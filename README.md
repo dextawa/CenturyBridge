@@ -37,9 +37,13 @@ CenturyBridge 是一个跨版本模组兼容层（Fabric）：把已停更的老
 
 ### 当前实测战果
 
-- 死于 1.20.1 的真实模组（含受损模组）经全自动转换后在 Fabric 1.20.2 / 1.21.1 / 26.2 服务端 "Done" 零错误
-- 270 模组语料全量回归：引擎零崩溃
-- 语料覆盖率（P0 数据，1.20.1→26.2）：架构可覆盖 77.5%，依赖封顶修正后 55.4%
+**走廊状态**：1.20.1 → 1.20.2 分段已达"生产完整"（分段数据 + triage + 6 个 shim mixin + 静态重定向 + 墓碑桩 + 实机验收），正在向 1.20.4 推进。
+
+- **服务端运行时干净率（1.20.1→1.20.2）：67%**（270 个真实死亡模组语料；181 个转换后预期零残留运行）。目标 ≥90%，硬底线 75%，按真实残留工单持续补 shim
+- 测量口径经 **side 标注**修真：datagen 类引用（模组内编译的开发期代码，游戏内永不执行）与 client 专用残留分开记账——裸静态口径（53%）会系统性高估伤亡
+- 死于 1.20.1 的真实模组（含受损模组）在 Fabric 1.20.2 / 1.21.1 / 26.2 服务端 "Done" 零错误
+- 270 模组语料全量回归：引擎零崩溃；所有转换产物可加载，残留符号仅在触发时惰性报错（带边界归因的错误消息）
+- 早期探索数据（1.20.1→26.2 全走廊）：架构可覆盖 77.5%，依赖封顶修正后 55.4%
 
 ### 构建
 
@@ -80,9 +84,13 @@ Per-jar pipeline:
 
 ### Current results
 
-- Real 1.20.1-abandoned mods (including damaged ones) convert fully automatically and reach "Done" with zero errors on Fabric 1.20.2 / 1.21.1 / 26.2 servers
-- Full 270-mod corpus regression: zero engine crashes
-- Corpus coverage (P0 data, 1.20.1→26.2): 77.5% architecturally coverable, 55.4% after dependency-availability correction
+**Corridor status**: the 1.20.1 → 1.20.2 segment is production-complete (segment data + triage + 6 shim mixins + static redirects + tombstones + live server acceptance); now extending toward 1.20.4.
+
+- **Server-runtime clean rate (1.20.1→1.20.2): 67%** (270 real abandoned mods; 181 convert with zero expected runtime residuals). Target ≥90%, hard floor 75%, driven by the real-residual work order
+- Measurement is **side-annotated**: datagen references (dev-time code compiled into mod jars that never executes in play) and client-only residuals are accounted separately — the raw static number (53%) systematically overstates damage
+- Real abandoned 1.20.1 mods (including damaged ones) reach "Done" with zero errors on Fabric 1.20.2 / 1.21.1 / 26.2 servers
+- Full 270-mod corpus regression: zero engine crashes; every converted jar loads, residual symbols fail lazily with boundary-attributed error messages
+- Early exploration data (full 1.20.1→26.2 corridor): 77.5% architecturally coverable, 55.4% after dependency-availability correction
 
 ### Building
 
