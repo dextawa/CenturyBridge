@@ -136,6 +136,15 @@ public final class Statics {
         return method_8114((net.minecraft.class_1860<?>) self);
     }
 
+    /** 1.20.1 LocationPredicate.ANY, removed with the Optional-ization; empty builder = match-all. */
+    public static final net.minecraft.class_2090 field_9685 =
+        net.minecraft.class_2090.class_2091.method_22484().method_9023();
+
+    /** 1.20.1 LocationPredicate.fromJson (same Optional-ization pattern as ItemPredicate). */
+    public static net.minecraft.class_2090 method_9021(JsonElement json) {
+        return net.minecraft.class_2090.method_9021(json).orElse(field_9685);
+    }
+
     private Statics() {
     }
 }

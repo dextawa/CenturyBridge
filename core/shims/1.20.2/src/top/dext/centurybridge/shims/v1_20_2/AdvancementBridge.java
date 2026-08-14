@@ -19,6 +19,23 @@ public abstract class AdvancementBridge {
         return ((class_161) (Object) this).comp_1913().orElse(null);
     }
 
+    /** legacy toBuilder(): fully reconstructed from the 1.20.2 record components */
+    public class_161.class_162 method_689() {
+        class_161 self = (class_161) (Object) this;
+        class_161.class_162 builder = class_161.class_162.method_707();
+        self.comp_1912().ifPresent(builder::method_708);
+        self.comp_1913().ifPresent(builder::method_693);
+        builder.method_706(self.comp_1914());
+        for (var e : self.comp_1915().entrySet()) {
+            builder.method_705(e.getKey(), e.getValue());
+        }
+        builder.method_34884(self.comp_1916());
+        if (self.comp_1917()) {
+            builder.method_53634();
+        }
+        return builder;
+    }
+
     /** legacy getId(): answered from the loader-populated identity map */
     public net.minecraft.class_2960 method_688() {
         net.minecraft.class_8779 entry = Trackers.ADVANCEMENT_ENTRIES.get(this);

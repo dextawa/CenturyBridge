@@ -46,4 +46,11 @@ public abstract class AdvancementBuilderBridge {
             .method_694(e -> exporter.accept(e.comp_1920()), id);
         return entry.comp_1920();
     }
+
+    /** legacy Builder.toJson(): build with a scratch id, serialize via 1.20.2 Advancement.toJson */
+    public com.google.gson.JsonObject method_698() {
+        class_8779 entry = ((class_161.class_162) (Object) this)
+            .method_694(e -> { }, "centurybridge_tojson");
+        return entry.comp_1920().method_53621();
+    }
 }
