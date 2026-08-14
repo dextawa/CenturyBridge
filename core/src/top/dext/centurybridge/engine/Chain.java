@@ -41,6 +41,8 @@ public final class Chain {
     public final java.util.Map<String, String> staticRedirects = new java.util.HashMap<>();
     /** instance calls redirected to a static (receiver becomes arg 0) -- for interface targets Mixin cannot touch */
     public final java.util.Map<String, String> instanceRedirects = new java.util.HashMap<>();
+    /** GETSTATIC field reads redirected to a same-name field on a runtime class */
+    public final java.util.Map<String, String> fieldRedirects = new java.util.HashMap<>();
     /** old signatures restored at runtime by shim mixins -- neither issues nor tombstones */
     public final java.util.Set<String> shimCovers = new java.util.HashSet<>();
     /** source-version class -> "client" | "datagen" (absent = common/server) */
@@ -80,6 +82,12 @@ public final class Chain {
                 var ir = root.getAsJsonObject("instanceRedirects");
                 for (String k : ir.keySet()) {
                     c.instanceRedirects.put(k, ir.get(k).getAsString());
+                }
+            }
+            if (root.has("fieldRedirects")) {
+                var fr = root.getAsJsonObject("fieldRedirects");
+                for (String k : fr.keySet()) {
+                    c.fieldRedirects.put(k, fr.get(k).getAsString());
                 }
             }
             if (root.has("covers")) {

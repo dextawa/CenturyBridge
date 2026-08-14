@@ -22,4 +22,9 @@ public abstract class StatusEffectBridge {
     public void method_5555(class_1309 entity, class_5131 attributes, int amplifier) {
         ((class_1291) (Object) this).method_5555(attributes, amplifier);
     }
+
+    /** removed in 1.20.2; re-implemented with the legacy default semantics */
+    public double method_5563(int amplifier, net.minecraft.class_1322 modifier) {
+        return modifier.method_6186() * (amplifier + 1);
+    }
 }

@@ -243,6 +243,7 @@ public final class JarProcessor {
                                            String tag, Tombstones reg, Report rpt) {
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
+        Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
         Set<String> clientTombstones = new HashSet<>();      // subset of tombstone keys on client-only owners
         ClassVisitor analysis = new ClassVisitor(Opcodes.ASM9) {
@@ -310,6 +311,12 @@ public final class JarProcessor {
                         if (!owner.startsWith("net/minecraft/")) {
                             return;
                         }
+                        String fkey = owner + "." + name + ":" + desc;
+                        String frt = chain.fieldRedirects.get(fkey);
+                        if (frt != null && op == Opcodes.GETSTATIC) {
+                            fldRedirects.put(fkey, frt);
+                            return;
+                        }
                         Chain.Issue r = chain.resolveMember('f', name);
                         if (r.level() == Chain.Level.OK) {
                             return;
@@ -360,7 +367,7 @@ public final class JarProcessor {
         };
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
-        if (redirects.isEmpty() && instRedirects.isEmpty() && tombstone.isEmpty()) {
+        if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty() && tombstone.isEmpty()) {
             return null;
         }
         for (String k : redirects.keySet()) {
@@ -368,6 +375,9 @@ public final class JarProcessor {
         }
         for (String k : instRedirects.keySet()) {
             rpt.notes.add(tag + "instance-redirected: " + k + " -> " + instRedirects.get(k));
+        }
+        for (String k : fldRedirects.keySet()) {
+            rpt.notes.add(tag + "field-redirected: " + k + " -> " + fldRedirects.get(k));
         }
         for (Map.Entry<String, String> t : tombstone.entrySet()) {
             String line = tag + "tombstoned (lazy-fail) @" + t.getValue() + ": " + t.getKey();
@@ -406,6 +416,16 @@ public final class JarProcessor {
                             return;
                         }
                         super.visitMethodInsn(op, owner, name, desc, itf);
+                    }
+
+                    @Override
+                    public void visitFieldInsn(int op, String owner, String name, String desc) {
+                        if (op == Opcodes.GETSTATIC && fldRedirects.containsKey(owner + "." + name + ":" + desc)) {
+                            super.visitFieldInsn(Opcodes.GETSTATIC,
+                                fldRedirects.get(owner + "." + name + ":" + desc), name, desc);
+                            return;
+                        }
+                        super.visitFieldInsn(op, owner, name, desc);
                     }
                 };
             }

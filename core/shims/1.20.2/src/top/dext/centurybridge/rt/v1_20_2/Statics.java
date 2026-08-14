@@ -1,4 +1,4 @@
-package top.dext.centurybridge.shims.v1_20_2;
+package top.dext.centurybridge.rt.v1_20_2;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
@@ -44,6 +44,42 @@ public final class Statics {
             net.minecraft.class_1936 world, net.minecraft.class_2338 pos, net.minecraft.class_2680 state) {
         return self.method_9700(null, world, pos, state);
     }
+
+    /** 1.20.1 Ingredient.fromJson(json, allowEmpty), removed 1.20.2. L3 x9. */
+    public static class_1856 method_8102(JsonElement json, boolean allowEmpty) {
+        var codec = allowEmpty ? class_1856.field_46095 : class_1856.field_46096;
+        return codec.parse(JsonOps.INSTANCE, json)
+            .result()
+            .orElseThrow(() -> new JsonSyntaxException("Invalid ingredient: " + json));
+    }
+
+    /** 1.20.1 Fertilizable.canGrow lost its trailing client-side flag in 1.20.2. Interface -> call-site redirect. L2 x9. */
+    public static boolean method_9651(net.minecraft.class_2256 self, net.minecraft.class_4538 world,
+            net.minecraft.class_2338 pos, net.minecraft.class_2680 state, boolean isClient) {
+        return self.method_9651(world, pos, state);
+    }
+
+    /** legacy Recipe.getId(): ids moved to RecipeEntry in 1.20.2; answered from the tracker map. */
+    public static net.minecraft.class_2960 method_8114(net.minecraft.class_1860<?> self) {
+        net.minecraft.class_2960 id = Trackers.RECIPE_IDS.get(self);
+        if (id == null) {
+            throw new UnsupportedOperationException(
+                "CenturyBridge: recipe id unavailable -- 1.20.2 moved ids to RecipeEntry"
+                + " and this recipe was not registered through RecipeManager");
+        }
+        return id;
+    }
+
+    public static net.minecraft.class_2960 method_8114(net.minecraft.class_1869 self) {
+        return method_8114((net.minecraft.class_1860<?>) self);
+    }
+
+    public static net.minecraft.class_2960 method_8114(net.minecraft.class_3955 self) {
+        return method_8114((net.minecraft.class_1860<?>) self);
+    }
+
+    /** 1.20.1 LootContextPredicate.EMPTY field, removed 1.20.2; field access redirected here. */
+    public static final net.minecraft.class_5258 field_24388 = net.minecraft.class_5258.method_27973();
 
     private Statics() {
     }

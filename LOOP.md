@@ -1,13 +1,13 @@
 # CB 循环任务 v2：1.20.1 → 1.20.4 走廊达标
 
-> **v2 目标（用户设定）**：每节分段的"服务端运行时干净率"打到 **≥90%（硬底线 75%）**，防止链路损伤并集滚大；本轮推进到 **1.20.4**。里程碑时更新 README；完成/阻塞 PushNotification（用户睡觉中，通知会真实送达）。
+> **v2 目标（用户设定，周期 9 修订）**：分段完工判据从"模组百分比"改为 **kill-list 闭合**——每段语料观测的运行时损伤引用清到 <50 条且全部记账（shim/重定向/quirk/墓碑逐条对应），残留只允许真正不可修的语义漂移尾巴。**一段不闭合，不进下一段**（用户："走一路爆一路零件迟早 1% 都不到"——per-segment 可接受损失在 21 段链上单调累积，必须逐段清零）。本轮推进到 **1.20.4**。里程碑时更新 README；完成/阻塞 PushNotification。
 > 当前基线（side 标注后 @1.20.2）：server-clean = 180/270 = **66.7%**（direct 160 + degraded 21 −1 重叠修正后 181→以 sided2 为准 181/270=67%）。
 
 ## v2 Backlog
 
 - [x] C1 side 标注：SideAnnotator（client 1970 类 / datagen 213 类，源版本 1.20.1）+ 调用方 datagen 启发式（modid/datagen|/data/ 包）+ 判定/报告分侧
 - [x] C2 shim 第二批 @1.20.2：Advancement 族（Builder.method_709 反射恢复 trigger + method_705 包装；method_694 换返回桥；Advancement.method_686 record 桥）、StatusEffect 双钩子降参桥、ShapedRecipe.outputFromJson 静态重定向、**FluidDrainable 实例重定向**（新机制：接口方法 Mixin 加不了 → 调用侧 receiver 变 arg0）。桥 jar 10KB / 9 mixin + Statics。boot 验证 mixin 全部 apply（含内部类目标）"Done (4.575s)"
-- [ ] C3 复扫验证 @1.20.2 ≥75%（当前 **185/270 = 68.5%**，残留 828→565 条）；shim 第三批工单：Recipe.getId 复合桥（RecipeManager 建 IdentityHashMap + 接口实例重定向，×30）、criterion 注册族（class_4558.method_27853/class_174.method_767，×26，需研 1.20.2 注册路径）、class_5258.field_24388 字段重定向（新机制 fieldRedirects）、class_1291.method_5563、class_1856.method_8102、class_2256.method_9651（接口→实例重定向）、class_2989/2985 进度加载器桥
+- [ ] C3 kill-list 闭合 @1.20.2（当前 **196/270 = 72.6%**，残留 565→? 条；批次 3 已交付：Trackers 身份图模式救活 Recipe.getId ×30 + Advancement.getId ×28、fieldRedirects 新机制、method_5563 重实现、Fertilizable 实例重定向；Mixin 包规则实锤：非 mixin 类必须住独立 rt 包）；shim 第三批工单：Recipe.getId 复合桥（RecipeManager 建 IdentityHashMap + 接口实例重定向，×30）、criterion 注册族（class_4558.method_27853/class_174.method_767，×26，需研 1.20.2 注册路径）、class_5258.field_24388 字段重定向（新机制 fieldRedirects）、class_1291.method_5563、class_1856.method_8102、class_2256.method_9651（接口→实例重定向）、class_2989/2985 进度加载器桥
 - [ ] C4 分段 1.20.2→1.20.3 同套待遇（shim 桥 1.20.3 工单 + 1.20.4 stub/运行时桥；1.20.3→1.20.4 零 diff 白送）
 - [ ] C5 全语料扫荡 @1.20.4 + server-1.20.4 实机验收
 - [ ] C6 README 更新（战果数字 + 走廊状态表）+ commit/push + PushNotification 叫醒用户
