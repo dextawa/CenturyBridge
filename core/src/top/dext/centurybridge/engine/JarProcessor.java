@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -102,18 +103,69 @@ public final class JarProcessor {
         }
         stripConfigs(entries, triage, deadMixins);
 
+        // tombstone stub class must be unique per jar layer (all layers share the runtime classpath)
+        String tombClass = "centurybridge/gen/Tombstones" + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count());
+        Tombstones reg = new Tombstones(tombClass, chain.to);
+
         for (Map.Entry<String, byte[]> e : entries.entrySet()) {
             String name = e.getKey();
             if (name.endsWith(".class")) {
                 String cls = name.substring(0, name.length() - 6);
                 if (!triage.configOfClass().containsKey(cls)) {
-                    verifyClass(e.getValue(), chain, issues, tag);
+                    byte[] rewritten = verifyAndRewrite(e.getValue(), chain, issues, tag, reg, rpt);
+                    if (rewritten != null) {
+                        e.setValue(rewritten);
+                    }
                 }
             } else if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
                 Map<String, byte[]> nested = readAll(e.getValue());
                 processEntries(nested, chain, rpt, issues, tag + "(bundled) ");
                 e.setValue(writeJar(nested));
             }
+        }
+        if (!reg.stubs.isEmpty()) {
+            entries.put(tombClass + ".class", reg.synthesize());
+        }
+    }
+
+    /** per-jar-layer registry of lazy-fail stubs, synthesized as one class */
+    private static final class Tombstones {
+        record Stub(String name, String staticDesc, String message) {}
+        final String clsName;
+        final String targetVer;
+        final Map<String, Stub> stubs = new LinkedHashMap<>();
+
+        Tombstones(String clsName, String targetVer) {
+            this.clsName = clsName;
+            this.targetVer = targetVer;
+        }
+
+        Stub get(String owner, String name, String desc, boolean isStatic, String boundary) {
+            return stubs.computeIfAbsent(owner + "." + name + desc + isStatic, k -> {
+                String staticDesc = isStatic ? desc : "(L" + owner + ";" + desc.substring(1);
+                String msg = "CenturyBridge tombstone: " + owner.replace('/', '.') + "." + name
+                    + " no longer exists in " + targetVer + " (died @" + boundary + ")";
+                return new Stub("t" + stubs.size(), staticDesc, msg);
+            });
+        }
+
+        byte[] synthesize() {
+            org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+            cw.visit(Opcodes.V17, Opcodes.ACC_PUBLIC | Opcodes.ACC_SYNTHETIC, clsName, null, "java/lang/Object", null);
+            for (Stub s : stubs.values()) {
+                MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, s.name(), s.staticDesc(), null, null);
+                mv.visitCode();
+                mv.visitTypeInsn(Opcodes.NEW, "java/lang/UnsupportedOperationException");
+                mv.visitInsn(Opcodes.DUP);
+                mv.visitLdcInsn(s.message());
+                mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/UnsupportedOperationException",
+                    "<init>", "(Ljava/lang/String;)V", false);
+                mv.visitInsn(Opcodes.ATHROW);
+                mv.visitMaxs(0, 0);
+                mv.visitEnd();
+            }
+            cw.visitEnd();
+            return cw.toByteArray();
         }
     }
 
@@ -171,8 +223,18 @@ public final class JarProcessor {
         }
     }
 
-    private static void verifyClass(byte[] bytes, Chain chain, Set<String> issues, String tag) {
-        ClassVisitor cv = new ClassVisitor(Opcodes.ASM9) {
+    /**
+     * Analysis pass collects issues and marks call sites that can be repaired
+     * (static redirects into the runtime bridge; dead-method tombstones). When
+     * repairs exist, a second ASM pass rewrites them -- redirected calls stop
+     * being issues, tombstoned calls fail lazily with a descriptive message.
+     * Returns the rewritten class bytes, or null when unchanged.
+     */
+    private static byte[] verifyAndRewrite(byte[] bytes, Chain chain, Set<String> issues,
+                                           String tag, Tombstones reg, Report rpt) {
+        Map<String, String> redirects = new HashMap<>();   // owner.name+desc -> runtime class
+        Map<String, String> tombstone = new HashMap<>();   // owner.name+desc -> boundary
+        ClassVisitor analysis = new ClassVisitor(Opcodes.ASM9) {
             @Override
             public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
                 checkClass(superName);
@@ -189,13 +251,37 @@ public final class JarProcessor {
                     @Override
                     public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
                         checkClass(owner);
-                        report('m', owner, name);
+                        if (!owner.startsWith("net/minecraft/")) {
+                            return; // mod-owned members (incl. overrides of dead interface methods) still exist
+                        }
+                        String key = owner + "." + name + desc;
+                        if (chain.shimCovers.contains(key)) {
+                            return; // restored at runtime by a shim mixin
+                        }
+                        String rt = chain.staticRedirects.get(key);
+                        if (rt != null && op == Opcodes.INVOKESTATIC) {
+                            redirects.put(key, rt);
+                            return;
+                        }
+                        Chain.Issue r = chain.resolveMember('m', name);
+                        if (r.level() == Chain.Level.L3 && !name.equals("<init>")
+                                && chain.resolveClass(owner).level() == Chain.Level.OK) {
+                            tombstone.put(key, r.boundary());
+                        } else if (r.level() != Chain.Level.OK) {
+                            issues.add(tag + r.level() + " method @" + r.boundary() + ": " + shortName(owner) + "." + name);
+                        }
                     }
 
                     @Override
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
                         checkClass(owner);
-                        report('f', owner, name);
+                        if (!owner.startsWith("net/minecraft/")) {
+                            return;
+                        }
+                        Chain.Issue r = chain.resolveMember('f', name);
+                        if (r.level() != Chain.Level.OK) {
+                            issues.add(tag + r.level() + " field @" + r.boundary() + ": " + shortName(owner) + "." + name);
+                        }
                     }
 
                     @Override
@@ -203,14 +289,6 @@ public final class JarProcessor {
                         checkClass(type);
                     }
                 };
-            }
-
-            private void report(char kind, String owner, String name) {
-                Chain.Issue r = chain.resolveMember(kind, name);
-                if (r.level() != Chain.Level.OK) {
-                    issues.add(tag + r.level() + (kind == 'm' ? " method " : " field ")
-                        + "@" + r.boundary() + ": " + shortName(owner) + "." + name);
-                }
             }
 
             private void checkClass(String internal) {
@@ -230,7 +308,45 @@ public final class JarProcessor {
                 }
             }
         };
-        new ClassReader(bytes).accept(cv, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+
+        if (redirects.isEmpty() && tombstone.isEmpty()) {
+            return null;
+        }
+        for (String k : redirects.keySet()) {
+            rpt.notes.add(tag + "static-redirected: " + k + " -> " + redirects.get(k));
+        }
+        for (Map.Entry<String, String> t : tombstone.entrySet()) {
+            issues.add(tag + "tombstoned (lazy-fail) @" + t.getValue() + ": " + t.getKey());
+        }
+
+        ClassReader cr = new ClassReader(bytes);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(0);
+        cr.accept(new ClassVisitor(Opcodes.ASM9, cw) {
+            @Override
+            public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
+                MethodVisitor mv = super.visitMethod(acc, mName, mDesc, sig, ex);
+                return new MethodVisitor(Opcodes.ASM9, mv) {
+                    @Override
+                    public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
+                        String key = owner + "." + name + desc;
+                        String rt = redirects.get(key);
+                        if (rt != null && op == Opcodes.INVOKESTATIC) {
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, rt, name, desc, false);
+                            return;
+                        }
+                        String boundary = tombstone.get(key);
+                        if (boundary != null) {
+                            Tombstones.Stub s = reg.get(owner, name, desc, op == Opcodes.INVOKESTATIC, boundary);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
+                            return;
+                        }
+                        super.visitMethodInsn(op, owner, name, desc, itf);
+                    }
+                };
+            }
+        }, 0);
+        return cw.toByteArray();
     }
 
     private static byte[] patchFmj(byte[] data, Chain chain, Report rpt) {

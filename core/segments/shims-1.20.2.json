@@ -1,0 +1,16 @@
+{
+ "staticRedirects": {
+  "net/minecraft/class_1856.method_52177(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_1856;": "top/dext/centurybridge/shims/v1_20_2/Statics"
+ },
+ "covers": [
+  "net/minecraft/class_2540.method_10794(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2540;",
+  "net/minecraft/class_1735.method_48931(Lnet/minecraft/class_1799;)V",
+  "net/minecraft/class_2342.method_10120()Lnet/minecraft/class_2680;",
+  "net/minecraft/class_2342.method_10122()Lnet/minecraft/class_2338;",
+  "net/minecraft/class_2342.method_10121()Lnet/minecraft/class_2586;",
+  "net/minecraft/class_2342.method_10207()Lnet/minecraft/class_3218;",
+  "net/minecraft/class_1856.method_8089()Lcom/google/gson/JsonElement;",
+  "net/minecraft/class_26.method_17924(Ljava/util/function/Function;Ljava/util/function/Supplier;Ljava/lang/String;)Lnet/minecraft/class_18;",
+  "net/minecraft/class_342.method_1865()V"
+ ]
+}

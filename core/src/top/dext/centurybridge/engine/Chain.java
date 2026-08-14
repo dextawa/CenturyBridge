@@ -37,6 +37,10 @@ public final class Chain {
     public final String from;
     public final String to;
     public final List<Segment> segments = new ArrayList<>();
+    /** "owner.name(desc)" -> runtime class carrying a same-name static replacement */
+    public final java.util.Map<String, String> staticRedirects = new java.util.HashMap<>();
+    /** old signatures restored at runtime by shim mixins -- neither issues nor tombstones */
+    public final java.util.Set<String> shimCovers = new java.util.HashSet<>();
 
     private Chain(String from, String to) {
         this.from = from;
@@ -53,6 +57,22 @@ public final class Chain {
         for (int i = a; i < b; i++) {
             c.segments.add(Segment.load(
                 segmentsDir.resolve(RELEASES.get(i) + "__" + RELEASES.get(i + 1) + ".json")));
+        }
+        Path shims = segmentsDir.resolve("shims-" + to + ".json");
+        if (java.nio.file.Files.exists(shims)) {
+            var gson = new com.google.gson.Gson();
+            var root = gson.fromJson(java.nio.file.Files.readString(shims), com.google.gson.JsonObject.class);
+            if (root.has("staticRedirects")) {
+                var sr = root.getAsJsonObject("staticRedirects");
+                for (String k : sr.keySet()) {
+                    c.staticRedirects.put(k, sr.get(k).getAsString());
+                }
+            }
+            if (root.has("covers")) {
+                for (var e : root.getAsJsonArray("covers")) {
+                    c.shimCovers.add(e.getAsString());
+                }
+            }
         }
         return c;
     }
