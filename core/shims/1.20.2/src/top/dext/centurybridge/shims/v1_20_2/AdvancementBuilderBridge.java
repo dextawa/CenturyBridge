@@ -41,6 +41,16 @@ public abstract class AdvancementBuilderBridge {
         return ((class_161.class_162) (Object) this).method_705(name, criterion);
     }
 
+    /** legacy parent(Advancement): resolve the entry via the tracker map */
+    public class_161.class_162 method_701(class_161 parent) {
+        class_8779 entry = top.dext.centurybridge.rt.v1_20_2.Trackers.ADVANCEMENT_ENTRIES.get(parent);
+        if (entry == null) {
+            throw new UnsupportedOperationException(
+                "CenturyBridge: parent advancement has no known entry (not loaded via ServerAdvancementLoader)");
+        }
+        return ((class_161.class_162) (Object) this).method_701(entry);
+    }
+
     public class_161 method_694(Consumer<class_161> exporter, String id) {
         class_8779 entry = ((class_161.class_162) (Object) this)
             .method_694(e -> exporter.accept(e.comp_1920()), id);

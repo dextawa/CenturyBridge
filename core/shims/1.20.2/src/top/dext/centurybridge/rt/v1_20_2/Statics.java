@@ -172,6 +172,30 @@ public final class Statics {
             .orElse(field_24388);
     }
 
+    /** ANY-constant family, removed with the predicate rework; rebuilt as match-alls. */
+    public static final net.minecraft.class_2073 field_9640 =
+        net.minecraft.class_2073.class_2074.method_8973().method_8976();
+
+    public static final net.minecraft.class_2048 field_9599 =
+        net.minecraft.class_2048.class_2049.method_8916().method_8920();
+
+    public static final net.minecraft.class_2105 field_9716 =
+        new net.minecraft.class_2105((net.minecraft.class_2487) null);
+
+    /** 1.20.1 ShapedRecipe.Serializer read pair (id parameter dropped / json moved to codec). */
+    public static net.minecraft.class_1869 method_8163(net.minecraft.class_1869.class_1870 self,
+            net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
+        return self.method_8163(buf);
+    }
+
+    public static net.minecraft.class_1869 method_8164(net.minecraft.class_1869.class_1870 self,
+            net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
+        return ((net.minecraft.class_1865<net.minecraft.class_1869>) self).method_53736()
+            .parse(JsonOps.INSTANCE, json)
+            .result()
+            .orElseThrow(() -> new JsonSyntaxException("Invalid shaped recipe " + id));
+    }
+
     private Statics() {
     }
 }

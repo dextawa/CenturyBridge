@@ -23,4 +23,14 @@ public abstract class PlayerAdvancementTrackerBridge {
         }
         return ((class_2985) (Object) this).method_12882(entry);
     }
+
+    /** legacy grantCriterion(Advancement, name) */
+    public boolean method_12878(class_161 advancement, String criterion) {
+        class_8779 entry = Trackers.ADVANCEMENT_ENTRIES.get(advancement);
+        if (entry == null) {
+            throw new UnsupportedOperationException(
+                "CenturyBridge: advancement has no known entry (not loaded via ServerAdvancementLoader)");
+        }
+        return ((class_2985) (Object) this).method_12878(entry, criterion);
+    }
 }

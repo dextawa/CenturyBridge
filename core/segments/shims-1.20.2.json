@@ -21,11 +21,16 @@
   "net/minecraft/class_1860.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_1869.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_3955.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
-  "net/minecraft/class_1867.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics"
+  "net/minecraft/class_1867.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_1869$class_1870.method_8163(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_1869$class_1870.method_8164(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1869;": "top/dext/centurybridge/rt/v1_20_2/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/Statics",
-  "net/minecraft/class_2090.field_9685:Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/Statics"
+  "net/minecraft/class_2090.field_9685:Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_2073.field_9640:Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_2048.field_9599:Lnet/minecraft/class_2048;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_2105.field_9716:Lnet/minecraft/class_2105;": "top/dext/centurybridge/rt/v1_20_2/Statics"
  },
  "classRenames": {
   "net/minecraft/class_5335": "top/dext/centurybridge/facade/v1_20_2/class_5335",
@@ -63,6 +68,8 @@
   "net/minecraft/class_161.method_689()Lnet/minecraft/class_161$class_162;",
   "net/minecraft/class_161$class_162.method_698()Lcom/google/gson/JsonObject;",
   "net/minecraft/class_26.method_20786(Ljava/util/function/Function;Ljava/lang/String;)Lnet/minecraft/class_18;",
-  "net/minecraft/class_163.method_716(Lnet/minecraft/class_2960;)Lnet/minecraft/class_161;"
+  "net/minecraft/class_163.method_716(Lnet/minecraft/class_2960;)Lnet/minecraft/class_161;",
+  "net/minecraft/class_161$class_162.method_701(Lnet/minecraft/class_161;)Lnet/minecraft/class_161$class_162;",
+  "net/minecraft/class_2985.method_12878(Lnet/minecraft/class_161;Ljava/lang/String;)Z"
  ]
 }
