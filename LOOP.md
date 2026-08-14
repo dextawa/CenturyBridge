@@ -6,8 +6,8 @@
 ## v2 Backlog
 
 - [x] C1 side 标注：SideAnnotator（client 1970 类 / datagen 213 类，源版本 1.20.1）+ 调用方 datagen 启发式（modid/datagen|/data/ 包）+ 判定/报告分侧
-- [ ] C2 shim 第二批 @1.20.2（按真实工单）：**Advancement 族**（class_161/$class_162 ×70+，advjs 类模组真运行时使用）、class_2263.method_9700（FluidDrainable）、class_1291.method_5562（StatusEffect）、class_1869.method_35228（ShapedRecipe JSON 静态→重定向）、class_4558/class_174（criterion 注册族）
-- [ ] C3 复扫验证 @1.20.2 ≥75%（冲 90%）
+- [x] C2 shim 第二批 @1.20.2：Advancement 族（Builder.method_709 反射恢复 trigger + method_705 包装；method_694 换返回桥；Advancement.method_686 record 桥）、StatusEffect 双钩子降参桥、ShapedRecipe.outputFromJson 静态重定向、**FluidDrainable 实例重定向**（新机制：接口方法 Mixin 加不了 → 调用侧 receiver 变 arg0）。桥 jar 10KB / 9 mixin + Statics。boot 验证 mixin 全部 apply（含内部类目标）"Done (4.575s)"
+- [ ] C3 复扫验证 @1.20.2 ≥75%（当前 **185/270 = 68.5%**，残留 828→565 条）；shim 第三批工单：Recipe.getId 复合桥（RecipeManager 建 IdentityHashMap + 接口实例重定向，×30）、criterion 注册族（class_4558.method_27853/class_174.method_767，×26，需研 1.20.2 注册路径）、class_5258.field_24388 字段重定向（新机制 fieldRedirects）、class_1291.method_5563、class_1856.method_8102、class_2256.method_9651（接口→实例重定向）、class_2989/2985 进度加载器桥
 - [ ] C4 分段 1.20.2→1.20.3 同套待遇（shim 桥 1.20.3 工单 + 1.20.4 stub/运行时桥；1.20.3→1.20.4 零 diff 白送）
 - [ ] C5 全语料扫荡 @1.20.4 + server-1.20.4 实机验收
 - [ ] C6 README 更新（战果数字 + 走廊状态表）+ commit/push + PushNotification 叫醒用户

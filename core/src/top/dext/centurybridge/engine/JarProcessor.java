@@ -241,9 +241,10 @@ public final class JarProcessor {
      */
     private static byte[] verifyAndRewrite(byte[] bytes, Chain chain, Set<String> issues,
                                            String tag, Tombstones reg, Report rpt) {
-        Map<String, String> redirects = new HashMap<>();   // owner.name+desc -> runtime class
-        Map<String, String> tombstone = new HashMap<>();   // owner.name+desc -> boundary
-        Set<String> clientTombstones = new HashSet<>();    // subset of tombstone keys on client-only owners
+        Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
+        Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
+        Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
+        Set<String> clientTombstones = new HashSet<>();      // subset of tombstone keys on client-only owners
         ClassVisitor analysis = new ClassVisitor(Opcodes.ASM9) {
             @Override
             public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
@@ -271,6 +272,11 @@ public final class JarProcessor {
                         String rt = chain.staticRedirects.get(key);
                         if (rt != null && op == Opcodes.INVOKESTATIC) {
                             redirects.put(key, rt);
+                            return;
+                        }
+                        String irt = chain.instanceRedirects.get(key);
+                        if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE)) {
+                            instRedirects.put(key, irt);
                             return;
                         }
                         Chain.Issue r = chain.resolveMember('m', name);
@@ -354,11 +360,14 @@ public final class JarProcessor {
         };
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
-        if (redirects.isEmpty() && tombstone.isEmpty()) {
+        if (redirects.isEmpty() && instRedirects.isEmpty() && tombstone.isEmpty()) {
             return null;
         }
         for (String k : redirects.keySet()) {
             rpt.notes.add(tag + "static-redirected: " + k + " -> " + redirects.get(k));
+        }
+        for (String k : instRedirects.keySet()) {
+            rpt.notes.add(tag + "instance-redirected: " + k + " -> " + instRedirects.get(k));
         }
         for (Map.Entry<String, String> t : tombstone.entrySet()) {
             String line = tag + "tombstoned (lazy-fail) @" + t.getValue() + ": " + t.getKey();
@@ -382,6 +391,12 @@ public final class JarProcessor {
                         String rt = redirects.get(key);
                         if (rt != null && op == Opcodes.INVOKESTATIC) {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, rt, name, desc, false);
+                            return;
+                        }
+                        String irt = instRedirects.get(key);
+                        if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE)) {
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, irt, name,
+                                "(L" + owner + ";" + desc.substring(1), false);
                             return;
                         }
                         String boundary = tombstone.get(key);

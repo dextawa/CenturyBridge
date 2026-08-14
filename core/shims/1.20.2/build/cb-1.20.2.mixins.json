@@ -3,7 +3,7 @@
  "minVersion": "0.8",
  "package": "top.dext.centurybridge.shims.v1_20_2",
  "compatibilityLevel": "JAVA_17",
- "mixins": ["BlockPointerBridge", "DimensionDataStorageBridge", "FriendlyByteBufBridge", "IngredientBridge", "SlotBridge"],
+ "mixins": ["AdvancementBridge", "AdvancementBuilderBridge", "BlockPointerBridge", "DimensionDataStorageBridge", "FriendlyByteBufBridge", "IngredientBridge", "SlotBridge", "StatusEffectBridge"],
  "client": ["EditBoxBridge"],
  "injectors": { "defaultRequire": 0 }
 }
