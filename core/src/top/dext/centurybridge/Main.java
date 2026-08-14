@@ -26,6 +26,8 @@ public final class Main {
                 .remapToIntermediary(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "gen-sides" -> top.dext.centurybridge.data.SideAnnotator.generate(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]), Path.of(args[5]));
+            case "audit" -> top.dext.centurybridge.data.SymbolAudit.run(
+                Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]));
             default -> usage();
         }
     }

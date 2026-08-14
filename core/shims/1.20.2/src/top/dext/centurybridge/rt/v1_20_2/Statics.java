@@ -145,6 +145,33 @@ public final class Statics {
         return net.minecraft.class_2090.method_9021(json).orElse(field_9685);
     }
 
+    /** Optional-ized fromJson batch (1.20.2 predicate rework); invalid json throws like the old code did. */
+    public static net.minecraft.class_2019 method_8839(JsonElement json) {
+        return net.minecraft.class_2019.method_8839(json)
+            .orElseThrow(() -> new JsonSyntaxException("Invalid damage predicate: " + json));
+    }
+
+    public static net.minecraft.class_2022 method_8846(JsonElement json) {
+        return net.minecraft.class_2022.method_8846(json)
+            .orElseThrow(() -> new JsonSyntaxException("Invalid damage source predicate: " + json));
+    }
+
+    public static net.minecraft.class_2025 method_8857(JsonElement json) {
+        return net.minecraft.class_2025.method_8857(json)
+            .orElseThrow(() -> new JsonSyntaxException("Invalid distance predicate: " + json));
+    }
+
+    public static net.minecraft.class_2048 method_8913(JsonElement json) {
+        return net.minecraft.class_2048.method_8913(json)
+            .orElseThrow(() -> new JsonSyntaxException("Invalid entity predicate: " + json));
+    }
+
+    public static net.minecraft.class_5258 method_51705(com.google.gson.JsonObject json, String key,
+            net.minecraft.class_5257 deserializer) {
+        return net.minecraft.class_2048.method_51705(json, key, deserializer)
+            .orElse(field_24388);
+    }
+
     private Statics() {
     }
 }

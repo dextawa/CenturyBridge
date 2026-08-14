@@ -19,4 +19,11 @@ public abstract class DimensionDataStorageBridge {
     public <T extends class_18> T method_17924(Function<class_2487, T> load, Supplier<T> ctor, String id) {
         return ((class_26) (Object) this).method_17924(new class_18.class_8645<>(ctor, load, null), id);
     }
+
+    /** legacy get(load, id): the new Factory wants a constructor too, but the get path never uses it */
+    public <T extends class_18> T method_20786(Function<class_2487, T> load, String id) {
+        return ((class_26) (Object) this).method_20786(new class_18.class_8645<>(() -> {
+            throw new IllegalStateException("CenturyBridge: legacy get() cannot construct fresh state for " + id);
+        }, load, null), id);
+    }
 }
