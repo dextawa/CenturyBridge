@@ -17,8 +17,16 @@
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/Statics"
  },
+ "classRenames": {
+  "net/minecraft/class_5335": "top/dext/centurybridge/facade/v1_20_2/class_5335",
+  "net/minecraft/class_5267": "top/dext/centurybridge/facade/v1_20_2/class_5267"
+ },
+ "fieldRenames": {
+  "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "field_45013"
+ },
  "covers": [
   "net/minecraft/class_4558.method_27853(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_195;",
+  "net/minecraft/class_195.method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;",
   "net/minecraft/class_2540.method_30617()Lnet/minecraft/class_2487;",
   "net/minecraft/class_2540.method_10794(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2540;",
   "net/minecraft/class_1735.method_48931(Lnet/minecraft/class_1799;)V",

@@ -43,6 +43,10 @@ public final class Chain {
     public final java.util.Map<String, String> instanceRedirects = new java.util.HashMap<>();
     /** GETSTATIC field reads redirected to a same-name field on a runtime class */
     public final java.util.Map<String, String> fieldRedirects = new java.util.HashMap<>();
+    /** dead vanilla classes renamed to facade classes shipped in the runtime bridge */
+    public final java.util.Map<String, String> classRenames = new java.util.HashMap<>();
+    /** instance fields renamed in place (resolution reaches relocated/renamed fields via hierarchy) */
+    public final java.util.Map<String, String> fieldRenames = new java.util.HashMap<>();
     /** old signatures restored at runtime by shim mixins -- neither issues nor tombstones */
     public final java.util.Set<String> shimCovers = new java.util.HashSet<>();
     /** source-version class -> "client" | "datagen" (absent = common/server) */
@@ -88,6 +92,18 @@ public final class Chain {
                 var fr = root.getAsJsonObject("fieldRedirects");
                 for (String k : fr.keySet()) {
                     c.fieldRedirects.put(k, fr.get(k).getAsString());
+                }
+            }
+            if (root.has("classRenames")) {
+                var cr = root.getAsJsonObject("classRenames");
+                for (String k : cr.keySet()) {
+                    c.classRenames.put(k, cr.get(k).getAsString());
+                }
+            }
+            if (root.has("fieldRenames")) {
+                var fr = root.getAsJsonObject("fieldRenames");
+                for (String k : fr.keySet()) {
+                    c.fieldRenames.put(k, fr.get(k).getAsString());
                 }
             }
             if (root.has("covers")) {

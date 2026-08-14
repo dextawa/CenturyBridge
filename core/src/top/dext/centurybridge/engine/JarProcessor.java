@@ -244,8 +244,23 @@ public final class JarProcessor {
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
+        Map<String, String> fldRenames = new HashMap<>();    // instance fields renamed in place
         Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
         Set<String> clientTombstones = new HashSet<>();      // subset of tombstone keys on client-only owners
+
+        // dead-class facade renames touch descriptors/signatures everywhere, so the
+        // trigger is a raw byte scan rather than per-ref analysis
+        boolean needClassRename = false;
+        if (!chain.classRenames.isEmpty()) {
+            String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+            for (String dead : chain.classRenames.keySet()) {
+                if (raw.contains(dead)) {
+                    needClassRename = true;
+                    rpt.notes.add(tag + "facade-renamed: " + dead + " -> " + chain.classRenames.get(dead));
+                    break;
+                }
+            }
+        }
         ClassVisitor analysis = new ClassVisitor(Opcodes.ASM9) {
             @Override
             public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
@@ -265,6 +280,9 @@ public final class JarProcessor {
                         checkClass(owner);
                         if (!owner.startsWith("net/minecraft/")) {
                             return; // mod-owned members (incl. overrides of dead interface methods) still exist
+                        }
+                        if (chain.classRenames.containsKey(owner)) {
+                            return; // owner facade-renamed; the member lives on the facade
                         }
                         String key = owner + "." + name + desc;
                         if (chain.shimCovers.contains(key)) {
@@ -311,10 +329,18 @@ public final class JarProcessor {
                         if (!owner.startsWith("net/minecraft/")) {
                             return;
                         }
+                        if (chain.classRenames.containsKey(owner)) {
+                            return;
+                        }
                         String fkey = owner + "." + name + ":" + desc;
                         String frt = chain.fieldRedirects.get(fkey);
                         if (frt != null && op == Opcodes.GETSTATIC) {
                             fldRedirects.put(fkey, frt);
+                            return;
+                        }
+                        String rename = chain.fieldRenames.get(fkey);
+                        if (rename != null) {
+                            fldRenames.put(fkey, rename);
                             return;
                         }
                         Chain.Issue r = chain.resolveMember('f', name);
@@ -352,6 +378,9 @@ public final class JarProcessor {
                 if (t.startsWith("L") && t.endsWith(";")) {
                     t = t.substring(1, t.length() - 1);
                 }
+                if (chain.classRenames.containsKey(t)) {
+                    return; // facade-renamed, repaired by the rewrite pass
+                }
                 Chain.Issue r = chain.resolveClass(t);
                 if (r.level() != Chain.Level.OK) {
                     String side = chain.sideOf(t);
@@ -367,7 +396,8 @@ public final class JarProcessor {
         };
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
-        if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty() && tombstone.isEmpty()) {
+        if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
+                && fldRenames.isEmpty() && tombstone.isEmpty() && !needClassRename) {
             return null;
         }
         for (String k : redirects.keySet()) {
@@ -390,7 +420,11 @@ public final class JarProcessor {
 
         ClassReader cr = new ClassReader(bytes);
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(0);
-        cr.accept(new ClassVisitor(Opcodes.ASM9, cw) {
+        ClassVisitor sink = needClassRename
+            ? new org.objectweb.asm.commons.ClassRemapper(cw,
+                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames))
+            : cw;
+        cr.accept(new ClassVisitor(Opcodes.ASM9, sink) {
             @Override
             public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
                 MethodVisitor mv = super.visitMethod(acc, mName, mDesc, sig, ex);
@@ -420,9 +454,14 @@ public final class JarProcessor {
 
                     @Override
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
-                        if (op == Opcodes.GETSTATIC && fldRedirects.containsKey(owner + "." + name + ":" + desc)) {
-                            super.visitFieldInsn(Opcodes.GETSTATIC,
-                                fldRedirects.get(owner + "." + name + ":" + desc), name, desc);
+                        String fkey = owner + "." + name + ":" + desc;
+                        if (op == Opcodes.GETSTATIC && fldRedirects.containsKey(fkey)) {
+                            super.visitFieldInsn(Opcodes.GETSTATIC, fldRedirects.get(fkey), name, desc);
+                            return;
+                        }
+                        String renamed = fldRenames.get(fkey);
+                        if (renamed != null) {
+                            super.visitFieldInsn(op, owner, renamed, desc);
                             return;
                         }
                         super.visitFieldInsn(op, owner, name, desc);

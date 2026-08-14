@@ -3,7 +3,7 @@
  "minVersion": "0.8",
  "package": "top.dext.centurybridge.shims.v1_20_2",
  "compatibilityLevel": "JAVA_17",
- "mixins": ["AbstractCriterionBridge", "AdvancementBridge", "AdvancementBuilderBridge", "AdvancementLoaderBridge", "BlockPointerBridge", "DimensionDataStorageBridge", "FriendlyByteBufBridge", "IngredientBridge", "PlayerAdvancementTrackerBridge", "RecipeManagerBridge", "SlotBridge", "StatusEffectBridge"],
+ "mixins": ["AbstractCriterionBridge", "AdvancementBridge", "AdvancementBuilderBridge", "AdvancementLoaderBridge", "BlockPointerBridge", "CriterionConditionsBridge", "DimensionDataStorageBridge", "FriendlyByteBufBridge", "IngredientBridge", "PlayerAdvancementTrackerBridge", "RecipeManagerBridge", "SlotBridge", "StatusEffectBridge"],
  "client": ["EditBoxBridge"],
  "injectors": { "defaultRequire": 0 }
 }
