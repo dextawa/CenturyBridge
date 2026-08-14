@@ -245,6 +245,7 @@ public final class JarProcessor {
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldRenames = new HashMap<>();    // instance fields renamed in place
+        Map<String, String> mthRenames = new HashMap<>();    // methods renamed in place (relocated to super)
         Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
         Set<String> clientTombstones = new HashSet<>();      // subset of tombstone keys on client-only owners
 
@@ -296,6 +297,11 @@ public final class JarProcessor {
                         String irt = chain.instanceRedirects.get(key);
                         if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE)) {
                             instRedirects.put(key, irt);
+                            return;
+                        }
+                        String mrn = chain.methodRenames.get(key);
+                        if (mrn != null) {
+                            mthRenames.put(key, mrn);
                             return;
                         }
                         Chain.Issue r = chain.resolveMember('m', name);
@@ -397,7 +403,7 @@ public final class JarProcessor {
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
         if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldRenames.isEmpty() && tombstone.isEmpty() && !needClassRename) {
+                && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty() && !needClassRename) {
             return null;
         }
         for (String k : redirects.keySet()) {
@@ -441,6 +447,11 @@ public final class JarProcessor {
                         if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE)) {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, irt, name,
                                 "(L" + owner + ";" + desc.substring(1), false);
+                            return;
+                        }
+                        String mrn = mthRenames.get(key);
+                        if (mrn != null) {
+                            super.visitMethodInsn(op, owner, mrn, desc, itf);
                             return;
                         }
                         String boundary = tombstone.get(key);

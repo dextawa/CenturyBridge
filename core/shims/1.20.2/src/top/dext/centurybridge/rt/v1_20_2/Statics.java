@@ -112,6 +112,30 @@ public final class Statics {
         return self.method_8122(buf);
     }
 
+    /** 1.20.1 ItemPredicate.fromJson: return became Optional in 1.20.2; old callers expect a
+     *  match-anything predicate for absent json (the ANY constant is gone -> empty builder). L3 x6. */
+    public static net.minecraft.class_2073 method_8969(JsonElement json) {
+        return net.minecraft.class_2073.method_8969(json)
+            .orElseGet(() -> net.minecraft.class_2073.class_2074.method_8973().method_8976());
+    }
+
+    /** 1.20.1 RecipeManager.deserialize: became protected and returns RecipeEntry. L3 x4. */
+    public static net.minecraft.class_1860<?> method_17720(net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
+        try {
+            var m = net.minecraft.class_1863.class.getDeclaredMethod(
+                "method_17720", net.minecraft.class_2960.class, com.google.gson.JsonObject.class);
+            m.setAccessible(true);
+            net.minecraft.class_8786<?> entry = (net.minecraft.class_8786<?>) m.invoke(null, id, json);
+            return entry.comp_1933();
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("CenturyBridge: recipe deserialize failed for " + id, e);
+        }
+    }
+
+    public static net.minecraft.class_2960 method_8114(net.minecraft.class_1867 self) {
+        return method_8114((net.minecraft.class_1860<?>) self);
+    }
+
     private Statics() {
     }
 }
