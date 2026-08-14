@@ -81,6 +81,37 @@ public final class Statics {
     /** 1.20.1 LootContextPredicate.EMPTY field, removed 1.20.2; field access redirected here. */
     public static final net.minecraft.class_5258 field_24388 = net.minecraft.class_5258.method_27973();
 
+    /** 1.20.1 Criteria.register(trigger) -- private in both eras (mods reached it via AW).
+     *  New shape needs a name; recovered from the legacy trigger's getId via reflection. L3 x12. */
+    @SuppressWarnings("unchecked")
+    public static net.minecraft.class_179<?> method_767(net.minecraft.class_179<?> trigger) {
+        try {
+            net.minecraft.class_2960 id = (net.minecraft.class_2960)
+                trigger.getClass().getMethod("method_794").invoke(trigger);
+            var register = net.minecraft.class_174.class.getDeclaredMethod(
+                "method_767", String.class, net.minecraft.class_179.class);
+            register.setAccessible(true);
+            return (net.minecraft.class_179<?>) register.invoke(null, id.toString(), trigger);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException(
+                "CenturyBridge: cannot register legacy criterion trigger " + trigger.getClass().getName(), e);
+        }
+    }
+
+    /** 1.20.1 RecipeSerializer.read(id, json): parsing moved to codec(); id unused. Interface -> call-site redirect. L3 x7. */
+    public static <T extends net.minecraft.class_1860<?>> T method_8121(
+            net.minecraft.class_1865<T> self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
+        return self.method_53736().parse(JsonOps.INSTANCE, json)
+            .result()
+            .orElseThrow(() -> new JsonSyntaxException("Invalid recipe " + id + ": " + json));
+    }
+
+    /** 1.20.1 RecipeSerializer.read(id, buf): id parameter dropped. Interface -> call-site redirect. L2 x6. */
+    public static <T extends net.minecraft.class_1860<?>> T method_8122(
+            net.minecraft.class_1865<T> self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
+        return self.method_8122(buf);
+    }
+
     private Statics() {
     }
 }

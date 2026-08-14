@@ -15,4 +15,9 @@ public abstract class FriendlyByteBufBridge {
     public class_2540 method_10794(class_2487 nbt) {
         return ((class_2540) (Object) this).method_10794((class_2520) nbt);
     }
+
+    /** removed unlimited-size NBT read; delegates to the standard read (size-cap approximation) */
+    public class_2487 method_30617() {
+        return ((class_2540) (Object) this).method_10798();
+    }
 }
