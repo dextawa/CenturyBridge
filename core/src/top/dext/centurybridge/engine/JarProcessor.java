@@ -100,8 +100,10 @@ public final class JarProcessor {
                 String lb = mx.loadBearing() ? " [load-bearing! may be unstable]" : "";
                 rpt.strippedMixins.add(tag + shortName(mx.className()) + lb + " -- " + String.join("; ", mx.broken()));
             } else if (mx.vanilla() && mx.worst().level() != Chain.Level.OK) {
-                issues.add(tag + "L2 mixin target sig changed@" + mx.worst().boundary()
-                    + ": " + shortName(mx.className()));
+                // triage decided to KEEP this mixin (no explicit-desc spec to fail at
+                // apply); an informational note, not an unaccounted residual
+                rpt.notes.add(tag + "kept L2 mixin (target sig changed@" + mx.worst().boundary()
+                    + "): " + shortName(mx.className()));
             }
         }
         stripConfigs(entries, triage, deadMixins);

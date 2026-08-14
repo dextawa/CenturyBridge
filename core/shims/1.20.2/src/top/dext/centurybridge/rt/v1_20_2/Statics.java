@@ -196,6 +196,49 @@ public final class Statics {
             .orElseThrow(() -> new JsonSyntaxException("Invalid shaped recipe " + id));
     }
 
+    public static net.minecraft.class_2960 method_8114(net.minecraft.class_1874 self) {
+        return method_8114((net.minecraft.class_1860<?>) self);
+    }
+
+    public static net.minecraft.class_2960 method_8114(net.minecraft.class_3862 self) {
+        return method_8114((net.minecraft.class_1860<?>) self);
+    }
+
+    public static net.minecraft.class_2960 method_8114(net.minecraft.class_3861 self) {
+        return method_8114((net.minecraft.class_1860<?>) self);
+    }
+
+    public static net.minecraft.class_2960 method_8114(net.minecraft.class_3920 self) {
+        return method_8114((net.minecraft.class_1860<?>) self);
+    }
+
+    public static boolean method_9651(net.minecraft.class_2302 self, net.minecraft.class_4538 world,
+            net.minecraft.class_2338 pos, net.minecraft.class_2680 state, boolean isClient) {
+        return ((net.minecraft.class_2256) self).method_9651(world, pos, state);
+    }
+
+    /** 1.20.1 Waterloggable.tryFillWithFluid gained a leading player param (same pattern as FluidDrainable). */
+    public static boolean method_10310(net.minecraft.class_2402 self, net.minecraft.class_1922 world,
+            net.minecraft.class_2338 pos, net.minecraft.class_2680 state, net.minecraft.class_3611 fluid) {
+        return self.method_10310(null, world, pos, state, fluid);
+    }
+
+    public static boolean method_10310(net.minecraft.class_3737 self, net.minecraft.class_1922 world,
+            net.minecraft.class_2338 pos, net.minecraft.class_2680 state, net.minecraft.class_3611 fluid) {
+        return ((net.minecraft.class_2402) self).method_10310(null, world, pos, state, fluid);
+    }
+
+    /** 1.20.1 CraftingResultInventory.setLastRecipe(Recipe) -> new takes RecipeEntry; rebuilt via tracker. */
+    public static void method_7662(net.minecraft.class_1731 self, net.minecraft.class_1860<?> recipe) {
+        if (recipe == null) {
+            ((net.minecraft.class_1732) self).method_7662(null);
+            return;
+        }
+        net.minecraft.class_2960 id = Trackers.RECIPE_IDS.get(recipe);
+        ((net.minecraft.class_1732) self).method_7662(
+            id == null ? null : new net.minecraft.class_8786<>(id, recipe));
+    }
+
     private Statics() {
     }
 }

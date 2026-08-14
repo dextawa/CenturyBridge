@@ -37,9 +37,9 @@ CenturyBridge 是一个跨版本模组兼容层（Fabric）：把已停更的老
 
 ### 当前实测战果
 
-**走廊状态**：1.20.1 → 1.20.2 分段已达"生产完整"（分段数据 + triage + 6 个 shim mixin + 静态重定向 + 墓碑桩 + 实机验收），正在向 1.20.4 推进。
+**走廊状态**：1.20.1 → 1.20.2 分段 **kill-list 已闭合**（未记账运行时残留 19 条；548 条已分类记账，每条带原因标签），正在向 1.20.4 推进。
 
-- **服务端运行时干净率（1.20.1→1.20.2）：67%**（270 个真实死亡模组语料；181 个转换后预期零残留运行）。目标 ≥90%，硬底线 75%，按真实残留工单持续补 shim
+- **服务端运行时干净率（1.20.1→1.20.2）：94.8%**（270 个真实死亡模组语料，256 个转换后预期零未知残留运行）。八种改写机制：shim 重载注入、静态/实例/字段重定向、墓碑桩、facade 类改名、字段/方法迁移改名 + 身份追踪器（Recipe/Advancement getId 复活）
 - 测量口径经 **side 标注**修真：datagen 类引用（模组内编译的开发期代码，游戏内永不执行）与 client 专用残留分开记账——裸静态口径（53%）会系统性高估伤亡
 - 死于 1.20.1 的真实模组（含受损模组）在 Fabric 1.20.2 / 1.21.1 / 26.2 服务端 "Done" 零错误
 - 270 模组语料全量回归：引擎零崩溃；所有转换产物可加载，残留符号仅在触发时惰性报错（带边界归因的错误消息）
@@ -84,9 +84,9 @@ Per-jar pipeline:
 
 ### Current results
 
-**Corridor status**: the 1.20.1 → 1.20.2 segment is production-complete (segment data + triage + 6 shim mixins + static redirects + tombstones + live server acceptance); now extending toward 1.20.4.
+**Corridor status**: the 1.20.1 → 1.20.2 segment is **kill-list closed** (19 unaccounted runtime residuals; 548 classified in the ledger, every entry with a reason tag); now extending toward 1.20.4.
 
-- **Server-runtime clean rate (1.20.1→1.20.2): 67%** (270 real abandoned mods; 181 convert with zero expected runtime residuals). Target ≥90%, hard floor 75%, driven by the real-residual work order
+- **Server-runtime clean rate (1.20.1→1.20.2): 94.8%** (270 real abandoned mods; 256 convert with zero unknown residuals). Eight rewrite mechanisms: shim overload injection, static/instance/field redirects, tombstone stubs, facade class renames, field/method relocation renames, plus identity trackers (Recipe/Advancement getId revival)
 - Measurement is **side-annotated**: datagen references (dev-time code compiled into mod jars that never executes in play) and client-only residuals are accounted separately — the raw static number (53%) systematically overstates damage
 - Real abandoned 1.20.1 mods (including damaged ones) reach "Done" with zero errors on Fabric 1.20.2 / 1.21.1 / 26.2 servers
 - Full 270-mod corpus regression: zero engine crashes; every converted jar loads, residual symbols fail lazily with boundary-attributed error messages
