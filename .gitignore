@@ -1,0 +1,16 @@
+# bulk data & runtimes (regenerable / downloadable)
+data/corpus/
+data/jars/
+data/runtime/
+data/mappings/
+data/inventory/
+data/cb-cache/
+data/retargeted/
+cbmods_test/
+
+# build outputs
+core/build/
+core/out-*/
+cb/build/
+__pycache__/
+*.pyc

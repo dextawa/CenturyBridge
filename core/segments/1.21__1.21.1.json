@@ -1,0 +1,18 @@
+{
+  "from": "1.21",
+  "to": "1.21.1",
+  "namespace": "intermediary",
+  "classesGone": [],
+  "methodsGone": [
+    "method_10995"
+  ],
+  "methodsDescChanged": [
+    "method_9318",
+    "method_9331",
+    "method_9332",
+    "method_9453"
+  ],
+  "fieldsGone": [],
+  "fieldsDescChanged": [],
+  "depRenames": {}
+}
