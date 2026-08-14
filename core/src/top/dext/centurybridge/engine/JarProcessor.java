@@ -39,7 +39,9 @@ public final class JarProcessor {
         public String file;
         public String modId;
         public String verdict;
-        public List<String> issues = new ArrayList<>();
+        public List<String> issues = new ArrayList<>();        // server-runtime relevant
+        public List<String> clientIssues = new ArrayList<>();  // client-side residuals, tracked separately
+        public int datagenSkipped;                             // dev-time-only refs, never execute in play
         public List<String> strippedMixins = new ArrayList<>();
         public List<String> notes = new ArrayList<>();
     }
@@ -112,7 +114,14 @@ public final class JarProcessor {
             if (name.endsWith(".class")) {
                 String cls = name.substring(0, name.length() - 6);
                 if (!triage.configOfClass().containsKey(cls)) {
-                    byte[] rewritten = verifyAndRewrite(e.getValue(), chain, issues, tag, reg, rpt);
+                    // fabric convention: the mod's own datagen providers live under
+                    // .../datagen/ or .../data/ and never execute in a live game
+                    boolean datagenCaller = cls.contains("datagen") || cls.contains("/data/");
+                    Set<String> sink = datagenCaller ? new TreeSet<>() : issues;
+                    byte[] rewritten = verifyAndRewrite(e.getValue(), chain, sink, tag, reg, rpt);
+                    if (datagenCaller) {
+                        rpt.datagenSkipped += sink.size();
+                    }
                     if (rewritten != null) {
                         e.setValue(rewritten);
                     }
@@ -234,6 +243,7 @@ public final class JarProcessor {
                                            String tag, Tombstones reg, Report rpt) {
         Map<String, String> redirects = new HashMap<>();   // owner.name+desc -> runtime class
         Map<String, String> tombstone = new HashMap<>();   // owner.name+desc -> boundary
+        Set<String> clientTombstones = new HashSet<>();    // subset of tombstone keys on client-only owners
         ClassVisitor analysis = new ClassVisitor(Opcodes.ASM9) {
             @Override
             public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
@@ -264,11 +274,27 @@ public final class JarProcessor {
                             return;
                         }
                         Chain.Issue r = chain.resolveMember('m', name);
+                        if (r.level() == Chain.Level.OK) {
+                            return;
+                        }
+                        String side = chain.sideOf(owner);
+                        if (side.equals("datagen")) {
+                            rpt.datagenSkipped++; // dev-time bytecode, never executes in play
+                            return;
+                        }
                         if (r.level() == Chain.Level.L3 && !name.equals("<init>")
                                 && chain.resolveClass(owner).level() == Chain.Level.OK) {
                             tombstone.put(key, r.boundary());
-                        } else if (r.level() != Chain.Level.OK) {
-                            issues.add(tag + r.level() + " method @" + r.boundary() + ": " + shortName(owner) + "." + name);
+                            if (side.equals("client")) {
+                                clientTombstones.add(key);
+                            }
+                        } else {
+                            String line = tag + r.level() + " method @" + r.boundary() + ": " + shortName(owner) + "." + name;
+                            if (side.equals("client")) {
+                                rpt.clientIssues.add(tag + "[client] " + line);
+                            } else {
+                                issues.add(line);
+                            }
                         }
                     }
 
@@ -279,8 +305,19 @@ public final class JarProcessor {
                             return;
                         }
                         Chain.Issue r = chain.resolveMember('f', name);
-                        if (r.level() != Chain.Level.OK) {
-                            issues.add(tag + r.level() + " field @" + r.boundary() + ": " + shortName(owner) + "." + name);
+                        if (r.level() == Chain.Level.OK) {
+                            return;
+                        }
+                        String side = chain.sideOf(owner);
+                        if (side.equals("datagen")) {
+                            rpt.datagenSkipped++;
+                            return;
+                        }
+                        String line = tag + r.level() + " field @" + r.boundary() + ": " + shortName(owner) + "." + name;
+                        if (side.equals("client")) {
+                            rpt.clientIssues.add(tag + "[client] " + line);
+                        } else {
+                            issues.add(line);
                         }
                     }
 
@@ -304,7 +341,14 @@ public final class JarProcessor {
                 }
                 Chain.Issue r = chain.resolveClass(t);
                 if (r.level() != Chain.Level.OK) {
-                    issues.add(tag + r.level() + " class @" + r.boundary() + ": " + t);
+                    String side = chain.sideOf(t);
+                    if (side.equals("datagen")) {
+                        rpt.datagenSkipped++;
+                    } else if (side.equals("client")) {
+                        rpt.clientIssues.add(tag + "[client] " + r.level() + " class @" + r.boundary() + ": " + t);
+                    } else {
+                        issues.add(tag + r.level() + " class @" + r.boundary() + ": " + t);
+                    }
                 }
             }
         };
@@ -317,7 +361,12 @@ public final class JarProcessor {
             rpt.notes.add(tag + "static-redirected: " + k + " -> " + redirects.get(k));
         }
         for (Map.Entry<String, String> t : tombstone.entrySet()) {
-            issues.add(tag + "tombstoned (lazy-fail) @" + t.getValue() + ": " + t.getKey());
+            String line = tag + "tombstoned (lazy-fail) @" + t.getValue() + ": " + t.getKey();
+            if (clientTombstones.contains(t.getKey())) {
+                rpt.clientIssues.add(tag + "[client] " + line);
+            } else {
+                issues.add(line);
+            }
         }
 
         ClassReader cr = new ClassReader(bytes);

@@ -41,6 +41,12 @@ public final class Chain {
     public final java.util.Map<String, String> staticRedirects = new java.util.HashMap<>();
     /** old signatures restored at runtime by shim mixins -- neither issues nor tombstones */
     public final java.util.Set<String> shimCovers = new java.util.HashSet<>();
+    /** source-version class -> "client" | "datagen" (absent = common/server) */
+    public final java.util.Map<String, String> classSide = new java.util.HashMap<>();
+
+    public String sideOf(String internalName) {
+        return classSide.getOrDefault(internalName, "common");
+    }
 
     private Chain(String from, String to) {
         this.from = from;
@@ -71,6 +77,18 @@ public final class Chain {
             if (root.has("covers")) {
                 for (var e : root.getAsJsonArray("covers")) {
                     c.shimCovers.add(e.getAsString());
+                }
+            }
+        }
+        Path sides = segmentsDir.resolve("sides-" + from + ".json");
+        if (java.nio.file.Files.exists(sides)) {
+            var gson = new com.google.gson.Gson();
+            var root = gson.fromJson(java.nio.file.Files.readString(sides), com.google.gson.JsonObject.class);
+            for (String side : new String[] {"client", "datagen"}) {
+                if (root.has(side)) {
+                    for (var e : root.getAsJsonArray(side)) {
+                        c.classSide.put(e.getAsString(), side);
+                    }
                 }
             }
         }

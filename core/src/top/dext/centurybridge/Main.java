@@ -24,6 +24,8 @@ public final class Main {
             case "convert" -> convert(args);
             case "remap-jar" -> top.dext.centurybridge.data.JarRemapper
                 .remapToIntermediary(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
+            case "gen-sides" -> top.dext.centurybridge.data.SideAnnotator.generate(
+                Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]), Path.of(args[5]));
             default -> usage();
         }
     }
@@ -86,6 +88,10 @@ public final class Main {
                 r.notes.forEach(n -> lines.add("- " + n));
                 r.strippedMixins.forEach(s -> lines.add("- stripped mixin: " + s));
                 r.issues.forEach(s -> lines.add("- " + s));
+                r.clientIssues.forEach(s -> lines.add("- " + s));
+                if (r.datagenSkipped > 0) {
+                    lines.add("- (datagen-only refs ignored: " + r.datagenSkipped + ")");
+                }
                 lines.add("");
             } catch (Exception ex) {
                 engineErrors++;

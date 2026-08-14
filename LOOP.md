@@ -1,4 +1,18 @@
-# CB 循环任务：1.20.1 → 1.20.2 完整移植
+# CB 循环任务 v2：1.20.1 → 1.20.4 走廊达标
+
+> **v2 目标（用户设定）**：每节分段的"服务端运行时干净率"打到 **≥90%（硬底线 75%）**，防止链路损伤并集滚大；本轮推进到 **1.20.4**。里程碑时更新 README；完成/阻塞 PushNotification（用户睡觉中，通知会真实送达）。
+> 当前基线（side 标注后 @1.20.2）：server-clean = 180/270 = **66.7%**（direct 160 + degraded 21 −1 重叠修正后 181→以 sided2 为准 181/270=67%）。
+
+## v2 Backlog
+
+- [x] C1 side 标注：SideAnnotator（client 1970 类 / datagen 213 类，源版本 1.20.1）+ 调用方 datagen 启发式（modid/datagen|/data/ 包）+ 判定/报告分侧
+- [ ] C2 shim 第二批 @1.20.2（按真实工单）：**Advancement 族**（class_161/$class_162 ×70+，advjs 类模组真运行时使用）、class_2263.method_9700（FluidDrainable）、class_1291.method_5562（StatusEffect）、class_1869.method_35228（ShapedRecipe JSON 静态→重定向）、class_4558/class_174（criterion 注册族）
+- [ ] C3 复扫验证 @1.20.2 ≥75%（冲 90%）
+- [ ] C4 分段 1.20.2→1.20.3 同套待遇（shim 桥 1.20.3 工单 + 1.20.4 stub/运行时桥；1.20.3→1.20.4 零 diff 白送）
+- [ ] C5 全语料扫荡 @1.20.4 + server-1.20.4 实机验收
+- [ ] C6 README 更新（战果数字 + 走廊状态表）+ commit/push + PushNotification 叫醒用户
+
+## 原始 Backlog（v1，已全部完成）
 
 > 目标：这条链上第一节分段达到"生产完整"——不只验证与摘除，还包括该边界的 shim 桥、墓碑桩、真实受损模组的实机验收。链条设计自底向上，做完这节的方法论直接复制到后续节。
 > 完成或阻塞时 PushNotification 通知用户。行为层验证：用户用 D:\Documents\MCProxyAgent（-javaagent 代理）+ ViaVersion 连测试服游玩确认。
