@@ -82,10 +82,14 @@ public final class Main {
         }
         java.util.Map<String, Integer> verdicts = new java.util.TreeMap<>();
         int engineErrors = 0;
+        int unaccounted = 0;
+        int ledgered = 0;
         for (Path jar : jars) {
             try {
                 JarProcessor.Report r = JarProcessor.process(jar, outDir, chain);
                 verdicts.merge(r.verdict, 1, Integer::sum);
+                unaccounted += r.issues.size();
+                ledgered += r.ledgered;
                 lines.add("## " + (r.modId != null ? r.modId : r.file) + " -- " + r.verdict);
                 r.notes.forEach(n -> lines.add("- " + n));
                 r.strippedMixins.forEach(s -> lines.add("- stripped mixin: " + s));
@@ -105,6 +109,7 @@ public final class Main {
             }
         }
         System.out.println("verdicts: " + verdicts);
+        System.out.println("unaccounted runtime refs: " + unaccounted + " (ledgered: " + ledgered + ")");
         if (engineErrors > 0) {
             System.out.println("!! engine errors: " + engineErrors + " (see report)");
         }

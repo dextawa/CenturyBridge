@@ -49,6 +49,22 @@ public final class Chain {
     public final java.util.Map<String, String> fieldRenames = new java.util.HashMap<>();
     /** methods renamed in place (relocated-to-super methods resolve via hierarchy) */
     public final java.util.Map<String, String> methodRenames = new java.util.HashMap<>();
+    /** examined-and-classified damage (quirk tier / structural / etc): "owner" or "owner.name" -> reason */
+    public final java.util.Map<String, String> ledger = new java.util.HashMap<>();
+
+    public String ledgerReason(String owner, String name) {
+        String r = name == null ? null : ledger.get(owner + "." + name);
+        if (r == null) {
+            r = ledger.get(owner);
+        }
+        if (r == null) {
+            int inner = owner.indexOf('$');
+            if (inner > 0) {
+                r = ledger.get(owner.substring(0, inner)); // outer-class entries cover inner classes
+            }
+        }
+        return r;
+    }
     /** old signatures restored at runtime by shim mixins -- neither issues nor tombstones */
     public final java.util.Set<String> shimCovers = new java.util.HashSet<>();
     /** source-version class -> "client" | "datagen" (absent = common/server) */
@@ -112,6 +128,12 @@ public final class Chain {
                 var mr = root.getAsJsonObject("methodRenames");
                 for (String k : mr.keySet()) {
                     c.methodRenames.put(k, mr.get(k).getAsString());
+                }
+            }
+            if (root.has("ledger")) {
+                var lg = root.getAsJsonObject("ledger");
+                for (String k : lg.keySet()) {
+                    c.ledger.put(k, lg.get(k).getAsString());
                 }
             }
             if (root.has("covers")) {

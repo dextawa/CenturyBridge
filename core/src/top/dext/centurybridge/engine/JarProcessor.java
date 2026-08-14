@@ -42,6 +42,7 @@ public final class JarProcessor {
         public List<String> issues = new ArrayList<>();        // server-runtime relevant
         public List<String> clientIssues = new ArrayList<>();  // client-side residuals, tracked separately
         public int datagenSkipped;                             // dev-time-only refs, never execute in play
+        public int ledgered;                                   // examined damage classified in the quirk ledger
         public List<String> strippedMixins = new ArrayList<>();
         public List<String> notes = new ArrayList<>();
     }
@@ -248,6 +249,7 @@ public final class JarProcessor {
         Map<String, String> mthRenames = new HashMap<>();    // methods renamed in place (relocated to super)
         Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
         Set<String> clientTombstones = new HashSet<>();      // subset of tombstone keys on client-only owners
+        Set<String> silentTombstones = new HashSet<>();      // ledgered damage: rewritten but not reported
 
         // dead-class facade renames touch descriptors/signatures everywhere, so the
         // trigger is a raw byte scan rather than per-ref analysis
@@ -295,7 +297,7 @@ public final class JarProcessor {
                             return;
                         }
                         String irt = chain.instanceRedirects.get(key);
-                        if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE)) {
+                        if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
                             instRedirects.put(key, irt);
                             return;
                         }
@@ -311,6 +313,15 @@ public final class JarProcessor {
                         String side = chain.sideOf(owner);
                         if (side.equals("datagen")) {
                             rpt.datagenSkipped++; // dev-time bytecode, never executes in play
+                            return;
+                        }
+                        if (chain.ledgerReason(owner, name) != null) {
+                            rpt.ledgered++;
+                            if (r.level() == Chain.Level.L3 && !name.equals("<init>")
+                                    && chain.resolveClass(owner).level() == Chain.Level.OK) {
+                                tombstone.put(key, r.boundary()); // still fail lazily with a message
+                                silentTombstones.add(key);        // but never as an issue line
+                            }
                             return;
                         }
                         if (r.level() == Chain.Level.L3 && !name.equals("<init>")
@@ -358,6 +369,10 @@ public final class JarProcessor {
                             rpt.datagenSkipped++;
                             return;
                         }
+                        if (chain.ledgerReason(owner, name) != null) {
+                            rpt.ledgered++;
+                            return;
+                        }
                         String line = tag + r.level() + " field @" + r.boundary() + ": " + shortName(owner) + "." + name;
                         if (side.equals("client")) {
                             rpt.clientIssues.add(tag + "[client] " + line);
@@ -390,7 +405,9 @@ public final class JarProcessor {
                 Chain.Issue r = chain.resolveClass(t);
                 if (r.level() != Chain.Level.OK) {
                     String side = chain.sideOf(t);
-                    if (side.equals("datagen")) {
+                    if (chain.ledgerReason(t, null) != null) {
+                        rpt.ledgered++;
+                    } else if (side.equals("datagen")) {
                         rpt.datagenSkipped++;
                     } else if (side.equals("client")) {
                         rpt.clientIssues.add(tag + "[client] " + r.level() + " class @" + r.boundary() + ": " + t);
@@ -416,6 +433,9 @@ public final class JarProcessor {
             rpt.notes.add(tag + "field-redirected: " + k + " -> " + fldRedirects.get(k));
         }
         for (Map.Entry<String, String> t : tombstone.entrySet()) {
+            if (silentTombstones.contains(t.getKey())) {
+                continue; // ledgered: rewritten to a descriptive lazy-fail, accounted elsewhere
+            }
             String line = tag + "tombstoned (lazy-fail) @" + t.getValue() + ": " + t.getKey();
             if (clientTombstones.contains(t.getKey())) {
                 rpt.clientIssues.add(tag + "[client] " + line);
@@ -444,7 +464,7 @@ public final class JarProcessor {
                             return;
                         }
                         String irt = instRedirects.get(key);
-                        if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE)) {
+                        if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, irt, name,
                                 "(L" + owner + ";" + desc.substring(1), false);
                             return;

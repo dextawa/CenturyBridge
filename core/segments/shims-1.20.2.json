@@ -42,6 +42,26 @@
  "methodRenames": {
   "net/minecraft/class_3244.method_14367(Lnet/minecraft/class_2561;)V": "method_52396"
  },
+ "ledger": {
+  "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
+  "net/minecraft/class_85": "quirk: loot codec rework -- loot entry builders",
+  "net/minecraft/class_5270": "quirk: loot codec rework -- LootGsons factories (dead, tombstoned)",
+  "net/minecraft/class_47$class_48": "quirk: loot context builder Optional-ization",
+  "net/minecraft/class_179$class_180": "quirk: criterion conditions container rework",
+  "net/minecraft/class_193": "structural: CriterionMerger fields moved cross-owner with type change",
+  "net/minecraft/class_195.method_807": "quirk: legacy conditions toJson on new-era instances (facade-desc bridge covers renamed call sites)",
+  "net/minecraft/class_2010$class_2012": "quirk: datagen-flavored criterion factory (returns AdvancementCriterion now)",
+  "net/minecraft/class_2054$class_2056": "quirk: datagen-flavored criterion factory",
+  "net/minecraft/class_2066$class_2068": "quirk: datagen-flavored criterion factory",
+  "net/minecraft/class_2048$class_2049": "quirk: predicate builder args became builder-typed (datagen-flavored)",
+  "net/minecraft/class_2090$class_2091": "quirk: predicate builder args became builder-typed (datagen-flavored)",
+  "net/minecraft/class_2096": "quirk: number-range fromJson family rework",
+  "net/minecraft/class_2035": "quirk: EnchantmentPredicate ANY (construction chain too deep for a constant)",
+  "net/minecraft/class_2102": "quirk: StatusEffectsPredicate ANY/builder rework",
+  "net/minecraft/class_2105.method_9075": "quirk: NbtPredicate toJson removal",
+  "net/minecraft/class_8053": "quirk: armor trim tooltip API gained RegistryAccess",
+  "net/minecraft/class_1865.method_17724": "quirk: vanilla serializer registration helper (mods should use registry)"
+ },
  "covers": [
   "net/minecraft/class_4558.method_27853(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_195;",
   "net/minecraft/class_195.method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;",
