@@ -39,7 +39,26 @@ public final class MixinTriage {
     private static final Pattern IMPLICIT_ACCESSOR = Pattern.compile("(?:get|is|set)([A-Z].*)");
 
     public record MixinInfo(String className, String config, List<String> targets, boolean vanilla,
-                            boolean loadBearing, Chain.Issue worst, List<String> broken) {}
+                            boolean loadBearing, Chain.Issue worst, List<String> broken) {
+
+        /**
+         * Will this mixin hard-fail at APPLY time? L3 anywhere is fatal; an L2
+         * on an inject-target/@At spec is also fatal when the spec carries an
+         * explicit descriptor the changed method no longer matches.
+         */
+        public boolean applyFatal() {
+            for (String b : broken) {
+                if (b.startsWith("L3")) {
+                    return true;
+                }
+                if (b.startsWith("L2") && (b.contains("inject-target") || b.contains(": at ")
+                        || b.contains("at-owner"))) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 
     public record Result(List<MixinInfo> mixins, Map<String, String> configOfClass) {}
 

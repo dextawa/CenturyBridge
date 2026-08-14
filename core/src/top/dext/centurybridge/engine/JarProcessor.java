@@ -49,36 +49,7 @@ public final class JarProcessor {
 
         Map<String, byte[]> entries = readAll(Files.readAllBytes(in));
         Set<String> issues = new TreeSet<>();
-
-        // ---- mixin triage ----
-        MixinTriage.Result triage = MixinTriage.run(entries, chain);
-        Set<String> deadMixins = new HashSet<>();
-        for (MixinTriage.MixinInfo mx : triage.mixins()) {
-            if (mx.vanilla() && mx.worst().level() == Chain.Level.L3) {
-                deadMixins.add(mx.className());
-                String tag = mx.loadBearing() ? " [load-bearing! may be unstable]" : "";
-                rpt.strippedMixins.add(shortName(mx.className()) + tag + " -- " + String.join("; ", mx.broken()));
-            } else if (mx.vanilla() && mx.worst().level() == Chain.Level.L2) {
-                issues.add("L2 mixin target sig changed@" + mx.worst().boundary() + ": " + shortName(mx.className()));
-            }
-        }
-        stripConfigs(entries, triage, deadMixins);
-
-        // ---- reference verification (mixin classes analyzed above, not here) ----
-        for (Map.Entry<String, byte[]> e : entries.entrySet()) {
-            String name = e.getKey();
-            if (name.endsWith(".class")) {
-                String cls = name.substring(0, name.length() - 6);
-                if (!triage.configOfClass().containsKey(cls)) {
-                    verifyClass(e.getValue(), chain, issues, "");
-                }
-            } else if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
-                for (byte[] nested : readAll(e.getValue()).entrySet().stream()
-                        .filter(n -> n.getKey().endsWith(".class")).map(Map.Entry::getValue).toList()) {
-                    verifyClass(nested, chain, issues, "(bundled) ");
-                }
-            }
-        }
+        processEntries(entries, chain, rpt, issues, "");
 
         // ---- metadata patch ----
         byte[] fmj = entries.get("fabric.mod.json");
@@ -109,6 +80,54 @@ public final class JarProcessor {
     }
 
     // ---------------------------------------------------------------- pieces
+
+    /**
+     * Triage + strip + verify one jar's entry map, recursing into JIJ-nested
+     * jars (bundled libraries carry their own mixins -- a nested mixin whose
+     * target died crashes the whole game just as hard as a top-level one).
+     */
+    private static void processEntries(Map<String, byte[]> entries, Chain chain,
+                                       Report rpt, Set<String> issues, String tag) throws IOException {
+        MixinTriage.Result triage = MixinTriage.run(entries, chain);
+        Set<String> deadMixins = new HashSet<>();
+        for (MixinTriage.MixinInfo mx : triage.mixins()) {
+            if (mx.vanilla() && mx.applyFatal()) {
+                deadMixins.add(mx.className());
+                String lb = mx.loadBearing() ? " [load-bearing! may be unstable]" : "";
+                rpt.strippedMixins.add(tag + shortName(mx.className()) + lb + " -- " + String.join("; ", mx.broken()));
+            } else if (mx.vanilla() && mx.worst().level() != Chain.Level.OK) {
+                issues.add(tag + "L2 mixin target sig changed@" + mx.worst().boundary()
+                    + ": " + shortName(mx.className()));
+            }
+        }
+        stripConfigs(entries, triage, deadMixins);
+
+        for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+            String name = e.getKey();
+            if (name.endsWith(".class")) {
+                String cls = name.substring(0, name.length() - 6);
+                if (!triage.configOfClass().containsKey(cls)) {
+                    verifyClass(e.getValue(), chain, issues, tag);
+                }
+            } else if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
+                Map<String, byte[]> nested = readAll(e.getValue());
+                processEntries(nested, chain, rpt, issues, tag + "(bundled) ");
+                e.setValue(writeJar(nested));
+            }
+        }
+    }
+
+    private static byte[] writeJar(Map<String, byte[]> entries) throws IOException {
+        var buf = new java.io.ByteArrayOutputStream();
+        try (ZipOutputStream zout = new ZipOutputStream(buf)) {
+            for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+                zout.putNextEntry(new ZipEntry(e.getKey()));
+                zout.write(e.getValue());
+                zout.closeEntry();
+            }
+        }
+        return buf.toByteArray();
+    }
 
     private static Map<String, byte[]> readAll(byte[] jar) throws IOException {
         Map<String, byte[]> entries = new LinkedHashMap<>();
