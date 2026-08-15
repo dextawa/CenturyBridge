@@ -26,6 +26,8 @@ public final class Main {
                 .remapToIntermediary(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "gen-sides" -> top.dext.centurybridge.data.SideAnnotator.generate(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]), Path.of(args[5]));
+            case "classify" -> top.dext.centurybridge.data.SymbolAudit.classify(
+                Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "audit" -> top.dext.centurybridge.data.SymbolAudit.run(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]));
             default -> usage();
@@ -65,6 +67,8 @@ public final class Main {
     private static void convert(String[] args) throws Exception {
         Chain chain = Chain.load(Path.of(args[1]), args[2], args[3]);
         Path outDir = Path.of(args[4]);
+        top.dext.centurybridge.data.FullAudit.enabled = true;
+        top.dext.centurybridge.data.FullAudit.reset();
         List<String> lines = new ArrayList<>();
         lines.add("# CenturyBridge conversion report (" + chain.from + " -> " + chain.to
             + ", " + chain.segments.size() + " segments)");
@@ -116,6 +120,11 @@ public final class Main {
         Path report = outDir.resolve("report.md");
         Files.write(report, String.join("\n", lines).getBytes(StandardCharsets.UTF_8));
         System.out.println("report -> " + report);
+        Path fullAudit = outDir.resolve("full-audit.tsv");
+        top.dext.centurybridge.data.FullAudit.write(fullAudit);
+        System.out.println("full-audit (distinct symbols by fate category): "
+            + top.dext.centurybridge.data.FullAudit.summary());
+        System.out.println("full-audit -> " + fullAudit);
     }
 
     private static void usage() {

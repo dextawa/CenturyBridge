@@ -89,6 +89,68 @@ public final class SymbolAudit {
         System.out.println("audited " + symbols.size() + " symbols -> " + out);
     }
 
+    /**
+     * Enrich a full-audit worklist with each symbol's fate in the new stub:
+     * SAME-DESC (exists as-is: resolution failure was hierarchy/side related),
+     * DESC-CHANGED (same owner+name, new descriptor -> shim-overload candidate),
+     * MOVED (same name on another owner -> redirect candidate), GONE
+     * (needs reimplementation or a justified tombstone).
+     */
+    public static void classify(Path newStub, Path tsv, Path out) throws IOException {
+        Index newIdx = index(newStub);
+        List<String> lines = new ArrayList<>();
+        for (String line : Files.readAllLines(tsv)) {
+            if (line.startsWith("count\t")) {
+                lines.add(line + "\tnewFate");
+                continue;
+            }
+            String[] cols = line.split("\t", 3);
+            if (cols.length < 3) {
+                continue;
+            }
+            String sym = cols[2];
+            String fate;
+            int dot = sym.indexOf('.');
+            if (dot < 0) {
+                // bare class reference (internal names never contain '.')
+                fate = newIdx.byOwner.containsKey(sym) ? "CLASS-EXISTS" : "CLASS-GONE";
+            } else {
+                String owner = sym.substring(0, dot);
+                String rest = sym.substring(dot + 1);
+                String name;
+                String desc;
+                int colon = rest.indexOf(':');
+                int paren = rest.indexOf('(');
+                if (paren >= 0) {
+                    name = rest.substring(0, paren);
+                    desc = rest.substring(paren);
+                } else if (colon >= 0) {
+                    name = rest.substring(0, colon);
+                    desc = rest.substring(colon + 1);
+                } else {
+                    name = rest;
+                    desc = "";
+                }
+                List<String> here = newIdx.byOwner.getOrDefault(owner, Map.of()).get(name);
+                if (here != null && here.contains(desc)) {
+                    fate = "SAME-DESC";
+                } else if (here != null) {
+                    fate = "DESC-CHANGED: " + String.join(" ; ", here);
+                } else {
+                    List<Member> global = newIdx.byName.get(name);
+                    if (global != null && !global.isEmpty()) {
+                        fate = "MOVED: " + global.get(0).owner() + " " + global.get(0).desc();
+                    } else {
+                        fate = "GONE";
+                    }
+                }
+            }
+            lines.add(line + "\t" + fate);
+        }
+        Files.write(out, String.join("\n", lines).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        System.out.println("classified " + (lines.size() - 1) + " rows -> " + out);
+    }
+
     private static Index index(Path stub) throws IOException {
         Index idx = new Index();
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(stub))) {

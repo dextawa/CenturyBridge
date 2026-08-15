@@ -220,6 +220,29 @@ public final class Statics {
             .orElse(com.google.gson.JsonNull.INSTANCE);
     }
 
+    /**
+     * 1.20.1 EntityRenderer.drawEntity(ctx,x,y,size,mouseX,mouseY,entity)
+     * gained 3 extra int params (overlayLight,blockLight,yaw) at 1.20.2.
+     * 13 client call sites.
+     */
+    public static void method_2486(net.minecraft.class_332 context,
+            int x, int y, int size, float mouseX, float mouseY,
+            net.minecraft.class_1309 entity) {
+        net.minecraft.class_490.method_2486(context, x, y, size, 0, 0, mouseX, mouseY, 0.0f, entity);
+    }
+
+    /**
+     * 1.20.1 EntityRenderer.drawEntity(ctx,x,y,size,rot,cam,entity)
+     * gained a float+Vector3f pivot at 1.20.2. 4 client call sites.
+     */
+    public static void method_48472(net.minecraft.class_332 context,
+            int x, int y, int size,
+            org.joml.Quaternionf rotation, org.joml.Quaternionf cameraAngle,
+            net.minecraft.class_1309 entity) {
+        net.minecraft.class_490.method_48472(context, (float) x, (float) y, size,
+                new org.joml.Vector3f(0, 0, 0), rotation, cameraAngle, entity);
+    }
+
     private Statics() {
     }
 }

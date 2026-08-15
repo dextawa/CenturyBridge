@@ -291,21 +291,25 @@ public final class JarProcessor {
                         }
                         String key = owner + "." + name + desc;
                         if (chain.shimCovers.contains(key)) {
+                            top.dext.centurybridge.data.FullAudit.record(key, "covered");
                             return; // restored at runtime by a shim mixin
                         }
                         String rt = chain.staticRedirects.get(key);
                         if (rt != null && op == Opcodes.INVOKESTATIC) {
                             redirects.put(key, rt);
+                            top.dext.centurybridge.data.FullAudit.record(key, "static-redirect");
                             return;
                         }
                         String irt = chain.instanceRedirects.get(key);
                         if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
                             instRedirects.put(key, irt);
+                            top.dext.centurybridge.data.FullAudit.record(key, "instance-redirect");
                             return;
                         }
                         String mrn = chain.methodRenames.get(key);
                         if (mrn != null) {
                             mthRenames.put(key, mrn);
+                            top.dext.centurybridge.data.FullAudit.record(key, "method-rename");
                             return;
                         }
                         Chain.Issue r = chain.resolveMember('m', name);
@@ -315,10 +319,13 @@ public final class JarProcessor {
                         String side = chain.sideOf(owner);
                         if (side.equals("datagen")) {
                             rpt.datagenSkipped++; // dev-time bytecode, never executes in play
+                            top.dext.centurybridge.data.FullAudit.record(key, "datagen-skip");
                             return;
                         }
                         if (chain.ledgerReason(owner, name) != null) {
                             rpt.ledgered++;
+                            top.dext.centurybridge.data.FullAudit.record(key,
+                                "LEDGERED[" + side + "]@" + r.boundary() + ": " + chain.ledgerReason(owner, name));
                             if (r.level() == Chain.Level.L3 && !name.equals("<init>")
                                     && chain.resolveClass(owner).level() == Chain.Level.OK) {
                                 tombstone.put(key, r.boundary()); // still fail lazily with a message
@@ -329,10 +336,13 @@ public final class JarProcessor {
                         if (r.level() == Chain.Level.L3 && !name.equals("<init>")
                                 && chain.resolveClass(owner).level() == Chain.Level.OK) {
                             tombstone.put(key, r.boundary());
+                            top.dext.centurybridge.data.FullAudit.record(key, "TOMBSTONE[" + side + "]@" + r.boundary());
                             if (side.equals("client")) {
                                 clientTombstones.add(key);
                             }
                         } else {
+                            top.dext.centurybridge.data.FullAudit.record(key,
+                                "ISSUE[" + side + "] " + r.level() + "@" + r.boundary());
                             String line = tag + r.level() + " method @" + r.boundary() + ": " + shortName(owner) + "." + name;
                             if (side.equals("client")) {
                                 rpt.clientIssues.add(tag + "[client] " + line);
@@ -355,11 +365,13 @@ public final class JarProcessor {
                         String frt = chain.fieldRedirects.get(fkey);
                         if (frt != null && op == Opcodes.GETSTATIC) {
                             fldRedirects.put(fkey, frt);
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "field-redirect");
                             return;
                         }
                         String rename = chain.fieldRenames.get(fkey);
                         if (rename != null) {
                             fldRenames.put(fkey, rename);
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "field-rename");
                             return;
                         }
                         Chain.Issue r = chain.resolveMember('f', name);
@@ -369,12 +381,17 @@ public final class JarProcessor {
                         String side = chain.sideOf(owner);
                         if (side.equals("datagen")) {
                             rpt.datagenSkipped++;
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "datagen-skip");
                             return;
                         }
                         if (chain.ledgerReason(owner, name) != null) {
                             rpt.ledgered++;
+                            top.dext.centurybridge.data.FullAudit.record(fkey,
+                                "LEDGERED[" + side + "]@" + r.boundary() + ": " + chain.ledgerReason(owner, name));
                             return;
                         }
+                        top.dext.centurybridge.data.FullAudit.record(fkey,
+                            "ISSUE[" + side + "] " + r.level() + "@" + r.boundary());
                         String line = tag + r.level() + " field @" + r.boundary() + ": " + shortName(owner) + "." + name;
                         if (side.equals("client")) {
                             rpt.clientIssues.add(tag + "[client] " + line);
@@ -399,6 +416,7 @@ public final class JarProcessor {
                                     && !chain.classRenames.containsKey(h.getOwner())) {
                                 String key = h.getOwner() + "." + h.getName() + h.getDesc();
                                 if (chain.shimCovers.contains(key)) {
+                                    top.dext.centurybridge.data.FullAudit.record(key, "covered");
                                     continue;
                                 }
                                 String rt = chain.staticRedirects.get(key);
@@ -408,6 +426,8 @@ public final class JarProcessor {
                                     if (irt != null) {
                                         instRedirects.put(key, irt);
                                     }
+                                    top.dext.centurybridge.data.FullAudit.record(key,
+                                        rt != null ? "static-redirect" : "instance-redirect");
                                     continue;
                                 }
                                 Chain.Issue r = chain.resolveMember('m', h.getName());
@@ -417,7 +437,16 @@ public final class JarProcessor {
                                     if (chain.ledgerReason(h.getOwner(), h.getName()) != null) {
                                         rpt.ledgered++;
                                         silentTombstones.add(key);
+                                        top.dext.centurybridge.data.FullAudit.record(key,
+                                            "LEDGERED[" + chain.sideOf(h.getOwner()) + "]@" + r.boundary()
+                                            + ": " + chain.ledgerReason(h.getOwner(), h.getName()));
+                                    } else {
+                                        top.dext.centurybridge.data.FullAudit.record(key,
+                                            "TOMBSTONE[" + chain.sideOf(h.getOwner()) + "]@" + r.boundary());
                                     }
+                                } else if (r.level() != Chain.Level.OK) {
+                                    top.dext.centurybridge.data.FullAudit.record(key,
+                                        "ISSUE[" + chain.sideOf(h.getOwner()) + "] " + r.level() + "@" + r.boundary());
                                 }
                             }
                         }
@@ -444,11 +473,18 @@ public final class JarProcessor {
                     String side = chain.sideOf(t);
                     if (chain.ledgerReason(t, null) != null) {
                         rpt.ledgered++;
+                        top.dext.centurybridge.data.FullAudit.record(t,
+                            "LEDGERED-CLASS[" + side + "]@" + r.boundary() + ": " + chain.ledgerReason(t, null));
                     } else if (side.equals("datagen")) {
                         rpt.datagenSkipped++;
+                        top.dext.centurybridge.data.FullAudit.record(t, "datagen-skip");
                     } else if (side.equals("client")) {
+                        top.dext.centurybridge.data.FullAudit.record(t,
+                            "CLASS-ISSUE[client] " + r.level() + "@" + r.boundary());
                         rpt.clientIssues.add(tag + "[client] " + r.level() + " class @" + r.boundary() + ": " + t);
                     } else {
+                        top.dext.centurybridge.data.FullAudit.record(t,
+                            "CLASS-ISSUE[" + side + "] " + r.level() + "@" + r.boundary());
                         issues.add(tag + r.level() + " class @" + r.boundary() + ": " + t);
                     }
                 }

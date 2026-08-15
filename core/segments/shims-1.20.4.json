@@ -6,7 +6,13 @@
   "net/minecraft/class_1869.method_35228(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_1863.method_17720(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1860;": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_1292.method_5577(Lnet/minecraft/class_1293;F)Lnet/minecraft/class_2561;": "top/dext/centurybridge/rt/v1_20_4/Statics",
-  "net/minecraft/class_2073.method_8969(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_4/Statics"
+  "net/minecraft/class_2073.method_8969(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2507.method_10633(Ljava/io/File;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2507.method_10630(Lnet/minecraft/class_2487;Ljava/io/File;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2507.method_30614(Lnet/minecraft/class_2487;Ljava/io/File;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2507.method_10629(Ljava/io/InputStream;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_490.method_2486(Lnet/minecraft/class_332;IIIFFLnet/minecraft/class_1309;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_490.method_48472(Lnet/minecraft/class_332;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/rt/v1_20_4/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_1865.method_8121(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1860;": "top/dext/centurybridge/rt/v1_20_4/Statics",
@@ -190,7 +196,35 @@
   "net/minecraft/class_2659": "1.20.3 network payload wave -- packet classes restructured",
   "net/minecraft/class_2662": "1.20.3 network payload wave -- packet classes restructured",
   "net/minecraft/class_3218.method_8454": "1.20.3 rework wave -- ledgered pending codec-based bridge",
-  "net/minecraft/class_2269.field_40299": "1.20.3 rework wave -- ledgered pending codec-based bridge"
+  "net/minecraft/class_2269.field_40299": "1.20.3 rework wave -- ledgered pending codec-based bridge",
+  "net/minecraft/class_1287": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_2613": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_3274": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_3517": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_4324": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_5221": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_5330": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_5336": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_6533": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_7997": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_8084": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_8586": "pre-corridor corpse: class gone @1.20.1->1.20.2, no corpus references",
+  "net/minecraft/class_2345": "class gone @1.20.1->1.20.2, 1 corpus ref(s) -- class-level tombstone sufficient",
+  "net/minecraft/class_2375": "class gone @1.20.2->1.20.3, no corpus references",
+  "net/minecraft/class_2411": "class gone @1.20.2->1.20.3, no corpus references",
+  "net/minecraft/class_6308": "class gone @1.20.2->1.20.3, no corpus references",
+  "net/minecraft/class_6349": "class gone @1.20.2->1.20.3, no corpus references",
+  "net/minecraft/class_6377": "class gone @1.20.2->1.20.3, no corpus references",
+  "net/minecraft/class_7382": "class gone @1.20.2->1.20.3, no corpus references",
+  "net/minecraft/class_7798": "class gone @1.20.2->1.20.3, no corpus references",
+  "net/minecraft/class_8175": "class gone @1.20.2->1.20.3, no corpus references",
+  "net/minecraft/class_8785": "class gone @1.20.2->1.20.3, no corpus references",
+  "net/minecraft/class_2444": "class gone @1.20.2->1.20.3, 8 corpus ref(s) -- class-level tombstone sufficient",
+  "net/minecraft/class_2468": "class gone @1.20.2->1.20.3, 1 corpus ref(s) -- class-level tombstone sufficient",
+  "net/minecraft/class_2650": "class gone @1.20.2->1.20.3, 1 corpus ref(s) -- class-level tombstone sufficient",
+  "net/minecraft/class_310.method_1565": "quirk: crash reporting helper gained client+file params; single-site",
+  "net/minecraft/class_634.method_29091": "quirk: client networking refactor -- accessor moved to class_8673; client-only",
+  "net/minecraft/class_8053.method_48428": "quirk: item usage context gained allowEmpty flag -- datagen-adjacent"
  },
  "covers": [
   "net/minecraft/class_2540.method_30617()Lnet/minecraft/class_2487;",
@@ -230,6 +264,14 @@
   "net/minecraft/class_1309.method_5781()Lnet/minecraft/class_270;",
   "net/minecraft/class_1657.method_5781()Lnet/minecraft/class_270;",
   "net/minecraft/class_1308.method_5781()Lnet/minecraft/class_270;",
-  "net/minecraft/class_437.method_25420(Lnet/minecraft/class_332;)V"
+  "net/minecraft/class_437.method_25420(Lnet/minecraft/class_332;)V",
+  "net/minecraft/class_437.method_25401(DDD)Z",
+  "net/minecraft/class_465.method_25401(DDD)Z",
+  "net/minecraft/class_342.method_25401(DDD)Z",
+  "net/minecraft/class_339.method_25401(DDD)Z",
+  "net/minecraft/class_362.method_25401(DDD)Z",
+  "net/minecraft/class_8208.method_25401(DDD)Z",
+  "net/minecraft/class_4265.method_25401(DDD)Z",
+  "net/minecraft/class_1676.method_5781()Lnet/minecraft/class_270;"
  ]
 }
