@@ -387,6 +387,41 @@ public final class JarProcessor {
                     public void visitTypeInsn(int op, String type) {
                         checkClass(type);
                     }
+
+                    @Override
+                    public void visitInvokeDynamicInsn(String name, String desc,
+                            org.objectweb.asm.Handle bsm, Object... bsmArgs) {
+                        // method references to dead/redirected methods hide inside
+                        // indy bootstrap arguments -- treat each handle like a call site
+                        for (Object arg : bsmArgs) {
+                            if (arg instanceof org.objectweb.asm.Handle h
+                                    && h.getOwner().startsWith("net/minecraft/")
+                                    && !chain.classRenames.containsKey(h.getOwner())) {
+                                String key = h.getOwner() + "." + h.getName() + h.getDesc();
+                                if (chain.shimCovers.contains(key)) {
+                                    continue;
+                                }
+                                String rt = chain.staticRedirects.get(key);
+                                String irt = chain.instanceRedirects.get(key);
+                                if (rt != null || irt != null) {
+                                    redirects.putAll(rt != null ? Map.of(key, rt) : Map.of());
+                                    if (irt != null) {
+                                        instRedirects.put(key, irt);
+                                    }
+                                    continue;
+                                }
+                                Chain.Issue r = chain.resolveMember('m', h.getName());
+                                if (r.level() == Chain.Level.L3 && !h.getName().equals("<init>")
+                                        && chain.resolveClass(h.getOwner()).level() == Chain.Level.OK) {
+                                    tombstone.put(key, r.boundary());
+                                    if (chain.ledgerReason(h.getOwner(), h.getName()) != null) {
+                                        rpt.ledgered++;
+                                        silentTombstones.add(key);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 };
             }
 
@@ -498,6 +533,39 @@ public final class JarProcessor {
                             return;
                         }
                         super.visitFieldInsn(op, owner, name, desc);
+                    }
+
+                    @Override
+                    public void visitInvokeDynamicInsn(String name, String desc,
+                            org.objectweb.asm.Handle bsm, Object... bsmArgs) {
+                        Object[] rewritten = bsmArgs.clone();
+                        for (int i = 0; i < rewritten.length; i++) {
+                            if (!(rewritten[i] instanceof org.objectweb.asm.Handle h)) {
+                                continue;
+                            }
+                            String key = h.getOwner() + "." + h.getName() + h.getDesc();
+                            String rt = redirects.get(key);
+                            if (rt != null && h.getTag() == Opcodes.H_INVOKESTATIC) {
+                                rewritten[i] = new org.objectweb.asm.Handle(
+                                    Opcodes.H_INVOKESTATIC, rt, h.getName(), h.getDesc(), false);
+                                continue;
+                            }
+                            String irt = instRedirects.get(key);
+                            if (irt != null && (h.getTag() == Opcodes.H_INVOKEVIRTUAL
+                                    || h.getTag() == Opcodes.H_INVOKEINTERFACE)) {
+                                rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, irt,
+                                    h.getName(), "(L" + h.getOwner() + ";" + h.getDesc().substring(1), false);
+                                continue;
+                            }
+                            String boundary = tombstone.get(key);
+                            if (boundary != null) {
+                                boolean isStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
+                                Tombstones.Stub s = reg.get(h.getOwner(), h.getName(), h.getDesc(), isStatic, boundary);
+                                rewritten[i] = new org.objectweb.asm.Handle(
+                                    Opcodes.H_INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
+                            }
+                        }
+                        super.visitInvokeDynamicInsn(name, desc, bsm, rewritten);
                     }
                 };
             }

@@ -203,6 +203,23 @@ public final class Statics {
         return net.minecraft.class_1292.method_5577(instance, multiplier, 1.0F);
     }
 
+    /** 1.20.1 ItemPredicate.fromJson, reimplemented on the 1.20.3+ codec (hit at init by real mods). */
+    public static net.minecraft.class_2073 method_8969(JsonElement json) {
+        if (json == null || json.isJsonNull()) {
+            return net.minecraft.class_2073.class_2074.method_8973().method_8976();
+        }
+        return net.minecraft.class_2073.field_45754.parse(JsonOps.INSTANCE, json)
+            .result()
+            .orElseThrow(() -> new JsonSyntaxException("Invalid item predicate: " + json));
+    }
+
+    /** 1.20.1 ItemPredicate.toJson, reimplemented on the codec's encode side. */
+    public static JsonElement method_8971(net.minecraft.class_2073 self) {
+        return net.minecraft.class_2073.field_45754.encodeStart(JsonOps.INSTANCE, self)
+            .result()
+            .orElse(com.google.gson.JsonNull.INSTANCE);
+    }
+
     private Statics() {
     }
 }

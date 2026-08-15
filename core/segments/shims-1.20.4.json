@@ -5,7 +5,8 @@
   "net/minecraft/class_1856.method_8102(Lcom/google/gson/JsonElement;Z)Lnet/minecraft/class_1856;": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_1869.method_35228(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_1863.method_17720(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1860;": "top/dext/centurybridge/rt/v1_20_4/Statics",
-  "net/minecraft/class_1292.method_5577(Lnet/minecraft/class_1293;F)Lnet/minecraft/class_2561;": "top/dext/centurybridge/rt/v1_20_4/Statics"
+  "net/minecraft/class_1292.method_5577(Lnet/minecraft/class_1293;F)Lnet/minecraft/class_2561;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2073.method_8969(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_4/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_1865.method_8121(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1860;": "top/dext/centurybridge/rt/v1_20_4/Statics",
@@ -25,7 +26,8 @@
   "net/minecraft/class_1731.method_7662(Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_3861.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_3920.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_4/Statics",
-  "net/minecraft/class_2302.method_9651(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Z": "top/dext/centurybridge/rt/v1_20_4/Statics"
+  "net/minecraft/class_2302.method_9651(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Z": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2073.method_8971()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_4/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_4/Statics",
@@ -122,7 +124,6 @@
   "net/minecraft/class_5258.method_27804": "quirk: loot-context predicate toJson removal (codec era)",
   "net/minecraft/class_131.method_594": "quirk: loot function apply helper rework",
   "net/minecraft/class_161.method_681": "structural: advancement children iteration moved to PlacedAdvancement",
-  "net/minecraft/class_2073.method_8969": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_2090.method_9021": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_2019.method_8839": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_2022.method_8846": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
@@ -155,7 +156,6 @@
   "net/minecraft/class_2170.method_44252": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2507.method_10629": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2621.method_11287": "1.20.3 rework wave -- ledgered pending codec-based bridge",
-  "net/minecraft/class_2073.method_8971": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_1792.method_7843": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2048.method_8912": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2619.method_49274": "1.20.3 rework wave -- ledgered pending codec-based bridge",
