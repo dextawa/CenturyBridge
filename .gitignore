@@ -14,3 +14,5 @@ core/out-*/
 cb/build/
 __pycache__/
 *.pyc
+jvmargs.txt
+data/runtime/client-*/
