@@ -20,4 +20,9 @@ public abstract class EntityBridge {
     public void method_5759(double x, double y, double z, float yaw, float pitch, int steps, boolean interpolate) {
         ((class_1297) (Object) this).method_5759(x, y, z, yaw, pitch, steps);
     }
+
+    /** 1.20.3 widened getScoreboardTeam's return to AbstractTeam; runtime instances are still Teams */
+    public net.minecraft.class_270 method_5781() {
+        return (net.minecraft.class_270) ((class_1297) (Object) this).method_5781();
+    }
 }

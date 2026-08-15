@@ -198,6 +198,11 @@ public final class Statics {
             id == null ? null : new net.minecraft.class_8786<>(id, recipe));
     }
 
+    /** 1.20.3 added a tick-rate parameter to StatusEffectUtil.getDurationText. */
+    public static net.minecraft.class_2561 method_5577(net.minecraft.class_1293 instance, float multiplier) {
+        return net.minecraft.class_1292.method_5577(instance, multiplier, 1.0F);
+    }
+
     private Statics() {
     }
 }

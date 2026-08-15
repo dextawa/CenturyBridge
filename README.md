@@ -37,7 +37,7 @@ CenturyBridge 是一个跨版本模组兼容层（Fabric）：把已停更的老
 
 ### 当前实测战果
 
-**走廊状态**：1.20.1 → 1.20.2 分段 **kill-list 已闭合**（未记账运行时残留 19 条；548 条已分类记账，每条带原因标签），正在向 1.20.4 推进。
+**走廊状态**：**1.20.1 → 1.20.4 走廊全线闭合** ✅ —— @1.20.2 段（未记账 19 / server-clean 94.8%）与 @1.20.4 段（未记账 35 / server-clean 91.1%，账目 1507 条全带原因标签）均达 kill-list 闭合判据；1.20.2 与 1.20.4 实机服务端验收通过（1.20.1 死模组经完整分段链转换后 "Done" 零错误）。shim 栈随版本前移的维护流程（编译器检测断点 → facade/ledger 化）已实战验证。
 
 - **服务端运行时干净率（1.20.1→1.20.2）：94.8%**（270 个真实死亡模组语料，256 个转换后预期零未知残留运行）。八种改写机制：shim 重载注入、静态/实例/字段重定向、墓碑桩、facade 类改名、字段/方法迁移改名 + 身份追踪器（Recipe/Advancement getId 复活）
 - 测量口径经 **side 标注**修真：datagen 类引用（模组内编译的开发期代码，游戏内永不执行）与 client 专用残留分开记账——裸静态口径（53%）会系统性高估伤亡
@@ -84,7 +84,7 @@ Per-jar pipeline:
 
 ### Current results
 
-**Corridor status**: the 1.20.1 → 1.20.2 segment is **kill-list closed** (19 unaccounted runtime residuals; 548 classified in the ledger, every entry with a reason tag); now extending toward 1.20.4.
+**Corridor status**: **the 1.20.1 → 1.20.4 corridor is fully closed** ✅ — both the @1.20.2 segment (19 unaccounted / 94.8% server-clean) and the @1.20.4 segment (35 unaccounted / 91.1% server-clean, 1507 ledger entries all reason-tagged) meet the kill-list closure criterion; live server acceptance passed on 1.20.2 and 1.20.4 (dead 1.20.1 mods reach "Done" with zero errors through the full segment chain). The per-release shim forward-port workflow (compiler-detected breakage → facade/ledger) is battle-tested.
 
 - **Server-runtime clean rate (1.20.1→1.20.2): 94.8%** (270 real abandoned mods; 256 convert with zero unknown residuals). Eight rewrite mechanisms: shim overload injection, static/instance/field redirects, tombstone stubs, facade class renames, field/method relocation renames, plus identity trackers (Recipe/Advancement getId revival)
 - Measurement is **side-annotated**: datagen references (dev-time code compiled into mod jars that never executes in play) and client-only residuals are accounted separately — the raw static number (53%) systematically overstates damage
