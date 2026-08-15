@@ -229,6 +229,7 @@
   "net/minecraft/class_1297.method_5781()Lnet/minecraft/class_270;",
   "net/minecraft/class_1309.method_5781()Lnet/minecraft/class_270;",
   "net/minecraft/class_1657.method_5781()Lnet/minecraft/class_270;",
-  "net/minecraft/class_1308.method_5781()Lnet/minecraft/class_270;"
+  "net/minecraft/class_1308.method_5781()Lnet/minecraft/class_270;",
+  "net/minecraft/class_437.method_25420(Lnet/minecraft/class_332;)V"
  ]
 }
