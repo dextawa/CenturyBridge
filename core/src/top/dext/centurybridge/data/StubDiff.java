@@ -132,7 +132,7 @@ public final class StubDiff {
         }
     }
 
-    private static Index index(Path jar) throws IOException {
+    static Index index(Path jar) throws IOException {
         Index idx = new Index();
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(jar))) {
             ZipEntry e;
