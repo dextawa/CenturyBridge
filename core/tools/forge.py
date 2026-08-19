@@ -156,22 +156,40 @@ def build_prompt(order, to_version, retry_error=None):
     return p
 
 
+# Reasoning models spend most of the budget before the answer starts, so this
+# has to cover think + write, not just the handful of lines we actually want.
+MAX_TOKENS = int(os.environ.get("CB_MAX_TOKENS", "8000"))
+
+
 def call_model(prompt, attempt=0):
     body = json.dumps({
         "model": MODEL,
         "messages": [{"role": "system", "content": SYSTEM},
                      {"role": "user", "content": prompt}],
         "temperature": 0,
-        "max_tokens": 700,
+        "max_tokens": MAX_TOKENS,
     }).encode()
     req = urllib.request.Request(
         f"{API_BASE}/chat/completions", data=body,
         headers={"Content-Type": "application/json",
                  "Authorization": f"Bearer {API_KEY}"})
     try:
-        with urllib.request.urlopen(req, timeout=120) as r:
+        with urllib.request.urlopen(req, timeout=300) as r:
             data = json.load(r)
-        return data["choices"][0]["message"]["content"]
+        choice = data["choices"][0]
+        msg = choice.get("message", {})
+        text = msg.get("content")
+        if not text:
+            # a reasoning model that ran out of budget mid-think never emits
+            # content; retrying with more room is the fix, not accepting the
+            # scratchpad as an answer
+            if choice.get("finish_reason") == "length" and attempt < 3:
+                time.sleep(1)
+                return call_model(prompt, attempt + 1)
+            text = msg.get("reasoning_content") or ""
+        if not text.strip():
+            raise RuntimeError(f"empty completion (finish={choice.get('finish_reason')})")
+        return text
     except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as e:
         if attempt < 3:
             time.sleep(2 ** attempt)
@@ -181,14 +199,37 @@ def call_model(prompt, attempt=0):
 
 def clean_body(text):
     text = text.strip()
-    fence = re.match(r"^```(?:java)?\s*\n(.*?)\n```\s*$", text, re.S)
-    if fence:
-        text = fence.group(1).strip()
+    # Reasoning models narrate their conclusion around the code, so a fenced
+    # block anywhere in the reply is the answer -- take the last one, which is
+    # the settled version rather than an intermediate draft.
+    fences = re.findall(r"```(?:java)?\s*\n(.*?)```", text, re.S)
+    if fences:
+        text = fences[-1].strip()
     # a model that emitted the whole method anyway: keep only the body
     m = re.match(r"^\s*(?:public|private|protected|static).*?\{(.*)\}\s*$", text, re.S)
     if m:
         text = m.group(1).strip()
+    # or that wrapped the body itself in braces
+    if text.startswith("{") and text.endswith("}"):
+        inner = text[1:-1]
+        if inner.count("{") == inner.count("}"):
+            text = inner.strip()
     return text
+
+
+# A reply that opens with a declaration or with prose is not a body; the caller
+# retries it rather than feeding javac something guaranteed to fail.
+_NOT_A_BODY = re.compile(
+    r"^\s*(?:@|(?:public|private|protected|static|final)\s)"
+    r"|^\s*(?:void|int|float|double|boolean|long|byte|char|short)\s+\w+\s*\("
+    r"|^\s*[A-Z][\w.$]*\s+\w+\s*\([^)]*\)\s*$"
+    r"|^\s*(?:Looking|Let|The old|In \d|Here|I need|We need|Based on)\b")
+
+
+def looks_like_body(text):
+    if not text or not text.strip():
+        return False
+    return not _NOT_A_BODY.search(text)
 
 
 def main():
@@ -220,6 +261,12 @@ def main():
             o = futures[fut]
             try:
                 body = clean_body(fut.result())
+                if not looks_like_body(body):
+                    # one nudge with the mistake named; models correct this reliably
+                    body = clean_body(call_model(
+                        build_prompt(o, to_version,
+                                     "You emitted a signature or prose. Emit ONLY the "
+                                     "statements that go inside the braces.")))
                 results.append({**o, "body": body, "javaSig": java_signature(o)})
             except Exception as e:  # noqa: BLE001 -- one bad order must not sink the run
                 failed += 1

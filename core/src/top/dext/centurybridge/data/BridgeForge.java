@@ -80,11 +80,23 @@ public final class BridgeForge {
             String newDesc = fate.equals("DESC_CHANGED") ? detail
                            : fate.equals("MOVED") ? detail : "";
 
+            List<String> api = apiSurface(newIdx, owner, name);
+            // Types that only appear in the NEW signature are exactly the ones a
+            // model has never seen and will otherwise invent accessors for, so
+            // ship their surface too.
+            for (String t : newTypes(oldDesc, newDesc)) {
+                if (t.equals(owner) || !newIdx.classes.contains(t)) {
+                    continue;
+                }
+                api.add("-- " + t.substring(t.lastIndexOf('/') + 1) + " --");
+                api.addAll(apiSurface(newIdx, t, ""));
+            }
+
             orders.add(new Order(
                 owner.replace('/', '.') + "#" + name + oldDesc,
                 isField ? "field" : "method",
                 side, fate, owner, name, oldDesc, newDesc, shimKind,
-                apiSurface(newIdx, owner, name),
+                api,
                 refs.getOrDefault(symbol, 0)));
         }
 
@@ -137,16 +149,36 @@ public final class BridgeForge {
         return "MIXIN_OVERLOAD";
     }
 
+    /** Minecraft types present in the new descriptor but absent from the old one. */
+    private static Set<String> newTypes(String oldDesc, String newDesc) {
+        Set<String> before = mcTypes(oldDesc);
+        Set<String> after = mcTypes(newDesc);
+        after.removeAll(before);
+        return after;
+    }
+
+    private static Set<String> mcTypes(String desc) {
+        Set<String> out = new java.util.LinkedHashSet<>();
+        java.util.regex.Matcher m = java.util.regex.Pattern
+            .compile("L(net/minecraft/[^;]+);").matcher(desc == null ? "" : desc);
+        while (m.find()) {
+            out.add(m.group(1));
+        }
+        return out;
+    }
+
     /** The new-side members of this owner, so the model can see what to delegate to. */
     private static List<String> apiSurface(StubDiff.Index idx, String owner, String name) {
         List<String> out = new ArrayList<>();
         Map<String, Set<String>> methods = idx.methods.getOrDefault(owner, Map.of());
         // the same-named survivors first: the delegation target is almost always here
-        for (String desc : new TreeSet<>(methods.getOrDefault(name, Set.of()))) {
-            out.add(name + desc);
+        if (name != null && !name.isEmpty()) {
+            for (String desc : new TreeSet<>(methods.getOrDefault(name, Set.of()))) {
+                out.add(name + desc);
+            }
         }
         for (Map.Entry<String, Set<String>> e : new java.util.TreeMap<>(methods).entrySet()) {
-            if (e.getKey().equals(name)) {
+            if (name != null && e.getKey().equals(name)) {
                 continue;
             }
             for (String desc : new TreeSet<>(e.getValue())) {
