@@ -16,3 +16,6 @@ __pycache__/
 *.pyc
 jvmargs.txt
 data/runtime/client-*/
+
+# stub diff / kill-list working set
+core/out-diff/
