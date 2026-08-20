@@ -142,6 +142,7 @@
   "StatusEffectBridge"
  ],
  "client": [
+  "ChatHudBridge",
   "DrawContextNineSliceBridge",
   "EditBoxBridge",
   "EntityRenderDispatcherBridge",
