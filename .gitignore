@@ -1,21 +1,44 @@
-# bulk data & runtimes (regenerable / downloadable)
-data/corpus/
-data/jars/
-data/runtime/
-data/mappings/
-data/inventory/
-data/cb-cache/
-data/retargeted/
-cbmods_test/
+# The repo carries the mod and its documentation. Everything else here is a
+# local working set: game jars, the mod corpus, test servers, generated
+# analysis. All of it is either huge, re-derivable from the engine, or someone
+# else's copyrighted code.
 
-# build outputs
+# --- game + corpus data (never distributable) ---
+data/
+
+# --- build output ---
+build/
+out/
 core/build/
 core/out-*/
-cb/build/
-__pycache__/
-*.pyc
-jvmargs.txt
-data/runtime/client-*/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
 
-# stub diff / kill-list working set
+# --- generated analysis, re-derivable via stub-diff / class-fate / convert ---
 core/out-diff/
+core/audit-*.md
+
+# --- segment diffs: regenerated from the stubs by gen-segment, not build input ---
+core/segments/*__*.json
+
+# --- kill-list tooling: drives the closure workflow, never ships in the jar ---
+core/tools/
+
+# --- working notes, not documentation ---
+LOOP.md
+
+# --- research scaffolding, superseded by the Java engine ---
+analyzer/
+cb/
+
+# --- runtime scratch ---
+run/
+logs/
+crash-reports/
+*.log
+.gradle/
+.idea/
+*.iml
+__pycache__/
+.claude/scheduled_tasks.lock

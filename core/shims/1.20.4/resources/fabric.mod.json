@@ -1,0 +1,10 @@
+{
+ "schemaVersion": 1,
+ "id": "centurybridge",
+ "version": "0.3.0+1.20.4",
+ "name": "CenturyBridge",
+ "environment": "*",
+ "mixins": ["cb-1.20.4.mixins.json"],
+ "accessWidener": "cb.accesswidener",
+ "depends": { "fabricloader": ">=0.15.0" }
+}
