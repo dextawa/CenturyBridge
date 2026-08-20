@@ -290,17 +290,20 @@ public final class JarProcessor {
                             return; // owner facade-renamed; the member lives on the facade
                         }
                         String key = owner + "." + name + desc;
-                        if (chain.shimCovers.contains(key)) {
+                        // a shim on any ancestor satisfies this call site: the mod
+                        // holds a subclass reference, but the member is declared
+                        // (and bridged) further up
+                        if (chain.coveredAnywhere(owner, name + desc)) {
                             top.dext.centurybridge.data.FullAudit.record(key, "covered");
                             return; // restored at runtime by a shim mixin
                         }
-                        String rt = chain.staticRedirects.get(key);
+                        String rt = chain.redirectAnywhere(chain.staticRedirects, owner, name + desc);
                         if (rt != null && op == Opcodes.INVOKESTATIC) {
                             redirects.put(key, rt);
                             top.dext.centurybridge.data.FullAudit.record(key, "static-redirect");
                             return;
                         }
-                        String irt = chain.instanceRedirects.get(key);
+                        String irt = chain.redirectAnywhere(chain.instanceRedirects, owner, name + desc);
                         if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
                             instRedirects.put(key, irt);
                             top.dext.centurybridge.data.FullAudit.record(key, "instance-redirect");
@@ -362,6 +365,13 @@ public final class JarProcessor {
                             return;
                         }
                         String fkey = owner + "." + name + ":" + desc;
+                        if (chain.coveredAnywhere(owner, name + ":" + desc)) {
+                            // a shim mixin puts the field back on the target, so
+                            // the GETFIELD resolves again at runtime -- fields were
+                            // being reported as damage even when covered
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "covered");
+                            return;
+                        }
                         String frt = chain.fieldRedirects.get(fkey);
                         if (frt != null && op == Opcodes.GETSTATIC) {
                             fldRedirects.put(fkey, frt);

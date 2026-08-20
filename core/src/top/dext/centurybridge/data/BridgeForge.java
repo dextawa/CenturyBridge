@@ -184,7 +184,7 @@ public final class BridgeForge {
             for (String desc : new TreeSet<>(e.getValue())) {
                 out.add(e.getKey() + desc);
             }
-            if (out.size() > 120) {
+            if (out.size() > 45) {
                 out.add("... (truncated)");
                 return out;
             }
@@ -194,7 +194,7 @@ public final class BridgeForge {
             for (String desc : new TreeSet<>(e.getValue())) {
                 out.add(e.getKey() + ":" + desc);
             }
-            if (out.size() > 150) {
+            if (out.size() > 60) {
                 out.add("... (truncated)");
                 return out;
             }

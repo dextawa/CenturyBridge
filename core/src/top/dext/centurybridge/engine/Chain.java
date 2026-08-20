@@ -1,6 +1,7 @@
 package top.dext.centurybridge.engine;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +53,41 @@ public final class Chain {
     /** examined-and-classified damage (quirk tier / structural / etc): "owner" or "owner.name" -> reason */
     public final java.util.Map<String, String> ledger = new java.util.HashMap<>();
 
+
+    /** A cover/redirect recorded on any ancestor applies to this call site too. */
+    public boolean coveredAnywhere(String owner, String nameDesc) {
+        for (String o : selfAndSupers(owner)) {
+            if (shimCovers.contains(o + "." + nameDesc)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Look a member up in a redirect map, walking the hierarchy. */
+    public String redirectAnywhere(java.util.Map<String, String> map,
+                                   String owner, String nameDesc) {
+        for (String o : selfAndSupers(owner)) {
+            String rt = map.get(o + "." + nameDesc);
+            if (rt != null) {
+                return rt;
+            }
+        }
+        return null;
+    }
+
     public String ledgerReason(String owner, String name) {
-        String r = name == null ? null : ledger.get(owner + "." + name);
+        String r = null;
+        if (name != null) {
+            // the entry may be recorded against any class in the hierarchy, since
+            // that is where the member is declared
+            for (String o : selfAndSupers(owner)) {
+                r = ledger.get(o + "." + name);
+                if (r != null) {
+                    break;
+                }
+            }
+        }
         if (r == null) {
             r = ledger.get(owner);
         }
@@ -67,6 +101,55 @@ public final class Chain {
     }
     /** old signatures restored at runtime by shim mixins -- neither issues nor tombstones */
     public final java.util.Set<String> shimCovers = new java.util.HashSet<>();
+
+    /**
+     * child -> superclass, read from the OLD stub. A mod calls a method through
+     * whatever class it holds a reference to, but the declaration -- and hence
+     * the ledger entry, cover or redirect -- lives wherever the member is
+     * actually declared. Looking up only the call site's owner missed the skin
+     * accessors on class_742, onCraft on class_1792 and ChatHud's accessor, all
+     * of which were written off as dead while a bridge already existed.
+     */
+    public final java.util.Map<String, String> superOf = new java.util.HashMap<>();
+
+    /** Walk owner and every ancestor, in order, so callers can resolve via any of them. */
+    public java.util.List<String> selfAndSupers(String owner) {
+        java.util.List<String> chainUp = new java.util.ArrayList<>();
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 12; hops++) {
+            chainUp.add(cur);
+            cur = superOf.get(cur);
+            if (cur != null && !cur.startsWith("net/minecraft/")) {
+                break;   // left the game's own hierarchy
+            }
+        }
+        return chainUp;
+    }
+
+    /** Load the class hierarchy of a stub jar so member lookups can walk it. */
+    public void loadHierarchy(Path stubJar) throws IOException {
+        try (java.util.zip.ZipInputStream zin =
+                 new java.util.zip.ZipInputStream(Files.newInputStream(stubJar))) {
+            java.util.zip.ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                if (!e.getName().endsWith(".class") || !e.getName().startsWith("net/minecraft/")) {
+                    continue;
+                }
+                new org.objectweb.asm.ClassReader(zin.readAllBytes()).accept(
+                    new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                        @Override
+                        public void visit(int v, int a, String name, String sig,
+                                          String sup, String[] itf) {
+                            if (sup != null) {
+                                superOf.put(name, sup);
+                            }
+                        }
+                    }, org.objectweb.asm.ClassReader.SKIP_CODE
+                       | org.objectweb.asm.ClassReader.SKIP_DEBUG
+                       | org.objectweb.asm.ClassReader.SKIP_FRAMES);
+            }
+        }
+    }
     /** source-version class -> "client" | "datagen" (absent = common/server) */
     public final java.util.Map<String, String> classSide = new java.util.HashMap<>();
 

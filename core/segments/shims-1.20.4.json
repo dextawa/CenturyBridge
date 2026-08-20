@@ -923,7 +923,6 @@
   "net/minecraft/class_315$4.field_1967": "bridge attempted, no faithful equivalent: class_316 does not exist in this version",
   "net/minecraft/class_3248.method_14375": "bridge attempted, no faithful equivalent: ServerLoginNetworkHandler.method_14375 was removed and has no public equivalent",
   "net/minecraft/class_3248.method_14384": "bridge attempted, no faithful equivalent: method_14384 (acceptPlayer) cannot be implemented because the authenticated GameProfile is not accessible",
-  "net/minecraft/class_315.field_1893": "bridge attempted, no faithful equivalent: field_1893 is no longer available",
   "net/minecraft/class_3439.method_14883": "bridge attempted, no faithful equivalent: Recipe no longer stores its own identifier in 1.20.2; use the RecipeEntry overload instead.",
   "net/minecraft/class_3439.method_14886": "bridge attempted, no faithful equivalent: Cannot retrieve recipe ID from Recipe in 1.20.2",
   "net/minecraft/class_2933.method_12697": "bridge attempted, no faithful equivalent: tasks are no longer managed by BuiltChunk",
@@ -1617,7 +1616,6 @@
   "net/minecraft/class_9674": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_9675": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (1 symbols: CLASS_GONEx1)",
   "net/minecraft/client/main/Main": "tombstone [client]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (2 symbols: CLASS_GONEx2)",
-  "net/minecraft/class_315.field_1866": "public option field removed @1.20.1->1.20.2 when settings became class_7172 SimpleOption wrappers: a GETFIELD on a public instance field cannot be bridged -- Mixin can add a field but not satisfy an external read of one that no longer exists, and redirects only rewrite call sites",
   "net/minecraft/class_1921.method_23585": "a specific RenderLayer preset deleted in the 1.20.3 pipeline rewrite: present in 1.20.2, zero references anywhere in the 1.20.4 jar (full-jar scan), and its neighbours method_23583/23587 both survive -- so this is one preset removed, not a rename. Substituting another layer would silently change how the mod renders, which is worse than failing loudly"
  },
  "covers": [
@@ -1721,6 +1719,9 @@
   "net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lcom/mojang/datafixers/DataFixer;ILnet/minecraft/class_2487;Lnet/minecraft/class_1940;Lnet/minecraft/class_5315;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31;",
   "net/minecraft/class_310.method_29610(Ljava/lang/String;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Z)V",
   "net/minecraft/class_310.method_31186(Ljava/lang/Throwable;Lnet/minecraft/class_2561;)V",
+  "net/minecraft/class_315.field_1866:Z",
+  "net/minecraft/class_315.field_1880:Z",
+  "net/minecraft/class_315.field_1893:Z",
   "net/minecraft/class_32$class_5143.method_29584()Lnet/minecraft/class_34;",
   "net/minecraft/class_3210.method_14083(J)Ljava/util/Set;",
   "net/minecraft/class_3210.method_14084(JLnet/minecraft/class_3222;)V",

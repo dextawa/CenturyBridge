@@ -74,6 +74,13 @@ public final class Main {
     // convert <segmentsDir> <from> <to> <outDir> <jar...>
     private static void convert(String[] args) throws Exception {
         Chain chain = Chain.load(Path.of(args[1]), args[2], args[3]);
+        // hierarchy of the SOURCE version: mods were compiled against it, so a call
+        // site's owner and the class actually declaring the member are related there
+        Path srcStub = Path.of("data/jars/client-" + args[2] + "-intermediary.jar");
+        if (Files.exists(srcStub)) {
+            chain.loadHierarchy(srcStub);
+            System.out.println("hierarchy: " + chain.superOf.size() + " classes from " + srcStub.getFileName());
+        }
         Path outDir = Path.of(args[4]);
         top.dext.centurybridge.data.FullAudit.enabled = true;
         top.dext.centurybridge.data.FullAudit.reset();
