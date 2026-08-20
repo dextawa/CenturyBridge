@@ -136,6 +136,7 @@
   "GenClass8496Bridge",
   "GenClass870Bridge",
   "GenClass8790Bridge",
+  "LootableContainerBridge",
   "PlayerAdvancementTrackerBridge",
   "RecipeManagerBridge",
   "SlotBridge",
@@ -147,6 +148,7 @@
   "EditBoxBridge",
   "EntityRenderDispatcherBridge",
   "HandledScreenBridge",
+  "PlayerSkinBridge",
   "ScreenBridge"
  ],
  "injectors": {
