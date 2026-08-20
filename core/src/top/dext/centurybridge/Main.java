@@ -28,6 +28,8 @@ public final class Main {
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]), Path.of(args[5]));
             case "stub-diff" -> top.dext.centurybridge.data.StubDiff.run(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
+            case "class-fate" -> top.dext.centurybridge.data.ClassFate.run(
+                Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "forge-orders" -> top.dext.centurybridge.data.BridgeForge.run(
                 Path.of(args[1]), Path.of(args[2]),
                 args.length > 4 ? Path.of(args[3]) : null,

@@ -45,7 +45,20 @@
  "classRenames": {
   "net/minecraft/class_5335": "top/dext/centurybridge/facade/v1_20_4/class_5335",
   "net/minecraft/class_5267": "top/dext/centurybridge/facade/v1_20_4/class_5267",
-  "net/minecraft/class_195": "top/dext/centurybridge/facade/v1_20_4/class_195"
+  "net/minecraft/class_195": "top/dext/centurybridge/facade/v1_20_4/class_195",
+  "net/minecraft/class_1068$class_7920": "net/minecraft/class_8685$class_7920",
+  "net/minecraft/class_193": "net/minecraft/class_8782$class_8797",
+  "net/minecraft/class_2158$class_2159": "net/minecraft/class_2159",
+  "net/minecraft/class_2440$class_2441": "net/minecraft/class_8177$class_2441",
+  "net/minecraft/class_2585": "net/minecraft/class_8828",
+  "net/minecraft/class_2991$class_6346": "net/minecraft/class_6346",
+  "net/minecraft/class_634$class_8137": "net/minecraft/class_8673$class_8137",
+  "net/minecraft/class_7538$class_7539": "net/minecraft/class_8768$class_7539",
+  "net/minecraft/class_7566$class_7567": "net/minecraft/class_7855$class_7567",
+  "net/minecraft/class_7566$class_7568": "net/minecraft/class_7855$class_7568",
+  "net/minecraft/class_7566$class_7855": "net/minecraft/class_7855",
+  "net/minecraft/class_761$class_5972": "net/minecraft/class_8679$class_5972",
+  "net/minecraft/class_761$class_762": "net/minecraft/class_8679$class_762"
  },
  "fieldRenames": {
   "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "field_45013"
