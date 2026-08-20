@@ -39,6 +39,10 @@ public final class StubDiff {
     /** owner -> name -> descriptors, plus name+desc -> owners for MOVED lookups. */
     static final class Index {
         final Set<String> classes = new HashSet<>();
+        /** Mixin cannot add an instance method to an interface, and a class
+         *  mixin on an interface target dies at PREPARE -- so the shim form
+         *  has to know which targets are interfaces. */
+        final Set<String> interfaces = new HashSet<>();
         final Map<String, Map<String, Set<String>>> methods = new HashMap<>();
         final Map<String, Map<String, Set<String>>> fields = new HashMap<>();
         final Map<String, Set<String>> methodHomes = new HashMap<>();
@@ -147,6 +151,9 @@ public final class StubDiff {
                     public void visit(int v, int acc, String name, String sig, String sup, String[] itf) {
                         owner = name;
                         idx.classes.add(name);
+                        if ((acc & Opcodes.ACC_INTERFACE) != 0) {
+                            idx.interfaces.add(name);
+                        }
                     }
 
                     @Override

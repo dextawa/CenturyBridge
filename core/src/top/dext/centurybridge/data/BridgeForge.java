@@ -141,6 +141,12 @@ public final class BridgeForge {
         if (name.equals("<init>")) {
             return "TOMBSTONE"; // constructors cannot be added back by any mechanism
         }
+        // An interface target cannot take a class mixin (PREPARE fails outright)
+        // and cannot gain an instance method either, so the only shape left is
+        // a call-site redirect with the receiver as arg 0.
+        if (newIdx.interfaces.contains(owner)) {
+            return "STATIC_SHIM";
+        }
         // a method with no new-side namesake at all has nothing to delegate to
         boolean anyNamesake = newIdx.methods.getOrDefault(owner, Map.of()).containsKey(name);
         if (!anyNamesake && fate.equals("GONE")) {

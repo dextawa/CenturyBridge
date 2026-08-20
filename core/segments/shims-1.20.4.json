@@ -190,7 +190,30 @@
   "net/minecraft/class_1826.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_1738.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_1731.method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;)Z": "top/dext/centurybridge/rt/v1_20_4/Statics",
-  "net/minecraft/class_1732.method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;)Z": "top/dext/centurybridge/rt/v1_20_4/Statics"
+  "net/minecraft/class_1732.method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;)Z": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_364.method_25401(DDD)Z": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1732.method_7663()Lnet/minecraft/class_1860;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1732.method_7662(Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_184.method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2952.method_12816(IIILnet/minecraft/class_1860;Ljava/util/Iterator;I)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_4614.method_39877(Ljava/io/DataInput;Lnet/minecraft/class_6836;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_6611.method_38656(IILjava/net/SocketAddress;I)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2792.method_12069(Lnet/minecraft/class_2803;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2921.method_12666(Lnet/minecraft/class_2923;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_4614.method_23262(Ljava/io/DataInput;ILnet/minecraft/class_2505;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_4614.method_39852(Ljava/io/DataInput;Lnet/minecraft/class_6836;)Lnet/minecraft/class_6836$class_6838;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_4614.method_39851(Ljava/io/DataInput;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_4614.method_39854(Ljava/io/DataInput;I)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_6611.method_38657(IILjava/net/SocketAddress;I)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_163$class_164.method_721(Lnet/minecraft/class_161;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2602.method_11126(Lnet/minecraft/class_2790;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2994.method_3788()I": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2994.method_3827()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2994.method_3802()I": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_2933.method_12697(Lnet/minecraft/class_2935;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_632$class_633.method_2866(Lnet/minecraft/class_161;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_632$class_633.method_2865(Lnet/minecraft/class_161;Lnet/minecraft/class_167;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1145.method_4884(Lnet/minecraft/class_1113;Lnet/minecraft/class_1146;)V": "top/dext/centurybridge/rt/v1_20_4/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_4/Statics",
@@ -1616,7 +1639,10 @@
   "net/minecraft/class_9674": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_9675": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (1 symbols: CLASS_GONEx1)",
   "net/minecraft/client/main/Main": "tombstone [client]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (2 symbols: CLASS_GONEx2)",
-  "net/minecraft/class_1921.method_23585": "a specific RenderLayer preset deleted in the 1.20.3 pipeline rewrite: present in 1.20.2, zero references anywhere in the 1.20.4 jar (full-jar scan), and its neighbours method_23583/23587 both survive -- so this is one preset removed, not a rename. Substituting another layer would silently change how the mod renders, which is worse than failing loudly"
+  "net/minecraft/class_1921.method_23585": "a specific RenderLayer preset deleted in the 1.20.3 pipeline rewrite: present in 1.20.2, zero references anywhere in the 1.20.4 jar (full-jar scan), and its neighbours method_23583/23587 both survive -- so this is one preset removed, not a rename. Substituting another layer would silently change how the mod renders, which is worse than failing loudly",
+  "net/minecraft/class_742.method_3121": "bridge attempted, no faithful equivalent: method_3121 (getSkinType) was removed; use method_52814 (getSkinTextures) and extract the model from class_8685 instead",
+  "net/minecraft/class_315.field_1893": "bridge attempted, no faithful equivalent: field_1893 is no longer available",
+  "net/minecraft/class_3439.method_14878": "bridge attempted, no faithful equivalent: Recipe no longer contains its ID in 1.20.2"
  },
  "covers": [
   "net/minecraft/class_1058.method_4570(D)F",
