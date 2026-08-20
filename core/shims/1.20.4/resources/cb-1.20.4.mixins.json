@@ -4,7 +4,6 @@
  "package": "top.dext.centurybridge.shims.v1_20_4",
  "compatibilityLevel": "JAVA_17",
  "mixins": [
-  "AdvancementBridge",
   "AdvancementBuilderBridge",
   "AdvancementLoaderBridge",
   "AdvancementManagerBridge",
@@ -28,7 +27,6 @@
   "GenClass2170Bridge",
   "GenClass2283Bridge",
   "GenClass2539Bridge",
-  "GenClass2636Bridge",
   "GenClass2661Bridge",
   "GenClass2670Bridge",
   "GenClass2779Bridge",

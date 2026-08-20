@@ -91,6 +91,36 @@ if cfgs:
 PYGATE
 [ $? -eq 0 ] || { echo "build aborted: mixin config out of sync with sources"; exit 1; }
 
+# Every redirect must point at a method that actually exists. A dangling one
+# compiles fine and throws NoSuchMethodError the moment a mod reaches it --
+# that is what put the chest GUI on the floor.
+python3 - "$SHIM" "$VERSION" <<'PYWIRE'
+import json, os, re, sys
+shim, ver = sys.argv[1], sys.argv[2]
+cfg = f"core/segments/shims-{ver}.json"
+statics = os.path.join(shim, "src", "top", "dext", "centurybridge",
+                       "rt", f"v{ver.replace('.', '_')}", "Statics.java")
+if os.path.exists(cfg) and os.path.exists(statics):
+    src = open(statics, encoding="utf-8").read()
+    impl = set(re.findall(r"public static [\w.$<>\[\], ?]+?\s(\w+)\s*\(", src))
+    impl |= set(re.findall(r"public static final [\w.$<>\[\]]+ (\w+)\s*=", src))
+    d = json.load(open(cfg, encoding="utf-8"))
+    dangling = []
+    for m in ("staticRedirects", "instanceRedirects", "fieldRedirects"):
+        for k, v in d.get(m, {}).items():
+            if "Statics" not in v:
+                continue
+            member = k.split(".")[-1].split("(")[0].split(":")[0]
+            if member not in impl:
+                dangling.append(k)
+    if dangling:
+        print(f"{len(dangling)} redirects point at missing Statics members:")
+        for k in dangling[:5]:
+            print(f"    {k}")
+        sys.exit(1)
+PYWIRE
+[ $? -eq 0 ] || { echo "build aborted: dangling redirects"; exit 1; }
+
 echo "compiling $VERSION shims..."
 find "$SHIM/src" -name '*.java' > "$OUT/sources-$VERSION.txt"
 javac -nowarn -proc:none -cp "$CP" -d "$CLASSES" "@$OUT/sources-$VERSION.txt"
@@ -101,4 +131,33 @@ cp "$SHIM"/resources/* "$CLASSES"/
 
 JAR="$OUT/centurybridge-0.3.0+$VERSION.jar"
 jar cf "$JAR" -C "$CLASSES" .
+
+# Last gate, on the artefact rather than the sources: intermediary leaves
+# members without a stable identity obfuscated, and those names change every
+# release. A call to one compiles against whatever stub is on the path and then
+# throws NoSuchMethodError on the real jar. Worse, when the method we overrode
+# is one vanilla itself calls, the world dies on the first tick -- that is how
+# class_1297.cw() reached a player three times.
+python3 - "$JAR" <<'PYOBF'
+import re, subprocess, sys, zipfile
+jar = sys.argv[1]
+SAFE = {"get", "put", "add", "map", "of", "abs", "min", "max", "pow", "run",
+        "set", "log", "cos", "sin", "tan"}
+with zipfile.ZipFile(jar) as z:
+    classes = [n[:-6].replace("/", ".") for n in z.namelist() if n.endswith(".class")]
+bad = []
+for cls in classes:
+    out = subprocess.run(["javap", "-c", "-p", "-cp", jar, cls],
+                         capture_output=True, text=True, errors="replace").stdout
+    for m in re.finditer(r"(?:Method|Field)\s+net/minecraft/[\w$/]+\.([a-z]{1,3}\d?):", out):
+        if m.group(1) not in SAFE:
+            bad.append((cls.split(".")[-1], m.group(1)))
+if bad:
+    print(f"{len(bad)} obfuscated call sites in the packaged jar:")
+    for c, n in bad[:5]:
+        print(f"    {c} -> .{n}()")
+    sys.exit(1)
+PYOBF
+[ $? -eq 0 ] || { echo "build aborted: jar calls obfuscated names"; rm -f "$JAR"; exit 1; }
+
 echo "-> $JAR"

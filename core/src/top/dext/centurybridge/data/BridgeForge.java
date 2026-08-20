@@ -132,6 +132,13 @@ public final class BridgeForge {
     /** JVM + Mixin rules decide this, not the model. */
     private static String shimKind(String fate, boolean isField, String owner, String name,
                                    String oldDesc, StubDiff.Index newIdx) {
+        // If the exact descriptor still exists on the destination, there is
+        // nothing to bridge -- adding an override here would shadow vanilla's
+        // own method and break the game rather than a mod.
+        if (!isField && newIdx.methods.getOrDefault(owner, Map.of())
+                .getOrDefault(name, Set.of()).contains(oldDesc)) {
+            return "ALREADY_PRESENT";
+        }
         if (fate.equals("CLASS_GONE")) {
             return "TOMBSTONE";
         }

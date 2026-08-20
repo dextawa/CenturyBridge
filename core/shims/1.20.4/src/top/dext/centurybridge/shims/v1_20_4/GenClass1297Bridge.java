@@ -20,9 +20,4 @@ public abstract class GenClass1297Bridge {
         return ((net.minecraft.class_1297)(Object)this).method_5659(null);
     }
 
-    /** was net/minecraft/class_1297.method_5820()Ljava/lang/String; */
-    public java.lang.String method_5820() {
-        return ((net.minecraft.class_1297) (Object) this).cw().toString();
-    }
-
 }
