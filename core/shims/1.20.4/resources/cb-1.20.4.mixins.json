@@ -137,6 +137,7 @@
   "GenClass870Bridge",
   "GenClass8790Bridge",
   "LootableContainerBridge",
+  "MountOffsetBridge",
   "PlayerAdvancementTrackerBridge",
   "RecipeManagerBridge",
   "SlotBridge",

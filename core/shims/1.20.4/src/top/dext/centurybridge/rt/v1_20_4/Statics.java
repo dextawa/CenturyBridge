@@ -243,6 +243,50 @@ public final class Statics {
                 new org.joml.Vector3f(0, 0, 0), rotation, cameraAngle, entity);
     }
 
+
+    /**
+     * 1.20.1 RecipeBookServer.contains(Recipe): the parameter became a
+     * RecipeEntry at 1.20.2. The tracker remembers which id each recipe was
+     * registered under, so the old shape still answers correctly instead of
+     * being written off as "moved into the RecipeEntry system".
+     */
+    public static boolean method_14878(net.minecraft.class_3439 self,
+            net.minecraft.class_1860<?> recipe) {
+        net.minecraft.class_2960 id = Trackers.RECIPE_IDS.get(recipe);
+        if (id == null) {
+            return false;   // never registered, so certainly not unlocked
+        }
+        return self.method_14878(new net.minecraft.class_8786<>(id, recipe));
+    }
+
+
+    /**
+     * 1.20.1 Item.onCraft(stack, world, player): the player parameter was
+     * dropped at 1.20.2. Declared on class_1792, so mods calling it through
+     * ItemStack/BlockItem subclasses land here too.
+     */
+    public static void method_7843(net.minecraft.class_1792 self,
+            net.minecraft.class_1799 stack, net.minecraft.class_1937 world,
+            net.minecraft.class_1657 player) {
+        self.method_7843(stack, world);
+    }
+
+    /**
+     * 1.20.1 CraftingResultInventory.shouldCraftRecipe(world, player, recipe):
+     * the recipe became a RecipeEntry. The tracker supplies the id the recipe
+     * was registered under, so the old call still resolves.
+     */
+    public static boolean method_7665(net.minecraft.class_1731 self,
+            net.minecraft.class_1937 world, net.minecraft.class_3222 player,
+            net.minecraft.class_1860<?> recipe) {
+        net.minecraft.class_2960 id = Trackers.RECIPE_IDS.get(recipe);
+        if (id == null) {
+            return false;
+        }
+        return ((net.minecraft.class_1732) self)
+            .method_7665(world, player, new net.minecraft.class_8786<>(id, recipe));
+    }
+
     private Statics() {
     }
 }

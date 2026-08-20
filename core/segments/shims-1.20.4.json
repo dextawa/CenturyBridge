@@ -181,7 +181,16 @@
   "net/minecraft/class_8181.method_49274()Lnet/minecraft/class_1799;": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_879.method_3884(Lnet/minecraft/class_1420;Lnet/minecraft/class_4587;F)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_8181.method_49275(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
-  "net/minecraft/class_8181.method_49276()Lnet/minecraft/class_1799;": "top/dext/centurybridge/rt/v1_20_4/Statics"
+  "net/minecraft/class_8181.method_49276()Lnet/minecraft/class_1799;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_3441.method_14878(Lnet/minecraft/class_1860;)Z": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_3439.method_14878(Lnet/minecraft/class_1860;)Z": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1792.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1811.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1747.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1826.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1738.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1731.method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;)Z": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_1732.method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;)Z": "top/dext/centurybridge/rt/v1_20_4/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_4/Statics",
@@ -448,7 +457,6 @@
   "net/minecraft/class_2170.method_44252": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2507.method_10629": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2621.method_11287": "1.20.3 rework wave -- ledgered pending codec-based bridge",
-  "net/minecraft/class_1792.method_7843": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2048.method_8912": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2619.method_49274": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_1844.method_47372": "1.20.3 rework wave -- ledgered pending codec-based bridge",
@@ -916,7 +924,6 @@
   "net/minecraft/class_3248.method_14375": "bridge attempted, no faithful equivalent: ServerLoginNetworkHandler.method_14375 was removed and has no public equivalent",
   "net/minecraft/class_3248.method_14384": "bridge attempted, no faithful equivalent: method_14384 (acceptPlayer) cannot be implemented because the authenticated GameProfile is not accessible",
   "net/minecraft/class_315.field_1893": "bridge attempted, no faithful equivalent: field_1893 is no longer available",
-  "net/minecraft/class_3439.method_14878": "bridge attempted, no faithful equivalent: Recipe no longer contains its ID in 1.20.2",
   "net/minecraft/class_3439.method_14883": "bridge attempted, no faithful equivalent: Recipe no longer stores its own identifier in 1.20.2; use the RecipeEntry overload instead.",
   "net/minecraft/class_3439.method_14886": "bridge attempted, no faithful equivalent: Cannot retrieve recipe ID from Recipe in 1.20.2",
   "net/minecraft/class_2933.method_12697": "bridge attempted, no faithful equivalent: tasks are no longer managed by BuiltChunk",
@@ -1040,7 +1047,6 @@
   "net/minecraft/class_4358.method_21069": "unbridgeable after 6 rounds: target member is protected: unreachable from a shim outside the declaring package",
   "net/minecraft/class_4614$1.method_23264": "unbridgeable after 6 rounds: anonymous inner class: no source-level name exists, so it can be neither a Mixin target nor a redirect receiver",
   "net/minecraft/class_8039$class_8041.method_48312": "unbridgeable after 6 rounds: generic signature clash: the old descriptor and the new one erase to the same method, so both cannot coexist on the class",
-  "net/minecraft/class_1732.method_7665": "unbridgeable after 6 rounds: generic signature clash: the old descriptor and the new one erase to the same method, so both cannot coexist on the class",
   "net/minecraft/class_2315.method_10012": "unbridgeable after 6 rounds: target member is protected: unreachable from a shim outside the declaring package",
   "net/minecraft/class_2479$1.method_23232": "unbridgeable after 6 rounds: anonymous inner class: no source-level name exists, so it can be neither a Mixin target nor a redirect receiver",
   "net/minecraft/class_2487$1.method_23240": "unbridgeable after 6 rounds: anonymous inner class: no source-level name exists, so it can be neither a Mixin target nor a redirect receiver",
@@ -1612,7 +1618,7 @@
   "net/minecraft/class_9675": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (1 symbols: CLASS_GONEx1)",
   "net/minecraft/client/main/Main": "tombstone [client]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (2 symbols: CLASS_GONEx2)",
   "net/minecraft/class_315.field_1866": "public option field removed @1.20.1->1.20.2 when settings became class_7172 SimpleOption wrappers: a GETFIELD on a public instance field cannot be bridged -- Mixin can add a field but not satisfy an external read of one that no longer exists, and redirects only rewrite call sites",
-  "net/minecraft/class_1498.method_5621": "getMountedHeightOffset removed @1.20.1->1.20.2: no member of that name survives anywhere in the 1.20.4 jar (verified by full-jar scan), the rider-offset calculation moved into the entity dimensions system"
+  "net/minecraft/class_1921.method_23585": "a specific RenderLayer preset deleted in the 1.20.3 pipeline rewrite: present in 1.20.2, zero references anywhere in the 1.20.4 jar (full-jar scan), and its neighbours method_23583/23587 both survive -- so this is one preset removed, not a rename. Substituting another layer would silently change how the mod renders, which is worse than failing loudly"
  },
  "covers": [
   "net/minecraft/class_1058.method_4570(D)F",
@@ -1621,6 +1627,7 @@
   "net/minecraft/class_1291.method_5555(Lnet/minecraft/class_1309;Lnet/minecraft/class_5131;I)V",
   "net/minecraft/class_1291.method_5562(Lnet/minecraft/class_1309;Lnet/minecraft/class_5131;I)V",
   "net/minecraft/class_1291.method_5563(ILnet/minecraft/class_1322;)D",
+  "net/minecraft/class_1297.method_5621()D",
   "net/minecraft/class_1297.method_5659()Z",
   "net/minecraft/class_1297.method_5678()D",
   "net/minecraft/class_1297.method_5759(DDDFFIZ)V",
@@ -1631,6 +1638,8 @@
   "net/minecraft/class_1309.method_5781()Lnet/minecraft/class_270;",
   "net/minecraft/class_1314.method_5678()D",
   "net/minecraft/class_1322.method_6185()Ljava/lang/String;",
+  "net/minecraft/class_1496.method_5621()D",
+  "net/minecraft/class_1498.method_5621()D",
   "net/minecraft/class_161$class_162.method_694(Ljava/util/function/Consumer;Ljava/lang/String;)Lnet/minecraft/class_161;",
   "net/minecraft/class_161$class_162.method_701(Lnet/minecraft/class_161;)Lnet/minecraft/class_161$class_162;",
   "net/minecraft/class_161.method_686()Lnet/minecraft/class_185;",
