@@ -20,7 +20,6 @@
   "EditBoxBridge",
   "EntityBridge",
   "EntityRenderDispatcherBridge",
-  "EntityRendererBridge",
   "FriendlyByteBufBridge",
   "GameOptionsBridge",
   "GenClass1011Bridge",
