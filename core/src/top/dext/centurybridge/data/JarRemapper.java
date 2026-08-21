@@ -18,6 +18,11 @@ import org.objectweb.asm.commons.Remapper;
  */
 public final class JarRemapper {
 
+    private static final java.util.regex.Pattern MEMBER_TOKEN =
+        java.util.regex.Pattern.compile("(?:method|field)_\\d+");
+    private static final java.util.regex.Pattern CLASS_TOKEN =
+        java.util.regex.Pattern.compile("net/minecraft/class_\\d+(?:\\$[\\w$]+)?");
+
     /**
      * Remaps a jar from the intermediary namespace into Mojang names using a
      * composed C/M/F table (compose_mojang.py). This is the conversion stage
@@ -101,6 +106,18 @@ public final class JarRemapper {
                 }
                 byte[] data = zin.readAllBytes();
                 if (!e.getName().endsWith(".class")) {
+                    if (e.getName().endsWith(".json") && e.getName().contains("refmap")) {
+                        // refmaps carry intermediary names as JSON strings
+                        // ("Lnet/minecraft/class_310;method_1507()V"); rewrite
+                        // them textually or every mixin target goes stale
+                        String text = new String(data, java.nio.charset.StandardCharsets.UTF_8);
+                        text = MEMBER_TOKEN.matcher(text).replaceAll(
+                            mr -> members.getOrDefault(mr.group(), mr.group()));
+                        text = CLASS_TOKEN.matcher(text).replaceAll(
+                            mr -> java.util.regex.Matcher.quoteReplacement(
+                                remapper.map(mr.group())));
+                        data = text.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                    }
                     zout.putNextEntry(new ZipEntry(e.getName()));
                     zout.write(data);
                     zout.closeEntry();
