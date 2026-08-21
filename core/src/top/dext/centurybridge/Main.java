@@ -24,6 +24,8 @@ public final class Main {
             case "convert" -> convert(args);
             case "remap-jar" -> top.dext.centurybridge.data.JarRemapper
                 .remapToIntermediary(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
+            case "remap-mojang" -> top.dext.centurybridge.data.JarRemapper
+                .remapWithTable(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "gen-sides" -> top.dext.centurybridge.data.SideAnnotator.generate(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]), Path.of(args[5]));
             case "stub-diff" -> top.dext.centurybridge.data.StubDiff.run(
@@ -147,6 +149,7 @@ public final class Main {
             centurybridge-core
               gen-segment <from> <to> <mappingsDir> <out.json>
               gen-chain <from> <to> <mappingsDir> <segmentsDir>
-              convert <segmentsDir> <from> <to> <outDir> <jar...>""");
+              convert <segmentsDir> <from> <to> <outDir> <jar...>
+              remap-mojang <inter-to-mojang.tsv> <in.jar> <out.jar>""");
     }
 }

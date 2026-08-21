@@ -18,6 +18,108 @@ import org.objectweb.asm.commons.Remapper;
  */
 public final class JarRemapper {
 
+    /**
+     * Remaps a jar from the intermediary namespace into Mojang names using a
+     * composed C/M/F table (compose_mojang.py). This is the conversion stage
+     * for year-versioned targets (26.1+): those jars ship unobfuscated, so an
+     * intermediary-named mod must be wholly renamed before any of its
+     * references resolve. Intermediary member ids are globally unique, so
+     * member maps are keyed by bare name; anything not matching
+     * method_/field_ passes through untouched. Code is preserved (this runs
+     * on real mod jars, not classpath stubs); non-class entries are copied
+     * verbatim -- refmap JSONs still carry intermediary names and need their
+     * own pass later.
+     */
+    public static void remapWithTable(Path tsv, Path inJar, Path outJar) throws IOException {
+        java.util.Map<String, String> classes = new java.util.HashMap<>();
+        // owner-qualified ("interOwner.name" -> moj) wins; the bare-name map
+        // covers call sites whose owner is a subclass of the declaring class,
+        // and drops the handful of ids the client/server merge left ambiguous
+        // (same field_/method_ id, two unrelated mojang members)
+        java.util.Map<String, String> byOwner = new java.util.HashMap<>();
+        java.util.Map<String, String> members = new java.util.HashMap<>();
+        java.util.Set<String> ambiguous = new java.util.HashSet<>();
+        for (String ln : Files.readAllLines(tsv)) {
+            String[] p = ln.split("\t");
+            if (p.length < 3) {
+                continue;
+            }
+            if (p[0].equals("C")) {
+                classes.put(p[1], p[2]);
+            } else if (p[0].equals("M") || p[0].equals("F")) {
+                String name = p[1].substring(p[1].lastIndexOf('.') + 1);
+                String moj = p[2].substring(p[2].lastIndexOf('.') + 1);
+                byOwner.put(p[1], moj);
+                String prev = members.putIfAbsent(name, moj);
+                if (prev != null && !prev.equals(moj)) {
+                    ambiguous.add(name);
+                }
+            }
+        }
+        members.keySet().removeAll(ambiguous);
+        Remapper remapper = new Remapper() {
+            @Override
+            public String map(String internalName) {
+                String hit = classes.get(internalName);
+                if (hit != null) {
+                    return hit;
+                }
+                // nested classes absent from the table (anonymous/synthetic)
+                // follow their outermost mapped enclosing class
+                int d = internalName.length();
+                while ((d = internalName.lastIndexOf('$', d - 1)) > 0) {
+                    String outer = classes.get(internalName.substring(0, d));
+                    if (outer != null) {
+                        return outer + internalName.substring(d);
+                    }
+                }
+                return internalName;
+            }
+
+            private String member(String owner, String name) {
+                String hit = byOwner.get(owner + "." + name);
+                return hit != null ? hit : members.getOrDefault(name, name);
+            }
+
+            @Override
+            public String mapMethodName(String owner, String name, String desc) {
+                return name.startsWith("method_") ? member(owner, name) : name;
+            }
+
+            @Override
+            public String mapFieldName(String owner, String name, String desc) {
+                return name.startsWith("field_") ? member(owner, name) : name;
+            }
+        };
+        int nClasses = 0;
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
+             ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(outJar))) {
+            ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                if (e.isDirectory()) {
+                    continue;
+                }
+                byte[] data = zin.readAllBytes();
+                if (!e.getName().endsWith(".class")) {
+                    zout.putNextEntry(new ZipEntry(e.getName()));
+                    zout.write(data);
+                    zout.closeEntry();
+                    continue;
+                }
+                ClassReader cr = new ClassReader(data);
+                ClassWriter cw = new ClassWriter(0);
+                cr.accept(new ClassRemapper(cw, remapper), 0);
+                zout.putNextEntry(new ZipEntry(remapper.map(cr.getClassName()) + ".class"));
+                zout.write(cw.toByteArray());
+                zout.closeEntry();
+                nClasses++;
+            }
+        }
+        System.out.println("renamed " + nClasses + " classes (table: " + classes.size()
+            + " classes, " + byOwner.size() + " members, " + ambiguous.size()
+            + " ambiguous ids owner-only) -> " + outJar);
+    }
+
     public static void remapToIntermediary(Path tiny, Path inJar, Path outJar) throws IOException {
         TinyMappings.Obf obf = TinyMappings.loadObf(tiny);
         Remapper remapper = new Remapper() {
