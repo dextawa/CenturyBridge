@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_310.class)
 public abstract class GenClass310Bridge {
 
-    /** was net/minecraft/class_310.method_29610(Ljava/lang/String;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Z)V */
-    public void method_29610(java.lang.String a0, net.minecraft.class_32.class_5143 a1, net.minecraft.class_3283 a2, net.minecraft.class_6904 a3, boolean a4) {
-        ((net.minecraft.class_310) (Object) this).method_29610(a1, a2, a3, a4);
+    /** was net/minecraft/class_310.method_1481(Lnet/minecraft/class_638;)V */
+    public void method_1481(net.minecraft.class_638 a0) {
+        ((net.minecraft.class_310) (Object) this).method_1481(a0, net.minecraft.class_434.class_9678.field_51487);
     }
 
-    /** was net/minecraft/class_310.method_31186(Ljava/lang/Throwable;Lnet/minecraft/class_2561;)V */
-    public void method_31186(java.lang.Throwable a0, net.minecraft.class_2561 a1) {
-        ((net.minecraft.class_310) (Object) this).method_31186(a0, a1, null);
+    /** was net/minecraft/class_310.method_18096(Lnet/minecraft/class_437;)V */
+    public void method_18096(net.minecraft.class_437 a0) {
+        ((net.minecraft.class_310) (Object) this).method_18096(a0, false);
     }
 
 }

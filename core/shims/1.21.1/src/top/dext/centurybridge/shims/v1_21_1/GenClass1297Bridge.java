@@ -15,9 +15,49 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1297.class)
 public abstract class GenClass1297Bridge {
 
-    /** was net/minecraft/class_1297.method_5659()Z */
-    public boolean method_5659() {
-        return ((net.minecraft.class_1297)(Object)this).method_5659(null);
+    /** was net/minecraft/class_1297.method_32875(Lnet/minecraft/class_5712;Lnet/minecraft/class_1297;)V */
+    public void method_32875(net.minecraft.class_5712 a0, net.minecraft.class_1297 a1) {
+        ((net.minecraft.class_1297) (Object) this).method_32875(net.minecraft.class_6880.method_40223(a0), a1);
+    }
+
+    /** was net/minecraft/class_1297.method_32876(Lnet/minecraft/class_5712;)V */
+    public void method_32876(net.minecraft.class_5712 a0) {
+        ((net.minecraft.class_1297) (Object) this).method_32876(net.minecraft.class_6880.method_40223(a0));
+    }
+
+    /** was net/minecraft/class_1297.method_48850(Ljava/util/List;)V */
+    public void method_48850(java.util.List a0) {
+        if (this instanceof net.minecraft.class_9221) {
+            ((net.minecraft.class_9221) (Object) this).method_48850(a0);
+        }
+    }
+
+    /** was net/minecraft/class_1297.method_5661()Ljava/lang/Iterable; */
+    public java.lang.Iterable method_5661() {
+        if ((Object) this instanceof net.minecraft.class_1309) {
+            return ((net.minecraft.class_1309) (Object) this).method_5661();
+        }
+        return java.util.Collections.emptyList();
+    }
+
+    /** was net/minecraft/class_1297.method_5673(Lnet/minecraft/class_1304;Lnet/minecraft/class_1799;)V */
+    public void method_5673(net.minecraft.class_1304 a0, net.minecraft.class_1799 a1) {
+        if ((Object) this instanceof net.minecraft.class_9460) {
+            ((net.minecraft.class_9460) (Object) this).method_5673(a0, a1);
+        }
+    }
+
+    /** was net/minecraft/class_1297.method_5693()V */
+    public void method_5693() {
+        throw new UnsupportedOperationException("CenturyBridge: method_5693 without arguments is unsupported");
+    }
+
+    /** was net/minecraft/class_1297.method_5877()Ljava/lang/Iterable; */
+    public java.lang.Iterable method_5877() {
+        if ((Object) this instanceof net.minecraft.class_1309) {
+            return ((net.minecraft.class_1309) (Object) this).method_5877();
+        }
+        return java.util.Collections.emptyList();
     }
 
 }
