@@ -20,4 +20,8 @@ public abstract class GenClass1764Bridge {
         ((net.minecraft.class_1764) (Object) this).method_7777(a0, a1, a2, a3, a4, a5, (net.minecraft.class_1309) null);
     }
 
+    /** was net/minecraft/class_1764.method_7775(Lnet/minecraft/class_1799;)I */
+    public int method_7775(net.minecraft.class_1799 a0) {
+        return ((net.minecraft.class_1764)(Object)this).method_7775(a0, null);
+    }
 }

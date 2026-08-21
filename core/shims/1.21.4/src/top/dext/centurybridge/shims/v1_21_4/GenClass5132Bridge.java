@@ -37,4 +37,13 @@ public abstract class GenClass5132Bridge {
         return ((net.minecraft.class_5132) (Object) this).method_27310(net.minecraft.class_6880.method_40223(a0));
     }
 
+    /** was net/minecraft/class_5132.method_27308(Lnet/minecraft/class_6880;Ljava/util/UUID;)D */
+    public double method_27308(net.minecraft.class_6880 a0, java.util.UUID a1) {
+        return ((net.minecraft.class_5132)(Object)this).method_27308(a0, net.minecraft.class_2960.method_43902("minecraft", a1.toString()));
+    }
+
+    /** was net/minecraft/class_5132.method_27309(Lnet/minecraft/class_6880;Ljava/util/UUID;)Z */
+    public boolean method_27309(net.minecraft.class_6880 a0, java.util.UUID a1) {
+        return ((net.minecraft.class_5132)(Object)this).method_27309(a0, net.minecraft.class_2960.method_12829(a1.toString()));
+    }
 }

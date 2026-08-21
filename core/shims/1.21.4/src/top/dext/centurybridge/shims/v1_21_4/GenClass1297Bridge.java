@@ -38,4 +38,8 @@ public abstract class GenClass1297Bridge {
         throw new UnsupportedOperationException("CenturyBridge: method_5693 without arguments is unsupported");
     }
 
+    /** was net/minecraft/class_1297.method_5639(I)V */
+    public void method_5639(int a0) {
+        ((net.minecraft.class_1297) (Object) this).method_5639((float) a0);
+    }
 }

@@ -4050,6 +4050,598 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: field_4805 was the synthetic outer instance reference (this$0) of class_962$1; it is an instance field that cannot be reconstructed from a static context without an instance of the inner class");
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /** was net/minecraft/class_1282.method_48790()Z */
+    public static boolean method_48790(net.minecraft.class_1282 self) {
+        return self.method_5526() == self.method_5529();
+    }
+
+    /** was net/minecraft/class_1297.field_5972I */
+    public static int field_5972() {
+        return 1024;
+    }
+
+    /** was net/minecraft/class_1297.field_5991Lnet/minecraft/class_2338; */
+    public static net.minecraft.class_2338 field_5991() {
+        return new net.minecraft.class_2338(0, 0, 0);
+    }
+
+    /** was net/minecraft/class_1297.method_20620(DDD)V */
+    public static void method_20620(net.minecraft.class_1297 self, double a0, double a1, double a2) {
+        self.method_18800(a0, a1, a2);
+    }
+
+    /** was net/minecraft/class_1297.method_30329(Lnet/minecraft/class_3218;)Lnet/minecraft/class_5454; */
+    public static net.minecraft.class_5454 method_30329(net.minecraft.class_1297 self, net.minecraft.class_3218 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_30329 (getTeleportTarget(ServerWorld)) was removed in 1.21; TeleportTarget (class_5454) was reworked to Entity.TeleportTarget (class_1297$class_5799) via method_33570 with different semantics and no ServerWorld parameter");
+    }
+
+    /** was net/minecraft/class_1297.method_52208(ZLnet/minecraft/class_243;)V */
+    public static void method_52208(net.minecraft.class_1297 self, boolean a0, net.minecraft.class_243 a1) {
+        self.method_18799(a1);
+        // Can't set velocityModified flag in new API
+    }
+
+    /** was net/minecraft/class_1297.method_5741()I */
+    public static int method_5741(net.minecraft.class_1297 self) {
+        return self.method_20802();
+    }
+
+    /** was net/minecraft/class_1304.method_20234(Lnet/minecraft/class_1304$class_1305;I)Lnet/minecraft/class_1304; */
+    public static net.minecraft.class_1304 method_20234(net.minecraft.class_1304 self, net.minecraft.class_1304.class_1305 a0, int a1) {
+        throw new UnsupportedOperationException("CenturyBridge: DyeColor.method_20234(DyeColorCode, int) was removed in 1.21 with no direct replacement; no remaining method accepts a DyeColorCode parameter");
+    }
+
+    /** was net/minecraft/class_1308.field_30086Ljava/lang/String; */
+    public static java.lang.String field_30086() {
+        return "Leash";
+    }
+
+    /** was net/minecraft/class_1308.method_18810(I)V */
+    public static void method_18810(net.minecraft.class_1308 self, int a0) {
+        self.method_5976((float) a0);
+    }
+
+
+    /** was net/minecraft/class_1309.method_27302()Z */
+    public static boolean method_27302(net.minecraft.class_1309 self) {
+        return self.method_29503();
+    }
+
+    /** was net/minecraft/class_1309.method_29502()V */
+    public static void method_29502(net.minecraft.class_1309 self) {
+        self.method_29505(null);
+    }
+
+    /** was net/minecraft/class_1492.field_30412I */
+    public static int field_30412() {
+        return 32767;
+    }
+
+    /** was net/minecraft/class_1530.method_6891()I */
+    public static int method_6891(net.minecraft.class_1530 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1530.method_6891() (getLifeTime) was removed in 1.21; the lifeTime field is no longer exposed on FireworkRocketEntity and no equivalent accessor exists in the new API surface");
+    }
+
+    /** was net/minecraft/class_155.field_29743Z */
+    public static boolean field_29743() {
+        throw new UnsupportedOperationException("CenturyBridge: class_155.field_29743 was a boolean flag deleted in 1.21 with no direct replacement; its original value cannot be inferred from the new API surface");
+        // CB-CONFIDENCE: high -- the field is explicitly listed as deleted with no replacement, and returning a guessed boolean constant would risk silent behaviour corruption
+    }
+
+    /** was net/minecraft/class_155.field_29744Z */
+    public static boolean field_29744() {
+        throw new UnsupportedOperationException("CenturyBridge: class_155.field_29744 was removed in 1.21 with no direct replacement");
+        // CB-CONFIDENCE: high -- the field is explicitly listed as deleted with no equivalent in the new API surface
+    }
+
+    /** was net/minecraft/class_155.field_43095Ljava/util/Set; */
+    public static java.util.Set field_43095() {
+        throw new UnsupportedOperationException("CenturyBridge: field_43095 was an instance Set<String> of enabled resource packs loaded from options.txt; removed in 1.21 with no static equivalent, use method_16673() on a GameOptions instance instead");
+    }
+
+    /** was net/minecraft/class_155.method_43250()V */
+    public static void method_43250(net.minecraft.class_155 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_43250 was deleted in 1.21 with no direct replacement");
+    }
+
+    /** was net/minecraft/class_1657.field_49991Z */
+    public static boolean field_49991() {
+        return true;
+        // CB-CONFIDENCE: low -- deleted static boolean constant with no direct replacement; value inferred as true from common feature-flag patterns but unverified
+    }
+
+    /** was net/minecraft/class_1657.method_26091(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;FZZ)Ljava/util/Optional; */
+    public static java.util.Optional method_26091(net.minecraft.class_1657 self, net.minecraft.class_3218 a0, net.minecraft.class_2338 a1, float a2, boolean a3, boolean a4) {
+        throw new UnsupportedOperationException("CenturyBridge: ServerPlayerEntity.trySleep(ServerWorld, BlockPos, float, boolean, boolean) (method_26091) was removed in 1.21; sleep handling was reworked and no direct equivalent exists on class_1657");
+    }
+
+
+    /** was net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799; */
+    public net.minecraft.class_1799 method_8116(net.minecraft.class_1263 a0, net.minecraft.class_7225.class_7874 a1) {
+        return ((net.minecraft.class_1860) (Object) this).method_8116((net.minecraft.class_9695) a0, a1);
+    }
+
+    /** was net/minecraft/class_1890.method_42304(Lnet/minecraft/class_1309;)F */
+    public static float method_42304(net.minecraft.class_1890 self, net.minecraft.class_1309 a0) {
+        return self.method_60123(a0.method_6047(), a0);
+    }
+
+    /** was net/minecraft/class_1890.method_8202(Lnet/minecraft/class_1799;)I */
+    public static int method_8202(net.minecraft.class_1890 self, net.minecraft.class_1799 a0) {
+        return 1;
+    }
+
+    /** was net/minecraft/class_1890.method_8217(Lnet/minecraft/class_1309;)F */
+    public static float method_8217(net.minecraft.class_1890 self, net.minecraft.class_1309 a0) {
+        return self.method_60123(a0.method_6047(), a0);
+    }
+
+    /** was net/minecraft/class_1890.method_8218(Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)F */
+    public static float method_8218(net.minecraft.class_1890 self, net.minecraft.class_1799 a0, net.minecraft.class_1299 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_8218(ItemStack, EntityType<?>) was replaced by method_60123(ItemStack, LivingEntity) which requires an entity instance, not an EntityType; cannot bridge without a LivingEntity");
+    }
+
+    /** was net/minecraft/class_1890.method_8221(Lnet/minecraft/class_1799;)Z */
+    public static boolean method_8221(net.minecraft.class_1890 self, net.minecraft.class_1799 a0) {
+        return self.method_57529(a0);
+    }
+
+    /** was net/minecraft/class_1893.field_23071Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_23071() {
+        throw new UnsupportedOperationException("CenturyBridge: field_23071 changed from Enchantment (class_1887) to RegistryKey<Enchantment> (class_5321); resolving a registry key to an Enchantment instance requires runtime registry access unavailable in a static field context");
+    }
+
+    /** was net/minecraft/class_1893.field_50158Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_50158() {
+        throw new UnsupportedOperationException("CenturyBridge: field_50158 is now a RegistryKey<Enchantment> (class_5321); the Enchantment instance (class_1887) is data-driven and only resolvable via the dynamic registry manager at runtime, not as a static constant");
+    }
+
+    /** was net/minecraft/class_1893.field_9095Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9095() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9095 changed from Enchantment (class_1887) to RegistryKey<Enchantment> (class_5321); enchantment instances require runtime registry lookup and are no longer available as static constants");
+        // CB-CONFIDENCE: high -- the old field type (class_1887 Enchantment) is a runtime instance, the new field type (class_5321 RegistryKey) is only a lookup key; no static conversion exists without registry access
+    }
+
+    /** was net/minecraft/class_1893.field_9096Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9096() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9096 is now a RegistryKey (class_5321), not a Registry (class_1887); cannot reconstruct Registry from RegistryKey without runtime context");
+    }
+
+    /** was net/minecraft/class_1893.field_9097Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9097() {
+        throw new UnsupportedOperationException("CenturyBridge: class_1887 (RecipeType) instances are no longer available as static fields; they require registry lookup via class_5321 (RegistryKey)");
+    }
+
+    /** was net/minecraft/class_1893.field_9099Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9099() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9099 changed from Registry (class_1887) to RegistryKey (class_5321); a static RegistryKey cannot yield a live Registry without a WrapperLookup");
+    }
+
+    /** was net/minecraft/class_1893.field_9101Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9101() {
+        throw new UnsupportedOperationException("CenturyBridge: Enchantments.field_9101 changed from Enchantment (class_1887) to RegistryKey (class_5321) in 1.21; cannot resolve a RegistryKey to an Enchantment instance without dynamic registry access");
+    }
+
+    /** was net/minecraft/class_1893.field_9104Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9104() {
+        throw new UnsupportedOperationException("CenturyBridge: Enchantments.field_9104 is now a RegistryKey<Enchantment>; resolving to Enchantment requires a dynamic registry lookup not available in a static context");
+    }
+
+    /** was net/minecraft/class_1893.field_9106Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9106() {
+        throw new UnsupportedOperationException("CenturyBridge: Enchantments.field_9106 is now a RegistryKey<Enchantment> (class_5321); the Enchantment instance (class_1887) is no longer a static constant and must be resolved from the registry at runtime");
+    }
+
+    /** was net/minecraft/class_1893.field_9113Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9113() {
+        throw new UnsupportedOperationException("CenturyBridge: class_1893.field_9113 changed from Enchantment (class_1887) to RegistryKey (class_5321); enchantment instances are no longer static constants and must be resolved from the registry at runtime");
+    }
+
+    /** was net/minecraft/class_1893.field_9115Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9115() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9115 changed from Enchantment (class_1887) to RegistryKey<Enchantment> (class_5321); Enchantment instances are no longer available as static constants and require registry lookup at runtime");
+    }
+
+    /** was net/minecraft/class_1893.field_9116Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9116() {
+        throw new UnsupportedOperationException("CenturyBridge: class_1893.field_9116 is now a RegistryKey<Enchantment> (class_5321); the Enchantment object (class_1887) is only resolvable through the enchantment registry at runtime, not as a constant field");
+        // CB-CONFIDENCE: high -- the field type changed from Enchantment to RegistryKey<Enchantment>, and no constant conversion exists without registry access
+    }
+
+    /** was net/minecraft/class_1893.field_9123Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9123() {
+        throw new UnsupportedOperationException("CenturyBridge: Registries.field_9123 is now a RegistryKey (class_5321) instead of a Registry (class_1887); cannot obtain a Registry from a RegistryKey without a RegistryAccess");
+    }
+
+    /** was net/minecraft/class_1893.field_9124Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9124() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9124 changed from Enchantment (class_1887) to RegistryKey<Enchantment> (class_5321); enchantment instances are no longer available as static constants, use the registry to resolve at runtime");
+    }
+
+    /** was net/minecraft/class_1893.field_9126Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9126() {
+        throw new UnsupportedOperationException("CenturyBridge: class_1893.field_9126 is now a RegistryKey (class_5321), not an Enchantment (class_1887); enchantments are data-driven and no static Enchantment instance can be returned");
+    }
+
+    /** was net/minecraft/class_1893.field_9132Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9132() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9132 is now a RegistryKey (class_5321), not an Enchantment instance (class_1887); resolving it requires dynamic registry access unavailable statically");
+        // CB-CONFIDENCE: high -- the new field is only a registry key and the provided class_1893 API exposes no way to obtain a class_1887 instance
+    }
+
+    /** was net/minecraft/class_1921.method_23012(Lnet/minecraft/class_287;Lnet/minecraft/class_8251;)V */
+    public static void method_23012(net.minecraft.class_1921 self, net.minecraft.class_287 a0, net.minecraft.class_8251 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: RenderLayer.draw(BufferBuilder, VertexConsumerProvider.Immediate) was removed in 1.21's rendering pipeline overhaul; class_1921 no longer owns buffer-drawing functionality");
+    }
+
+    /** was net/minecraft/class_1921.method_24296()Ljava/util/Optional; */
+    public static java.util.Optional method_24296(net.minecraft.class_1921 self) {
+        return self.method_23289();
+    }
+
+    /** was net/minecraft/class_2424.method_30484(Lnet/minecraft/class_3218;Lnet/minecraft/class_5459$class_5460;Lnet/minecraft/class_2350$class_2351;Lnet/minecraft/class_243;Lnet/minecraft/class_1297;Lnet/minecraft/class_243;FF)Lnet/minecraft/class_5454; */
+    public static net.minecraft.class_5454 method_30484(net.minecraft.class_2424 self, net.minecraft.class_3218 a0, net.minecraft.class_5459.class_5460 a1, net.minecraft.class_2350.class_2351 a2, net.minecraft.class_243 a3, net.minecraft.class_1297 a4, net.minecraft.class_243 a5, float a6, float a7) {
+        throw new UnsupportedOperationException("CenturyBridge: method_30484 created a TeleportTarget (class_5454) which was removed in 1.21; the portal teleportation system was reworked to use class_4048 (PostTeleportTarget) and class_2424 no longer creates teleport targets");
+    }
+
+    /** was net/minecraft/class_2547.method_10839(Lnet/minecraft/class_2561;)V */
+    public void method_10839(net.minecraft.class_2561 a0) {
+        ((net.minecraft.class_2547) (Object) this).method_10839(new net.minecraft.class_9812(a0));
+    }
+
+    /** was net/minecraft/class_2547.method_55597(Lnet/minecraft/class_129;)V */
+    public void method_55597(net.minecraft.class_129 a0) {
+        // adds system details
+    }
+
+    /** was net/minecraft/class_2619.method_44373()Z */
+    public static boolean method_44373(net.minecraft.class_2619 self) {
+        return self.method_60784() != null;
+    }
+
+    /** was net/minecraft/class_2619.method_49212()V */
+    public static void method_49212(net.minecraft.class_2619 self) {
+        self.method_49213();
+    }
+
+    /** was net/minecraft/class_2643.method_11409(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1297;Lnet/minecraft/class_2643;)V */
+    public static void method_11409(net.minecraft.class_2643 self, net.minecraft.class_1937 a0, net.minecraft.class_2338 a1, net.minecraft.class_2680 a2, net.minecraft.class_1297 a3, net.minecraft.class_2643 a4) {
+        throw new UnsupportedOperationException("CenturyBridge: method_11409 accepted an Entity (class_1297) parameter with no equivalent in the new class_2643 API; all replacement candidates (method_11411/method_31700/method_31702) omit the Entity argument");
+    }
+
+    /** was net/minecraft/class_290.field_1578Lnet/minecraft/class_296; */
+    public static net.minecraft.class_296 field_1578() {
+        throw new UnsupportedOperationException("CenturyBridge: class_290.field_1578 (type class_296) was removed in 1.21 with no direct equivalent");
+    }
+
+    /** was net/minecraft/class_290.field_1581Lnet/minecraft/class_296; */
+    public static net.minecraft.class_296 field_1581() {
+        throw new UnsupportedOperationException("CenturyBridge: class_290.field_1581 was a class_296 (VertexFormat) constant deleted in 1.21; the vertex format system was reworked and the new class_290 surface exposes only class_293 elements with no class_296 equivalent to reconstruct");
+        // CB-CONFIDENCE: high -- the field is explicitly marked deleted with no replacement, and the new class_290 API surface contains zero class_296 references, so no faithful constant can be synthesized
+    }
+
+    /** was net/minecraft/class_290.field_1587Lnet/minecraft/class_296; */
+    public static net.minecraft.class_296 field_1587() {
+        throw new UnsupportedOperationException("CenturyBridge: class_290.field_1587 (class_296 ButtonWidget instance) was removed in 1.21 with no direct replacement; remaining fields are class_293 ClickableWidget");
+        // CB-CONFIDENCE: high -- the field is deleted and the new API surface contains no class_296 fields, so no faithful constant can be produced
+    }
+
+    /** was net/minecraft/class_290.field_1591Lnet/minecraft/class_296; */
+    public static net.minecraft.class_296 field_1591() {
+        throw new UnsupportedOperationException("CenturyBridge: class_290.field_1591 (type class_296) was deleted in 1.21 with no direct replacement; new API surface exposes only class_293 (Drawable) fields, no class_296 equivalent exists");
+    }
+
+    /** was net/minecraft/class_290.field_20886Lnet/minecraft/class_296; */
+    public static net.minecraft.class_296 field_20886() {
+        throw new UnsupportedOperationException("CenturyBridge: class_290.field_20886 (normal Matrix3f) was removed in 1.21; MatrixStack no longer tracks a normal matrix");
+    }
+
+    /** was net/minecraft/class_290.field_20887Lnet/minecraft/class_293; */
+    public static net.minecraft.class_293 field_20887() {
+        throw new UnsupportedOperationException("CenturyBridge: class_290.field_20887 was removed in 1.21 with no direct equivalent");
+        // CB-CONFIDENCE: high -- the prompt explicitly states the field was deleted with no direct replacement; a tombstone is the honest bridge.
+    }
+
+    /** was net/minecraft/class_290.field_29335Lnet/minecraft/class_296; */
+    public static net.minecraft.class_296 field_29335() {
+        throw new UnsupportedOperationException("CenturyBridge: class_290.field_29335 (MatrixStack) was removed in 1.21 with no direct replacement; MatrixStack is now passed as a render parameter");
+    }
+
+
+    /** was net/minecraft/class_310.method_1488()F */
+    public static float method_1488(net.minecraft.class_310 self) {
+        return (float) self.method_41734();
+    }
+
+    /** was net/minecraft/class_3218.method_18211(Lnet/minecraft/class_3222;)V */
+    public static void method_18211(net.minecraft.class_3218 self, net.minecraft.class_3222 a0) {
+        self.method_18215(a0);
+    }
+
+    /** was net/minecraft/class_3417.field_14606Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_14606() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_14606.comp_349();
+    }
+
+    /** was net/minecraft/class_3417.field_14626Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_14626() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_14626.comp_349();
+    }
+
+    /** was net/minecraft/class_3417.field_14717Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_14717() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_14717.comp_349();
+    }
+
+    /** was net/minecraft/class_3417.field_14765Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_14765() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_14765.comp_349();
+    }
+
+    /** was net/minecraft/class_3417.field_14860Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_14860() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_14860.comp_349();
+    }
+
+    /** was net/minecraft/class_3417.field_14896Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_14896() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_14896.comp_349();
+    }
+
+    /** was net/minecraft/class_3417.field_14916Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_14916() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_14916.comp_349();
+    }
+
+    /** was net/minecraft/class_3417.field_15001Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_15001() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_15001.comp_349();
+    }
+
+    /** was net/minecraft/class_3417.field_15011Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_15011() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_15011.comp_349();
+    }
+
+    /** was net/minecraft/class_3417.field_15089Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_15089() {
+        return (net.minecraft.class_3414) net.minecraft.class_3417.field_15089.comp_349();
+    }
+
+    /** was net/minecraft/class_3485.method_44228(Lnet/minecraft/class_2960;Ljava/lang/String;)Ljava/nio/file/Path; */
+    public static java.nio.file.Path method_44228(net.minecraft.class_3485 self, net.minecraft.class_2960 a0, java.lang.String a1) {
+        return self.method_15085(a0, a1);
+    }
+
+    /** was net/minecraft/class_3489.field_15541Lnet/minecraft/class_6862; */
+    public static net.minecraft.class_6862 field_15541() {
+        throw new UnsupportedOperationException("CenturyBridge: field_15541 was removed in 1.21 with no direct replacement; the sound event it referenced no longer exists in the registry");
+        // CB-CONFIDENCE: high -- the field is explicitly marked deleted with no direct replacement, and without knowing which sound event it represented there is no faithful equivalent to return
+    }
+
+    /** was net/minecraft/class_3492.method_15120()Z */
+    public static boolean method_15120(net.minecraft.class_3492 self) {
+        return !self.method_16182().isEmpty();
+    }
+
+
+    /** was net/minecraft/class_3999.method_18131(Lnet/minecraft/class_289;)V */
+    public static void method_18131(net.minecraft.class_3999 self, net.minecraft.class_289 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3999.method_18131(class_289) was removed in 1.21 with no direct replacement; the remaining method_18130 requires an additional class_1060 (Texture) argument and returns class_287 (Sprite), which is incompatible with the old void contract");
+    }
+
+    /** was net/minecraft/class_4588.method_22901(IIII)V */
+    public static void method_22901(net.minecraft.class_4588 self, int a0, int a1, int a2, int a3) {
+        self.method_1336(a0, a1, a2, a3);
+    }
+
+    /** was net/minecraft/class_4588.method_22912(DDD)Lnet/minecraft/class_4588; */
+    public net.minecraft.class_4588 method_22912(double a0, double a1, double a2) {
+        return ((net.minecraft.class_4588) (Object) this).method_22912((float) a0, (float) a1, (float) a2);
+    }
+
+    /** was net/minecraft/class_4588.method_22916(I)Lnet/minecraft/class_4588; */
+    public static net.minecraft.class_4588 method_22916(net.minecraft.class_4588 self, int a0) {
+        return self.method_39415(a0);
+    }
+
+    /** was net/minecraft/class_4588.method_22917(II)Lnet/minecraft/class_4588; */
+    public static net.minecraft.class_4588 method_22917(net.minecraft.class_4588 self, int a0, int a1) {
+        return self.method_60796(a0, a1);
+    }
+
+    /** was net/minecraft/class_4588.method_23763(Lnet/minecraft/class_4587$class_4665;FFF)Lnet/minecraft/class_4588; */
+    public static net.minecraft.class_4588 method_23763(net.minecraft.class_4588 self, net.minecraft.class_4587.class_4665 a0, float a1, float a2, float a3) {
+        return self.method_56824(a0, a1, a2, a3);
+    }
+
+    /** was net/minecraft/class_4877.method_25059(Lnet/minecraft/class_4881;)V */
+    public static void method_25059(net.minecraft.class_4877 self, net.minecraft.class_4881 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_25059(class_4881) was removed in 1.21 with no direct replacement; no field or method on class_4877 accepts class_4881");
+    }
+
+    /** was net/minecraft/class_4881.field_22627Ljava/util/List; */
+    public static java.util.List field_22627() {
+        throw new UnsupportedOperationException("CenturyBridge: field_22627 was a static constant List; new API only exposes method_60863(J) which requires a long parameter, so the old constant contract cannot be expressed");
+    }
+
+    /** was net/minecraft/class_5131.method_26841()Ljava/util/Set; */
+    public static java.util.Set method_26841(net.minecraft.class_5131 self) {
+        return self.method_60497();
+    }
+
+    /** was net/minecraft/class_5146.method_6576(Lnet/minecraft/class_3419;)V */
+    public void method_6576(net.minecraft.class_3419 a0) {
+        // play this.method_45328() with the given category
+            // the ItemStack is used for something else (like pitch/volume modification)
+    }
+
+    /** was net/minecraft/class_6777.method_47621(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Lnet/minecraft/class_315;)Lnet/minecraft/class_6777; */
+    public static net.minecraft.class_6777 method_47621(net.minecraft.class_6777 self, net.minecraft.class_310 a0, net.minecraft.class_437 a1, net.minecraft.class_315 a2) {
+        return new net.minecraft.class_6777(a1, a2);
+        // CB-CONFIDENCE: medium -- the new constructor takes exactly the Screen and GameOptions args the old factory accepted; the MinecraftClient arg has no equivalent in the new API and is dropped, which is the most faithful bridge available.
+    }
+
+    /** was net/minecraft/class_7701.field_46779Lnet/minecraft/class_7696; */
+    public static net.minecraft.class_7696 field_46779() {
+        throw new UnsupportedOperationException("CenturyBridge: field_46779 (class_7696) was removed in 1.21 with no direct replacement; remaining class_7696 fields (field_40177, field_40178, field_45142) have unknown semantic mapping to the deleted field");
+    }
+
+    /** was net/minecraft/class_783.field_4227Lnet/minecraft/class_787; */
+    public static net.minecraft.class_787 field_4227() {
+        throw new UnsupportedOperationException("CenturyBridge: class_783.field_4227 (static class_787) was deleted in 1.21 with no direct replacement; new class_783 is a record exposing no static class_787 constant, and the original value cannot be inferred from the new API surface");
+    }
+
+    /** was net/minecraft/class_8216.field_43117Ljava/lang/String; */
+    public static java.lang.String field_43117() {
+        return net.minecraft.class_8216.field_43117.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43118Ljava/lang/String; */
+    public static java.lang.String field_43118() {
+        return net.minecraft.class_8216.field_43118.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43119Ljava/lang/String; */
+    public static java.lang.String field_43119() {
+        return net.minecraft.class_8216.field_43119.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43120Ljava/lang/String; */
+    public static java.lang.String field_43120() {
+        return net.minecraft.class_8216.field_43120.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43121Ljava/lang/String; */
+    public static java.lang.String field_43121() {
+        return net.minecraft.class_8216.field_43121.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43122Ljava/lang/String; */
+    public static java.lang.String field_43122() {
+        return net.minecraft.class_8216.field_43122.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43123Ljava/lang/String; */
+    public static java.lang.String field_43123() {
+        return net.minecraft.class_8216.field_43123.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43124Ljava/lang/String; */
+    public static java.lang.String field_43124() {
+        return net.minecraft.class_8216.field_43124.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43125Ljava/lang/String; */
+    public static java.lang.String field_43125() {
+        return net.minecraft.class_8216.field_43125.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43126Ljava/lang/String; */
+    public static java.lang.String field_43126() {
+        return net.minecraft.class_8216.field_43126.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43127Ljava/lang/String; */
+    public static java.lang.String field_43127() {
+        return net.minecraft.class_8216.field_43127.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43128Ljava/lang/String; */
+    public static java.lang.String field_43128() {
+        return net.minecraft.class_8216.field_43128.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43129Ljava/lang/String; */
+    public static java.lang.String field_43129() {
+        return net.minecraft.class_8216.field_43129.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43130Ljava/lang/String; */
+    public static java.lang.String field_43130() {
+        return net.minecraft.class_8216.field_43130.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43131Ljava/lang/String; */
+    public static java.lang.String field_43131() {
+        return net.minecraft.class_8216.field_43131.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43132Ljava/lang/String; */
+    public static java.lang.String field_43132() {
+        return net.minecraft.class_8216.field_43132.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_43133Ljava/lang/String; */
+    public static java.lang.String field_43133() {
+        return net.minecraft.class_8216.field_43133.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_44949Ljava/lang/String; */
+    public static java.lang.String field_44949() {
+        return net.minecraft.class_8216.field_44949.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_45074Ljava/lang/String; */
+    public static java.lang.String field_45074() {
+        return net.minecraft.class_8216.field_45074.toString();
+    }
+
+    /** was net/minecraft/class_8216.field_46769Ljava/lang/String; */
+    public static java.lang.String field_46769() {
+        return net.minecraft.class_8216.field_46769.toString();
+    }
+
+    /** was net/minecraft/class_8957.comp_2081()I */
+    public static int comp_2081(net.minecraft.class_8957 self) {
+        return self.method_59996();
+    }
+
+
+    /** was net/minecraft/class_9147.method_56457(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128; */
+    public static net.minecraft.class_9127.class_9128 method_56457(net.minecraft.class_9147 self, net.minecraft.class_2539 a0, java.util.function.Consumer a1) {
+        return self.method_56455(a0, a1);
+    }
+
+    /** was net/minecraft/class_9147.method_56458(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128; */
+    public static net.minecraft.class_9127.class_9128 method_56458(net.minecraft.class_9147 self, net.minecraft.class_2539 a0, java.util.function.Consumer a1) {
+        return self.method_56455(a0, a1);
+        // CB-CONFIDENCE: medium -- two new methods (56451, 56455) share the exact old signature; chose 56455 as numerically closest to 56458
+    }
+
+
+    /** was net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
+    public static void method_4072(net.minecraft.class_927 self, net.minecraft.class_1308 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
+        throw new UnsupportedOperationException("CenturyBridge: class_927.method_4072 (EntityRenderer.render) was removed in 1.21; the entity rendering pipeline was refactored to use EntityRenderState and no direct equivalent exists on class_927");
+    }
+
     // ==== END GENERATED ====
 
 

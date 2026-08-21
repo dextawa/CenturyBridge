@@ -20,5 +20,4 @@ public abstract class GenClass1729Bridge {
         throw new UnsupportedOperationException("CenturyBridge: class_1860 (Recipe) no longer has getId() in 1.20.2; cannot construct class_8786 (RecipeEntry) without an Identifier");
     }
 
-
 }
