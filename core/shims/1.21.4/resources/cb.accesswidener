@@ -1,0 +1,7 @@
+accessWidener v2 intermediary
+accessible field net/minecraft/class_8609 field_45013 Lnet/minecraft/class_2535;
+# 1.20.5 made Identifier's constructors private in favour of static factories.
+# The ctor still exists and still validates -- widening beats bytecode surgery
+# on every NEW/DUP/INVOKESPECIAL site in every mod.
+accessible method net/minecraft/class_2960 <init> (Ljava/lang/String;Ljava/lang/String;)V
+accessible method net/minecraft/class_4970 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
