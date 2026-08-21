@@ -15,9 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_5131.class)
 public abstract class GenClass5131Bridge {
 
-    /** was net/minecraft/class_5131.method_26852(Lnet/minecraft/class_1320;)D */
-    public double method_26852(net.minecraft.class_1320 a0) {
-        return ((net.minecraft.class_5131) (Object) this).method_26852(net.minecraft.class_6880.method_40223(a0));
+    /** was net/minecraft/class_5131.method_45330(Lnet/minecraft/class_6880;Ljava/util/UUID;)Z */
+    public boolean method_45330(net.minecraft.class_6880 a0, java.util.UUID a1) {
+        return ((net.minecraft.class_5131)(Object)this).method_45330(a0, net.minecraft.class_2960.method_12829(a1.toString()));
+    }
+
+    /** was net/minecraft/class_5131.method_45332(Lnet/minecraft/class_6880;Ljava/util/UUID;)D */
+    public double method_45332(net.minecraft.class_6880 a0, java.util.UUID a1) {
+        return ((net.minecraft.class_5131)(Object)this).method_45332(a0, net.minecraft.class_2960.method_12829(a1.toString()));
     }
 
 }

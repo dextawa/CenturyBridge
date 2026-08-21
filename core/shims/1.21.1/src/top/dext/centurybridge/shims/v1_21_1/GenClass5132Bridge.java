@@ -15,26 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_5132.class)
 public abstract class GenClass5132Bridge {
 
-    /** was net/minecraft/class_5132.method_26862(Lnet/minecraft/class_1320;)D */
-    public double method_26862(net.minecraft.class_1320 a0) {
-        return ((net.minecraft.class_5132)(Object)this).method_26862(net.minecraft.class_6880.method_40223(a0));
+    /** was net/minecraft/class_5132.method_27308(Lnet/minecraft/class_6880;Ljava/util/UUID;)D */
+    public double method_27308(net.minecraft.class_6880 a0, java.util.UUID a1) {
+        return ((net.minecraft.class_5132)(Object)this).method_27308(a0, net.minecraft.class_2960.method_43902("minecraft", a1.toString()));
     }
 
-    /** was net/minecraft/class_5132.method_26863(Ljava/util/function/Consumer;Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
-    public net.minecraft.class_1324 method_26863(java.util.function.Consumer a0, net.minecraft.class_1320 a1) {
-        return ((net.minecraft.class_5132)(Object) this).method_26863(a0, net.minecraft.class_6880.method_40223(a1));
-    }
-
-    /** was net/minecraft/class_5132.method_26864(Lnet/minecraft/class_1320;)D */
-    public double method_26864(net.minecraft.class_1320 a0) {
-        return ((net.minecraft.class_5132)(Object)this).method_26864(net.minecraft.class_6880.method_40223(a0));
-    }
-
-
-
-    /** was net/minecraft/class_5132.method_27310(Lnet/minecraft/class_1320;)Z */
-    public boolean method_27310(net.minecraft.class_1320 a0) {
-        return ((net.minecraft.class_5132) (Object) this).method_27310(net.minecraft.class_6880.method_40223(a0));
+    /** was net/minecraft/class_5132.method_27309(Lnet/minecraft/class_6880;Ljava/util/UUID;)Z */
+    public boolean method_27309(net.minecraft.class_6880 a0, java.util.UUID a1) {
+        return ((net.minecraft.class_5132)(Object)this).method_27309(a0, net.minecraft.class_2960.method_12829(a1.toString()));
     }
 
 }
