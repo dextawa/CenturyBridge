@@ -9,7 +9,6 @@ import net.minecraft.class_2338;
 import net.minecraft.class_2680;
 import net.minecraft.class_4538;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -21,8 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * - legacy OVERRIDES in mod block subclasses: they override the re-added void
  *   method, and the new-shape method invokes it virtually at TAIL, so mod
  *   break logic fires again. The empty base body prevents recursion.
- * getPickStack narrowed its world parameter; the old overload downcasts
- * (runtime worlds are WorldViews in practice).
  */
 @Mixin(class_2248.class)
 public abstract class BlockBridge {
@@ -37,12 +34,4 @@ public abstract class BlockBridge {
         this.method_9576(world, pos, state, player);
     }
 
-    /** 1.21.4 made getPickStack protected; shadow reaches it from the mixin */
-    @Shadow
-    protected abstract class_1799 method_9574(class_4538 world, class_2338 pos, class_2680 state, boolean includeData);
-
-    /** legacy getPickStack shape (world param narrowed at 1.20.3) */
-    public class_1799 method_9574(class_1922 world, class_2338 pos, class_2680 state) {
-        return this.method_9574((class_4538) world, pos, state, false);
-    }
 }

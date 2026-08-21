@@ -53,7 +53,13 @@ public final class JarProcessor {
 
         Map<String, byte[]> entries = readAll(Files.readAllBytes(in));
         Set<String> issues = new TreeSet<>();
-        processEntries(entries, chain, rpt, issues, "");
+        // tombstone class names must be unique PER JAR, not just per layer:
+        // every converted mod ships its own centurybridge/gen/Tombstones*, and
+        // on the flat runtime classpath the first one loaded shadows the rest
+        // -- another mod's calls then hit stubs with the wrong descriptors
+        String jarTag = in.getFileName().toString()
+            .replaceAll("\\.jar$", "").replaceAll("[^A-Za-z0-9]", "_");
+        processEntries(entries, chain, rpt, issues, "", jarTag);
 
         // ---- metadata patch ----
         byte[] fmj = entries.get("fabric.mod.json");
@@ -91,7 +97,8 @@ public final class JarProcessor {
      * target died crashes the whole game just as hard as a top-level one).
      */
     private static void processEntries(Map<String, byte[]> entries, Chain chain,
-                                       Report rpt, Set<String> issues, String tag) throws IOException {
+                                       Report rpt, Set<String> issues, String tag,
+                                       String jarTag) throws IOException {
         stripSignatures(entries, rpt, tag);
         MixinTriage.Result triage = MixinTriage.run(entries, chain);
         Set<String> deadMixins = new HashSet<>();
@@ -110,7 +117,8 @@ public final class JarProcessor {
         stripConfigs(entries, triage, deadMixins);
 
         // tombstone stub class must be unique per jar layer (all layers share the runtime classpath)
-        String tombClass = "centurybridge/gen/Tombstones" + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count());
+        String tombClass = "centurybridge/gen/Tombstones_" + jarTag
+            + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count());
         Tombstones reg = new Tombstones(tombClass, chain.to);
 
         for (Map.Entry<String, byte[]> e : entries.entrySet()) {
@@ -138,7 +146,11 @@ public final class JarProcessor {
                 }
             } else if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
                 Map<String, byte[]> nested = readAll(e.getValue());
-                processEntries(nested, chain, rpt, issues, tag + "(bundled) ");
+                // sibling nested jars share the flat runtime classpath too, so
+                // the nested jar's own name joins the uniqueness tag
+                String nestedTag = jarTag + "_" + name.substring("META-INF/jars/".length())
+                    .replaceAll("\\.jar$", "").replaceAll("[^A-Za-z0-9]", "_");
+                processEntries(nested, chain, rpt, issues, tag + "(bundled) ", nestedTag);
                 e.setValue(writeJar(nested));
             }
         }
