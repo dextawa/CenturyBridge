@@ -70,6 +70,37 @@ Minecraft 每出一个新版本，链头加一节分段。固定流程（顺序�
 
 **跨命名空间墙（1.21.11→26.1）特别段**：intermediary 停更，此边界是整 jar 改名段——`remap-mojang`（组合映射 TSV）+ refmap JSON 文本重写，之后 26.x 边界照常规流程走。
 
+### 社区：如何构建、如何提交一个新版本
+
+**先决条件**：JDK 21+、Python 3、bash（Windows 用 Git Bash）。仓库不携带任何游戏数据（版权原因）——首次构建前需要自备工作集：
+
+```bash
+# 1) 站起目标版本的离线运行时（官方库 + Fabric loader 库 + 资产）
+python3 core/tools/bootstrap_client.py <mcVersion> data/runtime/client-<mcVersion>
+
+# 2) intermediary 时代还需要:官方 client.jar 放到 data/jars/client-<ver>-obf.jar,
+#    intermediary-<ver>.tiny 放到 data/mappings/,然后产出编译用 stub:
+java -cp "core/build/classes;<asm>;<gson>" top.dext.centurybridge.Main      remap-jar data/mappings/intermediary-<ver>.tiny data/jars/client-<ver>-obf.jar      data/jars/client-<ver>-intermediary.jar
+# 26.x（年号时代）jar 无混淆,直接放 data/jars/client-<ver>.jar 即可
+
+# 3) 编译引擎（ASM/gson 取自任一运行时的 libraries）
+LIBS=$(find data/runtime/*/libraries -name 'asm*.jar' -o -name 'gson*.jar' | tr '
+' ';')
+javac -nowarn -cp "$LIBS" -d core/build/classes $(find core/src -name '*.java')
+
+# 4) 构建某版本的桥 jar（四道门卫全绿才出产物）
+./build.sh <mcVersion>            # -> build/centurybridge-0.3.0+<ver>.jar
+# 26.x 例：CB_STUB=data/jars/client-26.2.jar CB_LIBS=data/runtime/server-26.2/libraries ./build.sh 26.2
+```
+
+**提交一个新版本的支持**（PR 流程）：
+
+1. 按上文《接入新版本：分段更新清单》十步走完；提交物是**仓库内的这些路径**：`core/shims/<ver>/`（shim 树）、`core/segments/shims-<ver>.json`（wiring）、`Chain.RELEASES` 的版本表项，以及（若引擎有改动）`core/src/`
+2. PR 必须全绿的硬门：`./build.sh <ver>` 出 jar；`gapcheck.py` 该边界 OPEN = 0（或每个 OPEN 有工单/账目）；语料可用时 `convert` 零引擎错误 + `BytecodeVerify` 零损伤
+3. **每次锻造落地立即独立 commit**（不要攒大提交——出问题按 commit 粒度回滚）；commit 信息写清跨了哪堵墙、修了什么、剪了什么
+4. 生成物不入库：`data/`、`core/out-*/`、`build/` 都在 .gitignore；段 diff JSON 可由 `gen-segment` 再生
+5. 实机验收证据（服务端 "Done" 日志、客户端行为链截图）贴进 PR 描述
+
 ---
 
 ## English
@@ -137,6 +168,37 @@ Every new Minecraft release adds one segment at the head of the chain. The fixed
 10. **Wrap-up**: update README results, commit/push
 
 **The namespace wall (1.21.11→26.1) is a special segment**: intermediary ended there, so this boundary is a whole-jar rename — `remap-mojang` (composed mapping TSV) plus textual refmap JSON rewriting; 26.x boundaries after it follow the normal procedure.
+
+### Community: how to build, how to submit a new version
+
+**Prerequisites**: JDK 21+, Python 3, bash (Git Bash on Windows). The repo carries no game data (copyright) — stand up a local working set before the first build:
+
+```bash
+# 1) stand up an offline runtime for the target version (vanilla + Fabric loader libs + assets)
+python3 core/tools/bootstrap_client.py <mcVersion> data/runtime/client-<mcVersion>
+
+# 2) intermediary era only: drop the official client.jar at data/jars/client-<ver>-obf.jar,
+#    intermediary-<ver>.tiny into data/mappings/, then produce the compile stub:
+java -cp "core/build/classes;<asm>;<gson>" top.dext.centurybridge.Main      remap-jar data/mappings/intermediary-<ver>.tiny data/jars/client-<ver>-obf.jar      data/jars/client-<ver>-intermediary.jar
+# 26.x (year era) ships unobfuscated: just place data/jars/client-<ver>.jar
+
+# 3) compile the engine (ASM/gson come from any runtime's libraries)
+LIBS=$(find data/runtime/*/libraries -name 'asm*.jar' -o -name 'gson*.jar' | tr '
+' ';')
+javac -nowarn -cp "$LIBS" -d core/build/classes $(find core/src -name '*.java')
+
+# 4) build a version's bridge jar (artifact only appears if all four gates pass)
+./build.sh <mcVersion>            # -> build/centurybridge-0.3.0+<ver>.jar
+# 26.x example: CB_STUB=data/jars/client-26.2.jar CB_LIBS=data/runtime/server-26.2/libraries ./build.sh 26.2
+```
+
+**Submitting support for a new version** (PR flow):
+
+1. Walk the ten-step checklist above ("Adding a new version"); the deliverables are **these in-repo paths**: `core/shims/<ver>/` (the shim tree), `core/segments/shims-<ver>.json` (wiring), the `Chain.RELEASES` entry, plus `core/src/` if the engine changed
+2. Hard gates a PR must pass: `./build.sh <ver>` produces the jar; `gapcheck.py` reports OPEN = 0 for the boundary (or every OPEN symbol has a forge order / ledger line); with a corpus available, `convert` runs with zero engine errors and `BytecodeVerify` reports zero damage
+3. **Commit immediately after every forge landing** (no batched mega-commits — problems are rolled back at commit granularity); say in the message which wall was crossed, what was fixed, what was pruned
+4. Generated artifacts stay out of the repo: `data/`, `core/out-*/`, `build/` are gitignored; segment diff JSONs regenerate via `gen-segment`
+5. Attach live-acceptance evidence (server "Done" log, client behavior-loop screenshots) to the PR description
 
 ### License
 
