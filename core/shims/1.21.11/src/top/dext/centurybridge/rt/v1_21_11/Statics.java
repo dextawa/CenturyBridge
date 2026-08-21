@@ -1339,7 +1339,7 @@ public final class Statics {
 
     /** was net/minecraft/class_640.method_2977()Ljava/lang/String; */
     public static java.lang.String method_2977(net.minecraft.class_640 self) {
-        return self.method_2966().getName();
+        return self.method_2966().name();
     }
 
     /** was net/minecraft/class_640.method_35757()Z */
@@ -1675,7 +1675,7 @@ public final class Statics {
 
     /** was net/minecraft/class_1657.method_53968(Ljava/lang/String;)Z */
     public static boolean method_53968(net.minecraft.class_1657 self, java.lang.String a0) {
-        return self.method_7334().getName().equalsIgnoreCase(a0);
+        return self.method_7334().name().equalsIgnoreCase(a0);
     }
 
     /** was net/minecraft/class_1657.method_54292(Z)F */
