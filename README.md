@@ -53,6 +53,23 @@ CenturyBridge 是一个跨版本模组兼容层（Fabric）：把已停更的老
 
 无构建系统依赖（暂时）：`javac` + ASM/gson jar 即可编译 `core/`。详见 `LOOP.md` 中的命令示例。正式的 Gradle 工程化在路线图上。
 
+### 接入新版本：分段更新清单
+
+Minecraft 每出一个新版本，链头加一节分段。固定流程（顺序即依赖）：
+
+1. **版本表**：`Chain.RELEASES` 追加新版本号
+2. **映射与 stub**：下载官方 client.jar。intermediary 时代：取 `intermediary-<ver>.tiny`，`remap-jar` 产出 `client-<ver>-intermediary.jar`；**26.x（年号时代）jar 无混淆，直接用真名 jar**
+3. **段数据**：`gen-segment <from> <to>` 生成冻结分段 JSON（映射 diff；26.x 边界在 mojang 名字空间上做）
+4. **伤害面测量**：`stub-diff`（owner 限定）产出边界 diff TSV，`gapcheck.py` 扩入新边界；`class-fate` 分类整类死亡
+5. **锻造工单**：`forge-orders` 按 diff 生成逐符号工单 → `forge.py`（模型只写方法体）→ `verify.py`（javac 判官，错误回喂重试）→ `assemble.py` 落地源码 + wiring（**落地后立即 commit**）→ `prune_failed.py` / `prune_dead_targets.py` 修剪树上下文败者进重试单
+6. **shim 树前移**：`port_delta.py` 从上一版本树增量前移（包 token 自动改名）；对新 stub 编译，编译器当检测器清错；死目标进 dropped 清单；wiring 差量前移进 `shims-<ver>.json` 并对照 stub 机器验证
+7. **语料回归**：全 corpus `convert` @新版本；`BytecodeVerify` dataflow 全绿；统计未记账残留
+8. **闭合判据（硬门）**：`gapcheck` OPEN = 0，未记账 < 50 且全部记账（桥/重定向/facade/墓碑逐条对应）——**一段不闭合，不进下一段**
+9. **实机验收**：`build.sh <ver>` 出桥 jar（class 版本按代际钉板：1.20.x=17，其余=21）；服务端 "Done" 零错；客户端行为链自测（注册/放置/GUI/持久化）
+10. **收尾**：README 战果更新，commit/push
+
+**跨命名空间墙（1.21.11→26.1）特别段**：intermediary 停更，此边界是整 jar 改名段——`remap-mojang`（组合映射 TSV）+ refmap JSON 文本重写，之后 26.x 边界照常规流程走。
+
 ---
 
 ## English
@@ -103,6 +120,23 @@ Per-jar pipeline:
 ### Building
 
 No build system yet: `javac` plus the ASM/gson jars compiles `core/`. See `LOOP.md` for command examples. Proper Gradle packaging is on the roadmap.
+
+### Adding a new version: the segment update checklist
+
+Every new Minecraft release adds one segment at the head of the chain. The fixed procedure (order = dependency):
+
+1. **Release table**: append the version to `Chain.RELEASES`
+2. **Mappings & stub**: download the official client.jar. Intermediary era: fetch `intermediary-<ver>.tiny` and produce `client-<ver>-intermediary.jar` via `remap-jar`; **26.x (year-versioned era) ships unobfuscated — use the real-name jar directly**
+3. **Segment data**: `gen-segment <from> <to>` builds the frozen segment JSON (mapping diff; 26.x boundaries diff in the mojang namespace)
+4. **Damage surface**: `stub-diff` (owner-qualified) emits the boundary diff TSV; extend `gapcheck.py` with the new boundary; `class-fate` classifies whole-class deaths
+5. **Bridge forging**: `forge-orders` emits per-symbol work orders → `forge.py` (the model writes method bodies only) → `verify.py` (javac is the judge; errors fed back on retry) → `assemble.py` lands sources + wiring (**commit immediately after landing**) → `prune_failed.py` / `prune_dead_targets.py` cut in-tree failures into the retry queue
+6. **Shim tree forward-port**: `port_delta.py` moves the previous version's tree forward incrementally (package tokens rewritten); compile against the new stub and drive compiler errors to zero; dead targets go to the dropped list; wiring deltas move into `shims-<ver>.json`, machine-validated against the stub
+7. **Corpus regression**: `convert` the full corpus at the new version; `BytecodeVerify` dataflow all green; count unaccounted residuals
+8. **Closure gate (hard)**: `gapcheck` OPEN = 0, unaccounted < 50 and every symbol accounted (bridge / redirect / facade / tombstone) — **a segment that is not closed does not advance**
+9. **Live acceptance**: `build.sh <ver>` produces the bridge jar (class-file level pinned per era: 17 for 1.20.x, 21 after); server reaches "Done" with zero errors; client behavior-loop self-test (register / place / GUI / persistence)
+10. **Wrap-up**: update README results, commit/push
+
+**The namespace wall (1.21.11→26.1) is a special segment**: intermediary ended there, so this boundary is a whole-jar rename — `remap-mojang` (composed mapping TSV) plus textual refmap JSON rewriting; 26.x boundaries after it follow the normal procedure.
 
 ### License
 
