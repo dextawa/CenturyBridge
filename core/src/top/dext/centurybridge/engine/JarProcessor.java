@@ -35,6 +35,36 @@ import org.objectweb.asm.Opcodes;
 public final class JarProcessor {
     private static final Gson GSON = new Gson();
 
+    /**
+     * Component-wall hooks that gained a trailing RegistryWrapper.WrapperLookup
+     * parameter at 1.20.5. Damage is two-sided: a mod's override of the old
+     * shape is orphaned (vanilla now calls the new one), and the mod's super
+     * calls reference a descriptor that no longer exists. The rewrite pass
+     * synthesizes a new-shape override forwarding to the old one, and appends
+     * a builtin lookup to old-shape call sites.
+     */
+    private static final Map<String, String[]> LOOKUP_HOOKS = Map.of(
+        "method_11007", new String[] {"(Lnet/minecraft/class_2487;)V",
+            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V"},
+        "method_11014", new String[] {"(Lnet/minecraft/class_2487;)V",
+            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V"},
+        "method_16887", new String[] {"()Lnet/minecraft/class_2487;",
+            "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"},
+        "method_38244", new String[] {"()Lnet/minecraft/class_2487;",
+            "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"},
+        // Inventories.writeNbt / readNbt statics, same trailing-lookup change
+        "method_5426", new String[] {
+            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)Lnet/minecraft/class_2487;",
+            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"},
+        "method_5429", new String[] {
+            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)V",
+            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)V"},
+        "method_5427", new String[] {
+            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487;",
+            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;ZLnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"});
+
+    private static final String LOOKUP_RT = "top/dext/centurybridge/rt/v1_21_1/Statics";
+
     public static final class Report {
         public String file;
         public String modId;
@@ -256,6 +286,24 @@ public final class JarProcessor {
         // dead-class facade renames touch descriptors/signatures everywhere, so the
         // trigger is a raw byte scan rather than per-ref analysis
         boolean needClassRename = false;
+        // Orphaned override: 1.20.5 split Block.use -- the old 6-arg
+        // method_9534 stops being called by anyone, silently. Detected here,
+        // reconnected in the rewrite pass by synthesizing the new-signature
+        // hook that forwards to the mod's old method.
+        final boolean[] hasOldUse = {false};
+        final boolean[] hasNewUse = {false};
+        final Set<String> declaredOldHooks = new HashSet<>();
+        final Set<String> declaredNewHooks = new HashSet<>();
+        boolean needIfaceFix = false;
+        if (!chain.interfaceized.isEmpty()) {
+            String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+            for (String dead : chain.interfaceized) {
+                if (raw.contains(dead)) {
+                    needIfaceFix = true;
+                    break;
+                }
+            }
+        }
         if (!chain.classRenames.isEmpty()) {
             String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
             for (String dead : chain.classRenames.keySet()) {
@@ -279,11 +327,43 @@ public final class JarProcessor {
 
             @Override
             public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
+                if (mName.equals("method_9534") && mDesc.equals(
+                        "(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;"
+                        + "Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)"
+                        + "Lnet/minecraft/class_1269;")) {
+                    hasOldUse[0] = true;
+                }
+                if (mName.equals("method_55766")) {
+                    hasNewUse[0] = true;
+                }
+                String[] hk = LOOKUP_HOOKS.get(mName);
+                if (hk != null) {
+                    if (mDesc.equals(hk[0])) {
+                        declaredOldHooks.add(mName);
+                    } else if (mDesc.equals(hk[1])) {
+                        declaredNewHooks.add(mName);
+                    }
+                }
                 return new MethodVisitor(Opcodes.ASM9) {
                     @Override
                     public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
                         checkClass(owner);
                         if (!owner.startsWith("net/minecraft/")) {
+                            // library owners are outside the stub diffs, but a
+                            // redirect wired explicitly (DFU's Codec.dispatch
+                            // contract change hides behind generic erasure)
+                            // still applies
+                            String lkey = owner + "." + name + desc;
+                            String lrt = chain.instanceRedirects.get(lkey);
+                            if (lrt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
+                                instRedirects.put(lkey, lrt);
+                                top.dext.centurybridge.data.FullAudit.record(lkey, "instance-redirect");
+                            }
+                            String lsrt = chain.staticRedirects.get(lkey);
+                            if (lsrt != null && op == Opcodes.INVOKESTATIC) {
+                                redirects.put(lkey, lsrt);
+                                top.dext.centurybridge.data.FullAudit.record(lkey, "static-redirect");
+                            }
                             return; // mod-owned members (incl. overrides of dead interface methods) still exist
                         }
                         if (chain.classRenames.containsKey(owner)) {
@@ -503,9 +583,15 @@ public final class JarProcessor {
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
         if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty() && !needClassRename) {
+                && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
+                && !needClassRename && !needIfaceFix
+                && !(hasOldUse[0] && !hasNewUse[0])
+                && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)) {
             return null;
         }
+        final boolean reconnectUse = hasOldUse[0] && !hasNewUse[0];
+        final Set<String> reconnectHooks = new HashSet<>(declaredOldHooks);
+        reconnectHooks.removeAll(declaredNewHooks);
         for (String k : redirects.keySet()) {
             rpt.notes.add(tag + "static-redirected: " + k + " -> " + redirects.get(k));
         }
@@ -528,6 +614,7 @@ public final class JarProcessor {
         }
 
         ClassReader cr = new ClassReader(bytes);
+        final String[] clsName = {cr.getClassName()};
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(0);
         ClassVisitor sink = needClassRename
             ? new org.objectweb.asm.commons.ClassRemapper(cw,
@@ -535,11 +622,76 @@ public final class JarProcessor {
             : cw;
         cr.accept(new ClassVisitor(Opcodes.ASM9, sink) {
             @Override
+            public void visitEnd() {
+                for (String hook : reconnectHooks) {
+                    String[] hk = LOOKUP_HOOKS.get(hook);
+                    // new shape forwards to the mod's old override, dropping the lookup
+                    MethodVisitor hv = super.visitMethod(Opcodes.ACC_PROTECTED, hook, hk[1], null, null);
+                    hv.visitCode();
+                    hv.visitVarInsn(Opcodes.ALOAD, 0);
+                    boolean takesNbt = hk[0].startsWith("(Lnet/minecraft/class_2487;");
+                    if (takesNbt) {
+                        hv.visitVarInsn(Opcodes.ALOAD, 1);
+                    }
+                    hv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, clsName[0], hook, hk[0], false);
+                    hv.visitInsn(hk[0].endsWith(")V") ? Opcodes.RETURN : Opcodes.ARETURN);
+                    hv.visitMaxs(3, 3);
+                    hv.visitEnd();
+                }
+                if (reconnectUse) {
+                    // protected class_1269 method_55766(state, world, pos, player, hit)
+                    //   -> this.method_9534(state, world, pos, player, MAIN_HAND, hit)
+                    // The old override keeps working because the new hook vanilla
+                    // actually calls now forwards into it.
+                    MethodVisitor mv = super.visitMethod(Opcodes.ACC_PROTECTED, "method_55766",
+                        "(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;"
+                        + "Lnet/minecraft/class_1657;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+                        null, null);
+                    mv.visitCode();
+                    mv.visitVarInsn(Opcodes.ALOAD, 0);
+                    mv.visitVarInsn(Opcodes.ALOAD, 1);
+                    mv.visitVarInsn(Opcodes.ALOAD, 2);
+                    mv.visitVarInsn(Opcodes.ALOAD, 3);
+                    mv.visitVarInsn(Opcodes.ALOAD, 4);
+                    mv.visitFieldInsn(Opcodes.GETSTATIC, "net/minecraft/class_1268",
+                        "field_5808", "Lnet/minecraft/class_1268;");
+                    mv.visitVarInsn(Opcodes.ALOAD, 5);
+                    mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, clsName[0], "method_9534",
+                        "(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;"
+                        + "Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)"
+                        + "Lnet/minecraft/class_1269;", false);
+                    mv.visitInsn(Opcodes.ARETURN);
+                    mv.visitMaxs(7, 6);
+                    mv.visitEnd();
+                }
+                super.visitEnd();
+            }
+
+            @Override
             public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
                 MethodVisitor mv = super.visitMethod(acc, mName, mDesc, sig, ex);
                 return new MethodVisitor(Opcodes.ASM9, mv) {
                     @Override
                     public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
+                        // owner became an interface on the target: the verifier
+                        // rejects a Methodref there outright, so fix the call
+                        // kind (opcode + itf flag) while leaving the target alone
+                        if (!itf && chain.interfaceized.contains(owner)) {
+                            int fixed = op == Opcodes.INVOKEVIRTUAL ? Opcodes.INVOKEINTERFACE : op;
+                            super.visitMethodInsn(fixed, owner, name, desc, true);
+                            return;
+                        }
+                        String[] hk = LOOKUP_HOOKS.get(name);
+                        if (hk != null && desc.equals(hk[0]) && owner.startsWith("net/minecraft/")) {
+                            // append the builtin lookup and call the new shape;
+                            // the world's manager would be more precise, but the
+                            // builtin wrapper resolves everything vanilla
+                            // serialization needs here
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, LOOKUP_RT,
+                                "cbLookup", "()Lnet/minecraft/class_7225$class_7874;", false);
+                            super.visitMethodInsn(op, owner, name, hk[1], itf);
+                            return;
+                        }
                         String key = owner + "." + name + desc;
                         String rt = redirects.get(key);
                         if (rt != null && op == Opcodes.INVOKESTATIC) {
@@ -588,6 +740,17 @@ public final class JarProcessor {
                         for (int i = 0; i < rewritten.length; i++) {
                             if (!(rewritten[i] instanceof org.objectweb.asm.Handle h)) {
                                 continue;
+                            }
+                            // a method REFERENCE to an interfaceized owner carries its
+                            // own isInterface flag inside the Handle -- the plain
+                            // call-site fix never sees it, which is exactly where
+                            // DataResult::success kept crashing after the fix
+                            if (!h.isInterface() && chain.interfaceized.contains(h.getOwner())) {
+                                int tag = h.getTag() == Opcodes.H_INVOKEVIRTUAL
+                                    ? Opcodes.H_INVOKEINTERFACE : h.getTag();
+                                h = new org.objectweb.asm.Handle(
+                                    tag, h.getOwner(), h.getName(), h.getDesc(), true);
+                                rewritten[i] = h;
                             }
                             String key = h.getOwner() + "." + h.getName() + h.getDesc();
                             String rt = redirects.get(key);

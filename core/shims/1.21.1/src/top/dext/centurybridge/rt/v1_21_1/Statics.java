@@ -14,7 +14,7 @@ public final class Statics {
 
     /** 1.20.1 Ingredient.fromJson(JsonElement), removed 1.20.2 (codec era). L3 x29. */
     public static class_1856 method_52177(JsonElement json) {
-        return class_1856.field_46095.parse(JsonOps.INSTANCE, json)
+        return class_1856.field_46095.parse(cbJsonOps(), json)
             .result()
             .orElseThrow(() -> new JsonSyntaxException("Invalid ingredient: " + json));
     }
@@ -30,7 +30,7 @@ public final class Statics {
     /** 1.20.1 Ingredient.fromJson(json, allowEmpty), removed 1.20.2. L3 x9. */
     public static class_1856 method_8102(JsonElement json, boolean allowEmpty) {
         var codec = allowEmpty ? class_1856.field_46095 : class_1856.field_46096;
-        return codec.parse(JsonOps.INSTANCE, json)
+        return codec.parse(cbJsonOps(), json)
             .result()
             .orElseThrow(() -> new JsonSyntaxException("Invalid ingredient: " + json));
     }
@@ -166,14 +166,14 @@ public final class Statics {
         if (json == null || json.isJsonNull()) {
             return net.minecraft.class_2073.class_2074.method_8973().method_8976();
         }
-        return net.minecraft.class_2073.field_45754.parse(JsonOps.INSTANCE, json)
+        return net.minecraft.class_2073.field_45754.parse(cbJsonOps(), json)
             .result()
             .orElseThrow(() -> new JsonSyntaxException("Invalid item predicate: " + json));
     }
 
     /** 1.20.1 ItemPredicate.toJson, reimplemented on the codec's encode side. */
     public static JsonElement method_8971(net.minecraft.class_2073 self) {
-        return net.minecraft.class_2073.field_45754.encodeStart(JsonOps.INSTANCE, self)
+        return net.minecraft.class_2073.field_45754.encodeStart(cbJsonOps(), self)
             .result()
             .orElse(com.google.gson.JsonNull.INSTANCE);
     }
@@ -1603,6 +1603,80 @@ public final class Statics {
     }
 
     // ==== END GENERATED ====
+
+
+    /**
+     * DFU 7 changed Codec.dispatch's type function from returning Codec to
+     * returning MapCodec -- same erased descriptor, different contract, so the
+     * verifier never objects and the cast blows up at decode time deep inside
+     * a mod's own registry. The adapter accepts whatever the old function
+     * returns and normalises it.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static com.mojang.serialization.MapCodec cbAsMap(Object c) {
+        if (c instanceof com.mojang.serialization.MapCodec m) {
+            return m;
+        }
+        if (c instanceof com.mojang.serialization.MapCodec.MapCodecCodec mc) {
+            return mc.codec();
+        }
+        return com.mojang.serialization.MapCodec.assumeMapUnsafe(
+            (com.mojang.serialization.Codec) c);
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static com.mojang.serialization.Codec dispatch(
+            com.mojang.serialization.Codec self,
+            java.util.function.Function keyGetter, java.util.function.Function type) {
+        return self.dispatch(keyGetter, k -> cbAsMap(type.apply(k)));
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static com.mojang.serialization.Codec dispatch(
+            com.mojang.serialization.Codec self, String typeKey,
+            java.util.function.Function keyGetter, java.util.function.Function type) {
+        return self.dispatch(typeKey, keyGetter, k -> cbAsMap(type.apply(k)));
+    }
+
+
+    /**
+     * 1.20.5+ codecs resolve registry entries (items, enchantments) through the
+     * ops, not through static lookups baked into the codec -- plain JsonOps
+     * makes every id "invalid". Registry-aware ops built from the builtin root;
+     * lazy because the registries must be populated first, which they are by
+     * the time any mod entrypoint runs.
+     */
+    private static com.mojang.serialization.DynamicOps<JsonElement> cbOps;
+
+    private static com.mojang.serialization.DynamicOps<JsonElement> cbJsonOps() {
+        if (cbOps == null) {
+            cbOps = net.minecraft.class_6903.method_46632(JsonOps.INSTANCE,
+                net.minecraft.class_5455.method_40302(net.minecraft.class_7923.field_41167));
+        }
+        return cbOps;
+    }
+
+
+    /**
+     * 1.20.1 ItemStack.hasCustomName(): the component wall made the name a
+     * CUSTOM_NAME data component, so "has a name" is "carries the component".
+     * (First attempt guessed setCustomName from the method NAME -- the 1.20.1
+     * stub says ()Z. Semantics come from descriptors, not from naming vibes.)
+     */
+    public static boolean method_7938(net.minecraft.class_1799 self) {
+        return self.method_57826(net.minecraft.class_9334.field_49631);
+    }
+
+
+    /**
+     * Builtin registry lookup for component-wall call sites that suddenly need
+     * one (BlockEntity NBT family). The world's own manager would be the exact
+     * choice; the builtin wrapper resolves everything vanilla serialization
+     * reaches for in these paths.
+     */
+    public static net.minecraft.class_7225.class_7874 cbLookup() {
+        return net.minecraft.class_5455.method_40302(net.minecraft.class_7923.field_41167);
+    }
 
     private Statics() {
     }

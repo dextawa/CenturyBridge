@@ -103,6 +103,15 @@ public final class Chain {
     public final java.util.Set<String> shimCovers = new java.util.HashSet<>();
 
     /**
+     * Owners that were classes when the corpus was compiled and are interfaces
+     * on the target (DFU 7 turned DataResult into one). The JVM verifies the
+     * call-site kind strictly: a Methodref against an interface throws
+     * IncompatibleClassChangeError before any code runs, so these call sites
+     * need their opcode and itf flag rewritten, not their target.
+     */
+    public final java.util.Set<String> interfaceized = new java.util.HashSet<>();
+
+    /**
      * child -> superclass, read from the OLD stub. A mod calls a method through
      * whatever class it holds a reference to, but the declaration -- and hence
      * the ledger entry, cover or redirect -- lives wherever the member is
@@ -193,6 +202,11 @@ public final class Chain {
                 var fr = root.getAsJsonObject("fieldRedirects");
                 for (String k : fr.keySet()) {
                     c.fieldRedirects.put(k, fr.get(k).getAsString());
+                }
+            }
+            if (root.has("interfaceized")) {
+                for (var el : root.getAsJsonArray("interfaceized")) {
+                    c.interfaceized.add(el.getAsString());
                 }
             }
             if (root.has("classRenames")) {
