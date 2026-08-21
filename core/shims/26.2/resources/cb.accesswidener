@@ -1,0 +1,7 @@
+accessWidener v2 official
+accessible field net/minecraft/server/network/ServerCommonPacketListenerImpl connection Lnet/minecraft/network/Connection;
+# 1.20.5 made Identifier's constructors private in favour of static factories.
+# The ctor still exists and still validates -- widening beats bytecode surgery
+# on every NEW/DUP/INVOKESPECIAL site in every mod.
+accessible method net/minecraft/resources/Identifier <init> (Ljava/lang/String;Ljava/lang/String;)V
+accessible method net/minecraft/world/level/block/state/BlockBehaviour getCloneItemStack (Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/item/ItemStack;

@@ -129,6 +129,10 @@ public final class Chain {
     /** Runtime class serving cbLookup() for the hooks above ("lookupRt"). */
     public String lookupRt;
 
+    /** cbLookup()'s descriptor -- intermediary through 1.21.11, mojang names
+     *  past the namespace wall ("lookupDesc" in shims-<to>.json). */
+    public String lookupDesc = "()Lnet/minecraft/class_7225$class_7874;";
+
     /**
      * True when this target is past the 1.20.5 Block.use split
      * (method_9534 6-arg -> method_55766 5-arg): old-shape overrides need a
@@ -241,6 +245,9 @@ public final class Chain {
                     c.lookupHooks.put(k, new String[] {
                         arr.get(0).getAsString(), arr.get(1).getAsString()});
                 }
+            }
+            if (root.has("lookupDesc")) {
+                c.lookupDesc = root.get("lookupDesc").getAsString();
             }
             if (root.has("lookupRt")) {
                 c.lookupRt = root.get("lookupRt").getAsString();

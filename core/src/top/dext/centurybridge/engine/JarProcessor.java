@@ -33,6 +33,20 @@ import org.objectweb.asm.Opcodes;
  * Verdicts follow the tombstone philosophy: missing symbols degrade lazily.
  */
 public final class JarProcessor {
+
+    /** Redirect values are a class name, optionally "class#member" past the
+     *  namespace wall where call-site names are no longer globally unique. */
+    private static String redirCls(String v) {
+        int i = v.indexOf('#');
+        return i < 0 ? v : v.substring(0, i);
+    }
+
+    private static String redirName(String v, String callSiteName) {
+        int i = v.indexOf('#');
+        return i < 0 ? callSiteName : v.substring(i + 1);
+    }
+
+
     private static final Gson GSON = new Gson();
 
     public static final class Report {
@@ -757,19 +771,21 @@ public final class JarProcessor {
                             // shape (and get a forward synthesized) or inherit
                             // the vanilla new shape.
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, chain.lookupRt,
-                                "cbLookup", "()Lnet/minecraft/class_7225$class_7874;", false);
+                                "cbLookup", chain.lookupDesc, false);
                             super.visitMethodInsn(op, owner, name, hk[1], itf);
                             return;
                         }
                         String key = owner + "." + name + desc;
                         String rt = redirects.get(key);
                         if (rt != null && op == Opcodes.INVOKESTATIC) {
-                            super.visitMethodInsn(Opcodes.INVOKESTATIC, rt, name, desc, false);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(rt),
+                                redirName(rt, name), desc, false);
                             return;
                         }
                         String irt = instRedirects.get(key);
                         if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
-                            super.visitMethodInsn(Opcodes.INVOKESTATIC, irt, name,
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(irt),
+                                redirName(irt, name),
                                 "(L" + owner + ";" + desc.substring(1), false);
                             return;
                         }
@@ -791,7 +807,9 @@ public final class JarProcessor {
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
                         String fkey = owner + "." + name + ":" + desc;
                         if (op == Opcodes.GETSTATIC && fldRedirects.containsKey(fkey)) {
-                            super.visitFieldInsn(Opcodes.GETSTATIC, fldRedirects.get(fkey), name, desc);
+                            String fv = fldRedirects.get(fkey);
+                            super.visitFieldInsn(Opcodes.GETSTATIC, redirCls(fv),
+                                redirName(fv, name), desc);
                             return;
                         }
                         String renamed = fldRenames.get(fkey);
@@ -825,14 +843,15 @@ public final class JarProcessor {
                             String rt = redirects.get(key);
                             if (rt != null && h.getTag() == Opcodes.H_INVOKESTATIC) {
                                 rewritten[i] = new org.objectweb.asm.Handle(
-                                    Opcodes.H_INVOKESTATIC, rt, h.getName(), h.getDesc(), false);
+                                    Opcodes.H_INVOKESTATIC, redirCls(rt),
+                                    redirName(rt, h.getName()), h.getDesc(), false);
                                 continue;
                             }
                             String irt = instRedirects.get(key);
                             if (irt != null && (h.getTag() == Opcodes.H_INVOKEVIRTUAL
                                     || h.getTag() == Opcodes.H_INVOKEINTERFACE)) {
-                                rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, irt,
-                                    h.getName(), "(L" + h.getOwner() + ";" + h.getDesc().substring(1), false);
+                                rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, redirCls(irt),
+                                    redirName(irt, h.getName()), "(L" + h.getOwner() + ";" + h.getDesc().substring(1), false);
                                 continue;
                             }
                             String boundary = tombstone.get(key);

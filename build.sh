@@ -126,12 +126,13 @@ if os.path.exists(cfg):
     dangling = []
     for m in ("staticRedirects", "instanceRedirects", "fieldRedirects"):
         for k, v in d.get(m, {}).items():
-            impl = declared(v)
-            member = k.split(".")[-1].split("(")[0].split(":")[0]
+            cls, _, explicit = v.partition("#")
+            impl = declared(cls)
+            member = explicit or k.split(".")[-1].split("(")[0].split(":")[0]
             if impl is None:
                 dangling.append(f"{k} -> {v} (no such shim source)")
             elif member not in impl:
-                dangling.append(f"{k} -> {v}.{member} (member missing)")
+                dangling.append(f"{k} -> {cls}.{member} (member missing)")
     if d.get("lookupRt"):
         impl = declared(d["lookupRt"])
         if impl is None or "cbLookup" not in impl:
@@ -166,8 +167,15 @@ jar cf "$JAR" -C "$CLASSES" .
 # is one vanilla itself calls, the world dies on the first tick -- that is how
 # class_1297.cw() reached a player three times.
 python3 - "$JAR" <<'PYOBF'
-import re, subprocess, sys, zipfile
+import os, re, subprocess, sys, zipfile
 jar = sys.argv[1]
+# The premise (a 1-3 letter member name is an unstable obfuscated leftover)
+# only holds while the game ships obfuscated and we compile against
+# intermediary stubs. In the year-versioned era names are real -- Vec3.x()
+# is API, not residue -- so the gate stands down.
+if "intermediary" not in os.path.basename(os.environ.get("CB_STUB", "intermediary")):
+    print("real-name era stub: obfuscated-name gate not applicable")
+    sys.exit(0)
 SAFE = {"get", "put", "add", "map", "of", "abs", "min", "max", "pow", "run",
         "set", "log", "cos", "sin", "tan"}
 with zipfile.ZipFile(jar) as z:
