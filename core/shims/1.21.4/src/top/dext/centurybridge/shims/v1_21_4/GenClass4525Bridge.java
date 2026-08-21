@@ -20,4 +20,13 @@ public abstract class GenClass4525Bridge {
         ((net.minecraft.class_4525) (Object) this).method_22246(a0, a2);
     }
 
+    /** was net/minecraft/class_4525.method_22255(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Lnet/minecraft/class_2338; */
+    public net.minecraft.class_2338 method_22255(net.minecraft.class_2338 a0, int a1, net.minecraft.class_3218 a2) {
+        return ((net.minecraft.class_4525) (Object) this).method_22255(a0, a1, a2).orElse(null);
+    }
+
+    /** was net/minecraft/class_4525.method_22258(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Ljava/util/Collection; */
+    public java.util.Collection method_22258(net.minecraft.class_2338 a0, int a1, net.minecraft.class_3218 a2) {
+        return ((net.minecraft.class_4525) (Object) this).method_22258(a0, a1, a2).collect(java.util.stream.Collectors.toList());
+    }
 }

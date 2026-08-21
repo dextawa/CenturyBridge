@@ -25,4 +25,13 @@ public abstract class GenClass310Bridge {
         ((net.minecraft.class_310) (Object) this).method_31186(a0, a1, null);
     }
 
+    /** was net/minecraft/class_310.method_1481(Lnet/minecraft/class_638;)V */
+    public void method_1481(net.minecraft.class_638 a0) {
+        ((net.minecraft.class_310) (Object) this).method_1481(a0, net.minecraft.class_434.class_9678.field_51487);
+    }
+
+    /** was net/minecraft/class_310.method_18096(Lnet/minecraft/class_437;)V */
+    public void method_18096(net.minecraft.class_437 a0) {
+        ((net.minecraft.class_310) (Object) this).method_18096(a0, false);
+    }
 }

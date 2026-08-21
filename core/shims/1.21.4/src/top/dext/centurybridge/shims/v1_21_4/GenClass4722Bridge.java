@@ -20,4 +20,13 @@ public abstract class GenClass4722Bridge {
         return ((net.minecraft.class_4722) (Object) this).method_48480(false);
     }
 
+    /** was net/minecraft/class_4722.method_33081(Lnet/minecraft/class_5321;)Lnet/minecraft/class_4730; */
+    public net.minecraft.class_4730 method_33081(net.minecraft.class_5321 a0) {
+        return ((net.minecraft.class_4722)(Object)this).method_49341(a0);
+    }
+
+    /** was net/minecraft/class_4722.method_33083(Lnet/minecraft/class_5321;)Lnet/minecraft/class_4730; */
+    public net.minecraft.class_4730 method_33083(net.minecraft.class_5321 a0) {
+        return ((net.minecraft.class_4722) (Object) this).method_49341(a0);
+    }
 }
