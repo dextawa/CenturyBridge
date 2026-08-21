@@ -35,36 +35,6 @@ import org.objectweb.asm.Opcodes;
 public final class JarProcessor {
     private static final Gson GSON = new Gson();
 
-    /**
-     * Component-wall hooks that gained a trailing RegistryWrapper.WrapperLookup
-     * parameter at 1.20.5. Damage is two-sided: a mod's override of the old
-     * shape is orphaned (vanilla now calls the new one), and the mod's super
-     * calls reference a descriptor that no longer exists. The rewrite pass
-     * synthesizes a new-shape override forwarding to the old one, and appends
-     * a builtin lookup to old-shape call sites.
-     */
-    private static final Map<String, String[]> LOOKUP_HOOKS = Map.of(
-        "method_11007", new String[] {"(Lnet/minecraft/class_2487;)V",
-            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V"},
-        "method_11014", new String[] {"(Lnet/minecraft/class_2487;)V",
-            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V"},
-        "method_16887", new String[] {"()Lnet/minecraft/class_2487;",
-            "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"},
-        "method_38244", new String[] {"()Lnet/minecraft/class_2487;",
-            "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"},
-        // Inventories.writeNbt / readNbt statics, same trailing-lookup change
-        "method_5426", new String[] {
-            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)Lnet/minecraft/class_2487;",
-            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"},
-        "method_5429", new String[] {
-            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)V",
-            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)V"},
-        "method_5427", new String[] {
-            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487;",
-            "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;ZLnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"});
-
-    private static final String LOOKUP_RT = "top/dext/centurybridge/rt/v1_21_1/Statics";
-
     public static final class Report {
         public String file;
         public String modId;
@@ -122,6 +92,7 @@ public final class JarProcessor {
      */
     private static void processEntries(Map<String, byte[]> entries, Chain chain,
                                        Report rpt, Set<String> issues, String tag) throws IOException {
+        stripSignatures(entries, rpt, tag);
         MixinTriage.Result triage = MixinTriage.run(entries, chain);
         Set<String> deadMixins = new HashSet<>();
         for (MixinTriage.MixinInfo mx : triage.mixins()) {
@@ -146,18 +117,24 @@ public final class JarProcessor {
             String name = e.getKey();
             if (name.endsWith(".class")) {
                 String cls = name.substring(0, name.length() - 6);
-                if (!triage.configOfClass().containsKey(cls)) {
-                    // fabric convention: the mod's own datagen providers live under
-                    // .../datagen/ or .../data/ and never execute in a live game
-                    boolean datagenCaller = cls.contains("datagen") || cls.contains("/data/");
-                    Set<String> sink = datagenCaller ? new TreeSet<>() : issues;
-                    byte[] rewritten = verifyAndRewrite(e.getValue(), chain, sink, tag, reg, rpt);
-                    if (datagenCaller) {
-                        rpt.datagenSkipped += sink.size();
-                    }
-                    if (rewritten != null) {
-                        e.setValue(rewritten);
-                    }
+                if (deadMixins.contains(cls)) {
+                    continue; // stripped: never applied, never executes
+                }
+                // mixin classes go through the same rewrite as everything else:
+                // their method bodies are merged into the target and execute
+                // there, so a broken call site inside one crashes just as hard.
+                // Skipping them left hook/redirect damage in mixin bodies
+                // shipping silently.
+                // fabric convention: the mod's own datagen providers live under
+                // .../datagen/ or .../data/ and never execute in a live game
+                boolean datagenCaller = cls.contains("datagen") || cls.contains("/data/");
+                Set<String> sink = datagenCaller ? new TreeSet<>() : issues;
+                byte[] rewritten = verifyAndRewrite(e.getValue(), chain, sink, tag, reg, rpt);
+                if (datagenCaller) {
+                    rpt.datagenSkipped += sink.size();
+                }
+                if (rewritten != null) {
+                    e.setValue(rewritten);
                 }
             } else if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
                 Map<String, byte[]> nested = readAll(e.getValue());
@@ -209,6 +186,40 @@ public final class JarProcessor {
             cw.visitEnd();
             return cw.toByteArray();
         }
+    }
+
+    /**
+     * A signed jar carries per-entry digests; rewriting any entry makes the
+     * JVM's JarVerifier throw SecurityException on READ of that entry, which
+     * surfaces as maddeningly indirect breakage (Mixin reporting its config
+     * "could not be read" while the JSON inside is perfectly valid). Every
+     * converted jar is modified by definition, so the signature has to go:
+     * drop the signature files and keep only the manifest's main section.
+     */
+    private static void stripSignatures(Map<String, byte[]> entries, Report rpt, String tag) {
+        boolean signed = entries.keySet().removeIf(n -> {
+            String u = n.toUpperCase(java.util.Locale.ROOT);
+            return u.startsWith("META-INF/") && (u.endsWith(".SF")
+                || u.endsWith(".RSA") || u.endsWith(".DSA") || u.endsWith(".EC"));
+        });
+        if (!signed) {
+            return;
+        }
+        byte[] mf = entries.get("META-INF/MANIFEST.MF");
+        if (mf != null) {
+            String text = new String(mf, StandardCharsets.UTF_8);
+            int cut = text.indexOf("\r\n\r\n");
+            int len = 4;
+            if (cut < 0) {
+                cut = text.indexOf("\n\n");
+                len = 2;
+            }
+            if (cut >= 0) {
+                entries.put("META-INF/MANIFEST.MF",
+                    text.substring(0, cut + len).getBytes(StandardCharsets.UTF_8));
+            }
+        }
+        rpt.notes.add(tag + "unsigned: entry digests dropped (conversion invalidates them)");
     }
 
     private static byte[] writeJar(Map<String, byte[]> entries) throws IOException {
@@ -294,6 +305,10 @@ public final class JarProcessor {
         final boolean[] hasNewUse = {false};
         final Set<String> declaredOldHooks = new HashSet<>();
         final Set<String> declaredNewHooks = new HashSet<>();
+        // call sites hitting a lookup-hook's old descriptor; a class whose ONLY
+        // damage is such a call must still go through the rewrite pass -- the
+        // fix used to ride along on other damage and silently skip these
+        final Set<String> hookCallSites = new HashSet<>();
         boolean needIfaceFix = false;
         if (!chain.interfaceized.isEmpty()) {
             String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
@@ -327,16 +342,16 @@ public final class JarProcessor {
 
             @Override
             public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
-                if (mName.equals("method_9534") && mDesc.equals(
+                if (chain.blockUseSplit && mName.equals("method_9534") && mDesc.equals(
                         "(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;"
                         + "Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)"
                         + "Lnet/minecraft/class_1269;")) {
                     hasOldUse[0] = true;
                 }
-                if (mName.equals("method_55766")) {
+                if (chain.blockUseSplit && mName.equals("method_55766")) {
                     hasNewUse[0] = true;
                 }
-                String[] hk = LOOKUP_HOOKS.get(mName);
+                String[] hk = chain.lookupHooks.get(mName);
                 if (hk != null) {
                     if (mDesc.equals(hk[0])) {
                         declaredOldHooks.add(mName);
@@ -348,6 +363,19 @@ public final class JarProcessor {
                     @Override
                     public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
                         checkClass(owner);
+                        // lookup-hook call sites match on ANY owner: a mod calls
+                        // through whatever static type it holds -- its own
+                        // BlockEntity subclass as often as the vanilla owner.
+                        // Rewriting to the new shape holds either way: the
+                        // subclass declares the old shape (and gets a synthesized
+                        // new-shape forward) or inherits the vanilla new shape.
+                        String[] lhk = chain.lookupHooks.get(name);
+                        if (lhk != null && desc.equals(lhk[0])) {
+                            hookCallSites.add(owner + "." + name + desc);
+                            top.dext.centurybridge.data.FullAudit.record(
+                                owner + "." + name + desc, "lookup-hooked");
+                            return;
+                        }
                         if (!owner.startsWith("net/minecraft/")) {
                             // library owners are outside the stub diffs, but a
                             // redirect wired explicitly (DFU's Codec.dispatch
@@ -501,9 +529,28 @@ public final class JarProcessor {
                         // method references to dead/redirected methods hide inside
                         // indy bootstrap arguments -- treat each handle like a call site
                         for (Object arg : bsmArgs) {
-                            if (arg instanceof org.objectweb.asm.Handle h
-                                    && h.getOwner().startsWith("net/minecraft/")
-                                    && !chain.classRenames.containsKey(h.getOwner())) {
+                            if (!(arg instanceof org.objectweb.asm.Handle h)) {
+                                continue;
+                            }
+                            if (!h.getOwner().startsWith("net/minecraft/")) {
+                                // library-owner method references carry the same
+                                // explicitly-wired redirects as direct calls
+                                // (Codec::dispatch as a lambda breaks identically)
+                                String lkey = h.getOwner() + "." + h.getName() + h.getDesc();
+                                boolean hStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
+                                String lrt = chain.instanceRedirects.get(lkey);
+                                if (lrt != null && !hStatic && !h.getName().equals("<init>")) {
+                                    instRedirects.put(lkey, lrt);
+                                    top.dext.centurybridge.data.FullAudit.record(lkey, "instance-redirect");
+                                }
+                                String lsrt = chain.staticRedirects.get(lkey);
+                                if (lsrt != null && hStatic) {
+                                    redirects.put(lkey, lsrt);
+                                    top.dext.centurybridge.data.FullAudit.record(lkey, "static-redirect");
+                                }
+                                continue;
+                            }
+                            if (!chain.classRenames.containsKey(h.getOwner())) {
                                 String key = h.getOwner() + "." + h.getName() + h.getDesc();
                                 if (chain.shimCovers.contains(key)) {
                                     top.dext.centurybridge.data.FullAudit.record(key, "covered");
@@ -584,7 +631,7 @@ public final class JarProcessor {
 
         if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
-                && !needClassRename && !needIfaceFix
+                && !needClassRename && !needIfaceFix && hookCallSites.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)) {
             return null;
@@ -601,6 +648,9 @@ public final class JarProcessor {
         for (String k : fldRedirects.keySet()) {
             rpt.notes.add(tag + "field-redirected: " + k + " -> " + fldRedirects.get(k));
         }
+        for (String k : hookCallSites) {
+            rpt.notes.add(tag + "lookup-hooked: " + k);
+        }
         for (Map.Entry<String, String> t : tombstone.entrySet()) {
             if (silentTombstones.contains(t.getKey())) {
                 continue; // ledgered: rewritten to a descriptive lazy-fail, accounted elsewhere
@@ -615,7 +665,11 @@ public final class JarProcessor {
 
         ClassReader cr = new ClassReader(bytes);
         final String[] clsName = {cr.getClassName()};
-        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(0);
+        // COMPUTE_MAXS: the lookup-hook call-site fix pushes an extra value, so
+        // the original class's declared max_stack can no longer be trusted --
+        // ironchests only survived on incidental headroom from adjacent code
+        org.objectweb.asm.ClassWriter cw =
+            new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
         ClassVisitor sink = needClassRename
             ? new org.objectweb.asm.commons.ClassRemapper(cw,
                 new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames))
@@ -624,7 +678,7 @@ public final class JarProcessor {
             @Override
             public void visitEnd() {
                 for (String hook : reconnectHooks) {
-                    String[] hk = LOOKUP_HOOKS.get(hook);
+                    String[] hk = chain.lookupHooks.get(hook);
                     // new shape forwards to the mod's old override, dropping the lookup
                     MethodVisitor hv = super.visitMethod(Opcodes.ACC_PROTECTED, hook, hk[1], null, null);
                     hv.visitCode();
@@ -681,13 +735,16 @@ public final class JarProcessor {
                             super.visitMethodInsn(fixed, owner, name, desc, true);
                             return;
                         }
-                        String[] hk = LOOKUP_HOOKS.get(name);
-                        if (hk != null && desc.equals(hk[0]) && owner.startsWith("net/minecraft/")) {
+                        String[] hk = chain.lookupHooks.get(name);
+                        if (hk != null && desc.equals(hk[0])) {
                             // append the builtin lookup and call the new shape;
                             // the world's manager would be more precise, but the
                             // builtin wrapper resolves everything vanilla
-                            // serialization needs here
-                            super.visitMethodInsn(Opcodes.INVOKESTATIC, LOOKUP_RT,
+                            // serialization needs here. Any owner qualifies:
+                            // mod-owned static types either declare the old
+                            // shape (and get a forward synthesized) or inherit
+                            // the vanilla new shape.
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, chain.lookupRt,
                                 "cbLookup", "()Lnet/minecraft/class_7225$class_7874;", false);
                             super.visitMethodInsn(op, owner, name, hk[1], itf);
                             return;

@@ -24,6 +24,13 @@ CP="$STUB"
 if [ -d "$LIBS" ]; then
     while IFS= read -r jar; do CP="$CP:$jar"; done < <(find "$LIBS" -name '*.jar')
 fi
+# fabric-api modules: the fat jar nests them (jar-in-jar), so compile against
+# the copies the loader extracts on first launch. Without these the compat
+# shims (CbNetworking & friends) cannot build.
+FAPI="${CB_FAPI:-data/runtime/client-$VERSION/.fabric/processedMods}"
+if [ -d "$FAPI" ]; then
+    while IFS= read -r jar; do CP="$CP:$jar"; done < <(find "$FAPI" -name '*.jar')
+fi
 for extra in $(find data/runtime -name 'sponge-mixin-*.jar' 2>/dev/null | head -1); do
     CP="$CP:$extra"
 done
@@ -98,24 +105,40 @@ python3 - "$SHIM" "$VERSION" <<'PYWIRE'
 import json, os, re, sys
 shim, ver = sys.argv[1], sys.argv[2]
 cfg = f"core/segments/shims-{ver}.json"
-statics = os.path.join(shim, "src", "top", "dext", "centurybridge",
-                       "rt", f"v{ver.replace('.', '_')}", "Statics.java")
-if os.path.exists(cfg) and os.path.exists(statics):
-    src = open(statics, encoding="utf-8").read()
-    impl = set(re.findall(r"public static [\w.$<>\[\], ?]+?\s(\w+)\s*\(", src))
-    impl |= set(re.findall(r"public static final [\w.$<>\[\]]+ (\w+)\s*=", src))
+if os.path.exists(cfg):
     d = json.load(open(cfg, encoding="utf-8"))
+    members = {}  # internal class name -> set of declared member names
+
+    def declared(cls):
+        # any redirect target must be a shim source we ship for this version;
+        # resolving the file by the internal name covers Statics AND the
+        # compat/fapi classes the old "Statics"-substring filter skipped
+        if cls not in members:
+            src_path = os.path.join(shim, "src", *cls.split("/")) + ".java"
+            if not os.path.exists(src_path):
+                return None
+            src = open(src_path, encoding="utf-8").read()
+            got = set(re.findall(r"public static [\w.$<>\[\], ?]+?\s(\w+)\s*\(", src))
+            got |= set(re.findall(r"public static final [\w.$<>\[\]]+ (\w+)\s*=", src))
+            members[cls] = got
+        return members[cls]
+
     dangling = []
     for m in ("staticRedirects", "instanceRedirects", "fieldRedirects"):
         for k, v in d.get(m, {}).items():
-            if "Statics" not in v:
-                continue
+            impl = declared(v)
             member = k.split(".")[-1].split("(")[0].split(":")[0]
-            if member not in impl:
-                dangling.append(k)
+            if impl is None:
+                dangling.append(f"{k} -> {v} (no such shim source)")
+            elif member not in impl:
+                dangling.append(f"{k} -> {v}.{member} (member missing)")
+    if d.get("lookupRt"):
+        impl = declared(d["lookupRt"])
+        if impl is None or "cbLookup" not in impl:
+            dangling.append(f"lookupRt -> {d['lookupRt']}.cbLookup (missing)")
     if dangling:
-        print(f"{len(dangling)} redirects point at missing Statics members:")
-        for k in dangling[:5]:
+        print(f"{len(dangling)} redirects point at missing shim members:")
+        for k in dangling[:8]:
             print(f"    {k}")
         sys.exit(1)
 PYWIRE

@@ -1674,8 +1674,17 @@ public final class Statics {
      * choice; the builtin wrapper resolves everything vanilla serialization
      * reaches for in these paths.
      */
+    private static net.minecraft.class_7225.class_7874 cbLookupCache;
+
     public static net.minecraft.class_7225.class_7874 cbLookup() {
-        return net.minecraft.class_5455.method_40302(net.minecraft.class_7923.field_41167);
+        // cached like cbOps above: this backs every rewritten writeNbt/readNbt
+        // call site, and the wrapper is over the builtin (static) registries,
+        // which never reload -- rebuilding the whole wrapper graph per chunk
+        // save was pure waste
+        if (cbLookupCache == null) {
+            cbLookupCache = net.minecraft.class_5455.method_40302(net.minecraft.class_7923.field_41167);
+        }
+        return cbLookupCache;
     }
 
     private Statics() {

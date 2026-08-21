@@ -112,6 +112,27 @@ public final class Chain {
     public final java.util.Set<String> interfaceized = new java.util.HashSet<>();
 
     /**
+     * Hooks that gained a trailing RegistryWrapper.WrapperLookup parameter on
+     * this target (the 1.20.5 component wall): name -> [old desc, new desc].
+     * Damage is two-sided -- an old-shape override is orphaned, an old-shape
+     * call site references a descriptor that no longer exists -- so the
+     * rewrite both synthesizes forwarding overrides and appends a lookup at
+     * call sites. Declared per-target in shims-<to>.json ("lookupHooks"):
+     * a chain whose target predates the wall must leave these calls alone.
+     */
+    public final java.util.Map<String, String[]> lookupHooks = new java.util.HashMap<>();
+
+    /** Runtime class serving cbLookup() for the hooks above ("lookupRt"). */
+    public String lookupRt;
+
+    /**
+     * True when this target is past the 1.20.5 Block.use split
+     * (method_9534 6-arg -> method_55766 5-arg): old-shape overrides need a
+     * synthesized new-shape hook or vanilla never calls them again.
+     */
+    public boolean blockUseSplit;
+
+    /**
      * child -> superclass, read from the OLD stub. A mod calls a method through
      * whatever class it holds a reference to, but the declaration -- and hence
      * the ledger entry, cover or redirect -- lives wherever the member is
@@ -208,6 +229,20 @@ public final class Chain {
                 for (var el : root.getAsJsonArray("interfaceized")) {
                     c.interfaceized.add(el.getAsString());
                 }
+            }
+            if (root.has("lookupHooks")) {
+                var lh = root.getAsJsonObject("lookupHooks");
+                for (String k : lh.keySet()) {
+                    var arr = lh.getAsJsonArray(k);
+                    c.lookupHooks.put(k, new String[] {
+                        arr.get(0).getAsString(), arr.get(1).getAsString()});
+                }
+            }
+            if (root.has("lookupRt")) {
+                c.lookupRt = root.get("lookupRt").getAsString();
+            }
+            if (root.has("blockUseSplit")) {
+                c.blockUseSplit = root.get("blockUseSplit").getAsBoolean();
             }
             if (root.has("classRenames")) {
                 var cr = root.getAsJsonObject("classRenames");

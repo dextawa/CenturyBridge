@@ -1802,5 +1802,37 @@
  },
  "interfaceized": [
   "com/mojang/serialization/DataResult"
- ]
+ ],
+ "lookupRt": "top/dext/centurybridge/rt/v1_21_1/Statics",
+ "blockUseSplit": true,
+ "lookupHooks": {
+  "method_11007": [
+   "(Lnet/minecraft/class_2487;)V",
+   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V"
+  ],
+  "method_11014": [
+   "(Lnet/minecraft/class_2487;)V",
+   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V"
+  ],
+  "method_16887": [
+   "()Lnet/minecraft/class_2487;",
+   "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"
+  ],
+  "method_38244": [
+   "()Lnet/minecraft/class_2487;",
+   "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"
+  ],
+  "method_5426": [
+   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)Lnet/minecraft/class_2487;",
+   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"
+  ],
+  "method_5429": [
+   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)V",
+   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)V"
+  ],
+  "method_5427": [
+   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487;",
+   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;ZLnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"
+  ]
+ }
 }
