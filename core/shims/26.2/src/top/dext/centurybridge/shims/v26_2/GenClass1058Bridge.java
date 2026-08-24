@@ -15,14 +15,4 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.renderer.texture.TextureAtlasSprite.class)
 public abstract class GenClass1058Bridge {
 
-    /** was net/minecraft/client/renderer/texture/TextureAtlasSprite/getV(D)F */
-    public float getV(double a0) {
-        return ((net.minecraft.client.renderer.texture.TextureAtlasSprite) (Object) this).getV((float) a0);
-    }
-
-    /** was net/minecraft/client/renderer/texture/TextureAtlasSprite/getU(D)F */
-    public float getU(double a0) {
-        return ((net.minecraft.client.renderer.texture.TextureAtlasSprite) (Object) this).getU((float) a0);
-    }
-
 }
