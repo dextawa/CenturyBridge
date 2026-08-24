@@ -72,5 +72,6 @@ There is no unit-test suite. Verification is: corpus conversion (zero engine cra
 - Class-file level is pinned per era in build.sh (`--release 17` for 1.20.x targets, 21 after) — a newer ambient JDK's class files kill old sponge-mixin at Mixin PREPARE.
 - Mixin rules that cost real debugging: non-mixin helper classes must live in a separate `rt`/`Statics` package (mixin-package classes get transformed); `@Shadow` does not climb the hierarchy — declare it on the class that declares the member; class mixins must not target interfaces; every mixin listed in the config must exist in `src`.
 - Intermediary leaves unstable members obfuscated (`a`, `cw`...) and those names shift every release — never call one from shim code; build.sh's last gate catches this.
+- Hours-long forge/queue runs must be launched detached through Task Scheduler (`core/out-diff/launch_<tag>.cmd` + `schtasks /create ... /run`); background processes started from the session shell (nohup or PowerShell Start-Process) die silently on session interrupt. Check runner liveness (`Get-CimInstance Win32_Process`, log mtime) at the start of every cycle.
 - Git identity: commits are authored as `dext <dext@dext.top>` (already set in repo config — don't override with `-c`).
 - All docs except README are Chinese; keep LOOP.md updates in Chinese, README bilingual.
