@@ -48,12 +48,42 @@ public final class JarProcessor {
      * same ClassRemapper as the rest of the class, so a facade-renamed old
      * parameter type lands on the facade.
      */
+    /** verifier frame type for one parameter (locals are never widened here) */
+    private static Object frameType(org.objectweb.asm.Type t) {
+        switch (t.getSort()) {
+            case org.objectweb.asm.Type.BOOLEAN, org.objectweb.asm.Type.CHAR, org.objectweb.asm.Type.BYTE,
+                 org.objectweb.asm.Type.SHORT, org.objectweb.asm.Type.INT -> {
+                return Opcodes.INTEGER;
+            }
+            case org.objectweb.asm.Type.FLOAT -> {
+                return Opcodes.FLOAT;
+            }
+            case org.objectweb.asm.Type.LONG -> {
+                return Opcodes.LONG;
+            }
+            case org.objectweb.asm.Type.DOUBLE -> {
+                return Opcodes.DOUBLE;
+            }
+            default -> {
+                return t.getInternalName();
+            }
+        }
+    }
+
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName) {
         org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
         org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
         org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
         if (na.length != oa.length) {
             return; // arity change is not a shape this forwarder can express
+        }
+        // the engine writes with COMPUTE_MAXS only (frame computation would
+        // need the game's class hierarchy), so every branch target and handler
+        // in a synthesized method carries an explicit expanded frame
+        Object[] locals = new Object[na.length + 1];
+        locals[0] = cls;
+        for (int i = 0; i < na.length; i++) {
+            locals[i + 1] = frameType(na[i]);
         }
         MethodVisitor mv = cv.visitMethod(Opcodes.ACC_PUBLIC, h.newName, h.newDesc, null, null);
         mv.visitCode();
@@ -88,10 +118,12 @@ public final class JarProcessor {
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.guard, "cbExit", "(Ljava/lang/Object;)V", false);
             mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
             mv.visitLabel(handler);
+            mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 1, new Object[] {"java/lang/Throwable"});
             mv.visitVarInsn(Opcodes.ALOAD, 0);
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.guard, "cbExit", "(Ljava/lang/Object;)V", false);
             mv.visitInsn(Opcodes.ATHROW);
             mv.visitLabel(fallthrough);
+            mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 0, new Object[0]);
             if (superName == null || superName.equals("java/lang/Object")) {
                 // nothing above us declares the new shape: a re-entry here is a no-op
                 if (nr.getSort() != org.objectweb.asm.Type.VOID) {
@@ -166,6 +198,21 @@ public final class JarProcessor {
                     org.objectweb.asm.tree.AbstractInsnNode dup = newInsn.getNext();
                     if (dup == null || dup.getOpcode() != Opcodes.DUP) {
                         continue; // unusual shape (javac always emits NEW DUP); leave it alone
+                    }
+                    // a branch inside the argument expression means a frame that
+                    // records the two uninitialized slots we are about to drop;
+                    // rather than re-deriving frames, leave such sites as damage
+                    boolean framed = false;
+                    for (org.objectweb.asm.tree.AbstractInsnNode p = dup.getNext(); p != null && p != mi; p = p.getNext()) {
+                        if (p.getType() == org.objectweb.asm.tree.AbstractInsnNode.FRAME
+                                || p.getType() == org.objectweb.asm.tree.AbstractInsnNode.JUMP_INSN) {
+                            framed = true;
+                            break;
+                        }
+                    }
+                    if (framed) {
+                        rpt.notes.add(tag + "ctor-redirect skipped (branch in argument expression): " + key);
+                        continue;
                     }
                     m.instructions.remove(dup);
                     m.instructions.remove(newInsn);

@@ -1100,7 +1100,8 @@
   "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler": "top/dext/centurybridge/compat/fapi/CbClientPlayHandler",
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler": "top/dext/centurybridge/compat/fapi/CbServerPlayHandler",
   "net/fabricmc/fabric/api/client/model/ExtraModelProvider": "top/dext/centurybridge/compat/fapi/CbExtraModelProvider",
-  "net/minecraft/class_332": "top/dext/centurybridge/facade/v26_2/GuiGraphics"
+  "net/minecraft/class_332": "top/dext/centurybridge/facade/v26_2/GuiGraphics",
+  "net/fabricmc/fabric/api/client/keybinding/v1/KeyBindingHelper": "top/dext/centurybridge/compat/fapi/CbKeyBindingHelper"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
