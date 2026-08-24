@@ -55,6 +55,12 @@ public final class MixinTriage {
                         || b.contains("at-owner"))) {
                     return true;
                 }
+                // a @Shadow / @Accessor / @Invoker resolves by name AND descriptor:
+                // a changed descriptor is exactly as fatal as a missing member
+                if (b.startsWith("L2") && (b.contains("shadow") || b.contains("accessor")
+                        || b.contains("invoker"))) {
+                    return true;
+                }
             }
             return false;
         }
