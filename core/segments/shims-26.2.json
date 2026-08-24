@@ -1101,7 +1101,8 @@
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler": "top/dext/centurybridge/compat/fapi/CbServerPlayHandler",
   "net/fabricmc/fabric/api/client/model/ModelLoadingRegistry": "top/dext/centurybridge/compat/fapi/CbModelLoadingRegistry",
   "net/fabricmc/fabric/api/client/model/ExtraModelProvider": "top/dext/centurybridge/compat/fapi/CbExtraModelProvider",
-  "net/fabricmc/fabric/api/client/model/BakedModelManagerHelper": "top/dext/centurybridge/compat/fapi/CbBakedModelManagerHelper"
+  "net/fabricmc/fabric/api/client/model/BakedModelManagerHelper": "top/dext/centurybridge/compat/fapi/CbBakedModelManagerHelper",
+  "net/minecraft/class_332": "top/dext/centurybridge/facade/v26_2/GuiGraphics"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -2560,20 +2561,14 @@
   "net/minecraft/class_7701.field_46779": "bridge attempted, no faithful equivalent: field_46779 (class_7696) was removed in 1.21 with no direct replacement; remaining class_7696 fields (VANILLA, field_40178, TRADE_REBALANCE) have unknown semantic mapping to the deleted field",
   "net/minecraft/class_783.field_4227": "bridge attempted, no faithful equivalent: class_783.field_4227 (static class_787) was deleted in 1.21 with no direct replacement; new class_783 is a record exposing no static class_787 constant, and the original value cannot be inferred from the new API surface",
   "net/minecraft/class_927.method_4072": "bridge attempted, no faithful equivalent: class_927.method_4072 (EntityRenderer.render) was removed in 1.21; the entity rendering pipeline was refactored to use EntityRenderState and no direct equivalent exists on class_927",
-  "net/minecraft/client/gui/screens/Screen.renderBackground(Lnet/minecraft/client/gui/GuiGraphics;)V": "26.2-gui-overhaul: immediate-mode draw model replaced by GuiGraphicsExtractor; bridge needs a redesign, not a rename",
-  "net/minecraft/client/gui/screens/achievement/StatsScreen.method_2282(Lnet/minecraft/client/gui/GuiGraphics;IIII)V": "26.2-gui-overhaul: immediate-mode draw model replaced by GuiGraphicsExtractor; bridge needs a redesign, not a rename",
   "net/minecraft/world/level/levelgen/structure/StructureFeatureIndexSavedData.method_32358(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/levelgen/structure/StructureFeatureIndexSavedData;": "class gone in the 26.x era; no rename target",
   "net/minecraft/client/renderer/PanoramaRenderer.render(FF)V": "class gone in the 26.x era; no rename target",
-  "net/minecraft/client/gui/screens/inventory/InventoryScreen.renderEntityInInventoryFollowsMouse(Lnet/minecraft/client/gui/GuiGraphics;IIIFFLnet/minecraft/world/entity/LivingEntity;)V": "26.2-gui-overhaul: immediate-mode draw model replaced by GuiGraphicsExtractor; bridge needs a redesign, not a rename",
-  "net/minecraft/client/gui/screens/inventory/InventoryScreen.extractRenderState(Lnet/minecraft/client/gui/GuiGraphics;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/world/entity/LivingEntity;)V": "26.2-gui-overhaul: immediate-mode draw model replaced by GuiGraphicsExtractor; bridge needs a redesign, not a rename",
   "net/minecraft/advancements/criterion/SimpleCriterionTrigger$SimpleInstance.method_27790()Ljava/util/Optional;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
-  "net/minecraft/client/gui/screens/options/OptionsSubScreen.method_45626(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/components/OptionsList;IIF)V": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/advancements/CriterionTrigger.method_794()Lnet/minecraft/resources/Identifier;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/world/level/storage/loot/providers/nbt/NbtProviders.method_32442()Ljava/lang/Object;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/advancements/CriteriaTriggers.method_53697(Lnet/minecraft/advancements/CriterionTrigger;)Lnet/minecraft/resources/Identifier;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/advancements/CriteriaTriggers.method_766()Ljava/lang/Iterable;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/client/gui/screens/worldselection/EditGameRulesScreen.method_27630(Lnet/minecraft/client/gui/screens/worldselection/EditGameRulesScreen;)Lnet/minecraft/client/Minecraft;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
-  "net/minecraft/client/gui/screens/multiplayer/WarningScreen.method_44663(Lnet/minecraft/client/gui/GuiGraphics;)V": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager.method_44228(Lnet/minecraft/resources/Identifier;Ljava/lang/String;)Ljava/nio/file/Path;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/client/particle/ParticleRenderType.method_18131(Lcom/mojang/blaze3d/vertex/Tesselator;)V": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/client/renderer/entity/MobRenderer.method_4072(Lnet/minecraft/world/entity/Mob;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
@@ -2598,7 +2593,8 @@
   "net/minecraft/util/valueproviders/ClampedInt.CODEC:Lcom/mojang/serialization/Codec;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/util/valueproviders/ClampedNormalInt.CODEC:Lcom/mojang/serialization/Codec;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/world/level/levelgen/structure/templatesystem/CappedProcessor.CODEC:Lcom/mojang/serialization/Codec;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
-  "net/minecraft/class_1792.components": "26.x: item components are registry-built from the Properties initializer; the pending-key repair no longer rebuilds them, so a late-registered item may keep a placeholder display-name component (client-visible only)"
+  "net/minecraft/class_1792.components": "26.x: item components are registry-built from the Properties initializer; the pending-key repair no longer rebuilds them, so a late-registered item may keep a placeholder display-name component (client-visible only)",
+  "net/minecraft/class_332.method_51450()Lnet/minecraft/class_4597$class_4598;": "26.2 retained-mode GUI has no immediate vertex consumer (MultiBufferSource.BufferSource gone); facade cannot express it"
  },
  "interfaceized": [
   "com/mojang/serialization/DataResult"
@@ -2631,5 +2627,33 @@
    "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)V"
   ]
  },
- "lookupDesc": "()Lnet/minecraft/core/HolderLookup$Provider;"
+ "lookupDesc": "()Lnet/minecraft/core/HolderLookup$Provider;",
+ "overrideHooks": [
+  {
+   "old": "method_25394(Lnet/minecraft/class_332;IIF)V",
+   "new": "extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
+   "wrap": "top/dext/centurybridge/rt/v26_2/Statics.cbWrapGui(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)Ltop/dext/centurybridge/facade/v26_2/GuiGraphics;",
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics",
+   "notUnder": "net/minecraft/class_339"
+  },
+  {
+   "old": "method_25394(Lnet/minecraft/class_332;IIF)V",
+   "new": "extractWidgetRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
+   "wrap": "top/dext/centurybridge/rt/v26_2/Statics.cbWrapGui(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)Ltop/dext/centurybridge/facade/v26_2/GuiGraphics;",
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics",
+   "onlyUnder": "net/minecraft/class_339"
+  },
+  {
+   "old": "method_25420(Lnet/minecraft/class_332;IIF)V",
+   "new": "extractBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
+   "wrap": "top/dext/centurybridge/rt/v26_2/Statics.cbWrapGui(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)Ltop/dext/centurybridge/facade/v26_2/GuiGraphics;",
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics"
+  },
+  {
+   "old": "method_48579(Lnet/minecraft/class_332;IIF)V",
+   "new": "extractWidgetRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
+   "wrap": "top/dext/centurybridge/rt/v26_2/Statics.cbWrapGui(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)Ltop/dext/centurybridge/facade/v26_2/GuiGraphics;",
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics"
+  }
+ ]
 }

@@ -4385,4 +4385,22 @@ public final class Statics {
 
     private Statics() {
     }
+
+    // ---- 26.2 GUI model: DrawContext facade over GuiGraphicsExtractor ----
+    private static final ThreadLocal<java.util.Set<Object>> CB_IN_OLD_RENDER =
+        ThreadLocal.withInitial(() -> java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));
+
+    /** overrideHooks wrap: the extractor vanilla hands us -> the DrawContext a 1.20.x override expects */
+    public static top.dext.centurybridge.facade.v26_2.GuiGraphics cbWrapGui(net.minecraft.client.gui.GuiGraphicsExtractor ext) {
+        return new top.dext.centurybridge.facade.v26_2.GuiGraphics(ext);
+    }
+
+    /** overrideHooks guard: true on first entry for this object on this thread */
+    public static boolean cbEnter(Object self) {
+        return CB_IN_OLD_RENDER.get().add(self);
+    }
+
+    public static void cbExit(Object self) {
+        CB_IN_OLD_RENDER.get().remove(self);
+    }
 }

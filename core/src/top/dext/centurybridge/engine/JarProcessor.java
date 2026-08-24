@@ -34,6 +34,88 @@ import org.objectweb.asm.Opcodes;
  */
 public final class JarProcessor {
 
+    /**
+     * Emit the new-shape method vanilla now calls, forwarding to the mod's old
+     * override:
+     * <pre>
+     *   new(a1..an):
+     *     if (guard.cbEnter(this)) { try { this.old(wrap(a1)..an); } finally { guard.cbExit(this); } return; }
+     *     super.new(a1..an);          // re-entered through a super-call chain: fall through to vanilla
+     * </pre>
+     * Arguments whose type differs between the shapes go through the hook's
+     * wrap static (new type -> old type); everything else passes through.
+     * Descriptors are emitted in the analysis namespace and pass through the
+     * same ClassRemapper as the rest of the class, so a facade-renamed old
+     * parameter type lands on the facade.
+     */
+    private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName) {
+        org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
+        org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
+        org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
+        if (na.length != oa.length) {
+            return; // arity change is not a shape this forwarder can express
+        }
+        MethodVisitor mv = cv.visitMethod(Opcodes.ACC_PUBLIC, h.newName, h.newDesc, null, null);
+        mv.visitCode();
+        org.objectweb.asm.Label fallthrough = new org.objectweb.asm.Label();
+        org.objectweb.asm.Label tryStart = new org.objectweb.asm.Label();
+        org.objectweb.asm.Label tryEnd = new org.objectweb.asm.Label();
+        org.objectweb.asm.Label handler = new org.objectweb.asm.Label();
+        boolean guarded = h.guard != null;
+        if (guarded) {
+            mv.visitVarInsn(Opcodes.ALOAD, 0);
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.guard, "cbEnter", "(Ljava/lang/Object;)Z", false);
+            mv.visitJumpInsn(Opcodes.IFEQ, fallthrough);
+            mv.visitTryCatchBlock(tryStart, tryEnd, handler, null);
+            mv.visitLabel(tryStart);
+        }
+        mv.visitVarInsn(Opcodes.ALOAD, 0);
+        int slot = 1;
+        for (int i = 0; i < na.length; i++) {
+            mv.visitVarInsn(na[i].getOpcode(Opcodes.ILOAD), slot);
+            if (!na[i].equals(oa[i]) && h.wrapName != null) {
+                mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.wrapOwner, h.wrapName, h.wrapDesc, false);
+            }
+            slot += na[i].getSize();
+        }
+        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
+        if (nr.getSort() != org.objectweb.asm.Type.VOID) {
+            // same return type assumed; pop nothing
+        }
+        if (guarded) {
+            mv.visitLabel(tryEnd);
+            mv.visitVarInsn(Opcodes.ALOAD, 0);
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.guard, "cbExit", "(Ljava/lang/Object;)V", false);
+            mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+            mv.visitLabel(handler);
+            mv.visitVarInsn(Opcodes.ALOAD, 0);
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.guard, "cbExit", "(Ljava/lang/Object;)V", false);
+            mv.visitInsn(Opcodes.ATHROW);
+            mv.visitLabel(fallthrough);
+            if (superName == null || superName.equals("java/lang/Object")) {
+                // nothing above us declares the new shape: a re-entry here is a no-op
+                if (nr.getSort() != org.objectweb.asm.Type.VOID) {
+                    mv.visitInsn(nr.getSort() == org.objectweb.asm.Type.OBJECT || nr.getSort() == org.objectweb.asm.Type.ARRAY
+                        ? Opcodes.ACONST_NULL : Opcodes.ICONST_0);
+                }
+                mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+            } else {
+                mv.visitVarInsn(Opcodes.ALOAD, 0);
+                slot = 1;
+                for (org.objectweb.asm.Type t : na) {
+                    mv.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
+                    slot += t.getSize();
+                }
+                mv.visitMethodInsn(Opcodes.INVOKESPECIAL, superName, h.newName, h.newDesc, false);
+                mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+            }
+        } else {
+            mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+        }
+        mv.visitMaxs(slot + 3, slot + 1);
+        mv.visitEnd();
+    }
+
     /** Redirect values are a class name, optionally "class#member" past the
      *  namespace wall where call-site names are no longer globally unique. */
     private static String redirCls(String v) {
@@ -60,6 +142,40 @@ public final class JarProcessor {
         public List<String> strippedMixins = new ArrayList<>();
         public List<String> notes = new ArrayList<>();
         public Path outputJar;
+    }
+
+    /** Walk superclasses through the mod's own classes, then the vanilla hierarchy. */
+    private static boolean isUnder(String superName, String target, Map<String, String> jarSuper, Chain chain) {
+        String cur = superName;
+        int guard = 0;
+        while (cur != null && guard++ < 64) {
+            if (cur.equals(target)) {
+                return true;
+            }
+            String next = jarSuper.get(cur);
+            if (next == null) {
+                next = chain.superOf.get(cur);
+            }
+            cur = next;
+        }
+        return false;
+    }
+
+    /** class name -> superclass for every class in this jar layer (header read only). */
+    private static Map<String, String> superMapOf(Map<String, byte[]> entries) {
+        Map<String, String> m = new HashMap<>();
+        for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+            if (!e.getKey().endsWith(".class")) {
+                continue;
+            }
+            try {
+                ClassReader cr = new ClassReader(e.getValue());
+                m.put(cr.getClassName(), cr.getSuperName());
+            } catch (RuntimeException ignored) {
+                // not a class file after all
+            }
+        }
+        return m;
     }
 
     public static Report process(Path in, Path outDir, Chain chain) throws IOException {
@@ -115,6 +231,7 @@ public final class JarProcessor {
     private static void processEntries(Map<String, byte[]> entries, Chain chain,
                                        Report rpt, Set<String> issues, String tag,
                                        String jarTag) throws IOException {
+        Map<String, String> jarSuper = superMapOf(entries);
         stripSignatures(entries, rpt, tag);
         MixinTriage.Result triage = MixinTriage.run(entries, chain);
         Set<String> deadMixins = new HashSet<>();
@@ -153,7 +270,7 @@ public final class JarProcessor {
                 // .../datagen/ or .../data/ and never execute in a live game
                 boolean datagenCaller = cls.contains("datagen") || cls.contains("/data/");
                 Set<String> sink = datagenCaller ? new TreeSet<>() : issues;
-                byte[] rewritten = verifyAndRewrite(e.getValue(), chain, sink, tag, reg, rpt);
+                byte[] rewritten = verifyAndRewrite(e.getValue(), jarSuper, chain, sink, tag, reg, rpt);
                 if (datagenCaller) {
                     rpt.datagenSkipped += sink.size();
                 }
@@ -311,7 +428,7 @@ public final class JarProcessor {
      * being issues, tombstoned calls fail lazily with a descriptive message.
      * Returns the rewritten class bytes, or null when unchanged.
      */
-    private static byte[] verifyAndRewrite(byte[] bytes, Chain chain, Set<String> issues,
+    private static byte[] verifyAndRewrite(byte[] bytes, Map<String, String> jarSuper, Chain chain, Set<String> issues,
                                            String tag, Tombstones reg, Report rpt) {
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
@@ -333,6 +450,11 @@ public final class JarProcessor {
         final boolean[] hasNewUse = {false};
         final Set<String> declaredOldHooks = new HashSet<>();
         final Set<String> declaredNewHooks = new HashSet<>();
+        // generic orphaned overrides (overrideHooks): old shape declared here
+        final java.util.List<Chain.OverrideHook> declaredOldOverrides = new ArrayList<>();
+        final Set<Chain.OverrideHook> declaredNewOverrides = new HashSet<>();
+        final int[] classAccess = {0};
+        final String[] superOf = {null};
         // call sites hitting a lookup-hook's old descriptor; a class whose ONLY
         // damage is such a call must still go through the rewrite pass -- the
         // fix used to ride along on other damage and silently skip these
@@ -360,6 +482,8 @@ public final class JarProcessor {
         ClassVisitor analysis = new ClassVisitor(Opcodes.ASM9) {
             @Override
             public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
+                classAccess[0] = acc;
+                superOf[0] = superName;
                 checkClass(superName);
                 // a dead interface in the implements clause kills the class at
                 // load exactly like a dead superclass does (26.2: FlyingAnimal)
@@ -393,6 +517,21 @@ public final class JarProcessor {
                     } else if (mDesc.equals(hk[1])) {
                         declaredNewHooks.add(mName);
                     }
+                }
+                if ((acc & (Opcodes.ACC_STATIC | Opcodes.ACC_ABSTRACT)) == 0) {
+                    for (Chain.OverrideHook oh : chain.overrideHooksForOld(mName, mDesc)) {
+                        if (oh.onlyUnder != null && !isUnder(superOf[0], oh.onlyUnder, jarSuper, chain)) {
+                            continue;
+                        }
+                        if (oh.notUnder != null && isUnder(superOf[0], oh.notUnder, jarSuper, chain)) {
+                            continue;
+                        }
+                        declaredOldOverrides.add(oh);
+                    }
+                }
+                Chain.OverrideHook nh = chain.overrideHookForNew(mName, mDesc);
+                if (nh != null) {
+                    declaredNewOverrides.add(nh);
                 }
                 return new MethodVisitor(Opcodes.ASM9) {
                     @Override
@@ -668,8 +807,19 @@ public final class JarProcessor {
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
-                && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)) {
+                && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
+                && declaredOldOverrides.stream().allMatch(declaredNewOverrides::contains)) {
             return null;
+        }
+        final java.util.List<Chain.OverrideHook> reconnectOverrides = new ArrayList<>();
+        if ((classAccess[0] & Opcodes.ACC_INTERFACE) == 0) {
+            for (Chain.OverrideHook h : declaredOldOverrides) {
+                if (!declaredNewOverrides.contains(h) && !reconnectOverrides.contains(h)) {
+                    reconnectOverrides.add(h);
+                    rpt.notes.add(tag + "override-hooked: " + h.oldName + h.oldDesc + " -> " + h.newName + h.newDesc);
+                    top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hooked");
+                }
+            }
         }
         final boolean reconnectUse = hasOldUse[0] && !hasNewUse[0];
         final Set<String> reconnectHooks = new HashSet<>(declaredOldHooks);
@@ -712,6 +862,9 @@ public final class JarProcessor {
         cr.accept(new ClassVisitor(Opcodes.ASM9, sink) {
             @Override
             public void visitEnd() {
+                for (Chain.OverrideHook h : reconnectOverrides) {
+                    synthesizeOverride(this, h, clsName[0], superOf[0]);
+                }
                 for (String hook : reconnectHooks) {
                     String[] hk = chain.lookupHooks.get(hook);
                     // new shape forwards to the mod's old override, dropping the lookup

@@ -217,7 +217,9 @@
   "EntityRenderDispatcherBridge",
   "GameOptionsBridge",
   "HandledScreenBridge",
-  "PlayerSkinBridge"
+  "PlayerSkinBridge",
+  "ScreenRenderBridge",
+  "AbstractWidgetRenderBridge"
  ],
  "injectors": {
   "defaultRequire": 0

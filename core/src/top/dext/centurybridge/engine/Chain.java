@@ -126,6 +126,48 @@ public final class Chain {
      */
     public final java.util.Map<String, String[]> lookupHooks = new java.util.HashMap<>();
 
+    /**
+     * Generic orphaned-override reconnection ("overrideHooks" in
+     * shims-<to>.json): vanilla stopped calling a method mods override,
+     * replaced by one with a new name and a new parameter type (26.2:
+     * Screen.render(GuiGraphics..) -> extractRenderState(GuiGraphicsExtractor..)).
+     * For every mod class declaring the old shape but not the new, the rewrite
+     * synthesizes the new shape: it wraps the changed argument through
+     * {@code wrap} and forwards to the old override, guarded per object by
+     * {@code guard}.cbEnter/cbExit so a super-call chain that lands back in
+     * the new shape falls through to INVOKESPECIAL super instead of recursing.
+     */
+    public static final class OverrideHook {
+        public String oldName, oldDesc, newName, newDesc;
+        /** "owner.name(desc)" static that converts the new-typed argument to the old type. */
+        public String wrapOwner, wrapName, wrapDesc;
+        /** internal class name providing cbEnter(Object)Z and cbExit(Object)V */
+        public String guard;
+        /** hierarchy filters: apply only to classes under / not under this vanilla class */
+        public String onlyUnder, notUnder;
+    }
+
+    public final java.util.List<OverrideHook> overrideHooks = new java.util.ArrayList<>();
+
+    public java.util.List<OverrideHook> overrideHooksForOld(String name, String desc) {
+        java.util.List<OverrideHook> out = new java.util.ArrayList<>();
+        for (OverrideHook h : overrideHooks) {
+            if (h.oldName.equals(name) && h.oldDesc.equals(desc)) {
+                out.add(h);
+            }
+        }
+        return out;
+    }
+
+    public OverrideHook overrideHookForNew(String name, String desc) {
+        for (OverrideHook h : overrideHooks) {
+            if (h.newName.equals(name) && h.newDesc.equals(desc)) {
+                return h;
+            }
+        }
+        return null;
+    }
+
     /** Runtime class serving cbLookup() for the hooks above ("lookupRt"). */
     public String lookupRt;
 
@@ -200,6 +242,11 @@ public final class Chain {
         this.to = to;
     }
 
+    private static String[] splitSig(String sig) {
+        int p = sig.indexOf('(');
+        return new String[] {sig.substring(0, p), sig.substring(p)};
+    }
+
     public static Chain load(Path segmentsDir, String from, String to) throws IOException {
         int a = RELEASES.indexOf(from);
         int b = RELEASES.indexOf(to);
@@ -244,6 +291,30 @@ public final class Chain {
                     var arr = lh.getAsJsonArray(k);
                     c.lookupHooks.put(k, new String[] {
                         arr.get(0).getAsString(), arr.get(1).getAsString()});
+                }
+            }
+            if (root.has("overrideHooks")) {
+                for (var el : root.getAsJsonArray("overrideHooks")) {
+                    var o = el.getAsJsonObject();
+                    OverrideHook h = new OverrideHook();
+                    String[] osig = splitSig(o.get("old").getAsString());
+                    String[] nsig = splitSig(o.get("new").getAsString());
+                    h.oldName = osig[0];
+                    h.oldDesc = osig[1];
+                    h.newName = nsig[0];
+                    h.newDesc = nsig[1];
+                    if (o.has("wrap")) {
+                        String w = o.get("wrap").getAsString();
+                        int dot = w.lastIndexOf('.', w.indexOf('('));
+                        h.wrapOwner = w.substring(0, dot);
+                        String[] wsig = splitSig(w.substring(dot + 1));
+                        h.wrapName = wsig[0];
+                        h.wrapDesc = wsig[1];
+                    }
+                    h.guard = o.has("guard") ? o.get("guard").getAsString() : null;
+                    h.onlyUnder = o.has("onlyUnder") ? o.get("onlyUnder").getAsString() : null;
+                    h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
+                    c.overrideHooks.add(h);
                 }
             }
             if (root.has("lookupDesc")) {
