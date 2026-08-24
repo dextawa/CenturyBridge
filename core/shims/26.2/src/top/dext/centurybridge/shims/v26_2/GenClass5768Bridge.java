@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.animal.axolotl.AxolotlAi.
+ * Generated bridge overloads for net/minecraft/world/entity/animal/axolotl/AxolotlAi/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by

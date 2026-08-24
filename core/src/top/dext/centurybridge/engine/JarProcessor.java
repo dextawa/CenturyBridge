@@ -59,6 +59,7 @@ public final class JarProcessor {
         public int ledgered;                                   // examined damage classified in the quirk ledger
         public List<String> strippedMixins = new ArrayList<>();
         public List<String> notes = new ArrayList<>();
+        public Path outputJar;
     }
 
     public static Report process(Path in, Path outDir, Chain chain) throws IOException {
@@ -84,6 +85,7 @@ public final class JarProcessor {
         // ---- emit ----
         String base = rpt.file.endsWith(".jar") ? rpt.file.substring(0, rpt.file.length() - 4) : rpt.file;
         Path out = outDir.resolve(base + "+" + chain.to + ".jar");
+        rpt.outputJar = out;
         Files.createDirectories(outDir);
         try (ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(out))) {
             for (Map.Entry<String, byte[]> e : entries.entrySet()) {
@@ -359,6 +361,13 @@ public final class JarProcessor {
             @Override
             public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
                 checkClass(superName);
+                // a dead interface in the implements clause kills the class at
+                // load exactly like a dead superclass does (26.2: FlyingAnimal)
+                if (ifaces != null) {
+                    for (String i : ifaces) {
+                        checkClass(i);
+                    }
+                }
                 if (ifaces != null) {
                     for (String i : ifaces) {
                         checkClass(i);

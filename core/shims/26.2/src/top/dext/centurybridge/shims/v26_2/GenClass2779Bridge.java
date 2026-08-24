@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.network.protocol.game.ClientboundUpdateAdvancementsPacket.
+ * Generated bridge overloads for net/minecraft/network/protocol/game/ClientboundUpdateAdvancementsPacket/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.network.protocol.game.ClientboundUpdateAdvancementsPacket.class)
 public abstract class GenClass2779Bridge {
 
-    /** was net/minecraft/net.minecraft.network.protocol.game.ClientboundUpdateAdvancementsPacket.getAdded()Ljava/util/Map; */
+    /** was net/minecraft/network/protocol/game/ClientboundUpdateAdvancementsPacket/getAdded()Ljava/util/Map; */
     public java.util.Map getAdded() {
         return ((net.minecraft.network.protocol.game.ClientboundUpdateAdvancementsPacket) (Object) this).getProgress();
     }

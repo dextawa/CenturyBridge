@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.gui.components.DebugScreenOverlay.
+ * Generated bridge overloads for net/minecraft/client/gui/components/DebugScreenOverlay/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.gui.components.DebugScreenOverlay.class)
 public abstract class GenClass340Bridge {
 
-    /** was net/minecraft/net.minecraft.client.gui.components.DebugScreenOverlay.getPingLogger()Lnet/minecraft/net.minecraft.util.debugchart.SampleLogger; */
+    /** was net/minecraft/client/gui/components/DebugScreenOverlay/getPingLogger()Lnet/minecraft/util/debugchart/SampleLogger; */
     public net.minecraft.util.debugchart.SampleLogger getPingLogger() {
         return (net.minecraft.util.debugchart.SampleLogger) (Object) ((net.minecraft.client.gui.components.DebugScreenOverlay) (Object) this).getPingLogger();
     }
 
-    /** was net/minecraft/net.minecraft.client.gui.components.DebugScreenOverlay.getBandwidthLogger()Lnet/minecraft/net.minecraft.util.debugchart.SampleLogger; */
+    /** was net/minecraft/client/gui/components/DebugScreenOverlay/getBandwidthLogger()Lnet/minecraft/util/debugchart/SampleLogger; */
     public net.minecraft.util.debugchart.SampleLogger getBandwidthLogger() {
         return ((net.minecraft.client.gui.components.DebugScreenOverlay) (Object) this).getBandwidthLogger();
     }

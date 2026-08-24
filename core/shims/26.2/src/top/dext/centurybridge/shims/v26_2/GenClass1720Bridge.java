@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.inventory.AbstractFurnaceMenu.
+ * Generated bridge overloads for net/minecraft/world/inventory/AbstractFurnaceMenu/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.inventory.AbstractFurnaceMenu.class)
 public abstract class GenClass1720Bridge {
 
-    /** was net/minecraft/net.minecraft.world.inventory.AbstractFurnaceMenu.getBurnProgress()I */
+    /** was net/minecraft/world/inventory/AbstractFurnaceMenu/getBurnProgress()I */
     public int getBurnProgress() {
         return (int) ((net.minecraft.world.inventory.AbstractFurnaceMenu) (Object) this).getBurnProgress();
     }
 
-    /** was net/minecraft/net.minecraft.world.inventory.AbstractFurnaceMenu.getLitProgress()I */
+    /** was net/minecraft/world/inventory/AbstractFurnaceMenu/getLitProgress()I */
     public int getLitProgress() {
         return (int) ((net.minecraft.world.inventory.AbstractFurnaceMenu) (Object) this).getLitProgress();
     }

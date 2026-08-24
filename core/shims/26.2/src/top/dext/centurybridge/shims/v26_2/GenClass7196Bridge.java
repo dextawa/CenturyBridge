@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.gui.screens.worldselection.WorldOpenFlows.
+ * Generated bridge overloads for net/minecraft/client/gui/screens/worldselection/WorldOpenFlows/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.gui.screens.worldselection.WorldOpenFlows.class)
 public abstract class GenClass7196Bridge {
 
-    /** was net/minecraft/net.minecraft.client.gui.screens.worldselection.WorldOpenFlows.createFreshLevel(Ljava/lang/String;Lnet/minecraft/net.minecraft.world.level.LevelSettings;Lnet/minecraft/net.minecraft.world.level.levelgen.WorldOptions;Ljava/util/function/Function;)V */
+    /** was net/minecraft/client/gui/screens/worldselection/WorldOpenFlows/createFreshLevel(Ljava/lang/String;Lnet/minecraft/world/level/LevelSettings;Lnet/minecraft/world/level/levelgen/WorldOptions;Ljava/util/function/Function;)V */
     public void createFreshLevel(java.lang.String a0, net.minecraft.world.level.LevelSettings a1, net.minecraft.world.level.levelgen.WorldOptions a2, java.util.function.Function a3) {
         ((net.minecraft.client.gui.screens.worldselection.WorldOpenFlows) (Object) this).createFreshLevel(a0, a1, a2, a3, (net.minecraft.client.gui.screens.Screen) (Object) this);
     }

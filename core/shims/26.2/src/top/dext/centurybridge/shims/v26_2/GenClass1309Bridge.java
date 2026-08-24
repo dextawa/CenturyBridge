@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.LivingEntity.
+ * Generated bridge overloads for net/minecraft/world/entity/LivingEntity/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.entity.LivingEntity.class)
 public abstract class GenClass1309Bridge {
 
-    /** was net/minecraft/net.minecraft.world.entity.LivingEntity.onEquippedItemBroken(Lnet/minecraft/net.minecraft.world.entity.EquipmentSlot;)V */
+    /** was net/minecraft/world/entity/LivingEntity/onEquippedItemBroken(Lnet/minecraft/world/entity/EquipmentSlot;)V */
     public void onEquippedItemBroken(net.minecraft.world.entity.EquipmentSlot a0) {
         // sends a game event
     }

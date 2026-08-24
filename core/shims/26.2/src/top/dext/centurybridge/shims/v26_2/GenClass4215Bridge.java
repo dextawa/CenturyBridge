@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.ai.behavior.BehaviorUtils.
+ * Generated bridge overloads for net/minecraft/world/entity/ai/behavior/BehaviorUtils/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.entity.ai.behavior.BehaviorUtils.class)
 public abstract class GenClass4215Bridge {
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.behavior.BehaviorUtils.lockGazeAndWalkToEachOther(Lnet/minecraft/net.minecraft.world.entity.LivingEntity;Lnet/minecraft/net.minecraft.world.entity.LivingEntity;F)V */
+    /** was net/minecraft/world/entity/ai/behavior/BehaviorUtils/lockGazeAndWalkToEachOther(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;F)V */
     public void lockGazeAndWalkToEachOther(net.minecraft.world.entity.LivingEntity a0, net.minecraft.world.entity.LivingEntity a1, float a2) {
         ((net.minecraft.world.entity.ai.behavior.BehaviorUtils)(Object)this).lockGazeAndWalkToEachOther(a0, a1, a2, 0);
     }

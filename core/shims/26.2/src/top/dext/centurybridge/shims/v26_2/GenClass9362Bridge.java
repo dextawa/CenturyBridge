@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.item.MaceItem.
+ * Generated bridge overloads for net/minecraft/world/item/MaceItem/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.item.MaceItem.class)
 public abstract class GenClass9362Bridge {
 
-    /** was net/minecraft/net.minecraft.world.item.MaceItem.canSmashAttack(Lnet/minecraft/net.minecraft.world.entity.player.Player;)Z */
+    /** was net/minecraft/world/item/MaceItem/canSmashAttack(Lnet/minecraft/world/entity/player/Player;)Z */
     public boolean canSmashAttack(net.minecraft.world.entity.player.Player a0) {
         return ((net.minecraft.world.item.MaceItem) (Object) this).canSmashAttack(a0);
     }

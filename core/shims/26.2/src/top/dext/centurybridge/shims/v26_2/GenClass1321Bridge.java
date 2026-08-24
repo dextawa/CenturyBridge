@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.TamableAnimal.
+ * Generated bridge overloads for net/minecraft/world/entity/TamableAnimal/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.entity.TamableAnimal.class)
 public abstract class GenClass1321Bridge {
 
-    /** was net/minecraft/net.minecraft.world.entity.TamableAnimal.setTame(Z)V */
+    /** was net/minecraft/world/entity/TamableAnimal/setTame(Z)V */
     public void setTame(boolean a0) {
         ((net.minecraft.world.entity.TamableAnimal) (Object) this).setTame(a0, true);
     }

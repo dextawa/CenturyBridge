@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.item.CrossbowItem.
+ * Generated bridge overloads for net/minecraft/world/item/CrossbowItem/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.item.CrossbowItem.class)
 public abstract class GenClass1764Bridge {
 
-    /** was net/minecraft/net.minecraft.world.item.CrossbowItem.performShooting(Lnet/minecraft/net.minecraft.world.level.Level;Lnet/minecraft/net.minecraft.world.entity.LivingEntity;Lnet/minecraft/net.minecraft.world.InteractionHand;Lnet/minecraft/net.minecraft.world.item.ItemStack;FF)V */
+    /** was net/minecraft/world/item/CrossbowItem/performShooting(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;FF)V */
     public void performShooting(net.minecraft.world.level.Level a0, net.minecraft.world.entity.LivingEntity a1, net.minecraft.world.InteractionHand a2, net.minecraft.world.item.ItemStack a3, float a4, float a5) {
         ((net.minecraft.world.item.CrossbowItem) (Object) this).performShooting(a0, a1, a2, a3, a4, a5, (net.minecraft.world.entity.LivingEntity) null);
     }
 
-    /** was net/minecraft/net.minecraft.world.item.CrossbowItem.getChargeDuration(Lnet/minecraft/net.minecraft.world.item.ItemStack;)I */
+    /** was net/minecraft/world/item/CrossbowItem/getChargeDuration(Lnet/minecraft/world/item/ItemStack;)I */
     public int getChargeDuration(net.minecraft.world.item.ItemStack a0) {
         return ((net.minecraft.world.item.CrossbowItem)(Object)this).getChargeDuration(a0, null);
     }

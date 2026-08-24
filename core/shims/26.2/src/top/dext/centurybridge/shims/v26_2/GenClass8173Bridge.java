@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.block.entity.DecoratedPotPatterns.
+ * Generated bridge overloads for net/minecraft/world/level/block/entity/DecoratedPotPatterns/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.block.entity.DecoratedPotPatterns.class)
 public abstract class GenClass8173Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.block.entity.DecoratedPotPatterns.bootstrap(Lnet/minecraft/net.minecraft.core.Registry;)Ljava/lang/String; */
+    /** was net/minecraft/world/level/block/entity/DecoratedPotPatterns/bootstrap(Lnet/minecraft/core/Registry;)Ljava/lang/String; */
     public java.lang.String bootstrap(net.minecraft.core.Registry a0) {
         return ((net.minecraft.world.level.block.entity.DecoratedPotPatterns)(Object)this).bootstrap(a0).assetId().toString();
     }

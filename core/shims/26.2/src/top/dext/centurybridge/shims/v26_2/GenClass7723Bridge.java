@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.levelgen.WorldDimensions.
+ * Generated bridge overloads for net/minecraft/world/level/levelgen/WorldDimensions/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.levelgen.WorldDimensions.class)
 public abstract class GenClass7723Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.levelgen.WorldDimensions.dimensions()Lnet/minecraft/net.minecraft.core.Registry; */
+    /** was net/minecraft/world/level/levelgen/WorldDimensions/dimensions()Lnet/minecraft/core/Registry; */
     public net.minecraft.core.Registry dimensions() {
         throw new UnsupportedOperationException("CenturyBridge: dimensions() now returns Map instead of Registry; no method in the new net.minecraft.world.level.levelgen.WorldDimensions API surface converts the Map back to a net.minecraft.core.Registry Registry");
     }

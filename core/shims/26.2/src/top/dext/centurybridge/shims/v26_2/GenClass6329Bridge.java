@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.server.commands.RaidCommand.
+ * Generated bridge overloads for net/minecraft/server/commands/RaidCommand/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.server.commands.RaidCommand.class)
 public abstract class GenClass6329Bridge {
 
-    /** was net/minecraft/net.minecraft.server.commands.RaidCommand.register(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    /** was net/minecraft/server/commands/RaidCommand/register(Lcom/mojang/brigadier/CommandDispatcher;)V */
     public void register(com.mojang.brigadier.CommandDispatcher a0) {
         throw new UnsupportedOperationException("CenturyBridge: register(CommandDispatcher) requires a CommandBuildContext (net.minecraft.commands.CommandBuildContext) in 1.20.5+; the old single-arg overload has no source for the registry/feature context needed to construct one");
         // CB-CONFIDENCE: high -- the new API mandates a CommandBuildContext that cannot be derived from a CommandDispatcher alone

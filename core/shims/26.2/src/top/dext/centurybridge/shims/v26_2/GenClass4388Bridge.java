@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(com.mojang.realmsclient.gui.screens.configuration.RealmsConfigureWorldScreen.class)
 public abstract class GenClass4388Bridge {
 
-    /** was net/minecraft/com.mojang.realmsclient.gui.screens.configuration.RealmsConfigureWorldScreen.openTheWorld(ZLnet/minecraft/net.minecraft.client.gui.screens.Screen;)V */
+    /** was net/minecraft/com.mojang.realmsclient.gui.screens.configuration.RealmsConfigureWorldScreen.openTheWorld(ZLnet/minecraft/client/gui/screens/Screen;)V */
     public void openTheWorld(boolean a0, net.minecraft.client.gui.screens.Screen a1) {
         ((com.mojang.realmsclient.gui.screens.configuration.RealmsConfigureWorldScreen)(Object)this).openTheWorld(a0);
     }

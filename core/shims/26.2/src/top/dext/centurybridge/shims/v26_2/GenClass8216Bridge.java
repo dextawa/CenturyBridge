@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.util.CommonLinks.
+ * Generated bridge overloads for net/minecraft/util/CommonLinks/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.util.CommonLinks.class)
 public abstract class GenClass8216Bridge {
 
-    /** was net/minecraft/net.minecraft.util.CommonLinks.extendRealms(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; */
+    /** was net/minecraft/util/CommonLinks/extendRealms(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; */
     public java.lang.String extendRealms(java.lang.String a0, java.lang.String a1) {
         return ((net.minecraft.util.CommonLinks) (Object) this).extendRealms(a0, java.util.UUID.fromString(a1));
     }
 
-    /** was net/minecraft/net.minecraft.util.CommonLinks.extendRealms(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String; */
+    /** was net/minecraft/util/CommonLinks/extendRealms(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String; */
     public java.lang.String extendRealms(java.lang.String a0, java.lang.String a1, boolean a2) {
         return ((net.minecraft.util.CommonLinks) (Object) this).extendRealms(a0, java.util.UUID.fromString(a1), a2);
     }

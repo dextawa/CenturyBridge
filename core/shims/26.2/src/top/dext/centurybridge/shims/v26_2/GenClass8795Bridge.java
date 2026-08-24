@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.data.loot.packs.TradeRebalanceLootTableProvider.
+ * Generated bridge overloads for net/minecraft/data/loot/packs/TradeRebalanceLootTableProvider/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.data.loot.packs.TradeRebalanceLootTableProvider.class)
 public abstract class GenClass8795Bridge {
 
-    /** was net/minecraft/net.minecraft.data.loot.packs.TradeRebalanceLootTableProvider.create(Lnet/minecraft/net.minecraft.data.PackOutput;)Lnet/minecraft/net.minecraft.data.loot.LootTableProvider; */
+    /** was net/minecraft/data/loot/packs/TradeRebalanceLootTableProvider/create(Lnet/minecraft/data/PackOutput;)Lnet/minecraft/data/loot/LootTableProvider; */
     public net.minecraft.data.loot.LootTableProvider create(net.minecraft.data.PackOutput a0) {
         return ((net.minecraft.data.loot.packs.TradeRebalanceLootTableProvider)(Object)this).create(a0, new java.util.concurrent.CompletableFuture<>());
     }

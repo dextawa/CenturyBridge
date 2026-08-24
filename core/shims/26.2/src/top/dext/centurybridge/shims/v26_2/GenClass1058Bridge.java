@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.renderer.texture.TextureAtlasSprite.
+ * Generated bridge overloads for net/minecraft/client/renderer/texture/TextureAtlasSprite/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.renderer.texture.TextureAtlasSprite.class)
 public abstract class GenClass1058Bridge {
 
-    /** was net/minecraft/net.minecraft.client.renderer.texture.TextureAtlasSprite.getV(D)F */
+    /** was net/minecraft/client/renderer/texture/TextureAtlasSprite/getV(D)F */
     public float getV(double a0) {
         return ((net.minecraft.client.renderer.texture.TextureAtlasSprite) (Object) this).getV((float) a0);
     }
 
-    /** was net/minecraft/net.minecraft.client.renderer.texture.TextureAtlasSprite.getU(D)F */
+    /** was net/minecraft/client/renderer/texture/TextureAtlasSprite/getU(D)F */
     public float getU(double a0) {
         return ((net.minecraft.client.renderer.texture.TextureAtlasSprite) (Object) this).getU((float) a0);
     }

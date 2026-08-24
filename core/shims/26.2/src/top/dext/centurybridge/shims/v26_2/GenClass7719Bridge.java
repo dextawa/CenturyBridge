@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.gameevent.GameEventDispatcher.
+ * Generated bridge overloads for net/minecraft/world/level/gameevent/GameEventDispatcher/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.gameevent.GameEventDispatcher.class)
 public abstract class GenClass7719Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.gameevent.GameEventDispatcher.post(Lnet/minecraft/net.minecraft.world.level.gameevent.GameEvent;Lnet/minecraft/net.minecraft.world.phys.Vec3;Lnet/minecraft/net.minecraft.world.level.gameevent.GameEvent$class_7397;)V */
+    /** was net/minecraft/world/level/gameevent/GameEventDispatcher/post(Lnet/minecraft/world/level/gameevent/GameEvent;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEvent$Context;)V */
     public void post(net.minecraft.world.level.gameevent.GameEvent a0, net.minecraft.world.phys.Vec3 a1, net.minecraft.world.level.gameevent.GameEvent.Context a2) {
         ((net.minecraft.world.level.gameevent.GameEventDispatcher)(Object)this).post(net.minecraft.core.Holder.direct(a0), a1, a2);
     }

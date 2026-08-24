@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket.
+ * Generated bridge overloads for net/minecraft/network/protocol/game/ServerboundSeenAdvancementsPacket/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket.class)
 public abstract class GenClass2859Bridge {
 
-    /** was net/minecraft/net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket.openedTab(Lnet/minecraft/net.minecraft.advancements.Advancement;)Lnet/minecraft/net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket; */
+    /** was net/minecraft/network/protocol/game/ServerboundSeenAdvancementsPacket/openedTab(Lnet/minecraft/advancements/Advancement;)Lnet/minecraft/network/protocol/game/ServerboundSeenAdvancementsPacket; */
     public net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket openedTab(net.minecraft.advancements.Advancement a0) {
         return ((net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket) (Object) this).openedTab(new net.minecraft.advancements.AdvancementHolder(((net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket) (Object) this).getTab(), a0));
     }

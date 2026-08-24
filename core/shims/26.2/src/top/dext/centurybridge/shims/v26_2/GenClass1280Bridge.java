@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.damagesource.CombatRules.
+ * Generated bridge overloads for net/minecraft/world/damagesource/CombatRules/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.damagesource.CombatRules.class)
 public abstract class GenClass1280Bridge {
 
-    /** was net/minecraft/net.minecraft.world.damagesource.CombatRules.getDamageAfterAbsorb(FFF)F */
+    /** was net/minecraft/world/damagesource/CombatRules/getDamageAfterAbsorb(FFF)F */
     public float getDamageAfterAbsorb(float a0, float a1, float a2) {
         float f = 2.0F + a2 / 4.0F;
         float g = a1 - a0 / f;

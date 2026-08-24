@@ -20,6 +20,4 @@ public interface Class1793Accessor {
     @Invoker("effectiveModel")
     net.minecraft.resources.Identifier cbModelId();
 
-    @Invoker("buildAndValidateComponents")
-    net.minecraft.core.component.DataComponentMap cbBuildComponents(net.minecraft.network.chat.Component name, net.minecraft.resources.Identifier modelId);
 }

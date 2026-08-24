@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.server.level.PlayerMap.
+ * Generated bridge overloads for net/minecraft/server/level/PlayerMap/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,17 +15,17 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.server.level.PlayerMap.class)
 public abstract class GenClass3210Bridge {
 
-    /** was net/minecraft/net.minecraft.server.level.PlayerMap.getAllPlayers(J)Ljava/util/Set; */
+    /** was net/minecraft/server/level/PlayerMap/getAllPlayers(J)Ljava/util/Set; */
     public java.util.Set getAllPlayers(long a0) {
         return ((net.minecraft.server.level.PlayerMap) (Object) this).getAllPlayers();
     }
 
-    /** was net/minecraft/net.minecraft.server.level.PlayerMap.removePlayer(JLnet/minecraft/net.minecraft.server.level.ServerPlayer;)V */
+    /** was net/minecraft/server/level/PlayerMap/removePlayer(JLnet/minecraft/server/level/ServerPlayer;)V */
     public void removePlayer(long a0, net.minecraft.server.level.ServerPlayer a1) {
         ((net.minecraft.server.level.PlayerMap) (Object) this).removePlayer(a1);
     }
 
-    /** was net/minecraft/net.minecraft.server.level.PlayerMap.addPlayer(JLnet/minecraft/net.minecraft.server.level.ServerPlayer;Z)V */
+    /** was net/minecraft/server/level/PlayerMap/addPlayer(JLnet/minecraft/server/level/ServerPlayer;Z)V */
     public void addPlayer(long a0, net.minecraft.server.level.ServerPlayer a1, boolean a2) {
         ((net.minecraft.server.level.PlayerMap) (Object) this).addPlayer(a1, a2);
     }

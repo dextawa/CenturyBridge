@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.resources.metadata.gui.GuiSpriteScaling$class_8695.
+ * Generated bridge overloads for net/minecraft/client/resources/metadata/gui/GuiSpriteScaling$Type.
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.resources.metadata.gui.GuiSpriteScaling.Type.class)
 public abstract class GenClass8690Class8695Bridge {
 
-    /** was net/minecraft/net.minecraft.client.resources.metadata.gui.GuiSpriteScaling$class_8695.codec()Lcom/mojang/serialization/Codec; */
+    /** was net/minecraft/client/resources/metadata/gui/GuiSpriteScaling$Type.codec()Lcom/mojang/serialization/Codec; */
     public com.mojang.serialization.Codec codec() {
         return ((net.minecraft.client.resources.metadata.gui.GuiSpriteScaling.Type) (Object) this).codec().codec();
     }

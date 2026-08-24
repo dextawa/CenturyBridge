@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.network.chat.MessageSignatureCache.
+ * Generated bridge overloads for net/minecraft/network/chat/MessageSignatureCache/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.network.chat.MessageSignatureCache.class)
 public abstract class GenClass7561Bridge {
 
-    /** was net/minecraft/net.minecraft.network.chat.MessageSignatureCache.push(Lnet/minecraft/net.minecraft.network.chat.PlayerChatMessage;)V */
+    /** was net/minecraft/network/chat/MessageSignatureCache/push(Lnet/minecraft/network/chat/PlayerChatMessage;)V */
     public void push(net.minecraft.network.chat.PlayerChatMessage a0) {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.network.chat.PlayerChatMessage (SignedMessage) was removed in 1.20.3");
     }

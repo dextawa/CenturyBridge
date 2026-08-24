@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.server.advancements.AdvancementVisibilityEvaluator.
+ * Generated bridge overloads for net/minecraft/server/advancements/AdvancementVisibilityEvaluator/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.server.advancements.AdvancementVisibilityEvaluator.class)
 public abstract class GenClass8005Bridge {
 
-    /** was net/minecraft/net.minecraft.server.advancements.AdvancementVisibilityEvaluator.evaluateVisibility(Lnet/minecraft/net.minecraft.advancements.Advancement;Ljava/util/function/Predicate;Lnet/minecraft/net.minecraft.server.advancements.AdvancementVisibilityEvaluator$class_8006;)V */
+    /** was net/minecraft/server/advancements/AdvancementVisibilityEvaluator/evaluateVisibility(Lnet/minecraft/advancements/Advancement;Ljava/util/function/Predicate;Lnet/minecraft/server/advancements/AdvancementVisibilityEvaluator$Output;)V */
     public void evaluateVisibility(net.minecraft.advancements.Advancement a0, java.util.function.Predicate a1, net.minecraft.server.advancements.AdvancementVisibilityEvaluator.Output a2) {
         throw new UnsupportedOperationException("CenturyBridge: RecipeResultCollection now requires RecipeEntry");
     }

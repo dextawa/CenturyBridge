@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.ContainerHelper.
+ * Generated bridge overloads for net/minecraft/world/ContainerHelper/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass1262Bridge {
 
 
-    /** was net/minecraft/net.minecraft.world.ContainerHelper.saveAllItems(Lnet/minecraft/net.minecraft.nbt.CompoundTag;Lnet/minecraft/net.minecraft.core.NonNullList;Z)Lnet/minecraft/net.minecraft.nbt.CompoundTag; */
+    /** was net/minecraft/world/ContainerHelper/saveAllItems(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/NonNullList;Z)Lnet/minecraft/nbt/CompoundTag; */
     public net.minecraft.nbt.CompoundTag saveAllItems(net.minecraft.nbt.CompoundTag a0, net.minecraft.core.NonNullList a1, boolean a2) {
         throw new UnsupportedOperationException("CenturyBridge: Inventories.writeNbt requires a RegistryWrapper.WrapperLookup in 1.20.5");
     }

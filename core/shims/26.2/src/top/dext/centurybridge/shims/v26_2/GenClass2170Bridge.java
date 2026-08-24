@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.commands.Commands.
+ * Generated bridge overloads for net/minecraft/commands/Commands/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.commands.Commands.class)
 public abstract class GenClass2170Bridge {
 
-    /** was net/minecraft/net.minecraft.commands.Commands.performCommand(Lcom/mojang/brigadier/ParseResults;Ljava/lang/String;)I */
+    /** was net/minecraft/commands/Commands/performCommand(Lcom/mojang/brigadier/ParseResults;Ljava/lang/String;)I */
     public int performCommand(com.mojang.brigadier.ParseResults a0, java.lang.String a1) {
         throw new UnsupportedOperationException("CenturyBridge: Command execution no longer returns a synchronous integer result in 1.20.3");
     }

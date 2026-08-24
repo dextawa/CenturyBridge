@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.animal.frog.Frog.
+ * Generated bridge overloads for net/minecraft/world/entity/animal/frog/Frog/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass7102Bridge {
 
 
-    /** was net/minecraft/net.minecraft.world.entity.animal.frog.Frog.getVariant()Lnet/minecraft/net.minecraft.world.entity.animal.frog.FrogVariant; */
+    /** was net/minecraft/world/entity/animal/frog/Frog/getVariant()Lnet/minecraft/world/entity/animal/frog/FrogVariant; */
     public net.minecraft.world.entity.animal.frog.FrogVariant getVariant() {
         return (net.minecraft.world.entity.animal.frog.FrogVariant) ((net.minecraft.world.entity.animal.frog.Frog)(Object)this).getVariant().value();
         // CB-CONFIDENCE: medium -- value() extracts the value from the RegistryEntry (net.minecraft.core.Holder), and casting to net.minecraft.world.entity.animal.frog.FrogVariant assumes the entry's type parameter matches the old return type; the pattern is consistent with 1.20.5's wrapping of previously-raw values in RegistryEntry, but the exact type parameter is inferred.

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.advancements.CriterionProgress.
+ * Generated bridge overloads for net/minecraft/advancements/CriterionProgress/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.advancements.CriterionProgress.class)
 public abstract class GenClass178Bridge {
 
-    /** was net/minecraft/net.minecraft.advancements.CriterionProgress.getObtained()Ljava/util/Date; */
+    /** was net/minecraft/advancements/CriterionProgress/getObtained()Ljava/util/Date; */
     public java.util.Date getObtained() {
         return java.util.Date.from(((net.minecraft.advancements.CriterionProgress)(Object)this).getObtained());
     }

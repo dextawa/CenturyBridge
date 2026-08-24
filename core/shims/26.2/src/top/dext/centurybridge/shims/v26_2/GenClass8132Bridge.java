@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.gui.layouts.HeaderAndFooterLayout.
+ * Generated bridge overloads for net/minecraft/client/gui/layouts/HeaderAndFooterLayout/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.gui.layouts.HeaderAndFooterLayout.class)
 public abstract class GenClass8132Bridge {
 
-    /** was net/minecraft/net.minecraft.client.gui.layouts.HeaderAndFooterLayout.addToContents(Lnet/minecraft/net.minecraft.client.gui.layouts.LayoutElement;Lnet/minecraft/net.minecraft.client.gui.layouts.LayoutSettings;)Lnet/minecraft/net.minecraft.client.gui.layouts.LayoutElement; */
+    /** was net/minecraft/client/gui/layouts/HeaderAndFooterLayout/addToContents(Lnet/minecraft/client/gui/layouts/LayoutElement;Lnet/minecraft/client/gui/layouts/LayoutSettings;)Lnet/minecraft/client/gui/layouts/LayoutElement; */
     public net.minecraft.client.gui.layouts.LayoutElement addToContents(net.minecraft.client.gui.layouts.LayoutElement a0, net.minecraft.client.gui.layouts.LayoutSettings a1) {
         return ((net.minecraft.client.gui.layouts.HeaderAndFooterLayout) (Object) this).addToContents(a0, p -> {
             if (a1 != null) {

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.block.entity.BlockEntity.
+ * Generated bridge overloads for net/minecraft/world/level/block/entity/BlockEntity/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.block.entity.BlockEntity.class)
 public abstract class GenClass2586Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.block.entity.BlockEntity.loadStatic(Lnet/minecraft/net.minecraft.core.BlockPos;Lnet/minecraft/net.minecraft.world.level.block.state.BlockState;Lnet/minecraft/net.minecraft.nbt.CompoundTag;)Lnet/minecraft/net.minecraft.world.level.block.entity.BlockEntity; */
+    /** was net/minecraft/world/level/block/entity/BlockEntity/loadStatic(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/block/entity/BlockEntity; */
     public net.minecraft.world.level.block.entity.BlockEntity loadStatic(net.minecraft.core.BlockPos a0, net.minecraft.world.level.block.state.BlockState a1, net.minecraft.nbt.CompoundTag a2) {
         return net.minecraft.world.level.block.entity.BlockEntity.loadStatic(a0, a1, a2, net.minecraft.core.HolderLookup.Provider.create(java.util.stream.Stream.empty()));
     }
 
 
 
-    /** was net/minecraft/net.minecraft.world.level.block.entity.BlockEntity.getUpdateTag()Lnet/minecraft/net.minecraft.nbt.CompoundTag; */
+    /** was net/minecraft/world/level/block/entity/BlockEntity/getUpdateTag()Lnet/minecraft/nbt/CompoundTag; */
     public net.minecraft.nbt.CompoundTag getUpdateTag() {
         net.minecraft.world.level.block.entity.BlockEntity self = (net.minecraft.world.level.block.entity.BlockEntity) (Object) this;
         net.minecraft.world.level.Level world = self.getLevel();

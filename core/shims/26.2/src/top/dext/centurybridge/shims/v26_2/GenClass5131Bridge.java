@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeMap.
+ * Generated bridge overloads for net/minecraft/world/entity/ai/attributes/AttributeMap/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,17 +15,17 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.entity.ai.attributes.AttributeMap.class)
 public abstract class GenClass5131Bridge {
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeMap.getValue(Lnet/minecraft/net.minecraft.world.entity.ai.attributes.Attribute;)D */
+    /** was net/minecraft/world/entity/ai/attributes/AttributeMap/getValue(Lnet/minecraft/world/entity/ai/attributes/Attribute;)D */
     public double getValue(net.minecraft.world.entity.ai.attributes.Attribute a0) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeMap) (Object) this).getValue(net.minecraft.core.Holder.direct(a0));
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeMap.hasModifier(Lnet/minecraft/net.minecraft.core.Holder;Ljava/util/UUID;)Z */
+    /** was net/minecraft/world/entity/ai/attributes/AttributeMap/hasModifier(Lnet/minecraft/core/Holder;Ljava/util/UUID;)Z */
     public boolean hasModifier(net.minecraft.core.Holder a0, java.util.UUID a1) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeMap)(Object)this).hasModifier(a0, net.minecraft.resources.Identifier.tryParse(a1.toString()));
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeMap.getModifierValue(Lnet/minecraft/net.minecraft.core.Holder;Ljava/util/UUID;)D */
+    /** was net/minecraft/world/entity/ai/attributes/AttributeMap/getModifierValue(Lnet/minecraft/core/Holder;Ljava/util/UUID;)D */
     public double getModifierValue(net.minecraft.core.Holder a0, java.util.UUID a1) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeMap)(Object)this).getModifierValue(a0, net.minecraft.resources.Identifier.tryParse(a1.toString()));
     }

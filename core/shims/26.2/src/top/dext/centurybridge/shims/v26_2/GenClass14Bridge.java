@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.pathfinder.WalkNodeEvaluator.
+ * Generated bridge overloads for net/minecraft/world/level/pathfinder/WalkNodeEvaluator/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.pathfinder.WalkNodeEvaluator.class)
 public abstract class GenClass14Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.pathfinder.WalkNodeEvaluator.checkNeighbourBlocks(Lnet/minecraft/net.minecraft.world.level.BlockGetter;Lnet/minecraft/net.minecraft.core.BlockPos$class_2339;Lnet/minecraft/net.minecraft.world.level.pathfinder.PathType;)Lnet/minecraft/net.minecraft.world.level.pathfinder.PathType; */
+    /** was net/minecraft/world/level/pathfinder/WalkNodeEvaluator/checkNeighbourBlocks(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos$MutableBlockPos;Lnet/minecraft/world/level/pathfinder/PathType;)Lnet/minecraft/world/level/pathfinder/PathType; */
     public net.minecraft.world.level.pathfinder.PathType checkNeighbourBlocks(net.minecraft.world.level.BlockGetter a0, net.minecraft.core.BlockPos.MutableBlockPos a1, net.minecraft.world.level.pathfinder.PathType a2) {
         return ((net.minecraft.world.level.pathfinder.WalkNodeEvaluator) (Object) this).checkNeighbourBlocks(new net.minecraft.world.level.pathfinder.PathfindingContext((net.minecraft.world.level.CollisionGetter) a0, null), a1.getX(), a1.getY(), a1.getZ(), a2);
     }

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.gui.components.EditBox.
+ * Generated bridge overloads for net/minecraft/client/gui/components/EditBox/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,22 +15,22 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.gui.components.EditBox.class)
 public abstract class GenClass342Bridge {
 
-    /** was net/minecraft/net.minecraft.client.gui.components.EditBox.moveCursor(I)V */
+    /** was net/minecraft/client/gui/components/EditBox/moveCursor(I)V */
     public void moveCursor(int a0) {
         ((net.minecraft.client.gui.components.EditBox)(Object)this).moveCursor(a0, false);
     }
 
-    /** was net/minecraft/net.minecraft.client.gui.components.EditBox.moveCursorToStart()V */
+    /** was net/minecraft/client/gui/components/EditBox/moveCursorToStart()V */
     public void moveCursorToStart() {
         ((net.minecraft.client.gui.components.EditBox)(Object)this).moveCursorToStart(false);
     }
 
-    /** was net/minecraft/net.minecraft.client.gui.components.EditBox.moveCursorToEnd()V */
+    /** was net/minecraft/client/gui/components/EditBox/moveCursorToEnd()V */
     public void moveCursorToEnd() {
         ((net.minecraft.client.gui.components.EditBox)(Object)this).moveCursorToEnd(false);
     }
 
-    /** was net/minecraft/net.minecraft.client.gui.components.EditBox.moveCursorTo(I)V */
+    /** was net/minecraft/client/gui/components/EditBox/moveCursorTo(I)V */
     public void moveCursorTo(int a0) {
         ((net.minecraft.client.gui.components.EditBox)(Object)this).moveCursorTo(a0, true);
     }

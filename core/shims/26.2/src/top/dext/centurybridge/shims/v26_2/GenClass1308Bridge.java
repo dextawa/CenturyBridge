@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.Mob.
+ * Generated bridge overloads for net/minecraft/world/entity/Mob/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.entity.Mob.class)
 public abstract class GenClass1308Bridge {
 
-    /** was net/minecraft/net.minecraft.world.entity.Mob.finalizeSpawn(Lnet/minecraft/net.minecraft.world.level.ServerLevelAccessor;Lnet/minecraft/net.minecraft.world.DifficultyInstance;Lnet/minecraft/net.minecraft.world.entity.EntitySpawnReason;Lnet/minecraft/net.minecraft.world.entity.SpawnGroupData;Lnet/minecraft/net.minecraft.nbt.CompoundTag;)Lnet/minecraft/net.minecraft.world.entity.SpawnGroupData; */
+    /** was net/minecraft/world/entity/Mob/finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData; */
     public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor a0, net.minecraft.world.DifficultyInstance a1, net.minecraft.world.entity.EntitySpawnReason a2, net.minecraft.world.entity.SpawnGroupData a3, net.minecraft.nbt.CompoundTag a4) {
         return ((net.minecraft.world.entity.Mob) (Object) this).finalizeSpawn(a0, a1, a2, a3);
     }

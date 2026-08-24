@@ -71,8 +71,11 @@ public final class CbPending {
             Class1792Accessor ia = (Class1792Accessor) item;
             String tk = acc.cbTranslationKey();
             ia.cbSetTranslationKey(tk);
-            ia.cbSetComponents(acc.cbBuildComponents(
-                net.minecraft.network.chat.Component.translatable(tk), acc.cbModelId()));
+            // 26.x: item components are no longer a materialized field --
+            // the registry builds them from the Properties initializer with
+            // the real key at registration. The display-name component the
+            // initializer captured at construction may still carry the
+            // placeholder id for late-registered items (ledgered).
         }
     }
 

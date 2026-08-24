@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.chunk.ChunkGenerator.
+ * Generated bridge overloads for net/minecraft/world/level/chunk/ChunkGenerator/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.chunk.ChunkGenerator.class)
 public abstract class GenClass2794Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.chunk.ChunkGenerator.fillFromNoise(Ljava/util/concurrent/Executor;Lnet/minecraft/net.minecraft.world.level.levelgen.blending.Blender;Lnet/minecraft/net.minecraft.world.level.levelgen.RandomState;Lnet/minecraft/net.minecraft.world.level.StructureManager;Lnet/minecraft/net.minecraft.world.level.chunk.ChunkAccess;)Ljava/util/concurrent/CompletableFuture; */
+    /** was net/minecraft/world/level/chunk/ChunkGenerator/fillFromNoise(Ljava/util/concurrent/Executor;Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)Ljava/util/concurrent/CompletableFuture; */
     public java.util.concurrent.CompletableFuture fillFromNoise(java.util.concurrent.Executor a0, net.minecraft.world.level.levelgen.blending.Blender a1, net.minecraft.world.level.levelgen.RandomState a2, net.minecraft.world.level.StructureManager a3, net.minecraft.world.level.chunk.ChunkAccess a4) {
         return ((net.minecraft.world.level.chunk.ChunkGenerator) (Object) this).fillFromNoise(a1, a2, a3, a4);
     }
 
-    /** was net/minecraft/net.minecraft.world.level.chunk.ChunkGenerator.createBiomes(Ljava/util/concurrent/Executor;Lnet/minecraft/net.minecraft.world.level.levelgen.RandomState;Lnet/minecraft/net.minecraft.world.level.levelgen.blending.Blender;Lnet/minecraft/net.minecraft.world.level.StructureManager;Lnet/minecraft/net.minecraft.world.level.chunk.ChunkAccess;)Ljava/util/concurrent/CompletableFuture; */
+    /** was net/minecraft/world/level/chunk/ChunkGenerator/createBiomes(Ljava/util/concurrent/Executor;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)Ljava/util/concurrent/CompletableFuture; */
     public java.util.concurrent.CompletableFuture createBiomes(java.util.concurrent.Executor a0, net.minecraft.world.level.levelgen.RandomState a1, net.minecraft.world.level.levelgen.blending.Blender a2, net.minecraft.world.level.StructureManager a3, net.minecraft.world.level.chunk.ChunkAccess a4) {
         return ((net.minecraft.world.level.chunk.ChunkGenerator)(Object)this).createBiomes(a1, a2, a3, a4);
     }

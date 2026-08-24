@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.raid.Raid.
+ * Generated bridge overloads for net/minecraft/world/entity/raid/Raid/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.entity.raid.Raid.class)
 public abstract class GenClass3765Bridge {
 
-    /** was net/minecraft/net.minecraft.world.entity.raid.Raid.absorbRaidOmen(Lnet/minecraft/net.minecraft.world.entity.player.Player;)V */
+    /** was net/minecraft/world/entity/raid/Raid/absorbRaidOmen(Lnet/minecraft/world/entity/player/Player;)V */
     public void absorbRaidOmen(net.minecraft.world.entity.player.Player a0) {
         if (a0 instanceof net.minecraft.server.level.ServerPlayer) {
             ((net.minecraft.world.entity.raid.Raid) (Object) this).absorbRaidOmen((net.minecraft.server.level.ServerPlayer) a0);

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.saveddata.maps.MapIndex.
+ * Generated bridge overloads for net/minecraft/world/level/saveddata/maps/MapIndex/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass3978Bridge {
 
 
-    /** was net/minecraft/net.minecraft.world.level.saveddata.maps.MapIndex.method_32360(Lnet/minecraft/net.minecraft.nbt.CompoundTag;)Lnet/minecraft/net.minecraft.world.level.saveddata.maps.MapIndex; */
+    /** was net/minecraft/world/level/saveddata/maps/MapIndex/method_32360(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/saveddata/maps/MapIndex; */
     public net.minecraft.world.level.saveddata.maps.MapIndex method_32360(net.minecraft.nbt.CompoundTag a0) {
         throw new UnsupportedOperationException("CenturyBridge: method_32360(CompoundTag) requires a RegistryWrapper.WrapperLookup (net.minecraft.core.HolderLookup.Provider) in 1.20.5+; the old single-argument signature relied on global registry access that no longer exists");
     }

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.inventory.RecipeBookMenu.
+ * Generated bridge overloads for net/minecraft/world/inventory/RecipeBookMenu/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.inventory.RecipeBookMenu.class)
 public abstract class GenClass1729Bridge {
 
-    /** was net/minecraft/net.minecraft.world.inventory.RecipeBookMenu.handlePlacement(ZLnet/minecraft/net.minecraft.world.item.crafting.Recipe;Lnet/minecraft/net.minecraft.server.level.ServerPlayer;)V */
+    /** was net/minecraft/world/inventory/RecipeBookMenu/handlePlacement(ZLnet/minecraft/world/item/crafting/Recipe;Lnet/minecraft/server/level/ServerPlayer;)V */
     public void handlePlacement(boolean a0, net.minecraft.world.item.crafting.Recipe a1, net.minecraft.server.level.ServerPlayer a2) {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.item.crafting.Recipe (Recipe) no longer has getId() in 1.20.2; cannot construct net.minecraft.world.item.crafting.RecipeHolder (RecipeEntry) without an Identifier");
     }

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.multiplayer.ClientAdvancements.
+ * Generated bridge overloads for net/minecraft/client/multiplayer/ClientAdvancements/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.multiplayer.ClientAdvancements.class)
 public abstract class GenClass632Bridge {
 
-    /** was net/minecraft/net.minecraft.client.multiplayer.ClientAdvancements.setSelectedTab(Lnet/minecraft/net.minecraft.advancements.Advancement;Z)V */
+    /** was net/minecraft/client/multiplayer/ClientAdvancements/setSelectedTab(Lnet/minecraft/advancements/Advancement;Z)V */
     public void setSelectedTab(net.minecraft.advancements.Advancement a0, boolean a1) {
         throw new UnsupportedOperationException("CenturyBridge: setSelectedTab now requires net.minecraft.advancements.AdvancementHolder (Identifier+Text pair) but old signature only provides net.minecraft.advancements.Advancement (Text); cannot derive the required Identifier from Text alone");
     }

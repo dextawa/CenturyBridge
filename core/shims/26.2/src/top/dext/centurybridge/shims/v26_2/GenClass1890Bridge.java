@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.item.enchantment.EnchantmentHelper.
+ * Generated bridge overloads for net/minecraft/world/item/enchantment/EnchantmentHelper/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.item.enchantment.EnchantmentHelper.class)
 public abstract class GenClass1890Bridge {
 
-    /** was net/minecraft/net.minecraft.world.item.enchantment.EnchantmentHelper.getDamageProtection(Ljava/lang/Iterable;Lnet/minecraft/net.minecraft.world.damagesource.DamageSource;)I */
+    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/getDamageProtection(Ljava/lang/Iterable;Lnet/minecraft/world/damagesource/DamageSource;)I */
     public int getDamageProtection(java.lang.Iterable a0, net.minecraft.world.damagesource.DamageSource a1) {
         throw new UnsupportedOperationException("CenturyBridge: getDamageProtection(Iterable, DamageSource) computed protection for explicit equipment; 1.21 getDamageProtection requires World and LivingEntity (the defender), which cannot be derived from an equipment Iterable and DamageSource alone");
     }
 
-    /** was net/minecraft/net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(Lnet/minecraft/net.minecraft.world.item.enchantment.Enchantment;Lnet/minecraft/net.minecraft.world.item.ItemStack;)I */
+    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/getItemEnchantmentLevel(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I */
     public int getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantment a0, net.minecraft.world.item.ItemStack a1) {
         return ((net.minecraft.world.item.enchantment.EnchantmentHelper)(Object)this).getItemEnchantmentLevel(net.minecraft.core.Holder.direct(a0), a1);
     }

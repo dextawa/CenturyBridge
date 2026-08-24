@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.BaseSpawner.
+ * Generated bridge overloads for net/minecraft/world/level/BaseSpawner/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.BaseSpawner.class)
 public abstract class GenClass1917Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.BaseSpawner.getOrCreateDisplayEntity(Lnet/minecraft/net.minecraft.world.level.Level;Lnet/minecraft/net.minecraft.util.RandomSource;Lnet/minecraft/net.minecraft.core.BlockPos;)Lnet/minecraft/net.minecraft.world.entity.Entity; */
+    /** was net/minecraft/world/level/BaseSpawner/getOrCreateDisplayEntity(Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/entity/Entity; */
     public net.minecraft.world.entity.Entity getOrCreateDisplayEntity(net.minecraft.world.level.Level a0, net.minecraft.util.RandomSource a1, net.minecraft.core.BlockPos a2) {
         return ((net.minecraft.world.level.BaseSpawner) (Object) this).getOrCreateDisplayEntity(a0, a2);
     }

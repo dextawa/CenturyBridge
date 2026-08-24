@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.gameevent.vibrations.VibrationSystem$class_8516.
+ * Generated bridge overloads for net/minecraft/world/level/gameevent/vibrations/VibrationSystem$Listener.
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.gameevent.vibrations.VibrationSystem.Listener.class)
 public abstract class GenClass8514Class8516Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.gameevent.vibrations.VibrationSystem$class_8516.forceScheduleVibration(Lnet/minecraft/net.minecraft.server.level.ServerLevel;Lnet/minecraft/net.minecraft.world.level.gameevent.GameEvent;Lnet/minecraft/net.minecraft.world.level.gameevent.GameEvent$class_7397;Lnet/minecraft/net.minecraft.world.phys.Vec3;)V */
+    /** was net/minecraft/world/level/gameevent/vibrations/VibrationSystem$Listener.forceScheduleVibration(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/gameevent/GameEvent;Lnet/minecraft/world/level/gameevent/GameEvent$Context;Lnet/minecraft/world/phys/Vec3;)V */
     public void forceScheduleVibration(net.minecraft.server.level.ServerLevel a0, net.minecraft.world.level.gameevent.GameEvent a1, net.minecraft.world.level.gameevent.GameEvent.Context a2, net.minecraft.world.phys.Vec3 a3) {
         ((net.minecraft.world.level.gameevent.vibrations.VibrationSystem.Listener)(Object)this).forceScheduleVibration(a0, net.minecraft.core.Holder.direct(a1), a2, a3);
     }

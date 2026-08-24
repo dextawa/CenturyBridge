@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.multiplayer.ClientLevel.
+ * Generated bridge overloads for net/minecraft/client/multiplayer/ClientLevel/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.multiplayer.ClientLevel.class)
 public abstract class GenClass638Bridge {
 
-    /** was net/minecraft/net.minecraft.client.multiplayer.ClientLevel.overrideMapData(Ljava/lang/String;Lnet/minecraft/net.minecraft.world.level.saveddata.maps.MapItemSavedData;)V */
+    /** was net/minecraft/client/multiplayer/ClientLevel/overrideMapData(Ljava/lang/String;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V */
     public void overrideMapData(java.lang.String a0, net.minecraft.world.level.saveddata.maps.MapItemSavedData a1) {
         throw new UnsupportedOperationException("CenturyBridge: cannot convert String to net.minecraft.world.level.saveddata.maps.MapId without particle registry lookup");
     }

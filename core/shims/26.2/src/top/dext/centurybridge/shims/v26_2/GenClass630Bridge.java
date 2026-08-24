@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.model.geom.ModelPart.
+ * Generated bridge overloads for net/minecraft/client/model/geom/ModelPart/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.model.geom.ModelPart.class)
 public abstract class GenClass630Bridge {
 
-    /** was net/minecraft/net.minecraft.client.model.geom.ModelPart.render(Lnet/minecraft/com.mojang.blaze3d.vertex.PoseStack;Lnet/minecraft/com.mojang.blaze3d.vertex.VertexConsumer;IIFFFF)V */
+    /** was net/minecraft/client/model/geom/ModelPart/render(Lnet/minecraft/com.mojang.blaze3d.vertex.PoseStack;Lnet/minecraft/com.mojang.blaze3d.vertex.VertexConsumer;IIFFFF)V */
     public void render(com.mojang.blaze3d.vertex.PoseStack a0, com.mojang.blaze3d.vertex.VertexConsumer a1, int a2, int a3, float a4, float a5, float a6, float a7) {
         int r = (int)(a4 * 255.0F) & 0xFF;
         int g = (int)(a5 * 255.0F) & 0xFF;

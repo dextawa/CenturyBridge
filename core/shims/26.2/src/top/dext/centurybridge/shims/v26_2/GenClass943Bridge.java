@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.renderer.entity.ShulkerRenderer.
+ * Generated bridge overloads for net/minecraft/client/renderer/entity/ShulkerRenderer/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.renderer.entity.ShulkerRenderer.class)
 public abstract class GenClass943Bridge {
 
-    /** was net/minecraft/net.minecraft.client.renderer.entity.ShulkerRenderer.setupRotations(Lnet/minecraft/net.minecraft.world.entity.monster.Shulker;Lnet/minecraft/com.mojang.blaze3d.vertex.PoseStack;FFF)V */
+    /** was net/minecraft/client/renderer/entity/ShulkerRenderer/setupRotations(Lnet/minecraft/world/entity/monster/Shulker;Lnet/minecraft/com.mojang.blaze3d.vertex.PoseStack;FFF)V */
     public void setupRotations(net.minecraft.world.entity.monster.Shulker a0, com.mojang.blaze3d.vertex.PoseStack a1, float a2, float a3, float a4) {
         // f = animationProgress
             // g = bodyYaw

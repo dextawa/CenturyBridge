@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.Entity.
+ * Generated bridge overloads for net/minecraft/world/entity/Entity/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,17 +15,17 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.entity.Entity.class)
 public abstract class GenClass1297Bridge {
 
-    /** was net/minecraft/net.minecraft.world.entity.Entity.ignoreExplosion()Z */
+    /** was net/minecraft/world/entity/Entity/ignoreExplosion()Z */
     public boolean ignoreExplosion() {
         return ((net.minecraft.world.entity.Entity)(Object)this).ignoreExplosion(null);
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.Entity.gameEvent(Lnet/minecraft/net.minecraft.world.level.gameevent.GameEvent;Lnet/minecraft/net.minecraft.world.entity.Entity;)V */
+    /** was net/minecraft/world/entity/Entity/gameEvent(Lnet/minecraft/world/level/gameevent/GameEvent;Lnet/minecraft/world/entity/Entity;)V */
     public void gameEvent(net.minecraft.world.level.gameevent.GameEvent a0, net.minecraft.world.entity.Entity a1) {
         ((net.minecraft.world.entity.Entity) (Object) this).gameEvent(net.minecraft.core.Holder.direct(a0), a1);
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.Entity.gameEvent(Lnet/minecraft/net.minecraft.world.level.gameevent.GameEvent;)V */
+    /** was net/minecraft/world/entity/Entity/gameEvent(Lnet/minecraft/world/level/gameevent/GameEvent;)V */
     public void gameEvent(net.minecraft.world.level.gameevent.GameEvent a0) {
         ((net.minecraft.world.entity.Entity) (Object) this).gameEvent(net.minecraft.core.Holder.direct(a0));
     }
@@ -33,12 +33,12 @@ public abstract class GenClass1297Bridge {
 
 
 
-    /** was net/minecraft/net.minecraft.world.entity.Entity.defineSynchedData()V */
+    /** was net/minecraft/world/entity/Entity/defineSynchedData()V */
     public void defineSynchedData() {
         throw new UnsupportedOperationException("CenturyBridge: defineSynchedData without arguments is unsupported");
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.Entity.igniteForSeconds(I)V */
+    /** was net/minecraft/world/entity/Entity/igniteForSeconds(I)V */
     public void igniteForSeconds(int a0) {
         ((net.minecraft.world.entity.Entity) (Object) this).igniteForSeconds((float) a0);
     }

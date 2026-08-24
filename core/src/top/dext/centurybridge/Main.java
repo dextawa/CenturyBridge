@@ -38,6 +38,8 @@ public final class Main {
                 Path.of(args[args.length - 1]));
             case "classify" -> top.dext.centurybridge.data.SymbolAudit.classify(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
+            case "mixin-check" -> top.dext.centurybridge.data.MixinCheck.run(
+                Path.of(args[1]), Path.of(args[2]));
             case "audit" -> top.dext.centurybridge.data.SymbolAudit.run(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]));
             default -> usage();
@@ -101,6 +103,15 @@ public final class Main {
                 jars.add(p);
             }
         }
+        // the 1.21.11 -> 26.1 boundary is a namespace wall, not a symbol wall:
+        // everything that survives it gets renamed to mojang names. When the
+        // chain crosses it, every converted jar takes a whole-jar rename pass.
+        boolean crossesWall = Chain.RELEASES.indexOf(args[2]) <= Chain.RELEASES.indexOf("1.21.11")
+            && Chain.RELEASES.indexOf(args[3]) > Chain.RELEASES.indexOf("1.21.11");
+        Path renameTable = Path.of("data/mappings/inter-to-mojang-1.21.11.tsv");
+        if (crossesWall && !Files.exists(renameTable)) {
+            throw new IllegalStateException("chain crosses the namespace wall but " + renameTable + " is missing");
+        }
         java.util.Map<String, Integer> verdicts = new java.util.TreeMap<>();
         int engineErrors = 0;
         int unaccounted = 0;
@@ -108,6 +119,12 @@ public final class Main {
         for (Path jar : jars) {
             try {
                 JarProcessor.Report r = JarProcessor.process(jar, outDir, chain);
+                if (crossesWall && r.outputJar != null && Files.exists(r.outputJar)) {
+                    Path tmp = r.outputJar.resolveSibling(r.outputJar.getFileName() + ".preNs");
+                    Files.move(r.outputJar, tmp);
+                    top.dext.centurybridge.data.JarRemapper.remapWithTable(renameTable, tmp, r.outputJar);
+                    Files.delete(tmp);
+                }
                 verdicts.merge(r.verdict, 1, Integer::sum);
                 unaccounted += r.issues.size();
                 ledgered += r.ledgered;
@@ -150,6 +167,7 @@ public final class Main {
               gen-segment <from> <to> <mappingsDir> <out.json>
               gen-chain <from> <to> <mappingsDir> <segmentsDir>
               convert <segmentsDir> <from> <to> <outDir> <jar...>
-              remap-mojang <inter-to-mojang.tsv> <in.jar> <out.jar>""");
+              remap-mojang <inter-to-mojang.tsv> <in.jar> <out.jar>
+              mixin-check <compiledShimDir> <targetJar>""");
     }
 }

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.inventory.BeaconMenu.
+ * Generated bridge overloads for net/minecraft/world/inventory/BeaconMenu/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,18 +15,18 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.inventory.BeaconMenu.class)
 public abstract class GenClass1704Bridge {
 
-    /** was net/minecraft/net.minecraft.world.inventory.BeaconMenu.getPrimaryEffect()Lnet/minecraft/net.minecraft.world.effect.MobEffect; */
+    /** was net/minecraft/world/inventory/BeaconMenu/getPrimaryEffect()Lnet/minecraft/world/effect/MobEffect; */
     public net.minecraft.world.effect.MobEffect getPrimaryEffect() {
         net.minecraft.core.Holder entry = ((net.minecraft.world.inventory.BeaconMenu) (Object) this).getPrimaryEffect();
         return entry == null ? null : (net.minecraft.world.effect.MobEffect) entry.value();
     }
 
-    /** was net/minecraft/net.minecraft.world.inventory.BeaconMenu.getSecondaryEffect()Lnet/minecraft/net.minecraft.world.effect.MobEffect; */
+    /** was net/minecraft/world/inventory/BeaconMenu/getSecondaryEffect()Lnet/minecraft/world/effect/MobEffect; */
     public net.minecraft.world.effect.MobEffect getSecondaryEffect() {
         return (net.minecraft.world.effect.MobEffect) ((net.minecraft.world.inventory.BeaconMenu) (Object) this).getSecondaryEffect().value();
     }
 
-    /** was net/minecraft/net.minecraft.world.inventory.BeaconMenu.decodeEffect(I)Lnet/minecraft/net.minecraft.world.effect.MobEffect; */
+    /** was net/minecraft/world/inventory/BeaconMenu/decodeEffect(I)Lnet/minecraft/world/effect/MobEffect; */
     public net.minecraft.world.effect.MobEffect decodeEffect(int a0) {
         net.minecraft.core.Holder entry = ((net.minecraft.world.inventory.BeaconMenu) (Object) this).decodeEffect(a0);
         return entry == null ? null : (net.minecraft.world.effect.MobEffect) entry.value();

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.block.DispenserBlock.
+ * Generated bridge overloads for net/minecraft/world/level/block/DispenserBlock/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.block.DispenserBlock.class)
 public abstract class GenClass2315Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.block.DispenserBlock.getDispensePosition(Lnet/minecraft/net.minecraft.core.dispenser.BlockSource;)Lnet/minecraft/net.minecraft.core.Position; */
+    /** was net/minecraft/world/level/block/DispenserBlock/getDispensePosition(Lnet/minecraft/core/dispenser/BlockSource;)Lnet/minecraft/core/Position; */
     public net.minecraft.core.Position getDispensePosition(net.minecraft.core.dispenser.BlockSource a0) {
         return net.minecraft.world.level.block.DispenserBlock.getDispensePosition(a0);
     }

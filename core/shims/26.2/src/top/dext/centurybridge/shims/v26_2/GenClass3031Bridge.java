@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.levelgen.feature.Feature.
+ * Generated bridge overloads for net/minecraft/world/level/levelgen/feature/Feature/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.levelgen.feature.Feature.class)
 public abstract class GenClass3031Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.levelgen.feature.Feature.configuredCodec()Lcom/mojang/serialization/Codec; */
+    /** was net/minecraft/world/level/levelgen/feature/Feature/configuredCodec()Lcom/mojang/serialization/Codec; */
     public com.mojang.serialization.Codec configuredCodec() {
         return ((net.minecraft.world.level.levelgen.feature.Feature) (Object) this).configuredCodec().codec();
     }

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.CrashReport.
+ * Generated bridge overloads for net/minecraft/CrashReport/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.CrashReport.class)
 public abstract class GenClass128Bridge {
 
-    /** was net/minecraft/net.minecraft.CrashReport.saveToFile(Ljava/io/File;)Z */
+    /** was net/minecraft/CrashReport/saveToFile(Ljava/io/File;)Z */
     public boolean saveToFile(java.io.File a0) {
         return ((net.minecraft.CrashReport) (Object) this).saveToFile(a0.toPath(), net.minecraft.ReportType.CRASH, java.util.Collections.emptyList());
     }
 
-    /** was net/minecraft/net.minecraft.CrashReport.getSaveFile()Ljava/io/File; */
+    /** was net/minecraft/CrashReport/getSaveFile()Ljava/io/File; */
     public java.io.File getSaveFile() {
         return ((net.minecraft.CrashReport)(Object)this).getSaveFile().toFile();
     }

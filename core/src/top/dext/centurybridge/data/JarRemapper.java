@@ -97,6 +97,7 @@ public final class JarRemapper {
             }
         };
         int nClasses = 0;
+        java.util.Set<String> written = new java.util.HashSet<>();
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
              ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(outJar))) {
             ZipEntry e;
@@ -104,15 +105,59 @@ public final class JarRemapper {
                 if (e.isDirectory()) {
                     continue;
                 }
+                // shaded fat jars sometimes carry literal duplicate entries;
+                // first wins, same as every classloader would resolve them
+                if (!written.add(e.getName())) {
+                    continue;
+                }
                 byte[] data = zin.readAllBytes();
                 if (!e.getName().endsWith(".class")) {
+                    if (e.getName().endsWith(".accesswidener")) {
+                        // the loader validates the AW namespace against the
+                        // runtime before a single class loads: an intermediary
+                        // header on a 26.x server is fatal at boot
+                        String text = new String(data, java.nio.charset.StandardCharsets.UTF_8);
+                        StringBuilder sb = new StringBuilder();
+                        for (String ln : text.split("\n", -1)) {
+                            String t = ln.trim();
+                            if (t.startsWith("accessWidener")) {
+                                ln = ln.replace("intermediary", "official");
+                            } else if (!t.isEmpty() && !t.startsWith("#")) {
+                                String[] w = ln.split("\\s+");
+                                // accessible|extendable|mutable  kind  owner  [name  desc]
+                                if (w.length >= 4 && (w[1].equals("method") || w[1].equals("field"))) {
+                                    String hit = byOwner.get(w[2] + "." + w[3]);
+                                    if (hit == null) {
+                                        hit = members.getOrDefault(w[3], w[3]);
+                                    }
+                                    w[3] = hit;
+                                }
+                                if (w.length >= 3) {
+                                    w[2] = remapper.map(w[2]);
+                                }
+                                if (w.length >= 5) {
+                                    w[4] = CLASS_TOKEN.matcher(w[4]).replaceAll(
+                                        mr -> java.util.regex.Matcher.quoteReplacement(
+                                            remapper.map(mr.group())));
+                                }
+                                ln = String.join(" ", w);
+                            }
+                            sb.append(ln).append("\n");
+                        }
+                        text = sb.toString();
+                        if (text.endsWith("\n")) {
+                            text = text.substring(0, text.length() - 1);
+                        }
+                        data = text.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                    }
                     if (e.getName().endsWith(".json") && e.getName().contains("refmap")) {
                         // refmaps carry intermediary names as JSON strings
                         // ("Lnet/minecraft/class_310;method_1507()V"); rewrite
                         // them textually or every mixin target goes stale
                         String text = new String(data, java.nio.charset.StandardCharsets.UTF_8);
                         text = MEMBER_TOKEN.matcher(text).replaceAll(
-                            mr -> members.getOrDefault(mr.group(), mr.group()));
+                            mr -> java.util.regex.Matcher.quoteReplacement(
+                                members.getOrDefault(mr.group(), mr.group())));
                         text = CLASS_TOKEN.matcher(text).replaceAll(
                             mr -> java.util.regex.Matcher.quoteReplacement(
                                 remapper.map(mr.group())));
@@ -126,7 +171,11 @@ public final class JarRemapper {
                 ClassReader cr = new ClassReader(data);
                 ClassWriter cw = new ClassWriter(0);
                 cr.accept(new ClassRemapper(cw, remapper), 0);
-                zout.putNextEntry(new ZipEntry(remapper.map(cr.getClassName()) + ".class"));
+                String outName = remapper.map(cr.getClassName()) + ".class";
+                if (!outName.equals(e.getName()) && !written.add(outName)) {
+                    continue;
+                }
+                zout.putNextEntry(new ZipEntry(outName));
                 zout.write(cw.toByteArray());
                 zout.closeEntry();
                 nClasses++;

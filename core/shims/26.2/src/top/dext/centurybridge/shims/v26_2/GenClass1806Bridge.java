@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.item.MapItem.
+ * Generated bridge overloads for net/minecraft/world/item/MapItem/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.item.MapItem.class)
 public abstract class GenClass1806Bridge {
 
-    /** was net/minecraft/net.minecraft.world.item.MapItem.getSavedData(Ljava/lang/Integer;Lnet/minecraft/net.minecraft.world.level.Level;)Lnet/minecraft/net.minecraft.world.level.saveddata.maps.MapItemSavedData; */
+    /** was net/minecraft/world/item/MapItem/getSavedData(Ljava/lang/Integer;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData; */
     public net.minecraft.world.level.saveddata.maps.MapItemSavedData getSavedData(java.lang.Integer a0, net.minecraft.world.level.Level a1) {
         return ((net.minecraft.world.item.MapItem) (Object) this).getSavedData(a0 == null ? null : new net.minecraft.world.level.saveddata.maps.MapId(a0), a1);
     }

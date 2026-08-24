@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBindings.
+ * Generated bridge overloads for net/minecraft/world/level/levelgen/structure/pools/alias/PoolAliasBindings/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBindings.class)
 public abstract class GenClass8890Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBindings.bootstrap(Lnet/minecraft/net.minecraft.core.Registry;)Lcom/mojang/serialization/Codec; */
+    /** was net/minecraft/world/level/levelgen/structure/pools/alias/PoolAliasBindings/bootstrap(Lnet/minecraft/core/Registry;)Lcom/mojang/serialization/Codec; */
     public com.mojang.serialization.Codec bootstrap(net.minecraft.core.Registry a0) {
         return ((net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBindings)(Object) this).bootstrap(a0).codec();
     }

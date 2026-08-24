@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.gui.screens.advancements.AdvancementsScreen.
+ * Generated bridge overloads for net/minecraft/client/gui/screens/advancements/AdvancementsScreen/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.gui.screens.advancements.AdvancementsScreen.class)
 public abstract class GenClass457Bridge {
 
-    /** was net/minecraft/net.minecraft.client.gui.screens.advancements.AdvancementsScreen.getAdvancementWidget(Lnet/minecraft/net.minecraft.advancements.Advancement;)Lnet/minecraft/net.minecraft.client.gui.screens.advancements.AdvancementWidget; */
+    /** was net/minecraft/client/gui/screens/advancements/AdvancementsScreen/getAdvancementWidget(Lnet/minecraft/advancements/Advancement;)Lnet/minecraft/client/gui/screens/advancements/AdvancementWidget; */
     public net.minecraft.client.gui.screens.advancements.AdvancementWidget getAdvancementWidget(net.minecraft.advancements.Advancement a0) {
         throw new UnsupportedOperationException("CenturyBridge: Recipe lacks ID in 1.20.2, cannot look up RecipeEntry");
     }

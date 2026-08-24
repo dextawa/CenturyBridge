@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.saveddata.maps.MapItemSavedData.
+ * Generated bridge overloads for net/minecraft/world/level/saveddata/maps/MapItemSavedData/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,13 +15,13 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.saveddata.maps.MapItemSavedData.class)
 public abstract class GenClass22Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.saveddata.maps.MapItemSavedData.getUpdatePacket(ILnet/minecraft/net.minecraft.world.entity.player.Player;)Lnet/minecraft/net.minecraft.network.protocol.Packet; */
+    /** was net/minecraft/world/level/saveddata/maps/MapItemSavedData/getUpdatePacket(ILnet/minecraft/world/entity/player/Player;)Lnet/minecraft/network/protocol/Packet; */
     public net.minecraft.network.protocol.Packet getUpdatePacket(int a0, net.minecraft.world.entity.player.Player a1) {
         return ((net.minecraft.world.level.saveddata.maps.MapItemSavedData) (Object) this).getUpdatePacket(new net.minecraft.world.level.saveddata.maps.MapId(a0), a1);
     }
 
 
-    /** was net/minecraft/net.minecraft.world.level.saveddata.maps.MapItemSavedData.scaled(I)Lnet/minecraft/net.minecraft.world.level.saveddata.maps.MapItemSavedData; */
+    /** was net/minecraft/world/level/saveddata/maps/MapItemSavedData/scaled(I)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData; */
     public net.minecraft.world.level.saveddata.maps.MapItemSavedData scaled(int a0) {
         net.minecraft.world.level.saveddata.maps.MapItemSavedData state = (net.minecraft.world.level.saveddata.maps.MapItemSavedData) (Object) this;
         for (int i = 0; i < a0; i++) {

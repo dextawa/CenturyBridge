@@ -35,7 +35,8 @@ for extra in $(find data/runtime -name 'sponge-mixin-*.jar' 2>/dev/null | head -
     CP="$CP:$extra"
 done
 # Windows toolchains want ';' between classpath entries
-case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) CP="${CP//:/;}";; esac
+SEP=":"
+case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) CP="${CP//:/;}"; SEP=";";; esac
 
 CLASSES="$OUT/classes-$VERSION"
 rm -rf "$CLASSES"
@@ -152,6 +153,13 @@ find "$SHIM/src" -name '*.java' > "$OUT/sources-$VERSION.txt"
 # class file major version" on servers bundling an older sponge-mixin.
 case "$VERSION" in 1.20.*) RELEASE=17;; *) RELEASE=21;; esac
 javac -nowarn -proc:none --release "$RELEASE" -cp "$CP" -d "$CLASSES" "@$OUT/sources-$VERSION.txt"
+
+# Everything Mixin resolves by NAME at PREPARE (accessor/invoker/shadow
+# targets, injection selectors) is invisible to javac. Check all of it against
+# the real target jar now, not one failure per boot.
+if [ -d core/build/classes ]; then
+    java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB"         || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
+fi
 
 # fabric.mod.json, the mixin config and the access widener are mod SOURCE and
 # live under resources/; they are copied in at package time, not compiled.

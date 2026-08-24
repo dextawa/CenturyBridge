@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.
+ * Generated bridge overloads for net/minecraft/client/gui/screens/worldselection/SelectWorldScreen/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.class)
 public abstract class GenClass526Bridge {
 
-    /** was net/minecraft/net.minecraft.client.gui.screens.worldselection.SelectWorldScreen.updateButtonStatus(ZZ)V */
+    /** was net/minecraft/client/gui/screens/worldselection/SelectWorldScreen/updateButtonStatus(ZZ)V */
     public void updateButtonStatus(boolean a0, boolean a1) {
         throw new UnsupportedOperationException("CenturyBridge: updateButtonStatus(ZZ)V was replaced by updateButtonStatus(LevelSummary) and cannot be emulated without a LevelSummary context");
     }

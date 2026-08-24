@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket.
+ * Generated bridge overloads for net/minecraft/network/protocol/game/ClientboundUpdateRecipesPacket/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket.class)
 public abstract class GenClass2788Bridge {
 
-    /** was net/minecraft/net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket.method_17816(Lnet/minecraft/net.minecraft.network.FriendlyByteBuf;Lnet/minecraft/net.minecraft.world.item.crafting.Recipe;)V */
+    /** was net/minecraft/network/protocol/game/ClientboundUpdateRecipesPacket/method_17816(Lnet/minecraft/network/FriendlyByteBuf;Lnet/minecraft/world/item/crafting/Recipe;)V */
     public void method_17816(net.minecraft.network.FriendlyByteBuf a0, net.minecraft.world.item.crafting.Recipe a1) {
         throw new UnsupportedOperationException("CenturyBridge: Recipe no longer contains its ID");
     }

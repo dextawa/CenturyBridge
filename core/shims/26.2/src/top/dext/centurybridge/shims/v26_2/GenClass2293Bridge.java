@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.commands.arguments.item.ItemPredicateArgument.
+ * Generated bridge overloads for net/minecraft/commands/arguments/item/ItemPredicateArgument/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.commands.arguments.item.ItemPredicateArgument.class)
 public abstract class GenClass2293Bridge {
 
-    /** was net/minecraft/net.minecraft.commands.arguments.item.ItemPredicateArgument.getItemPredicate(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/function/Predicate; */
+    /** was net/minecraft/commands/arguments/item/ItemPredicateArgument/getItemPredicate(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/function/Predicate; */
     public java.util.function.Predicate getItemPredicate(com.mojang.brigadier.context.CommandContext a0, java.lang.String a1) {
         return net.minecraft.commands.arguments.item.ItemPredicateArgument.getItemPredicate(a0, a1);
     }

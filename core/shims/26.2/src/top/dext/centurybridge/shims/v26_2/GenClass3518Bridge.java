@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.util.GsonHelper.
+ * Generated bridge overloads for net/minecraft/util/GsonHelper/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.util.GsonHelper.class)
 public abstract class GenClass3518Bridge {
 
-    /** was net/minecraft/net.minecraft.util.GsonHelper.getAsItem(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/net.minecraft.world.item.Item;)Lnet/minecraft/net.minecraft.world.item.Item; */
+    /** was net/minecraft/util/GsonHelper/getAsItem(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/world/item/Item;)Lnet/minecraft/world/item/Item; */
     public net.minecraft.world.item.Item getAsItem(com.google.gson.JsonObject a0, java.lang.String a1, net.minecraft.world.item.Item a2) {
         net.minecraft.core.Holder var3 = net.minecraft.core.Holder.direct(a2);
         return (net.minecraft.world.item.Item) ((net.minecraft.util.GsonHelper)(Object)this).getAsItem(a0, a1, var3).value();

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement.
+ * Generated bridge overloads for net/minecraft/world/level/levelgen/structure/pools/StructurePoolElement/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement.class)
 public abstract class GenClass3784Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement.place(Lnet/minecraft/net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;Lnet/minecraft/net.minecraft.world.level.WorldGenLevel;Lnet/minecraft/net.minecraft.world.level.StructureManager;Lnet/minecraft/net.minecraft.world.level.chunk.ChunkGenerator;Lnet/minecraft/net.minecraft.core.BlockPos;Lnet/minecraft/net.minecraft.core.BlockPos;Lnet/minecraft/net.minecraft.world.level.block.Rotation;Lnet/minecraft/net.minecraft.world.level.levelgen.structure.BoundingBox;Lnet/minecraft/net.minecraft.util.RandomSource;Z)Z */
+    /** was net/minecraft/world/level/levelgen/structure/pools/StructurePoolElement/place(Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager;Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Rotation;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;Lnet/minecraft/util/RandomSource;Z)Z */
     public boolean place(net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager a0, net.minecraft.world.level.WorldGenLevel a1, net.minecraft.world.level.StructureManager a2, net.minecraft.world.level.chunk.ChunkGenerator a3, net.minecraft.core.BlockPos a4, net.minecraft.core.BlockPos a5, net.minecraft.world.level.block.Rotation a6, net.minecraft.world.level.levelgen.structure.BoundingBox a7, net.minecraft.util.RandomSource a8, boolean a9) {
         return ((net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement)(Object)this).place(a0, a1, a2, a3, a4, a5, a6, a7, a8, net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings.IGNORE_WATERLOGGING, a9);
     }

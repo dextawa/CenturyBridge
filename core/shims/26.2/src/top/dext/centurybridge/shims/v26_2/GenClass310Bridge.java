@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.Minecraft.
+ * Generated bridge overloads for net/minecraft/client/Minecraft/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass310Bridge {
 
 
-    /** was net/minecraft/net.minecraft.client.Minecraft.clearResourcePacksOnError(Ljava/lang/Throwable;Lnet/minecraft/net.minecraft.network.chat.Component;)V */
+    /** was net/minecraft/client/Minecraft/clearResourcePacksOnError(Ljava/lang/Throwable;Lnet/minecraft/network/chat/Component;)V */
     public void clearResourcePacksOnError(java.lang.Throwable a0, net.minecraft.network.chat.Component a1) {
         ((net.minecraft.client.Minecraft) (Object) this).clearResourcePacksOnError(a0, a1, null);
     }

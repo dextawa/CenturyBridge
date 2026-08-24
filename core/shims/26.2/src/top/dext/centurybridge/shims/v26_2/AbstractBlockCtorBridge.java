@@ -15,14 +15,14 @@ import top.dext.centurybridge.rt.v26_2.CbPending;
 public abstract class AbstractBlockCtorBridge {
 
     @Redirect(method = "<init>", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/net.minecraft.world.level.block.state.BlockBehaviour$class_2251;effectiveDrops()Ljava/util/Optional;"))
+        target = "Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;effectiveDrops()Ljava/util/Optional;"))
     private Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>> cb$lootKey(net.minecraft.world.level.block.state.BlockBehaviour.Properties settings) {
         CbPending.ensureBlockKey(this, settings);
         return ((Class2251Accessor) settings).cbLootTableKey();
     }
 
     @Redirect(method = "<init>", at = @At(value = "INVOKE",
-        target = "Lnet/minecraft/net.minecraft.world.level.block.state.BlockBehaviour$class_2251;effectiveDescriptionId()Ljava/lang/String;"))
+        target = "Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;effectiveDescriptionId()Ljava/lang/String;"))
     private String cb$translationKey(net.minecraft.world.level.block.state.BlockBehaviour.Properties settings) {
         CbPending.ensureBlockKey(this, settings);
         return ((Class2251Accessor) settings).cbTranslationKey();

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.Options.
+ * Generated bridge overloads for net/minecraft/client/Options/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.Options.class)
 public abstract class GenClass315Bridge {
 
-    /** was net/minecraft/net.minecraft.client.Options.getMenuBackgroundBlurriness()D */
+    /** was net/minecraft/client/Options/getMenuBackgroundBlurriness()D */
     public double getMenuBackgroundBlurriness() {
         return (double) ((net.minecraft.client.Options) (Object) this).getMenuBackgroundBlurriness();
     }

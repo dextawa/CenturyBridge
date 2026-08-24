@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.stats.RecipeBook.
+ * Generated bridge overloads for net/minecraft/stats/RecipeBook/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,27 +15,27 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.stats.RecipeBook.class)
 public abstract class GenClass3439Bridge {
 
-    /** was net/minecraft/net.minecraft.stats.RecipeBook.method_14876(Lnet/minecraft/net.minecraft.world.item.crafting.Recipe;)V */
+    /** was net/minecraft/stats/RecipeBook/method_14876(Lnet/minecraft/world/item/crafting/Recipe;)V */
     public void method_14876(net.minecraft.world.item.crafting.Recipe a0) {
         throw new UnsupportedOperationException("CenturyBridge: Recipe (net.minecraft.world.item.crafting.Recipe) no longer carries its id in 1.20.2; RecipeEntry (net.minecraft.world.item.crafting.RecipeHolder) requires an Identifier that cannot be recovered from a bare Recipe");
     }
 
-    /** was net/minecraft/net.minecraft.stats.RecipeBook.method_14878(Lnet/minecraft/net.minecraft.world.item.crafting.Recipe;)Z */
+    /** was net/minecraft/stats/RecipeBook/method_14878(Lnet/minecraft/world/item/crafting/Recipe;)Z */
     public boolean method_14878(net.minecraft.world.item.crafting.Recipe a0) {
         throw new UnsupportedOperationException("CenturyBridge: Recipe no longer contains its ID in 1.20.2");
     }
 
-    /** was net/minecraft/net.minecraft.stats.RecipeBook.method_14883(Lnet/minecraft/net.minecraft.world.item.crafting.Recipe;)Z */
+    /** was net/minecraft/stats/RecipeBook/method_14883(Lnet/minecraft/world/item/crafting/Recipe;)Z */
     public boolean method_14883(net.minecraft.world.item.crafting.Recipe a0) {
         throw new UnsupportedOperationException("CenturyBridge: Recipe no longer stores its own identifier in 1.20.2; use the RecipeEntry overload instead.");
     }
 
-    /** was net/minecraft/net.minecraft.stats.RecipeBook.method_14885(Lnet/minecraft/net.minecraft.world.item.crafting.Recipe;)V */
+    /** was net/minecraft/stats/RecipeBook/method_14885(Lnet/minecraft/world/item/crafting/Recipe;)V */
     public void method_14885(net.minecraft.world.item.crafting.Recipe a0) {
         throw new UnsupportedOperationException("CenturyBridge: Recipe (net.minecraft.world.item.crafting.Recipe) lost getId() in 1.20.2; method_14885 now requires net.minecraft.world.item.crafting.RecipeHolder (RecipeEntry) which wraps both an Identifier and a Recipe, and the Identifier cannot be recovered from a bare Recipe");
     }
 
-    /** was net/minecraft/net.minecraft.stats.RecipeBook.method_14886(Lnet/minecraft/net.minecraft.world.item.crafting.Recipe;)V */
+    /** was net/minecraft/stats/RecipeBook/method_14886(Lnet/minecraft/world/item/crafting/Recipe;)V */
     public void method_14886(net.minecraft.world.item.crafting.Recipe a0) {
         throw new UnsupportedOperationException("CenturyBridge: Cannot retrieve recipe ID from Recipe in 1.20.2");
     }

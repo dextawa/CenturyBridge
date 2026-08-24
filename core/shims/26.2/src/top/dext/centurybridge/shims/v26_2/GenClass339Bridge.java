@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.gui.components.AbstractWidget.
+ * Generated bridge overloads for net/minecraft/client/gui/components/AbstractWidget/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.gui.components.AbstractWidget.class)
 public abstract class GenClass339Bridge {
 
-    /** was net/minecraft/net.minecraft.client.gui.components.AbstractWidget.setTooltipDelay(I)V */
+    /** was net/minecraft/client/gui/components/AbstractWidget/setTooltipDelay(I)V */
     public void setTooltipDelay(int a0) {
         ((net.minecraft.client.gui.components.AbstractWidget) (Object) this).setTooltipDelay(java.time.Duration.ofMillis((long) a0));
     }

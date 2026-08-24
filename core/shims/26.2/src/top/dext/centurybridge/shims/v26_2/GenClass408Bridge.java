@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.client.gui.screens.ChatScreen.
+ * Generated bridge overloads for net/minecraft/client/gui/screens/ChatScreen/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.gui.screens.ChatScreen.class)
 public abstract class GenClass408Bridge {
 
-    /** was net/minecraft/net.minecraft.client.gui.screens.ChatScreen.handleChatInput(Ljava/lang/String;Z)Z */
+    /** was net/minecraft/client/gui/screens/ChatScreen/handleChatInput(Ljava/lang/String;Z)Z */
     public boolean handleChatInput(java.lang.String a0, boolean a1) {
         String normalized = ((net.minecraft.client.gui.screens.ChatScreen)(Object)this).normalizeChatMessage(a0);
         if (normalized.isEmpty()) {

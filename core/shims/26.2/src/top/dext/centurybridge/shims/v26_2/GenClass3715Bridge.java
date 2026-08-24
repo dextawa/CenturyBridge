@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.block.LecternBlock.
+ * Generated bridge overloads for net/minecraft/world/level/block/LecternBlock/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.block.LecternBlock.class)
 public abstract class GenClass3715Bridge {
 
-    /** was net/minecraft/net.minecraft.world.level.block.LecternBlock.tryPlaceBook(Lnet/minecraft/net.minecraft.world.entity.Entity;Lnet/minecraft/net.minecraft.world.level.Level;Lnet/minecraft/net.minecraft.core.BlockPos;Lnet/minecraft/net.minecraft.world.level.block.state.BlockState;Lnet/minecraft/net.minecraft.world.item.ItemStack;)Z */
+    /** was net/minecraft/world/level/block/LecternBlock/tryPlaceBook(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/item/ItemStack;)Z */
     public boolean tryPlaceBook(net.minecraft.world.entity.Entity a0, net.minecraft.world.level.Level a1, net.minecraft.core.BlockPos a2, net.minecraft.world.level.block.state.BlockState a3, net.minecraft.world.item.ItemStack a4) {
         if (a0 instanceof net.minecraft.world.entity.LivingEntity) {
             return ((net.minecraft.world.level.block.LecternBlock) (Object) this).tryPlaceBook((net.minecraft.world.entity.LivingEntity) a0, a1, a2, a3, a4);

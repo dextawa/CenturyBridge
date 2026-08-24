@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.level.pathfinder.NodeEvaluator.
+ * Generated bridge overloads for net/minecraft/world/level/pathfinder/NodeEvaluator/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass8Bridge {
 
 
-    /** was net/minecraft/net.minecraft.world.level.pathfinder.NodeEvaluator.getPathTypeOfMob(Lnet/minecraft/net.minecraft.world.level.BlockGetter;IIILnet/minecraft/net.minecraft.world.entity.Mob;)Lnet/minecraft/net.minecraft.world.level.pathfinder.PathType; */
+    /** was net/minecraft/world/level/pathfinder/NodeEvaluator/getPathTypeOfMob(Lnet/minecraft/world/level/BlockGetter;IIILnet/minecraft/world/entity/Mob;)Lnet/minecraft/world/level/pathfinder/PathType; */
     public net.minecraft.world.level.pathfinder.PathType getPathTypeOfMob(net.minecraft.world.level.BlockGetter a0, int a1, int a2, int a3, net.minecraft.world.entity.Mob a4) {
         return ((net.minecraft.world.level.pathfinder.NodeEvaluator) (Object) this).getPathTypeOfMob(new net.minecraft.world.level.pathfinder.PathfindingContext((net.minecraft.world.level.CollisionGetter) a0, a4), a1, a2, a3, a4);
     }

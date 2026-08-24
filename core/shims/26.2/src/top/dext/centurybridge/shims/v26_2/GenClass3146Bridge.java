@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.server.commands.TellRawCommand.
+ * Generated bridge overloads for net/minecraft/server/commands/TellRawCommand/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.server.commands.TellRawCommand.class)
 public abstract class GenClass3146Bridge {
 
-    /** was net/minecraft/net.minecraft.server.commands.TellRawCommand.register(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    /** was net/minecraft/server/commands/TellRawCommand/register(Lcom/mojang/brigadier/CommandDispatcher;)V */
     public void register(com.mojang.brigadier.CommandDispatcher a0) {
         ((net.minecraft.server.commands.TellRawCommand) (Object) this).register(a0, (net.minecraft.commands.CommandBuildContext) null);
     }

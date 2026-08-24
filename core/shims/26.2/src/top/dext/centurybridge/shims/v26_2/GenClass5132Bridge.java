@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeSupplier.
+ * Generated bridge overloads for net/minecraft/world/entity/ai/attributes/AttributeSupplier/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,34 +15,34 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.entity.ai.attributes.AttributeSupplier.class)
 public abstract class GenClass5132Bridge {
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeSupplier.getValue(Lnet/minecraft/net.minecraft.world.entity.ai.attributes.Attribute;)D */
+    /** was net/minecraft/world/entity/ai/attributes/AttributeSupplier/getValue(Lnet/minecraft/world/entity/ai/attributes/Attribute;)D */
     public double getValue(net.minecraft.world.entity.ai.attributes.Attribute a0) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeSupplier)(Object)this).getValue(net.minecraft.core.Holder.direct(a0));
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeSupplier.createInstance(Ljava/util/function/Consumer;Lnet/minecraft/net.minecraft.world.entity.ai.attributes.Attribute;)Lnet/minecraft/net.minecraft.world.entity.ai.attributes.AttributeInstance; */
+    /** was net/minecraft/world/entity/ai/attributes/AttributeSupplier/createInstance(Ljava/util/function/Consumer;Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance; */
     public net.minecraft.world.entity.ai.attributes.AttributeInstance createInstance(java.util.function.Consumer a0, net.minecraft.world.entity.ai.attributes.Attribute a1) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeSupplier)(Object) this).createInstance(a0, net.minecraft.core.Holder.direct(a1));
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeSupplier.getBaseValue(Lnet/minecraft/net.minecraft.world.entity.ai.attributes.Attribute;)D */
+    /** was net/minecraft/world/entity/ai/attributes/AttributeSupplier/getBaseValue(Lnet/minecraft/world/entity/ai/attributes/Attribute;)D */
     public double getBaseValue(net.minecraft.world.entity.ai.attributes.Attribute a0) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeSupplier)(Object)this).getBaseValue(net.minecraft.core.Holder.direct(a0));
     }
 
 
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeSupplier.hasAttribute(Lnet/minecraft/net.minecraft.world.entity.ai.attributes.Attribute;)Z */
+    /** was net/minecraft/world/entity/ai/attributes/AttributeSupplier/hasAttribute(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Z */
     public boolean hasAttribute(net.minecraft.world.entity.ai.attributes.Attribute a0) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeSupplier) (Object) this).hasAttribute(net.minecraft.core.Holder.direct(a0));
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeSupplier.getModifierValue(Lnet/minecraft/net.minecraft.core.Holder;Ljava/util/UUID;)D */
+    /** was net/minecraft/world/entity/ai/attributes/AttributeSupplier/getModifierValue(Lnet/minecraft/core/Holder;Ljava/util/UUID;)D */
     public double getModifierValue(net.minecraft.core.Holder a0, java.util.UUID a1) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeSupplier)(Object)this).getModifierValue(a0, net.minecraft.resources.Identifier.tryBuild("minecraft", a1.toString()));
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.ai.attributes.AttributeSupplier.hasModifier(Lnet/minecraft/net.minecraft.core.Holder;Ljava/util/UUID;)Z */
+    /** was net/minecraft/world/entity/ai/attributes/AttributeSupplier/hasModifier(Lnet/minecraft/core/Holder;Ljava/util/UUID;)Z */
     public boolean hasModifier(net.minecraft.core.Holder a0, java.util.UUID a1) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeSupplier)(Object)this).hasModifier(a0, net.minecraft.resources.Identifier.tryParse(a1.toString()));
     }

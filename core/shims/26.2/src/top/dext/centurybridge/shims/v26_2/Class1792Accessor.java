@@ -12,7 +12,4 @@ public interface Class1792Accessor {
     @Mutable
     void cbSetTranslationKey(String key);
 
-    @Accessor("components")
-    @Mutable
-    void cbSetComponents(net.minecraft.core.component.DataComponentMap components);
 }

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.network.protocol.common.ClientboundPingPacket.
+ * Generated bridge overloads for net/minecraft/network/protocol/common/ClientboundPingPacket/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.network.protocol.common.ClientboundPingPacket.class)
 public abstract class GenClass6373Bridge {
 
-    /** was net/minecraft/net.minecraft.network.protocol.common.ClientboundPingPacket.handle(Lnet/minecraft/net.minecraft.network.protocol.game.ClientGamePacketListener;)V */
+    /** was net/minecraft/network/protocol/common/ClientboundPingPacket/handle(Lnet/minecraft/network/protocol/game/ClientGamePacketListener;)V */
     public void handle(net.minecraft.network.protocol.game.ClientGamePacketListener a0) {
         ((net.minecraft.network.protocol.common.ClientboundPingPacket) (Object) this).handle((net.minecraft.network.protocol.common.ClientCommonPacketListener) a0);
     }

@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.world.entity.player.Player.
+ * Generated bridge overloads for net/minecraft/world/entity/player/Player/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.entity.player.Player.class)
 public abstract class GenClass1657Bridge {
 
-    /** was net/minecraft/net.minecraft.world.entity.player.Player.awardRecipesByKey([Lnet/minecraft/net.minecraft.resources.Identifier;)V */
+    /** was net/minecraft/world/entity/player/Player/awardRecipesByKey([Lnet/minecraft/resources/Identifier;)V */
     public void awardRecipesByKey(net.minecraft.resources.Identifier[] a0) {
         ((net.minecraft.world.entity.player.Player) (Object) this).awardRecipesByKey(java.util.Arrays.stream(a0)
             .map(id -> net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, (net.minecraft.resources.Identifier) id))
             .collect(java.util.stream.Collectors.toList()));
     }
 
-    /** was net/minecraft/net.minecraft.world.entity.player.Player.startAutoSpinAttack(I)V */
+    /** was net/minecraft/world/entity/player/Player/startAutoSpinAttack(I)V */
     public void startAutoSpinAttack(int a0) {
         ((net.minecraft.world.entity.player.Player)(Object)this).startAutoSpinAttack(a0, 1.0f, net.minecraft.world.item.ItemStack.EMPTY);
         // CB-CONFIDENCE: medium -- same method number with two added params (float + ItemStack); 1.0f and EMPTY are reasonable defaults but the exact semantics of the new float param are inferred

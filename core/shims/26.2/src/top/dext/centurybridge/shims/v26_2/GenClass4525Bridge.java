@@ -3,7 +3,7 @@ package top.dext.centurybridge.shims.v26_2;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
- * Generated bridge overloads for net/minecraft/net.minecraft.gametest.framework.StructureUtils.
+ * Generated bridge overloads for net/minecraft/gametest/framework/StructureUtils/
  *
  * Each method re-adds a descriptor this class carried before the corridor
  * boundary and forwards to whatever replaced it. The JVM resolves overloads by
@@ -15,17 +15,17 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.gametest.framework.StructureUtils.class)
 public abstract class GenClass4525Bridge {
 
-    /** was net/minecraft/net.minecraft.gametest.framework.StructureUtils.clearSpaceForStructure(Lnet/minecraft/net.minecraft.world.level.levelgen.structure.BoundingBox;ILnet/minecraft/net.minecraft.server.level.ServerLevel;)V */
+    /** was net/minecraft/gametest/framework/StructureUtils/clearSpaceForStructure(Lnet/minecraft/world/level/levelgen/structure/BoundingBox;ILnet/minecraft/server/level/ServerLevel;)V */
     public void clearSpaceForStructure(net.minecraft.world.level.levelgen.structure.BoundingBox a0, int a1, net.minecraft.server.level.ServerLevel a2) {
         ((net.minecraft.gametest.framework.StructureUtils) (Object) this).clearSpaceForStructure(a0, a2);
     }
 
-    /** was net/minecraft/net.minecraft.gametest.framework.StructureUtils.findNearestTest(Lnet/minecraft/net.minecraft.core.BlockPos;ILnet/minecraft/net.minecraft.server.level.ServerLevel;)Lnet/minecraft/net.minecraft.core.BlockPos; */
+    /** was net/minecraft/gametest/framework/StructureUtils/findNearestTest(Lnet/minecraft/core/BlockPos;ILnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/core/BlockPos; */
     public net.minecraft.core.BlockPos findNearestTest(net.minecraft.core.BlockPos a0, int a1, net.minecraft.server.level.ServerLevel a2) {
         return ((net.minecraft.gametest.framework.StructureUtils) (Object) this).findNearestTest(a0, a1, a2).orElse(null);
     }
 
-    /** was net/minecraft/net.minecraft.gametest.framework.StructureUtils.findTestBlocks(Lnet/minecraft/net.minecraft.core.BlockPos;ILnet/minecraft/net.minecraft.server.level.ServerLevel;)Ljava/util/Collection; */
+    /** was net/minecraft/gametest/framework/StructureUtils/findTestBlocks(Lnet/minecraft/core/BlockPos;ILnet/minecraft/server/level/ServerLevel;)Ljava/util/Collection; */
     public java.util.Collection findTestBlocks(net.minecraft.core.BlockPos a0, int a1, net.minecraft.server.level.ServerLevel a2) {
         return ((net.minecraft.gametest.framework.StructureUtils) (Object) this).findTestBlocks(a0, a1, a2).collect(java.util.stream.Collectors.toList());
     }
