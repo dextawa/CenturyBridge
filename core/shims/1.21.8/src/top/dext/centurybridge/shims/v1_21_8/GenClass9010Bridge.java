@@ -15,5 +15,10 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_9010.class)
 public abstract class GenClass9010Bridge {
 
+    /** was net/minecraft/class_9010.method_55377(Lcom/mojang/brigadier/StringReader;Lcom/mojang/serialization/Codec;)Ljava/lang/Object; */
+    public java.lang.Object method_55377(com.mojang.brigadier.StringReader a0, com.mojang.serialization.Codec a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_55377 now requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) as its first argument, and the old 2-arg overload has no source for one; no default/empty lookup is reachable from class_9010's API surface");
+        // CB-CONFIDENCE: high -- the new signature adds a required WrapperLookup parameter with no constructor or static factory visible on class_9010 or class_7225$class_7874's listed surface, so the old contract cannot be faithfully expressed
+    }
 
 }

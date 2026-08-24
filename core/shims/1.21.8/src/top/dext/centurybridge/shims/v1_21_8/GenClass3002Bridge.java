@@ -15,6 +15,15 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_3002.class)
 public abstract class GenClass3002Bridge {
 
+    /** was net/minecraft/class_3002.method_12963()Lnet/minecraft/class_2487; */
+    public net.minecraft.class_2487 method_12963() {
+        throw new UnsupportedOperationException("CenturyBridge: method_12963() in 1.21.8 requires a class_7225.class_7874 (RegistryWrapper.WrapperLookup) argument, and class_3002 exposes no accessor to obtain one");
+    }
 
+    /** was net/minecraft/class_3002.method_12966(Lnet/minecraft/class_2487;Lnet/minecraft/class_2960;)Lnet/minecraft/class_3002; */
+    public net.minecraft.class_3002 method_12966(net.minecraft.class_2487 a0, net.minecraft.class_2960 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_12966 now requires a RegistryWrapper.WrapperLookup (class_7225$class_7874) for NBT deserialization; the old 2-arg overload has no source for one");
+        // CB-CONFIDENCE: high -- the new API unconditionally requires a registry lookup the old signature cannot supply
+    }
 
 }

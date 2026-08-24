@@ -248,7 +248,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_1145.method_4884(Lnet/minecraft/class_1113;Lnet/minecraft/class_1146;)V */
     public void method_4884(net.minecraft.class_1113 a0, net.minecraft.class_1146 a1) {
         ((net.minecraft.class_1145) (Object) this).method_4884(a0, a1, 1.0f);
     }
@@ -340,7 +339,6 @@ public final class Statics {
         return 0.2f;
     }
 
-    /** was net/minecraft/class_163$class_164.method_721(Lnet/minecraft/class_161;)V */
     public void method_721(net.minecraft.class_161 a0) {
         ((net.minecraft.class_163.class_164) (Object) this).method_721(new net.minecraft.class_8781((net.minecraft.class_8779) (Object) a0, null));
     }
@@ -381,7 +379,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: BoatEntity.getWaterHeight was removed in 1.20.3");
     }
 
-    /** was net/minecraft/class_1732.method_7662(Lnet/minecraft/class_1860;)V */
     public void method_7662(net.minecraft.class_1860 a0) {
         net.minecraft.class_8786 current = ((net.minecraft.class_1732)(Object)this).method_7663();
         if (current == null) {
@@ -390,7 +387,6 @@ public final class Statics {
         ((net.minecraft.class_1732)(Object)this).method_7662(new net.minecraft.class_8786(current.comp_1932(), a0));
     }
 
-    /** was net/minecraft/class_1732.method_7663()Lnet/minecraft/class_1860; */
     public net.minecraft.class_1860 method_7663() {
         return ((net.minecraft.class_1732) (Object) this).method_7663().comp_1933();
     }
@@ -533,7 +529,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: class_2602.method_11083(class_2661) was removed in 1.20.2 with no direct replacement accepting class_2661");
     }
 
-    /** was net/minecraft/class_2602.method_11126(Lnet/minecraft/class_2790;)V */
     public void method_11126(net.minecraft.class_2790 a0) {
         ((net.minecraft.class_8705) (Object) this).method_11126(a0);
     }
@@ -584,7 +579,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_2792.method_12069(Lnet/minecraft/class_2803;)V */
     public void method_12069(net.minecraft.class_2803 a0) {
         ((net.minecraft.class_8706) (Object) this).method_12069(a0);
     }
@@ -609,32 +603,26 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: JigsawGeneratingC2SPacket (class_6374) handler was removed in 1.20.2");
     }
 
-    /** was net/minecraft/class_2921.method_12666(Lnet/minecraft/class_2923;)V */
     public void method_12666(net.minecraft.class_2923 a0) {
         ((net.minecraft.class_8763) (Object) this).method_12666(a0);
     }
 
-    /** was net/minecraft/class_2933.method_12697(Lnet/minecraft/class_2935;)V */
     public void method_12697(net.minecraft.class_2935 a0) {
         throw new UnsupportedOperationException("CenturyBridge: tasks are no longer managed by BuiltChunk");
     }
 
-    /** was net/minecraft/class_2952.method_12816(IIILnet/minecraft/class_1860;Ljava/util/Iterator;I)V */
     public void method_12816(int a0, int a1, int a2, net.minecraft.class_1860 a3, java.util.Iterator a4, int a5) {
         throw new UnsupportedOperationException("CenturyBridge: class_8786 (RecipeEntry) requires a class_2960 (Identifier) that is not available from the old class_1860-only method_12816 signature; Recipe.getId() was removed in 1.20.2");
     }
 
-    /** was net/minecraft/class_2994.method_3788()I */
     public int method_3788() {
         return ((net.minecraft.class_8599) (Object) this).method_3788();
     }
 
-    /** was net/minecraft/class_2994.method_3802()I */
     public int method_3802() {
         return ((net.minecraft.class_8599) (Object) this).method_3802();
     }
 
-    /** was net/minecraft/class_2994.method_3827()Ljava/lang/String; */
     public java.lang.String method_3827() {
         throw new UnsupportedOperationException("CenturyBridge: method_3827 moved to net.minecraft.class_8599");
     }
@@ -893,7 +881,6 @@ public final class Statics {
         return net.minecraft.class_2960.method_60654("textures/gui/recipe_book.png");
     }
 
-    /** was net/minecraft/class_364.method_25401(DDD)Z */
     public boolean method_25401(double a0, double a1, double a2) {
         return ((net.minecraft.class_364) (Object) this).method_25401(a0, a1, 0.0, a2);
     }
@@ -1322,12 +1309,10 @@ public final class Statics {
         return 8.0;
     }
 
-    /** was net/minecraft/class_632$class_633.method_2865(Lnet/minecraft/class_161;Lnet/minecraft/class_167;)V */
     public void method_2865(net.minecraft.class_161 a0, net.minecraft.class_167 a1) {
         throw new UnsupportedOperationException("CenturyBridge: Cannot convert net.minecraft.class_161 to net.minecraft.class_8781");
     }
 
-    /** was net/minecraft/class_632$class_633.method_2866(Lnet/minecraft/class_161;)V */
     public void method_2866(net.minecraft.class_161 a0) {
         ((net.minecraft.class_632.class_633) (Object) this).method_2866(new net.minecraft.class_8779(net.minecraft.class_2960.method_60655("centurybridge", "dummy"), a0));
     }
@@ -2144,7 +2129,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_1865.method_53736()Lcom/mojang/serialization/Codec; */
     public com.mojang.serialization.Codec method_53736() {
         return ((net.minecraft.class_1865) (Object) this).method_53736().codec();
     }
@@ -2173,22 +2157,18 @@ public final class Statics {
         return nbtCompound;
     }
 
-    /** was net/minecraft/class_1936.method_32888(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;)V */
     public void method_32888(net.minecraft.class_5712 a0, net.minecraft.class_243 a1, net.minecraft.class_5712.class_7397 a2) {
         ((net.minecraft.class_1936) (Object) this).method_32888(net.minecraft.class_6880.method_40223(a0), a1, a2);
     }
 
-    /** was net/minecraft/class_1936.method_33596(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;)V */
     public void method_33596(net.minecraft.class_1297 a0, net.minecraft.class_5712 a1, net.minecraft.class_2338 a2) {
         ((net.minecraft.class_1936) (Object) this).method_33596(a0, net.minecraft.class_6880.method_40223(a1), a2);
     }
 
-    /** was net/minecraft/class_1936.method_43275(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_243;)V */
     public void method_43275(net.minecraft.class_1297 a0, net.minecraft.class_5712 a1, net.minecraft.class_243 a2) {
         ((net.minecraft.class_1936) (Object) this).method_43275(a0, net.minecraft.class_6880.method_40223(a1), a2);
     }
 
-    /** was net/minecraft/class_1936.method_43276(Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712$class_7397;)V */
     public void method_43276(net.minecraft.class_5712 a0, net.minecraft.class_2338 a1, net.minecraft.class_5712.class_7397 a2) {
         ((net.minecraft.class_1936) (Object) this).method_43276(net.minecraft.class_6880.method_40223(a0), a1, a2);
     }
@@ -2279,7 +2259,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_2385.method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883; */
     public net.minecraft.class_6880.class_6883 method_10272(net.minecraft.class_5321 a0, java.lang.Object a1, com.mojang.serialization.Lifecycle a2) {
         return ((net.minecraft.class_2385) (Object) this).method_10272(a0, a1, new net.minecraft.class_9248(java.util.Optional.empty(), a2));
     }
@@ -2690,7 +2669,6 @@ public final class Statics {
         return net.minecraft.class_3826.field_25011.codec();
     }
 
-    /** was net/minecraft/class_3827.method_16821(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_3827; */
     public net.minecraft.class_3827 method_16821(java.lang.String a0, com.mojang.serialization.Codec a1) {
         throw new UnsupportedOperationException("CenturyBridge: RecipeSerializer registration using raw Codec is no longer supported; use MapCodec instead");
     }
@@ -3203,17 +3181,14 @@ public final class Statics {
         return self.comp_2210();
     }
 
-    /** was net/minecraft/class_4518.method_33317(Lnet/minecraft/class_4517;)V */
     public void method_33317(net.minecraft.class_4517 a0) {
         throw new UnsupportedOperationException("CenturyBridge: method_33317 now requires a class_4520 raid-context parameter whose constructor needs server world, collections, and nested types unavailable from class_4517 alone");
     }
 
-    /** was net/minecraft/class_4588.method_22919(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;FFFII)V */
     public void method_22919(net.minecraft.class_4587.class_4665 a0, net.minecraft.class_777 a1, float a2, float a3, float a4, int a5, int a6) {
         ((net.minecraft.class_4588) (Object) this).method_22919(a0, a1, a2, a3, a4, 1.0f, a5, a6);
     }
 
-    /** was net/minecraft/class_4588.method_22920(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFF[IIZ)V */
     public void method_22920(net.minecraft.class_4587.class_4665 a0, net.minecraft.class_777 a1, float[] a2, float a3, float a4, float a5, int[] a6, int a7, boolean a8) {
         ((net.minecraft.class_4588) (Object) this).method_22920(a0, a1, a2, a3, a4, a5, 1.0f, a6, a7, a8);
     }
@@ -3508,12 +3483,10 @@ public final class Statics {
         return new net.minecraft.class_2338(0, 0, 0);
     }
 
-    /** was net/minecraft/class_5713.method_32943(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_5713$class_7721;)Z */
     public boolean method_32943(net.minecraft.class_5712 a0, net.minecraft.class_243 a1, net.minecraft.class_5712.class_7397 a2, net.minecraft.class_5713.class_7721 a3) {
         return ((net.minecraft.class_5713) (Object) this).method_32943(net.minecraft.class_6880.method_40223(a0), a1, a2, a3);
     }
 
-    /** was net/minecraft/class_5714.method_32947(Lnet/minecraft/class_3218;Lnet/minecraft/class_5712;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_243;)Z */
     public boolean method_32947(net.minecraft.class_3218 a0, net.minecraft.class_5712 a1, net.minecraft.class_5712.class_7397 a2, net.minecraft.class_243 a3) {
         return ((net.minecraft.class_5714)(Object)this).method_32947(a0, net.minecraft.class_6880.method_40223(a1), a2, a3);
     }
@@ -3720,7 +3693,6 @@ public final class Statics {
         return null;
     }
 
-    /** was net/minecraft/class_7265.method_42276()Lnet/minecraft/class_2960; */
     public net.minecraft.class_2960 method_42276() {
         return ((net.minecraft.class_7265) (Object) this).method_42276().method_29177();
     }
@@ -3828,7 +3800,6 @@ public final class Statics {
         return net.minecraft.class_8180.field_42848.codec();
     }
 
-    /** was net/minecraft/class_8181.method_54080()Lnet/minecraft/class_2586; */
     public net.minecraft.class_2586 method_54080() {
         return ((net.minecraft.class_8181.class_9210) (Object) this).method_54080();
     }
@@ -3853,7 +3824,6 @@ public final class Statics {
         return net.minecraft.class_8247.field_43344.codec();
     }
 
-    /** was net/minecraft/class_8514$class_5719.method_32969(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;F)V */
     public void method_32969(net.minecraft.class_3218 a0, net.minecraft.class_2338 a1, net.minecraft.class_5712 a2, net.minecraft.class_1297 a3, net.minecraft.class_1297 a4, float a5) {
         ((net.minecraft.class_8514.class_5719) (Object) this).method_32969(a0, a1, net.minecraft.class_6880.method_40223(a2), a3, a4, a5);
     }
@@ -3883,7 +3853,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: class_8710.method_53028(PacketByteBuf) was deleted in 1.20.5 with no direct replacement; the new class_8710 API exposes no PacketByteBuf serialization path");
     }
 
-    /** was net/minecraft/class_8934.method_54869()Lnet/minecraft/class_2960; */
     public net.minecraft.class_2960 method_54869() {
         return ((net.minecraft.class_8934) (Object) this).method_54869().method_29177();
     }
@@ -4064,7 +4033,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799; */
     public net.minecraft.class_1799 method_8116(net.minecraft.class_1263 a0, net.minecraft.class_7225.class_7874 a1) {
         return ((net.minecraft.class_1860) (Object) this).method_8116((net.minecraft.class_9695) a0, a1);
     }
@@ -4192,12 +4160,10 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: method_30484 created a TeleportTarget (class_5454) which was removed in 1.21; the portal teleportation system was reworked to use class_4048 (PostTeleportTarget) and class_2424 no longer creates teleport targets");
     }
 
-    /** was net/minecraft/class_2547.method_10839(Lnet/minecraft/class_2561;)V */
     public void method_10839(net.minecraft.class_2561 a0) {
         ((net.minecraft.class_2547) (Object) this).method_10839(new net.minecraft.class_9812(a0));
     }
 
-    /** was net/minecraft/class_2547.method_55597(Lnet/minecraft/class_129;)V */
     public void method_55597(net.minecraft.class_129 a0) {
         // adds system details
     }
@@ -4312,7 +4278,6 @@ public final class Statics {
         self.method_1336(a0, a1, a2, a3);
     }
 
-    /** was net/minecraft/class_4588.method_22912(DDD)Lnet/minecraft/class_4588; */
     public net.minecraft.class_4588 method_22912(double a0, double a1, double a2) {
         return ((net.minecraft.class_4588) (Object) this).method_22912((float) a0, (float) a1, (float) a2);
     }
@@ -4347,7 +4312,6 @@ public final class Statics {
         return self.method_60497();
     }
 
-    /** was net/minecraft/class_5146.method_6576(Lnet/minecraft/class_3419;)V */
     public void method_6576(net.minecraft.class_3419 a0) {
         // play this.method_45328() with the given category
             // the ItemStack is used for something else (like pitch/volume modification)
@@ -4478,6 +4442,45 @@ public final class Statics {
     public static void method_4072(net.minecraft.class_927 self, net.minecraft.class_1308 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
         throw new UnsupportedOperationException("CenturyBridge: class_927.method_4072 (EntityRenderer.render) was removed in 1.21; the entity rendering pipeline was refactored to use EntityRenderState and no direct equivalent exists on class_927");
     }
+
+
+
+
+    /** was net/minecraft/class_1890.method_37424(Lnet/minecraft/class_2487;)I */
+    public static int method_37424(net.minecraft.class_1890 self, net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_37424(TagKey) has no direct replacement; the 1.21.8 ItemStack API has no TagKey-parameter methods");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /** was net/minecraft/class_4525.method_22250(Ljava/lang/String;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;ILnet/minecraft/class_3218;Z)Lnet/minecraft/class_2633; */
+    public static net.minecraft.class_2633 method_22250(net.minecraft.class_4525 self, java.lang.String a0, net.minecraft.class_2338 a1, net.minecraft.class_2470 a2, int a3, net.minecraft.class_3218 a4, boolean a5) {
+        throw new UnsupportedOperationException("CenturyBridge: class_4525.method_22250 (load-and-place structure by name with flags and initializeMobs) has no direct replacement; the new API's method_22251 requires a precomputed BlockBox, omits the int flags and boolean initializeMobs parameters, and returns void rather than a Structure, and no method on the new class_4525 surface loads a Structure by name");
+        // CB-CONFIDENCE: high -- the new API surface genuinely lacks any name->Structure loader and the placement method has incompatible semantics (BlockBox required, flags/boolean dropped, void return), so no faithful bridge exists
+    }
+
+
+
+
+
+
+
+
+
 
     // ==== END GENERATED ====
 

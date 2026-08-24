@@ -15,20 +15,10 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_22.class)
 public abstract class GenClass22Bridge {
 
-    /** was net/minecraft/class_22.method_100(ILnet/minecraft/class_1657;)Lnet/minecraft/class_2596; */
-    public net.minecraft.class_2596 method_100(int a0, net.minecraft.class_1657 a1) {
-        return ((net.minecraft.class_22) (Object) this).method_100(new net.minecraft.class_9209(a0), a1);
+    /** was net/minecraft/class_22.method_32371(Lnet/minecraft/class_2487;)Lnet/minecraft/class_22; */
+    public net.minecraft.class_22 method_32371(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_32371(class_2487) in 1.21.8 requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) that the old single-arg signature cannot supply; no default lookup is reachable from class_22 alone");
+        // CB-CONFIDENCE: high -- the new API strictly adds a required WrapperLookup parameter with no field on class_22 holding one and no static accessor in the listed surface, so the old contract is genuinely inexpressible
     }
-
-
-    /** was net/minecraft/class_22.method_32364(I)Lnet/minecraft/class_22; */
-    public net.minecraft.class_22 method_32364(int a0) {
-        net.minecraft.class_22 state = (net.minecraft.class_22) (Object) this;
-        for (int i = 0; i < a0; i++) {
-            state = state.method_32364();
-        }
-        return state;
-    }
-
 
 }

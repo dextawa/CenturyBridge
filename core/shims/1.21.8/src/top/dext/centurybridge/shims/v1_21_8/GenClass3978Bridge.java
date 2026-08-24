@@ -16,9 +16,4 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass3978Bridge {
 
 
-    /** was net/minecraft/class_3978.method_32360(Lnet/minecraft/class_2487;)Lnet/minecraft/class_3978; */
-    public net.minecraft.class_3978 method_32360(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_32360(CompoundTag) requires a RegistryWrapper.WrapperLookup (class_7225.class_7874) in 1.20.5+; the old single-argument signature relied on global registry access that no longer exists");
-    }
-
 }
