@@ -68,7 +68,7 @@ Minecraft 每出一个新版本，链头加一节分段。固定流程（顺序�
 9. **实机验收**：`build.sh <ver>` 出桥 jar（class 版本按代际钉板：1.20.x=17，其余=21）；服务端 "Done" 零错；客户端行为链自测（注册/放置/GUI/持久化）
 10. **收尾**：README 战果更新，commit/push
 
-**跨命名空间墙（1.21.11→26.1）特别段**：intermediary 停更，此边界是整 jar 改名段——`remap-mojang`（组合映射 TSV）+ refmap JSON 文本重写，之后 26.x 边界照常规流程走。
+**跨命名空间墙（1.21.11→26.1）特别段**：intermediary 停更，此边界是整 jar 改名段——`remap-mojang`（组合映射 TSV）+ refmap/accesswidener 文本重写。年号时代（26.x）的段数据不能用 tiny 映射 diff：先 `stub-diff` 真名 jar（含私有成员，供 mixin triage 用），再由 `gen_frontier_segment.py` 产出 intermediary 名的 gone 表、`augment_frontier_segment.py` 回填 desc-changed；shim 树用 `translate_tree.py` 整树源码级过墙，运行时类（Statics/facade）的成员保持 token 名。
 
 ### 社区：如何构建、如何提交一个新版本
 
@@ -167,7 +167,7 @@ Every new Minecraft release adds one segment at the head of the chain. The fixed
 9. **Live acceptance**: `build.sh <ver>` produces the bridge jar (class-file level pinned per era: 17 for 1.20.x, 21 after); server reaches "Done" with zero errors; client behavior-loop self-test (register / place / GUI / persistence)
 10. **Wrap-up**: update README results, commit/push
 
-**The namespace wall (1.21.11→26.1) is a special segment**: intermediary ended there, so this boundary is a whole-jar rename — `remap-mojang` (composed mapping TSV) plus textual refmap JSON rewriting; 26.x boundaries after it follow the normal procedure.
+**The namespace wall (1.21.11→26.1) is a special segment**: intermediary ended there, so this boundary is a whole-jar rename — `remap-mojang` (composed mapping TSV) plus textual refmap/accesswidener rewriting. Year-era (26.x) segment data cannot come from a tiny-mapping diff: `stub-diff` the real-name jars (private members included, for mixin triage), then `gen_frontier_segment.py` emits the intermediary-named gone lists and `augment_frontier_segment.py` fills in desc-changed; the shim tree crosses in source form via `translate_tree.py`, with runtime classes (Statics/facades) keeping their token member names.
 
 ### Community: how to build, how to submit a new version
 
