@@ -37,13 +37,13 @@ import org.objectweb.asm.Opcodes;
 public final class StubDiff {
 
     /** owner -> name -> descriptors, plus name+desc -> owners for MOVED lookups. */
-    static final class Index {
+    public static final class Index {
         final Set<String> classes = new HashSet<>();
         /** Mixin cannot add an instance method to an interface, and a class
          *  mixin on an interface target dies at PREPARE -- so the shim form
          *  has to know which targets are interfaces. */
         final Set<String> interfaces = new HashSet<>();
-        final Map<String, Map<String, Set<String>>> methods = new HashMap<>();
+        public final Map<String, Map<String, Set<String>>> methods = new HashMap<>();
         final Map<String, Map<String, Set<String>>> fields = new HashMap<>();
         final Map<String, Set<String>> methodHomes = new HashMap<>();
         final Map<String, Set<String>> fieldHomes = new HashMap<>();
@@ -140,7 +140,7 @@ public final class StubDiff {
         }
     }
 
-    static Index index(Path jar) throws IOException {
+    public static Index index(Path jar) throws IOException {
         Index idx = new Index();
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(jar))) {
             ZipEntry e;

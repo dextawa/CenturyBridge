@@ -38,6 +38,7 @@ public final class Main {
                 Path.of(args[args.length - 1]));
             case "classify" -> top.dext.centurybridge.data.SymbolAudit.classify(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
+            case "stub-dump" -> stubDump(Path.of(args[1]), Path.of(args[2]));
             case "mixin-check" -> top.dext.centurybridge.data.MixinCheck.run(
                 Path.of(args[1]), Path.of(args[2]));
             case "audit" -> top.dext.centurybridge.data.SymbolAudit.run(
@@ -161,6 +162,23 @@ public final class Main {
         System.out.println("full-audit -> " + fullAudit);
     }
 
+    // stub-dump <stubJar> <out.txt>: "M owner.name(desc)" per method, the
+    // self-recursion gate's input in assemble.py
+    private static void stubDump(Path stub, Path out) throws Exception {
+        var idx = top.dext.centurybridge.data.StubDiff.index(stub);
+        List<String> lines = new ArrayList<>();
+        for (var e : idx.methods.entrySet()) {
+            for (var m : e.getValue().entrySet()) {
+                for (String d : m.getValue()) {
+                    lines.add("M " + e.getKey() + "." + m.getKey() + d);
+                }
+            }
+        }
+        java.util.Collections.sort(lines);
+        Files.write(out, String.join("\n", lines).getBytes(StandardCharsets.UTF_8));
+        System.out.println("stub-dump: " + lines.size() + " methods -> " + out);
+    }
+
     private static void usage() {
         System.out.println("""
             centurybridge-core
@@ -168,6 +186,7 @@ public final class Main {
               gen-chain <from> <to> <mappingsDir> <segmentsDir>
               convert <segmentsDir> <from> <to> <outDir> <jar...>
               remap-mojang <inter-to-mojang.tsv> <in.jar> <out.jar>
-              mixin-check <compiledShimDir> <targetJar>""");
+              mixin-check <compiledShimDir> <targetJar>
+              stub-dump <stubJar> <out.txt>""");
     }
 }
