@@ -541,7 +541,8 @@
   "net/minecraft/class_4877.method_25059(Lnet/minecraft/class_4881;)V": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_5131.method_26841()Ljava/util/Set;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_6777.method_47621(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Lnet/minecraft/class_315;)Lnet/minecraft/class_6777;": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_8957.comp_2081()I": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_8957.comp_2081()I": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_310.method_1507(Lnet/minecraft/class_437;)V": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_4358.field_19638:Lnet/minecraft/class_4398;": "top/dext/centurybridge/rt/v26_2/Statics",

@@ -47,6 +47,9 @@ public final class StubDiff {
         final Map<String, Map<String, Set<String>>> fields = new HashMap<>();
         final Map<String, Set<String>> methodHomes = new HashMap<>();
         final Map<String, Set<String>> fieldHomes = new HashMap<>();
+        /** "owner.name" of private members: unreachable from call sites, but a
+         *  mod mixin can @Shadow them, so their fate still matters to triage */
+        final Set<String> privates = new HashSet<>();
 
         void addMethod(String owner, String name, String desc) {
             methods.computeIfAbsent(owner, k -> new HashMap<>())
@@ -89,8 +92,9 @@ public final class StubDiff {
         List<String> lines = new ArrayList<>();
         lines.add("kind\tfate\tsymbol\tdesc\tdetail");
         for (Damage d : out) {
+            boolean priv = oldIdx.privates.contains(d.owner() + "." + d.name());
             lines.add(d.kind() + "\t" + d.fate() + "\t" + d.owner() + "." + d.name()
-                + "\t" + d.desc() + "\t" + d.detail());
+                + "\t" + d.desc() + "\t" + d.detail() + (priv ? "\tpriv" : ""));
         }
         Files.write(outTsv, String.join("\n", lines).getBytes(StandardCharsets.UTF_8));
 
@@ -159,9 +163,13 @@ public final class StubDiff {
                     @Override
                     public MethodVisitor visitMethod(int acc, String name, String desc,
                                                      String sig, String[] ex) {
-                        // private members are invisible to mods; <clinit> is never a call target
-                        if ((acc & Opcodes.ACC_PRIVATE) == 0 && !name.equals("<clinit>")) {
+                        // <clinit> is never a target; private members are indexed but
+                        // tagged, so call-site accounting can skip them and triage cannot
+                        if (!name.equals("<clinit>")) {
                             idx.addMethod(owner, name, desc);
+                            if ((acc & Opcodes.ACC_PRIVATE) != 0) {
+                                idx.privates.add(owner + "." + name);
+                            }
                         }
                         return null;
                     }
@@ -169,8 +177,9 @@ public final class StubDiff {
                     @Override
                     public FieldVisitor visitField(int acc, String name, String desc,
                                                    String sig, Object val) {
-                        if ((acc & Opcodes.ACC_PRIVATE) == 0) {
-                            idx.addField(owner, name, desc);
+                        idx.addField(owner, name, desc);
+                        if ((acc & Opcodes.ACC_PRIVATE) != 0) {
+                            idx.privates.add(owner + "." + name);
                         }
                         return null;
                     }

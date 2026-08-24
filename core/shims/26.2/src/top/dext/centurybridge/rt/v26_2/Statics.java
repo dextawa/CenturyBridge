@@ -4441,4 +4441,9 @@ public final class Statics {
     public static net.minecraft.client.KeyMapping cbNewKeyMapping(String name, int code, String category) {
         return new net.minecraft.client.KeyMapping(name, code, cbKeyCategory(category));
     }
+
+    /** 26.2 moved Minecraft.setScreen onto the Gui (instance redirect: receiver becomes arg 0) */
+    public static void method_1507(net.minecraft.client.Minecraft self, net.minecraft.client.gui.screens.Screen screen) {
+        self.gui.setScreen(screen);
+    }
 }

@@ -82,6 +82,12 @@ public final class JarRemapper {
             }
 
             private String member(String owner, String name) {
+                // our runtime classes (Statics, facades, tombstones) keep their
+                // token-named members: the converter wired call sites to them
+                // by exactly that name, and nothing in the game maps them
+                if (owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/")) {
+                    return name;
+                }
                 String hit = byOwner.get(owner + "." + name);
                 return hit != null ? hit : members.getOrDefault(name, name);
             }
