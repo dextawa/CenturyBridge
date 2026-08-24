@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_8973.class)
 public abstract class GenClass8973Bridge {
 
+    /** was net/minecraft/class_8973.method_55233()Lnet/minecraft/class_5607; */
+    public net.minecraft.class_5607 method_55233() {
+        throw new UnsupportedOperationException("CenturyBridge: method_55233 now requires two int parameters absent from the old no-arg signature; cannot infer correct values without knowing their semantics");
+    }
 
 }
