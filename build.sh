@@ -65,7 +65,9 @@ if cfgs:
     # whole game with it, so refuse to package one.
     import re, struct, zipfile
     stub = os.environ.get("CB_STUB", "")
-    if stub and os.path.exists(stub):
+    # the dots-to-$ nesting guess below only holds for intermediary names;
+    # past the namespace wall mixin-check does this properly from access flags
+    if stub and os.path.exists(stub) and "intermediary" in os.path.basename(stub):
         ifaces = set()
         with zipfile.ZipFile(stub) as z:
             for n in z.namelist():
@@ -134,6 +136,11 @@ if os.path.exists(cfg):
                 dangling.append(f"{k} -> {v} (no such shim source)")
             elif member not in impl:
                 dangling.append(f"{k} -> {cls}.{member} (member missing)")
+    # a facade rename must land on a class we ship: a stale package token here
+    # turns every reference to the dead class into NoClassDefFoundError
+    for k, v in d.get("classRenames", {}).items():
+        if v.startswith("top/dext/") and not os.path.exists(os.path.join(shim, "src", *v.split("/")) + ".java"):
+            dangling.append(f"classRename {k} -> {v} (no such facade source)")
     if d.get("lookupRt"):
         impl = declared(d["lookupRt"])
         if impl is None or "cbLookup" not in impl:

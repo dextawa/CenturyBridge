@@ -4403,4 +4403,42 @@ public final class Statics {
     public static void cbExit(Object self) {
         CB_IN_OLD_RENDER.get().remove(self);
     }
+
+    // ---- 26.x KeyMapping: the String-category constructors died with KeyMapping.Category ----
+    private static final java.util.Map<String, net.minecraft.client.KeyMapping.Category> CB_KEY_CATEGORIES = new java.util.HashMap<>();
+
+    private static net.minecraft.client.KeyMapping.Category cbKeyCategory(String legacy) {
+        switch (legacy) {
+            case "key.categories.movement": return net.minecraft.client.KeyMapping.Category.MOVEMENT;
+            case "key.categories.misc": return net.minecraft.client.KeyMapping.Category.MISC;
+            case "key.categories.multiplayer": return net.minecraft.client.KeyMapping.Category.MULTIPLAYER;
+            case "key.categories.gameplay": return net.minecraft.client.KeyMapping.Category.GAMEPLAY;
+            case "key.categories.inventory": return net.minecraft.client.KeyMapping.Category.INVENTORY;
+            case "key.categories.creative": return net.minecraft.client.KeyMapping.Category.CREATIVE;
+            case "key.categories.spectator": return net.minecraft.client.KeyMapping.Category.SPECTATOR;
+            case "key.categories.ui": return net.minecraft.client.KeyMapping.Category.DEBUG;
+            default:
+                synchronized (CB_KEY_CATEGORIES) {
+                    return CB_KEY_CATEGORIES.computeIfAbsent(legacy, k -> {
+                        String path = k.toLowerCase(java.util.Locale.ROOT).replaceAll("[^a-z0-9/._-]", "_");
+                        return net.minecraft.client.KeyMapping.Category.register(
+                            net.minecraft.resources.Identifier.fromNamespaceAndPath("centurybridge", path));
+                    });
+                }
+        }
+    }
+
+    /** ctorRedirects: 1.20.x KeyBinding(String, InputUtil.Type, int, String category) */
+    public static net.minecraft.client.KeyMapping cbNewKeyMapping(String name, com.mojang.blaze3d.platform.InputConstants.Type type, int code, String category) {
+        net.minecraft.client.KeyMapping km = new net.minecraft.client.KeyMapping(name, code, cbKeyCategory(category));
+        if (type != com.mojang.blaze3d.platform.InputConstants.Type.KEYSYM) {
+            km.setKey(type.getOrCreate(code));
+        }
+        return km;
+    }
+
+    /** ctorRedirects: 1.20.x KeyBinding(String, int, String category) */
+    public static net.minecraft.client.KeyMapping cbNewKeyMapping(String name, int code, String category) {
+        return new net.minecraft.client.KeyMapping(name, code, cbKeyCategory(category));
+    }
 }

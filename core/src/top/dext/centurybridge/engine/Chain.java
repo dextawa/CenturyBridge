@@ -168,6 +168,23 @@ public final class Chain {
         return null;
     }
 
+    /**
+     * Constructor redirects ("ctorRedirects" in shims-<to>.json):
+     * "owner.<init>(desc)V" -> "runtimeClass#factory". Mixin cannot add a
+     * constructor, but a NEW site can be rewritten: NEW/DUP/args/INVOKESPECIAL
+     * becomes args/INVOKESTATIC factory(args)->owner, which leaves the exact
+     * same stack. Only NEW sites qualify -- a subclass super(...) call has no
+     * NEW to drop and stays damage.
+     */
+    public final java.util.Map<String, String> ctorRedirects = new java.util.HashMap<>();
+
+    /** owners that have at least one constructor redirect (fast pre-check) */
+    public final java.util.Set<String> ctorRedirectOwners = new java.util.HashSet<>();
+
+    /** fabric.mod.json dependency id migrations declared per target
+     *  ("depRenames" in shims-<to>.json), on top of the per-segment ones. */
+    public final java.util.Map<String, String> depRenames = new java.util.HashMap<>();
+
     /** Runtime class serving cbLookup() for the hooks above ("lookupRt"). */
     public String lookupRt;
 
@@ -315,6 +332,19 @@ public final class Chain {
                     h.onlyUnder = o.has("onlyUnder") ? o.get("onlyUnder").getAsString() : null;
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
                     c.overrideHooks.add(h);
+                }
+            }
+            if (root.has("depRenames")) {
+                var dr = root.getAsJsonObject("depRenames");
+                for (String k : dr.keySet()) {
+                    c.depRenames.put(k, dr.get(k).getAsString());
+                }
+            }
+            if (root.has("ctorRedirects")) {
+                var cr = root.getAsJsonObject("ctorRedirects");
+                for (String k : cr.keySet()) {
+                    c.ctorRedirects.put(k, cr.get(k).getAsString());
+                    c.ctorRedirectOwners.add(k.substring(0, k.indexOf(".<init>")));
                 }
             }
             if (root.has("lookupDesc")) {

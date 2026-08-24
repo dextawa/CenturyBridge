@@ -1067,9 +1067,9 @@
   "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "connection"
  },
  "classRenames": {
-  "net/minecraft/class_5335": "top/dext/centurybridge/facade/v1_20_4/class_5335",
-  "net/minecraft/class_5267": "top/dext/centurybridge/facade/v1_20_4/class_5267",
-  "net/minecraft/class_195": "top/dext/centurybridge/facade/v1_20_4/class_195",
+  "net/minecraft/class_5335": "top/dext/centurybridge/facade/v26_2/class_5335",
+  "net/minecraft/class_5267": "top/dext/centurybridge/facade/v26_2/class_5267",
+  "net/minecraft/class_195": "top/dext/centurybridge/facade/v26_2/class_195",
   "net/minecraft/class_1068$class_7920": "net/minecraft/class_8685$class_7920",
   "net/minecraft/class_193": "net/minecraft/advancements/AdvancementRequirements$Strategy",
   "net/minecraft/class_2158$class_2159": "net/minecraft/commands/CacheableFunction",
@@ -1099,9 +1099,7 @@
   "net/minecraft/class_8172$class_8526": "net/minecraft/world/level/block/entity/PotDecorations",
   "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler": "top/dext/centurybridge/compat/fapi/CbClientPlayHandler",
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler": "top/dext/centurybridge/compat/fapi/CbServerPlayHandler",
-  "net/fabricmc/fabric/api/client/model/ModelLoadingRegistry": "top/dext/centurybridge/compat/fapi/CbModelLoadingRegistry",
   "net/fabricmc/fabric/api/client/model/ExtraModelProvider": "top/dext/centurybridge/compat/fapi/CbExtraModelProvider",
-  "net/fabricmc/fabric/api/client/model/BakedModelManagerHelper": "top/dext/centurybridge/compat/fapi/CbBakedModelManagerHelper",
   "net/minecraft/class_332": "top/dext/centurybridge/facade/v26_2/GuiGraphics"
  },
  "ledger": {
@@ -1110,7 +1108,6 @@
   "net/minecraft/class_5270": "quirk: loot codec rework -- LootGsons factories (dead, tombstoned)",
   "net/minecraft/class_47$class_48": "quirk: loot context builder Optional-ization",
   "net/minecraft/class_179$class_180": "quirk: criterion conditions container rework",
-  "net/minecraft/class_193": "structural: CriterionMerger fields moved cross-owner with type change",
   "net/minecraft/class_195.method_807": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_2010$class_2012": "quirk: datagen-flavored criterion factory (returns AdvancementCriterion now)",
   "net/minecraft/class_2054$class_2056": "quirk: datagen-flavored criterion factory",
@@ -1191,7 +1188,6 @@
   "net/minecraft/class_1856.method_8089": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_161$class_162.method_709": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_161$class_162.method_698": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
-  "net/minecraft/class_2585": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
   "net/minecraft/class_2368": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
   "net/minecraft/class_2647": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
   "net/minecraft/class_4262": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
@@ -1223,7 +1219,6 @@
   "net/minecraft/class_2440": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_1309.method_5781": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_156.method_43028": "1.20.3 rework wave -- ledgered pending codec-based bridge",
-  "net/minecraft/class_2158$class_2159": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2621.method_11285": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2595.method_11285": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2991.method_12904": "1.20.3 rework wave -- ledgered pending codec-based bridge",
@@ -1565,7 +1560,6 @@
   "net/minecraft/class_72": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_73": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: GONEx1)",
   "net/minecraft/class_7376": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (1 symbols: CLASS_GONEx1)",
-  "net/minecraft/class_7380": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (3 symbols: CLASS_GONEx3)",
   "net/minecraft/class_7417": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (1 symbols: CLASS_GONEx1)",
   "net/minecraft/class_7431": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: GONEx1)",
   "net/minecraft/class_7538": "tombstone [client]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
@@ -2594,7 +2588,9 @@
   "net/minecraft/util/valueproviders/ClampedNormalInt.CODEC:Lcom/mojang/serialization/Codec;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/world/level/levelgen/structure/templatesystem/CappedProcessor.CODEC:Lcom/mojang/serialization/Codec;": "bridge body died at the 26.x walls; re-forge order queued (retry-context-26.2)",
   "net/minecraft/class_1792.components": "26.x: item components are registry-built from the Properties initializer; the pending-key repair no longer rebuilds them, so a late-registered item may keep a placeholder display-name component (client-visible only)",
-  "net/minecraft/class_332.method_51450()Lnet/minecraft/class_4597$class_4598;": "26.2 retained-mode GUI has no immediate vertex consumer (MultiBufferSource.BufferSource gone); facade cannot express it"
+  "net/minecraft/class_332.method_51450()Lnet/minecraft/class_4597$class_4598;": "26.2 retained-mode GUI has no immediate vertex consumer (MultiBufferSource.BufferSource gone); facade cannot express it",
+  "net/fabricmc/fabric/api/client/model/ModelLoadingRegistry": "facade class dropped at 26.2 (fapi model-loading API gone); no rename target",
+  "net/fabricmc/fabric/api/client/model/BakedModelManagerHelper": "facade class dropped at 26.2 (fapi model-loading API gone); no rename target"
  },
  "interfaceized": [
   "com/mojang/serialization/DataResult"
@@ -2655,5 +2651,13 @@
    "wrap": "top/dext/centurybridge/rt/v26_2/Statics.cbWrapGui(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)Ltop/dext/centurybridge/facade/v26_2/GuiGraphics;",
    "guard": "top/dext/centurybridge/rt/v26_2/Statics"
   }
- ]
+ ],
+ "depRenames": {
+  "fabric": "fabric-api",
+  "fabric-key-binding-api-v1": "fabric-key-mapping-api-v1"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_304.<init>(Ljava/lang/String;Lnet/minecraft/class_3675$class_307;ILjava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewKeyMapping",
+  "net/minecraft/class_304.<init>(Ljava/lang/String;ILjava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewKeyMapping"
+ }
 }

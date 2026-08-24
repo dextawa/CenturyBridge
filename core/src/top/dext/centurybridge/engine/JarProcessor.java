@@ -116,6 +116,75 @@ public final class JarProcessor {
         mv.visitEnd();
     }
 
+    /**
+     * NEW/DUP/args/INVOKESPECIAL owner.<init>(desc) -> args/INVOKESTATIC
+     * factory(desc)Lowner; for every constructor in ctorRedirects. NEWs are
+     * matched to their <init> LIFO per type, which is exactly how nesting
+     * works on the operand stack (an inner new completes before the outer
+     * <init>). Only NEW sites are rewritten.
+     */
+    private static byte[] rewriteConstructors(byte[] bytes, Chain chain, Report rpt, String tag) {
+        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+        boolean any = false;
+        for (String o : chain.ctorRedirectOwners) {
+            if (raw.contains(o)) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return bytes;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new ClassReader(bytes).accept(cn, 0);
+        int rewrites = 0;
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if (m.instructions == null) {
+                continue;
+            }
+            java.util.Map<String, java.util.ArrayDeque<org.objectweb.asm.tree.TypeInsnNode>> pending = new HashMap<>();
+            org.objectweb.asm.tree.AbstractInsnNode next;
+            for (org.objectweb.asm.tree.AbstractInsnNode in = m.instructions.getFirst(); in != null; in = next) {
+                next = in.getNext(); // captured first: set()/remove() below detach the current node
+                if (in.getOpcode() == Opcodes.NEW) {
+                    org.objectweb.asm.tree.TypeInsnNode t = (org.objectweb.asm.tree.TypeInsnNode) in;
+                    if (chain.ctorRedirectOwners.contains(t.desc)) {
+                        pending.computeIfAbsent(t.desc, k -> new java.util.ArrayDeque<>()).push(t);
+                    }
+                } else if (in.getOpcode() == Opcodes.INVOKESPECIAL) {
+                    org.objectweb.asm.tree.MethodInsnNode mi = (org.objectweb.asm.tree.MethodInsnNode) in;
+                    if (!mi.name.equals("<init>") || !chain.ctorRedirectOwners.contains(mi.owner)) {
+                        continue;
+                    }
+                    java.util.ArrayDeque<org.objectweb.asm.tree.TypeInsnNode> stack = pending.get(mi.owner);
+                    org.objectweb.asm.tree.TypeInsnNode newInsn = stack == null || stack.isEmpty() ? null : stack.pop();
+                    String key = mi.owner + "." + mi.name + mi.desc;
+                    String target = chain.ctorRedirects.get(key);
+                    if (target == null || newInsn == null) {
+                        continue; // live constructor, or a super(...) call: nothing to do here
+                    }
+                    org.objectweb.asm.tree.AbstractInsnNode dup = newInsn.getNext();
+                    if (dup == null || dup.getOpcode() != Opcodes.DUP) {
+                        continue; // unusual shape (javac always emits NEW DUP); leave it alone
+                    }
+                    m.instructions.remove(dup);
+                    m.instructions.remove(newInsn);
+                    String factoryDesc = mi.desc.substring(0, mi.desc.lastIndexOf(')') + 1) + "L" + mi.owner + ";";
+                    m.instructions.set(mi, new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC,
+                        redirCls(target), redirName(target, "cbNew"), factoryDesc, false));
+                    rewrites++;
+                }
+            }
+        }
+        if (rewrites == 0) {
+            return bytes;
+        }
+        rpt.notes.add(tag + "ctor-redirected: " + rewrites + " new-site(s) in " + cn.name);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
+    }
+
     /** Redirect values are a class name, optionally "class#member" past the
      *  namespace wall where call-site names are no longer globally unique. */
     private static String redirCls(String v) {
@@ -430,6 +499,12 @@ public final class JarProcessor {
      */
     private static byte[] verifyAndRewrite(byte[] bytes, Map<String, String> jarSuper, Chain chain, Set<String> issues,
                                            String tag, Tombstones reg, Report rpt) {
+        boolean ctorChanged = false;
+        if (!chain.ctorRedirects.isEmpty()) {
+            byte[] b2 = rewriteConstructors(bytes, chain, rpt, tag);
+            ctorChanged = b2 != bytes;
+            bytes = b2;
+        }
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
@@ -572,6 +647,10 @@ public final class JarProcessor {
                             return; // owner facade-renamed; the member lives on the facade
                         }
                         String key = owner + "." + name + desc;
+                        if (name.equals("<init>") && chain.ctorRedirects.containsKey(key)) {
+                            top.dext.centurybridge.data.FullAudit.record(key, "ctor-redirect");
+                            return; // rewritten to the factory by the constructor pre-pass
+                        }
                         // a shim on any ancestor satisfies this call site: the mod
                         // holds a subclass reference, but the member is declared
                         // (and bridged) further up
@@ -809,7 +888,7 @@ public final class JarProcessor {
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
                 && declaredOldOverrides.stream().allMatch(declaredNewOverrides::contains)) {
-            return null;
+            return ctorChanged ? bytes : null; // "unchanged" must not discard the constructor pre-pass
         }
         final java.util.List<Chain.OverrideHook> reconnectOverrides = new ArrayList<>();
         if ((classAccess[0] & Opcodes.ACC_INTERFACE) == 0) {
@@ -1043,11 +1122,19 @@ public final class JarProcessor {
                 dep.add("minecraft", new JsonPrimitive(chain.to));
                 rpt.notes.add("minecraft dep -> " + chain.to);
             }
+            java.util.List<Map<String, String>> renameSets = new ArrayList<>();
             for (Segment s : chain.segments) {
-                for (Map.Entry<String, String> e : s.depRenames.entrySet()) {
+                renameSets.add(s.depRenames);
+            }
+            renameSets.add(chain.depRenames);
+            for (Map<String, String> set : renameSets) {
+                for (Map.Entry<String, String> e : set.entrySet()) {
                     if (dep.has(e.getKey())) {
                         JsonElement v = dep.remove(e.getKey());
-                        dep.add(e.getValue(), v);
+                        // several old ids may collapse onto one provider: keep the wider range
+                        if (!dep.has(e.getValue())) {
+                            dep.add(e.getValue(), v);
+                        }
                         rpt.notes.add("dep " + e.getKey() + " -> " + e.getValue());
                     }
                 }
