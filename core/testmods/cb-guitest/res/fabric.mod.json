@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_guitest",
+ "version": "1.0.0",
+ "name": "CB GUI Test",
+ "environment": "client",
+ "entrypoints": { "client": ["cb.guitest.GuiTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.1" }
+}

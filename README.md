@@ -10,7 +10,7 @@
 
 CenturyBridge 是一个跨版本模组兼容层（Fabric）：把已停更的老版本模组 jar 放进 `cbmods/`，经转换后与当前版本的模组同场运行。心智模型是 Wine/Proton——在新版本上重建老版本的 API 表面，而不是移植模组本身。它的价值在长尾：那几千个永远不会有人手动移植的小模组。
 
-> ⚠️ **早期原型阶段**。走廊进度：1.20.1 → 1.20.2 / 1.20.4 **全量闭合**，→ 1.21.1 **端到端实测通过**（真实模组在游戏内完整行为链自测），→ 1.21.4 / 1.21.8 / 1.21.11 shim 树已立起（门卫绿、270 模组语料全转换），→ **26.2 全链贯通**：跨过命名空间墙后 26.2 服务端带桥与转换模组 "Done"，26.2 客户端带三个 1.20.1 转换模组到达标题画面（DrawContext→提取器 facade、构造器重定向、孤儿覆写钩子三个新机制；墙符号桥体锻造仍在进行）。距离可用发布还有相当距离。
+> ⚠️ **早期原型阶段**。走廊进度：1.20.1 → 1.20.2 / 1.20.4 **全量闭合**，→ 1.21.1 **端到端实测通过**（真实模组在游戏内完整行为链自测），→ 1.21.4 / 1.21.8 / 1.21.11 shim 树已立起（门卫绿、270 模组语料全转换），→ **26.2 全链贯通**：跨过命名空间墙后 26.2 服务端带桥与转换模组 "Done"，26.2 客户端带三个 1.20.1 转换模组到达标题画面，1.20.1 形态的 GUI 测试模组在 26.2 上完整渲染（DrawContext→提取器 facade、构造器重定向、孤儿覆写钩子三个新机制；1.21.8 / 1.21.11 服务端亦 "Done"；墙符号桥体锻造仍在进行）。距离可用发布还有相当距离。
 
 ### 架构：分段链
 
@@ -109,7 +109,7 @@ javac -nowarn -cp "$LIBS" -d core/build/classes $(find core/src -name '*.java')
 
 CenturyBridge is a cross-version mod compatibility layer for Fabric: drop abandoned old-version mod jars into `cbmods/`, and after conversion they run alongside current-version mods. The mental model is Wine/Proton — rebuild the old version's API surface on top of the new version, instead of porting each mod. The value is in the long tail: the thousands of small mods nobody will ever port by hand.
 
-> ⚠️ **Early prototype.** Corridor status: 1.20.1 → 1.20.2 / 1.20.4 **fully closed**, → 1.21.1 **self-tested end to end** (a real mod exercised in-game through its full behavior loop), → 1.21.4 / 1.21.8 / 1.21.11 shim trees standing (gates green, the 270-mod corpus converts), → **26.2 end to end**: across the namespace wall, a 26.2 server reaches "Done" with the bridge and converted mods, and a 26.2 client reaches the title screen with three converted 1.20.1 mods (DrawContext-over-extractor facade, constructor redirects, orphaned-override hooks; wall-symbol forging still in progress). Still far from a usable release.
+> ⚠️ **Early prototype.** Corridor status: 1.20.1 → 1.20.2 / 1.20.4 **fully closed**, → 1.21.1 **self-tested end to end** (a real mod exercised in-game through its full behavior loop), → 1.21.4 / 1.21.8 / 1.21.11 shim trees standing (gates green, the 270-mod corpus converts), → **26.2 end to end**: across the namespace wall, a 26.2 server reaches "Done" with the bridge and converted mods, and a 26.2 client reaches the title screen with three converted 1.20.1 mods and a 1.20.1-era GUI test mod renders fully on 26.2 (DrawContext-over-extractor facade, constructor redirects, orphaned-override hooks; 1.21.8 / 1.21.11 servers reach "Done" too; wall-symbol forging still in progress). Still far from a usable release.
 
 ### Architecture: the segment chain
 
