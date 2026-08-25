@@ -39,67 +39,67 @@ public final class GuiGraphics {
 
     /** 1.20.x DrawContext.method_51448 */
     @SuppressWarnings({"unchecked", "unused"})
-    public com.mojang.blaze3d.vertex.PoseStack pose() {
+    public com.mojang.blaze3d.vertex.PoseStack method_51448() {
         return poseAdapter;
     }
     /** 1.20.x DrawContext.method_25294 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void fill(int x1, int y1, int x2, int y2, int color) {
+    public void method_25294(int x1, int y1, int x2, int y2, int color) {
         ext.fill(x1, y1, x2, y2, color);
     }
     /** 1.20.x DrawContext.method_51439 */
     @SuppressWarnings({"unchecked", "unused"})
-    public int drawString(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Component text, int x, int y, int color, boolean shadow) {
+    public int method_51439(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Component text, int x, int y, int color, boolean shadow) {
         ext.text(font, text, x, y, color, shadow); return x + font.width(text);
     }
     /** 1.20.x DrawContext.method_25302 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void blit(net.minecraft.resources.Identifier tex, int x, int y, int u, int v, int w, int h) {
+    public void method_25302(net.minecraft.resources.Identifier tex, int x, int y, int u, int v, int w, int h) {
         ext.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, x, y, (float) u, (float) v, w, h, 256, 256);
     }
     /** 1.20.x DrawContext.method_25290 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void blit(net.minecraft.resources.Identifier tex, int x, int y, float u, float v, int w, int h, int tw, int th) {
+    public void method_25290(net.minecraft.resources.Identifier tex, int x, int y, float u, float v, int w, int h, int tw, int th) {
         ext.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, x, y, u, v, w, h, tw, th);
     }
     /** 1.20.x DrawContext.method_51433 */
     @SuppressWarnings({"unchecked", "unused"})
-    public int drawString(net.minecraft.client.gui.Font font, java.lang.String text, int x, int y, int color, boolean shadow) {
+    public int method_51433(net.minecraft.client.gui.Font font, java.lang.String text, int x, int y, int color, boolean shadow) {
         if (text == null) return x; ext.text(font, text, x, y, color, shadow); return x + font.width(text);
     }
     /** 1.20.x DrawContext.method_35720 */
     @SuppressWarnings({"unchecked", "unused"})
-    public int drawString(net.minecraft.client.gui.Font font, net.minecraft.util.FormattedCharSequence text, int x, int y, int color) {
+    public int method_35720(net.minecraft.client.gui.Font font, net.minecraft.util.FormattedCharSequence text, int x, int y, int color) {
         ext.text(font, text, x, y, color, true); return x + font.width(text);
     }
     /** 1.20.x DrawContext.method_25303 */
     @SuppressWarnings({"unchecked", "unused"})
-    public int drawString(net.minecraft.client.gui.Font font, java.lang.String text, int x, int y, int color) {
+    public int method_25303(net.minecraft.client.gui.Font font, java.lang.String text, int x, int y, int color) {
         if (text == null) return x; ext.text(font, text, x, y, color, true); return x + font.width(text);
     }
     /** 1.20.x DrawContext.method_51427 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void renderItem(net.minecraft.world.item.ItemStack stack, int x, int y) {
+    public void method_51427(net.minecraft.world.item.ItemStack stack, int x, int y) {
         ext.item(stack, x, y);
     }
     /** 1.20.x DrawContext.method_27534 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void drawCenteredString(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Component text, int cx, int y, int color) {
+    public void method_27534(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Component text, int cx, int y, int color) {
         ext.centeredText(font, text, cx, y, color);
     }
     /** 1.20.x DrawContext.method_25296 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void fillGradient(int x1, int y1, int x2, int y2, int c1, int c2) {
+    public void method_25296(int x1, int y1, int x2, int y2, int c1, int c2) {
         ext.fillGradient(x1, y1, x2, y2, c1, c2);
     }
     /** 1.20.x DrawContext.method_51434 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void setComponentTooltipForNextFrame(net.minecraft.client.gui.Font font, java.util.List lines, int x, int y) {
+    public void method_51434(net.minecraft.client.gui.Font font, java.util.List lines, int x, int y) {
         ext.setComponentTooltipForNextFrame(font, (java.util.List<net.minecraft.network.chat.Component>) (java.util.List<?>) lines, x, y);
     }
     /** 1.20.x DrawContext.method_27535 */
     @SuppressWarnings({"unchecked", "unused"})
-    public int drawString(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Component text, int x, int y, int color) {
+    public int method_27535(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Component text, int x, int y, int color) {
         ext.text(font, text, x, y, color, true); return x + font.width(text);
     }
     /** 1.20.x DrawContext.method_51422 */
@@ -109,17 +109,17 @@ public final class GuiGraphics {
     }
     /** 1.20.x DrawContext.method_51430 */
     @SuppressWarnings({"unchecked", "unused"})
-    public int drawString(net.minecraft.client.gui.Font font, net.minecraft.util.FormattedCharSequence text, int x, int y, int color, boolean shadow) {
+    public int method_51430(net.minecraft.client.gui.Font font, net.minecraft.util.FormattedCharSequence text, int x, int y, int color, boolean shadow) {
         ext.text(font, text, x, y, color, shadow); return x + font.width(text);
     }
     /** 1.20.x DrawContext.method_25291 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void blit(net.minecraft.resources.Identifier tex, int x, int y, int z, float u, float v, int w, int h, int tw, int th) {
+    public void method_25291(net.minecraft.resources.Identifier tex, int x, int y, int z, float u, float v, int w, int h, int tw, int th) {
         ext.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, x, y, u, v, w, h, tw, th);
     }
     /** 1.20.x DrawContext.method_25300 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void drawCenteredString(net.minecraft.client.gui.Font font, java.lang.String text, int cx, int y, int color) {
+    public void method_25300(net.minecraft.client.gui.Font font, java.lang.String text, int cx, int y, int color) {
         ext.centeredText(font, text, cx, y, color);
     }
     /** 1.20.x DrawContext.method_33284 */
@@ -129,62 +129,62 @@ public final class GuiGraphics {
     }
     /** 1.20.x DrawContext.method_51421 */
     @SuppressWarnings({"unchecked", "unused"})
-    public int guiWidth() {
+    public int method_51421() {
         return ext.guiWidth();
     }
     /** 1.20.x DrawContext.method_51443 */
     @SuppressWarnings({"unchecked", "unused"})
-    public int guiHeight() {
+    public int method_51443() {
         return ext.guiHeight();
     }
     /** 1.20.x DrawContext.method_51445 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void renderFakeItem(net.minecraft.world.item.ItemStack stack, int x, int y) {
+    public void method_51445(net.minecraft.world.item.ItemStack stack, int x, int y) {
         ext.fakeItem(stack, x, y);
     }
     /** 1.20.x DrawContext.method_25293 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void blit(net.minecraft.resources.Identifier tex, int x, int y, int w, int h, float u, float v, int rw, int rh, int tw, int th) {
+    public void method_25293(net.minecraft.resources.Identifier tex, int x, int y, int w, int h, float u, float v, int rw, int rh, int tw, int th) {
         ext.blit(tex, x, y, w, h, u / (float) tw, (u + rw) / (float) tw, v / (float) th, (v + rh) / (float) th);
     }
     /** 1.20.x DrawContext.method_51438 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void setTooltipForNextFrame(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Component text, int x, int y) {
+    public void method_51438(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Component text, int x, int y) {
         ext.setTooltipForNextFrame(font, text, x, y);
     }
     /** 1.20.x DrawContext.method_51431 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void renderItemDecorations(net.minecraft.client.gui.Font font, net.minecraft.world.item.ItemStack stack, int x, int y) {
+    public void method_51431(net.minecraft.client.gui.Font font, net.minecraft.world.item.ItemStack stack, int x, int y) {
         ext.itemDecorations(font, stack, x, y);
     }
     /** 1.20.x DrawContext.method_44380 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void disableScissor() {
+    public void method_44380() {
         ext.disableScissor();
     }
     /** 1.20.x DrawContext.method_51446 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void setTooltipForNextFrame(net.minecraft.client.gui.Font font, net.minecraft.world.item.ItemStack stack, int x, int y) {
+    public void method_51446(net.minecraft.client.gui.Font font, net.minecraft.world.item.ItemStack stack, int x, int y) {
         ext.setTooltipForNextFrame(font, stack, x, y);
     }
     /** 1.20.x DrawContext.method_44379 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void enableScissor(int x1, int y1, int x2, int y2) {
+    public void method_44379(int x1, int y1, int x2, int y2) {
         ext.enableScissor(x1, y1, x2, y2);
     }
     /** 1.20.x DrawContext.method_51432 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void renderItemDecorations(net.minecraft.client.gui.Font font, net.minecraft.world.item.ItemStack stack, int x, int y, java.lang.String label) {
+    public void method_51432(net.minecraft.client.gui.Font font, net.minecraft.world.item.ItemStack stack, int x, int y, java.lang.String label) {
         ext.itemDecorations(font, stack, x, y, label);
     }
     /** 1.20.x DrawContext.method_51440 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void drawWordWrap(net.minecraft.client.gui.Font font, net.minecraft.network.chat.FormattedText text, int x, int y, int width, int color) {
+    public void method_51440(net.minecraft.client.gui.Font font, net.minecraft.network.chat.FormattedText text, int x, int y, int width, int color) {
         ext.textWithWordWrap(font, text, x, y, width, color);
     }
     /** 1.20.x DrawContext.method_51447 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void setTooltipForNextFrame(net.minecraft.client.gui.Font font, java.util.List lines, int x, int y) {
+    public void method_51447(net.minecraft.client.gui.Font font, java.util.List lines, int x, int y) {
         ext.setTooltipForNextFrame(font, (java.util.List<net.minecraft.util.FormattedCharSequence>) (java.util.List<?>) lines, x, y);
     }
     /** 1.20.x DrawContext.method_25298 */
@@ -194,12 +194,12 @@ public final class GuiGraphics {
     }
     /** 1.20.x DrawContext.method_51437 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void setTooltipForNextFrame(net.minecraft.client.gui.Font font, java.util.List lines, java.util.Optional data, int x, int y) {
+    public void method_51437(net.minecraft.client.gui.Font font, java.util.List lines, java.util.Optional data, int x, int y) {
         ext.setTooltipForNextFrame(font, (java.util.List<net.minecraft.network.chat.Component>) (java.util.List<?>) lines, (java.util.Optional<net.minecraft.world.inventory.tooltip.TooltipComponent>) (java.util.Optional<?>) data, x, y);
     }
     /** 1.20.x DrawContext.method_51441 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void renderComponentHoverEffect(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Style style, int x, int y) {
+    public void method_51441(net.minecraft.client.gui.Font font, net.minecraft.network.chat.Style style, int x, int y) {
         /* hover effects are collected by the extractor's text collector in 26.2; nothing to draw here */
     }
     /** 1.20.x DrawContext.method_49601 */
@@ -224,12 +224,17 @@ public final class GuiGraphics {
     }
     /** 1.20.x DrawContext.method_25295 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void innerBlit(int x1, int y1, int x2, int y2, int z, int color) {
+    public void method_25295(int x1, int y1, int x2, int y2, int z, int color) {
         ext.fill(x1, y1, x2, y2, color);
+    }
+    /** 1.20.x DrawContext.method_51436 */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_51436(net.minecraft.client.gui.Font font, net.minecraft.world.item.ItemStack stack, int x, int y) {
+        ext.setTooltipForNextFrame(font, stack, x, y);
     }
     /** 1.20.x DrawContext.method_51435 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void renderTooltip(net.minecraft.client.gui.Font font, java.util.List lines, java.util.Optional data, int x, int y) {
+    public void method_51435(net.minecraft.client.gui.Font font, java.util.List lines, java.util.Optional data, int x, int y) {
         ext.setTooltipForNextFrame(font, (java.util.List<net.minecraft.network.chat.Component>) (java.util.List<?>) lines, (java.util.Optional<net.minecraft.world.inventory.tooltip.TooltipComponent>) (java.util.Optional<?>) data, x, y);
     }
     /** 1.20.x DrawContext.method_51444 */
@@ -239,7 +244,7 @@ public final class GuiGraphics {
     }
     /** 1.20.x DrawContext.method_51428 */
     @SuppressWarnings({"unchecked", "unused"})
-    public void renderItem(net.minecraft.world.item.ItemStack stack, int x, int y, int seed) {
+    public void method_51428(net.minecraft.world.item.ItemStack stack, int x, int y, int seed) {
         ext.item(stack, x, y, seed);
     }
     /** 1.20.x DrawContext.method_51426 */
