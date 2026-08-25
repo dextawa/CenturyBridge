@@ -274,7 +274,11 @@
   "net/minecraft/class_8890.method_54509(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec;",
   "net/minecraft/class_9019.method_55446()Lnet/minecraft/class_9019;",
   "net/minecraft/class_9362.method_58659(Lnet/minecraft/class_1657;)Z",
-  "net/minecraft/class_943.method_4114(Lnet/minecraft/class_1606;Lnet/minecraft/class_4587;FFF)V"
+  "net/minecraft/class_943.method_4114(Lnet/minecraft/class_1606;Lnet/minecraft/class_4587;FFF)V",
+  "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V",
+  "net/minecraft/class_437.method_25420(Lnet/minecraft/class_332;IIF)V",
+  "net/minecraft/class_437.method_25420(Lnet/minecraft/class_332;)V",
+  "net/minecraft/class_339.method_48579(Lnet/minecraft/class_332;IIF)V"
  ],
  "staticRedirects": {
   "net/minecraft/class_174.method_767(Lnet/minecraft/class_179;)Lnet/minecraft/class_179;": "top/dext/centurybridge/rt/v26_2/Statics",

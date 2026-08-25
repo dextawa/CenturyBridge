@@ -21,4 +21,9 @@ public abstract class ScreenRenderBridge {
     public void renderBackground(GuiGraphics context, int mouseX, int mouseY, float delta) {
         ((net.minecraft.client.gui.screens.Screen) (Object) this).extractBackground(context.cbExtractor(), mouseX, mouseY, delta);
     }
+
+    /** 1.20.1 renderBackground(DrawContext): the mouse/delta parameters arrived at 1.20.2 */
+    public void renderBackground(GuiGraphics context) {
+        ((net.minecraft.client.gui.screens.Screen) (Object) this).extractBackground(context.cbExtractor(), 0, 0, 0.0f);
+    }
 }
