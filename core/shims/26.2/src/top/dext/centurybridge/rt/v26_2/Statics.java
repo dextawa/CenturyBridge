@@ -7230,7 +7230,46 @@ public final class Statics {
             net.minecraft.server.packs.repository.PackSource source) {
         return net.minecraft.server.packs.repository.Pack.readMetaAndCreate(
             new net.minecraft.server.packs.PackLocationInfo(id, title, source, java.util.Optional.empty()),
-            resources, type,
+            cbWrapSupplier(resources), type,
             new net.minecraft.server.packs.PackSelectionConfig(required, position, false));
+    }
+
+    /**
+     * A 1.20.1 ResourcesSupplier lambda implements the old SAM open(String),
+     * not the PackLocationInfo pair the runtime calls: AbstractMethodError at
+     * Pack.readPackMetadata. Detect that shape and adapt it. The interface
+     * cannot be bridged by mixin (redeclaring its abstract pair would count as
+     * an overwrite), so the wrap happens where the legacy call enters.
+     */
+    private static net.minecraft.server.packs.repository.Pack.ResourcesSupplier cbWrapSupplier(
+            net.minecraft.server.packs.repository.Pack.ResourcesSupplier res) {
+        final java.lang.reflect.Method open;
+        try {
+            open = res.getClass().getMethod("open", String.class);
+        } catch (NoSuchMethodException e) {
+            return res; // already the current shape
+        }
+        try {
+            open.setAccessible(true);
+        } catch (RuntimeException ignored) {
+        }
+        return new net.minecraft.server.packs.repository.Pack.ResourcesSupplier() {
+            @Override
+            public net.minecraft.server.packs.PackResources openPrimary(
+                    net.minecraft.server.packs.PackLocationInfo info) {
+                try {
+                    return (net.minecraft.server.packs.PackResources) open.invoke(res, info.id());
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException("centurybridge: legacy ResourcesSupplier failed", e);
+                }
+            }
+
+            @Override
+            public net.minecraft.server.packs.PackResources openFull(
+                    net.minecraft.server.packs.PackLocationInfo info,
+                    net.minecraft.server.packs.repository.Pack.Metadata meta) {
+                return openPrimary(info);
+            }
+        };
     }
 }

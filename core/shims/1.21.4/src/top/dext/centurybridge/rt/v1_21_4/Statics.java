@@ -7055,6 +7055,42 @@ public final class Statics {
             net.minecraft.class_3288.class_3289 position, net.minecraft.class_5352 source) {
         return net.minecraft.class_3288.method_45275(
             new net.minecraft.class_9224(id, title, source, java.util.Optional.empty()),
-            resources, type, new net.minecraft.class_9225(required, position, false));
+            cbWrapSupplier(resources), type, new net.minecraft.class_9225(required, position, false));
+    }
+
+    /**
+     * A 1.20.1 ResourcesSupplier lambda implements the old SAM open(String),
+     * not the PackLocationInfo pair the runtime calls: AbstractMethodError at
+     * Pack.readPackMetadata. Detect that shape and adapt it. The interface
+     * cannot be bridged by mixin (redeclaring its abstract pair would count as
+     * an overwrite), so the wrap happens where the legacy call enters.
+     */
+    private static net.minecraft.class_3288.class_7680 cbWrapSupplier(net.minecraft.class_3288.class_7680 res) {
+        final java.lang.reflect.Method open;
+        try {
+            open = res.getClass().getMethod("open", String.class);
+        } catch (NoSuchMethodException e) {
+            return res; // already the current shape
+        }
+        try {
+            open.setAccessible(true);
+        } catch (RuntimeException ignored) {
+        }
+        return new net.minecraft.class_3288.class_7680() {
+            @Override
+            public net.minecraft.class_3262 method_52424(net.minecraft.class_9224 info) {
+                try {
+                    return (net.minecraft.class_3262) open.invoke(res, info.comp_2329());
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException("centurybridge: legacy ResourcesSupplier failed", e);
+                }
+            }
+
+            @Override
+            public net.minecraft.class_3262 method_52425(net.minecraft.class_9224 info,
+                    net.minecraft.class_3288.class_7679 meta) {
+                return method_52424(info);
+            }
+        };
     }
 }
