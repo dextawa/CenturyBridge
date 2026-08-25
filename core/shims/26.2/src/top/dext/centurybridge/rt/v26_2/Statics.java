@@ -7292,4 +7292,32 @@ public final class Statics {
             net.minecraft.network.chat.Component.literal(name),
             net.minecraft.server.packs.repository.PackSource.DEFAULT, java.util.Optional.empty());
     }
+
+    // --- NBT getter族: 26.x把 CompoundTag getter Optional 化了
+    //     (getBoolean(k):Optional<Boolean> + getBooleanOr(k,def)); 旧的
+    //     getBoolean(k) 语义 = getBooleanOr(k, 缺省值)。全语料最常用的桥之一。
+    public static boolean method_10577(net.minecraft.nbt.CompoundTag self, String key) {
+        return self.getBooleanOr(key, false);
+    }
+    public static byte method_10571(net.minecraft.nbt.CompoundTag self, String key) {
+        return self.getByteOr(key, (byte) 0);
+    }
+    public static short method_10568(net.minecraft.nbt.CompoundTag self, String key) {
+        return self.getShortOr(key, (short) 0);
+    }
+    public static int method_10550(net.minecraft.nbt.CompoundTag self, String key) {
+        return self.getIntOr(key, 0);
+    }
+    public static long method_10537(net.minecraft.nbt.CompoundTag self, String key) {
+        return self.getLongOr(key, 0L);
+    }
+    public static float method_10583(net.minecraft.nbt.CompoundTag self, String key) {
+        return self.getFloatOr(key, 0.0f);
+    }
+    public static double method_10574(net.minecraft.nbt.CompoundTag self, String key) {
+        return self.getDoubleOr(key, 0.0);
+    }
+    public static java.lang.String method_10558(net.minecraft.nbt.CompoundTag self, String key) {
+        return self.getStringOr(key, "");
+    }
 }
