@@ -3610,7 +3610,11 @@
   "net/minecraft/class_174.field_1197:Lnet/minecraft/class_2076;": "bridge body cut in tree context; queued again",
   "net/minecraft/class_1095.field_5426:Lnet/minecraft/class_809;": "bridge body cut in tree context; queued again",
   "net/minecraft/class_790$class_6247.field_32795:Lnet/minecraft/class_790;": "bridge body cut in tree context; queued again",
-  "net/minecraft/class_806$class_5827.field_28795:Lnet/minecraft/class_1087;": "bridge body cut in tree context; queued again"
+  "net/minecraft/class_806$class_5827.field_28795:Lnet/minecraft/class_1087;": "bridge body cut in tree context; queued again",
+  "net/minecraft/world/entity/Entity.setOnGroundWithMovement(ZLnet/minecraft/world/phys/Vec3;)V": "target already declares this exact method: bridge redundant (would overwrite vanilla)",
+  "net/minecraft/world/level/block/DispenserBlock/getDispensePosition(Lnet/minecraft/core/dispenser/BlockSource;)Lnet/minecraft/core/Position;": "target already declares this exact method: bridge redundant (would overwrite vanilla)",
+  "net/minecraft/world/level/StructureManager/getStructureWithPieceAt(Lnet/minecraft/core/BlockPos;Lnet/minecraft/tags/TagKey;)Lnet/minecraft/world/level/levelgen/structure/StructureStart;": "target already declares this exact method: bridge redundant (would overwrite vanilla)",
+  "net/minecraft/client/model/monster/breeze/BreezeModel.createBodyLayer()Lnet/minecraft/client/model/geom/builders/LayerDefinition;": "target already declares this exact method: bridge redundant (would overwrite vanilla)"
  },
  "interfaceized": [
   "com/mojang/serialization/DataResult"

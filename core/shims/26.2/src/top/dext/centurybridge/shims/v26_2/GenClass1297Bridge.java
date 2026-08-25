@@ -66,8 +66,4 @@ public abstract class GenClass1297Bridge {
         return ((net.minecraft.world.entity.Entity)(Object)this).hurtClient(a0);
     }
 
-    /** was net/minecraft/world/entity/Entity.setOnGroundWithMovement(ZLnet/minecraft/world/phys/Vec3;)V */
-    public void setOnGroundWithMovement(boolean a0, net.minecraft.world.phys.Vec3 a1) {
-        ((net.minecraft.world.entity.Entity) (Object) this).setOnGroundWithMovement(a0, false, a1);
-    }
 }

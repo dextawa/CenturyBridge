@@ -15,9 +15,4 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.block.DispenserBlock.class)
 public abstract class GenClass2315Bridge {
 
-    /** was net/minecraft/world/level/block/DispenserBlock/getDispensePosition(Lnet/minecraft/core/dispenser/BlockSource;)Lnet/minecraft/core/Position; */
-    public net.minecraft.core.Position getDispensePosition(net.minecraft.core.dispenser.BlockSource a0) {
-        return net.minecraft.world.level.block.DispenserBlock.getDispensePosition(a0);
-    }
-
 }

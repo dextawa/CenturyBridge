@@ -16,9 +16,4 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass5138Bridge {
 
 
-    /** was net/minecraft/world/level/StructureManager/getStructureWithPieceAt(Lnet/minecraft/core/BlockPos;Lnet/minecraft/tags/TagKey;)Lnet/minecraft/world/level/levelgen/structure/StructureStart; */
-    public net.minecraft.world.level.levelgen.structure.StructureStart getStructureWithPieceAt(net.minecraft.core.BlockPos a0, net.minecraft.tags.TagKey a1) {
-        return ((net.minecraft.world.level.StructureManager)(Object)this).getStructureWithPieceAt(a0, a1);
-    }
-
 }

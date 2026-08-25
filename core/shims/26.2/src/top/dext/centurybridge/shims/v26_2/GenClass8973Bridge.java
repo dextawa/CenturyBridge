@@ -15,9 +15,4 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.model.monster.breeze.BreezeModel.class)
 public abstract class GenClass8973Bridge {
 
-    /** was net/minecraft/client/model/monster/breeze/BreezeModel.createBodyLayer()Lnet/minecraft/client/model/geom/builders/LayerDefinition; */
-    public net.minecraft.client.model.geom.builders.LayerDefinition createBodyLayer() {
-        throw new UnsupportedOperationException("CenturyBridge: createBodyLayer now requires two int parameters absent from the old no-arg signature; cannot infer correct values without knowing their semantics");
-    }
-
 }

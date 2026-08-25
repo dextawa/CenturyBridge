@@ -10,8 +10,4 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.inventory.Slot.class)
 public abstract class SlotBridge {
 
-    public void setByPlayer(net.minecraft.world.item.ItemStack stack) {
-        net.minecraft.world.inventory.Slot self = (net.minecraft.world.inventory.Slot) (Object) this;
-        self.setByPlayer(stack, self.getItem());
-    }
 }

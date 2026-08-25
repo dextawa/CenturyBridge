@@ -421,7 +421,6 @@
   "net/minecraft/class_894.method_23160(Lnet/minecraft/class_1560;F)Lnet/minecraft/class_243;",
   "net/minecraft/class_8957.method_59997()Lnet/minecraft/class_2371;",
   "net/minecraft/class_897.method_23169(Lnet/minecraft/class_1297;F)Lnet/minecraft/class_243;",
-  "net/minecraft/class_8973.method_55233()Lnet/minecraft/class_5607;",
   "net/minecraft/class_8986.method_55267(Lnet/minecraft/class_8949;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_899.method_3961(Lnet/minecraft/class_1617;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_9010.method_55377(Lcom/mojang/brigadier/StringReader;Lcom/mojang/serialization/Codec;)Ljava/lang/Object;",
@@ -3573,7 +3572,8 @@
   "net/minecraft/class_4798.method_24472(Lnet/minecraft/class_4760;)Lnet/minecraft/class_2960;": "forged body did not compile in tree context (unmapped names); queued again",
   "net/minecraft/class_897.method_3921(Lnet/minecraft/class_1297;)Z": "forged body did not compile in tree context (unmapped names); queued again",
   "net/minecraft/class_382$class_328.field_2005:F": "bridge body cut in tree context; queued again",
-  "net/minecraft/class_582.field_3434:I": "bridge body cut in tree context; queued again"
+  "net/minecraft/class_582.field_3434:I": "bridge body cut in tree context; queued again",
+  "net/minecraft/class_8973.method_55233()Lnet/minecraft/class_5607;": "target already declares this exact method: bridge redundant (would overwrite vanilla)"
  },
  "interfaceized": [
   "com/mojang/serialization/DataResult"
