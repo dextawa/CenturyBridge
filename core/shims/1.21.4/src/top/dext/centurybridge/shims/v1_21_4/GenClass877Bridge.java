@@ -16,4 +16,12 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass877Bridge {
 
 
+
+    /** was net/minecraft/class_877.method_3880(Lnet/minecraft/class_1531;)Lnet/minecraft/class_2960; */
+    public net.minecraft.class_2960 method_3880(net.minecraft.class_1531 a0) {
+        net.minecraft.class_9998 state = ((net.minecraft.class_877)(Object)this).method_62374();
+        ((net.minecraft.class_877)(Object)this).method_62375(a0, state, 0.0f);
+        return ((net.minecraft.class_877)(Object)this).method_3880(state);
+    }
+
 }

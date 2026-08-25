@@ -246,7 +246,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_1145.method_4884(Lnet/minecraft/class_1113;Lnet/minecraft/class_1146;)V */
     public void method_4884(net.minecraft.class_1113 a0, net.minecraft.class_1146 a1) {
         ((net.minecraft.class_1145) (Object) this).method_4884(a0, a1, 1.0f);
     }
@@ -338,7 +337,6 @@ public final class Statics {
         return 0.2f;
     }
 
-    /** was net/minecraft/class_163$class_164.method_721(Lnet/minecraft/class_161;)V */
     public void method_721(net.minecraft.class_161 a0) {
         ((net.minecraft.class_163.class_164) (Object) this).method_721(new net.minecraft.class_8781((net.minecraft.class_8779) (Object) a0, null));
     }
@@ -379,7 +377,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: BoatEntity.getWaterHeight was removed in 1.20.3");
     }
 
-    /** was net/minecraft/class_1732.method_7662(Lnet/minecraft/class_1860;)V */
     public void method_7662(net.minecraft.class_1860 a0) {
         net.minecraft.class_8786 current = ((net.minecraft.class_1732)(Object)this).method_7663();
         if (current == null) {
@@ -388,7 +385,6 @@ public final class Statics {
         ((net.minecraft.class_1732)(Object)this).method_7662(new net.minecraft.class_8786(current.comp_1932(), a0));
     }
 
-    /** was net/minecraft/class_1732.method_7663()Lnet/minecraft/class_1860; */
     public net.minecraft.class_1860 method_7663() {
         return ((net.minecraft.class_1732) (Object) this).method_7663().comp_1933();
     }
@@ -531,7 +527,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: class_2602.method_11083(class_2661) was removed in 1.20.2 with no direct replacement accepting class_2661");
     }
 
-    /** was net/minecraft/class_2602.method_11126(Lnet/minecraft/class_2790;)V */
     public void method_11126(net.minecraft.class_2790 a0) {
         ((net.minecraft.class_8705) (Object) this).method_11126(a0);
     }
@@ -582,7 +577,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_2792.method_12069(Lnet/minecraft/class_2803;)V */
     public void method_12069(net.minecraft.class_2803 a0) {
         ((net.minecraft.class_8706) (Object) this).method_12069(a0);
     }
@@ -607,32 +601,26 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: JigsawGeneratingC2SPacket (class_6374) handler was removed in 1.20.2");
     }
 
-    /** was net/minecraft/class_2921.method_12666(Lnet/minecraft/class_2923;)V */
     public void method_12666(net.minecraft.class_2923 a0) {
         ((net.minecraft.class_8763) (Object) this).method_12666(a0);
     }
 
-    /** was net/minecraft/class_2933.method_12697(Lnet/minecraft/class_2935;)V */
     public void method_12697(net.minecraft.class_2935 a0) {
         throw new UnsupportedOperationException("CenturyBridge: tasks are no longer managed by BuiltChunk");
     }
 
-    /** was net/minecraft/class_2952.method_12816(IIILnet/minecraft/class_1860;Ljava/util/Iterator;I)V */
     public void method_12816(int a0, int a1, int a2, net.minecraft.class_1860 a3, java.util.Iterator a4, int a5) {
         throw new UnsupportedOperationException("CenturyBridge: class_8786 (RecipeEntry) requires a class_2960 (Identifier) that is not available from the old class_1860-only method_12816 signature; Recipe.getId() was removed in 1.20.2");
     }
 
-    /** was net/minecraft/class_2994.method_3788()I */
     public int method_3788() {
         return ((net.minecraft.class_8599) (Object) this).method_3788();
     }
 
-    /** was net/minecraft/class_2994.method_3802()I */
     public int method_3802() {
         return ((net.minecraft.class_8599) (Object) this).method_3802();
     }
 
-    /** was net/minecraft/class_2994.method_3827()Ljava/lang/String; */
     public java.lang.String method_3827() {
         throw new UnsupportedOperationException("CenturyBridge: method_3827 moved to net.minecraft.class_8599");
     }
@@ -927,7 +915,6 @@ public final class Statics {
         return net.minecraft.class_2960.method_60654("textures/gui/recipe_book.png");
     }
 
-    /** was net/minecraft/class_364.method_25401(DDD)Z */
     public boolean method_25401(double a0, double a1, double a2) {
         return ((net.minecraft.class_364) (Object) this).method_25401(a0, a1, 0.0, a2);
     }
@@ -1366,12 +1353,10 @@ public final class Statics {
         return 8.0;
     }
 
-    /** was net/minecraft/class_632$class_633.method_2865(Lnet/minecraft/class_161;Lnet/minecraft/class_167;)V */
     public void method_2865(net.minecraft.class_161 a0, net.minecraft.class_167 a1) {
         throw new UnsupportedOperationException("CenturyBridge: Cannot convert net.minecraft.class_161 to net.minecraft.class_8781");
     }
 
-    /** was net/minecraft/class_632$class_633.method_2866(Lnet/minecraft/class_161;)V */
     public void method_2866(net.minecraft.class_161 a0) {
         ((net.minecraft.class_632.class_633) (Object) this).method_2866(new net.minecraft.class_8779(net.minecraft.class_2960.method_60655("centurybridge", "dummy"), a0));
     }
@@ -2196,7 +2181,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_1865.method_53736()Lcom/mojang/serialization/Codec; */
     public com.mojang.serialization.Codec method_53736() {
         return ((net.minecraft.class_1865) (Object) this).method_53736().codec();
     }
@@ -2229,22 +2213,18 @@ public final class Statics {
         return nbtCompound;
     }
 
-    /** was net/minecraft/class_1936.method_32888(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;)V */
     public void method_32888(net.minecraft.class_5712 a0, net.minecraft.class_243 a1, net.minecraft.class_5712.class_7397 a2) {
         ((net.minecraft.class_1936) (Object) this).method_32888(net.minecraft.class_6880.method_40223(a0), a1, a2);
     }
 
-    /** was net/minecraft/class_1936.method_33596(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;)V */
     public void method_33596(net.minecraft.class_1297 a0, net.minecraft.class_5712 a1, net.minecraft.class_2338 a2) {
         ((net.minecraft.class_1936) (Object) this).method_33596(a0, net.minecraft.class_6880.method_40223(a1), a2);
     }
 
-    /** was net/minecraft/class_1936.method_43275(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_243;)V */
     public void method_43275(net.minecraft.class_1297 a0, net.minecraft.class_5712 a1, net.minecraft.class_243 a2) {
         ((net.minecraft.class_1936) (Object) this).method_43275(a0, net.minecraft.class_6880.method_40223(a1), a2);
     }
 
-    /** was net/minecraft/class_1936.method_43276(Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712$class_7397;)V */
     public void method_43276(net.minecraft.class_5712 a0, net.minecraft.class_2338 a1, net.minecraft.class_5712.class_7397 a2) {
         ((net.minecraft.class_1936) (Object) this).method_43276(net.minecraft.class_6880.method_40223(a0), a1, a2);
     }
@@ -2335,7 +2315,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_2385.method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883; */
     public net.minecraft.class_6880.class_6883 method_10272(net.minecraft.class_5321 a0, java.lang.Object a1, com.mojang.serialization.Lifecycle a2) {
         return ((net.minecraft.class_2385) (Object) this).method_10272(a0, a1, new net.minecraft.class_9248(java.util.Optional.empty(), a2));
     }
@@ -2754,7 +2733,6 @@ public final class Statics {
         return net.minecraft.class_3826.field_25011.codec();
     }
 
-    /** was net/minecraft/class_3827.method_16821(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_3827; */
     public net.minecraft.class_3827 method_16821(java.lang.String a0, com.mojang.serialization.Codec a1) {
         throw new UnsupportedOperationException("CenturyBridge: RecipeSerializer registration using raw Codec is no longer supported; use MapCodec instead");
     }
@@ -3288,17 +3266,14 @@ public final class Statics {
         return self.comp_2210();
     }
 
-    /** was net/minecraft/class_4518.method_33317(Lnet/minecraft/class_4517;)V */
     public void method_33317(net.minecraft.class_4517 a0) {
         throw new UnsupportedOperationException("CenturyBridge: method_33317 now requires a class_4520 raid-context parameter whose constructor needs server world, collections, and nested types unavailable from class_4517 alone");
     }
 
-    /** was net/minecraft/class_4588.method_22919(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;FFFII)V */
     public void method_22919(net.minecraft.class_4587.class_4665 a0, net.minecraft.class_777 a1, float a2, float a3, float a4, int a5, int a6) {
         ((net.minecraft.class_4588) (Object) this).method_22919(a0, a1, a2, a3, a4, 1.0f, a5, a6);
     }
 
-    /** was net/minecraft/class_4588.method_22920(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFF[IIZ)V */
     public void method_22920(net.minecraft.class_4587.class_4665 a0, net.minecraft.class_777 a1, float[] a2, float a3, float a4, float a5, int[] a6, int a7, boolean a8) {
         ((net.minecraft.class_4588) (Object) this).method_22920(a0, a1, a2, a3, a4, a5, 1.0f, a6, a7, a8);
     }
@@ -3593,12 +3568,10 @@ public final class Statics {
         return new net.minecraft.class_2338(0, 0, 0);
     }
 
-    /** was net/minecraft/class_5713.method_32943(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_5713$class_7721;)Z */
     public boolean method_32943(net.minecraft.class_5712 a0, net.minecraft.class_243 a1, net.minecraft.class_5712.class_7397 a2, net.minecraft.class_5713.class_7721 a3) {
         return ((net.minecraft.class_5713) (Object) this).method_32943(net.minecraft.class_6880.method_40223(a0), a1, a2, a3);
     }
 
-    /** was net/minecraft/class_5714.method_32947(Lnet/minecraft/class_3218;Lnet/minecraft/class_5712;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_243;)Z */
     public boolean method_32947(net.minecraft.class_3218 a0, net.minecraft.class_5712 a1, net.minecraft.class_5712.class_7397 a2, net.minecraft.class_243 a3) {
         return ((net.minecraft.class_5714)(Object)this).method_32947(a0, net.minecraft.class_6880.method_40223(a1), a2, a3);
     }
@@ -3822,18 +3795,15 @@ public final class Statics {
         return null;
     }
 
-    /** was net/minecraft/class_7265.method_42276()Lnet/minecraft/class_2960; */
     public net.minecraft.class_2960 method_42276() {
         return ((net.minecraft.class_7265) (Object) this).method_42276().method_29177();
     }
 
-    /** was net/minecraft/class_7265.method_42285(Lnet/minecraft/class_2487;)V */
     public void method_42285(net.minecraft.class_2487 a0) {
         net.minecraft.class_1937 world = ((net.minecraft.class_7265)(Object)this).method_37908();
         ((net.minecraft.class_7265)(Object)this).method_42285(a0, (net.minecraft.class_7225.class_7874)world);
     }
 
-    /** was net/minecraft/class_7265.method_42288(Lnet/minecraft/class_2487;)V */
     public void method_42288(net.minecraft.class_2487 a0) {
         ((net.minecraft.class_7265)(Object)this).method_42288(a0, (net.minecraft.class_7225.class_7874)((net.minecraft.class_7265)(Object)this).method_37908());
     }
@@ -3939,7 +3909,6 @@ public final class Statics {
         return net.minecraft.class_8180.field_42848.codec();
     }
 
-    /** was net/minecraft/class_8181.method_54080()Lnet/minecraft/class_2586; */
     public net.minecraft.class_2586 method_54080() {
         return ((net.minecraft.class_8181.class_9210) (Object) this).method_54080();
     }
@@ -3964,7 +3933,6 @@ public final class Statics {
         return net.minecraft.class_8247.field_43344.codec();
     }
 
-    /** was net/minecraft/class_8514$class_5719.method_32969(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;F)V */
     public void method_32969(net.minecraft.class_3218 a0, net.minecraft.class_2338 a1, net.minecraft.class_5712 a2, net.minecraft.class_1297 a3, net.minecraft.class_1297 a4, float a5) {
         ((net.minecraft.class_8514.class_5719) (Object) this).method_32969(a0, a1, net.minecraft.class_6880.method_40223(a2), a3, a4, a5);
     }
@@ -3994,7 +3962,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: class_8710.method_53028(PacketByteBuf) was deleted in 1.20.5 with no direct replacement; the new class_8710 API exposes no PacketByteBuf serialization path");
     }
 
-    /** was net/minecraft/class_8934.method_54869()Lnet/minecraft/class_2960; */
     public net.minecraft.class_2960 method_54869() {
         return ((net.minecraft.class_8934) (Object) this).method_54869().method_29177();
     }
@@ -4183,7 +4150,6 @@ public final class Statics {
     }
 
 
-    /** was net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799; */
     public net.minecraft.class_1799 method_8116(net.minecraft.class_1263 a0, net.minecraft.class_7225.class_7874 a1) {
         return ((net.minecraft.class_1860) (Object) this).method_8116((net.minecraft.class_9695) a0, a1);
     }
@@ -4311,12 +4277,10 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: method_30484 created a TeleportTarget (class_5454) which was removed in 1.21; the portal teleportation system was reworked to use class_4048 (PostTeleportTarget) and class_2424 no longer creates teleport targets");
     }
 
-    /** was net/minecraft/class_2547.method_10839(Lnet/minecraft/class_2561;)V */
     public void method_10839(net.minecraft.class_2561 a0) {
         ((net.minecraft.class_2547) (Object) this).method_10839(new net.minecraft.class_9812(a0));
     }
 
-    /** was net/minecraft/class_2547.method_55597(Lnet/minecraft/class_129;)V */
     public void method_55597(net.minecraft.class_129 a0) {
         // adds system details
     }
@@ -4462,7 +4426,6 @@ public final class Statics {
         self.method_1336(a0, a1, a2, a3);
     }
 
-    /** was net/minecraft/class_4588.method_22912(DDD)Lnet/minecraft/class_4588; */
     public net.minecraft.class_4588 method_22912(double a0, double a1, double a2) {
         return ((net.minecraft.class_4588) (Object) this).method_22912((float) a0, (float) a1, (float) a2);
     }
@@ -4497,7 +4460,6 @@ public final class Statics {
         return self.method_60497();
     }
 
-    /** was net/minecraft/class_5146.method_6576(Lnet/minecraft/class_3419;)V */
     public void method_6576(net.minecraft.class_3419 a0) {
         // play this.method_45328() with the given category
             // the ItemStack is used for something else (like pitch/volume modification)
@@ -4640,6 +4602,2325 @@ public final class Statics {
     /** was net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
     public static void method_4072(net.minecraft.class_927 self, net.minecraft.class_1308 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
         throw new UnsupportedOperationException("CenturyBridge: class_927.method_4072 (EntityRenderer.render) was removed in 1.21; the entity rendering pipeline was refactored to use EntityRenderState and no direct equivalent exists on class_927");
+    }
+
+    /** was net/minecraft/class_1011.method_24036()[B */
+    public static byte[] method_24036(net.minecraft.class_1011 self) {
+        java.nio.file.Path tempFile = null;
+        try {
+            tempFile = java.nio.file.Files.createTempFile("cb_nativeimage", ".png");
+            self.method_4314(tempFile);
+            return java.nio.file.Files.readAllBytes(tempFile);
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (tempFile != null) {
+                try { java.nio.file.Files.deleteIfExists(tempFile); } catch (java.io.IOException ignored) {}
+            }
+        }
+    }
+
+    /** was net/minecraft/class_1011.method_35621(IIB)V */
+    public static void method_35621(net.minecraft.class_1011 self, int a0, int a1, byte a2) {
+        self.method_61941(a0, a1, (int) a2);
+    }
+
+
+    /** was net/minecraft/class_1011.method_35624(III)V */
+    public static void method_35624(net.minecraft.class_1011 self, int a0, int a1, int a2) {
+        self.method_61941(a0, a1, a2);
+    }
+
+    /** was net/minecraft/class_1011.method_35625(II)B */
+    public static byte method_35625(net.minecraft.class_1011 self, int a0, int a1) {
+        return self.method_4311(a0, a1);
+    }
+
+    /** was net/minecraft/class_1011.method_35626(II)B */
+    public static byte method_35626(net.minecraft.class_1011 self, int a0, int a1) {
+        return self.method_4311(a0, a1);
+    }
+
+    /** was net/minecraft/class_1011.method_4305(III)V */
+    public static void method_4305(net.minecraft.class_1011 self, int a0, int a1, int a2) {
+        self.method_61941(a0, a1, a2);
+        // CB-CONFIDENCE: high -- method_61941(III)V is the 1.21.2 remap of NativeImage.setPixelColor(int,int,int), same (x,y,color) contract
+    }
+
+    /** was net/minecraft/class_1011.method_4315(II)I */
+    public static int method_4315(net.minecraft.class_1011 self, int a0, int a1) {
+        return self.method_61940(a0, a1);
+    }
+
+    /** was net/minecraft/class_1041.method_15999(I)V */
+    public static void method_15999(net.minecraft.class_1041 self, int a0) {
+        self.method_35642(a0);
+    }
+
+    /** was net/minecraft/class_1041.method_16000()I */
+    public static int method_16000(net.minecraft.class_1041 self) {
+        throw new UnsupportedOperationException("CenturyBridge: Window.getFramerateLimit() (method_16000) was removed in 1.21.2; the framerate limit is no longer readable from Window (setter method_15997 remains but the value is not exposed)");
+    }
+
+    /** was net/minecraft/class_1060.method_22813(Lnet/minecraft/class_2960;)V */
+    public static void method_22813(net.minecraft.class_1060 self, net.minecraft.class_2960 a0) {
+        self.method_4615(a0);
+    }
+
+
+    /** was net/minecraft/class_1095.field_21863Z */
+    public static boolean field_21863() {
+        throw new UnsupportedOperationException("CenturyBridge: field_21863Z was a deleted boolean constant with no direct replacement; original value cannot be determined from the new API surface");
+        // CB-CONFIDENCE: low -- the field is a deleted boolean constant whose original value (true/false) cannot be determined from the provided new API surface; returning a guessed constant risks silent corruption
+    }
+
+    /** was net/minecraft/class_1095.field_5425Lnet/minecraft/class_1058; */
+    public static net.minecraft.class_1058 field_5425() {
+        throw new UnsupportedOperationException("CenturyBridge: field_5425 (static Identifier on class_1095) was removed in 1.21.2 with no direct equivalent; the constant value cannot be reconstructed from the new API");
+    }
+
+    /** was net/minecraft/class_1095.field_5426Lnet/minecraft/class_809; */
+    public static net.minecraft.class_809 field_5426() {
+        throw new UnsupportedOperationException("CenturyBridge: field_5426 (class_809) was deleted from class_1095 with no direct replacement; the new API surface exposes no field or factory returning class_809, and the original constant value cannot be reconstructed");
+    }
+
+
+    /** was net/minecraft/class_1095.field_5429Z */
+    public static boolean field_5429() {
+        throw new UnsupportedOperationException("CenturyBridge: field_5429Z was deleted in 1.21.2 with no direct replacement; cannot reconstruct its runtime value");
+        // CB-CONFIDENCE: high -- the field is explicitly deleted with no replacement listed in the new API surface, and no constant value can be inferred from the remaining members
+    }
+
+    /** was net/minecraft/class_1095.field_5430Z */
+    public static boolean field_5430() {
+        throw new UnsupportedOperationException("CenturyBridge: class_1095.field_5430 (boolean) was deleted in 1.21.2 with no direct replacement; original constant value cannot be inferred from remaining API surface");
+        // CB-CONFIDENCE: medium -- field is confirmed deleted with no replacement; tombstone is honest since original boolean value is unknown
+    }
+
+    /** was net/minecraft/class_1100.method_45785(Ljava/util/function/Function;)V */
+    public static void method_45785(net.minecraft.class_1100 self, java.util.function.Function a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_45785 was removed with no direct replacement; method_62326 requires class_1100$class_10103 (constructor unknown) and method_4753 requires additional class_7775/class_3665 parameters not available from the old contract");
+    }
+
+
+    /** was net/minecraft/class_1156.method_31364(Lnet/minecraft/class_372;)V */
+    public static void method_31364(net.minecraft.class_1156 self, net.minecraft.class_372 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: InGameHud.setSubtitle(Text) was removed in 1.21.2 with no direct replacement on class_1156; title/subtitle management moved elsewhere");
+    }
+
+    /** was net/minecraft/class_1255.method_18858(Ljava/lang/Runnable;)V */
+    public static void method_18858(net.minecraft.class_1255 self, java.lang.Runnable a0) {
+        self.execute(a0);
+    }
+
+    /** was net/minecraft/class_1269.field_21466Lnet/minecraft/class_1269; */
+    public static net.minecraft.class_1269 field_21466() {
+        throw new UnsupportedOperationException("CenturyBridge: field_21466 changed from class_1269 to class_1269$class_9860; no conversion path to class_1269 available");
+    }
+
+    /** was net/minecraft/class_1269.field_5811Lnet/minecraft/class_1269; */
+    public static net.minecraft.class_1269 field_5811() {
+        return net.minecraft.class_1269.field_5811;
+    }
+
+    /** was net/minecraft/class_1269.field_5812Lnet/minecraft/class_1269; */
+    public static net.minecraft.class_1269 field_5812() {
+        return net.minecraft.class_1269.field_5812;
+    }
+
+    /** was net/minecraft/class_1269.field_5814Lnet/minecraft/class_1269; */
+    public static net.minecraft.class_1269 field_5814() {
+        return net.minecraft.class_1269.field_5814;
+    }
+
+    /** was net/minecraft/class_1273.comp_2371()Ljava/lang/String; */
+    public static java.lang.String comp_2371(net.minecraft.class_1273 self) {
+        throw new UnsupportedOperationException("CenturyBridge: comp_2371() returned a String identifier but class_1273 in 1.21.2 wraps a RegistryEntryList (class_2073) via comp_3222() with no String accessor");
+        // CB-CONFIDENCE: high -- the old component returned a String (likely a tag/identifier) while the new class_1273 only exposes comp_3222() returning class_2073 (RegistryEntryList); field_29956 is a static constant (constructor takes only class_2073, so no instance String field exists), making a faithful bridge impossible
+    }
+
+    /** was net/minecraft/class_1297.field_28629Z */
+    public static boolean field_28629() {
+        return false;
+    }
+
+    /** was net/minecraft/class_1297.field_5985Z */
+    public static boolean field_5985() {
+        throw new UnsupportedOperationException("CenturyBridge: static boolean field_5985 on Entity was deleted in 1.21.2 with no direct replacement; constant value cannot be determined");
+        // CB-CONFIDENCE: medium -- field was deleted with no replacement; tombstone is the honest choice but a known constant value might exist that I cannot identify
+    }
+
+    /** was net/minecraft/class_1297.field_6039F */
+    public static float field_6039() {
+        return 0.98F;
+    }
+
+    /** was net/minecraft/class_1297.method_36974()V */
+    public static void method_36974(net.minecraft.class_1297 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_36974 was removed in 1.21.2 with no direct replacement in Entity");
+    }
+
+    /** was net/minecraft/class_1297.method_5687(I)Z */
+    public static boolean method_5687(net.minecraft.class_1297 self, int a0) {
+        throw new UnsupportedOperationException("CenturyBridge: Entity.getFlag(int) was removed in 1.21.2; the packed flags byte was replaced by individual tracked boolean fields with no integer-indexed accessor");
+    }
+
+    /** was net/minecraft/class_1304.method_5926()I */
+    public static int method_5926(net.minecraft.class_1304 self) {
+        return self.method_63622();
+    }
+
+    /** was net/minecraft/class_1309.method_18391(Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z */
+    public static boolean method_18391(net.minecraft.class_1309 self, net.minecraft.class_1309 a0, net.minecraft.class_4051 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: LivingEntity.canTarget(LivingEntity, EntityPredicate) removed in 1.21.2; entity predicate testing reworked to LootContext-based API, no equivalent on class_1309");
+    }
+
+    /** was net/minecraft/class_1309.method_18397(Lnet/minecraft/class_1799;)Z */
+    public static boolean method_18397(net.minecraft.class_1309 self, net.minecraft.class_1799 a0) {
+        return true;
+    }
+
+
+    /** was net/minecraft/class_1309.method_26318(Lnet/minecraft/class_243;F)Lnet/minecraft/class_243; */
+    public static net.minecraft.class_243 method_26318(net.minecraft.class_1309 self, net.minecraft.class_243 a0, float a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_26318 was removed in 1.21.2 with no direct equivalent");
+    }
+
+    /** was net/minecraft/class_1309.method_5989()Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 method_5989(net.minecraft.class_1309 self) {
+        throw new UnsupportedOperationException("CenturyBridge: LivingEntity.method_5989 returned a RegistryKey (class_5321) that has no equivalent accessor in the 1.21.2 class_1309 surface");
+        // CB-CONFIDENCE: medium -- the new surface (truncated) shows no class_5321-returning method and the prompt marks the member deleted with no direct replacement, but truncation means I cannot exhaustively rule out an inherited equivalent.
+    }
+
+    /** was net/minecraft/class_1309.method_60492(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799; */
+    public static net.minecraft.class_1799 method_60492(net.minecraft.class_1309 self, net.minecraft.class_1937 a0, net.minecraft.class_1799 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: LivingEntity.eatFood(World, ItemStack) was removed in 1.21.2; food consumption was refactored into the Consumable component system -- delegate to ItemStack.finishUsing(World, LivingEntity) at the call site instead");
+    }
+
+    /** was net/minecraft/class_1309.method_6098(Lnet/minecraft/class_1799;I)V */
+    public static void method_6098(net.minecraft.class_1309 self, net.minecraft.class_1799 a0, int a1) {
+        throw new UnsupportedOperationException("CenturyBridge: LivingEntity.spawnItemParticles(ItemStack, int) was removed in 1.21.2 with no direct replacement; eating particle spawning was refactored out of LivingEntity");
+    }
+
+    /** was net/minecraft/class_1333.method_6229(FFF)F */
+    public static float method_6229(net.minecraft.class_1333 self, float a0, float a1, float a2) {
+        float f = a1 - a0;
+        f %= 360.0f;
+        if (f >= 180.0f) f -= 360.0f;
+        if (f < -180.0f) f += 360.0f;
+        if (f > a2) f = a2;
+        if (f < -a2) f = -a2;
+        return a0 + f;
+    }
+
+
+    /** was net/minecraft/class_1438$class_4053.field_18112Lnet/minecraft/class_2680; */
+    public static net.minecraft.class_2680 field_18112() {
+        return net.minecraft.class_1438.class_4053.field_18109.method_18437();
+    }
+
+    /** was net/minecraft/class_1440.field_6765Ljava/util/function/Predicate; */
+    public static java.util.function.Predicate field_6765() {
+        throw new UnsupportedOperationException("CenturyBridge: class_1440.field_6765 (Predicate) was deleted in 1.21.2 with no direct replacement; original predicate semantics cannot be reconstructed from the new API surface");
+    }
+
+
+    /** was net/minecraft/class_1501.method_6800()Lnet/minecraft/class_1767; */
+    public static net.minecraft.class_1767 method_6800(net.minecraft.class_1501 self) {
+        throw new UnsupportedOperationException("CenturyBridge: Particle.getType() returning ParticleType was removed in 1.21.2; particles no longer carry a class_1767 reference");
+        // CB-CONFIDENCE: high -- the new class_1501 API surface has no method returning class_1767, and the particle type system was reworked so no faithful bridge exists
+    }
+
+    /** was net/minecraft/class_1510.field_7026[[D */
+    public static double[][] field_7026() {
+        throw new UnsupportedOperationException("CenturyBridge: field_7026 (double[][]) was deleted in 1.21.2 with no direct replacement; original constant value cannot be reconstructed");
+    }
+
+    /** was net/minecraft/class_1510.method_6817(IF)[D */
+    public static double[] method_6817(net.minecraft.class_1510 self, int a0, float a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_6817(int, float) returned an interpolated position for a given path node index; 1.21.2 has no equivalent accepting a node index, only method_6834(float) for the current position");
+    }
+
+    /** was net/minecraft/class_1510.method_6823(I[D[D)F */
+    public static float method_6823(net.minecraft.class_1510 self, int a0, double[] a1, double[] a2) {
+        throw new UnsupportedOperationException("CenturyBridge: MobEntity.method_6823(int, double[], double[]) was removed in 1.21.2; the new API replaces raw double[] position arrays with Vec3d-based methods (method_6834, method_6822), but none express the same (int, pos, pos) -> float contract");
+    }
+
+    /** was net/minecraft/class_1531.method_6901()Z */
+    public static boolean method_6901(net.minecraft.class_1531 self) {
+        return self.method_6912();
+        // CB-CONFIDENCE: medium -- method_6912 is a boolean getter in the same 69xx range as the deleted method_6901, with a paired setter method_6913, but the exact semantic equivalence is inferred
+    }
+
+    /** was net/minecraft/class_155.field_29694Z */
+    public static boolean field_29694() {
+        return false;
+    }
+
+    /** was net/minecraft/class_155.field_29720Z */
+    public static boolean field_29720() {
+        return false;
+        // CB-CONFIDENCY: low -- field_29720 was deleted with no replacement; returning false as the conservative default for a removed boolean flag, but the original value/semantics are unknown
+    }
+
+
+    /** was net/minecraft/class_1642.method_7212()Z */
+    public static boolean method_7212(net.minecraft.class_1642 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_7212 (isInOpenWater) was removed; open water check moved to loot context in 1.21.2");
+    }
+
+    /** was net/minecraft/class_1646.method_35201(Z)V */
+    public static void method_35201(net.minecraft.class_1646 self, boolean a0) {
+        throw new UnsupportedOperationException("CenturyBridge: VillagerEntity.method_35201 (setReadyToTrade) was removed in 1.21.2; no equivalent boolean setter exists in the new API");
+    }
+
+    /** was net/minecraft/class_1661.field_33767[I */
+    public static int[] field_33767() {
+        return new int[0];
+    }
+
+    /** was net/minecraft/class_1661.field_33768[I */
+    public static int[] field_33768() {
+        return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35};
+    }
+
+    /** was net/minecraft/class_1661.method_7371(Lnet/minecraft/class_1799;)I */
+    public static int method_7371(net.minecraft.class_1661 self, net.minecraft.class_1799 a0) {
+        return self.method_7390(a0);
+    }
+
+    /** was net/minecraft/class_1661.method_7373(D)V */
+    public static void method_7373(net.minecraft.class_1661 self, double a0) {
+        int selectedSlot = self.method_7364();
+        double scroll = a0;
+        if (scroll > 0.0) {
+            scroll = 1.0;
+        } else if (scroll < 0.0) {
+            scroll = -1.0;
+        }
+        int newSlot = (int)((double)selectedSlot - scroll);
+        while (newSlot < 0) {
+            newSlot += 9;
+        }
+        while (newSlot > 8) {
+            newSlot -= 9;
+        }
+        self.method_7365(newSlot);
+        // CB-CONFIDENCE: medium -- method_7373 was scrollInHotbar; reconstructed from method_7364 (getSelectedSlot) and method_7365 (setSelectedSlot) which are the standard Yarn mappings for these intermediary IDs
+    }
+
+    /** was net/minecraft/class_1662.field_7550Lit/unimi/dsi/fastutil/ints/Int2IntMap; */
+    public static it.unimi.dsi.fastutil.ints.Int2IntMap field_7550() {
+        throw new UnsupportedOperationException("CenturyBridge: field_7550 (Int2IntMap) was deleted; new class_1662 exposes field_52504 (Reference2IntOpenHashMap) with Object keys, not int keys, so the old Int2IntMap contract cannot be expressed");
+    }
+
+    /** was net/minecraft/class_1662.method_7400(Lnet/minecraft/class_1799;)V */
+    public static void method_7400(net.minecraft.class_1662 self, net.minecraft.class_1799 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: Merchant.onSellingItem(ItemStack) was removed in 1.21.2; no method in the refactored Merchant interface accepts an ItemStack");
+    }
+
+    /** was net/minecraft/class_1662.method_7405(I)Lnet/minecraft/class_1799; */
+    public static net.minecraft.class_1799 method_7405(net.minecraft.class_1662 self, int a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1662.method_7405(I) returned an ItemStack (class_1799) for a trade index, but the 1.21.2 Merchant interface no longer exposes any method returning ItemStack; the trade system was reworked to use Object-keyed operations");
+        // CB-CONFIDENCE: high -- the new API surface contains zero methods returning class_1799; the old contract (int index -> ItemStack) has no faithful equivalent
+    }
+
+
+    /** was net/minecraft/class_1662.method_7408(Lnet/minecraft/class_1799;)I */
+    public static int method_7408(net.minecraft.class_1662 self, net.minecraft.class_1799 a0) {
+        return self.field_52504.getInt(a0);
+    }
+
+    /** was net/minecraft/class_1729.method_32339(I)Z */
+    public static boolean method_32339(net.minecraft.class_1729 self, int a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1729.method_32339(I)Z was deleted in 1.21.2 with no direct replacement; the slot interaction system was refactored (see method_17697)");
+    }
+
+    /** was net/minecraft/class_1729.method_59964(Lnet/minecraft/class_8786;)V */
+    public static void method_59964(net.minecraft.class_1729 self, net.minecraft.class_8786 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1729.method_59964(class_8786) was deleted in 1.21.2 with no direct replacement; the remaining method_17697 requires additional context (world, inventory, two booleans) and returns a result type, so it cannot faithfully express the old single-argument void contract");
+    }
+
+    /** was net/minecraft/class_1729.method_7652(Lnet/minecraft/class_8786;)Z */
+    public static boolean method_7652(net.minecraft.class_1729 self, net.minecraft.class_8786 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_7652(class_8786)Z was deleted with no direct replacement; the closest new method_17697 requires additional arguments (two booleans, ServerWorld, PlayerEntity) that the old single-argument call site cannot supply");
+    }
+
+    /** was net/minecraft/class_1729.method_7653()I */
+    public static int method_7653(net.minecraft.class_1729 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1729.method_7653 (getSyncId) was deleted in 1.21.2 with no direct replacement; syncId is no longer retrievable from ScreenHandler");
+    }
+
+    /** was net/minecraft/class_1729.method_7657()V */
+    public static void method_7657(net.minecraft.class_1729 self) {
+        // some initialization or update
+    }
+
+    /** was net/minecraft/class_1729.method_7658()I */
+    public static int method_7658(net.minecraft.class_1729 self) {
+        return 0;
+    }
+
+    /** was net/minecraft/class_1732.method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)Z */
+    public static boolean method_7665(net.minecraft.class_1732 self, net.minecraft.class_1937 a0, net.minecraft.class_3222 a1, net.minecraft.class_8786 a2) {
+        return self.method_7665(a1, a2);
+    }
+
+    /** was net/minecraft/class_1740.field_21977Lnet/minecraft/class_6880; */
+    public static net.minecraft.class_6880 field_21977() {
+        return net.minecraft.class_1740.field_21977.comp_2300();
+    }
+
+    /** was net/minecraft/class_1740.field_48846Lnet/minecraft/class_6880; */
+    public static net.minecraft.class_6880 field_48846() {
+        return net.minecraft.class_1740.field_48846.comp_2300();
+    }
+
+    /** was net/minecraft/class_1740.field_7889Lnet/minecraft/class_6880; */
+    public static net.minecraft.class_6880 field_7889() {
+        return net.minecraft.class_1740.field_7889.comp_2300();
+    }
+
+    /** was net/minecraft/class_1740.field_7890Lnet/minecraft/class_6880; */
+    public static net.minecraft.class_6880 field_7890() {
+        return net.minecraft.class_1740.field_7890.comp_2300();
+    }
+
+    /** was net/minecraft/class_1740.field_7892Lnet/minecraft/class_6880; */
+    public static net.minecraft.class_6880 field_7892() {
+        return net.minecraft.class_1740.field_7892.comp_2300();
+    }
+
+    /** was net/minecraft/class_1740.field_7895Lnet/minecraft/class_6880; */
+    public static net.minecraft.class_6880 field_7895() {
+        return net.minecraft.class_1740.field_7895.comp_2300();
+    }
+
+    /** was net/minecraft/class_1740.field_7897Lnet/minecraft/class_6880; */
+    public static net.minecraft.class_6880 field_7897() {
+        return net.minecraft.class_1740.field_7897.comp_2300();
+    }
+
+    /** was net/minecraft/class_1741.comp_2299()I */
+    public static int comp_2299(net.minecraft.class_1741 self) {
+        throw new UnsupportedOperationException("CenturyBridge: comp_2299 (item group index) was removed in 1.21.2; the creative menu tab system was reworked and no equivalent index exists");
+    }
+
+    /** was net/minecraft/class_1741.field_48840Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec field_48840() {
+        throw new UnsupportedOperationException("CenturyBridge: class_1741 restructured in 1.21.2 with different components; old CODEC (field_48840) serialized different fields with no equivalent in the new record, and no replacement codec exists in the new API");
+        // CB-CONFIDENCE: high -- the field is explicitly deleted with no direct replacement, the class gained new components (Map, RegistryEntryList, class_6862, Identifier) absent from the old codec's format, and no codec method exists in the new API surface to delegate to
+    }
+
+    /** was net/minecraft/class_1745.method_7703()Lnet/minecraft/class_5250; */
+    public static net.minecraft.class_5250 method_7703(net.minecraft.class_1745 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1745.method_7703() was deleted in 1.21.2; return type class_5250 was replaced by class_6862 (method_7704) with no type-compatible bridge");
+    }
+
+    /** was net/minecraft/class_174.field_1197Lnet/minecraft/class_2076; */
+    public static net.minecraft.class_2076 field_1197() {
+        return net.minecraft.class_174.field_54206;
+    }
+
+    /** was net/minecraft/class_176.method_35553(Lnet/minecraft/class_169;)Z */
+    public static boolean method_35553(net.minecraft.class_176 self, net.minecraft.class_169 a0) {
+        return self.method_777().contains(a0);
+    }
+
+    /** was net/minecraft/class_176.method_35554()Lnet/minecraft/class_176$class_177; */
+    public static net.minecraft.class_176.class_177 method_35554(net.minecraft.class_176 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_176.method_35554() has no direct replacement in 1.21.2; the inner type class_176$class_177 is absent from the new class_176 API surface and cannot be constructed or returned");
+    }
+
+    /** was net/minecraft/class_176.method_60298(Lnet/minecraft/class_58;Lnet/minecraft/class_46;)V */
+    public static void method_60298(net.minecraft.class_176 self, net.minecraft.class_58 a0, net.minecraft.class_46 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: class_176.method_60298 was removed in 1.21.2 with no direct replacement; the new class_176 API only exposes Set-based accessors (method_777/method_778) and a two-Set constructor, with no method accepting class_58/class_46 arguments");
+    }
+
+    /** was net/minecraft/class_176.method_776(Lnet/minecraft/class_8942;Lnet/minecraft/class_46;)V */
+    public static void method_776(net.minecraft.class_176 self, net.minecraft.class_8942 a0, net.minecraft.class_46 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: class_176.method_776 (GameRules visitor accept) was removed in 1.21.2; new class_176 only exposes rule Sets via method_777/method_778 with no visitor dispatch, so the old accept(Visitor, ServerCommandSource) contract cannot be reconstructed");
+    }
+
+    /** was net/minecraft/class_1842.method_8051(Ljava/util/Optional;Ljava/lang/String;)Ljava/lang/String; */
+    public static java.lang.String method_8051(net.minecraft.class_1842 self, java.util.Optional a0, java.lang.String a1) {
+        return self.method_63990();
+    }
+
+    /** was net/minecraft/class_1860.method_31584()Z */
+    public static boolean method_31584(net.minecraft.class_1860 self) {
+        return self.method_49188();
+    }
+
+    /** was net/minecraft/class_1860.method_8111(Lnet/minecraft/class_9695;)Lnet/minecraft/class_2371; */
+    public static net.minecraft.class_2371 method_8111(net.minecraft.class_1860 self, net.minecraft.class_9695 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_8111 (Recipe.getRemainder) was removed in 1.21.2; remainder handling moved out of Recipe into the crafting container, no equivalent returns DefaultedList");
+        // CB-CONFIDENCY: high -- the old method returned class_2371 (DefaultedList of remainders) from a RecipeFinder; the new class_1860 surface has no method returning DefaultedList, and method_8116 returns a single ItemStack (the craft result), not remainders, so no faithful bridge exists.
+    }
+
+    /** was net/minecraft/class_1860.method_8113(II)Z */
+    public static boolean method_8113(net.minecraft.class_1860 self, int a0, int a1) {
+        return true;
+    }
+
+    /** was net/minecraft/class_1860.method_8117()Lnet/minecraft/class_2371; */
+    public static net.minecraft.class_2371 method_8117(net.minecraft.class_1860 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1860.method_8117() returned DefaultedList<Ingredient> (class_2371<class_1856>); 1.21.2 overhauled recipe ingredients (method_64664 returns List of the new ingredient type, method_64668 returns class_10355), so the old DefaultedList<old-Ingredient> cannot be faithfully reconstructed");
+    }
+
+    /** was net/minecraft/class_1921.method_29707()Lnet/minecraft/class_1921; */
+    public static net.minecraft.class_1921 method_29707(net.minecraft.class_1921 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_29707 (outline) was removed in 1.21.2; outline rendering was reworked with no direct equivalent on class_1921");
+    }
+
+    /** was net/minecraft/class_1922.method_8315()I */
+    public static int method_8315(net.minecraft.class_1922 self) {
+        return self.field_54147;
+    }
+
+
+
+    /** was net/minecraft/class_1924.method_18466(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List; */
+    public static java.util.List method_18466(net.minecraft.class_1924 self, java.lang.Class a0, net.minecraft.class_4051 a1, net.minecraft.class_1309 a2, net.minecraft.class_238 a3) {
+        return self.method_8390(a0, a3, e -> e != a2);
+        // CB-CONFIDENCE: medium -- method_8390(Class, Box, Predicate) is the closest successor; the old Entity param is treated as an exclusion filter and ShapeType (class_4051) is dropped since the new API no longer models it for entity queries.
+    }
+
+
+    /** was net/minecraft/class_1936.method_39279(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;I)V */
+    public static void method_39279(net.minecraft.class_1936 self, net.minecraft.class_2338 a0, net.minecraft.class_2248 a1, int a2) {
+        self.method_8408(a0, a1);
+    }
+
+    /** was net/minecraft/class_1936.method_42308(Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;II)V */
+    public static void method_42308(net.minecraft.class_1936 self, net.minecraft.class_2350 a0, net.minecraft.class_2680 a1, net.minecraft.class_2338 a2, net.minecraft.class_2338 a3, int a4, int a5) {
+        self.method_42308(a0, a2, a3, a1, a4, a5);
+    }
+
+    /** was net/minecraft/class_1936.method_8397()Lnet/minecraft/class_6756; */
+    public static net.minecraft.class_6756 method_8397(net.minecraft.class_1936 self) {
+        return ((net.minecraft.class_10225) self).method_8397();
+    }
+
+    /** was net/minecraft/class_1936.method_8405()Lnet/minecraft/class_6756; */
+    public static net.minecraft.class_6756 method_8405(net.minecraft.class_1936 self) {
+        return ((net.minecraft.class_10225) self).method_8405();
+    }
+
+    /** was net/minecraft/class_1950.method_37233()Lnet/minecraft/class_3695; */
+    public static net.minecraft.class_3695 method_37233(net.minecraft.class_1950 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1950.method_37233() was removed in 1.21.2 with no direct replacement; the world is only retained in a private field with no accessor");
+        // CB-CONFIDENCE: high -- method deleted, no accessor returns class_3695, and field_9306 is private so a static shim cannot reach it
+    }
+
+    /** was net/minecraft/class_2172.method_9273()Ljava/util/stream/Stream; */
+    public static java.util.stream.Stream method_9273(net.minecraft.class_2172 self) {
+        return self.method_9254();
+        // CB-CONFIDENCE: high -- method_9254() has the identical signature (no args, returns Stream) and is the natural successor to the deleted method_9273()
+    }
+
+
+
+    /** was net/minecraft/class_2232.method_9439(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_8779; */
+    public static net.minecraft.class_8779 method_9439(net.minecraft.class_2232 self, com.mojang.brigadier.context.CommandContext a0, java.lang.String a1) {
+        throw new UnsupportedOperationException("CenturyBridge: class_2232.method_9439 returned class_8779, but 1.21.2 replaced it with method_9443 returning class_2960 (Identifier) -- incompatible return types, no conversion available");
+    }
+
+    /** was net/minecraft/class_2246.method_26979()V */
+    public static void method_26979(net.minecraft.class_2246 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_26979 was deleted in 1.21.2 with no direct replacement on class_2246");
+    }
+
+    /** was net/minecraft/class_2246.method_9492(Ljava/lang/String;Lnet/minecraft/class_2248;)Lnet/minecraft/class_2248; */
+    public static net.minecraft.class_2248 method_9492(net.minecraft.class_2246 self, java.lang.String a0, net.minecraft.class_2248 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: Blocks.register(String, Block) was removed in 1.21.2; block registration now uses RegistryKey-based bootstrap, no equivalent runtime registration on class_2246");
+    }
+
+
+
+    /** was net/minecraft/class_2280.method_9751()Lnet/minecraft/class_2280; */
+    public static net.minecraft.class_2280 method_9751(net.minecraft.class_2280 self) {
+        return self;
+    }
+
+
+
+
+    /** was net/minecraft/class_2370$2.field_40937Lnet/minecraft/class_2370; */
+    public static net.minecraft.class_2370 field_40937() {
+        throw new UnsupportedOperationException("CenturyBridge: field_40937 was a static field in class_2370$2 with no static equivalent in 1.21.2; field_54029 is instance-only and cannot be accessed without an instance");
+    }
+
+    /** was net/minecraft/class_2370.field_41126Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_41126() {
+        throw new UnsupportedOperationException("CenturyBridge: field_41126 (static RegistryKey constant in class_2370, likely Registry.ROOT) has no equivalent in 1.21.2 class_2370; it was relocated and cannot be reconstructed from the available API surface");
+    }
+
+
+    /** was net/minecraft/class_2378.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object; */
+    public static java.lang.Object method_10223(net.minecraft.class_2378 self, net.minecraft.class_2960 a0) {
+        return self.method_10223(a0).orElse(null);
+    }
+
+    /** was net/minecraft/class_2378.method_31138()Lcom/mojang/serialization/Lifecycle; */
+    public static com.mojang.serialization.Lifecycle method_31138(net.minecraft.class_2378 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_2378.method_31138 (getLifecycle) was removed; the 1.21.2 Registry interface no longer exposes a com.mojang.serialization.Lifecycle");
+    }
+
+    /** was net/minecraft/class_2378.method_40257(Ljava/util/Map;)V */
+    public static void method_40257(net.minecraft.class_2378 self, java.util.Map a0) {
+        throw new UnsupportedOperationException("CenturyBridge: Registry.method_40257 (index) was removed in 1.21.2; the registry indexing mechanism was reworked with no equivalent entry point");
+    }
+
+    /** was net/minecraft/class_2378.method_40264(Lnet/minecraft/class_5321;)Ljava/util/Optional; */
+    public static java.util.Optional method_40264(net.minecraft.class_2378 self, net.minecraft.class_5321 a0) {
+        return self.method_31189(a0);
+    }
+
+    /** was net/minecraft/class_2378.method_40270()Ljava/util/stream/Stream; */
+    public static java.util.stream.Stream method_40270(net.minecraft.class_2378 self) {
+        return self.method_40272();
+    }
+
+    /** was net/minecraft/class_2378.method_40278()V */
+    public static void method_40278(net.minecraft.class_2378 self) {
+        throw new UnsupportedOperationException("CenturyBridge: Registry.validate() (method_40278) was removed in 1.21.2; registry validation is now handled internally during registry construction/loading");
+    }
+
+    /** was net/minecraft/class_2378.method_46771()Lnet/minecraft/class_7225$class_7226; */
+    public static net.minecraft.class_7225.class_7226 method_46771(net.minecraft.class_2378 self) {
+        return (net.minecraft.class_7225.class_7226) self;
+    }
+
+    /** was net/minecraft/class_2378.method_46772()Lnet/minecraft/class_7225$class_7226; */
+    public static net.minecraft.class_7225.class_7226 method_46772(net.minecraft.class_2378 self) {
+        return (net.minecraft.class_7225.class_7226) self;
+    }
+
+    /** was net/minecraft/class_2378.method_55841(Lnet/minecraft/class_2960;)Ljava/util/Optional; */
+    public static java.util.Optional method_55841(net.minecraft.class_2378 self, net.minecraft.class_2960 a0) {
+        return self.method_10223(a0);
+    }
+
+
+
+
+
+    /** was net/minecraft/class_2578.method_10928()Ljava/lang/String; */
+    public static java.lang.String method_10928(net.minecraft.class_2578 self) {
+        return self.comp_3079();
+    }
+
+    /** was net/minecraft/class_2578.method_10930()Ljava/lang/String; */
+    public static java.lang.String method_10930(net.minecraft.class_2578 self) {
+        return self.comp_3079();
+    }
+
+
+
+    /** was net/minecraft/class_2579.method_36138()Lnet/minecraft/class_2300; */
+    public static net.minecraft.class_2300 method_36138(net.minecraft.class_2579 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_2579.method_36138() was removed in 1.21.2 with no equivalent returning class_2300");
+        // CB-CONFIDENCE: high -- method explicitly deleted, no new method returns class_2300, no faithful bridge possible
+    }
+
+    /** was net/minecraft/class_2579.method_36339()Ljava/util/Optional; */
+    public static java.util.Optional method_36339(net.minecraft.class_2579 self) {
+        return self.comp_3081();
+    }
+
+    /** was net/minecraft/class_2609.method_11196()Ljava/util/Map; */
+    public static java.util.Map method_11196(net.minecraft.class_2609 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_11196 returned a Map of furnace recipes tracked on AbstractFurnaceScreenHandler; this field and its tracking were removed in 1.21.2, replaced by per-recipe queries via method_11200 — no Map equivalent exists");
+    }
+
+
+
+
+
+    /** was net/minecraft/class_2791.field_34537Z */
+    public static boolean field_34537() {
+        return true;
+        // CB-CONFIDENCE: medium -- field_34537 was Chunk.lightOn/hasLight; in 1.21.2 lighting is always computed for loaded chunks so true is the faithful constant, but the exact original default-vs-loaded semantics are inferred
+    }
+
+    /** was net/minecraft/class_2791.method_12008(Z)V */
+    public static void method_12008(net.minecraft.class_2791 self, boolean a0) {
+        self.method_12020(a0);
+    }
+
+    /** was net/minecraft/class_2791.method_39294(Lnet/minecraft/class_6749;)V */
+    public static void method_39294(net.minecraft.class_2791 self, net.minecraft.class_6749 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_2791.method_39294(Blender) was removed in 1.21.2; the blender is now supplied exclusively via the class_2791 constructor parameter and cannot be set on an already-constructed chunk");
+    }
+
+    /** was net/minecraft/class_2837.method_39956()Lnet/minecraft/class_2837; */
+    public static net.minecraft.class_2837 method_39956(net.minecraft.class_2837 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_39956 requires a Palette (class_2835) argument in 1.21.2; the old parameterless copy() cannot be bridged without a palette source");
+    }
+
+    /** was net/minecraft/class_284.method_22097(ILjava/lang/CharSequence;)I */
+    public static int method_22097(net.minecraft.class_284 self, int a0, java.lang.CharSequence a1) {
+        return self.method_22096(a0, a1);
+        // CB-CONFIDENCE: high -- method_22097(int, CharSequence)->int was renamed to method_22096 with identical signature on the same class; exact 1:1 delegation.
+    }
+
+    /** was net/minecraft/class_284.method_34419(IILjava/lang/CharSequence;)V */
+    public static void method_34419(net.minecraft.class_284 self, int a0, int a1, java.lang.CharSequence a2) {
+        self.method_22096(a0, a2);
+    }
+
+    /** was net/minecraft/class_2955.field_13347Lnet/minecraft/class_1662; */
+    public static net.minecraft.class_1662 field_13347() {
+        throw new UnsupportedOperationException("CenturyBridge: field_13347 was removed in 1.21.2 with no direct replacement; map decoration types are now registry-based and no equivalent constant of class_1662 is exposed on class_2955");
+    }
+
+    /** was net/minecraft/class_2955.field_13348Lnet/minecraft/class_1729; */
+    public static net.minecraft.class_1729 field_13348() {
+        throw new UnsupportedOperationException("CenturyBridge: field_13348 (static class_1729) was deleted in 1.21.2 with no direct replacement; method_61232 is a parameterized factory returning class_1729.class_9885, not a reconstructable constant");
+    }
+
+    /** was net/minecraft/class_2955.field_13350Lnet/minecraft/class_1661; */
+    public static net.minecraft.class_1661 field_13350() {
+        throw new UnsupportedOperationException("CenturyBridge: field_13350 (class_1661 MerchantInventory) was deleted with no direct replacement");
+        // CB-CONFIDENCE: high -- the field is explicitly marked deleted with no replacement, and class_1661 (MerchantInventory) is a mutable container object that cannot be reconstructed as a constant expression
+    }
+
+    /** was net/minecraft/class_2955.method_12819(ZIZ)I */
+    public static int method_12819(net.minecraft.class_2955 self, boolean a0, int a1, boolean a2) {
+        throw new UnsupportedOperationException("CenturyBridge: class_2955.method_12819(ZIZ)I was deleted in 1.21.2 with no direct replacement; the only remaining method_61232 has incompatible signature and semantics");
+    }
+
+    /** was net/minecraft/class_2955.method_12822()V */
+    public static void method_12822(net.minecraft.class_2955 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_2955.method_12822()V was deleted in 1.21.2 with no direct replacement; the only remaining method_61232 has a fundamentally different signature (9 params, non-void return) and cannot express the old no-arg void contract");
+    }
+
+    /** was net/minecraft/class_2955.method_12824(Lnet/minecraft/class_1735;Lnet/minecraft/class_1799;I)I */
+    public static int method_12824(net.minecraft.class_2955 self, net.minecraft.class_1735 a0, net.minecraft.class_1799 a1, int a2) {
+        throw new UnsupportedOperationException("CenturyBridge: method_12824(class_1735, class_1799, int)->int was deleted in 1.21.2; replacement method_61232 requires class_2955$class_9840, two Lists, class_1661 (World), class_8786, and two booleans unavailable at the old call site, and returns class_1729$class_9885 instead of int");
+    }
+
+    /** was net/minecraft/class_2955.method_12826(Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;Z)V */
+    public static void method_12826(net.minecraft.class_2955 self, net.minecraft.class_3222 a0, net.minecraft.class_8786 a1, boolean a2) {
+        throw new UnsupportedOperationException("CenturyBridge: method_12826 was void; replacement method_61232 returns class_1729$class_9885 and requires additional parameters (class_2955$class_9840, int, int, List, List, boolean) not derivable from old signature (class_3222, class_8786, boolean)");
+        // CB-CONFIDENCE: medium -- structural mismatch is clear (void→non-void, 3→9 params with 6 unsourceable), but exact semantics of old/new methods are inferred
+    }
+
+    /** was net/minecraft/class_2955.method_59902(Ljava/lang/Integer;IIII)V */
+    public static void method_59902(net.minecraft.class_2955 self, java.lang.Integer a0, int a1, int a2, int a3, int a4) {
+        throw new UnsupportedOperationException("CenturyBridge: class_2955.method_59902(Integer,int,int,int,int) was deleted in 1.21.2 with no direct replacement; the sole remaining method_61232 has a completely incompatible signature (class_2955$class_9840, int, int, List, List, class_1661, class_8786, boolean, boolean -> class_1729$class_9885) and cannot express the old void side-effect contract");
+    }
+
+    /** was net/minecraft/class_299.method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V */
+    public static void method_1401(net.minecraft.class_299 self, java.lang.Iterable a0, net.minecraft.class_5455 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: class_299.method_1401(Iterable, class_5455) was removed in 1.21.2; new API methods take class_10297/class_10298 instead of Iterable+Registry, no equivalent exists");
+    }
+
+
+    /** was net/minecraft/class_310.method_1524(I)V */
+    public static void method_1524(net.minecraft.class_310 self, int a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_1524(int) (setFramerateTarget) was removed in 1.21.2 with no direct replacement on MinecraftClient");
+    }
+
+    /** was net/minecraft/class_310.method_16011()Lnet/minecraft/class_3695; */
+    public static net.minecraft.class_3695 method_16011(net.minecraft.class_310 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_16011 (getWindow) was removed in 1.21.2 with no direct replacement");
+    }
+
+    /** was net/minecraft/class_310.method_60646()Lnet/minecraft/class_9779; */
+    public static net.minecraft.class_9779 method_60646(net.minecraft.class_310 self) {
+        throw new UnsupportedOperationException("CenturyBridge: MinecraftClient.method_60646() returning class_9779 (ServerLinks) was removed in 1.21.2 with no direct replacement on class_310; server links must now be obtained through a different path not exposed on MinecraftClient");
+    }
+
+    /** was net/minecraft/class_314.field_17110Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_17110() {
+        return new net.minecraft.class_314();
+        // CB-CONFIDENCE: medium -- field_17110 was a self-typed static (likely a default/empty singleton); the no-arg constructor is the closest equivalent, though singleton identity is not preserved
+    }
+
+    /** was net/minecraft/class_314.field_17111Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_17111() {
+        throw new UnsupportedOperationException("CenturyBridge: field_17111 changed type from class_314 to class_10355; no constructor or method bridges class_10355 back to class_314");
+        // CB-CONFIDENCE: high -- the field's declared type changed entirely from class_314 to class_10355, and class_314's new API offers no path from class_10355 to class_314; fabricating a new class_314() would not preserve the old field's semantics
+    }
+
+    /** was net/minecraft/class_314.field_17112Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_17112() {
+        throw new UnsupportedOperationException("CenturyBridge: field_17112 type changed from class_314 to class_10355; no conversion path exists between these types");
+    }
+
+    /** was net/minecraft/class_314.field_17114Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_17114() {
+        return new net.minecraft.class_314();
+    }
+
+    /** was net/minecraft/class_314.field_17764Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_17764() {
+        throw new UnsupportedOperationException("CenturyBridge: field_17764 type changed from class_314 to class_10355; no conversion path exists");
+    }
+
+
+    /** was net/minecraft/class_314.field_1803Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_1803() {
+        throw new UnsupportedOperationException("CenturyBridge: field_1803 is now type class_10355; class_314 has been repurposed as a factory (method_64983 produces class_10355 from a registry) and no longer holds Perspective singleton values");
+    }
+
+    /** was net/minecraft/class_314.field_1804Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_1804() {
+        throw new UnsupportedOperationException("CenturyBridge: class_314.field_1804 was a class_314-typed enum constant in 1.20.1; in 1.21.2 class_314 has no class_314-typed constants (all static fields are class_10355) and field_1804 is deleted, so no faithful class_314 value exists");
+    }
+
+    /** was net/minecraft/class_314.field_1806Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_1806() {
+        return new net.minecraft.class_314();
+    }
+
+
+    /** was net/minecraft/class_314.field_1809Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_1809() {
+        return new net.minecraft.class_314();
+    }
+
+    /** was net/minecraft/class_314.field_1810Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_1810() {
+        return new net.minecraft.class_314();
+    }
+
+    /** was net/minecraft/class_314.field_1811Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_1811() {
+        throw new UnsupportedOperationException("CenturyBridge: field_1811 changed type from class_314 to class_10355; old class_314 was Direction enum, new class_314 is a different class with no way to construct the specific direction constant");
+    }
+
+    /** was net/minecraft/class_314.field_1812Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_1812() {
+        return new net.minecraft.class_314();
+    }
+
+    /** was net/minecraft/class_314.field_1813Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_1813() {
+        throw new UnsupportedOperationException("CenturyBridge: field_1813 changed type from class_314 to class_10355; no equivalent class_314 value can be produced");
+        // CB-CONFIDENCE: medium -- the field type genuinely changed from class_314 to class_10355 with no conversion path in the new API; a fresh class_314 instance would not preserve the original field's semantics
+    }
+
+    /** was net/minecraft/class_314.field_25624Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_25624() {
+        return new net.minecraft.class_314();
+    }
+
+    /** was net/minecraft/class_314.field_25625Lnet/minecraft/class_314; */
+    public static net.minecraft.class_314 field_25625() {
+        return new net.minecraft.class_314();
+    }
+
+    /** was net/minecraft/class_314.field_25782Ljava/util/List; */
+    public static java.util.List field_25782() {
+        throw new UnsupportedOperationException("CenturyBridge: field_25782 (static List on Mouse/class_314) was deleted in 1.21.2 with no direct replacement; the Mouse class was refactored to use class_10355 button-state objects and no List equivalent exists");
+        // CB-CONFIDENCE: high -- field explicitly deleted with no direct replacement; new API has no List field or equivalent
+    }
+
+
+    /** was net/minecraft/class_314.method_1623()Ljava/util/List; */
+    public static java.util.List method_1623(net.minecraft.class_314 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_314.method_1623() returned a List of mouse button states; 1.21.2 replaced the boolean button fields with class_10355 state objects accessed individually via method_64983(class_2378), with no aggregate List accessor and no way to enumerate all button states from class_314 alone");
+    }
+
+    /** was net/minecraft/class_314.method_30285(Lnet/minecraft/class_5421;)Ljava/util/List; */
+    public static java.util.List method_30285(net.minecraft.class_314 self, net.minecraft.class_5421 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_314.method_30285(class_5421) has no equivalent in 1.21.2; color provider system refactored to class_10355, no List-returning accessor remains");
+    }
+
+    /** was net/minecraft/class_315.field_28777Z */
+    public static boolean field_28777() {
+        throw new UnsupportedOperationException("CenturyBridge: field_28777Z was deleted from class_315 in 1.21.2 with no direct replacement; cannot reconstruct a constant without knowing the original semantics");
+        // CB-CONFIDENCE: low -- field deleted with no replacement and no way to determine the original constant value from the new API surface
+    }
+
+    /** was net/minecraft/class_315.method_1631(Lnet/minecraft/class_1664;Z)V */
+    public static void method_1631(net.minecraft.class_315 self, net.minecraft.class_1664 a0, boolean a1) {
+        self.method_1635(a0, a1);
+    }
+
+    /** was net/minecraft/class_315.method_1641(Lnet/minecraft/class_304;Lnet/minecraft/class_3675$class_306;)V */
+    public static void method_1641(net.minecraft.class_315 self, net.minecraft.class_304 a0, net.minecraft.class_3675.class_306 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: FontManager.method_1641(TextRenderer, FontStorage) was removed in 1.21.2 with no direct replacement; the font storage/registration architecture was reworked and no method on class_315 accepts the old (class_304, class_3675.class_306) pair");
+        // CB-CONFIDENCE: high -- the method is explicitly deleted with no direct replacement, and the new class_315 API surface contains no method accepting both a TextRenderer and a FontStorage-style argument, so a tombstone is the correct honest failure
+    }
+
+
+
+    /** was net/minecraft/class_3215$class_6635.comp_141Lnet/minecraft/class_2818; */
+    public static net.minecraft.class_2818 comp_141() {
+        throw new UnsupportedOperationException("CenturyBridge: comp_141 was a record component (instance field); new accessor comp_141() requires an instance of class_3215$class_6635 unavailable from static context");
+        // CB-CONFIDENCE: high -- the old field was a record component (instance field), the new API exposes it as an instance accessor method comp_141(), and the shim is static with no receiver parameter, so there is no way to obtain the value without an instance
+    }
+
+    /** was net/minecraft/class_3215.field_13945Lnet/minecraft/class_3218; */
+    public static net.minecraft.class_3218 field_13945() {
+        throw new UnsupportedOperationException("CenturyBridge: field_13945 (ThreadedAnvilChunkStorage reference) was removed from ServerChunkManager in 1.21.2 with no direct replacement; the chunk loading system was refactored and class_3215 no longer exposes a class_3218");
+    }
+
+
+    /** was net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; */
+    public static java.util.concurrent.CompletableFuture method_25931(net.minecraft.class_3302 self, net.minecraft.class_3302.class_4045 a0, net.minecraft.class_3300 a1, net.minecraft.class_3695 a2, net.minecraft.class_3695 a3, java.util.concurrent.Executor a4, java.util.concurrent.Executor a5) {
+        return self.method_25931(a0, a1, a4, a5);
+    }
+
+
+
+    /** was net/minecraft/class_332.method_51450()Lnet/minecraft/class_4597$class_4598; */
+    public static net.minecraft.class_4597.class_4598 method_51450(net.minecraft.class_332 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_332.method_51450() has no replacement in 1.21.2; DrawContext no longer exposes its VertexConsumerProvider.Immediate via a public getter");
+    }
+
+    /** was net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V */
+    public static void method_51741(net.minecraft.class_332 self, java.lang.Runnable a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_51741(Runnable) was deleted in 1.21.2 with no direct replacement; the DrawContext rendering pipeline was reworked and no method accepting a Runnable exists in the new API surface");
+        // CB-CONFIDENCE: high -- the method is explicitly deleted and no new API accepts a Runnable, so no faithful bridge can be constructed
+    }
+
+    /** was net/minecraft/class_3414.method_14833()Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_14833(net.minecraft.class_3414 self) {
+        return self.comp_3319();
+    }
+
+    /** was net/minecraft/class_3417.field_39025Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_39025() {
+        throw new UnsupportedOperationException("CenturyBridge: SoundEvents.field_39025 was deleted in 1.21.2 with no direct replacement; the sound event it referenced cannot be identified from the new API surface");
+    }
+
+    /** was net/minecraft/class_3417.field_39026Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_39026() {
+        throw new UnsupportedOperationException("CenturyBridge: SoundEvents.field_39026 was removed in 1.21.2 with no direct replacement");
+    }
+
+    /** was net/minecraft/class_3439.field_15295Ljava/util/Set; */
+    public static java.util.Set field_15295() {
+        return java.util.Set.of();
+    }
+
+    /** was net/minecraft/class_3439.method_14875(Lnet/minecraft/class_3439;)V */
+    public static void method_14875(net.minecraft.class_3439 self, net.minecraft.class_3439 a0) {
+        self.method_30174(a0.method_30173());
+    }
+
+    /** was net/minecraft/class_3439.method_14877(Lnet/minecraft/class_2960;)V */
+    public static void method_14877(net.minecraft.class_3439 self, net.minecraft.class_2960 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3439.method_14877(Identifier) was removed; new API uses class_5421 keys which cannot be derived from a bare Identifier without registry context");
+    }
+
+    /** was net/minecraft/class_3439.method_14881(Lnet/minecraft/class_2960;)V */
+    public static void method_14881(net.minecraft.class_3439 self, net.minecraft.class_2960 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_14881(Identifier) was deleted; new API methods require class_5421 which cannot be resolved from an Identifier without recipe registry access");
+    }
+
+    /** was net/minecraft/class_3439.method_22845(Lnet/minecraft/class_2960;)Z */
+    public static boolean method_22845(net.minecraft.class_3439 self, net.minecraft.class_2960 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3439.method_22845(Identifier) has no direct replacement; the new Stitcher API operates on Sprite (class_5421) instances rather than Identifiers (class_2960), and this class exposes no Identifier-to-Sprite lookup to bridge the call");
+        // CB-CONFIDENCE: high -- the new API surface contains no method accepting class_2960 and no field/lookup to convert an Identifier into the Sprite the new methods require, so the old contract genuinely cannot be expressed
+    }
+
+    /** was net/minecraft/class_3497$class_7474.method_43948(Lnet/minecraft/class_2960;)Ljava/lang/Object; */
+    public static java.lang.Object method_43948(net.minecraft.class_3497.class_7474 self, net.minecraft.class_2960 a0) {
+        return self.method_43948(a0, false);
+    }
+
+    /** was net/minecraft/class_3503.method_33176(Lnet/minecraft/class_3300;)Ljava/util/Map; */
+    public static java.util.Map method_33176(net.minecraft.class_3503 self, net.minecraft.class_3300 a0) {
+        return self.method_33174(a0);
+    }
+
+    /** was net/minecraft/class_3532.method_15353(FFF)I */
+    public static int method_15353(net.minecraft.class_3532 self, float a0, float a1, float a2) {
+        return net.minecraft.class_3532.method_15369(a0, a1, a2);
+    }
+
+    /** was net/minecraft/class_3558.method_20710(Lnet/minecraft/class_2680;JLnet/minecraft/class_2350;)Lnet/minecraft/class_265; */
+    public static net.minecraft.class_265 method_20710(net.minecraft.class_3558 self, net.minecraft.class_2680 a0, long a1, net.minecraft.class_2350 a2) {
+        return self.method_51562(a0, a2);
+    }
+
+
+
+
+    /** was net/minecraft/class_3680.method_17074(Lnet/minecraft/class_1451;FFF)V */
+    public static void method_17074(net.minecraft.class_3680 self, net.minecraft.class_1451 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3680.method_17074 was removed in 1.21.2 with no direct replacement; class_3680 now exposes only a constructor and field_52884 (class_9953) whose API surface is unavailable");
+    }
+
+    /** was net/minecraft/class_3680.method_17075(Lnet/minecraft/class_1451;FFFFF)V */
+    public static void method_17075(net.minecraft.class_3680 self, net.minecraft.class_1451 a0, float a1, float a2, float a3, float a4, float a5) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3680.method_17075 was removed in 1.21.2 with no direct replacement; particle spawning moved to class_9953 (field_52884) whose API surface is not available");
+    }
+
+
+
+
+
+
+
+    /** was net/minecraft/class_3729.method_16460(Lnet/minecraft/class_1543;Lnet/minecraft/class_4587;F)V */
+    public static void method_16460(net.minecraft.class_3729 self, net.minecraft.class_1543 a0, net.minecraft.class_4587 a1, float a2) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3729.method_16460 was removed in 1.21.2; method_62430 requires class_10035 which cannot be derived from class_4587 (MatrixStack) without additional context");
+    }
+
+    /** was net/minecraft/class_374$class_375.field_39932I */
+    public static int field_39932() {
+        throw new UnsupportedOperationException("CenturyBridge: field_39932 (int) in class_374$class_375 was deleted in 1.21.2 with no direct replacement; its static constant value cannot be reconstructed from the new API surface");
+        // CB-CONFIDENCE: medium -- the field is confirmed deleted with no replacement listed; without knowing the original constant value, a tombstone is the only honest option
+    }
+
+    /** was net/minecraft/class_3765.method_16515(Lnet/minecraft/class_7871;)Lnet/minecraft/class_1799; */
+    public static net.minecraft.class_1799 method_16515(net.minecraft.class_3765 self, net.minecraft.class_7871 a0) {
+        return self.method_61558(a0);
+    }
+
+    /** was net/minecraft/class_3806.field_16809Z */
+    public static boolean field_16809() {
+        return false;
+        // CB-CONFIDENCE: low -- inferring field_16809 is the removed preventProxyConnections server property (deleted ~1.20.5, within the 1.20.1->1.21.2 window) which defaulted to false; exact Yarn field identity not verified
+    }
+
+    /** was net/minecraft/class_3806.field_16836Z */
+    public static boolean field_16836() {
+        return true;
+    }
+
+    /** was net/minecraft/class_3847$class_3907.method_17347()I */
+    public static int method_17347(net.minecraft.class_3847.class_3907 self) {
+        return self.comp_3142();
+    }
+
+    /** was net/minecraft/class_3847.method_16909()Ljava/lang/Object; */
+    public static java.lang.Object method_16909(net.minecraft.class_3847 self) {
+        return self.method_16909();
+    }
+
+    /** was net/minecraft/class_3847.method_16910(Ljava/lang/Object;)Z */
+    public static boolean method_16910(net.minecraft.class_3847 self, java.lang.Object a0) {
+        return self.method_16910((java.lang.Runnable) a0);
+    }
+
+    /** was net/minecraft/class_3879.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V */
+    public static void method_2828(net.minecraft.class_3879 self, net.minecraft.class_4587 a0, net.minecraft.class_4588 a1, int a2, int a3, int a4) {
+        self.method_62100(a0, a1, a2, a3, a4);
+    }
+
+    /** was net/minecraft/class_3899.method_21679()Lit/unimi/dsi/fastutil/longs/LongSet; */
+    public static it.unimi.dsi.fastutil.longs.LongSet method_21679(net.minecraft.class_3899 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3899.method_21679() returned LongSet of ticketed chunk positions; removed in 1.21.2 chunk loading refactor with no direct equivalent on new API surface");
+    }
+
+
+    /** was net/minecraft/class_3924.method_17502(Lnet/minecraft/class_1799;)Ljava/util/Optional; */
+    public static java.util.Optional method_17502(net.minecraft.class_3924 self, net.minecraft.class_1799 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_17502 (getRecipeFor(ItemStack)) was removed; 1.21.2 recipe matching requires RecipeInput via RecipeManager, not a direct ItemStack lookup on the block entity");
+    }
+
+    /** was net/minecraft/class_3968.method_17790(Lnet/minecraft/class_1588;)Z */
+    public static boolean method_17790(net.minecraft.class_3968 self, net.minecraft.class_1588 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3968.method_17790(class_1588)Z was deleted in 1.21.2; surviving methods take render-context types (class_10017/class_10034/class_10086) and return void, so the ItemStack->boolean contract has no equivalent");
+    }
+
+    /** was net/minecraft/class_3969.method_17792(Lnet/minecraft/class_1570;)Z */
+    public static boolean method_17792(net.minecraft.class_3969 self, net.minecraft.class_1570 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3969.method_17792(class_1570) was removed in 1.21.2 with no direct replacement; the new class_3969 only exposes a constructor and no boolean query taking class_1570");
+    }
+
+
+    /** was net/minecraft/class_3999.field_17830Lnet/minecraft/class_3999; */
+    public static net.minecraft.class_3999 field_17830() {
+        throw new UnsupportedOperationException("CenturyBridge: field_17830 (EQUAL_DEPTH_TEST) was removed in 1.21.2; the RenderPhase depth-test system was refactored and this constant has no equivalent");
+    }
+
+    /** was net/minecraft/class_39.field_365Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_365() {
+        throw new UnsupportedOperationException("CenturyBridge: field_365 was removed from class_39 with no direct replacement");
+        // CB-CONFIDENCE: high -- field_365 is absent from the new class_39 surface (it would sit between field_356 and field_397, which are both present) and the task explicitly states it was deleted with no direct replacement.
+    }
+
+    /** was net/minecraft/class_39.field_385Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_385() {
+        throw new UnsupportedOperationException("CenturyBridge: class_39.field_385 was removed in 1.21.2 with no direct replacement");
+        // CB-CONFIDENCE: high -- the problem statement explicitly says the field was deleted with no direct replacement, and none of the remaining class_39 fields correspond to it
+    }
+
+    /** was net/minecraft/class_39.field_394Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_394() {
+        throw new UnsupportedOperationException("CenturyBridge: field_394 was deleted with no direct replacement and its original RegistryKey semantics cannot be determined from the new API surface");
+        // CB-CONFIDENCE: low -- field_394 is explicitly deleted with no direct replacement; without knowing which RegistryKey it represented, any guess would be a silent corruption
+    }
+
+    /** was net/minecraft/class_39.field_461Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_461() {
+        throw new UnsupportedOperationException("CenturyBridge: class_39.field_461 (RegistryKey) was removed in 1.21.2 with no direct replacement");
+        // CB-CONFIDENCE: medium -- prompt confirms the field is deleted with no equivalent; tombstone is the prescribed honest failure, but it does not preserve the old behaviour by design
+    }
+
+    /** was net/minecraft/class_39.field_629Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_629() {
+        throw new UnsupportedOperationException("CenturyBridge: class_39.field_629 was removed in 1.21.2 with no direct replacement; the original RegistryKey target is unknown and cannot be reconstructed from the remaining stat fields");
+        // CB-CONFIDENCE: medium -- the field is confirmed deleted with no listed replacement, but the specific stat it represented is unknown so no faithful constant can be synthesized
+    }
+
+    /** was net/minecraft/class_39.field_716Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_716() {
+        throw new UnsupportedOperationException("CenturyBridge: field_716 (class_39) was removed in 1.21.2 with no direct replacement");
+    }
+
+    /** was net/minecraft/class_39.field_778Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_778() {
+        throw new UnsupportedOperationException("CenturyBridge: class_39.field_778 (a net.minecraft.class_5321 RegistryKey) was deleted in 1.21.2 with no direct replacement, and its original dimension/registry identity cannot be recovered from the new API surface to rebuild the constant");
+        // CB-CONFIDENCE: medium -- the field is genuinely absent with no listed equivalent; reconstructing the exact RegistryKey constant would require knowing which dimension/registry it identified, which is not derivable from the provided surface, so a tombstone is safer than a guessed value
+    }
+
+    /** was net/minecraft/class_39.field_806Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_806() {
+        throw new UnsupportedOperationException("CenturyBridge: class_39.field_806 was removed in 1.21.2 with no direct replacement");
+        // CB-CONFIDENCE: high -- prompt explicitly states the field was deleted with no direct replacement
+    }
+
+    /** was net/minecraft/class_39.field_869Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_869() {
+        throw new UnsupportedOperationException("CenturyBridge: field_869 on class_39 (World) was deleted in 1.21.2 with no direct replacement; cannot determine semantic equivalent among remaining RegistryKey fields");
+        // CB-CONFIDENCE: medium -- the problem explicitly states "no direct replacement" and without knowing the original semantic identity of field_869, mapping it to any surviving field risks silent corruption; tombstone is the honest choice
+    }
+
+    /** was net/minecraft/class_39.field_878Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_878() {
+        throw new UnsupportedOperationException("CenturyBridge: class_39.field_878 was deleted in 1.21.2 with no direct replacement");
+    }
+
+    /** was net/minecraft/class_4010$class_4046.field_18037Ljava/lang/String; */
+    public static java.lang.String field_18037() {
+        throw new UnsupportedOperationException("CenturyBridge: field_18037 was a static String constant in class_4010$class_4046 deleted in 1.21.2 with no replacement; its value cannot be reconstructed from the new API surface");
+        // CB-CONFIDENCE: low -- the field was a static String constant with no direct replacement; without knowing the original constant value it cannot be faithfully reconstructed
+    }
+
+    /** was net/minecraft/class_4010$class_4046.field_18038Lnet/minecraft/class_3696; */
+    public static net.minecraft.class_3696 field_18038() {
+        throw new UnsupportedOperationException("CenturyBridge: field_18038 (class_3696) has no direct replacement; class_4010$class_4046 was restructured to a record (String + 2 AtomicLongs) with no equivalent for the old static field");
+    }
+
+    /** was net/minecraft/class_4010$class_4046.field_18039Lnet/minecraft/class_3696; */
+    public static net.minecraft.class_3696 field_18039() {
+        throw new UnsupportedOperationException("CenturyBridge: field_18039 of type class_3696 was deleted from class_4010$class_4046 with no direct replacement in 1.21.2; the new record only exposes a String name and two AtomicLong counters, so the old constant cannot be reconstructed");
+        // CB-CONFIDENCE: high -- the new API surface has no field of type class_3696 and the member is explicitly marked deleted with no replacement
+    }
+
+    /** was net/minecraft/class_4010$class_4046.field_18040Ljava/util/concurrent/atomic/AtomicLong; */
+    public static java.util.concurrent.atomic.AtomicLong field_18040() {
+        throw new UnsupportedOperationException("CenturyBridge: field_18040 was a static mutable AtomicLong with no equivalent in the new record API (only per-instance comp_3207/comp_3208 exist)");
+        // CB-CONFIDENCE: medium -- field is explicitly deleted with no replacement; AtomicLong implies mutable shared state, so a fresh-instance shim would silently corrupt increment semantics
+    }
+
+    /** was net/minecraft/class_4010$class_4046.field_18041Ljava/util/concurrent/atomic/AtomicLong; */
+    public static java.util.concurrent.atomic.AtomicLong field_18041() {
+        throw new UnsupportedOperationException("CenturyBridge: field_18041 was a static AtomicLong on class_4010$class_4046 with no direct replacement; new API only exposes instance AtomicLong components comp_3207/comp_3208");
+        // CB-CONFIDENCE: high -- the old static field is deleted and the new API has no static equivalent, only per-instance AtomicLong record components
+    }
+
+
+    /** was net/minecraft/class_4146.method_43081()I */
+    public static int method_43081(net.minecraft.class_4146 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_43081 was removed in 1.21.2; class_4146 no longer exposes any int-returning accessor");
+    }
+
+    /** was net/minecraft/class_4148.field_30258I */
+    public static int field_30258() {
+        return 2;
+    }
+
+    /** was net/minecraft/class_4156.method_28359(Ljava/lang/Runnable;)Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec method_28359(net.minecraft.class_4156 self, java.lang.Runnable a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_4156.method_28359 (codec factory taking a Runnable callback) was removed in 1.21.2; the new EndGatewayFeature no longer exposes a Codec and the Runnable is now passed directly to constructors, so the old codec-based contract cannot be reproduced");
+    }
+
+    /** was net/minecraft/class_4157.method_28364(Ljava/lang/Runnable;)Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec method_28364(net.minecraft.class_4157 self, java.lang.Runnable a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_4157.method_28364(Runnable) Codec factory removed in 1.21.2 with no direct replacement; structure serialization refactored to method_61451/class_9865, no Codec equivalent exposed on new API");
+    }
+
+    /** was net/minecraft/class_4176.field_50138Lnet/minecraft/class_4174; */
+    public static net.minecraft.class_4174 field_50138() {
+        throw new UnsupportedOperationException("CenturyBridge: field_50138 was deleted in 1.21.2 with no direct replacement");
+        // CB-CONFIDENCE: high -- the field is explicitly marked deleted with no direct replacement, and none of the surviving fields can be confidently mapped to it
+    }
+
+
+
+    /** was net/minecraft/class_4381$class_4382.field_19760Lnet/minecraft/class_4381; */
+    public static net.minecraft.class_4381 field_19760() {
+        throw new UnsupportedOperationException("CenturyBridge: field_19760 is the synthetic outer-class reference (this$0) on class_4381$class_4382 and cannot be returned from a parameterless static helper");
+    }
+
+
+    /** was net/minecraft/class_4466.method_23992(Lnet/minecraft/class_2338;)Z */
+    public static boolean method_23992(net.minecraft.class_4466 self, net.minecraft.class_2338 a0) {
+        return true;
+    }
+
+
+    /** was net/minecraft/class_4495.method_22111(Lnet/minecraft/class_4466;FFF)V */
+    public static void method_22111(net.minecraft.class_4495 self, net.minecraft.class_4466 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: method_22111(class_4466, F, F, F) was removed in 1.21.2; remaining methods on class_4495 take class_10017/class_10002 with no known conversion from class_4466 + 3 floats");
+    }
+
+    /** was net/minecraft/class_4507.method_22130(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFF)V */
+    public static void method_22130(net.minecraft.class_4507 self, net.minecraft.class_4587 a0, net.minecraft.class_4597 a1, int a2, net.minecraft.class_1297 a3, float a4, float a5, float a6, float a7) {
+        throw new UnsupportedOperationException("CenturyBridge: method_22130 took an Entity (class_1297) and 4 floats; the 1.21.2 API replaced it with methods taking class_10017/class_10055 and only 2 floats, with no Entity-based equivalent or documented float mapping");
+    }
+
+    /** was net/minecraft/class_459.method_57747(Lnet/minecraft/class_459;)Lnet/minecraft/class_310; */
+    public static net.minecraft.class_310 method_57747(net.minecraft.class_459 self, net.minecraft.class_459 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_459.method_57747 was deleted in 1.21.2 with no direct replacement among remaining Keyboard methods");
+    }
+
+
+
+
+    /** was net/minecraft/class_4722.method_24076()Lnet/minecraft/class_1921; */
+    public static net.minecraft.class_1921 method_24076(net.minecraft.class_4722 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_4722.method_24076 was deleted in 1.21.2 with no direct replacement; BufferBuilderStorage vertex consumer provider API was restructured");
+        // CB-CONFIDENCE: medium -- the method is explicitly marked deleted with no direct replacement; multiple new class_1921-returning methods exist but none can be confidently identified as the semantic equivalent without knowing the original method's exact purpose
+    }
+
+    /** was net/minecraft/class_4840.field_27464Lnet/minecraft/class_630; */
+    public static net.minecraft.class_630 field_27464() {
+        throw new UnsupportedOperationException("CenturyBridge: field_27464 was a static class_630 on class_4840, now only passed via constructor as an instance field; no static equivalent exists to reconstruct the old value");
+    }
+
+    /** was net/minecraft/class_4840.method_47656(Lnet/minecraft/class_5605;Lnet/minecraft/class_5609;)V */
+    public static void method_47656(net.minecraft.class_4840 self, net.minecraft.class_5605 a0, net.minecraft.class_5609 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: class_4840.method_47656(class_5605, class_5609) was removed in 1.21.2 with no direct replacement; new particle methods use incompatible parameter types (class_10017/class_10034/class_10054)");
+    }
+
+    /** was net/minecraft/class_4861$1.field_41905Lnet/minecraft/class_8047$class_8049; */
+    public static net.minecraft.class_8047.class_8049 field_41905() {
+        throw new UnsupportedOperationException("CenturyBridge: field_41905 of type class_8047.class_8049 was deleted in 1.21.2 with no direct replacement on class_4861$1");
+    }
+
+    /** was net/minecraft/class_4861$3.field_7778Lnet/minecraft/class_4861; */
+    public static net.minecraft.class_4861 field_7778() {
+        return null;
+    }
+
+    /** was net/minecraft/class_4861.method_48352()Lnet/minecraft/class_8047; */
+    public static net.minecraft.class_8047 method_48352(net.minecraft.class_4861 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_4861.method_48352() has no replacement in 1.21.2; the class_8047 passed to the constructor is no longer stored or exposed");
+    }
+
+    /** was net/minecraft/class_4861.method_48357(Lnet/minecraft/class_1799;)I */
+    public static int method_48357(net.minecraft.class_4861 self, net.minecraft.class_1799 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_48357(ItemStack)->int has no direct replacement in 1.21.2; recipe screen handler slot-finding was removed");
+    }
+
+    /** was net/minecraft/class_507.method_2596(Lnet/minecraft/class_8786;Ljava/util/List;)V */
+    public static void method_2596(net.minecraft.class_507 self, net.minecraft.class_8786 a0, java.util.List a1) {
+        throw new UnsupportedOperationException("CenturyBridge: class_507.method_2596(class_8786, List) was removed in 1.21.2; chat signing API reworked to method_64868/method_64875/method_64876 with incompatible types (class_9934/class_10295/class_10298/class_10352), no conversion from class_8786 available");
+    }
+
+    /** was net/minecraft/class_507.method_2600(Lnet/minecraft/class_1735;)V */
+    public static void method_2600(net.minecraft.class_507 self, net.minecraft.class_1735 a0) {
+        self.method_62044(a0);
+    }
+
+    /** was net/minecraft/class_507.method_60344(Lnet/minecraft/class_1856;IIII)V */
+    public static void method_60344(net.minecraft.class_507 self, net.minecraft.class_1856 a0, int a1, int a2, int a3, int a4) {
+        throw new UnsupportedOperationException("CenturyBridge: method_60344(Ingredient,int,int,int,int) deleted in 1.21.2; new class_507 API has no Ingredient-accepting method — rendering restructured around class_332/class_1735");
+    }
+
+
+    /** was net/minecraft/class_513.method_2630(Lnet/minecraft/class_507;)V */
+    public static void method_2630(net.minecraft.class_513 self, net.minecraft.class_507 a0) {
+        self.method_2638();
+    }
+
+    /** was net/minecraft/class_513.method_2631()Lnet/minecraft/class_8786; */
+    public static net.minecraft.class_8786 method_2631(net.minecraft.class_513 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_513.method_2631() (returning class_8786) was removed in 1.21.2; no remaining accessor on class_513 yields class_8786 -- method_64878() returns the unrelated class_10298, so the old contract has no faithful bridge");
+    }
+
+
+    /** was net/minecraft/class_514.method_2643()Lnet/minecraft/class_8786; */
+    public static net.minecraft.class_8786 method_2643(net.minecraft.class_514 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_514.method_2643() returned class_8786 (RecipeResultCollection), removed in 1.21.2; the new API exposes class_10298 via method_64881() instead, with no way to obtain or construct a class_8786 from class_514");
+    }
+
+    /** was net/minecraft/class_516.method_2647(Lnet/minecraft/class_3439;)V */
+    public static void method_2647(net.minecraft.class_516 self, net.minecraft.class_3439 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_516.method_2647(DyeColor) was removed in 1.21.2 with no direct replacement; sign color is now handled via class_10298 (method_2653), which has a different contract (returns boolean, not void) and no DyeColor conversion is available in the new API surface");
+    }
+
+    /** was net/minecraft/class_516.method_2649(Lnet/minecraft/class_1662;IILnet/minecraft/class_3439;)V */
+    public static void method_2649(net.minecraft.class_516 self, net.minecraft.class_1662 a0, int a1, int a2, net.minecraft.class_3439 a3) {
+        throw new UnsupportedOperationException("CenturyBridge: class_516.method_2649 (MerchantScreen trade-slot render helper taking Merchant/int/int/ItemRenderer) was removed in 1.21.2 with no direct equivalent; the new class_516 API surface exposes only query/filter methods (method_64884/64885/64886) and no ItemRenderer-based rendering path");
+    }
+
+
+
+    /** was net/minecraft/class_516.method_2657()Z */
+    public static boolean method_2657(net.minecraft.class_516 self) {
+        return self.method_2650().isEmpty();
+    }
+
+    /** was net/minecraft/class_516.method_48479()Lnet/minecraft/class_5455; */
+    public static net.minecraft.class_5455 method_48479(net.minecraft.class_516 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_516 no longer stores a class_5455 (RegistryWrapper.WrapperLookup); method_48479 has no equivalent in 1.21.2");
+    }
+
+    /** was net/minecraft/class_517.method_17065()Ljava/util/Set; */
+    public static java.util.Set method_17065(net.minecraft.class_517 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_17065 returned a Set and was deleted in 1.21.2 with no direct replacement in class_517");
+    }
+
+    /** was net/minecraft/class_518.method_2659()Lnet/minecraft/class_507; */
+    public static net.minecraft.class_507 method_2659(net.minecraft.class_518 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_518.method_2659() was deleted in 1.21.2 with no direct replacement; new class_518 API (method_16891, method_64862) cannot produce class_507");
+    }
+
+    /** was net/minecraft/class_521.method_20140(Lnet/minecraft/class_521;I)I */
+    public static int method_20140(net.minecraft.class_521 self, net.minecraft.class_521 a0, int a1) {
+        throw new UnsupportedOperationException("CenturyBridge: class_521.method_20140(class_521, int) was removed in 1.21.2 with no direct equivalent in the new API surface");
+    }
+
+    /** was net/minecraft/class_5294.method_28109(FF)[F */
+    public static float[] method_28109(net.minecraft.class_5294 self, float a0, float a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_28109(FF)[F was deleted in 1.21.2 with no direct replacement; the closest method_28112(Vec3d,float) has an incompatible signature");
+    }
+
+
+
+    /** was net/minecraft/class_5354.method_29923(Lnet/minecraft/class_1937;)Z */
+    public static boolean method_29923(net.minecraft.class_5354 self, net.minecraft.class_1937 a0) {
+        return self.method_29923((net.minecraft.class_3218) a0);
+    }
+
+    /** was net/minecraft/class_537.method_2784(Lnet/minecraft/class_332;FI)V */
+    public static void method_2784(net.minecraft.class_537 self, net.minecraft.class_332 a0, float a1, int a2) {
+        self.method_2784(a0, a1, (float) a2);
+    }
+
+
+    /** was net/minecraft/class_5411.method_30186(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5411; */
+    public static net.minecraft.class_5411 method_30186(net.minecraft.class_5411 self, net.minecraft.class_2540 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_30186(class_2540) has no equivalent in 1.21.2; class_5411 no longer deserializes from PacketByteBuf, only from NbtCompound via method_30183");
+        // CB-CONFIDENCE: high -- the new API surface has no method accepting class_2540; the only deserializer is method_30183(class_2487) which reads NBT, a different format from a packet buffer
+    }
+
+
+    /** was net/minecraft/class_5455$class_6892.comp_351Lnet/minecraft/class_2378; */
+    public static net.minecraft.class_2378 comp_351() {
+        throw new UnsupportedOperationException("CenturyBridge: comp_351 field was deleted; only instance accessor comp_351() remains, which requires a receiver");
+    }
+
+    /** was net/minecraft/class_5455.method_41201()Lcom/mojang/serialization/Lifecycle; */
+    public static com.mojang.serialization.Lifecycle method_41201(net.minecraft.class_5455 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_5455.method_41201() (getLifecycle) was removed in 1.21.2; registry wrappers no longer carry a registry-wide Lifecycle");
+    }
+
+    /** was net/minecraft/class_549.method_17084(Lnet/minecraft/class_1496;FFF)V */
+    public static void method_17084(net.minecraft.class_549 self, net.minecraft.class_1496 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: method_17084(ParticleEffect, float, float, float) was removed in 1.21.2; the replacement a(class_10017) takes a different parameter type that cannot be constructed from the old ParticleEffect + position without its API surface");
+    }
+
+    /** was net/minecraft/class_5514.field_26833Ljava/util/concurrent/ExecutorService; */
+    public static java.util.concurrent.ExecutorService field_26833() {
+        return java.util.concurrent.Executors.newCachedThreadPool();
+    }
+
+    /** was net/minecraft/class_5514.method_31298(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Lnet/minecraft/class_5514$class_5515;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; */
+    public static java.util.concurrent.CompletableFuture method_31298(net.minecraft.class_5514 self, com.mojang.authlib.GameProfile a0, java.lang.String a1, net.minecraft.class_5514.class_5515 a2, java.util.concurrent.Executor a3) {
+        throw new UnsupportedOperationException("CenturyBridge: method_31298 was removed; callback type class_5515 has no equivalent in new method_31299 (uses class_7241) and return type changed from CompletableFuture to void");
+    }
+
+    /** was net/minecraft/class_554.method_22952(Lnet/minecraft/class_1690;FFFFF)V */
+    public static void method_22952(net.minecraft.class_554 self, net.minecraft.class_1690 a0, float a1, float a2, float a3, float a4, float a5) {
+        throw new UnsupportedOperationException("CenturyBridge: ParticleManager.method_22952(Particle,5float) was removed in 1.21.2; the new API has no per-particle method accepting a Particle and float parameters");
+    }
+
+    /** was net/minecraft/class_557.method_24184(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V */
+    public static void method_24184(net.minecraft.class_557 self, net.minecraft.class_4587 a0, net.minecraft.class_4588 a1, int a2, int a3, int a4) {
+        throw new UnsupportedOperationException("CenturyBridge: class_557.method_24184(MatrixStack, VertexConsumerProvider, int, int, int) was removed in 1.21.2; no remaining member accepts MatrixStack/VertexConsumerProvider, rendering must migrate to DrawContext");
+    }
+
+    /** was net/minecraft/class_5601.method_35743()Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_35743(net.minecraft.class_5601 self) {
+        return self.comp_2995();
+    }
+
+    /** was net/minecraft/class_5601.method_35744()Ljava/lang/String; */
+    public static java.lang.String method_35744(net.minecraft.class_5601 self) {
+        return self.comp_2996();
+    }
+
+
+
+
+
+    /** was net/minecraft/class_5603.field_27702F */
+    public static float field_27702() {
+        throw new UnsupportedOperationException("CenturyBridge: field_27702 was a deleted static float constant in class_5603 (Color) with no direct replacement; value cannot be inferred from the new API surface");
+    }
+
+    /** was net/minecraft/class_566.field_3370Z */
+    public static boolean field_3370() {
+        return false;
+    }
+
+    /** was net/minecraft/class_566.field_3371Z */
+    public static boolean field_3371() {
+        return false;
+    }
+
+    /** was net/minecraft/class_5684.method_32661()I */
+    public static int method_32661(net.minecraft.class_5684 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_32661 now requires a TextRenderer (class_327) argument not available in the old no-arg signature");
+    }
+
+    /** was net/minecraft/class_5684.method_32666(Lnet/minecraft/class_327;IILnet/minecraft/class_332;)V */
+    public static void method_32666(net.minecraft.class_5684 self, net.minecraft.class_327 a0, int a1, int a2, net.minecraft.class_332 a3) {
+        self.method_32666(a0, a1, a2, -1, 15728880, a3);
+    }
+
+    /** was net/minecraft/class_571.method_17089(Lnet/minecraft/class_1584;FFF)V */
+    public static void method_17089(net.minecraft.class_571 self, net.minecraft.class_1584 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: method_17089 was removed in 1.21.2 model refactor; no method in the new API surface accepts (class_1584, float, float, float)");
+    }
+
+    /** was net/minecraft/class_574.method_17095(Lnet/minecraft/class_1439;FFF)V */
+    public static void method_17095(net.minecraft.class_574 self, net.minecraft.class_1439 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: method_17095(ItemStack,float,float,float) was removed in 1.21.2; the renderer now uses state objects (class_10017/class_10037) that cannot be constructed from the old parameters without additional rendering context");
+    }
+
+    /** was net/minecraft/class_576.method_17098(Lnet/minecraft/class_1621;FFF)V */
+    public static void method_17098(net.minecraft.class_576 self, net.minecraft.class_1621 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: class_576.method_17098(class_1621,float,float,float) was deleted in 1.21.2 with no direct replacement; new API uses different render context types (class_10017/class_10067) that cannot be constructed from the old parameters");
+    }
+
+    /** was net/minecraft/class_5789.method_33431(Lnet/minecraft/class_5776;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_33431(net.minecraft.class_5789 self, net.minecraft.class_5776 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_33431(class_5776)->class_2960 was deleted in 1.21.2; new class_5789 returns class_2960 only from a(class_10069) and b(class_10042), neither of which accepts class_5776");
+    }
+
+    /** was net/minecraft/class_582.field_32520I */
+    public static int field_32520() {
+        return 10;
+        // CB-CONFIDENCE: medium -- field_32520 was a static int constant in TextRenderer (Z-offset for text drawing); value 10 reconstructed from memory of the 1.17-era rendering refactor, not verified against source.
+    }
+
+    /** was net/minecraft/class_583.field_3449Z */
+    public static boolean field_3449() {
+        throw new UnsupportedOperationException("CenturyBridge: field_3449Z was deleted in 1.21.2 with no direct replacement; no boolean equivalent exists in the new class_583 API surface");
+        // CB-CONFIDENCE: high -- the field is explicitly deleted with no direct replacement, and the new API surface contains no boolean field to derive a value from
+    }
+
+
+    /** was net/minecraft/class_583.method_2816(Lnet/minecraft/class_1297;FFF)V */
+    public static void method_2816(net.minecraft.class_583 self, net.minecraft.class_1297 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: class_583.method_2816(Entity,float,float,float) was deleted in 1.21.2; the new model API uses method_2819(class_10017) with a render-state object that cannot be constructed from the old (Entity,float,float,float) parameters");
+    }
+
+    /** was net/minecraft/class_586.method_17102(Lnet/minecraft/class_1440;FFF)V */
+    public static void method_17102(net.minecraft.class_586 self, net.minecraft.class_1440 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: method_17102 (vertex with matrix transform) was removed in 1.21.2; VertexConsumer no longer accepts matrix-transformed float coordinates directly -- the new API uses class_10017/class_10042/class_10050 types whose semantics are incompatible with the old float-coordinate submission pattern");
+    }
+
+    /** was net/minecraft/class_591.method_2823(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;II)V */
+    public static void method_2823(net.minecraft.class_591 self, net.minecraft.class_4587 a0, net.minecraft.class_4588 a1, int a2, int a3) {
+        throw new UnsupportedOperationException("CenturyBridge: class_591.method_2823(MatrixStack, VertexConsumerProvider, int, int) was removed; 1.21.2 splash rendering requires new context types (class_10034/class_10055/class_1306) not derivable from the old parameters");
+        // CB-CONFIDENCE: high -- old signature explicitly deleted with no direct replacement; new API requires context objects unavailable from old params
+    }
+
+    /** was net/minecraft/class_591.method_2824(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;II)V */
+    public static void method_2824(net.minecraft.class_591 self, net.minecraft.class_4587 a0, net.minecraft.class_4588 a1, int a2, int a3) {
+        throw new UnsupportedOperationException("CenturyBridge: class_591.method_2824(MatrixStack, VertexConsumerProvider, int, int) was removed in 1.21.2; the rendering API now uses DrawContext instead of separate MatrixStack/VertexConsumerProvider, and no equivalent method exists in the new API surface");
+    }
+
+    /** was net/minecraft/class_5944.field_29482Lnet/minecraft/class_284; */
+    public static net.minecraft.class_284 field_29482() {
+        return null;
+    }
+
+    /** was net/minecraft/class_5944.field_29483Lorg/slf4j/Logger; */
+    public static org.slf4j.Logger field_29483() {
+        return org.slf4j.LoggerFactory.getLogger(net.minecraft.class_5944.class);
+    }
+
+    /** was net/minecraft/class_5944.method_34583(Ljava/lang/String;Ljava/lang/Object;)V */
+    public static void method_34583(net.minecraft.class_5944 self, java.lang.String a0, java.lang.Object a1) {
+        if (a1 instanceof java.lang.Integer) {
+            self.method_62899(a0, ((java.lang.Integer) a1).intValue());
+        } else {
+            throw new UnsupportedOperationException("CenturyBridge: method_34583(String, Object) was deleted; method_62899(String, int) is the closest equivalent but only accepts Integer");
+        }
+    }
+
+    /** was net/minecraft/class_5944.method_35786()Lnet/minecraft/class_293; */
+    public static net.minecraft.class_293 method_35786(net.minecraft.class_5944 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_5944 no longer exposes its underlying class_293; the provider is now passed into construction (method_60897/method_62896) and not retrievable");
+    }
+
+    /** was net/minecraft/class_5944.method_35787()Ljava/lang/String; */
+    public static java.lang.String method_35787(net.minecraft.class_5944 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_5944.method_35787() returned the shader program name, which is no longer stored or accessible on the new class_5944");
+    }
+
+    /** was net/minecraft/class_596.method_17115(Lnet/minecraft/class_1463;FFF)V */
+    public static void method_17115(net.minecraft.class_596 self, net.minecraft.class_1463 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_17115(class_1463, float, float, float) was removed in 1.21.2; the rendering pipeline was restructured (method_17117 now takes class_10059) and no direct equivalent exists");
+    }
+
+    /** was net/minecraft/class_598.method_17118(Lnet/minecraft/class_1472;FFF)V */
+    public static void method_17118(net.minecraft.class_598 self, net.minecraft.class_1472 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: class_598.method_17118(class_1472,float,float,float) was removed in 1.21.2 with no direct replacement; the surviving methods (a(class_10017), a(class_10042), method_17119(class_10063)) require new context types that cannot be constructed from the old arguments");
+    }
+
+    /** was net/minecraft/class_601.method_17120(Lnet/minecraft/class_1472;FFF)V */
+    public static void method_17120(net.minecraft.class_601 self, net.minecraft.class_1472 a0, float a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: class_601.method_17120(class_1472,float,float,float) was deleted in 1.21.2; camera update was restructured around new context types (class_10017/class_10042/class_10063) and none accept the old GameRenderer+3-float contract");
+        // CB-CONFIDENCE: high -- the new API surface contains no method accepting class_1472 or three floats; the old contract is genuinely inexpressible
+    }
+
+    /** was net/minecraft/class_602.method_2829()Lnet/minecraft/class_630; */
+    public static net.minecraft.class_630 method_2829(net.minecraft.class_602 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_602.method_2829() returned class_630 (the reference passed to its constructor) but 1.21.2 removed this getter; no method on class_602 returns class_630 anymore");
+    }
+
+    /** was net/minecraft/class_638.method_8435(J)V */
+    public static void method_8435(net.minecraft.class_638 self, long a0) {
+        throw new UnsupportedOperationException("CenturyBridge: ClientWorld.tickEntities(long) was removed in 1.21.2; entity ticking restructured with no method accepting a time parameter");
+    }
+
+    /** was net/minecraft/class_6749.field_35682Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec field_35682() {
+        throw new UnsupportedOperationException("CenturyBridge: class_6749.field_35682 was a dispatch Codec<StructurePlacement> over subclass types; 1.21.2 removed it and exposes no equivalent codec or registry hook in the listed API surface, so a faithful reconstruction is not possible");
+        // CB-CONFIDENCE: high -- the old field was a complex recursive dispatch codec with no replacement exposed in the new API surface; any synthetic codec would silently misbehave
+    }
+
+    /** was net/minecraft/class_6759.method_39401(Lnet/minecraft/class_6760;Ljava/util/function/Function;J)Lnet/minecraft/class_2487; */
+    public static net.minecraft.class_2487 method_39401(net.minecraft.class_6759 self, net.minecraft.class_6760 a0, java.util.function.Function a1, long a2) {
+        return self.method_39404(a1);
+    }
+
+    /** was net/minecraft/class_6761.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520; */
+    public static net.minecraft.class_2520 method_20463(net.minecraft.class_6761 self, long a0, java.util.function.Function a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_20463(long, Function) accepted a Function parameter with no equivalent in the new API; method_61898(long) returns List without accepting or applying a Function");
+    }
+
+    /** was net/minecraft/class_6800.field_35767Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_35767() {
+        throw new UnsupportedOperationException("CenturyBridge: field_35767 was removed in 1.21.2, no direct replacement exists");
+        // CB-CONFIDENCE: high -- field explicitly deleted with no direct replacement; remaining fields are distinct RegistryKey constants
+    }
+
+    /** was net/minecraft/class_6864$class_5748.method_56531()I */
+    public static int method_56531(net.minecraft.class_6864.class_5748 self) {
+        return self.method_64601();
+    }
+
+    /** was net/minecraft/class_6864$class_5748.method_56532(Lnet/minecraft/class_2378;)V */
+    public static void method_56532(net.minecraft.class_6864.class_5748 self, net.minecraft.class_2378 a0) {
+        self.method_61316(a0);
+    }
+
+    /** was net/minecraft/class_7094.method_43686(FF)V */
+    public static void method_43686(net.minecraft.class_7094 self, float a0, float a1) {
+        self.method_56988((int) a0, a1);
+    }
+
+
+
+
+    /** was net/minecraft/class_7165.method_41708(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V */
+    public static void method_41708(net.minecraft.class_7165 self, net.minecraft.class_1937 a0, net.minecraft.class_2680 a1, net.minecraft.class_2338 a2, net.minecraft.class_2248 a3, net.minecraft.class_2338 a4, boolean a5) {
+        // ...
+    }
+
+
+    /** was net/minecraft/class_7214.method_41966(Lnet/minecraft/class_7110;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_41966(net.minecraft.class_7214 self, net.minecraft.class_7110 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_7214.method_41966 was removed; replacement b() requires class_10042 but old arg is class_7110 with no available conversion");
+        // CB-CONFIDENCE: high -- the old parameter type class_7110 and the new b() parameter type class_10042 are distinct intermediary classes with no conversion surface provided, so no faithful bridge can be written
+    }
+
+    /** was net/minecraft/class_7264.method_42282(Lnet/minecraft/class_1657;)V */
+    public static void method_42282(net.minecraft.class_7264 self, net.minecraft.class_1657 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_7264.method_42282(PlayerEntity) was removed in 1.21.2 with no direct replacement on ServerPlayerInteractionManager");
+    }
+
+    /** was net/minecraft/class_7265.method_42283(Lnet/minecraft/class_1282;Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;)V */
+    public static void method_42283(net.minecraft.class_7265 self, net.minecraft.class_1282 a0, net.minecraft.class_1937 a1, net.minecraft.class_1297 a2) {
+        self.method_42283(a0, (net.minecraft.class_3218) a1, a2);
+    }
+
+    /** was net/minecraft/class_7378.field_41535Lnet/minecraft/class_7378$class_7380; */
+    public static net.minecraft.class_7378.class_7380 field_41535() {
+        throw new UnsupportedOperationException("CenturyBridge: field_41535 was removed in 1.21.2 with no direct replacement; cannot determine which remaining class_7380 field corresponds to the old semantics");
+    }
+
+    /** was net/minecraft/class_7430.method_43562(Lnet/minecraft/class_1799;Lnet/minecraft/class_6862;Lnet/minecraft/class_5819;)V */
+    public static void method_43562(net.minecraft.class_7430 self, net.minecraft.class_1799 a0, net.minecraft.class_6862 a1, net.minecraft.class_5819 a2) {
+        // This method was part of the recipe book / crafting system
+            // It likely added the ingredients of the recipe to the RecipeMatcher
+    }
+
+    /** was net/minecraft/class_7445.field_39125I */
+    public static int field_39125() {
+        return (int) net.minecraft.class_7445.field_39125;
+    }
+
+    /** was net/minecraft/class_744.field_3903Z */
+    public static boolean field_3903() {
+        return false;
+    }
+
+    /** was net/minecraft/class_744.field_3904Z */
+    public static boolean field_3904() {
+        throw new UnsupportedOperationException("CenturyBridge: field_3904 was a static boolean field deleted in 1.21.2 with no direct replacement; its constant value cannot be inferred from the new API surface");
+    }
+
+    /** was net/minecraft/class_744.field_3908Z */
+    public static boolean field_3908() {
+        return false;
+    }
+
+
+    /** was net/minecraft/class_744.field_3910Z */
+    public static boolean field_3910() {
+        throw new UnsupportedOperationException("CenturyBridge: field_3910 (boolean) was deleted from class_744 with no direct replacement; original constant value cannot be determined from new API surface");
+        // CB-CONFIDENCE: low -- the field was a raw boolean constant in RenderPhase deleted between 1.20.1 and 1.21.2 with no surviving equivalent; guessing true/false risks silent rendering behaviour changes
+    }
+
+    /** was net/minecraft/class_757.field_29403Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 field_29403() {
+        return null;
+    }
+
+    /** was net/minecraft/class_757.field_3993Lorg/slf4j/Logger; */
+    public static org.slf4j.Logger field_3993() {
+        return org.slf4j.LoggerFactory.getLogger(net.minecraft.class_757.class);
+    }
+
+    /** was net/minecraft/class_757.field_4015Lnet/minecraft/class_310; */
+    public static net.minecraft.class_310 field_4015() {
+        return net.minecraft.class_310.method_1551();
+    }
+
+    /** was net/minecraft/class_757.field_4024Lnet/minecraft/class_279; */
+    public static net.minecraft.class_279 field_4024() {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.camera (field_4024) was removed in 1.21.2 with no direct replacement; new API surface exposes no accessor returning class_279");
+        // CB-CONFIDENCY: high -- prompt explicitly states deletion with no direct replacement, and no method in the new class_757 surface returns class_279
+    }
+
+    /** was net/minecraft/class_757.method_3183()Lnet/minecraft/class_279; */
+    public static net.minecraft.class_279 method_3183(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.getCamera() was removed in 1.21.2; camera is no longer stored on or accessible from GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_3194()Lnet/minecraft/class_330; */
+    public static net.minecraft.class_330 method_3194(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.getCamera() (method_3194) was removed in 1.21.2; Camera is no longer stored in GameRenderer and no equivalent accessor exists on class_757");
+    }
+
+    /** was net/minecraft/class_757.method_3207()V */
+    public static void method_3207(net.minecraft.class_757 self) {
+        self.method_35768(true);
+    }
+
+
+    /** was net/minecraft/class_757.method_34496()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34496(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_34496() returned PostEffectProcessor (class_5944) for direct manipulation; 1.21.2 reworked post-processing to class_9779-based pipelines and no longer exposes the processor instance");
+    }
+
+    /** was net/minecraft/class_757.method_34497()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34497(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.getCamera() was removed in 1.21.2; camera is no longer stored on or accessible from GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_34498()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34498(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_757.method_34498() returned the loaded ShaderEffect (class_5944); in 1.21.2 the post-effect pipeline was reworked and GameRenderer no longer holds a class_5944 instance (only an identifier via method_62906)");
+    }
+
+    /** was net/minecraft/class_757.method_34499()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34499(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34499() returned the managed PostEffectProcessor (class_5944); in 1.21.2 post-effect handling was moved out of class_757 and no equivalent accessor exists on the new GameRenderer surface");
+    }
+
+    /** was net/minecraft/class_757.method_34501()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34501(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34501() returning PostEffectProcessor was removed in 1.21.2; post-effect processing was reworked with no equivalent on GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_34502()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34502(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34502() returned the PostEffectProcessor (class_5944); in 1.21.2 the post-effect pipeline was reworked and class_757 no longer holds/exposes a class_5944 instance (only method_62906() exposes the post-effect Identifier), so the old contract cannot be faithfully bridged");
+    }
+
+    /** was net/minecraft/class_757.method_34503()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34503(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34503() returned TickDeltaManager (class_5944) which was removed in 1.21.2; the render tick counter (class_9779) is now passed as a parameter to render methods and is no longer stored in or accessible from GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_34504()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34504(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34504() (getPostProcessor) was removed in 1.21.2 with no direct replacement; post-processing is no longer exposed on GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_34505()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34505(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34505() returned a PostEffectProcessor (class_5944) with no direct equivalent in 1.21.2; the post-effect pipeline was reworked around class_9779 and no accessor on class_757 yields class_5944 anymore");
+    }
+
+    /** was net/minecraft/class_757.method_34506()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34506(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34506() returned a PostEffectProcessor (class_5944) which no longer exists in 1.21.2; the post-processing pipeline was reworked");
+    }
+
+    /** was net/minecraft/class_757.method_34507()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34507(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34507() returned the post-processing ShaderEffect (class_5944), which was removed from GameRenderer in 1.21.2; the post-processing pipeline is now managed outside class_757");
+    }
+
+    /** was net/minecraft/class_757.method_34508()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34508(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34508() returned the post-processing PostEffectProcessor (class_5944), which is no longer held by GameRenderer in 1.21.2; the post-effect pipeline was reworked and no equivalent instance is exposed");
+    }
+
+    /** was net/minecraft/class_757.method_34509()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34509(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34509() (getPostProcessor returning PostEffectProcessor) has no equivalent in 1.21.2; post-processing was reworked and class_5944 is no longer held by class_757");
+    }
+
+    /** was net/minecraft/class_757.method_34510()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34510(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_757.method_34510() returned the PostEffectProcessor (class_5944); in 1.21.2 GameRenderer only exposes a setter method_34521(class_5912) for the renamed processor type and no getter, so the instance cannot be retrieved.");
+    }
+
+    /** was net/minecraft/class_757.method_34511()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34511(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34511() returned a PostEffectProcessor (class_5944) for the blur effect, which is no longer exposed on GameRenderer in 1.21.2; blur is now controlled via boolean flags (method_35765/method_35768-35770) and the processor is managed internally");
+    }
+
+    /** was net/minecraft/class_757.method_34512()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34512(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer no longer exposes a PostEffectProcessor (class_5944); the post-processing pipeline was restructured in 1.21.2 and the processor is not held by class_757");
+    }
+
+    /** was net/minecraft/class_757.method_34513()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34513(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34513() returned a PostEffectProcessor (class_5944); in 1.21.2 the post-effect pipeline was restructured out of class_757 and no accessor on the new GameRenderer surface yields a class_5944 instance");
+    }
+
+    /** was net/minecraft/class_757.method_34514()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34514(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34514() (getPostProcessor returning PostEffectProcessor) was removed in 1.21.2; the post-effect pipeline was reworked and GameRenderer no longer holds a class_5944 instance");
+    }
+
+    /** was net/minecraft/class_757.method_34515()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34515(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34515() returning class_5944 was removed in 1.21.2; no method on class_757 returns class_5944 in the new API");
+    }
+
+    /** was net/minecraft/class_757.method_34516()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34516(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_757.method_34516 (returns class_5944 PostEffectProcessor) is deleted in 1.21.2; post-effect pipeline reworked around class_9779 with no accessor returning the old type");
+        // CB-CONFIDENCE: high -- the new class_757 API surface contains no method returning class_5944, and the post-effect system was reworked to class_9779 (method_3188/method_3192), so the old contract is genuinely inexpressible.
+    }
+
+
+    /** was net/minecraft/class_757.method_34518()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34518(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_34518 (getPostProcessor returning class_5944) has no equivalent in 1.21.2; post-processing was reworked to class_9779 with only setters (method_3188/method_3192) and no getter exposed");
+    }
+
+    /** was net/minecraft/class_757.method_34519()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34519(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_34519 (getPostProcessor) removed in 1.21.2; post-processing reworked to class_9779, no getter for class_5944 remains on GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_34520()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34520(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.getPostProcessor() (method_34520) removed in 1.21.2; post-effect system reworked, class_757 no longer exposes class_5944");
+    }
+
+    /** was net/minecraft/class_757.method_34523()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34523(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34523() (getPostProcessor returning PostEffectProcessor) was removed in 1.21.2; the post-effect pipeline was reworked and class_757 no longer exposes a class_5944 instance");
+    }
+
+    /** was net/minecraft/class_757.method_34524()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34524(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_757.method_34524() returned the active PostEffectProcessor (class_5944), but 1.21.2 reworked post-effects to use class_9779 and no longer exposes a class_5944 instance from GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_34525()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34525(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer no longer exposes a ShaderEffect (class_5944); post-processing pipeline reworked in 1.21.2 with no equivalent accessor");
+    }
+
+    /** was net/minecraft/class_757.method_34526()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34526(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34526() returned PostEffectProcessor (class_5944), removed in 1.21.2 post-processing rework; no equivalent accessor on class_757");
+    }
+
+    /** was net/minecraft/class_757.method_34527()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34527(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer#method_34527 (getPostProcessor) removed in 1.21.2; post-effect processor no longer exposed by GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_34529()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34529(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34529 returned a class_5944 PostEffectProcessor (blur post-effect) but 1.21.2 refactored the post-effect pipeline to class_9779; GameRenderer no longer exposes a class_5944 instance");
+    }
+
+    /** was net/minecraft/class_757.method_34530()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34530(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_34530 returned GameRenderer's PostEffectProcessor (class_5944), which is no longer exposed in 1.21.2; the post-effect pipeline was reworked to a frame-graph-based system with no direct accessor for the processor");
+    }
+
+    /** was net/minecraft/class_757.method_34531()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34531(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer no longer holds or exposes a PostEffectProcessor (class_5944); post-processing was reworked in 1.21.2 and the processor is managed through a different mechanism (see method_62906/method_3188/method_3192)");
+    }
+
+    /** was net/minecraft/class_757.method_34532()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34532(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34532() was removed in 1.21.2; post-effect processing was refactored and GameRenderer no longer holds or exposes a PostEffectProcessor (class_5944)");
+    }
+
+    /** was net/minecraft/class_757.method_34533()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34533(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_34533 returned a PostEffectProcessor (class_5944) which is no longer exposed by GameRenderer in 1.21.2; the post-processing pipeline was reworked to use class_9779 (see method_3188/method_3192)");
+    }
+
+    /** was net/minecraft/class_757.method_34534()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34534(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer no longer holds or exposes a PostEffectProcessor (class_5944); in 1.21.2 post-effect processors are passed externally as class_9779 to method_3188/method_3192, so the getter has no faithful equivalent");
+    }
+
+    /** was net/minecraft/class_757.method_34535()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34535(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_34535 (getPostProcessor returning class_5944) was removed in 1.21.2; GameRenderer no longer holds a class_5944 ShaderEffect reference -- post-processing was restructured");
+    }
+
+    /** was net/minecraft/class_757.method_34536()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34536(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_34536 (blur PostEffectProcessor getter) was removed in 1.21.2; post-processing is now driven by class_9779 via method_3188/method_3192 and is no longer exposed as a retrievable instance on class_757");
+    }
+
+    /** was net/minecraft/class_757.method_34538(Lnet/minecraft/class_5912;)V */
+    public static void method_34538(net.minecraft.class_757 self, net.minecraft.class_5912 a0) {
+        self.method_34521(a0);
+    }
+
+    /** was net/minecraft/class_757.method_34539()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34539(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_757.method_34539() returned class_5944 (PostEffectProcessor), but 1.21.2 removed it from GameRenderer; post-processing was refactored to use class_9779 via method_3188/method_3192 with no accessor for the old type");
+    }
+
+    /** was net/minecraft/class_757.method_34540()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34540(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_34540 returned PostEffectProcessor (class_5944) which is no longer exposed by GameRenderer in 1.21.2; post-processing pipeline was refactored");
+    }
+
+    /** was net/minecraft/class_757.method_34542()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34542(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_34542 (getPostProcessor) was removed in 1.21.2; the post-effect pipeline was reworked and class_757 no longer holds a class_5944 instance");
+    }
+
+    /** was net/minecraft/class_757.method_34543()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34543(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34543() returned a PostEffectProcessor (class_5944) that GameRenderer no longer holds in 1.21.2; the post-effect pipeline was restructured (see class_9779 and method_3188/method_3192)");
+    }
+
+    /** was net/minecraft/class_757.method_34546()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34546(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34546() returned PostEffectProcessor (class_5944), which has no equivalent in 1.21.2 GameRenderer; the post-effect pipeline was restructured with no direct replacement");
+    }
+
+    /** was net/minecraft/class_757.method_34547()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34547(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_34547() returned a PostEffectProcessor (class_5944) which is no longer exposed by GameRenderer in 1.21.2; the post-processing pipeline was reworked and no equivalent accessor exists on class_757");
+    }
+
+    /** was net/minecraft/class_757.method_34548()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_34548(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_757.method_34548() returned a class_5944 PostEffectProcessor; in 1.21.2 the post-effect pipeline was reworked and GameRenderer no longer exposes individual PostEffectProcessor instances");
+    }
+
+    /** was net/minecraft/class_757.method_35767(Ljava/lang/String;)Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_35767(net.minecraft.class_757 self, java.lang.String a0) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_35767(String)PostEffectProcessor was removed in 1.21.2; post-effect processor loading was restructured out of class_757 with no replacement method on this class");
+    }
+
+    /** was net/minecraft/class_757.method_36432()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_36432(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer no longer stores a PostEffectProcessor (class_5944); post-effects are now identified by Identifier (class_2960) via method_62906, and the processor is managed externally");
+    }
+
+    /** was net/minecraft/class_757.method_36433()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_36433(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_36433() (getPostProcessor -> PostEffectProcessor) was removed in 1.21.2; the post-processing pipeline is no longer exposed as a class_5944 instance on GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_42595()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_42595(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_42595 (PostEffectProcessor accessor) was removed in 1.21.2; post-processing pipeline reworked with no equivalent accessor on class_757");
+        // CB-CONFIDENCE: high -- the new API surface has no method returning class_5944 and the member is explicitly marked deleted with no direct replacement
+    }
+
+    /** was net/minecraft/class_757.method_45774()Lnet/minecraft/class_3302; */
+    public static net.minecraft.class_3302 method_45774(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_45774() was deleted in 1.21.2 with no direct replacement; the Camera type it returned (class_3302) is no longer exposed by GameRenderer, whose getCamera (method_19418) now returns class_4184");
+    }
+
+    /** was net/minecraft/class_757.method_49037()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_49037(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_49037() returned its PostEffectProcessor, which no longer exists on GameRenderer in 1.21.2; post-processing moved to the new render pipeline");
+    }
+
+    /** was net/minecraft/class_757.method_49038()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_49038(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_49038() returned a PostEffectProcessor (class_5944) that GameRenderer no longer holds in 1.21.2; the post-effect pipeline was reworked and no equivalent accessor exists on class_757");
+    }
+
+    /** was net/minecraft/class_757.method_51771()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_51771(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_51771 (returning class_5944) was removed from GameRenderer in 1.21.2; the post-effect/frustum object it returned is no longer accessible from GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_51772()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_51772(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_51772() returned a PostEffectProcessor (class_5944) that is no longer held by GameRenderer in 1.21.2; post-effect processing was restructured out of this class");
+    }
+
+    /** was net/minecraft/class_757.method_51773()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_51773(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer no longer exposes a PostEffectProcessor (class_5944) in 1.21.2; the post-processing pipeline was moved out of GameRenderer and no field or method of that type remains on class_757");
+    }
+
+    /** was net/minecraft/class_757.method_51774()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_51774(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_51774() returned the PostEffectProcessor (class_5944); 1.21.2 reworked post-processing to a pipeline and GameRenderer no longer exposes a PostEffectProcessor instance");
+    }
+
+    /** was net/minecraft/class_757.method_55249()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_55249(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer.method_55249 (getPostProcessor returning PostEffectProcessor/class_5944) was removed in 1.21.2; the post-effect system was reworked around class_9779 and no class_5944 accessor remains on GameRenderer");
+    }
+
+    /** was net/minecraft/class_757.method_56846()Lnet/minecraft/class_5944; */
+    public static net.minecraft.class_5944 method_56846(net.minecraft.class_757 self) {
+        throw new UnsupportedOperationException("CenturyBridge: GameRenderer no longer exposes a PostEffectProcessor (class_5944); the post-effect pipeline was reworked in 1.21.2 and the getter has no equivalent on class_757");
+    }
+
+    /** was net/minecraft/class_758.method_23792()V */
+    public static void method_23792(net.minecraft.class_758 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_23792 was removed in 1.21.2 with no direct replacement in class_758");
+    }
+
+    /** was net/minecraft/class_758.method_3210(Lnet/minecraft/class_4184;FLnet/minecraft/class_638;IF)V */
+    public static void method_3210(net.minecraft.class_758 self, net.minecraft.class_4184 a0, float a1, net.minecraft.class_638 a2, int a3, float a4) {
+        self.method_62185(a0, a1, a2, a3, a4);
+    }
+
+    /** was net/minecraft/class_763.field_4129Lit/unimi/dsi/fastutil/ints/Int2ObjectMap; */
+    public static it.unimi.dsi.fastutil.ints.Int2ObjectMap field_4129() {
+        throw new UnsupportedOperationException("CenturyBridge: class_763.field_4129 (Int2ObjectMap) was deleted in 1.21.2 with no direct replacement and no data to reconstruct it");
+        // CB-CONFIDENCE: high -- the field is explicitly deleted with no equivalent in the new API surface, and fabricating map contents would be a silent corruption
+    }
+
+
+
+
+
+    /** was net/minecraft/class_7709.field_40245Lnet/minecraft/class_3542$class_7292; */
+    public static net.minecraft.class_3542.class_7292 field_40245() {
+        return (net.minecraft.class_3542.class_7292) net.minecraft.class_7709.field_40245;
+    }
+
+    /** was net/minecraft/class_7754.method_45710(Lnet/minecraft/class_630;)Lcom/google/common/collect/ImmutableList$Builder; */
+    public static com.google.common.collect.ImmutableList.Builder method_45710(net.minecraft.class_7754 self, net.minecraft.class_630 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_7754.method_45710(Text) returned ImmutableList.Builder for multi-segment text processing; 1.21.2 restructured to return single OrderedText via method_45714/method_62112 with no builder or list equivalent");
+    }
+
+    /** was net/minecraft/class_7754.method_45711(Lnet/minecraft/class_1690;FFFFF)V */
+    public static void method_45711(net.minecraft.class_7754 self, net.minecraft.class_1690 a0, float a1, float a2, float a3, float a4, float a5) {
+        throw new UnsupportedOperationException("CenturyBridge: class_7754.method_45711(VertexConsumer, float, float, float, float, float) was removed in 1.21.2 with no direct replacement; the new API only exposes method_45714()/method_62112() returning class_5607, and no equivalent vertex-drawing method exists on class_7754");
+    }
+
+    /** was net/minecraft/class_7754.method_45713(Lnet/minecraft/class_5610;)V */
+    public static void method_45713(net.minecraft.class_7754 self, net.minecraft.class_5610 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_7754.method_45713(class_5610) was removed in 1.21.2 with no direct replacement; the new class_7754 API only exposes getters (method_45714/method_62112 returning class_5607) and no mutation path accepting a class_5610");
+    }
+
+    /** was net/minecraft/class_7754.method_45715()Lcom/google/common/collect/ImmutableList; */
+    public static com.google.common.collect.ImmutableList method_45715(net.minecraft.class_7754 self) {
+        return com.google.common.collect.ImmutableList.of(self.method_45714(), self.method_62112());
+    }
+
+    /** was net/minecraft/class_7761$class_7762.field_40525Lnet/minecraft/class_630; */
+    public static net.minecraft.class_630 field_40525() {
+        throw new UnsupportedOperationException("CenturyBridge: field_40525 was a static class_630 field deleted in 1.21.2; new API only has instance fields field_40526/40527/40528 with no static equivalent");
+        // CB-CONFIDENCE: high -- the old field was static and deleted; the new API exposes only instance fields with no static constant or factory to reconstruct the old value
+    }
+
+    /** was net/minecraft/class_7871$class_7872.method_46750(Lnet/minecraft/class_5321;)Ljava/util/Optional; */
+    public static java.util.Optional method_46750(net.minecraft.class_7871.class_7872 self, net.minecraft.class_5321 a0) {
+        return self.method_46759(a0);
+        // CB-CONFIDENCE: medium -- method_46759 matches the old Optional<RegistryEntry> getOptional(RegistryKey) contract; method_58561 also returns Optional but is a later addition with possibly different semantics
+    }
+
+    /** was net/minecraft/class_790$class_6247.field_32795Lnet/minecraft/class_790; */
+    public static net.minecraft.class_790 field_32795() {
+        return null;
+    }
+
+    /** was net/minecraft/class_790.method_3422()Z */
+    public static boolean method_3422(net.minecraft.class_790 self) {
+        return true;
+    }
+
+    /** was net/minecraft/class_790.method_3423()Ljava/util/Map; */
+    public static java.util.Map method_3423(net.minecraft.class_790 self) {
+        java.util.Map map = new java.util.HashMap();
+        for (Object key : self.method_35791()) {
+            map.put(key, self.method_35792(key.toString()));
+        }
+        return map;
+    }
+
+    /** was net/minecraft/class_790.method_35790(Ljava/lang/String;)Z */
+    public static boolean method_35790(net.minecraft.class_790 self, java.lang.String a0) {
+        return self.method_35791().contains(a0);
+    }
+
+    /** was net/minecraft/class_7923.field_41166Lnet/minecraft/class_2378; */
+    public static net.minecraft.class_2378 field_41166() {
+        throw new UnsupportedOperationException("CenturyBridge: field_41166 (Registry) was removed from class_7923 in 1.21.2 with no direct replacement");
+    }
+
+    /** was net/minecraft/class_7923.field_48976Lnet/minecraft/class_2378; */
+    public static net.minecraft.class_2378 field_48976() {
+        throw new UnsupportedOperationException("CenturyBridge: field_48976 was a RegistryKey constant deleted in 1.21.2 with no direct replacement; its original registry/identifier cannot be inferred from the new API surface");
+    }
+
+
+
+
+
+
+
+    /** was net/minecraft/class_8047.method_48365(I)Z */
+    public static boolean method_48365(net.minecraft.class_8047 self, int a0) {
+        return a0 >= 0 && a0 < self.method_48369();
+    }
+
+    /** was net/minecraft/class_8059.method_30029(Lnet/minecraft/class_1799;)Z */
+    public static boolean method_30029(net.minecraft.class_8059 self, net.minecraft.class_1799 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_30029(ItemStack) was deleted in 1.21.2; class_8059 now queries via class_9695/class_9697 with an explicit World argument, and no ItemStack-keyed lookup is exposed");
+    }
+
+    /** was net/minecraft/class_8059.method_48453(Lnet/minecraft/class_1799;)Z */
+    public static boolean method_48453(net.minecraft.class_8059 self, net.minecraft.class_1799 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_48453(ItemStack) tested an item stack in isolation; 1.21.2 requires World + context (class_9695/class_9697) unavailable at the old call site");
+    }
+
+    /** was net/minecraft/class_8059.method_48454(Lnet/minecraft/class_1799;)Z */
+    public static boolean method_48454(net.minecraft.class_8059 self, net.minecraft.class_1799 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_48454 tested a single ItemStack without World context; 1.21.2 recipe API requires a RecipeInput and World, neither available from the old call site");
+    }
+
+    /** was net/minecraft/class_806$class_5827.field_28795Lnet/minecraft/class_1087; */
+    public static net.minecraft.class_1087 field_28795() {
+        throw new UnsupportedOperationException("CenturyBridge: field_28795 was a static Identifier constant on class_806$class_5827, deleted in 1.21.2 with no direct replacement; its value cannot be reconstructed from the new API");
+    }
+
+    /** was net/minecraft/class_806$class_5828.field_28796I */
+    public static int field_28796() {
+        throw new UnsupportedOperationException("CenturyBridge: field_28796 was a static int constant in class_806$class_5828 deleted with no direct replacement; its original value cannot be inferred from the new API surface (only comp_3191:I and comp_3192:F record components remain)");
+        // CB-CONFIDENCE: high -- the field is explicitly marked deleted with no direct replacement, and the new API surface contains only instance record components with no static constants, making it impossible to reconstruct the original int value without guessing
+    }
+
+
+
+    /** was net/minecraft/class_807.method_3497()Ljava/util/List; */
+    public static java.util.List method_3497(net.minecraft.class_807 self) {
+        return self.comp_3049();
+    }
+
+    /** was net/minecraft/class_8138.method_49050(Lnet/minecraft/class_8113;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_49050(net.minecraft.class_8138 self, net.minecraft.class_8113 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_49050 was deleted in 1.21.2; no new API on class_8138 returns an Identifier from class_8113");
+    }
+
+
+
+    /** was net/minecraft/class_816.method_3519()Ljava/util/List; */
+    public static java.util.List method_3519(net.minecraft.class_816 self) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3519 (list getter) was removed; class_816 no longer exposes the list passed to its constructor");
+    }
+
+    /** was net/minecraft/class_816.method_3520()Ljava/util/Set; */
+    public static java.util.Set method_3520(net.minecraft.class_816 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_816.method_3520() returned a Set (of render layers) that is no longer exposed in 1.21.2; the constructor accepts a List but provides no getter to retrieve it");
+    }
+
+    /** was net/minecraft/class_8174.method_49217(Lnet/minecraft/class_1657;)V */
+    public static void method_49217(net.minecraft.class_8174 self, net.minecraft.class_1657 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_49217(PlayerEntity) was deleted in 1.21.2; shriek logic was refactored into method_49215(long, World, Player, BlockPos, ItemStack) which has a different return type (boolean) and requires parameters (game time, World) not available from the old call site or the block entity's exposed API");
+        // CB-CONFIDENCE: medium -- the old method was deleted and the closest replacement (method_49215) has a different return type and requires extra parameters that cannot be faithfully supplied from the old call site
+    }
+
+
+    /** was net/minecraft/class_826.method_32148()Lnet/minecraft/class_5607; */
+    public static net.minecraft.class_5607 method_32148(net.minecraft.class_826 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_826.method_32148() has no equivalent in 1.21.2; the new class_826 exposes only a constructor and a void render method, with no accessor returning class_5607");
+    }
+
+    /** was net/minecraft/class_826.method_32149()Lnet/minecraft/class_5607; */
+    public static net.minecraft.class_5607 method_32149(net.minecraft.class_826 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_826.method_32149() returned a class_5607 (PostEffectProcessor) but the 1.21.2 class_826 surface exposes no field or method yielding one; post-effect handling was reworked out of this class");
+        // CB-CONFIDENCE: high -- the new API surface lists no member returning class_5607, so no faithful bridge exists
+    }
+
+    /** was net/minecraft/class_837.method_45793(Lnet/minecraft/class_4587;IILnet/minecraft/class_3879;Lnet/minecraft/class_4588;)V */
+    public static void method_45793(net.minecraft.class_837 self, net.minecraft.class_4587 a0, int a1, int a2, net.minecraft.class_3879 a3, net.minecraft.class_4588 a4) {
+        throw new UnsupportedOperationException("CenturyBridge: method_45793 cannot be bridged -- new method_45800 requires class_4597 render context (replacing VertexConsumerProvider) and class_4719 transform mode, neither derivable from old parameters");
+    }
+
+    /** was net/minecraft/class_8567.method_51865(Lnet/minecraft/class_169;)Z */
+    public static boolean method_51865(net.minecraft.class_8567 self, net.minecraft.class_169 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_8567.method_51865(DamageSource)Z was deleted in 1.21.2 with no direct replacement; new EndDragonFight API exposes no method accepting a class_169 (DamageSource) parameter, so the old contract cannot be expressed");
+    }
+
+    /** was net/minecraft/class_8567.method_51867(Lnet/minecraft/class_169;)Ljava/lang/Object; */
+    public static java.lang.Object method_51867(net.minecraft.class_8567 self, net.minecraft.class_169 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_8567.method_51867(class_169) was removed in 1.21.2 with no direct replacement; no remaining method accepts a DamageSource");
+    }
+
+    /** was net/minecraft/class_8567.method_51868(Lnet/minecraft/class_169;)Ljava/lang/Object; */
+    public static java.lang.Object method_51868(net.minecraft.class_8567 self, net.minecraft.class_169 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_51868(Scoreboard) was removed in 1.21.2 with no direct replacement; no remaining method on class_8567 accepts a Scoreboard or returns Object");
+    }
+
+    /** was net/minecraft/class_8567.method_51869(Lnet/minecraft/class_169;)Ljava/lang/Object; */
+    public static java.lang.Object method_51869(net.minecraft.class_8567 self, net.minecraft.class_169 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_51869(class_169)->Object was removed in 1.21.2 with no direct replacement; method_51864 uses a different parameter type (class_2960) and a callback-based void pattern, so the old synchronous getter contract cannot be faithfully bridged");
+        // CB-CONFIDENCE: high -- method is explicitly deleted with no direct replacement; new API surface has no method accepting class_169 or returning Object
+    }
+
+
+    /** was net/minecraft/class_8673.field_51520Z */
+    public static boolean field_51520() {
+        return false;
+    }
+
+    /** was net/minecraft/class_8679$class_6600.field_34819Ljava/util/LinkedHashSet; */
+    public static java.util.LinkedHashSet field_34819() {
+        throw new UnsupportedOperationException("CenturyBridge: field_34819 (LinkedHashSet) was removed from class_8679$class_6600 in 1.21.2 with no direct replacement; new fields (field_45627, field_45628, field_53929) have incompatible types and semantics");
+    }
+
+    /** was net/minecraft/class_876.method_23153(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIIFFIIII)V */
+    public static void method_23153(net.minecraft.class_876 self, net.minecraft.class_4587.class_4665 a0, net.minecraft.class_4588 a1, int a2, int a3, int a4, float a5, float a6, int a7, int a8, int a9, int a10) {
+        throw new UnsupportedOperationException("CenturyBridge: SignBlockEntityRenderer.method_23153 rendered sign text from individual style parameters (MatrixStack.Entry, text colors, glow flags, scale); 1.21.2 restructured sign text rendering to require a SignText (class_10017) object and a full MatrixStack (class_4587), neither constructable from the old method's primitive parameters");
+    }
+
+    /** was net/minecraft/class_878.method_3881(Lnet/minecraft/class_1545;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3881(net.minecraft.class_878 self, net.minecraft.class_1545 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3881(Identifier)->Packet has no 1.21.2 equivalent; new b(class_10042)->Packet requires a RecipeCollection (class_10042) not derivable from an Identifier via class_878's API");
+    }
+
+    /** was net/minecraft/class_880.method_3885(Lnet/minecraft/class_1549;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3885(net.minecraft.class_880 self, net.minecraft.class_1549 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3885 was deleted with no direct replacement; method b takes class_10042 not class_1549, no conversion available");
+    }
+
+    /** was net/minecraft/class_880.method_3886(Lnet/minecraft/class_1549;Lnet/minecraft/class_4587;F)V */
+    public static void method_3886(net.minecraft.class_880 self, net.minecraft.class_1549 a0, net.minecraft.class_4587 a1, float a2) {
+        throw new UnsupportedOperationException("CenturyBridge: class_880.method_3886 was deleted in 1.21.2 with no direct replacement; the remaining API surface (constructor + identifier lookup) cannot reproduce the former render-path behavior");
+    }
+
+    /** was net/minecraft/class_885.method_3896(Lnet/minecraft/class_1431;Lnet/minecraft/class_4587;FFFF)V */
+    public static void method_3896(net.minecraft.class_885 self, net.minecraft.class_1431 a0, net.minecraft.class_4587 a1, float a2, float a3, float a4, float a5) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3896 was removed in 1.21.2; the new render API (method a) requires a pre-populated RenderState (class_10042) which cannot be constructed from the old (class_1431, 4 floats) parameters");
+        // CB-CONFIDENCE: medium -- method explicitly deleted; new API uses RenderState-based paradigm incompatible with old direct-data parameters
+    }
+
+    /** was net/minecraft/class_885.method_3897(Lnet/minecraft/class_1431;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3897(net.minecraft.class_885 self, net.minecraft.class_1431 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_885.method_3897(class_1431) was deleted in 1.21.2; the structurally similar b(class_10042) takes a different parameter type with no known conversion from class_1431");
+    }
+
+    /** was net/minecraft/class_891.method_3905(Lnet/minecraft/class_1670;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3905(net.minecraft.class_891 self, net.minecraft.class_1670 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3905 returned class_2960 (Identifier) from class_1670 (Camera), but 1.21.2 class_891 has no Identifier-returning equivalent; the API was restructured around class_10017 and int-returning methods");
+    }
+
+    /** was net/minecraft/class_891.method_3906(Lnet/minecraft/class_1670;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
+    public static void method_3906(net.minecraft.class_891 self, net.minecraft.class_1670 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3906(ParticleEffect,float,float,VertexConsumerProvider,LightmapTextureManager,int) was deleted in 1.21.2; the replacement a(class_10017,...) requires a class_10017 that cannot be constructed from the old ParticleEffect+float parameters (only obtainable via d(), which would ignore caller-supplied args)");
+    }
+
+    /** was net/minecraft/class_892.method_3909(Lnet/minecraft/class_1511;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3909(net.minecraft.class_892 self, net.minecraft.class_1511 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3909 returned a per-particle texture Identifier (class_2960); 1.21.2 particles use sprite-atlas descriptors (class_10014 via method_62416 / class_10017 via d) with no equivalent single texture Identifier");
+    }
+
+    /** was net/minecraft/class_893.method_3910(Lnet/minecraft/class_1577;Lnet/minecraft/class_4587;F)V */
+    public static void method_3910(net.minecraft.class_893 self, net.minecraft.class_1577 a0, net.minecraft.class_4587 a1, float a2) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3910 rendered an ItemStack (class_1577) via MatrixStack (class_4587); class_893 in 1.21.2 only exposes Identifier-returning methods (a/b) and no longer handles ItemStack rendering");
+    }
+
+    /** was net/minecraft/class_8947.field_47260I */
+    public static int field_47260() {
+        throw new UnsupportedOperationException("CenturyBridge: field_47260 was a deleted static int constant from class_8947 with no direct replacement in 1.21.2; its value cannot be derived from the new API surface");
+    }
+
+    /** was net/minecraft/class_8949.method_55009()D */
+    public static double method_55009(net.minecraft.class_8949 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_8949.method_55009()D was deleted in 1.21.2 with no direct replacement; the double value it returned is no longer exposed on class_8949");
+    }
+
+    /** was net/minecraft/class_894.method_3911(Lnet/minecraft/class_1560;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
+    public static void method_3911(net.minecraft.class_894 self, net.minecraft.class_1560 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
+        self.method_62422(a0, self.method_62421(), a1);
+    }
+
+    /** was net/minecraft/class_8953.method_55038(Lnet/minecraft/class_8949;Lnet/minecraft/class_1309;)Z */
+    public static boolean method_55038(net.minecraft.class_8953 self, net.minecraft.class_8949 a0, net.minecraft.class_1309 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_55038(class_8949, class_1309)->boolean has no direct replacement; new API splits Raid and LivingEntity operations into separate method groups with no combined overload");
+    }
+
+    /** was net/minecraft/class_895.method_32165()Lnet/minecraft/class_5607; */
+    public static net.minecraft.class_5607 method_32165(net.minecraft.class_895 self) {
+        throw new UnsupportedOperationException("CenturyBridge: class_895.method_32165() returned a class_5607 (PostEffectProcessor) that class_895 no longer exposes in 1.21.2; the post-effect pipeline was reworked and no equivalent accessor exists");
+    }
+
+
+    /** was net/minecraft/class_8974.method_55239(Lnet/minecraft/class_9236;FFFFF)V */
+    public static void method_55239(net.minecraft.class_8974 self, net.minecraft.class_9236 a0, float a1, float a2, float a3, float a4, float a5) {
+        throw new UnsupportedOperationException("CenturyBridge: class_8974.method_55239(class_9236,float,float,float,float,float) was removed in 1.21.2 with no direct replacement; new a(class_10017) cannot be bridged without class_10017's constructor API to wrap the old (Random + 5 floats) arguments");
+    }
+
+    /** was net/minecraft/class_897.method_3931(Lnet/minecraft/class_1297;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3931(net.minecraft.class_897 self, net.minecraft.class_1297 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: EntityRenderer.getTexture(Entity) was removed in 1.21.2; textures are now resolved through the render state system, not via EntityRenderer");
+        // CB-CONFIDENCE: high -- the new class_897 API surface has no method returning class_2960 (Identifier); getTexture was genuinely removed in the 1.21.2 entity renderer refactor
+    }
+
+    /** was net/minecraft/class_8987.method_55269(Lnet/minecraft/class_9236;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_55269(net.minecraft.class_8987 self, net.minecraft.class_9236 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_55269 was removed in 1.21.2 with no direct replacement; the new class_8987 API exposes no path from class_9236 to class_2960");
+    }
+
+    /** was net/minecraft/class_8987.method_55270(Lnet/minecraft/class_9236;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
+    public static void method_55270(net.minecraft.class_8987 self, net.minecraft.class_9236 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
+        throw new UnsupportedOperationException("CenturyBridge: method_55270 was removed; replacement a() requires class_10017 (not class_9236) and drops the two position floats with no available conversion");
+    }
+
+    /** was net/minecraft/class_898.method_3954(Lnet/minecraft/class_1297;DDDFFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
+    public static void method_3954(net.minecraft.class_898 self, net.minecraft.class_1297 a0, double a1, double a2, double a3, float a4, float a5, net.minecraft.class_4587 a6, net.minecraft.class_4597 a7, int a8) {
+        self.method_62424(a0, a1, a2, a3, a5, a6, a7, a8);
+    }
+
+    /** was net/minecraft/class_8998.field_47509Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_47509() {
+        throw new UnsupportedOperationException("CenturyBridge: field_47509 (RegistryKey) was deleted in 1.21.2; remaining fields field_47507/field_47508 are different keys and cannot substitute");
+    }
+
+    /** was net/minecraft/class_900.method_3963(Lnet/minecraft/class_1669;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3963(net.minecraft.class_900 self, net.minecraft.class_1669 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3963 returned an Identifier (model/texture id) for an ItemStack; 1.21.2 replaced identifier-based lookups with state-based rendering via method_62429(class_1669, class_10020, float) and no longer exposes the Identifier");
+    }
+
+    /** was net/minecraft/class_901.method_3964(Lnet/minecraft/class_1540;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3964(net.minecraft.class_901 self, net.minecraft.class_1540 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_901.method_3964(Vec3d)->Identifier was removed in 1.21.2 with no direct replacement; no method on the new class_901 returns an Identifier");
+    }
+
+    /** was net/minecraft/class_902.method_3967(Lnet/minecraft/class_1303;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3967(net.minecraft.class_902 self, net.minecraft.class_1303 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3967(Camera) returned class_2960 (Matrix4f) computed from the camera alone; 1.21.2 replaced this with method_62434(Camera, class_10022, float) which writes into a class_10022 holder and requires a tick-delta parameter, and class_2960 itself was removed in the JOML migration");
+    }
+
+    /** was net/minecraft/class_903.method_3969(Lnet/minecraft/class_1671;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3969(net.minecraft.class_903 self, net.minecraft.class_1671 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_903.method_3969(ItemStack)Identifier was removed in 1.21.2; ItemRenderer no longer resolves an ItemStack to a texture Identifier (texture/sprite resolution moved to the new model system, and no method on class_903 returns class_2960)");
+    }
+
+    /** was net/minecraft/class_905.method_3973(Lnet/minecraft/class_1571;Lnet/minecraft/class_4587;F)V */
+    public static void method_3973(net.minecraft.class_905 self, net.minecraft.class_1571 a0, net.minecraft.class_4587 a1, float a2) {
+        self.method_62448(a0, self.method_62449(), a2);
+    }
+
+    /** was net/minecraft/class_906.method_3975(Lnet/minecraft/class_1536;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3975(net.minecraft.class_906 self, net.minecraft.class_1536 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3975 returned an Identifier derived from the Camera; 1.21.2 replaced it with boolean predicates (method_62441/method_62442) and direct rendering (method_62443), so the Identifier is no longer exposed");
+    }
+
+    /** was net/minecraft/class_908.method_3980(Lnet/minecraft/class_1570;Lnet/minecraft/class_4587;F)V */
+    public static void method_3980(net.minecraft.class_908 self, net.minecraft.class_1570 a0, net.minecraft.class_4587 a1, float a2) {
+        self.method_62450(a0, self.method_62451(), a2);
+    }
+
+    /** was net/minecraft/class_9094.field_48073Lnet/minecraft/class_9145; */
+    public static net.minecraft.class_9145 field_48073() {
+        throw new UnsupportedOperationException("CenturyBridge: field_48073 was deleted in 1.21.2 with no direct replacement among the remaining class_9145 constants");
+        // CB-CONFIDENCE: high -- the field is explicitly marked deleted with no direct replacement; returning a sibling constant would be a silent semantic mismatch
+    }
+
+    /** was net/minecraft/class_912.method_3985(Lnet/minecraft/class_1642;Lnet/minecraft/class_4587;F)V */
+    public static void method_3985(net.minecraft.class_912 self, net.minecraft.class_1642 a0, net.minecraft.class_4587 a1, float a2) {
+        throw new UnsupportedOperationException("CenturyBridge: class_912.method_3985(ItemStack, MatrixStack, float) was removed in 1.21.2; class_912 no longer exposes rendering methods, only identifier accessors a() and b()");
+    }
+
+
+
+
+    /** was net/minecraft/class_9135$13.field_51473Lnet/minecraft/class_9139; */
+    public static net.minecraft.class_9139 field_51473() {
+        throw new UnsupportedOperationException("CenturyBridge: field_51473 was a static class_9139 constant on class_9135$13, deleted in 1.21.2 with no static replacement; the codec is now passed via constructor and stored in instance field field_49697, so the original static constant cannot be reconstructed");
+        // CB-CONFIDENCE: medium -- field_49697 matches the type but the constructor strongly implies it is an instance field, not a static one; the old static constant's value is unknowable from the new API surface alone
+    }
+
+
+
+
+    /** was net/minecraft/class_9135$16.field_48574Ljava/util/function/Function; */
+    public static java.util.function.Function field_48574() {
+        throw new UnsupportedOperationException("CenturyBridge: field_48574 was a Function in the old Either stream codec (class_9135$16) with no direct replacement in 1.21.2; the codec was restructured to use method_58008/method_58009 with Either directly, eliminating the need for this function field");
+        // CB-CONFIDENCE: medium -- the field is explicitly marked deleted with no direct replacement; the Either codec was restructured in 1.21.2, but the original Function's exact semantics cannot be determined from the new API surface alone
+    }
+
+    /** was net/minecraft/class_9135$17.field_49690Lnet/minecraft/class_9139; */
+    public static net.minecraft.class_9139 field_49690() {
+        throw new UnsupportedOperationException("CenturyBridge: class_9135$17.field_49690 was deleted with no direct replacement; the static PacketCodec constant it held cannot be reconstructed from the remaining IntFunction/ToIntFunction instance fields");
+    }
+
+    /** was net/minecraft/class_9135$18.field_51475Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_51475() {
+        throw new UnsupportedOperationException("CenturyBridge: field_51475 was a static RegistryKey on class_9135$18 with no static equivalent in the new API; the new class stores the value as instance field_53746");
+        // CB-CONFIDENCE: medium -- the old static field has no direct static replacement; the new class refactored it into an instance field, so the original constant value cannot be reconstructed from the new API surface alone
+    }
+
+    /** was net/minecraft/class_918.field_40530Lnet/minecraft/class_1091; */
+    public static net.minecraft.class_1091 field_40530() {
+        throw new UnsupportedOperationException("CenturyBridge: field_40530 (class_1091 ModelIdentifier) was deleted in 1.21.2 with no direct replacement; field_40532/field_40533 are new fields with potentially different semantics");
+    }
+
+    /** was net/minecraft/class_918.method_29711(Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;ZZ)Lnet/minecraft/class_4588; */
+    public static net.minecraft.class_4588 method_29711(net.minecraft.class_918 self, net.minecraft.class_4597 a0, net.minecraft.class_1921 a1, boolean a2, boolean a3) {
+        return self.method_23181(a0, a1, a2, a3);
+    }
+
+
+    /** was net/minecraft/class_951.method_4127(Lnet/minecraft/class_1477;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_4127(net.minecraft.class_951 self, net.minecraft.class_1477 a0) {
+        return self.method_33431(self.method_62542());
     }
 
     // ==== END GENERATED ====

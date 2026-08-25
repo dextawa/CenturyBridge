@@ -15,9 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_5317.class)
 public abstract class GenClass5317Bridge {
 
-    /** was net/minecraft/class_5317.method_41594(Lnet/minecraft/class_2378;)Ljava/util/Optional; */
-    public java.util.Optional method_41594(net.minecraft.class_2378 a0) {
-        return ((net.minecraft.class_5317) (Object) this).method_41594(new net.minecraft.class_7723(a0));
+    /** was net/minecraft/class_5317.method_41598(Lnet/minecraft/class_5455;)Lnet/minecraft/class_7723; */
+    public net.minecraft.class_7723 method_41598(net.minecraft.class_5455 a0) {
+        return ((net.minecraft.class_5317)(Object)this).method_41598((net.minecraft.class_7225.class_7874)a0);
+    }
+
+    /** was net/minecraft/class_5317.method_41599(Lnet/minecraft/class_5455;)Lnet/minecraft/class_5363; */
+    public net.minecraft.class_5363 method_41599(net.minecraft.class_5455 a0) {
+        return ((net.minecraft.class_5317) (Object) this).method_41599((net.minecraft.class_7225.class_7874) a0);
     }
 
 }

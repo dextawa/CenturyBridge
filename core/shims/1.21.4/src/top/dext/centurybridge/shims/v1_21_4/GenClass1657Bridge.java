@@ -15,16 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1657.class)
 public abstract class GenClass1657Bridge {
 
-    /** was net/minecraft/class_1657.method_7335([Lnet/minecraft/class_2960;)V */
-    public void method_7335(net.minecraft.class_2960[] a0) {
-        ((net.minecraft.class_1657) (Object) this).method_7335(java.util.Arrays.stream(a0)
-            .map(id -> net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_52178, (net.minecraft.class_2960) id))
-            .collect(java.util.stream.Collectors.toList()));
-    }
 
-    /** was net/minecraft/class_1657.method_40126(I)V */
-    public void method_40126(int a0) {
-        ((net.minecraft.class_1657)(Object)this).method_40126(a0, 1.0f, net.minecraft.class_1799.field_8037);
-        // CB-CONFIDENCE: medium -- same method number with two added params (float + ItemStack); 1.0f and EMPTY are reasonable defaults but the exact semantics of the new float param are inferred
-    }
 }

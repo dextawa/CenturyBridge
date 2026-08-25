@@ -15,11 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_7723.class)
 public abstract class GenClass7723Bridge {
 
-    /** was net/minecraft/class_7723.comp_1014()Lnet/minecraft/class_2378; */
-    public net.minecraft.class_2378 comp_1014() {
-        throw new UnsupportedOperationException("CenturyBridge: comp_1014() now returns Map instead of Registry; no method in the new class_7723 API surface converts the Map back to a class_2378 Registry");
+    /** was net/minecraft/class_7723.method_45520(Lnet/minecraft/class_2378;Ljava/util/Map;Lnet/minecraft/class_2794;)Ljava/util/Map; */
+    public java.util.Map method_45520(net.minecraft.class_2378 a0, java.util.Map a1, net.minecraft.class_2794 a2) {
+        return ((net.minecraft.class_7723) (Object) this).method_45520((net.minecraft.class_7225) a0, a1, a2);
     }
 
-
+    /** was net/minecraft/class_7723.method_45522(Lnet/minecraft/class_5455;Lnet/minecraft/class_2794;)Lnet/minecraft/class_7723; */
+    public net.minecraft.class_7723 method_45522(net.minecraft.class_5455 a0, net.minecraft.class_2794 a1) {
+        return ((net.minecraft.class_7723) (Object) this).method_45522((net.minecraft.class_7225.class_7874) a0, a1);
+    }
 
 }

@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1606.class)
 public abstract class GenClass1606Bridge {
 
+    /** was net/minecraft/class_1606.method_33352(F)Ljava/util/Optional; */
+    public java.util.Optional method_33352(float a0) {
+        return java.util.Optional.ofNullable(((net.minecraft.class_1606) (Object) this).method_33352(a0));
+    }
 
 }

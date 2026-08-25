@@ -15,9 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1308.class)
 public abstract class GenClass1308Bridge {
 
-    /** was net/minecraft/class_1308.method_5943(Lnet/minecraft/class_5425;Lnet/minecraft/class_1266;Lnet/minecraft/class_3730;Lnet/minecraft/class_1315;Lnet/minecraft/class_2487;)Lnet/minecraft/class_1315; */
-    public net.minecraft.class_1315 method_5943(net.minecraft.class_5425 a0, net.minecraft.class_1266 a1, net.minecraft.class_3730 a2, net.minecraft.class_1315 a3, net.minecraft.class_2487 a4) {
-        return ((net.minecraft.class_1308) (Object) this).method_5943(a0, a1, a2, a3);
+
+
+
+    /** was net/minecraft/class_1308.method_60972(Ljava/util/function/Predicate;)Ljava/util/Set; */
+    public java.util.Set method_60972(java.util.function.Predicate a0) {
+        return ((net.minecraft.class_1308) (Object) this).method_60972((net.minecraft.class_3218) ((net.minecraft.class_1308) (Object) this).method_37908(), a0);
     }
 
 }

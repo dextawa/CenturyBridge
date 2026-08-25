@@ -15,4 +15,15 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_507.class)
 public abstract class GenClass507Bridge {
 
+    /** was net/minecraft/class_507.method_2581(Lnet/minecraft/class_332;IIZF)V */
+    public void method_2581(net.minecraft.class_332 a0, int a1, int a2, boolean a3, float a4) {
+        ((net.minecraft.class_507) (Object) this).method_2581(a0, a3);
+    }
+
+    /** was net/minecraft/class_507.method_2597(IILnet/minecraft/class_310;ZLnet/minecraft/class_1729;)V */
+    public void method_2597(int a0, int a1, net.minecraft.class_310 a2, boolean a3, net.minecraft.class_1729 a4) {
+        ((net.minecraft.class_507)(Object)this).method_2597(a0, a1, a2, a3);
+    }
+
+
 }

@@ -15,9 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_5328.class)
 public abstract class GenClass5328Bridge {
 
-    /** was net/minecraft/class_5328.method_33263(Lnet/minecraft/class_1542;Ljava/util/stream/Stream;)V */
-    public void method_33263(net.minecraft.class_1542 a0, java.util.stream.Stream a1) {
-        ((net.minecraft.class_5328) (Object) this).method_33263(a0, a1::iterator);
-    }
 
 }

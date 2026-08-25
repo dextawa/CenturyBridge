@@ -15,13 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1890.class)
 public abstract class GenClass1890Bridge {
 
-    /** was net/minecraft/class_1890.method_8219(Ljava/lang/Iterable;Lnet/minecraft/class_1282;)I */
-    public int method_8219(java.lang.Iterable a0, net.minecraft.class_1282 a1) {
-        throw new UnsupportedOperationException("CenturyBridge: method_8219(Iterable, DamageSource) computed protection for explicit equipment; 1.21 method_8219 requires World and LivingEntity (the defender), which cannot be derived from an equipment Iterable and DamageSource alone");
+    /** was net/minecraft/class_1890.method_60127(Lnet/minecraft/class_3218;Lnet/minecraft/class_1799;Lnet/minecraft/class_1665;Ljava/util/function/Consumer;)V */
+    public void method_60127(net.minecraft.class_3218 a0, net.minecraft.class_1799 a1, net.minecraft.class_1665 a2, java.util.function.Consumer a3) {
+        ((net.minecraft.class_1890)(Object)this).method_60127(a0, a1, (net.minecraft.class_1676)a2, a3);
     }
 
-    /** was net/minecraft/class_1890.method_8225(Lnet/minecraft/class_1887;Lnet/minecraft/class_1799;)I */
-    public int method_8225(net.minecraft.class_1887 a0, net.minecraft.class_1799 a1) {
-        return ((net.minecraft.class_1890)(Object)this).method_8225(net.minecraft.class_6880.method_40223(a0), a1);
-    }
 }
