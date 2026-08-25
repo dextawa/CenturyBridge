@@ -7272,4 +7272,24 @@ public final class Statics {
             }
         };
     }
+
+    /** ctorRedirects: 1.20.1 new PathPackResources(name, path, alwaysStable) */
+    public static net.minecraft.server.packs.PathPackResources cbNewPathPackResources(String name,
+            java.nio.file.Path path, boolean alwaysStable) {
+        return new net.minecraft.server.packs.PathPackResources(cbPackLocation(name), path);
+    }
+
+    /** ctorRedirects: 1.20.1 new ZipResourcePack(name, file, alwaysStable) */
+    public static net.minecraft.server.packs.FilePackResources cbNewFilePackResources(String name,
+            java.io.File file, boolean alwaysStable) {
+        return (net.minecraft.server.packs.FilePackResources)
+            new net.minecraft.server.packs.FilePackResources.FileResourcesSupplier(file)
+                .openPrimary(cbPackLocation(name));
+    }
+
+    private static net.minecraft.server.packs.PackLocationInfo cbPackLocation(String name) {
+        return new net.minecraft.server.packs.PackLocationInfo(name,
+            net.minecraft.network.chat.Component.literal(name),
+            net.minecraft.server.packs.repository.PackSource.DEFAULT, java.util.Optional.empty());
+    }
 }

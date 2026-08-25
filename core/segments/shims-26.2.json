@@ -3696,7 +3696,9 @@
   "net/minecraft/class_304.<init>(Ljava/lang/String;ILjava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewKeyMapping",
   "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewIdentifier",
   "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewIdentifier",
-  "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewServerInfo"
+  "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewServerInfo",
+  "net/minecraft/class_3259.<init>(Ljava/lang/String;Ljava/nio/file/Path;Z)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewPathPackResources",
+  "net/minecraft/class_3258.<init>(Ljava/lang/String;Ljava/io/File;Z)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewFilePackResources"
  },
  "superCtorAdapts": {
   "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": {

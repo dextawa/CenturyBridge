@@ -3630,7 +3630,9 @@
  "ctorRedirects": {
   "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_11/Statics#cbNewIdentifier",
   "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_11/Statics#cbNewIdentifier",
-  "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": "top/dext/centurybridge/rt/v1_21_11/Statics#cbNewServerInfo"
+  "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": "top/dext/centurybridge/rt/v1_21_11/Statics#cbNewServerInfo",
+  "net/minecraft/class_3259.<init>(Ljava/lang/String;Ljava/nio/file/Path;Z)V": "top/dext/centurybridge/rt/v1_21_11/Statics#cbNewPathPackResources",
+  "net/minecraft/class_3258.<init>(Ljava/lang/String;Ljava/io/File;Z)V": "top/dext/centurybridge/rt/v1_21_11/Statics#cbNewFilePackResources"
  },
  "superRedirects": {
   "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_21_11/Statics#cbRenderWidgets"
