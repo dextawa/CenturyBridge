@@ -59,7 +59,7 @@ if cfgs:
     for f in os.listdir(srcdir):
         if f.endswith(".java"):
             txt = open(os.path.join(srcdir, f), encoding="utf-8").read()
-            if re.search(r"b(class|interface)s+" + re.escape(f[:-5]) + r"b", txt):
+            if re.search(r"\b(class|interface)\s+" + re.escape(f[:-5]) + r"\b", txt):
                 present.add(f[:-5])
     ghosts = [m for side in ("mixins", "client", "server")
               for m in cfg.get(side, []) if m not in present]
