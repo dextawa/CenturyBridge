@@ -1738,6 +1738,7 @@
   "net/minecraft/class_3439.method_14886(Lnet/minecraft/class_1860;)V",
   "net/minecraft/class_3518.method_34916(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792;",
   "net/minecraft/class_361.method_1962(IIIILnet/minecraft/class_2960;)V",
+  "net/minecraft/class_364.method_25401(DDD)Z",
   "net/minecraft/class_3778$class_4182.method_19306(Lnet/minecraft/class_3790;Lorg/apache/commons/lang3/mutable/MutableObject;IZLnet/minecraft/class_5539;Lnet/minecraft/class_7138;)V",
   "net/minecraft/class_4341.method_20994(JLjava/lang/String;)V",
   "net/minecraft/class_4341.method_21017(JLjava/lang/String;)Lnet/minecraft/class_4870;",
@@ -1798,5 +1799,16 @@
  ],
  "superRedirects": {
   "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_20_4/Statics#cbRenderWidgets"
- }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_25401(DDD)Z",
+   "new": "method_25401(DDDD)Z",
+   "args": [
+    0,
+    1,
+    3
+   ]
+  }
+ ]
 }

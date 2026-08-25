@@ -74,8 +74,23 @@ public final class JarProcessor {
         org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
         org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
         org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
-        if (na.length != oa.length) {
-            return; // arity change is not a shape this forwarder can express
+        int[] map = h.args;
+        if (map == null) {
+            if (na.length != oa.length) {
+                return; // arity change without an explicit argument map
+            }
+            map = new int[oa.length];
+            for (int i = 0; i < map.length; i++) {
+                map[i] = i;
+            }
+        } else if (map.length != oa.length) {
+            return; // malformed hook
+        }
+        // local slot of each new parameter
+        int[] slotOf = new int[na.length];
+        for (int i = 0, s = 1; i < na.length; i++) {
+            slotOf[i] = s;
+            s += na[i].getSize();
         }
         // the engine writes with COMPUTE_MAXS only (frame computation would
         // need the game's class hierarchy), so every branch target and handler
@@ -100,13 +115,16 @@ public final class JarProcessor {
             mv.visitLabel(tryStart);
         }
         mv.visitVarInsn(Opcodes.ALOAD, 0);
-        int slot = 1;
-        for (int i = 0; i < na.length; i++) {
-            mv.visitVarInsn(na[i].getOpcode(Opcodes.ILOAD), slot);
-            if (!na[i].equals(oa[i]) && h.wrapName != null) {
+        for (int i = 0; i < oa.length; i++) {
+            int src = map[i];
+            mv.visitVarInsn(na[src].getOpcode(Opcodes.ILOAD), slotOf[src]);
+            if (!na[src].equals(oa[i]) && h.wrapName != null) {
                 mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.wrapOwner, h.wrapName, h.wrapDesc, false);
             }
-            slot += na[i].getSize();
+        }
+        int slot = 1;
+        for (org.objectweb.asm.Type t : na) {
+            slot += t.getSize();
         }
         mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
         if (nr.getSort() != org.objectweb.asm.Type.VOID) {

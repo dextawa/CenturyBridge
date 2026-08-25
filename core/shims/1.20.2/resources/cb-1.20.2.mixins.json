@@ -22,7 +22,8 @@
  ],
  "client": [
   "EditBoxBridge",
-  "ScreenDrawablesAccessor"
+  "ScreenDrawablesAccessor",
+  "MouseScrollBridge"
  ],
  "injectors": {
   "defaultRequire": 0

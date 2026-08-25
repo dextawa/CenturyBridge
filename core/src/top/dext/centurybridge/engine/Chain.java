@@ -145,6 +145,12 @@ public final class Chain {
         public String guard;
         /** hierarchy filters: apply only to classes under / not under this vanilla class */
         public String onlyUnder, notUnder;
+        /**
+         * For arity changes: for each OLD parameter, the index of the NEW
+         * parameter to pass (e.g. mouseScrolled(DDD) -> (DDDD): [0, 1, 3]).
+         * Null means same arity, positional.
+         */
+        public int[] args;
     }
 
     public final java.util.List<OverrideHook> overrideHooks = new java.util.ArrayList<>();
@@ -387,6 +393,13 @@ public final class Chain {
                     }
                     h.guard = o.has("guard") ? o.get("guard").getAsString() : null;
                     h.onlyUnder = o.has("onlyUnder") ? o.get("onlyUnder").getAsString() : null;
+                    if (o.has("args")) {
+                        var arr = o.getAsJsonArray("args");
+                        h.args = new int[arr.size()];
+                        for (int i = 0; i < arr.size(); i++) {
+                            h.args[i] = arr.get(i).getAsInt();
+                        }
+                    }
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
                     c.overrideHooks.add(h);
                 }

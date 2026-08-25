@@ -88,7 +88,8 @@
   "HandledScreenBridge",
   "PlayerSkinBridge",
   "ScreenBridge",
-  "ScreenDrawablesAccessor"
+  "ScreenDrawablesAccessor",
+  "MouseScrollBridge"
  ],
  "injectors": {
   "defaultRequire": 0

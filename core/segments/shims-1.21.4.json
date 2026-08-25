@@ -238,6 +238,7 @@
   "net/minecraft/class_3558.method_51562(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;",
   "net/minecraft/class_3609.method_15727(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;",
   "net/minecraft/class_361.method_1962(IIIILnet/minecraft/class_2960;)V",
+  "net/minecraft/class_364.method_25401(DDD)Z",
   "net/minecraft/class_3684.method_16047(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1451;FFFFFF)V",
   "net/minecraft/class_3715.method_17472(Lnet/minecraft/class_1297;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1799;)Z",
   "net/minecraft/class_3748.method_16546(Lnet/minecraft/class_3499$class_3501;Lnet/minecraft/class_3499$class_3501;)Z",
@@ -3721,5 +3722,16 @@
  },
  "superRedirects": {
   "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_21_4/Statics#cbRenderWidgets"
- }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_25401(DDD)Z",
+   "new": "method_25401(DDDD)Z",
+   "args": [
+    0,
+    1,
+    3
+   ]
+  }
+ ]
 }
