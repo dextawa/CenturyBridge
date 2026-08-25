@@ -20,4 +20,8 @@ public abstract class GenClass1729Bridge {
         throw new UnsupportedOperationException("CenturyBridge: class_1860 (Recipe) no longer has getId() in 1.20.2; cannot construct class_8786 (RecipeEntry) without an Identifier");
     }
 
+    /** was net/minecraft/class_1729.method_7654(Lnet/minecraft/class_1662;)V */
+    public void method_7654(net.minecraft.class_1662 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_7654 now requires class_9875 (RecipeFinder) pre-populated with crafting grid contents; cannot be derived from class_1662 (RecipeManager) alone");
+    }
 }

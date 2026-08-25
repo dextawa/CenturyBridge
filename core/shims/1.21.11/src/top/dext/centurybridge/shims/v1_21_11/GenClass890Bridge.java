@@ -15,5 +15,8 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_890.class)
 public abstract class GenClass890Bridge {
 
-
+    /** was net/minecraft/class_890.method_4164(Lnet/minecraft/class_1551;Lnet/minecraft/class_4587;FFFF)V */
+    public void method_4164(net.minecraft.class_1551 a0, net.minecraft.class_4587 a1, float a2, float a3, float a4, float a5) {
+        throw new UnsupportedOperationException("CenturyBridge: method_4164 changed from (class_1551, class_4587, FFFF) to (class_10086, class_4587, FF) -- cannot map class_1551 to class_10086 and cannot determine which 2 of 4 float parameters to pass");
+    }
 }

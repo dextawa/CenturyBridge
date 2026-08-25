@@ -21,5 +21,14 @@ public abstract class GenClass1262Bridge {
         throw new UnsupportedOperationException("CenturyBridge: Inventories.writeNbt requires a RegistryWrapper.WrapperLookup in 1.20.5");
     }
 
+    /** was net/minecraft/class_1262.method_5426(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)Lnet/minecraft/class_2487; */
+    public net.minecraft.class_2487 method_5426(net.minecraft.class_2487 a0, net.minecraft.class_2371 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_5426 in 1.21.8 requires a RegistryWrapper.WrapperLookup (class_7225$class_7874) that RecipeManager does not expose and the 1.20.1 signature did not carry");
+    }
 
+    /** was net/minecraft/class_1262.method_5429(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)V */
+    public void method_5429(net.minecraft.class_2487 a0, net.minecraft.class_2371 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_5429 now requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) that the old two-argument signature does not provide; no lookup is reachable from this Inventory instance");
+        // CB-CONFIDENCE: medium -- the new overload is the direct replacement, but a WrapperLookup cannot be obtained from the old (ItemStack, Direction) arguments alone, so a faithful bridge is impossible here
+    }
 }

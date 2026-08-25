@@ -15,6 +15,4 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_796.class)
 public abstract class GenClass796Bridge {
 
-
-
 }

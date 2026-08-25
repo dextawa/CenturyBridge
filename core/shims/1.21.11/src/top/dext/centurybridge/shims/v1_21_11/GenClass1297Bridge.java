@@ -42,4 +42,27 @@ public abstract class GenClass1297Bridge {
     public void method_5639(int a0) {
         ((net.minecraft.class_1297) (Object) this).method_5639((float) a0);
     }
+
+    /** was net/minecraft/class_1297.method_36971(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Z */
+    public boolean method_36971(net.minecraft.class_1937 a0, net.minecraft.class_2338 a1) {
+        if (a0 instanceof net.minecraft.class_3218 serverWorld) {
+            return ((net.minecraft.class_1297)(Object)this).method_36971(serverWorld, a1);
+        }
+        throw new UnsupportedOperationException("CenturyBridge: method_36971 now requires ServerWorld (class_3218) in 1.21.2; received " + a0.getClass());
+    }
+
+    /** was net/minecraft/class_1297.method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z */
+    public boolean method_48105(net.minecraft.class_3218 a0, double a1, double a2, double a3, java.util.Set a4, float a5, float a6) {
+        return ((net.minecraft.class_1297)(Object)this).method_48105(a0, a1, a2, a3, a4, a5, a6, false);
+    }
+
+    /** was net/minecraft/class_1297.method_5643(Lnet/minecraft/class_1282;F)Z */
+    public boolean method_5643(net.minecraft.class_1282 a0, float a1) {
+        return ((net.minecraft.class_1297)(Object)this).method_5643(a0);
+    }
+
+    /** was net/minecraft/class_1297.method_60607(ZLnet/minecraft/class_243;)V */
+    public void method_60607(boolean a0, net.minecraft.class_243 a1) {
+        ((net.minecraft.class_1297) (Object) this).method_60607(a0, false, a1);
+    }
 }

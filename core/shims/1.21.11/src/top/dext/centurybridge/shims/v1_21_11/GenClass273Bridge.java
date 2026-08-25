@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_273.class)
 public abstract class GenClass273Bridge {
 
-
+    /** was net/minecraft/class_273.method_32481(Lnet/minecraft/class_2487;)Lnet/minecraft/class_273; */
+    public net.minecraft.class_273 method_32481(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_32481(class_2487) in 1.21.8 requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) to deserialize Style from NBT; the old single-arg signature has no source for one and no default lookup is reachable from this context");
+        // CB-CONFIDENCE: high -- the new overload adds a mandatory RegistryWrapper.WrapperLookup parameter with no accessible default or factory from within this method, so the old contract cannot be faithfully bridged
+    }
 }

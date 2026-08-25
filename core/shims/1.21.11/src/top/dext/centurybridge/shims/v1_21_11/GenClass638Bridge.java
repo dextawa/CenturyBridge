@@ -20,4 +20,10 @@ public abstract class GenClass638Bridge {
         throw new UnsupportedOperationException("CenturyBridge: cannot convert String to class_9209 without particle registry lookup");
     }
 
+
+
+    /** was net/minecraft/class_638.method_29089(J)V */
+    public void method_29089(long a0) {
+        ((net.minecraft.class_638)(Object)this).method_29089(a0, 0L, true);
+    }
 }
