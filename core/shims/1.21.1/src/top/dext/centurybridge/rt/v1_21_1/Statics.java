@@ -284,11 +284,6 @@ public final class Statics {
         return (float) Math.sqrt(f * f + g * g + h * h);
     }
 
-    /** was net/minecraft/class_1297.method_5743()Ljava/lang/Iterable; */
-    public static java.lang.Iterable method_5743(net.minecraft.class_1297 self) {
-        return self.cU().toList();
-    }
-
     /** was net/minecraft/class_1309.field_30067F */
     public static float field_30067() {
         return 0.02f;
@@ -2981,11 +2976,6 @@ public final class Statics {
     /** was net/minecraft/class_1308.method_18810(I)V */
     public static void method_18810(net.minecraft.class_1308 self, int a0) {
         self.method_5976((float) a0);
-    }
-
-    /** was net/minecraft/class_1308.method_5933()Lnet/minecraft/class_1297; */
-    public static net.minecraft.class_1297 method_5933(net.minecraft.class_1308 self) {
-        return self.cQ();
     }
 
     /** was net/minecraft/class_1309.method_27302()Z */

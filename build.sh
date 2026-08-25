@@ -172,7 +172,7 @@ javac -nowarn -proc:none --release "$RELEASE" -cp "$CP" -d "$CLASSES" "@$OUT/sou
 # targets, injection selectors) is invisible to javac. Check all of it against
 # the real target jar now, not one failure per boot.
 if [ -d core/build/classes ]; then
-    java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB"         || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
+    java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "core/segments/shims-$VERSION.json"         || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 fi
 
 # fabric.mod.json, the mixin config and the access widener are mod SOURCE and

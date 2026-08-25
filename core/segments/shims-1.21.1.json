@@ -381,7 +381,6 @@
   "net/minecraft/class_1295.method_5602(I)V": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1297.method_18378(Lnet/minecraft/class_4050;Lnet/minecraft/class_4048;)F": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1297.method_52537(Lnet/minecraft/class_1297;)F": "top/dext/centurybridge/rt/v1_21_1/Statics",
-  "net/minecraft/class_1297.method_5743()Ljava/lang/Iterable;": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1309.method_20236(Lnet/minecraft/class_1268;)V": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_14.method_27138(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1355.method_35114(I)V": "top/dext/centurybridge/rt/v1_21_1/Statics",
@@ -485,7 +484,6 @@
   "net/minecraft/class_1297.method_5741()I": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1304.method_20234(Lnet/minecraft/class_1304$class_1305;I)Lnet/minecraft/class_1304;": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1308.method_18810(I)V": "top/dext/centurybridge/rt/v1_21_1/Statics",
-  "net/minecraft/class_1308.method_5933()Lnet/minecraft/class_1297;": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1309.method_27302()Z": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1309.method_29502()V": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1530.method_6891()I": "top/dext/centurybridge/rt/v1_21_1/Statics",
@@ -2478,7 +2476,9 @@
   "net/minecraft/class_4877.method_25059": "bridge attempted, no faithful equivalent: method_25059(class_4881) was removed in 1.21 with no direct replacement; no field or method on class_4877 accepts class_4881",
   "net/minecraft/class_7701.field_46779": "bridge attempted, no faithful equivalent: field_46779 (class_7696) was removed in 1.21 with no direct replacement; remaining class_7696 fields (field_40177, field_40178, field_45142) have unknown semantic mapping to the deleted field",
   "net/minecraft/class_783.field_4227": "bridge attempted, no faithful equivalent: class_783.field_4227 (static class_787) was deleted in 1.21 with no direct replacement; new class_783 is a record exposing no static class_787 constant, and the original value cannot be inferred from the new API surface",
-  "net/minecraft/class_927.method_4072": "bridge attempted, no faithful equivalent: class_927.method_4072 (EntityRenderer.render) was removed in 1.21; the entity rendering pipeline was refactored to use EntityRenderState and no direct equivalent exists on class_927"
+  "net/minecraft/class_927.method_4072": "bridge attempted, no faithful equivalent: class_927.method_4072 (EntityRenderer.render) was removed in 1.21; the entity rendering pipeline was refactored to use EntityRenderState and no direct equivalent exists on class_927",
+  "net/minecraft/class_1308.method_5933()Lnet/minecraft/class_1297;": "forged body did not compile in tree context (unmapped names); queued again",
+  "net/minecraft/class_1297.method_5743()Ljava/lang/Iterable;": "forged body did not compile in tree context (unmapped names); queued again"
  },
  "interfaceized": [
   "com/mojang/serialization/DataResult"
