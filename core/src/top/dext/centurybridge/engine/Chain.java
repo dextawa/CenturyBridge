@@ -227,6 +227,17 @@ public final class Chain {
         }
     }
 
+    /**
+     * Redirects that apply to INVOKESPECIAL super-calls only ("superRedirects"):
+     * "owner.name(desc)" -> "runtimeClass[#member]", receiver as arg 0. The
+     * method still exists on the target with the same descriptor, so a plain
+     * instance redirect would be wrong for virtual calls -- but the OLD
+     * super-call contract differs (1.20.1 Screen.render drew the widgets and
+     * nothing else; since 1.20.2 it draws the background first, over whatever
+     * the mod drew). Only a mod's own super.render(..) is rerouted.
+     */
+    public final java.util.Map<String, String> superRedirects = new java.util.HashMap<>();
+
     /** fabric.mod.json dependency id migrations declared per target
      *  ("depRenames" in shims-<to>.json), on top of the per-segment ones. */
     public final java.util.Map<String, String> depRenames = new java.util.HashMap<>();
@@ -384,6 +395,12 @@ public final class Chain {
                 var dr = root.getAsJsonObject("depRenames");
                 for (String k : dr.keySet()) {
                     c.depRenames.put(k, dr.get(k).getAsString());
+                }
+            }
+            if (root.has("superRedirects")) {
+                var sr2 = root.getAsJsonObject("superRedirects");
+                for (String k : sr2.keySet()) {
+                    c.superRedirects.put(k, sr2.get(k).getAsString());
                 }
             }
             if (root.has("ctorRedirects")) {

@@ -7021,4 +7021,16 @@ public final class Statics {
     public static net.minecraft.class_2960 cbNewIdentifier(String namespace, String path) {
         return net.minecraft.class_2960.method_60655(namespace, path);
     }
+
+    /**
+     * superRedirects: a 1.20.1 override's super.render(context, mx, my, delta).
+     * 1.20.1 Screen.render drew the widget list and nothing else; since 1.20.2
+     * it draws the background first, over everything the mod just drew. Render
+     * exactly what the old contract promised.
+     */
+    public static void cbRenderWidgets(net.minecraft.class_437 self, net.minecraft.class_332 context, int mouseX, int mouseY, float delta) {
+        for (net.minecraft.class_4068 d : ((top.dext.centurybridge.shims.v1_21_4.ScreenDrawablesAccessor) self).cbDrawables()) {
+            d.method_25394(context, mouseX, mouseY, delta);
+        }
+    }
 }

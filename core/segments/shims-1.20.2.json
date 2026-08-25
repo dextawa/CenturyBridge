@@ -160,5 +160,8 @@
   "net/minecraft/class_1297.method_5759(DDDFFIZ)V",
   "net/minecraft/class_1309.method_5759(DDDFFIZ)V",
   "net/minecraft/class_1314.method_5678()D"
- ]
+ ],
+ "superRedirects": {
+  "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbRenderWidgets"
+ }
 }

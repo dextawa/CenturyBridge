@@ -1603,7 +1603,16 @@
   "net/minecraft/class_1921.method_23585": "a specific RenderLayer preset deleted in the 1.20.3 pipeline rewrite: present in 1.20.2, zero references anywhere in the 1.20.4 jar (full-jar scan), and its neighbours method_23583/23587 both survive -- so this is one preset removed, not a rename. Substituting another layer would silently change how the mod renders, which is worse than failing loudly",
   "net/minecraft/class_742.method_3121": "bridge attempted, no faithful equivalent: method_3121 (getSkinType) was removed; use method_52814 (getSkinTextures) and extract the model from class_8685 instead",
   "net/minecraft/class_315.field_1893": "bridge attempted, no faithful equivalent: field_1893 is no longer available",
-  "net/minecraft/class_3439.method_14878": "bridge attempted, no faithful equivalent: Recipe no longer contains its ID in 1.20.2"
+  "net/minecraft/class_3439.method_14878": "bridge attempted, no faithful equivalent: Recipe no longer contains its ID in 1.20.2",
+  "net/minecraft/class_1690.method_7557()Lnet/minecraft/class_1792;": "forged body did not compile in tree context (unmapped names); queued again",
+  "net/minecraft/class_339.method_25401(DDD)Z": "cover had no backing bridge (cut in an earlier prune); queued again",
+  "net/minecraft/class_342.method_25401(DDD)Z": "cover had no backing bridge (cut in an earlier prune); queued again",
+  "net/minecraft/class_362.method_25401(DDD)Z": "cover had no backing bridge (cut in an earlier prune); queued again",
+  "net/minecraft/class_364.method_25401(DDD)Z": "cover had no backing bridge (cut in an earlier prune); queued again",
+  "net/minecraft/class_4265.method_25401(DDD)Z": "cover had no backing bridge (cut in an earlier prune); queued again",
+  "net/minecraft/class_437.method_25401(DDD)Z": "cover had no backing bridge (cut in an earlier prune); queued again",
+  "net/minecraft/class_465.method_25401(DDD)Z": "cover had no backing bridge (cut in an earlier prune); queued again",
+  "net/minecraft/class_8208.method_25401(DDD)Z": "cover had no backing bridge (cut in an earlier prune); queued again"
  },
  "covers": [
   "net/minecraft/class_1058.method_4570(D)F",
@@ -1637,7 +1646,6 @@
   "net/minecraft/class_1662.method_7403(Lnet/minecraft/class_1860;ILit/unimi/dsi/fastutil/ints/IntList;)I",
   "net/minecraft/class_1662.method_7407(Lnet/minecraft/class_1860;Lit/unimi/dsi/fastutil/ints/IntList;)I",
   "net/minecraft/class_1676.method_5781()Lnet/minecraft/class_270;",
-  "net/minecraft/class_1690.method_7557()Lnet/minecraft/class_1792;",
   "net/minecraft/class_1720.method_17363()I",
   "net/minecraft/class_1720.method_17364()I",
   "net/minecraft/class_1729.method_17697(ZLnet/minecraft/class_1860;Lnet/minecraft/class_3222;)V",
@@ -1718,13 +1726,11 @@
   "net/minecraft/class_3324.method_14570(Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)V",
   "net/minecraft/class_3324.method_14613(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_3222;",
   "net/minecraft/class_338.method_1809()Ljava/util/List;",
-  "net/minecraft/class_339.method_25401(DDD)Z",
   "net/minecraft/class_342.method_1855(I)V",
   "net/minecraft/class_342.method_1865()V",
   "net/minecraft/class_342.method_1870()V",
   "net/minecraft/class_342.method_1872()V",
   "net/minecraft/class_342.method_1883(I)V",
-  "net/minecraft/class_342.method_25401(DDD)Z",
   "net/minecraft/class_3439.method_14876(Lnet/minecraft/class_1860;)V",
   "net/minecraft/class_3439.method_14878(Lnet/minecraft/class_1860;)Z",
   "net/minecraft/class_3439.method_14883(Lnet/minecraft/class_1860;)Z",
@@ -1732,14 +1738,10 @@
   "net/minecraft/class_3439.method_14886(Lnet/minecraft/class_1860;)V",
   "net/minecraft/class_3518.method_34916(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792;",
   "net/minecraft/class_361.method_1962(IIIILnet/minecraft/class_2960;)V",
-  "net/minecraft/class_362.method_25401(DDD)Z",
-  "net/minecraft/class_364.method_25401(DDD)Z",
   "net/minecraft/class_3778$class_4182.method_19306(Lnet/minecraft/class_3790;Lorg/apache/commons/lang3/mutable/MutableObject;IZLnet/minecraft/class_5539;Lnet/minecraft/class_7138;)V",
-  "net/minecraft/class_4265.method_25401(DDD)Z",
   "net/minecraft/class_4341.method_20994(JLjava/lang/String;)V",
   "net/minecraft/class_4341.method_21017(JLjava/lang/String;)Lnet/minecraft/class_4870;",
   "net/minecraft/class_4341.method_21020(JLjava/lang/String;)Lnet/minecraft/class_4870;",
-  "net/minecraft/class_437.method_25401(DDD)Z",
   "net/minecraft/class_437.method_25420(Lnet/minecraft/class_332;)V",
   "net/minecraft/class_447.method_2282(Lnet/minecraft/class_332;IIII)V",
   "net/minecraft/class_4517.method_22166(Lnet/minecraft/class_2338;I)V",
@@ -1750,7 +1752,6 @@
   "net/minecraft/class_4614.method_39852(Ljava/io/DataInput;Lnet/minecraft/class_6836;)Lnet/minecraft/class_6836$class_6838;",
   "net/minecraft/class_4614.method_39854(Ljava/io/DataInput;I)V",
   "net/minecraft/class_4614.method_39877(Ljava/io/DataInput;Lnet/minecraft/class_6836;)V",
-  "net/minecraft/class_465.method_25401(DDD)Z",
   "net/minecraft/class_4722.method_48480()Lnet/minecraft/class_1921;",
   "net/minecraft/class_4874.method_25045()Ljava/lang/String;",
   "net/minecraft/class_4874.method_25046(Ljava/lang/String;)V",
@@ -1790,10 +1791,12 @@
   "net/minecraft/class_7957$class_7960.method_47700()Lnet/minecraft/class_7764;",
   "net/minecraft/class_8005.method_48031(Lnet/minecraft/class_161;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)V",
   "net/minecraft/class_8132.method_49000(Lnet/minecraft/class_8021;Lnet/minecraft/class_7847;)Lnet/minecraft/class_8021;",
-  "net/minecraft/class_8208.method_25401(DDD)Z",
   "net/minecraft/class_8216.method_49719(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
   "net/minecraft/class_8216.method_49720(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String;",
   "net/minecraft/class_8496.method_51260(Lnet/minecraft/class_310;Lnet/minecraft/class_542$class_8495;Lnet/minecraft/class_4011;Lnet/minecraft/class_4341;)V",
   "net/minecraft/class_870.method_3871(Lnet/minecraft/class_3341;Ljava/util/List;Ljava/util/List;Lnet/minecraft/class_2874;)V"
- ]
+ ],
+ "superRedirects": {
+  "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_20_4/Statics#cbRenderWidgets"
+ }
 }

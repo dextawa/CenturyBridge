@@ -205,6 +205,21 @@
   "net/minecraft/class_3210.method_14085(JLnet/minecraft/class_3222;Z)V",
   "net/minecraft/class_3281.method_14436(ILnet/minecraft/class_3264;)Lnet/minecraft/class_3281;",
   "net/minecraft/class_3312.method_37156(Ljava/lang/String;Ljava/util/function/Consumer;)V",
+  "net/minecraft/class_332.method_25290(Lnet/minecraft/class_2960;IIFFIIII)V",
+  "net/minecraft/class_332.method_25291(Lnet/minecraft/class_2960;IIIFFIIII)V",
+  "net/minecraft/class_332.method_25293(Lnet/minecraft/class_2960;IIIIFFIIII)V",
+  "net/minecraft/class_332.method_25302(Lnet/minecraft/class_2960;IIIIII)V",
+  "net/minecraft/class_332.method_25303(Lnet/minecraft/class_327;Ljava/lang/String;III)I",
+  "net/minecraft/class_332.method_27535(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;III)I",
+  "net/minecraft/class_332.method_33284(IIIIIII)V",
+  "net/minecraft/class_332.method_35720(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;III)I",
+  "net/minecraft/class_332.method_51422(FFFF)V",
+  "net/minecraft/class_332.method_51430(Lnet/minecraft/class_327;Lnet/minecraft/class_5481;IIIZ)I",
+  "net/minecraft/class_332.method_51433(Lnet/minecraft/class_327;Ljava/lang/String;IIIZ)I",
+  "net/minecraft/class_332.method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V",
+  "net/minecraft/class_332.method_51439(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIZ)I",
+  "net/minecraft/class_332.method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V",
+  "net/minecraft/class_332.method_51448()Lnet/minecraft/class_4587;",
   "net/minecraft/class_3324.method_14570(Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)V",
   "net/minecraft/class_3324.method_14613(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_3222;",
   "net/minecraft/class_338.method_1805(Lnet/minecraft/class_332;III)V",
@@ -3660,5 +3675,8 @@
  "ctorRedirects": {
   "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_8/Statics#cbNewIdentifier",
   "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_8/Statics#cbNewIdentifier"
+ },
+ "superRedirects": {
+  "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_21_8/Statics#cbRenderWidgets"
  }
 }

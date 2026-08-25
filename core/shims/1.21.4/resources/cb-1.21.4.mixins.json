@@ -229,7 +229,8 @@
   "HandledScreenBridge",
   "PlayerSkinBridge",
   "ScreenBridge",
-  "DrawContextBridge"
+  "DrawContextBridge",
+  "ScreenDrawablesAccessor"
  ],
  "injectors": {
   "defaultRequire": 0

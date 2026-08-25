@@ -581,6 +581,7 @@ public final class JarProcessor {
         // damage is such a call must still go through the rewrite pass -- the
         // fix used to ride along on other damage and silently skip these
         final Set<String> hookCallSites = new HashSet<>();
+        final Set<String> superRedirectSites = new HashSet<>();
         boolean needIfaceFix = false;
         if (!chain.interfaceized.isEmpty()) {
             String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
@@ -697,6 +698,11 @@ public final class JarProcessor {
                         if (name.equals("<init>") && chain.ctorRedirects.containsKey(key)) {
                             top.dext.centurybridge.data.FullAudit.record(key, "ctor-redirect");
                             return; // rewritten to the factory by the constructor pre-pass
+                        }
+                        if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>") && chain.superRedirects.containsKey(key)) {
+                            superRedirectSites.add(key);
+                            top.dext.centurybridge.data.FullAudit.record(key, "super-redirect");
+                            return;
                         }
                         if (name.equals("<init>") && !chain.targetCtors.isEmpty()
                                 && chain.targetCtors.containsKey(owner)
@@ -958,7 +964,7 @@ public final class JarProcessor {
 
         if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
-                && !needClassRename && !needIfaceFix && hookCallSites.isEmpty()
+                && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
                 && declaredOldOverrides.stream().allMatch(declaredNewOverrides::contains)) {
@@ -1091,6 +1097,12 @@ public final class JarProcessor {
                             return;
                         }
                         String key = owner + "." + name + desc;
+                        if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>") && superRedirectSites.contains(key)) {
+                            String srt = chain.superRedirects.get(key);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(srt), redirName(srt, name),
+                                "(L" + owner + ";" + desc.substring(1), false);
+                            return;
+                        }
                         String rt = redirects.get(key);
                         if (rt != null && op == Opcodes.INVOKESTATIC) {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(rt),

@@ -2518,5 +2518,8 @@
  "ctorRedirects": {
   "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_1/Statics#cbNewIdentifier",
   "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_1/Statics#cbNewIdentifier"
+ },
+ "superRedirects": {
+  "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_21_1/Statics#cbRenderWidgets"
  }
 }
