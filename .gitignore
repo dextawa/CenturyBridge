@@ -29,8 +29,8 @@ core/tools/
 LOOP.md
 
 # --- research scaffolding, superseded by the Java engine ---
-analyzer/
-cb/
+/analyzer/
+/cb/
 
 # --- runtime scratch ---
 run/
