@@ -698,6 +698,33 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(key, "ctor-redirect");
                             return; // rewritten to the factory by the constructor pre-pass
                         }
+                        if (name.equals("<init>") && !chain.targetCtors.isEmpty()
+                                && chain.targetCtors.containsKey(owner)
+                                && !chain.targetCtors.get(owner).contains(desc)
+                                && chain.resolveClass(owner).level() == Chain.Level.OK) {
+                            // the owner survives but this constructor shape does not:
+                            // NoSuchMethodError at the NEW site unless redirected
+                            String cside = chain.sideOf(owner);
+                            if (cside.equals("datagen")) {
+                                rpt.datagenSkipped++;
+                                top.dext.centurybridge.data.FullAudit.record(key, "datagen-skip");
+                                return;
+                            }
+                            if (chain.ledgerReason(owner, "<init>") != null) {
+                                rpt.ledgered++;
+                                top.dext.centurybridge.data.FullAudit.record(key,
+                                    "LEDGERED[" + cside + "] ctor: " + chain.ledgerReason(owner, "<init>"));
+                                return;
+                            }
+                            top.dext.centurybridge.data.FullAudit.record(key, "CTOR-ISSUE[" + cside + "]");
+                            String cline = tag + "L3 constructor: " + shortName(owner) + ".<init>" + desc;
+                            if (cside.equals("client")) {
+                                rpt.clientIssues.add(tag + "[client] " + cline);
+                            } else {
+                                issues.add(cline);
+                            }
+                            return;
+                        }
                         // a shim on any ancestor satisfies this call site: the mod
                         // holds a subclass reference, but the member is declared
                         // (and bridged) further up

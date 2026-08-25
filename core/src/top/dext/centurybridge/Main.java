@@ -113,6 +113,12 @@ public final class Main {
         if (crossesWall && !Files.exists(renameTable)) {
             throw new IllegalStateException("chain crosses the namespace wall but " + renameTable + " is missing");
         }
+        Path targetStub = crossesWall ? Path.of("data/jars/client-" + args[3] + ".jar")
+                                      : Path.of("data/jars/client-" + args[3] + "-intermediary.jar");
+        if (Files.exists(targetStub)) {
+            chain.loadTargetCtors(targetStub, crossesWall ? renameTable : null);
+            System.out.println("target constructors: " + chain.targetCtors.size() + " owners from " + targetStub.getFileName());
+        }
         java.util.Map<String, Integer> verdicts = new java.util.TreeMap<>();
         int engineErrors = 0;
         int unaccounted = 0;

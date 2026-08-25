@@ -181,6 +181,52 @@ public final class Chain {
     /** owners that have at least one constructor redirect (fast pre-check) */
     public final java.util.Set<String> ctorRedirectOwners = new java.util.HashSet<>();
 
+    /**
+     * Constructors the target actually has, owner -> descriptors, keyed in the
+     * analysis (intermediary) namespace. Segment data knows member NAMES, and
+     * every constructor is named <init>: without this a dead constructor call
+     * site was simply invisible to the accounting (7841 Identifier sites at
+     * 26.2 never counted). Empty when no target stub was available.
+     */
+    public final java.util.Map<String, java.util.Set<String>> targetCtors = new java.util.HashMap<>();
+
+    /**
+     * Index the target's constructors. For a real-name (26.x) target the jar is
+     * mojang-named: owners and descriptor classes are translated back through
+     * the inter->mojang table so they compare against intermediary call sites;
+     * classes born after the wall stay mojang-named and match nothing, which
+     * is right -- no old mod can name them.
+     */
+    public void loadTargetCtors(Path stubJar, Path interToMojangTsv) throws IOException {
+        java.util.Map<String, String> back = new java.util.HashMap<>();
+        if (interToMojangTsv != null && java.nio.file.Files.exists(interToMojangTsv)) {
+            for (String ln : java.nio.file.Files.readAllLines(interToMojangTsv)) {
+                String[] p = ln.split("\t");
+                if (p.length >= 3 && p[0].equals("C")) {
+                    back.put(p[2], p[1]);
+                }
+            }
+        }
+        var idx = top.dext.centurybridge.data.StubDiff.index(stubJar);
+        java.util.regex.Pattern cls = java.util.regex.Pattern.compile("L([^;]+);");
+        for (var e : idx.methods.entrySet()) {
+            java.util.Set<String> descs = e.getValue().get("<init>");
+            if (descs == null) {
+                continue;
+            }
+            String owner = back.getOrDefault(e.getKey(), e.getKey());
+            java.util.Set<String> out = targetCtors.computeIfAbsent(owner, k -> new java.util.HashSet<>());
+            for (String d : descs) {
+                if (back.isEmpty()) {
+                    out.add(d);
+                } else {
+                    out.add(cls.matcher(d).replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
+                        back.getOrDefault(mr.group(1), mr.group(1))) + ";"));
+                }
+            }
+        }
+    }
+
     /** fabric.mod.json dependency id migrations declared per target
      *  ("depRenames" in shims-<to>.json), on top of the per-segment ones. */
     public final java.util.Map<String, String> depRenames = new java.util.HashMap<>();
