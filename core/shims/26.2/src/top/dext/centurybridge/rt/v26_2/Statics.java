@@ -7320,4 +7320,22 @@ public final class Statics {
     public static java.lang.String method_10558(net.minecraft.nbt.CompoundTag self, String key) {
         return self.getStringOr(key, "");
     }
+
+    // --- NBT 引用类型 getter族 + PoseStack.mulPose: 26.x 的 Optional 化/接口化 ---
+    /** CompoundTag.getCompound(k): 旧缺失返回空 tag = 26.x getCompoundOrEmpty */
+    public static net.minecraft.nbt.CompoundTag method_10562(net.minecraft.nbt.CompoundTag self, String key) {
+        return self.getCompoundOrEmpty(key);
+    }
+    /** CompoundTag.getList(k, type): 26.x ListTag 不再按元素类型过滤, type 参丢弃 */
+    public static net.minecraft.nbt.ListTag method_10554(net.minecraft.nbt.CompoundTag self, String key, int type) {
+        return self.getListOrEmpty(key);
+    }
+    /** CompoundTag.remove(k): 返回类型 void->Tag, 老调用点期望 void */
+    public static void method_10551(net.minecraft.nbt.CompoundTag self, String key) {
+        self.remove(key);
+    }
+    /** PoseStack.mulPose(Quaternionf): 参数在 26.x 变成接口 Quaternionfc (Quaternionf 是其实现) */
+    public static void method_22907(com.mojang.blaze3d.vertex.PoseStack self, org.joml.Quaternionf q) {
+        self.mulPose(q);
+    }
 }

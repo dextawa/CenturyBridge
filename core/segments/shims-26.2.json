@@ -943,7 +943,11 @@
   "net/minecraft/class_2487.method_10537(Ljava/lang/String;)J": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_2487.method_10583(Ljava/lang/String;)F": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_2487.method_10574(Ljava/lang/String;)D": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_2487.method_10558(Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_2487.method_10558(Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_2487.method_10562(Ljava/lang/String;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_2487.method_10554(Ljava/lang/String;I)Lnet/minecraft/class_2499;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_2487.method_10551(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_4587.method_22907(Lorg/joml/Quaternionf;)V": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_4358.field_19638:Lnet/minecraft/class_4398;": "top/dext/centurybridge/rt/v26_2/Statics",
