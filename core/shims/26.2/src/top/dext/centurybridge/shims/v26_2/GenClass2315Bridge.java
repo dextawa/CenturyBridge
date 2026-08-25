@@ -20,5 +20,4 @@ public abstract class GenClass2315Bridge {
         return net.minecraft.world.level.block.DispenserBlock.getDispensePosition(a0);
     }
 
-
 }

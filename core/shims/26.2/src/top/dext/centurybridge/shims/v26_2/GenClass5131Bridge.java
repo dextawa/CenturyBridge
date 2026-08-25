@@ -29,4 +29,7 @@ public abstract class GenClass5131Bridge {
     public double getModifierValue(net.minecraft.core.Holder a0, java.util.UUID a1) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeMap)(Object)this).getModifierValue(a0, net.minecraft.resources.Identifier.tryParse(a1.toString()));
     }
+
+
+
 }

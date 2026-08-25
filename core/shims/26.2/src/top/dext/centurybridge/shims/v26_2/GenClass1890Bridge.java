@@ -24,4 +24,11 @@ public abstract class GenClass1890Bridge {
     public int getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantment a0, net.minecraft.world.item.ItemStack a1) {
         return ((net.minecraft.world.item.enchantment.EnchantmentHelper)(Object)this).getItemEnchantmentLevel(net.minecraft.core.Holder.direct(a0), a1);
     }
+
+
+
+    /** was net/minecraft/world/item/enchantment/EnchantmentHelper.onProjectileSpawned(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/projectile/arrow/AbstractArrow;Ljava/util/function/Consumer;)V */
+    public void onProjectileSpawned(net.minecraft.server.level.ServerLevel a0, net.minecraft.world.item.ItemStack a1, net.minecraft.world.entity.projectile.arrow.AbstractArrow a2, java.util.function.Consumer a3) {
+        ((net.minecraft.world.item.enchantment.EnchantmentHelper)(Object)this).onProjectileSpawned(a0, a1, (net.minecraft.world.entity.projectile.Projectile)a2, a3);
+    }
 }

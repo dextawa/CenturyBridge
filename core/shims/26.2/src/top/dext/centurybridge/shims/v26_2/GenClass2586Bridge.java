@@ -30,7 +30,4 @@ public abstract class GenClass2586Bridge {
     }
 
 
-
-
-
 }

@@ -25,4 +25,5 @@ public abstract class GenClass3004Bridge {
         throw new UnsupportedOperationException("CenturyBridge: PlayerAdvancementTracker.write requires RegistryWrapper.WrapperLookup in 1.20.5");
     }
 
+
 }

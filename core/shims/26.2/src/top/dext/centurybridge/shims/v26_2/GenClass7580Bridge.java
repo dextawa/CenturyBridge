@@ -26,4 +26,5 @@ public abstract class GenClass7580Bridge {
         return a0;
     }
 
+
 }

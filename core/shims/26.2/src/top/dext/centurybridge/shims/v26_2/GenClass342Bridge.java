@@ -35,4 +35,7 @@ public abstract class GenClass342Bridge {
         ((net.minecraft.client.gui.components.EditBox)(Object)this).moveCursorTo(a0, true);
     }
 
+
+
+
 }

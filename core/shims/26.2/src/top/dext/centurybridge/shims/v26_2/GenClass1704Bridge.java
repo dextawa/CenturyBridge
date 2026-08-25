@@ -32,4 +32,6 @@ public abstract class GenClass1704Bridge {
         return entry == null ? null : (net.minecraft.world.effect.MobEffect) entry.value();
     }
 
+
+
 }

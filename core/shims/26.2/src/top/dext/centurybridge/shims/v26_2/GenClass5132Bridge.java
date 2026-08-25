@@ -46,4 +46,10 @@ public abstract class GenClass5132Bridge {
     public boolean hasModifier(net.minecraft.core.Holder a0, java.util.UUID a1) {
         return ((net.minecraft.world.entity.ai.attributes.AttributeSupplier)(Object)this).hasModifier(a0, net.minecraft.resources.Identifier.tryParse(a1.toString()));
     }
+
+
+
+
+
+
 }

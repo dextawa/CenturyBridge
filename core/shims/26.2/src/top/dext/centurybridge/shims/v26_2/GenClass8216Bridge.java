@@ -25,4 +25,5 @@ public abstract class GenClass8216Bridge {
         return ((net.minecraft.util.CommonLinks) (Object) this).extendRealms(a0, java.util.UUID.fromString(a1), a2);
     }
 
+
 }

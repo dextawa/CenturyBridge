@@ -24,4 +24,6 @@ public abstract class GenClass1764Bridge {
     public int getChargeDuration(net.minecraft.world.item.ItemStack a0) {
         return ((net.minecraft.world.item.CrossbowItem)(Object)this).getChargeDuration(a0, null);
     }
+
+
 }

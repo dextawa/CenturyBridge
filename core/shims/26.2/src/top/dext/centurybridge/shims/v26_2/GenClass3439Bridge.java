@@ -40,4 +40,8 @@ public abstract class GenClass3439Bridge {
         throw new UnsupportedOperationException("CenturyBridge: Cannot retrieve recipe ID from Recipe in 1.20.2");
     }
 
+
+
+
+
 }

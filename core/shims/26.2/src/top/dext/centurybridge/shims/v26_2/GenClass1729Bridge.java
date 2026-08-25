@@ -20,4 +20,9 @@ public abstract class GenClass1729Bridge {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.item.crafting.Recipe (Recipe) no longer has getId() in 1.20.2; cannot construct net.minecraft.world.item.crafting.RecipeHolder (RecipeEntry) without an Identifier");
     }
 
+
+    /** was net/minecraft/world/inventory/RecipeBookMenu.fillCraftSlotsStackedContents(Lnet/minecraft/world/entity/player/StackedContents;)V */
+    public void fillCraftSlotsStackedContents(net.minecraft.world.entity.player.StackedContents a0) {
+        throw new UnsupportedOperationException("CenturyBridge: fillCraftSlotsStackedContents now requires net.minecraft.world.entity.player.StackedItemContents (RecipeFinder) pre-populated with crafting grid contents; cannot be derived from net.minecraft.world.entity.player.StackedContents (RecipeManager) alone");
+    }
 }

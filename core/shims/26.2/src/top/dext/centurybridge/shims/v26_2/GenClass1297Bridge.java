@@ -42,4 +42,32 @@ public abstract class GenClass1297Bridge {
     public void igniteForSeconds(int a0) {
         ((net.minecraft.world.entity.Entity) (Object) this).igniteForSeconds((float) a0);
     }
+
+
+
+
+
+
+    /** was net/minecraft/world/entity/Entity.mayInteract(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z */
+    public boolean mayInteract(net.minecraft.world.level.Level a0, net.minecraft.core.BlockPos a1) {
+        if (a0 instanceof net.minecraft.server.level.ServerLevel serverWorld) {
+            return ((net.minecraft.world.entity.Entity)(Object)this).mayInteract(serverWorld, a1);
+        }
+        throw new UnsupportedOperationException("CenturyBridge: mayInteract now requires ServerWorld (net.minecraft.server.level.ServerLevel) in 1.21.2; received " + a0.getClass());
+    }
+
+    /** was net/minecraft/world/entity/Entity.teleportTo(Lnet/minecraft/server/level/ServerLevel;DDDLjava/util/Set;FF)Z */
+    public boolean teleportTo(net.minecraft.server.level.ServerLevel a0, double a1, double a2, double a3, java.util.Set a4, float a5, float a6) {
+        return ((net.minecraft.world.entity.Entity)(Object)this).teleportTo(a0, a1, a2, a3, a4, a5, a6, false);
+    }
+
+    /** was net/minecraft/world/entity/Entity.hurtClient(Lnet/minecraft/world/damagesource/DamageSource;F)Z */
+    public boolean hurtClient(net.minecraft.world.damagesource.DamageSource a0, float a1) {
+        return ((net.minecraft.world.entity.Entity)(Object)this).hurtClient(a0);
+    }
+
+    /** was net/minecraft/world/entity/Entity.setOnGroundWithMovement(ZLnet/minecraft/world/phys/Vec3;)V */
+    public void setOnGroundWithMovement(boolean a0, net.minecraft.world.phys.Vec3 a1) {
+        ((net.minecraft.world.entity.Entity) (Object) this).setOnGroundWithMovement(a0, false, a1);
+    }
 }

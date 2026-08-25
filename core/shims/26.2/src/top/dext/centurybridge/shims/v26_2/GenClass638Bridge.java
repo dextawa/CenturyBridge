@@ -20,4 +20,5 @@ public abstract class GenClass638Bridge {
         throw new UnsupportedOperationException("CenturyBridge: cannot convert String to net.minecraft.world.level.saveddata.maps.MapId without particle registry lookup");
     }
 
+
 }

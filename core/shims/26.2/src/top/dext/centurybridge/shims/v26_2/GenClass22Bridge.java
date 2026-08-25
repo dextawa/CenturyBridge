@@ -31,4 +31,10 @@ public abstract class GenClass22Bridge {
     }
 
 
+
+    /** was net/minecraft/world/level/saveddata/maps/MapItemSavedData.method_32371(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData; */
+    public net.minecraft.world.level.saveddata.maps.MapItemSavedData method_32371(net.minecraft.nbt.CompoundTag a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_32371(net.minecraft.nbt.CompoundTag) in 1.21.8 requires a net.minecraft.core.HolderLookup$class_7874 (RegistryWrapper.WrapperLookup) that the old single-arg signature cannot supply; no default lookup is reachable from net.minecraft.world.level.saveddata.maps.MapItemSavedData alone");
+        // CB-CONFIDENCE: high -- the new API strictly adds a required WrapperLookup parameter with no field on net.minecraft.world.level.saveddata.maps.MapItemSavedData holding one and no static accessor in the listed surface, so the old contract is genuinely inexpressible
+    }
 }

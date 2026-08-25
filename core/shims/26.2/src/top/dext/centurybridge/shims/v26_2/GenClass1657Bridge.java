@@ -27,4 +27,6 @@ public abstract class GenClass1657Bridge {
         ((net.minecraft.world.entity.player.Player)(Object)this).startAutoSpinAttack(a0, 1.0f, net.minecraft.world.item.ItemStack.EMPTY);
         // CB-CONFIDENCE: medium -- same method number with two added params (float + ItemStack); 1.0f and EMPTY are reasonable defaults but the exact semantics of the new float param are inferred
     }
+
+
 }

@@ -25,4 +25,5 @@ public abstract class GenClass2794Bridge {
         return ((net.minecraft.world.level.chunk.ChunkGenerator)(Object)this).createBiomes(a1, a2, a3, a4);
     }
 
+
 }

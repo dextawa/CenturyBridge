@@ -25,4 +25,5 @@ public abstract class GenClass340Bridge {
         return ((net.minecraft.client.gui.components.DebugScreenOverlay) (Object) this).getBandwidthLogger();
     }
 
+
 }

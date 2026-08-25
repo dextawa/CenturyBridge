@@ -25,4 +25,5 @@ public abstract class GenClass1720Bridge {
         return (int) ((net.minecraft.world.inventory.AbstractFurnaceMenu) (Object) this).getLitProgress();
     }
 
+
 }

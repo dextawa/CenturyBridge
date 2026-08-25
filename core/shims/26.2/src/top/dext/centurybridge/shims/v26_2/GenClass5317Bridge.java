@@ -20,4 +20,14 @@ public abstract class GenClass5317Bridge {
         return ((net.minecraft.world.level.levelgen.presets.WorldPresets) (Object) this).fromSettings(new net.minecraft.world.level.levelgen.WorldDimensions(a0));
     }
 
+
+    /** was net/minecraft/world/level/levelgen/presets/WorldPresets.createNormalWorldDimensions(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/level/levelgen/WorldDimensions; */
+    public net.minecraft.world.level.levelgen.WorldDimensions createNormalWorldDimensions(net.minecraft.core.RegistryAccess a0) {
+        return ((net.minecraft.world.level.levelgen.presets.WorldPresets)(Object)this).createNormalWorldDimensions((net.minecraft.core.HolderLookup.Provider)a0);
+    }
+
+    /** was net/minecraft/world/level/levelgen/presets/WorldPresets.getNormalOverworld(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/level/dimension/LevelStem; */
+    public net.minecraft.world.level.dimension.LevelStem getNormalOverworld(net.minecraft.core.RegistryAccess a0) {
+        return ((net.minecraft.world.level.levelgen.presets.WorldPresets) (Object) this).getNormalOverworld((net.minecraft.core.HolderLookup.Provider) a0);
+    }
 }

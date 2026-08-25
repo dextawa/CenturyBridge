@@ -25,4 +25,5 @@ public abstract class GenClass128Bridge {
         return ((net.minecraft.CrashReport)(Object)this).getSaveFile().toFile();
     }
 
+
 }

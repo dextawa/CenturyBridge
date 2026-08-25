@@ -29,4 +29,7 @@ public abstract class GenClass4525Bridge {
     public java.util.Collection findTestBlocks(net.minecraft.core.BlockPos a0, int a1, net.minecraft.server.level.ServerLevel a2) {
         return ((net.minecraft.gametest.framework.StructureUtils) (Object) this).findTestBlocks(a0, a1, a2).collect(java.util.stream.Collectors.toList());
     }
+
+
+
 }

@@ -19,4 +19,10 @@ public abstract class GenClass1309Bridge {
     public void onEquippedItemBroken(net.minecraft.world.entity.EquipmentSlot a0) {
         // sends a game event
     }
+
+
+    /** was net/minecraft/world/entity/LivingEntity.activeLocationDependentEnchantments()Ljava/util/Map; */
+    public java.util.Map activeLocationDependentEnchantments() {
+        return ((net.minecraft.world.entity.LivingEntity)(Object)this).activeLocationDependentEnchantments(net.minecraft.world.entity.EquipmentSlot.FEET);
+    }
 }
