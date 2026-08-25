@@ -19,4 +19,9 @@ public abstract class GenClass1309Bridge {
     public void method_20235(net.minecraft.class_1304 a0) {
         // sends a game event
     }
+
+    /** was net/minecraft/class_1309.method_59926()Ljava/util/Map; */
+    public java.util.Map method_59926() {
+        return ((net.minecraft.class_1309)(Object)this).method_59926(net.minecraft.class_1304.field_6166);
+    }
 }

@@ -15,5 +15,8 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1662.class)
 public abstract class GenClass1662Bridge {
 
-
+    /** was net/minecraft/class_1662.method_7411(II)I */
+    public int method_7411(int a0, int a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_7411(II)I cannot be bridged to (Object;I)V -- int key cannot be reconstructed as Object key (Reference2IntOpenHashMap uses reference equality) and int return value has no equivalent in the void new API");
+    }
 }

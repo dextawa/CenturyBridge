@@ -26,4 +26,8 @@ public abstract class GenClass1262Bridge {
         // CB-CONFIDENCE: medium -- the new overload is the direct replacement, but a WrapperLookup cannot be obtained from the old (ItemStack, Direction) arguments alone, so a faithful bridge is impossible here
     }
 
+    /** was net/minecraft/class_1262.method_5427(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487; */
+    public net.minecraft.class_2487 method_5427(net.minecraft.class_2487 a0, net.minecraft.class_2371 a1, boolean a2) {
+        throw new UnsupportedOperationException("CenturyBridge: Inventories.writeNbt requires a RegistryWrapper.WrapperLookup in 1.20.5");
+    }
 }

@@ -15,5 +15,8 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_757.class)
 public abstract class GenClass757Bridge {
 
-
+    /** was net/minecraft/class_757.method_22973(D)Lorg/joml/Matrix4f; */
+    public org.joml.Matrix4f method_22973(double a0) {
+        return ((net.minecraft.class_757) (Object) this).method_22973((float) a0);
+    }
 }

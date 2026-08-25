@@ -15,5 +15,8 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_913.class)
 public abstract class GenClass913Bridge {
 
-
+    /** was net/minecraft/class_913.method_3987(Lnet/minecraft/class_1439;)Lnet/minecraft/class_2960; */
+    public net.minecraft.class_2960 method_3987(net.minecraft.class_1439 a0) {
+        return ((net.minecraft.class_913)(Object)this).method_3987(((net.minecraft.class_913)(Object)this).method_62468());
+    }
 }

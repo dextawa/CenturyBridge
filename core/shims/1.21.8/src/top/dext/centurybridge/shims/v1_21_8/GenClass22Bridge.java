@@ -21,4 +21,17 @@ public abstract class GenClass22Bridge {
         // CB-CONFIDENCE: high -- the new API strictly adds a required WrapperLookup parameter with no field on class_22 holding one and no static accessor in the listed surface, so the old contract is genuinely inexpressible
     }
 
+    /** was net/minecraft/class_22.method_100(ILnet/minecraft/class_1657;)Lnet/minecraft/class_2596; */
+    public net.minecraft.class_2596 method_100(int a0, net.minecraft.class_1657 a1) {
+        return ((net.minecraft.class_22) (Object) this).method_100(new net.minecraft.class_9209(a0), a1);
+    }
+
+    /** was net/minecraft/class_22.method_32364(I)Lnet/minecraft/class_22; */
+    public net.minecraft.class_22 method_32364(int a0) {
+        net.minecraft.class_22 state = (net.minecraft.class_22) (Object) this;
+        for (int i = 0; i < a0; i++) {
+            state = state.method_32364();
+        }
+        return state;
+    }
 }

@@ -21,4 +21,8 @@ public abstract class GenClass823Bridge {
         net.minecraft.class_823.method_29999(a0, a1, a2, a3, a4, a5, a6, net.minecraft.class_1767.field_7942, new net.minecraft.class_9307(a7));
     }
 
+    /** was net/minecraft/class_823.method_23802(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLnet/minecraft/class_1767;Lnet/minecraft/class_9307;Z)V */
+    public void method_23802(net.minecraft.class_4587 a0, net.minecraft.class_4597 a1, int a2, int a3, net.minecraft.class_630 a4, net.minecraft.class_4730 a5, boolean a6, net.minecraft.class_1767 a7, net.minecraft.class_9307 a8, boolean a9) {
+        ((net.minecraft.class_823)(Object)this).method_23802(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, false);
+    }
 }

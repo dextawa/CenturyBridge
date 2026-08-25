@@ -20,4 +20,13 @@ public abstract class GenClass3887Bridge {
         int color = 0xFF000000 | ((int)(a13 * 255.0f) << 16) | ((int)(a14 * 255.0f) << 8) | (int)(a15 * 255.0f);
     }
 
+    /** was net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFI)V */
+    public void method_23196(net.minecraft.class_583 a0, net.minecraft.class_583 a1, net.minecraft.class_2960 a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5, net.minecraft.class_1309 a6, float a7, float a8, float a9, float a10, float a11, float a12, int a13) {
+        throw new UnsupportedOperationException("CenturyBridge: class_10042 render state (item stacks, arm poses, 9 floats, 8 booleans) cannot be reconstructed from old params (BakedModel a1, LivingEntity a6, 6 floats) — entity/item/pose data must be pre-computed by the new pipeline");
+    }
+
+    /** was net/minecraft/class_3887.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V */
+    public void method_4199(net.minecraft.class_4587 a0, net.minecraft.class_4597 a1, int a2, net.minecraft.class_1297 a3, float a4, float a5, float a6, float a7, float a8, float a9) {
+        throw new UnsupportedOperationException("CenturyBridge: class_3887.method_4199 now requires a pre-built class_10017 render state that bundles Entity-derived data and 4 of the old 6 float params; no API exists to populate it from the old individual parameters");
+    }
 }

@@ -20,4 +20,8 @@ public abstract class GenClass1676Bridge {
         ((net.minecraft.class_1676) (Object) this).method_59859(a0, a1, a2, a3);
     }
 
+    /** was net/minecraft/class_1676.method_54457(Lnet/minecraft/class_1937;)Z */
+    public boolean method_54457(net.minecraft.class_1937 a0) {
+        return method_54457((net.minecraft.class_3218) a0);
+    }
 }

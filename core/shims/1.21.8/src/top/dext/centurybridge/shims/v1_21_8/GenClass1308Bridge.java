@@ -20,4 +20,8 @@ public abstract class GenClass1308Bridge {
         return ((net.minecraft.class_1308) (Object) this).method_5943(a0, a1, a2, a3);
     }
 
+    /** was net/minecraft/class_1308.method_60972(Ljava/util/function/Predicate;)Ljava/util/Set; */
+    public java.util.Set method_60972(java.util.function.Predicate a0) {
+        return ((net.minecraft.class_1308) (Object) this).method_60972((net.minecraft.class_3218) ((net.minecraft.class_1308) (Object) this).method_37908(), a0);
+    }
 }

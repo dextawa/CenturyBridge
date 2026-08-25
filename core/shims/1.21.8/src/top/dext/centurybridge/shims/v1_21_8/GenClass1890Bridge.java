@@ -24,4 +24,9 @@ public abstract class GenClass1890Bridge {
     public int method_8225(net.minecraft.class_1887 a0, net.minecraft.class_1799 a1) {
         return ((net.minecraft.class_1890)(Object)this).method_8225(net.minecraft.class_6880.method_40223(a0), a1);
     }
+
+    /** was net/minecraft/class_1890.method_60127(Lnet/minecraft/class_3218;Lnet/minecraft/class_1799;Lnet/minecraft/class_1665;Ljava/util/function/Consumer;)V */
+    public void method_60127(net.minecraft.class_3218 a0, net.minecraft.class_1799 a1, net.minecraft.class_1665 a2, java.util.function.Consumer a3) {
+        ((net.minecraft.class_1890)(Object)this).method_60127(a0, a1, (net.minecraft.class_1676)a2, a3);
+    }
 }
