@@ -171,8 +171,12 @@ javac -nowarn -proc:none --release "$RELEASE" -cp "$CP" -d "$CLASSES" "@$OUT/sou
 # Everything Mixin resolves by NAME at PREPARE (accessor/invoker/shadow
 # targets, injection selectors) is invisible to javac. Check all of it against
 # the real target jar now, not one failure per boot.
+# past the namespace wall the bridge declares mojang names; the covers are
+# keyed in the analysis namespace and need the table to compare
+NAMETABLE=""
+case "$STUB" in *intermediary*) ;; *) NAMETABLE="data/mappings/inter-to-mojang-1.21.11.tsv";; esac
 if [ -d core/build/classes ]; then
-    java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "core/segments/shims-$VERSION.json"         || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
+    java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "core/segments/shims-$VERSION.json" "$NAMETABLE"         || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 fi
 
 # fabric.mod.json, the mixin config and the access widener are mod SOURCE and
