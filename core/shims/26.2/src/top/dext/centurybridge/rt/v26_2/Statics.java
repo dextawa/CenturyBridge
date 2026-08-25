@@ -7338,4 +7338,14 @@ public final class Statics {
     public static void method_22907(com.mojang.blaze3d.vertex.PoseStack self, org.joml.Quaternionf q) {
         self.mulPose(q);
     }
+
+    // --- Mth.sin/cos: 26.x 参数 float->double (sqrt 等仍是 float) ---
+    /** Mth.sin(float): 26.x 只剩 sin(double), float 实参加宽 */
+    public static float method_15374(float f) {
+        return net.minecraft.util.Mth.sin(f);
+    }
+    /** Mth.cos(float): 26.x 只剩 cos(double) */
+    public static float method_15362(float f) {
+        return net.minecraft.util.Mth.cos(f);
+    }
 }
