@@ -986,9 +986,9 @@
   "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "field_45013"
  },
  "classRenames": {
-  "net/minecraft/class_5335": "top/dext/centurybridge/facade/v1_20_4/class_5335",
-  "net/minecraft/class_5267": "top/dext/centurybridge/facade/v1_20_4/class_5267",
-  "net/minecraft/class_195": "top/dext/centurybridge/facade/v1_20_4/class_195",
+  "net/minecraft/class_5335": "top/dext/centurybridge/facade/v1_21_1/class_5335",
+  "net/minecraft/class_5267": "top/dext/centurybridge/facade/v1_21_1/class_5267",
+  "net/minecraft/class_195": "top/dext/centurybridge/facade/v1_21_1/class_195",
   "net/minecraft/class_1068$class_7920": "net/minecraft/class_8685$class_7920",
   "net/minecraft/class_193": "net/minecraft/class_8782$class_8797",
   "net/minecraft/class_2158$class_2159": "net/minecraft/class_2159",
@@ -2514,5 +2514,9 @@
    "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487;",
    "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;ZLnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"
   ]
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_1/Statics#cbNewIdentifier",
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_1/Statics#cbNewIdentifier"
  }
 }

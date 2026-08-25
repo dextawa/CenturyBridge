@@ -6746,4 +6746,15 @@ public final class Statics {
 
     private Statics() {
     }
+
+    // ---- Identifier constructors: gone since 1.21 in favour of static factories ----
+    /** ctorRedirects: 1.20.1 new Identifier("ns:path") */
+    public static net.minecraft.class_2960 cbNewIdentifier(String id) {
+        return net.minecraft.class_2960.method_60654(id);
+    }
+
+    /** ctorRedirects: 1.20.1 new Identifier(namespace, path) */
+    public static net.minecraft.class_2960 cbNewIdentifier(String namespace, String path) {
+        return net.minecraft.class_2960.method_60655(namespace, path);
+    }
 }

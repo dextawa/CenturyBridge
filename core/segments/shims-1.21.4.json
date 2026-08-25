@@ -3708,5 +3708,8 @@
    "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;ZLnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"
   ]
  },
- "ctorRedirects": {}
+ "ctorRedirects": {
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_4/Statics#cbNewIdentifier",
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_4/Statics#cbNewIdentifier"
+ }
 }
