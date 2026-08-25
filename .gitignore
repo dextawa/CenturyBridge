@@ -22,8 +22,9 @@ core/audit-*.md
 # --- segment diffs: regenerated from the stubs by gen-segment, not build input ---
 core/segments/*__*.json
 
-# --- kill-list tooling: drives the closure workflow, never ships in the jar ---
-core/tools/
+# --- corridor-run wrappers carry the gateway key; the tooling itself is tracked ---
+core/tools/run_*.sh
+core/tools/__pycache__/
 
 # --- working notes, not documentation ---
 LOOP.md
