@@ -146,7 +146,10 @@ public final class BridgeForge {
             return "FIELD_SHIM";
         }
         if (name.equals("<init>")) {
-            return "TOMBSTONE"; // constructors cannot be added back by any mechanism
+            // Mixin cannot add a constructor, but the converter rewrites NEW sites
+            // to a static factory (ctorRedirects): the body builds the instance
+            // from a surviving constructor or static factory of the same class
+            return "CTOR_SHIM";
         }
         // An interface target cannot take a class mixin (PREPARE fails outright)
         // and cannot gain an instance method either, so the only shape left is
