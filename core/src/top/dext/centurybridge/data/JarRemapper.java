@@ -194,6 +194,30 @@ public final class JarRemapper {
 
     public static void remapToIntermediary(Path tiny, Path inJar, Path outJar) throws IOException {
         TinyMappings.Obf obf = TinyMappings.loadObf(tiny);
+
+        // The tiny file names a method once, on its declaring class. An
+        // override in a subclass carries the same obf name and must get the
+        // same intermediary name -- tiny-remapper propagates this through the
+        // hierarchy at runtime, and a stub that does not leaves Screen.render
+        // obfuscated below Drawable.render: javac then refuses subclasses,
+        // mixin-check misses targets, the self-recursion gate goes blind.
+        java.util.Map<String, byte[]> entries = new java.util.LinkedHashMap<>();
+        java.util.Map<String, String> superOf = new java.util.HashMap<>();
+        java.util.Map<String, String[]> ifacesOf = new java.util.HashMap<>();
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar))) {
+            ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                if (e.isDirectory() || !e.getName().endsWith(".class")) {
+                    continue; // classpath stub: classes only
+                }
+                byte[] data = zin.readAllBytes();
+                entries.put(e.getName(), data);
+                ClassReader cr = new ClassReader(data);
+                superOf.put(cr.getClassName(), cr.getSuperName());
+                ifacesOf.put(cr.getClassName(), cr.getInterfaces());
+            }
+        }
+
         Remapper remapper = new Remapper() {
             @Override
             public String map(String internalName) {
@@ -202,7 +226,35 @@ public final class JarRemapper {
 
             @Override
             public String mapMethodName(String owner, String name, String desc) {
-                return obf.methods.getOrDefault(owner + "." + name + desc, name);
+                String hit = obf.methods.get(owner + "." + name + desc);
+                if (hit != null) {
+                    return hit;
+                }
+                // climb: the declaring ancestor owns the mapping
+                java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+                java.util.Set<String> seen = new java.util.HashSet<>();
+                todo.add(owner);
+                while (!todo.isEmpty()) {
+                    String cur = todo.poll();
+                    if (!seen.add(cur)) {
+                        continue;
+                    }
+                    String h = obf.methods.get(cur + "." + name + desc);
+                    if (h != null) {
+                        return h;
+                    }
+                    String sup = superOf.get(cur);
+                    if (sup != null) {
+                        todo.add(sup);
+                    }
+                    String[] ifs = ifacesOf.get(cur);
+                    if (ifs != null) {
+                        for (String i : ifs) {
+                            todo.add(i);
+                        }
+                    }
+                }
+                return name;
             }
 
             @Override
@@ -212,14 +264,8 @@ public final class JarRemapper {
         };
 
         int classes = 0;
-        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
-             ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(outJar))) {
-            ZipEntry e;
-            while ((e = zin.getNextEntry()) != null) {
-                if (e.isDirectory() || !e.getName().endsWith(".class")) {
-                    continue; // classpath stub: classes only
-                }
-                byte[] data = zin.readAllBytes();
+        try (ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(outJar))) {
+            for (byte[] data : entries.values()) {
                 ClassReader cr = new ClassReader(data);
                 ClassWriter cw = new ClassWriter(0);
                 cr.accept(new ClassRemapper(cw, remapper),
