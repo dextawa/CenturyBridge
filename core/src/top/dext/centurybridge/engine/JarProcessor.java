@@ -840,6 +840,22 @@ public final class JarProcessor {
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
                         checkClass(owner);
                         if (!owner.startsWith("net/minecraft/")) {
+                            // fabric-API fields move too (ClientTickEvents world->level):
+                            // rename/redirect them like classRenames does for any owner.
+                            // Everything else off the vanilla surface is not our damage.
+                            String ffkey = owner + "." + name + ":" + desc;
+                            String frn = chain.fieldRenames.get(ffkey);
+                            if (frn != null) {
+                                fldRenames.put(ffkey, frn);
+                                top.dext.centurybridge.data.FullAudit.record(ffkey, "field-rename");
+                                return;
+                            }
+                            String ffrt = chain.fieldRedirects.get(ffkey);
+                            if (ffrt != null && op == Opcodes.GETSTATIC) {
+                                fldRedirects.put(ffkey, ffrt);
+                                top.dext.centurybridge.data.FullAudit.record(ffkey, "field-redirect");
+                                return;
+                            }
                             return;
                         }
                         if (chain.classRenames.containsKey(owner)) {
