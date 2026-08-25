@@ -7205,4 +7205,32 @@ public final class Statics {
     public static net.minecraft.resources.Identifier cbNewIdentifier(String namespace, String path) {
         return net.minecraft.resources.Identifier.fromNamespaceAndPath(namespace, path);
     }
+
+    /** ctorRedirects: 1.20.1 new ServerInfo(name, address, local) -- the boolean
+     *  became ServerData.Type in 1.20.2 (local ? LAN : OTHER). */
+    public static net.minecraft.client.multiplayer.ServerData cbNewServerInfo(String name, String address, boolean local) {
+        return new net.minecraft.client.multiplayer.ServerData(name, address,
+            local ? net.minecraft.client.multiplayer.ServerData.Type.LAN
+                  : net.minecraft.client.multiplayer.ServerData.Type.OTHER);
+    }
+
+    /** superCtorAdapts: the 1.20.1 ServerInfo ctor boolean, as ServerData.Type */
+    public static net.minecraft.client.multiplayer.ServerData.Type cbServerType(boolean local) {
+        return local ? net.minecraft.client.multiplayer.ServerData.Type.LAN
+                     : net.minecraft.client.multiplayer.ServerData.Type.OTHER;
+    }
+
+    /** staticRedirects: 1.20.1 Pack.readMetaAndCreate -- id/title/required/pos/source
+     *  folded into PackLocationInfo + PackSelectionConfig at 1.20.5. */
+    public static net.minecraft.server.packs.repository.Pack cbReadMetaAndCreate(String id,
+            net.minecraft.network.chat.Component title, boolean required,
+            net.minecraft.server.packs.repository.Pack.ResourcesSupplier resources,
+            net.minecraft.server.packs.PackType type,
+            net.minecraft.server.packs.repository.Pack.Position position,
+            net.minecraft.server.packs.repository.PackSource source) {
+        return net.minecraft.server.packs.repository.Pack.readMetaAndCreate(
+            new net.minecraft.server.packs.PackLocationInfo(id, title, source, java.util.Optional.empty()),
+            resources, type,
+            new net.minecraft.server.packs.PackSelectionConfig(required, position, false));
+    }
 }

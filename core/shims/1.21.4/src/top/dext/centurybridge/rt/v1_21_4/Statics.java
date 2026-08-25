@@ -7033,4 +7033,28 @@ public final class Statics {
             d.method_25394(context, mouseX, mouseY, delta);
         }
     }
+
+    /** ctorRedirects: 1.20.1 new ServerInfo(name, address, local) -- the boolean
+     *  became ServerInfo.ServerType in 1.20.2 (local ? LAN : OTHER). */
+    public static net.minecraft.class_642 cbNewServerInfo(String name, String address, boolean local) {
+        return new net.minecraft.class_642(name, address,
+            local ? net.minecraft.class_642.class_8678.field_45609   // LAN
+                  : net.minecraft.class_642.class_8678.field_45611); // OTHER
+    }
+
+    /** superCtorAdapts: the 1.20.1 ServerInfo ctor boolean, as ServerType */
+    public static net.minecraft.class_642.class_8678 cbServerType(boolean local) {
+        return local ? net.minecraft.class_642.class_8678.field_45609   // LAN
+                     : net.minecraft.class_642.class_8678.field_45611;  // OTHER
+    }
+
+    /** staticRedirects: 1.20.1 Pack.readMetaAndCreate -- id/title/required/pos/source
+     *  folded into PackLocationInfo + PackSelectionConfig at 1.20.5. */
+    public static net.minecraft.class_3288 cbReadMetaAndCreate(String id, net.minecraft.class_2561 title,
+            boolean required, net.minecraft.class_3288.class_7680 resources, net.minecraft.class_3264 type,
+            net.minecraft.class_3288.class_3289 position, net.minecraft.class_5352 source) {
+        return net.minecraft.class_3288.method_45275(
+            new net.minecraft.class_9224(id, title, source, java.util.Optional.empty()),
+            resources, type, new net.minecraft.class_9225(required, position, false));
+    }
 }

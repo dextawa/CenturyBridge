@@ -1735,4 +1735,18 @@ public final class Statics {
             d.method_25394(context, mouseX, mouseY, delta);
         }
     }
+
+    /** ctorRedirects: 1.20.1 new ServerInfo(name, address, local) -- the boolean
+     *  became ServerInfo.ServerType in 1.20.2 (local ? LAN : OTHER). */
+    public static net.minecraft.class_642 cbNewServerInfo(String name, String address, boolean local) {
+        return new net.minecraft.class_642(name, address,
+            local ? net.minecraft.class_642.class_8678.field_45609   // LAN
+                  : net.minecraft.class_642.class_8678.field_45611); // OTHER
+    }
+
+    /** superCtorAdapts: the 1.20.1 ServerInfo ctor boolean, as ServerType */
+    public static net.minecraft.class_642.class_8678 cbServerType(boolean local) {
+        return local ? net.minecraft.class_642.class_8678.field_45609   // LAN
+                     : net.minecraft.class_642.class_8678.field_45611;  // OTHER
+    }
 }

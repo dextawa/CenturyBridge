@@ -234,6 +234,15 @@ public final class Chain {
     }
 
     /**
+     * Constructor calls with no NEW site (super(...) / this(...)) cannot be
+     * routed to a static factory; when only the tail argument changed shape,
+     * the call is adapted in place instead: a converter runs on the top of the
+     * operand stack and the INVOKESPECIAL takes the new descriptor.
+     * key "owner.<init>(oldDesc)V" -> [newDesc, convClass#convName, convDesc].
+     */
+    public final java.util.Map<String, String[]> superCtorAdapts = new java.util.HashMap<>();
+
+    /**
      * Redirects that apply to INVOKESPECIAL super-calls only ("superRedirects"):
      * "owner.name(desc)" -> "runtimeClass[#member]", receiver as arg 0. The
      * method still exists on the target with the same descriptor, so a plain
@@ -414,6 +423,16 @@ public final class Chain {
                 var sr2 = root.getAsJsonObject("superRedirects");
                 for (String k : sr2.keySet()) {
                     c.superRedirects.put(k, sr2.get(k).getAsString());
+                }
+            }
+            if (root.has("superCtorAdapts")) {
+                var sca = root.getAsJsonObject("superCtorAdapts");
+                for (String k : sca.keySet()) {
+                    var o = sca.getAsJsonObject(k);
+                    c.superCtorAdapts.put(k, new String[] {
+                        o.get("desc").getAsString(), o.get("conv").getAsString(),
+                        o.get("convDesc").getAsString() });
+                    c.ctorRedirectOwners.add(k.substring(0, k.indexOf('.')));
                 }
             }
             if (root.has("ctorRedirects")) {

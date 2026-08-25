@@ -1810,5 +1810,15 @@
     3
    ]
   }
- ]
+ ],
+ "ctorRedirects": {
+  "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": "top/dext/centurybridge/rt/v1_20_4/Statics#cbNewServerInfo"
+ },
+ "superCtorAdapts": {
+  "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_642$class_8678;)V",
+   "conv": "top/dext/centurybridge/rt/v1_20_4/Statics#cbServerType",
+   "convDesc": "(Z)Lnet/minecraft/class_642$class_8678;"
+  }
+ }
 }

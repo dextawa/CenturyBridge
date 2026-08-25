@@ -210,8 +210,26 @@ public final class JarProcessor {
                     org.objectweb.asm.tree.TypeInsnNode newInsn = stack == null || stack.isEmpty() ? null : stack.pop();
                     String key = mi.owner + "." + mi.name + mi.desc;
                     String target = chain.ctorRedirects.get(key);
-                    if (target == null || newInsn == null) {
-                        continue; // live constructor, or a super(...) call: nothing to do here
+                    if (newInsn == null) {
+                        // no NEW site: a super(...) / this(...) delegation. A factory
+                        // cannot replace it, but an argument adapter can.
+                        String[] adapt = chain.superCtorAdapts.get(key);
+                        if (adapt != null) {
+                            m.instructions.insertBefore(mi, new org.objectweb.asm.tree.MethodInsnNode(
+                                Opcodes.INVOKESTATIC, redirCls(adapt[1]),
+                                redirName(adapt[1], "cbConv"), adapt[2], false));
+                            mi.desc = adapt[0];
+                            rewrites++;
+                            rpt.notes.add(tag + "super-ctor-adapted: " + key + " in " + cn.name);
+                        } else if (target != null) {
+                            rpt.notes.add(tag + "!! super-ctor call not adaptable (no superCtorAdapts entry): "
+                                + key + " in " + cn.name);
+                            top.dext.centurybridge.data.FullAudit.record(key, "SUPER-CTOR-ISSUE");
+                        }
+                        continue;
+                    }
+                    if (target == null) {
+                        continue; // live constructor
                     }
                     org.objectweb.asm.tree.AbstractInsnNode dup = newInsn.getNext();
                     if (dup == null || dup.getOpcode() != Opcodes.DUP) {
@@ -565,7 +583,7 @@ public final class JarProcessor {
     private static byte[] verifyAndRewrite(byte[] bytes, Map<String, String> jarSuper, Chain chain, Set<String> issues,
                                            String tag, Tombstones reg, Report rpt) {
         boolean ctorChanged = false;
-        if (!chain.ctorRedirects.isEmpty()) {
+        if (!chain.ctorRedirects.isEmpty() || !chain.superCtorAdapts.isEmpty()) {
             byte[] b2 = rewriteConstructors(bytes, chain, rpt, tag);
             ctorChanged = b2 != bytes;
             bytes = b2;
@@ -713,6 +731,10 @@ public final class JarProcessor {
                             return; // owner facade-renamed; the member lives on the facade
                         }
                         String key = owner + "." + name + desc;
+                        if (name.equals("<init>") && chain.superCtorAdapts.containsKey(key)) {
+                            top.dext.centurybridge.data.FullAudit.record(key, "super-ctor-adapt");
+                            return; // adapted in place by the constructor pre-pass
+                        }
                         if (name.equals("<init>") && chain.ctorRedirects.containsKey(key)) {
                             top.dext.centurybridge.data.FullAudit.record(key, "ctor-redirect");
                             return; // rewritten to the factory by the constructor pre-pass
