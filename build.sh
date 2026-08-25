@@ -46,14 +46,21 @@ mkdir -p "$CLASSES" "$OUT"
 # a single class loads -- worse than a compile error, because the build looks
 # clean and the game dies on launch. Catch it here.
 python3 - "$SHIM" <<'PYGATE'
-import json, os, sys, glob
+import json, os, re, sys, glob
 shim = sys.argv[1]
 cfgs = glob.glob(os.path.join(shim, "resources", "*.mixins.json"))
 if cfgs:
     cfg = json.load(open(cfgs[0], encoding="utf-8"))
     pkg = cfg["package"].replace(".", "/")
     srcdir = os.path.join(shim, "src", pkg)
-    present = {f[:-5] for f in os.listdir(srcdir) if f.endswith(".java")}
+    # a source file that no longer declares its class (a prune that ate the
+    # header) leaves the config pointing at nothing -- fatal at PREPARE
+    present = set()
+    for f in os.listdir(srcdir):
+        if f.endswith(".java"):
+            txt = open(os.path.join(srcdir, f), encoding="utf-8").read()
+            if re.search(r"(class|interface)\s+" + re.escape(f[:-5]) + r"", txt):
+                present.add(f[:-5])
     ghosts = [m for side in ("mixins", "client", "server")
               for m in cfg.get(side, []) if m not in present]
     if ghosts:
