@@ -4446,4 +4446,15 @@ public final class Statics {
     public static void method_1507(net.minecraft.client.Minecraft self, net.minecraft.client.gui.screens.Screen screen) {
         self.gui.setScreen(screen);
     }
+
+    // ---- Identifier constructors: private since 1.20.5, the one-arg form gone by 26.x ----
+    /** ctorRedirects: 1.20.1 new Identifier("ns:path") / new Identifier("path") */
+    public static net.minecraft.resources.Identifier cbNewIdentifier(String id) {
+        return net.minecraft.resources.Identifier.parse(id);
+    }
+
+    /** ctorRedirects: 1.20.1 new Identifier(namespace, path) */
+    public static net.minecraft.resources.Identifier cbNewIdentifier(String namespace, String path) {
+        return net.minecraft.resources.Identifier.fromNamespaceAndPath(namespace, path);
+    }
 }

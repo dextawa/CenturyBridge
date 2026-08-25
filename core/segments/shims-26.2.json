@@ -2664,6 +2664,8 @@
  },
  "ctorRedirects": {
   "net/minecraft/class_304.<init>(Ljava/lang/String;Lnet/minecraft/class_3675$class_307;ILjava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewKeyMapping",
-  "net/minecraft/class_304.<init>(Ljava/lang/String;ILjava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewKeyMapping"
+  "net/minecraft/class_304.<init>(Ljava/lang/String;ILjava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewKeyMapping",
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewIdentifier",
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewIdentifier"
  }
 }
