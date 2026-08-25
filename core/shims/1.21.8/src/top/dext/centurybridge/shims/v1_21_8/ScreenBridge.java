@@ -13,7 +13,16 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(class_437.class)
 public abstract class ScreenBridge {
 
+    /**
+     * 1.20.1 renderBackground(DrawContext). Since 1.21.6 the retained GUI
+     * allows one background blur per frame and Screen.render draws the
+     * background itself, so an old override's own call is idempotent here.
+     */
     public void method_25420(class_332 context) {
-        ((class_437) (Object) this).method_25420(context, 0, 0, 0.0F);
+        try {
+            ((class_437) (Object) this).method_25420(context, 0, 0, 0.0F);
+        } catch (IllegalStateException alreadyBlurred) {
+            // background already drawn this frame
+        }
     }
 }
