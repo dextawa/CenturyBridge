@@ -16,7 +16,13 @@ public interface CbModelLoadingRegistry {
 
     default void registerModelProvider(CbExtraModelProvider provider) {
         ModelLoadingPlugin.register(ctx -> provider.provideExtraModels(
-            net.minecraft.class_310.method_1551().method_1478(), ctx::addModels));
+            net.minecraft.class_310.method_1551().method_1478(), id -> {
+                var key = net.fabricmc.fabric.api.client.model.loading.v1.ExtraModelKey
+                    .<net.minecraft.class_1087>create(id::toString);
+                CbBakedModelManagerHelper.CB_KEYS.put(id, key);
+                ctx.addModel(key, net.fabricmc.fabric.api.client.model.loading.v1
+                    .SimpleUnbakedExtraModel.blockStateModel(id));
+            }));
     }
 
     default void registerAppender(Object appender) {
