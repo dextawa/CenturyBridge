@@ -15,7 +15,11 @@ cfg_p = glob.glob(f"core/shims/{ver}/resources/*.mixins.json")[0]
 stub = f"data/jars/client-{ver}-intermediary.jar"
 
 cp = [stub]
-for base in (f"data/runtime/client-{ver}/libraries", f"data/runtime/client-{ver}/.fabric/processedMods"):
+# some versions ship only a server runtime (no client-<ver>) -- include both,
+# else a missing client dir yields an incomplete classpath and phantom errors
+# that make tree_prune excise good bodies.
+for base in (f"data/runtime/client-{ver}/libraries", f"data/runtime/server-{ver}/libraries",
+             f"data/runtime/client-{ver}/.fabric/processedMods", f"data/runtime/server-{ver}/.fabric/processedMods"):
     for root,_,fs in os.walk(base):
         cp += [os.path.join(root,f) for f in fs if f.endswith('.jar')]
 sm = glob.glob("data/runtime/**/sponge-mixin-*.jar", recursive=True)
