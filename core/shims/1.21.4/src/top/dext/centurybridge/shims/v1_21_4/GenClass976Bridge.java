@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_976.class)
 public abstract class GenClass976Bridge {
 
+    /** was net/minecraft/class_976.method_17159(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V */
+    public void method_17159(net.minecraft.class_4587 a0, net.minecraft.class_4597 a1, int a2, net.minecraft.class_1309 a3, float a4, float a5, float a6, float a7, float a8, float a9) {
+        throw new UnsupportedOperationException("CenturyBridge: class_976.method_17159 now requires a pre-populated class_10042 render state (armor items, body parts, model parts, animation params) that cannot be constructed from a raw Entity + 6 floats without the 1.21.2 state update pipeline");
+    }
 
 }

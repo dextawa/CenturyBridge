@@ -15,9 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_4798.class)
 public abstract class GenClass4798Bridge {
 
-    /** was net/minecraft/class_4798.method_27038(Lnet/minecraft/class_4760;)Z */
-    public boolean method_27038(net.minecraft.class_4760 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_27038(class_4760) checked enchantment acceptability for a specific ItemStack; new method_27038 takes class_10032 (only int+boolean fields, no ItemStack) which cannot be derived from the old ItemStack argument");
-    }
 
 }

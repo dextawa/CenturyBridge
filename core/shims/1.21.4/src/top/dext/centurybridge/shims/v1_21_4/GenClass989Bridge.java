@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_989.class)
 public abstract class GenClass989Bridge {
 
-    /** was net/minecraft/class_989.method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V */
-    public void method_17162(net.minecraft.class_4587 a0, net.minecraft.class_4597 a1, int a2, net.minecraft.class_1309 a3, float a4, float a5, float a6, float a7, float a8, float a9) {
-        throw new UnsupportedOperationException("CenturyBridge: class_989.method_17162 in 1.21.2 takes a pre-populated class_10042 render-state object instead of a LivingEntity; the state object carries equipment ItemStacks, Identifiers, booleans, and 9 float fields that cannot be faithfully reconstructed from just the entity and 6 pose floats without the upstream extraction logic that was moved out of this method");
+    /** was net/minecraft/class_989.method_4192(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
+    public void method_4192(net.minecraft.class_1309 a0, net.minecraft.class_1799 a1, net.minecraft.class_811 a2, net.minecraft.class_1306 a3, net.minecraft.class_4587 a4, net.minecraft.class_4597 a5, int a6) {
+        throw new UnsupportedOperationException("CenturyBridge: class_989.method_4192 now requires class_10042 (render context) and class_1087 (model part) that were previously derived internally from class_1309; cannot reconstruct without entity model access");
     }
 
 }

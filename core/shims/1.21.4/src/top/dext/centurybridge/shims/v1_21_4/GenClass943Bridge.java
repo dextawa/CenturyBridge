@@ -15,11 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_943.class)
 public abstract class GenClass943Bridge {
 
-    /** was net/minecraft/class_943.method_4114(Lnet/minecraft/class_1606;Lnet/minecraft/class_4587;FFF)V */
-    public void method_4114(net.minecraft.class_1606 a0, net.minecraft.class_4587 a1, float a2, float a3, float a4) {
-        // f = animationProgress
-            // g = bodyYaw
-            // h = headYaw
+    /** was net/minecraft/class_943.method_23189(Lnet/minecraft/class_1606;F)Lnet/minecraft/class_243; */
+    public net.minecraft.class_243 method_23189(net.minecraft.class_1606 a0, float a1) {
+        net.minecraft.class_10065 params = new net.minecraft.class_10065();
+        ((net.minecraft.class_943)(Object)this).method_62526(a0, params, a1);
+        return ((net.minecraft.class_943)(Object)this).method_23189(params);
     }
+
 
 }
