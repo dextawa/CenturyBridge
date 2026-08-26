@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1693.class)
 public abstract class GenClass1693Bridge {
 
+    /** was net/minecraft/class_1693.method_7562(Lnet/minecraft/class_2960;J)V */
+    public void method_7562(net.minecraft.class_2960 a0, long a1) {
+        throw new UnsupportedOperationException("CenturyBridge: converting the loot table identifier requires the loot table registry key, which is not exposed by the provided API surface");
+    }
 
 }

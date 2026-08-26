@@ -15,14 +15,41 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1309.class)
 public abstract class GenClass1309Bridge {
 
-    /** was net/minecraft/class_1309.method_64618(Lnet/minecraft/class_1297;Lnet/minecraft/class_3959$class_3960;Lnet/minecraft/class_3959$class_242;Ljava/util/function/DoubleSupplier;)Z */
-    public boolean method_64618(net.minecraft.class_1297 a0, net.minecraft.class_3959.class_3960 a1, net.minecraft.class_3959.class_242 a2, java.util.function.DoubleSupplier a3) {
-        return ((net.minecraft.class_1309) (Object) this).method_64618(a0, a1, a2, a3.getAsDouble());
+
+    /** was net/minecraft/class_1309.method_23883()V */
+    public void method_23883() {
+        throw new UnsupportedOperationException("CenturyBridge: the new drop-experience API requires the server world and attacking entity, which the old no-argument signature cannot supply");
     }
 
-    /** was net/minecraft/class_1309.method_64619(Lnet/minecraft/class_1309;DZZLjava/util/function/Predicate;[Ljava/util/function/DoubleSupplier;)Z */
-    public boolean method_64619(net.minecraft.class_1309 a0, double a1, boolean a2, boolean a3, java.util.function.Predicate a4, java.util.function.DoubleSupplier[] a5) {
-        throw new UnsupportedOperationException("CenturyBridge: the new overload has no Predicate parameter, so the old filtering contract cannot be preserved");
+    /** was net/minecraft/class_1309.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
+    public net.minecraft.class_1324 method_5996(net.minecraft.class_1320 a0) {
+        return ((net.minecraft.class_1309) (Object) this).method_5996(net.minecraft.class_6880.method_40223(a0));
     }
+
+    /** was net/minecraft/class_1309.method_6016(Lnet/minecraft/class_1291;)Z */
+    public boolean method_6016(net.minecraft.class_1291 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the old class_1291 value cannot be converted to the required class_6880 registry entry using the provided API surface");
+    }
+
+    /** was net/minecraft/class_1309.method_6059(Lnet/minecraft/class_1291;)Z */
+    public boolean method_6059(net.minecraft.class_1291 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: converting a raw class_1291 to the canonical class_6880 registry entry requires registry lookup unavailable from this API surface");
+    }
+
+    /** was net/minecraft/class_1309.method_6099(Lnet/minecraft/class_1282;IZ)V */
+    public void method_6099(net.minecraft.class_1282 a0, int a1, boolean a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API no longer accepts the explicit looting multiplier, so a1 cannot be preserved");
+    }
+
+    /** was net/minecraft/class_1309.method_6111(Lnet/minecraft/class_1291;)Lnet/minecraft/class_1293; */
+    public net.minecraft.class_1293 method_6111(net.minecraft.class_1291 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the old status effect value cannot be faithfully converted to the registry entry required by the new API");
+    }
+
+    /** was net/minecraft/class_1309.method_6112(Lnet/minecraft/class_1291;)Lnet/minecraft/class_1293; */
+    public net.minecraft.class_1293 method_6112(net.minecraft.class_1291 a0) {
+        return ((net.minecraft.class_1309) (Object) this).method_6112(net.minecraft.class_6880.method_40223(a0));
+    }
+
 
 }

@@ -15,13 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1280.class)
 public abstract class GenClass1280Bridge {
 
-    /** was net/minecraft/class_1280.method_5496(FFF)F */
-    public float method_5496(float a0, float a1, float a2) {
-        float f = 2.0F + a2 / 4.0F;
-        float g = a1 - a0 / f;
-        float minLimit = a1 * 0.2F;
-        float clampedG = g < minLimit ? minLimit : (g > 20.0F ? 20.0F : g);
-        return a0 * (1.0F - clampedG / 25.0F);
+    /** was net/minecraft/class_1280.method_5496(FLnet/minecraft/class_1282;FF)F */
+    public float method_5496(float a0, net.minecraft.class_1282 a1, float a2, float a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the new overload requires a class_1309 instance that the old contract does not provide");
     }
 
 }

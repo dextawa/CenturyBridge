@@ -15,30 +15,20 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2586.class)
 public abstract class GenClass2586Bridge {
 
-    /** was net/minecraft/class_2586.method_11005(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2586; */
-    public net.minecraft.class_2586 method_11005(net.minecraft.class_2338 a0, net.minecraft.class_2680 a1, net.minecraft.class_2487 a2) {
-        return net.minecraft.class_2586.method_11005(a0, a1, a2, net.minecraft.class_7225.class_7874.method_46761(java.util.stream.Stream.empty()));
+    /** was net/minecraft/class_2586.method_11007(Lnet/minecraft/class_2487;)V */
+    public void method_11007(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires a registry lookup that cannot be obtained reliably from the block entity");
     }
 
 
-
-    /** was net/minecraft/class_2586.method_16887()Lnet/minecraft/class_2487; */
-    public net.minecraft.class_2487 method_16887() {
-        net.minecraft.class_2586 self = (net.minecraft.class_2586) (Object) this;
-        net.minecraft.class_1937 world = self.method_10997();
-        return self.method_16887(world != null ? world.method_30349() : net.minecraft.class_7225.class_7874.method_46761(java.util.stream.Stream.empty()));
+    /** was net/minecraft/class_2586.method_38242()Lnet/minecraft/class_2487; */
+    public net.minecraft.class_2487 method_38242() {
+        return ((net.minecraft.class_2586) (Object) this).method_38242(((net.minecraft.class_2586) (Object) this).method_10997().method_30349());
     }
 
-
-
-    /** was net/minecraft/class_2586.method_38243()Lnet/minecraft/class_2487; */
-    public net.minecraft.class_2487 method_38243() {
-        net.minecraft.class_1937 world = ((net.minecraft.class_2586) (Object) this).method_10997();
-        if (world == null) {
-            throw new java.lang.UnsupportedOperationException("CenturyBridge: Cannot serialize BlockEntity without world registry context");
-        }
-        return ((net.minecraft.class_2586) (Object) this).method_38243(world.method_30349());
+    /** was net/minecraft/class_2586.method_38244()Lnet/minecraft/class_2487; */
+    public net.minecraft.class_2487 method_38244() {
+        throw new UnsupportedOperationException("CenturyBridge: the new serialization API requires a registry lookup, which the old no-argument contract does not provide");
     }
-
 
 }

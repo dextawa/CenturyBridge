@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_624.class)
 public abstract class GenClass624Bridge {
 
-    /** was net/minecraft/class_624.method_17133(Lnet/minecraft/class_1493;FFFFF)V */
-    public void method_17133(net.minecraft.class_1493 a0, float a1, float a2, float a3, float a4, float a5) {
-        throw new UnsupportedOperationException("CenturyBridge: method_17133(class_1493,5F) cannot be bridged to method_17133(class_10085); class_10085 has only a no-arg constructor with 4 float fields + Identifier/Item/ItemStack fields that cannot be populated from a general ParticleEffect and 5 floats");
+    /** was net/minecraft/class_624.method_32068()Lnet/minecraft/class_5607; */
+    public net.minecraft.class_5607 method_32068() {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_5605 argument and returns class_5609, so it cannot preserve the old no-argument class_5607 contract");
     }
 
 }

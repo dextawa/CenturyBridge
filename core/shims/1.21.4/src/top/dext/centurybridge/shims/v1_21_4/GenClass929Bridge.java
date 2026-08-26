@@ -15,11 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_929.class)
 public abstract class GenClass929Bridge {
 
-    /** was net/minecraft/class_929.method_4078(Lnet/minecraft/class_1451;)Lnet/minecraft/class_2960; */
-    public net.minecraft.class_2960 method_4078(net.minecraft.class_1451 a0) {
-        net.minecraft.class_10008 state = new net.minecraft.class_10008();
-        ((net.minecraft.class_929)(Object)this).method_62395(a0, state, 0.0f);
-        return ((net.minecraft.class_929)(Object)this).method_4078(state);
+    /** was net/minecraft/class_929.method_16045(Lnet/minecraft/class_1451;Lnet/minecraft/class_4587;FFF)V */
+    public void method_16045(net.minecraft.class_1451 a0, net.minecraft.class_4587 a1, float a2, float a3, float a4) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires render-state data and an additional float that cannot be derived faithfully from the old arguments");
     }
 
 }

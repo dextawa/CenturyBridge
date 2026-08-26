@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_5142.class)
 public abstract class GenClass5142Bridge {
 
+    /** was net/minecraft/class_5142.method_28908()Lcom/mojang/serialization/Codec; */
+    public com.mojang.serialization.Codec method_28908() {
+        return ((net.minecraft.class_5142) (Object) this).method_28908().codec();
+    }
 
 }

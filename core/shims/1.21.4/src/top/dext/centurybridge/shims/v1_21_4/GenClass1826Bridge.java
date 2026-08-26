@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1826.class)
 public abstract class GenClass1826Bridge {
 
-    /** was net/minecraft/class_1826.method_8015(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1299; */
-    public net.minecraft.class_1299 method_8015(net.minecraft.class_1799 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a registry lookup context that the old signature does not provide");
+    /** was net/minecraft/class_1826.method_8015(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1299; */
+    public net.minecraft.class_1299 method_8015(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: converting legacy NBT entity data to the new ItemStack component format requires a registry lookup unavailable to this overload");
     }
 
-    /** was net/minecraft/class_1826.method_8018(Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)Z */
-    public boolean method_8018(net.minecraft.class_1799 a0, net.minecraft.class_1299 a1) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_8018 requires a class_7225.class_7874 registry lookup context that cannot be derived from the old arguments");
+    /** was net/minecraft/class_1826.method_8018(Lnet/minecraft/class_2487;Lnet/minecraft/class_1299;)Z */
+    public boolean method_8018(net.minecraft.class_2487 a0, net.minecraft.class_1299 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the old NBT-based entity-type check cannot be expressed by the new ItemStack-based API without registry lookup context");
     }
 
 }

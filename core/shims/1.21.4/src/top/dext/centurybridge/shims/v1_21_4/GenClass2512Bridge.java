@@ -15,14 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2512.class)
 public abstract class GenClass2512Bridge {
 
-
-    /** was net/minecraft/class_2512.method_10692(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487; */
-    public net.minecraft.class_2487 method_10692(net.minecraft.class_2338 a0) {
-        net.minecraft.class_2487 nbt = new net.minecraft.class_2487();
-        nbt.method_10548("X", a0.method_10263());
-        nbt.method_10548("Y", a0.method_10264());
-        nbt.method_10548("Z", a0.method_10260());
-        return nbt;
+    /** was net/minecraft/class_2512.method_10691(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2338; */
+    public net.minecraft.class_2338 method_10691(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a keyed block-position value and cannot decode the old root compound contract");
     }
 
 }

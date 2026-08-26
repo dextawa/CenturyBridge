@@ -15,10 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_8.class)
 public abstract class GenClass8Bridge {
 
-
-    /** was net/minecraft/class_8.method_25(Lnet/minecraft/class_1922;IIILnet/minecraft/class_1308;)Lnet/minecraft/class_7; */
-    public net.minecraft.class_7 method_25(net.minecraft.class_1922 a0, int a1, int a2, int a3, net.minecraft.class_1308 a4) {
-        return ((net.minecraft.class_8) (Object) this).method_25(new net.minecraft.class_9316((net.minecraft.class_1941) a0, a4), a1, a2, a3, a4);
+    /** was net/minecraft/class_8.method_17(Lnet/minecraft/class_1922;III)Lnet/minecraft/class_7; */
+    public net.minecraft.class_7 method_17(net.minecraft.class_1922 a0, int a1, int a2, int a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a class_9316 with a class_1941 world and entity context, which cannot be faithfully constructed from an arbitrary class_1922");
     }
 
 }

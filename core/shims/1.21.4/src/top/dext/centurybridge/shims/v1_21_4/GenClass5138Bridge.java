@@ -15,10 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_5138.class)
 public abstract class GenClass5138Bridge {
 
+    /** was net/minecraft/class_5138.method_39783(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833; */
+    public net.minecraft.class_6833 method_39783(net.minecraft.class_1923 a0, net.minecraft.class_3195 a1, boolean a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a class_6874 structure placement, which cannot be derived from the old arguments");
+    }
 
-    /** was net/minecraft/class_5138.method_41413(Lnet/minecraft/class_2338;Lnet/minecraft/class_6862;)Lnet/minecraft/class_3449; */
-    public net.minecraft.class_3449 method_41413(net.minecraft.class_2338 a0, net.minecraft.class_6862 a1) {
-        return ((net.minecraft.class_5138)(Object)this).method_57560(a0, a1);
+    /** was net/minecraft/class_5138.method_41034(Lnet/minecraft/class_2338;Lnet/minecraft/class_5321;)Lnet/minecraft/class_3449; */
+    public net.minecraft.class_3449 method_41034(net.minecraft.class_2338 a0, net.minecraft.class_5321 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the old RegistryKey argument cannot be converted to the new RegistryEntryList parameter using the available API");
     }
 
 }

@@ -15,6 +15,24 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_8966.class)
 public abstract class GenClass8966Bridge {
 
+    /** was net/minecraft/class_8966.method_55184(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z */
+    public boolean method_55184(net.minecraft.class_3218 a0, net.minecraft.class_8965 a1, float a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_55184 requires an int value that cannot be faithfully derived from the old class_8965 argument");
+    }
 
+    /** was net/minecraft/class_8966.method_55186(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_8962;I)V */
+    public void method_55186(net.minecraft.class_3218 a0, net.minecraft.class_2338 a1, net.minecraft.class_8962 a2, int a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_8963 instance, but the old class_8962 and int arguments do not provide the additional class_8963 state needed for faithful construction");
+    }
+
+    /** was net/minecraft/class_8966.method_55197()Z */
+    public boolean method_55197() {
+        throw new UnsupportedOperationException("CenturyBridge: the old parameterless contract cannot supply the required class_8963 and class_5819 arguments");
+    }
+
+    /** was net/minecraft/class_8966.method_55198(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z */
+    public boolean method_55198(net.minecraft.class_3218 a0, net.minecraft.class_8965 a1, float a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the old class_8965 argument cannot be faithfully translated to the new integer parameter");
+    }
 
 }

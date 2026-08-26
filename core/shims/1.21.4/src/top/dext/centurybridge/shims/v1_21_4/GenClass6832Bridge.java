@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_6832.class)
 public abstract class GenClass6832Bridge {
 
+    /** was net/minecraft/class_6832.method_39831(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833; */
+    public net.minecraft.class_6833 method_39831(net.minecraft.class_1923 a0, net.minecraft.class_3195 a1, boolean a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a StructurePlacement argument that the old contract does not provide");
+    }
 
 }

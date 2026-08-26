@@ -15,9 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1702.class)
 public abstract class GenClass1702Bridge {
 
-    /** was net/minecraft/class_1702.method_7588(Lnet/minecraft/class_1657;)V */
-    public void method_7588(net.minecraft.class_1657 a0) {
-        ((net.minecraft.class_1702) (Object) this).method_7588((net.minecraft.class_3222) a0);
+    /** was net/minecraft/class_1702.method_7579(Lnet/minecraft/class_1792;Lnet/minecraft/class_1799;)V */
+    public void method_7579(net.minecraft.class_1792 a0, net.minecraft.class_1799 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: provided replacement descriptor conflicts with the target API surface; method_7579 accepts class_4174, not class_1799");
+    }
+
+    /** was net/minecraft/class_1702.method_7579(Lnet/minecraft/class_1799;)V */
+    public void method_7579(net.minecraft.class_1799 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_4174 food component, but the old class_1799 argument cannot be faithfully converted using the provided API surface");
     }
 
 }

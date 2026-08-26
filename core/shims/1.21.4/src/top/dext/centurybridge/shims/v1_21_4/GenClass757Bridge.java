@@ -15,10 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_757.class)
 public abstract class GenClass757Bridge {
 
-    /** was net/minecraft/class_757.method_22973(D)Lorg/joml/Matrix4f; */
-    public org.joml.Matrix4f method_22973(double a0) {
-        return ((net.minecraft.class_757) (Object) this).method_22973((float) a0);
+    /** was net/minecraft/class_757.method_3188(FJ)V */
+    public void method_3188(float a0, long a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_3188 requires a class_9779 render tick counter, and the old long frame-time argument cannot be represented by that API");
     }
 
+    /** was net/minecraft/class_757.method_3192(FJZ)V */
+    public void method_3192(float a0, long a1, boolean a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the new render API has no parameter or RenderTickCounter method that can preserve the old start-time argument");
+    }
 
 }

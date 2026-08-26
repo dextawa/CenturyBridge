@@ -15,17 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_936.class)
 public abstract class GenClass936Bridge {
 
-    /** was net/minecraft/class_936.method_4094(Lnet/minecraft/class_1454;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
-    public void method_4094(net.minecraft.class_1454 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
-        net.minecraft.class_10058 state = ((net.minecraft.class_936)(Object)this).method_62514();
-        ((net.minecraft.class_936)(Object)this).method_62513(a0, state, a2);
-        ((net.minecraft.class_936)(Object)this).method_4094(state, a3, a4, a5);
-    }
-
-
-    /** was net/minecraft/class_936.method_4096(Lnet/minecraft/class_1454;)Lnet/minecraft/class_2960; */
-    public net.minecraft.class_2960 method_4096(net.minecraft.class_1454 a0) {
-        return ((net.minecraft.class_936)(Object)this).method_4096(((net.minecraft.class_936)(Object)this).method_62514());
-    }
 
 }

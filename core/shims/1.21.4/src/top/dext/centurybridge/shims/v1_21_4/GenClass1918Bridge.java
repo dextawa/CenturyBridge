@@ -15,11 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1918.class)
 public abstract class GenClass1918Bridge {
 
-    /** was net/minecraft/class_1918.method_8297(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487; */
-    public net.minecraft.class_2487 method_8297(net.minecraft.class_2487 a0) {
-        net.minecraft.class_3218 world = ((net.minecraft.class_1918) (Object) this).method_8293();
-        net.minecraft.class_7225.class_7874 registries = world != null ? world.method_30349() : net.minecraft.class_7225.class_7874.method_46761(java.util.stream.Stream.empty());
-        return ((net.minecraft.class_1918) (Object) this).method_8297(a0, registries);
+    /** was net/minecraft/class_1918.method_8305(Lnet/minecraft/class_2487;)V */
+    public void method_8305(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_8305 requires a class_7225.class_7874 registry lookup that the old signature does not provide");
     }
 
 }

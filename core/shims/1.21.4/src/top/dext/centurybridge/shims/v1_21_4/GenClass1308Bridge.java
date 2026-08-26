@@ -15,33 +15,32 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1308.class)
 public abstract class GenClass1308Bridge {
 
-    /** was net/minecraft/class_1308.method_20820(Lnet/minecraft/class_1799;)Z */
-    public boolean method_20820(net.minecraft.class_1799 a0) {
-        return ((net.minecraft.class_1308) (Object) this).method_20820((net.minecraft.class_3218) ((net.minecraft.class_1308) (Object) this).method_37908(), a0);
+    /** was net/minecraft/class_1308.method_30758(Lnet/minecraft/class_5819;FLnet/minecraft/class_1304;)V */
+    public void method_30758(net.minecraft.class_5819 a0, float a1, net.minecraft.class_1304 a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the old float difficulty value cannot be faithfully reconstructed as the required class_1266 local difficulty context");
     }
 
-    /** was net/minecraft/class_1308.method_24523(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799; */
-    public net.minecraft.class_1799 method_24523(net.minecraft.class_1799 a0) {
-        net.minecraft.class_1937 world = ((net.minecraft.class_1308) (Object) this).method_37908();
-        if (!(world instanceof net.minecraft.class_3218 serverWorld)) {
-            throw new UnsupportedOperationException("CenturyBridge: method_24523 now requires a server world, but this entity is not in one");
-        }
-        return ((net.minecraft.class_1308) (Object) this).method_24523(serverWorld, a0);
+    /** was net/minecraft/class_1308.method_30759(Lnet/minecraft/class_5819;F)V */
+    public void method_30759(net.minecraft.class_5819 a0, float a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a ServerWorldAccess and full LocalDifficulty, which cannot be faithfully reconstructed from Random and enchantment power alone");
     }
 
-    /** was net/minecraft/class_1308.method_29243(Lnet/minecraft/class_1299;Z)Lnet/minecraft/class_1308; */
-    public net.minecraft.class_1308 method_29243(net.minecraft.class_1299 a0, boolean a1) {
-        return ((net.minecraft.class_1308) (Object) this).method_29243(a0, net.minecraft.class_10179.method_63607(((net.minecraft.class_1308) (Object) this), a1, false), converted -> {});
+    /** was net/minecraft/class_1308.method_5931(Lnet/minecraft/class_1657;)Z */
+    public boolean method_5931(net.minecraft.class_1657 a0) {
+        return ((net.minecraft.class_1308) (Object) this).method_5931();
     }
 
-    /** was net/minecraft/class_1308.method_5991()Lnet/minecraft/class_5321; */
-    public net.minecraft.class_5321 method_5991() {
-        return ((net.minecraft.class_1308) (Object) this).method_5991().orElse(null);
+    /** was net/minecraft/class_1308.method_5932(ZZ)V */
+    public void method_5932(boolean a0, boolean a1) {
+        throw new UnsupportedOperationException("CenturyBridge: replacement moved to class_9817, but its API surface is unavailable and class_1308 exposes no verified equivalent");
     }
 
-    /** was net/minecraft/class_1308.method_60973()V */
-    public void method_60973() {
-        ((net.minecraft.class_1308) (Object) this).method_60973((net.minecraft.class_3218) ((net.minecraft.class_1308) (Object) this).method_37908());
+
+    /** was net/minecraft/class_1308.method_5991()Lnet/minecraft/class_2960; */
+    public net.minecraft.class_2960 method_5991() {
+        return ((net.minecraft.class_1308) (Object) this).method_5991()
+                .map(net.minecraft.class_5321::method_29177)
+                .orElse(null);
     }
 
 }
