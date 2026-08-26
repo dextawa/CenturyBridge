@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1741.class)
 public abstract class GenClass1741Bridge {
 
-    /** was net/minecraft/class_1741.comp_2301()Ljava/util/function/Supplier; */
-    public java.util.function.Supplier comp_2301() {
-        return () -> ((net.minecraft.class_1741)(Object)this).comp_2301();
+    /** was net/minecraft/class_1741.comp_3168()Lnet/minecraft/class_2960; */
+    public net.minecraft.class_2960 comp_3168() {
+        return ((net.minecraft.class_1741) (Object) this).comp_3168().method_29177();
     }
 
 }

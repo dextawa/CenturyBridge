@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2794.class)
 public abstract class GenClass2794Bridge {
 
+    /** was net/minecraft/class_2794.method_16129(Lnet/minecraft/class_5455;Lnet/minecraft/class_7869;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;Lnet/minecraft/class_3485;)V */
+    public void method_16129(net.minecraft.class_5455 a0, net.minecraft.class_7869 a1, net.minecraft.class_5138 a2, net.minecraft.class_2791 a3, net.minecraft.class_3485 a4) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a world registry key (class_5321), which cannot be derived from the old method arguments");
+    }
 
 }

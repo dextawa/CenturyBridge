@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_3195.class)
 public abstract class GenClass3195Bridge {
 
-    /** was net/minecraft/class_3195.method_42699(Ljava/util/function/Function;)Lcom/mojang/serialization/Codec; */
-    public com.mojang.serialization.Codec method_42699(java.util.function.Function a0) {
-        return net.minecraft.class_3195.method_42699(a0).codec();
+    /** was net/minecraft/class_3195.method_41614(Lnet/minecraft/class_5455;Lnet/minecraft/class_2794;Lnet/minecraft/class_1966;Lnet/minecraft/class_7138;Lnet/minecraft/class_3485;JLnet/minecraft/class_1923;ILnet/minecraft/class_5539;Ljava/util/function/Predicate;)Lnet/minecraft/class_3449; */
+    public net.minecraft.class_3449 method_41614(net.minecraft.class_5455 a0, net.minecraft.class_2794 a1, net.minecraft.class_1966 a2, net.minecraft.class_7138 a3, net.minecraft.class_3485 a4, long a5, net.minecraft.class_1923 a6, int a7, net.minecraft.class_5539 a8, java.util.function.Predicate a9) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_6880 and class_5321 that cannot be derived from the old arguments");
     }
 
 }

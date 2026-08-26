@@ -15,13 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1309.class)
 public abstract class GenClass1309Bridge {
 
-    /** was net/minecraft/class_1309.method_6121(Lnet/minecraft/class_1297;)Z */
-    public boolean method_6121(net.minecraft.class_1297 a0) {
-        net.minecraft.class_1937 world = ((net.minecraft.class_1309) (Object) this).method_37908();
-        if (!(world instanceof net.minecraft.class_3218)) {
-            throw new UnsupportedOperationException("CenturyBridge: method_6121 requires a server world on the new API");
-        }
-        return ((net.minecraft.class_1309) (Object) this).method_6121((net.minecraft.class_3218) world, a0);
+    /** was net/minecraft/class_1309.method_64618(Lnet/minecraft/class_1297;Lnet/minecraft/class_3959$class_3960;Lnet/minecraft/class_3959$class_242;Ljava/util/function/DoubleSupplier;)Z */
+    public boolean method_64618(net.minecraft.class_1297 a0, net.minecraft.class_3959.class_3960 a1, net.minecraft.class_3959.class_242 a2, java.util.function.DoubleSupplier a3) {
+        return ((net.minecraft.class_1309) (Object) this).method_64618(a0, a1, a2, a3.getAsDouble());
+    }
+
+    /** was net/minecraft/class_1309.method_64619(Lnet/minecraft/class_1309;DZZLjava/util/function/Predicate;[Ljava/util/function/DoubleSupplier;)Z */
+    public boolean method_64619(net.minecraft.class_1309 a0, double a1, boolean a2, boolean a3, java.util.function.Predicate a4, java.util.function.DoubleSupplier[] a5) {
+        throw new UnsupportedOperationException("CenturyBridge: the new overload has no Predicate parameter, so the old filtering contract cannot be preserved");
     }
 
 }

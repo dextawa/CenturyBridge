@@ -15,12 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_916.class)
 public abstract class GenClass916Bridge {
 
-    /** was net/minecraft/class_916.method_3996(Lnet/minecraft/class_1542;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
-    public void method_3996(net.minecraft.class_1542 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
-        net.minecraft.class_10039 state = new net.minecraft.class_10039();
-        ((net.minecraft.class_916)(Object)this).method_62470(a0, state, a1);
-        state.field_53435 = a2;
-        ((net.minecraft.class_916)(Object)this).method_3996(state, a3, a4, a5);
+    /** was net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V */
+    public void method_56858(net.minecraft.class_918 a0, net.minecraft.class_4587 a1, net.minecraft.class_4597 a2, int a3, net.minecraft.class_1799 a4, net.minecraft.class_1087 a5, boolean a6, net.minecraft.class_5819 a7) {
+        throw new UnsupportedOperationException("CenturyBridge: the new renderer requires a class_10428 render state, but the old baked model and handedness arguments cannot faithfully construct that state");
     }
 
 }

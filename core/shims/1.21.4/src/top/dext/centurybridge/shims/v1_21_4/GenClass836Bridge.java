@@ -15,4 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_836.class)
 public abstract class GenClass836Bridge {
 
+    /** was net/minecraft/class_836.method_32160(Lnet/minecraft/class_5599;)Ljava/util/Map; */
+    public java.util.Map method_32160(net.minecraft.class_5599 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a class_2484.class_2485 context and returns class_5598 instead of the old Map contract");
+    }
+
+    /** was net/minecraft/class_836.method_3578(Lnet/minecraft/class_2484$class_2485;Lnet/minecraft/class_9296;)Lnet/minecraft/class_1921; */
+    public net.minecraft.class_1921 method_3578(net.minecraft.class_2484.class_2485 a0, net.minecraft.class_9296 a1) {
+        return ((net.minecraft.class_836) (Object) this).method_65832(a0, a1);
+    }
+
 }

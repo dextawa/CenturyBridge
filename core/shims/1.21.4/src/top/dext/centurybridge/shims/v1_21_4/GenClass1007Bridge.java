@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1007.class)
 public abstract class GenClass1007Bridge {
 
-    /** was net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V */
-    public void method_4221(net.minecraft.class_4587 a0, net.minecraft.class_4597 a1, int a2, net.minecraft.class_742 a3) {
-        throw new UnsupportedOperationException("CenturyBridge: the new overload requires a skin texture identifier and sleeve-visibility flag, which cannot be derived faithfully from the supplied class_1007 API surface");
+    /** was net/minecraft/class_1007.method_64258(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573; */
+    public net.minecraft.class_572.class_573 method_64258(net.minecraft.class_10055 a0, net.minecraft.class_1306 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_64258 requires a class_742 player, which cannot be recovered from the class_10055 argument");
     }
 
 }

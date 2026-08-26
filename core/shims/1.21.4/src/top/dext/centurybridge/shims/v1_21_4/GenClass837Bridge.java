@@ -15,10 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_837.class)
 public abstract class GenClass837Bridge {
 
-    /** was net/minecraft/class_837.method_32154()Lnet/minecraft/class_5607; */
-    public net.minecraft.class_5607 method_32154() {
-        return ((net.minecraft.class_837) (Object) this).method_32154(false);
-    }
-
 
 }

@@ -15,4 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1011.class)
 public abstract class GenClass1011Bridge {
 
+    /** was net/minecraft/class_1011.method_22619(IIIIIIIZZZZ)V */
+    public void method_22619(int a0, int a1, int a2, int a3, int a4, int a5, int a6, boolean a7, boolean a8, boolean a9, boolean a10) {
+        ((net.minecraft.class_1011) (Object) this).method_22619(a0, a1, a2, a3, a4, a5, a6, a7);
+    }
+
 }

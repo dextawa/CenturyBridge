@@ -15,28 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1297.class)
 public abstract class GenClass1297Bridge {
 
-    /** was net/minecraft/class_1297.method_5671()Lnet/minecraft/class_2168; */
-    public net.minecraft.class_2168 method_5671() {
-        return ((net.minecraft.class_1297) (Object) this).method_5671((net.minecraft.class_3218) ((net.minecraft.class_1297) (Object) this).method_37908());
-    }
-
-    /** was net/minecraft/class_1297.method_5706(Lnet/minecraft/class_1935;)Lnet/minecraft/class_1542; */
-    public net.minecraft.class_1542 method_5706(net.minecraft.class_1935 a0) {
-        return ((net.minecraft.class_1297) (Object) this).method_5706((net.minecraft.class_3218) ((net.minecraft.class_1297) (Object) this).method_37908(), a0);
-    }
-
-    /** was net/minecraft/class_1297.method_5768()V */
-    public void method_5768() {
-        throw new UnsupportedOperationException("CenturyBridge: the old no-argument discard contract cannot supply the required class_3218 server-world context");
-    }
-
-    /** was net/minecraft/class_1297.method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542; */
-    public net.minecraft.class_1542 method_5775(net.minecraft.class_1799 a0) {
-        net.minecraft.class_1297 self = (net.minecraft.class_1297) (Object) this;
-        if (!(self.method_37908() instanceof net.minecraft.class_3218)) {
-            throw new UnsupportedOperationException("CenturyBridge: the new drop-stack API requires a server world");
-        }
-        return self.method_5775((net.minecraft.class_3218) self.method_37908(), a0);
+    /** was net/minecraft/class_1297.method_5716(Lnet/minecraft/class_1297;ILnet/minecraft/class_1282;)V */
+    public void method_5716(net.minecraft.class_1297 a0, int a1, net.minecraft.class_1282 a2) {
+        ((net.minecraft.class_1297) (Object) this).method_5716(a0, a2);
     }
 
 }

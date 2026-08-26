@@ -47,12 +47,15 @@ for rnd in range(1, 40):
         print(f"round {rnd}: CLEAN ({len(srcs)} files)"); break
     w = json.load(io.open(shims_p, encoding='utf-8'))
     cfg = json.load(io.open(cfg_p, encoding='utf-8'))
-    # (1) private-access -> whole file
+    # (1) invalid mixin target -> whole file. private/inaccessible inner class,
+    #     or any error in the class-header region (<=16, the @Mixin/class decl):
+    #     assemble mis-generated a bridge onto a class that cannot be mixed into.
     priv_files = set()
     for l in errs:
-        if "private access" in l:
-            m = re.match(r"(.+\.java):", l)
-            if m: priv_files.add(os.path.basename(m.group(1).replace("\\","/"))[:-5])
+        m = re.match(r"(.+\.java):(\d+):", l)
+        if not m: continue
+        if ("private access" in l or "inaccessible" in l or int(m.group(2)) <= 16):
+            priv_files.add(os.path.basename(m.group(1).replace("\\","/"))[:-5])
     for bf in priv_files: excise_file(bf, w, cfg)
     io.open(cfg_p,'w',encoding='utf-8',newline='\n').write(json.dumps(cfg,indent=1))
     io.open(shims_p,'w',encoding='utf-8',newline='\n').write(json.dumps(w,indent=1,ensure_ascii=False))
