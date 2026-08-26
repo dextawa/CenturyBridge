@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_8973.class)
 public abstract class GenClass8973Bridge {
 
-    /** was net/minecraft/class_8973.method_55233()Lnet/minecraft/class_5607; */
-    public net.minecraft.class_5607 method_55233() {
-        return ((net.minecraft.class_8973) (Object) this).method_55233(0, 0);
+    /** was net/minecraft/class_8973.method_55232(Lnet/minecraft/class_8949;FFFFF)V */
+    public void method_55232(net.minecraft.class_8949 a0, float a1, float a2, float a3, float a4, float a5) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_10006 state object, but the provided API exposes no faithful conversion from class_8949 and the five float parameters");
     }
 
 }

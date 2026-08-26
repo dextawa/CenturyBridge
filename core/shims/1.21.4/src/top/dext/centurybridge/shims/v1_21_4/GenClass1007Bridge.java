@@ -15,9 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1007.class)
 public abstract class GenClass1007Bridge {
 
-    /** was net/minecraft/class_1007.method_64258(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573; */
-    public net.minecraft.class_572.class_573 method_64258(net.minecraft.class_10055 a0, net.minecraft.class_1306 a1) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_64258 requires a class_742 player, which cannot be recovered from the class_10055 argument");
-    }
 
 }

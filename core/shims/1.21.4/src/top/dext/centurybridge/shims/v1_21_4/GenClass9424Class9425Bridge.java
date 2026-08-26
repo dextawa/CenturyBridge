@@ -15,10 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_9424.class_9425.class)
 public abstract class GenClass9424Class9425Bridge {
 
+    /** was net/minecraft/class_9424$class_9425.method_58427(Lnet/minecraft/class_6862;)Lnet/minecraft/class_9424$class_9425; */
+    public net.minecraft.class_9424.class_9425 method_58427(net.minecraft.class_6862 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: converting a tag key to a registry entry list requires a registry entry owner, which is not available");
+    }
 
-    /** was net/minecraft/class_9424$class_9425.method_58434(Ljava/util/List;F)Lnet/minecraft/class_9424$class_9425; */
-    public net.minecraft.class_9424.class_9425 method_58434(java.util.List a0, float a1) {
-        return ((net.minecraft.class_9424.class_9425) (Object) this).method_58434(net.minecraft.class_6885.method_40242(a0), a1);
+    /** was net/minecraft/class_9424$class_9425.method_58431(Ljava/util/List;F)Lnet/minecraft/class_9424$class_9425; */
+    public net.minecraft.class_9424.class_9425 method_58431(java.util.List a0, float a1) {
+        return ((net.minecraft.class_9424.class_9425) (Object) this).method_58431(net.minecraft.class_6885.method_40242(a0), a1);
     }
 
 }

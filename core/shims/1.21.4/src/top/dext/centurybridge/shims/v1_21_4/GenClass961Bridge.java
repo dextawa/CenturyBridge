@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_961.class)
 public abstract class GenClass961Bridge {
 
+    /** was net/minecraft/class_961.method_4145(Lnet/minecraft/class_1496;)Lnet/minecraft/class_2960; */
+    public net.minecraft.class_2960 method_4145(net.minecraft.class_1496 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the old class_1496 argument cannot be converted to the new class_10019 render state using the available API");
+    }
 
 }

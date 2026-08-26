@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_4309.class)
 public abstract class GenClass4309Bridge {
 
-    /** was net/minecraft/class_4309.method_51148(Lnet/minecraft/class_3300;Ljava/lang/String;Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Ljava/util/Map;)V */
-    public void method_51148(net.minecraft.class_3300 a0, java.lang.String a1, com.mojang.serialization.DynamicOps a2, com.mojang.serialization.Codec a3, java.util.Map a4) {
-        ((net.minecraft.class_4309) (Object) this).method_51148(a0, net.minecraft.class_7654.method_45114(a1), a2, a3, a4);
+    /** was net/minecraft/class_4309.method_51148(Lnet/minecraft/class_3300;Ljava/lang/String;Lcom/google/gson/Gson;Ljava/util/Map;)V */
+    public void method_51148(net.minecraft.class_3300 a0, java.lang.String a1, com.google.gson.Gson a2, java.util.Map a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the old Gson-based contract cannot supply the DynamicOps and Codec required by the new API");
     }
 
 }

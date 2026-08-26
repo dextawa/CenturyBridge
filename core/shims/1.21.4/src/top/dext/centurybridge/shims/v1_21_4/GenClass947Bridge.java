@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_947.class)
 public abstract class GenClass947Bridge {
 
+    /** was net/minecraft/class_947.method_4120(Lnet/minecraft/class_1679;)Lnet/minecraft/class_2960; */
+    public net.minecraft.class_2960 method_4120(net.minecraft.class_1679 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1679 cannot be converted to the class_9999 required by the new method_4120 overload");
+    }
 
 }

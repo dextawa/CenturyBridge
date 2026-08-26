@@ -15,12 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_958.class)
 public abstract class GenClass958Bridge {
 
-    /** was net/minecraft/class_958.method_4139(Lnet/minecraft/class_1481;)Lnet/minecraft/class_2960; */
-    public net.minecraft.class_2960 method_4139(net.minecraft.class_1481 a0) {
-        net.minecraft.class_10077 arg = new net.minecraft.class_10077();
-        // set booleans based on enum value
-        return ((net.minecraft.class_958)(Object)this).method_4139(arg);
-    }
-
 
 }

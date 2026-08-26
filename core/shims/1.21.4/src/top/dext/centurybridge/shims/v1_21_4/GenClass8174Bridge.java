@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_8174.class)
 public abstract class GenClass8174Bridge {
 
+    /** was net/minecraft/class_8174.method_49219()V */
+    public void method_49219() {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_49219 requires a class_3218 instance, but the old no-argument contract provides no world context");
+    }
 
 }

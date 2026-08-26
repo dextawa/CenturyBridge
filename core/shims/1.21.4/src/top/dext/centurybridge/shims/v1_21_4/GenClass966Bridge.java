@@ -15,13 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_966.class)
 public abstract class GenClass966Bridge {
 
-    /** was net/minecraft/class_966.method_4159(Lnet/minecraft/class_1687;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
-    public void method_4159(net.minecraft.class_1687 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
-        net.minecraft.class_10084 state = new net.minecraft.class_10084();
-        ((net.minecraft.class_966)(Object)this).method_62579(a0, state, a1);
-        state.field_53623 = a2;
-        ((net.minecraft.class_966)(Object)this).method_4159(state, a3, a4, a5);
+    /** was net/minecraft/class_966.method_4160(Lnet/minecraft/class_1687;)Lnet/minecraft/class_2960; */
+    public net.minecraft.class_2960 method_4160(net.minecraft.class_1687 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the old world-based texture lookup cannot be expressed through the new render-state-based method without a net.minecraft.class_10084 instance");
     }
-
 
 }

@@ -15,11 +15,11 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_894.class)
 public abstract class GenClass894Bridge {
 
-    /** was net/minecraft/class_894.method_23160(Lnet/minecraft/class_1560;F)Lnet/minecraft/class_243; */
-    public net.minecraft.class_243 method_23160(net.minecraft.class_1560 a0, float a1) {
-        net.minecraft.class_10016 ctx = new net.minecraft.class_10016();
-        ((net.minecraft.class_894)(Object)this).method_62422(a0, ctx, a1);
-        return ((net.minecraft.class_894)(Object)this).method_23160(ctx);
+    /** was net/minecraft/class_894.method_3912(Lnet/minecraft/class_1560;)Lnet/minecraft/class_2960; */
+    public net.minecraft.class_2960 method_3912(net.minecraft.class_1560 a0) {
+        net.minecraft.class_10016 state = ((net.minecraft.class_894) (Object) this).method_62421();
+        ((net.minecraft.class_894) (Object) this).method_62422(a0, state, 0.0F);
+        return ((net.minecraft.class_894) (Object) this).method_3912(state);
     }
 
 }

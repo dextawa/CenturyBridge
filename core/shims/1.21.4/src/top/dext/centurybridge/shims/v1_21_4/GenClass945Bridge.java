@@ -15,12 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_945.class)
 public abstract class GenClass945Bridge {
 
-    /** was net/minecraft/class_945.method_4116(Lnet/minecraft/class_1621;)Lnet/minecraft/class_2960; */
-    public net.minecraft.class_2960 method_4116(net.minecraft.class_1621 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: class_945.method_4116 now requires class_10067; no conversion from class_1621 is available in the new API");
-        // CB-CONFIDENCE: high -- the new method_4116 takes a completely different parameter type (class_10067) with no conversion path from class_1621 in the visible API surface; method_62531 takes both types together but its semantics and the required float argument are unknown, so any bridge would be a guess
-    }
-
-
 
 }
