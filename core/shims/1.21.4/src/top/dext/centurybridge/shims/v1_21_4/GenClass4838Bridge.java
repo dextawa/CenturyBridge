@@ -16,7 +16,21 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass4838Bridge {
 
 
+    /** was net/minecraft/class_4838.method_24728(Lnet/minecraft/class_4836;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; */
+    public net.minecraft.class_1269 method_24728(net.minecraft.class_4836 a0, net.minecraft.class_1657 a1, net.minecraft.class_1268 a2) {
+        return ((net.minecraft.class_4838) (Object) this).method_24728((net.minecraft.class_3218) a1.method_37908(), a0, a1, a2);
+    }
 
 
+
+    /** was net/minecraft/class_4838.method_25948(Lnet/minecraft/class_4836;)V */
+    public void method_25948(net.minecraft.class_4836 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the required class_3218 argument cannot be recovered from the old class_4836-only contract");
+    }
+
+    /** was net/minecraft/class_4838.method_29945(Lnet/minecraft/class_5418;)V */
+    public void method_29945(net.minecraft.class_5418 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the replacement requires a class_3218 server world, which the old signature does not provide");
+    }
 
 }

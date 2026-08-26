@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2609.class)
 public abstract class GenClass2609Bridge {
 
-    /** was net/minecraft/class_2609.method_31651(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2609;)V */
-    public void method_31651(net.minecraft.class_1937 a0, net.minecraft.class_2338 a1, net.minecraft.class_2680 a2, net.minecraft.class_2609 a3) {
-        ((net.minecraft.class_2609) (Object) this).method_31651((net.minecraft.class_3218) a0, a1, a2, a3);
+    /** was net/minecraft/class_2609.method_11200(Lnet/minecraft/class_1799;)I */
+    public int method_11200(net.minecraft.class_1799 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_9895 context that cannot be derived from the old receiver or item stack");
     }
 
 }

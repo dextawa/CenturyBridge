@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_513.class)
 public abstract class GenClass513Bridge {
 
-    /** was net/minecraft/class_513.method_2627(Ljava/util/List;Z)V */
-    public void method_2627(java.util.List a0, boolean a1) {
-        ((net.minecraft.class_513) (Object) this).method_2627(a0, a1, false);
+    /** was net/minecraft/class_513.method_2633()Lnet/minecraft/class_3439; */
+    public net.minecraft.class_3439 method_2633() {
+        throw new UnsupportedOperationException("CenturyBridge: the new method returns class_299, and the provided API exposes no conversion to the required class_3439");
     }
 
 }

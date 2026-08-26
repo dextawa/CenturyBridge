@@ -15,12 +15,33 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1308.class)
 public abstract class GenClass1308Bridge {
 
+    /** was net/minecraft/class_1308.method_20820(Lnet/minecraft/class_1799;)Z */
+    public boolean method_20820(net.minecraft.class_1799 a0) {
+        return ((net.minecraft.class_1308) (Object) this).method_20820((net.minecraft.class_3218) ((net.minecraft.class_1308) (Object) this).method_37908(), a0);
+    }
 
+    /** was net/minecraft/class_1308.method_24523(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799; */
+    public net.minecraft.class_1799 method_24523(net.minecraft.class_1799 a0) {
+        net.minecraft.class_1937 world = ((net.minecraft.class_1308) (Object) this).method_37908();
+        if (!(world instanceof net.minecraft.class_3218 serverWorld)) {
+            throw new UnsupportedOperationException("CenturyBridge: method_24523 now requires a server world, but this entity is not in one");
+        }
+        return ((net.minecraft.class_1308) (Object) this).method_24523(serverWorld, a0);
+    }
 
+    /** was net/minecraft/class_1308.method_29243(Lnet/minecraft/class_1299;Z)Lnet/minecraft/class_1308; */
+    public net.minecraft.class_1308 method_29243(net.minecraft.class_1299 a0, boolean a1) {
+        return ((net.minecraft.class_1308) (Object) this).method_29243(a0, net.minecraft.class_10179.method_63607(((net.minecraft.class_1308) (Object) this), a1, false), converted -> {});
+    }
 
-    /** was net/minecraft/class_1308.method_60972(Ljava/util/function/Predicate;)Ljava/util/Set; */
-    public java.util.Set method_60972(java.util.function.Predicate a0) {
-        return ((net.minecraft.class_1308) (Object) this).method_60972((net.minecraft.class_3218) ((net.minecraft.class_1308) (Object) this).method_37908(), a0);
+    /** was net/minecraft/class_1308.method_5991()Lnet/minecraft/class_5321; */
+    public net.minecraft.class_5321 method_5991() {
+        return ((net.minecraft.class_1308) (Object) this).method_5991().orElse(null);
+    }
+
+    /** was net/minecraft/class_1308.method_60973()V */
+    public void method_60973() {
+        ((net.minecraft.class_1308) (Object) this).method_60973((net.minecraft.class_3218) ((net.minecraft.class_1308) (Object) this).method_37908());
     }
 
 }

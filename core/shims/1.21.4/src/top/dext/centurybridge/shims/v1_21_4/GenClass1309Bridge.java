@@ -15,5 +15,13 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1309.class)
 public abstract class GenClass1309Bridge {
 
+    /** was net/minecraft/class_1309.method_6121(Lnet/minecraft/class_1297;)Z */
+    public boolean method_6121(net.minecraft.class_1297 a0) {
+        net.minecraft.class_1937 world = ((net.minecraft.class_1309) (Object) this).method_37908();
+        if (!(world instanceof net.minecraft.class_3218)) {
+            throw new UnsupportedOperationException("CenturyBridge: method_6121 requires a server world on the new API");
+        }
+        return ((net.minecraft.class_1309) (Object) this).method_6121((net.minecraft.class_3218) world, a0);
+    }
 
 }

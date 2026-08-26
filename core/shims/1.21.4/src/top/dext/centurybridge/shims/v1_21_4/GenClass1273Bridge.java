@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1273.class)
 public abstract class GenClass1273Bridge {
 
+    /** was net/minecraft/class_1273.method_5474(Lnet/minecraft/class_2487;)V */
+    public void method_5474(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_5474 requires a class_7225.class_7874 registry lookup, which the old contract does not provide");
+    }
 
 }

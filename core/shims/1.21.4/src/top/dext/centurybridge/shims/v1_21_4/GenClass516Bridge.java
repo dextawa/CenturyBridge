@@ -15,4 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_516.class)
 public abstract class GenClass516Bridge {
 
+    /** was net/minecraft/class_516.method_2653(Lnet/minecraft/class_8786;)Z */
+    public boolean method_2653(net.minecraft.class_8786 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the old class_8786 argument cannot be converted to the new class_10298 criterion-index type using the available API");
+    }
+
 }

@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_4840.class)
 public abstract class GenClass4840Bridge {
 
-    /** was net/minecraft/class_4840.method_24803(Lnet/minecraft/class_1308;FFFFF)V */
-    public void method_24803(net.minecraft.class_1308 a0, float a1, float a2, float a3, float a4, float a5) {
-        throw new UnsupportedOperationException("CenturyBridge: method_24803(LivingEntity,FFFFF) was a model setAngles taking entity + 5 animation floats; new method_24803(class_10054) context has only 1 float and no entity field, so 4 floats and the entity cannot be carried");
+    /** was net/minecraft/class_4840.method_29355(Lnet/minecraft/class_1308;F)V */
+    public void method_29355(net.minecraft.class_1308 a0, float a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires class_10054 render state, and this API surface provides no faithful conversion from class_1308");
     }
 
 }
