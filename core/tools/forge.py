@@ -212,13 +212,18 @@ MAX_TOKENS = int(os.environ.get("CB_MAX_TOKENS", "8000"))
 
 def call_model(prompt, attempt=0):
     LIMITER.acquire()
-    body = json.dumps({
+    payload = {
         "model": MODEL,
         "messages": [{"role": "system", "content": SYSTEM},
                      {"role": "user", "content": prompt}],
         "temperature": 0,
-        "max_tokens": MAX_TOKENS,
-    }).encode()
+    }
+    # Reasoning models need a big budget to cover think+write; non-reasoning
+    # ones (ox-alpha emits no reasoning chain) HANG on max_tokens=8000 at this
+    # gateway. Set CB_MAX_TOKENS=0 to omit the field and let the provider decide.
+    if MAX_TOKENS > 0:
+        payload["max_tokens"] = MAX_TOKENS
+    body = json.dumps(payload).encode()
     req = urllib.request.Request(
         f"{API_BASE}/chat/completions", data=body,
         headers={"Content-Type": "application/json",
