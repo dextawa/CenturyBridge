@@ -16,4 +16,9 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass1297Bridge {
 
 
+    /** was net/minecraft/class_1297.method_5822()Z */
+    public boolean method_5822() {
+        return ((net.minecraft.class_1297) (Object) this).method_5822(false);
+    }
+
 }

@@ -16,10 +16,4 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass1007Bridge {
 
 
-    /** was net/minecraft/class_1007.method_4212(Lnet/minecraft/class_742;Lnet/minecraft/class_4587;FFFF)V */
-    public void method_4212(net.minecraft.class_742 a0, net.minecraft.class_4587 a1, float a2, float a3, float a4, float a5) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a populated class_10055 render state, and the available API does not provide a faithful conversion preserving all four legacy float parameters");
-    }
-
-
 }

@@ -16,9 +16,4 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass915Bridge {
 
 
-    /** was net/minecraft/class_915.method_23176(Lnet/minecraft/class_1533;)Z */
-    public boolean method_23176(net.minecraft.class_1533 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new hasLabel contract requires a squared camera distance that the old signature does not provide");
-    }
-
 }

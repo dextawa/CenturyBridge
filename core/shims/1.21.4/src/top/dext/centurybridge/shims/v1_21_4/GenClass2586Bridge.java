@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2586.class)
 public abstract class GenClass2586Bridge {
 
+    /** was net/minecraft/class_2586.method_11014(Lnet/minecraft/class_2487;)V */
+    public void method_11014(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the old overload provides no registry lookup required by the new method_11014 contract");
+    }
 
 }

@@ -15,10 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_3443.class)
 public abstract class GenClass3443Bridge {
 
-    /** was net/minecraft/class_3443.method_14915(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_2960;)Z */
-    public boolean method_14915(net.minecraft.class_5281 a0, net.minecraft.class_3341 a1, net.minecraft.class_5819 a2, int a3, int a4, int a5, net.minecraft.class_2960 a6) {
-        throw new UnsupportedOperationException("CenturyBridge: converting the structure identifier to class_5321 requires the structure registry identifier, which is not available from the provided API surface");
-    }
 
 
 }

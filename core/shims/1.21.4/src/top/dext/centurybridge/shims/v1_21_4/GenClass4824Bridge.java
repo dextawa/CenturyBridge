@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_4824.class)
 public abstract class GenClass4824Bridge {
 
+    /** was net/minecraft/class_4824.method_47120(Ljava/util/function/Predicate;Ljava/util/function/Function;)Lnet/minecraft/class_7893; */
+    public net.minecraft.class_7893 method_47120(java.util.function.Predicate a0, java.util.function.Function a1) {
+        return ((net.minecraft.class_4824) (Object) this).method_47120((world, value) -> a0.test(value), (world, value) -> (java.util.Optional) a1.apply(value));
+    }
 
 }

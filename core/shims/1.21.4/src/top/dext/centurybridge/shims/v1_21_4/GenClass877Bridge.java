@@ -16,4 +16,5 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass877Bridge {
 
 
+
 }
