@@ -15,20 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2586.class)
 public abstract class GenClass2586Bridge {
 
-    /** was net/minecraft/class_2586.method_11007(Lnet/minecraft/class_2487;)V */
-    public void method_11007(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a registry lookup that cannot be obtained reliably from the block entity");
-    }
-
-
-    /** was net/minecraft/class_2586.method_38242()Lnet/minecraft/class_2487; */
-    public net.minecraft.class_2487 method_38242() {
-        return ((net.minecraft.class_2586) (Object) this).method_38242(((net.minecraft.class_2586) (Object) this).method_10997().method_30349());
-    }
-
-    /** was net/minecraft/class_2586.method_38244()Lnet/minecraft/class_2487; */
-    public net.minecraft.class_2487 method_38244() {
-        throw new UnsupportedOperationException("CenturyBridge: the new serialization API requires a registry lookup, which the old no-argument contract does not provide");
-    }
 
 }

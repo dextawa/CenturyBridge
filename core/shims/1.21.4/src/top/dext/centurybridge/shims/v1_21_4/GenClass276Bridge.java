@@ -15,9 +15,12 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_276.class)
 public abstract class GenClass276Bridge {
 
-    /** was net/minecraft/class_276.method_1230(Z)V */
-    public void method_1230(boolean a0) {
-        ((net.minecraft.class_276) (Object) this).method_1230();
+    /** was net/minecraft/class_276.method_1234(IIZ)V */
+    public void method_1234(int a0, int a1, boolean a2) {
+        if (!a2) {
+            throw new UnsupportedOperationException("CenturyBridge: the new framebuffer draw API always disables blending and cannot preserve disableBlend=false");
+        }
+        ((net.minecraft.class_276) (Object) this).method_1234(a0, a1);
     }
 
 }

@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_5132.class)
 public abstract class GenClass5132Bridge {
 
-    /** was net/minecraft/class_5132.method_27308(Lnet/minecraft/class_1320;Ljava/util/UUID;)D */
-    public double method_27308(net.minecraft.class_1320 a0, java.util.UUID a1) {
-        throw new UnsupportedOperationException("CenturyBridge: the new API requires a class_2960 identifier instead of the old UUID, and no faithful UUID-to-identifier conversion exists");
+    /** was net/minecraft/class_5132.method_27309(Lnet/minecraft/class_1320;Ljava/util/UUID;)Z */
+    public boolean method_27309(net.minecraft.class_1320 a0, java.util.UUID a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires class_2960 instead of UUID, and no faithful UUID conversion is available");
     }
 
 }

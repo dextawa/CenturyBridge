@@ -15,13 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_4042.class)
 public abstract class GenClass4042Bridge {
 
-    /** was net/minecraft/class_4042.method_18333(Lnet/minecraft/class_4019;)Lnet/minecraft/class_2960; */
-    public net.minecraft.class_2960 method_18333(net.minecraft.class_4019 a0) {
-        net.minecraft.class_10027 converted = new net.minecraft.class_10027();
-        ((net.minecraft.class_4042)(Object)this).method_62444(a0, converted, 0.0f);
-        return ((net.minecraft.class_4042)(Object)this).method_18333(converted);
-        // CB-CONFIDENCE: medium -- method_62444 takes both old class_4019 and new class_10027 so it is the conversion bridge, but the float arg semantics are inferred (0.0f default)
-    }
-
 
 }

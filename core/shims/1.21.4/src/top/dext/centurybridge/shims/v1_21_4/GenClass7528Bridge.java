@@ -15,9 +15,10 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_7528.class)
 public abstract class GenClass7528Bridge {
 
-    /** was net/minecraft/class_7528.method_44389(Lnet/minecraft/class_332;IIF)V */
-    public void method_44389(net.minecraft.class_332 a0, int a1, int a2, float a3) {
-        throw new UnsupportedOperationException("CenturyBridge: replacement class_10415 API surface is unavailable, so the old rendering contract cannot be delegated safely");
+
+    /** was net/minecraft/class_7528.method_44386(Lnet/minecraft/class_332;)V */
+    public void method_44386(net.minecraft.class_332 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_44386 moved to class_10415, but a class_7528 receiver is not guaranteed to be that subclass");
     }
 
 }

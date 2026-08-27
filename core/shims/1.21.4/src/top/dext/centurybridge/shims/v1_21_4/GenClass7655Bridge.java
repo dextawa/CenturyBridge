@@ -15,9 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_7655.class)
 public abstract class GenClass7655Bridge {
 
-    /** was net/minecraft/class_7655.method_56519(Ljava/util/Map;Lnet/minecraft/class_5912;Lnet/minecraft/class_5455;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890; */
-    public net.minecraft.class_5455.class_6890 method_56519(java.util.Map a0, net.minecraft.class_5912 a1, net.minecraft.class_5455 a2, java.util.List a3) {
-        throw new UnsupportedOperationException("CenturyBridge: the old class_5455 registry manager parameter cannot be faithfully converted to the new required List parameter");
-    }
 
 }

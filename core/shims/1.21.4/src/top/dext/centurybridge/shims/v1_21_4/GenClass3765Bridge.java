@@ -15,11 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_3765.class)
 public abstract class GenClass3765Bridge {
 
-    /** was net/minecraft/class_3765.method_16518(Lnet/minecraft/class_1657;)V */
-    public void method_16518(net.minecraft.class_1657 a0) {
-        if (a0 instanceof net.minecraft.class_3222) {
-            ((net.minecraft.class_3765) (Object) this).method_16518((net.minecraft.class_3222) a0);
-        }
-    }
 
 }

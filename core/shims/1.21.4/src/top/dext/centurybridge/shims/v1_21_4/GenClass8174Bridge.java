@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_8174.class)
 public abstract class GenClass8174Bridge {
 
-    /** was net/minecraft/class_8174.method_49219()V */
-    public void method_49219() {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_49219 requires a class_3218 instance, but the old no-argument contract provides no world context");
+    /** was net/minecraft/class_8174.method_49216(Lnet/minecraft/class_2960;J)V */
+    public void method_49216(net.minecraft.class_2960 a0, long a1) {
+        throw new UnsupportedOperationException("CenturyBridge: converting the loot-table identifier requires the registry key, which is not available in the supplied API surface");
     }
 
 }

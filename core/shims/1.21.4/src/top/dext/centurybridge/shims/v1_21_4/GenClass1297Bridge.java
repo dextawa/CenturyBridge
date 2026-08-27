@@ -15,19 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1297.class)
 public abstract class GenClass1297Bridge {
 
-    /** was net/minecraft/class_1297.method_18002()Lnet/minecraft/class_2596; */
-    public net.minecraft.class_2596 method_18002() {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_3231 tracking entry, which the old no-argument contract does not provide");
-    }
-
-    /** was net/minecraft/class_1297.method_5731(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297; */
-    public net.minecraft.class_1297 method_5731(net.minecraft.class_3218 a0) {
-        return ((net.minecraft.class_1297) (Object) this).method_5731(new net.minecraft.class_5454(a0, (net.minecraft.class_1297) (Object) this, net.minecraft.class_5454.field_52245));
-    }
-
-    /** was net/minecraft/class_1297.method_5822()Z */
-    public boolean method_5822() {
-        return ((net.minecraft.class_1297) (Object) this).method_5822(false);
-    }
 
 }

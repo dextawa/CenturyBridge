@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_958.class)
 public abstract class GenClass958Bridge {
 
+    /** was net/minecraft/class_958.method_55835(Lnet/minecraft/class_1481;)F */
+    public float method_55835(net.minecraft.class_1481 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_10077 render state, which cannot be derived faithfully from class_1481 alone");
+    }
 
 }

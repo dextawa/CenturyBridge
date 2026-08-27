@@ -15,9 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2852.class)
 public abstract class GenClass2852Bridge {
 
-    /** was net/minecraft/class_2852.method_12395(Lnet/minecraft/class_3218;Lnet/minecraft/class_4153;Lnet/minecraft/class_1923;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2839; */
-    public net.minecraft.class_2839 method_12395(net.minecraft.class_3218 a0, net.minecraft.class_4153 a1, net.minecraft.class_1923 a2, net.minecraft.class_2487 a3) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_12395 requires a class_9240 context that cannot be faithfully derived from the old arguments");
-    }
 
 }

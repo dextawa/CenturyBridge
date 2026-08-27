@@ -16,9 +16,4 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass1308Bridge {
 
 
-    /** was net/minecraft/class_1308.method_60973()V */
-    public void method_60973() {
-        ((net.minecraft.class_1308) (Object) this).method_60973((net.minecraft.class_3218) ((net.minecraft.class_1308) (Object) this).method_37908());
-    }
-
 }

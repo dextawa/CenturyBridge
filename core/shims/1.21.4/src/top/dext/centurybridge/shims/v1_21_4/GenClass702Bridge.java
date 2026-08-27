@@ -15,4 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_702.class)
 public abstract class GenClass702Bridge {
 
+    /** was net/minecraft/class_702.method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V */
+    public void method_3049(net.minecraft.class_765 a0, net.minecraft.class_4184 a1, float a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the old lightmap texture manager argument cannot supply the new vertex consumer provider required for particle rendering");
+    }
+
 }
