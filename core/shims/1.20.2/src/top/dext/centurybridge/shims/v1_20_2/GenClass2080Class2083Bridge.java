@@ -16,9 +16,4 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass2080Class2083Bridge {
 
 
-    /** was net/minecraft/class_2080$class_2083.method_8997(Lnet/minecraft/class_2048$class_2049;)Lnet/minecraft/class_2080$class_2083; */
-    public net.minecraft.class_2080.class_2083 method_8997(net.minecraft.class_2048.class_2049 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_8997 produces class_175 and no API preserves the old fluent class_2083 contract");
-    }
-
 }

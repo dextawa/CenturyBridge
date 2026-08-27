@@ -160,7 +160,13 @@
   "net/minecraft/class_3286.<init>": "bridge attempted, no faithful equivalent: the surviving constructor requires a class_8580 instance, but the old no-argument constructor provides no equivalent value",
   "net/minecraft/class_454.<init>": "bridge attempted, no faithful equivalent: old class_161 advancement cannot be converted to the required class_8781 advancement entry",
   "net/minecraft/class_5500.<init>": "bridge attempted, no faithful equivalent: cannot convert class_316[] options to the required class_7172[] without a guaranteed element mapping",
-  "net/minecraft/class_8208.method_25401": "bridge attempted, no faithful equivalent: the new class_8208 API has no equivalent for the removed three-coordinate boolean method_25401 contract"
+  "net/minecraft/class_8208.method_25401": "bridge attempted, no faithful equivalent: the new class_8208 API has no equivalent for the removed three-coordinate boolean method_25401 contract",
+  "net/minecraft/class_5342.<init>": "bridge attempted, no faithful equivalent: class_5335 cannot be converted to the Codec required by the surviving class_5342 constructor",
+  "net/minecraft/class_161$class_162.method_704": "bridge attempted, no faithful equivalent: the old class_193 criterion merger cannot be converted faithfully to the new class_8782.class_8797 strategy type",
+  "net/minecraft/class_5339.<init>": "bridge attempted, no faithful equivalent: the legacy JsonSerializer argument cannot be converted to the Codec required by the new LootFunctionType constructor",
+  "net/minecraft/class_5338.<init>": "bridge attempted, no faithful equivalent: the old class_5335 argument cannot be converted to the Codec required by the surviving constructor",
+  "net/minecraft/class_4265.method_25401": "bridge attempted, no faithful equivalent: the new API has no equivalent accepting three double coordinates",
+  "net/minecraft/class_7172.<init>": "bridge attempted, no faithful equivalent: class_7307 cannot be converted to the required class_7277"
  },
  "covers": [
   "net/minecraft/class_1058.method_4570(D)F",
@@ -218,6 +224,7 @@
   "net/minecraft/class_361.method_1962(IIIILnet/minecraft/class_2960;)V",
   "net/minecraft/class_362.method_25401(DDD)Z",
   "net/minecraft/class_364.method_25401(DDD)Z",
+  "net/minecraft/class_4265.method_25401(DDD)Z",
   "net/minecraft/class_437.method_25401(DDD)Z",
   "net/minecraft/class_437.method_25420(Lnet/minecraft/class_332;)V",
   "net/minecraft/class_4558.method_27853(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_195;",
@@ -319,7 +326,17 @@
   "net/minecraft/class_8060.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_8060",
   "net/minecraft/class_6409$class_6410.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_6409class_6410",
   "net/minecraft/class_8208.<init>(IILnet/minecraft/class_2960;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_8208",
-  "net/minecraft/class_8208.<init>(IIIILnet/minecraft/class_2960;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_8208"
+  "net/minecraft/class_8208.<init>(IIIILnet/minecraft/class_2960;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_8208",
+  "net/minecraft/class_1852.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_1852",
+  "net/minecraft/class_5342.<init>(Lnet/minecraft/class_5335;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_5342",
+  "net/minecraft/class_4185.<init>(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_4185$class_4241;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_4185",
+  "net/minecraft/class_195.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_195",
+  "net/minecraft/class_5712.<init>(Ljava/lang/String;I)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_5712",
+  "net/minecraft/class_5339.<init>(Lnet/minecraft/class_5335;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_5339",
+  "net/minecraft/class_2817.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_2817",
+  "net/minecraft/class_5338.<init>(Lnet/minecraft/class_5335;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_5338",
+  "net/minecraft/class_1874.<init>(Lnet/minecraft/class_3956;Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_1874",
+  "net/minecraft/class_7172.<init>(Ljava/lang/String;Lnet/minecraft/class_7172$class_7307;Lnet/minecraft/class_7172$class_7303;Lnet/minecraft/class_7172$class_7178;Lcom/mojang/serialization/Codec;Ljava/lang/Object;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_7172"
  },
  "superCtorAdapts": {
   "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": {

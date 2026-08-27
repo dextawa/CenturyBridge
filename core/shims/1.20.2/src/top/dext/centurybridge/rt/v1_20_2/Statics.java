@@ -626,6 +626,26 @@ public final class Statics {
         return new net.minecraft.class_8508.class_8509(java.util.Optional.ofNullable(a0), a1, a2);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // ==== END GENERATED ====
 
     private Statics() {

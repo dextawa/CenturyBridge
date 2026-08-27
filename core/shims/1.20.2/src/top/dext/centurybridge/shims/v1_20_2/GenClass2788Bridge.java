@@ -16,9 +16,4 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class GenClass2788Bridge {
 
 
-    /** was net/minecraft/class_2788.method_17817(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1860; */
-    public net.minecraft.class_1860 method_17817(net.minecraft.class_2540 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_17817 now returns class_8786, and the provided API cannot recover the former class_1860 result");
-    }
-
 }
