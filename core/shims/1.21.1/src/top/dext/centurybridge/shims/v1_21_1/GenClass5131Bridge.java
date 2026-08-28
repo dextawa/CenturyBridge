@@ -15,14 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_5131.class)
 public abstract class GenClass5131Bridge {
 
-    /** was net/minecraft/class_5131.method_45330(Lnet/minecraft/class_6880;Ljava/util/UUID;)Z */
-    public boolean method_45330(net.minecraft.class_6880 a0, java.util.UUID a1) {
-        return ((net.minecraft.class_5131)(Object)this).method_45330(a0, net.minecraft.class_2960.method_12829(a1.toString()));
-    }
-
-    /** was net/minecraft/class_5131.method_45332(Lnet/minecraft/class_6880;Ljava/util/UUID;)D */
-    public double method_45332(net.minecraft.class_6880 a0, java.util.UUID a1) {
-        return ((net.minecraft.class_5131)(Object)this).method_45332(a0, net.minecraft.class_2960.method_12829(a1.toString()));
+    /** was net/minecraft/class_5131.method_26856(Lnet/minecraft/class_1320;)D */
+    public double method_26856(net.minecraft.class_1320 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a registry entry for the attribute, and the old raw attribute does not provide a faithful registry-entry conversion");
     }
 
 }

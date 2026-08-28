@@ -15,14 +15,5 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2794.class)
 public abstract class GenClass2794Bridge {
 
-    /** was net/minecraft/class_2794.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture; */
-    public java.util.concurrent.CompletableFuture method_12088(java.util.concurrent.Executor a0, net.minecraft.class_6748 a1, net.minecraft.class_7138 a2, net.minecraft.class_5138 a3, net.minecraft.class_2791 a4) {
-        return ((net.minecraft.class_2794) (Object) this).method_12088(a1, a2, a3, a4);
-    }
-
-    /** was net/minecraft/class_2794.method_38275(Ljava/util/concurrent/Executor;Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture; */
-    public java.util.concurrent.CompletableFuture method_38275(java.util.concurrent.Executor a0, net.minecraft.class_7138 a1, net.minecraft.class_6748 a2, net.minecraft.class_5138 a3, net.minecraft.class_2791 a4) {
-        return ((net.minecraft.class_2794)(Object)this).method_38275(a1, a2, a3, a4);
-    }
 
 }

@@ -15,9 +15,19 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1764.class)
 public abstract class GenClass1764Bridge {
 
-    /** was net/minecraft/class_1764.method_7775(Lnet/minecraft/class_1799;)I */
-    public int method_7775(net.minecraft.class_1799 a0) {
-        return ((net.minecraft.class_1764)(Object)this).method_7775(a0, null);
+    /** was net/minecraft/class_1764.method_7844(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap; */
+    public com.google.common.collect.Multimap method_7844(net.minecraft.class_1304 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API no longer exposes an equivalent for retrieving the attribute modifier multimap by equipment slot");
+    }
+
+    /** was net/minecraft/class_1764.method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Ljava/util/List;Lnet/minecraft/class_1836;)V */
+    public void method_7851(net.minecraft.class_1799 a0, net.minecraft.class_1937 a1, java.util.List a2, net.minecraft.class_1836 a3) {
+        ((net.minecraft.class_1764) (Object) this).method_7851(a0, net.minecraft.class_1792.class_9635.method_59528(a1), a2, a3);
+    }
+
+    /** was net/minecraft/class_1764.method_7881(Lnet/minecraft/class_1799;)I */
+    public int method_7881(net.minecraft.class_1799 a0) {
+        return ((net.minecraft.class_1764) (Object) this).method_7881(a0, null);
     }
 
 }

@@ -20,4 +20,14 @@ public abstract class GenClass1297Bridge {
         ((net.minecraft.class_1297) (Object) this).method_5639((float) a0);
     }
 
+    /** was net/minecraft/class_1297.method_5659()Z */
+    public boolean method_5659() {
+        throw new UnsupportedOperationException("CenturyBridge: explosion-specific immunity requires an Explosion unavailable to the old no-argument contract");
+    }
+
+    /** was net/minecraft/class_1297.method_5731(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297; */
+    public net.minecraft.class_1297 method_5731(net.minecraft.class_3218 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_5731 requires a class_5454 teleport target, which cannot be faithfully derived from only the old class_3218 world argument");
+    }
+
 }

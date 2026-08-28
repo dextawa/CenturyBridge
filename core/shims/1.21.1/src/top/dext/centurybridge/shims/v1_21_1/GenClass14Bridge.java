@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_14.class)
 public abstract class GenClass14Bridge {
 
-    /** was net/minecraft/class_14.method_59(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_7;)Lnet/minecraft/class_7; */
-    public net.minecraft.class_7 method_59(net.minecraft.class_1922 a0, net.minecraft.class_2338.class_2339 a1, net.minecraft.class_7 a2) {
-        return ((net.minecraft.class_14) (Object) this).method_59(new net.minecraft.class_9316((net.minecraft.class_1941) a0, null), a1.method_10263(), a1.method_10264(), a1.method_10260(), a2);
+    /** was net/minecraft/class_14.method_23476(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_7; */
+    public net.minecraft.class_7 method_23476(net.minecraft.class_1922 a0, net.minecraft.class_2338.class_2339 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires a PathContext, which cannot be faithfully constructed from the old BlockView argument without its required CollisionView and mob context");
     }
 
 }

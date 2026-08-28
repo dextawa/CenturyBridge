@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_339.class)
 public abstract class GenClass339Bridge {
 
-    /** was net/minecraft/class_339.method_47402(I)V */
-    public void method_47402(int a0) {
-        ((net.minecraft.class_339) (Object) this).method_47402(java.time.Duration.ofMillis((long) a0));
+    /** was net/minecraft/class_339.method_25401(DDD)Z */
+    public boolean method_25401(double a0, double a1, double a2) {
+        return ((net.minecraft.class_339) (Object) this).method_25401(a0, a1, 0.0D, a2);
     }
 
 }

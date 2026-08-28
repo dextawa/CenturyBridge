@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1277.class)
 public abstract class GenClass1277Bridge {
 
-    /** was net/minecraft/class_1277.method_7660()Lnet/minecraft/class_2499; */
-    public net.minecraft.class_2499 method_7660() {
-        return ((net.minecraft.class_1277) (Object) this).method_7660(net.minecraft.class_7225.class_7874.method_46761(java.util.stream.Stream.empty()));
+    /** was net/minecraft/class_1277.method_7659(Lnet/minecraft/class_2499;)V */
+    public void method_7659(net.minecraft.class_2499 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_7659 now requires a registry lookup context that the old overload cannot provide");
     }
 
 }

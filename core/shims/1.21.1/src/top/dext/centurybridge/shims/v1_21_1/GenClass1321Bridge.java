@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1321.class)
 public abstract class GenClass1321Bridge {
 
-    /** was net/minecraft/class_1321.method_6173(Z)V */
-    public void method_6173(boolean a0) {
-        ((net.minecraft.class_1321) (Object) this).method_6173(a0, true);
+    /** was net/minecraft/class_1321.method_6016(Lnet/minecraft/class_1291;)Z */
+    public boolean method_6016(net.minecraft.class_1291 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1321 no longer exposes an effect-type query equivalent to method_6016(class_1291)");
     }
 
 }

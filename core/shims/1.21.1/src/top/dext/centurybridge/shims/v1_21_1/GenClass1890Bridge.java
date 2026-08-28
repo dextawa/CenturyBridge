@@ -15,14 +15,24 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1890.class)
 public abstract class GenClass1890Bridge {
 
-    /** was net/minecraft/class_1890.method_8219(Ljava/lang/Iterable;Lnet/minecraft/class_1282;)I */
-    public int method_8219(java.lang.Iterable a0, net.minecraft.class_1282 a1) {
-        throw new UnsupportedOperationException("CenturyBridge: method_8219(Iterable, DamageSource) computed protection for explicit equipment; 1.21 method_8219 requires World and LivingEntity (the defender), which cannot be derived from an equipment Iterable and DamageSource alone");
+    /** was net/minecraft/class_1890.method_8201(Ljava/util/Collection;Lnet/minecraft/class_1887;)Z */
+    public boolean method_8201(java.util.Collection a0, net.minecraft.class_1887 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the old raw class_1887 enchantment cannot be faithfully converted to the required registry-backed class_6880 without registry context");
     }
 
-    /** was net/minecraft/class_1890.method_8225(Lnet/minecraft/class_1887;Lnet/minecraft/class_1799;)I */
-    public int method_8225(net.minecraft.class_1887 a0, net.minecraft.class_1799 a1) {
-        return ((net.minecraft.class_1890)(Object)this).method_8225(net.minecraft.class_6880.method_40223(a0), a1);
+    /** was net/minecraft/class_1890.method_8204(Lnet/minecraft/class_1887;Lnet/minecraft/class_1309;)Ljava/util/Map$Entry; */
+    public java.util.Map.Entry method_8204(net.minecraft.class_1887 a0, net.minecraft.class_1309 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API selects equipment by an enchantment effect component type and returns a different result contract, so an old class_1887-specific Map.Entry cannot be reconstructed faithfully");
+    }
+
+    /** was net/minecraft/class_1890.method_8230(Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Ljava/util/List; */
+    public java.util.List method_8230(net.minecraft.class_5819 a0, net.minecraft.class_1799 a1, int a2, boolean a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a Stream of enchantment registry entries, but the old arguments provide no registry lookup from which to reproduce the treasureAllowed selection");
+    }
+
+    /** was net/minecraft/class_1890.method_8233(Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Lnet/minecraft/class_1799; */
+    public net.minecraft.class_1799 method_8233(net.minecraft.class_5819 a0, net.minecraft.class_1799 a1, int a2, boolean a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires an enchantment Stream, but the old signature provides no registry access from which to construct the treasure-filtered candidate stream");
     }
 
 }
