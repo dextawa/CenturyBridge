@@ -15,26 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1657.class)
 public abstract class GenClass1657Bridge {
 
-    /** was net/minecraft/class_1657.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799; */
-    public net.minecraft.class_1799 method_18866(net.minecraft.class_1937 a0, net.minecraft.class_1799 a1) {
-        return ((net.minecraft.class_1657) (Object) this).method_18866(a0, a1, a1.method_57824(net.minecraft.class_9334.field_50075));
+    /** was net/minecraft/class_1657.method_7284(Z)V */
+    public void method_7284(boolean a0) {
+        ((net.minecraft.class_1657) (Object) this).method_7284();
     }
-
-    /** was net/minecraft/class_1657.method_40126(I)V */
-    public void method_40126(int a0) {
-        ((net.minecraft.class_1657) (Object) this).method_40126(a0, 0.0F, net.minecraft.class_1799.field_8037);
-    }
-
-    /** was net/minecraft/class_1657.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
-    public net.minecraft.class_1324 method_5996(net.minecraft.class_1320 a0) {
-        return ((net.minecraft.class_1657) (Object) this).method_5996(net.minecraft.class_6880.method_40223(a0));
-    }
-
-    /** was net/minecraft/class_1657.method_6016(Lnet/minecraft/class_1291;)Z */
-    public boolean method_6016(net.minecraft.class_1291 a0) {
-        return ((net.minecraft.class_1657) (Object) this).method_6016(net.minecraft.class_6880.method_40223(a0));
-    }
-
-
 
 }

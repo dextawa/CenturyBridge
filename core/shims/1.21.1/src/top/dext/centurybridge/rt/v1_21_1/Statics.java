@@ -874,8 +874,8 @@ public final class Statics {
     }
 
     /** was net/minecraft/class_1860.method_8110(Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799; */
-    public net.minecraft.class_1799 method_8110(net.minecraft.class_5455 a0) {
-        return ((net.minecraft.class_1860) (Object) this).method_8110((net.minecraft.class_7225.class_7874) a0);
+    public static net.minecraft.class_1799 method_8110(net.minecraft.class_1860 self, net.minecraft.class_5455 a0) {
+        return self.method_8110((net.minecraft.class_7225.class_7874) a0);
     }
 
 
@@ -3324,8 +3324,8 @@ public final class Statics {
     }
 
     /** was net/minecraft/class_4588.method_22912(DDD)Lnet/minecraft/class_4588; */
-    public net.minecraft.class_4588 method_22912(double a0, double a1, double a2) {
-        return ((net.minecraft.class_4588) (Object) this).method_22912((float) a0, (float) a1, (float) a2);
+    public static net.minecraft.class_4588 method_22912(net.minecraft.class_4588 self, double a0, double a1, double a2) {
+        return self.method_22912((float) a0, (float) a1, (float) a2);
     }
 
     /** was net/minecraft/class_4588.method_22916(I)Lnet/minecraft/class_4588; */
@@ -3740,7 +3740,7 @@ public final class Statics {
 
     /** was net/minecraft/class_3955.method_8110(Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799; */
     public static net.minecraft.class_1799 method_8110(net.minecraft.class_3955 self, net.minecraft.class_5455 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: class_3955 no longer exposes an API that creates class_1799 from class_5455");
+        return self.method_8110((net.minecraft.class_7225.class_7874) a0);
     }
 
     /** was net/minecraft/class_3955.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371; */
@@ -3819,6 +3819,17 @@ public final class Statics {
     public static net.minecraft.class_1799 method_8110(net.minecraft.class_8059 self, net.minecraft.class_5455 a0) {
         return self.method_17447();
     }
+
+
+    /** was net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z */
+    public static boolean method_8115(net.minecraft.class_1860 self, net.minecraft.class_1263 a0, net.minecraft.class_1937 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: old class_1263 inventory cannot be faithfully converted to required class_9695 recipe input");
+    }
+
+
+
+
+
 
     // ==== END GENERATED ====
     /**
@@ -4005,5 +4016,20 @@ public final class Statics {
     private static net.minecraft.class_9224 cbPackLocation(String name) {
         return new net.minecraft.class_9224(name, net.minecraft.class_2561.method_43470(name),
             net.minecraft.class_5352.field_25347, java.util.Optional.empty());
+    }
+
+    /** was net/minecraft/class_5134.field_23717Lnet/minecraft/class_1320; */
+    public static net.minecraft.class_1320 field_23717() {
+        return (net.minecraft.class_1320) net.minecraft.class_5134.field_23717.comp_349();
+    }
+
+    /** was net/minecraft/class_2512.method_10691(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2338; */
+    public static net.minecraft.class_2338 method_10691(net.minecraft.class_2487 nbt) {
+        return new net.minecraft.class_2338(nbt.method_10550("X"), nbt.method_10550("Y"), nbt.method_10550("Z"));
+    }
+
+    /** was net/minecraft/class_5132$class_5133.method_26867(Lnet/minecraft/class_1320;)Lnet/minecraft/class_5132$class_5133; */
+    public static net.minecraft.class_5132.class_5133 method_26867(net.minecraft.class_5132.class_5133 self, net.minecraft.class_1320 attr) {
+        return self.method_26867(net.minecraft.class_7923.field_41190.method_47983(attr));
     }
 }

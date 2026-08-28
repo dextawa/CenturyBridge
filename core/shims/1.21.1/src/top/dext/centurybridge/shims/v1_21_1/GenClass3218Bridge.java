@@ -15,20 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_3218.class)
 public abstract class GenClass3218Bridge {
 
-    /** was net/minecraft/class_3218.method_32888(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;)V */
-    public void method_32888(net.minecraft.class_5712 a0, net.minecraft.class_243 a1, net.minecraft.class_5712.class_7397 a2) {
-        ((net.minecraft.class_3218) (Object) this).method_32888(new net.minecraft.class_6880.class_6881<>(a0), a1, a2);
+    /** was net/minecraft/class_3218.method_43276(Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712$class_7397;)V */
+    public void method_43276(net.minecraft.class_5712 a0, net.minecraft.class_2338 a1, net.minecraft.class_5712.class_7397 a2) {
+        ((net.minecraft.class_3218) (Object) this).method_43276(net.minecraft.class_6880.method_40223(a0), a1, a2);
     }
-
-    /** was net/minecraft/class_3218.method_33596(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;)V */
-    public void method_33596(net.minecraft.class_1297 a0, net.minecraft.class_5712 a1, net.minecraft.class_2338 a2) {
-        ((net.minecraft.class_3218) (Object) this).method_33596(a0, net.minecraft.class_6880.method_40223(a1), a2);
-    }
-
-    /** was net/minecraft/class_3218.method_43275(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_243;)V */
-    public void method_43275(net.minecraft.class_1297 a0, net.minecraft.class_5712 a1, net.minecraft.class_243 a2) {
-        ((net.minecraft.class_3218) (Object) this).method_43275(a0, net.minecraft.class_6880.method_40223(a1), a2);
-    }
-
 
 }

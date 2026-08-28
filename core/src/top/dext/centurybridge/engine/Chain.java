@@ -48,6 +48,10 @@ public final class Chain {
     public final java.util.Map<String, String> instanceRedirects = new java.util.HashMap<>();
     /** GETSTATIC field reads redirected to a same-name field on a runtime class */
     public final java.util.Map<String, String> fieldRedirects = new java.util.HashMap<>();
+    /** GETSTATIC field reads redirected to a zero-arg getter method (name = field name)
+     *  on a runtime class -- for holderified fields whose value must be unwrapped lazily
+     *  (a static-field target would evaluate at Statics class-init, before the registry binds) */
+    public final java.util.Map<String, String> fieldGetters = new java.util.HashMap<>();
     /** dead vanilla classes renamed to facade classes shipped in the runtime bridge */
     public final java.util.Map<String, String> classRenames = new java.util.HashMap<>();
     /** instance fields renamed in place (resolution reaches relocated/renamed fields via hierarchy) */
@@ -367,6 +371,12 @@ public final class Chain {
                 var fr = root.getAsJsonObject("fieldRedirects");
                 for (String k : fr.keySet()) {
                     c.fieldRedirects.put(k, fr.get(k).getAsString());
+                }
+            }
+            if (root.has("fieldGetters")) {
+                var fg = root.getAsJsonObject("fieldGetters");
+                for (String k : fg.keySet()) {
+                    c.fieldGetters.put(k, fg.get(k).getAsString());
                 }
             }
             if (root.has("interfaceized")) {

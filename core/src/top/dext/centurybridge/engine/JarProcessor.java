@@ -591,6 +591,7 @@ public final class JarProcessor {
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
+        Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
         Map<String, String> fldRenames = new HashMap<>();    // instance fields renamed in place
         Map<String, String> mthRenames = new HashMap<>();    // methods renamed in place (relocated to super)
         Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
@@ -856,6 +857,12 @@ public final class JarProcessor {
                                 top.dext.centurybridge.data.FullAudit.record(ffkey, "field-redirect");
                                 return;
                             }
+                            String ffgt = chain.fieldGetters.get(ffkey);
+                            if (ffgt != null && op == Opcodes.GETSTATIC) {
+                                fldGetters.put(ffkey, ffgt);
+                                top.dext.centurybridge.data.FullAudit.record(ffkey, "field-getter");
+                                return;
+                            }
                             return;
                         }
                         if (chain.classRenames.containsKey(owner)) {
@@ -873,6 +880,12 @@ public final class JarProcessor {
                         if (frt != null && op == Opcodes.GETSTATIC) {
                             fldRedirects.put(fkey, frt);
                             top.dext.centurybridge.data.FullAudit.record(fkey, "field-redirect");
+                            return;
+                        }
+                        String fgt = chain.fieldGetters.get(fkey);
+                        if (fgt != null && op == Opcodes.GETSTATIC) {
+                            fldGetters.put(fkey, fgt);
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "field-getter");
                             return;
                         }
                         String rename = chain.fieldRenames.get(fkey);
@@ -1019,6 +1032,7 @@ public final class JarProcessor {
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
         if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
+                && fldGetters.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
@@ -1047,6 +1061,9 @@ public final class JarProcessor {
         }
         for (String k : fldRedirects.keySet()) {
             rpt.notes.add(tag + "field-redirected: " + k + " -> " + fldRedirects.get(k));
+        }
+        for (String k : fldGetters.keySet()) {
+            rpt.notes.add(tag + "field-gettered: " + k + " -> " + fldGetters.get(k));
         }
         for (String k : hookCallSites) {
             rpt.notes.add(tag + "lookup-hooked: " + k);
@@ -1189,6 +1206,12 @@ public final class JarProcessor {
                     @Override
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
                         String fkey = owner + "." + name + ":" + desc;
+                        if (op == Opcodes.GETSTATIC && fldGetters.containsKey(fkey)) {
+                            String fv = fldGetters.get(fkey);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),
+                                redirName(fv, name), "()" + desc, false);
+                            return;
+                        }
                         if (op == Opcodes.GETSTATIC && fldRedirects.containsKey(fkey)) {
                             String fv = fldRedirects.get(fkey);
                             super.visitFieldInsn(Opcodes.GETSTATIC, redirCls(fv),
