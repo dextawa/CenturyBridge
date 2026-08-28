@@ -15,5 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_5132.class_5133.class)
 public abstract class GenClass5132Class5133Bridge {
 
+    /** was net/minecraft/class_5132$class_5133.method_26867(Lnet/minecraft/class_1320;)Lnet/minecraft/class_5132$class_5133; */
+    public net.minecraft.class_5132.class_5133 method_26867(net.minecraft.class_1320 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: cannot faithfully convert a raw class_1320 attribute to its registered class_6880 entry");
+    }
+
+    /** was net/minecraft/class_5132$class_5133.method_26868(Lnet/minecraft/class_1320;D)Lnet/minecraft/class_5132$class_5133; */
+    public net.minecraft.class_5132.class_5133 method_26868(net.minecraft.class_1320 a0, double a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the old raw attribute cannot be faithfully converted to the registry-backed entry required by the new API");
+    }
 
 }

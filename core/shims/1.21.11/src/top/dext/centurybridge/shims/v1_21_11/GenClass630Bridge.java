@@ -15,14 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_630.class)
 public abstract class GenClass630Bridge {
 
-    /** was net/minecraft/class_630.method_22699(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V */
-    public void method_22699(net.minecraft.class_4587 a0, net.minecraft.class_4588 a1, int a2, int a3, float a4, float a5, float a6, float a7) {
-        int r = (int)(a4 * 255.0F) & 0xFF;
-        int g = (int)(a5 * 255.0F) & 0xFF;
-        int b = (int)(a6 * 255.0F) & 0xFF;
-        int a = (int)(a7 * 255.0F) & 0xFF;
-        int color = (a << 24) | (r << 16) | (g << 8) | b;
-        ((net.minecraft.class_630)(Object)this).method_22699(a0, a1, a2, a3, color);
+    /** was net/minecraft/class_630.method_32088()Ljava/util/stream/Stream; */
+    public java.util.stream.Stream method_32088() {
+        return ((net.minecraft.class_630) (Object) this).method_32088().stream();
     }
 
 }

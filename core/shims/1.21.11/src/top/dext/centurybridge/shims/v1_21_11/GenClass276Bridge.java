@@ -15,10 +15,19 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_276.class)
 public abstract class GenClass276Bridge {
 
+    /** was net/minecraft/class_276.method_1234(IIZ)V */
+    public void method_1234(int a0, int a1, boolean a2) {
+        ((net.minecraft.class_276) (Object) this).method_1234(a0, a1);
+    }
 
-    /** was net/minecraft/class_276.method_1231(IIZ)V */
-    public void method_1231(int a0, int a1, boolean a2) {
-        ((net.minecraft.class_276)(Object)this).method_1231(a0, a1);
+    /** was net/minecraft/class_276.method_30277()I */
+    public int method_30277() {
+        return ((net.minecraft.class_276) (Object) this).field_1481;
+    }
+
+    /** was net/minecraft/class_276.method_30278()I */
+    public int method_30278() {
+        throw new UnsupportedOperationException("CenturyBridge: the old integer OpenGL texture ID cannot be represented by the new GpuTexture API");
     }
 
 }

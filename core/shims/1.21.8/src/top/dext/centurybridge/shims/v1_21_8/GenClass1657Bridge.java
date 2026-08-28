@@ -15,16 +15,29 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1657.class)
 public abstract class GenClass1657Bridge {
 
-    /** was net/minecraft/class_1657.method_7335([Lnet/minecraft/class_2960;)V */
-    public void method_7335(net.minecraft.class_2960[] a0) {
-        ((net.minecraft.class_1657) (Object) this).method_7335(java.util.Arrays.stream(a0)
-            .map(id -> net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_52178, (net.minecraft.class_2960) id))
-            .collect(java.util.stream.Collectors.toList()));
+    /** was net/minecraft/class_1657.method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542; */
+    public net.minecraft.class_1542 method_5775(net.minecraft.class_1799 a0) {
+        return ((net.minecraft.class_1657) (Object) this).method_7328(a0, false);
     }
 
-    /** was net/minecraft/class_1657.method_40126(I)V */
-    public void method_40126(int a0) {
-        ((net.minecraft.class_1657)(Object)this).method_40126(a0, 1.0f, net.minecraft.class_1799.field_8037);
-        // CB-CONFIDENCE: medium -- same method number with two added params (float + ItemStack); 1.0f and EMPTY are reasonable defaults but the exact semantics of the new float param are inferred
+    /** was net/minecraft/class_1657.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
+    public net.minecraft.class_1324 method_5996(net.minecraft.class_1320 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new attribute lookup requires a registry entry, and the legacy raw class_1320 cannot be converted faithfully from the provided API");
     }
+
+    /** was net/minecraft/class_1657.method_6016(Lnet/minecraft/class_1291;)Z */
+    public boolean method_6016(net.minecraft.class_1291 a0) {
+        return ((net.minecraft.class_1657) (Object) this).method_6016(net.minecraft.class_6880.method_40223(a0));
+    }
+
+    /** was net/minecraft/class_1657.method_6059(Lnet/minecraft/class_1291;)Z */
+    public boolean method_6059(net.minecraft.class_1291 a0) {
+        return ((net.minecraft.class_1657) (Object) this).method_6059(net.minecraft.class_7923.field_41174.method_47983(a0));
+    }
+
+    /** was net/minecraft/class_1657.method_6112(Lnet/minecraft/class_1291;)Lnet/minecraft/class_1293; */
+    public net.minecraft.class_1293 method_6112(net.minecraft.class_1291 a0) {
+        return ((net.minecraft.class_1657) (Object) this).method_6112(net.minecraft.class_6880.method_40223(a0));
+    }
+
 }

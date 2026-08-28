@@ -15,8 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2248.class)
 public abstract class GenClass2248Bridge {
 
-    /** was net/minecraft/class_2248.method_9586(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1927;)V */
-    public void method_9586(net.minecraft.class_1937 a0, net.minecraft.class_2338 a1, net.minecraft.class_1927 a2) {
-        ((net.minecraft.class_2248) (Object) this).method_9586((net.minecraft.class_3218) a0, a1, a2);
+    /** was net/minecraft/class_2248.method_9554(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;F)V */
+    public void method_9554(net.minecraft.class_1937 a0, net.minecraft.class_2680 a1, net.minecraft.class_2338 a2, net.minecraft.class_1297 a3, float a4) {
+        ((net.minecraft.class_2248) (Object) this).method_9554(a0, a1, a2, a3, (double) a4);
     }
+
+    /** was net/minecraft/class_2248.method_9607(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;)Z */
+    public boolean method_9607(net.minecraft.class_2680 a0, net.minecraft.class_1922 a1, net.minecraft.class_2338 a2, net.minecraft.class_2350 a3, net.minecraft.class_2338 a4) {
+        return net.minecraft.class_2248.method_9607(a0, a1.method_8320(a4), a3);
+    }
+
 }

@@ -15,54 +15,43 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1297.class)
 public abstract class GenClass1297Bridge {
 
-    /** was net/minecraft/class_1297.method_5659()Z */
-    public boolean method_5659() {
-        return ((net.minecraft.class_1297)(Object)this).method_5659(null);
+    /** was net/minecraft/class_1297.method_5647(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487; */
+    public net.minecraft.class_2487 method_5647(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_5647 requires a class_11372 write view and no supplied API can faithfully adapt class_2487 or preserve the returned compound");
     }
 
-    /** was net/minecraft/class_1297.method_32875(Lnet/minecraft/class_5712;Lnet/minecraft/class_1297;)V */
-    public void method_32875(net.minecraft.class_5712 a0, net.minecraft.class_1297 a1) {
-        ((net.minecraft.class_1297) (Object) this).method_32875(net.minecraft.class_6880.method_40223(a0), a1);
+    /** was net/minecraft/class_1297.method_5651(Lnet/minecraft/class_2487;)V */
+    public void method_5651(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new readData contract requires a registry-aware ReadView, which cannot be faithfully constructed from the old NbtCompound argument alone");
     }
 
-    /** was net/minecraft/class_1297.method_32876(Lnet/minecraft/class_5712;)V */
-    public void method_32876(net.minecraft.class_5712 a0) {
-        ((net.minecraft.class_1297) (Object) this).method_32876(net.minecraft.class_6880.method_40223(a0));
+    /** was net/minecraft/class_1297.method_5662(Lnet/minecraft/class_2487;)Z */
+    public boolean method_5662(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: old NBT compound argument cannot be converted to the new class_11372 read-view contract");
     }
 
-
-
-
-    /** was net/minecraft/class_1297.method_5693()V */
-    public void method_5693() {
-        throw new UnsupportedOperationException("CenturyBridge: method_5693 without arguments is unsupported");
+    /** was net/minecraft/class_1297.method_5671()Lnet/minecraft/class_2168; */
+    public net.minecraft.class_2168 method_5671() {
+        return ((net.minecraft.class_1297) (Object) this).method_5671((net.minecraft.class_3218) ((net.minecraft.class_1297) (Object) this).method_37908());
     }
 
-    /** was net/minecraft/class_1297.method_5639(I)V */
-    public void method_5639(int a0) {
-        ((net.minecraft.class_1297) (Object) this).method_5639((float) a0);
+    /** was net/minecraft/class_1297.method_5747(FFLnet/minecraft/class_1282;)Z */
+    public boolean method_5747(float a0, float a1, net.minecraft.class_1282 a2) {
+        return ((net.minecraft.class_1297) (Object) this).method_5747((double) a0, a1, a2);
     }
 
-    /** was net/minecraft/class_1297.method_36971(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Z */
-    public boolean method_36971(net.minecraft.class_1937 a0, net.minecraft.class_2338 a1) {
-        if (a0 instanceof net.minecraft.class_3218 serverWorld) {
-            return ((net.minecraft.class_1297)(Object)this).method_36971(serverWorld, a1);
+    /** was net/minecraft/class_1297.method_5768()V */
+    public void method_5768() {
+        ((net.minecraft.class_1297) (Object) this).method_5768((net.minecraft.class_3218) ((net.minecraft.class_1297) (Object) this).method_37908());
+    }
+
+    /** was net/minecraft/class_1297.method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542; */
+    public net.minecraft.class_1542 method_5775(net.minecraft.class_1799 a0) {
+        net.minecraft.class_1297 self = (net.minecraft.class_1297) (Object) this;
+        if (!(self.method_37908() instanceof net.minecraft.class_3218 serverWorld)) {
+            throw new UnsupportedOperationException("CenturyBridge: item dropping requires a server world");
         }
-        throw new UnsupportedOperationException("CenturyBridge: method_36971 now requires ServerWorld (class_3218) in 1.21.2; received " + a0.getClass());
+        return self.method_5775(serverWorld, a0);
     }
 
-    /** was net/minecraft/class_1297.method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z */
-    public boolean method_48105(net.minecraft.class_3218 a0, double a1, double a2, double a3, java.util.Set a4, float a5, float a6) {
-        return ((net.minecraft.class_1297)(Object)this).method_48105(a0, a1, a2, a3, a4, a5, a6, false);
-    }
-
-    /** was net/minecraft/class_1297.method_5643(Lnet/minecraft/class_1282;F)Z */
-    public boolean method_5643(net.minecraft.class_1282 a0, float a1) {
-        return ((net.minecraft.class_1297)(Object)this).method_5643(a0);
-    }
-
-    /** was net/minecraft/class_1297.method_60607(ZLnet/minecraft/class_243;)V */
-    public void method_60607(boolean a0, net.minecraft.class_243 a1) {
-        ((net.minecraft.class_1297) (Object) this).method_60607(a0, false, a1);
-    }
 }

@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_922.class)
 public abstract class GenClass922Bridge {
 
+    /** was net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I */
+    public int method_23622(net.minecraft.class_1309 a0, float a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_23622 now requires a class_10042 render state, and the supplied class_1309 cannot be converted without an accessible state factory");
+    }
 
 }

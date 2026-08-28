@@ -15,9 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1321.class)
 public abstract class GenClass1321Bridge {
 
-    /** was net/minecraft/class_1321.method_6173(Z)V */
-    public void method_6173(boolean a0) {
-        ((net.minecraft.class_1321) (Object) this).method_6173(a0, true);
+    /** was net/minecraft/class_1321.method_5652(Lnet/minecraft/class_2487;)V */
+    public void method_5652(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires class_11372, and the legacy class_2487 value cannot be converted without the required decoding context");
+    }
+
+    /** was net/minecraft/class_1321.method_5749(Lnet/minecraft/class_2487;)V */
+    public void method_5749(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: cannot convert legacy class_2487 NBT data to the new class_11368 read-view contract");
     }
 
 }

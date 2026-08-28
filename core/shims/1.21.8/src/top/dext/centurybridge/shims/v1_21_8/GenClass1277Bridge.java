@@ -15,10 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1277.class)
 public abstract class GenClass1277Bridge {
 
-    /** was net/minecraft/class_1277.method_7660()Lnet/minecraft/class_2499; */
-    public net.minecraft.class_2499 method_7660() {
-        throw new UnsupportedOperationException("CenturyBridge: Ingredient.method_7660() in 1.21+ requires a RegistryWrapper.WrapperLookup to serialize item references; none is available from the no-arg overload");
-        // CB-CONFIDENCE: high -- the new API unconditionally requires a WrapperLookup that the old no-arg signature cannot supply and the class does not store
+    /** was net/minecraft/class_1277.method_7659(Lnet/minecraft/class_2499;)V */
+    public void method_7659(net.minecraft.class_2499 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the legacy NBT list cannot be converted to the new structured list read-view API");
     }
 
 }

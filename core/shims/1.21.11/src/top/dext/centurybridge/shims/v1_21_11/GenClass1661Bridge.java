@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1661.class)
 public abstract class GenClass1661Bridge {
 
+    /** was net/minecraft/class_1661.method_7397(Lnet/minecraft/class_2499;)V */
+    public void method_7397(net.minecraft.class_2499 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: legacy NbtList cannot be converted to the required ReadView.TypedListReadView without registry-aware decoding context");
+    }
 
 }

@@ -15,25 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_638.class)
 public abstract class GenClass638Bridge {
 
-    /** was net/minecraft/class_638.method_47437(Ljava/lang/String;Lnet/minecraft/class_22;)V */
-    public void method_47437(java.lang.String a0, net.minecraft.class_22 a1) {
-        throw new UnsupportedOperationException("CenturyBridge: cannot convert String to class_9209 without particle registry lookup");
+    /** was net/minecraft/class_638.method_8433()Lnet/minecraft/class_1863; */
+    public net.minecraft.class_1863 method_8433() {
+        throw new UnsupportedOperationException("CenturyBridge: the new method returns class_10286, which cannot be safely adapted to class_1863");
     }
 
-    /** was net/minecraft/class_638.method_23777(Lnet/minecraft/class_243;F)Lnet/minecraft/class_243; */
-    public net.minecraft.class_243 method_23777(net.minecraft.class_243 a0, float a1) {
-        int color = ((net.minecraft.class_638)(Object)this).method_23777(a0, a1);
-        return new net.minecraft.class_243(((color >> 16) & 0xFF) / 255.0, ((color >> 8) & 0xFF) / 255.0, (color & 0xFF) / 255.0);
-    }
-
-    /** was net/minecraft/class_638.method_23785(F)Lnet/minecraft/class_243; */
-    public net.minecraft.class_243 method_23785(float a0) {
-        int color = ((net.minecraft.class_638)(Object)this).method_23785(a0);
-        return new net.minecraft.class_243(((color >> 16) & 0xFF) / 255.0, ((color >> 8) & 0xFF) / 255.0, (color & 0xFF) / 255.0);
-    }
-
-    /** was net/minecraft/class_638.method_29089(J)V */
-    public void method_29089(long a0) {
-        ((net.minecraft.class_638)(Object)this).method_29089(a0, 0L, true);
-    }
 }

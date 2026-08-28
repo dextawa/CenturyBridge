@@ -15,15 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_638.class)
 public abstract class GenClass638Bridge {
 
-    /** was net/minecraft/class_638.method_47437(Ljava/lang/String;Lnet/minecraft/class_22;)V */
-    public void method_47437(java.lang.String a0, net.minecraft.class_22 a1) {
-        throw new UnsupportedOperationException("CenturyBridge: cannot convert String to class_9209 without particle registry lookup");
+    /** was net/minecraft/class_638.method_8433()Lnet/minecraft/class_1863; */
+    public net.minecraft.class_1863 method_8433() {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_8433 returns class_10286 and does not guarantee the concrete class_1863 required by the old contract");
     }
 
-
-
-    /** was net/minecraft/class_638.method_29089(J)V */
-    public void method_29089(long a0) {
-        ((net.minecraft.class_638)(Object)this).method_29089(a0, 0L, true);
-    }
 }

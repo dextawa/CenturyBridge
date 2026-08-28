@@ -15,8 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_796.class)
 public abstract class GenClass796Bridge {
 
-    /** was net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;Z)Lnet/minecraft/class_777; */
-    public net.minecraft.class_777 method_3468(org.joml.Vector3f a0, org.joml.Vector3f a1, net.minecraft.class_783 a2, net.minecraft.class_1058 a3, net.minecraft.class_2350 a4, net.minecraft.class_3665 a5, net.minecraft.class_789 a6, boolean a7) {
+    /** was net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZLnet/minecraft/class_2960;)Lnet/minecraft/class_777; */
+    public net.minecraft.class_777 method_3468(org.joml.Vector3f a0, org.joml.Vector3f a1, net.minecraft.class_783 a2, net.minecraft.class_1058 a3, net.minecraft.class_2350 a4, net.minecraft.class_3665 a5, net.minecraft.class_789 a6, boolean a7, net.minecraft.class_2960 a8) {
         return ((net.minecraft.class_796) (Object) this).method_3468(a0, a1, a2, a3, a4, a5, a6, a7, 0);
     }
+
 }

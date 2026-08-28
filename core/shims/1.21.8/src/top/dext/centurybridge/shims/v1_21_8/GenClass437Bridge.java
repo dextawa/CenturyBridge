@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_437.class)
 public abstract class GenClass437Bridge {
 
+    /** was net/minecraft/class_437.method_25401(DDD)Z */
+    public boolean method_25401(double a0, double a1, double a2) {
+        return ((net.minecraft.class_437) (Object) this).method_25401(a0, a1, 0.0D, a2);
+    }
 
 }

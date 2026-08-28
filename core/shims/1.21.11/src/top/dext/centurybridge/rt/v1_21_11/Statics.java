@@ -6566,6 +6566,607 @@ public final class Statics {
         return self.method_33431(self.method_62542());
     }
 
+    /** was net/minecraft/class_1043.<init>(Lnet/minecraft/class_1011;)V */
+    public static net.minecraft.class_1043 cbNewclass_1043(net.minecraft.class_1011 a0) {
+        return new net.minecraft.class_1043(() -> "CenturyBridge dynamic texture", a0);
+    }
+
+    /** was net/minecraft/class_1086.field_5347Lnet/minecraft/class_1086; */
+    public static net.minecraft.class_1086 field_5347() {
+        return net.minecraft.class_1086.field_63619;
+    }
+
+    /** was net/minecraft/class_1086.field_5349Lnet/minecraft/class_1086; */
+    public static net.minecraft.class_1086 field_5349() {
+        return net.minecraft.class_1086.field_63619;
+    }
+
+    /** was net/minecraft/class_1086.field_5350Lnet/minecraft/class_1086; */
+    public static net.minecraft.class_1086 field_5350() {
+        return net.minecraft.class_1086.field_63619;
+    }
+
+    /** was net/minecraft/class_1086.field_5352Lnet/minecraft/class_1086; */
+    public static net.minecraft.class_1086 field_5352() {
+        return net.minecraft.class_1086.field_63619;
+    }
+
+    /** was net/minecraft/class_1086.field_5353Lnet/minecraft/class_1086; */
+    public static net.minecraft.class_1086 field_5353() {
+        return net.minecraft.class_1086.field_63619;
+    }
+
+    /** was net/minecraft/class_1086.field_5355Lnet/minecraft/class_1086; */
+    public static net.minecraft.class_1086 field_5355() {
+        return net.minecraft.class_1086.field_63619;
+    }
+
+    /** was net/minecraft/class_1086.field_5358Lnet/minecraft/class_1086; */
+    public static net.minecraft.class_1086 field_5358() {
+        return net.minecraft.class_1086.field_63619;
+    }
+
+    /** was net/minecraft/class_1086.field_5361Lnet/minecraft/class_1086; */
+    public static net.minecraft.class_1086 field_5361() {
+        return net.minecraft.class_1086.field_63619;
+    }
+
+    /** was net/minecraft/class_1086.field_5366Lnet/minecraft/class_1086; */
+    public static net.minecraft.class_1086 field_5366() {
+        return net.minecraft.class_1086.field_63619;
+    }
+
+    /** was net/minecraft/class_1263.method_5432(Lnet/minecraft/class_1657;)V */
+    public static void method_5432(net.minecraft.class_1263 self, net.minecraft.class_1657 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the replacement requires net.minecraft.class_11565, and no guaranteed conversion from net.minecraft.class_1657 is available");
+    }
+
+    /** was net/minecraft/class_1263.method_5435(Lnet/minecraft/class_1657;)V */
+    public static void method_5435(net.minecraft.class_1263 self, net.minecraft.class_1657 a0) {
+        self.method_5435(a0);
+    }
+
+    /** was net/minecraft/class_1297.field_6007Z */
+    public static boolean field_6007() {
+        throw new UnsupportedOperationException("CenturyBridge: field_6007 is an instance field and the static shim has no entity receiver");
+    }
+
+
+    /** was net/minecraft/class_1400.<init>(Lnet/minecraft/class_1308;Ljava/lang/Class;ZLjava/util/function/Predicate;)V */
+    public static net.minecraft.class_1400 cbNewclass_1400(net.minecraft.class_1308 a0, java.lang.Class a1, boolean a2, java.util.function.Predicate a3) {
+        return new net.minecraft.class_1400(a0, a1, a2, a3 == null ? null : (target, world) -> a3.test(target));
+    }
+
+    /** was net/minecraft/class_1657.field_7505F */
+    public static float field_7505() {
+        return 0.02F;
+    }
+
+    /** was net/minecraft/class_1661.field_7544Lnet/minecraft/class_2371; */
+    public static net.minecraft.class_2371 field_7544() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_7544 was per-inventory off-hand storage, but this static no-argument shim has no class_1661 receiver for method_67533");
+    }
+
+    /** was net/minecraft/class_1686.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V */
+    public static net.minecraft.class_1686 cbNewclass_1686(net.minecraft.class_1937 a0, net.minecraft.class_1309 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: class_1686 is now abstract and has no surviving factory or concrete constructor preserving the old generic thrown-potion contract");
+    }
+
+    /** was net/minecraft/class_1696.field_7736D */
+    public static double field_7736() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_7736 was per-instance pushZ state and cannot be recovered by a receiverless static shim");
+    }
+
+    /** was net/minecraft/class_1696.field_7737D */
+    public static double field_7737() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_7737 was per-instance mutable state and cannot be reproduced by a receiverless static helper");
+    }
+
+
+    /** was net/minecraft/class_1740.field_7887Lnet/minecraft/class_1740; */
+    public static net.minecraft.class_1740 field_7887() {
+        throw new UnsupportedOperationException("CenturyBridge: field_7887 now has type net.minecraft.class_1741, and the new API provides no guaranteed net.minecraft.class_1740 equivalent");
+    }
+
+
+
+
+
+    /** was net/minecraft/class_1822.<init>(Lnet/minecraft/class_1792$class_1793;Lnet/minecraft/class_2248;Lnet/minecraft/class_2248;)V */
+    public static net.minecraft.class_1822 cbNewclass_1822(net.minecraft.class_1792.class_1793 a0, net.minecraft.class_2248 a1, net.minecraft.class_2248 a2) {
+        return new net.minecraft.class_1822(a1, a2, a0);
+    }
+
+    /** was net/minecraft/class_1826.<init>(Lnet/minecraft/class_1299;IILnet/minecraft/class_1792$class_1793;)V */
+    public static net.minecraft.class_1826 cbNewclass_1826(net.minecraft.class_1299 a0, int a1, int a2, net.minecraft.class_1792.class_1793 a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the surviving constructor accepts only item settings and cannot preserve the old entity type and spawn egg color arguments");
+    }
+
+    /** was net/minecraft/class_1827.<init>(Lnet/minecraft/class_2248;Lnet/minecraft/class_2248;Lnet/minecraft/class_1792$class_1793;Lnet/minecraft/class_2350;)V */
+    public static net.minecraft.class_1827 cbNewclass_1827(net.minecraft.class_2248 a0, net.minecraft.class_2248 a1, net.minecraft.class_1792.class_1793 a2, net.minecraft.class_2350 a3) {
+        return new net.minecraft.class_1827(a0, a1, a3, a2);
+    }
+
+    /** was net/minecraft/class_1842.<init>([Lnet/minecraft/class_1293;)V */
+    public static net.minecraft.class_1842 cbNewclass_1842(net.minecraft.class_1293[] a0) {
+        return new net.minecraft.class_1842("", a0);
+    }
+
+    /** was net/minecraft/class_1847.field_8984Lnet/minecraft/class_1842; */
+    public static net.minecraft.class_1842 field_8984() {
+        throw new UnsupportedOperationException("CenturyBridge: the EMPTY potion was removed and no equivalent net.minecraft.class_1842 constant exists in the new API");
+    }
+
+    /** was net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z */
+    public static boolean method_8115(net.minecraft.class_1860 self, net.minecraft.class_1263 a0, net.minecraft.class_1937 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires class_9695, and no guaranteed conversion from class_1263 is available");
+    }
+
+    /** was net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799; */
+    public static net.minecraft.class_1799 method_8116(net.minecraft.class_1860 self, net.minecraft.class_1263 a0, net.minecraft.class_5455 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: cannot convert the old class_1263 inventory and class_5455 registry manager arguments to the required class_9695 recipe input and class_7225.class_7874 registry lookup");
+    }
+
+    /** was net/minecraft/class_1893.field_9098Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9098() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9098 is now a registry key, and the provided API surface cannot resolve it to a net.minecraft.class_1887 instance");
+    }
+
+    /** was net/minecraft/class_1893.field_9103Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9103() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9103 is now a registry key and the old class_1887 instance cannot be recovered without registry access");
+    }
+
+    /** was net/minecraft/class_1893.field_9105Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9105() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9105 is now a registry key and cannot be resolved to an enchantment without registry access");
+    }
+
+    /** was net/minecraft/class_1893.field_9108Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9108() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9108 is now a registry key and no registry access is available to resolve it to class_1887");
+    }
+
+    /** was net/minecraft/class_1893.field_9110Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9110() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9110 is now a registry key and cannot be resolved to a class_1887 without registry access");
+    }
+
+    /** was net/minecraft/class_1893.field_9118Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9118() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9118 is now a registry key, and no class_1887 instance can be recovered without registry access");
+    }
+
+    /** was net/minecraft/class_1893.field_9119Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9119() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9119 is now a registry key and no registry access is available to resolve it to class_1887");
+    }
+
+    /** was net/minecraft/class_1893.field_9121Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9121() {
+        throw new UnsupportedOperationException("CenturyBridge: the enchantment instance was replaced by a registry key and cannot be resolved without registry access");
+    }
+
+    /** was net/minecraft/class_1893.field_9125Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9125() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9125 is now a registry key and no enchantment registry context is available to resolve it");
+    }
+
+    /** was net/minecraft/class_1893.field_9130Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9130() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9130 is now a registry key, and no enchantment registry lookup context is available to recover the old class_1887 instance");
+    }
+
+    /** was net/minecraft/class_1893.field_9131Lnet/minecraft/class_1887; */
+    public static net.minecraft.class_1887 field_9131() {
+        throw new UnsupportedOperationException("CenturyBridge: field_9131 is now a registry key, and the provided API exposes no registry lookup capable of producing class_1887");
+    }
+
+    /** was net/minecraft/class_1921$class_4687.field_29640Ljava/util/function/BiFunction; */
+    public static java.util.function.BiFunction field_29640() {
+        throw new UnsupportedOperationException("CenturyBridge: the new API surface provides no BiFunction equivalent or reconstruction details for field_29640");
+    }
+
+
+
+    /** was net/minecraft/class_1936.method_33596(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;)V */
+    public static void method_33596(net.minecraft.class_1936 self, net.minecraft.class_1297 a0, net.minecraft.class_5712 a1, net.minecraft.class_2338 a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires class_6880, but no guaranteed conversion from class_5712 to its registry entry is available");
+    }
+
+    /** was net/minecraft/class_1936.method_8396(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V */
+    public static void method_8396(net.minecraft.class_1936 self, net.minecraft.class_1657 a0, net.minecraft.class_2338 a1, net.minecraft.class_3414 a2, net.minecraft.class_3419 a3, float a4, float a5) {
+        self.method_8396(a0, a1, a2, a3, a4, a5);
+    }
+
+    /** was net/minecraft/class_243.<init>(Lorg/joml/Vector3f;)V */
+    public static net.minecraft.class_243 cbNewclass_243(org.joml.Vector3f a0) {
+        return new net.minecraft.class_243((org.joml.Vector3fc) a0);
+    }
+
+    /** was net/minecraft/class_2464.field_11456Lnet/minecraft/class_2464; */
+    public static net.minecraft.class_2464 field_11456() {
+        throw new UnsupportedOperationException("CenturyBridge: ENTITYBLOCK_ANIMATED was removed and no equivalent BlockRenderType exists");
+    }
+
+
+    /** was net/minecraft/class_2544.field_22158Lnet/minecraft/class_2754; */
+    public static net.minecraft.class_2754 field_22158() {
+        return net.minecraft.class_2544.field_55817;
+    }
+
+    /** was net/minecraft/class_2588.<init>(Ljava/lang/String;[Ljava/lang/Object;)V */
+    public static net.minecraft.class_2588 cbNewclass_2588(java.lang.String a0, java.lang.Object[] a1) {
+        return new net.minecraft.class_2588(a0, null, a1);
+    }
+
+    /** was net/minecraft/class_2588.<init>(Ljava/lang/String;)V */
+    public static net.minecraft.class_2588 cbNewclass_2588(java.lang.String a0) {
+        return new net.minecraft.class_2588(a0, a0, new Object[0]);
+    }
+
+    /** was net/minecraft/class_276.field_1476I */
+    public static int field_1476() {
+        throw new UnsupportedOperationException("CenturyBridge: the old field_1476 was a per-instance framebuffer ID and cannot be reproduced by a receiverless static helper");
+    }
+
+    /** was net/minecraft/class_2828$class_2831.<init>(FFZ)V */
+    public static net.minecraft.class_2828.class_2831 cbNewclass_2828class_2831(float a0, float a1, boolean a2) {
+        return new net.minecraft.class_2828.class_2831(a0, a1, a2, false);
+    }
+
+
+
+    /** was net/minecraft/class_304.<init>(Ljava/lang/String;Lnet/minecraft/class_3675$class_307;ILjava/lang/String;)V */
+    public static net.minecraft.class_304 cbNewclass_304(java.lang.String a0, net.minecraft.class_3675.class_307 a1, int a2, java.lang.String a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the legacy String category cannot be converted to the required class_304.class_11900 category using the provided API surface");
+    }
+
+    /** was net/minecraft/class_304.<init>(Ljava/lang/String;ILjava/lang/String;)V */
+    public static net.minecraft.class_304 cbNewclass_304(java.lang.String a0, int a1, java.lang.String a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the legacy String category cannot be converted to the required class_304.class_11900 category using the available API");
+    }
+
+    /** was net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; */
+    public static java.util.concurrent.CompletableFuture method_25931(net.minecraft.class_3302 self, net.minecraft.class_3302.class_4045 a0, net.minecraft.class_3300 a1, net.minecraft.class_3695 a2, net.minecraft.class_3695 a3, java.util.concurrent.Executor a4, java.util.concurrent.Executor a5) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method requires class_11558 shared state, which cannot be constructed from the old class_3300 and class_3695 parameters using the available API");
+    }
+
+    /** was net/minecraft/class_3417.field_20614Lnet/minecraft/class_3414; */
+    public static net.minecraft.class_3414 field_20614() {
+        return net.minecraft.class_3417.field_20614.comp_349();
+    }
+
+    /** was net/minecraft/class_3852.field_17054Lnet/minecraft/class_3852; */
+    public static net.minecraft.class_3852 field_17054() {
+        throw new UnsupportedOperationException("CenturyBridge: the old class_3852 singleton was replaced by a registry key and cannot be resolved without a class_2378 registry");
+        //
+    }
+
+    /** was net/minecraft/class_3852.field_17056Lnet/minecraft/class_3852; */
+    public static net.minecraft.class_3852 field_17056() {
+        throw new UnsupportedOperationException("CenturyBridge: rebuilding the old class_3852 value requires a class_2378 registry instance, but the new field only stores a class_5321 registry key");
+    }
+
+    /** was net/minecraft/class_3879.<init>(Ljava/util/function/Function;)V */
+    public static net.minecraft.class_3879 cbNewclass_3879(java.util.function.Function a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the surviving constructor requires a net.minecraft.class_630 instance that cannot be derived from the old Function argument");
+    }
+
+    /** was net/minecraft/class_3955.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z */
+    public static boolean method_8115(net.minecraft.class_3955 self, net.minecraft.class_1263 a0, net.minecraft.class_1937 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new class_3955 API has no equivalent operation accepting class_1263 and class_1937");
+    }
+
+    /** was net/minecraft/class_3955.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799; */
+    public static net.minecraft.class_1799 method_8116(net.minecraft.class_3955 self, net.minecraft.class_1263 a0, net.minecraft.class_5455 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new class_3955 API has no method that accepts class_1263 and class_5455 or otherwise exposes the old item-stack-producing contract");
+    }
+
+    /** was net/minecraft/class_3999.field_17828Lnet/minecraft/class_3999; */
+    public static net.minecraft.class_3999 field_17828() {
+        return net.minecraft.class_3999.field_62622;
+    }
+
+    /** was net/minecraft/class_3999.field_17829Lnet/minecraft/class_3999; */
+    public static net.minecraft.class_3999 field_17829() {
+        return net.minecraft.class_3999.field_62622;
+    }
+
+
+
+    /** was net/minecraft/class_4309.<init>(Lcom/google/gson/Gson;Ljava/lang/String;)V */
+    public static net.minecraft.class_4309 cbNewclass_4309(com.google.gson.Gson a0, java.lang.String a1) {
+        throw new UnsupportedOperationException("CenturyBridge: Gson and resource-path constructor semantics cannot be expressed by the surviving Codec-based constructors");
+    }
+
+    /** was net/minecraft/class_437$class_6390.field_33825Lnet/minecraft/class_6379; */
+    public static net.minecraft.class_6379 field_33825() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_33825 was instance-specific, but this zero-argument static shim has no receiver from which to call comp_4463()");
+    }
+
+    /** was net/minecraft/class_437$class_6390.field_33826I */
+    public static int field_33826() {
+        throw new UnsupportedOperationException("CenturyBridge: old instance index field requires a receiver, but the static field shim has none");
+    }
+
+
+    /** was net/minecraft/class_437.field_44669Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 field_44669() {
+        return net.minecraft.class_2960.method_60656("textures/gui/options_background.png");
+    }
+
+    /** was net/minecraft/class_4512.<init>(Ljava/lang/String;)V */
+    public static net.minecraft.class_4512 cbNewclass_4512(java.lang.String a0) {
+        return new net.minecraft.class_4512(net.minecraft.class_2561.method_43470(a0), 0);
+    }
+
+    /** was net/minecraft/class_4588.method_22912(DDD)Lnet/minecraft/class_4588; */
+    public static net.minecraft.class_4588 method_22912(net.minecraft.class_4588 self, double a0, double a1, double a2) {
+        return self.method_22912((float) a0, (float) a1, (float) a2);
+    }
+
+    /** was net/minecraft/class_4588.method_22918(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588; */
+    public static net.minecraft.class_4588 method_22918(net.minecraft.class_4588 self, org.joml.Matrix4f a0, float a1, float a2, float a3) {
+        return self.method_22918((org.joml.Matrix4fc) a0, a1, a2, a3);
+    }
+
+    /** was net/minecraft/class_4588.method_23919(FFFFFFFFFIIFFF)V */
+    public static void method_23919(net.minecraft.class_4588 self, float a0, float a1, float a2, float a3, float a4, float a5, float a6, float a7, float a8, int a9, int a10, float a11, float a12, float a13) {
+        self.method_23919(a0, a1, a2, ((int) (a6 * 255.0F) << 24) | ((int) (a3 * 255.0F) << 16) | ((int) (a4 * 255.0F) << 8) | (int) (a5 * 255.0F), a7, a8, a9, a10, a11, a12, a13);
+    }
+
+    /** was net/minecraft/class_4590.<init>(Lorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Vector3f;Lorg/joml/Quaternionf;)V */
+    public static net.minecraft.class_4590 cbNewclass_4590(org.joml.Vector3f a0, org.joml.Quaternionf a1, org.joml.Vector3f a2, org.joml.Quaternionf a3) {
+        return new net.minecraft.class_4590(a0, a1, a2, a3);
+    }
+
+    /** was net/minecraft/class_4590.<init>(Lorg/joml/Matrix4f;)V */
+    public static net.minecraft.class_4590 cbNewclass_4590(org.joml.Matrix4f a0) {
+        return new net.minecraft.class_4590((org.joml.Matrix4fc) a0);
+    }
+
+    /** was net/minecraft/class_4763.field_22067I */
+    public static int field_22067() {
+        throw new UnsupportedOperationException("CenturyBridge: field_22067 is an instance-specific value, but this static no-argument shim has no receiver");
+    }
+
+    /** was net/minecraft/class_4763.field_22068I */
+    public static int field_22068() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_22068 was an instance-specific water color, but the no-argument static shim has no receiver from which to obtain it");
+    }
+
+    /** was net/minecraft/class_4763.field_22069I */
+    public static int field_22069() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_22069 was an instance water-fog color value, but this static shim has no receiver");
+    }
+
+    /** was net/minecraft/class_4763.field_22070Ljava/util/Optional; */
+    public static java.util.Optional field_22070() {
+        return java.util.Optional.empty();
+    }
+
+    /** was net/minecraft/class_4763.field_22491Ljava/util/Optional; */
+    public static java.util.Optional field_22491() {
+        return java.util.Optional.empty();
+    }
+
+    /** was net/minecraft/class_4763.field_22492Ljava/util/Optional; */
+    public static java.util.Optional field_22492() {
+        return java.util.Optional.empty();
+    }
+
+    /** was net/minecraft/class_4763.field_22493Ljava/util/Optional; */
+    public static java.util.Optional field_22493() {
+        return java.util.Optional.empty();
+    }
+
+    /** was net/minecraft/class_4763.field_24113Ljava/util/Optional; */
+    public static java.util.Optional field_24113() {
+        return java.util.Optional.empty();
+    }
+
+    /** was net/minecraft/class_4763.field_26418I */
+    public static int field_26418() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_26418 is an instance-specific sky color, but the static field shim has no receiver from which to obtain comp_5169");
+    }
+
+    /** was net/minecraft/class_4763.field_26419Ljava/util/Optional; */
+    public static java.util.Optional field_26419() {
+        return java.util.Optional.empty();
+    }
+
+    /** was net/minecraft/class_4763.field_26420Ljava/util/Optional; */
+    public static java.util.Optional field_26420() {
+        return java.util.Optional.empty();
+    }
+
+    /** was net/minecraft/class_5134.field_23717Lnet/minecraft/class_1320; */
+    public static net.minecraft.class_1320 field_23717() {
+        return net.minecraft.class_5134.field_23717.comp_349();
+    }
+
+    /** was net/minecraft/class_5134.field_23721Lnet/minecraft/class_1320; */
+    public static net.minecraft.class_1320 field_23721() {
+        return net.minecraft.class_5134.field_23721.comp_349();
+    }
+
+    /** was net/minecraft/class_5134.field_23722Lnet/minecraft/class_1320; */
+    public static net.minecraft.class_1320 field_23722() {
+        return net.minecraft.class_5134.field_23722.comp_349();
+    }
+
+    /** was net/minecraft/class_5483$class_1964.<init>(Lnet/minecraft/class_1299;III)V */
+    public static net.minecraft.class_5483.class_1964 cbNewclass_5483class_1964(net.minecraft.class_1299 a0, int a1, int a2, int a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the old four-argument constructor contains a third int value that the surviving three-argument constructor cannot represent");
+    }
+
+    /** was net/minecraft/class_5603.field_27703F */
+    public static float field_27703() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_27703 was an instance pivotY value, but this static shim has no receiver from which to read comp_2998()");
+    }
+
+    /** was net/minecraft/class_5603.field_27704F */
+    public static float field_27704() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_27704 is instance-specific pivotZ, but the static shim has no receiver");
+    }
+
+    /** was net/minecraft/class_5603.field_27705F */
+    public static float field_27705() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_27705 was an instance-specific pitch value and cannot be reconstructed by a receiverless static helper");
+    }
+
+    /** was net/minecraft/class_5603.field_27706F */
+    public static float field_27706() {
+        throw new UnsupportedOperationException("CenturyBridge: old instance yaw field requires a class_5603 receiver, but the static shim has no receiver");
+    }
+
+    /** was net/minecraft/class_5603.field_27707F */
+    public static float field_27707() {
+        return net.minecraft.class_5603.field_27701.comp_3002();
+    }
+
+    /** was net/minecraft/class_583.<init>()V */
+    public static net.minecraft.class_583 cbNewclass_583() {
+        throw new UnsupportedOperationException("CenturyBridge: the new constructor requires a net.minecraft.class_630 instance, but the old zero-argument constructor provides no equivalent value");
+    }
+
+    /** was net/minecraft/class_6367.<init>(IIZZ)V */
+    public static net.minecraft.class_6367 cbNewclass_6367(int a0, int a1, boolean a2, boolean a3) {
+        return new net.minecraft.class_6367("", a0, a1, a2);
+    }
+
+    /** was net/minecraft/class_7186.<init>(FLorg/joml/Vector3f;Lnet/minecraft/class_7179$class_7180;)V */
+    public static net.minecraft.class_7186 cbNewclass_7186(float a0, org.joml.Vector3f a1, net.minecraft.class_7179.class_7180 a2) {
+        return new net.minecraft.class_7186(a0, a1, a2);
+    }
+
+    /** was net/minecraft/class_7375.field_38715Lnet/minecraft/class_5321; */
+    public static net.minecraft.class_5321 field_38715() {
+        throw new UnsupportedOperationException("CenturyBridge: the old class_5321 constant cannot be reconstructed from class_7375's new API surface");
+    }
+
+    /** was net/minecraft/class_746.field_17892Lnet/minecraft/class_638; */
+    public static net.minecraft.class_638 field_17892() {
+        return net.minecraft.class_310.method_1551().field_1687;
+    }
+
+    /** was net/minecraft/class_758$class_7285.field_38341F */
+    public static float field_38341() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_38341 is an instance fog-end value and cannot be reconstructed by a receiverless static helper");
+    }
+
+    /** was net/minecraft/class_7775.method_45872(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100; */
+    public static net.minecraft.class_1100 method_45872(net.minecraft.class_7775 self, net.minecraft.class_2960 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: replacement returns net.minecraft.class_10819, not net.minecraft.class_1100, and no conversion API is available");
+    }
+
+    /** was net/minecraft/class_777.<init>([IILnet/minecraft/class_2350;Lnet/minecraft/class_1058;Z)V */
+    public static net.minecraft.class_777 cbNewclass_777(int[] a0, int a1, net.minecraft.class_2350 a2, net.minecraft.class_1058 a3, boolean a4) {
+        throw new UnsupportedOperationException("CenturyBridge: the old packed int[] vertex data cannot be faithfully converted to the new constructor's four Vector3fc vertices and four packed long values without the removed vertex-format decoding contract");
+    }
+
+
+    /** was net/minecraft/class_783.field_4224Ljava/lang/String; */
+    public static java.lang.String field_4224() {
+        return "normal";
+    }
+
+    /** was net/minecraft/class_783.field_4225Lnet/minecraft/class_2350; */
+    public static net.minecraft.class_2350 field_4225() {
+        throw new UnsupportedOperationException("CenturyBridge: cull face is instance-specific and the static shim has no receiver for comp_2867()");
+    }
+
+    /** was net/minecraft/class_783.field_4226I */
+    public static int field_4226() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_4226 is per-instance tint data, but this static shim has no receiver");
+    }
+
+    /** was net/minecraft/class_785.<init>(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Ljava/util/Map;Lnet/minecraft/class_789;Z)V */
+    public static net.minecraft.class_785 cbNewclass_785(org.joml.Vector3f a0, org.joml.Vector3f a1, java.util.Map a2, net.minecraft.class_789 a3, boolean a4) {
+        return new net.minecraft.class_785(a0, a1, a2, a3, a4, 0);
+    }
+
+    /** was net/minecraft/class_785.field_4228Lorg/joml/Vector3f; */
+    public static org.joml.Vector3f field_4228() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_4228 was an instance-specific from vector, but this static field shim has no receiver");
+    }
+
+    /** was net/minecraft/class_785.field_4230Ljava/util/Map; */
+    public static java.util.Map field_4230() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_4230 was an instance-specific faces map, but the static field shim has no ModelElement receiver from which to call comp_3729()");
+    }
+
+    /** was net/minecraft/class_785.field_4231Lorg/joml/Vector3f; */
+    public static org.joml.Vector3f field_4231() {
+        throw new UnsupportedOperationException("CenturyBridge: field_4231 was a per-instance 'to' vector, but this no-argument static shim has no class_785 receiver");
+    }
+
+    /** was net/minecraft/class_785.field_4232Lnet/minecraft/class_789; */
+    public static net.minecraft.class_789 field_4232() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_4232 was an instance-specific rotation, but the static shim has no class_785 receiver");
+    }
+
+    /** was net/minecraft/class_787.field_4235[F */
+    public static float[] field_4235() {
+        throw new UnsupportedOperationException("CenturyBridge: the old field is per-instance mutable UV data, but this static shim has no receiver from which to retrieve it");
+    }
+
+    /** was net/minecraft/class_7922.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object; */
+    public static java.lang.Object method_10223(net.minecraft.class_7922 self, net.minecraft.class_2960 a0) {
+        return self.method_63535(a0);
+    }
+
+    /** was net/minecraft/class_7923.field_41179Lnet/minecraft/class_7922; */
+    public static net.minecraft.class_7922 field_41179() {
+        throw new UnsupportedOperationException("CenturyBridge: the new potion registry is no longer a net.minecraft.class_7922 defaulted registry");
+    }
+
+    /** was net/minecraft/class_793.field_4249Lnet/minecraft/class_796; */
+    public static net.minecraft.class_796 field_4249() {
+        return new net.minecraft.class_796();
+    }
+
+    /** was net/minecraft/class_793.field_4253Lnet/minecraft/class_793; */
+    public static net.minecraft.class_793 field_4253() {
+        throw new UnsupportedOperationException("CenturyBridge: the removed field value cannot be reconstructed from the new class_793 API without its original component constants");
+    }
+
+    /** was net/minecraft/class_804.<init>(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V */
+    public static net.minecraft.class_804 cbNewclass_804(org.joml.Vector3f a0, org.joml.Vector3f a1, org.joml.Vector3f a2) {
+        return new net.minecraft.class_804(a0, a1, a2);
+    }
+
+    /** was net/minecraft/class_804.field_4285Lorg/joml/Vector3f; */
+    public static org.joml.Vector3f field_4285() {
+        return new org.joml.Vector3f(1.0F, 1.0F, 1.0F);
+    }
+
+    /** was net/minecraft/class_804.field_4286Lorg/joml/Vector3f; */
+    public static org.joml.Vector3f field_4286() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_4286 was per-instance translation state, but this static shim has no class_804 receiver");
+    }
+
+    /** was net/minecraft/class_804.field_4287Lorg/joml/Vector3f; */
+    public static org.joml.Vector3f field_4287() {
+        throw new UnsupportedOperationException("CenturyBridge: old field_4287 was an instance rotation value, but this receiverless static shim cannot access the replacement comp_3747()");
+    }
+
+    /** was net/minecraft/class_827.method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V */
+    public static void method_3569(net.minecraft.class_827 self, net.minecraft.class_2586 a0, float a1, net.minecraft.class_4587 a2, net.minecraft.class_4597 a3, int a4, int a5) {
+        throw new UnsupportedOperationException("CenturyBridge: the new split extraction/render API requires render state and queue/context parameters that cannot be derived from the old arguments");
+    }
+
+    /** was net/minecraft/class_970.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_572;Lnet/minecraft/class_572;Lnet/minecraft/class_1092;)V */
+    public static net.minecraft.class_970 cbNewclass_970(net.minecraft.class_3883 a0, net.minecraft.class_572 a1, net.minecraft.class_572 a2, net.minecraft.class_1092 a3) {
+        throw new UnsupportedOperationException("CenturyBridge: old class_572 and class_1092 constructor arguments cannot be converted to required class_11677 and class_10197 types from the available API");
+    }
+
+    /** was net/minecraft/class_989.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_759;)V */
+    public static net.minecraft.class_989 cbNewclass_989(net.minecraft.class_3883 a0, net.minecraft.class_759 a1) {
+        return new net.minecraft.class_989(a0);
+    }
+
     // ==== END GENERATED ====
 
 

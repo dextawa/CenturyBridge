@@ -15,17 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_4696.class)
 public abstract class GenClass4696Bridge {
 
-    /** was net/minecraft/class_4696.method_23678(Lnet/minecraft/class_1799;Z)Lnet/minecraft/class_1921; */
-    public net.minecraft.class_1921 method_23678(net.minecraft.class_1799 a0, boolean a1) {
-        ((net.minecraft.class_4696)(Object)this).method_23682(a1);
-        return ((net.minecraft.class_4696)(Object)this).method_23678(a0);
-        // CB-CONFIDENCE: medium -- the removed boolean parameter maps to the method_23682(Z)V setter on the same class, inferring it sets the state the old boolean controlled
+    /** was net/minecraft/class_4696.method_23679(Lnet/minecraft/class_2680;)Lnet/minecraft/class_1921; */
+    public net.minecraft.class_1921 method_23679(net.minecraft.class_2680 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: block render layers now use class_11515, and no faithful class_1921 equivalent exists");
     }
 
-    /** was net/minecraft/class_4696.method_23683(Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1921; */
-    public net.minecraft.class_1921 method_23683(net.minecraft.class_2680 a0, boolean a1) {
-        ((net.minecraft.class_4696)(Object)this).method_23682(a1);
-        return ((net.minecraft.class_4696)(Object)this).method_23683(a0);
+    /** was net/minecraft/class_4696.method_23680(Lnet/minecraft/class_3610;)Lnet/minecraft/class_1921; */
+    public net.minecraft.class_1921 method_23680(net.minecraft.class_3610 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_23680 now returns class_11515, and the available API provides no guaranteed conversion to class_1921");
     }
 
 }

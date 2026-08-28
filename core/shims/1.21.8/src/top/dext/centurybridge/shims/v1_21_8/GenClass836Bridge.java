@@ -15,4 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_836.class)
 public abstract class GenClass836Bridge {
 
+    /** was net/minecraft/class_836.method_3578(Lnet/minecraft/class_2484$class_2485;Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_1921; */
+    public net.minecraft.class_1921 method_3578(net.minecraft.class_2484.class_2485 a0, com.mojang.authlib.GameProfile a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a resolved texture identifier, which cannot be faithfully derived from a GameProfile through the available class_836 API");
+    }
+
 }

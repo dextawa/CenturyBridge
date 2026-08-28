@@ -15,5 +15,24 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_927.class)
 public abstract class GenClass927Bridge {
 
+    /** was net/minecraft/class_927.method_24302(Lnet/minecraft/class_1309;ZZZ)Lnet/minecraft/class_1921; */
+    public net.minecraft.class_1921 method_24302(net.minecraft.class_1309 a0, boolean a1, boolean a2, boolean a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the new class_927 API has no method returning class_1921 or equivalent capable of preserving the old rendering-layer contract");
+    }
+
+    /** was net/minecraft/class_927.method_4042(Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;F)V */
+    public void method_4042(net.minecraft.class_1309 a0, net.minecraft.class_4587 a1, float a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the new class_927 API has no rendering method equivalent to the removed method_4042 contract");
+    }
+
+    /** was net/minecraft/class_927.method_4058(Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;FFF)V */
+    public void method_4058(net.minecraft.class_1309 a0, net.minecraft.class_4587 a1, float a2, float a3, float a4) {
+        throw new UnsupportedOperationException("CenturyBridge: the new class_927 API has no matrix-stack transform method equivalent to the removed method_4058 contract");
+    }
+
+    /** was net/minecraft/class_927.method_4071(Lnet/minecraft/class_1308;)Z */
+    public boolean method_4071(net.minecraft.class_1308 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new overload requires camera-distance context that the old signature does not provide");
+    }
 
 }

@@ -15,6 +15,16 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_327.class)
 public abstract class GenClass327Bridge {
 
+    /** was net/minecraft/class_327.method_22942(Lnet/minecraft/class_5481;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I */
+    public int method_22942(net.minecraft.class_5481 a0, float a1, float a2, int a3, boolean a4, org.joml.Matrix4f a5, net.minecraft.class_4597 a6, net.minecraft.class_327.class_6415 a7, int a8, int a9) {
+        ((net.minecraft.class_327) (Object) this).method_22942(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+        return (int) (a1 + ((net.minecraft.class_327) (Object) this).method_30880(a0)) + (a4 ? 1 : 0);
+    }
 
+    /** was net/minecraft/class_327.method_27521(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/class_4597;Lnet/minecraft/class_327$class_6415;II)I */
+    public int method_27521(java.lang.String a0, float a1, float a2, int a3, boolean a4, org.joml.Matrix4f a5, net.minecraft.class_4597 a6, net.minecraft.class_327.class_6415 a7, int a8, int a9) {
+        ((net.minecraft.class_327) (Object) this).method_27521(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+        return (int) (a1 + ((net.minecraft.class_327) (Object) this).method_1727(a0)) + (a4 ? 1 : 0);
+    }
 
 }

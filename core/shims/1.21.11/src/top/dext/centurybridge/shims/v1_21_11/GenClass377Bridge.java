@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_377.class)
 public abstract class GenClass377Bridge {
 
-    /** was net/minecraft/class_377.method_2004(Ljava/util/List;)V */
-    public void method_2004(java.util.List a0) {
-        ((net.minecraft.class_377) (Object) this).method_2004(a0, java.util.Set.of());
+    /** was net/minecraft/class_377.method_22943()Lnet/minecraft/class_382; */
+    public net.minecraft.class_382 method_22943() {
+        throw new UnsupportedOperationException("CenturyBridge: method_22943 now returns net.minecraft.class_11769, and the new class_377 API exposes no guaranteed conversion to net.minecraft.class_382");
     }
 
 }

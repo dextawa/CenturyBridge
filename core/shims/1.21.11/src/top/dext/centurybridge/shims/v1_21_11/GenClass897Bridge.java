@@ -15,8 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_897.class)
 public abstract class GenClass897Bridge {
 
-    /** was net/minecraft/class_897.method_23169(Lnet/minecraft/class_1297;F)Lnet/minecraft/class_243; */
-    public net.minecraft.class_243 method_23169(net.minecraft.class_1297 a0, float a1) {
-        return ((net.minecraft.class_897)(Object)this).method_23169(((net.minecraft.class_897)(Object)this).method_62425(a0, a1));
+    /** was net/minecraft/class_897.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
+    public void method_3936(net.minecraft.class_1297 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
+        throw new UnsupportedOperationException("CenturyBridge: the new renderer requires a class_10017 render state and class_11659/class_12075 rendering context that cannot be faithfully constructed from the old entity, yaw, tick delta, matrix stack, vertex consumer provider, and light arguments");
     }
+
 }

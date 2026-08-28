@@ -15,5 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1661.class)
 public abstract class GenClass1661Bridge {
 
+    /** was net/minecraft/class_1661.method_7384(Lnet/minecraft/class_2499;)Lnet/minecraft/class_2499; */
+    public net.minecraft.class_2499 method_7384(net.minecraft.class_2499 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method writes typed stack-with-slot values through WriteView.ListAppender and cannot faithfully append their registry-aware NBT encoding to the supplied NbtList");
+    }
+
+    /** was net/minecraft/class_1661.method_7397(Lnet/minecraft/class_2499;)V */
+    public void method_7397(net.minecraft.class_2499 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: legacy class_2499 inventory data cannot be converted to the new class_11368.class_11369 representation using the provided API");
+    }
 
 }

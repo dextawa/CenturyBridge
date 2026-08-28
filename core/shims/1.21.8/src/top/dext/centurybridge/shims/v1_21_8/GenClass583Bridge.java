@@ -15,5 +15,9 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_583.class)
 public abstract class GenClass583Bridge {
 
+    /** was net/minecraft/class_583.method_2819(Lnet/minecraft/class_1297;FFFFF)V */
+    public void method_2819(net.minecraft.class_1297 a0, float a1, float a2, float a3, float a4, float a5) {
+        throw new UnsupportedOperationException("CenturyBridge: the old entity and five-float contract cannot be expressed through method_2819(class_10017) without a guaranteed class_10017 construction mapping");
+    }
 
 }

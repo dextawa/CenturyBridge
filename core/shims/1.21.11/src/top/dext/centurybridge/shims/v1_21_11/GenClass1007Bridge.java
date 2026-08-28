@@ -15,16 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1007.class)
 public abstract class GenClass1007Bridge {
 
-    /** was net/minecraft/class_1007.method_23206(Lnet/minecraft/class_742;F)Lnet/minecraft/class_243; */
-    public net.minecraft.class_243 method_23206(net.minecraft.class_742 a0, float a1) {
-        net.minecraft.class_1007 self = ((net.minecraft.class_1007) (Object) this);
-        net.minecraft.class_10055 ctx = self.method_62608();
-        self.method_62604(a0, ctx, a1);
-        return self.method_23206(ctx);
+    /** was net/minecraft/class_1007.method_4220(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V */
+    public void method_4220(net.minecraft.class_4587 a0, net.minecraft.class_4597 a1, int a2, net.minecraft.class_742 a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the old class_4597 vertex consumer provider and class_742 player arguments cannot be faithfully converted to the new class_11659 render command queue, class_2960 texture, and boolean parameters");
     }
 
-
-
-
+    /** was net/minecraft/class_1007.method_4221(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_742;)V */
+    public void method_4221(net.minecraft.class_4587 a0, net.minecraft.class_4597 a1, int a2, net.minecraft.class_742 a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_4221 requires class_11659 render state and class_2960 texture parameters that cannot be derived faithfully from the old class_4597 and class_742 arguments");
+    }
 
 }

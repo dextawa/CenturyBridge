@@ -15,5 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1588.class)
 public abstract class GenClass1588Bridge {
 
+    /** was net/minecraft/class_1588.method_5652(Lnet/minecraft/class_2487;)V */
+    public void method_5652(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: new serialization API requires a WriteView and cannot write into the supplied NbtCompound");
+    }
+
+    /** was net/minecraft/class_1588.method_5749(Lnet/minecraft/class_2487;)V */
+    public void method_5749(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new class_1588 API has no method accepting class_2487 or equivalent NBT deserialization entry point");
+    }
 
 }

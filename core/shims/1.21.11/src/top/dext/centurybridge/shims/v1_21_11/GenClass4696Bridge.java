@@ -15,6 +15,19 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_4696.class)
 public abstract class GenClass4696Bridge {
 
+    /** was net/minecraft/class_4696.method_23679(Lnet/minecraft/class_2680;)Lnet/minecraft/class_1921; */
+    public net.minecraft.class_1921 method_23679(net.minecraft.class_2680 a0) {
+        return ((net.minecraft.class_4696) (Object) this).method_23683(a0);
+    }
 
+    /** was net/minecraft/class_4696.method_23680(Lnet/minecraft/class_3610;)Lnet/minecraft/class_1921; */
+    public net.minecraft.class_1921 method_23680(net.minecraft.class_3610 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new fluid-layer API returns class_11515 BlockRenderLayer, which cannot be faithfully converted to the old class_1921 RenderLayer contract");
+    }
+
+    /** was net/minecraft/class_4696.method_23683(Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1921; */
+    public net.minecraft.class_1921 method_23683(net.minecraft.class_2680 a0, boolean a1) {
+        return ((net.minecraft.class_4696) (Object) this).method_23683(a0);
+    }
 
 }
