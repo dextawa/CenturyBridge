@@ -7423,4 +7423,12 @@ public final class Statics {
     public static net.minecraft.world.entity.ai.attributes.AttributeInstance method_5996(net.minecraft.world.entity.Mob self, net.minecraft.world.entity.ai.attributes.Attribute a) {
         return self.getAttribute(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(a));
     }
+    /** was net/minecraft/class_1496.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
+    public static net.minecraft.world.entity.ai.attributes.AttributeInstance method_5996(net.minecraft.world.entity.animal.equine.AbstractHorse self, net.minecraft.world.entity.ai.attributes.Attribute a) {
+        return self.getAttribute(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(a));
+    }
+    /** was net/minecraft/class_3222.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
+    public static net.minecraft.world.entity.ai.attributes.AttributeInstance method_5996(net.minecraft.server.level.ServerPlayer self, net.minecraft.world.entity.ai.attributes.Attribute a) {
+        return self.getAttribute(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(a));
+    }
 }
