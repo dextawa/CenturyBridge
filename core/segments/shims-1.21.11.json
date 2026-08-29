@@ -1215,7 +1215,8 @@
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler": "top/dext/centurybridge/compat/fapi/CbServerPlayHandler",
   "net/fabricmc/fabric/api/client/model/ModelLoadingRegistry": "top/dext/centurybridge/compat/fapi/CbModelLoadingRegistry",
   "net/fabricmc/fabric/api/client/model/ExtraModelProvider": "top/dext/centurybridge/compat/fapi/CbExtraModelProvider",
-  "net/fabricmc/fabric/api/client/model/BakedModelManagerHelper": "top/dext/centurybridge/compat/fapi/CbBakedModelManagerHelper"
+  "net/fabricmc/fabric/api/client/model/BakedModelManagerHelper": "top/dext/centurybridge/compat/fapi/CbBakedModelManagerHelper",
+  "net/minecraft/class_2753": "net/minecraft/class_2754"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
