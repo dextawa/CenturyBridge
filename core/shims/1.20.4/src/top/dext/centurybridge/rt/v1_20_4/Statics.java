@@ -1749,4 +1749,176 @@ public final class Statics {
         return local ? net.minecraft.class_642.class_8678.field_45609   // LAN
                      : net.minecraft.class_642.class_8678.field_45611;  // OTHER
     }
+
+    /** was net/minecraft/class_4185.<init>(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_4185$class_4241;)V -- the ctor is
+     *  protected since 1.19.3; Button.builder is the public path */
+    public static net.minecraft.class_4185 cbNewclass_4185(int x, int y, int w, int h, net.minecraft.class_2561 text, net.minecraft.class_4185.class_4241 action) {
+        return net.minecraft.class_4185.method_46430(text, action).method_46434(x, y, w, h).method_46431();
+    }
+
+    /** was net/minecraft/class_332.<init>()V -- a real DrawContext over the client's entity vertex consumers */
+    public static net.minecraft.class_332 cbNewclass_332() {
+        net.minecraft.class_310 mc = net.minecraft.class_310.method_1551();
+        return new net.minecraft.class_332(mc, mc.method_22940().method_23000());
+    }
+
+    /** was net/minecraft/class_2588.<init>(Ljava/lang/String;[Ljava/lang/Object;)V -- 1.20.3 added a fallback string */
+    public static net.minecraft.class_2588 cbNewclass_2588(String key, Object[] args) { return new net.minecraft.class_2588(key, key, args); }
+    /** was net/minecraft/class_2588.<init>(Ljava/lang/String;)V */
+    public static net.minecraft.class_2588 cbNewclass_2588(String key) { return new net.minecraft.class_2588(key, key, new Object[0]); }
+
+    // NbtIo took java.nio.file.Path instead of File in 1.20.3.
+    /** was net/minecraft/class_2507.method_30614(Lnet/minecraft/class_2487;Ljava/io/File;)V writeCompressed */
+    public static void method_30614(net.minecraft.class_2487 nbt, java.io.File f) throws java.io.IOException { net.minecraft.class_2507.method_30614(nbt, f.toPath()); }
+    /** was net/minecraft/class_2507.method_10630(Lnet/minecraft/class_2487;Ljava/io/File;)V write */
+    public static void method_10630(net.minecraft.class_2487 nbt, java.io.File f) throws java.io.IOException { net.minecraft.class_2507.method_10630(nbt, f.toPath()); }
+    /** was net/minecraft/class_2507.method_10633(Ljava/io/File;)Lnet/minecraft/class_2487; read */
+    public static net.minecraft.class_2487 method_10633(java.io.File f) throws java.io.IOException { return net.minecraft.class_2507.method_10633(f.toPath()); }
+
+    /** was net/minecraft/class_746.method_3117()Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3117(net.minecraft.class_746 self) { return self.method_52814().comp_1626(); }
+    /** was net/minecraft/class_746.method_3121()Ljava/lang/String; */
+    public static String method_3121(net.minecraft.class_746 self) { return self.method_52814().comp_1629().method_52856(); }
+    /** was net/minecraft/class_742.method_3119()Lnet/minecraft/class_2960; getCapeTexture */
+    public static net.minecraft.class_2960 method_3119(net.minecraft.class_742 self) { return self.method_52814().comp_1627(); }
+    /** was net/minecraft/class_742.method_3122()Lnet/minecraft/class_2960; getElytraTexture */
+    public static net.minecraft.class_2960 method_3122(net.minecraft.class_742 self) { return self.method_52814().comp_1628(); }
+    /** was net/minecraft/class_742.method_3125()Z isCapeLoaded */
+    public static boolean method_3125(net.minecraft.class_742 self) { return self.method_52814().comp_1627() != null; }
+    /** was net/minecraft/class_742.method_3127()Z isSkinLoaded */
+    public static boolean method_3127(net.minecraft.class_742 self) { return self.method_52814().comp_1626() != null; }
+    /** was net/minecraft/class_640.method_2968()Lnet/minecraft/class_2960; PlayerListEntry.getSkinTexture */
+    public static net.minecraft.class_2960 method_2968(net.minecraft.class_640 self) { return self.method_52810().comp_1626(); }
+    /** was net/minecraft/class_640.method_2957()Lnet/minecraft/class_2960; getElytraTexture */
+    public static net.minecraft.class_2960 method_2957(net.minecraft.class_640 self) { return self.method_52810().comp_1628(); }
+    /** was net/minecraft/class_640.method_2979()Lnet/minecraft/class_2960; getCapeTexture */
+    public static net.minecraft.class_2960 method_2979(net.minecraft.class_640 self) { return self.method_52810().comp_1627(); }
+    /** was net/minecraft/class_1068.method_4647(Ljava/util/UUID;)Ljava/lang/String; DefaultSkinHelper.getModel */
+    public static String method_4647(java.util.UUID uuid) { return net.minecraft.class_1068.method_4648(uuid).comp_1629().method_52856(); }
+    /** was net/minecraft/class_320.method_1673()Ljava/lang/String; Session.getUuid (1.20.2 stores a UUID) */
+    public static String method_1673(net.minecraft.class_320 self) { java.util.UUID u = self.method_44717(); return u == null ? "" : u.toString(); }
+    /** was net/minecraft/class_320.method_1677()Lcom/mojang/authlib/GameProfile; Session.getProfile */
+    public static com.mojang.authlib.GameProfile method_1677(net.minecraft.class_320 self) {
+        return new com.mojang.authlib.GameProfile(self.method_44717(), self.method_1676());
+    }
+    /** was net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V */
+    public static void method_2942(net.minecraft.class_638 self, int id, net.minecraft.class_1297 e) { self.method_53875(e); }
+    /** was net/minecraft/class_161$class_162.method_695(Lnet/minecraft/class_2960;)Lnet/minecraft/class_161; Builder.build(id) */
+    public static net.minecraft.class_161 method_695(net.minecraft.class_161.class_162 self, net.minecraft.class_2960 id) {
+        return self.method_695(id).comp_1920();
+    }
+    /** was net/minecraft/class_161$class_162.method_710()Ljava/util/Map; Builder.getCriteria (accessor on the ImmutableMap builder) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static java.util.Map method_710(net.minecraft.class_161.class_162 self) {
+        return ((top.dext.centurybridge.shims.v1_20_4.CbAdvancementBuilderCriteria) (Object) self).cbCriteria().build();
+    }
+    /** was net/minecraft/class_632.method_2864(Lnet/minecraft/class_161;Z)V selectTab(Advancement, boolean): locate its entry in the tree */
+    public static void method_2864(net.minecraft.class_632 self, net.minecraft.class_161 adv, boolean b) {
+        for (net.minecraft.class_8781 p : self.method_53814().method_53693()) {
+            if (p.method_53647() == adv) { self.method_2864(p.method_53649(), b); return; }
+        }
+        self.method_2864((net.minecraft.class_8779) null, b);
+    }
+    /** was net/minecraft/class_3448.method_14957()Ljava/lang/String; StatType.getTranslationKey */
+    @SuppressWarnings("rawtypes")
+    public static String method_14957(net.minecraft.class_3448 self) {
+        return net.minecraft.class_156.method_646("stat_type", net.minecraft.class_7923.field_41193.method_10221(self));
+    }
+    /** was net/minecraft/class_5712.method_32938()Ljava/lang/String; GameEvent.getId (the registry path) */
+    public static String method_32938(net.minecraft.class_5712 self) {
+        net.minecraft.class_2960 id = net.minecraft.class_7923.field_41171.method_10221(self);
+        return id == null ? "unknown" : id.method_12832();
+    }
+    /** was net/minecraft/class_173.method_762(Lnet/minecraft/class_176;)Lnet/minecraft/class_2960; LootContextTypes.getId (registry map via accessor) */
+    public static net.minecraft.class_2960 method_762(net.minecraft.class_176 set) {
+        return top.dext.centurybridge.shims.v1_20_4.CbLootContextTypesAccessor.cbRegistry().inverse().get(set);
+    }
+    /** was net/minecraft/class_1496.method_5621()D */
+    public static double method_5621(net.minecraft.class_1496 self) { return self.method_17682() * 0.75; }
+    /** was net/minecraft/class_1498.method_5621()D */
+    public static double method_5621(net.minecraft.class_1498 self) { return self.method_17682() * 0.75; }
+    /** was net/minecraft/class_2090.method_9017(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090; LocationPredicate.feature(structure) */
+    public static net.minecraft.class_2090 method_9017(net.minecraft.class_5321<net.minecraft.class_3195> key) {
+        return net.minecraft.class_2090.class_2091.method_53183(key).method_9023();
+    }
+    /** was net/minecraft/class_2080$class_2083.method_35248(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2080$class_2083; */
+    public static net.minecraft.class_2080.class_2083 method_35248(net.minecraft.class_2048 p) {
+        return net.minecraft.class_2080.class_2083.method_35248(java.util.Optional.ofNullable(p)).comp_1924();
+    }
+    /** was net/minecraft/class_5409$class_5410.method_30099(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073$class_2074;Lnet/minecraft/class_5258;)Lnet/minecraft/class_5409$class_5410; */
+    public static net.minecraft.class_5409.class_5410 method_30099(net.minecraft.class_5258 a, net.minecraft.class_2073.class_2074 b, net.minecraft.class_5258 c) {
+        return net.minecraft.class_5409.class_5410.method_30099(java.util.Optional.ofNullable(a), b, java.util.Optional.ofNullable(c)).comp_1924();
+    }
+    /** was net/minecraft/class_2724.method_11779()Lnet/minecraft/class_5321; PlayerRespawnS2CPacket.getDimension */
+    public static net.minecraft.class_5321<net.minecraft.class_1937> method_11779(net.minecraft.class_2724 self) { return self.comp_1728().comp_1554(); }
+    /** was net/minecraft/class_3898.method_39975(IIIII)Z ChunkMap.isChunkInRange (1.20.1 algorithm) */
+    public static boolean method_39975(int x1, int z1, int x2, int z2, int distance) {
+        int i = Math.max(0, Math.abs(x1 - x2) - 1);
+        int j = Math.max(0, Math.abs(z1 - z2) - 1);
+        long l = Math.max(0, Math.max(i, j) - 1);
+        long m = Math.min(i, j);
+        long n = m * m + l * l;
+        int k = distance * distance;
+        return n < (long) k;
+    }
+    /** was net/minecraft/class_1867$class_1868.method_8142(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1867; */
+    public static net.minecraft.class_1867 method_8142(net.minecraft.class_1867.class_1868 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
+        return self.method_53736().parse(JsonOps.INSTANCE, json).result()
+            .orElseThrow(() -> new JsonSyntaxException("CenturyBridge: invalid shapeless recipe " + id));
+    }
+    /** was net/minecraft/class_505.method_2565(Lnet/minecraft/class_1860;)V RecipeBookWidget.showGhostRecipe(Recipe): find its RecipeEntry */
+    public static void method_2565(net.minecraft.class_505 self, net.minecraft.class_1860<?> recipe) {
+        net.minecraft.class_638 world = net.minecraft.class_310.method_1551().field_1687;
+        if (world == null) return;
+        for (net.minecraft.class_8786<?> e : world.method_8433().method_8126()) {
+            if (e.comp_1933() == recipe) { self.method_2565(e); return; }
+        }
+    }
+    /** was net/minecraft/class_332.method_49697(Lnet/minecraft/class_2960;IIIIIIIIII)V drawNineSlicedTexture(sideW, sideH) */
+    public static void method_49697(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int sw, int sh, int cw, int ch, int u, int v) {
+        method_48587(self, tex, x, y, w, h, sw, sh, sw, sh, cw, ch, u, v);
+    }
+    private static int[] cbDivide(int total, int piece) {
+        if (total <= 0 || piece <= 0) return new int[0];
+        int count = net.minecraft.class_3532.method_38788(total, piece);
+        int q = total / count, mod = total % count, rem = 0;
+        int[] out = new int[count];
+        for (int idx = 0; idx < count; idx++) {
+            int p = q;
+            rem += mod;
+            if (rem >= count) { rem -= count; p++; }
+            out[idx] = p;
+        }
+        return out;
+    }
+    /** SpecialCraftingRecipe(Identifier, category) -> (category): the id moved to RecipeEntry. */
+    public static net.minecraft.class_7710 cbDropRecipeId(net.minecraft.class_2960 id, net.minecraft.class_7710 category) { return category; }
+    /** AbstractCriterionConditions(Identifier, LootContextPredicate) -> (Optional<LootContextPredicate>) */
+    public static java.util.Optional<net.minecraft.class_5258> cbCriterionPlayer(net.minecraft.class_2960 id, net.minecraft.class_5258 p) { return java.util.Optional.ofNullable(p); }
+    /** ServerPlayerEntity(server, world, profile) gained SyncedClientOptions */
+    public static net.minecraft.class_8791 cbDefaultClientOptions() { return net.minecraft.class_8791.method_53821(); }
+    /** ButtonWidget(x, y, w, h, text, action) gained a NarrationSupplier; the vanilla default narrates the supplied message */
+    public static net.minecraft.class_4185.class_7841 cbDefaultNarration() { return s -> s.get(); }
+
+    /** was net/minecraft/class_1071.method_4654(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map; PlayerSkinProvider.getTextures.
+     *  Rebuilt from the synchronous SkinTextures: SKIN carries the real URL + model metadata; CAPE/ELYTRA
+     *  entries are present when the texture is, with the registered texture id standing in for a URL. */
+    public static java.util.Map<com.mojang.authlib.minecraft.MinecraftProfileTexture.Type, com.mojang.authlib.minecraft.MinecraftProfileTexture> method_4654(net.minecraft.class_1071 self, com.mojang.authlib.GameProfile profile) {
+        net.minecraft.class_8685 t = self.method_52862(profile);
+        java.util.Map<com.mojang.authlib.minecraft.MinecraftProfileTexture.Type, com.mojang.authlib.minecraft.MinecraftProfileTexture> m =
+            new java.util.EnumMap<>(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.class);
+        if (t.comp_1911() != null) {
+            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.SKIN,
+                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1911(), java.util.Map.of("model", t.comp_1629().method_52856())));
+        }
+        if (t.comp_1627() != null) {
+            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.CAPE,
+                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1627().toString(), null));
+        }
+        if (t.comp_1628() != null) {
+            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.ELYTRA,
+                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1628().toString(), null));
+        }
+        return m;
+    }
 }

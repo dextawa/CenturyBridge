@@ -25,7 +25,7 @@ public abstract class PlayerSkinBridge {
 
     /** 1.20.1 getModel(): now SkinTextures.model(), "slim" or "default". */
     public String method_3121() {
-        return ((class_742) (Object) this).method_52814().comp_1911();
+        return ((class_742) (Object) this).method_52814().comp_1629().method_52856();
     }
 
     /** 1.20.1 getCapeTexture(): now SkinTextures.capeTexture(), may be null. */
