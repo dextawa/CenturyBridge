@@ -949,7 +949,13 @@
   "net/minecraft/class_2487.method_10562(Ljava/lang/String;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_2487.method_10554(Ljava/lang/String;I)Lnet/minecraft/class_2499;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_2487.method_10551(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_4587.method_22907(Lorg/joml/Quaternionf;)V": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_4587.method_22907(Lorg/joml/Quaternionf;)V": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_5132$class_5133.method_26867(Lnet/minecraft/class_1320;)Lnet/minecraft/class_5132$class_5133;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_5132$class_5133.method_26868(Lnet/minecraft/class_1320;D)Lnet/minecraft/class_5132$class_5133;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_4588.method_22912(DDD)Lnet/minecraft/class_4588;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_4588.method_22918(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_2499.method_10602(I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1144.method_4873(Lnet/minecraft/class_1113;)V": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v26_2/Statics",
@@ -961,7 +967,10 @@
   "net/minecraft/class_2186.method_9318(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2300;": "parse",
   "net/minecraft/class_2191.method_9331(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2191$class_2192;": "parse",
   "net/minecraft/class_2233.method_9453(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2233$class_2234;": "parse",
-  "net/minecraft/class_3244.method_14367(Lnet/minecraft/class_2561;)V": "disconnect"
+  "net/minecraft/class_3244.method_14367(Lnet/minecraft/class_2561;)V": "disconnect",
+  "net/minecraft/class_7922.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": "getValue",
+  "net/minecraft/class_2370.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": "getValue",
+  "net/minecraft/class_2348.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": "getValue"
  },
  "fieldRenames": {
   "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "connection",
@@ -1005,7 +1014,8 @@
   "net/minecraft/class_332": "top/dext/centurybridge/facade/v26_2/GuiGraphics",
   "net/fabricmc/fabric/api/client/keybinding/v1/KeyBindingHelper": "top/dext/centurybridge/compat/fapi/CbKeyBindingHelper",
   "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$EndWorldTick": "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$EndLevelTick",
-  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$StartWorldTick": "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$StartLevelTick"
+  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$StartWorldTick": "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$StartLevelTick",
+  "net/minecraft/class_2753": "net/minecraft/class_2754"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -3725,6 +3735,7 @@
   "net/minecraft/class_9135$13.field_51473:Lnet/minecraft/class_9139;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_9135$16.field_48574:Ljava/util/function/Function;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_9135$17.field_49690:Lnet/minecraft/class_9139;": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_9135$18.field_51475:Lnet/minecraft/class_5321;": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_9135$18.field_51475:Lnet/minecraft/class_5321;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_5134.field_23721:Lnet/minecraft/class_1320;": "top/dext/centurybridge/rt/v26_2/Statics"
  }
 }

@@ -910,6 +910,25 @@ public final class JarProcessor {
                                 "LEDGERED[" + side + "]@" + r.boundary() + ": " + chain.ledgerReason(owner, name));
                             return;
                         }
+                        // the field's TYPE was merged into a surviving VANILLA class via
+                        // classRename (e.g. DirectionProperty -> EnumProperty): the ClassRemapper
+                        // rewrites this GETSTATIC's type descriptor to the renamed class, which is
+                        // exactly what the surviving vanilla field now holds, so the read resolves
+                        // at runtime even though the segment marks the old type as changed. Only
+                        // vanilla targets qualify -- a facade rename does NOT match the real field's
+                        // type, so those stay ISSUE.
+                        if (op == Opcodes.GETSTATIC) {
+                            org.objectweb.asm.Type ft = org.objectweb.asm.Type.getType(desc);
+                            String fe = ft.getSort() == org.objectweb.asm.Type.OBJECT ? ft.getInternalName()
+                                      : ft.getSort() == org.objectweb.asm.Type.ARRAY
+                                        && ft.getElementType().getSort() == org.objectweb.asm.Type.OBJECT
+                                        ? ft.getElementType().getInternalName() : null;
+                            String ren = fe == null ? null : chain.classRenames.get(fe);
+                            if (ren != null && ren.startsWith("net/minecraft/")) {
+                                top.dext.centurybridge.data.FullAudit.record(fkey, "class-renamed-field");
+                                return;
+                            }
+                        }
                         top.dext.centurybridge.data.FullAudit.record(fkey,
                             "ISSUE[" + side + "] " + r.level() + "@" + r.boundary());
                         String line = tag + r.level() + " field @" + r.boundary() + ": " + shortName(owner) + "." + name;

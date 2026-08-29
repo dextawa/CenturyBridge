@@ -7348,4 +7348,45 @@ public final class Statics {
     public static float method_15362(float f) {
         return net.minecraft.util.Mth.cos(f);
     }
+
+    /** was net/minecraft/class_5132$class_5133.method_26867(Lnet/minecraft/class_1320;)Lnet/minecraft/class_5132$class_5133; */
+    public static net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder method_26867(
+            net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder self,
+            net.minecraft.world.entity.ai.attributes.Attribute attr) {
+        return self.add(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attr));
+    }
+
+    /** was net/minecraft/class_5132$class_5133.method_26868(Lnet/minecraft/class_1320;D)Lnet/minecraft/class_5132$class_5133; */
+    public static net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder method_26868(
+            net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder self,
+            net.minecraft.world.entity.ai.attributes.Attribute attr, double value) {
+        return self.add(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attr), value);
+    }
+
+    /** was net/minecraft/class_4588.method_22912(DDD)Lnet/minecraft/class_4588; */
+    public static com.mojang.blaze3d.vertex.VertexConsumer method_22912(
+            com.mojang.blaze3d.vertex.VertexConsumer self, double x, double y, double z) {
+        return self.addVertex((float) x, (float) y, (float) z);
+    }
+
+    /** was net/minecraft/class_4588.method_22918(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588; */
+    public static com.mojang.blaze3d.vertex.VertexConsumer method_22918(
+            com.mojang.blaze3d.vertex.VertexConsumer self, org.joml.Matrix4f m, float x, float y, float z) {
+        return self.addVertex(m, x, y, z);
+    }
+
+    /** was net/minecraft/class_5134.field_23721Lnet/minecraft/class_1320; */
+    public static net.minecraft.world.entity.ai.attributes.Attribute field_23721() {
+        return (net.minecraft.world.entity.ai.attributes.Attribute) net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE.value();
+    }
+
+    /** was net/minecraft/class_2499.method_10602(I)Lnet/minecraft/class_2487; -- ListTag.getCompound(int) Optional-ified in 26.x; old returned an empty compound when absent = getCompoundOrEmpty */
+    public static net.minecraft.nbt.CompoundTag method_10602(net.minecraft.nbt.ListTag self, int i) {
+        return self.getCompoundOrEmpty(i);
+    }
+
+    /** was net/minecraft/class_1144.method_4873(Lnet/minecraft/class_1113;)V -- SoundManager.play now returns a PlayResult; the old call discarded a void return */
+    public static void method_4873(net.minecraft.client.sounds.SoundManager self, net.minecraft.client.resources.sounds.SoundInstance s) {
+        self.play(s);
+    }
 }
