@@ -79,7 +79,12 @@ def index_jar(path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('corpus'); ap.add_argument('fapi'); ap.add_argument('--wall'); ap.add_argument('--out')
+    ap.add_argument('--handled', help='shims-<ver>.json: classRenames already routing a fapi class (to a compat class or a new fapi name) count as handled')
     a = ap.parse_args()
+    handled = {}
+    if a.handled:
+        import json
+        handled = {k: v for k, v in json.load(io.open(a.handled, encoding='utf-8')).get('classRenames', {}).items() if k.startswith('net/fabricmc/')}
     wall = {}
     if a.wall:
         for ln in io.open(a.wall, encoding='utf-8'):
@@ -104,9 +109,10 @@ def main():
             for owner, name, desc, tag in r[4]:
                 if owner.startswith('net/fabricmc/fabric/api/'):
                     k = (owner, name, desc); mem_refs[k].add(mod); mem_cnt[k] += 1
-    missing_cls = {c: m for c, m in cls_refs.items() if c not in fapi}
+    missing_cls = {c: m for c, m in cls_refs.items() if c not in fapi and c not in handled}
     missing_mem = {}
     for (owner, name, desc), mods in mem_refs.items():
+        if owner in handled: continue  # routed to a compat/renamed class: that class owns the member contract
         if owner not in fapi: continue
         methods, fields = fapi[owner]
         td = tr(desc)
