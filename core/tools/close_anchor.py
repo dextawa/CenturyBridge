@@ -64,12 +64,10 @@ for l in io.open(audit, encoding='utf-8'):
     key = owner + ('.' + member if member else '')
     if key in led:
         continue
-    # do not ledger something already bridged (redirect/cover/getter/rename)
-    keydesc = sym  # full key with desc for redirect maps
-    bridged = any(sym in (w.get(mk) or {}) for mk in ('instanceRedirects','staticRedirects','fieldRedirects','fieldGetters','methodRenames','ctorRedirects')) \
-              or sym in (w.get('covers') or [])
-    if bridged:
-        continue
+    # NB: do NOT skip symbols that are merely WIRED in a redirect map -- the audit
+    # already reports this symbol as unaccounted, so any such wiring is dangling/broken
+    # (desc mismatch, method-ref path). The analysis consults redirects BEFORE the
+    # ledger, so a working redirect still wins; ledgering only catches the broken ones.
     rsn = reason(owner, member)
     if rsn.startswith("no faithful") and fate.startswith('TOMBSTONE') and bnd:
         rsn = f"removed @{bnd}; no runtime equivalent (documented lazy-fail stub)"

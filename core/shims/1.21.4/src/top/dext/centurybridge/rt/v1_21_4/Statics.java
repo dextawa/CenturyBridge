@@ -12393,4 +12393,18 @@ public final class Statics {
         return new net.minecraft.class_9224(name, net.minecraft.class_2561.method_43470(name),
             net.minecraft.class_5352.field_25347, java.util.Optional.empty());
     }
+
+    // Entity.setOnFireFor int-seconds -> float-seconds (1.21 widened the parameter).
+    /** was net/minecraft/class_1297.method_5639(I)V */
+    public static void method_5639(net.minecraft.class_1297 self, int i) { self.method_5639((float) i); }
+    /** was net/minecraft/class_1309.method_5639(I)V */
+    public static void method_5639(net.minecraft.class_1309 self, int i) { self.method_5639((float) i); }
+    /** was net/minecraft/class_1542.method_5639(I)V */
+    public static void method_5639(net.minecraft.class_1542 self, int i) { self.method_5639((float) i); }
+    /** was net/minecraft/class_1588.method_5639(I)V */
+    public static void method_5639(net.minecraft.class_1588 self, int i) { self.method_5639((float) i); }
+    /** was net/minecraft/class_1657.method_5639(I)V */
+    public static void method_5639(net.minecraft.class_1657 self, int i) { self.method_5639((float) i); }
+    /** was net/minecraft/class_1676.method_5639(I)V */
+    public static void method_5639(net.minecraft.class_1676 self, int i) { self.method_5639((float) i); }
 }
