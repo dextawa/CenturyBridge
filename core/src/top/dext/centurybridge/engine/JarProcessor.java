@@ -127,8 +127,10 @@ public final class JarProcessor {
             slot += t.getSize();
         }
         mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
-        if (nr.getSort() != org.objectweb.asm.Type.VOID) {
-            // same return type assumed; pop nothing
+        if (h.unwrapName != null) {
+            // the old override answers in the old return type; convert it to
+            // what vanilla expects from the new shape (facade -> real type)
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.unwrapOwner, h.unwrapName, h.unwrapDesc, false);
         }
         if (guarded) {
             mv.visitLabel(tryEnd);
@@ -1069,6 +1071,23 @@ public final class JarProcessor {
         if ((classAccess[0] & Opcodes.ACC_INTERFACE) == 0) {
             for (Chain.OverrideHook h : declaredOldOverrides) {
                 if (!declaredNewOverrides.contains(h) && !reconnectOverrides.contains(h)) {
+                    // two old overrides folding into ONE new shape (Entity.interact +
+                    // interactAt -> interact(player, hand, pos)): a second synthesized
+                    // method with the same name+desc is a ClassFormatError, so the
+                    // first hook (config order) wins and the other is noted
+                    boolean dup = false;
+                    for (Chain.OverrideHook x : reconnectOverrides) {
+                        if (x.newName.equals(h.newName) && x.newDesc.equals(h.newDesc)) {
+                            dup = true;
+                            break;
+                        }
+                    }
+                    if (dup) {
+                        rpt.notes.add(tag + "override-hook skipped (new shape already synthesized from another old override): "
+                            + h.oldName + h.oldDesc);
+                        top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-shadowed");
+                        continue;
+                    }
                     reconnectOverrides.add(h);
                     rpt.notes.add(tag + "override-hooked: " + h.oldName + h.oldDesc + " -> " + h.newName + h.newDesc);
                     top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hooked");

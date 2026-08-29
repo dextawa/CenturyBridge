@@ -5111,9 +5111,9 @@ public final class Statics {
         self.execute(a0);
     }
 
-    /** was net/minecraft/world/InteractionResult.field_21466Lnet/minecraft/world/InteractionResult; */
+    /** was net/minecraft/class_1269.field_21466Lnet/minecraft/class_1269; -- CONSUME survives as a Success(SwingSource.NONE), a subtype of the old field type */
     public static net.minecraft.world.InteractionResult field_21466() {
-        throw new UnsupportedOperationException("CenturyBridge: CONSUME changed from net.minecraft.world.InteractionResult to net.minecraft.world.InteractionResult$class_9860; no conversion path to net.minecraft.world.InteractionResult available");
+        return net.minecraft.world.InteractionResult.CONSUME;
     }
 
     /** was net/minecraft/world/InteractionResult.field_5811Lnet/minecraft/world/InteractionResult; */
@@ -7430,5 +7430,73 @@ public final class Statics {
     /** was net/minecraft/class_3222.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
     public static net.minecraft.world.entity.ai.attributes.AttributeInstance method_5996(net.minecraft.server.level.ServerPlayer self, net.minecraft.world.entity.ai.attributes.Attribute a) {
         return self.getAttribute(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(a));
+    }
+
+    // ---- InteractionResult (class_1269): enum -> sealed interface at 1.21.2. The
+    //      surviving constants are Success/Fail/Pass records (subtypes of the old
+    //      field type: fieldGetters above); the enum-era helpers are rebuilt here. ----
+    /** was net/minecraft/class_1269.field_33562Lnet/minecraft/class_1269; -- CONSUME_PARTIAL dropped at 1.21.2; CONSUME is the nearest surviving outcome (consumes the action, no swing) */
+    public static net.minecraft.world.InteractionResult field_33562() {
+        return net.minecraft.world.InteractionResult.CONSUME;
+    }
+
+    /** was net/minecraft/class_1269.method_29236(Z)Lnet/minecraft/class_1269; -- sidedSuccess(isClient): 1.20.1 body = isClient ? SUCCESS : CONSUME (client swings, server consumes without swinging) */
+    public static net.minecraft.world.InteractionResult method_29236(boolean isClient) {
+        return isClient ? net.minecraft.world.InteractionResult.SUCCESS : net.minecraft.world.InteractionResult.CONSUME;
+    }
+
+    /** was net/minecraft/class_1269.method_23666()Z -- shouldSwing(): 1.20.1 `this == SUCCESS`; a Success now says which side swings */
+    public static boolean method_23666(net.minecraft.world.InteractionResult self) {
+        return self instanceof net.minecraft.world.InteractionResult.Success s
+            && s.swingSource() != net.minecraft.world.InteractionResult.SwingSource.NONE;
+    }
+
+    /** was net/minecraft/class_1269.method_36360()Z -- shouldAwardStats(): 1.20.1 `SUCCESS || CONSUME` = every Success */
+    public static boolean method_36360(net.minecraft.world.InteractionResult self) {
+        return self instanceof net.minecraft.world.InteractionResult.Success;
+    }
+
+    // ---- TypedActionResult (class_1271, facade) <-> InteractionResult boundary ----
+    /** overrideHooks unwrap: a 1.20.1 Item.use override's TypedActionResult -> the InteractionResult vanilla expects from use() */
+    public static net.minecraft.world.InteractionResult cbUnwrapTyped(top.dext.centurybridge.facade.v26_2.class_1271<?> r) {
+        return r == null ? net.minecraft.world.InteractionResult.PASS : r.cbToVanilla();
+    }
+
+    /** was net/minecraft/class_5328.method_29282(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271; -- ItemUtils.startUsingInstantly, 1.20.1 body: start using, answer consume(held) */
+    public static top.dext.centurybridge.facade.v26_2.class_1271<net.minecraft.world.item.ItemStack> method_29282(
+            net.minecraft.world.level.Level level, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        player.startUsingItem(hand);
+        return new top.dext.centurybridge.facade.v26_2.class_1271<>(net.minecraft.world.InteractionResult.CONSUME, player.getItemInHand(hand));
+    }
+
+    // Item.use answered TypedActionResult<ItemStack> until 1.21.2. A mod's super.use(..) /
+    // item.use(..) lands here (instance redirect, incl. INVOKESPECIAL); the virtual call
+    // reaches the mod's synthesized new-shape hook, whose re-entry guard falls through to
+    // vanilla. One overload per call-site owner seen in the corpus (the redirect emits the
+    // receiver's own type).
+    /** was net/minecraft/class_1792.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271; */
+    public static top.dext.centurybridge.facade.v26_2.class_1271<net.minecraft.world.item.ItemStack> method_7836(
+            net.minecraft.world.item.Item self, net.minecraft.world.level.Level level, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        return top.dext.centurybridge.facade.v26_2.class_1271.cbFrom(self.use(level, player, hand), player.getItemInHand(hand));
+    }
+    /** was net/minecraft/class_1747.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271; */
+    public static top.dext.centurybridge.facade.v26_2.class_1271<net.minecraft.world.item.ItemStack> method_7836(
+            net.minecraft.world.item.BlockItem self, net.minecraft.world.level.Level level, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        return top.dext.centurybridge.facade.v26_2.class_1271.cbFrom(self.use(level, player, hand), player.getItemInHand(hand));
+    }
+    /** was net/minecraft/class_1755.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271; */
+    public static top.dext.centurybridge.facade.v26_2.class_1271<net.minecraft.world.item.ItemStack> method_7836(
+            net.minecraft.world.item.BucketItem self, net.minecraft.world.level.Level level, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        return top.dext.centurybridge.facade.v26_2.class_1271.cbFrom(self.use(level, player, hand), player.getItemInHand(hand));
+    }
+    /** was net/minecraft/class_1753.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271; */
+    public static top.dext.centurybridge.facade.v26_2.class_1271<net.minecraft.world.item.ItemStack> method_7836(
+            net.minecraft.world.item.BowItem self, net.minecraft.world.level.Level level, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        return top.dext.centurybridge.facade.v26_2.class_1271.cbFrom(self.use(level, player, hand), player.getItemInHand(hand));
+    }
+    /** was net/minecraft/class_1821.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271; */
+    public static top.dext.centurybridge.facade.v26_2.class_1271<net.minecraft.world.item.ItemStack> method_7836(
+            net.minecraft.world.item.ShovelItem self, net.minecraft.world.level.Level level, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        return top.dext.centurybridge.facade.v26_2.class_1271.cbFrom(self.use(level, player, hand), player.getItemInHand(hand));
     }
 }

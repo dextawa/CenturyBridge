@@ -145,6 +145,12 @@ public final class Chain {
         public String oldName, oldDesc, newName, newDesc;
         /** "owner.name(desc)" static that converts the new-typed argument to the old type. */
         public String wrapOwner, wrapName, wrapDesc;
+        /**
+         * "owner.name(desc)" static that converts the OLD override's return
+         * value to the NEW return type (Item.use: TypedActionResult facade ->
+         * InteractionResult). Null when the return type did not change.
+         */
+        public String unwrapOwner, unwrapName, unwrapDesc;
         /** internal class name providing cbEnter(Object)Z and cbExit(Object)V */
         public String guard;
         /** hierarchy filters: apply only to classes under / not under this vanilla class */
@@ -409,6 +415,14 @@ public final class Chain {
                         String[] wsig = splitSig(w.substring(dot + 1));
                         h.wrapName = wsig[0];
                         h.wrapDesc = wsig[1];
+                    }
+                    if (o.has("unwrap")) {
+                        String u = o.get("unwrap").getAsString();
+                        int dot = u.lastIndexOf('.', u.indexOf('('));
+                        h.unwrapOwner = u.substring(0, dot);
+                        String[] usig = splitSig(u.substring(dot + 1));
+                        h.unwrapName = usig[0];
+                        h.unwrapDesc = usig[1];
                     }
                     h.guard = o.has("guard") ? o.get("guard").getAsString() : null;
                     h.onlyUnder = o.has("onlyUnder") ? o.get("onlyUnder").getAsString() : null;
