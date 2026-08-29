@@ -739,6 +739,24 @@ public final class JarProcessor {
                             return; // mod-owned members (incl. overrides of dead interface methods) still exist
                         }
                         if (chain.classRenames.containsKey(owner)) {
+                            // a class merged into a surviving VANILLA class (BakedModel ->
+                            // BlockStateModel) keeps its old members only where a redirect is
+                            // wired explicitly on the old owner; the Statics overload takes the
+                            // renamed type because the emitted descriptor goes through the same
+                            // ClassRemapper. Everything else lives on the facade / renamed class.
+                            String rkey = owner + "." + name + desc;
+                            String rirt = chain.instanceRedirects.get(rkey);
+                            if (rirt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
+                                instRedirects.put(rkey, rirt);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "instance-redirect");
+                                return;
+                            }
+                            String rsrt = chain.staticRedirects.get(rkey);
+                            if (rsrt != null && op == Opcodes.INVOKESTATIC) {
+                                redirects.put(rkey, rsrt);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "static-redirect");
+                                return;
+                            }
                             return; // owner facade-renamed; the member lives on the facade
                         }
                         String key = owner + "." + name + desc;

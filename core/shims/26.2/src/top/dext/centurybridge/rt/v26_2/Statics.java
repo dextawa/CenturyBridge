@@ -4011,7 +4011,8 @@ public final class Statics {
 
     /** was net/minecraft/com.mojang.blaze3d.vertex.VertexConsumer.method_22916(I)Lnet/minecraft/com.mojang.blaze3d.vertex.VertexConsumer; */
     public static com.mojang.blaze3d.vertex.VertexConsumer method_22916(com.mojang.blaze3d.vertex.VertexConsumer self, int a0) {
-        return self.setColor(a0);
+        // 1.20.1 uv2(int) = packed lightmap coordinates (the forged body sent it to setColor)
+        return self.setLight(a0);
     }
 
     /** was net/minecraft/com.mojang.blaze3d.vertex.VertexConsumer.method_22917(II)Lnet/minecraft/com.mojang.blaze3d.vertex.VertexConsumer; */
@@ -7955,5 +7956,228 @@ public final class Statics {
     /** was net/minecraft/class_1772.method_7807(Lnet/minecraft/class_1799;Lnet/minecraft/class_1889;)V -- addEnchantment(book, instance) */
     public static void method_7807(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.enchantment.EnchantmentInstance inst) {
         net.minecraft.world.item.enchantment.EnchantmentHelper.updateEnchantments(stack, m -> m.upgrade(inst.enchantment(), inst.level()));
+    }
+
+    // =====================================================================
+    // 1.21 VertexConsumer surface: endVertex / default colour gone (implicit),
+    // normal(Matrix3f, ..) transforms then sets. BufferBuilder implements the
+    // interface, but the redirect emits the receiver's own type -> overloads.
+    // =====================================================================
+    /** was net/minecraft/class_4588.method_1344()V -- endVertex(): vertices complete implicitly since 1.21 */
+    public static void method_1344(com.mojang.blaze3d.vertex.VertexConsumer self) {
+    }
+    /** was net/minecraft/class_287.method_1344()V */
+    public static void method_1344(com.mojang.blaze3d.vertex.BufferBuilder self) {
+    }
+    /** was net/minecraft/class_4588.method_35666()V -- unsetDefaultColor(): default colours are gone in 1.21 */
+    public static void method_35666(com.mojang.blaze3d.vertex.VertexConsumer self) {
+    }
+    /** was net/minecraft/class_287.method_35666()V */
+    public static void method_35666(com.mojang.blaze3d.vertex.BufferBuilder self) {
+    }
+    /** was net/minecraft/class_4588.method_23763(Lorg/joml/Matrix3f;FFF)Lnet/minecraft/class_4588; -- normal(matrix, x, y, z): 1.20.1 transformed the normal by the matrix, then stored it */
+    public static com.mojang.blaze3d.vertex.VertexConsumer method_23763(com.mojang.blaze3d.vertex.VertexConsumer self, org.joml.Matrix3f m, float x, float y, float z) {
+        org.joml.Vector3f n = m.transform(new org.joml.Vector3f(x, y, z));
+        return self.setNormal(n.x(), n.y(), n.z());
+    }
+    /** was net/minecraft/class_287.method_23763(Lorg/joml/Matrix3f;FFF)Lnet/minecraft/class_4588; */
+    public static com.mojang.blaze3d.vertex.VertexConsumer method_23763(com.mojang.blaze3d.vertex.BufferBuilder self, org.joml.Matrix3f m, float x, float y, float z) {
+        return method_23763((com.mojang.blaze3d.vertex.VertexConsumer) self, m, x, y, z);
+    }
+    /** was net/minecraft/class_4588.method_23919(FFFFFFFFFIIFFF)V -- vertex(x,y,z, r,g,b,a, u,v, overlay, light, nx,ny,nz): colour is one packed int now */
+    public static void method_23919(com.mojang.blaze3d.vertex.VertexConsumer self, float x, float y, float z, float r, float g, float b, float a,
+            float u, float v, int overlay, int light, float nx, float ny, float nz) {
+        self.addVertex(x, y, z, net.minecraft.util.ARGB.colorFromFloat(a, r, g, b), u, v, overlay, light, nx, ny, nz);
+    }
+    /** was net/minecraft/class_287.method_23919(FFFFFFFFFIIFFF)V */
+    public static void method_23919(com.mojang.blaze3d.vertex.BufferBuilder self, float x, float y, float z, float r, float g, float b, float a,
+            float u, float v, int overlay, int light, float nx, float ny, float nz) {
+        method_23919((com.mojang.blaze3d.vertex.VertexConsumer) self, x, y, z, r, g, b, a, u, v, overlay, light, nx, ny, nz);
+    }
+    /** was net/minecraft/class_287.method_22918(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588; */
+    public static com.mojang.blaze3d.vertex.VertexConsumer method_22918(com.mojang.blaze3d.vertex.BufferBuilder self, org.joml.Matrix4f m, float x, float y, float z) {
+        return self.addVertex(m, x, y, z);
+    }
+    /** was net/minecraft/class_287.method_22912(DDD)Lnet/minecraft/class_4588; */
+    public static com.mojang.blaze3d.vertex.VertexConsumer method_22912(com.mojang.blaze3d.vertex.BufferBuilder self, double x, double y, double z) {
+        return self.addVertex((float) x, (float) y, (float) z);
+    }
+    /** was net/minecraft/class_287.method_22917(II)Lnet/minecraft/class_4588; -- overlayCoords(u, v) */
+    public static com.mojang.blaze3d.vertex.VertexConsumer method_22917(com.mojang.blaze3d.vertex.BufferBuilder self, int u, int v) {
+        return self.setUv1(u, v);
+    }
+    /** was net/minecraft/class_287.method_22916(I)Lnet/minecraft/class_4588; -- uv2(packedLight) */
+    public static com.mojang.blaze3d.vertex.VertexConsumer method_22916(com.mojang.blaze3d.vertex.BufferBuilder self, int packedLight) {
+        return self.setLight(packedLight);
+    }
+
+    // ---- RenderType static factories: RenderTypes since 1.21.x; chunk layers left RenderType
+    //      (ChunkSectionLayer), the "moving block" variants are the same pipelines for ad-hoc drawing ----
+    /** was net/minecraft/class_1921.method_23577()Lnet/minecraft/class_1921; -- RenderType.solid(): RenderTypes.solidMovingBlock() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23577() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.solidMovingBlock();
+    }
+    /** was net/minecraft/class_1921.method_23579()Lnet/minecraft/class_1921; -- RenderType.cutoutMipped(): RenderTypes.cutoutMovingBlock() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23579() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.cutoutMovingBlock();
+    }
+    /** was net/minecraft/class_1921.method_23581()Lnet/minecraft/class_1921; -- RenderType.cutout(): RenderTypes.cutoutMovingBlock() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23581() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.cutoutMovingBlock();
+    }
+    /** was net/minecraft/class_1921.method_23583()Lnet/minecraft/class_1921; -- RenderType.translucent(): RenderTypes.translucentMovingBlock() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23583() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.translucentMovingBlock();
+    }
+    /** was net/minecraft/class_1921.method_23585()Lnet/minecraft/class_1921; -- RenderType.translucentNoCrumbling(): RenderTypes.translucentMovingBlock() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23585() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.translucentMovingBlock();
+    }
+    /** was net/minecraft/class_1921.method_29380()Lnet/minecraft/class_1921; -- RenderType.translucentMovingBlock(): RenderTypes.translucentMovingBlock() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_29380() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.translucentMovingBlock();
+    }
+    /** was net/minecraft/class_1921.method_29997()Lnet/minecraft/class_1921; -- RenderType.tripwire(): RenderTypes.translucentMovingBlock() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_29997() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.translucentMovingBlock();
+    }
+    /** was net/minecraft/class_1921.method_23572(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.entitySolid(tex): RenderTypes.entitySolid(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23572(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.entitySolid(tex);
+    }
+    /** was net/minecraft/class_1921.method_23576(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.entityCutout(tex): RenderTypes.entityCutoutCull(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23576(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.entityCutoutCull(tex);
+    }
+    /** was net/minecraft/class_1921.method_23578(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.entityCutoutNoCull(tex): RenderTypes.entityCutout(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23578(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.entityCutout(tex);
+    }
+    /** was net/minecraft/class_1921.method_23584(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.entitySmoothCutout(tex): RenderTypes.entityCutoutCull(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23584(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.entityCutoutCull(tex);
+    }
+    /** was net/minecraft/class_1921.method_23580(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.entityTranslucent(tex): RenderTypes.entityTranslucent(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23580(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.entityTranslucent(tex);
+    }
+    /** was net/minecraft/class_1921.method_24294(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921; -- RenderType.entityTranslucent(tex, outline): RenderTypes.entityTranslucent(tex, outline) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_24294(net.minecraft.resources.Identifier tex, boolean outline) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.entityTranslucent(tex, outline);
+    }
+    /** was net/minecraft/class_1921.method_23689(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.entityTranslucentCull(tex): RenderTypes.entityTranslucent(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23689(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.entityTranslucent(tex);
+    }
+    /** was net/minecraft/class_1921.method_29379(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.itemEntityTranslucentCull(tex): RenderTypes.itemTranslucent(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_29379(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.itemTranslucent(tex);
+    }
+    /** was net/minecraft/class_1921.method_25448(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.armorCutoutNoCull(tex): RenderTypes.armorCutoutNoCull(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_25448(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.armorCutoutNoCull(tex);
+    }
+    /** was net/minecraft/class_1921.method_23026(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.eyes(tex): RenderTypes.eyes(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23026(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.eyes(tex);
+    }
+    /** was net/minecraft/class_1921.method_23028(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921; -- RenderType.text(tex): RenderTypes.text(tex) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23028(net.minecraft.resources.Identifier tex) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.text(tex);
+    }
+    /** was net/minecraft/class_1921.method_23018(Lnet/minecraft/class_2960;FF)Lnet/minecraft/class_1921; -- RenderType.energySwirl(tex, u, v): RenderTypes.energySwirl(tex, u, v) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23018(net.minecraft.resources.Identifier tex, float u, float v) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.energySwirl(tex, u, v);
+    }
+    /** was net/minecraft/class_1921.method_23592(Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1921; -- RenderType.beaconBeam(tex, translucent): RenderTypes.beaconBeam(tex, translucent) */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23592(net.minecraft.resources.Identifier tex, boolean translucent) {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.beaconBeam(tex, translucent);
+    }
+    /** was net/minecraft/class_1921.method_23594()Lnet/minecraft/class_1921; -- RenderType.lines(): RenderTypes.lines() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23594() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.lines();
+    }
+    /** was net/minecraft/class_1921.method_23587()Lnet/minecraft/class_1921; -- RenderType.leash(): RenderTypes.leash() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23587() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.leash();
+    }
+    /** was net/minecraft/class_1921.method_23589()Lnet/minecraft/class_1921; -- RenderType.waterMask(): RenderTypes.waterMask() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23589() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.waterMask();
+    }
+    /** was net/minecraft/class_1921.method_23590()Lnet/minecraft/class_1921; -- RenderType.glint(): RenderTypes.glint() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23590() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.glint();
+    }
+    /** was net/minecraft/class_1921.method_29706()Lnet/minecraft/class_1921; -- RenderType.glintDirect(): RenderTypes.glint() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_29706() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.glint();
+    }
+    /** was net/minecraft/class_1921.method_23591()Lnet/minecraft/class_1921; -- RenderType.entityGlint(): RenderTypes.entityGlint() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23591() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.entityGlint();
+    }
+    /** was net/minecraft/class_1921.method_30676()Lnet/minecraft/class_1921; -- RenderType.glintTranslucent(): RenderTypes.glintTranslucent() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_30676() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.glintTranslucent();
+    }
+    /** was net/minecraft/class_1921.method_23593()Lnet/minecraft/class_1921; -- RenderType.lightning(): RenderTypes.lightning() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23593() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.lightning();
+    }
+    /** was net/minecraft/class_1921.method_23574()Lnet/minecraft/class_1921; -- RenderType.endPortal(): RenderTypes.endPortal() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_23574() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.endPortal();
+    }
+    /** was net/minecraft/class_1921.method_34571()Lnet/minecraft/class_1921; -- RenderType.endGateway(): RenderTypes.endGateway() */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_34571() {
+        return net.minecraft.client.renderer.rendertype.RenderTypes.endGateway();
+    }
+
+    // ---- BakedModel (class_1087) -> BlockStateModel: 1.21.5 split models into parts, 26.x made
+    //      the particle texture a Material. The old owner is class-renamed to the real
+    //      BlockStateModel; these answer the members that did not survive. ----
+    private static java.util.List<net.minecraft.client.renderer.block.dispatch.BlockStateModelPart> cbModelParts(net.minecraft.client.renderer.block.dispatch.BlockStateModel self, net.minecraft.util.RandomSource rand) {
+        java.util.List<net.minecraft.client.renderer.block.dispatch.BlockStateModelPart> parts = new java.util.ArrayList<>();
+        self.collectParts(rand == null ? net.minecraft.util.RandomSource.create(42L) : rand, parts);
+        return parts;
+    }
+    /** was net/minecraft/class_1087.method_4707(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_5819;)Ljava/util/List; -- getQuads(state, side, random): every part's quads for that side */
+    public static java.util.List<net.minecraft.client.resources.model.geometry.BakedQuad> method_4707(net.minecraft.client.renderer.block.dispatch.BlockStateModel self,
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.core.Direction side, net.minecraft.util.RandomSource rand) {
+        java.util.List<net.minecraft.client.resources.model.geometry.BakedQuad> out = new java.util.ArrayList<>();
+        for (net.minecraft.client.renderer.block.dispatch.BlockStateModelPart part : cbModelParts(self, rand)) {
+            out.addAll(part.getQuads(side));
+        }
+        return out;
+    }
+    /** was net/minecraft/class_1087.method_4708()Z -- useAmbientOcclusion(): any part */
+    public static boolean method_4708(net.minecraft.client.renderer.block.dispatch.BlockStateModel self) {
+        for (net.minecraft.client.renderer.block.dispatch.BlockStateModelPart part : cbModelParts(self, null)) {
+            if (part.useAmbientOcclusion()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /** was net/minecraft/class_1087.method_4711()Lnet/minecraft/class_1058; -- getParticleIcon(): the particle material's sprite */
+    public static net.minecraft.client.renderer.texture.TextureAtlasSprite method_4711(net.minecraft.client.renderer.block.dispatch.BlockStateModel self) {
+        return self.particleMaterial().sprite();
+    }
+    /** was net/minecraft/class_1087.method_4712()Z -- isGui3d(): block-state models always were */
+    public static boolean method_4712(net.minecraft.client.renderer.block.dispatch.BlockStateModel self) {
+        return true;
+    }
+    /** was net/minecraft/class_1087.method_24304()Z -- usesBlockLight(): block-state models always did */
+    public static boolean method_24304(net.minecraft.client.renderer.block.dispatch.BlockStateModel self) {
+        return true;
+    }
+    /** was net/minecraft/class_1087.method_4713()Z -- isCustomRenderer(): custom renderers are item models now */
+    public static boolean method_4713(net.minecraft.client.renderer.block.dispatch.BlockStateModel self) {
+        return false;
+    }
+    /** was net/minecraft/class_1087.method_4709()Lnet/minecraft/class_809; -- getTransforms(): block-state models carry no item transforms (identity) */
+    public static net.minecraft.client.resources.model.cuboid.ItemTransforms method_4709(net.minecraft.client.renderer.block.dispatch.BlockStateModel self) {
+        return net.minecraft.client.resources.model.cuboid.ItemTransforms.NO_TRANSFORMS;
     }
 }
