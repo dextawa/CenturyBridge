@@ -973,7 +973,16 @@
   "net/minecraft/class_1747.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_1755.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_1753.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_1821.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_1821.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1297.method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1309.method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1533.method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1297.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1427.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1531.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1530.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1657.method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_3222.method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v26_2/Statics",
@@ -3118,6 +3127,27 @@
    "unwrap": "top/dext/centurybridge/rt/v26_2/Statics.cbUnwrapTyped(Ltop/dext/centurybridge/facade/v26_2/class_1271;)Lnet/minecraft/class_1269;",
    "guard": "top/dext/centurybridge/rt/v26_2/Statics",
    "onlyUnder": "net/minecraft/class_1792"
+  },
+  {
+   "old": "method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+   "new": "method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_243;)Lnet/minecraft/class_1269;",
+   "args": [
+    0,
+    1
+   ],
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics",
+   "onlyUnder": "net/minecraft/class_1297"
+  },
+  {
+   "old": "method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+   "new": "method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_243;)Lnet/minecraft/class_1269;",
+   "args": [
+    0,
+    2,
+    1
+   ],
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics",
+   "onlyUnder": "net/minecraft/class_1297"
   }
  ],
  "depRenames": {

@@ -7499,4 +7499,45 @@ public final class Statics {
             net.minecraft.world.item.ShovelItem self, net.minecraft.world.level.Level level, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
         return top.dext.centurybridge.facade.v26_2.class_1271.cbFrom(self.use(level, player, hand), player.getItemInHand(hand));
     }
+
+    // ---- 26.1 interact rework: Entity.interact(Player, Hand) + interactAt(Player, Vec3, Hand)
+    //      merged into interact(Player, Hand, Vec3 relativeHit); Player.interactOn gained the
+    //      same Vec3. Old two-arg callers had no hit location: Vec3.ZERO (= entity origin).
+    //      Overrides are reconnected by overrideHooks (args map); one overload per call-site owner. ----
+    /** was net/minecraft/class_1297.method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; */
+    public static net.minecraft.world.InteractionResult method_5688(net.minecraft.world.entity.Entity self, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        return self.interact(player, hand, net.minecraft.world.phys.Vec3.ZERO);
+    }
+    /** was net/minecraft/class_1309.method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; */
+    public static net.minecraft.world.InteractionResult method_5688(net.minecraft.world.entity.LivingEntity self, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        return self.interact(player, hand, net.minecraft.world.phys.Vec3.ZERO);
+    }
+    /** was net/minecraft/class_1533.method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; */
+    public static net.minecraft.world.InteractionResult method_5688(net.minecraft.world.entity.decoration.ItemFrame self, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        return self.interact(player, hand, net.minecraft.world.phys.Vec3.ZERO);
+    }
+    /** was net/minecraft/class_1297.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; -- interactAt: the hit vector is exactly what the merged method takes */
+    public static net.minecraft.world.InteractionResult method_5664(net.minecraft.world.entity.Entity self, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.Vec3 hit, net.minecraft.world.InteractionHand hand) {
+        return self.interact(player, hand, hit);
+    }
+    /** was net/minecraft/class_1427.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; */
+    public static net.minecraft.world.InteractionResult method_5664(net.minecraft.world.entity.animal.golem.AbstractGolem self, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.Vec3 hit, net.minecraft.world.InteractionHand hand) {
+        return self.interact(player, hand, hit);
+    }
+    /** was net/minecraft/class_1531.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; */
+    public static net.minecraft.world.InteractionResult method_5664(net.minecraft.world.entity.decoration.ArmorStand self, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.Vec3 hit, net.minecraft.world.InteractionHand hand) {
+        return self.interact(player, hand, hit);
+    }
+    /** was net/minecraft/class_1530.method_5664(Lnet/minecraft/class_1657;Lnet/minecraft/class_243;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; */
+    public static net.minecraft.world.InteractionResult method_5664(net.minecraft.world.entity.decoration.HangingEntity self, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.Vec3 hit, net.minecraft.world.InteractionHand hand) {
+        return self.interact(player, hand, hit);
+    }
+    /** was net/minecraft/class_1657.method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; -- Player.interactOn(entity, hand) */
+    public static net.minecraft.world.InteractionResult method_7287(net.minecraft.world.entity.player.Player self, net.minecraft.world.entity.Entity target, net.minecraft.world.InteractionHand hand) {
+        return self.interactOn(target, hand, net.minecraft.world.phys.Vec3.ZERO);
+    }
+    /** was net/minecraft/class_3222.method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; */
+    public static net.minecraft.world.InteractionResult method_7287(net.minecraft.server.level.ServerPlayer self, net.minecraft.world.entity.Entity target, net.minecraft.world.InteractionHand hand) {
+        return self.interactOn(target, hand, net.minecraft.world.phys.Vec3.ZERO);
+    }
 }
