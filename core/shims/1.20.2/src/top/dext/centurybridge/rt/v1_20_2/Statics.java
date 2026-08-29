@@ -523,9 +523,10 @@ public final class Statics {
         return new net.minecraft.class_2960("textures/gui/icons.png");
     }
 
-    /** was net/minecraft/class_332.<init>()V */
+    /** was net/minecraft/class_332.<init>()V -- a real DrawContext over the client's entity vertex consumers */
     public static net.minecraft.class_332 cbNewclass_332() {
-        throw new UnsupportedOperationException("CenturyBridge: the new constructors require a Minecraft client and vertex consumer provider, but the old zero-argument constructor supplies neither");
+        net.minecraft.class_310 mc = net.minecraft.class_310.method_1551();
+        return new net.minecraft.class_332(mc, mc.method_22940().method_23000());
     }
 
     /** was net/minecraft/class_339.field_22757Lnet/minecraft/class_2960; */
@@ -921,4 +922,10 @@ public final class Statics {
     public static net.minecraft.class_8791 cbDefaultClientOptions() { return net.minecraft.class_8791.method_53821(); }
     /** ButtonWidget(x, y, w, h, text, action) gained a NarrationSupplier; the vanilla default narrates the supplied message */
     public static net.minecraft.class_4185.class_7841 cbDefaultNarration() { return s -> s.get(); }
+
+    /** was net/minecraft/class_4185.<init>(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_4185$class_4241;)V -- the ctor is
+     *  protected since 1.19.3; Button.builder is the public path */
+    public static net.minecraft.class_4185 cbNewclass_4185(int x, int y, int w, int h, net.minecraft.class_2561 text, net.minecraft.class_4185.class_4241 action) {
+        return net.minecraft.class_4185.method_46430(text, action).method_46434(x, y, w, h).method_46431();
+    }
 }
