@@ -7389,4 +7389,38 @@ public final class Statics {
     public static void method_4873(net.minecraft.client.sounds.SoundManager self, net.minecraft.client.resources.sounds.SoundInstance s) {
         self.play(s);
     }
+
+    // ListTag primitive getters Optional-ified in 26.x; old semantics (value or default
+    // when absent/wrong-type) = getXxxOr(index, default).
+    /** was net/minecraft/class_2499.method_10608(I)Ljava/lang/String; */
+    public static String method_10608(net.minecraft.nbt.ListTag self, int i) { return self.getStringOr(i, ""); }
+    /** was net/minecraft/class_2499.method_10611(I)D */
+    public static double method_10611(net.minecraft.nbt.ListTag self, int i) { return self.getDoubleOr(i, 0.0); }
+    /** was net/minecraft/class_2499.method_10604(I)F */
+    public static float method_10604(net.minecraft.nbt.ListTag self, int i) { return self.getFloatOr(i, 0.0f); }
+    /** was net/minecraft/class_2499.method_10600(I)I */
+    public static int method_10600(net.minecraft.nbt.ListTag self, int i) { return self.getIntOr(i, 0); }
+
+    // LivingEntity.getAttribute(Attribute) holderified in 1.20.5; wrap the bare attribute.
+    // One overload per call-site owner (the redirect emits the receiver's own type).
+    /** was net/minecraft/class_1309.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
+    public static net.minecraft.world.entity.ai.attributes.AttributeInstance method_5996(net.minecraft.world.entity.LivingEntity self, net.minecraft.world.entity.ai.attributes.Attribute a) {
+        return self.getAttribute(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(a));
+    }
+    /** was net/minecraft/class_1657.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
+    public static net.minecraft.world.entity.ai.attributes.AttributeInstance method_5996(net.minecraft.world.entity.player.Player self, net.minecraft.world.entity.ai.attributes.Attribute a) {
+        return self.getAttribute(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(a));
+    }
+    /** was net/minecraft/class_1642.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
+    public static net.minecraft.world.entity.ai.attributes.AttributeInstance method_5996(net.minecraft.world.entity.monster.zombie.Zombie self, net.minecraft.world.entity.ai.attributes.Attribute a) {
+        return self.getAttribute(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(a));
+    }
+    /** was net/minecraft/class_1498.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
+    public static net.minecraft.world.entity.ai.attributes.AttributeInstance method_5996(net.minecraft.world.entity.animal.equine.Horse self, net.minecraft.world.entity.ai.attributes.Attribute a) {
+        return self.getAttribute(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(a));
+    }
+    /** was net/minecraft/class_1308.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
+    public static net.minecraft.world.entity.ai.attributes.AttributeInstance method_5996(net.minecraft.world.entity.Mob self, net.minecraft.world.entity.ai.attributes.Attribute a) {
+        return self.getAttribute(net.minecraft.core.registries.BuiltInRegistries.ATTRIBUTE.wrapAsHolder(a));
+    }
 }
