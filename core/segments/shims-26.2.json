@@ -476,7 +476,8 @@
   "net/minecraft/class_1921.method_30676()Lnet/minecraft/class_1921;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_1921.method_23593()Lnet/minecraft/class_1921;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_1921.method_23574()Lnet/minecraft/class_1921;": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_1921.method_34571()Lnet/minecraft/class_1921;": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_1921.method_34571()Lnet/minecraft/class_1921;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_5251.method_27719(Ljava/lang/String;)Lnet/minecraft/class_5251;": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v26_2/Statics",
@@ -1065,7 +1066,8 @@
   "net/minecraft/class_1087.method_4712()Z": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_1087.method_24304()Z": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_1087.method_4713()Z": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_1087.method_4709()Lnet/minecraft/class_809;": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_1087.method_4709()Lnet/minecraft/class_809;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1299$class_1300.method_5905(Ljava/lang/String;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v26_2/Statics",
@@ -1133,7 +1135,8 @@
   "net/minecraft/class_1087": "net/minecraft/client/renderer/block/dispatch/BlockStateModel",
   "net/minecraft/class_809": "net/minecraft/client/resources/model/cuboid/ItemTransforms",
   "net/minecraft/class_804": "net/minecraft/client/resources/model/cuboid/ItemTransform",
-  "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap": "top/dext/centurybridge/compat/fapi/CbBlockRenderLayerMap"
+  "net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap": "top/dext/centurybridge/compat/fapi/CbBlockRenderLayerMap",
+  "net/fabricmc/fabric/api/item/v1/FabricItemSettings": "top/dext/centurybridge/compat/fapi/FabricItemSettings"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -1235,7 +1238,6 @@
   "net/minecraft/class_2246.field_10261": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2246.field_10545": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_5620": "1.20.3 rework wave -- ledgered pending codec-based bridge",
-  "net/minecraft/class_5251.method_27719": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_7417.field_39004": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_3544.method_15439": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_1937.method_8454": "1.20.3 rework wave -- ledgered pending codec-based bridge",

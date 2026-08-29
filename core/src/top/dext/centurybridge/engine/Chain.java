@@ -217,6 +217,31 @@ public final class Chain {
      * 26.2 never counted). Empty when no target stub was available.
      */
     public final java.util.Map<String, java.util.Set<String>> targetCtors = new java.util.HashMap<>();
+    /**
+     * Every method DECLARED on each target-stub class, "name(desc)" in the analysis
+     * namespace (mojang-era stubs are translated back through the wall table). Mixin
+     * resolves @Inject/@Shadow/@Overwrite/@Invoker targets in the target class itself,
+     * not up the hierarchy -- a method that moved to a superclass is an apply-time
+     * failure even though the member still exists.
+     */
+    public final java.util.Map<String, java.util.Set<String>> targetDecls = new java.util.HashMap<>();
+
+    /** true unless the owner is a known target-stub class that does NOT declare name(desc). */
+    public boolean declaredOnTarget(String owner, String name, String desc) {
+        java.util.Set<String> decl = targetDecls.get(owner);
+        if (decl == null) {
+            return true; // not a stub class (mod-owned, or dead: class death is reported elsewhere)
+        }
+        if (desc == null) {
+            for (String s : decl) {
+                if (s.startsWith(name + "(")) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return decl.contains(name + desc);
+    }
 
     /**
      * Index the target's constructors. For a real-name (26.x) target the jar is
@@ -227,29 +252,52 @@ public final class Chain {
      */
     public void loadTargetCtors(Path stubJar, Path interToMojangTsv) throws IOException {
         java.util.Map<String, String> back = new java.util.HashMap<>();
+        java.util.Map<String, String> memberBack = new java.util.HashMap<>();
+        java.util.Map<String, String> fwd = new java.util.HashMap<>();
         if (interToMojangTsv != null && java.nio.file.Files.exists(interToMojangTsv)) {
             for (String ln : java.nio.file.Files.readAllLines(interToMojangTsv)) {
                 String[] p = ln.split("\t");
                 if (p.length >= 3 && p[0].equals("C")) {
                     back.put(p[2], p[1]);
+                    fwd.put(p[1], p[2]);
+                } else if (p.length >= 3 && p[0].equals("M")) {
+                    memberBack.put(p[2], p[1]); // "mojOwner.mojName" -> "interOwner.interName"
                 }
             }
         }
         var idx = top.dext.centurybridge.data.StubDiff.index(stubJar);
         java.util.regex.Pattern cls = java.util.regex.Pattern.compile("L([^;]+);");
         for (var e : idx.methods.entrySet()) {
-            java.util.Set<String> descs = e.getValue().get("<init>");
-            if (descs == null) {
-                continue;
-            }
             String owner = back.getOrDefault(e.getKey(), e.getKey());
-            java.util.Set<String> out = targetCtors.computeIfAbsent(owner, k -> new java.util.HashSet<>());
-            for (String d : descs) {
-                if (back.isEmpty()) {
-                    out.add(d);
-                } else {
-                    out.add(cls.matcher(d).replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
-                        back.getOrDefault(mr.group(1), mr.group(1))) + ";"));
+            java.util.Set<String> decls = targetDecls.computeIfAbsent(owner, k -> new java.util.HashSet<>());
+            for (var me : e.getValue().entrySet()) {
+                String name = me.getKey();
+                if (!back.isEmpty()) {
+                    // the wall table lists each member once, on its ROOT declaration; an
+                    // override on a subclass shares the intermediary name, so climb the
+                    // (source-era) hierarchy until an ancestor's mapping is found
+                    String mapped = memberBack.get(e.getKey() + "." + name);
+                    if (mapped == null) {
+                        for (String anc : selfAndSupers(owner)) {
+                            String mojAnc = fwd.get(anc);
+                            mapped = mojAnc == null ? null : memberBack.get(mojAnc + "." + name);
+                            if (mapped != null) {
+                                break;
+                            }
+                        }
+                    }
+                    if (mapped != null) {
+                        name = mapped.substring(mapped.lastIndexOf('.') + 1);
+                    }
+                }
+                for (String d : me.getValue()) {
+                    String bd = back.isEmpty() ? d
+                        : cls.matcher(d).replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
+                            back.getOrDefault(mr.group(1), mr.group(1))) + ";");
+                    decls.add(name + bd);
+                    if (name.equals("<init>")) {
+                        targetCtors.computeIfAbsent(owner, k -> new java.util.HashSet<>()).add(bd);
+                    }
                 }
             }
         }

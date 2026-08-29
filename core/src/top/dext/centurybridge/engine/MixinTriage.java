@@ -137,6 +137,18 @@ public final class MixinTriage {
             }
             worst[0] = worst[0].worst(issue);
         };
+        // Mixin looks the member up in the target class itself; a target that merely
+        // inherits it (the method moved up the hierarchy) fails at APPLY time, so it
+        // is as fatal as a dead member even though resolveSpec says the name survives.
+        java.util.function.BiConsumer<Spec, String> declCheck = (sp, what) -> {
+            List<String> owners = sp.owner != null ? List.of(sp.owner) : targets;
+            for (String o : owners) {
+                if (!chain.declaredOnTarget(o, sp.name, sp.desc)) {
+                    touch.accept(new Chain.Issue(Chain.Level.L3, "target-decl"),
+                        what + " not declared on " + o.substring(o.lastIndexOf('/') + 1));
+                }
+            }
+        };
 
         ClassVisitor cv = new ClassVisitor(Opcodes.ASM9) {
             @Override
@@ -192,10 +204,12 @@ public final class MixinTriage {
                             case OVERWRITE -> {
                                 loadBearing[0] = true;
                                 touch.accept(chain.resolveSpec('m', mName, mDesc), "overwrite " + mName);
+                                declCheck.accept(new Spec(null, mName, mDesc, 'm'), "overwrite " + mName);
                                 return null;
                             }
                             case SHADOW -> {
                                 touch.accept(chain.resolveSpec('m', mName, mDesc), "shadow " + mName);
+                                declCheck.accept(new Spec(null, mName, mDesc, 'm'), "shadow " + mName);
                                 return null;
                             }
                             case ACCESSOR, INVOKER -> {
@@ -213,6 +227,9 @@ public final class MixinTriage {
                                     Spec sp = parseSpec(rm(refmap, tgt));
                                     touch.accept(chain.resolveSpec(invoker ? 'm' : 'f', sp.name, sp.desc),
                                         "accessor " + tgt);
+                                    if (invoker) {
+                                        declCheck.accept(sp, "invoker " + tgt);
+                                    }
                                 });
                             }
                             default -> {
@@ -227,6 +244,9 @@ public final class MixinTriage {
                                             Spec sp = parseSpec(rm(refmap, s));
                                             touch.accept(chain.resolveSpec(sp.kind, sp.name, sp.desc),
                                                 "inject-target " + sp.name);
+                                            if (sp.kind == 'm') {
+                                                declCheck.accept(sp, "inject-target " + sp.name);
+                                            }
                                         }
                                     }
                                     for (Object o : asList(values.get("at"))) {

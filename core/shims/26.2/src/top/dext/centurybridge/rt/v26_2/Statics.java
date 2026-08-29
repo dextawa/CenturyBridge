@@ -8180,4 +8180,20 @@ public final class Statics {
     public static net.minecraft.client.resources.model.cuboid.ItemTransforms method_4709(net.minecraft.client.renderer.block.dispatch.BlockStateModel self) {
         return net.minecraft.client.resources.model.cuboid.ItemTransforms.NO_TRANSFORMS;
     }
+
+    /** was net/minecraft/class_1299$class_1300.method_5905(Ljava/lang/String;)Lnet/minecraft/class_1299; --
+     *  EntityType.Builder.build(String id) took a ResourceKey since 1.21.2; the 1.20.1 string was the entity's
+     *  registry id (used for the datafixer choice type). 29 corpus mods; left as-is it is a NoSuchMethodError
+     *  in the mod's entrypoint. */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.world.entity.EntityType method_5905(net.minecraft.world.entity.EntityType.Builder self, String id) {
+        return self.build(net.minecraft.resources.ResourceKey.create(
+            net.minecraft.core.registries.Registries.ENTITY_TYPE, net.minecraft.resources.Identifier.parse(id)));
+    }
+
+    /** was net/minecraft/class_5251.method_27719(Ljava/lang/String;)Lnet/minecraft/class_5251; -- TextColor.parseColor
+     *  returns DataResult since 1.20.3; the 1.20.1 contract was "TextColor or null". */
+    public static net.minecraft.network.chat.TextColor method_27719(String s) {
+        return net.minecraft.network.chat.TextColor.parseColor(s).result().orElse(null);
+    }
 }
