@@ -2076,29 +2076,6 @@ public final class Statics {
         return ((net.minecraft.world.item.crafting.RecipeSerializer) (Object) this).codec().codec();
     }
 
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/method_22445(Lnet/minecraft/nbt/ListTag;)Ljava/util/Map; */
-    public static java.util.Map method_22445(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.nbt.ListTag a0) {
-        throw new UnsupportedOperationException("CenturyBridge: Enchantments are dynamic in 1.20.5 and cannot be resolved from raw NBT without a registry context");
-    }
-
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/method_37423(Lnet/minecraft/world/item/enchantment/Enchantment;)Lnet/minecraft/resources/Identifier; */
-    public static net.minecraft.resources.Identifier method_37423(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.world.item.enchantment.Enchantment a0) {
-        throw new UnsupportedOperationException("CenturyBridge: Enchantments are dynamic in this version and their IDs cannot be resolved without a registry context.");
-    }
-
-
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/method_37425(Lnet/minecraft/nbt/CompoundTag;I)V */
-    public static void method_37425(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.nbt.CompoundTag a0, int a1) {
-        throw new UnsupportedOperationException("CenturyBridge: NBT-based enchantment manipulation is no longer supported");
-    }
-
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/method_37426(Lnet/minecraft/resources/Identifier;I)Lnet/minecraft/nbt/CompoundTag; */
-    public static net.minecraft.nbt.CompoundTag method_37426(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.resources.Identifier a0, int a1) {
-        net.minecraft.nbt.CompoundTag nbtCompound = new net.minecraft.nbt.CompoundTag();
-        nbtCompound.putString("id", java.lang.String.valueOf(a0));
-        nbtCompound.putFloat("lvl", (short) a1);
-        return nbtCompound;
-    }
 
     /** was net/minecraft/world/level/LevelAccessor/gameEvent(Lnet/minecraft/world/level/gameevent/GameEvent;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEvent$Context;)V */
     public void gameEvent(net.minecraft.world.level.gameevent.GameEvent a0, net.minecraft.world.phys.Vec3 a1, net.minecraft.world.level.gameevent.GameEvent.Context a2) {
@@ -3900,114 +3877,6 @@ public final class Statics {
 
 
 
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/method_42304(Lnet/minecraft/world/entity/LivingEntity;)F */
-    public static float method_42304(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.world.entity.LivingEntity a0) {
-        return self.getTridentSpinAttackStrength(a0.getMainHandItem(), a0);
-    }
-
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/method_8202(Lnet/minecraft/world/item/ItemStack;)I */
-    public static int method_8202(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.world.item.ItemStack a0) {
-        return 1;
-    }
-
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/method_8217(Lnet/minecraft/world/entity/LivingEntity;)F */
-    public static float method_8217(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.world.entity.LivingEntity a0) {
-        return self.getTridentSpinAttackStrength(a0.getMainHandItem(), a0);
-    }
-
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/method_8218(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EntityType;)F */
-    public static float method_8218(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.world.item.ItemStack a0, net.minecraft.world.entity.EntityType a1) {
-        throw new UnsupportedOperationException("CenturyBridge: method_8218(ItemStack, EntityType<?>) was replaced by getTridentSpinAttackStrength(ItemStack, LivingEntity) which requires an entity instance, not an EntityType; cannot bridge without a LivingEntity");
-    }
-
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/method_8221(Lnet/minecraft/world/item/ItemStack;)Z */
-    public static boolean method_8221(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.world.item.ItemStack a0) {
-        return self.canStoreEnchantments(a0);
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_23071Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_23071() {
-        throw new UnsupportedOperationException("CenturyBridge: SOUL_SPEED changed from Enchantment (net.minecraft.world.item.enchantment.Enchantment) to RegistryKey<Enchantment> (net.minecraft.resources.ResourceKey); resolving a registry key to an Enchantment instance requires runtime registry access unavailable in a static field context");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_50158Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_50158() {
-        throw new UnsupportedOperationException("CenturyBridge: BREACH is now a RegistryKey<Enchantment> (net.minecraft.resources.ResourceKey); the Enchantment instance (net.minecraft.world.item.enchantment.Enchantment) is data-driven and only resolvable via the dynamic registry manager at runtime, not as a static constant");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9095Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9095() {
-        throw new UnsupportedOperationException("CenturyBridge: FIRE_PROTECTION changed from Enchantment (net.minecraft.world.item.enchantment.Enchantment) to RegistryKey<Enchantment> (net.minecraft.resources.ResourceKey); enchantment instances require runtime registry lookup and are no longer available as static constants");
-        // CB-CONFIDENCE: high -- the old field type (net.minecraft.world.item.enchantment.Enchantment Enchantment) is a runtime instance, the new field type (net.minecraft.resources.ResourceKey RegistryKey) is only a lookup key; no static conversion exists without registry access
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9096Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9096() {
-        throw new UnsupportedOperationException("CenturyBridge: PROJECTILE_PROTECTION is now a RegistryKey (net.minecraft.resources.ResourceKey), not a Registry (net.minecraft.world.item.enchantment.Enchantment); cannot reconstruct Registry from RegistryKey without runtime context");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9097Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9097() {
-        throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.item.enchantment.Enchantment (RecipeType) instances are no longer available as static fields; they require registry lookup via net.minecraft.resources.ResourceKey (RegistryKey)");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9099Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9099() {
-        throw new UnsupportedOperationException("CenturyBridge: SILK_TOUCH changed from Registry (net.minecraft.world.item.enchantment.Enchantment) to RegistryKey (net.minecraft.resources.ResourceKey); a static RegistryKey cannot yield a live Registry without a WrapperLookup");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9101Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9101() {
-        throw new UnsupportedOperationException("CenturyBridge: Enchantments.MENDING changed from Enchantment (net.minecraft.world.item.enchantment.Enchantment) to RegistryKey (net.minecraft.resources.ResourceKey) in 1.21; cannot resolve a RegistryKey to an Enchantment instance without dynamic registry access");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9104Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9104() {
-        throw new UnsupportedOperationException("CenturyBridge: Enchantments.RIPTIDE is now a RegistryKey<Enchantment>; resolving to Enchantment requires a dynamic registry lookup not available in a static context");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9106Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9106() {
-        throw new UnsupportedOperationException("CenturyBridge: Enchantments.IMPALING is now a RegistryKey<Enchantment> (net.minecraft.resources.ResourceKey); the Enchantment instance (net.minecraft.world.item.enchantment.Enchantment) is no longer a static constant and must be resolved from the registry at runtime");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9113Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9113() {
-        throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.item.enchantment.Enchantments.BINDING_CURSE changed from Enchantment (net.minecraft.world.item.enchantment.Enchantment) to RegistryKey (net.minecraft.resources.ResourceKey); enchantment instances are no longer static constants and must be resolved from the registry at runtime");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9115Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9115() {
-        throw new UnsupportedOperationException("CenturyBridge: SWEEPING_EDGE changed from Enchantment (net.minecraft.world.item.enchantment.Enchantment) to RegistryKey<Enchantment> (net.minecraft.resources.ResourceKey); Enchantment instances are no longer available as static constants and require registry lookup at runtime");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9116Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9116() {
-        throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.item.enchantment.Enchantments.PUNCH is now a RegistryKey<Enchantment> (net.minecraft.resources.ResourceKey); the Enchantment object (net.minecraft.world.item.enchantment.Enchantment) is only resolvable through the enchantment registry at runtime, not as a constant field");
-        // CB-CONFIDENCE: high -- the field type changed from Enchantment to RegistryKey<Enchantment>, and no constant conversion exists without registry access
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9123Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9123() {
-        throw new UnsupportedOperationException("CenturyBridge: Registries.SMITE is now a RegistryKey (net.minecraft.resources.ResourceKey) instead of a Registry (net.minecraft.world.item.enchantment.Enchantment); cannot obtain a Registry from a RegistryKey without a RegistryAccess");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9124Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9124() {
-        throw new UnsupportedOperationException("CenturyBridge: FIRE_ASPECT changed from Enchantment (net.minecraft.world.item.enchantment.Enchantment) to RegistryKey<Enchantment> (net.minecraft.resources.ResourceKey); enchantment instances are no longer available as static constants, use the registry to resolve at runtime");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9126Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9126() {
-        throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.item.enchantment.Enchantments.FLAME is now a RegistryKey (net.minecraft.resources.ResourceKey), not an Enchantment (net.minecraft.world.item.enchantment.Enchantment); enchantments are data-driven and no static Enchantment instance can be returned");
-    }
-
-    /** was net/minecraft/world/item/enchantment/Enchantments/field_9132Lnet/minecraft/world/item/enchantment/Enchantment; */
-    public static net.minecraft.world.item.enchantment.Enchantment field_9132() {
-        throw new UnsupportedOperationException("CenturyBridge: PIERCING is now a RegistryKey (net.minecraft.resources.ResourceKey), not an Enchantment instance (net.minecraft.world.item.enchantment.Enchantment); resolving it requires dynamic registry access unavailable statically");
-        // CB-CONFIDENCE: high -- the new field is only a registry key and the provided net.minecraft.world.item.enchantment.Enchantments API exposes no way to obtain a net.minecraft.world.item.enchantment.Enchantment instance
-    }
-
     /** was net/minecraft/client/renderer/rendertype/RenderType/method_23012(Lnet/minecraft/com.mojang.blaze3d.vertex.BufferBuilder;Lnet/minecraft/com.mojang.blaze3d.vertex.VertexSorting;)V */
     public static void method_23012(net.minecraft.client.renderer.rendertype.RenderType self, com.mojang.blaze3d.vertex.BufferBuilder a0, com.mojang.blaze3d.vertex.VertexSorting a1) {
         throw new UnsupportedOperationException("CenturyBridge: RenderLayer.draw(BufferBuilder, VertexConsumerProvider.Immediate) was removed in 1.21's rendering pipeline overhaul; net.minecraft.client.renderer.rendertype.RenderType no longer owns buffer-drawing functionality");
@@ -4997,11 +4866,6 @@ public final class Statics {
     /** was net/minecraft/client/player/AbstractClientPlayer.method_3117()Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier method_3117(net.minecraft.client.player.AbstractClientPlayer self) {
         throw new UnsupportedOperationException("CenturyBridge: method_3117 was deleted in 26.2 with no direct replacement; new ClientPlayerEntity API has no method returning Identifier (net.minecraft.resources.Identifier)");
-    }
-
-    /** was net/minecraft/world/item/enchantment/EnchantmentHelper.method_37424(Lnet/minecraft/nbt/CompoundTag;)I */
-    public static int method_37424(net.minecraft.world.item.enchantment.EnchantmentHelper self, net.minecraft.nbt.CompoundTag a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_37424(TagKey) has no direct replacement; the 1.21.8 ItemStack API has no TagKey-parameter methods");
     }
 
     /** was net/minecraft/gametest/framework/StructureUtils.method_22250(Ljava/lang/String;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Rotation;ILnet/minecraft/server/level/ServerLevel;Z)Lnet/minecraft/world/level/block/entity/StructureBlockEntity; */
@@ -7539,5 +7403,557 @@ public final class Statics {
     /** was net/minecraft/class_3222.method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; */
     public static net.minecraft.world.InteractionResult method_7287(net.minecraft.server.level.ServerPlayer self, net.minecraft.world.entity.Entity target, net.minecraft.world.InteractionHand hand) {
         return self.interactOn(target, hand, net.minecraft.world.phys.Vec3.ZERO);
+    }
+
+    // =====================================================================
+    // 1.21 data-driven enchantments. Enchantment is a registry value whose
+    // identity is its Holder in the WORLD's dynamic registry (no static
+    // Registries.ENCHANTMENT, Enchantments.* are ResourceKeys). 1.20.1 mods
+    // hold bare Enchantment values; these helpers translate both ways.
+    // =====================================================================
+    private static net.minecraft.core.HolderLookup.Provider cbVanillaDataCache;
+
+    /** the live dynamic registries of the side we are on; null before any world exists */
+    public static net.minecraft.core.RegistryAccess cbLiveRegistryAccess() {
+        net.minecraft.server.MinecraftServer s = Trackers.SERVER;
+        if (s != null && s.isSameThread()) {
+            return s.registryAccess();
+        }
+        if (net.fabricmc.loader.api.FabricLoader.getInstance().getEnvironmentType() == net.fabricmc.api.EnvType.CLIENT) {
+            net.minecraft.core.RegistryAccess c = CbClientRegistry.current();
+            if (c != null) {
+                return c;
+            }
+        }
+        return s != null ? s.registryAccess() : null;
+    }
+
+    private static net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment> cbEnchantmentRegistryOrNull() {
+        net.minecraft.core.RegistryAccess ra = cbLiveRegistryAccess();
+        return ra == null ? null : ra.lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+    }
+
+    /** the live Registry&lt;Enchantment&gt; (Registries.ENCHANTMENT reads); a frozen registry: register() fails as in vanilla */
+    public static net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment> cbEnchantmentRegistry() {
+        net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment> r = cbEnchantmentRegistryOrNull();
+        if (r == null) {
+            throw new IllegalStateException("CenturyBridge: enchantments are data-driven since 1.21 and live in the world's dynamic registry; none is loaded yet (called before a server/world exists)");
+        }
+        return r;
+    }
+
+    /** was net/minecraft/class_7923.field_41176Lnet/minecraft/class_2378; -- Registries.ENCHANTMENT: the live dynamic registry */
+    public static net.minecraft.core.Registry field_41176() {
+        return cbEnchantmentRegistry();
+    }
+
+    /** also answers before a world exists, from the vanilla datapack copy (right keys/values, not the live Holder identity) */
+    private static net.minecraft.core.HolderLookup.RegistryLookup<net.minecraft.world.item.enchantment.Enchantment> cbEnchantmentLookup() {
+        net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment> r = cbEnchantmentRegistryOrNull();
+        if (r != null) {
+            return r;
+        }
+        if (cbVanillaDataCache == null) {
+            cbVanillaDataCache = net.minecraft.data.registries.VanillaRegistries.createLookup();
+        }
+        return cbVanillaDataCache.lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+    }
+
+    /** a bare Enchantment for a key; the value->key pair is remembered so the live Holder can be recovered later */
+    public static net.minecraft.world.item.enchantment.Enchantment cbEnchantment(net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> key) {
+        net.minecraft.world.item.enchantment.Enchantment e = cbEnchantmentLookup().getOrThrow(key).value();
+        Trackers.ENCHANTMENT_KEYS.putIfAbsent(e, key);
+        return e;
+    }
+
+    /** live Holder for a bare Enchantment: by remembered key, else by value identity, else a direct holder */
+    public static net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> cbEnchHolder(net.minecraft.world.item.enchantment.Enchantment e) {
+        return cbEnchHolder(e, cbEnchantmentRegistryOrNull());
+    }
+
+    public static net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> cbEnchHolder(net.minecraft.world.item.enchantment.Enchantment e, net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment> reg) {
+        if (reg != null && e != null) {
+            net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> key = Trackers.ENCHANTMENT_KEYS.get(e);
+            if (key != null) {
+                java.util.Optional<net.minecraft.core.Holder.Reference<net.minecraft.world.item.enchantment.Enchantment>> h = reg.get(key);
+                if (h.isPresent()) {
+                    return h.get();
+                }
+            }
+            net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> h = reg.wrapAsHolder(e);
+            if (h.kind() == net.minecraft.core.Holder.Kind.REFERENCE) {
+                h.unwrapKey().ifPresent(k -> Trackers.ENCHANTMENT_KEYS.putIfAbsent(e, k));
+                return h;
+            }
+        }
+        return net.minecraft.core.Holder.direct(e);
+    }
+
+    public static net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> cbEnchHolder(net.minecraft.world.item.enchantment.Enchantment e, net.minecraft.world.level.Level level) {
+        return cbEnchHolder(e, level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT));
+    }
+
+    private static net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> cbEnchHolder(net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> key, net.minecraft.world.entity.LivingEntity entity) {
+        return entity.level().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(key);
+    }
+
+    /** a bare value out of a component/registry holder, remembered with its key */
+    private static net.minecraft.world.item.enchantment.Enchantment cbEnchValue(net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> h) {
+        net.minecraft.world.item.enchantment.Enchantment e = h.value();
+        h.unwrapKey().ifPresent(k -> Trackers.ENCHANTMENT_KEYS.putIfAbsent(e, k));
+        return e;
+    }
+
+    private static int cbLevel(net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> key, net.minecraft.world.entity.LivingEntity entity) {
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentLevel(cbEnchHolder(key, entity), entity);
+    }
+
+    private static int cbItemLevel(net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> key, net.minecraft.world.item.ItemStack stack) {
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(cbEnchantmentLookup().getOrThrow(key), stack);
+    }
+
+    private static net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> cbEnchKey(net.minecraft.world.item.enchantment.Enchantment e) {
+        net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> key = Trackers.ENCHANTMENT_KEYS.get(e);
+        if (key != null) {
+            return key;
+        }
+        net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment> r = cbEnchantmentRegistryOrNull();
+        return r == null ? null : r.getResourceKey(e).orElse(null);
+    }
+
+    // ---- Enchantments.* constants (1.20.1 Enchantment fields -> 1.21 ResourceKeys) ----
+    /** was net/minecraft/class_1893.field_23071Lnet/minecraft/class_1887; -- Enchantments.SOUL_SPEED: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_23071() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.SOUL_SPEED);
+    }
+    /** was net/minecraft/class_1893.field_38223Lnet/minecraft/class_1887; -- Enchantments.SWIFT_SNEAK: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_38223() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.SWIFT_SNEAK);
+    }
+    /** was net/minecraft/class_1893.field_50157Lnet/minecraft/class_1887; -- Enchantments.DENSITY: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_50157() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.DENSITY);
+    }
+    /** was net/minecraft/class_1893.field_50158Lnet/minecraft/class_1887; -- Enchantments.BREACH: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_50158() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.BREACH);
+    }
+    /** was net/minecraft/class_1893.field_50159Lnet/minecraft/class_1887; -- Enchantments.WIND_BURST: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_50159() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.WIND_BURST);
+    }
+    /** was net/minecraft/class_1893.field_63420Lnet/minecraft/class_1887; -- Enchantments.LUNGE: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_63420() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.LUNGE);
+    }
+    /** was net/minecraft/class_1893.field_9095Lnet/minecraft/class_1887; -- Enchantments.FIRE_PROTECTION: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9095() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.FIRE_PROTECTION);
+    }
+    /** was net/minecraft/class_1893.field_9096Lnet/minecraft/class_1887; -- Enchantments.PROJECTILE_PROTECTION: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9096() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.PROJECTILE_PROTECTION);
+    }
+    /** was net/minecraft/class_1893.field_9097Lnet/minecraft/class_1887; -- Enchantments.THORNS: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9097() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.THORNS);
+    }
+    /** was net/minecraft/class_1893.field_9098Lnet/minecraft/class_1887; -- Enchantments.QUICK_CHARGE: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9098() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.QUICK_CHARGE);
+    }
+    /** was net/minecraft/class_1893.field_9099Lnet/minecraft/class_1887; -- Enchantments.SILK_TOUCH: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9099() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH);
+    }
+    /** was net/minecraft/class_1893.field_9100Lnet/minecraft/class_1887; -- Enchantments.LURE: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9100() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.LURE);
+    }
+    /** was net/minecraft/class_1893.field_9101Lnet/minecraft/class_1887; -- Enchantments.MENDING: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9101() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.MENDING);
+    }
+    /** was net/minecraft/class_1893.field_9103Lnet/minecraft/class_1887; -- Enchantments.POWER: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9103() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.POWER);
+    }
+    /** was net/minecraft/class_1893.field_9104Lnet/minecraft/class_1887; -- Enchantments.RIPTIDE: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9104() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.RIPTIDE);
+    }
+    /** was net/minecraft/class_1893.field_9105Lnet/minecraft/class_1887; -- Enchantments.AQUA_AFFINITY: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9105() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.AQUA_AFFINITY);
+    }
+    /** was net/minecraft/class_1893.field_9106Lnet/minecraft/class_1887; -- Enchantments.IMPALING: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9106() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.IMPALING);
+    }
+    /** was net/minecraft/class_1893.field_9107Lnet/minecraft/class_1887; -- Enchantments.BLAST_PROTECTION: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9107() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.BLAST_PROTECTION);
+    }
+    /** was net/minecraft/class_1893.field_9108Lnet/minecraft/class_1887; -- Enchantments.MULTISHOT: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9108() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.MULTISHOT);
+    }
+    /** was net/minecraft/class_1893.field_9109Lnet/minecraft/class_1887; -- Enchantments.VANISHING_CURSE: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9109() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.VANISHING_CURSE);
+    }
+    /** was net/minecraft/class_1893.field_9110Lnet/minecraft/class_1887; -- Enchantments.LOOTING: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9110() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.LOOTING);
+    }
+    /** was net/minecraft/class_1893.field_9111Lnet/minecraft/class_1887; -- Enchantments.PROTECTION: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9111() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.PROTECTION);
+    }
+    /** was net/minecraft/class_1893.field_9112Lnet/minecraft/class_1887; -- Enchantments.BANE_OF_ARTHROPODS: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9112() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.BANE_OF_ARTHROPODS);
+    }
+    /** was net/minecraft/class_1893.field_9113Lnet/minecraft/class_1887; -- Enchantments.BINDING_CURSE: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9113() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.BINDING_CURSE);
+    }
+    /** was net/minecraft/class_1893.field_9114Lnet/minecraft/class_1887; -- Enchantments.LUCK_OF_THE_SEA: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9114() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.LUCK_OF_THE_SEA);
+    }
+    /** was net/minecraft/class_1893.field_9115Lnet/minecraft/class_1887; -- Enchantments.SWEEPING_EDGE: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9115() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.SWEEPING_EDGE);
+    }
+    /** was net/minecraft/class_1893.field_9116Lnet/minecraft/class_1887; -- Enchantments.PUNCH: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9116() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.PUNCH);
+    }
+    /** was net/minecraft/class_1893.field_9117Lnet/minecraft/class_1887; -- Enchantments.CHANNELING: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9117() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.CHANNELING);
+    }
+    /** was net/minecraft/class_1893.field_9118Lnet/minecraft/class_1887; -- Enchantments.SHARPNESS: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9118() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.SHARPNESS);
+    }
+    /** was net/minecraft/class_1893.field_9119Lnet/minecraft/class_1887; -- Enchantments.UNBREAKING: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9119() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.UNBREAKING);
+    }
+    /** was net/minecraft/class_1893.field_9120Lnet/minecraft/class_1887; -- Enchantments.LOYALTY: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9120() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.LOYALTY);
+    }
+    /** was net/minecraft/class_1893.field_9121Lnet/minecraft/class_1887; -- Enchantments.KNOCKBACK: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9121() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.KNOCKBACK);
+    }
+    /** was net/minecraft/class_1893.field_9122Lnet/minecraft/class_1887; -- Enchantments.FROST_WALKER: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9122() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.FROST_WALKER);
+    }
+    /** was net/minecraft/class_1893.field_9123Lnet/minecraft/class_1887; -- Enchantments.SMITE: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9123() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.SMITE);
+    }
+    /** was net/minecraft/class_1893.field_9124Lnet/minecraft/class_1887; -- Enchantments.FIRE_ASPECT: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9124() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.FIRE_ASPECT);
+    }
+    /** was net/minecraft/class_1893.field_9125Lnet/minecraft/class_1887; -- Enchantments.INFINITY: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9125() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.INFINITY);
+    }
+    /** was net/minecraft/class_1893.field_9126Lnet/minecraft/class_1887; -- Enchantments.FLAME: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9126() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.FLAME);
+    }
+    /** was net/minecraft/class_1893.field_9127Lnet/minecraft/class_1887; -- Enchantments.RESPIRATION: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9127() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.RESPIRATION);
+    }
+    /** was net/minecraft/class_1893.field_9128Lnet/minecraft/class_1887; -- Enchantments.DEPTH_STRIDER: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9128() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.DEPTH_STRIDER);
+    }
+    /** was net/minecraft/class_1893.field_9129Lnet/minecraft/class_1887; -- Enchantments.FEATHER_FALLING: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9129() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.FEATHER_FALLING);
+    }
+    /** was net/minecraft/class_1893.field_9130Lnet/minecraft/class_1887; -- Enchantments.FORTUNE: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9130() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.FORTUNE);
+    }
+    /** was net/minecraft/class_1893.field_9131Lnet/minecraft/class_1887; -- Enchantments.EFFICIENCY: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9131() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.EFFICIENCY);
+    }
+    /** was net/minecraft/class_1893.field_9132Lnet/minecraft/class_1887; -- Enchantments.PIERCING: a ResourceKey since 1.21, resolved from the live dynamic registry */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9132() {
+        return cbEnchantment(net.minecraft.world.item.enchantment.Enchantments.PIERCING);
+    }
+
+    // ---- EnchantmentHelper statics that died with the 1.20.5 components / 1.21 data rework ----
+    /** was net/minecraft/class_1890.method_8222(Lnet/minecraft/class_1799;)Ljava/util/Map; -- getEnchantments(stack): Map&lt;Enchantment,Integer&gt; from the (stored-)enchantments component */
+    public static java.util.Map<net.minecraft.world.item.enchantment.Enchantment, java.lang.Integer> method_8222(net.minecraft.world.item.ItemStack stack) {
+        java.util.Map<net.minecraft.world.item.enchantment.Enchantment, java.lang.Integer> map = new java.util.LinkedHashMap<>();
+        for (it.unimi.dsi.fastutil.objects.Object2IntMap.Entry<net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>> en : net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet()) {
+            map.put(cbEnchValue(en.getKey()), en.getIntValue());
+        }
+        return map;
+    }
+
+    /** was net/minecraft/class_1890.method_8214(Ljava/util/Map;Lnet/minecraft/class_1799;)V -- setEnchantments(map, stack) */
+    public static void method_8214(java.util.Map<net.minecraft.world.item.enchantment.Enchantment, java.lang.Integer> map, net.minecraft.world.item.ItemStack stack) {
+        net.minecraft.world.item.enchantment.ItemEnchantments.Mutable m =
+            new net.minecraft.world.item.enchantment.ItemEnchantments.Mutable(net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
+        net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment> reg = cbEnchantmentRegistryOrNull();
+        for (java.util.Map.Entry<net.minecraft.world.item.enchantment.Enchantment, java.lang.Integer> en : map.entrySet()) {
+            if (en.getKey() != null && en.getValue() != null && en.getValue() > 0) {
+                m.set(cbEnchHolder(en.getKey(), reg), en.getValue());
+            }
+        }
+        net.minecraft.world.item.enchantment.EnchantmentHelper.setEnchantments(stack, m.toImmutable());
+    }
+
+    /** was net/minecraft/class_1890.method_8203(Lnet/minecraft/class_1887;Lnet/minecraft/class_1309;)I -- getEnchantmentLevel(ench, entity) */
+    public static int method_8203(net.minecraft.world.item.enchantment.Enchantment e, net.minecraft.world.entity.LivingEntity entity) {
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentLevel(cbEnchHolder(e, entity.level()), entity);
+    }
+
+    /** was net/minecraft/class_1890.method_8216(Lnet/minecraft/class_1309;)Z -- hasFrostWalker */
+    public static boolean method_8216(net.minecraft.world.entity.LivingEntity e) { return cbLevel(net.minecraft.world.item.enchantment.Enchantments.FROST_WALKER, e) > 0; }
+    /** was net/minecraft/class_1890.method_8200(Lnet/minecraft/class_1309;)Z -- hasAquaAffinity */
+    public static boolean method_8200(net.minecraft.world.entity.LivingEntity e) { return cbLevel(net.minecraft.world.item.enchantment.Enchantments.AQUA_AFFINITY, e) > 0; }
+    /** was net/minecraft/class_1890.method_25951(Lnet/minecraft/class_1309;)Z -- hasSoulSpeed */
+    public static boolean method_25951(net.minecraft.world.entity.LivingEntity e) { return cbLevel(net.minecraft.world.item.enchantment.Enchantments.SOUL_SPEED, e) > 0; }
+    /** was net/minecraft/class_1890.method_8226(Lnet/minecraft/class_1309;)I -- getMobLooting */
+    public static int method_8226(net.minecraft.world.entity.LivingEntity e) { return cbLevel(net.minecraft.world.item.enchantment.Enchantments.LOOTING, e); }
+    /** was net/minecraft/class_1890.method_8205(Lnet/minecraft/class_1309;)I -- getKnockbackBonus */
+    public static int method_8205(net.minecraft.world.entity.LivingEntity e) { return cbLevel(net.minecraft.world.item.enchantment.Enchantments.KNOCKBACK, e); }
+    /** was net/minecraft/class_1890.method_8199(Lnet/minecraft/class_1309;)I -- getFireAspect */
+    public static int method_8199(net.minecraft.world.entity.LivingEntity e) { return cbLevel(net.minecraft.world.item.enchantment.Enchantments.FIRE_ASPECT, e); }
+    /** was net/minecraft/class_1890.method_8211(Lnet/minecraft/class_1309;)I -- getRespiration */
+    public static int method_8211(net.minecraft.world.entity.LivingEntity e) { return cbLevel(net.minecraft.world.item.enchantment.Enchantments.RESPIRATION, e); }
+    /** was net/minecraft/class_1890.method_8232(Lnet/minecraft/class_1309;)I -- getDepthStrider */
+    public static int method_8232(net.minecraft.world.entity.LivingEntity e) { return cbLevel(net.minecraft.world.item.enchantment.Enchantments.DEPTH_STRIDER, e); }
+    /** was net/minecraft/class_1890.method_8234(Lnet/minecraft/class_1309;)I -- getBlockEfficiency */
+    public static int method_8234(net.minecraft.world.entity.LivingEntity e) { return cbLevel(net.minecraft.world.item.enchantment.Enchantments.EFFICIENCY, e); }
+    /** was net/minecraft/class_1890.method_8217(Lnet/minecraft/class_1309;)F -- getSweepingDamageRatio: 1.20.1 = 1 - 1/(level+1), 0 when absent */
+    public static float method_8217(net.minecraft.world.entity.LivingEntity e) {
+        int lvl = cbLevel(net.minecraft.world.item.enchantment.Enchantments.SWEEPING_EDGE, e);
+        return lvl > 0 ? 1.0F - 1.0F / (float) (lvl + 1) : 0.0F;
+    }
+    /** was net/minecraft/class_1890.method_42304(Lnet/minecraft/class_1309;)F -- getSneakingSpeedBonus: level * 0.15 */
+    public static float method_42304(net.minecraft.world.entity.LivingEntity e) { return (float) cbLevel(net.minecraft.world.item.enchantment.Enchantments.SWIFT_SNEAK, e) * 0.15F; }
+    /** was net/minecraft/class_1890.method_8206(Lnet/minecraft/class_1799;)I -- getLoyalty */
+    public static int method_8206(net.minecraft.world.item.ItemStack s) { return cbItemLevel(net.minecraft.world.item.enchantment.Enchantments.LOYALTY, s); }
+    /** was net/minecraft/class_1890.method_8202(Lnet/minecraft/class_1799;)I -- getRiptide */
+    public static int method_8202(net.minecraft.world.item.ItemStack s) { return cbItemLevel(net.minecraft.world.item.enchantment.Enchantments.RIPTIDE, s); }
+    /** was net/minecraft/class_1890.method_8215(Lnet/minecraft/class_1799;)I -- getFishingSpeedBonus (Lure) */
+    public static int method_8215(net.minecraft.world.item.ItemStack s) { return cbItemLevel(net.minecraft.world.item.enchantment.Enchantments.LURE, s); }
+    /** was net/minecraft/class_1890.method_8223(Lnet/minecraft/class_1799;)I -- getFishingLuckBonus (Luck of the Sea) */
+    public static int method_8223(net.minecraft.world.item.ItemStack s) { return cbItemLevel(net.minecraft.world.item.enchantment.Enchantments.LUCK_OF_THE_SEA, s); }
+    /** was net/minecraft/class_1890.method_49189(Lnet/minecraft/class_1799;)Z -- hasSilkTouch */
+    public static boolean method_49189(net.minecraft.world.item.ItemStack s) { return cbItemLevel(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH, s) > 0; }
+    /** was net/minecraft/class_1890.method_8228(Lnet/minecraft/class_1799;)Z -- hasChanneling */
+    public static boolean method_8228(net.minecraft.world.item.ItemStack s) { return cbItemLevel(net.minecraft.world.item.enchantment.Enchantments.CHANNELING, s) > 0; }
+    /** was net/minecraft/class_1890.method_8224(Lnet/minecraft/class_1799;)Z -- hasBindingCurse: the 1.21 definition is the PREVENT_ARMOR_CHANGE effect */
+    public static boolean method_8224(net.minecraft.world.item.ItemStack s) {
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.has(s, net.minecraft.world.item.enchantment.EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE);
+    }
+    /** was net/minecraft/class_1890.method_8221(Lnet/minecraft/class_1799;)Z -- hasVanishingCurse: PREVENT_EQUIPMENT_DROP effect */
+    public static boolean method_8221(net.minecraft.world.item.ItemStack s) {
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.has(s, net.minecraft.world.item.enchantment.EnchantmentEffectComponents.PREVENT_EQUIPMENT_DROP);
+    }
+
+    // 1.20.1 ran the victim's enchantments (doPostHurtEffects) and the attacker's
+    // (doPostDamageEffects) as two calls; 1.21 runs both sides in one
+    // doPostAttackEffects(level, victim, source). Mods call the old pair back to
+    // back, so the second call for the same pair in the same tick is a no-op.
+    private static Object cbLastPostVictim, cbLastPostAttacker;
+    private static long cbLastPostTime = Long.MIN_VALUE;
+
+    private static void cbPostAttack(net.minecraft.world.entity.Entity victim, net.minecraft.world.entity.Entity attacker) {
+        if (victim == null || !(victim.level() instanceof net.minecraft.server.level.ServerLevel sl)) {
+            return;
+        }
+        long t = sl.getGameTime();
+        synchronized (Statics.class) {
+            if (cbLastPostVictim == victim && cbLastPostAttacker == attacker && cbLastPostTime == t) {
+                return;
+            }
+            cbLastPostVictim = victim;
+            cbLastPostAttacker = attacker;
+            cbLastPostTime = t;
+        }
+        net.minecraft.world.damagesource.DamageSource src;
+        if (attacker instanceof net.minecraft.world.entity.player.Player pl) {
+            src = victim.damageSources().playerAttack(pl);
+        } else if (attacker instanceof net.minecraft.world.entity.LivingEntity l) {
+            src = victim.damageSources().mobAttack(l);
+        } else {
+            src = victim.damageSources().generic();
+        }
+        net.minecraft.world.item.enchantment.EnchantmentHelper.doPostAttackEffects(sl, victim, src);
+    }
+
+    /** was net/minecraft/class_1890.method_8210(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297;)V -- doPostHurtEffects(victim, attacker) */
+    public static void method_8210(net.minecraft.world.entity.LivingEntity victim, net.minecraft.world.entity.Entity attacker) { cbPostAttack(victim, attacker); }
+    /** was net/minecraft/class_1890.method_8213(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297;)V -- doPostDamageEffects(attacker, victim) */
+    public static void method_8213(net.minecraft.world.entity.LivingEntity attacker, net.minecraft.world.entity.Entity victim) { cbPostAttack(victim, attacker); }
+
+    /** was net/minecraft/class_1890.method_37427(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2960; -- getEnchantmentId(tag) */
+    public static net.minecraft.resources.Identifier method_37427(net.minecraft.nbt.CompoundTag tag) {
+        return net.minecraft.resources.Identifier.tryParse(tag.getStringOr("id", ""));
+    }
+    /** was net/minecraft/class_1890.method_37424(Lnet/minecraft/class_2487;)I -- getEnchantmentLevel(tag) */
+    public static int method_37424(net.minecraft.nbt.CompoundTag tag) {
+        return net.minecraft.util.Mth.clamp(tag.getIntOr("lvl", 0), 0, 255);
+    }
+    /** was net/minecraft/class_1890.method_37425(Lnet/minecraft/class_2487;I)V -- setEnchantmentLevel(tag, level) */
+    public static void method_37425(net.minecraft.nbt.CompoundTag tag, int level) {
+        tag.putShort("lvl", (short) level);
+    }
+    /** was net/minecraft/class_1890.method_37426(Lnet/minecraft/class_2960;I)Lnet/minecraft/class_2487; -- storeEnchantment(id, level) */
+    public static net.minecraft.nbt.CompoundTag method_37426(net.minecraft.resources.Identifier id, int level) {
+        net.minecraft.nbt.CompoundTag tag = new net.minecraft.nbt.CompoundTag();
+        tag.putString("id", String.valueOf(id));
+        tag.putShort("lvl", (short) level);
+        return tag;
+    }
+    /** was net/minecraft/class_1890.method_37423(Lnet/minecraft/class_1887;)Lnet/minecraft/class_2960; -- getEnchantmentId(ench) */
+    public static net.minecraft.resources.Identifier method_37423(net.minecraft.world.item.enchantment.Enchantment e) {
+        net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> k = cbEnchKey(e);
+        return k == null ? null : k.identifier();
+    }
+    /** was net/minecraft/class_1890.method_22445(Lnet/minecraft/class_2499;)Ljava/util/Map; -- deserializeEnchantments(listTag): 1.20.1 {id, lvl} entries */
+    public static java.util.Map<net.minecraft.world.item.enchantment.Enchantment, java.lang.Integer> method_22445(net.minecraft.nbt.ListTag list) {
+        java.util.Map<net.minecraft.world.item.enchantment.Enchantment, java.lang.Integer> map = new java.util.LinkedHashMap<>();
+        for (int i = 0; i < list.size(); i++) {
+            net.minecraft.nbt.CompoundTag tag = list.getCompoundOrEmpty(i);
+            net.minecraft.resources.Identifier id = method_37427(tag);
+            if (id == null) {
+                continue;
+            }
+            java.util.Optional<net.minecraft.core.Holder.Reference<net.minecraft.world.item.enchantment.Enchantment>> h =
+                cbEnchantmentLookup().get(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ENCHANTMENT, id));
+            h.ifPresent(r -> map.put(cbEnchValue(r), method_37424(tag)));
+        }
+        return map;
+    }
+
+    /** was net/minecraft/class_1890.method_8204(Lnet/minecraft/class_1887;Lnet/minecraft/class_1309;)Ljava/util/Map$Entry; -- getRandomItemWith(ench, entity): a random equipped stack carrying it, else null */
+    public static java.util.Map.Entry<net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack> method_8204(net.minecraft.world.item.enchantment.Enchantment e, net.minecraft.world.entity.LivingEntity entity) {
+        net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> h = cbEnchHolder(e, entity.level());
+        java.util.List<java.util.Map.Entry<net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack>> hits = new java.util.ArrayList<>();
+        for (net.minecraft.world.entity.EquipmentSlot slot : net.minecraft.world.entity.EquipmentSlot.values()) {
+            net.minecraft.world.item.ItemStack st = entity.getItemBySlot(slot);
+            if (!st.isEmpty() && net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(h, st) > 0) {
+                hits.add(new java.util.AbstractMap.SimpleEntry<>(slot, st));
+            }
+        }
+        return hits.isEmpty() ? null : hits.get(entity.getRandom().nextInt(hits.size()));
+    }
+
+    /** was net/minecraft/class_1890.method_8201(Ljava/util/Collection;Lnet/minecraft/class_1887;)Z -- isEnchantmentCompatible(existing, candidate) */
+    public static boolean method_8201(java.util.Collection<net.minecraft.world.item.enchantment.Enchantment> existing, net.minecraft.world.item.enchantment.Enchantment candidate) {
+        net.minecraft.core.Registry<net.minecraft.world.item.enchantment.Enchantment> reg = cbEnchantmentRegistryOrNull();
+        java.util.List<net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>> hs = new java.util.ArrayList<>();
+        for (net.minecraft.world.item.enchantment.Enchantment x : existing) {
+            hs.add(cbEnchHolder(x, reg));
+        }
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.isEnchantmentCompatible(hs, cbEnchHolder(candidate, reg));
+    }
+
+    private static java.util.stream.Stream<net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>> cbEnchantable(boolean allowTreasure) {
+        return cbEnchantmentRegistry().listElements()
+            .filter(h -> allowTreasure || h.is(net.minecraft.tags.EnchantmentTags.IN_ENCHANTING_TABLE))
+            .map(h -> (net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>) h);
+    }
+
+    /** was net/minecraft/class_1890.method_8233(Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Lnet/minecraft/class_1799; -- enchantItem(random, stack, level, allowTreasure) */
+    public static net.minecraft.world.item.ItemStack method_8233(net.minecraft.util.RandomSource random, net.minecraft.world.item.ItemStack stack, int level, boolean allowTreasure) {
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.enchantItem(random, stack, level, cbEnchantable(allowTreasure));
+    }
+    /** was net/minecraft/class_1890.method_8230(Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Ljava/util/List; -- selectEnchantment(random, stack, level, allowTreasure) */
+    public static java.util.List<net.minecraft.world.item.enchantment.EnchantmentInstance> method_8230(net.minecraft.util.RandomSource random, net.minecraft.world.item.ItemStack stack, int level, boolean allowTreasure) {
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.selectEnchantment(random, stack, level, cbEnchantable(allowTreasure));
+    }
+
+    // ---- Enchantment (class_1887) instance methods that became data / tags in 1.21 ----
+    /** was net/minecraft/class_1887.method_8184()Ljava/lang/String; -- getDescriptionId: the translation key behind the data-driven description */
+    public static java.lang.String method_8184(net.minecraft.world.item.enchantment.Enchantment self) {
+        if (self.description().getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents t) {
+            return t.getKey();
+        }
+        net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> k = cbEnchKey(self);
+        return k == null ? "enchantment.unknown" : "enchantment." + k.identifier().toLanguageKey();
+    }
+    /** was net/minecraft/class_1887.method_8190()Ljava/lang/String; -- getOrCreateDescriptionId */
+    public static java.lang.String method_8190(net.minecraft.world.item.enchantment.Enchantment self) { return method_8184(self); }
+    /** was net/minecraft/class_1887.method_8179(I)Lnet/minecraft/class_2561; -- getFullname(level): static on (Holder, int) since 1.21 */
+    public static net.minecraft.network.chat.Component method_8179(net.minecraft.world.item.enchantment.Enchantment self, int level) {
+        return net.minecraft.world.item.enchantment.Enchantment.getFullname(cbEnchHolder(self), level);
+    }
+    /** was net/minecraft/class_1887.method_8193()Z -- isTreasureOnly: the #treasure tag */
+    public static boolean method_8193(net.minecraft.world.item.enchantment.Enchantment self) { return cbEnchHolder(self).is(net.minecraft.tags.EnchantmentTags.TREASURE); }
+    /** was net/minecraft/class_1887.method_8195()Z -- isCurse: the #curse tag */
+    public static boolean method_8195(net.minecraft.world.item.enchantment.Enchantment self) { return cbEnchHolder(self).is(net.minecraft.tags.EnchantmentTags.CURSE); }
+    /** was net/minecraft/class_1887.method_25949()Z -- isTradeable: the #tradeable tag */
+    public static boolean method_25949(net.minecraft.world.item.enchantment.Enchantment self) { return cbEnchHolder(self).is(net.minecraft.tags.EnchantmentTags.TRADEABLE); }
+    /** was net/minecraft/class_1887.method_25950()Z -- isDiscoverable: obtainable from the table, loot or trades */
+    public static boolean method_25950(net.minecraft.world.item.enchantment.Enchantment self) {
+        net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> h = cbEnchHolder(self);
+        return h.is(net.minecraft.tags.EnchantmentTags.IN_ENCHANTING_TABLE) || h.is(net.minecraft.tags.EnchantmentTags.ON_RANDOM_LOOT)
+            || h.is(net.minecraft.tags.EnchantmentTags.TRADEABLE);
+    }
+    /** was net/minecraft/class_1887.method_8188(Lnet/minecraft/class_1887;)Z -- isCompatibleWith(other) */
+    public static boolean method_8188(net.minecraft.world.item.enchantment.Enchantment self, net.minecraft.world.item.enchantment.Enchantment other) {
+        return net.minecraft.world.item.enchantment.Enchantment.areCompatible(cbEnchHolder(self), cbEnchHolder(other));
+    }
+    /** was net/minecraft/class_1887.method_8180(Lnet/minecraft/class_1887;)Z -- checkCompatibility(other) */
+    public static boolean method_8180(net.minecraft.world.item.enchantment.Enchantment self, net.minecraft.world.item.enchantment.Enchantment other) { return method_8188(self, other); }
+    /** was net/minecraft/class_1887.method_8191(I)Lnet/minecraft/class_1887; -- byId(numeric id): the live registry's id space */
+    public static net.minecraft.world.item.enchantment.Enchantment method_8191(int id) {
+        net.minecraft.world.item.enchantment.Enchantment e = cbEnchantmentRegistry().byId(id);
+        return e == null ? null : cbEnchValue(cbEnchHolder(e));
+    }
+
+    // ---- EnchantmentInstance (class_1889): record since 1.21 (Holder + private components) ----
+    /** ctorRedirects: 1.20.1 new EnchantmentInstance(Enchantment, int) */
+    public static net.minecraft.world.item.enchantment.EnchantmentInstance cbNewEnchantmentInstance(net.minecraft.world.item.enchantment.Enchantment e, int level) {
+        return new net.minecraft.world.item.enchantment.EnchantmentInstance(cbEnchHolder(e), level);
+    }
+    /** was net/minecraft/class_1889.field_9093Lnet/minecraft/class_1887; -- instance field read (record component) */
+    public static net.minecraft.world.item.enchantment.Enchantment field_9093(net.minecraft.world.item.enchantment.EnchantmentInstance self) { return cbEnchValue(self.enchantment()); }
+    /** was net/minecraft/class_1889.field_9094I */
+    public static int field_9094(net.minecraft.world.item.enchantment.EnchantmentInstance self) { return self.level(); }
+
+    // ---- EnchantedBookItem (class_1772, removed 1.21.2: the book is a plain Item with STORED_ENCHANTMENTS) ----
+    /** instanceOfRedirects: `x instanceof EnchantedBookItem` */
+    public static boolean cbIsEnchantedBook(Object o) {
+        return o instanceof net.minecraft.world.item.Item it && it == net.minecraft.world.item.Items.ENCHANTED_BOOK;
+    }
+    /** was net/minecraft/class_1772.method_7808(Lnet/minecraft/class_1889;)Lnet/minecraft/class_1799; -- createForEnchantment */
+    public static net.minecraft.world.item.ItemStack method_7808(net.minecraft.world.item.enchantment.EnchantmentInstance inst) { return net.minecraft.world.item.enchantment.EnchantmentHelper.createBook(inst); }
+    /** was net/minecraft/class_1772.method_7806(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2499; -- getEnchantments(book): stored enchantments as the 1.20.1 {id, lvl} list */
+    public static net.minecraft.nbt.ListTag method_7806(net.minecraft.world.item.ItemStack stack) {
+        net.minecraft.nbt.ListTag list = new net.minecraft.nbt.ListTag();
+        net.minecraft.world.item.enchantment.ItemEnchantments stored =
+            stack.getOrDefault(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS, net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
+        for (it.unimi.dsi.fastutil.objects.Object2IntMap.Entry<net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment>> en : stored.entrySet()) {
+            java.util.Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment>> k = en.getKey().unwrapKey();
+            if (k.isPresent()) {
+                list.add(method_37426(k.get().identifier(), en.getIntValue()));
+            }
+        }
+        return list;
+    }
+    /** was net/minecraft/class_1772.method_7807(Lnet/minecraft/class_1799;Lnet/minecraft/class_1889;)V -- addEnchantment(book, instance) */
+    public static void method_7807(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.enchantment.EnchantmentInstance inst) {
+        net.minecraft.world.item.enchantment.EnchantmentHelper.updateEnchantments(stack, m -> m.upgrade(inst.enchantment(), inst.level()));
     }
 }

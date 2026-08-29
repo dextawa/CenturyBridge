@@ -134,7 +134,7 @@ if os.path.exists(cfg):
         return members[cls]
 
     dangling = []
-    for m in ("staticRedirects", "instanceRedirects", "fieldRedirects"):
+    for m in ("staticRedirects", "instanceRedirects", "fieldRedirects", "instanceFieldGetters", "instanceOfRedirects"):
         for k, v in d.get(m, {}).items():
             cls, _, explicit = v.partition("#")
             impl = declared(cls)

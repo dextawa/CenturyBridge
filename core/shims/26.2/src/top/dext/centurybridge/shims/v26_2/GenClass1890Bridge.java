@@ -22,7 +22,8 @@ public abstract class GenClass1890Bridge {
 
     /** was net/minecraft/world/item/enchantment/EnchantmentHelper/getItemEnchantmentLevel(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I */
     public int getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantment a0, net.minecraft.world.item.ItemStack a1) {
-        return ((net.minecraft.world.item.enchantment.EnchantmentHelper)(Object)this).getItemEnchantmentLevel(net.minecraft.core.Holder.direct(a0), a1);
+        // Holder.direct never equals the registry Reference the item component is keyed by (identity), so it always answered 0
+        return ((net.minecraft.world.item.enchantment.EnchantmentHelper)(Object)this).getItemEnchantmentLevel(top.dext.centurybridge.rt.v26_2.Statics.cbEnchHolder(a0), a1);
     }
 
 

@@ -242,7 +242,8 @@
   "RecipeManagerBridge",
   "RegistryAddBridge",
   "ScreenBridge",
-  "SlotBridge"
+  "SlotBridge",
+  "MinecraftServerBridge"
  ],
  "client": [
   "ChatHudBridge",

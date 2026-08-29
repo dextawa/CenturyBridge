@@ -58,6 +58,18 @@ public final class Chain {
     public final java.util.Map<String, String> fieldRenames = new java.util.HashMap<>();
     /** methods renamed in place (relocated-to-super methods resolve via hierarchy) */
     public final java.util.Map<String, String> methodRenames = new java.util.HashMap<>();
+    /**
+     * GETFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field
+     * read rewritten to a static getter taking the receiver (record components
+     * are private fields; EnchantmentInstance.enchantment/level, Minecraft.screen).
+     */
+    public final java.util.Map<String, String> instanceFieldGetters = new java.util.HashMap<>();
+    /**
+     * INSTANCEOF "type" -> "runtimeClass#predicate": a type test against a class
+     * that no longer describes the runtime object (EnchantedBookItem is a plain
+     * Item since 1.21.2) becomes INVOKESTATIC predicate(Object)Z.
+     */
+    public final java.util.Map<String, String> instanceOfRedirects = new java.util.HashMap<>();
     /** examined-and-classified damage (quirk tier / structural / etc): "owner" or "owner.name" -> reason */
     public final java.util.Map<String, String> ledger = new java.util.HashMap<>();
 
@@ -441,6 +453,18 @@ public final class Chain {
                 var dr = root.getAsJsonObject("depRenames");
                 for (String k : dr.keySet()) {
                     c.depRenames.put(k, dr.get(k).getAsString());
+                }
+            }
+            if (root.has("instanceFieldGetters")) {
+                var ifg = root.getAsJsonObject("instanceFieldGetters");
+                for (String k : ifg.keySet()) {
+                    c.instanceFieldGetters.put(k, ifg.get(k).getAsString());
+                }
+            }
+            if (root.has("instanceOfRedirects")) {
+                var ior = root.getAsJsonObject("instanceOfRedirects");
+                for (String k : ior.keySet()) {
+                    c.instanceOfRedirects.put(k, ior.get(k).getAsString());
                 }
             }
             if (root.has("superRedirects")) {

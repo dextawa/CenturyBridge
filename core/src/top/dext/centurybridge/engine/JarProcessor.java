@@ -600,6 +600,8 @@ public final class JarProcessor {
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
+        Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
+        Map<String, String> instOfSites = new HashMap<>();   // INSTANCEOF type -> INVOKESTATIC predicate(Object)Z
         Map<String, String> fldRenames = new HashMap<>();    // instance fields renamed in place
         Map<String, String> mthRenames = new HashMap<>();    // methods renamed in place (relocated to super)
         Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
@@ -896,6 +898,12 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(fkey, "field-getter");
                             return;
                         }
+                        String ifgt = chain.instanceFieldGetters.get(fkey);
+                        if (ifgt != null && op == Opcodes.GETFIELD) {
+                            instFldGetters.put(fkey, ifgt);
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-getter");
+                            return;
+                        }
                         String rename = chain.fieldRenames.get(fkey);
                         if (rename != null) {
                             fldRenames.put(fkey, rename);
@@ -949,6 +957,14 @@ public final class JarProcessor {
 
                     @Override
                     public void visitTypeInsn(int op, String type) {
+                        if (op == Opcodes.INSTANCEOF) {
+                            String pred = chain.instanceOfRedirects.get(type);
+                            if (pred != null) {
+                                instOfSites.put(type, pred);
+                                top.dext.centurybridge.data.FullAudit.record("instanceof " + type, "instanceof-redirect");
+                                return; // answered by the predicate; the type itself is not loaded here
+                            }
+                        }
                         checkClass(type);
                     }
 
@@ -1059,7 +1075,7 @@ public final class JarProcessor {
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
         if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldGetters.isEmpty()
+                && fldGetters.isEmpty() && instFldGetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
@@ -1108,6 +1124,12 @@ public final class JarProcessor {
         }
         for (String k : fldGetters.keySet()) {
             rpt.notes.add(tag + "field-gettered: " + k + " -> " + fldGetters.get(k));
+        }
+        for (String k : instFldGetters.keySet()) {
+            rpt.notes.add(tag + "instance-field-gettered: " + k + " -> " + instFldGetters.get(k));
+        }
+        for (String k : instOfSites.keySet()) {
+            rpt.notes.add(tag + "instanceof-redirected: " + k + " -> " + instOfSites.get(k));
         }
         for (String k : hookCallSites) {
             rpt.notes.add(tag + "lookup-hooked: " + k);
@@ -1248,8 +1270,25 @@ public final class JarProcessor {
                     }
 
                     @Override
+                    public void visitTypeInsn(int op, String type) {
+                        if (op == Opcodes.INSTANCEOF && instOfSites.containsKey(type)) {
+                            String pv = instOfSites.get(type);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(pv),
+                                redirName(pv, "cbInstanceOf"), "(Ljava/lang/Object;)Z", false);
+                            return;
+                        }
+                        super.visitTypeInsn(op, type);
+                    }
+
+                    @Override
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
                         String fkey = owner + "." + name + ":" + desc;
+                        if (op == Opcodes.GETFIELD && instFldGetters.containsKey(fkey)) {
+                            String fv = instFldGetters.get(fkey);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),
+                                redirName(fv, name), "(L" + owner + ";)" + desc, false);
+                            return;
+                        }
                         if (op == Opcodes.GETSTATIC && fldGetters.containsKey(fkey)) {
                             String fv = fldGetters.get(fkey);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),

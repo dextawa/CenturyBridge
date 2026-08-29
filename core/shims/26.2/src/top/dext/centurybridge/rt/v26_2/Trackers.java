@@ -16,6 +16,18 @@ public final class Trackers {
     public static final Map<Object, net.minecraft.advancements.AdvancementHolder> ADVANCEMENT_ENTRIES =
         Collections.synchronizedMap(new IdentityHashMap<>());
 
+    /** the running server (set by MinecraftServerBridge); source of the dynamic registries */
+    public static volatile net.minecraft.server.MinecraftServer SERVER;
+
+    /**
+     * 1.21 enchantments are registry values with Holder identity; a bare
+     * Enchantment handed to a 1.20.1 mod (from Enchantments.* getters or a
+     * component read) is remembered with its key so it can be turned back into
+     * the live registry's Holder even when it came from another registry copy.
+     */
+    public static final Map<Object, net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment>> ENCHANTMENT_KEYS =
+        Collections.synchronizedMap(new IdentityHashMap<>());
+
     private Trackers() {
     }
 }
