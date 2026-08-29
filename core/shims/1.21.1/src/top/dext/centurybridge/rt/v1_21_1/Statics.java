@@ -4032,4 +4032,12 @@ public final class Statics {
     public static net.minecraft.class_5132.class_5133 method_26867(net.minecraft.class_5132.class_5133 self, net.minecraft.class_1320 attr) {
         return self.method_26867(net.minecraft.class_7923.field_41190.method_47983(attr));
     }
+
+    // Entity.setOnFireFor int-seconds -> float-seconds (1.21 widened the parameter).
+    /** was net/minecraft/class_1297.method_5639(I)V */
+    public static void method_5639(net.minecraft.class_1297 self, int i) { self.method_5639((float) i); }
+    /** was net/minecraft/class_1309.method_5639(I)V */
+    public static void method_5639(net.minecraft.class_1309 self, int i) { self.method_5639((float) i); }
+    /** was net/minecraft/class_1657.method_5639(I)V */
+    public static void method_5639(net.minecraft.class_1657 self, int i) { self.method_5639((float) i); }
 }

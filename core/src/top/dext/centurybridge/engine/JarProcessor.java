@@ -222,9 +222,15 @@ public final class JarProcessor {
                             rewrites++;
                             rpt.notes.add(tag + "super-ctor-adapted: " + key + " in " + cn.name);
                         } else if (target != null) {
-                            rpt.notes.add(tag + "!! super-ctor call not adaptable (no superCtorAdapts entry): "
-                                + key + " in " + cn.name);
-                            top.dext.centurybridge.data.FullAudit.record(key, "SUPER-CTOR-ISSUE");
+                            if (chain.ledgerReason(mi.owner, "<init>") != null) {
+                                rpt.notes.add(tag + "super-ctor ledgered: " + key + " in " + cn.name);
+                                top.dext.centurybridge.data.FullAudit.record(key,
+                                    "LEDGERED[" + chain.sideOf(mi.owner) + "] super-ctor: " + chain.ledgerReason(mi.owner, "<init>"));
+                            } else {
+                                rpt.notes.add(tag + "!! super-ctor call not adaptable (no superCtorAdapts entry): "
+                                    + key + " in " + cn.name);
+                                top.dext.centurybridge.data.FullAudit.record(key, "SUPER-CTOR-ISSUE");
+                            }
                         }
                         continue;
                     }
