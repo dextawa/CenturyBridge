@@ -78,8 +78,12 @@ public final class Statics {
         return method_8114((net.minecraft.class_1860<?>) self);
     }
 
-    /** 1.20.1 LootContextPredicate.EMPTY field, removed 1.20.2; field access redirected here. */
-    public static final net.minecraft.class_5258 field_24388 = net.minecraft.class_5258.method_27973();
+    /** 1.20.1 LootContextPredicate.EMPTY field, removed 1.20.2; field access redirected here.
+     *  1.20.2 rejects a predicate with zero conditions (IllegalArgumentException in <init> -- which
+     *  killed this whole class's <clinit> and with it every bridge routed through Statics, caught by
+     *  the real-client fixture). A RandomChance(1.0) condition is the faithful match-all. */
+    public static final net.minecraft.class_5258 field_24388 =
+        net.minecraft.class_5258.method_27973(new net.minecraft.class_219(1.0f));
 
     /** 1.20.1 Criteria.register(trigger) -- private in both eras (mods reached it via AW).
      *  New shape needs a name; recovered from the legacy trigger's getId via reflection. L3 x12. */
@@ -676,4 +680,245 @@ public final class Statics {
         return local ? net.minecraft.class_642.class_8678.field_45609   // LAN
                      : net.minecraft.class_642.class_8678.field_45611;  // OTHER
     }
+
+    // =====================================================================
+    // 1.20.2 kill-list closure batch (hand-written). Intermediary names;
+    // bodies target the surviving 1.20.2 API.
+    // =====================================================================
+
+    // ---- Player skins: 1.20.2 folded the per-texture getters into the SkinTextures record
+    // (class_8685: texture, textureUrl, cape, elytra, model, secure).
+    /** was net/minecraft/class_742.method_3117()Lnet/minecraft/class_2960; getSkinTexture */
+    public static net.minecraft.class_2960 method_3117(net.minecraft.class_742 self) { return self.method_52814().comp_1626(); }
+    /** was net/minecraft/class_746.method_3117()Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3117(net.minecraft.class_746 self) { return self.method_52814().comp_1626(); }
+    /** was net/minecraft/class_742.method_3121()Ljava/lang/String; getModel */
+    public static String method_3121(net.minecraft.class_742 self) { return self.method_52814().comp_1629().method_52856(); }
+    /** was net/minecraft/class_746.method_3121()Ljava/lang/String; */
+    public static String method_3121(net.minecraft.class_746 self) { return self.method_52814().comp_1629().method_52856(); }
+    /** was net/minecraft/class_742.method_3119()Lnet/minecraft/class_2960; getCapeTexture */
+    public static net.minecraft.class_2960 method_3119(net.minecraft.class_742 self) { return self.method_52814().comp_1627(); }
+    /** was net/minecraft/class_742.method_3122()Lnet/minecraft/class_2960; getElytraTexture */
+    public static net.minecraft.class_2960 method_3122(net.minecraft.class_742 self) { return self.method_52814().comp_1628(); }
+    /** was net/minecraft/class_742.method_3125()Z isCapeLoaded */
+    public static boolean method_3125(net.minecraft.class_742 self) { return self.method_52814().comp_1627() != null; }
+    /** was net/minecraft/class_742.method_3126()Z isElytraLoaded */
+    public static boolean method_3126(net.minecraft.class_742 self) { return self.method_52814().comp_1628() != null; }
+    /** was net/minecraft/class_742.method_3127()Z isSkinLoaded */
+    public static boolean method_3127(net.minecraft.class_742 self) { return self.method_52814().comp_1626() != null; }
+    /** was net/minecraft/class_640.method_2968()Lnet/minecraft/class_2960; PlayerListEntry.getSkinTexture */
+    public static net.minecraft.class_2960 method_2968(net.minecraft.class_640 self) { return self.method_52810().comp_1626(); }
+    /** was net/minecraft/class_640.method_2957()Lnet/minecraft/class_2960; getElytraTexture */
+    public static net.minecraft.class_2960 method_2957(net.minecraft.class_640 self) { return self.method_52810().comp_1628(); }
+    /** was net/minecraft/class_640.method_2979()Lnet/minecraft/class_2960; getCapeTexture */
+    public static net.minecraft.class_2960 method_2979(net.minecraft.class_640 self) { return self.method_52810().comp_1627(); }
+    /** was net/minecraft/class_640.method_2977()Ljava/lang/String; getModel */
+    public static String method_2977(net.minecraft.class_640 self) { return self.method_52810().comp_1629().method_52856(); }
+    /** was net/minecraft/class_1068.method_4647(Ljava/util/UUID;)Ljava/lang/String; DefaultSkinHelper.getModel */
+    public static String method_4647(java.util.UUID uuid) { return net.minecraft.class_1068.method_4648(uuid).comp_1629().method_52856(); }
+    /** was net/minecraft/class_1071.method_4654(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map; PlayerSkinProvider.getTextures.
+     *  Rebuilt from the synchronous SkinTextures: SKIN carries the real URL + model metadata; CAPE/ELYTRA
+     *  entries are present when the texture is, with the registered texture id standing in for a URL. */
+    public static java.util.Map<com.mojang.authlib.minecraft.MinecraftProfileTexture.Type, com.mojang.authlib.minecraft.MinecraftProfileTexture> method_4654(net.minecraft.class_1071 self, com.mojang.authlib.GameProfile profile) {
+        net.minecraft.class_8685 t = self.method_52862(profile);
+        java.util.Map<com.mojang.authlib.minecraft.MinecraftProfileTexture.Type, com.mojang.authlib.minecraft.MinecraftProfileTexture> m =
+            new java.util.EnumMap<>(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.class);
+        if (t.comp_1911() != null) {
+            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.SKIN,
+                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1911(), java.util.Map.of("model", t.comp_1629().method_52856())));
+        }
+        if (t.comp_1627() != null) {
+            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.CAPE,
+                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1627().toString(), null));
+        }
+        if (t.comp_1628() != null) {
+            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.ELYTRA,
+                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1628().toString(), null));
+        }
+        return m;
+    }
+    /** was net/minecraft/class_320.method_1673()Ljava/lang/String; Session.getUuid (1.20.2 stores a UUID) */
+    public static String method_1673(net.minecraft.class_320 self) { java.util.UUID u = self.method_44717(); return u == null ? "" : u.toString(); }
+    /** was net/minecraft/class_320.method_1677()Lcom/mojang/authlib/GameProfile; Session.getProfile */
+    public static com.mojang.authlib.GameProfile method_1677(net.minecraft.class_320 self) {
+        return new com.mojang.authlib.GameProfile(self.method_44717(), self.method_1676());
+    }
+
+    // ---- ClientWorld.addEntity(int id, Entity) -> addEntity(Entity): the id is already on the entity.
+    /** was net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V */
+    public static void method_2942(net.minecraft.class_638 self, int id, net.minecraft.class_1297 e) { self.method_53875(e); }
+
+    // ---- Advancements: 1.20.2 wraps Advancement in AdvancementEntry(id, advancement) and the
+    // client tree in PlacedAdvancement.
+    /** was net/minecraft/class_161$class_162.method_695(Lnet/minecraft/class_2960;)Lnet/minecraft/class_161; Builder.build(id) */
+    public static net.minecraft.class_161 method_695(net.minecraft.class_161.class_162 self, net.minecraft.class_2960 id) {
+        return self.method_695(id).comp_1920();
+    }
+    /** was net/minecraft/class_161$class_162.method_710()Ljava/util/Map; Builder.getCriteria (accessor on the ImmutableMap builder) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static java.util.Map method_710(net.minecraft.class_161.class_162 self) {
+        return ((top.dext.centurybridge.shims.v1_20_2.CbAdvancementBuilderCriteria) (Object) self).cbCriteria().build();
+    }
+    /** was net/minecraft/class_632.method_2864(Lnet/minecraft/class_161;Z)V selectTab(Advancement, boolean): locate its entry in the tree */
+    public static void method_2864(net.minecraft.class_632 self, net.minecraft.class_161 adv, boolean b) {
+        for (net.minecraft.class_8781 p : self.method_53814().method_53693()) {
+            if (p.method_53647() == adv) { self.method_2864(p.method_53649(), b); return; }
+        }
+        self.method_2864((net.minecraft.class_8779) null, b);
+    }
+    /** was net/minecraft/class_163.method_712()Ljava/util/Collection; AdvancementManager.getAdvancements */
+    public static java.util.Collection<net.minecraft.class_161> method_712(net.minecraft.class_163 self) {
+        java.util.List<net.minecraft.class_161> out = new java.util.ArrayList<>();
+        for (net.minecraft.class_8781 p : self.method_53693()) out.add(p.method_53647());
+        return out;
+    }
+    /** was net/minecraft/class_455.method_2320()I AdvancementObtainedStatus.getSpriteIndex: OBTAINED=0, UNOBTAINED=1 (== ordinal) */
+    public static int method_2320(net.minecraft.class_455 self) { return self.ordinal(); }
+
+    // ---- Registry-derived names that lost their getters.
+    /** was net/minecraft/class_3448.method_14957()Ljava/lang/String; StatType.getTranslationKey */
+    @SuppressWarnings("rawtypes")
+    public static String method_14957(net.minecraft.class_3448 self) {
+        return net.minecraft.class_156.method_646("stat_type", net.minecraft.class_7923.field_41193.method_10221(self));
+    }
+    /** was net/minecraft/class_5712.method_32938()Ljava/lang/String; GameEvent.getId (the registry path) */
+    public static String method_32938(net.minecraft.class_5712 self) {
+        net.minecraft.class_2960 id = net.minecraft.class_7923.field_41171.method_10221(self);
+        return id == null ? "unknown" : id.method_12832();
+    }
+    /** was net/minecraft/class_173.method_762(Lnet/minecraft/class_176;)Lnet/minecraft/class_2960; LootContextTypes.getId (registry map via accessor) */
+    public static net.minecraft.class_2960 method_762(net.minecraft.class_176 set) {
+        return top.dext.centurybridge.shims.v1_20_2.CbLootContextTypesAccessor.cbRegistry().inverse().get(set);
+    }
+
+    // ---- Entity.getMountedHeightOffset removed (1.20.2 moved to passenger attachment points);
+    // the 1.20.1 default was height * 0.75 (horses used the same formula).
+    /** was net/minecraft/class_1297.method_5621()D */
+    public static double method_5621(net.minecraft.class_1297 self) { return self.method_17682() * 0.75; }
+    /** was net/minecraft/class_1496.method_5621()D */
+    public static double method_5621(net.minecraft.class_1496 self) { return self.method_17682() * 0.75; }
+    /** was net/minecraft/class_1498.method_5621()D */
+    public static double method_5621(net.minecraft.class_1498 self) { return self.method_17682() * 0.75; }
+
+    // ---- Predicates / criteria: builders became Optional-typed, factories return AdvancementCriterion.
+    /** was net/minecraft/class_2090.method_9017(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090; LocationPredicate.feature(structure) */
+    public static net.minecraft.class_2090 method_9017(net.minecraft.class_5321<net.minecraft.class_3195> key) {
+        return net.minecraft.class_2090.class_2091.method_53183(key).method_9023();
+    }
+    /** was net/minecraft/class_2080$class_2083.method_35248(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2080$class_2083; */
+    public static net.minecraft.class_2080.class_2083 method_35248(net.minecraft.class_2048 p) {
+        return net.minecraft.class_2080.class_2083.method_35248(java.util.Optional.ofNullable(p)).comp_1924();
+    }
+    /** was net/minecraft/class_5409$class_5410.method_30099(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073$class_2074;Lnet/minecraft/class_5258;)Lnet/minecraft/class_5409$class_5410; */
+    public static net.minecraft.class_5409.class_5410 method_30099(net.minecraft.class_5258 a, net.minecraft.class_2073.class_2074 b, net.minecraft.class_5258 c) {
+        return net.minecraft.class_5409.class_5410.method_30099(java.util.Optional.ofNullable(a), b, java.util.Optional.ofNullable(c)).comp_1924();
+    }
+    /** was net/minecraft/class_2724.method_11779()Lnet/minecraft/class_5321; PlayerRespawnS2CPacket.getDimension */
+    public static net.minecraft.class_5321<net.minecraft.class_1937> method_11779(net.minecraft.class_2724 self) { return self.comp_1728().comp_1554(); }
+    /** was net/minecraft/class_3898.method_39975(IIIII)Z ChunkMap.isChunkInRange (1.20.1 algorithm) */
+    public static boolean method_39975(int x1, int z1, int x2, int z2, int distance) {
+        int i = Math.max(0, Math.abs(x1 - x2) - 1);
+        int j = Math.max(0, Math.abs(z1 - z2) - 1);
+        long l = Math.max(0, Math.max(i, j) - 1);
+        long m = Math.min(i, j);
+        long n = m * m + l * l;
+        int k = distance * distance;
+        return n < (long) k;
+    }
+
+    // ---- Recipes: json read via the serializer codec; ghost recipe via the client recipe manager.
+    /** was net/minecraft/class_1867$class_1868.method_8142(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1867; */
+    public static net.minecraft.class_1867 method_8142(net.minecraft.class_1867.class_1868 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
+        return self.method_53736().parse(JsonOps.INSTANCE, json).result()
+            .orElseThrow(() -> new JsonSyntaxException("CenturyBridge: invalid shapeless recipe " + id));
+    }
+    /** was net/minecraft/class_505.method_2565(Lnet/minecraft/class_1860;)V RecipeBookWidget.showGhostRecipe(Recipe): find its RecipeEntry */
+    public static void method_2565(net.minecraft.class_505 self, net.minecraft.class_1860<?> recipe) {
+        net.minecraft.class_638 world = net.minecraft.class_310.method_1551().field_1687;
+        if (world == null) return;
+        for (net.minecraft.class_8786<?> e : world.method_8433().method_8126()) {
+            if (e.comp_1933() == recipe) { self.method_2565(e); return; }
+        }
+    }
+
+    // ---- DrawContext nine-slice / repeating textures. 1.20.2 replaced them with sprite-atlas gui
+    // textures (drawGuiTexture + Scaling metadata) that take a sprite id, not a texture path, so the
+    // faithful bridge is the 1.20.1 algorithm on top of the surviving 7-arg drawTexture (method_25302).
+    /** was net/minecraft/class_332.method_48586(Lnet/minecraft/class_2960;IIIIIIIII)V drawNineSlicedTexture(outer) */
+    public static void method_48586(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int outer, int cw, int ch, int u, int v) {
+        method_48587(self, tex, x, y, w, h, outer, outer, outer, outer, cw, ch, u, v);
+    }
+    /** was net/minecraft/class_332.method_49697(Lnet/minecraft/class_2960;IIIIIIIIII)V drawNineSlicedTexture(sideW, sideH) */
+    public static void method_49697(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int sw, int sh, int cw, int ch, int u, int v) {
+        method_48587(self, tex, x, y, w, h, sw, sh, sw, sh, cw, ch, u, v);
+    }
+    /** was net/minecraft/class_332.method_48587(Lnet/minecraft/class_2960;IIIIIIIIIIII)V drawNineSlicedTexture(left, top, right, bottom) */
+    public static void method_48587(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h,
+                                    int left, int top, int right, int bottom, int cw, int ch, int u, int v) {
+        left = Math.min(left, w / 2);
+        right = Math.min(right, w / 2);
+        top = Math.min(top, h / 2);
+        bottom = Math.min(bottom, h / 2);
+        if (w == cw && h == ch) { self.method_25302(tex, x, y, u, v, w, h); return; }
+        if (h == ch) {
+            self.method_25302(tex, x, y, u, v, left, h);
+            method_48585(self, tex, x + left, y, w - right - left, h, u + left, v, cw - right - left, ch);
+            self.method_25302(tex, x + w - right, y, u + cw - right, v, right, h);
+            return;
+        }
+        if (w == cw) {
+            self.method_25302(tex, x, y, u, v, w, top);
+            method_48585(self, tex, x, y + top, w, h - bottom - top, u, v + top, cw, ch - bottom - top);
+            self.method_25302(tex, x, y + h - bottom, u, v + ch - bottom, w, bottom);
+            return;
+        }
+        self.method_25302(tex, x, y, u, v, left, top);
+        method_48585(self, tex, x + left, y, w - right - left, top, u + left, v, cw - right - left, top);
+        self.method_25302(tex, x + w - right, y, u + cw - right, v, right, top);
+        self.method_25302(tex, x, y + h - bottom, u, v + ch - bottom, left, bottom);
+        method_48585(self, tex, x + left, y + h - bottom, w - right - left, bottom, u + left, v + ch - bottom, cw - right - left, bottom);
+        self.method_25302(tex, x + w - right, y + h - bottom, u + cw - right, v + ch - bottom, right, bottom);
+        method_48585(self, tex, x, y + top, left, h - bottom - top, u, v + top, left, ch - bottom - top);
+        method_48585(self, tex, x + left, y + top, w - right - left, h - bottom - top, u + left, v + top, cw - right - left, ch - bottom - top);
+        method_48585(self, tex, x + w - right, y + top, right, h - bottom - top, u + cw - right, v + top, right, ch - bottom - top);
+    }
+    /** was net/minecraft/class_332.method_48585(Lnet/minecraft/class_2960;IIIIIIII)V drawRepeatingTexture */
+    public static void method_48585(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int u, int v, int tw, int th) {
+        int i = x;
+        for (int j : cbDivide(w, tw)) {
+            int k = (tw - j) / 2;
+            int l = y;
+            for (int m : cbDivide(h, th)) {
+                int n = (th - m) / 2;
+                self.method_25302(tex, i, l, u + k, v + n, j, m);
+                l += m;
+            }
+            i += j;
+        }
+    }
+    /** 1.20.1 Divider(total, ceilDiv(total, piece)): even split, remainder spread one pixel at a time. */
+    private static int[] cbDivide(int total, int piece) {
+        if (total <= 0 || piece <= 0) return new int[0];
+        int count = net.minecraft.class_3532.method_38788(total, piece);
+        int q = total / count, mod = total % count, rem = 0;
+        int[] out = new int[count];
+        for (int idx = 0; idx < count; idx++) {
+            int p = q;
+            rem += mod;
+            if (rem >= count) { rem -= count; p++; }
+            out[idx] = p;
+        }
+        return out;
+    }
+
+    // ---- super(...) argument adapters for 1.20.2 constructor reshapes (engine superCtorAdapts:
+    // a static converter runs on the stack tail right before INVOKESPECIAL <init>).
+    /** SpecialCraftingRecipe(Identifier, category) -> (category): the id moved to RecipeEntry. */
+    public static net.minecraft.class_7710 cbDropRecipeId(net.minecraft.class_2960 id, net.minecraft.class_7710 category) { return category; }
+    /** AbstractCriterionConditions(Identifier, LootContextPredicate) -> (Optional<LootContextPredicate>) */
+    public static java.util.Optional<net.minecraft.class_5258> cbCriterionPlayer(net.minecraft.class_2960 id, net.minecraft.class_5258 p) { return java.util.Optional.ofNullable(p); }
+    /** ServerPlayerEntity(server, world, profile) gained SyncedClientOptions */
+    public static net.minecraft.class_8791 cbDefaultClientOptions() { return net.minecraft.class_8791.method_53821(); }
+    /** ButtonWidget(x, y, w, h, text, action) gained a NarrationSupplier; the vanilla default narrates the supplied message */
+    public static net.minecraft.class_4185.class_7841 cbDefaultNarration() { return s -> s.get(); }
 }

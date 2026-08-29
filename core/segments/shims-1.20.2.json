@@ -11,7 +11,13 @@
   "net/minecraft/class_2022.method_8846(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2022;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_2025.method_8857(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2025;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_2048.method_8913(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2048;": "top/dext/centurybridge/rt/v1_20_2/Statics",
-  "net/minecraft/class_2048.method_51705(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/Statics"
+  "net/minecraft/class_2048.method_51705(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_1068.method_4647(Ljava/util/UUID;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_2090.method_9017(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_173.method_762(Lnet/minecraft/class_176;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_3898.method_39975(IIIII)Z": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_2080$class_2083.method_35248(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_5409$class_5410.method_30099(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073$class_2074;Lnet/minecraft/class_5258;)Lnet/minecraft/class_5409$class_5410;": "top/dext/centurybridge/rt/v1_20_2/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_1865.method_8121(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1860;": "top/dext/centurybridge/rt/v1_20_2/Statics",
@@ -31,7 +37,41 @@
   "net/minecraft/class_1731.method_7662(Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_3861.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_3920.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
-  "net/minecraft/class_2302.method_9651(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Z": "top/dext/centurybridge/rt/v1_20_2/Statics"
+  "net/minecraft/class_2302.method_9651(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Z": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_742.method_3117()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_746.method_3117()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_742.method_3121()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_746.method_3121()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_742.method_3119()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_742.method_3122()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_742.method_3125()Z": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_742.method_3126()Z": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_742.method_3127()Z": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_640.method_2968()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_640.method_2957()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_640.method_2979()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_640.method_2977()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_1071.method_4654(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_320.method_1673()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_320.method_1677()Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_632.method_2864(Lnet/minecraft/class_161;Z)V": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_163.method_712()Ljava/util/Collection;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_161$class_162.method_695(Lnet/minecraft/class_2960;)Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_161$class_162.method_710()Ljava/util/Map;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_455.method_2320()I": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_3448.method_14957()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_1297.method_5621()D": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_1496.method_5621()D": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_1498.method_5621()D": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_5712.method_32938()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_2724.method_11779()Lnet/minecraft/class_5321;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_1867$class_1868.method_8142(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1867;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_505.method_2565(Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_332.method_48586(Lnet/minecraft/class_2960;IIIIIIIII)V": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_332.method_49697(Lnet/minecraft/class_2960;IIIIIIIIII)V": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_332.method_48587(Lnet/minecraft/class_2960;IIIIIIIIIIII)V": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_332.method_48585(Lnet/minecraft/class_2960;IIIIIIII)V": "top/dext/centurybridge/rt/v1_20_2/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/Statics",
@@ -46,13 +86,15 @@
  },
  "classRenames": {
   "net/minecraft/class_5335": "top/dext/centurybridge/facade/v1_20_2/class_5335",
-  "net/minecraft/class_5267": "top/dext/centurybridge/facade/v1_20_2/class_5267"
+  "net/minecraft/class_5267": "top/dext/centurybridge/facade/v1_20_2/class_5267",
+  "net/minecraft/class_2345": "top/dext/centurybridge/facade/v1_20_2/class_2345"
  },
  "fieldRenames": {
   "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "field_45013"
  },
  "methodRenames": {
-  "net/minecraft/class_3244.method_14367(Lnet/minecraft/class_2561;)V": "method_52396"
+  "net/minecraft/class_3244.method_14367(Lnet/minecraft/class_2561;)V": "method_52396",
+  "net/minecraft/class_632.method_2863()Lnet/minecraft/class_163;": "method_53814"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -166,7 +208,26 @@
   "net/minecraft/class_5339.<init>": "bridge attempted, no faithful equivalent: the legacy JsonSerializer argument cannot be converted to the Codec required by the new LootFunctionType constructor",
   "net/minecraft/class_5338.<init>": "bridge attempted, no faithful equivalent: the old class_5335 argument cannot be converted to the Codec required by the surviving constructor",
   "net/minecraft/class_4265.method_25401": "bridge attempted, no faithful equivalent: the new API has no equivalent accepting three double coordinates",
-  "net/minecraft/class_7172.<init>": "bridge attempted, no faithful equivalent: class_7307 cannot be converted to the required class_7277"
+  "net/minecraft/class_7172.<init>": "bridge attempted, no faithful equivalent: class_7307 cannot be converted to the required class_7277",
+  "net/minecraft/class_1869.<init>": "recipe ctor dropped its leading Identifier in 1.20.2 (id moved to RecipeEntry); a super() site needs a leading-arg drop, which superCtorAdapts (tail converter) cannot express -- pending engine superCtorDropArgs",
+  "net/minecraft/class_1867.<init>": "recipe ctor dropped its leading Identifier in 1.20.2 (id moved to RecipeEntry); a super() site needs a leading-arg drop, which superCtorAdapts (tail converter) cannot express -- pending engine superCtorDropArgs",
+  "net/minecraft/class_3975.<init>": "recipe ctor dropped its leading Identifier in 1.20.2 (id moved to RecipeEntry); a super() site needs a leading-arg drop, which superCtorAdapts (tail converter) cannot express -- pending engine superCtorDropArgs",
+  "net/minecraft/class_1874.<init>": "recipe ctor dropped its leading Identifier in 1.20.2 (id moved to RecipeEntry); a super() site needs a leading-arg drop, which superCtorAdapts (tail converter) cannot express -- pending engine superCtorDropArgs",
+  "net/minecraft/class_8060.<init>": "recipe ctor dropped its leading Identifier in 1.20.2 (id moved to RecipeEntry); a super() site needs a leading-arg drop, which superCtorAdapts (tail converter) cannot express -- pending engine superCtorDropArgs",
+  "net/minecraft/class_8490.method_51203": "LootDataType.getGson removed in the 1.20.2 loot codec rework (use codec())",
+  "net/minecraft/class_2444.method_10415": "RecipeJsonProvider.toJson removed (recipes are codec-driven); dev-time datagen only",
+  "net/minecraft/class_186.field_1246": "loot condition array became a List in 1.20.2; instance field read (GETFIELD) has no redirect mechanism",
+  "net/minecraft/class_55.field_954": "loot pool condition array became a List in 1.20.2; instance field read (GETFIELD) has no redirect mechanism",
+  "net/minecraft/class_69.field_982": "loot entry children array became a List in 1.20.2; instance field read (GETFIELD) has no redirect mechanism",
+  "net/minecraft/class_79.field_988": "loot entry condition array became a List in 1.20.2; instance field read (GETFIELD) has no redirect mechanism",
+  "net/minecraft/class_8208.<init>": "ImageWidget ctors became package-private (int,int,int,int) with Sprite/Texture subclasses in 1.20.2; a mod subclass cannot super() into them",
+  "net/minecraft/class_489.<init>": "AbstractFurnaceScreen ctor gained two sprite Identifiers (lit/burn progress) in 1.20.2; two pushed args exceed what one tail adapter supplies",
+  "net/minecraft/class_2505.<init>": "NbtLong ctor is no longer public in 1.20.2 (NbtLong.of)",
+  "net/minecraft/class_2030$class_2032.<init>": "EnchantedItemCriterion.Conditions ctor wrapped two non-tail args in Optional; not expressible as a tail adapter",
+  "net/minecraft/class_2788.method_17816": "SynchronizeRecipesS2CPacket.writeRecipe now takes a RecipeEntry (id+recipe); a bare Recipe carries no id in 1.20.2",
+  "net/minecraft/class_1071.method_4652": "PlayerSkinProvider.loadSkin(profile, callback, secure) replaced by fetchSkinTextures futures; the per-texture callback type is gone",
+  "net/minecraft/class_1071.method_4656": "PlayerSkinProvider.loadSkin(texture, type) removed; textures are registered internally while loading SkinTextures",
+  "net/minecraft/class_3222.method_14246": "ServerPlayerEntity.sendUnloadChunkPacket removed (chunk tracking moved to ChunkTrackingView in 1.20.2)"
  },
  "covers": [
   "net/minecraft/class_1058.method_4570(D)F",
@@ -234,7 +295,10 @@
   "net/minecraft/class_490.method_48472(Lnet/minecraft/class_332;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/class_1309;)V",
   "net/minecraft/class_514.method_2643()Lnet/minecraft/class_1860;",
   "net/minecraft/class_634.method_29091()Lnet/minecraft/class_5455;",
-  "net/minecraft/class_8208.method_25401(DDD)Z"
+  "net/minecraft/class_8208.method_25401(DDD)Z",
+  "net/minecraft/class_315.field_1866:Z",
+  "net/minecraft/class_315.field_1880:Z",
+  "net/minecraft/class_315.field_1893:Z"
  ],
  "superRedirects": {
   "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbRenderWidgets"
@@ -343,6 +407,26 @@
    "desc": "(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_642$class_8678;)V",
    "conv": "top/dext/centurybridge/rt/v1_20_2/Statics#cbServerType",
    "convDesc": "(Z)Lnet/minecraft/class_642$class_8678;"
+  },
+  "net/minecraft/class_1852.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "conv": "top/dext/centurybridge/rt/v1_20_2/Statics#cbDropRecipeId",
+   "convDesc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)Lnet/minecraft/class_7710;"
+  },
+  "net/minecraft/class_195.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;)V",
+   "conv": "top/dext/centurybridge/rt/v1_20_2/Statics#cbCriterionPlayer",
+   "convDesc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+  },
+  "net/minecraft/class_3222.<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_3218;Lcom/mojang/authlib/GameProfile;)V": {
+   "desc": "(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_3218;Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_8791;)V",
+   "conv": "top/dext/centurybridge/rt/v1_20_2/Statics#cbDefaultClientOptions",
+   "convDesc": "()Lnet/minecraft/class_8791;"
+  },
+  "net/minecraft/class_4185.<init>(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_4185$class_4241;)V": {
+   "desc": "(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_4185$class_4241;Lnet/minecraft/class_4185$class_7841;)V",
+   "conv": "top/dext/centurybridge/rt/v1_20_2/Statics#cbDefaultNarration",
+   "convDesc": "()Lnet/minecraft/class_4185$class_7841;"
   }
  }
 }

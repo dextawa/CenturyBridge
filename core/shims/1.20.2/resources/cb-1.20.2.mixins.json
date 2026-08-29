@@ -18,12 +18,16 @@
   "PlayerAdvancementTrackerBridge",
   "RecipeManagerBridge",
   "SlotBridge",
-  "StatusEffectBridge"
+  "StatusEffectBridge",
+  "CbAdvancementBuilderCriteria",
+  "CbLootContextTypesAccessor"
  ],
  "client": [
   "EditBoxBridge",
   "ScreenDrawablesAccessor",
-  "MouseScrollBridge"
+  "MouseScrollBridge",
+  "ScreenBridge",
+  "GameOptionsBridge"
  ],
  "injectors": {
   "defaultRequire": 0
