@@ -7368,4 +7368,123 @@ public final class Statics {
     public static net.minecraft.class_1299 method_5905(net.minecraft.class_1299.class_1300 self, String id) {
         return self.method_5905(net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41266, net.minecraft.class_2960.method_60654(id)));
     }
+
+    // ---- dead-cover replacements (the wiring claimed a mixin restored these shapes; none ever existed) ----
+
+    // StatusEffect / EntityAttribute became Holders (1.20.5 / 1.21)
+    public static boolean method_6059(net.minecraft.class_1309 self, net.minecraft.class_1291 effect) {
+        return self.method_6059(net.minecraft.class_7923.field_41174.method_47983(effect));
+    }
+
+    public static net.minecraft.class_1293 method_6112(net.minecraft.class_1309 self, net.minecraft.class_1291 effect) {
+        return self.method_6112(net.minecraft.class_7923.field_41174.method_47983(effect));
+    }
+
+    public static boolean method_6016(net.minecraft.class_1309 self, net.minecraft.class_1291 effect) {
+        return self.method_6016(net.minecraft.class_7923.field_41174.method_47983(effect));
+    }
+
+    public static net.minecraft.class_1324 method_5996(net.minecraft.class_1309 self, net.minecraft.class_1320 attribute) {
+        return self.method_5996(net.minecraft.class_7923.field_41190.method_47983(attribute));
+    }
+
+    public static double method_26852(net.minecraft.class_5131 self, net.minecraft.class_1320 attribute) {
+        return self.method_26852(net.minecraft.class_7923.field_41190.method_47983(attribute));
+    }
+
+    public static boolean method_27310(net.minecraft.class_5132 self, net.minecraft.class_1320 attribute) {
+        return self.method_27310(net.minecraft.class_7923.field_41190.method_47983(attribute));
+    }
+
+    /** was LivingEntity.sendEquipmentBreakStatus(EquipmentSlot): 1.20.5+ also wants the item */
+    public static void method_20235(net.minecraft.class_1309 self, net.minecraft.class_1304 slot) {
+        self.method_20235(self.method_6118(slot).method_7909(), slot);
+    }
+
+    /** was EntityAttributeModifier.getName(): modifiers are keyed by Identifier since 1.21 */
+    public static String method_6185(net.minecraft.class_1322 self) {
+        return self.comp_2447().toString();
+    }
+
+    /** was MobEntity.initialize(.., NbtCompound): the NBT argument left in 1.20.5. Call sites only -- a 1.20.1 override stays an orphan (vanilla calls the 4-arg shape) */
+    public static net.minecraft.class_1315 method_5943(net.minecraft.class_1308 self, net.minecraft.class_5425 world, net.minecraft.class_1266 difficulty,
+            net.minecraft.class_3730 reason, net.minecraft.class_1315 data, net.minecraft.class_2487 nbt) {
+        return self.method_5943(world, difficulty, reason, data);
+    }
+
+    /** registries for a block entity: its world's, or the vanilla lookup before it is placed */
+    public static net.minecraft.class_7225.class_7874 cbRegistries(net.minecraft.class_2586 be) {
+        net.minecraft.class_1937 w = be.method_10997();
+        return w != null ? w.method_30349() : net.minecraft.class_7887.method_46817();
+    }
+
+    /** was Entity.damage(DamageSource, float): 1.21.2 split it into hurtServer(ServerWorld, ..); client-side damage was always a no-op */
+    public static boolean method_5643(net.minecraft.class_1297 self, net.minecraft.class_1282 source, float amount) {
+        return self.method_73183() instanceof net.minecraft.class_3218 sw && self.method_64397(sw, source, amount);
+    }
+
+    /** was NbtHelper.fromBlockPos(BlockPos)NbtCompound: the 1.20.1 {X,Y,Z} compound (1.21.2 writes an int array) */
+    public static net.minecraft.class_2487 method_10692(net.minecraft.class_2338 pos) {
+        net.minecraft.class_2487 c = new net.minecraft.class_2487();
+        c.method_10569("X", pos.method_10263());
+        c.method_10569("Y", pos.method_10264());
+        c.method_10569("Z", pos.method_10260());
+        return c;
+    }
+
+    public static net.minecraft.class_2487 method_38242(net.minecraft.class_2586 self) {
+        return self.method_38242(cbRegistries(self));
+    }
+
+    public static net.minecraft.class_2586 method_11005(net.minecraft.class_2338 pos, net.minecraft.class_2680 state, net.minecraft.class_2487 nbt) {
+        return net.minecraft.class_2586.method_11005(pos, state, nbt, net.minecraft.class_7887.method_46817());
+    }
+
+    // ItemCooldownManager keys by stack (cooldown group) since 1.21.2
+    public static boolean method_7904(net.minecraft.class_1796 self, net.minecraft.class_1792 item) {
+        return self.method_7904(new net.minecraft.class_1799(item));
+    }
+
+    public static float method_7905(net.minecraft.class_1796 self, net.minecraft.class_1792 item, float tickDelta) {
+        return self.method_7905(new net.minecraft.class_1799(item), tickDelta);
+    }
+
+    /** was Block.onDestroyedByExplosion(World, ..): ServerWorld since 1.21.2 (client explosions never reached it) */
+    public static void method_9586(net.minecraft.class_2248 self, net.minecraft.class_1937 world, net.minecraft.class_2338 pos, net.minecraft.class_1927 explosion) {
+        if (world instanceof net.minecraft.class_3218 sw) {
+            self.method_9586(sw, pos, explosion);
+        }
+    }
+
+    /** was Entity.canModifyAt(World, BlockPos): ServerWorld since 1.21.2; the client never enforces it */
+    public static boolean method_36971(net.minecraft.class_1297 self, net.minecraft.class_1937 world, net.minecraft.class_2338 pos) {
+        return !(world instanceof net.minecraft.class_3218 sw) || self.method_36971(sw, pos);
+    }
+
+    /** was CampfireBlockEntity.addItem(Entity, ItemStack, int): 1.21.2 takes (ServerWorld, LivingEntity, ItemStack), cook time comes from the recipe */
+    public static boolean method_17503(net.minecraft.class_3924 self, net.minecraft.class_1297 user, net.minecraft.class_1799 stack, int cookTime) {
+        return self.method_10997() instanceof net.minecraft.class_3218 sw && user instanceof net.minecraft.class_1309 living && self.method_17503(sw, living, stack);
+    }
+
+    /** was GameRenderer.getBasicProjectionMatrix(double fov) -> float since 1.21.2 */
+    public static org.joml.Matrix4f method_22973(net.minecraft.class_757 self, double fov) {
+        return self.method_22973((float) fov);
+    }
+
+    /** was ModelPart.render(matrices, vertices, light, overlay, r, g, b, a): one packed ARGB int since 1.21 */
+    public static void method_22699(net.minecraft.class_630 self, net.minecraft.class_4587 matrices, net.minecraft.class_4588 vertices, int light, int overlay,
+            float red, float green, float blue, float alpha) {
+        int argb = (Math.round(alpha * 255f) << 24) | (Math.round(red * 255f) << 16) | (Math.round(green * 255f) << 8) | Math.round(blue * 255f);
+        self.method_22699(matrices, vertices, light, overlay, argb);
+    }
+
+    /** was RenderLayers.getEntityBlockLayer(state, direct): the direct/buffered flag left in 1.21.5 */
+    public static net.minecraft.class_1921 method_23683(net.minecraft.class_2680 state, boolean direct) {
+        return net.minecraft.class_4696.method_23683(state);
+    }
+
+    /** was ButtonWidget(x, y, w, h, text, onPress): the ctor went protected in 1.20.2 -- through the builder */
+    public static net.minecraft.class_4185 cbNewclass_4185(int x, int y, int w, int h, net.minecraft.class_2561 text, net.minecraft.class_4185.class_4241 action) {
+        return net.minecraft.class_4185.method_46430(text, action).method_46434(x, y, w, h).method_46431();
+    }
 }
