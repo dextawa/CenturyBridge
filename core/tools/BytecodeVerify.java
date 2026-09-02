@@ -41,53 +41,73 @@ public final class BytecodeVerify {
     static int lastCount;
 
     static int verifyJar(Path jar) throws IOException {
-        int bad = 0;
         lastCount = 0;
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(jar))) {
-            ZipEntry e;
-            while ((e = zin.getNextEntry()) != null) {
-                if (!e.getName().endsWith(".class")) {
+            return verifyStream(zin, jar.getFileName().toString());
+        }
+    }
+
+    /**
+     * Walks one jar layer. Bundled (jar-in-jar) libraries under META-INF/jars/
+     * are rewritten by the converter exactly like top-level classes, so they
+     * are verified in place too -- a spill-rewritten constructor inside a
+     * bundled cloth-config is as shipped as anything else.
+     */
+    static int verifyStream(ZipInputStream zin, String label) throws IOException {
+        int bad = 0;
+        ZipEntry e;
+        while ((e = zin.getNextEntry()) != null) {
+            if (e.getName().startsWith("META-INF/jars/") && e.getName().endsWith(".jar")) {
+                byte[] nested = zin.readAllBytes();
+                try (ZipInputStream nz = new ZipInputStream(new java.io.ByteArrayInputStream(nested))) {
+                    bad += verifyStream(nz, label + "!" + e.getName().substring("META-INF/jars/".length()));
+                }
+                continue;
+            }
+            if (!e.getName().endsWith(".class")) {
+                continue;
+            }
+            byte[] bytes = zin.readAllBytes();
+            lastCount++;
+            ClassNode cn = new ClassNode();
+            try {
+                new ClassReader(bytes).accept(cn, ClassReader.SKIP_DEBUG);
+            } catch (Exception ex) {
+                System.out.println("UNREADABLE " + label + " " + e.getName() + ": " + ex);
+                bad++;
+                continue;
+            }
+            for (MethodNode mn : cn.methods) {
+                if (mn.instructions.size() == 0) {
                     continue;
                 }
-                byte[] bytes = zin.readAllBytes();
-                lastCount++;
-                ClassNode cn = new ClassNode();
                 try {
-                    new ClassReader(bytes).accept(cn, ClassReader.SKIP_DEBUG);
-                } catch (Exception ex) {
-                    System.out.println("UNREADABLE " + jar.getFileName() + " " + e.getName() + ": " + ex);
-                    bad++;
-                    continue;
-                }
-                for (MethodNode mn : cn.methods) {
-                    if (mn.instructions.size() == 0) {
-                        continue;
-                    }
-                    try {
-                        Analyzer<BasicValue> az = new Analyzer<>(new BasicInterpreter());
-                        az.analyze(cn.name, mn);
-                        // the analyzer tracks real depth; compare to declared max
-                        int max = 0;
-                        for (var f : az.getFrames()) {
-                            if (f != null) {
-                                int d = 0;
-                                for (int i = 0; i < f.getStackSize(); i++) {
-                                    d += f.getStack(i).getSize();
-                                }
-                                max = Math.max(max, d);
+                    // the analyzer also rejects any load/store past max_locals, so a
+                    // spilled constructor argument without a recomputed max_locals
+                    // fails here too
+                    Analyzer<BasicValue> az = new Analyzer<>(new BasicInterpreter());
+                    az.analyze(cn.name, mn);
+                    // the analyzer tracks real depth; compare to declared max
+                    int max = 0;
+                    for (var f : az.getFrames()) {
+                        if (f != null) {
+                            int d = 0;
+                            for (int i = 0; i < f.getStackSize(); i++) {
+                                d += f.getStack(i).getSize();
                             }
+                            max = Math.max(max, d);
                         }
-                        if (max > mn.maxStack) {
-                            System.out.println("MAXSTACK " + jar.getFileName() + " "
-                                + cn.name + "." + mn.name + mn.desc
-                                + " needs " + max + " declared " + mn.maxStack);
-                            bad++;
-                        }
-                    } catch (AnalyzerException ex) {
-                        System.out.println("DATAFLOW " + jar.getFileName() + " "
-                            + cn.name + "." + mn.name + ": " + ex.getMessage());
+                    }
+                    if (max > mn.maxStack) {
+                        System.out.println("MAXSTACK " + label + " "
+                            + cn.name + "." + mn.name + mn.desc
+                            + " needs " + max + " declared " + mn.maxStack);
                         bad++;
                     }
+                } catch (AnalyzerException ex) {
+                    System.out.println("DATAFLOW " + label + " "
+                        + cn.name + "." + mn.name + ": " + ex.getMessage());
+                    bad++;
                 }
             }
         }

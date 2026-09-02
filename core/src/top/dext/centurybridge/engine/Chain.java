@@ -313,6 +313,195 @@ public final class Chain {
     public final java.util.Map<String, String[]> superCtorAdapts = new java.util.HashMap<>();
 
     /**
+     * General constructor-call reshaping ("superCtorReshapes" in
+     * shims-<to>.json) -- the full form of which {@link #superCtorAdapts} is
+     * the one-tail-argument special case. Applies to super(...) / this(...)
+     * delegations (no NEW site, so no factory can serve them) and, when no
+     * ctorRedirect claims the NEW site, to plain {@code new} sites as well.
+     * The engine spills the old arguments into fresh locals above the method's
+     * max_locals, re-pushes them in the new order (converting / dropping /
+     * supplying as the ops say) and swaps the INVOKESPECIAL descriptor.
+     * Frames stay valid: the sequence is straight-line and the temporaries are
+     * dead at every existing frame.
+     *
+     * <pre>
+     * "superCtorReshapes": {
+     *   "net/minecraft/class_1874.&lt;init&gt;(Lnet/minecraft/class_3956;Lnet/minecraft/class_2960;Ljava/lang/String;...FI)V": {
+     *     "desc": "(Lnet/minecraft/class_3956;Ljava/lang/String;...FI)V",
+     *     "ops":  ["keep", "drop", "keep", "keep", "keep", "keep", "keep", "keep"]
+     *   },
+     *   "net/minecraft/class_489.&lt;init&gt;(Lnet/minecraft/class_1720;...Lnet/minecraft/class_2960;)V": {
+     *     "desc": "(Lnet/minecraft/class_1720;...Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V",
+     *     "ops":  ["keep", "keep", "keep", "keep", "keep",
+     *              "push top/dext/centurybridge/rt/v1_20_2/Statics#cbLitProgress()Lnet/minecraft/class_2960;",
+     *              "push top/dext/centurybridge/rt/v1_20_2/Statics#cbBurnProgress()Lnet/minecraft/class_2960;"]
+     *   }
+     * }
+     * </pre>
+     *
+     * {@code ops} is read in NEW-argument order; each op emits zero or one new
+     * argument and consumes zero or more OLD arguments:
+     * <ul>
+     * <li>{@code keep} -- re-push the next old argument unchanged.</li>
+     * <li>{@code drop} -- consume the next old argument, push nothing.</li>
+     * <li>{@code conv OWNER#name(desc)R} -- push the next old argument and run
+     *     the static converter on it; its return type is the new argument.
+     *     The converter's parameter type must equal the old argument type.</li>
+     * <li>{@code push OWNER#name()R} -- call a zero-argument static supplier;
+     *     consumes no old argument (a new parameter with a default).</li>
+     * <li>{@code keep:N} / {@code conv:I,J,... OWNER#name(desc)R} -- the
+     *     explicit form names old argument indices (0-based) instead of taking
+     *     the next one in sequence: reordering, duplicating, or folding
+     *     several old arguments into one converter. When any op is explicit
+     *     the sequential coverage check is waived.</li>
+     * </ul>
+     * Longs and doubles are handled (two-slot locals, typed load/store). The
+     * argument types the ops produce must equal {@code desc}'s parameter list
+     * exactly; a mismatch is rejected when the wiring loads, not at a mod's
+     * call site. Old ops in sequence must cover every old argument (add
+     * {@code drop} for the ones that go away).
+     *
+     * Precedence at one call site: a NEW site with a {@code ctorRedirects}
+     * factory takes the factory; otherwise a reshape wins over a
+     * {@code superCtorAdapts} tail adapter for the same key. The full audit
+     * credits {@code super-ctor-reshape} / {@code ctor-reshape} per rewritten
+     * site; a dead constructor still reached after the pre-pass shows up as
+     * {@code SUPER-CTOR-ISSUE} / {@code CTOR-ISSUE} (or its ledger reason).
+     */
+    public final java.util.Map<String, CtorReshape> superCtorReshapes = new java.util.HashMap<>();
+
+    /** one parsed "superCtorReshapes" entry: the new descriptor and the ops that build its arguments */
+    public static final class CtorReshape {
+        public final String newDesc;
+        public final java.util.List<ReshapeOp> ops;
+
+        CtorReshape(String newDesc, java.util.List<ReshapeOp> ops) {
+            this.newDesc = newDesc;
+            this.ops = ops;
+        }
+    }
+
+    /** one reshape op: which old arguments to re-push, and the static to run on them (null = plain keep/drop) */
+    public static final class ReshapeOp {
+        /** old argument indices pushed, in order; empty for a push (supplier) */
+        public final int[] from;
+        /** static converter/supplier; null for keep and drop */
+        public final String owner, name, desc;
+        public final boolean drop;
+
+        ReshapeOp(int[] from, String owner, String name, String desc, boolean drop) {
+            this.from = from;
+            this.owner = owner;
+            this.name = name;
+            this.desc = desc;
+            this.drop = drop;
+        }
+    }
+
+    /**
+     * Parse and validate one reshape. Rejects, with the offending key in the
+     * message: unknown ops, an index past the old arity, a converter whose
+     * parameters do not match the old argument types, a void converter,
+     * uncovered trailing old arguments (sequential form), and a produced
+     * argument list that differs from {@code newDesc}.
+     */
+    public static CtorReshape parseReshape(String key, String newDesc, java.util.List<String> opStrs) {
+        String oldDesc = key.substring(key.indexOf('('));
+        org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(oldDesc);
+        org.objectweb.asm.Type[] want = org.objectweb.asm.Type.getArgumentTypes(newDesc);
+        java.util.List<ReshapeOp> ops = new java.util.ArrayList<>();
+        java.util.List<org.objectweb.asm.Type> produced = new java.util.ArrayList<>();
+        int cursor = 0;
+        boolean explicit = false;
+        String where = "superCtorReshapes " + key;
+        for (String s : opStrs) {
+            String t = s.trim();
+            int sp = t.indexOf(' ');
+            String head = sp < 0 ? t : t.substring(0, sp);
+            String rest = sp < 0 ? "" : t.substring(sp + 1).trim();
+            String kind = head;
+            String idxs = null;
+            int colon = head.indexOf(':');
+            if (colon >= 0) {
+                kind = head.substring(0, colon);
+                idxs = head.substring(colon + 1);
+            }
+            int[] from;
+            if (kind.equals("push")) {
+                from = new int[0];
+            } else if (idxs != null) {
+                explicit = true;
+                String[] parts = idxs.split(",");
+                from = new int[parts.length];
+                for (int i = 0; i < parts.length; i++) {
+                    from[i] = Integer.parseInt(parts[i].trim());
+                    if (from[i] < 0 || from[i] >= old.length) {
+                        throw new IllegalArgumentException(where + ": op '" + t + "' names old argument "
+                            + from[i] + " but the old constructor has " + old.length);
+                    }
+                }
+            } else {
+                if (cursor >= old.length) {
+                    throw new IllegalArgumentException(where + ": op '" + t + "' has no old argument left to consume");
+                }
+                from = new int[] {cursor++};
+            }
+            switch (kind) {
+                case "keep" -> {
+                    if (!rest.isEmpty() || from.length != 1) {
+                        throw new IllegalArgumentException(where + ": malformed op '" + t + "'");
+                    }
+                    ops.add(new ReshapeOp(from, null, null, null, false));
+                    produced.add(old[from[0]]);
+                }
+                case "drop" -> {
+                    if (!rest.isEmpty() || from.length != 1) {
+                        throw new IllegalArgumentException(where + ": malformed op '" + t + "'");
+                    }
+                    ops.add(new ReshapeOp(from, null, null, null, true));
+                }
+                case "conv", "push" -> {
+                    int hash = rest.indexOf('#');
+                    int paren = rest.indexOf('(');
+                    if (hash <= 0 || paren <= hash) {
+                        throw new IllegalArgumentException(where + ": op '" + t + "' needs OWNER#name(desc)R");
+                    }
+                    String cOwner = rest.substring(0, hash);
+                    String cName = rest.substring(hash + 1, paren);
+                    String cDesc = rest.substring(paren);
+                    org.objectweb.asm.Type[] p = org.objectweb.asm.Type.getArgumentTypes(cDesc);
+                    if (p.length != from.length) {
+                        throw new IllegalArgumentException(where + ": op '" + t + "' takes " + p.length
+                            + " parameter(s) but consumes " + from.length + " old argument(s)");
+                    }
+                    for (int i = 0; i < p.length; i++) {
+                        if (!p[i].equals(old[from[i]])) {
+                            throw new IllegalArgumentException(where + ": op '" + t + "' parameter " + i + " is "
+                                + p[i].getDescriptor() + " but old argument " + from[i] + " is " + old[from[i]].getDescriptor());
+                        }
+                    }
+                    org.objectweb.asm.Type r = org.objectweb.asm.Type.getReturnType(cDesc);
+                    if (r.getSort() == org.objectweb.asm.Type.VOID) {
+                        throw new IllegalArgumentException(where + ": op '" + t + "' returns void");
+                    }
+                    ops.add(new ReshapeOp(from, cOwner, cName, cDesc, false));
+                    produced.add(r);
+                }
+                default -> throw new IllegalArgumentException(where + ": unknown op '" + t + "'");
+            }
+        }
+        if (!explicit && cursor != old.length) {
+            throw new IllegalArgumentException(where + ": " + (old.length - cursor)
+                + " trailing old argument(s) not covered by ops (add keep/drop)");
+        }
+        if (!produced.equals(java.util.Arrays.asList(want))) {
+            throw new IllegalArgumentException(where + ": ops produce " + produced + " but desc declares "
+                + java.util.Arrays.asList(want));
+        }
+        return new CtorReshape(newDesc, ops);
+    }
+
+    /**
      * Redirects that apply to INVOKESPECIAL super-calls only ("superRedirects"):
      * "owner.name(desc)" -> "runtimeClass[#member]", receiver as arg 0. The
      * method still exists on the target with the same descriptor, so a plain
@@ -529,6 +718,18 @@ public final class Chain {
                         o.get("desc").getAsString(), o.get("conv").getAsString(),
                         o.get("convDesc").getAsString() });
                     c.ctorRedirectOwners.add(k.substring(0, k.indexOf('.')));
+                }
+            }
+            if (root.has("superCtorReshapes")) {
+                var scr = root.getAsJsonObject("superCtorReshapes");
+                for (String k : scr.keySet()) {
+                    var o = scr.getAsJsonObject(k);
+                    java.util.List<String> ops = new java.util.ArrayList<>();
+                    for (var el : o.getAsJsonArray("ops")) {
+                        ops.add(el.getAsString());
+                    }
+                    c.superCtorReshapes.put(k, parseReshape(k, o.get("desc").getAsString(), ops));
+                    c.ctorRedirectOwners.add(k.substring(0, k.indexOf(".<init>")));
                 }
             }
             if (root.has("ctorRedirects")) {

@@ -169,11 +169,23 @@ public final class JarProcessor {
     }
 
     /**
-     * NEW/DUP/args/INVOKESPECIAL owner.<init>(desc) -> args/INVOKESTATIC
-     * factory(desc)Lowner; for every constructor in ctorRedirects. NEWs are
-     * matched to their <init> LIFO per type, which is exactly how nesting
-     * works on the operand stack (an inner new completes before the outer
-     * <init>). Only NEW sites are rewritten.
+     * Constructor pre-pass, three mechanisms by call shape:
+     * <ul>
+     * <li>NEW/DUP/args/INVOKESPECIAL owner.<init>(desc) -> args/INVOKESTATIC
+     *     factory(desc)Lowner; for every constructor in ctorRedirects. NEWs are
+     *     matched to their <init> LIFO per type, which is exactly how nesting
+     *     works on the operand stack (an inner new completes before the outer
+     *     <init>). A branch inside the argument expression (a frame that records
+     *     the two uninitialized refs) keeps NEW/DUP and pops them at the call.</li>
+     * <li>superCtorReshapes: any INVOKESPECIAL <init> -- super()/this() with no
+     *     NEW to drop, or a NEW site no factory claims -- has its arguments
+     *     spilled to fresh locals and re-pushed per the ops (drop / conv / push),
+     *     then takes the new descriptor. See {@link Chain#superCtorReshapes}.</li>
+     * <li>superCtorAdapts: the one-tail-argument special case of the above.</li>
+     * </ul>
+     * Every rewrite is credited in the full audit here, by the pass that did
+     * it: the analysis pass runs on the rewritten bytes and only ever sees the
+     * residue (a dead constructor still called), which it reports as damage.
      */
     private static byte[] rewriteConstructors(byte[] bytes, Chain chain, Report rpt, String tag) {
         String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
@@ -212,58 +224,80 @@ public final class JarProcessor {
                     org.objectweb.asm.tree.TypeInsnNode newInsn = stack == null || stack.isEmpty() ? null : stack.pop();
                     String key = mi.owner + "." + mi.name + mi.desc;
                     String target = chain.ctorRedirects.get(key);
-                    if (newInsn == null) {
-                        // no NEW site: a super(...) / this(...) delegation. A factory
-                        // cannot replace it, but an argument adapter can.
-                        String[] adapt = chain.superCtorAdapts.get(key);
-                        if (adapt != null) {
+                    Chain.CtorReshape reshape = chain.superCtorReshapes.get(key);
+                    String[] adapt = chain.superCtorAdapts.get(key);
+                    if (newInsn == null || target == null) {
+                        // no NEW site (a super(...) / this(...) delegation), or a NEW
+                        // site no factory claims: a factory cannot replace the call,
+                        // but the arguments can be reshaped / adapted in place
+                        if (reshape != null) {
+                            reshapeArgs(m, mi, reshape);
+                            rewrites++;
+                            rpt.notes.add(tag + (newInsn == null ? "super-ctor-reshaped: " : "ctor-reshaped: ")
+                                + key + " -> " + reshape.newDesc + " in " + cn.name);
+                            top.dext.centurybridge.data.FullAudit.record(key,
+                                newInsn == null ? "super-ctor-reshape" : "ctor-reshape");
+                        } else if (adapt != null) {
                             m.instructions.insertBefore(mi, new org.objectweb.asm.tree.MethodInsnNode(
                                 Opcodes.INVOKESTATIC, redirCls(adapt[1]),
                                 redirName(adapt[1], "cbConv"), adapt[2], false));
                             mi.desc = adapt[0];
                             rewrites++;
-                            rpt.notes.add(tag + "super-ctor-adapted: " + key + " in " + cn.name);
-                        } else if (target != null) {
-                            if (chain.ledgerReason(mi.owner, "<init>") != null) {
-                                rpt.notes.add(tag + "super-ctor ledgered: " + key + " in " + cn.name);
-                                top.dext.centurybridge.data.FullAudit.record(key,
-                                    "LEDGERED[" + chain.sideOf(mi.owner) + "] super-ctor: " + chain.ledgerReason(mi.owner, "<init>"));
-                            } else {
-                                rpt.notes.add(tag + "!! super-ctor call not adaptable (no superCtorAdapts entry): "
-                                    + key + " in " + cn.name);
-                                top.dext.centurybridge.data.FullAudit.record(key, "SUPER-CTOR-ISSUE");
-                            }
+                            rpt.notes.add(tag + (newInsn == null ? "super-ctor-adapted: " : "ctor-adapted: ")
+                                + key + " in " + cn.name);
+                            top.dext.centurybridge.data.FullAudit.record(key,
+                                newInsn == null ? "super-ctor-adapt" : "ctor-adapt");
+                        } else if (newInsn == null && target != null) {
+                            // left in place: the analysis pass sees the dead constructor
+                            // still called from a super()/this() site and accounts it
+                            // (ledger / datagen / SUPER-CTOR-ISSUE)
+                            rpt.notes.add(tag + "!! super-ctor call not adaptable (no superCtorReshapes/superCtorAdapts entry): "
+                                + key + " in " + cn.name);
                         }
                         continue;
                     }
-                    if (target == null) {
-                        continue; // live constructor
-                    }
                     org.objectweb.asm.tree.AbstractInsnNode dup = newInsn.getNext();
                     if (dup == null || dup.getOpcode() != Opcodes.DUP) {
-                        continue; // unusual shape (javac always emits NEW DUP); leave it alone
+                        // unusual shape (javac always emits NEW DUP): the factory cannot
+                        // take this site; the analysis pass reports the residue
+                        rpt.notes.add(tag + "!! ctor-redirect skipped (NEW without DUP): " + key + " in " + cn.name);
+                        continue;
                     }
+                    String factoryDesc = mi.desc.substring(0, mi.desc.lastIndexOf(')') + 1) + "L" + mi.owner + ";";
                     // a branch inside the argument expression means a frame that
-                    // records the two uninitialized slots we are about to drop;
-                    // rather than re-deriving frames, leave such sites as damage
+                    // records the two uninitialized slots: dropping NEW/DUP would
+                    // invalidate it. Keep them, and at the call: spill the
+                    // arguments, pop the two uninitialized refs, reload, call the
+                    // factory -- every existing frame stays exact.
                     boolean framed = false;
                     for (org.objectweb.asm.tree.AbstractInsnNode p = dup.getNext(); p != null && p != mi; p = p.getNext()) {
                         if (p.getType() == org.objectweb.asm.tree.AbstractInsnNode.FRAME
-                                || p.getType() == org.objectweb.asm.tree.AbstractInsnNode.JUMP_INSN) {
+                                || p.getType() == org.objectweb.asm.tree.AbstractInsnNode.JUMP_INSN
+                                || p.getType() == org.objectweb.asm.tree.AbstractInsnNode.TABLESWITCH_INSN
+                                || p.getType() == org.objectweb.asm.tree.AbstractInsnNode.LOOKUPSWITCH_INSN) {
                             framed = true;
                             break;
                         }
                     }
                     if (framed) {
-                        rpt.notes.add(tag + "ctor-redirect skipped (branch in argument expression): " + key);
-                        continue;
+                        org.objectweb.asm.Type[] args = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
+                        int[] slots = spillArgs(m, mi, args);
+                        org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
+                        seq.add(new org.objectweb.asm.tree.InsnNode(Opcodes.POP2)); // the two uninitialized refs
+                        for (int i = 0; i < args.length; i++) {
+                            seq.add(new org.objectweb.asm.tree.VarInsnNode(args[i].getOpcode(Opcodes.ILOAD), slots[i]));
+                        }
+                        m.instructions.insertBefore(mi, seq);
+                        rpt.notes.add(tag + "ctor-redirected through spill (branch in argument expression): " + key
+                            + " in " + cn.name);
+                    } else {
+                        m.instructions.remove(dup);
+                        m.instructions.remove(newInsn);
                     }
-                    m.instructions.remove(dup);
-                    m.instructions.remove(newInsn);
-                    String factoryDesc = mi.desc.substring(0, mi.desc.lastIndexOf(')') + 1) + "L" + mi.owner + ";";
                     m.instructions.set(mi, new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC,
                         redirCls(target), redirName(target, "cbNew"), factoryDesc, false));
                     rewrites++;
+                    top.dext.centurybridge.data.FullAudit.record(key, "ctor-redirect");
                 }
             }
         }
@@ -274,6 +308,59 @@ public final class JarProcessor {
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
         cn.accept(cw);
         return cw.toByteArray();
+    }
+
+    /**
+     * Store the arguments sitting on the operand stack before {@code at} into
+     * fresh locals above the method's max_locals (top of stack first, so the
+     * slots end up in argument order). Returns the slot of each argument.
+     * COMPUTE_MAXS re-derives max_locals from the code afterwards; the node's
+     * value is bumped anyway so a second spill in the same method stays fresh.
+     */
+    private static int[] spillArgs(org.objectweb.asm.tree.MethodNode m,
+                                   org.objectweb.asm.tree.AbstractInsnNode at,
+                                   org.objectweb.asm.Type[] args) {
+        int[] slots = new int[args.length];
+        int s = m.maxLocals;
+        for (int i = 0; i < args.length; i++) {
+            slots[i] = s;
+            s += args[i].getSize();
+        }
+        org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
+        for (int i = args.length - 1; i >= 0; i--) {
+            seq.add(new org.objectweb.asm.tree.VarInsnNode(args[i].getOpcode(Opcodes.ISTORE), slots[i]));
+        }
+        m.instructions.insertBefore(at, seq);
+        m.maxLocals = s;
+        return slots;
+    }
+
+    /**
+     * In-place constructor reshape at an INVOKESPECIAL <init>: spill the old
+     * arguments, re-push them per the ops (keep / drop / conv / push), swap the
+     * descriptor. Valid at super()/this() and at NEW sites alike -- whatever
+     * sits below the arguments (uninitializedThis, or NEW DUP's two refs) is
+     * untouched, so existing frames stay exact.
+     */
+    private static void reshapeArgs(org.objectweb.asm.tree.MethodNode m,
+                                    org.objectweb.asm.tree.MethodInsnNode mi,
+                                    Chain.CtorReshape r) {
+        org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
+        int[] slots = spillArgs(m, mi, old);
+        org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
+        for (Chain.ReshapeOp op : r.ops) {
+            if (op.drop) {
+                continue;
+            }
+            for (int idx : op.from) {
+                seq.add(new org.objectweb.asm.tree.VarInsnNode(old[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
+            }
+            if (op.owner != null) {
+                seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, op.owner, op.name, op.desc, false));
+            }
+        }
+        m.instructions.insertBefore(mi, seq);
+        mi.desc = r.newDesc;
     }
 
     /** Redirect values are a class name, optionally "class#member" past the
@@ -591,7 +678,7 @@ public final class JarProcessor {
     private static byte[] verifyAndRewrite(byte[] bytes, Map<String, String> jarSuper, Chain chain, Set<String> issues,
                                            String tag, Tombstones reg, Report rpt) {
         boolean ctorChanged = false;
-        if (!chain.ctorRedirects.isEmpty() || !chain.superCtorAdapts.isEmpty()) {
+        if (!chain.ctorRedirects.isEmpty() || !chain.superCtorAdapts.isEmpty() || !chain.superCtorReshapes.isEmpty()) {
             byte[] b2 = rewriteConstructors(bytes, chain, rpt, tag);
             ctorChanged = b2 != bytes;
             bytes = b2;
@@ -704,9 +791,22 @@ public final class JarProcessor {
                     declaredNewOverrides.add(nh);
                 }
                 return new MethodVisitor(Opcodes.ASM9) {
+                    /** NEW sites awaiting their <init>, LIFO per type -- the same
+                     *  matching the constructor pre-pass does, so the audit credits a
+                     *  factory only where a factory can actually be applied */
+                    final Map<String, java.util.ArrayDeque<Boolean>> pendingNew = new HashMap<>();
+
                     @Override
                     public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
                         checkClass(owner);
+                        boolean newSite = false;
+                        if (name.equals("<init>")) {
+                            java.util.ArrayDeque<Boolean> st = pendingNew.get(owner);
+                            newSite = st != null && !st.isEmpty();
+                            if (newSite) {
+                                st.pop();
+                            }
+                        }
                         // lookup-hook call sites match on ANY owner: a mod calls
                         // through whatever static type it holds -- its own
                         // BlockEntity subclass as often as the vanilla owner.
@@ -760,44 +860,59 @@ public final class JarProcessor {
                             return; // owner facade-renamed; the member lives on the facade
                         }
                         String key = owner + "." + name + desc;
-                        if (name.equals("<init>") && chain.superCtorAdapts.containsKey(key)) {
-                            top.dext.centurybridge.data.FullAudit.record(key, "super-ctor-adapt");
-                            return; // adapted in place by the constructor pre-pass
+                        if (name.equals("<init>")) {
+                            // The constructor pre-pass already rewrote every site it
+                            // could (factory at NEW, reshape/adapt anywhere) and
+                            // credited them in the audit; this pass runs on the
+                            // rewritten bytes, so a dead shape still called here is the
+                            // residue. Damage whichever way it is called -- the label
+                            // keeps super()/this() apart from NEW sites because only
+                            // the former can never take a factory.
+                            boolean dead;
+                            if (!chain.targetCtors.isEmpty()) {
+                                dead = chain.targetCtors.containsKey(owner) && !chain.targetCtors.get(owner).contains(desc);
+                            } else {
+                                // no target stub: wiring is the only knowledge -- a wired
+                                // site the pre-pass could not rewrite is dead by definition
+                                dead = chain.ctorRedirects.containsKey(key) || chain.superCtorAdapts.containsKey(key)
+                                    || chain.superCtorReshapes.containsKey(key);
+                            }
+                            if (dead && chain.resolveClass(owner).level() == Chain.Level.OK) {
+                                String cside = chain.sideOf(owner);
+                                String what = newSite ? "ctor" : "super-ctor";
+                                if (cside.equals("datagen")) {
+                                    rpt.datagenSkipped++;
+                                    top.dext.centurybridge.data.FullAudit.record(key, "datagen-skip");
+                                    return;
+                                }
+                                if (chain.ledgerReason(owner, "<init>") != null) {
+                                    rpt.ledgered++;
+                                    top.dext.centurybridge.data.FullAudit.record(key,
+                                        "LEDGERED[" + cside + "] " + what + ": " + chain.ledgerReason(owner, "<init>"));
+                                    return;
+                                }
+                                top.dext.centurybridge.data.FullAudit.record(key,
+                                    (newSite ? "CTOR-ISSUE[" : "SUPER-CTOR-ISSUE[") + cside + "]");
+                                String cline = tag + "L3 " + (newSite ? "constructor: " : "super-constructor: ")
+                                    + shortName(owner) + ".<init>" + desc;
+                                if (!newSite) {
+                                    // recorded in the audit, surfaced as a note; not (yet)
+                                    // in the unaccounted count
+                                    rpt.notes.add(tag + "!! " + cline);
+                                    return;
+                                }
+                                if (cside.equals("client")) {
+                                    rpt.clientIssues.add(tag + "[client] " + cline);
+                                } else {
+                                    issues.add(cline);
+                                }
+                                return;
+                            }
+                            return; // live constructor (a dead owner is reported by checkClass)
                         }
-                        if (name.equals("<init>") && chain.ctorRedirects.containsKey(key)) {
-                            top.dext.centurybridge.data.FullAudit.record(key, "ctor-redirect");
-                            return; // rewritten to the factory by the constructor pre-pass
-                        }
-                        if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>") && chain.superRedirects.containsKey(key)) {
+                        if (op == Opcodes.INVOKESPECIAL && chain.superRedirects.containsKey(key)) {
                             superRedirectSites.add(key);
                             top.dext.centurybridge.data.FullAudit.record(key, "super-redirect");
-                            return;
-                        }
-                        if (name.equals("<init>") && !chain.targetCtors.isEmpty()
-                                && chain.targetCtors.containsKey(owner)
-                                && !chain.targetCtors.get(owner).contains(desc)
-                                && chain.resolveClass(owner).level() == Chain.Level.OK) {
-                            // the owner survives but this constructor shape does not:
-                            // NoSuchMethodError at the NEW site unless redirected
-                            String cside = chain.sideOf(owner);
-                            if (cside.equals("datagen")) {
-                                rpt.datagenSkipped++;
-                                top.dext.centurybridge.data.FullAudit.record(key, "datagen-skip");
-                                return;
-                            }
-                            if (chain.ledgerReason(owner, "<init>") != null) {
-                                rpt.ledgered++;
-                                top.dext.centurybridge.data.FullAudit.record(key,
-                                    "LEDGERED[" + cside + "] ctor: " + chain.ledgerReason(owner, "<init>"));
-                                return;
-                            }
-                            top.dext.centurybridge.data.FullAudit.record(key, "CTOR-ISSUE[" + cside + "]");
-                            String cline = tag + "L3 constructor: " + shortName(owner) + ".<init>" + desc;
-                            if (cside.equals("client")) {
-                                rpt.clientIssues.add(tag + "[client] " + cline);
-                            } else {
-                                issues.add(cline);
-                            }
                             return;
                         }
                         // a shim on any ancestor satisfies this call site: the mod
@@ -982,6 +1097,9 @@ public final class JarProcessor {
                                 top.dext.centurybridge.data.FullAudit.record("instanceof " + type, "instanceof-redirect");
                                 return; // answered by the predicate; the type itself is not loaded here
                             }
+                        }
+                        if (op == Opcodes.NEW && chain.ctorRedirectOwners.contains(type)) {
+                            pendingNew.computeIfAbsent(type, k -> new java.util.ArrayDeque<>()).push(Boolean.TRUE);
                         }
                         checkClass(type);
                     }
