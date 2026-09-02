@@ -408,21 +408,76 @@ public final class JarProcessor {
         return false;
     }
 
-    /** class name -> superclass for every class in this jar layer (header read only). */
-    private static Map<String, String> superMapOf(Map<String, byte[]> entries) {
-        Map<String, String> m = new HashMap<>();
+    /**
+     * Header index of one jar layer: class -> superclass, and class -> the
+     * members it declares ("name(desc)" for methods, "name:desc" for fields).
+     * The declarations are what tells an inherited vanilla member apart from
+     * the mod's own: javac qualifies a call by the static type it was made
+     * through, so {@code this.method_25420(ctx)} inside a Screen subclass is
+     * emitted against the MOD class, and a segment that killed the vanilla
+     * method was invisible behind that owner.
+     */
+    static final class LayerIndex {
+        final Map<String, String> superOf = new HashMap<>();
+        final Map<String, Set<String>> decls = new HashMap<>();
+    }
+
+    private static LayerIndex indexLayer(Map<String, byte[]> entries) {
+        LayerIndex idx = new LayerIndex();
         for (Map.Entry<String, byte[]> e : entries.entrySet()) {
             if (!e.getKey().endsWith(".class")) {
                 continue;
             }
             try {
                 ClassReader cr = new ClassReader(e.getValue());
-                m.put(cr.getClassName(), cr.getSuperName());
+                Set<String> members = new HashSet<>();
+                cr.accept(new ClassVisitor(Opcodes.ASM9) {
+                    @Override
+                    public MethodVisitor visitMethod(int acc, String n, String d, String s, String[] x) {
+                        members.add(n + d);
+                        return null;
+                    }
+
+                    @Override
+                    public org.objectweb.asm.FieldVisitor visitField(int acc, String n, String d, String s, Object v) {
+                        members.add(n + ":" + d);
+                        return null;
+                    }
+                }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                idx.superOf.put(cr.getClassName(), cr.getSuperName());
+                idx.decls.put(cr.getClassName(), members);
             } catch (RuntimeException ignored) {
                 // not a class file after all
             }
         }
-        return m;
+        return idx;
+    }
+
+    /**
+     * For a member reference whose owner is a class of this jar layer: the
+     * first VANILLA class up the superclass chain when no mod class on the
+     * way declares the member (an inherited vanilla member, to be resolved --
+     * cover / redirect / ledger / tombstone -- as if referenced on that
+     * class); null when the mod declares it itself or the chain leaves into a
+     * library. Interfaces are not walked: a default method inherited from a
+     * vanilla interface through a mod-owned owner stays outside the audit.
+     */
+    private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64; hops++) {
+            if (cur.startsWith("net/minecraft/")) {
+                return cur;
+            }
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                return null; // not a class of this layer: a library, outside the stub diffs
+            }
+            if (d.contains(member)) {
+                return null; // the mod's own member
+            }
+            cur = layer.superOf.get(cur);
+        }
+        return null;
     }
 
     public static Report process(Path in, Path outDir, Chain chain) throws IOException {
@@ -478,7 +533,8 @@ public final class JarProcessor {
     private static void processEntries(Map<String, byte[]> entries, Chain chain,
                                        Report rpt, Set<String> issues, String tag,
                                        String jarTag) throws IOException {
-        Map<String, String> jarSuper = superMapOf(entries);
+        LayerIndex layer = indexLayer(entries);
+        Map<String, String> jarSuper = layer.superOf;
         stripSignatures(entries, rpt, tag);
         MixinTriage.Result triage = MixinTriage.run(entries, chain);
         Set<String> deadMixins = new HashSet<>();
@@ -517,7 +573,7 @@ public final class JarProcessor {
                 // .../datagen/ or .../data/ and never execute in a live game
                 boolean datagenCaller = cls.contains("datagen") || cls.contains("/data/");
                 Set<String> sink = datagenCaller ? new TreeSet<>() : issues;
-                byte[] rewritten = verifyAndRewrite(e.getValue(), jarSuper, chain, sink, tag, reg, rpt);
+                byte[] rewritten = verifyAndRewrite(e.getValue(), layer, chain, sink, tag, reg, rpt);
                 if (datagenCaller) {
                     rpt.datagenSkipped += sink.size();
                 }
@@ -675,8 +731,9 @@ public final class JarProcessor {
      * being issues, tombstoned calls fail lazily with a descriptive message.
      * Returns the rewritten class bytes, or null when unchanged.
      */
-    private static byte[] verifyAndRewrite(byte[] bytes, Map<String, String> jarSuper, Chain chain, Set<String> issues,
+    private static byte[] verifyAndRewrite(byte[] bytes, LayerIndex layer, Chain chain, Set<String> issues,
                                            String tag, Tombstones reg, Report rpt) {
+        Map<String, String> jarSuper = layer.superOf;
         boolean ctorChanged = false;
         if (!chain.ctorRedirects.isEmpty() || !chain.superCtorAdapts.isEmpty() || !chain.superCtorReshapes.isEmpty()) {
             byte[] b2 = rewriteConstructors(bytes, chain, rpt, tag);
@@ -694,6 +751,11 @@ public final class JarProcessor {
         Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
         Set<String> clientTombstones = new HashSet<>();      // subset of tombstone keys on client-only owners
         Set<String> silentTombstones = new HashSet<>();      // ledgered damage: rewritten but not reported
+        // call-site key -> the class to name in an emitted receiver-typed descriptor
+        // "(Lowner;...)". Set when the site's owner is a mod class through which a
+        // vanilla member is inherited: the bridge static is declared on the vanilla
+        // class the wiring names, and the mod instance is assignable to it.
+        Map<String, String> emitOwner = new HashMap<>();
 
         // dead-class facade renames touch descriptors/signatures everywhere, so the
         // trigger is a raw byte scan rather than per-ref analysis
@@ -715,7 +777,7 @@ public final class JarProcessor {
         // damage is such a call must still go through the rewrite pass -- the
         // fix used to ride along on other damage and silently skip these
         final Set<String> hookCallSites = new HashSet<>();
-        final Set<String> superRedirectSites = new HashSet<>();
+        final Map<String, String> superRedirectSites = new HashMap<>(); // call-site key -> runtime target
         boolean needIfaceFix = false;
         if (!chain.interfaceized.isEmpty()) {
             String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
@@ -820,23 +882,36 @@ public final class JarProcessor {
                                 owner + "." + name + desc, "lookup-hooked");
                             return;
                         }
+                        // the call-site key is what the rewrite pass sees; the chain is
+                        // consulted on the VANILLA owner, which differs when the site
+                        // names a mod class an inherited vanilla member is reached through
+                        final String site = owner + "." + name + desc;
                         if (!owner.startsWith("net/minecraft/")) {
-                            // library owners are outside the stub diffs, but a
-                            // redirect wired explicitly (DFU's Codec.dispatch
-                            // contract change hides behind generic erasure)
-                            // still applies
-                            String lkey = owner + "." + name + desc;
-                            String lrt = chain.instanceRedirects.get(lkey);
-                            if (lrt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
-                                instRedirects.put(lkey, lrt);
-                                top.dext.centurybridge.data.FullAudit.record(lkey, "instance-redirect");
+                            String inh = name.equals("<init>") ? null
+                                : inheritedVanillaOwner(owner, name + desc, layer);
+                            if (inh == null) {
+                                // library owners are outside the stub diffs, but a
+                                // redirect wired explicitly (DFU's Codec.dispatch
+                                // contract change hides behind generic erasure)
+                                // still applies
+                                String lrt = chain.instanceRedirects.get(site);
+                                if (lrt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
+                                    instRedirects.put(site, lrt);
+                                    top.dext.centurybridge.data.FullAudit.record(site, "instance-redirect");
+                                }
+                                String lsrt = chain.staticRedirects.get(site);
+                                if (lsrt != null && op == Opcodes.INVOKESTATIC) {
+                                    redirects.put(site, lsrt);
+                                    top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
+                                }
+                                return; // mod-owned members (incl. overrides of dead interface methods) still exist
                             }
-                            String lsrt = chain.staticRedirects.get(lkey);
-                            if (lsrt != null && op == Opcodes.INVOKESTATIC) {
-                                redirects.put(lkey, lsrt);
-                                top.dext.centurybridge.data.FullAudit.record(lkey, "static-redirect");
-                            }
-                            return; // mod-owned members (incl. overrides of dead interface methods) still exist
+                            // TestScreen.method_25420(ctx) is Screen.method_25420(ctx): the
+                            // mod class declares no such member, so the segment's verdict on
+                            // the vanilla one -- and its cover / redirect / ledger -- applies
+                            // here exactly as if the site named the vanilla class
+                            owner = inh;
+                            emitOwner.put(site, inh);
                         }
                         if (chain.classRenames.containsKey(owner)) {
                             // a class merged into a surviving VANILLA class (BakedModel ->
@@ -847,13 +922,13 @@ public final class JarProcessor {
                             String rkey = owner + "." + name + desc;
                             String rirt = chain.instanceRedirects.get(rkey);
                             if (rirt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
-                                instRedirects.put(rkey, rirt);
+                                instRedirects.put(site, rirt);
                                 top.dext.centurybridge.data.FullAudit.record(rkey, "instance-redirect");
                                 return;
                             }
                             String rsrt = chain.staticRedirects.get(rkey);
                             if (rsrt != null && op == Opcodes.INVOKESTATIC) {
-                                redirects.put(rkey, rsrt);
+                                redirects.put(site, rsrt);
                                 top.dext.centurybridge.data.FullAudit.record(rkey, "static-redirect");
                                 return;
                             }
@@ -911,7 +986,7 @@ public final class JarProcessor {
                             return; // live constructor (a dead owner is reported by checkClass)
                         }
                         if (op == Opcodes.INVOKESPECIAL && chain.superRedirects.containsKey(key)) {
-                            superRedirectSites.add(key);
+                            superRedirectSites.put(site, chain.superRedirects.get(key));
                             top.dext.centurybridge.data.FullAudit.record(key, "super-redirect");
                             return;
                         }
@@ -924,19 +999,24 @@ public final class JarProcessor {
                         }
                         String rt = chain.redirectAnywhere(chain.staticRedirects, owner, name + desc);
                         if (rt != null && op == Opcodes.INVOKESTATIC) {
-                            redirects.put(key, rt);
+                            redirects.put(site, rt);
                             top.dext.centurybridge.data.FullAudit.record(key, "static-redirect");
                             return;
                         }
                         String irt = chain.redirectAnywhere(chain.instanceRedirects, owner, name + desc);
                         if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
-                            instRedirects.put(key, irt);
+                            instRedirects.put(site, irt);
+                            if (!site.equals(key)) {
+                                // through a mod class: the bridge static is declared on the
+                                // class the wiring keys the member on
+                                emitOwner.put(site, chain.redirectHome(chain.instanceRedirects, owner, name + desc));
+                            }
                             top.dext.centurybridge.data.FullAudit.record(key, "instance-redirect");
                             return;
                         }
                         String mrn = chain.methodRenames.get(key);
                         if (mrn != null) {
-                            mthRenames.put(key, mrn);
+                            mthRenames.put(site, mrn);
                             top.dext.centurybridge.data.FullAudit.record(key, "method-rename");
                             return;
                         }
@@ -956,17 +1036,17 @@ public final class JarProcessor {
                                 "LEDGERED[" + side + "]@" + r.boundary() + ": " + chain.ledgerReason(owner, name));
                             if (r.level() == Chain.Level.L3 && !name.equals("<init>")
                                     && chain.resolveClass(owner).level() == Chain.Level.OK) {
-                                tombstone.put(key, r.boundary()); // still fail lazily with a message
-                                silentTombstones.add(key);        // but never as an issue line
+                                tombstone.put(site, r.boundary()); // still fail lazily with a message
+                                silentTombstones.add(site);        // but never as an issue line
                             }
                             return;
                         }
                         if (r.level() == Chain.Level.L3 && !name.equals("<init>")
                                 && chain.resolveClass(owner).level() == Chain.Level.OK) {
-                            tombstone.put(key, r.boundary());
+                            tombstone.put(site, r.boundary());
                             top.dext.centurybridge.data.FullAudit.record(key, "TOMBSTONE[" + side + "]@" + r.boundary());
                             if (side.equals("client")) {
-                                clientTombstones.add(key);
+                                clientTombstones.add(site);
                             }
                         } else {
                             top.dext.centurybridge.data.FullAudit.record(key,
@@ -983,30 +1063,38 @@ public final class JarProcessor {
                     @Override
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
                         checkClass(owner);
+                        // call-site key vs vanilla owner: see visitMethodInsn
+                        final String fsite = owner + "." + name + ":" + desc;
                         if (!owner.startsWith("net/minecraft/")) {
-                            // fabric-API fields move too (ClientTickEvents world->level):
-                            // rename/redirect them like classRenames does for any owner.
-                            // Everything else off the vanilla surface is not our damage.
-                            String ffkey = owner + "." + name + ":" + desc;
-                            String frn = chain.fieldRenames.get(ffkey);
-                            if (frn != null) {
-                                fldRenames.put(ffkey, frn);
-                                top.dext.centurybridge.data.FullAudit.record(ffkey, "field-rename");
+                            String inh = inheritedVanillaOwner(owner, name + ":" + desc, layer);
+                            if (inh == null) {
+                                // fabric-API fields move too (ClientTickEvents world->level):
+                                // rename/redirect them like classRenames does for any owner.
+                                // Everything else off the vanilla surface is not our damage.
+                                String frn = chain.fieldRenames.get(fsite);
+                                if (frn != null) {
+                                    fldRenames.put(fsite, frn);
+                                    top.dext.centurybridge.data.FullAudit.record(fsite, "field-rename");
+                                    return;
+                                }
+                                String ffrt = chain.fieldRedirects.get(fsite);
+                                if (ffrt != null && op == Opcodes.GETSTATIC) {
+                                    fldRedirects.put(fsite, ffrt);
+                                    top.dext.centurybridge.data.FullAudit.record(fsite, "field-redirect");
+                                    return;
+                                }
+                                String ffgt = chain.fieldGetters.get(fsite);
+                                if (ffgt != null && op == Opcodes.GETSTATIC) {
+                                    fldGetters.put(fsite, ffgt);
+                                    top.dext.centurybridge.data.FullAudit.record(fsite, "field-getter");
+                                    return;
+                                }
                                 return;
                             }
-                            String ffrt = chain.fieldRedirects.get(ffkey);
-                            if (ffrt != null && op == Opcodes.GETSTATIC) {
-                                fldRedirects.put(ffkey, ffrt);
-                                top.dext.centurybridge.data.FullAudit.record(ffkey, "field-redirect");
-                                return;
-                            }
-                            String ffgt = chain.fieldGetters.get(ffkey);
-                            if (ffgt != null && op == Opcodes.GETSTATIC) {
-                                fldGetters.put(ffkey, ffgt);
-                                top.dext.centurybridge.data.FullAudit.record(ffkey, "field-getter");
-                                return;
-                            }
-                            return;
+                            // this.field_22789 inside a Screen subclass: an inherited
+                            // vanilla field referenced through the mod's own class
+                            owner = inh;
+                            emitOwner.put(fsite, inh);
                         }
                         if (chain.classRenames.containsKey(owner)) {
                             return;
@@ -1021,25 +1109,25 @@ public final class JarProcessor {
                         }
                         String frt = chain.fieldRedirects.get(fkey);
                         if (frt != null && op == Opcodes.GETSTATIC) {
-                            fldRedirects.put(fkey, frt);
+                            fldRedirects.put(fsite, frt);
                             top.dext.centurybridge.data.FullAudit.record(fkey, "field-redirect");
                             return;
                         }
                         String fgt = chain.fieldGetters.get(fkey);
                         if (fgt != null && op == Opcodes.GETSTATIC) {
-                            fldGetters.put(fkey, fgt);
+                            fldGetters.put(fsite, fgt);
                             top.dext.centurybridge.data.FullAudit.record(fkey, "field-getter");
                             return;
                         }
                         String ifgt = chain.instanceFieldGetters.get(fkey);
                         if (ifgt != null && op == Opcodes.GETFIELD) {
-                            instFldGetters.put(fkey, ifgt);
+                            instFldGetters.put(fsite, ifgt);
                             top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-getter");
                             return;
                         }
                         String rename = chain.fieldRenames.get(fkey);
                         if (rename != null) {
-                            fldRenames.put(fkey, rename);
+                            fldRenames.put(fsite, rename);
                             top.dext.centurybridge.data.FullAudit.record(fkey, "field-rename");
                             return;
                         }
@@ -1113,26 +1201,35 @@ public final class JarProcessor {
                             if (!(arg instanceof org.objectweb.asm.Handle h)) {
                                 continue;
                             }
-                            if (!h.getOwner().startsWith("net/minecraft/")) {
-                                // library-owner method references carry the same
-                                // explicitly-wired redirects as direct calls
-                                // (Codec::dispatch as a lambda breaks identically)
-                                String lkey = h.getOwner() + "." + h.getName() + h.getDesc();
-                                boolean hStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
-                                String lrt = chain.instanceRedirects.get(lkey);
-                                if (lrt != null && !hStatic && !h.getName().equals("<init>")) {
-                                    instRedirects.put(lkey, lrt);
-                                    top.dext.centurybridge.data.FullAudit.record(lkey, "instance-redirect");
+                            // handle owner vs vanilla owner: a method reference through the
+                            // mod's own class (this::method_25420) resolves like a call
+                            final String site = h.getOwner() + "." + h.getName() + h.getDesc();
+                            String hOwner = h.getOwner();
+                            if (!hOwner.startsWith("net/minecraft/")) {
+                                String inh = h.getName().equals("<init>") ? null
+                                    : inheritedVanillaOwner(hOwner, h.getName() + h.getDesc(), layer);
+                                if (inh == null) {
+                                    // library-owner method references carry the same
+                                    // explicitly-wired redirects as direct calls
+                                    // (Codec::dispatch as a lambda breaks identically)
+                                    boolean hStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
+                                    String lrt = chain.instanceRedirects.get(site);
+                                    if (lrt != null && !hStatic && !h.getName().equals("<init>")) {
+                                        instRedirects.put(site, lrt);
+                                        top.dext.centurybridge.data.FullAudit.record(site, "instance-redirect");
+                                    }
+                                    String lsrt = chain.staticRedirects.get(site);
+                                    if (lsrt != null && hStatic) {
+                                        redirects.put(site, lsrt);
+                                        top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
+                                    }
+                                    continue;
                                 }
-                                String lsrt = chain.staticRedirects.get(lkey);
-                                if (lsrt != null && hStatic) {
-                                    redirects.put(lkey, lsrt);
-                                    top.dext.centurybridge.data.FullAudit.record(lkey, "static-redirect");
-                                }
-                                continue;
+                                hOwner = inh;
+                                emitOwner.put(site, inh);
                             }
-                            if (!chain.classRenames.containsKey(h.getOwner())) {
-                                String key = h.getOwner() + "." + h.getName() + h.getDesc();
+                            if (!chain.classRenames.containsKey(hOwner)) {
+                                String key = hOwner + "." + h.getName() + h.getDesc();
                                 if (chain.shimCovers.contains(key)) {
                                     top.dext.centurybridge.data.FullAudit.record(key, "covered");
                                     continue;
@@ -1140,9 +1237,9 @@ public final class JarProcessor {
                                 String rt = chain.staticRedirects.get(key);
                                 String irt = chain.instanceRedirects.get(key);
                                 if (rt != null || irt != null) {
-                                    redirects.putAll(rt != null ? Map.of(key, rt) : Map.of());
+                                    redirects.putAll(rt != null ? Map.of(site, rt) : Map.of());
                                     if (irt != null) {
-                                        instRedirects.put(key, irt);
+                                        instRedirects.put(site, irt);
                                     }
                                     top.dext.centurybridge.data.FullAudit.record(key,
                                         rt != null ? "static-redirect" : "instance-redirect");
@@ -1150,21 +1247,21 @@ public final class JarProcessor {
                                 }
                                 Chain.Issue r = chain.resolveMember('m', h.getName());
                                 if (r.level() == Chain.Level.L3 && !h.getName().equals("<init>")
-                                        && chain.resolveClass(h.getOwner()).level() == Chain.Level.OK) {
-                                    tombstone.put(key, r.boundary());
-                                    if (chain.ledgerReason(h.getOwner(), h.getName()) != null) {
+                                        && chain.resolveClass(hOwner).level() == Chain.Level.OK) {
+                                    tombstone.put(site, r.boundary());
+                                    if (chain.ledgerReason(hOwner, h.getName()) != null) {
                                         rpt.ledgered++;
-                                        silentTombstones.add(key);
+                                        silentTombstones.add(site);
                                         top.dext.centurybridge.data.FullAudit.record(key,
-                                            "LEDGERED[" + chain.sideOf(h.getOwner()) + "]@" + r.boundary()
-                                            + ": " + chain.ledgerReason(h.getOwner(), h.getName()));
+                                            "LEDGERED[" + chain.sideOf(hOwner) + "]@" + r.boundary()
+                                            + ": " + chain.ledgerReason(hOwner, h.getName()));
                                     } else {
                                         top.dext.centurybridge.data.FullAudit.record(key,
-                                            "TOMBSTONE[" + chain.sideOf(h.getOwner()) + "]@" + r.boundary());
+                                            "TOMBSTONE[" + chain.sideOf(hOwner) + "]@" + r.boundary());
                                     }
                                 } else if (r.level() != Chain.Level.OK) {
                                     top.dext.centurybridge.data.FullAudit.record(key,
-                                        "ISSUE[" + chain.sideOf(h.getOwner()) + "] " + r.level() + "@" + r.boundary());
+                                        "ISSUE[" + chain.sideOf(hOwner) + "] " + r.level() + "@" + r.boundary());
                                 }
                             }
                         }
@@ -1372,10 +1469,13 @@ public final class JarProcessor {
                             return;
                         }
                         String key = owner + "." + name + desc;
-                        if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>") && superRedirectSites.contains(key)) {
-                            String srt = chain.superRedirects.get(key);
+                        // receiver type named in an emitted static descriptor: the vanilla
+                        // class when the site reaches an inherited member through a mod class
+                        String recv = emitOwner.getOrDefault(key, owner);
+                        String srt = superRedirectSites.get(key);
+                        if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>") && srt != null) {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(srt), redirName(srt, name),
-                                "(L" + owner + ";" + desc.substring(1), false);
+                                "(L" + recv + ";" + desc.substring(1), false);
                             return;
                         }
                         String rt = redirects.get(key);
@@ -1388,7 +1488,7 @@ public final class JarProcessor {
                         if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(irt),
                                 redirName(irt, name),
-                                "(L" + owner + ";" + desc.substring(1), false);
+                                "(L" + recv + ";" + desc.substring(1), false);
                             return;
                         }
                         String mrn = mthRenames.get(key);
@@ -1398,7 +1498,7 @@ public final class JarProcessor {
                         }
                         String boundary = tombstone.get(key);
                         if (boundary != null) {
-                            Tombstones.Stub s = reg.get(owner, name, desc, op == Opcodes.INVOKESTATIC, boundary);
+                            Tombstones.Stub s = reg.get(recv, name, desc, op == Opcodes.INVOKESTATIC, boundary);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
                             return;
                         }
@@ -1422,7 +1522,7 @@ public final class JarProcessor {
                         if (op == Opcodes.GETFIELD && instFldGetters.containsKey(fkey)) {
                             String fv = instFldGetters.get(fkey);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),
-                                redirName(fv, name), "(L" + owner + ";)" + desc, false);
+                                redirName(fv, name), "(L" + emitOwner.getOrDefault(fkey, owner) + ";)" + desc, false);
                             return;
                         }
                         if (op == Opcodes.GETSTATIC && fldGetters.containsKey(fkey)) {
@@ -1465,6 +1565,7 @@ public final class JarProcessor {
                                 rewritten[i] = h;
                             }
                             String key = h.getOwner() + "." + h.getName() + h.getDesc();
+                            String recv = emitOwner.getOrDefault(key, h.getOwner());
                             String rt = redirects.get(key);
                             if (rt != null && h.getTag() == Opcodes.H_INVOKESTATIC) {
                                 rewritten[i] = new org.objectweb.asm.Handle(
@@ -1476,13 +1577,13 @@ public final class JarProcessor {
                             if (irt != null && (h.getTag() == Opcodes.H_INVOKEVIRTUAL
                                     || h.getTag() == Opcodes.H_INVOKEINTERFACE)) {
                                 rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, redirCls(irt),
-                                    redirName(irt, h.getName()), "(L" + h.getOwner() + ";" + h.getDesc().substring(1), false);
+                                    redirName(irt, h.getName()), "(L" + recv + ";" + h.getDesc().substring(1), false);
                                 continue;
                             }
                             String boundary = tombstone.get(key);
                             if (boundary != null) {
                                 boolean isStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
-                                Tombstones.Stub s = reg.get(h.getOwner(), h.getName(), h.getDesc(), isStatic, boundary);
+                                Tombstones.Stub s = reg.get(recv, h.getName(), h.getDesc(), isStatic, boundary);
                                 rewritten[i] = new org.objectweb.asm.Handle(
                                     Opcodes.H_INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
                             }

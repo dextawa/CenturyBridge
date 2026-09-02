@@ -87,10 +87,15 @@ public final class Chain {
     /** Look a member up in a redirect map, walking the hierarchy. */
     public String redirectAnywhere(java.util.Map<String, String> map,
                                    String owner, String nameDesc) {
+        String home = redirectHome(map, owner, nameDesc);
+        return home == null ? null : map.get(home + "." + nameDesc);
+    }
+
+    /** The class (owner or an ancestor) the redirect map keys the member on; null when unwired. */
+    public String redirectHome(java.util.Map<String, String> map, String owner, String nameDesc) {
         for (String o : selfAndSupers(owner)) {
-            String rt = map.get(o + "." + nameDesc);
-            if (rt != null) {
-                return rt;
+            if (map.containsKey(o + "." + nameDesc)) {
+                return o;
             }
         }
         return null;
