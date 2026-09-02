@@ -22,6 +22,33 @@ public final class CbClientNetworking {
         ClientPlayNetworking.send(new CbNetworking.RawPayload(channel, CbNetworking.drain(buf)));
     }
 
+    public static boolean registerReceiver(class_2960 channel, CbClientPlayHandler handler) {
+        CbNetworking.ensureS2C(channel);
+        return ClientPlayNetworking.registerReceiver(CbNetworking.idOf(channel),
+            (payload, ctx) -> handler.receive(ctx.client(), ctx.client().method_1562(),
+                CbNetworking.wrap(payload), ctx.responseSender()));
+    }
+
+    /** was ClientPlayNetworking.createC2SPacket(Identifier, PacketByteBuf) */
+    public static net.minecraft.class_2596 createC2SPacket(class_2960 channel, class_2540 buf) {
+        CbNetworking.ensureC2S(channel);
+        return ClientPlayNetworking.createC2SPacket(new CbNetworking.RawPayload(channel, CbNetworking.drain(buf)));
+    }
+
+    // ---- old typed-packet API (FabricPacket / PacketType, gone in 1.20.5) ----
+
+    public static void send(CbFabricPacket packet) {
+        class_2540 buf = new class_2540(io.netty.buffer.Unpooled.buffer());
+        packet.write(buf);
+        send(packet.getType().getId(), buf);
+    }
+
+    public static <T extends CbFabricPacket> boolean registerGlobalReceiver(CbPacketType<T> type, CbClientPlayPacketHandler<T> handler) {
+        CbNetworking.ensureS2C(type.getId());
+        return ClientPlayNetworking.registerGlobalReceiver(CbNetworking.idOf(type.getId()),
+            (payload, ctx) -> handler.receive(type.read(CbNetworking.wrap(payload)), ctx.player(), ctx.responseSender()));
+    }
+
     private CbClientNetworking() {
     }
 }

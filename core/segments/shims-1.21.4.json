@@ -794,7 +794,15 @@
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.of()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.copyOf(Lnet/minecraft/class_4970;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.copyOf(Lnet/minecraft/class_4970$class_2251;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
-  "net/minecraft/class_1317.method_20637(Lnet/minecraft/class_1299;Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_4306;)V": "top/dext/centurybridge/rt/v1_21_4/Statics"
+  "net/minecraft/class_1317.method_20637(Lnet/minecraft/class_1299;Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_4306;)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.createS2CPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/compat/fapi/CbNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.registerReceiver(Lnet/minecraft/class_3244;Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler;)Z": "top/dext/centurybridge/compat/fapi/CbNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.send(Lnet/minecraft/class_3222;Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/compat/fapi/CbNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.registerGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayPacketHandler;)Z": "top/dext/centurybridge/compat/fapi/CbNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.createC2SPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/compat/fapi/CbClientNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z": "top/dext/centurybridge/compat/fapi/CbClientNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.send(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/compat/fapi/CbClientNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayPacketHandler;)Z": "top/dext/centurybridge/compat/fapi/CbClientNetworking"
  },
  "instanceRedirects": {
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1881,7 +1889,8 @@
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/compat/fapi/CbEntityBuilders",
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/compat/fapi/CbEntityBuilders",
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/compat/fapi/CbEntityBuilders",
-  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.spawnRestriction(Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_4306;)Lnet/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob;": "top/dext/centurybridge/compat/fapi/CbEntityBuilders"
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.spawnRestriction(Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_4306;)Lnet/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob;": "top/dext/centurybridge/compat/fapi/CbEntityBuilders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/compat/fapi/CbNetworking"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1986,7 +1995,11 @@
   "net/fabricmc/fabric/api/screenhandler/v1/ScreenHandlerRegistry$ExtendedClientHandlerFactory": "top/dext/centurybridge/compat/fapi/CbExtendedClientHandlerFactory",
   "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType": "top/dext/centurybridge/compat/fapi/CbExtendedScreenHandlerType",
   "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType$ExtendedFactory": "top/dext/centurybridge/compat/fapi/CbExtendedFactory",
-  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerFactory": "top/dext/centurybridge/compat/fapi/CbExtendedScreenHandlerFactory"
+  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerFactory": "top/dext/centurybridge/compat/fapi/CbExtendedScreenHandlerFactory",
+  "net/fabricmc/fabric/api/networking/v1/FabricPacket": "top/dext/centurybridge/compat/fapi/CbFabricPacket",
+  "net/fabricmc/fabric/api/networking/v1/PacketType": "top/dext/centurybridge/compat/fapi/CbPacketType",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayPacketHandler": "top/dext/centurybridge/compat/fapi/CbServerPlayPacketHandler",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayPacketHandler": "top/dext/centurybridge/compat/fapi/CbClientPlayPacketHandler"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",

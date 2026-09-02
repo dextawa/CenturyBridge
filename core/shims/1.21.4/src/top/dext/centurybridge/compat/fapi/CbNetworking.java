@@ -96,6 +96,43 @@ public final class CbNetworking {
         ServerPlayNetworking.send(player, new RawPayload(channel, drain(buf)));
     }
 
+    public static boolean registerReceiver(net.minecraft.class_3244 listener, class_2960 channel, CbServerPlayHandler handler) {
+        ensureC2S(channel);
+        return ServerPlayNetworking.registerReceiver(listener, idOf(channel),
+            (payload, ctx) -> handler.receive(ctx.server(), ctx.player(),
+                ctx.player().field_13987, wrap(payload), ctx.responseSender()));
+    }
+
+    /** was ServerPlayNetworking.createS2CPacket(Identifier, PacketByteBuf) */
+    public static net.minecraft.class_2596 createS2CPacket(class_2960 channel, class_2540 buf) {
+        ensureS2C(channel);
+        return ServerPlayNetworking.createS2CPacket(new RawPayload(channel, drain(buf)));
+    }
+
+    // ---- old typed-packet API (FabricPacket / PacketType, gone in 1.20.5) ----
+
+    public static void send(class_3222 player, CbFabricPacket packet) {
+        class_2540 buf = new class_2540(io.netty.buffer.Unpooled.buffer());
+        packet.write(buf);
+        send(player, packet.getType().getId(), buf);
+    }
+
+    public static <T extends CbFabricPacket> boolean registerGlobalReceiver(CbPacketType<T> type, CbServerPlayPacketHandler<T> handler) {
+        ensureC2S(type.getId());
+        return ServerPlayNetworking.registerGlobalReceiver(idOf(type.getId()),
+            (payload, ctx) -> handler.receive(type.read(wrap(payload)), ctx.player(), ctx.responseSender()));
+    }
+
+    // ---- old PacketSender.sendPacket(Identifier, PacketByteBuf) (instance redirect: receiver first) ----
+
+    public static void sendPacket(net.fabricmc.fabric.api.networking.v1.PacketSender self, class_2960 channel, class_2540 buf) {
+        // direction unknowable at the call site (response sender exists on both
+        // sides); registering the codec both ways is harmless metadata
+        ensureC2S(channel);
+        ensureS2C(channel);
+        self.sendPacket(new RawPayload(channel, drain(buf)));
+    }
+
     private CbNetworking() {
     }
 }
