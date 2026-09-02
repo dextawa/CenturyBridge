@@ -128,6 +128,7 @@ public final class Main {
         int engineErrors = 0;
         int unaccounted = 0;
         int ledgered = 0;
+        int brokenClasses = 0;
         for (Path jar : jars) {
             try {
                 JarProcessor.Report r = JarProcessor.process(jar, outDir, chain);
@@ -140,7 +141,9 @@ public final class Main {
                 verdicts.merge(r.verdict, 1, Integer::sum);
                 unaccounted += r.issues.size();
                 ledgered += r.ledgered;
+                brokenClasses += r.brokenHierarchy.size();
                 lines.add("## " + (r.modId != null ? r.modId : r.file) + " -- " + r.verdict);
+                r.brokenHierarchy.forEach(s -> lines.add("- !! cannot load: " + s));
                 r.notes.forEach(n -> lines.add("- " + n));
                 r.strippedMixins.forEach(s -> lines.add("- stripped mixin: " + s));
                 r.issues.forEach(s -> lines.add("- " + s));
@@ -160,10 +163,15 @@ public final class Main {
         }
         System.out.println("verdicts: " + verdicts);
         System.out.println("unaccounted runtime refs: " + unaccounted + " (ledgered: " + ledgered + ")");
+        if (brokenClasses > 0) {
+            System.out.println("broken hierarchy: " + brokenClasses + " mod class(es) cannot load on " + chain.to
+                + " (" + verdicts.getOrDefault("broken_hierarchy", 0) + " mods)");
+        }
         if (engineErrors > 0) {
             System.out.println("!! engine errors: " + engineErrors + " (see report)");
         }
         Path report = outDir.resolve("report.md");
+        Files.createDirectories(outDir); // no jar may have been written (all engine errors / bad paths)
         Files.write(report, String.join("\n", lines).getBytes(StandardCharsets.UTF_8));
         System.out.println("report -> " + report);
         Path fullAudit = outDir.resolve("full-audit.tsv");

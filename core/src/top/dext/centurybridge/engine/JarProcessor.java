@@ -384,6 +384,10 @@ public final class JarProcessor {
         public String verdict;
         public List<String> issues = new ArrayList<>();        // server-runtime relevant
         public List<String> clientIssues = new ArrayList<>();  // client-side residuals, tracked separately
+        /** mod classes the JVM refuses to load on the target: extends a class that
+         *  is gone / final / an interface there, implements a gone or de-interfaced
+         *  type. No call-site bridge reaches these; the verdict is broken_hierarchy. */
+        public List<String> brokenHierarchy = new ArrayList<>();
         public int datagenSkipped;                             // dev-time-only refs, never execute in play
         public int ledgered;                                   // examined damage classified in the quirk ledger
         public List<String> strippedMixins = new ArrayList<>();
@@ -519,6 +523,11 @@ public final class JarProcessor {
         if (!issues.isEmpty() && !rpt.strippedMixins.isEmpty()) {
             rpt.verdict = "ok_degraded_partial";
         }
+        if (!rpt.brokenHierarchy.isEmpty()) {
+            // a class that cannot load is not "ok" in any degree: the mod either
+            // dies at its entrypoint or the first time the class is touched
+            rpt.verdict = "broken_hierarchy";
+        }
         rpt.notes.add("output: " + out.getFileName());
         return rpt;
     }
@@ -573,7 +582,8 @@ public final class JarProcessor {
                 // .../datagen/ or .../data/ and never execute in a live game
                 boolean datagenCaller = cls.contains("datagen") || cls.contains("/data/");
                 Set<String> sink = datagenCaller ? new TreeSet<>() : issues;
-                byte[] rewritten = verifyAndRewrite(e.getValue(), layer, chain, sink, tag, reg, rpt);
+                List<String> brokenSink = datagenCaller ? new ArrayList<>() : rpt.brokenHierarchy;
+                byte[] rewritten = verifyAndRewrite(e.getValue(), layer, chain, sink, brokenSink, tag, reg, rpt);
                 if (datagenCaller) {
                     rpt.datagenSkipped += sink.size();
                 }
@@ -732,7 +742,7 @@ public final class JarProcessor {
      * Returns the rewritten class bytes, or null when unchanged.
      */
     private static byte[] verifyAndRewrite(byte[] bytes, LayerIndex layer, Chain chain, Set<String> issues,
-                                           String tag, Tombstones reg, Report rpt) {
+                                           List<String> brokenSink, String tag, Tombstones reg, Report rpt) {
         Map<String, String> jarSuper = layer.superOf;
         boolean ctorChanged = false;
         if (!chain.ctorRedirects.isEmpty() || !chain.superCtorAdapts.isEmpty() || !chain.superCtorReshapes.isEmpty()) {
@@ -805,16 +815,30 @@ public final class JarProcessor {
                 classAccess[0] = acc;
                 superOf[0] = superName;
                 checkClass(superName);
+                // the hierarchy itself must load: a superclass that is gone, final
+                // (26.2 Enchantment is a final record) or an interface on the target,
+                // or an implemented type that is gone / no longer an interface, is
+                // refused by the JVM before any bridge can run. Ledgered or not, the
+                // mod's verdict must say so.
+                if (superName != null && superName.startsWith("net/minecraft/")) {
+                    String why = chain.hierarchyBreak(superName, false);
+                    if (why != null && !chain.sideOf(superName).equals("datagen")) {
+                        brokenSink.add(tag + name + " extends " + superName + " (" + why + ")"
+                            + (chain.sideOf(superName).equals("client") ? " [client]" : ""));
+                    }
+                }
                 // a dead interface in the implements clause kills the class at
                 // load exactly like a dead superclass does (26.2: FlyingAnimal)
                 if (ifaces != null) {
                     for (String i : ifaces) {
                         checkClass(i);
-                    }
-                }
-                if (ifaces != null) {
-                    for (String i : ifaces) {
-                        checkClass(i);
+                        if (i.startsWith("net/minecraft/")) {
+                            String why = chain.hierarchyBreak(i, true);
+                            if (why != null && !chain.sideOf(i).equals("datagen")) {
+                                brokenSink.add(tag + name + " implements " + i + " (" + why + ")"
+                                    + (chain.sideOf(i).equals("client") ? " [client]" : ""));
+                            }
+                        }
                     }
                 }
             }

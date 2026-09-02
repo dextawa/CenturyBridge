@@ -43,6 +43,10 @@ public final class StubDiff {
          *  mixin on an interface target dies at PREPARE -- so the shim form
          *  has to know which targets are interfaces. */
         final Set<String> interfaces = new HashSet<>();
+        /** class -> access flags: a mod class extending a target-FINAL class
+         *  (26.2 Enchantment is a final record) dies at load, so the verdict
+         *  needs the flags, not just the member tables */
+        public final Map<String, Integer> classAccess = new HashMap<>();
         public final Map<String, Map<String, Set<String>>> methods = new HashMap<>();
         final Map<String, Map<String, Set<String>>> fields = new HashMap<>();
         final Map<String, Set<String>> methodHomes = new HashMap<>();
@@ -155,6 +159,7 @@ public final class StubDiff {
                     public void visit(int v, int acc, String name, String sig, String sup, String[] itf) {
                         owner = name;
                         idx.classes.add(name);
+                        idx.classAccess.put(name, acc);
                         if ((acc & Opcodes.ACC_INTERFACE) != 0) {
                             idx.interfaces.add(name);
                         }

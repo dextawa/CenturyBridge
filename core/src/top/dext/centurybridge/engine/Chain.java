@@ -231,6 +231,53 @@ public final class Chain {
      */
     public final java.util.Map<String, java.util.Set<String>> targetDecls = new java.util.HashMap<>();
 
+    /** every class of the target stub, analysis namespace (empty when no stub was available) */
+    public final java.util.Set<String> targetClasses = new java.util.HashSet<>();
+    /**
+     * Target-stub classes that are FINAL on the target (26.2: Enchantment is a
+     * final record). A mod class extending one is refused by the JVM at load
+     * (IncompatibleClassChangeError) -- no bridge can help, and a verdict that
+     * says ok_* for such a mod is a lie.
+     */
+    public final java.util.Set<String> targetFinals = new java.util.HashSet<>();
+    /** target-stub classes that are interfaces on the target */
+    public final java.util.Set<String> targetInterfaces = new java.util.HashSet<>();
+
+    /**
+     * Why a mod class's {@code extends}/{@code implements} of {@code type}
+     * cannot load on the target, or null when it can (or cannot be judged:
+     * no stub, a class outside the stub, a facade rename we ship). Death of
+     * the type, finality, and class/interface kind flips are all load-time
+     * fatal for the subclass, whatever the ledger says about the type.
+     */
+    public String hierarchyBreak(String type, boolean asInterface) {
+        String t = type;
+        if (classRenames.containsKey(t)) {
+            t = classRenames.get(t);
+            if (!t.startsWith("net/minecraft/")) {
+                return null; // onto a facade we ship
+            }
+        } else {
+            Issue r = resolveClass(t);
+            if (r.level() != Level.OK) {
+                return "gone @" + r.boundary();
+            }
+        }
+        if (!targetClasses.contains(t)) {
+            return null;
+        }
+        if (asInterface) {
+            return targetInterfaces.contains(t) ? null : "a class, not an interface, in " + to;
+        }
+        if (targetInterfaces.contains(t)) {
+            return "an interface in " + to;
+        }
+        if (targetFinals.contains(t)) {
+            return "final in " + to;
+        }
+        return null;
+    }
+
     /** true unless the owner is a known target-stub class that does NOT declare name(desc). */
     public boolean declaredOnTarget(String owner, String name, String desc) {
         java.util.Set<String> decl = targetDecls.get(owner);
@@ -272,6 +319,16 @@ public final class Chain {
         }
         var idx = top.dext.centurybridge.data.StubDiff.index(stubJar);
         java.util.regex.Pattern cls = java.util.regex.Pattern.compile("L([^;]+);");
+        for (var e : idx.classAccess.entrySet()) {
+            String owner = back.getOrDefault(e.getKey(), e.getKey());
+            targetClasses.add(owner);
+            if ((e.getValue() & org.objectweb.asm.Opcodes.ACC_FINAL) != 0) {
+                targetFinals.add(owner);
+            }
+            if ((e.getValue() & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0) {
+                targetInterfaces.add(owner);
+            }
+        }
         for (var e : idx.methods.entrySet()) {
             String owner = back.getOrDefault(e.getKey(), e.getKey());
             java.util.Set<String> decls = targetDecls.computeIfAbsent(owner, k -> new java.util.HashSet<>());
