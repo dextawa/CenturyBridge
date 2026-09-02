@@ -969,14 +969,11 @@ public final class JarProcessor {
                                 }
                                 top.dext.centurybridge.data.FullAudit.record(key,
                                     (newSite ? "CTOR-ISSUE[" : "SUPER-CTOR-ISSUE[") + cside + "]");
+                                // a super()/this() into a dead constructor means the subclass
+                                // cannot be instantiated at all (NoSuchMethodError inside its
+                                // own <init>): counted exactly like a NEW site
                                 String cline = tag + "L3 " + (newSite ? "constructor: " : "super-constructor: ")
                                     + shortName(owner) + ".<init>" + desc;
-                                if (!newSite) {
-                                    // recorded in the audit, surfaced as a note; not (yet)
-                                    // in the unaccounted count
-                                    rpt.notes.add(tag + "!! " + cline);
-                                    return;
-                                }
                                 if (cside.equals("client")) {
                                     rpt.clientIssues.add(tag + "[client] " + cline);
                                 } else {
