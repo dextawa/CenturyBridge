@@ -84,12 +84,16 @@ public final class JarRemapper {
 
                 @Override
                 public String mapMethodName(String owner, String name, String desc) {
-                    return name.startsWith("method_") ? member(owner, name) : name;
+                    // comp_NNNN: a record component accessor (intermediary names them
+                    // apart from method_; the table lists them as methods)
+                    return name.startsWith("method_") || name.startsWith("comp_") ? member(owner, name) : name;
                 }
 
                 @Override
                 public String mapFieldName(String owner, String name, String desc) {
-                    return name.startsWith("field_") ? member(owner, name) : name;
+                    // a record component's backing field carries the accessor's token
+                    // and takes the accessor's mojang name
+                    return name.startsWith("field_") || name.startsWith("comp_") ? member(owner, name) : name;
                 }
             };
         }
@@ -126,13 +130,30 @@ public final class JarRemapper {
 
     public static void remapWithTable(Path tsv, Path inJar, Path outJar) throws IOException {
         Table table = loadTable(tsv);
+        int nClasses;
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
+             ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(outJar))) {
+            nClasses = remapEntries(zin, zout, table);
+        }
+        System.out.println("renamed " + nClasses + " classes (table: " + table.classes.size()
+            + " classes, " + table.byOwner.size() + " members, " + table.ambiguous
+            + " ambiguous ids owner-only) -> " + outJar);
+    }
+
+    /**
+     * One jar layer. Bundled libraries under META-INF/jars/ are jars of their
+     * own (the loader extracts and loads them like top-level mods) and get the
+     * same rename recursively -- the converter rewrites them, BytecodeVerify
+     * checks them, and until now the wall pass skipped them wholesale: every
+     * jar-in-jar library crossed into 26.x still spelling intermediary names.
+     */
+    private static int remapEntries(ZipInputStream zin, ZipOutputStream zout, Table table) throws IOException {
         java.util.Map<String, String> byOwner = table.byOwner;
         java.util.Map<String, String> members = table.members;
         Remapper remapper = table.remapper();
         int nClasses = 0;
         java.util.Set<String> written = new java.util.HashSet<>();
-        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
-             ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(outJar))) {
+        {
             ZipEntry e;
             while ((e = zin.getNextEntry()) != null) {
                 if (e.isDirectory()) {
@@ -144,6 +165,17 @@ public final class JarRemapper {
                     continue;
                 }
                 byte[] data = zin.readAllBytes();
+                if (e.getName().startsWith("META-INF/jars/") && e.getName().endsWith(".jar")) {
+                    java.io.ByteArrayOutputStream bos = new java.io.ByteArrayOutputStream();
+                    try (ZipInputStream nin = new ZipInputStream(new java.io.ByteArrayInputStream(data));
+                         ZipOutputStream nout = new ZipOutputStream(bos)) {
+                        nClasses += remapEntries(nin, nout, table);
+                    }
+                    zout.putNextEntry(new ZipEntry(e.getName()));
+                    zout.write(bos.toByteArray());
+                    zout.closeEntry();
+                    continue;
+                }
                 if (!e.getName().endsWith(".class")) {
                     if (e.getName().endsWith(".accesswidener")) {
                         // the loader validates the AW namespace against the
@@ -214,9 +246,7 @@ public final class JarRemapper {
                 nClasses++;
             }
         }
-        System.out.println("renamed " + nClasses + " classes (table: " + table.classes.size()
-            + " classes, " + byOwner.size() + " members, " + table.ambiguous
-            + " ambiguous ids owner-only) -> " + outJar);
+        return nClasses;
     }
 
     public static void remapToIntermediary(Path tiny, Path inJar, Path outJar) throws IOException {

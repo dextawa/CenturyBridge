@@ -48,7 +48,7 @@ public final class StubDiff {
          *  needs the flags, not just the member tables */
         public final Map<String, Integer> classAccess = new HashMap<>();
         public final Map<String, Map<String, Set<String>>> methods = new HashMap<>();
-        final Map<String, Map<String, Set<String>>> fields = new HashMap<>();
+        public final Map<String, Map<String, Set<String>>> fields = new HashMap<>();
         final Map<String, Set<String>> methodHomes = new HashMap<>();
         final Map<String, Set<String>> fieldHomes = new HashMap<>();
         /** "owner.name" of private members: unreachable from call sites, but a

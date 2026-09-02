@@ -412,7 +412,9 @@ public final class MixinCheck {
         for (String p : prefixes) {
             if (mname.startsWith(p) && mname.length() > p.length()) {
                 String rest = mname.substring(p.length());
-                return Character.toLowerCase(rest.charAt(0)) + rest.substring(1);
+                // Mixin keeps an all-uppercase remainder as-is (getCRITERIA -> CRITERIA)
+                return rest.equals(rest.toUpperCase()) ? rest
+                    : Character.toLowerCase(rest.charAt(0)) + rest.substring(1);
             }
         }
         return null;

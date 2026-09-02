@@ -143,7 +143,10 @@ public final class MixinTriage {
         java.util.function.BiConsumer<Spec, String> declCheck = (sp, what) -> {
             List<String> owners = sp.owner != null ? List.of(sp.owner) : targets;
             for (String o : owners) {
-                if (!chain.declaredOnTarget(o, sp.name, sp.desc)) {
+                boolean declared = sp.kind == 'f'
+                    ? chain.fieldDeclaredOnTarget(o, sp.name, sp.desc)
+                    : chain.declaredOnTarget(o, sp.name, sp.desc);
+                if (!declared) {
                     touch.accept(new Chain.Issue(Chain.Level.L3, "target-decl"),
                         what + " not declared on " + o.substring(o.lastIndexOf('/') + 1));
                 }
@@ -189,6 +192,7 @@ public final class MixinTriage {
                     public AnnotationVisitor visitAnnotation(String desc, boolean vis) {
                         if (desc.equals(SHADOW)) {
                             touch.accept(chain.resolveSpec('f', fName, fDesc), "shadow-field " + fName);
+                            declCheck.accept(new Spec(null, fName, fDesc, 'f'), "shadow-field " + fName);
                         }
                         return null;
                     }
@@ -220,15 +224,26 @@ public final class MixinTriage {
                                     String tgt = values.get("value") instanceof String s && !s.isEmpty() ? s : null;
                                     if (tgt == null) {
                                         Matcher m = IMPLICIT_ACCESSOR.matcher(mName);
-                                        tgt = m.matches()
-                                            ? Character.toLowerCase(m.group(1).charAt(0)) + m.group(1).substring(1)
-                                            : mName;
+                                        // Mixin keeps an all-uppercase remainder as-is
+                                        // (getCRITERIA -> CRITERIA); otherwise de-capitalises
+                                        tgt = !m.matches() ? mName
+                                            : m.group(1).equals(m.group(1).toUpperCase())
+                                                ? m.group(1)
+                                                : Character.toLowerCase(m.group(1).charAt(0)) + m.group(1).substring(1);
                                     }
                                     Spec sp = parseSpec(rm(refmap, tgt));
                                     touch.accept(chain.resolveSpec(invoker ? 'm' : 'f', sp.name, sp.desc),
                                         "accessor " + tgt);
                                     if (invoker) {
                                         declCheck.accept(sp, "invoker " + tgt);
+                                    } else {
+                                        // the field's descriptor is the accessor's return type
+                                        // (getter) or its single parameter (setter)
+                                        Type[] args = Type.getArgumentTypes(mDesc);
+                                        String fd = sp.desc != null ? sp.desc
+                                            : args.length == 1 ? args[0].getDescriptor()
+                                            : Type.getReturnType(mDesc).getDescriptor();
+                                        declCheck.accept(new Spec(sp.owner, sp.name, fd, 'f'), "accessor " + tgt);
                                     }
                                 });
                             }

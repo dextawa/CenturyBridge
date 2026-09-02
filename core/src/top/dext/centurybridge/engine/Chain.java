@@ -305,6 +305,7 @@ public final class Chain {
     public void loadTargetCtors(Path stubJar, Path interToMojangTsv) throws IOException {
         java.util.Map<String, String> back = new java.util.HashMap<>();
         java.util.Map<String, String> memberBack = new java.util.HashMap<>();
+        java.util.Map<String, String> fieldBack = new java.util.HashMap<>();
         java.util.Map<String, String> fwd = new java.util.HashMap<>();
         if (interToMojangTsv != null && java.nio.file.Files.exists(interToMojangTsv)) {
             for (String ln : java.nio.file.Files.readAllLines(interToMojangTsv)) {
@@ -314,6 +315,8 @@ public final class Chain {
                     fwd.put(p[1], p[2]);
                 } else if (p.length >= 3 && p[0].equals("M")) {
                     memberBack.put(p[2], p[1]); // "mojOwner.mojName" -> "interOwner.interName"
+                } else if (p.length >= 3 && p[0].equals("F")) {
+                    fieldBack.put(p[2], p[1]); // a field is declared on exactly one class: no climb
                 }
             }
         }
@@ -357,12 +360,65 @@ public final class Chain {
                         : cls.matcher(d).replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
                             back.getOrDefault(mr.group(1), mr.group(1))) + ";");
                     decls.add(name + bd);
+                    if (!name.equals(me.getKey())) {
+                        // past the wall the runtime name IS the mojang one: a mixin
+                        // spelling it that way (mojang-mapped bundled jar, whose
+                        // descriptors are mojang-named as well) resolves too
+                        decls.add(me.getKey() + d);
+                    }
                     if (name.equals("<init>")) {
                         targetCtors.computeIfAbsent(owner, k -> new java.util.HashSet<>()).add(bd);
                     }
                 }
             }
         }
+        // fields, as "name:desc" -- @Shadow fields and @Accessor targets resolve on
+        // the target class itself exactly like methods do (a field that moved up
+        // or down the hierarchy is an apply-time failure, not a survivor)
+        for (var e : idx.fields.entrySet()) {
+            String owner = back.getOrDefault(e.getKey(), e.getKey());
+            java.util.Set<String> decls = targetDecls.computeIfAbsent(owner, k -> new java.util.HashSet<>());
+            for (var fe : e.getValue().entrySet()) {
+                String name = fe.getKey();
+                if (!back.isEmpty()) {
+                    String mapped = fieldBack.get(e.getKey() + "." + name);
+                    if (mapped == null) {
+                        // a record component's field shares its accessor's name; the
+                        // table lists it once, as the method (comp_NNNN)
+                        mapped = memberBack.get(e.getKey() + "." + name);
+                    }
+                    if (mapped != null) {
+                        name = mapped.substring(mapped.lastIndexOf('.') + 1);
+                    }
+                }
+                for (String d : fe.getValue()) {
+                    String bd = back.isEmpty() ? d
+                        : cls.matcher(d).replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
+                            back.getOrDefault(mr.group(1), mr.group(1))) + ";");
+                    decls.add(name + ":" + bd);
+                    if (!name.equals(fe.getKey())) {
+                        decls.add(fe.getKey() + ":" + d); // mojang spelling + descriptor, see above
+                    }
+                }
+            }
+        }
+    }
+
+    /** field form of {@link #declaredOnTarget}: true unless a known target-stub class lacks name:desc. */
+    public boolean fieldDeclaredOnTarget(String owner, String name, String desc) {
+        java.util.Set<String> decl = targetDecls.get(owner);
+        if (decl == null) {
+            return true;
+        }
+        if (desc == null) {
+            for (String s : decl) {
+                if (s.startsWith(name + ":")) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return decl.contains(name + ":" + desc);
     }
 
     /**
