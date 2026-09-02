@@ -207,6 +207,7 @@
   "GenClass951Bridge",
   "GenClass959Bridge",
   "HandledScreenBridge",
+  "HandledScreensAccessor",
   "ItemCtorBridge",
   "LootableContainerBridge",
   "MountOffsetBridge",

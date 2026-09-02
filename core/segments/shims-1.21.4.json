@@ -1978,7 +1978,15 @@
   "net/fabricmc/fabric/api/item/v1/FabricItemSettings": "top/dext/centurybridge/compat/fapi/FabricItemSettings",
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings": "net/minecraft/class_4970$class_2251",
   "net/fabricmc/fabric/api/registry/FuelRegistry": "top/dext/centurybridge/compat/fapi/CbFuelRegistry",
-  "net/minecraft/class_1317$class_1319": "top/dext/centurybridge/facade/v1_21_4/class_1317_class_1319"
+  "net/minecraft/class_1317$class_1319": "top/dext/centurybridge/facade/v1_21_4/class_1317_class_1319",
+  "net/fabricmc/fabric/api/client/screenhandler/v1/ScreenRegistry": "top/dext/centurybridge/compat/fapi/CbScreenRegistry",
+  "net/fabricmc/fabric/api/client/screenhandler/v1/ScreenRegistry$Factory": "net/minecraft/class_3929$class_3930",
+  "net/fabricmc/fabric/api/screenhandler/v1/ScreenHandlerRegistry": "top/dext/centurybridge/compat/fapi/CbScreenHandlerRegistry",
+  "net/fabricmc/fabric/api/screenhandler/v1/ScreenHandlerRegistry$SimpleClientHandlerFactory": "net/minecraft/class_3917$class_3918",
+  "net/fabricmc/fabric/api/screenhandler/v1/ScreenHandlerRegistry$ExtendedClientHandlerFactory": "top/dext/centurybridge/compat/fapi/CbExtendedClientHandlerFactory",
+  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType": "top/dext/centurybridge/compat/fapi/CbExtendedScreenHandlerType",
+  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType$ExtendedFactory": "top/dext/centurybridge/compat/fapi/CbExtendedFactory",
+  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerFactory": "top/dext/centurybridge/compat/fapi/CbExtendedScreenHandlerFactory"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
