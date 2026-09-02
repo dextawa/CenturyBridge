@@ -217,6 +217,7 @@
   "RegistryAddBridge",
   "ScreenBridge",
   "SlotBridge",
+  "ThrownItemEntityBridge",
   "FuelBuilderAccessor"
  ],
  "client": [

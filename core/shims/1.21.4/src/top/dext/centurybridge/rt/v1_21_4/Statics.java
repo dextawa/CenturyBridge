@@ -6957,20 +6957,20 @@ public final class Statics {
 
     /** was net/minecraft/class_1680.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V */
     public static net.minecraft.class_1680 cbNewclass_1680(net.minecraft.class_1937 a0, net.minecraft.class_1309 a1) {
-        return new net.minecraft.class_1680(a0, a1, net.minecraft.class_1799.field_8037);
+        return new net.minecraft.class_1680(a0, a1, CbDefaults.THROWN_DEFAULT_ITEM);
     }
 
 
     /** was net/minecraft/class_1681.<init>(Lnet/minecraft/class_1937;DDD)V */
     public static net.minecraft.class_1681 cbNewclass_1681(net.minecraft.class_1937 a0, double a1, double a2, double a3) {
-        return new net.minecraft.class_1681(a0, a1, a2, a3, net.minecraft.class_1799.field_8037);
+        return new net.minecraft.class_1681(a0, a1, a2, a3, CbDefaults.THROWN_DEFAULT_ITEM);
     }
 
 
 
     /** was net/minecraft/class_1686.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V */
     public static net.minecraft.class_1686 cbNewclass_1686(net.minecraft.class_1937 a0, net.minecraft.class_1309 a1) {
-        return new net.minecraft.class_1686(a0, a1, net.minecraft.class_1799.field_8037);
+        return new net.minecraft.class_1686(a0, a1, CbDefaults.THROWN_DEFAULT_ITEM);
     }
 
 
@@ -7713,7 +7713,7 @@ public final class Statics {
 
     /** was net/minecraft/class_1680.<init>(Lnet/minecraft/class_1937;DDD)V */
     public static net.minecraft.class_1680 cbNewclass_1680(net.minecraft.class_1937 a0, double a1, double a2, double a3) {
-        return new net.minecraft.class_1680(a0, a1, a2, a3, net.minecraft.class_1799.field_8037);
+        return new net.minecraft.class_1680(a0, a1, a2, a3, CbDefaults.THROWN_DEFAULT_ITEM);
     }
 
 
@@ -7730,7 +7730,7 @@ public final class Statics {
 
     /** was net/minecraft/class_1684.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V */
     public static net.minecraft.class_1684 cbNewclass_1684(net.minecraft.class_1937 a0, net.minecraft.class_1309 a1) {
-        return new net.minecraft.class_1684(a0, a1, net.minecraft.class_1799.field_8037);
+        return new net.minecraft.class_1684(a0, a1, CbDefaults.THROWN_DEFAULT_ITEM);
     }
 
 
@@ -11114,7 +11114,7 @@ public final class Statics {
 
     /** was net/minecraft/class_1681.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V */
     public static net.minecraft.class_1681 cbNewclass_1681(net.minecraft.class_1937 a0, net.minecraft.class_1309 a1) {
-        return new net.minecraft.class_1681(a0, a1, net.minecraft.class_1799.field_8037);
+        return new net.minecraft.class_1681(a0, a1, CbDefaults.THROWN_DEFAULT_ITEM);
     }
 
     /** was net/minecraft/class_1682.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;)V */
@@ -12428,5 +12428,43 @@ public final class Statics {
             net.minecraft.class_2902.class_2903 heightmap, net.minecraft.class_1317.class_4306 predicate) {
         // private since 1.20.5: through the invoker mixin
         top.dext.centurybridge.shims.v1_21_4.Class1317Accessor.cbRegister(type, location.cbVanilla(), heightmap, predicate);
+    }
+
+    /** was net/minecraft/class_1686.<init>(Lnet/minecraft/class_1937;DDD)V -- 1.21.2 ctors take the stack; the sentinel becomes getDefaultItem() (ThrownItemEntityBridge) */
+    public static net.minecraft.class_1686 cbNewclass_1686(net.minecraft.class_1937 a0, double a1, double a2, double a3) {
+        return new net.minecraft.class_1686(a0, a1, a2, a3, CbDefaults.THROWN_DEFAULT_ITEM);
+    }
+
+    /** ThrownItemEntity super(...) reshapes push this: the 1.20.1 no-stack ctors meant "the default item" */
+    public static net.minecraft.class_1799 cbThrownDefaultItem() {
+        return CbDefaults.THROWN_DEFAULT_ITEM;
+    }
+
+    /** was net/minecraft/class_4668$class_4683.<init>(Lnet/minecraft/class_2960;ZZ)V -- RenderPhase.Texture: 1.21.2 made blur a TriState */
+    public static net.minecraft.class_4668.class_4683 cbNewclass_4668class_4683(net.minecraft.class_2960 id, boolean blur, boolean mipmap) {
+        return new net.minecraft.class_4668.class_4683(id, blur ? net.minecraft.class_9851.field_52394 : net.minecraft.class_9851.field_52395, mipmap);
+    }
+
+    /** was net/minecraft/class_2591.<init>(Lnet/minecraft/class_2591$class_5559;Ljava/util/Set;Lcom/mojang/datafixers/types/Type;)V -- the DFU type argument is gone (fapi's AW opens the private ctor at runtime) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_2591 cbNewclass_2591(net.minecraft.class_2591.class_5559 factory, java.util.Set<net.minecraft.class_2248> blocks, com.mojang.datafixers.types.Type<?> type) {
+        return new net.minecraft.class_2591(factory, blocks);
+    }
+
+    // method_7843 (Item.onCraft, player param dropped @1.20.2): the converter emits the site's own owner
+    public static void method_7843(net.minecraft.class_1747 self, net.minecraft.class_1799 stack, net.minecraft.class_1937 world, net.minecraft.class_1657 player) {
+        method_7843((net.minecraft.class_1792) self, stack, world, player);
+    }
+
+    public static void method_7843(net.minecraft.class_1811 self, net.minecraft.class_1799 stack, net.minecraft.class_1937 world, net.minecraft.class_1657 player) {
+        method_7843((net.minecraft.class_1792) self, stack, world, player);
+    }
+
+    public static void method_7843(net.minecraft.class_1826 self, net.minecraft.class_1799 stack, net.minecraft.class_1937 world, net.minecraft.class_1657 player) {
+        method_7843((net.minecraft.class_1792) self, stack, world, player);
+    }
+
+    public static void method_7843(net.minecraft.class_1738 self, net.minecraft.class_1799 stack, net.minecraft.class_1937 world, net.minecraft.class_1657 player) {
+        method_7843((net.minecraft.class_1792) self, stack, world, player);
     }
 }
