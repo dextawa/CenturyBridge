@@ -12472,4 +12472,152 @@ public final class Statics {
     public static top.dext.centurybridge.facade.v1_21_4.class_1271<net.minecraft.class_1799> method_29282(net.minecraft.class_1937 world, net.minecraft.class_1657 player, net.minecraft.class_1268 hand) {
         return top.dext.centurybridge.facade.v1_21_4.class_1271.cbFrom(net.minecraft.class_5328.method_29282(world, player, hand), player.method_5998(hand));
     }
+
+    // ---- dead-cover replacements (the wiring claimed a mixin restored these shapes; none ever existed) ----
+
+    /** registries for a block entity: its world's, or the vanilla lookup before it is placed */
+    public static net.minecraft.class_7225.class_7874 cbRegistries(net.minecraft.class_2586 be) {
+        net.minecraft.class_1937 w = be.method_10997();
+        return w != null ? w.method_30349() : net.minecraft.class_7887.method_46817();
+    }
+
+    /** was Entity.damage(DamageSource, float): 1.21.2 split it into hurtServer(ServerWorld, ..); client-side damage was always a no-op */
+    public static boolean method_5643(net.minecraft.class_1297 self, net.minecraft.class_1282 source, float amount) {
+        return self.method_37908() instanceof net.minecraft.class_3218 sw && self.method_64397(sw, source, amount);
+    }
+
+    /** was NbtHelper.fromBlockPos(BlockPos)NbtCompound: the 1.20.1 {X,Y,Z} compound (1.21.2 writes an int array) */
+    public static net.minecraft.class_2487 method_10692(net.minecraft.class_2338 pos) {
+        net.minecraft.class_2487 c = new net.minecraft.class_2487();
+        c.method_10569("X", pos.method_10263());
+        c.method_10569("Y", pos.method_10264());
+        c.method_10569("Z", pos.method_10260());
+        return c;
+    }
+
+    // StatusEffect / EntityAttribute became Holders (1.20.5 / 1.21)
+    public static boolean method_6059(net.minecraft.class_1309 self, net.minecraft.class_1291 effect) {
+        return self.method_6059(net.minecraft.class_7923.field_41174.method_47983(effect));
+    }
+
+    public static net.minecraft.class_1293 method_6112(net.minecraft.class_1309 self, net.minecraft.class_1291 effect) {
+        return self.method_6112(net.minecraft.class_7923.field_41174.method_47983(effect));
+    }
+
+    public static boolean method_6016(net.minecraft.class_1309 self, net.minecraft.class_1291 effect) {
+        return self.method_6016(net.minecraft.class_7923.field_41174.method_47983(effect));
+    }
+
+    public static net.minecraft.class_1324 method_5996(net.minecraft.class_1309 self, net.minecraft.class_1320 attribute) {
+        return self.method_5996(net.minecraft.class_7923.field_41190.method_47983(attribute));
+    }
+
+    public static double method_26852(net.minecraft.class_5131 self, net.minecraft.class_1320 attribute) {
+        return self.method_26852(net.minecraft.class_7923.field_41190.method_47983(attribute));
+    }
+
+    public static boolean method_27310(net.minecraft.class_5132 self, net.minecraft.class_1320 attribute) {
+        return self.method_27310(net.minecraft.class_7923.field_41190.method_47983(attribute));
+    }
+
+    /** was LivingEntity.sendEquipmentBreakStatus(EquipmentSlot): 1.21.2 also wants the item */
+    public static void method_20235(net.minecraft.class_1309 self, net.minecraft.class_1304 slot) {
+        self.method_20235(self.method_6118(slot).method_7909(), slot);
+    }
+
+    // BlockEntity NBT views gained the registry lookup (1.20.5)
+    public static net.minecraft.class_2487 method_38242(net.minecraft.class_2586 self) {
+        return self.method_38242(cbRegistries(self));
+    }
+
+    public static net.minecraft.class_2487 method_38243(net.minecraft.class_2586 self) {
+        return self.method_38243(cbRegistries(self));
+    }
+
+    public static net.minecraft.class_2586 method_11005(net.minecraft.class_2338 pos, net.minecraft.class_2680 state, net.minecraft.class_2487 nbt) {
+        return net.minecraft.class_2586.method_11005(pos, state, nbt, net.minecraft.class_7887.method_46817());
+    }
+
+    // ItemCooldownManager keys by stack (cooldown group) since 1.21.2
+    public static boolean method_7904(net.minecraft.class_1796 self, net.minecraft.class_1792 item) {
+        return self.method_7904(new net.minecraft.class_1799(item));
+    }
+
+    public static float method_7905(net.minecraft.class_1796 self, net.minecraft.class_1792 item, float tickDelta) {
+        return self.method_7905(new net.minecraft.class_1799(item), tickDelta);
+    }
+
+    /** was EntityAttributeModifier.getName(): modifiers are keyed by Identifier since 1.21 */
+    public static String method_6185(net.minecraft.class_1322 self) {
+        return self.comp_2447().toString();
+    }
+
+    /** was Block.onDestroyedByExplosion(World, ..): ServerWorld since 1.21.2 (client explosions never reached it) */
+    public static void method_9586(net.minecraft.class_2248 self, net.minecraft.class_1937 world, net.minecraft.class_2338 pos, net.minecraft.class_1927 explosion) {
+        if (world instanceof net.minecraft.class_3218 sw) {
+            self.method_9586(sw, pos, explosion);
+        }
+    }
+
+    /** was Entity.canModifyAt(World, BlockPos): ServerWorld since 1.21.2; the client never enforces it */
+    public static boolean method_36971(net.minecraft.class_1297 self, net.minecraft.class_1937 world, net.minecraft.class_2338 pos) {
+        return !(world instanceof net.minecraft.class_3218 sw) || self.method_36971(sw, pos);
+    }
+
+    /** was Entity.dropStack(ItemStack): ServerWorld-explicit since 1.21.2 (client side dropped nothing and answered null) */
+    public static net.minecraft.class_1542 method_5775(net.minecraft.class_1297 self, net.minecraft.class_1799 stack) {
+        return self.method_37908() instanceof net.minecraft.class_3218 sw ? self.method_5775(sw, stack) : null;
+    }
+
+    public static net.minecraft.class_1542 method_5706(net.minecraft.class_1297 self, net.minecraft.class_1935 item) {
+        return self.method_37908() instanceof net.minecraft.class_3218 sw ? self.method_5706(sw, item) : null;
+    }
+
+    // PersistentStateManager: (reader, factory, id) folded into PersistentState.Type in 1.20.5, reader gained the registry lookup
+    public static <T extends net.minecraft.class_18> T method_17924(net.minecraft.class_26 self, java.util.function.Function<net.minecraft.class_2487, T> reader,
+            java.util.function.Supplier<T> factory, String id) {
+        return self.method_17924(new net.minecraft.class_18.class_8645<>(factory, (nbt, lookup) -> reader.apply(nbt), null), id);
+    }
+
+    public static <T extends net.minecraft.class_18> T method_20786(net.minecraft.class_26 self, java.util.function.Function<net.minecraft.class_2487, T> reader, String id) {
+        return self.method_20786(new net.minecraft.class_18.class_8645<>(null, (nbt, lookup) -> reader.apply(nbt), null), id);
+    }
+
+    /** was SimpleInventory.toNbtList(): the registry lookup is the vanilla one (the inventory has no world) */
+    public static net.minecraft.class_2499 method_7660(net.minecraft.class_1277 self) {
+        return self.method_7660(net.minecraft.class_7887.method_46817());
+    }
+
+    /** was ItemUsage.spawnItemContents(ItemEntity, Stream) -> Iterable since 1.21 */
+    public static void method_33263(net.minecraft.class_1542 entity, java.util.stream.Stream<net.minecraft.class_1799> contents) {
+        net.minecraft.class_5328.method_33263(entity, contents.toList());
+    }
+
+    /** was CampfireBlockEntity.addItem(Entity, ItemStack, int): 1.21.2 takes (ServerWorld, LivingEntity, ItemStack), cook time comes from the recipe */
+    public static boolean method_17503(net.minecraft.class_3924 self, net.minecraft.class_1297 user, net.minecraft.class_1799 stack, int cookTime) {
+        return self.method_10997() instanceof net.minecraft.class_3218 sw && user instanceof net.minecraft.class_1309 living && self.method_17503(sw, living, stack);
+    }
+
+    /** was GameRenderer.getBasicProjectionMatrix(double fov) -> float since 1.21.2 */
+    public static org.joml.Matrix4f method_22973(net.minecraft.class_757 self, double fov) {
+        return self.method_22973((float) fov);
+    }
+
+    /** was AbstractFurnaceBlockEntity.tick(World, ..): ServerWorld since 1.21.2 (the client never ticked it) */
+    public static void method_31651(net.minecraft.class_1937 world, net.minecraft.class_2338 pos, net.minecraft.class_2680 state, net.minecraft.class_2609 be) {
+        if (world instanceof net.minecraft.class_3218 sw) {
+            net.minecraft.class_2609.method_31651(sw, pos, state, be);
+        }
+    }
+
+    /** was StructureAccessor.getStructureContaining(BlockPos, TagKey): a predicate over structure holders since 1.21.2 */
+    public static net.minecraft.class_3449 method_41413(net.minecraft.class_5138 self, net.minecraft.class_2338 pos, net.minecraft.class_6862<net.minecraft.class_3195> tag) {
+        return self.method_41413(pos, holder -> holder.method_40220(tag));
+    }
+
+    /** was MobEntity.initialize(.., NbtCompound): the NBT argument left in 1.20.5. Call sites only -- a 1.20.1 override stays an orphan (vanilla calls the 4-arg shape) */
+    public static net.minecraft.class_1315 method_5943(net.minecraft.class_1308 self, net.minecraft.class_5425 world, net.minecraft.class_1266 difficulty,
+            net.minecraft.class_3730 reason, net.minecraft.class_1315 data, net.minecraft.class_2487 nbt) {
+        return self.method_5943(world, difficulty, reason, data);
+    }
 }
