@@ -108,57 +108,15 @@ if cfgs:
 PYGATE
 [ $? -eq 0 ] || { echo "build aborted: mixin config out of sync with sources"; exit 1; }
 
-# Every redirect must point at a method that actually exists. A dangling one
-# compiles fine and throws NoSuchMethodError the moment a mod reaches it --
-# that is what put the chest GUI on the floor.
-python3 - "$SHIM" "$VERSION" <<'PYWIRE'
-import json, os, re, sys
-shim, ver = sys.argv[1], sys.argv[2]
-cfg = f"core/segments/shims-{ver}.json"
-if os.path.exists(cfg):
-    d = json.load(open(cfg, encoding="utf-8"))
-    members = {}  # internal class name -> set of declared member names
-
-    def declared(cls):
-        # any redirect target must be a shim source we ship for this version;
-        # resolving the file by the internal name covers Statics AND the
-        # compat/fapi classes the old "Statics"-substring filter skipped
-        if cls not in members:
-            src_path = os.path.join(shim, "src", *cls.split("/")) + ".java"
-            if not os.path.exists(src_path):
-                return None
-            src = open(src_path, encoding="utf-8").read()
-            got = set(re.findall(r"public static [\w.$<>\[\], ?]+?\s(\w+)\s*\(", src))
-            got |= set(re.findall(r"public static final [\w.$<>\[\]]+ (\w+)\s*=", src))
-            members[cls] = got
-        return members[cls]
-
-    dangling = []
-    for m in ("staticRedirects", "instanceRedirects", "fieldRedirects", "instanceFieldGetters", "instanceOfRedirects"):
-        for k, v in d.get(m, {}).items():
-            cls, _, explicit = v.partition("#")
-            impl = declared(cls)
-            member = explicit or k.split(".")[-1].split("(")[0].split(":")[0]
-            if impl is None:
-                dangling.append(f"{k} -> {v} (no such shim source)")
-            elif member not in impl:
-                dangling.append(f"{k} -> {cls}.{member} (member missing)")
-    # a facade rename must land on a class we ship: a stale package token here
-    # turns every reference to the dead class into NoClassDefFoundError
-    for k, v in d.get("classRenames", {}).items():
-        if v.startswith("top/dext/") and not os.path.exists(os.path.join(shim, "src", *v.split("/")) + ".java"):
-            dangling.append(f"classRename {k} -> {v} (no such facade source)")
-    if d.get("lookupRt"):
-        impl = declared(d["lookupRt"])
-        if impl is None or "cbLookup" not in impl:
-            dangling.append(f"lookupRt -> {d['lookupRt']}.cbLookup (missing)")
-    if dangling:
-        print(f"{len(dangling)} redirects point at missing shim members:")
-        for k in dangling[:8]:
-            print(f"    {k}")
-        sys.exit(1)
-PYWIRE
-[ $? -eq 0 ] || { echo "build aborted: dangling redirects"; exit 1; }
+# The wiring and mixin gates below run the engine's own checkers against the
+# COMPILED tree, so the engine must be built first (see CLAUDE.md). Skipping
+# them silently when it is not would ship a jar no gate has looked at.
+[ -d core/build/classes/top/dext/centurybridge ] || {
+    echo "engine not compiled (core/build/classes): build it first, the wiring/mixin gates need it"; exit 1; }
+# past the namespace wall the bridge declares mojang names; wiring keys and
+# covers are in the analysis namespace and need the table to compare
+NAMETABLE=""
+case "$STUB" in *intermediary*) ;; *) NAMETABLE="data/mappings/inter-to-mojang-1.21.11.tsv";; esac
 
 echo "compiling $VERSION shims..."
 find "$SHIM/src" -name '*.java' > "$OUT/sources-$VERSION.txt"
@@ -168,16 +126,26 @@ find "$SHIM/src" -name '*.java' > "$OUT/sources-$VERSION.txt"
 case "$VERSION" in 1.20.*) RELEASE=17;; *) RELEASE=21;; esac
 javac -nowarn -proc:none --release "$RELEASE" -cp "$CP" -d "$CLASSES" "@$OUT/sources-$VERSION.txt"
 
+# Every redirect must point at a static that actually exists WITH THE EXACT
+# DESCRIPTOR the converter emits: INVOKESTATIC resolves by name+descriptor,
+# so a same-name overload of another arity is still NoSuchMethodError the
+# moment a mod reaches it -- that is what put the chest GUI on the floor, and
+# how a dead 1-arg renderBackground cover hid behind the live 4-arg one.
+# Checked on the compiled classes (javap-level truth, not source regexes), for
+# every wiring key that names a runtime member: static/instance/super
+# redirects, field redirects/getters, instanceof predicates, constructor
+# factories, super-ctor adapters and reshape ops, lookupRt, override-hook
+# wrap/unwrap/guard, facade renames.
+java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "core/segments/shims-$VERSION.json" "$NAMETABLE" \
+    || { echo "build aborted: dangling redirect wiring"; exit 1; }
+
 # Everything Mixin resolves by NAME at PREPARE (accessor/invoker/shadow
 # targets, injection selectors) is invisible to javac. Check all of it against
-# the real target jar now, not one failure per boot.
-# past the namespace wall the bridge declares mojang names; the covers are
-# keyed in the analysis namespace and need the table to compare
-NAMETABLE=""
-case "$STUB" in *intermediary*) ;; *) NAMETABLE="data/mappings/inter-to-mojang-1.21.11.tsv";; esac
-if [ -d core/build/classes ]; then
-    java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "core/segments/shims-$VERSION.json" "$NAMETABLE"         || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
-fi
+# the real target jar now, not one failure per boot. Covers are checked here
+# too: the shape must be declared by a mixin on the owner, an ancestor, or an
+# implemented interface (name AND descriptor).
+java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "core/segments/shims-$VERSION.json" "$NAMETABLE" \
+    || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 
 # fabric.mod.json, the mixin config and the access widener are mod SOURCE and
 # live under resources/; they are copied in at package time, not compiled.

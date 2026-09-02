@@ -4,7 +4,9 @@
 # else's copyrighted code.
 
 # --- game + corpus data (never distributable) ---
-data/
+# anchored: the bare pattern also swallowed core/src/.../data/ (MixinCheck.java
+# never made it into a commit because of it)
+/data/
 
 # --- build output ---
 build/

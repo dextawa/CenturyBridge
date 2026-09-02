@@ -752,9 +752,10 @@ public final class JarProcessor {
         Set<String> clientTombstones = new HashSet<>();      // subset of tombstone keys on client-only owners
         Set<String> silentTombstones = new HashSet<>();      // ledgered damage: rewritten but not reported
         // call-site key -> the class to name in an emitted receiver-typed descriptor
-        // "(Lowner;...)". Set when the site's owner is a mod class through which a
-        // vanilla member is inherited: the bridge static is declared on the vanilla
-        // class the wiring names, and the mod instance is assignable to it.
+        // "(Lowner;...)": the class the wiring keys the member on (instance redirects
+        // climb the hierarchy), or the vanilla class an inherited member is reached
+        // through when the site names a mod class. The bridge static is declared
+        // on that class; the actual receiver is assignable to it.
         Map<String, String> emitOwner = new HashMap<>();
 
         // dead-class facade renames touch descriptors/signatures everywhere, so the
@@ -1003,14 +1004,15 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(key, "static-redirect");
                             return;
                         }
-                        String irt = chain.redirectAnywhere(chain.instanceRedirects, owner, name + desc);
-                        if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
-                            instRedirects.put(site, irt);
-                            if (!site.equals(key)) {
-                                // through a mod class: the bridge static is declared on the
-                                // class the wiring keys the member on
-                                emitOwner.put(site, chain.redirectHome(chain.instanceRedirects, owner, name + desc));
-                            }
+                        String irtHome = chain.redirectHome(chain.instanceRedirects, owner, name + desc);
+                        if (irtHome != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
+                            instRedirects.put(site, chain.instanceRedirects.get(irtHome + "." + name + desc));
+                            // the bridge static takes the receiver typed as the class the
+                            // wiring keys the member on; a call through a subclass (vanilla
+                            // or the mod's own) passes an assignable receiver. Naming the
+                            // call-site class instead demanded one overload per subclass
+                            // ever called through -- and NoSuchMethodError where it was missing.
+                            emitOwner.put(site, irtHome);
                             top.dext.centurybridge.data.FullAudit.record(key, "instance-redirect");
                             return;
                         }

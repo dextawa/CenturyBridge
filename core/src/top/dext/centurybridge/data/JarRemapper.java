@@ -35,14 +35,72 @@ public final class JarRemapper {
      * verbatim -- refmap JSONs still carry intermediary names and need their
      * own pass later.
      */
-    public static void remapWithTable(Path tsv, Path inJar, Path outJar) throws IOException {
-        java.util.Map<String, String> classes = new java.util.HashMap<>();
+    /**
+     * The composed inter->mojang table, and the one Remapper every consumer
+     * of it must share: the whole-jar conversion pass, and the build gate that
+     * predicts what a converted call site will look like (WiringCheck) -- a
+     * gate that translated names its own way would pass wiring the converter
+     * then emits differently.
+     */
+    public static final class Table {
+        public final java.util.Map<String, String> classes = new java.util.HashMap<>();
+        /** "interOwner.name" -> mojang member name */
+        public final java.util.Map<String, String> byOwner = new java.util.HashMap<>();
+        /** bare intermediary member name -> mojang name, ambiguous ids removed */
+        public final java.util.Map<String, String> members = new java.util.HashMap<>();
+        /** how many bare ids were ambiguous (owner-qualified lookup only) */
+        public int ambiguous;
+
+        public Remapper remapper() {
+            return new Remapper() {
+                @Override
+                public String map(String internalName) {
+                    String hit = classes.get(internalName);
+                    if (hit != null) {
+                        return hit;
+                    }
+                    // nested classes absent from the table (anonymous/synthetic)
+                    // follow their outermost mapped enclosing class
+                    int d = internalName.length();
+                    while ((d = internalName.lastIndexOf('$', d - 1)) > 0) {
+                        String outer = classes.get(internalName.substring(0, d));
+                        if (outer != null) {
+                            return outer + internalName.substring(d);
+                        }
+                    }
+                    return internalName;
+                }
+
+                private String member(String owner, String name) {
+                    // our runtime classes (Statics, facades, tombstones) keep their
+                    // token-named members: the converter wired call sites to them
+                    // by exactly that name, and nothing in the game maps them
+                    if (owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/")) {
+                        return name;
+                    }
+                    String hit = byOwner.get(owner + "." + name);
+                    return hit != null ? hit : members.getOrDefault(name, name);
+                }
+
+                @Override
+                public String mapMethodName(String owner, String name, String desc) {
+                    return name.startsWith("method_") ? member(owner, name) : name;
+                }
+
+                @Override
+                public String mapFieldName(String owner, String name, String desc) {
+                    return name.startsWith("field_") ? member(owner, name) : name;
+                }
+            };
+        }
+    }
+
+    public static Table loadTable(Path tsv) throws IOException {
+        Table t = new Table();
         // owner-qualified ("interOwner.name" -> moj) wins; the bare-name map
         // covers call sites whose owner is a subclass of the declaring class,
         // and drops the handful of ids the client/server merge left ambiguous
         // (same field_/method_ id, two unrelated mojang members)
-        java.util.Map<String, String> byOwner = new java.util.HashMap<>();
-        java.util.Map<String, String> members = new java.util.HashMap<>();
         java.util.Set<String> ambiguous = new java.util.HashSet<>();
         for (String ln : Files.readAllLines(tsv)) {
             String[] p = ln.split("\t");
@@ -50,58 +108,27 @@ public final class JarRemapper {
                 continue;
             }
             if (p[0].equals("C")) {
-                classes.put(p[1], p[2]);
+                t.classes.put(p[1], p[2]);
             } else if (p[0].equals("M") || p[0].equals("F")) {
                 String name = p[1].substring(p[1].lastIndexOf('.') + 1);
                 String moj = p[2].substring(p[2].lastIndexOf('.') + 1);
-                byOwner.put(p[1], moj);
-                String prev = members.putIfAbsent(name, moj);
+                t.byOwner.put(p[1], moj);
+                String prev = t.members.putIfAbsent(name, moj);
                 if (prev != null && !prev.equals(moj)) {
                     ambiguous.add(name);
                 }
             }
         }
-        members.keySet().removeAll(ambiguous);
-        Remapper remapper = new Remapper() {
-            @Override
-            public String map(String internalName) {
-                String hit = classes.get(internalName);
-                if (hit != null) {
-                    return hit;
-                }
-                // nested classes absent from the table (anonymous/synthetic)
-                // follow their outermost mapped enclosing class
-                int d = internalName.length();
-                while ((d = internalName.lastIndexOf('$', d - 1)) > 0) {
-                    String outer = classes.get(internalName.substring(0, d));
-                    if (outer != null) {
-                        return outer + internalName.substring(d);
-                    }
-                }
-                return internalName;
-            }
+        t.members.keySet().removeAll(ambiguous);
+        t.ambiguous = ambiguous.size();
+        return t;
+    }
 
-            private String member(String owner, String name) {
-                // our runtime classes (Statics, facades, tombstones) keep their
-                // token-named members: the converter wired call sites to them
-                // by exactly that name, and nothing in the game maps them
-                if (owner.startsWith("top/dext/centurybridge/") || owner.startsWith("centurybridge/")) {
-                    return name;
-                }
-                String hit = byOwner.get(owner + "." + name);
-                return hit != null ? hit : members.getOrDefault(name, name);
-            }
-
-            @Override
-            public String mapMethodName(String owner, String name, String desc) {
-                return name.startsWith("method_") ? member(owner, name) : name;
-            }
-
-            @Override
-            public String mapFieldName(String owner, String name, String desc) {
-                return name.startsWith("field_") ? member(owner, name) : name;
-            }
-        };
+    public static void remapWithTable(Path tsv, Path inJar, Path outJar) throws IOException {
+        Table table = loadTable(tsv);
+        java.util.Map<String, String> byOwner = table.byOwner;
+        java.util.Map<String, String> members = table.members;
+        Remapper remapper = table.remapper();
         int nClasses = 0;
         java.util.Set<String> written = new java.util.HashSet<>();
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
@@ -187,8 +214,8 @@ public final class JarRemapper {
                 nClasses++;
             }
         }
-        System.out.println("renamed " + nClasses + " classes (table: " + classes.size()
-            + " classes, " + byOwner.size() + " members, " + ambiguous.size()
+        System.out.println("renamed " + nClasses + " classes (table: " + table.classes.size()
+            + " classes, " + byOwner.size() + " members, " + table.ambiguous
             + " ambiguous ids owner-only) -> " + outJar);
     }
 
