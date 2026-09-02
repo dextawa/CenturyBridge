@@ -788,7 +788,8 @@
   "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.send(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/compat/fapi/CbClientNetworking",
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.registerGlobalReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler;)Z": "top/dext/centurybridge/compat/fapi/CbNetworking",
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.send(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/compat/fapi/CbNetworking",
-  "net/minecraft/class_3288.method_45275(Ljava/lang/String;Lnet/minecraft/class_2561;ZLnet/minecraft/class_3288$class_7680;Lnet/minecraft/class_3264;Lnet/minecraft/class_3288$class_3289;Lnet/minecraft/class_5352;)Lnet/minecraft/class_3288;": "top/dext/centurybridge/rt/v1_21_4/Statics#cbReadMetaAndCreate"
+  "net/minecraft/class_3288.method_45275(Ljava/lang/String;Lnet/minecraft/class_2561;ZLnet/minecraft/class_3288$class_7680;Lnet/minecraft/class_3264;Lnet/minecraft/class_3288$class_3289;Lnet/minecraft/class_5352;)Lnet/minecraft/class_3288;": "top/dext/centurybridge/rt/v1_21_4/Statics#cbReadMetaAndCreate",
+  "net/minecraft/class_5251.method_27719(Ljava/lang/String;)Lnet/minecraft/class_5251;": "top/dext/centurybridge/rt/v1_21_4/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1830,7 +1831,8 @@
   "net/minecraft/class_1542.method_5639(I)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_1588.method_5639(I)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_1657.method_5639(I)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
-  "net/minecraft/class_1676.method_5639(I)V": "top/dext/centurybridge/rt/v1_21_4/Statics"
+  "net/minecraft/class_1676.method_5639(I)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
+  "net/minecraft/class_1299$class_1300.method_5905(Ljava/lang/String;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/rt/v1_21_4/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -2026,7 +2028,6 @@
   "net/minecraft/class_2246.field_10261": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2246.field_10545": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_5620": "1.20.3 rework wave -- ledgered pending codec-based bridge",
-  "net/minecraft/class_5251.method_27719": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_7417.field_39004": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_3544.method_15439": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_1937.method_8454": "1.20.3 rework wave -- ledgered pending codec-based bridge",

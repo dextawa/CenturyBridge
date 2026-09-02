@@ -1921,4 +1921,10 @@ public final class Statics {
         }
         return m;
     }
+
+    /** was net/minecraft/class_5251.method_27719(Ljava/lang/String;)Lnet/minecraft/class_5251; -- TextColor.parseColor
+     *  returns DataResult since 1.20.3; the 1.20.1 contract was "TextColor or null". */
+    public static net.minecraft.class_5251 method_27719(String s) {
+        return net.minecraft.class_5251.method_27719(s).result().orElse(null);
+    }
 }

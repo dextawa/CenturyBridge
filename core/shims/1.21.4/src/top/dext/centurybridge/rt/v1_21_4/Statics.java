@@ -12407,4 +12407,17 @@ public final class Statics {
     public static void method_5639(net.minecraft.class_1657 self, int i) { self.method_5639((float) i); }
     /** was net/minecraft/class_1676.method_5639(I)V */
     public static void method_5639(net.minecraft.class_1676 self, int i) { self.method_5639((float) i); }
+
+    /** was net/minecraft/class_5251.method_27719(Ljava/lang/String;)Lnet/minecraft/class_5251; -- TextColor.parseColor
+     *  returns DataResult since 1.20.3; the 1.20.1 contract was "TextColor or null". */
+    public static net.minecraft.class_5251 method_27719(String s) {
+        return net.minecraft.class_5251.method_27719(s).result().orElse(null);
+    }
+
+    /** was net/minecraft/class_1299$class_1300.method_5905(Ljava/lang/String;)Lnet/minecraft/class_1299; -- EntityType.Builder.build(String)
+     *  takes a RegistryKey since 1.21.2; the 1.20.1 string was the entity's registry id. */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_1299 method_5905(net.minecraft.class_1299.class_1300 self, String id) {
+        return self.method_5905(net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41266, net.minecraft.class_2960.method_60654(id)));
+    }
 }

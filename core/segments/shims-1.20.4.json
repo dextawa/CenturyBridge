@@ -17,7 +17,8 @@
   "net/minecraft/class_5409$class_5410.method_30099(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073$class_2074;Lnet/minecraft/class_5258;)Lnet/minecraft/class_5409$class_5410;": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_2507.method_30614(Lnet/minecraft/class_2487;Ljava/io/File;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_2507.method_10630(Lnet/minecraft/class_2487;Ljava/io/File;)V": "top/dext/centurybridge/rt/v1_20_4/Statics",
-  "net/minecraft/class_2507.method_10633(Ljava/io/File;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v1_20_4/Statics"
+  "net/minecraft/class_2507.method_10633(Ljava/io/File;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v1_20_4/Statics",
+  "net/minecraft/class_5251.method_27719(Ljava/lang/String;)Lnet/minecraft/class_5251;": "top/dext/centurybridge/rt/v1_20_4/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v1_20_4/Statics",
@@ -461,7 +462,6 @@
   "net/minecraft/class_2246.field_10261": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_2246.field_10545": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_5620": "1.20.3 rework wave -- ledgered pending codec-based bridge",
-  "net/minecraft/class_5251.method_27719": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_7417.field_39004": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_3544.method_15439": "1.20.3 rework wave -- ledgered pending codec-based bridge",
   "net/minecraft/class_1937.method_8454": "1.20.3 rework wave -- ledgered pending codec-based bridge",
