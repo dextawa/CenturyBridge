@@ -8243,4 +8243,14 @@ public final class Statics {
     public static net.minecraft.network.chat.TextColor method_27719(String s) {
         return net.minecraft.network.chat.TextColor.parseColor(s).result().orElse(null);
     }
+
+    /** was net/minecraft/class_1317.method_20637(Lnet/minecraft/class_1299;Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_4306;)V --
+     *  SpawnRestriction.register(type, Location, heightmap, predicate): the class survives as SpawnPlacements, only the
+     *  Location enum died (1.20.5 SpawnPlacementType constants); the corpus reaches it through the class_1317 facade enum.
+     *  11 corpus mods register mob spawn placements this way, and 4 more through FabricEntityTypeBuilder.Mob. */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void method_20637(net.minecraft.world.entity.EntityType type, top.dext.centurybridge.facade.v26_2.class_1317.class_1319 location,
+            net.minecraft.world.level.levelgen.Heightmap.Types heightmap, net.minecraft.world.entity.SpawnPlacements.SpawnPredicate predicate) {
+        net.minecraft.world.entity.SpawnPlacements.register(type, location.cbToVanilla(), heightmap, predicate);
+    }
 }
