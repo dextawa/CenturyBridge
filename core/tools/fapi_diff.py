@@ -165,6 +165,9 @@ def main():
     def ledgered(sym):
         # a ledger entry may name the class, or the class with an outer-class prefix (nested)
         return sym in ledger or sym.split('$')[0] in ledger
+    def ledgered_member(owner, name, desc):
+        # engine ledger keys: the owner class, owner.name, or the full member (owner.name(desc) / owner.NAME:desc)
+        return ledgered(owner) or f"{owner}.{name}" in ledger or f"{owner}.{name}{desc}" in ledger or f"{owner}.{name}:{desc}" in ledger
     missing_cls = {}; ledgered_cls = {}
     for c, m in cls_refs.items():
         if c in fapi or c in handled: continue
@@ -184,7 +187,7 @@ def main():
                     renamed_missing[(owner, name, desc)] = (mods, tgt, same[:2])
             continue
         if owner not in fapi:
-            if ledgered(owner): ledgered_mem[(owner, name, desc)] = mods
+            if ledgered_member(owner, name, desc): ledgered_mem[(owner, name, desc)] = mods
             continue
         methods, fields = fapi[owner][:2]
         td = tr(desc)
@@ -193,7 +196,7 @@ def main():
             up = declares(owner, name, td)
             if up:
                 inherited += 1; continue
-            if ledgered(owner) or ledgered(f"{owner}.{name}"):
+            if ledgered_member(owner, name, desc):
                 ledgered_mem[(owner, name, desc)] = mods; continue
             # tolerate a same-name member with any descriptor as "renamed desc" (report separately)
             same = [m for m in methods | fields if m.startswith(name + '(') or m == name + td]
