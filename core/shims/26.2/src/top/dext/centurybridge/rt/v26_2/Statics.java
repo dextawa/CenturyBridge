@@ -199,6 +199,47 @@ public final class Statics {
         self.onCraftedPostProcess(stack, world);
     }
 
+    // INVOKESTATIC resolves by exact descriptor and the converter emits the call site's OWNER as the
+    // receiver type: the subclass-owner redirects (class_1811 / class_1747 / class_1826) need their own overloads.
+    public static void method_7843(net.minecraft.world.item.ProjectileWeaponItem self,
+            net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.Level world,
+            net.minecraft.world.entity.player.Player player) {
+        method_7843((net.minecraft.world.item.Item) self, stack, world, player);
+    }
+
+    public static void method_7843(net.minecraft.world.item.BlockItem self,
+            net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.Level world,
+            net.minecraft.world.entity.player.Player player) {
+        method_7843((net.minecraft.world.item.Item) self, stack, world, player);
+    }
+
+    public static void method_7843(net.minecraft.world.item.SpawnEggItem self,
+            net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.Level world,
+            net.minecraft.world.entity.player.Player player) {
+        method_7843((net.minecraft.world.item.Item) self, stack, world, player);
+    }
+
+    /** class_1732 (RecipeUnlocker) is the INTERFACE owner of setLastRecipe: the emitted receiver is RecipeCraftingHolder, not ResultContainer */
+    public static void method_7662(net.minecraft.world.inventory.RecipeCraftingHolder self, net.minecraft.world.item.crafting.Recipe<?> recipe) {
+        if (recipe == null) {
+            self.setRecipeUsed(null);
+            return;
+        }
+        net.minecraft.resources.Identifier id = Trackers.RECIPE_IDS.get(recipe);
+        self.setRecipeUsed(id == null ? null : new net.minecraft.world.item.crafting.RecipeHolder<>(cbRecipeKey(id), recipe));
+    }
+
+    /** class_1732.shouldCraftRecipe(world, player, recipe) through the interface owner (see method_7665(ResultContainer, ...)) */
+    public static boolean method_7665(net.minecraft.world.inventory.RecipeCraftingHolder self,
+            net.minecraft.world.level.Level world, net.minecraft.server.level.ServerPlayer player,
+            net.minecraft.world.item.crafting.Recipe<?> recipe) {
+        net.minecraft.resources.Identifier id = Trackers.RECIPE_IDS.get(recipe);
+        if (id == null) {
+            return false;
+        }
+        return self.setRecipeUsed(player, new net.minecraft.world.item.crafting.RecipeHolder<>(cbRecipeKey(id), recipe));
+    }
+
     /**
      * 1.20.1 CraftingResultInventory.shouldCraftRecipe(world, player, recipe):
      * the recipe became a RecipeEntry. The tracker supplies the id the recipe
@@ -412,6 +453,12 @@ public final class Statics {
     /** was net/minecraft/advancements/CriterionTriggerInstance/method_807()Lcom/google/gson/JsonObject; */
     public static com.google.gson.JsonObject method_807(net.minecraft.advancements.CriterionTriggerInstance self) {
         throw new UnsupportedOperationException("CenturyBridge: Advancement JSON serialization is not supported on this version");
+    }
+
+    /** 1.20.1 toJson(AdvancementEntityPredicateSerializer): the wired shape carries the class_5267 facade argument */
+    public static com.google.gson.JsonObject method_807(net.minecraft.advancements.CriterionTriggerInstance self,
+            top.dext.centurybridge.facade.v26_2.class_5267 serializer) {
+        return method_807(self);
     }
 
 
