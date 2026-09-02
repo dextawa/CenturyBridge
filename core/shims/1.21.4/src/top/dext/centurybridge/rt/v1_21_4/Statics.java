@@ -12467,4 +12467,9 @@ public final class Statics {
     public static void method_7843(net.minecraft.class_1738 self, net.minecraft.class_1799 stack, net.minecraft.class_1937 world, net.minecraft.class_1657 player) {
         method_7843((net.minecraft.class_1792) self, stack, world, player);
     }
+
+    /** was net/minecraft/class_5328.method_29282(World, PlayerEntity, Hand)TypedActionResult -- ItemUsage.consumeHeldItem now answers a bare ActionResult */
+    public static top.dext.centurybridge.facade.v1_21_4.class_1271<net.minecraft.class_1799> method_29282(net.minecraft.class_1937 world, net.minecraft.class_1657 player, net.minecraft.class_1268 hand) {
+        return top.dext.centurybridge.facade.v1_21_4.class_1271.cbFrom(net.minecraft.class_5328.method_29282(world, player, hand), player.method_5998(hand));
+    }
 }

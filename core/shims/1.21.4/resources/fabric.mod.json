@@ -6,5 +6,6 @@
  "environment": "*",
  "mixins": ["cb-1.21.4.mixins.json"],
  "accessWidener": "cb.accesswidener",
+ "entrypoints": { "main": ["top.dext.centurybridge.rt.v1_21_4.CbInit"] },
  "depends": { "fabricloader": ">=0.15.0" }
 }

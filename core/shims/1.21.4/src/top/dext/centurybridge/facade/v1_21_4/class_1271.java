@@ -29,8 +29,25 @@ public class class_1271<T> {
         return new class_1271<>(net.minecraft.class_1269.field_5811, value);
     }
 
+    /** consume(value): CONSUME survives as a Success constant */
     public static <T> class_1271<T> method_22431(T value) {
-        throw new UnsupportedOperationException();
+        return new class_1271<>(net.minecraft.class_1269.field_21466, value);
+    }
+
+    /** the 1.21.2+ shape of this result: a Success carries the transformed held item the value meant */
+    public net.minecraft.class_1269 cbToVanilla() {
+        if (field_5815 instanceof net.minecraft.class_1269.class_9860 success && field_5816 instanceof net.minecraft.class_1799 stack) {
+            return success.method_61393(stack);
+        }
+        return field_5815;
+    }
+
+    /** wrap a 1.21.2+ result back into the old pair (the value is the hand stack unless Success carried a new one) */
+    public static class_1271<net.minecraft.class_1799> cbFrom(net.minecraft.class_1269 result, net.minecraft.class_1799 held) {
+        if (result instanceof net.minecraft.class_1269.class_9860 success && success.method_61396() != null) {
+            return new class_1271<>(result, success.method_61396());
+        }
+        return new class_1271<>(result, held);
     }
 
     public static <T> class_1271<T> method_29237(T value, boolean swingHand) {
