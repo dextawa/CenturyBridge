@@ -12420,4 +12420,13 @@ public final class Statics {
     public static net.minecraft.class_1299 method_5905(net.minecraft.class_1299.class_1300 self, String id) {
         return self.method_5905(net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41266, net.minecraft.class_2960.method_60654(id)));
     }
+
+    /** was net/minecraft/class_1317.method_20637(EntityType, SpawnRestriction.Location, Heightmap.Type, SpawnPredicate)V
+     *  -- SpawnRestriction.register; the Location enum became the SpawnLocation interface in 1.20.5 (facade class_1317_class_1319). */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void method_20637(net.minecraft.class_1299 type, top.dext.centurybridge.facade.v1_21_4.class_1317_class_1319 location,
+            net.minecraft.class_2902.class_2903 heightmap, net.minecraft.class_1317.class_4306 predicate) {
+        // private since 1.20.5: through the invoker mixin
+        top.dext.centurybridge.shims.v1_21_4.Class1317Accessor.cbRegister(type, location.cbVanilla(), heightmap, predicate);
+    }
 }

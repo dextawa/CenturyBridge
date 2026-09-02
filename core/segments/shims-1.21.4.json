@@ -793,7 +793,8 @@
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.create()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.of()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.copyOf(Lnet/minecraft/class_4970;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
-  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.copyOf(Lnet/minecraft/class_4970$class_2251;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings"
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.copyOf(Lnet/minecraft/class_4970$class_2251;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/minecraft/class_1317.method_20637(Lnet/minecraft/class_1299;Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_4306;)V": "top/dext/centurybridge/rt/v1_21_4/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1876,7 +1877,11 @@
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.instrument(Lnet/minecraft/class_2766;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.replaceable()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.drops(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
-  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.collidable(Z)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings"
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.collidable(Z)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/compat/fapi/CbEntityBuilders",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/compat/fapi/CbEntityBuilders",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/compat/fapi/CbEntityBuilders",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.spawnRestriction(Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_2902$class_2903;Lnet/minecraft/class_1317$class_4306;)Lnet/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob;": "top/dext/centurybridge/compat/fapi/CbEntityBuilders"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1972,7 +1977,8 @@
   "net/minecraft/class_4005": "top/dext/centurybridge/facade/v1_21_4/class_4005",
   "net/fabricmc/fabric/api/item/v1/FabricItemSettings": "top/dext/centurybridge/compat/fapi/FabricItemSettings",
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings": "net/minecraft/class_4970$class_2251",
-  "net/fabricmc/fabric/api/registry/FuelRegistry": "top/dext/centurybridge/compat/fapi/CbFuelRegistry"
+  "net/fabricmc/fabric/api/registry/FuelRegistry": "top/dext/centurybridge/compat/fapi/CbFuelRegistry",
+  "net/minecraft/class_1317$class_1319": "top/dext/centurybridge/facade/v1_21_4/class_1317_class_1319"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -2731,7 +2737,6 @@
   "net/minecraft/class_8255": "datagen: build-time data generation, never executes at runtime (1 symbols)",
   "net/minecraft/class_1293": "class withdrawn @1.20.4->1.20.5: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
   "net/minecraft/class_1310": "class withdrawn @1.20.4->1.20.5: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
-  "net/minecraft/class_1317": "class withdrawn @1.20.4->1.20.5: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
   "net/minecraft/class_1768": "class withdrawn @1.20.4->1.20.5: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
   "net/minecraft/class_1799": "class withdrawn @1.20.4->1.20.5: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
   "net/minecraft/class_1886": "class withdrawn @1.20.4->1.20.5: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",

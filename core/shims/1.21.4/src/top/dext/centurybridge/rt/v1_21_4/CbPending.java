@@ -3,6 +3,7 @@ package top.dext.centurybridge.rt.v1_21_4;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import top.dext.centurybridge.shims.v1_21_4.Class1299Accessor;
 import top.dext.centurybridge.shims.v1_21_4.Class1792Accessor;
 import top.dext.centurybridge.shims.v1_21_4.Class1793Accessor;
 import top.dext.centurybridge.shims.v1_21_4.Class2251Accessor;
@@ -25,6 +26,7 @@ public final class CbPending {
     private static final AtomicInteger N = new AtomicInteger();
     private static final Map<Object, net.minecraft.class_4970.class_2251> BLOCKS = new IdentityHashMap<>();
     private static final Map<Object, net.minecraft.class_1792.class_1793> ITEMS = new IdentityHashMap<>();
+    private static final Map<Object, Boolean> ENTITY_TYPES = new IdentityHashMap<>();
 
     private static net.minecraft.class_2960 next() {
         return net.minecraft.class_2960.method_60655(NS, "p" + N.getAndIncrement());
@@ -52,8 +54,25 @@ public final class CbPending {
         }
     }
 
+    /** EntityType.Builder.build wants the key up front since 1.21.2; a fapi builder's no-arg build() gets a placeholder. */
+    public static net.minecraft.class_5321<net.minecraft.class_1299<?>> pendingEntityKey() {
+        return net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41266, next());
+    }
+
+    public static synchronized void rememberEntityType(net.minecraft.class_1299<?> type) {
+        ENTITY_TYPES.put(type, Boolean.TRUE);
+    }
+
     /** Called from the registry add hook with the real key. */
     public static synchronized void backfill(net.minecraft.class_5321<?> key, Object entry) {
+        if (ENTITY_TYPES.remove(entry) != null && entry instanceof net.minecraft.class_1299<?> type) {
+            // what EntityType.Builder.build(key) derives from the key: "entity.<ns>.<path>" and entities/<id>
+            net.minecraft.class_2960 id = key.method_29177();
+            Class1299Accessor ea = (Class1299Accessor) type;
+            ea.cbSetTranslationKey("entity." + id.method_12836() + "." + id.method_12832());
+            ea.cbSetLootTableKey(java.util.Optional.of(net.minecraft.class_5321.method_29179(
+                net.minecraft.class_7924.field_50079, id.method_45138("entities/"))));
+        }
         var bs = BLOCKS.remove(entry);
         if (bs != null && entry instanceof net.minecraft.class_4970 block) {
             Class2251Accessor acc = (Class2251Accessor) bs;
