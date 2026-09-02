@@ -4046,4 +4046,104 @@ public final class Statics {
     public static net.minecraft.class_5251 method_27719(String s) {
         return net.minecraft.class_5251.method_27719(s).result().orElse(null);
     }
+
+    // ---- dead-cover replacements (the wiring claimed a mixin restored these shapes; none ever existed) ----
+
+    // StatusEffect / EntityAttribute became Holders (1.20.5 / 1.21)
+    public static boolean method_6059(net.minecraft.class_1309 self, net.minecraft.class_1291 effect) {
+        return self.method_6059(net.minecraft.class_7923.field_41174.method_47983(effect));
+    }
+
+    public static net.minecraft.class_1293 method_6112(net.minecraft.class_1309 self, net.minecraft.class_1291 effect) {
+        return self.method_6112(net.minecraft.class_7923.field_41174.method_47983(effect));
+    }
+
+    public static boolean method_6016(net.minecraft.class_1309 self, net.minecraft.class_1291 effect) {
+        return self.method_6016(net.minecraft.class_7923.field_41174.method_47983(effect));
+    }
+
+    public static net.minecraft.class_1324 method_5996(net.minecraft.class_1309 self, net.minecraft.class_1320 attribute) {
+        return self.method_5996(net.minecraft.class_7923.field_41190.method_47983(attribute));
+    }
+
+    public static double method_26852(net.minecraft.class_5131 self, net.minecraft.class_1320 attribute) {
+        return self.method_26852(net.minecraft.class_7923.field_41190.method_47983(attribute));
+    }
+
+    public static boolean method_27310(net.minecraft.class_5132 self, net.minecraft.class_1320 attribute) {
+        return self.method_27310(net.minecraft.class_7923.field_41190.method_47983(attribute));
+    }
+
+    /** was LivingEntity.sendEquipmentBreakStatus(EquipmentSlot): 1.20.5+ also wants the item */
+    public static void method_20235(net.minecraft.class_1309 self, net.minecraft.class_1304 slot) {
+        self.method_20235(self.method_6118(slot).method_7909(), slot);
+    }
+
+    /** was EntityAttributeModifier.getName(): modifiers are keyed by Identifier since 1.21 */
+    public static String method_6185(net.minecraft.class_1322 self) {
+        return self.comp_2447().toString();
+    }
+
+    /** was MobEntity.initialize(.., NbtCompound): the NBT argument left in 1.20.5. Call sites only -- a 1.20.1 override stays an orphan (vanilla calls the 4-arg shape) */
+    public static net.minecraft.class_1315 method_5943(net.minecraft.class_1308 self, net.minecraft.class_5425 world, net.minecraft.class_1266 difficulty,
+            net.minecraft.class_3730 reason, net.minecraft.class_1315 data, net.minecraft.class_2487 nbt) {
+        return self.method_5943(world, difficulty, reason, data);
+    }
+
+    // PersistentStateManager: (reader, factory, id) folded into PersistentState.Type in 1.20.5, reader gained the registry lookup
+    public static <T extends net.minecraft.class_18> T method_17924(net.minecraft.class_26 self, java.util.function.Function<net.minecraft.class_2487, T> reader,
+            java.util.function.Supplier<T> factory, String id) {
+        return self.method_17924(new net.minecraft.class_18.class_8645<>(factory, (nbt, lookup) -> reader.apply(nbt), null), id);
+    }
+
+    public static <T extends net.minecraft.class_18> T method_20786(net.minecraft.class_26 self, java.util.function.Function<net.minecraft.class_2487, T> reader, String id) {
+        return self.method_20786(new net.minecraft.class_18.class_8645<>(null, (nbt, lookup) -> reader.apply(nbt), null), id);
+    }
+
+    /** was SimpleInventory.toNbtList(): the registry lookup is the vanilla one (the inventory has no world) */
+    public static net.minecraft.class_2499 method_7660(net.minecraft.class_1277 self) {
+        return self.method_7660(net.minecraft.class_7887.method_46817());
+    }
+
+    // World.emitGameEvent(.., GameEvent, ..) -> Holder<GameEvent> (1.20.5); keyed on the ServerWorld owner the corpus calls through
+    public static void method_33596(net.minecraft.class_3218 self, net.minecraft.class_1297 entity, net.minecraft.class_5712 event, net.minecraft.class_2338 pos) {
+        self.method_33596(entity, net.minecraft.class_7923.field_41171.method_47983(event), pos);
+    }
+
+    public static void method_43275(net.minecraft.class_3218 self, net.minecraft.class_1297 entity, net.minecraft.class_5712 event, net.minecraft.class_243 pos) {
+        self.method_43275(entity, net.minecraft.class_7923.field_41171.method_47983(event), pos);
+    }
+
+    public static void method_32888(net.minecraft.class_3218 self, net.minecraft.class_5712 event, net.minecraft.class_243 pos, net.minecraft.class_5712.class_7397 emitter) {
+        self.method_32888(net.minecraft.class_7923.field_41171.method_47983(event), pos, emitter);
+    }
+
+    /** was PlayerEntity.eatFood(World, ItemStack): 1.20.5+ takes the food component explicitly (the stack's own) */
+    public static net.minecraft.class_1799 method_18866(net.minecraft.class_1657 self, net.minecraft.class_1937 world, net.minecraft.class_1799 stack) {
+        net.minecraft.class_4174 food = stack.method_57824(net.minecraft.class_9334.field_50075);
+        return food == null ? stack : self.method_18866(world, stack, food);
+    }
+
+    /** was TexturedRenderLayers.getArmorTrims(): 1.20.5+ takes the decal flag (false = the base trims sheet) */
+    public static net.minecraft.class_1921 method_48480() {
+        return net.minecraft.class_4722.method_48480(false);
+    }
+
+    /** was ButtonWidget(x, y, w, h, text, onPress): the ctor went protected in 1.20.2 -- through the builder */
+    public static net.minecraft.class_4185 cbNewclass_4185(int x, int y, int w, int h, net.minecraft.class_2561 text, net.minecraft.class_4185.class_4241 action) {
+        return net.minecraft.class_4185.method_46430(text, action).method_46434(x, y, w, h).method_46431();
+    }
+
+    /** was TreeDecoratorType(Codec): private and MapCodec-typed since 1.20.5 -- the codec is taken as a map codec (record codecs serialize the same way) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_4663 cbNewclass_4663(com.mojang.serialization.Codec codec) {
+        // the ctor is private and the build gate cannot check an <init> invoker: reflection (game classes live in the unnamed module)
+        try {
+            java.lang.reflect.Constructor<net.minecraft.class_4663> c = net.minecraft.class_4663.class.getDeclaredConstructor(com.mojang.serialization.MapCodec.class);
+            c.setAccessible(true);
+            return c.newInstance(com.mojang.serialization.MapCodec.assumeMapUnsafe(codec));
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("centurybridge: TreeDecoratorType(MapCodec) constructor", e);
+        }
+    }
 }
