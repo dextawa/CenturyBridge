@@ -213,7 +213,8 @@
   "RecipeManagerBridge",
   "RegistryAddBridge",
   "ScreenBridge",
-  "SlotBridge"
+  "SlotBridge",
+  "FuelBuilderAccessor"
  ],
  "client": [
   "ChatHudBridge",

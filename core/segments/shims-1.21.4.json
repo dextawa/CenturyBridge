@@ -1971,7 +1971,8 @@
   "net/minecraft/class_1830": "top/dext/centurybridge/facade/v1_21_4/class_1830",
   "net/minecraft/class_4005": "top/dext/centurybridge/facade/v1_21_4/class_4005",
   "net/fabricmc/fabric/api/item/v1/FabricItemSettings": "top/dext/centurybridge/compat/fapi/FabricItemSettings",
-  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings": "net/minecraft/class_4970$class_2251"
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings": "net/minecraft/class_4970$class_2251",
+  "net/fabricmc/fabric/api/registry/FuelRegistry": "top/dext/centurybridge/compat/fapi/CbFuelRegistry"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
