@@ -789,7 +789,11 @@
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.registerGlobalReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler;)Z": "top/dext/centurybridge/compat/fapi/CbNetworking",
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.send(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/compat/fapi/CbNetworking",
   "net/minecraft/class_3288.method_45275(Ljava/lang/String;Lnet/minecraft/class_2561;ZLnet/minecraft/class_3288$class_7680;Lnet/minecraft/class_3264;Lnet/minecraft/class_3288$class_3289;Lnet/minecraft/class_5352;)Lnet/minecraft/class_3288;": "top/dext/centurybridge/rt/v1_21_4/Statics#cbReadMetaAndCreate",
-  "net/minecraft/class_5251.method_27719(Ljava/lang/String;)Lnet/minecraft/class_5251;": "top/dext/centurybridge/rt/v1_21_4/Statics"
+  "net/minecraft/class_5251.method_27719(Ljava/lang/String;)Lnet/minecraft/class_5251;": "top/dext/centurybridge/rt/v1_21_4/Statics",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.create()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.of()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.copyOf(Lnet/minecraft/class_4970;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.copyOf(Lnet/minecraft/class_4970$class_2251;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings"
  },
  "instanceRedirects": {
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1832,7 +1836,47 @@
   "net/minecraft/class_1588.method_5639(I)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_1657.method_5639(I)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_1676.method_5639(I)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
-  "net/minecraft/class_1299$class_1300.method_5905(Ljava/lang/String;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/rt/v1_21_4/Statics"
+  "net/minecraft/class_1299$class_1300.method_5905(Ljava/lang/String;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/rt/v1_21_4/Statics",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.noCollision()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.nonOpaque()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.slipperiness(F)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.velocityMultiplier(F)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.jumpVelocityMultiplier(F)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.sounds(Lnet/minecraft/class_2498;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.luminance(Ljava/util/function/ToIntFunction;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.luminance(I)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.strength(FF)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.breakInstantly()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.strength(F)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.ticksRandomly()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.dynamicBounds()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.dropsNothing()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.dropsLike(Lnet/minecraft/class_2248;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.air()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.allowsSpawning(Lnet/minecraft/class_4970$class_4972;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.solidBlock(Lnet/minecraft/class_4970$class_4973;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.suffocates(Lnet/minecraft/class_4970$class_4973;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.blockVision(Lnet/minecraft/class_4970$class_4973;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.postProcess(Lnet/minecraft/class_4970$class_4973;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.emissiveLighting(Lnet/minecraft/class_4970$class_4973;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.requiresTool()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.mapColor(Lnet/minecraft/class_3620;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.mapColor(Lnet/minecraft/class_1767;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.mapColor(Ljava/util/function/Function;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.hardness(F)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.resistance(F)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.offset(Lnet/minecraft/class_4970$class_2250;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.noBlockBreakParticles()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.requires([Lnet/minecraft/class_7696;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.burnable()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.liquid()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.solid()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.notSolid()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.pistonBehavior(Lnet/minecraft/class_3619;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.instrument(Lnet/minecraft/class_2766;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.replaceable()Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.drops(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings.collidable(Z)Lnet/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings;": "top/dext/centurybridge/compat/fapi/CbBlockSettings"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1850,7 +1894,8 @@
   "net/minecraft/class_2348.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": "method_63535"
  },
  "fieldRenames": {
-  "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "field_45013"
+  "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "field_45013",
+  "net/fabricmc/fabric/api/event/registry/RegistryAttribute.PERSISTED:Lnet/fabricmc/fabric/api/event/registry/RegistryAttribute;": "MODDED"
  },
  "classRenames": {
   "net/minecraft/class_5335": "top/dext/centurybridge/facade/v1_21_4/class_5335",
@@ -1924,7 +1969,9 @@
   "net/minecraft/class_8184": "top/dext/centurybridge/facade/v1_21_4/class_8184",
   "net/minecraft/class_3876": "top/dext/centurybridge/facade/v1_21_4/class_3876",
   "net/minecraft/class_1830": "top/dext/centurybridge/facade/v1_21_4/class_1830",
-  "net/minecraft/class_4005": "top/dext/centurybridge/facade/v1_21_4/class_4005"
+  "net/minecraft/class_4005": "top/dext/centurybridge/facade/v1_21_4/class_4005",
+  "net/fabricmc/fabric/api/item/v1/FabricItemSettings": "top/dext/centurybridge/compat/fapi/FabricItemSettings",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings": "net/minecraft/class_4970$class_2251"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -4969,7 +5016,18 @@
   "net/minecraft/class_744.field_3903": "no faithful equivalent (API restructured across the 1.20.1->1.21.4 span)",
   "net/minecraft/class_806.<init>": "no faithful equivalent (API restructured across the 1.20.1->1.21.4 span)",
   "net/minecraft/class_909.<init>": "no faithful equivalent (API restructured across the 1.20.1->1.21.4 span)",
-  "net/minecraft/class_979.<init>": "no faithful equivalent (API restructured across the 1.20.1->1.21.4 span)"
+  "net/minecraft/class_979.<init>": "no faithful equivalent (API restructured across the 1.20.1->1.21.4 span)",
+  "net/fabricmc/fabric/api/resource/ResourceReloadListenerKeys.TAGS": "fapi: tag loading left the resource-reload listener chain in 1.20.5 (tags load with the registries); no reload-listener key exists to order against",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider": "datagen: fabric-data-generation-api providers run only under the datagen entrypoint (-Dfabric-api.datagen), never in a game; 1.20.5 ctors gained a registries future -- not bridged",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider": "datagen: fabric-data-generation-api providers run only under the datagen entrypoint, never in a game -- not bridged",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider": "datagen: fabric-data-generation-api providers run only under the datagen entrypoint, never in a game -- not bridged",
+  "net/fabricmc/fabric/api/datagen/v1/provider/SimpleFabricLootTableProvider": "datagen: fabric-data-generation-api providers run only under the datagen entrypoint, never in a game -- not bridged",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricAdvancementProvider": "datagen: fabric-data-generation-api providers run only under the datagen entrypoint, never in a game -- not bridged",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "datagen: fabric-data-generation-api providers run only under the datagen entrypoint, never in a game; the 1.21.4 model provider was rewritten for the item-model split -- not bridged",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider": "datagen: fabric-data-generation-api providers run only under the datagen entrypoint, never in a game -- not bridged",
+  "net/fabricmc/fabric/api/datagen/v1/FabricDataGenerator": "datagen: fabric-data-generation-api runs only under the datagen entrypoint, never in a game -- not bridged",
+  "net/fabricmc/fabric/api/datagen/v1/FabricDataOutput": "datagen: fabric-data-generation-api runs only under the datagen entrypoint, never in a game -- not bridged",
+  "net/fabricmc/fabric/api/biome/v1/BiomeModifications.addCarver": "fapi: 1.21.2 merged carving into a single step and GenerationStep.Carver (class_2893$class_2894, already ledgered) died with it; the call site reads the dead enum constant before any bridge could run (1 corpus mod)"
  },
  "interfaceized": [
   "com/mojang/serialization/DataResult"

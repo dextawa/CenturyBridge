@@ -23,4 +23,8 @@ public interface Class2251Accessor {
 
     @Invoker("method_63506")
     String cbTranslationKey();
+
+    /** hasCollision: the 1.20.1 FabricBlockSettings.collidable(true) wrote it directly */
+    @Accessor("field_10664")
+    void cbSetCollidable(boolean collidable);
 }
