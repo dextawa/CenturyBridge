@@ -84,9 +84,53 @@ public final class CbNetworking {
                 ctx.player().connection, wrap(payload), ctx.responseSender()));
     }
 
+    public static boolean registerReceiver(net.minecraft.server.network.ServerGamePacketListenerImpl listener,
+                                           net.minecraft.resources.Identifier channel, CbServerPlayHandler handler) {
+        ensureC2S(channel);
+        return ServerPlayNetworking.registerReceiver(listener, idOf(channel),
+            (payload, ctx) -> handler.receive(ctx.server(), ctx.player(),
+                ctx.player().connection, wrap(payload), ctx.responseSender()));
+    }
+
     public static void send(net.minecraft.server.level.ServerPlayer player, net.minecraft.resources.Identifier channel, net.minecraft.network.FriendlyByteBuf buf) {
         ensureS2C(channel);
         ServerPlayNetworking.send(player, new RawPayload(channel, drain(buf)));
+    }
+
+    /** was ServerPlayNetworking.createS2CPacket(Identifier, PacketByteBuf) */
+    public static net.minecraft.network.protocol.Packet createS2CPacket(net.minecraft.resources.Identifier channel, net.minecraft.network.FriendlyByteBuf buf) {
+        ensureS2C(channel);
+        return ServerPlayNetworking.createClientboundPacket(new RawPayload(channel, drain(buf)));
+    }
+
+    // ---- old typed-packet API (FabricPacket / PacketType, gone in 1.20.5) ----
+
+    public static void send(net.minecraft.server.level.ServerPlayer player, CbFabricPacket packet) {
+        net.minecraft.network.FriendlyByteBuf buf = new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
+        packet.write(buf);
+        send(player, packet.getType().getId(), buf);
+    }
+
+    public static <T extends CbFabricPacket> boolean registerGlobalReceiver(CbPacketType<T> type, CbServerPlayPacketHandler<T> handler) {
+        ensureC2S(type.getId());
+        return ServerPlayNetworking.registerGlobalReceiver(idOf(type.getId()),
+            (payload, ctx) -> handler.receive(type.read(wrap(payload)), ctx.player(), ctx.responseSender()));
+    }
+
+    // ---- old PacketSender.sendPacket(Identifier, PacketByteBuf) (instance redirect: receiver first) ----
+
+    public static void sendPacket(net.fabricmc.fabric.api.networking.v1.PacketSender self,
+                                  net.minecraft.resources.Identifier channel, net.minecraft.network.FriendlyByteBuf buf) {
+        // direction unknowable at the call site (response sender exists on both
+        // sides); registering the codec both ways is harmless metadata
+        ensureC2S(channel);
+        ensureS2C(channel);
+        self.sendPacket(new RawPayload(channel, drain(buf)));
+    }
+
+    /** was PlayerLookup.world(ServerWorld) -- renamed to level() in the mojang-name era */
+    public static java.util.Collection<net.minecraft.server.level.ServerPlayer> world(net.minecraft.server.level.ServerLevel level) {
+        return net.fabricmc.fabric.api.networking.v1.PlayerLookup.level(level);
     }
 
     private CbNetworking() {
