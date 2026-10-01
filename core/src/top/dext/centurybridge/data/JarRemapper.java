@@ -316,7 +316,24 @@ public final class JarRemapper {
 
             @Override
             public String mapFieldName(String owner, String name, String desc) {
-                return obf.fields.getOrDefault(owner + "." + name + ":" + desc, name);
+                // a reference through a subclass (putfield Horse.at) names the
+                // declaring superclass's field: climb like methods do
+                for (String cur = owner; cur != null; cur = superOf.get(cur)) {
+                    String h = obf.fields.get(cur + "." + name + ":" + desc);
+                    if (h != null) {
+                        return h;
+                    }
+                    String[] ifs = ifacesOf.get(cur);
+                    if (ifs != null) {
+                        for (String i : ifs) {
+                            String hi = obf.fields.get(i + "." + name + ":" + desc);
+                            if (hi != null) {
+                                return hi;
+                            }
+                        }
+                    }
+                }
+                return name;
             }
         };
 
@@ -325,8 +342,11 @@ public final class JarRemapper {
             for (byte[] data : entries.values()) {
                 ClassReader cr = new ClassReader(data);
                 ClassWriter cw = new ClassWriter(0);
-                cr.accept(new ClassRemapper(cw, remapper),
-                    ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                // CB_REMAP_KEEP_CODE=1: keep bodies -- an analysis jar for injector
+                // anchor checks (MixinRepair) where no loader-remapped runtime exists
+                cr.accept(new ClassRemapper(cw, remapper), System.getenv("CB_REMAP_KEEP_CODE") != null
+                    ? ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES
+                    : ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
                 String newName = remapper.map(cr.getClassName());
                 zout.putNextEntry(new ZipEntry(newName + ".class"));
                 zout.write(cw.toByteArray());

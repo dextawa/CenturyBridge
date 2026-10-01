@@ -391,6 +391,8 @@ public final class JarProcessor {
         public int datagenSkipped;                             // dev-time-only refs, never execute in play
         public int ledgered;                                   // examined damage classified in the quirk ledger
         public List<String> strippedMixins = new ArrayList<>();
+        /** injectors set to require=0: anchor gone in the target body, unrepairable -- known loss */
+        public List<String> disabledInjectors = new ArrayList<>();
         public List<String> notes = new ArrayList<>();
         public Path outputJar;
     }
@@ -545,10 +547,23 @@ public final class JarProcessor {
         LayerIndex layer = indexLayer(entries);
         Map<String, String> jarSuper = layer.superOf;
         stripSignatures(entries, rpt, tag);
+        // anchors are checked against real target bodies BEFORE triage: a repair
+        // (desc-drop / descend) rewrites the selector triage then reads
+        MixinRepair.Outcome repaired = chain.mixinRepair != null ? chain.mixinRepair.repair(entries) : null;
+        if (repaired != null) {
+            for (String r : repaired.repairs()) rpt.notes.add(tag + "mixin repaired: " + r);
+            for (String d : repaired.disabled()) rpt.disabledInjectors.add(tag + d);
+        }
         MixinTriage.Result triage = MixinTriage.run(entries, chain);
         Set<String> deadMixins = new HashSet<>();
+        if (repaired != null) {
+            for (String cls : repaired.fatal()) {
+                deadMixins.add(cls);
+                rpt.strippedMixins.add(tag + shortName(cls) + " -- " + repaired.fatalWhy().get(cls));
+            }
+        }
         for (MixinTriage.MixinInfo mx : triage.mixins()) {
-            if (mx.vanilla() && mx.applyFatal()) {
+            if (mx.vanilla() && mx.applyFatal(repaired != null)) {
                 deadMixins.add(mx.className());
                 String lb = mx.loadBearing() ? " [load-bearing! may be unstable]" : "";
                 rpt.strippedMixins.add(tag + shortName(mx.className()) + lb + " -- " + String.join("; ", mx.broken()));
@@ -557,6 +572,23 @@ public final class JarProcessor {
                 // apply); an informational note, not an unaccounted residual
                 rpt.notes.add(tag + "kept L2 mixin (target sig changed@" + mx.worst().boundary()
                     + "): " + shortName(mx.className()));
+            }
+        }
+        // a mixin extending a stripped mixin cannot apply either ("super class
+        // ... was not found in the hierarchy of target"): strip the subtree too
+        boolean grew = true;
+        while (grew) {
+            grew = false;
+            for (String cls : triage.configOfClass().keySet()) {
+                if (deadMixins.contains(cls)) continue;
+                for (String sup = jarSuper.get(cls); sup != null; sup = jarSuper.get(sup)) {
+                    if (deadMixins.contains(sup)) {
+                        deadMixins.add(cls);
+                        rpt.strippedMixins.add(tag + shortName(cls) + " -- extends stripped mixin " + shortName(sup));
+                        grew = true;
+                        break;
+                    }
+                }
             }
         }
         stripConfigs(entries, triage, deadMixins);

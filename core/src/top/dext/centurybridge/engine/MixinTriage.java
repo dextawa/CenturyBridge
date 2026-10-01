@@ -47,7 +47,19 @@ public final class MixinTriage {
          * explicit descriptor the changed method no longer matches.
          */
         public boolean applyFatal() {
+            return applyFatal(false);
+        }
+
+        /**
+         * @param injectorsHandled MixinRepair ran against real bodies and switched every
+         *        injector with a dead target or anchor to require=0 -- those entries no
+         *        longer take the whole mixin (and its working injectors) down with them
+         */
+        public boolean applyFatal(boolean injectorsHandled) {
             for (String b : broken) {
+                if (injectorsHandled && (b.contains("inject-target") || b.contains(": at ") || b.contains("at-owner"))) {
+                    continue;
+                }
                 if (b.startsWith("L3")) {
                     return true;
                 }

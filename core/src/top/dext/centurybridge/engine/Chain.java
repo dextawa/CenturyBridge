@@ -279,6 +279,9 @@ public final class Chain {
     }
 
     /** true unless the owner is a known target-stub class that does NOT declare name(desc). */
+    /** injector anchor check/repair against real target bodies; null = unavailable */
+    public MixinRepair mixinRepair;
+
     public boolean declaredOnTarget(String owner, String name, String desc) {
         java.util.Set<String> decl = targetDecls.get(owner);
         if (decl == null) {

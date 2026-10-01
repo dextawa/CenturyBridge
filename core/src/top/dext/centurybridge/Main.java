@@ -46,6 +46,7 @@ public final class Main {
             case "wiring-check" -> top.dext.centurybridge.data.WiringCheck.run(
                 Path.of(args[1]), Path.of(args[2]),
                 args.length > 3 && !args[3].isEmpty() ? Path.of(args[3]) : null);
+            case "mixin-anchors" -> top.dext.centurybridge.engine.MixinRepair.audit(args);
             case "link-check" -> top.dext.centurybridge.data.LinkCheck.run(args);
             case "audit" -> top.dext.centurybridge.data.SymbolAudit.run(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]));
@@ -125,6 +126,25 @@ public final class Main {
             chain.loadTargetCtors(targetStub, crossesWall ? renameTable : null);
             System.out.println("target constructors: " + chain.targetCtors.size() + " owners from " + targetStub.getFileName());
         }
+        // real method bodies for injector anchors (the stub has none). Intermediary
+        // era only: past the wall the refmaps are renamed later in the pipeline.
+        if (!crossesWall) {
+            Path codeJar = System.getenv("CB_TARGET_CODE") != null ? Path.of(System.getenv("CB_TARGET_CODE")) : null;
+            if (codeJar == null) {
+                Path rj = Path.of("data/runtime/client-" + args[3] + "/.fabric/remappedJars");
+                if (Files.isDirectory(rj)) {
+                    try (var s = Files.walk(rj)) {
+                        codeJar = s.filter(f -> f.getFileName().toString().equals("client-intermediary.jar")).findFirst().orElse(null);
+                    }
+                }
+            }
+            if (codeJar != null && Files.exists(codeJar)) {
+                chain.mixinRepair = new top.dext.centurybridge.engine.MixinRepair(codeJar);
+                System.out.println("mixin anchors: checked against " + codeJar);
+            } else {
+                System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
+            }
+        }
         java.util.Map<String, Integer> verdicts = new java.util.TreeMap<>();
         int engineErrors = 0;
         int unaccounted = 0;
@@ -147,6 +167,7 @@ public final class Main {
                 r.brokenHierarchy.forEach(s -> lines.add("- !! cannot load: " + s));
                 r.notes.forEach(n -> lines.add("- " + n));
                 r.strippedMixins.forEach(s -> lines.add("- stripped mixin: " + s));
+                r.disabledInjectors.forEach(s -> lines.add("- disabled injector: " + s));
                 r.issues.forEach(s -> lines.add("- " + s));
                 r.clientIssues.forEach(s -> lines.add("- " + s));
                 if (r.datagenSkipped > 0) {
