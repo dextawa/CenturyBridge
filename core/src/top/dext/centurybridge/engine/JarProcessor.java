@@ -597,6 +597,19 @@ public final class JarProcessor {
                 String nestedTag = jarTag + "_" + name.substring("META-INF/jars/".length())
                     .replaceAll("\\.jar$", "").replaceAll("[^A-Za-z0-9]", "_");
                 processEntries(nested, chain, rpt, issues, tag + "(bundled) ", nestedTag);
+                // a bundled mod is a mod to the loader: its own minecraft range
+                // still says the source version, and dependency resolution
+                // refuses the whole pack before a class loads (293 nested mods
+                // across 26 corpus jars at 1.21.4). Throwaway report: the outer
+                // jar keeps its mod id.
+                byte[] nfmj = nested.get("fabric.mod.json");
+                if (nfmj != null) {
+                    try {
+                        nested.put("fabric.mod.json", patchFmj(nfmj, chain, new Report()));
+                    } catch (RuntimeException ex) {
+                        rpt.notes.add("bundled " + name + ": fabric.mod.json unparseable, left as is");
+                    }
+                }
                 e.setValue(writeJar(nested));
             }
         }

@@ -68,6 +68,18 @@ if cfgs:
               f"{ghosts[:5]}{'...' if len(ghosts) > 5 else ''}")
         sys.exit(1)
 
+    # The other direction: a @Mixin source the config does not list compiles,
+    # passes mixin-check and satisfies the covers audit -- and never loads. 313
+    # of 531 bridges in the 1.21.4 tree sat like that, all audited "covered".
+    listed = {m for side in ("mixins", "client", "server") for m in cfg.get(side, [])}
+    unlisted = sorted(f[:-5] for f in os.listdir(srcdir)
+                      if f.endswith(".java") and f[:-5] in present and f[:-5] not in listed
+                      and "@Mixin" in open(os.path.join(srcdir, f), encoding="utf-8").read())
+    if unlisted:
+        print(f"{len(unlisted)} @Mixin sources not listed in the mixin config (never applied): "
+              f"{unlisted[:5]}{'...' if len(unlisted) > 5 else ''} -- core/tools/sync_mixin_config.py")
+        sys.exit(1)
+
     # A class mixin whose target is an interface fails at PREPARE and takes the
     # whole game with it, so refuse to package one.
     import re, struct, zipfile
