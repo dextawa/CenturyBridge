@@ -66,7 +66,7 @@ java -cp "core/build/classes;$LIBS" BytecodeVerify <dirOfConvertedJars>
 **Independent link check — the ground truth for "is it actually bridged".** The converter's audit is self-graded (covered/redirect = "the wiring table says so"; `Chain.resolveMember` only examines intermediary names). `link-check` reads none of the engine's tables: it puts converted jars on the real target runtime (game jar + libraries + fabric-api incl. jar-in-jar + the built CB jar + JDK), folds only mixins that a config actually lists, and resolves every reference JVM-style. Findings are bucketed CLAIMED (engine says fixed, site still dangles) / BLIND (engine never saw it) / KNOWN (reported/ledgered — still a hard crash unless tombstoned) / EXTDEP (another mod's API). Kinds include ORPHAN (mod override that no longer overrides anything — silently dead), ABSTRACT, LAMBDA (SAM drift → AbstractMethodError), ICCE (static/interface mismatch).
 
 ```bash
-java -cp "core/build/classes;$LIBS" top.dext.centurybridge.Main link-check <outDir> <conv>/full-audit.tsv <convDir> --     build/centurybridge-0.3.0+<ver>.jar data/jars/client-<ver>-intermediary.jar data/runtime/client-<ver>/mods/fabric-api-*.jar data/runtime/client-<ver>/libraries
+java -cp "core/build/classes;$LIBS" top.dext.centurybridge.Main link-check <outDir> <conv>/full-audit.tsv <convDir> -- \n    build/centurybridge-0.3.0+<ver>.jar data/jars/client-<ver>-intermediary.jar data/runtime/client-<ver>/mods/fabric-api-*.jar data/runtime/client-<ver>/libraries
 ```
 
 Controls that calibrate it: native fabric-api on its own runtime → 0 findings; raw 1.20.1 corpus on native 1.20.1 → ~140 platform findings (the noise floor). Never report a corridor as bridged/closed on the engine's own counts alone.
