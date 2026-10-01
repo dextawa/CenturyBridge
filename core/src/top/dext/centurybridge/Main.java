@@ -46,6 +46,7 @@ public final class Main {
             case "wiring-check" -> top.dext.centurybridge.data.WiringCheck.run(
                 Path.of(args[1]), Path.of(args[2]),
                 args.length > 3 && !args[3].isEmpty() ? Path.of(args[3]) : null);
+            case "link-check" -> top.dext.centurybridge.data.LinkCheck.run(args);
             case "audit" -> top.dext.centurybridge.data.SymbolAudit.run(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]));
             default -> usage();
@@ -207,6 +208,7 @@ public final class Main {
               remap-mojang <inter-to-mojang.tsv> <in.jar> <out.jar>
               mixin-check <compiledShimDir> <targetJar> [<shims.json> [<inter-to-mojang.tsv>]]
               wiring-check <compiledShimDir> <shims.json> [<inter-to-mojang.tsv>]
-              stub-dump <stubJar> <out.txt>""");
+              stub-dump <stubJar> <out.txt>
+              link-check <outDir> <full-audit.tsv|-> <convertedJar|dir...> -- <classpathJar|dir...>""");
     }
 }
