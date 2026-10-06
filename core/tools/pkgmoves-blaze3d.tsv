@@ -1,0 +1,25 @@
+# Hand-verified net.minecraft -> com.mojang.blaze3d class migrations that
+# compose_mojang.py cannot derive on its own.
+#
+# WHY compose_mojang misses these: it composes the 1.21.11 proguard log with
+# 1.21.11 intermediary. A class that Mojang moved OUT of net.minecraft INTO
+# com.mojang.blaze3d at or before 1.21.11 is, at 1.21.11, no longer an
+# intermediary (net.minecraft) class -- so there is no class_NNN -> blaze3d row
+# to compose. But a 1.20.1-era corpus mod still carries the OLD intermediary
+# token (class_NNN) in its bytecode, and the converter has no rule to send it
+# to the blaze3d name that 26.2 actually ships. Result: the ref keeps the old
+# token, which exists nowhere on 26.2 -> link-check CLAIMED / BLIND, and SAM /
+# facade descriptors that mention the type silently fail to match.
+#
+# Each row verified against data/jars/client-1.20.1-intermediary.jar (the token
+# IS this type at 1.20.1, by member shape) AND data/jars/client-26.2.jar (the
+# target name exists there). Appended to data/mappings/inter-to-mojang-1.21.11.tsv
+# by pkgmoves.py's recipe step 6 (cat this onto the deployed table).
+#
+# TODO root-fix: teach pkgmoves.py to match across the net.minecraft ->
+# com.mojang.blaze3d boundary (its simple-name + member-shape matcher currently
+# only ranges over net.minecraft candidates), so this hand list is not needed.
+#
+# kind	intermediary	mojang
+C	net/minecraft/class_293	com/mojang/blaze3d/vertex/VertexFormat
+C	net/minecraft/class_296	com/mojang/blaze3d/vertex/VertexFormatElement

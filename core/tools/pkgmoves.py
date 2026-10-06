@@ -48,6 +48,12 @@ Recipe for regenerating the wall (java steps are one process at a time):
      link-check BLIND CLASS) and SAM facades silently fail to match (CLAIMED
      LAMBDA). cp -- do not merge:
        cp core/out-wall/inter-to-mojang-1.21.11.tsv data/mappings/inter-to-mojang-1.21.11.tsv
+       grep -v '^#' core/tools/pkgmoves-blaze3d.tsv >> data/mappings/inter-to-mojang-1.21.11.tsv
+     The pkgmoves-blaze3d.tsv append carries hand-verified
+     net.minecraft -> com.mojang.blaze3d class moves that compose_mojang cannot
+     see (a class moved into blaze3d by 1.21.11 is no longer intermediary there,
+     so there is no row to compose, yet 1.20.1-era mod bytecode still spells the
+     old class_NNN token). See that file's header.
   The 1.21.11 -> 26.1 segment is measured with the 1.21.11-named table (26.1
   still spells the old packages); only the 26.2-targeted table goes into
   data/mappings/ for the converter, the build gates and the 26.2 segment.
