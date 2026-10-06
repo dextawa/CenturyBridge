@@ -592,6 +592,7 @@ public final class JarProcessor {
             }
         }
         stripConfigs(entries, triage, deadMixins);
+        markConfigsOptional(entries, triage);
 
         // tombstone stub class must be unique per jar layer (all layers share the runtime classpath)
         String tombClass = "centurybridge/gen/Tombstones_" + jarTag
@@ -750,6 +751,29 @@ public final class JarProcessor {
         return entries;
     }
 
+    /**
+     * Runtime safety net under the static repair: a converted mod's mixin config
+     * becomes "required": false, Mixin's own switch for "log this config's errors
+     * and carry on". What static analysis could not foresee then skips one mixin
+     * instead of killing the game -- and CenturyBridge's error handler writes
+     * every such failure to logs/centurybridge-mixin.log, so it stays KNOWN.
+     */
+    private static void markConfigsOptional(Map<String, byte[]> entries, MixinTriage.Result triage) {
+        for (String cfgName : new HashSet<>(triage.configOfClass().values())) {
+            byte[] data = entries.get(cfgName);
+            if (data == null) {
+                continue;
+            }
+            try {
+                JsonObject cfg = GSON.fromJson(new String(data, StandardCharsets.UTF_8), JsonObject.class);
+                cfg.addProperty("required", false);
+                entries.put(cfgName, GSON.toJson(cfg).getBytes(StandardCharsets.UTF_8));
+            } catch (RuntimeException ex) {
+                // unparseable config: left as is (triage could not read it either)
+            }
+        }
+    }
+
     private static void stripConfigs(Map<String, byte[]> entries, MixinTriage.Result triage, Set<String> dead) {
         if (dead.isEmpty()) {
             return;
@@ -816,6 +840,12 @@ public final class JarProcessor {
         // dead-class facade renames touch descriptors/signatures everywhere, so the
         // trigger is a raw byte scan rather than per-ref analysis
         boolean needClassRename = false;
+        // super/implements-only rename: set when this class's superName or an
+        // interface is a superRenames key. Only the hierarchy and super-invokes
+        // are rewritten to the facade; every other reference to the dead type
+        // is left on the real type (avoids the type-split a global classRename
+        // causes when the same class also reads a vanilla constant of that type).
+        final boolean[] needSuperRename = {false};
         // Orphaned override: 1.20.5 split Block.use -- the old 6-arg
         // method_9534 stops being called by anyone, silently. Detected here,
         // reconnected in the rewrite pass by synthesizing the new-signature
@@ -860,6 +890,18 @@ public final class JarProcessor {
                 classAccess[0] = acc;
                 superOf[0] = superName;
                 checkClass(superName);
+                if (!chain.superRenames.isEmpty()) {
+                    if (superName != null && chain.superRenames.containsKey(superName)) {
+                        needSuperRename[0] = true;
+                    }
+                    if (ifaces != null) {
+                        for (String i : ifaces) {
+                            if (chain.superRenames.containsKey(i)) {
+                                needSuperRename[0] = true;
+                            }
+                        }
+                    }
+                }
                 // the hierarchy itself must load: a superclass that is gone, final
                 // (26.2 Enchantment is a final record) or an interface on the target,
                 // or an implemented type that is gone / no longer an interface, is
@@ -867,7 +909,8 @@ public final class JarProcessor {
                 // mod's verdict must say so.
                 if (superName != null && superName.startsWith("net/minecraft/")) {
                     String why = chain.hierarchyBreak(superName, false);
-                    if (why != null && !chain.sideOf(superName).equals("datagen")) {
+                    if (why != null && !chain.sideOf(superName).equals("datagen")
+                            && !chain.superRenames.containsKey(superName)) {
                         brokenSink.add(tag + name + " extends " + superName + " (" + why + ")"
                             + (chain.sideOf(superName).equals("client") ? " [client]" : ""));
                     }
@@ -879,7 +922,8 @@ public final class JarProcessor {
                         checkClass(i);
                         if (i.startsWith("net/minecraft/")) {
                             String why = chain.hierarchyBreak(i, true);
-                            if (why != null && !chain.sideOf(i).equals("datagen")) {
+                            if (why != null && !chain.sideOf(i).equals("datagen")
+                                    && !chain.superRenames.containsKey(i)) {
                                 brokenSink.add(tag + name + " implements " + i + " (" + why + ")"
                                     + (chain.sideOf(i).equals("client") ? " [client]" : ""));
                             }
@@ -1379,6 +1423,7 @@ public final class JarProcessor {
                 && fldGetters.isEmpty() && instFldGetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
+                && !needSuperRename[0]
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
                 && declaredOldOverrides.stream().allMatch(declaredNewOverrides::contains)) {
@@ -1458,6 +1503,52 @@ public final class JarProcessor {
             ? new org.objectweb.asm.commons.ClassRemapper(cw,
                 new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames))
             : cw;
+        // super/implements-only rename layer: rewrites the hierarchy declaration
+        // and super-invocations to the facade, leaving every other reference to
+        // the dead type on the real type. Sits outside the classRename remapper
+        // so the two never fight over the same owner.
+        if (needSuperRename[0]) {
+            final ClassVisitor downstream = sink;
+            sink = new ClassVisitor(Opcodes.ASM9, downstream) {
+                @Override
+                public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
+                    String sn = superName != null ? chain.superRenames.getOrDefault(superName, superName) : superName;
+                    String[] ifs = ifaces;
+                    if (ifaces != null) {
+                        ifs = new String[ifaces.length];
+                        for (int i = 0; i < ifaces.length; i++) {
+                            ifs[i] = chain.superRenames.getOrDefault(ifaces[i], ifaces[i]);
+                        }
+                    }
+                    // the generic signature still names the old super/interfaces;
+                    // drop it rather than emit one that disagrees with the facade
+                    // (the JVM does not need it, and a stale signature is a verify risk)
+                    super.visit(ver, acc, name, null, sn, ifs);
+                }
+
+                @Override
+                public MethodVisitor visitMethod(int a, String mn, String md, String ms, String[] ex) {
+                    MethodVisitor mv = super.visitMethod(a, mn, md, ms, ex);
+                    if (mv == null) {
+                        return null;
+                    }
+                    return new MethodVisitor(Opcodes.ASM9, mv) {
+                        @Override
+                        public void visitMethodInsn(int op, String owner, String n, String d, boolean itf) {
+                            // super-invocations (INVOKESPECIAL) to the renamed type
+                            // must follow the hierarchy to the facade; a facade
+                            // mirroring the method surface answers them. Other
+                            // opcodes keep the real owner (no type-split).
+                            if (op == Opcodes.INVOKESPECIAL && chain.superRenames.containsKey(owner)) {
+                                super.visitMethodInsn(op, chain.superRenames.get(owner), n, d, itf);
+                            } else {
+                                super.visitMethodInsn(op, owner, n, d, itf);
+                            }
+                        }
+                    };
+                }
+            };
+        }
         cr.accept(new ClassVisitor(Opcodes.ASM9, sink) {
             @Override
             public void visitEnd() {

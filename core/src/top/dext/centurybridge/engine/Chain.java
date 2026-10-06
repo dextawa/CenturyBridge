@@ -54,6 +54,18 @@ public final class Chain {
     public final java.util.Map<String, String> fieldGetters = new java.util.HashMap<>();
     /** dead vanilla classes renamed to facade classes shipped in the runtime bridge */
     public final java.util.Map<String, String> classRenames = new java.util.HashMap<>();
+    /**
+     * super/implements-only renames: a mod class that extends/implements the key
+     * (a vanilla type now final/record, or an interface that became a class) has
+     * ONLY its superName/interfaces and its super-invocations (INVOKESPECIAL to
+     * the old type) rewritten to the value (a CB facade). Unlike classRenames,
+     * every OTHER reference to the key in the class is left untouched -- so a
+     * class that both subclasses the dead type AND reads a vanilla constant of
+     * that type (the type-split that defeats a global classRename) keeps the
+     * constant access on the real type while its own hierarchy points at the
+     * facade. The facade must mirror the full method surface the subclass calls.
+     */
+    public final java.util.Map<String, String> superRenames = new java.util.HashMap<>();
     /** instance fields renamed in place (resolution reaches relocated/renamed fields via hierarchy) */
     public final java.util.Map<String, String> fieldRenames = new java.util.HashMap<>();
     /** methods renamed in place (relocated-to-super methods resolve via hierarchy) */
@@ -873,6 +885,12 @@ public final class Chain {
                 var cr = root.getAsJsonObject("classRenames");
                 for (String k : cr.keySet()) {
                     c.classRenames.put(k, cr.get(k).getAsString());
+                }
+            }
+            if (root.has("superRenames")) {
+                var sr = root.getAsJsonObject("superRenames");
+                for (String k : sr.keySet()) {
+                    c.superRenames.put(k, sr.get(k).getAsString());
                 }
             }
             if (root.has("fieldRenames")) {
