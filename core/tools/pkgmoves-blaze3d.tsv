@@ -23,3 +23,41 @@
 # kind	intermediary	mojang
 C	net/minecraft/class_293	com/mojang/blaze3d/vertex/VertexFormat
 C	net/minecraft/class_296	com/mojang/blaze3d/vertex/VertexFormatElement
+# GlStateManager: platform (1.20.1) -> opengl (26.2). compose uses 1.21.11
+# where it is already opengl, so the platform-named key a 1.20.1 mod carries
+# has no row. Outer class + nested state classes (BlendState/BooleanState/...).
+C	com/mojang/blaze3d/platform/GlStateManager	com/mojang/blaze3d/opengl/GlStateManager
+C	com/mojang/blaze3d/platform/GlStateManager$class_1017	com/mojang/blaze3d/opengl/GlStateManager$BlendState
+C	com/mojang/blaze3d/platform/GlStateManager$class_1018	com/mojang/blaze3d/opengl/GlStateManager$BooleanState
+M	com/mojang/blaze3d/platform/GlStateManager$class_1018.method_4469	com/mojang/blaze3d/opengl/GlStateManager$BooleanState.disable
+M	com/mojang/blaze3d/platform/GlStateManager$class_1018.method_4471	com/mojang/blaze3d/opengl/GlStateManager$BooleanState.enable
+M	com/mojang/blaze3d/platform/GlStateManager$class_1018.method_4470	com/mojang/blaze3d/opengl/GlStateManager$BooleanState.setEnabled
+C	com/mojang/blaze3d/platform/GlStateManager$class_1021	com/mojang/blaze3d/opengl/GlStateManager$ColorLogicState
+C	com/mojang/blaze3d/platform/GlStateManager$class_1022	com/mojang/blaze3d/opengl/GlStateManager$ColorMask
+C	com/mojang/blaze3d/platform/GlStateManager$class_1025	com/mojang/blaze3d/opengl/GlStateManager$CullState
+C	com/mojang/blaze3d/platform/GlStateManager$class_1026	com/mojang/blaze3d/opengl/GlStateManager$DepthState
+C	com/mojang/blaze3d/platform/GlStateManager$class_1031	com/mojang/blaze3d/opengl/GlStateManager$PolygonOffsetState
+C	com/mojang/blaze3d/platform/GlStateManager$class_5518	com/mojang/blaze3d/opengl/GlStateManager$ScissorState
+C	com/mojang/blaze3d/platform/GlStateManager$class_1039	com/mojang/blaze3d/opengl/GlStateManager$TextureState
+F	com/mojang/blaze3d/platform/GlStateManager$class_1017.field_5045	com/mojang/blaze3d/opengl/GlStateManager$BlendState.mode
+F	com/mojang/blaze3d/platform/GlStateManager$class_1017.field_5049	com/mojang/blaze3d/opengl/GlStateManager$BlendState.srcRgb
+F	com/mojang/blaze3d/platform/GlStateManager$class_1017.field_5048	com/mojang/blaze3d/opengl/GlStateManager$BlendState.dstRgb
+F	com/mojang/blaze3d/platform/GlStateManager$class_1017.field_5047	com/mojang/blaze3d/opengl/GlStateManager$BlendState.srcAlpha
+F	com/mojang/blaze3d/platform/GlStateManager$class_1017.field_5046	com/mojang/blaze3d/opengl/GlStateManager$BlendState.dstAlpha
+F	com/mojang/blaze3d/platform/GlStateManager$class_1018.field_5050	com/mojang/blaze3d/opengl/GlStateManager$BooleanState.state
+F	com/mojang/blaze3d/platform/GlStateManager$class_1018.field_5051	com/mojang/blaze3d/opengl/GlStateManager$BooleanState.enabled
+F	com/mojang/blaze3d/platform/GlStateManager$class_1021.field_5058	com/mojang/blaze3d/opengl/GlStateManager$ColorLogicState.enable
+F	com/mojang/blaze3d/platform/GlStateManager$class_1021.field_5059	com/mojang/blaze3d/opengl/GlStateManager$ColorLogicState.op
+F	com/mojang/blaze3d/platform/GlStateManager$class_1022.field_5063	com/mojang/blaze3d/opengl/GlStateManager$ColorMask.red
+F	com/mojang/blaze3d/platform/GlStateManager$class_1022.field_5062	com/mojang/blaze3d/opengl/GlStateManager$ColorMask.green
+F	com/mojang/blaze3d/platform/GlStateManager$class_1022.field_5061	com/mojang/blaze3d/opengl/GlStateManager$ColorMask.blue
+F	com/mojang/blaze3d/platform/GlStateManager$class_1022.field_5060	com/mojang/blaze3d/opengl/GlStateManager$ColorMask.alpha
+F	com/mojang/blaze3d/platform/GlStateManager$class_1025.field_5072	com/mojang/blaze3d/opengl/GlStateManager$CullState.enable
+F	com/mojang/blaze3d/platform/GlStateManager$class_1026.field_5074	com/mojang/blaze3d/opengl/GlStateManager$DepthState.mode
+F	com/mojang/blaze3d/platform/GlStateManager$class_1026.field_5076	com/mojang/blaze3d/opengl/GlStateManager$DepthState.mask
+F	com/mojang/blaze3d/platform/GlStateManager$class_1026.field_5075	com/mojang/blaze3d/opengl/GlStateManager$DepthState.func
+F	com/mojang/blaze3d/platform/GlStateManager$class_1031.field_5123	com/mojang/blaze3d/opengl/GlStateManager$PolygonOffsetState.fill
+F	com/mojang/blaze3d/platform/GlStateManager$class_1031.field_5124	com/mojang/blaze3d/opengl/GlStateManager$PolygonOffsetState.factor
+F	com/mojang/blaze3d/platform/GlStateManager$class_1031.field_5122	com/mojang/blaze3d/opengl/GlStateManager$PolygonOffsetState.units
+F	com/mojang/blaze3d/platform/GlStateManager$class_5518.field_26840	com/mojang/blaze3d/opengl/GlStateManager$ScissorState.mode
+F	com/mojang/blaze3d/platform/GlStateManager$class_1039.field_5167	com/mojang/blaze3d/opengl/GlStateManager$TextureState.binding
