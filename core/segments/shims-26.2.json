@@ -1214,7 +1214,8 @@
   "net/minecraft/class_5151": "top/dext/centurybridge/facade/v26_2/class_5151",
   "net/minecraft/class_4573": "top/dext/centurybridge/facade/v26_2/class_4573",
   "net/minecraft/class_1432": "top/dext/centurybridge/facade/v26_2/class_1432",
-  "net/minecraft/class_7988": "top/dext/centurybridge/facade/v26_2/class_7988"
+  "net/minecraft/class_7988": "top/dext/centurybridge/facade/v26_2/class_7988",
+  "net/minecraft/class_1865": "top/dext/centurybridge/facade/v26_2/class_1865"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
