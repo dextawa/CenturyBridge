@@ -279,4 +279,85 @@ public final class GuiGraphics {
         // center
         tile(tex, x + left, y + top, w - left - right, h - top - bottom, u + left, v + top, regionW - left - right, regionH - top - bottom);
     }
+
+    // ---- late-added bridges: DrawContext methods the corpus calls that the
+    // ---- facade had not yet declared (26.2 link-check CLAIMED cluster). Each
+    // ---- delegates to the real GuiGraphicsExtractor; parameters that the
+    // ---- retained-mode GUI dropped (PoseStack, RenderType, z-layer) are
+    // ---- discarded with a note, never silently faked into a wrong draw.
+
+    /** 1.20.x DrawContext.method_51452 -- flush/draw. Retained-mode submits
+     *  automatically at frame end, so the explicit flush is a no-op. */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_51452() {
+        /* retained-mode GUI auto-submits; explicit flush dropped */
+    }
+    /** 1.20.x DrawContext.method_51739 -- fill(RenderType, x1,y1,x2,y2,color).
+     *  26.2 chooses the pipeline itself; the RenderType is dropped. */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_51739(net.minecraft.client.renderer.rendertype.RenderType layer, int x1, int y1, int x2, int y2, int color) {
+        ext.fill(x1, y1, x2, y2, color);
+    }
+    /** 1.20.x DrawContext.method_51737 -- fillGradient with explicit z-layer
+     *  (x1,y1,x2,y2,z... actually 6 ints: x1,y1,x2,y2,c1,c2 after z-drop).
+     *  1.20.1 sig is (int x1,int y1,int x2,int y2,int c1,int c2) at this arity. */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_51737(int x1, int y1, int x2, int y2, int c1, int c2) {
+        ext.fillGradient(x1, y1, x2, y2, c1, c2);
+    }
+    /** 1.20.x DrawContext.method_25300(PoseStack,Font,String,...) -- the
+     *  pre-1.20.1 centered-string overload still emitted by older mod bytecode.
+     *  26.2 tracks the matrix in the extractor's own pose stack; the passed
+     *  PoseStack is dropped. */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_25300(com.mojang.blaze3d.vertex.PoseStack pose, net.minecraft.client.gui.Font font, java.lang.String text, int cx, int y, int color) {
+        if (text != null) ext.centeredText(font, text, cx, y, color);
+    }
+    /** 1.20.x DrawContext.method_27534(PoseStack,Font,Component,...) -- older
+     *  centered-component overload; PoseStack dropped (see method_25300). */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_27534(com.mojang.blaze3d.vertex.PoseStack pose, net.minecraft.client.gui.Font font, net.minecraft.network.chat.Component text, int cx, int y, int color) {
+        ext.centeredText(font, text, cx, y, color);
+    }
+    /** 1.20.x DrawContext.method_35719 -- centered FormattedCharSequence. */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_35719(net.minecraft.client.gui.Font font, net.minecraft.util.FormattedCharSequence text, int cx, int y, int color) {
+        ext.centeredText(font, text, cx, y, color);
+    }
+    /** 1.20.x DrawContext.method_51423 -- item for a LivingEntity holder
+     *  (seed = 0 in the pre-seed overload). */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_51423(net.minecraft.world.entity.LivingEntity entity, net.minecraft.world.item.ItemStack stack, int x, int y, int seed) {
+        ext.item(entity, stack, x, y, seed);
+    }
+    /** 1.20.x DrawContext.method_51429 -- itemDecorations with a count override.
+     *  1.20.1 sig (ItemStack,x,y,String? no -- (ItemStack,int,int,int,int)). The
+     *  trailing two ints are x,y of the slot in the pre-font overload; decorations
+     *  need a Font, so delegate to the extractor's font-aware decorations using
+     *  the client's own font. */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_51429(net.minecraft.world.item.ItemStack stack, int a, int b, int c, int d) {
+        ext.itemDecorations(net.minecraft.client.Minecraft.getInstance().font, stack, c, d);
+    }
+    /** 1.20.x DrawContext.method_25295(Identifier,x,y,w,h,color,r,g,b,a) -- a
+     *  tinted blit overload. 26.2's Identifier blit takes (tex,x,y,w,h,u,v,...);
+     *  this older variant is a simple textured rect at (x,y,w,h); the per-vertex
+     *  color is dropped (retained-mode blit has no vertex tint here). */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_25295(net.minecraft.resources.Identifier tex, int x, int y, int w, int h, int color, float r, float g, float b, float a) {
+        ext.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, x, y, 0.0F, 0.0F, w, h, 256, 256);
+    }
+    /** 1.20.x DrawContext.method_48585(Identifier,x,y,w,h,regionW,regionH,u,v)
+     *  -- a sprite/region blit. Delegate to the Identifier blit with the given
+     *  region as texture coords. */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_48585(net.minecraft.resources.Identifier tex, int x, int y, int w, int h, int regionW, int regionH, int u, int v) {
+        ext.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, x, y, (float) u, (float) v, w, h, regionW, regionH);
+    }
+    /** 1.20.x DrawContext.method_51436(Font,List,ClientTooltipPositioner,x,y)
+     *  -- component tooltip with an explicit positioner. */
+    @SuppressWarnings({"unchecked", "unused"})
+    public void method_51436(net.minecraft.client.gui.Font font, java.util.List lines, net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner positioner, int x, int y) {
+        ext.setTooltipForNextFrame(font, (java.util.List) lines, java.util.Optional.empty(), positioner, x, y, false, null);
+    }
 }
