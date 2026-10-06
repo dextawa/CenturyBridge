@@ -1207,7 +1207,8 @@
   "net/fabricmc/fabric/api/registry/FabricBrewingRecipeRegistry": "top/dext/centurybridge/compat/fapi/CbFabricBrewingRecipeRegistry",
   "net/fabricmc/fabric/api/event/client/player/ClientPickBlockGatherCallback": "top/dext/centurybridge/compat/fapi/CbClientPickBlockGatherCallback",
   "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$AfterRender": "top/dext/centurybridge/compat/fapi/CbScreenAfterRender",
-  "net/fabricmc/fabric/api/transfer/v1/item/InventoryStorage": "net/fabricmc/fabric/api/transfer/v1/item/ContainerStorage"
+  "net/fabricmc/fabric/api/transfer/v1/item/InventoryStorage": "net/fabricmc/fabric/api/transfer/v1/item/ContainerStorage",
+  "net/minecraft/class_3545": "top/dext/centurybridge/facade/v26_2/class_3545"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
