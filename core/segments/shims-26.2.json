@@ -1217,7 +1217,8 @@
   "net/minecraft/class_7988": "top/dext/centurybridge/facade/v26_2/class_7988",
   "net/minecraft/class_1865": "top/dext/centurybridge/facade/v26_2/class_1865",
   "net/minecraft/class_1886": "top/dext/centurybridge/facade/v26_2/class_1886",
-  "net/minecraft/class_1887$class_1888": "top/dext/centurybridge/facade/v26_2/class_1888"
+  "net/minecraft/class_1887$class_1888": "top/dext/centurybridge/facade/v26_2/class_1888",
+  "net/minecraft/class_1738$class_8051": "top/dext/centurybridge/facade/v26_2/class_8051"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -4220,6 +4221,7 @@
   "net/minecraft/class_1766": "top/dext/centurybridge/facade/v26_2/class_1766",
   "net/minecraft/class_1829": "top/dext/centurybridge/facade/v26_2/class_1829",
   "net/minecraft/class_1810": "top/dext/centurybridge/facade/v26_2/class_1810",
-  "net/minecraft/class_1794": "top/dext/centurybridge/facade/v26_2/class_1794"
+  "net/minecraft/class_1794": "top/dext/centurybridge/facade/v26_2/class_1794",
+  "net/minecraft/class_1738": "top/dext/centurybridge/facade/v26_2/class_1738"
  }
 }
