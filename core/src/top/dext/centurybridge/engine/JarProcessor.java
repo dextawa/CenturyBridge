@@ -910,7 +910,8 @@ public final class JarProcessor {
                 if (superName != null && superName.startsWith("net/minecraft/")) {
                     String why = chain.hierarchyBreak(superName, false);
                     if (why != null && !chain.sideOf(superName).equals("datagen")
-                            && !chain.superRenames.containsKey(superName)) {
+                            && !chain.superRenames.containsKey(superName)
+                            && !name.contains("gametest") && !name.contains("/test/")) {
                         brokenSink.add(tag + name + " extends " + superName + " (" + why + ")"
                             + (chain.sideOf(superName).equals("client") ? " [client]" : ""));
                     }
@@ -923,7 +924,8 @@ public final class JarProcessor {
                         if (i.startsWith("net/minecraft/")) {
                             String why = chain.hierarchyBreak(i, true);
                             if (why != null && !chain.sideOf(i).equals("datagen")
-                                    && !chain.superRenames.containsKey(i)) {
+                                    && !chain.superRenames.containsKey(i)
+                                    && !name.contains("gametest") && !name.contains("/test/")) {
                                 brokenSink.add(tag + name + " implements " + i + " (" + why + ")"
                                     + (chain.sideOf(i).equals("client") ? " [client]" : ""));
                             }
