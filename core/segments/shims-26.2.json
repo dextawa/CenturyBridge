@@ -4215,6 +4215,11 @@
  },
  "superRenames": {
   "net/minecraft/class_1887": "top/dext/centurybridge/facade/v26_2/class_1887",
-  "net/minecraft/class_3491": "top/dext/centurybridge/facade/v26_2/class_3491"
+  "net/minecraft/class_3491": "top/dext/centurybridge/facade/v26_2/class_3491",
+  "net/minecraft/class_1831": "top/dext/centurybridge/facade/v26_2/class_1831",
+  "net/minecraft/class_1766": "top/dext/centurybridge/facade/v26_2/class_1766",
+  "net/minecraft/class_1829": "top/dext/centurybridge/facade/v26_2/class_1829",
+  "net/minecraft/class_1810": "top/dext/centurybridge/facade/v26_2/class_1810",
+  "net/minecraft/class_1794": "top/dext/centurybridge/facade/v26_2/class_1794"
  }
 }
