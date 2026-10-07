@@ -657,6 +657,15 @@ public final class JarProcessor {
                 if (rew != null) {
                     e.setValue(rew);
                 }
+            } else if (name.endsWith(".json") && name.contains("/lang/")
+                    && name.startsWith("assets/") && e.getValue().length == 0) {
+                // A mod shipping a zero-byte lang json loaded fine on older MC
+                // (the parser tolerated empty), but 26.2's Language.loadFromJson
+                // NPEs on null entries and aborts world load. Materialize an
+                // empty object so the resource parses to zero translations --
+                // the faithful equivalent of "this lang file adds nothing".
+                e.setValue("{}".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                rpt.notes.add(tag + "empty lang json " + name + " -> {} (26.2 parser rejects empty)");
             }
         }
         if (!reg.stubs.isEmpty()) {
