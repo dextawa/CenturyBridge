@@ -106,9 +106,12 @@ public final class Statics {
     }
 
     
-    /** ANY-constant family, removed with the predicate rework; rebuilt as match-alls. */
-    public static final net.minecraft.advancements.predicates.ItemPredicate field_9640 =
-        net.minecraft.advancements.predicates.ItemPredicate.Builder.item().build();
+    /** ANY-constant family, removed with the predicate rework; rebuilt as match-alls.
+     *  fieldGetter target: the converter rewrites GETSTATIC class_2073.field_9640
+     *  to INVOKESTATIC Statics.field_9640(), so this must be a getter method. */
+    public static net.minecraft.advancements.predicates.ItemPredicate field_9640() {
+        return net.minecraft.advancements.predicates.ItemPredicate.Builder.item().build();
+    }
 
     public static final net.minecraft.advancements.predicates.entity.EntityPredicate field_9599 =
         net.minecraft.advancements.predicates.entity.EntityPredicate.Builder.entity().build();
