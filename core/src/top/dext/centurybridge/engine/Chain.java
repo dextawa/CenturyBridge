@@ -269,11 +269,20 @@ public final class Chain {
             if (!t.startsWith("net/minecraft/")) {
                 return null; // onto a facade we ship
             }
-        } else {
+        } else if (!targetClasses.contains(t)) {
+            // A class that survives in the target under its (possibly wall-renamed)
+            // name is NOT a hierarchy break, whatever the per-segment death tables
+            // say: past the namespace wall the segment data is in the dead
+            // intermediary namespace and records every surviving vanilla class as
+            // "gone", but loadTargetCtors has already proven it exists in the
+            // target jar (and the convert rename pass rewrites the extends to its
+            // real name). Only when the class is genuinely absent from the target
+            // do we consult resolveClass for the boundary that killed it.
             Issue r = resolveClass(t);
             if (r.level() != Level.OK) {
                 return "gone @" + r.boundary();
             }
+            return null;
         }
         if (!targetClasses.contains(t)) {
             return null;
