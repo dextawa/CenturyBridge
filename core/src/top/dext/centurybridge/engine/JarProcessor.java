@@ -644,11 +644,103 @@ public final class JarProcessor {
                     }
                 }
                 e.setValue(writeJar(nested));
+            } else if (!chain.wallClassFwd.isEmpty()
+                    && (name.endsWith(".accesswidener") || name.endsWith(".accessWidener")
+                        || name.endsWith(".aw"))) {
+                // A mod's own access widener is a resource, not a class, so the
+                // bytecode rewrite never touches it. Past the namespace wall the
+                // runtime rejects an intermediary-named AW ("Namespace
+                // (intermediary) does not match current runtime namespace"):
+                // translate owners/names/descriptors to the mojang namespace the
+                // converted bytecode now uses, and relabel the header to named.
+                byte[] rew = rewriteAccessWidener(e.getValue(), chain, tag, rpt);
+                if (rew != null) {
+                    e.setValue(rew);
+                }
             }
         }
         if (!reg.stubs.isEmpty()) {
             entries.put(tombClass + ".class", reg.synthesize());
         }
+    }
+
+    /**
+     * Rewrite a mod's access-widener file across the namespace wall:
+     * intermediary owners/names/descriptors -> mojang, header namespace ->
+     * named. Lines are {@code <access> class <owner>}, {@code <access> field
+     * <owner> <name> <desc>}, {@code <access> method <owner> <name> <desc>},
+     * plus the {@code accessWidener v1 <ns>} header and {@code #} comments.
+     * An owner/name with no mapping is left as is (survivors keep their name;
+     * only wall-renamed tokens move). Returns null to leave the file unchanged
+     * when nothing needed rewriting.
+     */
+    private static byte[] rewriteAccessWidener(byte[] bytes, Chain chain, String tag, Report rpt) {
+        String text = new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
+        String nl = text.contains("\r\n") ? "\r\n" : "\n";
+        String[] lines = text.split("\r\n|\n", -1);
+        java.util.regex.Pattern descCls = java.util.regex.Pattern.compile("L([^;]+);");
+        boolean changed = false;
+        int moved = 0;
+        for (int i = 0; i < lines.length; i++) {
+            String ln = lines[i];
+            String trimmed = ln.trim();
+            if (trimmed.isEmpty() || trimmed.startsWith("#")) {
+                continue;
+            }
+            // split off a trailing comment so we rewrite only the directive
+            String comment = "";
+            int hash = ln.indexOf('#');
+            String body = ln;
+            if (hash >= 0) {
+                comment = ln.substring(hash);
+                body = ln.substring(0, hash);
+            }
+            String[] tok = body.split("\\s+");
+            if (tok.length >= 3 && tok[0].equals("accessWidener")) {
+                // header: accessWidener v1 intermediary -> official. Past the
+                // wall the 26.x runtime names ARE the mojang/official ones the
+                // converted bytecode uses; fabric calls that namespace
+                // "official", so the AW must declare official (not named) to
+                // match the runtime it loads against.
+                if (tok[2].equals("intermediary")) {
+                    tok[2] = "official";
+                    lines[i] = String.join("\t", tok) + comment;
+                    changed = true;
+                }
+                continue;
+            }
+            // directive lines start with the access verb; the kind is tok[1]
+            if (tok.length < 3) {
+                continue;
+            }
+            String kind = tok[1];
+            if (kind.equals("class") && tok.length >= 3) {
+                String moj = chain.wallClassFwd.get(tok[2]);
+                if (moj != null) { tok[2] = moj; changed = true; moved++; }
+            } else if ((kind.equals("field") || kind.equals("method")) && tok.length >= 5) {
+                String owner = tok[2];
+                String member = tok[3];
+                String desc = tok[4];
+                String key = owner + "." + member;
+                String mojName = kind.equals("field")
+                    ? chain.wallFieldFwd.get(key) : chain.wallMethodFwd.get(key);
+                String mojOwner = chain.wallClassFwd.get(owner);
+                if (mojOwner != null) { tok[2] = mojOwner; changed = true; moved++; }
+                if (mojName != null) { tok[3] = mojName; changed = true; }
+                String nd = descCls.matcher(desc).replaceAll(mr -> "L"
+                    + java.util.regex.Matcher.quoteReplacement(
+                        chain.wallClassFwd.getOrDefault(mr.group(1), mr.group(1))) + ";");
+                if (!nd.equals(desc)) { tok[4] = nd; changed = true; }
+            } else {
+                continue;
+            }
+            lines[i] = String.join("\t", tok) + comment;
+        }
+        if (!changed) {
+            return null;
+        }
+        rpt.notes.add(tag + "access widener rewritten across wall (" + moved + " owners/classes -> mojang, header -> named)");
+        return String.join(nl, lines).getBytes(java.nio.charset.StandardCharsets.UTF_8);
     }
 
     /** per-jar-layer registry of lazy-fail stubs, synthesized as one class */

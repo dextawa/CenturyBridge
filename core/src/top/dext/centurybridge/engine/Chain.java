@@ -256,6 +256,22 @@ public final class Chain {
     public final java.util.Set<String> targetInterfaces = new java.util.HashSet<>();
 
     /**
+     * Forward wall translation (intermediary -> mojang) for rewriting a mod's
+     * own access-widener file, which the class rewrite never touches. Past the
+     * 1.21.11->26.1 wall the runtime expects AW entries in the mojang-named
+     * namespace that the converted bytecode uses; an unrewritten {@code v1
+     * intermediary} AW with {@code class_NNNN} names is rejected at load
+     * ("Namespace (intermediary) does not match current runtime namespace").
+     * Populated by {@link #loadTargetCtors} only when the chain crosses the
+     * wall; empty otherwise (pre-wall AW is already in the right namespace).
+     * Keys/values are internal names (class_NNNN -> net/minecraft/...);
+     * member maps key "owner.name" (intermediary) -> mojang simple name.
+     */
+    public final java.util.Map<String, String> wallClassFwd = new java.util.HashMap<>();
+    public final java.util.Map<String, String> wallFieldFwd = new java.util.HashMap<>();
+    public final java.util.Map<String, String> wallMethodFwd = new java.util.HashMap<>();
+
+    /**
      * Why a mod class's {@code extends}/{@code implements} of {@code type}
      * cannot load on the target, or null when it can (or cannot be judged:
      * no stub, a class outside the stub, a facade rename we ship). Death of
@@ -337,10 +353,14 @@ public final class Chain {
                 if (p.length >= 3 && p[0].equals("C")) {
                     back.put(p[2], p[1]);
                     fwd.put(p[1], p[2]);
+                    wallClassFwd.put(p[1], p[2]);
                 } else if (p.length >= 3 && p[0].equals("M")) {
                     memberBack.put(p[2], p[1]); // "mojOwner.mojName" -> "interOwner.interName"
+                    // "interOwner.interName" -> mojang simple name, for AW rewrite
+                    wallMethodFwd.put(p[1], p[2].substring(p[2].lastIndexOf('.') + 1));
                 } else if (p.length >= 3 && p[0].equals("F")) {
                     fieldBack.put(p[2], p[1]); // a field is declared on exactly one class: no climb
+                    wallFieldFwd.put(p[1], p[2].substring(p[2].lastIndexOf('.') + 1));
                 }
             }
         }
