@@ -4214,6 +4214,7 @@
   "net/minecraft/class_1772": "top/dext/centurybridge/rt/v26_2/Statics#cbIsEnchantedBook"
  },
  "superRenames": {
-  "net/minecraft/class_1887": "top/dext/centurybridge/facade/v26_2/class_1887"
+  "net/minecraft/class_1887": "top/dext/centurybridge/facade/v26_2/class_1887",
+  "net/minecraft/class_3491": "top/dext/centurybridge/facade/v26_2/class_3491"
  }
 }
