@@ -61,3 +61,5 @@ F	com/mojang/blaze3d/platform/GlStateManager$class_1031.field_5124	com/mojang/bl
 F	com/mojang/blaze3d/platform/GlStateManager$class_1031.field_5122	com/mojang/blaze3d/opengl/GlStateManager$PolygonOffsetState.units
 F	com/mojang/blaze3d/platform/GlStateManager$class_5518.field_26840	com/mojang/blaze3d/opengl/GlStateManager$ScissorState.mode
 F	com/mojang/blaze3d/platform/GlStateManager$class_1039.field_5167	com/mojang/blaze3d/opengl/GlStateManager$TextureState.binding
+# class_1289: 映射表拼写错 InstantenousMobEffect(缺a) -> 26.2 真名 InstantaneousMobEffect
+C	net/minecraft/class_1289	net/minecraft/world/effect/InstantaneousMobEffect
