@@ -63,3 +63,6 @@ F	com/mojang/blaze3d/platform/GlStateManager$class_5518.field_26840	com/mojang/b
 F	com/mojang/blaze3d/platform/GlStateManager$class_1039.field_5167	com/mojang/blaze3d/opengl/GlStateManager$TextureState.binding
 # class_1289: 映射表拼写错 InstantenousMobEffect(缺a) -> 26.2 真名 InstantaneousMobEffect
 C	net/minecraft/class_1289	net/minecraft/world/effect/InstantaneousMobEffect
+# class_1265: 映射目标包错 world/ContainerListener -> 26.2 真实 world/inventory/ContainerListener
+C	net/minecraft/class_1265	net/minecraft/world/inventory/ContainerListener
+M	net/minecraft/class_1265.method_5453	net/minecraft/world/inventory/ContainerListener.containerChanged
