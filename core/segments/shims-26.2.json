@@ -373,7 +373,8 @@
   "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.register(Lnet/minecraft/class_2960;Ljava/util/function/Predicate;)V": "top/dext/centurybridge/compat/fapi/CbResourceConditions",
   "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.get(Lnet/minecraft/class_2960;)Ljava/util/function/Predicate;": "top/dext/centurybridge/compat/fapi/CbResourceConditions",
   "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents.afterRender(Lnet/minecraft/class_437;)Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/compat/fapi/CbScreenEvents",
-  "net/minecraft/class_2073.method_8969(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_2073.method_8969(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_174.method_767(Lnet/minecraft/class_179;)Lnet/minecraft/class_179;": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v26_2/Statics",
@@ -3352,10 +3353,6 @@
   "net/minecraft/class_922.method_4056(Lnet/minecraft/class_1309;)Z": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 26.x render pipeline (extraction + submit nodes, MultiBufferSource/immediate mode gone); no bridge",
   "net/minecraft/class_979.method_17161(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 26.x render pipeline (extraction + submit nodes, MultiBufferSource/immediate mode gone); no bridge",
   "net/minecraft/class_989.method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 26.x render pipeline (extraction + submit nodes, MultiBufferSource/immediate mode gone); no bridge",
-  "net/minecraft/class_174.method_767(Lnet/minecraft/class_179;)Lnet/minecraft/class_179;": "26.x package migration (advancements/criterion|CriterionTrigger -> advancements/predicates|triggers): the wall table still emits the 1.21.11 class name, so the call site cannot reach the Statics bridge (which is kept); re-wire once the wall-table re-org lands",
-  "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "26.x package migration (advancements/criterion|CriterionTrigger -> advancements/predicates|triggers): the wall table still emits the 1.21.11 class name, so the call site cannot reach the Statics bridge (which is kept); re-wire once the wall-table re-org lands",
-  "net/minecraft/class_2048.field_9599:Lnet/minecraft/class_2048;": "26.x package migration (advancements/criterion|CriterionTrigger -> advancements/predicates|triggers): the wall table still emits the 1.21.11 class name, so the call site cannot reach the Statics bridge (which is kept); re-wire once the wall-table re-org lands",
-  "net/minecraft/class_2105.field_9716:Lnet/minecraft/class_2105;": "26.x package migration (advancements/criterion|CriterionTrigger -> advancements/predicates|triggers): the wall table still emits the 1.21.11 class name, so the call site cannot reach the Statics bridge (which is kept); re-wire once the wall-table re-org lands",
   "net/minecraft/class_1738.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "owner class_1738 (ArmorItem) is dead at 1.21.5; the redirect could never be emitted with a live receiver type",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider": "datagen-only API (net.fabricmc.fabric.api.datagen.v1): runs in the data-generation task, never at game runtime",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "datagen-only API (net.fabricmc.fabric.api.datagen.v1): runs in the data-generation task, never at game runtime",
@@ -4205,7 +4202,10 @@
   "net/minecraft/class_1893.field_63420:Lnet/minecraft/class_1887;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_1893.field_9109:Lnet/minecraft/class_1887;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_7923.field_41176:Lnet/minecraft/class_2378;": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_2073.field_9640:Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_2073.field_9640:Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_2048.field_9599:Lnet/minecraft/class_2048;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_2105.field_9716:Lnet/minecraft/class_2105;": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_1889.field_9093:Lnet/minecraft/class_1887;": "top/dext/centurybridge/rt/v26_2/Statics",

@@ -65,8 +65,11 @@ public final class Statics {
         return method_8114((net.minecraft.world.item.crafting.Recipe<?>) self);
     }
 
-    /** 1.20.1 LootContextPredicate.EMPTY field, removed 1.20.2; field access redirected here. */
-    public static final net.minecraft.advancements.predicates.ContextAwarePredicate field_24388 = net.minecraft.advancements.predicates.ContextAwarePredicate.create();
+    /** 1.20.1 LootContextPredicate.EMPTY field, removed 1.20.2; field access redirected here
+     *  (fieldGetter: converter rewrites GETSTATIC to INVOKESTATIC field_24388()). */
+    public static net.minecraft.advancements.predicates.ContextAwarePredicate field_24388() {
+        return net.minecraft.advancements.predicates.ContextAwarePredicate.create();
+    }
 
     /** 1.20.1 Criteria.register(trigger) -- private in both eras (mods reached it via AW).
      *  New shape needs a name; recovered from the legacy trigger's getId via reflection. L3 x12. */
@@ -113,11 +116,13 @@ public final class Statics {
         return net.minecraft.advancements.predicates.ItemPredicate.Builder.item().build();
     }
 
-    public static final net.minecraft.advancements.predicates.entity.EntityPredicate field_9599 =
-        net.minecraft.advancements.predicates.entity.EntityPredicate.Builder.entity().build();
+    public static net.minecraft.advancements.predicates.entity.EntityPredicate field_9599() {
+        return net.minecraft.advancements.predicates.entity.EntityPredicate.Builder.entity().build();
+    }
 
-    public static final net.minecraft.advancements.predicates.NbtPredicate field_9716 =
-        new net.minecraft.advancements.predicates.NbtPredicate((net.minecraft.nbt.CompoundTag) null);
+    public static net.minecraft.advancements.predicates.NbtPredicate field_9716() {
+        return new net.minecraft.advancements.predicates.NbtPredicate((net.minecraft.nbt.CompoundTag) null);
+    }
 
 
 
