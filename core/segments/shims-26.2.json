@@ -1221,7 +1221,8 @@
   "net/minecraft/class_1865": "top/dext/centurybridge/facade/v26_2/class_1865",
   "net/minecraft/class_1886": "top/dext/centurybridge/facade/v26_2/class_1886",
   "net/minecraft/class_1887$class_1888": "top/dext/centurybridge/facade/v26_2/class_1888",
-  "net/minecraft/class_1738$class_8051": "top/dext/centurybridge/facade/v26_2/class_8051"
+  "net/minecraft/class_1738$class_8051": "top/dext/centurybridge/facade/v26_2/class_8051",
+  "net/minecraft/class_1813": "top/dext/centurybridge/facade/v26_2/class_1813"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -2001,7 +2002,6 @@
   "net/minecraft/class_8975": "class withdrawn @1.20.4->1.20.5: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
   "net/minecraft/class_1123": "class withdrawn @1.20.6->1.21: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
   "net/minecraft/class_1124": "class withdrawn @1.20.6->1.21: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
-  "net/minecraft/class_1813": "class withdrawn @1.20.6->1.21: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
   "net/minecraft/class_1885": "class withdrawn @1.20.6->1.21: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
   "net/minecraft/class_1894": "class withdrawn @1.20.6->1.21: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
   "net/minecraft/class_1900": "class withdrawn @1.20.6->1.21: not one mapped member survives anywhere in the new jar, so this is a removal rather than a move",
@@ -4224,7 +4224,6 @@
   "net/minecraft/class_1794": "top/dext/centurybridge/facade/v26_2/class_1794",
   "net/minecraft/class_1738": "top/dext/centurybridge/facade/v26_2/class_1738",
   "net/minecraft/class_1741": "top/dext/centurybridge/facade/v26_2/class_1741",
-  "net/minecraft/class_1813": "top/dext/centurybridge/facade/v26_2/class_1813",
   "net/minecraft/class_4003": "top/dext/centurybridge/facade/v26_2/class_4003",
   "net/minecraft/class_5597": "top/dext/centurybridge/facade/v26_2/class_5597",
   "net/minecraft/class_1768": "top/dext/centurybridge/facade/v26_2/class_1768",
