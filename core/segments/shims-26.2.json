@@ -4372,6 +4372,48 @@
     "conv:1 top/dext/centurybridge/rt/v26_2/Statics#cbTickToSeconds(I)F",
     "keep:2"
    ]
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;)V": {
+   "desc": "(Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v26_2/Statics#cbMobEffectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
+   ]
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;I)V": {
+   "desc": "(Lnet/minecraft/class_6880;I)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v26_2/Statics#cbMobEffectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1"
+   ]
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;II)V": {
+   "desc": "(Lnet/minecraft/class_6880;II)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v26_2/Statics#cbMobEffectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1",
+    "keep:2"
+   ]
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;IIZZ)V": {
+   "desc": "(Lnet/minecraft/class_6880;IIZZ)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v26_2/Statics#cbMobEffectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;IIZZZ)V": {
+   "desc": "(Lnet/minecraft/class_6880;IIZZZ)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v26_2/Statics#cbMobEffectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ]
   }
  }
 }
