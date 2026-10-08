@@ -4336,6 +4336,20 @@
     "push top/dext/centurybridge/rt/v26_2/Statics#cbLeafParticle()F",
     "keep:0"
    ]
+  },
+  "net/minecraft/class_2527.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_2394;)V": {
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:1 top/dext/centurybridge/rt/v26_2/Statics#cbToSimpleParticle(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2400;",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_2555.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_2394;)V": {
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:1 top/dext/centurybridge/rt/v26_2/Statics#cbToSimpleParticle(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2400;",
+    "keep:0"
+   ]
   }
  }
 }

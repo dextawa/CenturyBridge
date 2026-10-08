@@ -6042,4 +6042,13 @@ public final class Statics {
     public static float cbLeafParticle() {
         return 0.01F;
     }
+    /** 1.20.1 Torch/WallTorchBlock took a ParticleOptions; 26.2 narrowed it to
+     *  SimpleParticleType. Vanilla torch particles (FLAME/SOUL_FIRE_FLAME) are
+     *  all SimpleParticleType, so cast; fall back to FLAME for the rare custom
+     *  non-simple particle (a torch must still render some flame). */
+    public static net.minecraft.core.particles.SimpleParticleType cbToSimpleParticle(
+            net.minecraft.core.particles.ParticleOptions p) {
+        return p instanceof net.minecraft.core.particles.SimpleParticleType s
+            ? s : net.minecraft.core.particles.ParticleTypes.FLAME;
+    }
 }
