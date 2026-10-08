@@ -4257,6 +4257,71 @@
     "keep:2",
     "keep:0"
    ]
+  },
+  "net/minecraft/class_2323.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_8177;)V": {
+   "desc": "(Lnet/minecraft/class_8177;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_2349.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_4719;)V": {
+   "desc": "(Lnet/minecraft/class_4719;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_2431.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_6017;)V": {
+   "desc": "(Lnet/minecraft/class_6017;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_2508.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_4719;)V": {
+   "desc": "(Lnet/minecraft/class_4719;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_2533.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_8177;)V": {
+   "desc": "(Lnet/minecraft/class_8177;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_2551.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_4719;)V": {
+   "desc": "(Lnet/minecraft/class_4719;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_7713.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_4719;)V": {
+   "desc": "(Lnet/minecraft/class_4719;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_7715.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_4719;)V": {
+   "desc": "(Lnet/minecraft/class_4719;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_8170.<init>(Lnet/minecraft/class_2248;Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;)V": {
+   "desc": "(Lnet/minecraft/class_2248;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:0",
+    "keep:2",
+    "keep:3",
+    "keep:1"
+   ]
   }
  }
 }
