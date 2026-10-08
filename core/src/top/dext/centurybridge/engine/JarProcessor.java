@@ -652,6 +652,7 @@ public final class JarProcessor {
         }
         stripConfigs(entries, triage, deadMixins);
         markConfigsOptional(entries, triage);
+        relaxBodyInjectors(entries, triage, deadMixins, chain, rpt, tag);
 
         // tombstone stub class must be unique per jar layer (all layers share the runtime classpath)
         String tombClass = "centurybridge/gen/Tombstones_" + jarTag
@@ -918,6 +919,85 @@ public final class JarProcessor {
      * instead of killing the game -- and CenturyBridge's error handler writes
      * every such failure to logs/centurybridge-mixin.log, so it stays KNOWN.
      */
+    /**
+     * Past the namespace wall, {@link MixinRepair} (which downgrades failing
+     * injectors to require=0) does not run, so a mod mixin's "body-level"
+     * injector -- @ModifyConstant / @ModifyExpressionValue / @ModifyReturnValue
+     * -- that no longer matches (the target method body was refactored in 26.x,
+     * so the constant/expression is gone: scan 0, InjectionError) takes the
+     * whole mixin apply down. These injectors are inherently un-bridgeable
+     * statically (they depend on the target's bytecode interior, below the
+     * name/signature level CB works at). Set their require to 0 so a missing
+     * match degrades to "this tweak doesn't apply" instead of a hard crash --
+     * the mod loads, that one body tweak is silently inert (reported). Only
+     * body-level injectors are relaxed; @Inject/@Redirect/@Overwrite keep their
+     * require so a structural miss still surfaces. Config-optional (required
+     * false) governs class load; this governs per-injector match count.
+     */
+    private static void relaxBodyInjectors(Map<String, byte[]> entries, MixinTriage.Result triage,
+            Set<String> deadMixins, Chain chain, Report rpt, String tag) {
+        if (chain.wallClassFwd.isEmpty()) {
+            return; // pre-wall: MixinRepair already handled injector downgrade
+        }
+        java.util.Set<String> bodyInjectors = java.util.Set.of(
+            "Lorg/spongepowered/asm/mixin/injection/ModifyConstant;",
+            "Lcom/llamalad7/mixinextras/injector/ModifyExpressionValue;",
+            "Lcom/llamalad7/mixinextras/injector/ModifyReturnValue;");
+        int relaxed = 0;
+        for (String cls : triage.configOfClass().keySet()) {
+            if (deadMixins.contains(cls)) {
+                continue; // whole mixin stripped already
+            }
+            byte[] data = entries.get(cls + ".class");
+            if (data == null) {
+                continue;
+            }
+            org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+            new ClassReader(data).accept(cn, 0);
+            boolean changed = false;
+            if (cn.methods != null) {
+                for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                    for (java.util.List<org.objectweb.asm.tree.AnnotationNode> anns
+                            : java.util.Arrays.asList(m.visibleAnnotations, m.invisibleAnnotations)) {
+                        if (anns == null) {
+                            continue;
+                        }
+                        for (org.objectweb.asm.tree.AnnotationNode an : anns) {
+                            if (bodyInjectors.contains(an.desc)) {
+                                setRequireZero(an);
+                                changed = true;
+                                relaxed++;
+                            }
+                        }
+                    }
+                }
+            }
+            if (changed) {
+                org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(0);
+                cn.accept(cw);
+                entries.put(cls + ".class", cw.toByteArray());
+            }
+        }
+        if (relaxed > 0) {
+            rpt.notes.add(tag + "relaxed " + relaxed + " body-level injector(s) to require=0 (wall: @Constant/expression may be gone in 26.x)");
+        }
+    }
+
+    /** set an injector annotation's require to 0 (body-level downgrade). */
+    private static void setRequireZero(org.objectweb.asm.tree.AnnotationNode an) {
+        if (an.values == null) {
+            an.values = new ArrayList<>();
+        }
+        for (int i = 0; i + 1 < an.values.size(); i += 2) {
+            if ("require".equals(an.values.get(i))) {
+                an.values.set(i + 1, 0);
+                return;
+            }
+        }
+        an.values.add("require");
+        an.values.add(0);
+    }
+
     private static void markConfigsOptional(Map<String, byte[]> entries, MixinTriage.Result triage) {
         for (String cfgName : new HashSet<>(triage.configOfClass().values())) {
             byte[] data = entries.get(cfgName);
