@@ -4146,4 +4146,17 @@ public final class Statics {
             throw new IllegalStateException("centurybridge: TreeDecoratorType(MapCodec) constructor", e);
         }
     }
+
+    /**
+     * 1.20.1 StateHolder.getValues() (class_2688.method_11656) returned a Guava
+     * ImmutableMap; at 1.21 the internal store became a fastutil
+     * Reference2ObjectArrayMap and the method now returns java.util.Map, so a
+     * 1.20.1 call site resolved to ()ImmutableMap NoSuchMethodErrors. Wrap the
+     * real Map back into an ImmutableMap so the old contract holds (callers
+     * iterate/read it; copy is cheap and faithful).
+     */
+    public static com.google.common.collect.ImmutableMap<net.minecraft.class_2769<?>, java.lang.Comparable<?>>
+            method_11656(net.minecraft.class_2688<?, ?> self) {
+        return com.google.common.collect.ImmutableMap.copyOf(self.method_11656());
+    }
 }

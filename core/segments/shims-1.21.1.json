@@ -542,7 +542,8 @@
   "net/minecraft/class_3218.method_33596(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_3218.method_43275(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_243;)V": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_3218.method_32888(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;)V": "top/dext/centurybridge/rt/v1_21_1/Statics",
-  "net/minecraft/class_1657.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/rt/v1_21_1/Statics"
+  "net/minecraft/class_1657.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/rt/v1_21_1/Statics",
+  "net/minecraft/class_2688.method_11656()Lcom/google/common/collect/ImmutableMap;": "top/dext/centurybridge/rt/v1_21_1/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_1/Statics",
