@@ -4415,6 +4415,33 @@
     "keep:4",
     "keep:5"
    ]
+  },
+  "net/minecraft/class_1743.<init>(Lnet/minecraft/class_1832;FFLnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/world/item/ToolMaterial;FFLnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v26_2/Statics#cbTierToMaterial(Lnet/minecraft/class_1832;)Lnet/minecraft/world/item/ToolMaterial;",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_1821.<init>(Lnet/minecraft/class_1832;FFLnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/world/item/ToolMaterial;FFLnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v26_2/Statics#cbTierToMaterial(Lnet/minecraft/class_1832;)Lnet/minecraft/world/item/ToolMaterial;",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_1794.<init>(Lnet/minecraft/class_1832;IFLnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/world/item/ToolMaterial;FFLnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v26_2/Statics#cbTierToMaterial(Lnet/minecraft/class_1832;)Lnet/minecraft/world/item/ToolMaterial;",
+    "conv:1 top/dext/centurybridge/rt/v26_2/Statics#cbIntToFloat(I)F",
+    "keep:2",
+    "keep:3"
+   ]
   }
  }
 }

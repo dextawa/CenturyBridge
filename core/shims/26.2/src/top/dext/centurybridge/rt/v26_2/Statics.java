@@ -6077,4 +6077,32 @@ public final class Statics {
             net.minecraft.world.item.component.TypedEntityData.of(type, new net.minecraft.nbt.CompoundTag()));
         return new net.minecraft.world.item.SpawnEggItem(props);
     }
+    /** Convert a legacy Tier facade (class_1832, the old interface mods
+     *  implemented for custom tool materials) into a 26.2 ToolMaterial record.
+     *  26.2 replaced the mining-LEVEL int with an incorrect-blocks TagKey, so
+     *  map level 0-4 to the vanilla WOODEN/STONE/IRON/DIAMOND/NETHERITE tool
+     *  tags. The repair Ingredient has no TagKey equivalent (ingredient->tag is
+     *  not derivable), so repairItems degrades to an empty CB tag: the tool
+     *  works, only anvil material-repair is lost (not a load/crash issue). */
+    public static net.minecraft.world.item.ToolMaterial cbTierToMaterial(
+            top.dext.centurybridge.facade.v26_2.class_1832 tier) {
+        int level = tier.method_8024();
+        net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> incorrect;
+        switch (level <= 0 ? 0 : (level >= 4 ? 4 : level)) {
+            case 0 -> incorrect = net.minecraft.tags.BlockTags.INCORRECT_FOR_WOODEN_TOOL;
+            case 1 -> incorrect = net.minecraft.tags.BlockTags.INCORRECT_FOR_STONE_TOOL;
+            case 2 -> incorrect = net.minecraft.tags.BlockTags.INCORRECT_FOR_IRON_TOOL;
+            case 3 -> incorrect = net.minecraft.tags.BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
+            default -> incorrect = net.minecraft.tags.BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
+        }
+        net.minecraft.tags.TagKey<net.minecraft.world.item.Item> repair =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                net.minecraft.resources.Identifier.fromNamespaceAndPath("centurybridge", "tier_repair"));
+        return new net.minecraft.world.item.ToolMaterial(incorrect, tier.method_8025(),
+            tier.method_8027(), tier.method_8028(), tier.method_8026(), repair);
+    }
+    /** 1.20.1 HoeItem took int attackDamage; 26.2 takes float. Widen. */
+    public static float cbIntToFloat(int v) {
+        return (float) v;
+    }
 }
