@@ -1223,7 +1223,8 @@
   "net/minecraft/class_1886": "top/dext/centurybridge/facade/v26_2/class_1886",
   "net/minecraft/class_1887$class_1888": "top/dext/centurybridge/facade/v26_2/class_1888",
   "net/minecraft/class_1738$class_8051": "top/dext/centurybridge/facade/v26_2/class_8051",
-  "net/minecraft/class_1813": "top/dext/centurybridge/facade/v26_2/class_1813"
+  "net/minecraft/class_1813": "top/dext/centurybridge/facade/v26_2/class_1813",
+  "net/minecraft/class_2368": "top/dext/centurybridge/facade/v26_2/class_2368"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -3543,7 +3544,8 @@
   "net/minecraft/class_3259.<init>(Ljava/lang/String;Ljava/nio/file/Path;Z)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewPathPackResources",
   "net/minecraft/class_3258.<init>(Ljava/lang/String;Ljava/io/File;Z)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewFilePackResources",
   "net/minecraft/class_1889.<init>(Lnet/minecraft/class_1887;I)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewEnchantmentInstance",
-  "net/minecraft/class_1923.<init>(J)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewChunkPos"
+  "net/minecraft/class_1923.<init>(J)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewChunkPos",
+  "net/minecraft/class_2420.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewclass_2420"
  },
  "superCtorAdapts": {
   "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": {

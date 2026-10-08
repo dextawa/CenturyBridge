@@ -5997,4 +5997,14 @@ public final class Statics {
     public static net.minecraft.world.level.ChunkPos cbNewChunkPos(long packed) {
         return net.minecraft.world.level.ChunkPos.unpack(packed);
     }
+    /**
+     * 1.20.1 MushroomBlock(class_2420) constructor took (Properties,
+     * ResourceKey<ConfiguredFeature>); 26.2 reordered it to (ResourceKey,
+     * Properties). Reorder for a legacy call site (Ad Astra ModBlocks).
+     */
+    public static net.minecraft.world.level.block.MushroomBlock cbNewclass_2420(
+            net.minecraft.world.level.block.state.BlockBehaviour.Properties props,
+            net.minecraft.resources.ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> feature) {
+        return new net.minecraft.world.level.block.MushroomBlock(feature, props);
+    }
 }
