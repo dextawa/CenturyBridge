@@ -6051,4 +6051,16 @@ public final class Statics {
         return p instanceof net.minecraft.core.particles.SimpleParticleType s
             ? s : net.minecraft.core.particles.ParticleTypes.FLAME;
     }
+    /** 1.20.1 FlowerBlock(MobEffect, int ticks, Properties) -> 26.2
+     *  (Holder<MobEffect>, float seconds, Properties). Wrap the effect as a
+     *  registry Holder and convert the stew-effect duration from ticks to
+     *  seconds (26.2's makeEffectList multiplies back by 20). */
+    public static net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> cbMobEffectHolder(
+            net.minecraft.world.effect.MobEffect effect) {
+        return net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect);
+    }
+
+    public static float cbTickToSeconds(int ticks) {
+        return ticks / 20.0F;
+    }
 }
