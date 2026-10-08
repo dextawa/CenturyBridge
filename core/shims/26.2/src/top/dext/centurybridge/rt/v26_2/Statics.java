@@ -5976,4 +5976,17 @@ public final class Statics {
             net.minecraft.world.level.levelgen.Heightmap.Types heightmap, net.minecraft.world.entity.SpawnPlacements.SpawnPredicate predicate) {
         net.minecraft.world.entity.SpawnPlacements.register(type, location.cbToVanilla(), heightmap, predicate);
     }
+
+    /**
+     * 1.20.1 ExtraCodecs.validate (class_5699.method_48112): wrap a codec with a
+     * post-decode validation function. Removed from ExtraCodecs at 1.20.5 when
+     * DataFixerUpper moved the capability onto Codec itself as the default
+     * instance method {@code Codec.validate(Function)}. Forward to it so a mod's
+     * static codec initializer (e.g. Ad Astra) that calls the old static works.
+     */
+    public static <T> com.mojang.serialization.Codec<T> method_48112(
+            com.mojang.serialization.Codec<T> codec,
+            java.util.function.Function<T, com.mojang.serialization.DataResult<T>> validator) {
+        return codec.validate(validator);
+    }
 }

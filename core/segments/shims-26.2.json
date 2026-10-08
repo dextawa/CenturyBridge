@@ -374,7 +374,8 @@
   "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.get(Lnet/minecraft/class_2960;)Ljava/util/function/Predicate;": "top/dext/centurybridge/compat/fapi/CbResourceConditions",
   "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents.afterRender(Lnet/minecraft/class_437;)Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/compat/fapi/CbScreenEvents",
   "net/minecraft/class_2073.method_8969(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_174.method_767(Lnet/minecraft/class_179;)Lnet/minecraft/class_179;": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_174.method_767(Lnet/minecraft/class_179;)Lnet/minecraft/class_179;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_5699.method_48112(Lcom/mojang/serialization/Codec;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v26_2/Statics",
