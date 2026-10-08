@@ -5989,4 +5989,12 @@ public final class Statics {
             java.util.function.Function<T, com.mojang.serialization.DataResult<T>> validator) {
         return codec.validate(validator);
     }
+    /**
+     * 1.20.1 ChunkPos(long) packed-long constructor (class_1923): 26.2 replaced
+     * it with the static factory ChunkPos.unpack(long). Reached by both direct
+     * new and ChunkPos::new method references.
+     */
+    public static net.minecraft.world.level.ChunkPos cbNewChunkPos(long packed) {
+        return net.minecraft.world.level.ChunkPos.unpack(packed);
+    }
 }

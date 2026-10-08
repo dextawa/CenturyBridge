@@ -3542,7 +3542,8 @@
   "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": "top/dext/centurybridge/rt/v26_2/ClientStatics#cbNewServerInfo",
   "net/minecraft/class_3259.<init>(Ljava/lang/String;Ljava/nio/file/Path;Z)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewPathPackResources",
   "net/minecraft/class_3258.<init>(Ljava/lang/String;Ljava/io/File;Z)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewFilePackResources",
-  "net/minecraft/class_1889.<init>(Lnet/minecraft/class_1887;I)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewEnchantmentInstance"
+  "net/minecraft/class_1889.<init>(Lnet/minecraft/class_1887;I)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewEnchantmentInstance",
+  "net/minecraft/class_1923.<init>(J)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewChunkPos"
  },
  "superCtorAdapts": {
   "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": {
