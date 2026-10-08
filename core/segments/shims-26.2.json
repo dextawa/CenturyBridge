@@ -3545,7 +3545,9 @@
   "net/minecraft/class_3258.<init>(Ljava/lang/String;Ljava/io/File;Z)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewFilePackResources",
   "net/minecraft/class_1889.<init>(Lnet/minecraft/class_1887;I)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewEnchantmentInstance",
   "net/minecraft/class_1923.<init>(J)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewChunkPos",
-  "net/minecraft/class_2420.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewclass_2420"
+  "net/minecraft/class_2420.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_5321;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewclass_2420",
+  "net/minecraft/class_2431.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_6017;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewclass_2431",
+  "net/minecraft/class_2349.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_4719;)V": "top/dext/centurybridge/rt/v26_2/Statics#cbNewclass_2349"
  },
  "superCtorAdapts": {
   "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": {
@@ -4246,5 +4248,15 @@
   "net/minecraft/class_2754": "top/dext/centurybridge/facade/v26_2/class_2754",
   "net/minecraft/class_2746": "top/dext/centurybridge/facade/v26_2/class_2746",
   "net/minecraft/class_2758": "top/dext/centurybridge/facade/v26_2/class_2758"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_2269.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_8177;IZ)V": {
+   "desc": "(Lnet/minecraft/class_8177;ILnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:2",
+    "keep:0"
+   ]
+  }
  }
 }

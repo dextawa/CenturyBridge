@@ -6007,4 +6007,28 @@ public final class Statics {
             net.minecraft.resources.ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> feature) {
         return new net.minecraft.world.level.block.MushroomBlock(feature, props);
     }
+    /** 1.20.x ButtonBlock(class_2269) (Properties,BlockSetType,int,boolean) ->
+     *  26.2 (BlockSetType,int,Properties); the trailing boolean (arrow-sound
+     *  flag) folded into BlockSetType, dropped. */
+    public static net.minecraft.world.level.block.ButtonBlock cbNewclass_2269(
+            net.minecraft.world.level.block.state.BlockBehaviour.Properties props,
+            net.minecraft.world.level.block.state.properties.BlockSetType setType, int ticks, boolean arrows) {
+        return new net.minecraft.world.level.block.ButtonBlock(setType, ticks, props);
+    }
+
+    /** 1.20.x DropExperienceBlock(class_2431) (Properties,IntProvider) ->
+     *  26.2 (IntProvider,Properties). */
+    public static net.minecraft.world.level.block.DropExperienceBlock cbNewclass_2431(
+            net.minecraft.world.level.block.state.BlockBehaviour.Properties props,
+            net.minecraft.util.valueproviders.IntProvider xp) {
+        return new net.minecraft.world.level.block.DropExperienceBlock(xp, props);
+    }
+
+    /** 1.20.x FenceGateBlock(class_2349) (Properties,WoodType) ->
+     *  26.2 (WoodType,Properties). */
+    public static net.minecraft.world.level.block.FenceGateBlock cbNewclass_2349(
+            net.minecraft.world.level.block.state.BlockBehaviour.Properties props,
+            net.minecraft.world.level.block.state.properties.WoodType wood) {
+        return new net.minecraft.world.level.block.FenceGateBlock(wood, props);
+    }
 }
