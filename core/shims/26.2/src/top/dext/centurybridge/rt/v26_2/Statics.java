@@ -6105,4 +6105,49 @@ public final class Statics {
     public static float cbIntToFloat(int v) {
         return (float) v;
     }
+    /** 1.20.1 ArmorItem.Type(class_8051) facade -> 26.2 ArmorType. */
+    public static net.minecraft.world.item.equipment.ArmorType cbArmorType(
+            top.dext.centurybridge.facade.v26_2.class_8051 t) {
+        switch (t) {
+            case field_41934: return net.minecraft.world.item.equipment.ArmorType.HELMET;
+            case field_41935: return net.minecraft.world.item.equipment.ArmorType.CHESTPLATE;
+            case field_41936: return net.minecraft.world.item.equipment.ArmorType.LEGGINGS;
+            default:          return net.minecraft.world.item.equipment.ArmorType.BOOTS;
+        }
+    }
+
+    /** 1.20.1 ArmorMaterial(class_1741) interface facade -> 26.2 ArmorMaterial
+     *  record. 26.2 record: (durability, defense Map<ArmorType,Integer>,
+     *  enchantValue, equipSound Holder, toughness, knockbackResistance,
+     *  repairItems TagKey, assetId ResourceKey<EquipmentAsset>). Pull per-slot
+     *  defense/durability from the legacy accessors; equipSound uses the generic
+     *  armor-equip; repairItems degrades to an empty CB tag (ingredient->tag not
+     *  derivable, anvil material-repair lost, not fatal); assetId falls back to
+     *  the IRON equipment asset so the armor renders with iron textures rather
+     *  than a missing-texture (custom armor model is a client-asset concern
+     *  26.2 drives from data, un-portable from a 1.20.1 jar). */
+    public static net.minecraft.world.item.equipment.ArmorMaterial cbArmorMaterial(
+            top.dext.centurybridge.facade.v26_2.class_1741 mat) {
+        java.util.Map<net.minecraft.world.item.equipment.ArmorType, Integer> defense = new java.util.EnumMap<>(net.minecraft.world.item.equipment.ArmorType.class);
+        top.dext.centurybridge.facade.v26_2.class_8051[] slots = {
+            top.dext.centurybridge.facade.v26_2.class_8051.field_41934,
+            top.dext.centurybridge.facade.v26_2.class_8051.field_41935,
+            top.dext.centurybridge.facade.v26_2.class_8051.field_41936,
+            top.dext.centurybridge.facade.v26_2.class_8051.field_41937};
+        int durability = 1;
+        for (top.dext.centurybridge.facade.v26_2.class_8051 sl : slots) {
+            try {
+                defense.put(cbArmorType(sl), mat.method_48402(sl));
+                durability = Math.max(durability, mat.method_48403(sl));
+            } catch (Throwable ignored) { }
+        }
+        net.minecraft.tags.TagKey<net.minecraft.world.item.Item> repair =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                net.minecraft.resources.Identifier.fromNamespaceAndPath("centurybridge", "armor_repair"));
+        return new net.minecraft.world.item.equipment.ArmorMaterial(
+            durability, defense, mat.method_7699(),
+            net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_GENERIC,
+            mat.method_7700(), mat.method_24355(), repair,
+            net.minecraft.world.item.equipment.EquipmentAssets.IRON);
+    }
 }

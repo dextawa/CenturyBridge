@@ -4,29 +4,43 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.equipment.ArmorMaterial;
+import top.dext.centurybridge.rt.v26_2.Statics;
 
 /**
  * Facade for 1.20.1 net/minecraft/class_1738 (ArmorItem), deleted on 26.2
- * (armor is a data component, no ArmorItem subclass). Reached via superRenames:
- * a mod armor subclass has its extends + super-calls pointed here; every other
- * class_1738 reference stays real. Extends the real 26.2 Item so the subclass
- * is still a genuine Item and registers; implements the Equipable facade as the
- * original did. The old (ArmorMaterial, Type, Properties) constructor forwards
- * to Item(Properties), dropping the armor params (data-driven on 26.2).
+ * (armor is data-driven: a plain Item + ARMOR components). A corpus mod both
+ * {@code new class_1738(...)} and types fields/returns as class_1738 (e.g.
+ * MythicMetals' metal armor), so this facade extends the real 26.2 Item and
+ * reconstructs the old (ArmorMaterial, Type, Properties) constructor by routing
+ * through 26.2's own {@code Properties.humanoidArmor(ArmorMaterial, ArmorType)}
+ * -- which attaches the EQUIPPABLE / ARMOR / durability components -- so the
+ * armor actually protects and wears, not just loads.
  *
- * ArmorMaterial (class_1741) survives on 26.2 as a real class, so the ctor and
- * getMaterial use its real type directly. Type (class_8051) is a CB facade enum.
+ * The legacy material arg is the mod's own class_1741 (the old ArmorMaterial
+ * interface the mod implements); {@link Statics#cbArmorMaterial} turns it into
+ * a 26.2 ArmorMaterial record (per-slot defense/durability from the legacy
+ * accessors; repair + render asset degrade -- see there). Reached via a
+ * classRename on class_1738 so both direct new and subclass extends resolve.
  * Member names are intermediary tokens.
  */
 public class class_1738 extends Item implements class_5151 {
 
     protected final class_8051 field_41933;   // Type
-    protected final ArmorMaterial field_7881; // ArmorMaterial (real 26.2 type)
+    protected final class_1741 field_7881;     // the legacy ArmorMaterial facade
 
-    public class_1738(ArmorMaterial material, class_8051 type, Item.Properties props) {
-        super(props);
+    public class_1738(class_1741 material, class_8051 type, Item.Properties props) {
+        super(buildProps(material, type, props));
         this.field_7881 = material;
         this.field_41933 = type;
+    }
+
+    private static Item.Properties buildProps(class_1741 material, class_8051 type, Item.Properties props) {
+        try {
+            return props.humanoidArmor(Statics.cbArmorMaterial(material), Statics.cbArmorType(type));
+        } catch (Throwable t) {
+            // never let an armor piece fail to construct over a component edge case
+            return props;
+        }
     }
 
     /** getType() */
@@ -34,9 +48,9 @@ public class class_1738 extends Item implements class_5151 {
         return field_41933;
     }
 
-    /** getMaterial() */
+    /** getMaterial() -> the real 26.2 ArmorMaterial record (converted) */
     public ArmorMaterial method_7686() {
-        return field_7881;
+        return Statics.cbArmorMaterial(field_7881);
     }
 
     /** getEquipmentSlot() -- from Equipable (class_5151) */
