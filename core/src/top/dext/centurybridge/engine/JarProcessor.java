@@ -300,6 +300,40 @@ public final class JarProcessor {
                     top.dext.centurybridge.data.FullAudit.record(key, "ctor-redirect");
                 }
             }
+            // Constructor method references (owner::new) compile to an
+            // invokedynamic whose bootstrap carries a REF_newInvokeSpecial
+            // MethodHandle to owner.<init>, or (rarely) to an LDC of such a
+            // handle. The NEW/INVOKESPECIAL rewrite above never sees these, so a
+            // dead constructor reached only through ::new (e.g. resourcefullib's
+            // Identifier::new byte-codec) slips past as a NoSuchMethodError at
+            // the lambda's first use. Rewrite the handle to an INVOKESTATIC
+            // pointing at the same factory the direct-call path uses.
+            for (org.objectweb.asm.tree.AbstractInsnNode in = m.instructions.getFirst(); in != null; in = in.getNext()) {
+                if (in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode idin) {
+                    if (idin.bsmArgs != null) {
+                        for (int i = 0; i < idin.bsmArgs.length; i++) {
+                            if (idin.bsmArgs[i] instanceof org.objectweb.asm.Handle h) {
+                                org.objectweb.asm.Handle nh = rewriteCtorHandle(h, chain);
+                                if (nh != null) {
+                                    idin.bsmArgs[i] = nh;
+                                    rewrites++;
+                                    top.dext.centurybridge.data.FullAudit.record(
+                                        h.getOwner() + ".<init>" + h.getDesc(), "ctor-redirect-methodref");
+                                }
+                            }
+                        }
+                    }
+                } else if (in instanceof org.objectweb.asm.tree.LdcInsnNode ldc
+                        && ldc.cst instanceof org.objectweb.asm.Handle h) {
+                    org.objectweb.asm.Handle nh = rewriteCtorHandle(h, chain);
+                    if (nh != null) {
+                        ldc.cst = nh;
+                        rewrites++;
+                        top.dext.centurybridge.data.FullAudit.record(
+                            h.getOwner() + ".<init>" + h.getDesc(), "ctor-redirect-methodref");
+                    }
+                }
+            }
         }
         if (rewrites == 0) {
             return bytes;
@@ -308,6 +342,31 @@ public final class JarProcessor {
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
         cn.accept(cw);
         return cw.toByteArray();
+    }
+
+    /**
+     * If {@code h} is a {@code owner::new} constructor method handle
+     * (REF_newInvokeSpecial) whose owner has a ctorRedirect factory, return an
+     * equivalent REF_invokeStatic handle to that factory (same arg types, with
+     * the owner appended as the return type -- exactly the factory signature the
+     * direct-call rewrite produces). Returns null if nothing to do, so callers
+     * can detect a hit.
+     */
+    private static org.objectweb.asm.Handle rewriteCtorHandle(org.objectweb.asm.Handle h, Chain chain) {
+        if (h.getTag() != org.objectweb.asm.Opcodes.H_NEWINVOKESPECIAL
+                || !h.getName().equals("<init>")
+                || !chain.ctorRedirectOwners.contains(h.getOwner())) {
+            return null;
+        }
+        String key = h.getOwner() + ".<init>" + h.getDesc();
+        String target = chain.ctorRedirects.get(key);
+        if (target == null) {
+            return null; // owner is redirected but not this arity: leave for the audit
+        }
+        String factoryDesc = h.getDesc().substring(0, h.getDesc().lastIndexOf(')') + 1)
+            + "L" + h.getOwner() + ";";
+        return new org.objectweb.asm.Handle(org.objectweb.asm.Opcodes.H_INVOKESTATIC,
+            redirCls(target), redirName(target, "cbNew"), factoryDesc, false);
     }
 
     /**
