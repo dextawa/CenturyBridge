@@ -6063,4 +6063,18 @@ public final class Statics {
     public static float cbTickToSeconds(int ticks) {
         return ticks / 20.0F;
     }
+    /** 1.20.1 SpawnEggItem(EntityType, bgColor, highlightColor, Properties) ->
+     *  26.2 SpawnEggItem(Properties): the egg's entity became data-driven, read
+     *  from the stack's ENTITY_DATA component (SpawnEggItem.getType). Attach the
+     *  entity type as that component so the egg still spawns the right mob; the
+     *  two legacy colors are dropped (26.2 derives egg colors from the entity's
+     *  own spawn-egg definition, not the item constructor). */
+    @SuppressWarnings({"unchecked","rawtypes"})
+    public static net.minecraft.world.item.SpawnEggItem cbNewSpawnEgg(
+            net.minecraft.world.entity.EntityType<?> type, int bg, int hl,
+            net.minecraft.world.item.Item.Properties props) {
+        props.component((net.minecraft.core.component.DataComponentType) net.minecraft.core.component.DataComponents.ENTITY_DATA,
+            net.minecraft.world.item.component.TypedEntityData.of(type, new net.minecraft.nbt.CompoundTag()));
+        return new net.minecraft.world.item.SpawnEggItem(props);
+    }
 }
