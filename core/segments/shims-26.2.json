@@ -4322,6 +4322,20 @@
     "keep:3",
     "keep:1"
    ]
+  },
+  "net/minecraft/class_2431.<init>(Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_6017;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v26_2/Statics#cbDefaultXp()Lnet/minecraft/class_6017;",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_2397.<init>(Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(FLnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v26_2/Statics#cbLeafParticle()F",
+    "keep:0"
+   ]
   }
  }
 }

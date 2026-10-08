@@ -6031,4 +6031,15 @@ public final class Statics {
             net.minecraft.world.level.block.state.properties.WoodType wood) {
         return new net.minecraft.world.level.block.FenceGateBlock(wood, props);
     }
+    /** Default XP IntProvider for 1.20.1 DropExperienceBlock(Properties) (no-xp
+     *  overload); 26.2 requires an IntProvider, 0 preserves the old no-drop. */
+    public static net.minecraft.util.valueproviders.IntProvider cbDefaultXp() {
+        return net.minecraft.util.valueproviders.ConstantInt.of(0);
+    }
+
+    /** Default leaf-particle chance for 1.20.1 LeavesBlock(Properties); 26.2
+     *  added a float particle chance, vanilla leaves use 0.01. */
+    public static float cbLeafParticle() {
+        return 0.01F;
+    }
 }
