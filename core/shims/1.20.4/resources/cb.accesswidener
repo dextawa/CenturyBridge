@@ -1,2 +1,9 @@
 accessWidener v2 intermediary
 accessible field net/minecraft/class_8609 field_45013 Lnet/minecraft/class_2535;
+extendable class net/minecraft/class_1856
+extendable class net/minecraft/class_20
+extendable class net/minecraft/class_2073
+extendable class net/minecraft/class_3754
+extendable class net/minecraft/class_5251
+extendable class net/minecraft/class_5604
+extendable class net/minecraft/class_630

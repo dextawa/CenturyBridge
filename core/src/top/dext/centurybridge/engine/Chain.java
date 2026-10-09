@@ -254,6 +254,11 @@ public final class Chain {
     public final java.util.Set<String> targetFinals = new java.util.HashSet<>();
     /** target-stub classes that are interfaces on the target */
     public final java.util.Set<String> targetInterfaces = new java.util.HashSet<>();
+    /** classes CB's own access widener re-opens with `extendable` -- fabric loader
+     *  strips their ACC_FINAL at runtime, so a mod subclass loads and stays a real
+     *  instance (instanceof holds, vanilla takes it back). In the analysis
+     *  (intermediary) namespace, so hierarchyBreak can consult it directly. */
+    public final java.util.Set<String> awExtendable = new java.util.HashSet<>();
 
     /**
      * Forward wall translation (intermediary -> mojang) for rewriting a mod's
@@ -310,7 +315,10 @@ public final class Chain {
             return "an interface in " + to;
         }
         if (targetFinals.contains(t)) {
-            return "final in " + to;
+            // CB's access widener re-opens this class with `extendable`: fabric
+            // loader strips its ACC_FINAL before the mod subclass loads, so the
+            // extends is legal and the object is still a real instance.
+            return awExtendable.contains(t) ? null : "final in " + to;
         }
         return null;
     }
@@ -444,6 +452,34 @@ public final class Chain {
                         decls.add(fe.getKey() + ":" + d); // mojang spelling + descriptor, see above
                     }
                 }
+            }
+        }
+        loadAwExtendable(back);
+    }
+
+    /**
+     * Load CB's own `extendable class` entries from core/shims/&lt;to&gt;/resources/cb.accesswidener
+     * into {@link #awExtendable}, in the analysis (intermediary) namespace. The AW is
+     * authored in the runtime namespace -- intermediary for pre-wall targets, official
+     * (mojang) for 26.x -- so past the wall each name is translated back to intermediary
+     * via {@code back} (mojang -&gt; intermediary) to match how hierarchyBreak sees it.
+     */
+    private void loadAwExtendable(java.util.Map<String, String> back) throws IOException {
+        Path aw = Path.of("core/shims/" + to + "/resources/cb.accesswidener");
+        if (!java.nio.file.Files.exists(aw)) {
+            return;
+        }
+        for (String ln : java.nio.file.Files.readAllLines(aw)) {
+            String s = ln.trim();
+            if (s.startsWith("#") || s.isEmpty()) {
+                continue;
+            }
+            // "extendable class net/minecraft/<name>" (also accept the historical
+            // "extend-able"/"transitive-extendable" spellings fabric tolerates)
+            String[] p = s.split("\\s+");
+            if (p.length >= 3 && p[1].equals("class") && p[0].endsWith("extendable")) {
+                String name = p[2];
+                awExtendable.add(back.getOrDefault(name, name));
             }
         }
     }

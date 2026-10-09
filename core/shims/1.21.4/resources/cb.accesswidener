@@ -5,3 +5,12 @@ accessible field net/minecraft/class_8609 field_45013 Lnet/minecraft/class_2535;
 # on every NEW/DUP/INVOKESPECIAL site in every mod.
 accessible method net/minecraft/class_2960 <init> (Ljava/lang/String;Ljava/lang/String;)V
 accessible method net/minecraft/class_4970 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+extendable class net/minecraft/class_1856
+extendable class net/minecraft/class_1887
+extendable class net/minecraft/class_20
+extendable class net/minecraft/class_2073
+extendable class net/minecraft/class_2960
+extendable class net/minecraft/class_3754
+extendable class net/minecraft/class_5251
+extendable class net/minecraft/class_5604
+extendable class net/minecraft/class_630
