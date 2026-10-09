@@ -1837,7 +1837,8 @@
   "net/fabricmc/fabric/api/object/builder/v1/block/type/WoodTypeRegistry": "top/dext/centurybridge/compat/fapi/CbWoodTypeRegistry",
   "net/fabricmc/fabric/api/registry/FabricBrewingRecipeRegistry": "top/dext/centurybridge/compat/fapi/CbFabricBrewingRecipeRegistry",
   "net/fabricmc/fabric/api/event/player/UseItemCallback": "top/dext/centurybridge/compat/fapi/CbUseItemCallback",
-  "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/facade/v1_21_4/CbPartialResult"
+  "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/facade/v1_21_4/CbPartialResult",
+  "net/minecraft/class_1813": "top/dext/centurybridge/facade/v1_21_4/class_1813"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
