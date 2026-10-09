@@ -14,7 +14,11 @@ CenturyBridge 是一个跨版本模组兼容层（Fabric）：把已停更的老
 >
 > **真机验收（2026-10，Linux 服务器 + Java 25）**：MC 26.2 的 server bundler 要求 class file version 69（Java 25）；Linux 上 Java 25 无 Windows 的 netty loopback 问题。单跳转换（pristine 源 → 目标，走廊内部逐段组合后压平成直达）实测：9 个 pristine 小模组从 1.20.2 / 1.21.4 单跳到 26.2 服务端 "Done"（含跨 20 段+命名墙的 1.20.2→26.2）；2 个 1.20.1 模组单跳到 1.21.1 服务端 "Done"。期间修复三个真机暴露的缺陷：模组自带 access widener 过命名墙未翻译（→ official 命名空间）、空 lang json 导致 26.2 Language 解析器崩、构造-后注册物品的占位 key 泄漏进 DataComponentInitializers。
 >
-> **已知未覆盖（发布前必须补）**：① 真机只测过小模组（最大为 cloth-config 1.1MB 库）——**Create / Valkyrien Skies 等大型深 mixin 模组尚未真机测**（本机语料里的大型模组均为 CB 产物而非 pristine 源，无法单跳验证）；② 客户端渲染 facade 无客户端夹具实测（缺素材）；③ 1.20.x 中间站 wiring 未收尾（见上）；④ 转换 CB 自身产物（接力/逐级落地）当前会残留旧版 facade/Statics 引用而崩，非设计用法但引擎应拒绝而非默默产坏 jar。
+> **大型模组真机（2026-10，pristine 源）**：下载 Ad Astra（548 类）、MythicMetals（金属工具/护甲）等真 pristine 1.20.1 大型模组单跳 26.2，逐层真机剥通并逐一补桥，形成两大**内容子系统**的忠实桥：**工具族**（26.2 删 PickaxeItem/SwordItem/TieredItem、Tier 接口变 ToolMaterial record——facade + Tier→record 转换 + 挖掘等级→方块标签映射，经 `Properties.pickaxe/sword` 真挂 TOOL 组件）、**护甲族**（删 ArmorItem、ArmorMaterial 接口变 8 参 record——facade + 转换 + `Properties.humanoidArmor` 真挂 ARMOR 组件）。另系统修：方块属性 `extends final`（Enum/Boolean/IntegerProperty facade）、构造器参数重排全族（26.2 Properties 挪末位的新约定，`gen_ctor_reshapes` 工具自动安全重排）、`owner::new` 构造器方法引用（invokedynamic handle 重写）、SpawnEgg/RecordItem/MobEffectInstance 的 DataComponent/Holder 迁移。
+>
+> **mixin 深注入是固有降级区**：mod 用 mixin 深度 hook vanilla 方法**内部**（@ModifyConstant 改方法体常量、@Inject 注入被重构成 lambda 的目标、@At selector 的栈类型），当 vanilla 在 26.x 重构了那个方法体，这些注入点静态无法预判是否仍匹配（CB 工作在名/签名级，够不着方法体内部与运行时栈）——是 mixin 跨版本的**固有极限，非 CB 可完全忠实桥**。CB 的务实解是降级：墙后 body-level injector（@ModifyConstant 等）失配时 require=0 软失败（mod 加载、该 hook 功能静默失效），而非让整个 mod 崩。真机见于 reach-entity-attributes（Yarn refmap + @Constant）、Ad Astra（lambda-target）、MythicMetals FireworkMixin（@At 栈类型）。
+>
+> **已知未覆盖（发布前必须补）**：① 大型模组真机**剥到 mixin 深注入层**（内容子系统已桥通），完整到 "Done" 还需墙后 injector 降级的 triage 判据补全（method-selector-fail / 栈类型失配 → strip 整个失配 mixin）；② 客户端渲染 facade 无客户端夹具实测（缺素材）；③ 1.20.x 中间站 wiring 未收尾（见上）；④ 转换 CB 自身产物（接力/逐级落地）当前会残留旧版 facade/Statics 引用而崩，非设计用法但引擎应拒绝而非默默产坏 jar。
 
 ### 架构：分段链
 
