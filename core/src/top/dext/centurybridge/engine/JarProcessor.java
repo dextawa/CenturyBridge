@@ -939,10 +939,28 @@ public final class JarProcessor {
         if (chain.wallClassFwd.isEmpty()) {
             return; // pre-wall: MixinRepair already handled injector downgrade
         }
+        // Every require-based injector anchors to an @At/@Constant point INSIDE a
+        // target method body. Post-wall there is no MixinRepair pass checking those
+        // anchors against the real 26.x body (it only runs pre-wall), so an injector
+        // whose target method name survived triage but whose anchor drifted when
+        // vanilla refactored the body throws InvalidInjectionException at APPLY and
+        // takes the whole mod down. require=0 is harmless to an injector that still
+        // matches (it injects normally) and turns a zero-match into a silent skip --
+        // the mod loads, that one hook degrades to a no-op. It cannot save a VerifyError
+        // (anchor matched but the stack type changed): that is the inherent mixin limit.
         java.util.Set<String> bodyInjectors = java.util.Set.of(
             "Lorg/spongepowered/asm/mixin/injection/ModifyConstant;",
+            "Lorg/spongepowered/asm/mixin/injection/Inject;",
+            "Lorg/spongepowered/asm/mixin/injection/Redirect;",
+            "Lorg/spongepowered/asm/mixin/injection/ModifyArg;",
+            "Lorg/spongepowered/asm/mixin/injection/ModifyArgs;",
+            "Lorg/spongepowered/asm/mixin/injection/ModifyVariable;",
             "Lcom/llamalad7/mixinextras/injector/ModifyExpressionValue;",
-            "Lcom/llamalad7/mixinextras/injector/ModifyReturnValue;");
+            "Lcom/llamalad7/mixinextras/injector/ModifyReturnValue;",
+            "Lcom/llamalad7/mixinextras/injector/ModifyReceiver;",
+            "Lcom/llamalad7/mixinextras/injector/wrapoperation/WrapOperation;",
+            "Lcom/llamalad7/mixinextras/injector/WrapWithCondition;",
+            "Lcom/llamalad7/mixinextras/injector/v2/WrapWithCondition;");
         int relaxed = 0;
         for (String cls : triage.configOfClass().keySet()) {
             if (deadMixins.contains(cls)) {
@@ -979,7 +997,7 @@ public final class JarProcessor {
             }
         }
         if (relaxed > 0) {
-            rpt.notes.add(tag + "relaxed " + relaxed + " body-level injector(s) to require=0 (wall: @Constant/expression may be gone in 26.x)");
+            rpt.notes.add(tag + "relaxed " + relaxed + " body-level injector(s) to require=0 (wall: anchor @At/@Constant may have drifted when 26.x refactored the target body; a drifted hook degrades to a silent no-op instead of crashing the mod)");
         }
     }
 
