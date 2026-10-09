@@ -591,7 +591,11 @@
   "net/minecraft/class_5328.method_33263(Lnet/minecraft/class_1542;Ljava/util/stream/Stream;)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_2586.method_11005(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2586;": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_2609.method_31651(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2609;)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
-  "net/minecraft/class_2512.method_10692(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v1_21_4/Statics"
+  "net/minecraft/class_2512.method_10692(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v1_21_4/Statics",
+  "com/mojang/serialization/codecs/KeyDispatchCodec.unsafe(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/Function;Ljava/util/function/Function;)Lcom/mojang/serialization/codecs/KeyDispatchCodec;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "com/mojang/util/UUIDTypeAdapter.fromString(Ljava/lang/String;)Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "com/mojang/util/UUIDTypeAdapter.fromUUID(Ljava/util/UUID;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "com/llamalad7/mixinextras/MixinExtrasBootstrap.initialize(Z)V": "top/dext/centurybridge/rt/v1_21_4/CbLibs"
  },
  "instanceRedirects": {
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1706,7 +1710,14 @@
   "net/minecraft/class_5132.method_27310(Lnet/minecraft/class_1320;)Z": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_1309.method_6112(Lnet/minecraft/class_1291;)Lnet/minecraft/class_1293;": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_2248.method_9586(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1927;)V": "top/dext/centurybridge/rt/v1_21_4/Statics",
-  "net/minecraft/class_1277.method_7660()Lnet/minecraft/class_2499;": "top/dext/centurybridge/rt/v1_21_4/Statics"
+  "net/minecraft/class_1277.method_7660()Lnet/minecraft/class_2499;": "top/dext/centurybridge/rt/v1_21_4/Statics",
+  "com/mojang/serialization/DataResult.getOrThrow(ZLjava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "com/mojang/serialization/DataResult.get()Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "com/mojang/serialization/DataResult.error()Ljava/util/Optional;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "com/mojang/datafixers/DataFixerBuilder.buildOptimized(Ljava/util/Set;Ljava/util/concurrent/Executor;)Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "com/mojang/authlib/minecraft/MinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "com/mojang/authlib/yggdrasil/response/MinecraftTexturesPayload.getTextures()Ljava/util/Map;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "com/mojang/authlib/yggdrasil/response/BlockListResponse.getBlockedProfiles()Ljava/util/Set;": "top/dext/centurybridge/rt/v1_21_4/CbLibs"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1825,7 +1836,8 @@
   "net/fabricmc/fabric/api/object/builder/v1/block/type/BlockSetTypeRegistry": "top/dext/centurybridge/compat/fapi/CbBlockSetTypeRegistry",
   "net/fabricmc/fabric/api/object/builder/v1/block/type/WoodTypeRegistry": "top/dext/centurybridge/compat/fapi/CbWoodTypeRegistry",
   "net/fabricmc/fabric/api/registry/FabricBrewingRecipeRegistry": "top/dext/centurybridge/compat/fapi/CbFabricBrewingRecipeRegistry",
-  "net/fabricmc/fabric/api/event/player/UseItemCallback": "top/dext/centurybridge/compat/fapi/CbUseItemCallback"
+  "net/fabricmc/fabric/api/event/player/UseItemCallback": "top/dext/centurybridge/compat/fapi/CbUseItemCallback",
+  "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/facade/v1_21_4/CbPartialResult"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -5131,7 +5143,9 @@
   "net/minecraft/class_990.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_759;)V": "top/dext/centurybridge/rt/v1_21_4/Statics#cbNewclass_990",
   "net/minecraft/class_5780.<init>(Lnet/minecraft/class_5778;IZZZFLnet/minecraft/class_6885;)V": "top/dext/centurybridge/rt/v1_21_4/Statics#cbNewclass_5780",
   "net/minecraft/class_793.<init>(Lnet/minecraft/class_2960;Ljava/util/List;Ljava/util/Map;Ljava/lang/Boolean;Lnet/minecraft/class_793$class_4751;Lnet/minecraft/class_809;Ljava/util/List;)V": "top/dext/centurybridge/rt/v1_21_4/Statics#cbNewclass_793",
-  "net/minecraft/class_1079.<init>(Ljava/util/List;IIIZ)V": "top/dext/centurybridge/rt/v1_21_4/Statics#cbNewclass_1079"
+  "net/minecraft/class_1079.<init>(Ljava/util/List;IIIZ)V": "top/dext/centurybridge/rt/v1_21_4/Statics#cbNewclass_1079",
+  "com/mojang/serialization/codecs/OptionalFieldCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;)V": "top/dext/centurybridge/rt/v1_21_4/CbLibs#cbNewOptionalFieldCodec",
+  "com/mojang/serialization/codecs/ListCodec.<init>(Lcom/mojang/serialization/Codec;)V": "top/dext/centurybridge/rt/v1_21_4/CbLibs#cbNewListCodec"
  },
  "superRedirects": {
   "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_21_4/Statics#cbRenderWidgets"
@@ -6176,6 +6190,17 @@
     "keep:1",
     "keep:0"
    ]
+  },
+  "com/mojang/serialization/codecs/OptionalFieldCodec.<init>(Ljava/lang/String;Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Ljava/lang/String;Lcom/mojang/serialization/Codec;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/rt/v1_21_4/CbLibs#cbFalse()Z"
+   ]
   }
+ },
+ "superRenames": {
+  "net/minecraft/class_1741": "top/dext/centurybridge/facade/v1_21_4/class_1741"
  }
 }
