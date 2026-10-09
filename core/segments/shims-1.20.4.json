@@ -1745,5 +1745,8 @@
   "net/minecraft/class_2621.field_31352:Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_7923.field_41154:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_4/Statics",
   "net/minecraft/class_7610$class_7611.field_40848:Lnet/minecraft/class_7610$class_7611;": "top/dext/centurybridge/rt/v1_20_4/Statics"
+ },
+ "superRenames": {
+  "net/minecraft/class_2647": "top/dext/centurybridge/facade/v1_20_4/class_2647"
  }
 }
