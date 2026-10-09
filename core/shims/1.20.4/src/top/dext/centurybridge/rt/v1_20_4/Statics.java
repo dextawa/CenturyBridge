@@ -188,13 +188,13 @@ public final class Statics {
     }
 
     /** 1.20.1 CraftingResultInventory.setLastRecipe(Recipe) -> new takes RecipeEntry; rebuilt via tracker. */
-    public static void method_7662(net.minecraft.class_1731 self, net.minecraft.class_1860<?> recipe) {
+    public static void method_7662(net.minecraft.class_1732 self, net.minecraft.class_1860<?> recipe) {
         if (recipe == null) {
-            ((net.minecraft.class_1732) self).method_7662(null);
+            self.method_7662(null);
             return;
         }
         net.minecraft.class_2960 id = Trackers.RECIPE_IDS.get(recipe);
-        ((net.minecraft.class_1732) self).method_7662(
+        self.method_7662(
             id == null ? null : new net.minecraft.class_8786<>(id, recipe));
     }
 
@@ -276,15 +276,14 @@ public final class Statics {
      * the recipe became a RecipeEntry. The tracker supplies the id the recipe
      * was registered under, so the old call still resolves.
      */
-    public static boolean method_7665(net.minecraft.class_1731 self,
+    public static boolean method_7665(net.minecraft.class_1732 self,
             net.minecraft.class_1937 world, net.minecraft.class_3222 player,
             net.minecraft.class_1860<?> recipe) {
         net.minecraft.class_2960 id = Trackers.RECIPE_IDS.get(recipe);
         if (id == null) {
             return false;
         }
-        return ((net.minecraft.class_1732) self)
-            .method_7665(world, player, new net.minecraft.class_8786<>(id, recipe));
+        return self.method_7665(world, player, new net.minecraft.class_8786<>(id, recipe));
     }
 
     // ==== GENERATED BRIDGES (assemble.py) ====
@@ -501,7 +500,8 @@ public final class Statics {
 
 
     /** was net/minecraft/class_184.method_807()Lcom/google/gson/JsonObject; */
-    public static com.google.gson.JsonObject method_807(net.minecraft.class_184 self) {
+    public static com.google.gson.JsonObject method_807(net.minecraft.class_184 self,
+            top.dext.centurybridge.facade.v1_20_4.class_5267 ctx) {
         throw new UnsupportedOperationException("CenturyBridge: Advancement JSON serialization is not supported on this version");
     }
 
