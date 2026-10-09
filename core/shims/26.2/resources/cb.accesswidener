@@ -5,3 +5,14 @@ accessible field net/minecraft/server/network/ServerCommonPacketListenerImpl con
 # on every NEW/DUP/INVOKESPECIAL site in every mod.
 accessible method net/minecraft/resources/Identifier <init> (Ljava/lang/String;Ljava/lang/String;)V
 accessible method net/minecraft/world/level/block/state/BlockBehaviour getCloneItemStack (Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/item/ItemStack;
+extendable class net/minecraft/world/item/crafting/Ingredient
+extendable class net/minecraft/advancements/predicates/ItemPredicate
+extendable class net/minecraft/resources/Identifier
+extendable class net/minecraft/world/level/saveddata/maps/MapDecoration
+extendable class net/minecraft/network/chat/TextColor
+extendable class net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator
+extendable class net/minecraft/client/model/geom/ModelPart
+extendable class net/minecraft/client/model/geom/builders/CubeDefinition
+extendable class net/minecraft/nbt/ListTag
+extendable class net/minecraft/world/level/pathfinder/Path
+extendable class net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration
