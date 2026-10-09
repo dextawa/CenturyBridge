@@ -929,6 +929,25 @@ public final class Statics {
         return net.minecraft.class_4185.method_46430(text, action).method_46434(x, y, w, h).method_46431();
     }
 
+    // ---- static-signature migrations: old return type recovered by unwrapping
+    //      the 1.20.2 wrapper record (wiring-check closure cycle 64) ----
+
+    /** 1.20.1 SynchronizeRecipesS2CPacket.readRecipe(buf) returned the Recipe directly;
+     *  1.20.2 made it private and returns a RecipeEntry (class_8786). The @Invoker on
+     *  GenClass2788Bridge reaches the private reader; comp_1933() is the wrapped recipe. */
+    public static net.minecraft.class_1860<?> method_17817(net.minecraft.class_2540 buf) {
+        net.minecraft.class_8786<?> entry =
+            top.dext.centurybridge.shims.v1_20_2.GenClass2788Bridge.cbReadRecipeEntry(buf);
+        return entry == null ? null : entry.comp_1933();
+    }
+
+    /** 1.20.1 EntityPredicate.Builder static builder returned the Builder directly;
+     *  1.20.2 wraps it in a class_175 record. comp_1924() is the wrapped Builder. */
+    public static net.minecraft.class_2080.class_2083 method_8997(net.minecraft.class_2048.class_2049 arg) {
+        net.minecraft.class_175<net.minecraft.class_2080.class_2083> w = net.minecraft.class_2080.class_2083.method_8997(arg);
+        return w == null ? null : w.comp_1924();
+    }
+
     // ---- 1.20.1 -> 1.20.2 dead constructors (wiring-check closure cycle 62) ----
 
     /** was ServerboundCustomPayloadPacket(Identifier, PacketByteBuf): 1.20.2 packets
