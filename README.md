@@ -18,7 +18,11 @@ CenturyBridge 是一个跨版本模组兼容层（Fabric）：把已停更的老
 >
 > **mixin 深注入是固有降级区**：mod 用 mixin 深度 hook vanilla 方法**内部**（@ModifyConstant 改方法体常量、@Inject 注入被重构成 lambda 的目标、@At selector 的栈类型），当 vanilla 在 26.x 重构了那个方法体，这些注入点静态无法预判是否仍匹配（CB 工作在名/签名级，够不着方法体内部与运行时栈）——是 mixin 跨版本的**固有极限，非 CB 可完全忠实桥**。CB 的务实解是降级：墙后 body-level injector（@ModifyConstant 等）失配时 require=0 软失败（mod 加载、该 hook 功能静默失效），而非让整个 mod 崩。真机见于 reach-entity-attributes（Yarn refmap + @Constant）、Ad Astra（lambda-target）、MythicMetals FireworkMixin（@At 栈类型）。
 >
-> **已知未覆盖（发布前必须补）**：① 大型模组真机**剥到 mixin 深注入层**（内容子系统已桥通），完整到 "Done" 还需墙后 injector 降级的 triage 判据补全（method-selector-fail / 栈类型失配 → strip 整个失配 mixin）；② 客户端渲染 facade 无客户端夹具实测（缺素材）；③ 1.20.x 中间站 wiring 未收尾（见上）；④ 转换 CB 自身产物（接力/逐级落地）当前会残留旧版 facade/Statics 引用而崩，非设计用法但引擎应拒绝而非默默产坏 jar。
+> **继承 vanilla 变 final/删除/改类型的类是第二个固有限制区**：mod `extends`/`implements` 一个 vanilla 在后续版本**变 final、被删、或 class↔interface 互换**的类（class_1856 Ingredient 变 final、class_1887 Enchantment 1.21 变 final、class_2073 ItemPredicate final、class_2342 DispenserBehavior 变 class、class_2647/4262 1.20.3 删等）。这是 JVM 继承语义的墙而非 CB 工作量问题：存活的 final vanilla 类无法被 facade 继承且同时保持 `instanceof` 为真，mod 对象传回 vanilla 就 ClassCastException——除非改写 mod 自身逻辑（超出 Wine/Proton 的 API-表面重建范畴）。对比可桥场景：vanilla **删掉**类并改组件化时（如 26.2 删 ArmorItem/PickaxeItem），facade 替身可行且已桥（见上工具/护甲子系统）；真正无解的是**类还在、只是变 final**。全量回归显示这主要打击深度继承 vanilla 的大型模组，纯 API 调用的小模组（CB 的长尾价值）基本不受影响。
+>
+> **全量 corpus 回归（270 真实 pristine 1.20.1 模组，四目标站，引擎零崩溃、270 产物全出）**：1.20.2 = 213 ok_direct / 44 degraded / 13 broken_hierarchy / 10 未记账；1.20.4 = 206 / 44 / 20 / 9；1.21.4 = 153 / 63 / 54 / 118；26.2 = 58 / 175 / 37 / 6871。走廊越远 ok_direct 越降、degraded/未记账越升（每段损耗单调累积）；broken_hierarchy 全部是上述继承固有限制（常只 1-2 个类 cannot-load 却令整 jar 判 broken）。近端站多数模组 ok_direct，远端站多转为 degraded（部分 hook 降级但加载）。
+>
+> **已知未覆盖**：① 大型模组真机**剥到 mixin 深注入层**（内容子系统已桥通），完整到 "Done" 还需墙后 injector 降级的 triage 判据补全——周期 62 已把 require=0 降级扩到全部 require-based 注入器（@Inject/@Redirect/@ModifyArg 等），drifted hook 降级为静默 no-op 而非崩；② 客户端渲染 facade 无客户端夹具实测（缺素材）；③ 1.20.x 中间站 wiring **已收尾**：1.20.2 / 1.20.4 build 四门全绿、桥 jar 产物落地（真机服务端验收待补）；④ 转换 CB 自身产物（接力/逐级落地）当前会残留旧版 facade/Statics 引用而崩，非设计用法但引擎应拒绝而非默默产坏 jar。
 
 ### 架构：分段链
 
