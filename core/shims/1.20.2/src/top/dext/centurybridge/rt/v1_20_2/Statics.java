@@ -928,4 +928,78 @@ public final class Statics {
     public static net.minecraft.class_4185 cbNewclass_4185(int x, int y, int w, int h, net.minecraft.class_2561 text, net.minecraft.class_4185.class_4241 action) {
         return net.minecraft.class_4185.method_46430(text, action).method_46434(x, y, w, h).method_46431();
     }
+
+    // ---- 1.20.1 -> 1.20.2 dead constructors (wiring-check closure cycle 62) ----
+
+    /** was ServerboundCustomPayloadPacket(Identifier, PacketByteBuf): 1.20.2 packets
+     *  carry a CustomPayload object. CbRawPayload wraps the old id + already-encoded
+     *  bytes verbatim, byte-for-byte what the 1.20.1 packet put on the wire. */
+    public static net.minecraft.class_2817 cbNewclass_2817(net.minecraft.class_2960 id, net.minecraft.class_2540 data) {
+        return new net.minecraft.class_2817(new CbRawPayload(id, data));
+    }
+
+    /** LootConditionType(JsonSerializer) -> Codec: a legacy serializer is a codec in
+     *  disguise (CbLootJson bridges toJson/fromJson both ways). */
+    public static net.minecraft.class_5342 cbNewclass_5342(top.dext.centurybridge.facade.v1_20_2.class_5335 serializer) {
+        return new net.minecraft.class_5342(CbLootJson.codec(serializer));
+    }
+
+    /** LootFunctionType(JsonSerializer) -> Codec */
+    public static net.minecraft.class_5339 cbNewclass_5339(top.dext.centurybridge.facade.v1_20_2.class_5335 serializer) {
+        return new net.minecraft.class_5339(CbLootJson.codec(serializer));
+    }
+
+    /** LootPoolEntryType(JsonSerializer) -> Codec */
+    public static net.minecraft.class_5338 cbNewclass_5338(top.dext.centurybridge.facade.v1_20_2.class_5335 serializer) {
+        return new net.minecraft.class_5338(CbLootJson.codec(serializer));
+    }
+
+    /** AdvancementRewards-area LootContextPredicate wrapper: 1.20.2's class_195 is
+     *  abstract -- no faithful standalone construction. */
+    public static net.minecraft.class_195 cbNewclass_195(net.minecraft.class_2960 id, net.minecraft.class_5258 pred) {
+        throw new UnsupportedOperationException("CenturyBridge: class_195 became abstract in 1.20.2; the old concrete (Identifier, LootContextPredicate) ctor has no faithful standalone equivalent");
+    }
+
+    /** CraftingRecipe-category ctor: 1.20.2's class_1852 is abstract with new
+     *  abstract methods a legacy call cannot satisfy. */
+    public static net.minecraft.class_1852 cbNewclass_1852(net.minecraft.class_2960 id, net.minecraft.class_7710 category) {
+        throw new UnsupportedOperationException("CenturyBridge: SpecialCraftingRecipe is abstract in 1.20.2 and its id moved to the registry key; the old (Identifier, category) ctor cannot be reconstructed here");
+    }
+
+    /** GameEvent(String name, int range) -> 1.20.2 takes range only (the registry
+     *  holds the name). */
+    public static net.minecraft.class_5712 cbNewclass_5712(String name, int range) {
+        return new net.minecraft.class_5712(range);
+    }
+
+    /** AbstractCookingRecipe: 1.20.2's class_1874 is abstract (CookingRecipeSerializer
+     *  builds concrete subtypes); no faithful standalone construction. */
+    public static net.minecraft.class_1874 cbNewclass_1874(net.minecraft.class_3956 type, net.minecraft.class_2960 id,
+            String group, net.minecraft.class_7709 category, net.minecraft.class_1856 ingredient,
+            net.minecraft.class_1799 result, float xp, int cookTime) {
+        throw new UnsupportedOperationException("CenturyBridge: AbstractCookingRecipe is abstract in 1.20.2 and its id moved to the registry key; the old concrete ctor has no faithful equivalent");
+    }
+
+    // ---- unbridgeable dead ctors: tombstone stubs (mod loads; lazy-fails only if
+    //      a mod actually constructs these vanilla-internal screens/packets) ----
+
+    /** ServerboundCustomQueryAnswerPacket(int, PacketByteBuf): 1.20.2 takes a typed
+     *  QueryAnswerPayload (class_8594) with no lossless path from raw bytes. */
+    public static net.minecraft.class_2913 cbNewclass_2913(int id, net.minecraft.class_2540 data) {
+        throw new UnsupportedOperationException("CenturyBridge: ServerboundCustomQueryAnswerPacket became a typed QueryAnswerPayload in 1.20.2; raw PacketByteBuf has no faithful conversion");
+    }
+
+    /** SimpleOptionsScreen / CreditsScreen ctors are unbridgeable (deleted/package-private
+     *  arg types); their ctorRedirect entries were removed and ledgered instead. */
+
+    /** EnchantmentScreen-family ctor gained two extra Identifier args in 1.20.2. */
+    public static net.minecraft.class_489 cbNewclass_489(net.minecraft.class_1720 handler, net.minecraft.class_517 a, net.minecraft.class_1661 inv, net.minecraft.class_2561 title, net.minecraft.class_2960 tex) {
+        throw new UnsupportedOperationException("CenturyBridge: this screen's 1.20.2 ctor requires two additional texture Identifiers not present in the 1.20.1 call");
+    }
+
+    /** ClientPlayNetworkHandler ctor collapsed its args into a single class_8675
+     *  ClientConnectionState in 1.20.2. */
+    public static net.minecraft.class_634 cbNewclass_634(net.minecraft.class_310 mc, net.minecraft.class_437 screen, net.minecraft.class_2535 conn, net.minecraft.class_642 server, com.mojang.authlib.GameProfile profile, net.minecraft.class_7975 cookie) {
+        throw new UnsupportedOperationException("CenturyBridge: ClientPlayNetworkHandler's 1.20.2 ctor takes a ClientConnectionState (class_8675) that bundles state not reconstructable from the old separate args");
+    }
 }
