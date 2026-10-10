@@ -159,7 +159,7 @@ python3 core/tools/sync_mixin_config.py "$VERSION" "$CLASSES" "$SERVER" --check 
 # redirects, field redirects/getters, instanceof predicates, constructor
 # factories, super-ctor adapters and reshape ops, lookupRt, override-hook
 # wrap/unwrap/guard, facade renames.
-java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "core/segments/shims-$VERSION.json" "$NAMETABLE" \
+java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "core/segments/shims-$VERSION.json" "$NAMETABLE" "$STUB" \
     || { echo "build aborted: dangling redirect wiring"; exit 1; }
 
 # Everything Mixin resolves by NAME at PREPARE (accessor/invoker/shadow

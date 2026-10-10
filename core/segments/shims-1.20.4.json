@@ -232,7 +232,10 @@
   "net/minecraft/class_7380": "net/minecraft/class_7378$class_7380",
   "net/minecraft/class_7917$class_8751": "net/minecraft/class_9298$class_8751",
   "net/minecraft/class_8172$class_8526": "net/minecraft/class_8526",
-  "net/minecraft/class_2345": "top/dext/centurybridge/facade/v1_20_4/class_2345"
+  "net/minecraft/class_2345": "top/dext/centurybridge/facade/v1_20_4/class_2345",
+  "net/minecraft/class_2647": "top/dext/centurybridge/facade/v1_20_4/class_2647",
+  "net/minecraft/class_4262": "top/dext/centurybridge/facade/v1_20_4/class_4262",
+  "net/minecraft/class_2368": "top/dext/centurybridge/facade/v1_20_4/class_2368"
  },
  "fieldRenames": {
   "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "field_45013"
@@ -329,9 +332,6 @@
   "net/minecraft/class_161$class_162.method_709": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_161$class_162.method_698": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_2585": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
-  "net/minecraft/class_2368": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
-  "net/minecraft/class_2647": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
-  "net/minecraft/class_4262": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
   "net/minecraft/class_2511": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
   "net/minecraft/class_2164": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
   "net/minecraft/class_269": "1.20.3 rework wave -- ledgered pending codec-based bridge",
@@ -1747,10 +1747,6 @@
   "net/minecraft/class_7610$class_7611.field_40848:Lnet/minecraft/class_7610$class_7611;": "top/dext/centurybridge/rt/v1_20_4/Statics"
  },
  "superRenames": {
-  "net/minecraft/class_2647": "top/dext/centurybridge/facade/v1_20_4/class_2647",
-  "net/minecraft/class_4262": "top/dext/centurybridge/facade/v1_20_4/class_4262",
-  "net/minecraft/class_2368": "top/dext/centurybridge/facade/v1_20_4/class_2368",
-  "net/minecraft/class_2342": "top/dext/centurybridge/facade/v1_20_4/class_2342",
   "net/minecraft/class_2096": "top/dext/centurybridge/facade/v1_20_4/class_2096"
  }
 }

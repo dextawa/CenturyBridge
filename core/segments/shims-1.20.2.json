@@ -413,7 +413,6 @@
   "net/minecraft/class_339.field_22757:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/Statics"
  },
  "superRenames": {
-  "net/minecraft/class_2342": "top/dext/centurybridge/facade/v1_20_2/class_2342",
   "net/minecraft/class_2096": "top/dext/centurybridge/facade/v1_20_2/class_2096"
  }
 }

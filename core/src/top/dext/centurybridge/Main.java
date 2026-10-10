@@ -45,7 +45,8 @@ public final class Main {
                 args.length > 4 && !args[4].isEmpty() ? Path.of(args[4]) : null);
             case "wiring-check" -> top.dext.centurybridge.data.WiringCheck.run(
                 Path.of(args[1]), Path.of(args[2]),
-                args.length > 3 && !args[3].isEmpty() ? Path.of(args[3]) : null);
+                args.length > 3 && !args[3].isEmpty() ? Path.of(args[3]) : null,
+                args.length > 4 && !args[4].isEmpty() ? Path.of(args[4]) : null);
             case "mixin-anchors" -> top.dext.centurybridge.engine.MixinRepair.audit(args);
             case "link-check" -> top.dext.centurybridge.data.LinkCheck.run(args);
             case "audit" -> top.dext.centurybridge.data.SymbolAudit.run(

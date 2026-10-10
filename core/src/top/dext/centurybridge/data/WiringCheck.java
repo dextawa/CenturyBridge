@@ -38,18 +38,30 @@ import org.objectweb.asm.tree.MethodNode;
  * onto shipped facades. Covers are checked by MixinCheck against the mixin
  * classes (they are overloads added to vanilla classes, not statics).
  *
- *   wiring-check &lt;compiledShimDir&gt; &lt;shims.json&gt; [&lt;inter-to-mojang.tsv&gt;]
+ *   wiring-check &lt;compiledShimDir&gt; &lt;shims.json&gt; [&lt;inter-to-mojang.tsv&gt;] [&lt;target stub jar&gt;]
  */
 public final class WiringCheck {
 
     private final Map<String, ClassNode> classes = new HashMap<>();
+    /** target stub classes (members only): what superRenames and reshapes must agree with */
+    private final Map<String, ClassNode> stub = new HashMap<>();
     private final List<String> problems = new ArrayList<>();
     private Remapper facade = new SimpleRemapper(Map.of());
     private Remapper wall;
     private int checked;
 
-    public static void run(Path classesDir, Path shimsJson, Path table) throws IOException {
+    public static void run(Path classesDir, Path shimsJson, Path table, Path stubJar) throws IOException {
         WiringCheck w = new WiringCheck();
+        if (stubJar != null && Files.exists(stubJar)) {
+            try (var z = new java.util.zip.ZipFile(stubJar.toFile())) {
+                for (var en : java.util.Collections.list(z.entries())) {
+                    if (!en.getName().endsWith(".class")) continue;
+                    ClassNode cn = new ClassNode();
+                    new ClassReader(z.getInputStream(en).readAllBytes()).accept(cn, ClassReader.SKIP_CODE);
+                    w.stub.put(cn.name, cn);
+                }
+            }
+        }
         try (var stream = Files.walk(classesDir)) {
             for (Path p : (Iterable<Path>) stream.filter(f -> f.toString().endsWith(".class"))::iterator) {
                 ClassNode cn = new ClassNode();
@@ -96,6 +108,7 @@ public final class WiringCheck {
                     problems.add("superRename " + e.getKey() + " -> " + v + " (no such facade class)");
                 }
                 checked++;
+                if (!stub.isEmpty()) checkSuperRename(e.getKey(), v);
             }
         }
         // "owner.name(desc)R" -> "cls[#member]": static with the key's descriptor
@@ -138,9 +151,14 @@ public final class WiringCheck {
                     methodDesc(o.get("convDesc").getAsString()));
             }
         }
+        Map<String, String> superRen = new HashMap<>();
+        if (root.has("superRenames")) {
+            for (var e : root.getAsJsonObject("superRenames").entrySet()) superRen.put(e.getKey(), e.getValue().getAsString());
+        }
         if (root.has("superCtorReshapes")) {
             for (var e : root.getAsJsonObject("superCtorReshapes").entrySet()) {
                 var o = e.getValue().getAsJsonObject();
+                if (!stub.isEmpty()) checkReshapeTarget(e.getKey(), o.get("desc").getAsString(), superRen);
                 for (var op : o.getAsJsonArray("ops")) {
                     String t = op.getAsString().trim();
                     int sp = t.indexOf(' ');
@@ -188,6 +206,61 @@ public final class WiringCheck {
     }
 
     /** the converter's view of a descriptor: facade renames, then the namespace wall */
+    /**
+     * A superRename moves only the extends/implements clause (and super calls) onto
+     * the facade; every other reference keeps the original type. That is sound only
+     * while the original type survives on the target AND the facade is one of its
+     * subtypes. A key that is gone leaves NEW sites, casts and field/method types
+     * naming a missing class (classRenames is the tool); a facade that is not a
+     * subtype of the surviving type makes the mod's own instances fail verification
+     * wherever they meet a slot of that type -- always the case for a final class.
+     */
+    private void checkSuperRename(String key, String fac) {
+        String kt = targetName(key);
+        ClassNode kn = stub.get(kt);
+        if (kn == null) {
+            problems.add("superRename " + key + ": the class is gone on the target -- superRenames only move"
+                + " extends/implements, so NEW sites, casts and field/method types keep naming it; use classRenames");
+        } else if (classes.containsKey(fac) && !isSubtype(fac, kt)) {
+            boolean fin = (kn.access & org.objectweb.asm.Opcodes.ACC_FINAL) != 0;
+            problems.add("superRename " + key + " -> " + fac + ": not a subtype of the surviving " + kt
+                + (fin ? " (final on the target, so no facade can be)" : "")
+                + " -- a mod instance reaching a " + kt + "-typed slot fails verification");
+        }
+    }
+
+    /** the reshaped super call lands on the facade (superRenamed owner) or the renamed owner; the ctor must exist there */
+    private void checkReshapeTarget(String key, String reshapedDesc, Map<String, String> superRen) {
+        Sym s = Sym.method(key);
+        String tc = superRen.containsKey(s.owner) ? superRen.get(s.owner) : targetName(facade.map(s.owner));
+        String nd = methodDesc(reshapedDesc);
+        ClassNode tn = classes.containsKey(tc) ? classes.get(tc) : stub.get(tc);
+        if (tn == null) {
+            problems.add("superCtorReshapes " + key + ": reshaped call targets " + tc + ", which does not exist");
+        } else if (tn.methods.stream().noneMatch(m -> m.name.equals("<init>") && m.desc.equals(nd))) {
+            problems.add("superCtorReshapes " + key + ": " + tc + ".<init>" + nd + " is not a constructor there");
+        }
+    }
+
+    private String targetName(String internalName) {
+        return wall == null ? internalName : wall.map(internalName);
+    }
+
+    private boolean isSubtype(String sub, String sup) {
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(sub));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.pop();
+            if (c.equals(sup)) return true;
+            if (!seen.add(c)) continue;
+            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            if (n == null) continue;
+            if (n.superName != null) todo.push(n.superName);
+            todo.addAll(n.interfaces);
+        }
+        return false;
+    }
+
     private String methodDesc(String desc) {
         String d = facade.mapMethodDesc(desc);
         return wall == null ? d : wall.mapMethodDesc(d);
