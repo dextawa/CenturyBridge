@@ -113,6 +113,36 @@ public final class Chain {
         return null;
     }
 
+    /**
+     * Home for an instance call, in the JVM's method-resolution order: the class and
+     * its superclasses, then their superinterfaces. A member keyed on an interface
+     * serves a call made through an implementing class (ResultContainer implements
+     * RecipeHolder) exactly as the JVM would resolve it; the bridge static takes the
+     * receiver as that interface, which the implementing instance satisfies.
+     */
+    public String instanceRedirectHome(java.util.Map<String, String> map, String owner, String nameDesc) {
+        String home = redirectHome(map, owner, nameDesc);
+        if (home != null) {
+            return home;
+        }
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>();
+        for (String o : selfAndSupers(owner)) {
+            todo.addAll(interfacesOf.getOrDefault(o, java.util.List.of()));
+        }
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String i = todo.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            if (map.containsKey(i + "." + nameDesc)) {
+                return i;
+            }
+            todo.addAll(interfacesOf.getOrDefault(i, java.util.List.of()));
+        }
+        return null;
+    }
+
     public String ledgerReason(String owner, String name) {
         String r = null;
         if (name != null) {
@@ -749,6 +779,8 @@ public final class Chain {
      * of which were written off as dead while a bridge already existed.
      */
     public final java.util.Map<String, String> superOf = new java.util.HashMap<>();
+    /** source-version class -> its directly implemented interfaces (game classes only) */
+    public final java.util.Map<String, java.util.List<String>> interfacesOf = new java.util.HashMap<>();
 
     /** Walk owner and every ancestor, in order, so callers can resolve via any of them. */
     public java.util.List<String> selfAndSupers(String owner) {
@@ -780,6 +812,9 @@ public final class Chain {
                                           String sup, String[] itf) {
                             if (sup != null) {
                                 superOf.put(name, sup);
+                            }
+                            if (itf != null && itf.length > 0) {
+                                interfacesOf.put(name, java.util.List.of(itf));
                             }
                         }
                     }, org.objectweb.asm.ClassReader.SKIP_CODE

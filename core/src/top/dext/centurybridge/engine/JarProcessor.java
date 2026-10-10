@@ -1374,7 +1374,7 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(key, "static-redirect");
                             return;
                         }
-                        String irtHome = chain.redirectHome(chain.instanceRedirects, owner, name + desc);
+                        String irtHome = chain.instanceRedirectHome(chain.instanceRedirects, owner, name + desc);
                         if (irtHome != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
                             instRedirects.put(site, chain.instanceRedirects.get(irtHome + "." + name + desc));
                             // the bridge static takes the receiver typed as the class the
@@ -1607,11 +1607,16 @@ public final class JarProcessor {
                                     continue;
                                 }
                                 String rt = chain.staticRedirects.get(key);
-                                String irt = chain.instanceRedirects.get(key);
+                                // same resolution as a direct call: class, superclasses, superinterfaces
+                                String irtHome = h.getTag() == Opcodes.H_INVOKESTATIC ? null
+                                    : chain.instanceRedirectHome(chain.instanceRedirects, hOwner, h.getName() + h.getDesc());
+                                String irt = irtHome == null ? null
+                                    : chain.instanceRedirects.get(irtHome + "." + h.getName() + h.getDesc());
                                 if (rt != null || irt != null) {
                                     redirects.putAll(rt != null ? Map.of(site, rt) : Map.of());
                                     if (irt != null) {
                                         instRedirects.put(site, irt);
+                                        emitOwner.put(site, irtHome);
                                     }
                                     top.dext.centurybridge.data.FullAudit.record(key,
                                         rt != null ? "static-redirect" : "instance-redirect");
