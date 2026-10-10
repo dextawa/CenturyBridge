@@ -85,6 +85,19 @@ public final class WiringCheck {
             }
             facade = new SimpleRemapper(ren);
         }
+        // superRenames point a mod's extends/implements at a shipped facade class
+        // (interface or abstract class). Like classRenames, a key naming a facade
+        // that was never compiled would make every converted subclass fail to load
+        // with NoClassDefFound -- the build gate must catch the dangling target.
+        if (root.has("superRenames")) {
+            for (var e : root.getAsJsonObject("superRenames").entrySet()) {
+                String v = e.getValue().getAsString();
+                if (v.startsWith("top/dext/") && !classes.containsKey(v)) {
+                    problems.add("superRename " + e.getKey() + " -> " + v + " (no such facade class)");
+                }
+                checked++;
+            }
+        }
         // "owner.name(desc)R" -> "cls[#member]": static with the key's descriptor
         obj(root, "staticRedirects", (k, v) -> {
             Sym s = Sym.method(k);
