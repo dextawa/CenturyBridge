@@ -36,6 +36,10 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.MultiANewArrayInsnNode;
 import org.objectweb.asm.tree.TypeInsnNode;
+import org.objectweb.asm.tree.analysis.Analyzer;
+import org.objectweb.asm.tree.analysis.AnalyzerException;
+import org.objectweb.asm.tree.analysis.BasicValue;
+import org.objectweb.asm.tree.analysis.SimpleVerifier;
 
 /**
  * Independent link check of converted jars against the REAL target runtime.
@@ -59,6 +63,10 @@ import org.objectweb.asm.tree.TypeInsnNode;
  *   ABSTRACT   concrete class misses an abstract member AbstractMethodError
  *   ORPHAN     mod override (intermediary method_N)     silently never called
  *              no longer overrides anything
+ *   TYPE       value reaches a class-typed slot it      VerifyError (the whole
+ *              does not extend (type flow over the      class is rejected at
+ *              real hierarchy)                          link time)
+ *   VERIFY     method body fails analysis otherwise     VerifyError
  *
  * Each finding is then joined against the engine's full-audit.tsv (optional):
  *   CLAIMED  engine recorded the symbol as fixed (covered/redirect/rename/hook)
@@ -392,8 +400,157 @@ public final class LinkCheck {
             }
         }
         if (mixin) return; // members of mixins are MixinCheck's job
+        checkTypes(cn);
         if ((cn.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE)) == 0) checkAbstracts(cn);
         checkOrphans(cn);
+    }
+
+    /**
+     * Type-flow check of every method body against the real hierarchy: the JVM's
+     * verifier rejects the whole class (VerifyError) when a value meets a slot of a
+     * class type it does not extend. Renaming a mod's hierarchy onto a facade that is
+     * not a subtype of the surviving vanilla type produces exactly that, and no
+     * member-resolution check can see it. Mixin bodies are skipped: they only acquire
+     * their real `this` type once merged into the target.
+     */
+    private void checkTypes(ClassNode cn) {
+        for (MethodNode m : cn.methods) {
+            if (m.instructions == null || m.instructions.size() == 0) continue;
+            String where = cn.name + "." + m.name + m.desc;
+            IndexVerifier v = new IndexVerifier(cn);
+            try {
+                new Analyzer<>(v).analyze(cn.name, m);
+            } catch (AnalyzerException ex) {
+                if (v.expected != null) {
+                    reportType(where, v.expected, v.actual, ex.getMessage());
+                } else {
+                    report("VERIFY", where, where, String.valueOf(ex.getMessage()));
+                }
+            } catch (RuntimeException ex) {
+                report("VERIFY", where, where, ex.getClass().getSimpleName() + ": " + ex.getMessage());
+            }
+        }
+    }
+
+    private void reportType(String where, Type expected, Type actual, String message) {
+        String exp = expected.getSort() == Type.OBJECT ? expected.getInternalName() : expected.getDescriptor();
+        if (!reported.add("TYPE " + exp)) return;
+        String bucket;
+        if (actual.getSort() == Type.OBJECT && hasFacadeAncestor(actual.getInternalName())) {
+            bucket = "CLAIMED"; // the converter moved this value's hierarchy onto a facade the slot rejects
+        } else if (expected.getSort() == Type.OBJECT && !platform(exp) && !subjectOwns(exp)) {
+            bucket = "EXTDEP";
+        } else {
+            bucket = "BLIND";
+        }
+        findings.add(new Finding(bucket, "TYPE", curJar, where, exp,
+            "found " + (actual.getSort() == Type.OBJECT ? actual.getInternalName() : actual.getDescriptor())
+            + " (" + message + ")"));
+    }
+
+    private boolean hasFacadeAncestor(String name) {
+        if (name.startsWith("top/dext/centurybridge/")) return true;
+        if (cls(name) == null) return false;
+        for (String c : supertypes(name)) if (c.startsWith("top/dext/centurybridge/")) return true;
+        return false;
+    }
+
+    private boolean subjectOwns(String name) {
+        for (ClassNode cn : subjects.getOrDefault(curJar, List.of())) if (cn.name.equals(name)) return true;
+        return false;
+    }
+
+    /** SimpleVerifier answering subtype questions from the index instead of loading classes. */
+    private final class IndexVerifier extends SimpleVerifier {
+        Type expected;
+        Type actual;
+
+        IndexVerifier(ClassNode cn) {
+            super(Opcodes.ASM9, Type.getObjectType(cn.name),
+                  cn.superName == null ? null : Type.getObjectType(cn.superName),
+                  cn.interfaces.stream().map(Type::getObjectType).toList(),
+                  (cn.access & Opcodes.ACC_INTERFACE) != 0);
+        }
+
+        @Override
+        protected boolean isSubTypeOf(BasicValue value, BasicValue expectedValue) {
+            Type exp = expectedValue.getType();
+            Type typ = value.getType();
+            boolean ok;
+            if (isReference(exp) && isReference(typ) && !typ.getInternalName().equals("null")) {
+                // SimpleVerifier would ask getClass(exp).isInterface() on a miss; the index
+                // already answers that (isAssignableFrom relaxes interface slots like the JVM)
+                ok = isAssignableFrom(exp, typ);
+            } else {
+                ok = super.isSubTypeOf(value, expectedValue); // primitives, null: no class lookup
+            }
+            if (!ok && expected == null) {
+                expected = exp;
+                actual = typ;
+            }
+            return ok;
+        }
+
+        private boolean isReference(Type t) {
+            return t != null && (t.getSort() == Type.OBJECT || t.getSort() == Type.ARRAY);
+        }
+
+        @Override
+        protected boolean isInterface(Type type) {
+            if (type.getSort() != Type.OBJECT) return false;
+            Cls c = cls(type.getInternalName());
+            return c != null && c.isInterface();
+        }
+
+        @Override
+        protected Type getSuperClass(Type type) {
+            if (type.getSort() != Type.OBJECT) return Type.getObjectType("java/lang/Object");
+            Cls c = cls(type.getInternalName());
+            return c == null || c.superName == null ? null : Type.getObjectType(c.superName);
+        }
+
+        @Override
+        protected boolean isAssignableFrom(Type type, Type other) {
+            if (type == null || other == null) return false;
+            if (type.equals(other)) return true;
+            if (type.getSort() == Type.ARRAY) {
+                if (other.getSort() != Type.ARRAY) return false;
+                if (type.getDimensions() == other.getDimensions()) {
+                    Type te = type.getElementType();
+                    Type oe = other.getElementType();
+                    if (te.getSort() != Type.OBJECT || oe.getSort() != Type.OBJECT) return te.equals(oe);
+                    return isAssignableFrom(te, oe);
+                }
+                if (type.getDimensions() > other.getDimensions()) return false;
+                String e = type.getElementType().getInternalName();
+                return type.getElementType().getSort() == Type.OBJECT && arrayRoot(e);
+            }
+            if (type.getSort() != Type.OBJECT) return false;
+            String target = type.getInternalName();
+            if (target.equals("java/lang/Object")) return true;
+            if (other.getSort() == Type.ARRAY) return arrayRoot(target);
+            if (other.getSort() != Type.OBJECT) return false;
+            Cls t = cls(target);
+            if (t == null) return true;        // unknown type: already a CLASS finding
+            if (t.isInterface()) return true;  // the verifier does not check interface assignment
+            for (String c = other.getInternalName(); c != null; ) {
+                if (c.equals(target)) return true;
+                Cls k = cls(c);
+                if (k == null) return true;    // broken chain: already a CLASS finding
+                c = k.superName;
+            }
+            return false;
+        }
+
+        private boolean arrayRoot(String name) {
+            return name.equals("java/lang/Object") || name.equals("java/lang/Cloneable")
+                   || name.equals("java/io/Serializable");
+        }
+
+        @Override
+        protected Class<?> getClass(Type type) {
+            throw new UnsupportedOperationException("link-check resolves types from its index, never by loading " + type);
+        }
     }
 
     private void checkInsn(AbstractInsnNode in, String where) {
@@ -637,8 +794,8 @@ public final class LinkCheck {
         if (dot > 0) owner = ref.substring(0, dot);
         String bucket;
         String fate = auditFate.get(auditKey(kind, ref));
-        if (kind.equals("ORPHAN")) {
-            bucket = "BLIND"; // the audit counts call sites, never declarations
+        if (kind.equals("ORPHAN") || kind.equals("VERIFY")) {
+            bucket = "BLIND"; // the audit counts call sites, never declarations or method bodies
         } else if (owner.startsWith("top/dext/centurybridge/")) {
             bucket = "CLAIMED"; // the converter pointed the site at a bridge that is not there
         } else if (!platform(owner) || foreignMinecraft(owner)) {
