@@ -232,18 +232,20 @@ public final class WiringCheck {
     /** the reshaped super call lands on the facade (superRenamed owner) or the renamed owner; the ctor must exist there */
     private void checkReshapeTarget(String key, String reshapedDesc, Map<String, String> superRen) {
         Sym s = Sym.method(key);
-        String tc = superRen.containsKey(s.owner) ? superRen.get(s.owner) : targetName(facade.map(s.owner));
+        String tc = superRen.containsKey(s.owner) ? superRen.get(s.owner) : targetName(facade.mapType(s.owner));
         String nd = methodDesc(reshapedDesc);
         ClassNode tn = classes.containsKey(tc) ? classes.get(tc) : stub.get(tc);
         if (tn == null) {
-            problems.add("superCtorReshapes " + key + ": reshaped call targets " + tc + ", which does not exist");
+            if (tc.startsWith("net/minecraft/")) { // library owners (DFU...) are not in the game stub
+                problems.add("superCtorReshapes " + key + ": reshaped call targets " + tc + ", which does not exist");
+            }
         } else if (tn.methods.stream().noneMatch(m -> m.name.equals("<init>") && m.desc.equals(nd))) {
             problems.add("superCtorReshapes " + key + ": " + tc + ".<init>" + nd + " is not a constructor there");
         }
     }
 
     private String targetName(String internalName) {
-        return wall == null ? internalName : wall.map(internalName);
+        return wall == null ? internalName : wall.mapType(internalName); // map() is null when unmapped
     }
 
     private boolean isSubtype(String sub, String sup) {
