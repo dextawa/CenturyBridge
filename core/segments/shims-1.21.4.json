@@ -1838,7 +1838,11 @@
   "net/fabricmc/fabric/api/registry/FabricBrewingRecipeRegistry": "top/dext/centurybridge/compat/fapi/CbFabricBrewingRecipeRegistry",
   "net/fabricmc/fabric/api/event/player/UseItemCallback": "top/dext/centurybridge/compat/fapi/CbUseItemCallback",
   "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/facade/v1_21_4/CbPartialResult",
-  "net/minecraft/class_1813": "top/dext/centurybridge/facade/v1_21_4/class_1813"
+  "net/minecraft/class_1813": "top/dext/centurybridge/facade/v1_21_4/class_1813",
+  "net/minecraft/class_4262": "top/dext/centurybridge/facade/v1_21_4/class_4262",
+  "net/minecraft/class_2368": "top/dext/centurybridge/facade/v1_21_4/class_2368",
+  "net/minecraft/class_2647": "top/dext/centurybridge/facade/v1_21_4/class_2647",
+  "net/minecraft/class_4057": "top/dext/centurybridge/facade/v1_21_4/class_4057"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -1928,9 +1932,6 @@
   "net/minecraft/class_161$class_162.method_709": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_161$class_162.method_698": "1.20.3 predicate/criterion codec wave -- delegation targets deleted; ledgered at this target",
   "net/minecraft/class_2585": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
-  "net/minecraft/class_2368": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
-  "net/minecraft/class_2647": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
-  "net/minecraft/class_4262": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
   "net/minecraft/class_2511": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
   "net/minecraft/class_2164": "pre-corridor corpse: reference was already dead on 1.20.1 (mod shipped broken/unused path)",
   "net/minecraft/class_269": "1.20.3 rework wave -- ledgered pending codec-based bridge",
@@ -2903,7 +2904,6 @@
   "net/minecraft/class_3953": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: MOVEDx1)",
   "net/minecraft/class_3977": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_4048": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
-  "net/minecraft/class_4057": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (1 symbols: CLASS_GONEx1)",
   "net/minecraft/class_4058": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (1 symbols: CLASS_GONEx1)",
   "net/minecraft/class_4059": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_412": "tombstone [client]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
@@ -6202,13 +6202,6 @@
   }
  },
  "superRenames": {
-  "net/minecraft/class_1741": "top/dext/centurybridge/facade/v1_21_4/class_1741",
-  "net/minecraft/class_4262": "top/dext/centurybridge/facade/v1_21_4/class_4262",
-  "net/minecraft/class_2368": "top/dext/centurybridge/facade/v1_21_4/class_2368",
-  "net/minecraft/class_2647": "top/dext/centurybridge/facade/v1_21_4/class_2647",
-  "net/minecraft/class_2342": "top/dext/centurybridge/facade/v1_21_4/class_2342",
-  "net/minecraft/class_2096": "top/dext/centurybridge/facade/v1_21_4/class_2096",
-  "net/minecraft/class_4057": "top/dext/centurybridge/facade/v1_21_4/class_4057",
-  "net/minecraft/class_3999": "top/dext/centurybridge/facade/v1_21_4/class_3999"
+  "net/minecraft/class_2096": "top/dext/centurybridge/facade/v1_21_4/class_2096"
  }
 }
