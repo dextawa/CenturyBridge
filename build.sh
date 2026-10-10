@@ -138,6 +138,17 @@ find "$SHIM/src" -name '*.java' > "$OUT/sources-$VERSION.txt"
 case "$VERSION" in 1.20.*) RELEASE=17;; *) RELEASE=21;; esac
 javac -nowarn -proc:none --release "$RELEASE" -cp "$CP" -d "$CLASSES" "@$OUT/sources-$VERSION.txt"
 
+# Which side a mixin loads on is derived, not hand-placed: "client" only when it
+# references a class the dedicated server jar lacks. A server bridge parked in
+# "client" never applies on a dedicated server, so the call site its cover left
+# untouched throws NoSuchMethodError there -- while every other gate and a client
+# test pass. Checked against the real server jar.
+SERVER="${CB_SERVER:-$(find "data/runtime/server-$VERSION" -name server-intermediary.jar 2>/dev/null | head -1)}"
+[ -n "$SERVER" ] || SERVER="data/runtime/server-$VERSION/versions/$VERSION/server-$VERSION.jar"
+[ -f "$SERVER" ] || { echo "dedicated server jar not found (set CB_SERVER): needed to verify mixin sides"; exit 1; }
+python3 core/tools/sync_mixin_config.py "$VERSION" "$CLASSES" "$SERVER" --check \
+    || { echo "build aborted: mixin config sides disagree with the server jar -- core/tools/sync_mixin_config.py --fix"; exit 1; }
+
 # Every redirect must point at a static that actually exists WITH THE EXACT
 # DESCRIPTOR the converter emits: INVOKESTATIC resolves by name+descriptor,
 # so a same-name overload of another arity is still NoSuchMethodError the

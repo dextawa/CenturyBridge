@@ -8,13 +8,19 @@ jar -- applying it on a server would load a class that is not there.
 
   python3 sync_mixin_config.py <ver> <compiledClassesDir> <server-intermediary.jar> [--check]
 
---check: only report how the existing entries would be classified (sanity
-check of the side rule against hand-placed entries), write nothing.
+--check: report entries whose side disagrees with the rule; exit 1 if any
+(build.sh runs this as a gate after compiling).
+--fix:   also move existing entries to the side the rule gives (a deliberate
+"server" entry stays). Sides are derived, not hand-placed: a server bridge in
+"client" never loads on a dedicated server (the covered call site then throws
+NoSuchMethodError), and a client-referencing mixin in "mixins" drags a class the
+server does not have into its load.
 """
 import glob, json, os, re, struct, sys, zipfile
 
 ver, classes, server_jar = sys.argv[1:4]
 check = "--check" in sys.argv
+fix = "--fix" in sys.argv
 shim = f"core/shims/{ver}"
 cfg_p = glob.glob(f"{shim}/resources/*.mixins.json")[0]
 cfg = json.load(open(cfg_p, encoding="utf-8"))
@@ -70,7 +76,18 @@ if check:
             disagree += 1
             print(f"  {m}: config={side} rule={r[0]} {r[1][:3]}")
     print(f"side rule vs existing entries: {agree} agree, {disagree} disagree")
-    sys.exit(0)
+    sys.exit(1 if disagree else 0)
+
+moved = 0
+if fix:
+    for m, side in sorted(listed.items()):
+        r = side_of(m)
+        if r is None or r[0] == side or (side == "server" and r[0] == "mixins"):
+            continue
+        cfg[side].remove(m)
+        cfg.setdefault(r[0], []).append(m)
+        listed[m] = r[0]
+        moved += 1
 
 srcdir = os.path.join(shim, "src", pkg)
 added = {"mixins": [], "client": []}
@@ -87,4 +104,4 @@ for side, names in added.items():
     cfg[side] = sorted(set(cfg.get(side, [])) | set(names))
 json.dump(cfg, open(cfg_p, "w", encoding="utf-8", newline="\n"), indent=2)
 open(cfg_p, "a", encoding="utf-8", newline="\n").write("\n")
-print(f"{cfg_p}: +{len(added['mixins'])} mixins, +{len(added['client'])} client")
+print(f"{cfg_p}: +{len(added['mixins'])} mixins, +{len(added['client'])} client, {moved} re-sided")
