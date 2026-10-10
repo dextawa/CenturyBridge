@@ -124,6 +124,13 @@ public final class Chain {
                     break;
                 }
             }
+            // A class-level entry accounts for the members of a class that is itself
+            // gone. When the class survives on the target, a dead member (or dead
+            // constructor) is damage in its own right: falling back to the class entry
+            // would file a real NoSuchMethodError as "known".
+            if (r == null && survivesOnTarget(owner)) {
+                return null;
+            }
         }
         if (r == null) {
             r = ledger.get(owner);
@@ -135,6 +142,11 @@ public final class Chain {
             }
         }
         return r;
+    }
+
+    /** true only when the target stub was loaded and still has the class (under its analysis name) */
+    private boolean survivesOnTarget(String owner) {
+        return !targetClasses.isEmpty() && targetClasses.contains(owner);
     }
     /** old signatures restored at runtime by shim mixins -- neither issues nor tombstones */
     public final java.util.Set<String> shimCovers = new java.util.HashSet<>();

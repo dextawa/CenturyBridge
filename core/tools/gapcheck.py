@@ -51,21 +51,38 @@ def side_of(owner):
 
 
 covers, redirects, renames, class_renames = set(), {}, {}, {}
+getters, ctors, hooked = set(), set(), set()
 ledger = {}
 for path in SHIMS:
     d = json.load(open(path, encoding="utf-8"))
     covers |= set(d.get("covers", []))
-    for key in ("staticRedirects", "instanceRedirects", "fieldRedirects"):
+    for key in ("staticRedirects", "instanceRedirects", "fieldRedirects", "superRedirects"):
         redirects.update(d.get(key, {}))
+    for key in ("fieldGetters", "instanceFieldGetters"):
+        getters |= set(d.get(key, {}))
+    for key in ("ctorRedirects", "superCtorReshapes", "superCtorAdapts"):
+        ctors |= set(d.get(key, {}))
+    # owner-agnostic: the converter rewrites every site/override of that name+desc
+    for h in d.get("overrideHooks", []):
+        hooked.add(h["old"])
+    for name, descs in d.get("lookupHooks", {}).items():
+        if descs:
+            hooked.add(name + descs[0])
     for key in ("methodRenames", "fieldRenames"):
         renames.update(d.get(key, {}))
     class_renames.update(d.get("classRenames", {}))
     ledger.update(d.get("ledger", {}))
 
 
-def ledger_reason(owner, name):
-    """Ledger keys are owner, owner.name, or the outer class of an inner class."""
-    for key in (f"{owner}.{name}", owner, owner.split("$")[0]):
+def ledger_reason(owner, name, fate):
+    """Ledger keys are owner.name, or -- only for a member whose class is itself
+    gone (CLASS_GONE) -- the owner or the outer class of an inner class. A class
+    entry cannot account for a dead member of a class that survives: that is a
+    real NoSuchMethodError/NoSuchFieldError needing its own disposition."""
+    keys = [f"{owner}.{name}"]
+    if fate == "CLASS_GONE":
+        keys += [owner, owner.split("$")[0]]
+    for key in keys:
         if key in ledger:
             return ledger[key]
     return None
@@ -91,11 +108,17 @@ def verdict(kind, fate, symbol, desc):
         return "cover", ""
     if full in redirects:
         return "redirect", ""
+    if full in getters:
+        return "getter", ""
+    if full in ctors:
+        return "ctor", ""
+    if kind == "method" and f"{name}{desc}" in hooked:
+        return "hook", ""
     if full in renames or symbol in renames:
         return "rename", ""
     if owner in class_renames:
         return "facade", ""
-    reason = ledger_reason(owner, name)
+    reason = ledger_reason(owner, name, fate)
     if reason:
         return "ledger", reason
     return "OPEN", ""
