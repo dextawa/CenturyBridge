@@ -1749,6 +1749,8 @@
  "superRenames": {
   "net/minecraft/class_2647": "top/dext/centurybridge/facade/v1_20_4/class_2647",
   "net/minecraft/class_4262": "top/dext/centurybridge/facade/v1_20_4/class_4262",
-  "net/minecraft/class_2368": "top/dext/centurybridge/facade/v1_20_4/class_2368"
+  "net/minecraft/class_2368": "top/dext/centurybridge/facade/v1_20_4/class_2368",
+  "net/minecraft/class_2342": "top/dext/centurybridge/facade/v1_20_4/class_2342",
+  "net/minecraft/class_2096": "top/dext/centurybridge/facade/v1_20_4/class_2096"
  }
 }
