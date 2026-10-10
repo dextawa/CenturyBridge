@@ -33,6 +33,23 @@ def fetch(url, dest=None, tries=3):
                 raise
 
 
+# Mojang's library rules name the OS; natives ship as ordinary rule-gated
+# artifacts (lwjgl-*-natives-<os>.jar), so the rule filter alone picks the right
+# ones. Every natives jar is arch-partitioned inside (linux/x64, linux/arm64...),
+# so arch constraints are ignored: LWJGL extracts the one matching the JVM.
+OS_NAME = {"win32": "windows", "darwin": "osx"}.get(sys.platform, "linux")
+
+
+def rules_allow(rules):
+    allowed = False
+    for r in rules:
+        name = r.get("os", {}).get("name")
+        if name and name != OS_NAME:
+            continue
+        allowed = r["action"] == "allow"
+    return allowed
+
+
 def maven_path(coord):
     group, artifact, version = coord.split(":")[:3]
     return f"{group.replace('.', '/')}/{artifact}/{version}/{artifact}-{version}.jar"
@@ -60,16 +77,8 @@ def main():
         if not art:
             continue
         rules = lib.get("rules")
-        if rules:
-            allowed = False
-            for r in rules:
-                osname = r.get("os", {}).get("name")
-                if r["action"] == "allow" and osname in (None, "windows"):
-                    allowed = True
-                if r["action"] == "disallow" and osname == "windows":
-                    allowed = False
-            if not allowed:
-                continue
+        if rules and not rules_allow(rules):
+            continue
         dest = os.path.join(libdir, art["path"])
         cp.append(dest)
         if not os.path.exists(dest):
@@ -131,9 +140,9 @@ def main():
 
     # ---- launch files ----
     with open(os.path.join(out, "classpath.txt"), "w", encoding="utf-8") as f:
-        f.write(";".join(os.path.abspath(p) for p in cp))
+        f.write(os.pathsep.join(os.path.abspath(p) for p in cp))
     with open(os.path.join(out, "jvmargs.txt"), "w", encoding="utf-8") as f:
-        cp_fwd = ";".join(os.path.abspath(p).replace("\\", "/") for p in cp)
+        cp_fwd = os.pathsep.join(os.path.abspath(p).replace("\\", "/") for p in cp)
         f.write(f"-Xmx3G\n-cp\n{cp_fwd}\n")
     with open(os.path.join(out, "launch-info.json"), "w", encoding="utf-8") as f:
         json.dump({"mainClass": main_class, "assetIndex": aidx["id"],
