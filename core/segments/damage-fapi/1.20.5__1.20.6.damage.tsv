@@ -1,0 +1,5 @@
+usage	owner	name	desc	kinds	w
+lambda	net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context	responseSender	()Lnet/fabricmc/fabric/api/networking/v1/PacketSender;	LAMBDA	method responseSender()Lnet/fabricmc/fabric/api/networking/v1/PacketSender; public abstract
+implement-interface	net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+implement-interface	net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+implement-interface	net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$Context			ABSTRACT	class public abstract interface extends java/lang/Object
