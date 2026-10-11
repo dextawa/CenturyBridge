@@ -159,21 +159,29 @@ public final class LinkCheck {
 
     private void loadAudit(Path tsv) throws IOException {
         for (String line : Files.readAllLines(tsv)) {
-            String[] f = line.split("\t", 3);
+            String[] f = line.split("\t", 4);
             if (f.length < 3 || f[0].equals("count")) continue;
-            String fate = f[1];
-            // the converter spells a delegation site's fate apart: SUPER-CTOR-ISSUE[..],
-            // super-ctor-reshape / -adapt, "LEDGERED[side] super-ctor: reason"
-            boolean superSite = fate.startsWith("SUPER-CTOR-ISSUE") || fate.startsWith("super-ctor-")
-                || fate.matches("LEDGERED\\[[^\\]]*\\] super-ctor:.*");
-            int b = fate.indexOf('[');
-            if (b > 0) fate = fate.substring(0, b);
-            // several fates per symbol are possible (different sites); a KNOWN one wins
-            // over a FIXED one only if nothing claimed it fixed -- keep the most "claimed"
-            Map<String, String> into = superSite ? superCtorFate : auditFate;
-            String prev = into.get(f[2]);
-            if (prev == null || FIXED_FATES.contains(fate)) into.put(f[2], fate);
+            // past the wall the converter adds the symbol as the converted jar spells it
+            if (f.length == 4) {
+                loadAuditRow(f[1], f[3]);
+            }
+            loadAuditRow(f[1], f[2]);
         }
+    }
+
+    private void loadAuditRow(String rawFate, String symbol) {
+        // the converter spells a delegation site's fate apart: SUPER-CTOR-ISSUE[..],
+        // super-ctor-reshape / -adapt, "LEDGERED[side] super-ctor: reason"
+        boolean superSite = rawFate.startsWith("SUPER-CTOR-ISSUE") || rawFate.startsWith("super-ctor-")
+            || rawFate.matches("LEDGERED\\[[^\\]]*\\] super-ctor:.*");
+        String fate = rawFate;
+        int b = fate.indexOf('[');
+        if (b > 0) fate = fate.substring(0, b);
+        // several fates per symbol are possible (different sites); a KNOWN one wins
+        // over a FIXED one only if nothing claimed it fixed -- keep the most "claimed"
+        Map<String, String> into = superSite ? superCtorFate : auditFate;
+        String prev = into.get(symbol);
+        if (prev == null || FIXED_FATES.contains(fate)) into.put(symbol, fate);
     }
 
     private void loadJrt() throws IOException {

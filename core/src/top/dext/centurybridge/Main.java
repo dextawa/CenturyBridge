@@ -227,7 +227,8 @@ public final class Main {
         Files.write(report, String.join("\n", lines).getBytes(StandardCharsets.UTF_8));
         System.out.println("report -> " + report);
         Path fullAudit = outDir.resolve("full-audit.tsv");
-        top.dext.centurybridge.data.FullAudit.write(fullAudit);
+        top.dext.centurybridge.data.FullAudit.write(fullAudit,
+            crossesWall ? top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).remapper() : null);
         System.out.println("full-audit (distinct symbols by fate category): "
             + top.dext.centurybridge.data.FullAudit.summary());
         System.out.println("full-audit -> " + fullAudit);
