@@ -24,7 +24,9 @@
     "GenClass5409Class5410Bridge",
     "IngredientBridge",
     "PlayerAdvancementTrackerBridge",
+    "RecipeLoadIdBridge",
     "RecipeManagerBridge",
+    "RecipeSyncIdBridge",
     "SlotBridge",
     "StatusEffectBridge"
   ],

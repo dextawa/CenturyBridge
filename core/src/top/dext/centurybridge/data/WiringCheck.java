@@ -181,6 +181,40 @@ public final class WiringCheck {
                                                   : "()Lnet/minecraft/class_7225$class_7874;";
             wantMethod("lookupRt", root.get("lookupRt").getAsString(), "cbLookup", methodDesc(desc));
         }
+        // adapterHooks: the bridge interface must declare every required old shape
+        // exactly (the mod's own methods implement it by name+descriptor), and every
+        // synthesized new shape calls a static that exists with the exact descriptor
+        if (root.has("adapterHooks")) {
+            for (var el : root.getAsJsonArray("adapterHooks")) {
+                var o = el.getAsJsonObject();
+                String adapter = o.get("adapter").getAsString();
+                String where = "adapterHooks " + adapter;
+                checked++;
+                ClassNode an = classes.get(adapter);
+                if (an == null || (an.access & Opcodes.ACC_INTERFACE) == 0) {
+                    problems.add(where + " (no such bridge interface)");
+                } else {
+                    for (var r : o.getAsJsonArray("requires")) {
+                        String shape = r.getAsString();
+                        int paren = shape.indexOf('(');
+                        String name = shape.substring(0, paren);
+                        String desc = methodDesc(shape.substring(paren));
+                        boolean declared = an.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc)
+                            && (m.access & Opcodes.ACC_ABSTRACT) != 0);
+                        if (!declared) {
+                            problems.add(where + " does not declare the required shape " + name + desc);
+                        }
+                    }
+                }
+                for (var sy : o.getAsJsonArray("synth")) {
+                    String call = sy.getAsJsonObject().get("call").getAsString();
+                    int paren = call.indexOf('(');
+                    int dot = call.lastIndexOf('.', paren);
+                    wantMethod(where + " synth", call.substring(0, dot) + "#" + call.substring(dot + 1, paren),
+                        null, methodDesc(call.substring(paren)));
+                }
+            }
+        }
         if (root.has("overrideHooks")) {
             for (var el : root.getAsJsonArray("overrideHooks")) {
                 var o = el.getAsJsonObject();

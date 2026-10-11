@@ -414,5 +414,25 @@
  },
  "superRenames": {
   "net/minecraft/class_2096": "top/dext/centurybridge/facade/v1_20_2/class_2096"
- }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1865",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyRecipeSerializer",
+   "requires": [
+    "method_8121(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1860;",
+    "method_8122(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1860;"
+   ],
+   "synth": [
+    {
+     "new": "method_53736()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipes.legacyCodec(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyRecipeSerializer;)Lcom/mojang/serialization/Codec;"
+    },
+    {
+     "new": "method_8122(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1860;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipes.legacyRead(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyRecipeSerializer;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1860;"
+    }
+   ]
+  }
+ ]
 }

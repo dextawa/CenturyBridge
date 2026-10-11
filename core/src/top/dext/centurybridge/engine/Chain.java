@@ -287,6 +287,47 @@ public final class Chain {
 
     public final java.util.List<OverrideHook> overrideHooks = new java.util.ArrayList<>();
 
+    /**
+     * Adapter hooks ("adapterHooks" in shims-<to>.json): a vanilla type whose
+     * overridable surface changed SHAPE, not just a signature (1.20.2
+     * RecipeSerializer: read(id, json) became codec()). A mod class under
+     * {@code under} that itself declares every {@code requires} shape gets
+     * {@code adapter} -- a bridge interface declaring exactly those old shapes, so
+     * the mod's own methods implement it -- added to its interfaces, and each
+     * {@code synth} method (the new shape vanilla calls) synthesized to call a
+     * static bridge with (this, args...). The bridge reaches the old methods
+     * through the adapter, typed.
+     */
+    public static final class AdapterHook {
+        public String under, adapter;
+        public final java.util.List<String> requires = new java.util.ArrayList<>();
+        /** {new name, new desc, call owner, call name, call desc} */
+        public final java.util.List<String[]> synth = new java.util.ArrayList<>();
+    }
+
+    public final java.util.List<AdapterHook> adapterHooks = new java.util.ArrayList<>();
+
+    /** whether {@code type} is reached from these vanilla roots through the source hierarchy */
+    public boolean sourceSubtype(java.util.List<String> roots, String type) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(roots);
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c)) {
+                continue;
+            }
+            if (c.equals(type)) {
+                return true;
+            }
+            String sup = superOf.get(c);
+            if (sup != null) {
+                todo.add(sup);
+            }
+            todo.addAll(interfacesOf.getOrDefault(c, java.util.List.of()));
+        }
+        return false;
+    }
+
     public java.util.List<OverrideHook> overrideHooksForOld(String name, String desc) {
         java.util.List<OverrideHook> out = new java.util.ArrayList<>();
         for (OverrideHook h : overrideHooks) {
@@ -1061,6 +1102,26 @@ public final class Chain {
                     }
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
                     c.overrideHooks.add(h);
+                }
+            }
+            if (root.has("adapterHooks")) {
+                for (var el : root.getAsJsonArray("adapterHooks")) {
+                    var o = el.getAsJsonObject();
+                    AdapterHook h = new AdapterHook();
+                    h.under = o.get("under").getAsString();
+                    h.adapter = o.get("adapter").getAsString();
+                    for (var r : o.getAsJsonArray("requires")) {
+                        h.requires.add(r.getAsString());
+                    }
+                    for (var sy : o.getAsJsonArray("synth")) {
+                        var so = sy.getAsJsonObject();
+                        String[] nsig = splitSig(so.get("new").getAsString());
+                        String call = so.get("call").getAsString();
+                        int dot = call.lastIndexOf('.', call.indexOf('('));
+                        String[] csig = splitSig(call.substring(dot + 1));
+                        h.synth.add(new String[] {nsig[0], nsig[1], call.substring(0, dot), csig[0], csig[1]});
+                    }
+                    c.adapterHooks.add(h);
                 }
             }
             if (root.has("depRenames")) {

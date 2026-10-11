@@ -1183,11 +1183,47 @@ public final class JarProcessor {
                 }
             }
         }
+        final List<Chain.AdapterHook> adapterApply = new ArrayList<>();
+        final Set<String> declaredShapes = new HashSet<>();
         ClassVisitor analysis = new ClassVisitor(Opcodes.ASM9) {
             String cls;
             String[] itfs;
             boolean broken;
             List<String> vanillaRoots;
+            /** orphan candidates: {name, desc, overridden owner, side}; settled once adapter hooks are known */
+            final List<String[]> orphanCandidates = new ArrayList<>();
+
+            @Override
+            public void visitEnd() {
+                if ((classAccess[0] & Opcodes.ACC_INTERFACE) == 0 && !broken && !chain.adapterHooks.isEmpty()) {
+                    if (vanillaRoots == null) {
+                        vanillaRoots = vanillaAncestors(superOf[0], itfs, layer);
+                    }
+                    for (Chain.AdapterHook h : chain.adapterHooks) {
+                        if (declaredShapes.containsAll(h.requires) && chain.sourceSubtype(vanillaRoots, h.under)) {
+                            adapterApply.add(h);
+                            for (String r : h.requires) {
+                                top.dext.centurybridge.data.FullAudit.record(cls + "." + r, "adapter-hooked");
+                            }
+                            rpt.notes.add(tag + "adapter-hooked: " + cls + " implements " + h.adapter);
+                        }
+                    }
+                }
+                for (String[] o : orphanCandidates) {
+                    boolean adapted = false;
+                    for (Chain.AdapterHook h : adapterApply) {
+                        adapted |= h.requires.contains(o[0] + o[1]);
+                    }
+                    if (adapted) {
+                        continue;
+                    }
+                    top.dext.centurybridge.data.FullAudit.record(cls + "." + o[0] + o[1],
+                        "ORPHAN[" + o[3] + "] overrode " + o[2] + "." + o[0] + o[1]);
+                    rpt.orphanedOverrides.add(tag + cls + "." + o[0] + o[1] + " overrode " + o[2]
+                        + (o[3].equals("client") ? " [client]" : ""));
+                }
+                super.visitEnd();
+            }
 
             /**
              * An override vanilla no longer calls: the shape it bound to at the
@@ -1221,10 +1257,7 @@ public final class JarProcessor {
                     top.dext.centurybridge.data.FullAudit.record(cls + "." + mName + mDesc, "datagen-skip");
                     return;
                 }
-                top.dext.centurybridge.data.FullAudit.record(cls + "." + mName + mDesc,
-                    "ORPHAN[" + side + "] overrode " + overridden + "." + mName + mDesc);
-                rpt.orphanedOverrides.add(tag + cls + "." + mName + mDesc + " overrode " + overridden
-                    + (side.equals("client") ? " [client]" : ""));
+                orphanCandidates.add(new String[] {mName, mDesc, overridden, side});
             }
 
             @Override
@@ -1282,6 +1315,7 @@ public final class JarProcessor {
 
             @Override
             public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
+                declaredShapes.add(mName + mDesc);
                 if (chain.blockUseSplit && mName.equals("method_9534") && mDesc.equals(
                         "(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;"
                         + "Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)"
@@ -1786,7 +1820,7 @@ public final class JarProcessor {
                 && fldGetters.isEmpty() && instFldGetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
-                && !needSuperRename[0]
+                && !needSuperRename[0] && adapterApply.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
                 && declaredOldOverrides.stream().allMatch(declaredNewOverrides::contains)) {
@@ -1923,7 +1957,55 @@ public final class JarProcessor {
         }
         cr.accept(new ClassVisitor(Opcodes.ASM9, sink) {
             @Override
+            public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
+                if (!adapterApply.isEmpty()) {
+                    java.util.LinkedHashSet<String> all = new java.util.LinkedHashSet<>();
+                    if (ifaces != null) {
+                        all.addAll(List.of(ifaces));
+                    }
+                    StringBuilder extra = new StringBuilder();
+                    for (Chain.AdapterHook h : adapterApply) {
+                        if (all.add(h.adapter)) {
+                            extra.append('L').append(h.adapter).append(';');
+                        }
+                    }
+                    ifaces = all.toArray(new String[0]);
+                    // a generic class signature lists the interfaces too: append, never drop
+                    if (sig != null) {
+                        sig = sig + extra;
+                    }
+                }
+                super.visit(ver, acc, name, sig, superName, ifaces);
+            }
+
+            @Override
             public void visitEnd() {
+                for (Chain.AdapterHook h : adapterApply) {
+                    for (String[] sy : h.synth) {
+                        if (declaredShapes.contains(sy[0] + sy[1])) {
+                            continue; // the mod already speaks the new shape
+                        }
+                        // new shape vanilla calls -> static bridge(this-as-adapter, args...)
+                        MethodVisitor mv = super.visitMethod(Opcodes.ACC_PUBLIC, sy[0], sy[1], null, null);
+                        mv.visitCode();
+                        mv.visitVarInsn(Opcodes.ALOAD, 0);
+                        int slot = 1;
+                        for (org.objectweb.asm.Type t : org.objectweb.asm.Type.getArgumentTypes(sy[1])) {
+                            mv.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
+                            slot += t.getSize();
+                        }
+                        mv.visitMethodInsn(Opcodes.INVOKESTATIC, sy[2], sy[3], sy[4], false);
+                        org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(sy[1]);
+                        org.objectweb.asm.Type got = org.objectweb.asm.Type.getReturnType(sy[4]);
+                        if (ret.getSort() >= org.objectweb.asm.Type.ARRAY && !ret.equals(got)) {
+                            mv.visitTypeInsn(Opcodes.CHECKCAST, ret.getInternalName());
+                        }
+                        mv.visitInsn(ret.getOpcode(Opcodes.IRETURN));
+                        mv.visitMaxs(0, 0);
+                        mv.visitEnd();
+                        rpt.notes.add(tag + "adapter-synthesized: " + clsName[0] + "." + sy[0] + sy[1]);
+                    }
+                }
                 for (Chain.OverrideHook h : reconnectOverrides) {
                     synthesizeOverride(this, h, clsName[0], superOf[0]);
                 }
