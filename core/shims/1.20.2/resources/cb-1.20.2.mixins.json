@@ -35,6 +35,7 @@
     "StatusEffectBridge"
   ],
   "client": [
+    "CbGuiTextureManagerBridge",
     "EditBoxBridge",
     "GameOptionsBridge",
     "GenClass1058Bridge",

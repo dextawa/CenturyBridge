@@ -1,0 +1,30 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_368.field_2207:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbGuiTextures",
+  "net/minecraft/class_365.field_2199:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbGuiTextures",
+  "net/minecraft/class_5682.field_28359:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbGuiTextures",
+  "net/minecraft/class_5522.field_26875:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbGuiTextures",
+  "net/minecraft/class_339.field_42117:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbGuiTextures"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_1076.field_32971:Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_355.field_32206:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_355.field_32207:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_355.field_32208:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_355.field_32209:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_355.field_32210:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_355.field_32211:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_355.field_32212:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_355.field_32213:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_357.field_43051:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_357.field_43052:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_357.field_43102:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_357.field_43103:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_4264.field_43046:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_4264.field_43047:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_4264.field_43048:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_4264.field_43100:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_4264.field_43101:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
+  "net/minecraft/class_5619.field_32922:Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants"
+ }
+}
