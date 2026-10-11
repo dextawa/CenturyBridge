@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_itemtest",
+ "version": "1.0.0",
+ "name": "CB Item Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.itemtest.ItemTestMod"], "client": ["cb.itemtest.ItemTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.1", "fabric-api": "*" }
+}

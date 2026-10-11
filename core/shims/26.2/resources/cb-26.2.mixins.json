@@ -171,6 +171,8 @@
     "GenClass939Bridge",
     "GenClass943Bridge",
     "HandledScreenBridge",
+    "ItemModelsBridge",
+    "ItemTintSourcesBridge",
     "MinecraftLevelBridge",
     "ModelRenderBridge",
     "MouseScrollBridge",

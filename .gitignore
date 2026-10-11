@@ -45,3 +45,4 @@ crash-reports/
 *.iml
 __pycache__/
 .claude/scheduled_tasks.lock
+.claude/worktrees/

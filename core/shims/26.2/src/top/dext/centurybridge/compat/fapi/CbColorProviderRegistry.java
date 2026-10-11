@@ -2,7 +2,6 @@ package top.dext.centurybridge.compat.fapi;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import net.minecraft.world.item.Item;
@@ -18,8 +17,10 @@ import top.dext.centurybridge.facade.v26_2.class_326;
  * takes a BlockTintsFactory that fills one colour per tint index), so each old
  * per-index callback is asked for indices 0..7 -- every 1.20.1 model tintindex
  * in the corpus is below that. Item tints have had no runtime registry since
- * 1.21.4 (item model definition JSON); ITEM keeps the providers for get() and
- * warns once. Stays an interface: the corpus calls it through INVOKEINTERFACE.
+ * 1.21.4 (item model definition JSON); ITEM keeps the providers, and the
+ * centurybridge:legacy_color tint the converter writes into a mod's item model
+ * definitions answers from them (CbLegacyItemModels). Stays an interface: the
+ * corpus calls it through INVOKEINTERFACE.
  */
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbColorProviderRegistry<T, Provider> {
@@ -59,7 +60,6 @@ public interface CbColorProviderRegistry<T, Provider> {
     }
 
     final class Items implements CbColorProviderRegistry<ItemLike, class_326> {
-        private static final AtomicBoolean WARNED = new AtomicBoolean();
         private final Map<Item, class_326> providers = new IdentityHashMap<>();
 
         @Override
@@ -68,9 +68,6 @@ public interface CbColorProviderRegistry<T, Provider> {
                 for (ItemLike i : items) {
                     providers.put(i.asItem(), provider);
                 }
-            }
-            if (WARNED.compareAndSet(false, true)) {
-                System.err.println("[CenturyBridge] ColorProviderRegistry.ITEM has no runtime equivalent on 26.x: item tints are declared in the item model definition JSON (tints) since 1.21.4; registrations recorded but not rendered");
             }
         }
 

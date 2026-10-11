@@ -180,7 +180,7 @@ public final class ResourceTranslator {
         out.generated += add.size();
     }
 
-    /** the highest tint index a model can ask for: a face's tintindex, or an item/generated layer */
+    /** the highest tint index a model can ask for: a face's tintindex, an item/generated layer, or its vanilla parent's */
     private static int highestTint(JsonElement j) {
         if (j == null || !j.isJsonObject()) {
             return 0;
@@ -203,6 +203,13 @@ public final class ResourceTranslator {
                 if (k.matches("layer\\d+")) {
                     max = Math.max(max, Integer.parseInt(k.substring(5)));
                 }
+            }
+        }
+        // a vanilla parent draws its own tinted layers (template_spawn_egg: two)
+        if (o.has("parent") && o.get("parent").isJsonPrimitive()) {
+            String p = o.get("parent").getAsString();
+            if (!p.contains(":") || p.startsWith("minecraft:")) {
+                max = Math.max(max, top.dext.centurybridge.res.VanillaItemLayers.highest(p.substring(p.indexOf(':') + 1)));
             }
         }
         return max;

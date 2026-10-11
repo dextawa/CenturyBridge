@@ -370,7 +370,8 @@
   "net/minecraft/class_6662.method_38927(Lnet/minecraft/class_1842;)Lnet/minecraft/class_120$class_121;": "top/dext/centurybridge/rt/v26_2/CbHolders",
   "net/minecraft/class_3887.method_23199(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFF)V": "top/dext/centurybridge/rt/v26_2/CbRenderLayers",
   "net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFFFF)V": "top/dext/centurybridge/rt/v26_2/CbRenderLayers",
-  "net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I": "top/dext/centurybridge/rt/v26_2/CbRenderLayers#overlay"
+  "net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I": "top/dext/centurybridge/rt/v26_2/CbRenderLayers#overlay",
+  "net/minecraft/class_1826.method_8019(Lnet/minecraft/class_1299;)Lnet/minecraft/class_1826;": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_4341.method_21021()Ljava/lang/Boolean;": "top/dext/centurybridge/rt/v26_2/ClientStatics",
@@ -685,7 +686,9 @@
   "net/minecraft/class_8514$class_5719.method_32970(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712;Lnet/minecraft/class_5712$class_7397;)Z": "top/dext/centurybridge/rt/v26_2/CbHolders",
   "net/minecraft/class_8514$class_5719.method_32969(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;F)V": "top/dext/centurybridge/rt/v26_2/CbHolders",
   "net/minecraft/class_8514$class_5719.method_42324(Lnet/minecraft/class_5712;Lnet/minecraft/class_5712$class_7397;)Z": "top/dext/centurybridge/rt/v26_2/CbHolders",
-  "net/minecraft/class_152$class_153.method_640(Lnet/minecraft/class_1291;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;": "top/dext/centurybridge/rt/v26_2/CbHolders"
+  "net/minecraft/class_152$class_153.method_640(Lnet/minecraft/class_1291;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;": "top/dext/centurybridge/rt/v26_2/CbHolders",
+  "net/minecraft/class_1826.method_8016(I)I": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1826.method_8015(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_1299.field_30054:F": "net/minecraft/world/entity/EntityTypes",
@@ -1182,7 +1185,10 @@
   "net/minecraft/class_4597": "top/dext/centurybridge/facade/v26_2/class_4597",
   "net/minecraft/class_806": "top/dext/centurybridge/facade/v26_2/class_806",
   "net/minecraft/class_2500": "top/dext/centurybridge/facade/v26_2/class_2500",
-  "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/facade/v26_2/DfuPartialResult"
+  "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/facade/v26_2/DfuPartialResult",
+  "net/minecraft/class_5272": "top/dext/centurybridge/facade/v26_2/class_5272",
+  "net/minecraft/class_1800": "top/dext/centurybridge/facade/v26_2/class_1800",
+  "net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry": "top/dext/centurybridge/compat/fapi/CbFabricModelPredicateProviderRegistry"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -3330,7 +3336,6 @@
   "net/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandler.getFluidSprites(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;)[Lnet/minecraft/class_1058;": "26.x fluid rendering is model-driven (FluidRenderingRegistry.register(fluid, FluidModel.Unbaked)): the 1.20.1 handler callbacks (getFluidSprites/getFluidColor/renderFluid) have no consumer; a SimpleFluidRenderHandler->FluidModel.Unbaked bridge is possible but unbuilt (3 mods)",
   "net/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandler.renderFluid(Lnet/minecraft/class_2338;Lnet/minecraft/class_1920;Lnet/minecraft/class_4588;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)V": "26.x fluid rendering is model-driven (FluidRenderingRegistry.register(fluid, FluidModel.Unbaked)): the 1.20.1 handler callbacks (getFluidSprites/getFluidColor/renderFluid) have no consumer; a SimpleFluidRenderHandler->FluidModel.Unbaked bridge is possible but unbuilt (3 mods)",
   "net/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandler.reloadTextures(Lnet/minecraft/class_1059;)V": "26.x fluid rendering is model-driven (FluidRenderingRegistry.register(fluid, FluidModel.Unbaked)): the 1.20.1 handler callbacks (getFluidSprites/getFluidColor/renderFluid) have no consumer; a SimpleFluidRenderHandler->FluidModel.Unbaked bridge is possible but unbuilt (3 mods)",
-  "net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry": "1.21.4 item model definitions: item property overrides are JSON (range_dispatch/select) and ClampedItemPropertyFunction is gone, so the callback cannot even be constructed",
   "net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer.renderPart(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_3879;Lnet/minecraft/class_2960;)V": "26.x render pipeline: MultiBufferSource gone, armor renders through submit nodes; no immediate-mode part renderer",
   "net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer.render(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V": "26.x render pipeline: MultiBufferSource gone, armor renders through submit nodes; no immediate-mode part renderer",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context.addModels([Lnet/minecraft/class_2960;)V": "1.21.4 model-loading rework: extra models are keyed by ExtraModelKey (no id-based addModels/BakedModelManagerHelper lookup) and after-bake modifiers are per model kind (block state / item); the corpus BakedModel-based wrappers are dead with BakedModel",
@@ -5371,6 +5376,12 @@
     "keep:2",
     "keep:3"
    ]
+  },
+  "net/minecraft/class_1826.<init>(Lnet/minecraft/class_1299;IILnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "conv:0,1,2,3 top/dext/centurybridge/rt/v26_2/Statics#cbSpawnEggProps(Lnet/minecraft/class_1299;IILnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ]
   }
  },
  "facadeGaps": {
@@ -5787,7 +5798,11 @@
   "net/minecraft/class_806.field_28792:[Lnet/minecraft/class_806$class_5827;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
   "net/minecraft/class_806.field_28793:[Lnet/minecraft/class_2960;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
   "net/minecraft/class_2500.method_10614(Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
-  "net/minecraft/class_2500.method_10613(Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state"
+  "net/minecraft/class_2500.method_10613(Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_5272.method_63532(Lnet/minecraft/class_1799;)I": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1800.method_65643()Lcom/mojang/serialization/MapCodec;": "1.21.4 handed the intermediary name class_1800 to the item model property (RangeSelectItemModelProperty), a different contract; a 1.20.1 mod's class_1800 is ModelPredicateProvider (the facade), which never had this member",
+  "net/minecraft/class_1800.method_65644(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)F": "1.21.4 handed the intermediary name class_1800 to the item model property (RangeSelectItemModelProperty), a different contract; a 1.20.1 mod's class_1800 is ModelPredicateProvider (the facade), which never had this member",
+  "net/minecraft/class_1800.method_65644(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_11566;I)F": "1.21.4 handed the intermediary name class_1800 to the item model property (RangeSelectItemModelProperty), a different contract; a 1.20.1 mod's class_1800 is ModelPredicateProvider (the facade), which never had this member"
  },
  "adapterHooks": [
   {
@@ -5865,5 +5880,9 @@
   "net/minecraft/class_897.method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/rt/v26_2/CbEntityRender#superRender",
   "net/minecraft/class_922.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/rt/v26_2/CbEntityRender#superRender",
   "net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/rt/v26_2/CbEntityRender#superRender"
- }
+ },
+ "resourceTypes": [
+  "centurybridge:legacy_overrides",
+  "centurybridge:legacy_color"
+ ]
 }

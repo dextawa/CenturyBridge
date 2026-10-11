@@ -103,7 +103,7 @@ kill $CPID 2>/dev/null; sleep 3; kill -9 $CPID 2>/dev/null
 kill $XPID 2>/dev/null
 echo "=== shots ==="; ls shot-$TAG-*.png 2>/dev/null | tr '\n' ' '; echo
 echo "=== fixture ==="
-grep -a 'CB-RENDERTEST' "$LOG" | sed 's/^.*CB-RENDERTEST/CB-RENDERTEST/' | head -30
+grep -aE 'CB-(RENDERTEST|ITEMTEST)' "$LOG" | grep -v 'feature render' | sed -E 's/^.*(CB-(RENDERTEST|ITEMTEST))/\1/' | head -40
 echo "=== problems ==="
 grep -anE '/ERROR|Exception|Caused by|NoSuchMethod|NoSuchField|AbstractMethod|IncompatibleClass|IllegalAccess|VerifyError|ClassCast|crash' "$LOG" \
   | grep -viE 'Error loading class|realms|telemetry' | head -40

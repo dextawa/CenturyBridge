@@ -6296,19 +6296,74 @@ public final class Statics {
     public static float cbTickToSeconds(int ticks) {
         return ticks / 20.0F;
     }
-    /** 1.20.1 SpawnEggItem(EntityType, bgColor, highlightColor, Properties) ->
-     *  26.2 SpawnEggItem(Properties): the egg's entity became data-driven, read
-     *  from the stack's ENTITY_DATA component (SpawnEggItem.getType). Attach the
-     *  entity type as that component so the egg still spawns the right mob; the
-     *  two legacy colors are dropped (26.2 derives egg colors from the entity's
-     *  own spawn-egg definition, not the item constructor). */
-    @SuppressWarnings({"unchecked","rawtypes"})
+    /** 1.20.1 SpawnEggItem(EntityType, bgColor, highlightColor, Properties) at a NEW site ->
+     *  26.2 SpawnEggItem(Properties); see cbSpawnEggProps. */
     public static net.minecraft.world.item.SpawnEggItem cbNewSpawnEgg(
+            net.minecraft.world.entity.EntityType<?> type, int bg, int hl,
+            net.minecraft.world.item.Item.Properties props) {
+        return new net.minecraft.world.item.SpawnEggItem(cbSpawnEggProps(type, bg, hl, props));
+    }
+
+    /** the two colours 1.20.1 spawn egg constructors took, by entity type (1.20.1 kept one egg
+     *  per type, SpawnEggItem.BY_ID) */
+    private static final java.util.Map<net.minecraft.world.entity.EntityType<?>, int[]> CB_EGG_COLORS =
+        new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** The properties a 1.20.1 spawn egg constructor (a NEW site, or a mod egg's super())
+     *  hands 26.2's SpawnEggItem(Properties). The egg's entity became data, read from the
+     *  stack's ENTITY_DATA component (SpawnEggItem.getType), so the type goes there as the
+     *  item's default. 26.2 eggs have no colours -- each vanilla egg has its own texture --
+     *  so the two old ones are kept here: SpawnEggItem.getColor answers them, and the
+     *  centurybridge:legacy_color tint gives them to the mod's template_spawn_egg model, as
+     *  vanilla 1.20.1 registered an item colour for every egg, modded ones too. */
+    @SuppressWarnings({"unchecked","rawtypes"})
+    public static net.minecraft.world.item.Item.Properties cbSpawnEggProps(
             net.minecraft.world.entity.EntityType<?> type, int bg, int hl,
             net.minecraft.world.item.Item.Properties props) {
         props.component((net.minecraft.core.component.DataComponentType) net.minecraft.core.component.DataComponents.ENTITY_DATA,
             net.minecraft.world.item.component.TypedEntityData.of(type, new net.minecraft.nbt.CompoundTag()));
-        return new net.minecraft.world.item.SpawnEggItem(props);
+        CB_EGG_COLORS.put(type, new int[] {bg, hl});
+        return props;
+    }
+
+    /** 1.20.1 SpawnEggItem.getColor(tintIndex): the primary colour for 0, the secondary for
+     *  any other index. A 26.2 vanilla egg was not built by a 1.20.1 constructor and has no
+     *  colours: -1, no tint. */
+    public static int method_8016(net.minecraft.world.item.SpawnEggItem self, int tintIndex) {
+        net.minecraft.world.item.component.TypedEntityData<net.minecraft.world.entity.EntityType<?>> data =
+            self.components().get(net.minecraft.core.component.DataComponents.ENTITY_DATA);
+        int[] c = data == null ? null : CB_EGG_COLORS.get(data.type());
+        return c == null ? -1 : (tintIndex == 0 ? c[0] : c[1]);
+    }
+
+    /** what 1.20.1's ItemColors answered for an item no mod registered a provider for: a spawn
+     *  egg's own colours (vanilla registered every SpawnEggItem), else no tint (-1) */
+    public static int cbLegacySpawnEggColor(net.minecraft.world.item.Item item, int tintIndex) {
+        return item instanceof net.minecraft.world.item.SpawnEggItem egg ? method_8016(egg, tintIndex) : -1;
+    }
+
+    /** 1.20.1 SpawnEggItem.getEntityType(nbt): the EntityTag id the stack's tag names, else the
+     *  egg's own type (26.2 keeps it as the item's default ENTITY_DATA) */
+    public static net.minecraft.world.entity.EntityType<?> method_8015(net.minecraft.world.item.SpawnEggItem self,
+            net.minecraft.nbt.CompoundTag nbt) {
+        net.minecraft.world.item.component.TypedEntityData<net.minecraft.world.entity.EntityType<?>> data =
+            self.components().get(net.minecraft.core.component.DataComponents.ENTITY_DATA);
+        net.minecraft.world.entity.EntityType<?> own = data == null ? null : data.type(); // every egg has one
+        if (nbt == null) {
+            return own;
+        }
+        // EntityType.get(id) was Registries.ENTITY_TYPE.getOrEmpty(Identifier.tryParse(id))
+        return nbt.getCompound("EntityTag").flatMap(t -> t.getString("id"))
+            .map(net.minecraft.resources.Identifier::tryParse)
+            .flatMap(id -> net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getOptional(id))
+            .<net.minecraft.world.entity.EntityType<?>>map(t -> t).orElse(own);
+    }
+
+    /** 1.20.1 SpawnEggItem.forEntity(type) (BY_ID.get): 26.2 finds eggs by their ENTITY_DATA component */
+    public static net.minecraft.world.item.SpawnEggItem method_8019(net.minecraft.world.entity.EntityType<?> type) {
+        return net.minecraft.world.item.SpawnEggItem.byId(type).map(net.minecraft.core.Holder::value)
+            .filter(i -> i instanceof net.minecraft.world.item.SpawnEggItem)
+            .map(i -> (net.minecraft.world.item.SpawnEggItem) i).orElse(null);
     }
     /** Convert a legacy Tier facade (class_1832, the old interface mods
      *  implemented for custom tool materials) into a 26.2 ToolMaterial record.

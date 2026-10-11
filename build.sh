@@ -186,9 +186,10 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$C
     "${CB_STUBS:-data/jars}" "$VERSION" \
     || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 
-# fabric.mod.json, the mixin config and the access widener are mod SOURCE and
-# live under resources/; they are copied in at package time, not compiled.
-cp "$SHIM"/resources/* "$CLASSES"/
+# fabric.mod.json, the mixin config, the access widener and the resource pack
+# (assets/: CenturyBridge's own models and textures) are mod SOURCE and live
+# under resources/; they are copied in at package time, not compiled.
+cp -r "$SHIM"/resources/. "$CLASSES"/
 
 JAR="$OUT/centurybridge-0.3.0+$VERSION.jar"
 jar cf "$JAR" -C "$CLASSES" .
