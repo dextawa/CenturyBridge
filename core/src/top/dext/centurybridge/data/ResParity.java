@@ -48,7 +48,9 @@ public final class ResParity {
             }
             JsonElement ja = Json.tryParse(e.getValue());
             JsonElement jb = Json.tryParse(other);
-            boolean eq = ja != null && ja.equals(jb);
+            // releases differ in which defaults their encoders write (26.x omits count 1,
+            // bonus_rolls 0, add false...): both sides are compared with defaults dropped
+            boolean eq = ja != null && jb != null && dropDefaults(ja.deepCopy()).equals(dropDefaults(jb.deepCopy()));
             c[(touched ? 0 : 2) + (eq ? 0 : 1)]++;
             if (touched && !eq) {
                 List<String> l = samples.computeIfAbsent(dir, k -> new ArrayList<>());
@@ -69,9 +71,37 @@ public final class ResParity {
         });
     }
 
+    /** a field holding a value an encoder may leave out as the default: 0, false, 1 for a count, empty */
+    private static JsonElement dropDefaults(JsonElement e) {
+        if (e.isJsonArray()) {
+            com.google.gson.JsonArray a = e.getAsJsonArray();
+            for (int i = 0; i < a.size(); i++) {
+                a.set(i, dropDefaults(a.get(i)));
+            }
+            return a;
+        }
+        if (!e.isJsonObject()) {
+            return e;
+        }
+        com.google.gson.JsonObject o = e.getAsJsonObject();
+        for (String k : new java.util.ArrayList<>(o.keySet())) {
+            JsonElement v = dropDefaults(o.get(k));
+            boolean dflt = v.isJsonPrimitive() && (v.getAsJsonPrimitive().isBoolean() && !v.getAsBoolean()
+                    || v.getAsJsonPrimitive().isNumber() && (v.getAsDouble() == 0 || k.equals("count") && v.getAsDouble() == 1))
+                || v.isJsonArray() && v.getAsJsonArray().isEmpty()
+                || v.isJsonObject() && v.getAsJsonObject().size() == 0;
+            if (dflt) {
+                o.remove(k);
+            } else {
+                o.add(k, v);
+            }
+        }
+        return o;
+    }
+
     private static String abbreviate(JsonElement e) {
         String s = String.valueOf(e);
-        return s.length() > 400 ? s.substring(0, 400) + "..." : s;
+        return s.length() > 400 && !Boolean.getBoolean("cb.parity.full") ? s.substring(0, 400) + "..." : s;
     }
 
     private static String dirOf(String n) {

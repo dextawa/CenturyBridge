@@ -224,6 +224,11 @@ public final class LegacyLoot {
                     c.add("predicate", entityPredicate(c.getAsJsonObject("predicate"), from, to, losses));
                 }
             }
+            case "minecraft:damage_source_properties" -> {
+                if (c.has("predicate") && c.get("predicate").isJsonObject()) {
+                    c.add("predicate", damageSourcePredicate(c.getAsJsonObject("predicate"), from, to, losses));
+                }
+            }
             case "minecraft:location_check" -> {
                 if (c.has("predicate") && c.get("predicate").isJsonObject()) {
                     c.add("predicate", locationPredicate(c.getAsJsonObject("predicate"), from, to, losses));
@@ -293,21 +298,80 @@ public final class LegacyLoot {
                 out.add(k, locationPredicate(out.getAsJsonObject(k), from, to, losses));
             }
         }
-        if (crosses(from, to, "1.20.5") && out.has("type_specific") && out.get("type_specific").isJsonObject()) {
+        if (out.has("type_specific") && out.get("type_specific").isJsonObject()) {
             JsonObject ts = out.getAsJsonObject("type_specific");
             String t = id(ts, "type"); // a registry-keyed dispatch since 1.20.5: written namespaced
-            if (t != null) {
+            if (t != null && crosses(from, to, "1.20.5")) {
                 ts.addProperty("type", t);
             }
-            for (String k : new String[] {"looking_at"}) {
-                if (ts.has(k) && ts.get(k).isJsonObject()) {
-                    ts.add(k, entityPredicate(ts.getAsJsonObject(k), from, to, losses));
-                }
+            // the player check's looking_at is itself an entity predicate
+            if (ts.has("looking_at") && ts.get("looking_at").isJsonObject()) {
+                ts.add("looking_at", entityPredicate(ts.getAsJsonObject("looking_at"), from, to, losses));
             }
         }
         for (String k : new String[] {"vehicle", "passenger", "targeted_entity"}) {
             if (out.has(k) && out.get(k).isJsonObject()) {
                 out.add(k, entityPredicate(out.getAsJsonObject(k), from, to, losses));
+            }
+        }
+        if (crosses(from, to, "1.21.5") && out.has("type_specific") && out.get("type_specific").isJsonObject()) {
+            // the variant checks moved from type_specific into component predicates
+            JsonObject ts = out.getAsJsonObject("type_specific");
+            String t = id(ts, "type");
+            if (("minecraft:cat".equals(t) || "minecraft:frog".equals(t)) && ts.has("variant")) {
+                JsonObject comps = out.has("components") ? out.getAsJsonObject("components") : new JsonObject();
+                comps.add(t + "/variant", ts.get("variant"));
+                out.add("components", comps);
+                out.remove("type_specific");
+            }
+        }
+        if (crosses(from, to, "26.2")) {
+            out = subPredicateMap(out);
+        }
+        return out;
+    }
+
+    /** a damage source predicate: its entities are entity predicates */
+    public static JsonObject damageSourcePredicate(JsonObject p, String from, String to, LegacyItems.Losses losses) {
+        JsonObject out = p.deepCopy();
+        for (String k : new String[] {"direct_entity", "source_entity"}) {
+            if (out.has(k) && out.get(k).isJsonObject()) {
+                out.add(k, entityPredicate(out.getAsJsonObject(k), from, to, losses));
+            }
+        }
+        return out;
+    }
+
+    /** the entity predicate fields 26.2 keys by sub-predicate id */
+    private static final Set<String> ENTITY_FIELDS = Set.of(
+        "type", "distance", "location", "stepping_on", "movement_affected_by", "flags", "equipment", "vehicle",
+        "passenger", "targeted_entity", "effects", "nbt", "team", "movement", "periodic_tick", "slots",
+        "components", "predicates");
+
+    /**
+     * 26.2: an entity predicate is a map of sub-predicates keyed by their ids --
+     * "type" -> "minecraft:entity_type", every other field namespaced, and the type-specific
+     * check keyed by its type ("minecraft:type_specific/player").
+     */
+    private static JsonObject subPredicateMap(JsonObject p) {
+        JsonObject out = new JsonObject();
+        for (var e : p.entrySet()) {
+            String k = e.getKey();
+            if (k.equals("type_specific") && e.getValue().isJsonObject()) {
+                JsonObject ts = e.getValue().getAsJsonObject().deepCopy();
+                String t = id(ts, "type");
+                ts.remove("type");
+                String type = t == null ? "unknown" : t.substring(t.indexOf(':') + 1);
+                if (type.equals("slime")) {
+                    type = "cube_mob"; // 26.2 generalized the slime check to every cube mob
+                }
+                out.add("minecraft:type_specific/" + type, ts);
+            } else if (k.equals("type")) {
+                out.add("minecraft:entity_type", e.getValue());
+            } else if (ENTITY_FIELDS.contains(k)) {
+                out.add("minecraft:" + k, e.getValue());
+            } else {
+                out.add(k, e.getValue());
             }
         }
         return out;

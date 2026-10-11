@@ -14,7 +14,7 @@ sed -i 's/^online-mode=.*/online-mode=false/' server.properties
 cp "$FAPI" "$CB" mods/
 [ -n "$MODS" ] && cp "$MODS"/*.jar mods/
 LOG=boot-$TAG.log
-timeout 300 java -Xmx6g -jar fabric-server.jar nogui > $LOG 2>&1 &
+timeout 300 ${JAVA:-java} -Xmx6g -jar fabric-server.jar nogui > $LOG 2>&1 &
 PID=$!
 for i in $(seq 1 140); do
     sleep 2

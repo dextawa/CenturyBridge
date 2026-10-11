@@ -82,7 +82,16 @@ public final class ResourceTranslator {
         }
         recipes(entries, from, to, out);
         lootAndAdvancements(entries, from, to, out);
+        worldgen(entries, from, to, out);
         vanillaIds(entries, from, to, out);
+        if (Release.before(from, "1.20.5") && Release.reaches(to, "1.20.5")) {
+            // item arguments, particle options and NBT paths in commands changed with the
+            // component rework; a function file is a command script, not data -- not translated
+            long fns = entries.keySet().stream().filter(n -> n.startsWith("data/") && n.endsWith(".mcfunction")).count();
+            if (fns > 0) {
+                out.lost("function files (.mcfunction) not translated: command syntax changed at 1.20.5 (x" + fns + ")");
+            }
+        }
         if (Release.before(from, "1.21.4") && Release.reaches(to, "1.21.4")) {
             itemDefinitions(entries, runtimeTypes, out);
         }
@@ -249,6 +258,32 @@ public final class ResourceTranslator {
                 };
             } catch (RuntimeException ex) {
                 out.lost(kind + " left as written (" + ex + "): " + n);
+                continue;
+            }
+            if (!up.equals(j)) {
+                e.setValue(Json.write(up));
+                out.rewritten++;
+            }
+        }
+    }
+
+    /** worldgen and dimension files: registries that load all-or-nothing (LegacyWorldgen) */
+    private static void worldgen(Map<String, byte[]> entries, String from, String to, Outcome out) {
+        for (var e : entries.entrySet()) {
+            String n = e.getKey();
+            if (!n.startsWith("data/") || !n.endsWith(".json")
+                    || !(n.contains("/worldgen/") || n.contains("/dimension_type/") || n.contains("/dimension/"))) {
+                continue;
+            }
+            JsonElement j = Json.tryParse(e.getValue());
+            if (j == null) {
+                continue;
+            }
+            JsonElement up;
+            try {
+                up = top.dext.centurybridge.res.LegacyWorldgen.upgrade(j, n, from, to, what -> out.lost("worldgen: " + what));
+            } catch (RuntimeException ex) {
+                out.lost("worldgen file left as written (" + ex + "): " + n);
                 continue;
             }
             if (!up.equals(j)) {

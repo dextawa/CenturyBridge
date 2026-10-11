@@ -19,8 +19,8 @@ public final class LegacyAdvancements {
     private static final Set<String> ITEM_LIST = Set.of("items", "ingredients");
     private static final Set<String> ENTITY = Set.of(
         "player", "entity", "parent", "partner", "child", "zombie", "villager", "projectile", "shooter",
-        "lightning", "source", "direct_entity", "source_entity", "killer", "cause");
-    private static final Set<String> ENTITY_LIST = Set.of("victims", "bystander");
+        "lightning", "source", "direct_entity", "source_entity", "killer", "cause", "bystander");
+    private static final Set<String> ENTITY_LIST = Set.of("victims");
     private static final Set<String> DAMAGE = Set.of("damage", "killing_blow", "type");
 
     public static JsonObject upgrade(JsonObject in, String from, String to, LegacyItems.Losses losses) {

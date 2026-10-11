@@ -29,8 +29,7 @@ public final class Main {
             case "gen-sides" -> top.dext.centurybridge.data.SideAnnotator.generate(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]), Path.of(args[5]));
             case "res-parity" -> top.dext.centurybridge.data.ResParity.run(
-                Path.of("data/jars/client-" + args[1] + "-obf.jar"), args[1],
-                Path.of("data/jars/client-" + args[2] + "-obf.jar"), args[2],
+                clientJar(args[1]), args[1], clientJar(args[2]), args[2],
                 args.length > 3 ? Integer.parseInt(args[3]) : 3);
             case "gen-renames" -> {
                 // gen-renames <newest client jar> <out.json> [<jarsDir> <IdRenameTable.java>]
@@ -251,6 +250,12 @@ public final class Main {
         System.out.println("full-audit (distinct symbols by fate category): "
             + top.dext.centurybridge.data.FullAudit.summary());
         System.out.println("full-audit -> " + fullAudit);
+    }
+
+    /** a release's client jar under data/jars: obfuscated before 26.1, plain after */
+    private static Path clientJar(String version) {
+        Path obf = Path.of("data/jars/client-" + version + "-obf.jar");
+        return Files.exists(obf) ? obf : Path.of("data/jars/client-" + version + ".jar");
     }
 
     // stub-dump <stubJar> <out.txt>: "M owner.name(desc)" per method, the
