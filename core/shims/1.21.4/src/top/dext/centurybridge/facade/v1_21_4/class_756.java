@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_756 implements net.minecraft.class_4013 {
     private static final net.minecraft.class_2627[] field_3981;
     private static final net.minecraft.class_2627 field_3984;

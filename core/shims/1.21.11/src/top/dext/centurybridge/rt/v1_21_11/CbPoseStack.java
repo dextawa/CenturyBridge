@@ -7,6 +7,7 @@ package top.dext.centurybridge.rt.v1_21_11;
  * retained-mode GUI. Lives in the mixin package only so the bridge can name it
  * without an import; it is a plain class, not a mixin.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbPoseStack extends net.minecraft.class_4587 {
     private final org.joml.Matrix3x2fStack mirror;
 

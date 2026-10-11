@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_806 {
     public static final class_806 field_4292;
     public static final float field_42072 = Float.NEGATIVE_INFINITY;

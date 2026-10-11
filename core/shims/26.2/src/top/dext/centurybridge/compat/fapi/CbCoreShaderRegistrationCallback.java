@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.event.EventFactory;
  * anyway.
  */
 @FunctionalInterface
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbCoreShaderRegistrationCallback {
 
     Event<CbCoreShaderRegistrationCallback> EVENT = Bridge.create();

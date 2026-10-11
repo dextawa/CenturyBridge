@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.FabricBakedModelManager;
  * files the key when the legacy provider registers the model, and the lookup
  * resolves through it here.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbBakedModelManagerHelper {
 
     static final Map<net.minecraft.class_2960, ExtraModelKey<net.minecraft.class_1087>> CB_KEYS =

@@ -1,0 +1,328 @@
+package top.dext.centurybridge.rt.v1_20_2;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.class_1856;
+
+/**
+ * The client half of Statics: static-redirect targets whose bodies name client-only
+ * classes. A dedicated server loads Statics for every server-side redirect, and one
+ * client type in a method it verifies is a NoClassDefFoundError for the whole class;
+ * these members are only ever reached from client code.
+ */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
+public final class ClientStatics {
+
+    /** was net/minecraft/class_332.<init>()V -- a real DrawContext over the client's entity vertex consumers */
+    public static net.minecraft.class_332 cbNewclass_332() {
+        net.minecraft.class_310 mc = net.minecraft.class_310.method_1551();
+        return new net.minecraft.class_332(mc, mc.method_22940().method_23000());
+    }
+
+    /** was net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;IILnet/minecraft/class_4185$class_4241;)V */
+    public static net.minecraft.class_344 cbNewclass_344(int a0, int a1, int a2, int a3, int a4, int a5, int a6, net.minecraft.class_2960 a7, int a8, int a9, net.minecraft.class_4185.class_4241 a10) {
+        throw new UnsupportedOperationException("CenturyBridge: the new class_8666 sprite-based constructor cannot represent the old texture atlas UV coordinates and dimensions");
+    }
+
+    /** was net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V */
+    public static net.minecraft.class_344 cbNewclass_344(int a0, int a1, int a2, int a3, int a4, int a5, int a6, net.minecraft.class_2960 a7, net.minecraft.class_4185.class_4241 a8) {
+        throw new UnsupportedOperationException("CenturyBridge: the old texture-atlas UV and hover-offset contract cannot be represented by the new class_8666 sprite-based constructor");
+    }
+
+    /** was net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;IILnet/minecraft/class_4185$class_4241;Lnet/minecraft/class_2561;)V */
+    public static net.minecraft.class_344 cbNewclass_344(int a0, int a1, int a2, int a3, int a4, int a5, int a6, net.minecraft.class_2960 a7, int a8, int a9, net.minecraft.class_4185.class_4241 a10, net.minecraft.class_2561 a11) {
+        throw new UnsupportedOperationException("CenturyBridge: the new class_8666 sprite API cannot represent the old texture atlas UV coordinates and dimensions");
+    }
+
+    /** was net/minecraft/class_344.<init>(IIIIIILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V */
+    public static net.minecraft.class_344 cbNewclass_344(int a0, int a1, int a2, int a3, int a4, int a5, net.minecraft.class_2960 a6, net.minecraft.class_4185.class_4241 a7) {
+        throw new UnsupportedOperationException("CenturyBridge: the old texture coordinates and identifier cannot be converted to the required class_8666 without its construction API");
+    }
+
+    /** was net/minecraft/class_7193.<init>(Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_5350;)V */
+    public static net.minecraft.class_7193 cbNewclass_7193(net.minecraft.class_5285 a0, com.mojang.serialization.Lifecycle a1, net.minecraft.class_5455.class_6890 a2, net.minecraft.class_5350 a3) {
+        throw new UnsupportedOperationException("CenturyBridge: the new constructors require class_7723, class_7780, and class_7712 values that cannot be derived from the old Lifecycle and class_5455.class_6890 arguments");
+    }
+
+    /** was net/minecraft/class_8208.<init>(IILnet/minecraft/class_2960;)V */
+    public static net.minecraft.class_8208 cbNewclass_8208(int a0, int a1, net.minecraft.class_2960 a2) {
+        return net.minecraft.class_8208.method_52720(a0, a1, a2);
+    }
+
+    /** was net/minecraft/class_8208.<init>(IIIILnet/minecraft/class_2960;)V */
+    public static net.minecraft.class_8208 cbNewclass_8208(int a0, int a1, int a2, int a3, net.minecraft.class_2960 a4) {
+        net.minecraft.class_8208 widget = net.minecraft.class_8208.method_52720(a2, a3, a4);
+        widget.method_46421(a0);
+        widget.method_46419(a1);
+        return widget;
+    }
+
+    /**
+     * superRedirects: a 1.20.1 override's super.render(context, mx, my, delta).
+     * 1.20.1 Screen.render drew the widget list and nothing else; since 1.20.2
+     * it draws the background first, over everything the mod just drew. Render
+     * exactly what the old contract promised.
+     */
+    public static void cbRenderWidgets(net.minecraft.class_437 self, net.minecraft.class_332 context, int mouseX, int mouseY, float delta) {
+        for (net.minecraft.class_4068 d : ((top.dext.centurybridge.shims.v1_20_2.ScreenDrawablesAccessor) self).cbDrawables()) {
+            d.method_25394(context, mouseX, mouseY, delta);
+        }
+    }
+
+    /** ctorRedirects: 1.20.1 new ServerInfo(name, address, local) -- the boolean
+     *  became ServerInfo.ServerType in 1.20.2 (local ? LAN : OTHER). */
+    public static net.minecraft.class_642 cbNewServerInfo(String name, String address, boolean local) {
+        return new net.minecraft.class_642(name, address,
+            local ? net.minecraft.class_642.class_8678.field_45609   // LAN
+                  : net.minecraft.class_642.class_8678.field_45611); // OTHER
+    }
+
+    /** superCtorAdapts: the 1.20.1 ServerInfo ctor boolean, as ServerType */
+    public static net.minecraft.class_642.class_8678 cbServerType(boolean local) {
+        return local ? net.minecraft.class_642.class_8678.field_45609   // LAN
+                     : net.minecraft.class_642.class_8678.field_45611;  // OTHER
+    }
+
+    /** was net/minecraft/class_742.method_3117()Lnet/minecraft/class_2960; getSkinTexture */
+    public static net.minecraft.class_2960 method_3117(net.minecraft.class_742 self) { return self.method_52814().comp_1626(); }
+
+    /** was net/minecraft/class_746.method_3117()Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_3117(net.minecraft.class_746 self) { return self.method_52814().comp_1626(); }
+
+    /** was net/minecraft/class_742.method_3121()Ljava/lang/String; getModel */
+    public static String method_3121(net.minecraft.class_742 self) { return self.method_52814().comp_1629().method_52856(); }
+
+    /** was net/minecraft/class_746.method_3121()Ljava/lang/String; */
+    public static String method_3121(net.minecraft.class_746 self) { return self.method_52814().comp_1629().method_52856(); }
+
+    /** was net/minecraft/class_742.method_3119()Lnet/minecraft/class_2960; getCapeTexture */
+    public static net.minecraft.class_2960 method_3119(net.minecraft.class_742 self) { return self.method_52814().comp_1627(); }
+
+    /** was net/minecraft/class_742.method_3122()Lnet/minecraft/class_2960; getElytraTexture */
+    public static net.minecraft.class_2960 method_3122(net.minecraft.class_742 self) { return self.method_52814().comp_1628(); }
+
+    /** was net/minecraft/class_742.method_3125()Z isCapeLoaded */
+    public static boolean method_3125(net.minecraft.class_742 self) { return self.method_52814().comp_1627() != null; }
+
+    /** was net/minecraft/class_742.method_3126()Z isElytraLoaded */
+    public static boolean method_3126(net.minecraft.class_742 self) { return self.method_52814().comp_1628() != null; }
+
+    /** was net/minecraft/class_742.method_3127()Z isSkinLoaded */
+    public static boolean method_3127(net.minecraft.class_742 self) { return self.method_52814().comp_1626() != null; }
+
+    /** was net/minecraft/class_640.method_2968()Lnet/minecraft/class_2960; PlayerListEntry.getSkinTexture */
+    public static net.minecraft.class_2960 method_2968(net.minecraft.class_640 self) { return self.method_52810().comp_1626(); }
+
+    /** was net/minecraft/class_640.method_2957()Lnet/minecraft/class_2960; getElytraTexture */
+    public static net.minecraft.class_2960 method_2957(net.minecraft.class_640 self) { return self.method_52810().comp_1628(); }
+
+    /** was net/minecraft/class_640.method_2979()Lnet/minecraft/class_2960; getCapeTexture */
+    public static net.minecraft.class_2960 method_2979(net.minecraft.class_640 self) { return self.method_52810().comp_1627(); }
+
+    /** was net/minecraft/class_640.method_2977()Ljava/lang/String; getModel */
+    public static String method_2977(net.minecraft.class_640 self) { return self.method_52810().comp_1629().method_52856(); }
+
+    /** was net/minecraft/class_1068.method_4647(Ljava/util/UUID;)Ljava/lang/String; DefaultSkinHelper.getModel */
+    public static String method_4647(java.util.UUID uuid) { return net.minecraft.class_1068.method_4648(uuid).comp_1629().method_52856(); }
+
+    /** was net/minecraft/class_1071.method_4654(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map; PlayerSkinProvider.getTextures.
+     *  Rebuilt from the synchronous SkinTextures: SKIN carries the real URL + model metadata; CAPE/ELYTRA
+     *  entries are present when the texture is, with the registered texture id standing in for a URL. */
+    public static java.util.Map<com.mojang.authlib.minecraft.MinecraftProfileTexture.Type, com.mojang.authlib.minecraft.MinecraftProfileTexture> method_4654(net.minecraft.class_1071 self, com.mojang.authlib.GameProfile profile) {
+        net.minecraft.class_8685 t = self.method_52862(profile);
+        java.util.Map<com.mojang.authlib.minecraft.MinecraftProfileTexture.Type, com.mojang.authlib.minecraft.MinecraftProfileTexture> m =
+            new java.util.EnumMap<>(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.class);
+        if (t.comp_1911() != null) {
+            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.SKIN,
+                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1911(), java.util.Map.of("model", t.comp_1629().method_52856())));
+        }
+        if (t.comp_1627() != null) {
+            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.CAPE,
+                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1627().toString(), null));
+        }
+        if (t.comp_1628() != null) {
+            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.ELYTRA,
+                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1628().toString(), null));
+        }
+        return m;
+    }
+
+    /** was net/minecraft/class_320.method_1673()Ljava/lang/String; Session.getUuid (1.20.2 stores a UUID) */
+    public static String method_1673(net.minecraft.class_320 self) { java.util.UUID u = self.method_44717(); return u == null ? "" : u.toString(); }
+
+    /** was net/minecraft/class_320.method_1677()Lcom/mojang/authlib/GameProfile; Session.getProfile */
+    public static com.mojang.authlib.GameProfile method_1677(net.minecraft.class_320 self) {
+        return new com.mojang.authlib.GameProfile(self.method_44717(), self.method_1676());
+    }
+
+    /** was net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V */
+    public static void method_2942(net.minecraft.class_638 self, int id, net.minecraft.class_1297 e) { self.method_53875(e); }
+
+    /** was net/minecraft/class_632.method_2864(Lnet/minecraft/class_161;Z)V selectTab(Advancement, boolean): locate its entry in the tree */
+    public static void method_2864(net.minecraft.class_632 self, net.minecraft.class_161 adv, boolean b) {
+        for (net.minecraft.class_8781 p : self.method_53814().method_53693()) {
+            if (p.method_53647() == adv) { self.method_2864(p.method_53649(), b); return; }
+        }
+        self.method_2864((net.minecraft.class_8779) null, b);
+    }
+
+    /** was net/minecraft/class_455.method_2320()I AdvancementObtainedStatus.getSpriteIndex: OBTAINED=0, UNOBTAINED=1 (== ordinal) */
+    public static int method_2320(net.minecraft.class_455 self) { return self.ordinal(); }
+
+    /** was net/minecraft/class_505.method_2565(Lnet/minecraft/class_1860;)V RecipeBookWidget.showGhostRecipe(Recipe): find its RecipeEntry */
+    public static void method_2565(net.minecraft.class_505 self, net.minecraft.class_1860<?> recipe) {
+        net.minecraft.class_638 world = net.minecraft.class_310.method_1551().field_1687;
+        if (world == null) return;
+        for (net.minecraft.class_8786<?> e : world.method_8433().method_8126()) {
+            if (e.comp_1933() == recipe) { self.method_2565(e); return; }
+        }
+    }
+
+    /** was net/minecraft/class_332.method_48586(Lnet/minecraft/class_2960;IIIIIIIII)V drawNineSlicedTexture(outer) */
+    public static void method_48586(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int outer, int cw, int ch, int u, int v) {
+        method_48587(self, tex, x, y, w, h, outer, outer, outer, outer, cw, ch, u, v);
+    }
+
+    /** was net/minecraft/class_332.method_49697(Lnet/minecraft/class_2960;IIIIIIIIII)V drawNineSlicedTexture(sideW, sideH) */
+    public static void method_49697(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int sw, int sh, int cw, int ch, int u, int v) {
+        method_48587(self, tex, x, y, w, h, sw, sh, sw, sh, cw, ch, u, v);
+    }
+
+    /** was net/minecraft/class_332.method_48587(Lnet/minecraft/class_2960;IIIIIIIIIIII)V drawNineSlicedTexture(left, top, right, bottom) */
+    public static void method_48587(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h,
+                                    int left, int top, int right, int bottom, int cw, int ch, int u, int v) {
+        left = Math.min(left, w / 2);
+        right = Math.min(right, w / 2);
+        top = Math.min(top, h / 2);
+        bottom = Math.min(bottom, h / 2);
+        if (w == cw && h == ch) { self.method_25302(tex, x, y, u, v, w, h); return; }
+        if (h == ch) {
+            self.method_25302(tex, x, y, u, v, left, h);
+            method_48585(self, tex, x + left, y, w - right - left, h, u + left, v, cw - right - left, ch);
+            self.method_25302(tex, x + w - right, y, u + cw - right, v, right, h);
+            return;
+        }
+        if (w == cw) {
+            self.method_25302(tex, x, y, u, v, w, top);
+            method_48585(self, tex, x, y + top, w, h - bottom - top, u, v + top, cw, ch - bottom - top);
+            self.method_25302(tex, x, y + h - bottom, u, v + ch - bottom, w, bottom);
+            return;
+        }
+        self.method_25302(tex, x, y, u, v, left, top);
+        method_48585(self, tex, x + left, y, w - right - left, top, u + left, v, cw - right - left, top);
+        self.method_25302(tex, x + w - right, y, u + cw - right, v, right, top);
+        self.method_25302(tex, x, y + h - bottom, u, v + ch - bottom, left, bottom);
+        method_48585(self, tex, x + left, y + h - bottom, w - right - left, bottom, u + left, v + ch - bottom, cw - right - left, bottom);
+        self.method_25302(tex, x + w - right, y + h - bottom, u + cw - right, v + ch - bottom, right, bottom);
+        method_48585(self, tex, x, y + top, left, h - bottom - top, u, v + top, left, ch - bottom - top);
+        method_48585(self, tex, x + left, y + top, w - right - left, h - bottom - top, u + left, v + top, cw - right - left, ch - bottom - top);
+        method_48585(self, tex, x + w - right, y + top, right, h - bottom - top, u + cw - right, v + top, right, ch - bottom - top);
+    }
+
+    /** was net/minecraft/class_332.method_48585(Lnet/minecraft/class_2960;IIIIIIII)V drawRepeatingTexture */
+    public static void method_48585(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int u, int v, int tw, int th) {
+        int i = x;
+        for (int j : cbDivide(w, tw)) {
+            int k = (tw - j) / 2;
+            int l = y;
+            for (int m : cbDivide(h, th)) {
+                int n = (th - m) / 2;
+                self.method_25302(tex, i, l, u + k, v + n, j, m);
+                l += m;
+            }
+            i += j;
+        }
+    }
+
+    /** ButtonWidget(x, y, w, h, text, action) gained a NarrationSupplier; the vanilla default narrates the supplied message */
+    public static net.minecraft.class_4185.class_7841 cbDefaultNarration() { return s -> s.get(); }
+
+    /** was net/minecraft/class_4185.<init>(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_4185$class_4241;)V -- the ctor is
+     *  protected since 1.19.3; Button.builder is the public path */
+    public static net.minecraft.class_4185 cbNewclass_4185(int x, int y, int w, int h, net.minecraft.class_2561 text, net.minecraft.class_4185.class_4241 action) {
+        return net.minecraft.class_4185.method_46430(text, action).method_46434(x, y, w, h).method_46431();
+    }
+
+    /** EnchantmentScreen-family ctor gained two extra Identifier args in 1.20.2. */
+    public static net.minecraft.class_489 cbNewclass_489(net.minecraft.class_1720 handler, net.minecraft.class_517 a, net.minecraft.class_1661 inv, net.minecraft.class_2561 title, net.minecraft.class_2960 tex) {
+        throw new UnsupportedOperationException("CenturyBridge: this screen's 1.20.2 ctor requires two additional texture Identifiers not present in the 1.20.1 call");
+    }
+
+    /** ClientPlayNetworkHandler ctor collapsed its args into a single class_8675
+     *  ClientConnectionState in 1.20.2. */
+    public static net.minecraft.class_634 cbNewclass_634(net.minecraft.class_310 mc, net.minecraft.class_437 screen, net.minecraft.class_2535 conn, net.minecraft.class_642 server, com.mojang.authlib.GameProfile profile, net.minecraft.class_7975 cookie) {
+        throw new UnsupportedOperationException("CenturyBridge: ClientPlayNetworkHandler's 1.20.2 ctor takes a ClientConnectionState (class_8675) that bundles state not reconstructable from the old separate args");
+    }
+
+    /** was net/minecraft/class_1068.method_4648(Ljava/util/UUID;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_4648(java.util.UUID a0) {
+        return net.minecraft.class_1068.method_4648(a0).comp_1626();
+    }
+
+    /** was net/minecraft/class_4722.method_48480()Lnet/minecraft/class_1921; */
+    public static net.minecraft.class_1921 method_48480() {
+        return net.minecraft.class_4722.method_48480(false);
+    }
+
+    /**
+     * 1.20.1 InventoryScreen.drawEntity(ctx, x, y, size, mouseX, mouseY, entity): x/y is
+     * where the feet go, mouseX/mouseY are already relative to the entity (the caller
+     * subtracts the cursor). 1.20.2 replaced it with a scissor-box form that takes
+     * ABSOLUTE cursor coordinates, so feeding the old arguments into it drew nothing (a
+     * zero size) or looked the wrong way. The 1.20.1 body is ported verbatim instead:
+     * the same head/body rotation, applied to the entity around the old renderer
+     * {@link #method_48472}, then restored.
+     */
+    public static void method_2486(net.minecraft.class_332 context,
+            int x, int y, int size, float mouseX, float mouseY,
+            net.minecraft.class_1309 entity) {
+        float yaw = (float) Math.atan(mouseX / 40.0F);
+        float pitch = (float) Math.atan(mouseY / 40.0F);
+        org.joml.Quaternionf rotation = new org.joml.Quaternionf().rotateZ((float) Math.PI);
+        org.joml.Quaternionf camera = new org.joml.Quaternionf().rotateX(pitch * 20.0F * ((float) Math.PI / 180.0F));
+        rotation.mul(camera);
+        float bodyYaw = entity.field_6283;
+        float entityYaw = entity.method_36454();
+        float entityPitch = entity.method_36455();
+        float prevHeadYaw = entity.field_6259;
+        float headYaw = entity.field_6241;
+        entity.field_6283 = 180.0F + yaw * 20.0F;
+        entity.method_36456(180.0F + yaw * 40.0F);
+        entity.method_36457(-pitch * 20.0F);
+        entity.field_6241 = entity.method_36454();
+        entity.field_6259 = entity.method_36454();
+        method_48472(context, x, y, size, rotation, camera, entity);
+        entity.field_6283 = bodyYaw;
+        entity.method_36456(entityYaw);
+        entity.method_36457(entityPitch);
+        entity.field_6259 = prevHeadYaw;
+        entity.field_6241 = headYaw;
+    }
+
+    /** was net/minecraft/class_490.method_48472(Lnet/minecraft/class_332;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/class_1309;)V */
+    public static void method_48472(net.minecraft.class_332 a0, int a1, int a2, int a3, org.joml.Quaternionf a4, org.joml.Quaternionf a5, net.minecraft.class_1309 a6) {
+        net.minecraft.class_490.method_48472(a0, (float) a1, (float) a2, a3, new org.joml.Vector3f(), a4, a5, a6);
+    }
+
+    // ---- DrawContext nine-slice / repeating textures. 1.20.2 replaced them with sprite-atlas gui
+    // textures (drawGuiTexture + Scaling metadata) that take a sprite id, not a texture path, so the
+    // faithful bridge is the 1.20.1 algorithm on top of the surviving 7-arg drawTexture (method_25302).
+    /** 1.20.1 Divider(total, ceilDiv(total, piece)): even split, remainder spread one pixel at a time. */
+    private static int[] cbDivide(int total, int piece) {
+        if (total <= 0 || piece <= 0) return new int[0];
+        int count = net.minecraft.class_3532.method_38788(total, piece);
+        int q = total / count, mod = total % count, rem = 0;
+        int[] out = new int[count];
+        for (int idx = 0; idx < count; idx++) {
+            int p = q;
+            rem += mod;
+            if (rem >= count) { rem -= count; p++; }
+            out[idx] = p;
+        }
+        return out;
+    }
+
+    private ClientStatics() {
+    }
+}

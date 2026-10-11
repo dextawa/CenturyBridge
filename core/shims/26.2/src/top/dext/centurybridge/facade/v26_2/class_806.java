@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
  *  constructor is kept (ItemOverride=class_799 deleted, but it only appears in
  *  the erased List parameter); resolve(method_3495) defaults to returning the
  *  input model. Member names are intermediary tokens. */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_806 {
     protected class_806() {}
 

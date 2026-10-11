@@ -36,6 +36,7 @@ import net.minecraft.world.phys.Vec3;
  * exception in a render hook would take the client down. Such a listener is
  * logged once and dropped; the rest of the frame and the other mods carry on.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbWorldRenderEvents {
 
     public static final Event<CbWorldRenderStart> START = event(CbWorldRenderStart.class, ls -> ctx -> each(ls, l -> l.onStart(ctx)));

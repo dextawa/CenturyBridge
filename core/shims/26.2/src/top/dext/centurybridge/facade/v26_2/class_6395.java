@@ -4,6 +4,7 @@ package top.dext.centurybridge.facade.v26_2;
  *  deleted on 26.2 (item model properties are data-driven). Legacy item model
  *  predicates implement it; default call clamps unclampedCall. Member names are
  *  intermediary tokens. */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface class_6395 {
     /** unclampedCall (method_unclamped) */
     float unclampedCall(net.minecraft.world.item.ItemStack stack,

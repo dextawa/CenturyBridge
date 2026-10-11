@@ -18,6 +18,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
  * The four old constructors (scale/offset flags) forward to super(EMPTY_ROOT);
  * the mod's real parts come via its getHeadParts/getBodyParts (method_22946/48).
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public abstract class class_4592<T extends EntityRenderState> extends EntityModel<T> {
 
     private static final ModelPart EMPTY_ROOT = new ModelPart(List.of(), Map.of());

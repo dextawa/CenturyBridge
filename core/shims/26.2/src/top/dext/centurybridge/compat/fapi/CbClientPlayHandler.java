@@ -6,6 +6,7 @@ package top.dext.centurybridge.compat.fapi;
  * converter classRenames the old interface here, so mods' lambdas and
  * implementations keep their exact old shape.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbClientPlayHandler {
     void receive(net.minecraft.client.Minecraft client,
                  net.minecraft.client.multiplayer.ClientPacketListener handler,

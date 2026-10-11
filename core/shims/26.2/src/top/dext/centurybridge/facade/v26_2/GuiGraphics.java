@@ -9,6 +9,7 @@ package top.dext.centurybridge.facade.v26_2;
  * (see overrideHooks in shims-26.2.json); the extractor is the single source
  * of truth, this object only translates calls.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class GuiGraphics {
 
     private final net.minecraft.client.gui.GuiGraphicsExtractor ext;

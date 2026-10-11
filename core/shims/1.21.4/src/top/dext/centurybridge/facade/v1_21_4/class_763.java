@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_763 {
     public final it.unimi.dsi.fastutil.ints.Int2ObjectMap<net.minecraft.class_1091> field_4129;
     private final it.unimi.dsi.fastutil.ints.Int2ObjectMap<net.minecraft.class_1087> field_4130;

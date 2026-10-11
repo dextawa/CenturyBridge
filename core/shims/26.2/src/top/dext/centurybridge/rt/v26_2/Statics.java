@@ -17,14 +17,12 @@ public final class Statics {
             .orElseThrow(() -> new JsonSyntaxException("Invalid ingredient: " + json));
     }
 
-
     /** 1.20.1 FluidDrainable.tryDrainFluid gained a leading @Nullable player param in 1.20.2.
      *  Interface methods cannot be re-added via Mixin; call sites are redirected here. L2 x19. */
     public static net.minecraft.world.item.ItemStack method_9700(net.minecraft.world.level.block.BucketPickup self,
             net.minecraft.world.level.LevelAccessor world, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
         return self.pickupBlock(null, world, pos, state);
     }
-
 
     /** 1.21.2 keyed recipes by registry key; every bridge holding a bare id goes through here. */
     public static net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>> cbRecipeKey(net.minecraft.resources.Identifier id) {
@@ -88,8 +86,6 @@ public final class Statics {
         }
     }
 
-
-
     
     /** 1.20.1 RecipeManager.deserialize: became protected and returns RecipeEntry. L3 x4. */
     public static net.minecraft.world.item.crafting.Recipe<?> method_17720(net.minecraft.resources.Identifier id, com.google.gson.JsonObject json) {
@@ -123,8 +119,6 @@ public final class Statics {
     public static net.minecraft.advancements.predicates.NbtPredicate field_9716() {
         return new net.minecraft.advancements.predicates.NbtPredicate((net.minecraft.nbt.CompoundTag) null);
     }
-
-
 
     public static net.minecraft.resources.Identifier method_8114(net.minecraft.world.item.crafting.AbstractCookingRecipe self) {
         return method_8114((net.minecraft.world.item.crafting.Recipe<?>) self);
@@ -190,11 +184,6 @@ public final class Statics {
             .result()
             .orElse(com.google.gson.JsonNull.INSTANCE);
     }
-
-
-
-
-
 
     /**
      * 1.20.1 Item.onCraft(stack, world, player): the player parameter was
@@ -306,7 +295,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.util.datafix.fixes.StatsCounterFix.upgradeBlock(String) was removed in 1.20.2; the rename callback is no longer exposed and is inlined into makeRule(), so the old per-name transform contract cannot be reproduced on the new type");
     }
 
-
     /** was net/minecraft/world/effect/MobEffectInstance/method_5589(Lnet/minecraft/world/entity/LivingEntity;)V */
     public static void method_5589(net.minecraft.world.effect.MobEffectInstance self, net.minecraft.world.entity.LivingEntity a0) {
         self.onEffectStarted(a0);
@@ -316,7 +304,6 @@ public final class Statics {
     public static boolean method_20233(net.minecraft.world.entity.Entity self, net.minecraft.world.entity.Pose a0) {
         throw new UnsupportedOperationException("CenturyBridge: method_20233(EntityPose) was removed in 1.20.2 with no direct replacement");
     }
-
 
     /** was net/minecraft/world/entity/Entity/method_5621()D */
     public static double method_5621(net.minecraft.world.entity.Entity self) {
@@ -393,7 +380,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: BoatEntity.getTicksUnderwater is no longer exposed");
     }
 
-
     /** was net/minecraft/world/entity/vehicle/boat/Boat/method_7554()F */
     public static float method_7554(net.minecraft.world.entity.vehicle.boat.Boat self) {
         throw new UnsupportedOperationException("CenturyBridge: BoatEntity.getWaterHeight was removed in 1.20.3");
@@ -428,8 +414,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: StringIdentifiable.Codec has been removed in 1.20.3");
     }
 
-
-
     /** was net/minecraft/advancements/CriterionProgress/method_783()Lcom/google/gson/JsonElement; */
     public static com.google.gson.JsonElement method_783(net.minecraft.advancements.CriterionProgress self) {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.advancements.CriterionProgress.method_783() (JsonElement serialization) was deleted in 1.20.2; the new API surface only exposes getObtained() returning Instant and serializeToNetwork() for PacketByteBuf serialization, with no equivalent JsonElement contract");
@@ -440,7 +424,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.advancements.CriterionProgress.method_788(String) has no 1.20.2 equivalent; the String parameter is no longer part of net.minecraft.advancements.CriterionProgress's contract (only <init>() or <init>(Instant) exist)");
     }
 
-
     /** was net/minecraft/class_1830.field_30925Ljava/lang/String; */
     public static java.lang.String field_30925() {
         return "Items";
@@ -450,7 +433,6 @@ public final class Statics {
     public static net.minecraft.resources.Identifier method_806(net.minecraft.advancements.CriterionTriggerInstance self) {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.advancements.CriterionTriggerInstance no longer stores an Identifier; the advancement ID was moved to AdvancementEntry (net.minecraft.advancements.AdvancementNode) in 1.20.2, so method_806 has no equivalent on net.minecraft.advancements.CriterionTriggerInstance itself");
     }
-
 
     /** was net/minecraft/advancements/CriterionTriggerInstance/method_807()Lcom/google/gson/JsonObject; */
     public static com.google.gson.JsonObject method_807(net.minecraft.advancements.CriterionTriggerInstance self) {
@@ -463,7 +445,6 @@ public final class Statics {
         return method_807(self);
     }
 
-
     /** was net/minecraft/advancements/AdvancementType/method_832()I */
     public static int method_832(net.minecraft.advancements.AdvancementType self) {
         return self.ordinal();
@@ -473,7 +454,6 @@ public final class Statics {
     public static int field_32773() {
         return 131072;
     }
-
 
     /** was net/minecraft/advancements/criterion/ConsumeItemTrigger/field_9509Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_9509() {
@@ -495,8 +475,6 @@ public final class Statics {
         return net.minecraft.resources.Identifier.fromNamespaceAndPath("minecraft", "brewed_potion");
     }
 
-
-
     /** was net/minecraft/world/level/block/Blocks/field_10150Lnet/minecraft/world/level/block/Block; */
     public static net.minecraft.world.level.block.Block field_10150() {
         throw new UnsupportedOperationException("CenturyBridge: Blocks.field_10150 was deleted in 1.20.3 with no direct replacement");
@@ -511,10 +489,6 @@ public final class Statics {
     public static java.lang.Object method_10231(net.minecraft.core.Registry self, net.minecraft.core.Registry a0, int a1, java.lang.String a2, java.lang.Object a3) {
         throw new UnsupportedOperationException("CenturyBridge: method_10231 (Registry.register with raw id) has no 1.20.2 equivalent; raw-id registration is no longer supported");
     }
-
-
-
-
 
     /** was net/minecraft/network/FriendlyByteBuf/method_10815(I)I */
     public static int method_10815(net.minecraft.network.FriendlyByteBuf self, int a0) {
@@ -582,7 +556,6 @@ public final class Statics {
     public static java.lang.String method_21865(net.minecraft.world.level.block.entity.StructureBlockEntity self) {
         return self.AUTHOR_TAG;
     }
-
 
     /** was net/minecraft/network/protocol/game/ServerGamePacketListener/handleClientInformation(Lnet/minecraft/network/protocol/common/ServerboundClientInformationPacket;)V */
     public void handleClientInformation(net.minecraft.network.protocol.common.ServerboundClientInformationPacket a0) {
@@ -729,10 +702,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: method_29014 not supported due to API changes in DataConfiguration parsing");
     }
 
-
-
-
-
     /** was net/minecraft/client/gui/components/AbstractWidget/field_22757Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_22757() {
         return net.minecraft.resources.Identifier.parse("textures/gui/widgets.png");
@@ -859,11 +828,6 @@ public final class Statics {
         return net.minecraft.resources.Identifier.parse("textures/gui/recipe_book.png");
     }
 
-    /** was net/minecraft/client/gui/components/events/GuiEventListener/mouseScrolled(DDD)Z */
-    public boolean mouseScrolled(double a0, double a1, double a2) {
-        return ((net.minecraft.client.gui.components.events.GuiEventListener) (Object) this).mouseScrolled(a0, a1, 0.0, a2);
-    }
-
     /** was net/minecraft/client/gui/components/spectator/SpectatorGui/field_2199Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_2199() {
         return net.minecraft.resources.Identifier.fromNamespaceAndPath("minecraft", "textures/gui/options_background.png");
@@ -969,7 +933,6 @@ public final class Statics {
         return net.minecraft.resources.Identifier.parse("textures/gui/container/creative_inventory/creative_inventory.png");
     }
 
-
     /** was net/minecraft/com.mojang.realmsclient.gui.screens.RealmsSelectWorldTemplateScreen.field_20072I */
     public static int field_20072() {
         return 32;
@@ -1015,7 +978,6 @@ public final class Statics {
         return 5;
     }
 
-
     /** was net/minecraft/gametest/framework/StructureUtils/method_36106([Ljava/lang/String;)V */
     public static void method_36106(net.minecraft.gametest.framework.StructureUtils self, java.lang.String[] a0) {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.gametest.framework.StructureUtils.method_36106(String[]) was removed in 1.20.2 with no direct replacement; the structure manager no longer accepts a pack/namespace array");
@@ -1025,12 +987,6 @@ public final class Statics {
     public static net.minecraft.resources.Identifier field_2716() {
         return net.minecraft.resources.Identifier.parse("textures/gui/options_background.png");
     }
-
-
-
-
-
-
 
     /** was net/minecraft/com.mojang.realmsclient.dto.PendingInvite.field_22583Ljava/lang/String; */
     public static java.lang.String field_22583() {
@@ -1127,7 +1083,6 @@ public final class Statics {
         return -7079482;
     }
 
-
     /** was net/minecraft/client/gui/screens/packs/TransferableSelectionList/field_19125Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_19125() {
         return net.minecraft.resources.Identifier.parse("textures/gui/recipe_book.png");
@@ -1157,7 +1112,6 @@ public final class Statics {
     public static java.lang.String field_32922() {
         return "en_us";
     }
-
 
     /** was net/minecraft/world/level/storage/loot/providers/number/NumberProviders/method_32455()Ljava/lang/Object; */
     public static java.lang.Object method_32455(net.minecraft.world.level.storage.loot.providers.number.NumberProviders self) {
@@ -1197,11 +1151,6 @@ public final class Statics {
     /** was net/minecraft/client/multiplayer/ClientAdvancements$Listener.onUpdateAdvancementProgress(Lnet/minecraft/advancements/Advancement;Lnet/minecraft/advancements/AdvancementProgress;)V */
     public void onUpdateAdvancementProgress(net.minecraft.advancements.Advancement a0, net.minecraft.advancements.AdvancementProgress a1) {
         throw new UnsupportedOperationException("CenturyBridge: Cannot convert net.minecraft.advancements.Advancement to net.minecraft.advancements.AdvancementNode");
-    }
-
-    /** was net/minecraft/client/multiplayer/ClientAdvancements$Listener.onSelectedTabChanged(Lnet/minecraft/advancements/Advancement;)V */
-    public void onSelectedTabChanged(net.minecraft.advancements.Advancement a0) {
-        ((net.minecraft.client.multiplayer.ClientAdvancements.Listener) (Object) this).onSelectedTabChanged(new net.minecraft.advancements.AdvancementHolder(net.minecraft.resources.Identifier.fromNamespaceAndPath("centurybridge", "dummy"), a0));
     }
 
     /** was net/minecraft/world/entity/animal/allay/Allay/method_45342()Z */
@@ -1332,7 +1281,6 @@ public final class Statics {
         return (float) Math.sqrt(f * f + g * g + h * h);
     }
 
-
     /** was net/minecraft/world/entity/LivingEntity/field_30067F */
     public static float field_30067() {
         return 0.02f;
@@ -1342,8 +1290,6 @@ public final class Statics {
     public static void method_20236(net.minecraft.world.entity.LivingEntity self, net.minecraft.world.InteractionHand a0) {
         self.swing(a0, false);
     }
-
-
 
     /** was net/minecraft/world/entity/ai/goal/GoalSelector/method_35114(I)V */
     public static void method_35114(net.minecraft.world.entity.ai.goal.GoalSelector self, int a0) {
@@ -1480,8 +1426,6 @@ public final class Statics {
         return self.toughness();
     }
 
-
-
     /** was net/minecraft/world/item/equipment/ArmorMaterial/method_7695()Lnet/minecraft/world/item/crafting/Ingredient; */
     public static net.minecraft.world.item.crafting.Ingredient method_7695(net.minecraft.world.item.equipment.ArmorMaterial self) {
         throw new UnsupportedOperationException("CenturyBridge: Ingredient getter is no longer available on net.minecraft.world.item.equipment.ArmorMaterial");
@@ -1507,7 +1451,6 @@ public final class Statics {
         return "BlockEntityTag";
     }
 
-
     /** was net/minecraft/world/item/CompassItem/field_30860Ljava/lang/String; */
     public static java.lang.String field_30860() {
         return "Charged";
@@ -1527,7 +1470,6 @@ public final class Statics {
     public static java.lang.String field_30874() {
         return "default";
     }
-
 
     /** was net/minecraft/world/item/FireworkRocketItem/field_30875Ljava/lang/String; */
     public static java.lang.String field_30875() {
@@ -1608,7 +1550,6 @@ public final class Statics {
     public static java.lang.String field_30923() {
         return "Potion";
     }
-
 
     /** was net/minecraft/world/item/WrittenBookItem/field_30929I */
     public static int field_30929() {
@@ -1885,12 +1826,10 @@ public final class Statics {
         return (net.minecraft.world.item.alchemy.Potion) net.minecraft.world.item.alchemy.Potions.SWIFTNESS.value();
     }
 
-
     /** was net/minecraft/world/item/crafting/RecipeSerializer/codec()Lcom/mojang/serialization/Codec; */
     public com.mojang.serialization.Codec codec() {
         return ((net.minecraft.world.item.crafting.RecipeSerializer) (Object) this).codec().codec();
     }
-
 
     /** was net/minecraft/world/level/LevelAccessor/gameEvent(Lnet/minecraft/world/level/gameevent/GameEvent;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEvent$Context;)V */
     public void gameEvent(net.minecraft.world.level.gameevent.GameEvent a0, net.minecraft.world.phys.Vec3 a1, net.minecraft.world.level.gameevent.GameEvent.Context a2) {
@@ -1997,7 +1936,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: Registering with an explicit raw ID is no longer supported");
     }
 
-
     /** was net/minecraft/core/WritableRegistry/register(Lnet/minecraft/resources/ResourceKey;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/core/Holder$Reference; */
     public net.minecraft.core.Holder.Reference register(net.minecraft.resources.ResourceKey a0, java.lang.Object a1, com.mojang.serialization.Lifecycle a2) {
         return ((net.minecraft.core.WritableRegistry) (Object) this).register(a0, a1, new net.minecraft.core.RegistrationInfo(java.util.Optional.empty(), a2));
@@ -2022,7 +1960,6 @@ public final class Statics {
     public static java.lang.String field_31299() {
         return "Patterns";
     }
-
 
     /** was net/minecraft/world/level/block/entity/BannerBlockEntity/method_16842(Lnet/minecraft/network/chat/Component;)V */
     public static void method_16842(net.minecraft.world.level.block.entity.BannerBlockEntity self, net.minecraft.network.chat.Component a0) {
@@ -2059,7 +1996,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: field_27219 is the synthetic outer this$0 field of net.minecraft.world.level.block.entity.SpawnerBlockEntity$1 and cannot be accessed statically without a receiver");
     }
 
-
     /** was net/minecraft/world/level/chunk/LevelChunk$RebindableTickingBlockEntityWrapper.field_27227Lnet/minecraft/world/level/chunk/LevelChunk; */
     public static net.minecraft.world.level.chunk.LevelChunk field_27227() {
         throw new UnsupportedOperationException("CenturyBridge: Cannot access instance field field_27227 statically");
@@ -2069,7 +2005,6 @@ public final class Statics {
     public static net.minecraft.world.level.chunk.LevelChunkSection field_36411() {
         throw new UnsupportedOperationException("CenturyBridge: field_36411 cannot be retrieved statically");
     }
-
 
     /** was net/minecraft/world/level/levelgen/DebugLevelSource/field_24768Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_24768() {
@@ -2100,7 +2035,6 @@ public final class Statics {
     public static com.mojang.serialization.Codec field_37790() {
         return net.minecraft.world.level.levelgen.structure.structures.BuriedTreasureStructure.CODEC.codec();
     }
-
 
     /** was net/minecraft/world/level/storage/PlayerDataStorage/method_263()[Ljava/lang/String; */
     public static java.lang.String[] method_263(net.minecraft.world.level.storage.PlayerDataStorage self) {
@@ -2252,7 +2186,6 @@ public final class Statics {
         return (net.minecraft.sounds.SoundEvent) net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_NETHERITE.value();
     }
 
-
     /** was net/minecraft/world/entity/monster/CrossbowAttackMob/method_18811(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/projectile/Projectile;F)V */
     public static void method_18811(net.minecraft.world.entity.monster.CrossbowAttackMob self, net.minecraft.world.entity.LivingEntity a0, net.minecraft.world.item.ItemStack a1, net.minecraft.world.entity.projectile.Projectile a2, float a3) {
         throw new UnsupportedOperationException("CenturyBridge: CrossbowItem.shoot (method_18811) was removed in 1.20.5");
@@ -2309,9 +2242,6 @@ public final class Statics {
         return net.minecraft.world.level.levelgen.structure.pools.ListPoolElement.CODEC.codec();
     }
 
-
-
-
     /** was net/minecraft/world/level/levelgen/structure/templatesystem/TagMatchTest/field_25014Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_25014() {
         return net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest.CODEC.codec();
@@ -2342,7 +2272,6 @@ public final class Statics {
         return net.minecraft.world.level.levelgen.structure.templatesystem.BlockStateMatchTest.CODEC.codec();
     }
 
-
     /** was net/minecraft/world/level/levelgen/structure/templatesystem/RandomBlockStateMatchTest/field_25010Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_25010() {
         return net.minecraft.world.level.levelgen.structure.templatesystem.RandomBlockStateMatchTest.CODEC.codec();
@@ -2353,15 +2282,9 @@ public final class Statics {
         return net.minecraft.world.level.levelgen.structure.templatesystem.RandomBlockMatchTest.CODEC.codec();
     }
 
-
     /** was net/minecraft/world/level/levelgen/structure/templatesystem/RuleTestType/register(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/RuleTestType; */
     public net.minecraft.world.level.levelgen.structure.templatesystem.RuleTestType register(java.lang.String a0, com.mojang.serialization.Codec a1) {
         throw new UnsupportedOperationException("CenturyBridge: RecipeSerializer registration using raw Codec is no longer supported; use MapCodec instead");
-    }
-
-    /** was net/minecraft/client/gui/font/providers/GlyphProviderDefinition/field_44801Lcom/mojang/serialization/Codec; */
-    public static com.mojang.serialization.Codec field_44801() {
-        return net.minecraft.client.gui.font.providers.GlyphProviderDefinition.MAP_CODEC.codec();
     }
 
     /** was net/minecraft/util/datafix/schemas/V1928/method_17997(Lcom/mojang/datafixers/schemas/Schema;)Lcom/mojang/datafixers/types/templates/TypeTemplate; */
@@ -2519,7 +2442,6 @@ public final class Statics {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.WEAPONSMITH_GIFT.identifier();
     }
 
-
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_22402Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_22402() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.PIGLIN_BARTERING.identifier();
@@ -2565,7 +2487,6 @@ public final class Statics {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.END_CITY_TREASURE.identifier();
     }
 
-
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_300Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_300() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.UNDERWATER_RUIN_BIG.identifier();
@@ -2581,7 +2502,6 @@ public final class Statics {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.SIMPLE_DUNGEON.identifier();
     }
 
-
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_38438Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_38438() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.ANCIENT_CITY.identifier();
@@ -2591,8 +2511,6 @@ public final class Statics {
     public static net.minecraft.resources.Identifier field_38439() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.ANCIENT_CITY_ICE_BOX.identifier();
     }
-
-
 
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_397Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_397() {
@@ -2638,7 +2556,6 @@ public final class Statics {
     public static net.minecraft.resources.Identifier field_44748() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.SNIFFER_DIGGING.identifier();
     }
-
 
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_472Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_472() {
@@ -2710,13 +2627,10 @@ public final class Statics {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.WOODLAND_MANSION.identifier();
     }
 
-
-
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_615Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_615() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.NETHER_BRIDGE.identifier();
     }
-
 
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_662Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_662() {
@@ -2734,13 +2648,10 @@ public final class Statics {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.STRONGHOLD_LIBRARY.identifier();
     }
 
-
-
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_751Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_751() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.JUNGLE_TEMPLE_DISPENSER.identifier();
     }
-
 
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_795Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_795() {
@@ -2757,8 +2668,6 @@ public final class Statics {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.JUNGLE_TEMPLE.identifier();
     }
 
-
-
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_841Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_841() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.SHIPWRECK_MAP.identifier();
@@ -2769,7 +2678,6 @@ public final class Statics {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.STRONGHOLD_CORRIDOR.identifier();
     }
 
-
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_850Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_850() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.SPAWN_BONUS_CHEST.registry();
@@ -2779,8 +2687,6 @@ public final class Statics {
     public static net.minecraft.resources.Identifier field_854() {
         return net.minecraft.world.level.storage.loot.BuiltInLootTables.FISHING_TREASURE.registry();
     }
-
-
 
     /** was net/minecraft/world/level/storage/loot/BuiltInLootTables/field_880Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier field_880() {
@@ -2837,11 +2743,6 @@ public final class Statics {
         // CB-CONFIDENCE: high -- field explicitly deleted, no equivalent in new API surface; tombstone is the correct choice
     }
 
-
-
-
-
-
     /** was net/minecraft/gametest/framework/GameTestBatch/method_22153(Lnet/minecraft/server/level/ServerLevel;)V */
     public static void method_22153(net.minecraft.gametest.framework.GameTestBatch self, net.minecraft.server.level.ServerLevel a0) {
         throw new UnsupportedOperationException("CenturyBridge: method_22153(ServerWorld) was deleted in 1.20.5 with no direct replacement; net.minecraft.gametest.framework.GameTestBatch is now a record (String, Collection, Consumer, Consumer) with no ServerWorld-interacting methods");
@@ -2856,8 +2757,6 @@ public final class Statics {
     public void testPassed(net.minecraft.gametest.framework.GameTestInfo a0) {
         throw new UnsupportedOperationException("CenturyBridge: testPassed now requires a net.minecraft.gametest.framework.GameTestRunner raid-context parameter whose constructor needs server world, collections, and nested types unavailable from net.minecraft.gametest.framework.GameTestInfo alone");
     }
-
-
 
     /** was net/minecraft/world/level/levelgen/feature/foliageplacers/AcaciaFoliagePlacer/field_24926Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_24926() {
@@ -2991,13 +2890,10 @@ public final class Statics {
         return net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer.CODEC.codec();
     }
 
-
     /** was net/minecraft/world/level/levelgen/structure/structures/RuinedPortalStructure/field_37812Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_37812() {
         return net.minecraft.world.level.levelgen.structure.structures.RuinedPortalStructure.CODEC.codec();
     }
-
-
 
     /** was net/minecraft/world/level/levelgen/feature/featuresize/ThreeLayersFeatureSize/field_24924Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_24924() {
@@ -3044,8 +2940,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: getSeaLevel (method_144) was removed from net.minecraft.world.level.storage.LevelData in 1.20.5 with no direct replacement; sea level is no longer exposed on WorldProperties");
     }
 
-
-
     /** was net/minecraft/world/level/storage/WritableLevelData/method_27416(I)V */
     public static void method_27416(net.minecraft.world.level.storage.WritableLevelData self, int a0) {
         throw new UnsupportedOperationException("CenturyBridge: method_27416(int) has no 1.20.5 equivalent; the only remaining method setSpawn requires a BlockPos and float that cannot be derived from the int argument");
@@ -3065,7 +2959,6 @@ public final class Statics {
     public static int[] field_24574() {
         throw new UnsupportedOperationException("CenturyBridge: field_24574 was deleted in 1.20.5 with no direct replacement; field_24575 is a distinct field (stable intermediary names), so the original constant value cannot be faithfully reconstructed");
     }
-
 
     /** was net/minecraft/world/level/levelgen/placement/InSquarePlacement/field_35727Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_35727() {
@@ -3117,9 +3010,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: method_32960 wrote TextContent to PacketByteBuf in 1.20.1's binary format; 1.20.5 replaced this with MapCodec serialization (codec) using a different on-wire format");
     }
 
-
-
-
     /** was net/minecraft/world/level/levelgen/placement/HeightmapPlacement/field_29265Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_29265() {
         return net.minecraft.world.level.levelgen.placement.HeightmapPlacement.CODEC.codec();
@@ -3140,9 +3030,6 @@ public final class Statics {
         return net.minecraft.world.level.levelgen.placement.SurfaceWaterDepthFilter.CODEC.codec();
     }
 
-
-
-
     /** was net/minecraft/world/level/block/LevelEvent/field_47339I */
     public static int field_47339() {
         throw new UnsupportedOperationException("CenturyBridge: field_47339 was deleted in 1.20.5 with no direct replacement; its int value cannot be reconstructed from the new API surface");
@@ -3157,8 +3044,6 @@ public final class Statics {
     public static net.minecraft.gametest.framework.GameTestServer field_33163() {
         throw new UnsupportedOperationException("CenturyBridge: field_33163 (type net.minecraft.gametest.framework.GameTestServer) in net.minecraft.gametest.framework.GameTestServer$1 was deleted in 1.20.5 with no direct replacement; cannot reconstruct a net.minecraft.gametest.framework.GameTestServer constant without constructor or factory information for the outer type");
     }
-
-
 
     /** was net/minecraft/world/level/levelgen/heightproviders/TrapezoidHeight/field_33522Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_33522() {
@@ -3195,7 +3080,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: field_35297 was the synthetic this$0 outer instance reference of net.minecraft.world.level.levelgen.SurfaceSystem$1; it is an instance field and cannot be returned from a parameterless static helper");
     }
 
-
     /** was net/minecraft/world/level/levelgen/placement/RandomOffsetPlacement/field_35419Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_35419() {
         return net.minecraft.world.level.levelgen.placement.RandomOffsetPlacement.CODEC.codec();
@@ -3231,10 +3115,6 @@ public final class Statics {
         return net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement.CODEC.codec();
     }
 
-
-
-
-
     /** was net/minecraft/world/level/levelgen/RandomState$1.field_40361Lnet/minecraft/world/level/levelgen/RandomState; */
     public static net.minecraft.world.level.levelgen.RandomState field_40361() {
         throw new UnsupportedOperationException("CenturyBridge: field_40361 was an instance field holding the enclosing net.minecraft.world.level.levelgen.RandomState reference; cannot reconstruct from a static context with no receiver");
@@ -3249,8 +3129,6 @@ public final class Statics {
     public net.minecraft.resources.Identifier getContainerLootTable() {
         return ((net.minecraft.world.entity.vehicle.ContainerEntity) (Object) this).getContainerLootTable().identifier();
     }
-
-
 
     /** was net/minecraft/util/datafix/schemas/V3083/method_42645(Lcom/mojang/datafixers/schemas/Schema;Ljava/util/Map;Ljava/lang/String;)V */
     public static void method_42645(net.minecraft.util.datafix.schemas.V3083 self, com.mojang.datafixers.schemas.Schema a0, java.util.Map a1, java.lang.String a2) {
@@ -3270,16 +3148,6 @@ public final class Statics {
     /** was net/minecraft/commands/arguments/ArgumentSignatures$Entry.comp_914Lnet/minecraft/network/chat/MessageSignature; */
     public static net.minecraft.network.chat.MessageSignature comp_914() {
         throw new UnsupportedOperationException("CenturyBridge: signature was a static field on net.minecraft.commands.arguments.ArgumentSignatures$class_7599, deleted in 1.20.5; new signature() is an instance method with no static equivalent");
-    }
-
-    /** was net/minecraft/client/multiplayer/chat/LoggedChatMessage$Player.field_40809Lcom/mojang/serialization/Codec; */
-    public static com.mojang.serialization.Codec field_40809() {
-        return net.minecraft.client.multiplayer.chat.LoggedChatMessage.Player.CODEC.codec();
-    }
-
-    /** was net/minecraft/client/multiplayer/chat/LoggedChatMessage$System.field_40810Lcom/mojang/serialization/Codec; */
-    public static com.mojang.serialization.Codec field_40810() {
-        return net.minecraft.client.multiplayer.chat.LoggedChatMessage.System.CODEC.codec();
     }
 
     /** was net/minecraft/client/renderer/GameRenderer/field_3996[Lnet/minecraft/resources/Identifier; */
@@ -3313,16 +3181,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: Registries.field_41165 was removed in 1.20.5 with no direct replacement");
     }
 
-    /** was net/minecraft/client/renderer/texture/atlas/sources/DirectoryLister/field_41399Lcom/mojang/serialization/Codec; */
-    public static com.mojang.serialization.Codec field_41399() {
-        return net.minecraft.client.renderer.texture.atlas.sources.DirectoryLister.MAP_CODEC.codec();
-    }
-
-    /** was net/minecraft/client/renderer/texture/atlas/sources/SingleFile/field_41402Lcom/mojang/serialization/Codec; */
-    public static com.mojang.serialization.Codec field_41402() {
-        return net.minecraft.client.renderer.texture.atlas.sources.SingleFile.MAP_CODEC.codec();
-    }
-
     /** was net/minecraft/world/level/levelgen/feature/foliageplacers/CherryFoliagePlacer/field_42841Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_42841() {
         return net.minecraft.world.level.levelgen.feature.foliageplacers.CherryFoliagePlacer.CODEC.codec();
@@ -3337,7 +3195,6 @@ public final class Statics {
     public net.minecraft.world.level.block.entity.BlockEntity getContainerBlockEntity() {
         return ((net.minecraft.world.ticks.ContainerSingleItem.BlockContainerSingleItem) (Object) this).getContainerBlockEntity();
     }
-
 
     /** was net/minecraft/world/level/levelgen/structure/templatesystem/rule/blockentity/AppendStatic/field_43339Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec field_43339() {
@@ -3362,11 +3219,6 @@ public final class Statics {
     /** was net/minecraft/world/level/gameevent/vibrations/VibrationSystem/RESONANCE_EVENTS[Lnet/minecraft/world/level/gameevent/GameEvent; */
     public static net.minecraft.world.level.gameevent.GameEvent[] field_44638() {
         return net.minecraft.world.level.gameevent.vibrations.VibrationSystem.RESONANCE_EVENTS.toArray(new net.minecraft.world.level.gameevent.GameEvent[0]);
-    }
-
-    /** was net/minecraft/client/resources/metadata/gui/GuiSpriteScaling$Tile.field_45655Lcom/mojang/serialization/Codec; */
-    public static com.mojang.serialization.Codec field_45655() {
-        return (com.mojang.serialization.Codec) net.minecraft.client.resources.metadata.gui.GuiSpriteScaling.Tile.CODEC;
     }
 
     /** was net/minecraft/network/ProtocolSwapHandler/method_53011(Lio/netty/util/Attribute;Lnet/minecraft/network/protocol/Packet;)V */
@@ -3414,33 +3266,6 @@ public final class Statics {
     public static net.minecraft.network.chat.numbers.NumberFormat method_55467(net.minecraft.network.chat.numbers.NumberFormatTypes self, net.minecraft.network.FriendlyByteBuf a0) {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.network.chat.numbers.NumberFormatTypes.method_55467(PacketByteBuf)->net.minecraft.network.chat.numbers.NumberFormat was removed in 1.20.5 with no direct replacement; the new net.minecraft.network.chat.numbers.NumberFormatTypes API has no method accepting a PacketByteBuf, and the old instance-method semantics (using receiver state to drive deserialization) cannot be expressed via the static Codec/MapCodec fields");
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /** was net/minecraft/world/damagesource/DamageSource/method_48790()Z */
     public static boolean method_48790(net.minecraft.world.damagesource.DamageSource self) {
@@ -3493,12 +3318,10 @@ public final class Statics {
         self.setYya((float) a0);
     }
 
-
     /** was net/minecraft/world/entity/LivingEntity/method_27302()Z */
     public static boolean method_27302(net.minecraft.world.entity.LivingEntity self) {
         return self.isSensitiveToWater();
     }
-
 
     /** was net/minecraft/world/entity/animal/equine/AbstractChestedHorse/field_30412I */
     public static int field_30412() {
@@ -3628,7 +3451,6 @@ public final class Statics {
         return (net.minecraft.sounds.SoundEvent) net.minecraft.sounds.SoundEvents.CROSSBOW_QUICK_CHARGE_3.value();
     }
 
-
     /** was net/minecraft/tags/ItemTags/field_15541Lnet/minecraft/tags/TagKey; */
     public static net.minecraft.tags.TagKey field_15541() {
         throw new UnsupportedOperationException("CenturyBridge: field_15541 was removed in 1.21 with no direct replacement; the sound event it referenced no longer exists in the registry");
@@ -3660,7 +3482,6 @@ public final class Statics {
     public static net.minecraft.world.flag.FeatureFlag field_46779() {
         throw new UnsupportedOperationException("CenturyBridge: field_46779 (net.minecraft.world.flag.FeatureFlag) was removed in 1.21 with no direct replacement; remaining net.minecraft.world.flag.FeatureFlag fields (VANILLA, field_40178, TRADE_REBALANCE) have unknown semantic mapping to the deleted field");
     }
-
 
     /** was net/minecraft/util/CommonLinks/field_43117Ljava/lang/String; */
     public static java.lang.String field_43117() {
@@ -3778,7 +3599,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: field_21863Z was a deleted boolean constant with no direct replacement; original value cannot be determined from the new API surface");
         // CB-CONFIDENCE: low -- the field is a deleted boolean constant whose original value (true/false) cannot be determined from the provided new API surface; returning a guessed constant risks silent corruption
     }
-
 
     /** was net/minecraft/class_1095.field_5429Z */
     public static boolean field_5429() {
@@ -4090,7 +3910,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.item.equipment.ArmorMaterial restructured in 1.21.2 with different components; old CODEC (field_48840) serialized different fields with no equivalent in the new record, and no replacement codec exists in the new API");
         // CB-CONFIDENCE: high -- the field is explicitly deleted with no direct replacement, the class gained new components (Map, RegistryEntryList, net.minecraft.tags.TagKey, Identifier) absent from the old codec's format, and no codec method exists in the new API surface to delegate to
     }
-
 
     /** was net/minecraft/util/context/ContextKeySet.method_35553(Lnet/minecraft/util/context/ContextKey;)Z */
     public static boolean method_35553(net.minecraft.util.context.ContextKeySet self, net.minecraft.util.context.ContextKey a0) {
@@ -4451,8 +4270,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: level (ThreadedAnvilChunkStorage reference) was removed from ServerChunkManager in 1.21.2 with no direct replacement; the chunk loading system was refactored and net.minecraft.server.level.ServerChunkCache no longer exposes a net.minecraft.server.level.ServerLevel");
     }
 
-
-
     /** was net/minecraft/sounds/SoundEvent.method_14833()Lnet/minecraft/resources/Identifier; */
     public static net.minecraft.resources.Identifier method_14833(net.minecraft.sounds.SoundEvent self) {
         return self.location();
@@ -4704,7 +4521,6 @@ public final class Statics {
         return self.isAngryAtAllPlayers((net.minecraft.server.level.ServerLevel) a0);
     }
 
-
     /** was net/minecraft/stats/RecipeBookSettings.method_30186(Lnet/minecraft/network/FriendlyByteBuf;)Lnet/minecraft/stats/RecipeBookSettings; */
     public static net.minecraft.stats.RecipeBookSettings method_30186(net.minecraft.stats.RecipeBookSettings self, net.minecraft.network.FriendlyByteBuf a0) {
         throw new UnsupportedOperationException("CenturyBridge: method_30186(net.minecraft.network.FriendlyByteBuf) has no equivalent in 1.21.2; net.minecraft.stats.RecipeBookSettings no longer deserializes from PacketByteBuf, only from NbtCompound via method_30183");
@@ -4751,11 +4567,6 @@ public final class Statics {
     public static boolean field_3449() {
         throw new UnsupportedOperationException("CenturyBridge: field_3449Z was deleted in 1.21.2 with no direct replacement; no boolean equivalent exists in the new net.minecraft.client.model.EntityModel API surface");
         // CB-CONFIDENCE: high -- the field is explicitly deleted with no direct replacement, and the new API surface contains no boolean field to derive a value from
-    }
-
-    /** was com/mojang/blaze3d/opengl/GlProgram.field_29483Lorg/slf4j/Logger; */
-    public static org.slf4j.Logger field_29483() {
-        return org.slf4j.LoggerFactory.getLogger(com.mojang.blaze3d.opengl.GlProgram.class);
     }
 
     /** was net/minecraft/world/level/levelgen/blending/BlendingData.field_35682Lcom/mojang/serialization/Codec; */
@@ -4837,11 +4648,6 @@ public final class Statics {
         // CB-CONFIDENCE: low -- the field was a raw boolean constant in RenderPhase deleted between 1.20.1 and 1.21.2 with no surviving equivalent; guessing true/false risks silent rendering behaviour changes
     }
 
-    /** was net/minecraft/client/renderer/GameRenderer.field_3993Lorg/slf4j/Logger; */
-    public static org.slf4j.Logger field_3993() {
-        return org.slf4j.LoggerFactory.getLogger(net.minecraft.client.renderer.GameRenderer.class);
-    }
-
     /** was net/minecraft/class_763.field_4129Lit/unimi/dsi/fastutil/ints/Int2ObjectMap; */
     public static it.unimi.dsi.fastutil.ints.Int2ObjectMap field_4129() {
         throw new UnsupportedOperationException("CenturyBridge: class_763.field_4129 (Int2ObjectMap) was deleted in 1.21.2 with no direct replacement and no data to reconstruct it");
@@ -4858,8 +4664,6 @@ public final class Statics {
         return self.lookup(a0);
         // CB-CONFIDENCE: medium -- lookup matches the old Optional<RegistryEntry> getOptional(RegistryKey) contract; get also returns Optional but is a later addition with possibly different semantics
     }
-
-
 
     /** was net/minecraft/core/registries/BuiltInRegistries.field_41166Lnet/minecraft/core/Registry; */
     public static net.minecraft.core.Registry field_41166() {
@@ -4891,7 +4695,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: method_48454 tested a single ItemStack without World context; 1.21.2 recipe API requires a RecipeInput and World, neither available from the old call site");
     }
 
-
     /** was net/minecraft/class_806$class_5828.field_28796I */
     public static int field_28796() {
         throw new UnsupportedOperationException("CenturyBridge: field_28796 was a static int constant in class_806$class_5828 deleted with no direct replacement; its original value cannot be inferred from the new API surface (only comp_3191:I and comp_3192:F record components remain)");
@@ -4903,7 +4706,6 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: unpackLootTable(PlayerEntity) was deleted in 1.21.2; shriek logic was refactored into brush(long, World, Player, BlockPos, ItemStack) which has a different return type (boolean) and requires parameters (game time, World) not available from the old call site or the block entity's exposed API");
         // CB-CONFIDENCE: medium -- the old method was deleted and the closest replacement (brush) has a different return type and requires extra parameters that cannot be faithfully supplied from the old call site
     }
-
 
     /** was net/minecraft/world/level/storage/loot/LootParams.method_51865(Lnet/minecraft/util/context/ContextKey;)Z */
     public static boolean method_51865(net.minecraft.world.level.storage.loot.LootParams self, net.minecraft.util.context.ContextKey a0) {
@@ -4946,12 +4748,10 @@ public final class Statics {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.entity.monster.breeze.Breeze.method_55009()D was deleted in 1.21.2 with no direct replacement; the double value it returned is no longer exposed on net.minecraft.world.entity.monster.breeze.Breeze");
     }
 
-
     /** was net/minecraft/world/entity/monster/breeze/Shoot.method_55038(Lnet/minecraft/world/entity/monster/breeze/Breeze;Lnet/minecraft/world/entity/LivingEntity;)Z */
     public static boolean method_55038(net.minecraft.world.entity.monster.breeze.Shoot self, net.minecraft.world.entity.monster.breeze.Breeze a0, net.minecraft.world.entity.LivingEntity a1) {
         throw new UnsupportedOperationException("CenturyBridge: method_55038(net.minecraft.world.entity.monster.breeze.Breeze, net.minecraft.world.entity.LivingEntity)->boolean has no direct replacement; new API splits Raid and LivingEntity operations into separate method groups with no combined overload");
     }
-
 
     /** was net/minecraft/data/worldgen/TrialChambersStructurePools.field_47509Lnet/minecraft/resources/ResourceKey; */
     public static net.minecraft.resources.ResourceKey field_47509() {
@@ -4989,7 +4789,6 @@ public final class Statics {
 
     // ==== END GENERATED ====
 
-
     /**
      * DFU 7 changed Codec.dispatch's type function from returning Codec to
      * returning MapCodec -- same erased descriptor, different contract, so the
@@ -5023,7 +4822,6 @@ public final class Statics {
         return self.dispatch(typeKey, keyGetter, k -> cbAsMap(type.apply(k)));
     }
 
-
     /**
      * 1.20.5+ codecs resolve registry entries (items, enchantments) through the
      * ops, not through static lookups baked into the codec -- plain JsonOps
@@ -5041,7 +4839,6 @@ public final class Statics {
         return cbOps;
     }
 
-
     /**
      * 1.20.1 ItemStack.hasCustomName(): the component wall made the name a
      * CUSTOM_NAME data component, so "has a name" is "carries the component".
@@ -5051,7 +4848,6 @@ public final class Statics {
     public static boolean method_7938(net.minecraft.world.item.ItemStack self) {
         return self.has(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
     }
-
 
     /**
      * Builtin registry lookup for component-wall call sites that suddenly need
@@ -6358,11 +6154,6 @@ public final class Statics {
         return net.minecraft.gametest.framework.StructureUtils.findTestBlocks(a0, a1, a2).collect(java.util.stream.Collectors.toList());
     }
 
-    /** was net/minecraft/client/renderer/Sheets/armorTrimsSheet()Lnet/minecraft/client/renderer/rendertype/RenderType; */
-    public static net.minecraft.client.renderer.rendertype.RenderType method_48480() {
-        return net.minecraft.client.renderer.Sheets.armorTrimsSheet(false);
-    }
-
     /** was net/minecraft/world/entity/ai/behavior/StopAttackingIfTargetInvalid.create(Ljava/util/function/Predicate;)Lnet/minecraft/world/entity/ai/behavior/BehaviorControl; */
     public static net.minecraft.world.entity.ai.behavior.BehaviorControl method_47138(java.util.function.Predicate a0) {
         return net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid.create((net.minecraft.server.level.ServerLevel world, net.minecraft.world.entity.LivingEntity entity) -> a0.test(entity));
@@ -6373,21 +6164,6 @@ public final class Statics {
         net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid.StopAttackCondition cbPredicate = (net.minecraft.server.level.ServerLevel world, net.minecraft.world.entity.LivingEntity entity) -> a0.test(entity);
         net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid.TargetErasedCallback cbConsumer = (net.minecraft.server.level.ServerLevel world, java.lang.Object obj, net.minecraft.world.entity.LivingEntity entity) -> a1.accept(obj, entity);
         return net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid.create(cbPredicate, cbConsumer, a2);
-    }
-
-    /** was net/minecraft/com.mojang.realmsclient.dto.RealmsServerPlayerLists.parse(Lcom/google/gson/JsonObject;)Lnet/minecraft/com.mojang.realmsclient.dto.RealmsServerPlayerLists; */
-    public static com.mojang.realmsclient.dto.RealmsServerPlayerLists method_25074(com.google.gson.JsonObject a0) {
-        return com.mojang.realmsclient.dto.RealmsServerPlayerLists.parse(a0.toString());
-    }
-
-    /** was net/minecraft/client/model/AnimationUtils.animateCrossbowCharge(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/world/entity/LivingEntity;Z)V */
-    public static void method_25446(net.minecraft.client.model.geom.ModelPart a0, net.minecraft.client.model.geom.ModelPart a1, net.minecraft.world.entity.LivingEntity a2, boolean a3) {
-        throw new UnsupportedOperationException("CenturyBridge: cannot derive float and int from LivingEntity without knowing the new API semantics");
-    }
-
-    /** was net/minecraft/client/model/AnimationUtils.swingWeaponDown(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/world/entity/Mob;FF)V */
-    public static void method_29351(net.minecraft.client.model.geom.ModelPart a0, net.minecraft.client.model.geom.ModelPart a1, net.minecraft.world.entity.Mob a2, float a3, float a4) {
-        throw new UnsupportedOperationException("CenturyBridge: net.minecraft.client.model.AnimationUtils.swingWeaponDown now takes EquipmentSlot (net.minecraft.world.entity.HumanoidArm) instead of LivingEntity (net.minecraft.world.entity.Mob); cannot derive slot from entity without additional context");
     }
 
     /** was net/minecraft/world/level/levelgen/presets/WorldPresets/fromSettings(Lnet/minecraft/core/Registry;)Ljava/util/Optional; */
@@ -6422,11 +6198,6 @@ public final class Statics {
         return (net.minecraft.world.item.crafting.Ingredient) net.minecraft.world.entity.animal.frog.FrogAi.getTemptations();
     }
 
-    /** was net/minecraft/client/renderer/fog/FogRenderer.setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/fog/FogRenderer$FogMode;FZF)V */
-    public static void method_3211(net.minecraft.client.Camera a0, net.minecraft.client.renderer.fog.FogRenderer.FogMode a1, float a2, boolean a3, float a4) {
-        throw new UnsupportedOperationException("CenturyBridge: setupFog now requires a Vector4f (computed by computeFogColor which needs a net.minecraft.client.multiplayer.ClientLevel world) that was previously internal; no equivalent without world access");
-    }
-
     /** was net/minecraft/world/entity/animal/camel/CamelAi/method_45368()Lnet/minecraft/world/item/crafting/Ingredient; */
     public static net.minecraft.world.item.crafting.Ingredient method_45368() {
         throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.entity.animal.camel.CamelAi.method_45368() now returns Predicate instead of Ingredient; 1.20.5 Ingredient is data-driven and cannot wrap an arbitrary predicate");
@@ -6435,11 +6206,6 @@ public final class Statics {
     /** was net/minecraft/world/level/levelgen/WorldDimensions.withOverworld(Lnet/minecraft/core/Registry;Ljava/util/Map;Lnet/minecraft/world/level/chunk/ChunkGenerator;)Ljava/util/Map; */
     public static java.util.Map method_45520(net.minecraft.core.Registry a0, java.util.Map a1, net.minecraft.world.level.chunk.ChunkGenerator a2) {
         return net.minecraft.world.level.levelgen.WorldDimensions.withOverworld((net.minecraft.core.HolderLookup) a0, a1, a2);
-    }
-
-    /** was net/minecraft/client/telemetry/TelemetryPropertyMap/createCodec(Ljava/util/List;)Lcom/mojang/serialization/Codec; */
-    public static com.mojang.serialization.Codec method_47761(java.util.List a0) {
-        return net.minecraft.client.telemetry.TelemetryPropertyMap.createCodec(a0).codec();
     }
 
     /** was net/minecraft/server/advancements/AdvancementVisibilityEvaluator/evaluateVisibility(Lnet/minecraft/advancements/Advancement;Ljava/util/function/Predicate;Lnet/minecraft/server/advancements/AdvancementVisibilityEvaluator$Output;)V */
@@ -6475,11 +6241,6 @@ public final class Statics {
     /** was net/minecraft/world/level/levelgen/structure/pools/alias/PoolAliasBindings/bootstrap(Lnet/minecraft/core/Registry;)Lcom/mojang/serialization/Codec; */
     public static com.mojang.serialization.Codec method_54509(net.minecraft.core.Registry a0) {
         return net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBindings.bootstrap(a0).codec();
-    }
-
-    /** was net/minecraft/client/renderer/entity/EndCrystalRenderer.getY(Lnet/minecraft/world/entity/boss/enderdragon/EndCrystal;F)F */
-    public static float method_23155(net.minecraft.world.entity.boss.enderdragon.EndCrystal a0, float a1) {
-        return net.minecraft.client.renderer.entity.EndCrystalRenderer.getY(a1);
     }
 
     /** was net/minecraft/commands/ParserUtils.method_55377(Lcom/mojang/brigadier/StringReader;Lcom/mojang/serialization/Codec;)Ljava/lang/Object; */

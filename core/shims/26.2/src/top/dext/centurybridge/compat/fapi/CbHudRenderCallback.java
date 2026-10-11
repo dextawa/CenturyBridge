@@ -15,6 +15,7 @@ import top.dext.centurybridge.facade.v26_2.GuiGraphics;
  * DrawContext facade the converter already hands to every mod screen.
  */
 @FunctionalInterface
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbHudRenderCallback {
 
     Event<CbHudRenderCallback> EVENT = Bridge.create();

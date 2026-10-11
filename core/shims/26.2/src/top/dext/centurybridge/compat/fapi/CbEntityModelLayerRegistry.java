@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
  * leave every 1.20.1 method reference an AbstractMethodError, so the old SAM
  * ({@link CbTexturedModelDataProvider}) is adapted here.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbEntityModelLayerRegistry {
 
     public static void registerModelLayer(ModelLayerLocation layer, CbTexturedModelDataProvider provider) {

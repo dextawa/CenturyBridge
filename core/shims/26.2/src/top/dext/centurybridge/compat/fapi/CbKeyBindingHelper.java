@@ -5,6 +5,7 @@ package top.dext.centurybridge.compat.fapi;
  * module became fabric-key-mapping-api-v1 with a new package in the 26.x
  * era; the converter class-renames the old helper here.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbKeyBindingHelper {
 
     private CbKeyBindingHelper() {

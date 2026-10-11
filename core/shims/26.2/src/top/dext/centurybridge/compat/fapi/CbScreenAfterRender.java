@@ -7,6 +7,7 @@ import top.dext.centurybridge.facade.v26_2.GuiGraphics;
 
 /** was ScreenEvents.AfterRender (SAM afterRender(screen, DrawContext, mouseX, mouseY, tickDelta)): a real AfterForeground listener that wraps the extractor in the DrawContext facade */
 @FunctionalInterface
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbScreenAfterRender extends ScreenEvents.AfterForeground {
 
     void afterRender(Screen screen, GuiGraphics drawContext, int mouseX, int mouseY, float tickDelta);

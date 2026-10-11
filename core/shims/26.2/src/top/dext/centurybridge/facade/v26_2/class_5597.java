@@ -31,6 +31,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
  * 26.2 EntityModel(ModelPart) constructor (the old no-arg form is gone), the
  * mod's real root is its own via method_32008.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public abstract class class_5597<T extends EntityRenderState> extends EntityModel<T> {
 
     private static final ModelPart EMPTY_ROOT = new ModelPart(List.of(), Map.of());

@@ -11,6 +11,7 @@ import com.mojang.serialization.JsonOps;
  * {@link Statics} without eager-resolving those types. Call sites for these live only in
  * client-side mixins/classes, which a dedicated server never loads.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class ClientStatics {
 
 
@@ -2297,5 +2298,90 @@ public final class ClientStatics {
     /** was net/minecraft/class_1087.method_4709()Lnet/minecraft/class_809; -- getTransforms(): block-state models carry no item transforms (identity) */
     public static net.minecraft.client.resources.model.cuboid.ItemTransforms method_4709(net.minecraft.client.renderer.block.dispatch.BlockStateModel self) {
         return net.minecraft.client.resources.model.cuboid.ItemTransforms.NO_TRANSFORMS;
+    }
+
+    /** was net/minecraft/client/gui/components/events/GuiEventListener/mouseScrolled(DDD)Z */
+    public boolean mouseScrolled(double a0, double a1, double a2) {
+        return ((net.minecraft.client.gui.components.events.GuiEventListener) (Object) this).mouseScrolled(a0, a1, 0.0, a2);
+    }
+
+    /** was net/minecraft/client/multiplayer/ClientAdvancements$Listener.onSelectedTabChanged(Lnet/minecraft/advancements/Advancement;)V */
+    public void onSelectedTabChanged(net.minecraft.advancements.Advancement a0) {
+        ((net.minecraft.client.multiplayer.ClientAdvancements.Listener) (Object) this).onSelectedTabChanged(new net.minecraft.advancements.AdvancementHolder(net.minecraft.resources.Identifier.fromNamespaceAndPath("centurybridge", "dummy"), a0));
+    }
+
+    /** was net/minecraft/client/gui/font/providers/GlyphProviderDefinition/field_44801Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec field_44801() {
+        return net.minecraft.client.gui.font.providers.GlyphProviderDefinition.MAP_CODEC.codec();
+    }
+
+    /** was net/minecraft/client/multiplayer/chat/LoggedChatMessage$Player.field_40809Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec field_40809() {
+        return net.minecraft.client.multiplayer.chat.LoggedChatMessage.Player.CODEC.codec();
+    }
+
+    /** was net/minecraft/client/multiplayer/chat/LoggedChatMessage$System.field_40810Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec field_40810() {
+        return net.minecraft.client.multiplayer.chat.LoggedChatMessage.System.CODEC.codec();
+    }
+
+    /** was net/minecraft/client/renderer/texture/atlas/sources/DirectoryLister/field_41399Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec field_41399() {
+        return net.minecraft.client.renderer.texture.atlas.sources.DirectoryLister.MAP_CODEC.codec();
+    }
+
+    /** was net/minecraft/client/renderer/texture/atlas/sources/SingleFile/field_41402Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec field_41402() {
+        return net.minecraft.client.renderer.texture.atlas.sources.SingleFile.MAP_CODEC.codec();
+    }
+
+    /** was net/minecraft/client/resources/metadata/gui/GuiSpriteScaling$Tile.field_45655Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec field_45655() {
+        return (com.mojang.serialization.Codec) net.minecraft.client.resources.metadata.gui.GuiSpriteScaling.Tile.CODEC;
+    }
+
+    /** was com/mojang/blaze3d/opengl/GlProgram.field_29483Lorg/slf4j/Logger; */
+    public static org.slf4j.Logger field_29483() {
+        return org.slf4j.LoggerFactory.getLogger(com.mojang.blaze3d.opengl.GlProgram.class);
+    }
+
+    /** was net/minecraft/client/renderer/GameRenderer.field_3993Lorg/slf4j/Logger; */
+    public static org.slf4j.Logger field_3993() {
+        return org.slf4j.LoggerFactory.getLogger(net.minecraft.client.renderer.GameRenderer.class);
+    }
+
+    /** was net/minecraft/client/renderer/Sheets/armorTrimsSheet()Lnet/minecraft/client/renderer/rendertype/RenderType; */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_48480() {
+        return net.minecraft.client.renderer.Sheets.armorTrimsSheet(false);
+    }
+
+    /** was net/minecraft/com.mojang.realmsclient.dto.RealmsServerPlayerLists.parse(Lcom/google/gson/JsonObject;)Lnet/minecraft/com.mojang.realmsclient.dto.RealmsServerPlayerLists; */
+    public static com.mojang.realmsclient.dto.RealmsServerPlayerLists method_25074(com.google.gson.JsonObject a0) {
+        return com.mojang.realmsclient.dto.RealmsServerPlayerLists.parse(a0.toString());
+    }
+
+    /** was net/minecraft/client/model/AnimationUtils.animateCrossbowCharge(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/world/entity/LivingEntity;Z)V */
+    public static void method_25446(net.minecraft.client.model.geom.ModelPart a0, net.minecraft.client.model.geom.ModelPart a1, net.minecraft.world.entity.LivingEntity a2, boolean a3) {
+        throw new UnsupportedOperationException("CenturyBridge: cannot derive float and int from LivingEntity without knowing the new API semantics");
+    }
+
+    /** was net/minecraft/client/model/AnimationUtils.swingWeaponDown(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/world/entity/Mob;FF)V */
+    public static void method_29351(net.minecraft.client.model.geom.ModelPart a0, net.minecraft.client.model.geom.ModelPart a1, net.minecraft.world.entity.Mob a2, float a3, float a4) {
+        throw new UnsupportedOperationException("CenturyBridge: net.minecraft.client.model.AnimationUtils.swingWeaponDown now takes EquipmentSlot (net.minecraft.world.entity.HumanoidArm) instead of LivingEntity (net.minecraft.world.entity.Mob); cannot derive slot from entity without additional context");
+    }
+
+    /** was net/minecraft/client/renderer/fog/FogRenderer.setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/fog/FogRenderer$FogMode;FZF)V */
+    public static void method_3211(net.minecraft.client.Camera a0, net.minecraft.client.renderer.fog.FogRenderer.FogMode a1, float a2, boolean a3, float a4) {
+        throw new UnsupportedOperationException("CenturyBridge: setupFog now requires a Vector4f (computed by computeFogColor which needs a net.minecraft.client.multiplayer.ClientLevel world) that was previously internal; no equivalent without world access");
+    }
+
+    /** was net/minecraft/client/telemetry/TelemetryPropertyMap/createCodec(Ljava/util/List;)Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec method_47761(java.util.List a0) {
+        return net.minecraft.client.telemetry.TelemetryPropertyMap.createCodec(a0).codec();
+    }
+
+    /** was net/minecraft/client/renderer/entity/EndCrystalRenderer.getY(Lnet/minecraft/world/entity/boss/enderdragon/EndCrystal;F)F */
+    public static float method_23155(net.minecraft.world.entity.boss.enderdragon.EndCrystal a0, float a1) {
+        return net.minecraft.client.renderer.entity.EndCrystalRenderer.getY(a1);
     }
 }

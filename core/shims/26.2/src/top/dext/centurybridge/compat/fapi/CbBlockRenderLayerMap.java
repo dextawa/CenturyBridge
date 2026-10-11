@@ -14,6 +14,7 @@ import net.minecraft.world.level.material.Fluid;
  * the registrations themselves are a documented no-op -- declare the layer in
  * the model JSON instead.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbBlockRenderLayerMap {
 
     CbBlockRenderLayerMap INSTANCE = new CbBlockRenderLayerMap() {

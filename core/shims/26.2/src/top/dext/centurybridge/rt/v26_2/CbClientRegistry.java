@@ -4,6 +4,7 @@ package top.dext.centurybridge.rt.v26_2;
  * Client-side registry access, kept in its own class so the reference to
  * net.minecraft.client.Minecraft is never resolved on a dedicated server.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbClientRegistry {
 
     private CbClientRegistry() {

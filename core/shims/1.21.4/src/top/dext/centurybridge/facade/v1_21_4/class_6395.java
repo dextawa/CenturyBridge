@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface class_6395 extends net.minecraft.class_1800 {
     default float call(
             net.minecraft.class_1799 stack,

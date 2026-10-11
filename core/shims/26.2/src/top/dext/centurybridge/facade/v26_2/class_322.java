@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * in 1.20.1 (no intermediary member), so the corpus uses it verbatim.
  */
 @FunctionalInterface
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface class_322 {
     /** was BlockColorProvider.getColor(state, world, pos, tintIndex) */
     int getColor(BlockState state, BlockAndTintGetter level, BlockPos pos, int tintIndex);

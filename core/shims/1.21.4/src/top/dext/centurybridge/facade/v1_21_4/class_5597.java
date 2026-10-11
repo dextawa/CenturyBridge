@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public abstract class class_5597<E extends net.minecraft.class_1297> extends net.minecraft.class_583 {
     private static final org.joml.Vector3f field_39195;
 

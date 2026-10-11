@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
  * (method_18140/18142), the standard particle lifecycle. Member names are
  * intermediary tokens.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public abstract class class_4003 extends SingleQuadParticle {
 
     protected TextureAtlasSprite field_17886; // sprite

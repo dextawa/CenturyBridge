@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_7753 extends net.minecraft.class_7754 {
     private static final java.lang.String field_40470 = "bottom";
     private static final java.lang.String field_40471 = "lid";

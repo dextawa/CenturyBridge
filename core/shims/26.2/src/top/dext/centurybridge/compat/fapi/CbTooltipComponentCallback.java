@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
  * register() on it, the invoker type is never seen by them).
  */
 @FunctionalInterface
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbTooltipComponentCallback extends ClientTooltipComponentCallback {
 
     @SuppressWarnings({"unchecked", "rawtypes"})

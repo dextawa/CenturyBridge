@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_4005 extends net.minecraft.class_1049 {
     public class_4005(
             net.minecraft.class_3300 arg0,

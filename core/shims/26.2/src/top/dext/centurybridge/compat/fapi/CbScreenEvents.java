@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.client.gui.screens.Screen;
 
 /** fabric-screen-api-v1's ScreenEvents.afterRender(screen) (3 corpus mods): 26.2 split render into extract/background/foreground; after-foreground is the 1.20.1 "after render" moment (staticRedirect on the surviving ScreenEvents class). */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbScreenEvents {
 
     @SuppressWarnings({"unchecked", "rawtypes"})

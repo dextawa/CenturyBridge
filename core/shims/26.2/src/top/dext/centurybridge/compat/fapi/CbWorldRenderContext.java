@@ -23,6 +23,7 @@ import org.joml.Matrix4f;
  * NoSuchMethodError inside the event dispatch, which CbWorldRenderEvents
  * catches: that listener is dropped with a log line and the game goes on.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbWorldRenderContext {
 
     LevelRenderer worldRenderer();

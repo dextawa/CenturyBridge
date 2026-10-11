@@ -21,6 +21,7 @@ import top.dext.centurybridge.facade.v26_2.class_326;
  * 1.21.4 (item model definition JSON); ITEM keeps the providers for get() and
  * warns once. Stays an interface: the corpus calls it through INVOKEINTERFACE.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbColorProviderRegistry<T, Provider> {
 
     CbColorProviderRegistry<ItemLike, class_326> ITEM = new Items();

@@ -6,6 +6,7 @@ package top.dext.centurybridge.facade.v26_2;
  * that reads it back) and mirrored onto the extractor's 2D Matrix3x2fStack,
  * which is what actually positions retained-mode GUI elements in 26.2.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbPoseStack extends com.mojang.blaze3d.vertex.PoseStack {
 
     private final org.joml.Matrix3x2fStack mirror;

@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
  * a pure rename. Old SAM stays abstract, new one derived; EVENT is the real event.
  */
 @FunctionalInterface
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbLivingEntityFeatureRendererRegistrationCallback extends LivingEntityRenderLayerRegistrationCallback {
 
     @SuppressWarnings({"unchecked", "rawtypes"})

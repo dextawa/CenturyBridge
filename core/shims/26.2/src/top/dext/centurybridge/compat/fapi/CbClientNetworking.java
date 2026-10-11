@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
  * Client half of the raw-channel compat -- separate class so a dedicated
  * server never touches net.minecraft.client.Minecraft. See CbNetworking.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbClientNetworking {
 
     public static boolean registerGlobalReceiver(net.minecraft.resources.Identifier channel, CbClientPlayHandler handler) {

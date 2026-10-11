@@ -11,6 +11,7 @@ import net.minecraft.class_765;
  * lightmapTextureManager() is reachable from the game renderer, limitTime() (the frame chunk-build deadline)
  * no longer exists -- 0 means "no budget left", which only ever throttled optional work.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbWorldRenderContext {
 
     public static float tickDelta(WorldRenderContext self) {

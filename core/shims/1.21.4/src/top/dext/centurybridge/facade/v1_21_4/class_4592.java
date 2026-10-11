@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public abstract class class_4592<E extends net.minecraft.class_1297> extends net.minecraft.class_583 {
     private final boolean field_20915;
     private final float field_20916;

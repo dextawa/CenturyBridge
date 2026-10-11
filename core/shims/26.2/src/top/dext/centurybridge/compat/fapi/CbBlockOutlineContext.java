@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * the outline is a retained render state (BlockOutlineRenderState), there is no
  * line consumer to draw into during the event.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbBlockOutlineContext {
 
     VertexConsumer vertexConsumer();

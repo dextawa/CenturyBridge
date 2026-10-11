@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
  * with a log line rather than silently ignored -- a mod relying on them loses
  * a feature, not the truth about why.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public interface CbModelLoadingRegistry {
 
     CbModelLoadingRegistry INSTANCE = new CbModelLoadingRegistry() {};

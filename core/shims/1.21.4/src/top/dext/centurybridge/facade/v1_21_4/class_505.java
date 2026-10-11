@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_505 {
     private net.minecraft.class_1860<?> field_3079;
     private final java.util.List<class_506> field_3081;

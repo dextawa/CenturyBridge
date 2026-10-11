@@ -1,5 +1,6 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_7752 extends net.minecraft.class_554 {
     private static final java.lang.String field_40467 = "chest_bottom";
     private static final java.lang.String field_40468 = "chest_lid";

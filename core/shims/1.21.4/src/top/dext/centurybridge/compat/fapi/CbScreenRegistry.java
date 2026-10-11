@@ -15,6 +15,7 @@ import top.dext.centurybridge.shims.v1_21_4.HandledScreensAccessor;
  * Client only: a dedicated server never loads it.
  * classRename: net/fabricmc/fabric/api/client/screenhandler/v1/ScreenRegistry -> this class.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbScreenRegistry {
 
     public static <H extends class_1703, S extends class_437 & class_3936<H>> void register(

@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.FabricBakedModelManager;
  * Stand-in for fabric-api's removed BakedModelManagerHelper: the lookup moved
  * to an interface fabric injects into BakedModelManager itself.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbBakedModelManagerHelper {
 
     public static net.minecraft.class_1087 getModel(net.minecraft.class_1092 manager,

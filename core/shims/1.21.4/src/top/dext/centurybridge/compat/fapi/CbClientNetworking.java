@@ -8,6 +8,7 @@ import net.minecraft.class_2960;
  * Client half of the raw-channel compat -- separate class so a dedicated
  * server never touches class_310. See CbNetworking.
  */
+@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public final class CbClientNetworking {
 
     public static boolean registerGlobalReceiver(class_2960 channel, CbClientPlayHandler handler) {
