@@ -23,17 +23,17 @@ public abstract class class_4592<T extends EntityRenderState> extends EntityMode
 
     private static final ModelPart EMPTY_ROOT = new ModelPart(List.of(), Map.of());
 
-    protected class_4592() { super(EMPTY_ROOT); }
-    protected class_4592(boolean scaleHead, float yOff, float zOff) { super(EMPTY_ROOT); }
-    protected class_4592(boolean scaleHead, float yOff, float zOff, float a, float b, float c) { super(EMPTY_ROOT); }
-    protected class_4592(java.util.function.Function<net.minecraft.resources.Identifier,
+    public class_4592() { super(EMPTY_ROOT); }
+    public class_4592(boolean scaleHead, float yOff, float zOff) { super(EMPTY_ROOT); }
+    public class_4592(boolean scaleHead, float yOff, float zOff, float a, float b, float c) { super(EMPTY_ROOT); }
+    public class_4592(java.util.function.Function<net.minecraft.resources.Identifier,
             net.minecraft.client.renderer.rendertype.RenderType> rt,
             boolean scaleHead, float yOff, float zOff, float a, float b, float c) { super(EMPTY_ROOT, rt); }
 
     /** getHeadParts (method_22946) */
-    protected abstract Iterable<ModelPart> method_22946();
+    public abstract Iterable<ModelPart> method_22946();
     /** getBodyParts (method_22948) */
-    protected abstract Iterable<ModelPart> method_22948();
+    public abstract Iterable<ModelPart> method_22948();
 
     /** old setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch) */
     public void method_2819(Entity e, float limbSwing, float limbSwingAmount,

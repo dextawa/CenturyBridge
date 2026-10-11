@@ -10,7 +10,7 @@ package top.dext.centurybridge.facade.v1_21_4;
  */
 public abstract class class_4262 extends net.minecraft.class_8923 {
 
-    protected class_4262(net.minecraft.class_4970.class_2251 properties) {
+    public class_4262(net.minecraft.class_4970.class_2251 properties) {
         super(properties);
     }
 }

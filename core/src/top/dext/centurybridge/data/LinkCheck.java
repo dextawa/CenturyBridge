@@ -67,6 +67,20 @@ import org.objectweb.asm.tree.analysis.SimpleVerifier;
  *              does not extend (type flow over the      class is rejected at
  *              real hierarchy)                          link time)
  *   VERIFY     method body fails analysis otherwise     VerifyError
+ *   ACCESS     class or member the caller may not reach IllegalAccessError
+ *              (private/package/protected, JVM rules
+ *              incl. nestmates), or a final field
+ *              written from outside its class
+ *   FINAL      extends a final class / overrides an     the class fails to load
+ *              accessible final method
+ *   SEALED     extends/implements a sealed type that    the class fails to load
+ *              does not permit it
+ *   AWFILE     an access widener the loader rejects     the game does not boot
+ *              (format, namespace, missing file)
+ *
+ * Access is judged through the access wideners the game would load with the mod: every
+ * classpath mod's (Fabric API's modules, CenturyBridge's) plus the subject's own (and its
+ * jar-in-jar mods'), applied as the loader applies them (AwRules).
  *
  * Each finding is then joined against the engine's full-audit.tsv (optional):
  *   CLAIMED  engine recorded the symbol as fixed (covered/redirect/rename/hook)
@@ -100,15 +114,30 @@ public final class LinkCheck {
         final String name;
         String superName;
         final Set<String> interfaces = new HashSet<>();
-        int access;
+        int access;                                           // as read; access wideners are applied per check
         final Map<String, Integer> methods = new HashMap<>(); // name+desc -> access
-        final Map<String, Integer> fields = new HashMap<>();  // name+desc -> access
+        final Map<String, Integer> fields = new HashMap<>();  // name+":"+desc -> access
         String origin;
+        String nestHost;
+        Set<String> permitted;                                // non-null: sealed
+        String canonicalCtor;                                 // a record's canonical constructor desc
         Cls(String name) { this.name = name; }
         boolean isInterface() { return (access & Opcodes.ACC_INTERFACE) != 0; }
     }
 
+    /** a resolved member: the class that declares it and its flags as read */
+    record Member(String owner, String name, String desc, int access) {}
+
+    /** an access widener some loaded mod declares (fabric.mod.json "accessWidener") */
+    record AwFile(String origin, String subjectTag, String modId, String path, String text) {}
+
     private final Map<String, Cls> index = new HashMap<>();
+    private final List<AwFile> awFiles = new ArrayList<>();
+    private final Set<String> mixinNames = new HashSet<>();
+    /** the runtime's mapping namespace, as an access widener header must name it */
+    private String runtimeNamespace;
+    /** access wideners in force for the subject being checked: the runtime's + its own */
+    private AwRules rules = new AwRules();
     private final Map<String, Path> jrt = new HashMap<>();
     private final List<ClassNode> mixins = new ArrayList<>();
     /** mixins some config still lists; triage-stripped ones never load and are neither folded nor checked */
@@ -143,6 +172,7 @@ public final class LinkCheck {
         lc.loadJrt();
         for (Path p : cp) for (Path j : jarsOf(p)) lc.loadJar(j, null, j.getFileName().toString());
         for (Path p : subj) for (Path j : jarsOf(p)) lc.loadJar(j, j.getFileName().toString(), j.getFileName().toString());
+        lc.injectInterfaces();
         lc.foldMixins();
         lc.checkAll();
         lc.write(outDir);
@@ -207,13 +237,20 @@ public final class LinkCheck {
     /** recurses into jar-in-jar: fabric-api modules and mods' bundled libraries */
     private void loadZip(ZipInputStream zin, String subjectTag, String origin) throws IOException {
         ZipEntry e;
+        byte[] modJson = null;
+        Map<String, byte[]> texts = new HashMap<>(); // candidates for the access widener fabric.mod.json names
         while ((e = zin.getNextEntry()) != null) {
             String n = e.getName();
             if (n.endsWith(".jar")) {
                 byte[] b = zin.readAllBytes();
                 loadZip(new ZipInputStream(new ByteArrayInputStream(b)), subjectTag, origin + "!" + n);
+            } else if (n.equals("fabric.mod.json")) {
+                modJson = zin.readAllBytes();
             } else if (n.endsWith(".json") && !n.contains("/")) {
                 collectMixinConfig(zin.readAllBytes());
+            } else if (!n.endsWith("/") && !n.endsWith(".class") && !ASSET.matcher(n).find()) {
+                byte[] b = zin.readAllBytes();
+                if (b.length < (1 << 20)) texts.put(n, b);
             } else if (n.endsWith(".class") && !n.startsWith("META-INF/versions/") && !n.endsWith("module-info.class")) {
                 byte[] b = zin.readAllBytes();
                 ClassNode cn = new ClassNode();
@@ -224,10 +261,52 @@ public final class LinkCheck {
                 }
                 if (index.containsKey(cn.name)) continue; // first on the path wins, like the loader
                 index.put(cn.name, model(cn, origin));
-                if (isMixin(cn)) mixins.add(cn);
+                if (isMixin(cn)) { mixins.add(cn); mixinNames.add(cn.name); }
                 if (subjectTag != null) subjects.computeIfAbsent(subjectTag, k -> new ArrayList<>()).add(cn);
             }
         }
+        if (modJson != null) collectModMetadata(modJson, texts, subjectTag, origin);
+    }
+
+    private static final Pattern ASSET = Pattern.compile(
+        "\\.(png|ogg|json|nbt|mcmeta|wav|ttf|otf|bin|jpg|jpeg|gif|psd|bbmodel|obj|mtl|fsh|vsh|glsl|lang|properties|md|MF)$");
+
+    /** mod ids the classpath brings (Fabric API's modules, CenturyBridge, the loader's builtins) */
+    private final Set<String> runtimeIds = new HashSet<>(Set.of("minecraft", "java", "fabricloader"));
+    /** subject tag -> the mod ids it brings (its own, its jar-in-jar mods', their "provides") */
+    private final Map<String, Set<String>> provides = new HashMap<>();
+    /** mod id -> the mod ids it declares in "depends" */
+    private final Map<String, Set<String>> modDepends = new HashMap<>();
+
+    /** fabric.mod.json: what the mod is, what it needs loaded with it, its access widener */
+    private void collectModMetadata(byte[] modJson, Map<String, byte[]> texts, String subjectTag, String origin) {
+        String id;
+        String path = null;
+        try {
+            var r = new com.google.gson.stream.JsonReader(new java.io.StringReader(
+                new String(modJson, java.nio.charset.StandardCharsets.UTF_8)));
+            r.setLenient(true);
+            var o = com.google.gson.JsonParser.parseReader(r).getAsJsonObject();
+            id = o.has("id") ? o.get("id").getAsString() : origin;
+            Set<String> ids = new HashSet<>(Set.of(id));
+            if (o.has("provides") && o.get("provides").isJsonArray())
+                for (var el : o.getAsJsonArray("provides")) ids.add(el.getAsString());
+            if (subjectTag == null) runtimeIds.addAll(ids);
+            else provides.computeIfAbsent(subjectTag, k -> new HashSet<>()).addAll(ids);
+            if (o.has("depends") && o.get("depends").isJsonObject())
+                modDepends.computeIfAbsent(id, k -> new HashSet<>()).addAll(o.getAsJsonObject("depends").keySet());
+            if (o.has("accessWidener") && o.get("accessWidener").isJsonPrimitive()) path = o.get("accessWidener").getAsString();
+        } catch (RuntimeException ex) {
+            return; // not a fabric.mod.json the loader reads either
+        }
+        if (path == null) return;
+        // calibration control: -Dcb.linkcheck.skipAw=<substring> leaves out the access wideners of
+        // matching jars (e.g. "centurybridge"), to measure what they give back
+        String skip = System.getProperty("cb.linkcheck.skipAw");
+        if (skip != null && !skip.isEmpty() && origin.contains(skip)) return;
+        byte[] b = texts.get(path.startsWith("/") ? path.substring(1) : path);
+        awFiles.add(new AwFile(origin, subjectTag, id, path,
+            b == null ? null : new String(b, java.nio.charset.StandardCharsets.UTF_8)));
     }
 
     private void collectMixinConfig(byte[] b) {
@@ -257,7 +336,14 @@ public final class LinkCheck {
         c.access = cn.access;
         c.origin = origin;
         for (MethodNode m : cn.methods) c.methods.put(m.name + m.desc, m.access);
-        for (FieldNode f : cn.fields) c.fields.put(f.name + f.desc, f.access);
+        for (FieldNode f : cn.fields) c.fields.put(f.name + ":" + f.desc, f.access);
+        c.nestHost = cn.nestHostClass != null ? cn.nestHostClass : cn.name;
+        if (cn.permittedSubclasses != null && !cn.permittedSubclasses.isEmpty()) c.permitted = new HashSet<>(cn.permittedSubclasses);
+        if (cn.recordComponents != null) {
+            StringBuilder d = new StringBuilder("(");
+            for (var rc : cn.recordComponents) d.append(rc.descriptor);
+            c.canonicalCtor = d.append(")V").toString();
+        }
         return c;
     }
 
@@ -317,10 +403,167 @@ public final class LinkCheck {
                 }
                 for (FieldNode f : mx.fields) {
                     if (ann(f.visibleAnnotations, SHADOW) != null || ann(f.invisibleAnnotations, SHADOW) != null) continue;
-                    tc.fields.putIfAbsent(f.name + f.desc, f.access);
+                    tc.fields.putIfAbsent(f.name + ":" + f.desc, f.access);
                 }
             }
         }
+    }
+
+    // ---------------------------------------------------------------- access wideners
+
+    /** the runtime's access wideners: one per classpath mod id, the first seen (as for classes) */
+    private final List<AwFile> runtimeAws = new ArrayList<>();
+    private final Map<String, List<AwFile>> subjectAws = new HashMap<>();
+
+    /**
+     * Interface injection is structural (it changes what resolves where), so it goes into
+     * the index once; access flags stay as read and are judged per subject (rules).
+     */
+    private void injectInterfaces() {
+        if (index.containsKey("net/minecraft/class_1297")) runtimeNamespace = "intermediary";
+        else if (index.containsKey("net/minecraft/world/entity/Entity")) runtimeNamespace = "official";
+        Set<String> runtimeIds = new HashSet<>();
+        for (AwFile f : awFiles) {
+            if (f.subjectTag() == null && runtimeIds.add(f.modId())) runtimeAws.add(f);
+        }
+        Map<String, Set<String>> subjectIds = new HashMap<>();
+        for (AwFile f : awFiles) {
+            if (f.subjectTag() == null || runtimeIds.contains(f.modId())) continue; // the runtime's copy of that mod wins
+            if (subjectIds.computeIfAbsent(f.subjectTag(), k -> new HashSet<>()).add(f.modId()))
+                subjectAws.computeIfAbsent(f.subjectTag(), k -> new ArrayList<>()).add(f);
+        }
+        AwRules all = new AwRules();
+        for (AwFile f : runtimeAws) {
+            String err = f.text() == null ? "Missing classTweaker file " + f.path() + " from mod " + f.modId()
+                : all.read(AwRules.lines(f.text()), runtimeNamespace);
+            if (err != null) {
+                String bucket = f.origin().contains("centurybridge") ? "CLAIMED" : "EXTDEP";
+                findings.add(new Finding(bucket, "AWFILE", f.origin(), f.modId(), f.path(), err));
+            }
+        }
+        for (List<AwFile> l : subjectAws.values()) {
+            for (AwFile f : l) if (f.text() != null) all.read(AwRules.lines(f.text()), runtimeNamespace);
+        }
+        int n = 0;
+        for (Cls c : index.values()) {
+            Set<String> add = all.injectedInterfaces(c.name);
+            if (!add.isEmpty() && c.interfaces.addAll(add)) n++;
+        }
+        System.out.println("access wideners: " + runtimeAws.size() + " runtime, "
+            + subjectAws.values().stream().mapToInt(List::size).sum() + " from subjects; namespace " + runtimeNamespace
+            + "; interfaces injected into " + n + " classes");
+    }
+
+    /** the subject's declared dependencies (transitively) that nothing in this run provides */
+    private Set<String> absentDeps = Set.of();
+    /** the text of the subject's own access wideners: did it ever name a member */
+    private String ownAwText = "";
+
+    /**
+     * What the game loads with this subject: the runtime's access wideners, the subject's
+     * own (with its jar-in-jar mods'), and those of the mods it declares as dependencies --
+     * when the run has them; the rest are remembered (absentDeps), since their access
+     * wideners may be what the subject relies on.
+     */
+    private AwRules rulesFor(String subjectTag) {
+        Set<String> withTags = new java.util.LinkedHashSet<>(List.of(subjectTag));
+        Set<String> absent = new java.util.TreeSet<>();
+        Set<String> have = new HashSet<>(provides.getOrDefault(subjectTag, Set.of()));
+        List<String> todo = new ArrayList<>(have);
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String id = todo.remove(todo.size() - 1);
+            if (!seen.add(id)) continue;
+            for (String dep : modDepends.getOrDefault(id, Set.of())) {
+                if (runtimeIds.contains(dep) || have.contains(dep)) {
+                    todo.add(dep);
+                    continue;
+                }
+                String provider = null;
+                for (var e : provides.entrySet()) if (e.getValue().contains(dep)) { provider = e.getKey(); break; }
+                if (provider == null) { absent.add(dep); continue; }
+                withTags.add(provider);
+                have.addAll(provides.get(provider));
+                todo.addAll(provides.get(provider));
+            }
+        }
+        absentDeps = absent;
+        AwRules r = new AwRules();
+        for (AwFile f : runtimeAws) if (f.text() != null) r.read(AwRules.lines(f.text()), runtimeNamespace);
+        StringBuilder own = new StringBuilder();
+        for (String tag : withTags) {
+            for (AwFile f : subjectAws.getOrDefault(tag, List.of())) {
+                String err = f.text() == null ? "Missing classTweaker file " + f.path() + " from mod " + f.modId()
+                    : r.read(AwRules.lines(f.text()), runtimeNamespace);
+                if (!tag.equals(subjectTag)) continue; // a dependency's own findings are its own
+                if (f.text() != null) own.append(f.text()).append('\n');
+                if (err != null) findings.add(new Finding("BLIND", "AWFILE", subjectTag, f.modId(), f.path(), err));
+            }
+        }
+        ownAwText = own.toString();
+        return r;
+    }
+
+    private int classAcc(Cls c) {
+        return rules.classAccess(c.name, c.access);
+    }
+
+    /** a member's flags with the access wideners in force */
+    private int memberAcc(Member m) {
+        Cls o = cls(m.owner());
+        int ownerAcc = o == null ? 0 : o.access;
+        if (m.desc().startsWith("(")) {
+            int a = m.access();
+            if (o != null && m.name().equals("<init>") && m.desc().equals(o.canonicalCtor)) {
+                a = rules.canonicalConstructorAccess(m.owner(), a);
+            }
+            return rules.methodAccess(m.owner(), m.name(), m.desc(), a, ownerAcc);
+        }
+        return rules.fieldAccess(m.owner(), m.name(), m.desc(), m.access(), ownerAcc);
+    }
+
+    private static String pkg(String name) {
+        int i = name.lastIndexOf('/');
+        return i < 0 ? "" : name.substring(0, i);
+    }
+
+    private boolean isSubclass(String sub, String sup) {
+        for (String c = sub; c != null; ) {
+            if (c.equals(sup)) return true;
+            Cls k = cls(c);
+            c = k == null ? null : k.superName;
+        }
+        return false;
+    }
+
+    private String nestHost(String name) {
+        Cls c = cls(name);
+        return c == null || c.nestHost == null ? name : c.nestHost;
+    }
+
+    /**
+     * JVMS 5.4.4 as HotSpot's Reflection::verify_member_access applies it: public; the same
+     * class; protected to a subclass (an instance member only through a reference typed as
+     * the caller's own hierarchy); not private within the package; private within the nest.
+     */
+    private boolean memberAccessible(String from, String refOwner, String declOwner, int acc) {
+        if ((acc & Opcodes.ACC_PUBLIC) != 0 || from.equals(declOwner)) return true;
+        if ((acc & Opcodes.ACC_PROTECTED) != 0) {
+            Cls d = cls(from);
+            if (d != null && !d.isInterface() && isSubclass(from, declOwner)
+                    && ((acc & Opcodes.ACC_STATIC) != 0 || from.equals(refOwner) || declOwner.equals(refOwner)
+                        || isSubclass(refOwner, from) || isSubclass(from, refOwner))) {
+                return true;
+            }
+        }
+        if ((acc & Opcodes.ACC_PRIVATE) == 0) return pkg(from).equals(pkg(declOwner));
+        return nestHost(from).equals(nestHost(declOwner));
+    }
+
+    private static String describe(int acc) {
+        if ((acc & Opcodes.ACC_PRIVATE) != 0) return "private";
+        if ((acc & Opcodes.ACC_PROTECTED) != 0) return "protected";
+        return (acc & Opcodes.ACC_PUBLIC) != 0 ? "public" : "package-private";
     }
 
     // ---------------------------------------------------------------- resolution
@@ -328,16 +571,22 @@ public final class LinkCheck {
     /** null = resolved; "?" = hierarchy incomplete (a missing class, reported separately) */
     private static final Object UNKNOWN = new Object();
 
-    /** JVM method resolution: class chain, then all superinterfaces. Returns access or null/UNKNOWN. */
+    /**
+     * JVM method resolution: the class chain (any access -- a private match is found and
+     * then fails the access check), then the superinterfaces, where private and static
+     * methods do not count (JVMS 5.4.3.3/5.4.3.4). Returns a Member, null or UNKNOWN.
+     */
     private Object findMethod(String owner, String nameDesc) {
         Set<String> seenIfaces = new HashSet<>();
         List<String> ifaces = new ArrayList<>();
         boolean incomplete = false;
+        String name = nameDesc.substring(0, nameDesc.indexOf('('));
+        String desc = nameDesc.substring(name.length());
         for (String c = owner; c != null; ) {
             Cls k = cls(c);
             if (k == null) { incomplete = true; break; }
             Integer acc = k.methods.get(nameDesc);
-            if (acc != null) return acc;
+            if (acc != null) return new Member(c, name, desc, acc);
             ifaces.addAll(k.interfaces);
             c = k.superName;
         }
@@ -347,31 +596,35 @@ public final class LinkCheck {
             Cls k = cls(i);
             if (k == null) { incomplete = true; continue; }
             Integer acc = k.methods.get(nameDesc);
-            if (acc != null) return acc;
+            if (acc != null && (acc & (Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC)) == 0) return new Member(i, name, desc, acc);
             ifaces.addAll(k.interfaces);
         }
         if (!owner.equals("java/lang/Object")) {
             Cls obj = cls("java/lang/Object");
-            if (obj != null && obj.methods.containsKey(nameDesc)) return obj.methods.get(nameDesc);
+            if (obj != null && obj.methods.containsKey(nameDesc))
+                return new Member("java/lang/Object", name, desc, obj.methods.get(nameDesc));
         }
         return incomplete ? UNKNOWN : null;
     }
 
-    private Object findField(String owner, String nameDesc) {
-        boolean incomplete = false;
-        List<String> todo = new ArrayList<>(List.of(owner));
-        Set<String> seen = new HashSet<>();
-        while (!todo.isEmpty()) {
-            String c = todo.remove(0);
-            if (!seen.add(c)) continue;
-            Cls k = cls(c);
-            if (k == null) { incomplete = true; continue; }
-            Integer acc = k.fields.get(nameDesc);
-            if (acc != null) return acc;
-            todo.addAll(k.interfaces);
-            if (k.superName != null) todo.add(k.superName);
+    private Object findField(String owner, String name, String desc) {
+        boolean[] incomplete = {false};
+        Member m = lookupField(owner, name, desc, new HashSet<>(), incomplete);
+        return m != null ? m : incomplete[0] ? UNKNOWN : null;
+    }
+
+    /** JVMS 5.4.3.2: the class itself, then its direct superinterfaces (recursively), then its superclass */
+    private Member lookupField(String c, String name, String desc, Set<String> seen, boolean[] incomplete) {
+        if (!seen.add(c)) return null;
+        Cls k = cls(c);
+        if (k == null) { incomplete[0] = true; return null; }
+        Integer acc = k.fields.get(name + ":" + desc);
+        if (acc != null) return new Member(c, name, desc, acc);
+        for (String i : k.interfaces) {
+            Member m = lookupField(i, name, desc, seen, incomplete);
+            if (m != null) return m;
         }
-        return incomplete ? UNKNOWN : null;
+        return k.superName == null ? null : lookupField(k.superName, name, desc, seen, incomplete);
     }
 
     private boolean hierarchyKnown(String name) {
@@ -397,6 +650,10 @@ public final class LinkCheck {
 
     private String curJar;
     private Set<String> reported; // per jar: dedupe identical (kind, ref)
+    /** the classes the code being checked runs as: the class itself, or a mixin's targets; null = not judged */
+    private List<String> curCallers;
+    private String curMethod;
+    private int curVersion;
     /** the instruction being checked is a constructor's super(...)/this(...) call */
     private boolean delegationSite;
 
@@ -404,6 +661,7 @@ public final class LinkCheck {
         for (var e : subjects.entrySet()) {
             curJar = e.getKey();
             reported = new HashSet<>();
+            rules = rulesFor(curJar);
             for (ClassNode cn : e.getValue()) {
                 if (cn.name.startsWith("centurybridge/gen/Tombstones")) continue; // lazy-fail by design
                 if (!live(cn)) continue; // stripped by triage: never applied
@@ -414,10 +672,19 @@ public final class LinkCheck {
 
     private void checkClass(ClassNode cn) {
         boolean mixin = isMixin(cn);
+        List<String> runsAs = List.of(cn.name);
+        if (mixin) {
+            runsAs = mixinTargets(cn).stream().filter(t -> cls(t) != null).toList();
+            if (runsAs.isEmpty()) runsAs = null; // no target to judge access from
+        }
+        curVersion = cn.version & 0xFFFF;
+        curCallers = mixin ? null : runsAs; // a mixin's own extends/implements are never loaded as such
         if (cn.superName != null) needClass(cn.superName, cn.name, "extends");
         for (String i : cn.interfaces) needClass(i, cn.name, "implements");
+        curCallers = runsAs;
         for (MethodNode m : cn.methods) {
             String where = cn.name + "." + m.name + m.desc;
+            curMethod = m.name;
             if (m.instructions != null) {
                 Map<String, Integer> pendingNew = new HashMap<>();
                 for (AbstractInsnNode in : m.instructions) {
@@ -427,10 +694,61 @@ public final class LinkCheck {
                 delegationSite = false;
             }
         }
+        curCallers = null;
         if (mixin) return; // members of mixins are MixinCheck's job
+        checkInheritance(cn);
         checkTypes(cn);
         if ((cn.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE)) == 0) checkAbstracts(cn);
         checkOrphans(cn);
+    }
+
+    /**
+     * What makes the class itself fail to load: extending a final class, extending or
+     * implementing a sealed type that does not permit it, overriding an accessible final
+     * method (HotSpot's ClassFileParser::check_final_method_override) -- with the access
+     * wideners in force, which is how a bridge gives these back (extendable).
+     */
+    private void checkInheritance(ClassNode cn) {
+        Cls sup = cn.superName == null ? null : cls(cn.superName);
+        if (sup != null && (classAcc(sup) & Opcodes.ACC_FINAL) != 0)
+            report("FINAL", cn.name, cn.superName, "cannot inherit from final class");
+        List<String> direct = new ArrayList<>();
+        if (cn.superName != null) direct.add(cn.superName);
+        direct.addAll(cn.interfaces);
+        for (String t : direct) {
+            Cls k = cls(t);
+            if (k != null && k.permitted != null && !rules.unsealed(t) && !k.permitted.contains(cn.name))
+                report("SEALED", cn.name, t, "not a permitted subclass");
+        }
+        for (MethodNode m : cn.methods) {
+            if ((m.access & (Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC)) != 0 || m.name.startsWith("<")) continue;
+            String nd = m.name + m.desc;
+            for (String c = cn.superName; c != null; ) {
+                Member sm = declaredUp(c, nd);
+                if (sm == null) break;
+                int a = memberAcc(sm);
+                if ((a & Opcodes.ACC_FINAL) != 0 && (a & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) == 0
+                        && memberAccessible(cn.name, sm.owner(), sm.owner(), a)) {
+                    report("FINAL", cn.name + "." + nd, sm.owner() + "." + nd, "overrides final method");
+                    break;
+                }
+                Cls holder = cls(sm.owner());
+                c = holder == null ? null : holder.superName;
+            }
+        }
+    }
+
+    /** the first class from {@code c} up the superclass chain that declares the method */
+    private Member declaredUp(String c, String nameDesc) {
+        String name = nameDesc.substring(0, nameDesc.indexOf('('));
+        for (; c != null; ) {
+            Cls k = cls(c);
+            if (k == null) return null;
+            Integer acc = k.methods.get(nameDesc);
+            if (acc != null) return new Member(c, name, nameDesc.substring(name.length()), acc);
+            c = k.superName;
+        }
+        return null;
     }
 
     /**
@@ -630,22 +948,49 @@ public final class LinkCheck {
 
     private boolean needClass(String name, String where, String how) {
         if (name.startsWith("[")) { needType(name, where); return true; }
-        if (cls(name) != null) return true;
-        report("CLASS", where, name, how);
-        return false;
+        Cls c = cls(name);
+        if (c == null) {
+            report("CLASS", where, name, how);
+            return false;
+        }
+        // JVMS 5.4.4: a class is accessible if public or in the caller's run-time package
+        if (curCallers != null && !mixinNames.contains(name) && (classAcc(c) & Opcodes.ACC_PUBLIC) == 0) {
+            for (String d : curCallers) {
+                if (!pkg(d).equals(pkg(name))) {
+                    report("ACCESS", where, name, "class not public, caller " + d + " (" + how + ")");
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+
+    /** IllegalAccessError for a resolved member the code may not reach */
+    private void checkAccess(String refOwner, Member m, String where) {
+        if (curCallers == null || mixinNames.contains(m.owner()) || mixinNames.contains(refOwner)) return;
+        int acc = memberAcc(m);
+        for (String d : curCallers) {
+            if (!memberAccessible(d, refOwner, m.owner(), acc)) {
+                String ref = refOwner + "." + m.name() + (m.desc().startsWith("(") ? "" : ":") + m.desc();
+                report("ACCESS", where, ref, describe(acc) + " in " + m.owner() + ", caller " + d);
+                return;
+            }
+        }
     }
 
     private void checkMethodRef(String owner, String name, String desc, int op, boolean itf, String where) {
         if (owner.startsWith("[")) return; // array clone() etc.
         if ((owner.equals("java/lang/invoke/MethodHandle") || owner.equals("java/lang/invoke/VarHandle"))) return;
         if (!needClass(owner, where, "owner")) return;
-        Object acc = findMethod(owner, name + desc);
-        if (acc == UNKNOWN) return;
-        if (acc == null) {
+        Object res = findMethod(owner, name + desc);
+        if (res == UNKNOWN) return;
+        if (res == null) {
             report("METHOD", where, owner + "." + name + desc, "");
             return;
         }
-        int a = (Integer) acc;
+        Member mem = (Member) res;
+        checkAccess(owner, mem, where);
+        int a = mem.access();
         boolean isStatic = (a & Opcodes.ACC_STATIC) != 0;
         if (op == Opcodes.INVOKESTATIC && !isStatic) report("ICCE", where, owner + "." + name + desc, "invokestatic on instance method");
         if ((op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE) && isStatic)
@@ -657,15 +1002,35 @@ public final class LinkCheck {
 
     private void checkFieldRef(String owner, String name, String desc, int op, String where) {
         if (!needClass(owner, where, "owner")) return;
-        Object acc = findField(owner, name + desc);
-        if (acc == UNKNOWN) return;
-        if (acc == null) {
+        Object res = findField(owner, name, desc);
+        if (res == UNKNOWN) return;
+        if (res == null) {
             report("FIELD", where, owner + "." + name + ":" + desc, "");
             return;
         }
-        boolean isStatic = ((Integer) acc & Opcodes.ACC_STATIC) != 0;
+        Member mem = (Member) res;
+        checkAccess(owner, mem, where);
+        boolean isStatic = (mem.access() & Opcodes.ACC_STATIC) != 0;
         boolean wantStatic = op == Opcodes.GETSTATIC || op == Opcodes.PUTSTATIC;
         if (isStatic != wantStatic) report("ICCE", where, owner + "." + name + ":" + desc, wantStatic ? "static access to instance field" : "instance access to static field");
+        if ((op == Opcodes.PUTFIELD || op == Opcodes.PUTSTATIC) && (memberAcc(mem) & Opcodes.ACC_FINAL) != 0)
+            checkFinalWrite(owner, mem, op, where);
+    }
+
+    /**
+     * putfield/putstatic to a final field: only its own class may, and (class files of Java
+     * 9 and later) only in its instance / static initializer -- else IllegalAccessError.
+     */
+    private void checkFinalWrite(String owner, Member mem, int op, String where) {
+        if (curCallers == null || mixinNames.contains(mem.owner()) || mixinNames.contains(owner)) return;
+        String init = op == Opcodes.PUTFIELD ? "<init>" : "<clinit>";
+        for (String d : curCallers) {
+            if (!d.equals(mem.owner()) || (curVersion >= 53 && !init.equals(curMethod))) {
+                report("ACCESS", where, owner + "." + mem.name() + ":" + mem.desc(),
+                       "final field written " + (d.equals(mem.owner()) ? "outside " + init : "from " + d));
+                return;
+            }
+        }
     }
 
     private void checkHandle(Handle h, String where) {
@@ -798,21 +1163,31 @@ public final class LinkCheck {
             if (!INTER_METHOD.matcher(m.name).matches()) continue;
             if (cn.name.startsWith("top/dext/centurybridge/")) continue; // facade API / Statics helpers, not overrides
             if (selfCalled.contains(m.name + m.desc)) continue; // an override hook forwards to it
-            Object found = UNKNOWN;
             boolean anyName = false;
             String alt = null;
+            String blocked = null;
             if (!hierarchyKnown(cn.name)) continue;
-            found = null;
+            Object found = null;
             for (String sup : supertypes(cn.name)) {
                 Cls k = cls(sup);
-                if (k.methods.containsKey(m.name + m.desc)) { found = k; break; }
+                Integer acc = k.methods.get(m.name + m.desc);
+                if (acc != null) {
+                    // only a method the class can override is overridden (JVMS 5.4.5)
+                    int a = memberAcc(new Member(sup, m.name, m.desc, acc));
+                    boolean overridable = (a & (Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC)) == 0
+                        && ((a & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) != 0 || pkg(sup).equals(pkg(cn.name)));
+                    if (overridable) { found = k; break; }
+                    blocked = sup + " declares it " + ((a & Opcodes.ACC_STATIC) != 0 ? "static" : describe(a));
+                    continue;
+                }
                 for (String md : k.methods.keySet()) {
                     if (md.startsWith(m.name + "(")) { anyName = true; alt = sup + "." + md; }
                 }
             }
             if (found == null) {
                 report("ORPHAN", cn.name + "." + m.name + m.desc, cn.name + "." + m.name + m.desc,
-                       anyName ? "signature changed: now " + alt : "no supertype declares it");
+                       blocked != null ? "not overridable: " + blocked
+                       : anyName ? "signature changed: now " + alt : "no supertype declares it");
             }
         }
     }
@@ -853,7 +1228,13 @@ public final class LinkCheck {
             fate = sf != null ? sf : fate != null && !FIXED_FATES.contains(fate) ? fate : null;
             if (fate != null) note = "super() " + note;
         }
-        if (kind.equals("VERIFY") || (kind.equals("ORPHAN") && fate == null)) {
+        if (ACCESS_KINDS.contains(kind) && platform(owner) && !owner.startsWith("top/dext/centurybridge/")
+                && !absentDeps.isEmpty() && !ownAwText.contains(memberName(ref))) {
+            // a vanilla member only an access widener ever opened, and the subject's own never
+            // named it: what it relies on is a dependency this run does not have
+            bucket = "EXTDEP";
+            note = "needs " + String.join(",", absentDeps) + " (absent here; its access widener may open it) " + note;
+        } else if (kind.equals("VERIFY") || (kind.equals("ORPHAN") && fate == null)) {
             bucket = "BLIND"; // the audit counts call sites (and orphaned overrides), never method bodies
         } else if (kind.equals("ORPHAN")) {
             bucket = "KNOWN"; // the converter reported this override as orphaned
@@ -869,6 +1250,18 @@ public final class LinkCheck {
             bucket = "KNOWN";
         }
         findings.add(new Finding(bucket, kind, curJar, where, ref, (fate != null ? "audit=" + fate + " " : "") + note));
+    }
+
+    private static final Set<String> ACCESS_KINDS = Set.of("ACCESS", "FINAL", "SEALED");
+
+    /** the member (or class) name a reference names: owner.name(desc) / owner.name:desc / owner */
+    private static String memberName(String ref) {
+        int dot = ref.indexOf('.');
+        if (dot < 0) return ref;
+        String rest = ref.substring(dot + 1);
+        int end = rest.indexOf('(');
+        if (end < 0) end = rest.indexOf(':');
+        return end < 0 ? rest : rest.substring(0, end);
     }
 
     private Boolean intermediaryTarget;

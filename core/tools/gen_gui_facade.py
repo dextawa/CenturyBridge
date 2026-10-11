@@ -151,7 +151,7 @@ src = f"""package top.dext.centurybridge.facade.v26_2;
  * (see overrideHooks in shims-26.2.json); the extractor is the single source
  * of truth, this object only translates calls.
  */
-public final class GuiGraphics {{
+public class GuiGraphics {{
 
     private final net.minecraft.client.gui.GuiGraphicsExtractor {E};
     private final CbPoseStack poseAdapter;

@@ -109,6 +109,12 @@ public final class WiringCheck {
      * superclasses. Private members count: an access widener opens them -- Fabric API's
      * transitive one for every mod (ModelPredicateProviderRegistry.register), or the mod's
      * own -- and the mod then calls them like any other.
+     *
+     * Which is also why a facade's own members must all be public, and the facade not
+     * final where the class was not: the loader applies access wideners to game classes
+     * only, so whatever a mod's widener opened on the dead class does nothing for the
+     * facade standing in for it -- a protected MusicDiscItem constructor some mod widened
+     * to call it is an IllegalAccessError on the facade.
      */
     private void checkFacadeSurfaces(com.google.gson.JsonObject root) {
         if (sources.isEmpty() || !root.has("classRenames")) {
@@ -134,6 +140,14 @@ public final class WiringCheck {
                 continue;
             }
             List<String> missing = new ArrayList<>();
+            List<String> closed = new ArrayList<>();
+            ClassNode facNode = classes.get(fac);
+            boolean enumFacade = (facNode.access & Opcodes.ACC_ENUM) != 0;
+            // (an enum is final unless its constants have bodies -- no mod source can extend one either way)
+            if ((facNode.access & Opcodes.ACC_FINAL) != 0
+                    && lives.stream().anyMatch(v -> (v.access & (Opcodes.ACC_FINAL | Opcodes.ACC_ENUM)) == 0)) {
+                problems.add("facade " + fac + " (for dead " + dead + ") is final; the class was not -- a mod's subclass cannot load");
+            }
             java.util.Set<String> seen = new java.util.HashSet<>();
             List<MethodNode> methods = new ArrayList<>();
             List<FieldNode> fields = new ArrayList<>();
@@ -157,6 +171,10 @@ public final class WiringCheck {
                 String desc = methodDesc(m.desc);
                 String gapKey = dead + "." + m.name + m.desc;
                 MethodNode has = facadeMethod(fac, m.name, desc, m.name.equals("<init>"));
+                if (has != null && has != OBJECT_METHOD && foundIn.startsWith("top/dext/")
+                        && (has.access & Opcodes.ACC_PUBLIC) == 0 && !(enumFacade && m.name.equals("<init>"))) {
+                    closed.add(m.name + desc);
+                }
                 if (has == null) {
                     if (declared.containsKey(gapKey)) {
                         used.add(gapKey);
@@ -178,6 +196,9 @@ public final class WiringCheck {
                 String desc = typeDesc(f.desc);
                 String gapKey = dead + "." + f.name + ":" + f.desc;
                 FieldNode has = facadeField(fac, f.name, desc);
+                if (has != null && foundIn.startsWith("top/dext/") && (has.access & Opcodes.ACC_PUBLIC) == 0) {
+                    closed.add(f.name + ":" + desc);
+                }
                 if (has == null) {
                     if (declared.containsKey(gapKey)) {
                         used.add(gapKey);
@@ -192,6 +213,11 @@ public final class WiringCheck {
                 }
             }
             checkFunctional(dead, fac, declared, used);
+            if (!closed.isEmpty()) {
+                problems.add("facade " + fac + " (for dead " + dead + ") has " + closed.size()
+                    + " non-public member(s) standing in for the class's -- access wideners never reach a"
+                    + " CenturyBridge class, so they must be public: " + String.join(", ", closed));
+            }
             if (!missing.isEmpty()) {
                 problems.add("facade " + fac + " (for dead " + dead + ") lacks " + missing.size()
                     + " undeclared member(s) the class had (fill them or list them in facadeGaps): "
@@ -251,6 +277,9 @@ public final class WiringCheck {
         return (access & Opcodes.ACC_PRIVATE) != 0 ? " [private]" : "";
     }
 
+    /** the class facadeMethod / facadeField last found the member in */
+    private String foundIn;
+
     private MethodNode facadeMethod(String cls, String name, String desc, boolean ctor) {
         if (!ctor && OBJECT_METHODS.contains(name + desc)) {
             return OBJECT_METHOD;
@@ -262,6 +291,7 @@ public final class WiringCheck {
             }
             for (MethodNode m : cn.methods) {
                 if (m.name.equals(name) && m.desc.equals(desc)) {
+                    foundIn = c;
                     return m;
                 }
             }
@@ -273,6 +303,7 @@ public final class WiringCheck {
                 if (in != null) {
                     for (MethodNode m : in.methods) {
                         if (m.name.equals(name) && m.desc.equals(desc)) {
+                            foundIn = i;
                             return m;
                         }
                     }
@@ -291,6 +322,7 @@ public final class WiringCheck {
             }
             for (FieldNode f : cn.fields) {
                 if (f.name.equals(name) && f.desc.equals(desc)) {
+                    foundIn = c;
                     return f;
                 }
             }

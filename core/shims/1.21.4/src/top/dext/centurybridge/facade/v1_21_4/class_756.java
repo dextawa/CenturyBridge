@@ -2,23 +2,23 @@ package top.dext.centurybridge.facade.v1_21_4;
 
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_756 implements net.minecraft.class_4013 {
-    private static final net.minecraft.class_2627[] field_3981;
-    private static final net.minecraft.class_2627 field_3984;
+    public static final net.minecraft.class_2627[] field_3981;
+    public static final net.minecraft.class_2627 field_3984;
 
-    private final net.minecraft.class_2595 field_3976;
-    private final net.minecraft.class_2595 field_3978;
-    private final net.minecraft.class_2611 field_3977;
-    private final net.minecraft.class_2573 field_3983;
-    private final net.minecraft.class_2587 field_3982;
-    private final net.minecraft.class_2597 field_3979;
-    private final net.minecraft.class_8172 field_42909;
+    public final net.minecraft.class_2595 field_3976;
+    public final net.minecraft.class_2595 field_3978;
+    public final net.minecraft.class_2611 field_3977;
+    public final net.minecraft.class_2573 field_3983;
+    public final net.minecraft.class_2587 field_3982;
+    public final net.minecraft.class_2597 field_3979;
+    public final net.minecraft.class_8172 field_42909;
 
-    private net.minecraft.class_600 field_3980;
-    private net.minecraft.class_613 field_3985;
-    private java.util.Map<net.minecraft.class_2484.class_2485, net.minecraft.class_5598> field_27737;
+    public net.minecraft.class_600 field_3980;
+    public net.minecraft.class_613 field_3985;
+    public java.util.Map<net.minecraft.class_2484.class_2485, net.minecraft.class_5598> field_27737;
 
-    private final net.minecraft.class_824 field_27738;
-    private final net.minecraft.class_5599 field_27739;
+    public final net.minecraft.class_824 field_27738;
+    public final net.minecraft.class_5599 field_27739;
 
     public class_756(net.minecraft.class_824 arg0, net.minecraft.class_5599 arg1) {
         this.field_27738 = arg0;

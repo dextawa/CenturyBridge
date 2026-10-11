@@ -6,12 +6,12 @@ package top.dext.centurybridge.facade.v1_20_2;
  * bridged toJson ignores it, and asks it to write a condition array: that goes through
  * the same loot codecs the rest of the legacy loot JSON uses.
  */
-public final class class_5267 {
+public class class_5267 {
 
     /** INSTANCE */
     public static final class_5267 field_24420 = new class_5267();
 
-    private class_5267() {
+    public class_5267() {
     }
 
     /** conditionsToJson(conditions) */

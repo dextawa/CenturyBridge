@@ -1,7 +1,7 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
 public class class_1805 extends net.minecraft.class_1792 {
-    private static final int field_30911 = 32;
+    public static final int field_30911 = 32;
 
     public class_1805(net.minecraft.class_1792.class_1793 arg) {
         super(arg);

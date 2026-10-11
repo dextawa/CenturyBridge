@@ -1,5 +1,10 @@
 accessWidener v2 intermediary
 accessible field net/minecraft/class_8609 field_45013 Lnet/minecraft/class_2535;
+# Classes 1.20.1 mods extend that later turned final (some into records: ItemPredicate,
+# MapDecoration, Enchantment, GeodeConfiguration). A record made extendable reports
+# Class.isRecord() == false -- nothing in the game, Fabric API or the loader asks (checked:
+# no isRecord/getRecordComponents call sites); only a mod reflecting on one of these with a
+# record-aware serializer would notice. The generated block below never un-finalizes a record.
 extendable class net/minecraft/class_1856
 extendable class net/minecraft/class_20
 extendable class net/minecraft/class_2073
@@ -8,8 +13,9 @@ extendable class net/minecraft/class_5251
 extendable class net/minecraft/class_5604
 extendable class net/minecraft/class_630
 # ---- BEGIN GENERATED: access narrowed since 1.20.1 (Main access-diff) ----
-# public/protected in 1.20.1, narrowed (or made final) in this release: the same
-# members, so a converted mod calling or overriding them gets the access back.
+# public/protected in 1.20.1, narrowed, made final or sealed in this release: the same
+# members, so a converted mod calling, overriding, extending or writing them gets the
+# access back (core/tools/access_aw.py).
 accessible class net/minecraft/class_1288
 accessible field net/minecraft/class_101$class_102 field_1024 Lnet/minecraft/class_169;
 accessible field net/minecraft/class_101$class_102 field_1025 Ljava/lang/String;
@@ -21,26 +27,33 @@ accessible field net/minecraft/class_4895 field_42049 I
 accessible field net/minecraft/class_4895 field_42050 I
 accessible field net/minecraft/class_4895 field_42051 I
 accessible field net/minecraft/class_4895 field_42068 I
-accessible method net/minecraft/class_1214 method_5172 (Ljava/lang/String;)Ljava/lang/String;
-accessible method net/minecraft/class_1214 method_5173 (Ljava/lang/String;)Ljava/lang/String;
 accessible method net/minecraft/class_1324 method_6202 (Lnet/minecraft/class_1322;)V
+accessible method net/minecraft/class_1690 method_7549 ()V
 accessible method net/minecraft/class_186$class_187 <init> ([Lnet/minecraft/class_5341$class_210;)V
 accessible method net/minecraft/class_2561$class_2562 <init> ()V
 accessible method net/minecraft/class_2995 method_32704 (Lnet/minecraft/class_2487;)Lnet/minecraft/class_273;
 accessible method net/minecraft/class_2995 method_32705 ()Lnet/minecraft/class_273;
 accessible method net/minecraft/class_310 method_1519 ()V
+accessible method net/minecraft/class_339 method_48579 (Lnet/minecraft/class_332;IIF)V
 accessible method net/minecraft/class_4358 method_21067 (Lnet/minecraft/class_2561;)V
-accessible method net/minecraft/class_5556 method_36994 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V
+accessible method net/minecraft/class_465 method_37432 ()V
 accessible method net/minecraft/class_8162 method_49184 (Lnet/minecraft/class_1937;Lnet/minecraft/class_3965;Lnet/minecraft/class_2680;Lnet/minecraft/class_243;Lnet/minecraft/class_1306;)V
+accessible method net/minecraft/class_8836 method_7516 (Lnet/minecraft/class_1282;)V
+extendable method net/minecraft/class_1214 method_5172 (Ljava/lang/String;)Ljava/lang/String;
+extendable method net/minecraft/class_1214 method_5173 (Ljava/lang/String;)Ljava/lang/String;
 extendable method net/minecraft/class_1309 method_6073 (F)V
 extendable method net/minecraft/class_1309 method_6094 ()Z
-extendable method net/minecraft/class_161 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_161 hashCode ()I
-extendable method net/minecraft/class_161 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_170 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_179$class_180 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_179$class_180 hashCode ()I
-extendable method net/minecraft/class_20 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_20 hashCode ()I
+extendable method net/minecraft/class_1324 method_6202 (Lnet/minecraft/class_1322;)V
+extendable method net/minecraft/class_1690 method_7549 ()V
+extendable method net/minecraft/class_2995 method_32704 (Lnet/minecraft/class_2487;)Lnet/minecraft/class_273;
+extendable method net/minecraft/class_2995 method_32705 ()Lnet/minecraft/class_273;
+extendable method net/minecraft/class_310 method_1519 ()V
 extendable method net/minecraft/class_339 method_25394 (Lnet/minecraft/class_332;IIF)V
+extendable method net/minecraft/class_339 method_37020 (Lnet/minecraft/class_6382;)V
+extendable method net/minecraft/class_5556 method_36994 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V
+extendable method net/minecraft/class_8162 method_49184 (Lnet/minecraft/class_1937;Lnet/minecraft/class_3965;Lnet/minecraft/class_2680;Lnet/minecraft/class_243;Lnet/minecraft/class_1306;)V
+mutable field net/minecraft/class_4207$class_4233 field_18932 Ljava/lang/String;
+mutable field net/minecraft/class_4341$class_4343 field_19589 Ljava/lang/String;
+mutable field net/minecraft/class_4341$class_4343 field_19590 Ljava/lang/String;
+mutable field net/minecraft/class_4410 field_19998 I
 # ---- END GENERATED ----

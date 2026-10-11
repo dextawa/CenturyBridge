@@ -4,7 +4,7 @@ package top.dext.centurybridge.facade.v1_21_4;
 public abstract class class_883<T extends net.minecraft.class_1492>
         extends net.minecraft.class_9991<T> {
 
-    private static final java.util.Map<net.minecraft.class_1299<?>, net.minecraft.class_2960> field_4650 =
+    public static final java.util.Map<net.minecraft.class_1299<?>, net.minecraft.class_2960> field_4650 =
             java.util.Collections.emptyMap();
 
     public class_883(

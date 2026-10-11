@@ -23,13 +23,13 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public abstract class class_4003 extends SingleQuadParticle {
 
-    protected TextureAtlasSprite field_17886; // sprite
+    public TextureAtlasSprite field_17886; // sprite
 
-    protected class_4003(ClientLevel level, double x, double y, double z) {
+    public class_4003(ClientLevel level, double x, double y, double z) {
         super(level, x, y, z, (TextureAtlasSprite) null);
     }
 
-    protected class_4003(ClientLevel level, double x, double y, double z,
+    public class_4003(ClientLevel level, double x, double y, double z,
                          double vx, double vy, double vz) {
         super(level, x, y, z, vx, vy, vz, (TextureAtlasSprite) null);
     }
@@ -42,7 +42,7 @@ public abstract class class_4003 extends SingleQuadParticle {
     }
 
     /** setSprite(TextureAtlasSprite) (method_18141) */
-    protected void method_18141(TextureAtlasSprite s) {
+    public void method_18141(TextureAtlasSprite s) {
         this.field_17886 = s;
         this.setSprite(s);
     }
@@ -81,22 +81,22 @@ public abstract class class_4003 extends SingleQuadParticle {
     }
 
     /** getU0 (method_18133) */
-    protected float method_18133() {
+    public float method_18133() {
         return super.getU0();
     }
 
     /** getU1 (method_18134) */
-    protected float method_18134() {
+    public float method_18134() {
         return super.getU1();
     }
 
     /** getV0 (method_18135) */
-    protected float method_18135() {
+    public float method_18135() {
         return super.getV0();
     }
 
     /** getV1 (method_18136) */
-    protected float method_18136() {
+    public float method_18136() {
         return super.getV1();
     }
 

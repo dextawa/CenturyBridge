@@ -5,6 +5,11 @@ accessible field net/minecraft/server/network/ServerCommonPacketListenerImpl con
 # on every NEW/DUP/INVOKESPECIAL site in every mod.
 accessible method net/minecraft/resources/Identifier <init> (Ljava/lang/String;Ljava/lang/String;)V
 accessible method net/minecraft/world/level/block/state/BlockBehaviour getCloneItemStack (Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/item/ItemStack;
+# Classes 1.20.1 mods extend that later turned final (some into records: ItemPredicate,
+# MapDecoration, Enchantment, GeodeConfiguration). A record made extendable reports
+# Class.isRecord() == false -- nothing in the game, Fabric API or the loader asks (checked:
+# no isRecord/getRecordComponents call sites); only a mod reflecting on one of these with a
+# record-aware serializer would notice. The generated block below never un-finalizes a record.
 extendable class net/minecraft/world/item/crafting/Ingredient
 extendable class net/minecraft/advancements/predicates/ItemPredicate
 extendable class net/minecraft/resources/Identifier
@@ -23,8 +28,9 @@ accessible method net/minecraft/world/level/block/entity/BlockEntity saveAdditio
 accessible method net/minecraft/world/entity/Entity readAdditionalSaveData (Lnet/minecraft/world/level/storage/ValueInput;)V
 accessible method net/minecraft/world/entity/Entity addAdditionalSaveData (Lnet/minecraft/world/level/storage/ValueOutput;)V
 # ---- BEGIN GENERATED: access narrowed since 1.20.1 (Main access-diff) ----
-# public/protected in 1.20.1, narrowed (or made final) in this release: the same
-# members, so a converted mod calling or overriding them gets the access back.
+# public/protected in 1.20.1, narrowed, made final or sealed in this release: the same
+# members, so a converted mod calling, overriding, extending or writing them gets the
+# access back (core/tools/access_aw.py).
 accessible class net/minecraft/client/gui/components/SubtitleOverlay$Subtitle
 accessible class net/minecraft/client/gui/font/glyphs/BakedSheetGlyph$EffectInstance
 accessible class net/minecraft/client/multiplayer/SessionSearchTrees$Key
@@ -37,14 +43,12 @@ accessible class net/minecraft/world/level/levelgen/DensityFunctions$BlendOffset
 accessible class net/minecraft/world/level/levelgen/DensityFunctions$Marker
 accessible class net/minecraft/world/level/lighting/SpatialLongSet$InternalMap
 accessible field com/mojang/blaze3d/opengl/GlStateManager TEXTURE_COUNT I
-accessible field com/mojang/realmsclient/client/UploadStatus bytesWritten J
-accessible field com/mojang/realmsclient/client/UploadStatus totalBytes J
-accessible field com/mojang/realmsclient/gui/RealmsWorldSlotButton SLOT_FRAME_SPRITE Lnet/minecraft/resources/Identifier;
-accessible field com/mojang/realmsclient/gui/screens/configuration/RealmsSlotOptionsScreen parentScreen Lcom/mojang/realmsclient/gui/screens/configuration/RealmsConfigureWorldScreen;
 accessible field net/minecraft/client/Options DEFAULT_SOUND_DEVICE Ljava/lang/String;
 accessible field net/minecraft/client/Options useNativeTransport Z
 accessible field net/minecraft/client/gui/Font random Lnet/minecraft/util/RandomSource;
+accessible field net/minecraft/client/gui/components/tabs/GridLayoutTab title Lnet/minecraft/network/chat/Component;
 accessible field net/minecraft/client/gui/screens/TitleScreen COPYRIGHT_TEXT Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/screens/inventory/EffectsInInventory minecraft Lnet/minecraft/client/Minecraft;
 accessible field net/minecraft/client/gui/screens/inventory/SmithingScreen ARMOR_STAND_SCALE I
 accessible field net/minecraft/client/gui/screens/inventory/SmithingScreen ARMOR_STAND_X_ROT I
 accessible field net/minecraft/client/gui/screens/inventory/SmithingScreen ARMOR_STAND_Y_ROT I
@@ -53,15 +57,23 @@ accessible field net/minecraft/client/gui/screens/multiplayer/JoinMultiplayerScr
 accessible field net/minecraft/client/model/animal/axolotl/AdultAxolotlModel SWIMMING_LEG_XROT F
 accessible field net/minecraft/client/multiplayer/SessionSearchTrees CREATIVE_NAMES Lnet/minecraft/client/multiplayer/SessionSearchTrees$Key;
 accessible field net/minecraft/client/multiplayer/SessionSearchTrees CREATIVE_TAGS Lnet/minecraft/client/multiplayer/SessionSearchTrees$Key;
+accessible field net/minecraft/client/renderer/entity/DisplayRenderer entityRenderDispatcher Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;
+accessible field net/minecraft/client/resources/sounds/MinecartSoundInstance pitch F
 accessible field net/minecraft/core/BlockMath VANILLA_UV_TRANSFORM_GLOBAL_TO_LOCAL Ljava/util/Map;
 accessible field net/minecraft/core/BlockMath VANILLA_UV_TRANSFORM_LOCAL_TO_GLOBAL Ljava/util/Map;
+accessible field net/minecraft/core/dispenser/ShulkerBoxDispenseBehavior LOGGER Lorg/slf4j/Logger;
+accessible field net/minecraft/data/info/BiomeParametersDumpReport LOGGER Lorg/slf4j/Logger;
 accessible field net/minecraft/data/loot/BlockLootSubProvider enabledFeatures Lnet/minecraft/world/flag/FeatureFlagSet;
 accessible field net/minecraft/data/loot/BlockLootSubProvider explosionResistant Ljava/util/Set;
 accessible field net/minecraft/data/loot/BlockLootSubProvider map Ljava/util/Map;
+accessible field net/minecraft/data/loot/LootTableProvider LOGGER Lorg/slf4j/Logger;
+accessible field net/minecraft/data/structures/NbtToSnbt LOGGER Lorg/slf4j/Logger;
+accessible field net/minecraft/data/structures/SnbtToNbt LOGGER Lorg/slf4j/Logger;
 accessible field net/minecraft/recipebook/ServerPlaceRecipe inventory Lnet/minecraft/world/entity/player/Inventory;
 accessible field net/minecraft/server/level/ServerPlayer server Lnet/minecraft/server/MinecraftServer;
 accessible field net/minecraft/server/packs/resources/SimpleReloadInstance allDone Ljava/util/concurrent/CompletableFuture;
 accessible field net/minecraft/server/packs/resources/SimpleReloadInstance allPreparations Ljava/util/concurrent/CompletableFuture;
+accessible field net/minecraft/util/FutureChain LOGGER Lorg/slf4j/Logger;
 accessible field net/minecraft/util/NativeModuleLister$NativeModuleInfo name Ljava/lang/String;
 accessible field net/minecraft/util/NativeModuleLister$NativeModuleInfo version Ljava/util/Optional;
 accessible field net/minecraft/util/NativeModuleLister$NativeModuleVersion company Ljava/lang/String;
@@ -224,8 +236,6 @@ accessible field net/minecraft/world/level/timers/TimerQueue$Event sequentialId 
 accessible field net/minecraft/world/level/timers/TimerQueue$Event triggerTime J
 accessible method com/mojang/blaze3d/Blaze3D <init> ()V
 accessible method com/mojang/blaze3d/platform/NativeImage getPixelABGR (II)I
-accessible method com/mojang/realmsclient/client/RealmsClient <init> (Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/client/Minecraft;)V
-accessible method com/mojang/realmsclient/util/task/LongRunningTask error (Lnet/minecraft/network/chat/Component;)V
 accessible method net/minecraft/client/Minecraft emergencySave ()V
 accessible method net/minecraft/client/data/models/BlockModelGenerators createAxisAlignedPillarBlock (Lnet/minecraft/world/level/block/Block;Lnet/minecraft/client/data/models/model/TexturedModel$Provider;)V
 accessible method net/minecraft/client/data/models/BlockModelGenerators createTrivialBlock (Lnet/minecraft/world/level/block/Block;Lnet/minecraft/client/data/models/model/TexturedModel$Provider;)V
@@ -243,7 +253,6 @@ accessible method net/minecraft/client/multiplayer/ClientPacketListener setKeyPa
 accessible method net/minecraft/client/multiplayer/SessionSearchTrees$Key <init> ()V
 accessible method net/minecraft/client/renderer/texture/SpriteLoader stitch (Ljava/util/List;ILjava/util/concurrent/Executor;)Lnet/minecraft/client/renderer/texture/SpriteLoader$Preparations;
 accessible method net/minecraft/client/renderer/texture/atlas/sources/PalettedPermutations loadPaletteEntryFromImage (Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/Identifier;)[I
-accessible method net/minecraft/client/resources/model/cuboid/CuboidFace$Deserializer getTintIndex (Lcom/google/gson/JsonObject;)I
 accessible method net/minecraft/client/server/IntegratedServer initServer ()Z
 accessible method net/minecraft/client/server/IntegratedServer onServerCrash (Lnet/minecraft/CrashReport;)V
 accessible method net/minecraft/client/server/IntegratedServer tickServer (Ljava/util/function/BooleanSupplier;)V
@@ -456,7 +465,6 @@ accessible method net/minecraft/network/protocol/login/ServerboundKeyPacket writ
 accessible method net/minecraft/network/protocol/ping/ClientboundPongResponsePacket <init> (Lnet/minecraft/network/FriendlyByteBuf;)V
 accessible method net/minecraft/network/protocol/ping/ClientboundPongResponsePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
 accessible method net/minecraft/network/protocol/status/ServerboundStatusRequestPacket <init> ()V
-accessible method net/minecraft/recipebook/ServerPlaceRecipe clearGrid ()V
 accessible method net/minecraft/resources/RegistryDataLoader$RegistryData <init> (Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Codec;)V
 accessible method net/minecraft/server/MinecraftServer createProfiler ()Lnet/minecraft/util/profiling/ProfilerFiller;
 accessible method net/minecraft/server/MinecraftServer doRunTask (Ljava/lang/Runnable;)V
@@ -471,18 +479,17 @@ accessible method net/minecraft/server/dedicated/DedicatedServer forceDifficulty
 accessible method net/minecraft/server/dedicated/DedicatedServer initServer ()Z
 accessible method net/minecraft/server/dedicated/DedicatedServer onServerExit ()V
 accessible method net/minecraft/server/dedicated/DedicatedServer stopServer ()V
+accessible method net/minecraft/server/dedicated/DedicatedServer tickServer (Ljava/util/function/BooleanSupplier;)V
 accessible method net/minecraft/server/players/CachedUserNameToIdResolver load ()Ljava/util/List;
 accessible method net/minecraft/util/CubicSpline$Builder <init> (Lnet/minecraft/util/BoundedFloatFunction;)V
 accessible method net/minecraft/util/FileUtil containsAllowedCharactersOnly (Ljava/lang/String;)Z
-accessible method net/minecraft/util/datafix/fixes/OminousBannerRenameFix fixItemStackTag (Lcom/mojang/serialization/Dynamic;)Lcom/mojang/serialization/Dynamic;
-accessible method net/minecraft/util/datafix/fixes/StatsCounterFix upgradeBlock (Ljava/lang/String;)Ljava/lang/String;
-accessible method net/minecraft/util/datafix/fixes/StatsCounterFix upgradeItem (Ljava/lang/String;)Ljava/lang/String;
+accessible method net/minecraft/util/datafix/fixes/VillagerTradeFix makeRule ()Lcom/mojang/datafixers/TypeRewriteRule;
 accessible method net/minecraft/util/thread/BlockableEventLoop pollTask ()Z
 accessible method net/minecraft/util/thread/ReentrantBlockableEventLoop doRunTask (Ljava/lang/Runnable;)V
 accessible method net/minecraft/util/thread/ReentrantBlockableEventLoop scheduleExecutables ()Z
 accessible method net/minecraft/world/entity/EntityDimensions <init> (FFZ)V
 accessible method net/minecraft/world/entity/LivingEntity handleRelativeFrictionAndCalculateMovement (Lnet/minecraft/world/phys/Vec3;F)Lnet/minecraft/world/phys/Vec3;
-accessible method net/minecraft/world/entity/Mob isSunBurnTick ()Z
+accessible method net/minecraft/world/entity/LivingEntity serverAiStep ()V
 accessible method net/minecraft/world/entity/ai/attributes/AttributeSupplier <init> (Ljava/util/Map;)V
 accessible method net/minecraft/world/entity/animal/axolotl/Axolotl setVariant (Lnet/minecraft/world/entity/animal/axolotl/Axolotl$Variant;)V
 accessible method net/minecraft/world/entity/animal/cow/MushroomCow setVariant (Lnet/minecraft/world/entity/animal/cow/MushroomCow$Variant;)V
@@ -499,8 +506,8 @@ accessible method net/minecraft/world/entity/animal/wolf/Wolf setCollarColor (Ln
 accessible method net/minecraft/world/entity/decoration/painting/Painting setVariant (Lnet/minecraft/core/Holder;)V
 accessible method net/minecraft/world/entity/monster/Shulker setVariant (Ljava/util/Optional;)V
 accessible method net/minecraft/world/entity/projectile/arrow/AbstractArrow setPierceLevel (B)V
+accessible method net/minecraft/world/entity/vehicle/boat/AbstractBoat getDropItem ()Lnet/minecraft/world/item/Item;
 accessible method net/minecraft/world/entity/vehicle/minecart/MinecartCommandBlock$MinecartCommandBase <init> (Lnet/minecraft/world/entity/vehicle/minecart/MinecartCommandBlock;)V
-accessible method net/minecraft/world/inventory/AnvilMenu createInputSlotDefinitions ()Lnet/minecraft/world/inventory/ItemCombinerMenuSlotDefinition;
 accessible method net/minecraft/world/inventory/TransientCraftingContainer <init> (Lnet/minecraft/world/inventory/AbstractContainerMenu;IILnet/minecraft/core/NonNullList;)V
 accessible method net/minecraft/world/item/BrushItem spawnDustParticles (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/HumanoidArm;)V
 accessible method net/minecraft/world/level/biome/Climate$ParameterPoint parameterSpace ()Ljava/util/List;
@@ -547,6 +554,7 @@ accessible method net/minecraft/world/level/block/BarrelBlock hasAnalogOutputSig
 accessible method net/minecraft/world/level/block/BarrelBlock mirror (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Mirror;)Lnet/minecraft/world/level/block/state/BlockState;
 accessible method net/minecraft/world/level/block/BarrelBlock rotate (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Rotation;)Lnet/minecraft/world/level/block/state/BlockState;
 accessible method net/minecraft/world/level/block/BarrelBlock tick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
+accessible method net/minecraft/world/level/block/BarrierBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
 accessible method net/minecraft/world/level/block/BarrierBlock getRenderShape (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/RenderShape;
 accessible method net/minecraft/world/level/block/BarrierBlock getShadeBrightness (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F
 accessible method net/minecraft/world/level/block/BaseCoralFanBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
@@ -571,6 +579,8 @@ accessible method net/minecraft/world/level/block/BaseRailBlock canSurvive (Lnet
 accessible method net/minecraft/world/level/block/BaseRailBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
 accessible method net/minecraft/world/level/block/BaseRailBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/BaseRailBlock onPlace (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V
+accessible method net/minecraft/world/level/block/BaseTorchBlock canSurvive (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/world/level/block/BaseTorchBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/BedBlock getSeed (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)J
 accessible method net/minecraft/world/level/block/BedBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/BeehiveBlock getDrops (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/storage/loot/LootParams$Builder;)Ljava/util/List;
@@ -693,6 +703,10 @@ accessible method net/minecraft/world/level/block/DecoratedPotBlock getDrops (Ln
 accessible method net/minecraft/world/level/block/DecoratedPotBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
 accessible method net/minecraft/world/level/block/DecoratedPotBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/DecoratedPotBlock getSoundType (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/SoundType;
+accessible method net/minecraft/world/level/block/DecoratedPotBlock hasAnalogOutputSignal (Lnet/minecraft/world/level/block/state/BlockState;)Z
+accessible method net/minecraft/world/level/block/DecoratedPotBlock mirror (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Mirror;)Lnet/minecraft/world/level/block/state/BlockState;
+accessible method net/minecraft/world/level/block/DecoratedPotBlock onProjectileHit (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/entity/projectile/Projectile;)V
+accessible method net/minecraft/world/level/block/DecoratedPotBlock rotate (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Rotation;)Lnet/minecraft/world/level/block/state/BlockState;
 accessible method net/minecraft/world/level/block/DetectorRailBlock getDirectSignal (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)I
 accessible method net/minecraft/world/level/block/DetectorRailBlock hasAnalogOutputSignal (Lnet/minecraft/world/level/block/state/BlockState;)Z
 accessible method net/minecraft/world/level/block/DetectorRailBlock isSignalSource (Lnet/minecraft/world/level/block/state/BlockState;)Z
@@ -730,7 +744,9 @@ accessible method net/minecraft/world/level/block/EnchantingTableBlock getMenuPr
 accessible method net/minecraft/world/level/block/EnchantingTableBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/EnchantingTableBlock useShapeForLightOcclusion (Lnet/minecraft/world/level/block/state/BlockState;)Z
 accessible method net/minecraft/world/level/block/EndGatewayBlock canBeReplaced (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/Fluid;)Z
+accessible method net/minecraft/world/level/block/EndGatewayBlock getRenderShape (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/RenderShape;
 accessible method net/minecraft/world/level/block/EndPortalBlock canBeReplaced (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/Fluid;)Z
+accessible method net/minecraft/world/level/block/EndPortalBlock getRenderShape (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/RenderShape;
 accessible method net/minecraft/world/level/block/EndPortalBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/EndPortalFrameBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/EndPortalFrameBlock hasAnalogOutputSignal (Lnet/minecraft/world/level/block/state/BlockState;)Z
@@ -760,6 +776,8 @@ accessible method net/minecraft/world/level/block/FireBlock onPlace (Lnet/minecr
 accessible method net/minecraft/world/level/block/FireBlock tick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
 accessible method net/minecraft/world/level/block/FlowerBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/FlowerPotBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+accessible method net/minecraft/world/level/block/FlowerPotBlock isRandomlyTicking (Lnet/minecraft/world/level/block/state/BlockState;)Z
+accessible method net/minecraft/world/level/block/FlowerPotBlock randomTick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
 accessible method net/minecraft/world/level/block/FrogspawnBlock canSurvive (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
 accessible method net/minecraft/world/level/block/FrogspawnBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/FrogspawnBlock onPlace (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V
@@ -810,11 +828,11 @@ accessible method net/minecraft/world/level/block/LadderBlock rotate (Lnet/minec
 accessible method net/minecraft/world/level/block/LanternBlock canSurvive (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
 accessible method net/minecraft/world/level/block/LanternBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
 accessible method net/minecraft/world/level/block/LanternBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
-accessible method net/minecraft/world/level/block/LayeredCauldronBlock handleEntityOnFireInside (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V
 accessible method net/minecraft/world/level/block/LeavesBlock getBlockSupportShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/LeavesBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
 accessible method net/minecraft/world/level/block/LeavesBlock isRandomlyTicking (Lnet/minecraft/world/level/block/state/BlockState;)Z
 accessible method net/minecraft/world/level/block/LeavesBlock randomTick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
+accessible method net/minecraft/world/level/block/LeavesBlock skipRendering (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z
 accessible method net/minecraft/world/level/block/LeavesBlock tick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
 accessible method net/minecraft/world/level/block/LecternBlock getCollisionShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/LecternBlock getDirectSignal (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)I
@@ -848,6 +866,7 @@ accessible method net/minecraft/world/level/block/LiquidBlock isRandomlyTicking 
 accessible method net/minecraft/world/level/block/LiquidBlock onPlace (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V
 accessible method net/minecraft/world/level/block/LiquidBlock randomTick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
 accessible method net/minecraft/world/level/block/LiquidBlock skipRendering (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z
+accessible method net/minecraft/world/level/block/LiquidBlock tick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
 accessible method net/minecraft/world/level/block/LoomBlock getMenuProvider (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/MenuProvider;
 accessible method net/minecraft/world/level/block/MangrovePropaguleBlock canSurvive (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
 accessible method net/minecraft/world/level/block/MangrovePropaguleBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
@@ -861,6 +880,7 @@ accessible method net/minecraft/world/level/block/MudBlock getShadeBrightness (L
 accessible method net/minecraft/world/level/block/MudBlock getVisualShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/MultifaceBlock canBeReplaced (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/item/context/BlockPlaceContext;)Z
 accessible method net/minecraft/world/level/block/MultifaceBlock canSurvive (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/world/level/block/MultifaceBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
 accessible method net/minecraft/world/level/block/MultifaceBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/MultifaceBlock mirror (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Mirror;)Lnet/minecraft/world/level/block/state/BlockState;
 accessible method net/minecraft/world/level/block/MultifaceBlock rotate (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Rotation;)Lnet/minecraft/world/level/block/state/BlockState;
@@ -994,9 +1014,17 @@ accessible method net/minecraft/world/level/block/SoulSandBlock getCollisionShap
 accessible method net/minecraft/world/level/block/SoulSandBlock getShadeBrightness (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F
 accessible method net/minecraft/world/level/block/SoulSandBlock getVisualShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/SpawnerBlock spawnAfterBreak (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;Z)V
+accessible method net/minecraft/world/level/block/SpeleothemBlock canSurvive (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/world/level/block/SpeleothemBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
+accessible method net/minecraft/world/level/block/SpeleothemBlock getMaxHorizontalOffset ()F
+accessible method net/minecraft/world/level/block/SpeleothemBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+accessible method net/minecraft/world/level/block/SpeleothemBlock isCollisionShapeFullBlock (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/world/level/block/SpeleothemBlock onProjectileHit (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/entity/projectile/Projectile;)V
+accessible method net/minecraft/world/level/block/SpeleothemBlock tick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
 accessible method net/minecraft/world/level/block/SpongeBlock onPlace (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V
 accessible method net/minecraft/world/level/block/SporeBlossomBlock canSurvive (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z
 accessible method net/minecraft/world/level/block/SporeBlossomBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+accessible method net/minecraft/world/level/block/SpreadingSnowyBlock randomTick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
 accessible method net/minecraft/world/level/block/StairBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
 accessible method net/minecraft/world/level/block/StairBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/StairBlock mirror (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Mirror;)Lnet/minecraft/world/level/block/state/BlockState;
@@ -1032,6 +1060,8 @@ accessible method net/minecraft/world/level/block/TargetBlock onProjectileHit (L
 accessible method net/minecraft/world/level/block/TargetBlock tick (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V
 accessible method net/minecraft/world/level/block/TntBlock onPlace (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V
 accessible method net/minecraft/world/level/block/TntBlock onProjectileHit (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/entity/projectile/Projectile;)V
+accessible method net/minecraft/world/level/block/TransparentBlock getShadeBrightness (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F
+accessible method net/minecraft/world/level/block/TransparentBlock getVisualShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/TrapDoorBlock getFluidState (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;
 accessible method net/minecraft/world/level/block/TrapDoorBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/TrappedChestBlock getDirectSignal (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)I
@@ -1093,6 +1123,7 @@ accessible method net/minecraft/world/level/block/WeatheringCopperStairBlock ran
 accessible method net/minecraft/world/level/block/WetSpongeBlock onPlace (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V
 accessible method net/minecraft/world/level/block/piston/MovingPistonBlock getCollisionShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/piston/MovingPistonBlock getDrops (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/storage/loot/LootParams$Builder;)Ljava/util/List;
+accessible method net/minecraft/world/level/block/piston/MovingPistonBlock getRenderShape (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/RenderShape;
 accessible method net/minecraft/world/level/block/piston/MovingPistonBlock getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/piston/MovingPistonBlock mirror (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Mirror;)Lnet/minecraft/world/level/block/state/BlockState;
 accessible method net/minecraft/world/level/block/piston/MovingPistonBlock rotate (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Rotation;)Lnet/minecraft/world/level/block/state/BlockState;
@@ -1126,9 +1157,11 @@ accessible method net/minecraft/world/level/block/state/BlockBehaviour getSeed (
 accessible method net/minecraft/world/level/block/state/BlockBehaviour getShadeBrightness (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F
 accessible method net/minecraft/world/level/block/state/BlockBehaviour getShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/state/BlockBehaviour getSignal (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)I
+accessible method net/minecraft/world/level/block/state/BlockBehaviour getSoundType (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/SoundType;
 accessible method net/minecraft/world/level/block/state/BlockBehaviour getVisualShape (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;
 accessible method net/minecraft/world/level/block/state/BlockBehaviour hasAnalogOutputSignal (Lnet/minecraft/world/level/block/state/BlockState;)Z
 accessible method net/minecraft/world/level/block/state/BlockBehaviour isCollisionShapeFullBlock (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/world/level/block/state/BlockBehaviour isRandomlyTicking (Lnet/minecraft/world/level/block/state/BlockState;)Z
 accessible method net/minecraft/world/level/block/state/BlockBehaviour isSignalSource (Lnet/minecraft/world/level/block/state/BlockState;)Z
 accessible method net/minecraft/world/level/block/state/BlockBehaviour mirror (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/Mirror;)Lnet/minecraft/world/level/block/state/BlockState;
 accessible method net/minecraft/world/level/block/state/BlockBehaviour onPlace (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V
@@ -1156,93 +1189,217 @@ accessible method net/minecraft/world/phys/shapes/Shapes createIndexMerger (ILit
 accessible method net/minecraft/world/phys/shapes/Shapes findBits (DD)I
 accessible method net/minecraft/world/phys/shapes/Shapes lcm (II)J
 accessible method net/minecraft/world/phys/shapes/SubShape <init> (Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;IIIIII)V
-extendable method com/mojang/blaze3d/vertex/VertexFormatElement equals (Ljava/lang/Object;)Z
-extendable method com/mojang/blaze3d/vertex/VertexFormatElement hashCode ()I
-extendable method net/minecraft/advancements/Advancement equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/advancements/Advancement hashCode ()I
-extendable method net/minecraft/advancements/Advancement toString ()Ljava/lang/String;
-extendable method net/minecraft/advancements/AdvancementRewards toString ()Ljava/lang/String;
-extendable method net/minecraft/client/data/models/MultiVariant equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/client/data/models/MultiVariant hashCode ()I
-extendable method net/minecraft/client/data/models/blockstates/PropertyValueList equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/client/data/models/blockstates/PropertyValueList hashCode ()I
-extendable method net/minecraft/client/model/geom/ModelLayerLocation equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/client/model/geom/ModelLayerLocation hashCode ()I
-extendable method net/minecraft/client/renderer/block/dispatch/BlockStateModelDispatcher equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/client/renderer/block/dispatch/BlockStateModelDispatcher hashCode ()I
-extendable method net/minecraft/client/renderer/block/dispatch/Variant equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/client/renderer/block/dispatch/Variant hashCode ()I
-extendable method net/minecraft/client/renderer/block/dispatch/Variant toString ()Ljava/lang/String;
-extendable method net/minecraft/client/renderer/block/dispatch/multipart/KeyValueCondition toString ()Ljava/lang/String;
-extendable method net/minecraft/client/renderer/block/dispatch/multipart/Selector equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/client/renderer/block/dispatch/multipart/Selector hashCode ()I
-extendable method net/minecraft/client/resources/model/cuboid/ItemTransform equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/client/resources/model/cuboid/ItemTransform hashCode ()I
-extendable method net/minecraft/client/resources/model/sprite/SpriteId equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/client/resources/model/sprite/SpriteId hashCode ()I
-extendable method net/minecraft/client/resources/model/sprite/SpriteId toString ()Ljava/lang/String;
-extendable method net/minecraft/commands/arguments/coordinates/LocalCoordinates equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/commands/arguments/coordinates/LocalCoordinates hashCode ()I
-extendable method net/minecraft/commands/arguments/coordinates/WorldCoordinate equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/commands/arguments/coordinates/WorldCoordinate hashCode ()I
-extendable method net/minecraft/commands/arguments/coordinates/WorldCoordinates equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/commands/arguments/coordinates/WorldCoordinates hashCode ()I
-extendable method net/minecraft/core/GlobalPos equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/core/GlobalPos hashCode ()I
-extendable method net/minecraft/core/Rotations equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/nbt/ByteTag equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/nbt/ByteTag hashCode ()I
-extendable method net/minecraft/nbt/DoubleTag equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/nbt/DoubleTag hashCode ()I
-extendable method net/minecraft/nbt/FloatTag equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/nbt/FloatTag hashCode ()I
-extendable method net/minecraft/nbt/IntTag equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/nbt/IntTag hashCode ()I
-extendable method net/minecraft/nbt/LongTag equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/nbt/LongTag hashCode ()I
-extendable method net/minecraft/nbt/ShortTag equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/nbt/ShortTag hashCode ()I
-extendable method net/minecraft/nbt/StringTag equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/nbt/StringTag hashCode ()I
-extendable method net/minecraft/network/chat/contents/NbtContents equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/network/chat/contents/NbtContents hashCode ()I
-extendable method net/minecraft/network/chat/contents/NbtContents toString ()Ljava/lang/String;
-extendable method net/minecraft/network/chat/contents/ScoreContents equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/network/chat/contents/ScoreContents hashCode ()I
-extendable method net/minecraft/network/chat/contents/SelectorContents equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/network/chat/contents/SelectorContents hashCode ()I
-extendable method net/minecraft/network/chat/contents/data/BlockDataSource equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/network/chat/contents/data/BlockDataSource hashCode ()I
-extendable method net/minecraft/network/chat/contents/data/BlockDataSource toString ()Ljava/lang/String;
-extendable method net/minecraft/network/chat/contents/data/EntityDataSource equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/network/chat/contents/data/EntityDataSource hashCode ()I
-extendable method net/minecraft/network/chat/contents/data/EntityDataSource toString ()Ljava/lang/String;
-extendable method net/minecraft/server/level/TicketType toString ()Ljava/lang/String;
+extendable class com/mojang/blaze3d/opengl/Uniform
+extendable class net/minecraft/advancements/predicates/entity/EntityPredicate
+extendable class net/minecraft/core/HolderSet$Direct
+extendable class net/minecraft/nbt/ByteArrayTag
+extendable class net/minecraft/nbt/CollectionTag
+extendable class net/minecraft/nbt/CompoundTag
+extendable class net/minecraft/nbt/EndTag
+extendable class net/minecraft/nbt/IntArrayTag
+extendable class net/minecraft/nbt/LongArrayTag
+extendable class net/minecraft/nbt/NumericTag
+extendable class net/minecraft/network/chat/MutableComponent
+extendable class net/minecraft/network/chat/Style
+extendable class net/minecraft/util/random/WeightedList
+extendable class net/minecraft/world/level/block/state/properties/BooleanProperty
+extendable class net/minecraft/world/level/block/state/properties/EnumProperty
+extendable class net/minecraft/world/level/block/state/properties/IntegerProperty
+extendable method net/minecraft/client/Minecraft emergencySave ()V
+extendable method net/minecraft/client/data/models/BlockModelGenerators createAxisAlignedPillarBlock (Lnet/minecraft/world/level/block/Block;Lnet/minecraft/client/data/models/model/TexturedModel$Provider;)V
+extendable method net/minecraft/client/data/models/BlockModelGenerators createTrivialBlock (Lnet/minecraft/world/level/block/Block;Lnet/minecraft/client/data/models/model/TexturedModel$Provider;)V
+extendable method net/minecraft/client/data/models/BlockModelGenerators createTrivialCube (Lnet/minecraft/world/level/block/Block;)V
+extendable method net/minecraft/client/gui/components/AbstractWidget updateNarration (Lnet/minecraft/client/gui/narration/NarrationElementOutput;)V
+extendable method net/minecraft/client/gui/components/ChatComponent getHeight ()I
+extendable method net/minecraft/client/gui/components/ChatComponent getScale ()D
+extendable method net/minecraft/client/gui/components/ChatComponent getWidth ()I
+extendable method net/minecraft/client/gui/screens/recipebook/RecipeBookComponent initVisuals ()V
+extendable method net/minecraft/client/multiplayer/ClientLevel getSkyFlashTime ()I
+extendable method net/minecraft/client/multiplayer/ClientPacketListener setKeyPair (Lnet/minecraft/world/entity/player/ProfileKeyPair;)V
+extendable method net/minecraft/client/renderer/texture/SpriteLoader stitch (Ljava/util/List;ILjava/util/concurrent/Executor;)Lnet/minecraft/client/renderer/texture/SpriteLoader$Preparations;
+extendable method net/minecraft/client/resources/model/cuboid/CuboidFace$Deserializer getTintIndex (Lcom/google/gson/JsonObject;)I
+extendable method net/minecraft/network/protocol/common/ClientboundKeepAlivePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/common/ClientboundPingPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/common/ClientboundUpdateTagsPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/common/ServerboundKeepAlivePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/common/ServerboundPongPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundAnimatePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundBlockDestructionPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundClearTitlesPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundCommandsPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundContainerClosePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundContainerSetDataPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundEntityEventPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundGameEventPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundInitializeBorderPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundLevelEventPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundLightUpdatePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundMountScreenOpenPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundMoveEntityPacket$Pos write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundMoveEntityPacket$PosRot write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundMoveEntityPacket$Rot write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundOpenBookPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundOpenSignEditorPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundPlayerAbilitiesPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundPlayerCombatEndPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundPlayerLookAtPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundRemoveEntitiesPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundRotateHeadPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSectionBlocksUpdatePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSelectAdvancementsTabPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetBorderCenterPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetBorderLerpSizePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetBorderSizePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetBorderWarningDelayPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetBorderWarningDistancePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetCameraPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetChunkCacheCenterPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetChunkCacheRadiusPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetDisplayObjectivePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetEntityLinkPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetExperiencePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetHealthPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetPassengersPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundSetTitlesAnimationPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundStopSoundPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundTagQueryPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ClientboundTakeItemEntityPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundAcceptTeleportationPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundBlockEntityTagQueryPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundClientCommandPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundCommandSuggestionPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundContainerClosePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundEntityTagQueryPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundJigsawGeneratePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundLockDifficultyPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundMovePlayerPacket$Pos write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundMovePlayerPacket$PosRot write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundMovePlayerPacket$Rot write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundMovePlayerPacket$StatusOnly write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundPaddleBoatPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundPlayerAbilitiesPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundPlayerActionPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundPlayerCommandPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundRecipeBookChangeSettingsPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundRenameItemPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundSeenAdvancementsPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundSelectTradePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundSetCarriedItemPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundSetCommandBlockPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundSetCommandMinecartPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundSetJigsawBlockPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundSetStructureBlockPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundSignUpdatePacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundSwingPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundTeleportToEntityPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundUseItemOnPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/game/ServerboundUseItemPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/login/ClientboundHelloPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/login/ClientboundLoginCompressionPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/network/protocol/login/ServerboundKeyPacket write (Lnet/minecraft/network/FriendlyByteBuf;)V
+extendable method net/minecraft/recipebook/ServerPlaceRecipe clearGrid ()V
+extendable method net/minecraft/server/MinecraftServer createProfiler ()Lnet/minecraft/util/profiling/ProfilerFiller;
+extendable method net/minecraft/server/players/CachedUserNameToIdResolver load ()Ljava/util/List;
+extendable method net/minecraft/util/datafix/fixes/OminousBannerRenameFix fixItemStackTag (Lcom/mojang/serialization/Dynamic;)Lcom/mojang/serialization/Dynamic;
+extendable method net/minecraft/util/datafix/fixes/StatsCounterFix upgradeBlock (Ljava/lang/String;)Ljava/lang/String;
+extendable method net/minecraft/util/datafix/fixes/StatsCounterFix upgradeItem (Ljava/lang/String;)Ljava/lang/String;
 extendable method net/minecraft/world/entity/AgeableMob isBaby ()Z
 extendable method net/minecraft/world/entity/AgeableMob setBaby (Z)V
 extendable method net/minecraft/world/entity/Entity getEyeHeight (Lnet/minecraft/world/entity/Pose;)F
 extendable method net/minecraft/world/entity/Entity isAlliedTo (Lnet/minecraft/world/entity/Entity;)Z
 extendable method net/minecraft/world/entity/Entity makeBoundingBox ()Lnet/minecraft/world/phys/AABB;
 extendable method net/minecraft/world/entity/Entity startRiding (Lnet/minecraft/world/entity/Entity;)Z
-extendable method net/minecraft/world/entity/EntityDimensions toString ()Ljava/lang/String;
 extendable method net/minecraft/world/entity/LivingEntity getDimensions (Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;
+extendable method net/minecraft/world/entity/LivingEntity handleRelativeFrictionAndCalculateMovement (Lnet/minecraft/world/phys/Vec3;F)Lnet/minecraft/world/phys/Vec3;
 extendable method net/minecraft/world/entity/LivingEntity setAbsorptionAmount (F)V
-extendable method net/minecraft/world/entity/ai/attributes/AttributeModifier equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/world/entity/ai/attributes/AttributeModifier hashCode ()I
-extendable method net/minecraft/world/entity/ai/attributes/AttributeModifier toString ()Ljava/lang/String;
+extendable method net/minecraft/world/entity/Mob isSunBurnTick ()Z
+extendable method net/minecraft/world/entity/animal/axolotl/Axolotl setVariant (Lnet/minecraft/world/entity/animal/axolotl/Axolotl$Variant;)V
+extendable method net/minecraft/world/entity/animal/cow/MushroomCow setVariant (Lnet/minecraft/world/entity/animal/cow/MushroomCow$Variant;)V
 extendable method net/minecraft/world/entity/animal/equine/AbstractHorse getInventorySize ()I
+extendable method net/minecraft/world/entity/animal/equine/Horse setVariant (Lnet/minecraft/world/entity/animal/equine/Variant;)V
+extendable method net/minecraft/world/entity/animal/equine/Llama setVariant (Lnet/minecraft/world/entity/animal/equine/Llama$Variant;)V
+extendable method net/minecraft/world/entity/animal/feline/Cat isRelaxStateOne ()Z
+extendable method net/minecraft/world/entity/animal/feline/Cat setCollarColor (Lnet/minecraft/world/item/DyeColor;)V
+extendable method net/minecraft/world/entity/animal/feline/Cat setRelaxStateOne (Z)V
+extendable method net/minecraft/world/entity/animal/fish/TropicalFish setPattern (Lnet/minecraft/world/entity/animal/fish/TropicalFish$Pattern;)V
+extendable method net/minecraft/world/entity/animal/fox/Fox setVariant (Lnet/minecraft/world/entity/animal/fox/Fox$Variant;)V
+extendable method net/minecraft/world/entity/animal/parrot/Parrot setVariant (Lnet/minecraft/world/entity/animal/parrot/Parrot$Variant;)V
+extendable method net/minecraft/world/entity/animal/rabbit/Rabbit setVariant (Lnet/minecraft/world/entity/animal/rabbit/Rabbit$Variant;)V
+extendable method net/minecraft/world/entity/animal/wolf/Wolf setCollarColor (Lnet/minecraft/world/item/DyeColor;)V
 extendable method net/minecraft/world/entity/decoration/ItemFrame recalculateBoundingBox ()V
-extendable method net/minecraft/world/entity/npc/villager/VillagerProfession toString ()Ljava/lang/String;
+extendable method net/minecraft/world/entity/decoration/painting/Painting setVariant (Lnet/minecraft/core/Holder;)V
+extendable method net/minecraft/world/entity/monster/Shulker setVariant (Ljava/util/Optional;)V
+extendable method net/minecraft/world/entity/projectile/arrow/AbstractArrow setPierceLevel (B)V
+extendable method net/minecraft/world/entity/vehicle/boat/AbstractBoat getPickResult ()Lnet/minecraft/world/item/ItemStack;
+extendable method net/minecraft/world/inventory/AnvilMenu createInputSlotDefinitions ()Lnet/minecraft/world/inventory/ItemCombinerMenuSlotDefinition;
+extendable method net/minecraft/world/item/BrushItem spawnDustParticles (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/HumanoidArm;)V
 extendable method net/minecraft/world/item/Item getDescriptionId ()Ljava/lang/String;
 extendable method net/minecraft/world/item/Item requiredFeatures ()Lnet/minecraft/world/flag/FeatureFlagSet;
-extendable method net/minecraft/world/item/equipment/trim/ArmorTrim equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/world/level/ChunkPos equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/world/level/gameevent/GameEvent toString ()Ljava/lang/String;
-extendable method net/minecraft/world/level/levelgen/DensityFunctions$Spline$Coordinate toString ()Ljava/lang/String;
-extendable method net/minecraft/world/level/saveddata/maps/MapBanner equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/world/level/saveddata/maps/MapBanner hashCode ()I
-extendable method net/minecraft/world/level/saveddata/maps/MapDecoration equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/world/level/saveddata/maps/MapDecoration hashCode ()I
-extendable method net/minecraft/world/level/storage/loot/providers/number/ConstantValue equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/world/level/storage/loot/providers/number/ConstantValue hashCode ()I
+extendable method net/minecraft/world/item/crafting/NormalCraftingRecipe category ()Lnet/minecraft/world/item/crafting/CraftingBookCategory;
+extendable method net/minecraft/world/item/crafting/NormalCraftingRecipe group ()Ljava/lang/String;
+extendable method net/minecraft/world/item/crafting/NormalCraftingRecipe showNotification ()Z
+extendable method net/minecraft/world/item/crafting/SimpleSmithingRecipe showNotification ()Z
+extendable method net/minecraft/world/level/block/LayeredCauldronBlock handleEntityOnFireInside (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V
+mutable field net/minecraft/client/gui/screens/Screen font Lnet/minecraft/client/gui/Font;
+mutable field net/minecraft/client/gui/screens/Screen minecraft Lnet/minecraft/client/Minecraft;
+mutable field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen imageHeight I
+mutable field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen imageWidth I
+mutable field net/minecraft/client/gui/screens/inventory/EffectsInInventory minecraft Lnet/minecraft/client/Minecraft;
+mutable field net/minecraft/client/gui/screens/recipebook/RecipeBookComponent menu Lnet/minecraft/world/inventory/RecipeBookMenu;
+mutable field net/minecraft/client/renderer/texture/atlas/SpriteSources CODEC Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/client/renderer/texture/atlas/SpriteSources FILE_CODEC Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/client/resources/sounds/AbstractSoundInstance random Lnet/minecraft/util/RandomSource;
+mutable field net/minecraft/core/UUIDUtil AUTHLIB_CODEC Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/network/chat/LastSeenMessages EMPTY Lnet/minecraft/network/chat/LastSeenMessages;
+mutable field net/minecraft/recipebook/ServerPlaceRecipe inventory Lnet/minecraft/world/entity/player/Inventory;
+mutable field net/minecraft/server/commands/ChaseCommand DIMENSION_NAMES Lcom/google/common/collect/BiMap;
+mutable field net/minecraft/util/Brightness FULL_BRIGHT Lnet/minecraft/util/Brightness;
+mutable field net/minecraft/util/ExtraCodecs MATRIX4F Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/util/datafix/fixes/AbstractUUIDFix typeReference Lcom/mojang/datafixers/DSL$TypeReference;
+mutable field net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal targetConditions Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;
+mutable field net/minecraft/world/entity/animal/frog/Tadpole HITBOX_HEIGHT F
+mutable field net/minecraft/world/entity/animal/frog/Tadpole HITBOX_WIDTH F
+mutable field net/minecraft/world/entity/monster/warden/Warden attackAnimationState Lnet/minecraft/world/entity/AnimationState;
+mutable field net/minecraft/world/entity/monster/warden/Warden diggingAnimationState Lnet/minecraft/world/entity/AnimationState;
+mutable field net/minecraft/world/entity/monster/warden/Warden emergeAnimationState Lnet/minecraft/world/entity/AnimationState;
+mutable field net/minecraft/world/entity/monster/warden/Warden roarAnimationState Lnet/minecraft/world/entity/AnimationState;
+mutable field net/minecraft/world/entity/monster/warden/Warden sniffAnimationState Lnet/minecraft/world/entity/AnimationState;
+mutable field net/minecraft/world/entity/monster/warden/Warden sonicBoomAnimationState Lnet/minecraft/world/entity/AnimationState;
+mutable field net/minecraft/world/level/block/MultifaceSpreader$DefaultSpreaderConfig block Lnet/minecraft/world/level/block/MultifaceBlock;
+mutable field net/minecraft/world/level/chunk/ChunkAccess blendingData Lnet/minecraft/world/level/levelgen/blending/BlendingData;
+mutable field net/minecraft/world/level/gameevent/vibrations/VibrationSystem$Data CODEC Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/world/level/levelgen/placement/PlacementModifier CODEC Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/world/level/levelgen/structure/TemplateStructurePiece placeSettings Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;
+mutable field net/minecraft/world/level/levelgen/structure/TemplateStructurePiece template Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;
+mutable field net/minecraft/world/level/levelgen/structure/structures/NetherFortressPieces$StartPiece availableBridgePieces Ljava/util/List;
+mutable field net/minecraft/world/level/levelgen/structure/structures/NetherFortressPieces$StartPiece availableCastlePieces Ljava/util/List;
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties airPocket Z
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties cold Z
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties mossiness F
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties overgrown Z
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties replaceWithBlackstone Z
+mutable field net/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$Properties vines Z
+mutable field net/minecraft/world/level/storage/DataVersion MAIN_SERIES Ljava/lang/String;
+# narrowed too, but outside the classes the loader tweaks -- not bridged by this:
+#   accessible field com/mojang/realmsclient/client/UploadStatus bytesWritten J
+#   accessible field com/mojang/realmsclient/client/UploadStatus totalBytes J
+#   accessible field com/mojang/realmsclient/gui/RealmsWorldSlotButton SLOT_FRAME_SPRITE Lnet/minecraft/resources/Identifier;
+#   accessible field com/mojang/realmsclient/gui/screens/RealmsLongRunningMcoTaskScreen title Lnet/minecraft/network/chat/Component;
+#   accessible field com/mojang/realmsclient/gui/screens/configuration/RealmsPlayersTab font Lnet/minecraft/client/gui/Font;
+#   accessible field com/mojang/realmsclient/gui/screens/configuration/RealmsPlayersTab minecraft Lnet/minecraft/client/Minecraft;
+#   accessible field com/mojang/realmsclient/gui/screens/configuration/RealmsSlotOptionsScreen parentScreen Lcom/mojang/realmsclient/gui/screens/configuration/RealmsConfigureWorldScreen;
+#   accessible field com/mojang/realmsclient/gui/screens/configuration/RealmsSubscriptionTab minecraft Lnet/minecraft/client/Minecraft;
+#   accessible method com/mojang/realmsclient/client/RealmsClient <init> (Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/client/Minecraft;)V
+#   accessible method com/mojang/realmsclient/util/task/LongRunningTask error (Lnet/minecraft/network/chat/Component;)V
+#   mutable field com/mojang/realmsclient/client/RealmsClient$Environment baseUrl Ljava/lang/String;
+#   mutable field com/mojang/realmsclient/client/RealmsClient$Environment protocol Ljava/lang/String;
+#   mutable field com/mojang/realmsclient/dto/Backup backupId Ljava/lang/String;
+#   mutable field com/mojang/realmsclient/dto/Backup changeList Ljava/util/Map;
+#   mutable field com/mojang/realmsclient/dto/Backup metadata Ljava/util/Map;
+#   mutable field com/mojang/realmsclient/dto/Backup size J
+#   mutable field com/mojang/realmsclient/gui/screens/RealmsConfirmScreen callback Lit/unimi/dsi/fastutil/booleans/BooleanConsumer;
+#   mutable field com/mojang/realmsclient/gui/screens/RealmsResetWorldScreen slot I
+#   mutable field com/mojang/realmsclient/gui/screens/configuration/RealmsPlayersTab font Lnet/minecraft/client/gui/Font;
+#   mutable field com/mojang/realmsclient/gui/screens/configuration/RealmsPlayersTab minecraft Lnet/minecraft/client/Minecraft;
+#   mutable field com/mojang/realmsclient/gui/screens/configuration/RealmsSubscriptionTab minecraft Lnet/minecraft/client/Minecraft;
 # ---- END GENERATED ----

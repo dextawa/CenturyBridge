@@ -15,7 +15,7 @@ public enum class_1888 {
     field_9088(2),   // RARE
     field_9091(1);   // VERY_RARE
 
-    private final int field_9089;
+    public final int field_9089;
 
     class_1888(int weight) {
         this.field_9089 = weight;

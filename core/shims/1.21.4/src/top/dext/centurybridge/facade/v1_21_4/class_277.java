@@ -4,16 +4,16 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class class_277 {
-    private static class_277 field_1484;
-    private final int field_1491;
-    private final int field_1490;
-    private final int field_1489;
-    private final int field_1488;
-    private final int field_1486;
-    private final boolean field_1487;
-    private final boolean field_1485;
+    public static class_277 field_1484;
+    public final int field_1491;
+    public final int field_1490;
+    public final int field_1489;
+    public final int field_1488;
+    public final int field_1486;
+    public final boolean field_1487;
+    public final boolean field_1485;
 
-    private class_277(
+    public class_277(
             boolean separateBlend,
             boolean blendDisabled,
             int srcRgb,

@@ -8,7 +8,7 @@ public abstract class class_2647 {
     public class_2647() {}
 
     /** getConfiguredFeature (method_11430) */
-    protected abstract net.minecraft.resources.ResourceKey<?> method_11430(
+    public abstract net.minecraft.resources.ResourceKey<?> method_11430(
             net.minecraft.util.RandomSource rand, boolean beehive);
 
     /** place (method_11431) -> no-op false */

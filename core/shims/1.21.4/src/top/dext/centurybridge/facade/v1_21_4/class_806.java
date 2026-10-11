@@ -6,9 +6,9 @@ public class class_806 {
     public static final float field_42072 = Float.NEGATIVE_INFINITY;
 
     private final class_5827[] field_28792;
-    private final net.minecraft.class_2960[] field_28793;
+    public final net.minecraft.class_2960[] field_28793;
 
-    private class_806() {
+    public class_806() {
         this.field_28792 = new class_5827[0];
         this.field_28793 = new net.minecraft.class_2960[0];
     }

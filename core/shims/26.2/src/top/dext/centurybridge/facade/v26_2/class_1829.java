@@ -18,7 +18,7 @@ import com.google.common.collect.ImmutableMultimap;
  */
 public class class_1829 extends class_1831 implements class_5150 {
 
-    private final float field_8920; // attackDamage
+    public final float field_8920; // attackDamage
 
     public class_1829(class_1832 tier, int attackDamage, float attackSpeed, Item.Properties props) {
         super(tier, props);

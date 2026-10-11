@@ -39,8 +39,8 @@ public final class Main {
                 }
                 top.dext.centurybridge.data.ApplyAw.run(Path.of(args[1]), Path.of(args[2]), aws);
             }
-            case "access-diff" -> top.dext.centurybridge.data.AccessDiff.run(Path.of(args[1]), Path.of(args[2]),
-                args.length > 4 && !args[3].isEmpty() ? Path.of(args[3]) : null, Path.of(args[args.length - 1]));
+            // access-diff <oldStub> <newStub> [<wall.tsv>] [<shims-ver.json>] <out.aw>
+            case "access-diff" -> top.dext.centurybridge.data.AccessDiff.run(args);
             case "gen-renames" -> {
                 // gen-renames <newest client jar> <out.json> [<jarsDir> <IdRenameTable.java>]
                 top.dext.centurybridge.data.IdRenames.run(Path.of(args[1]), Path.of(args[2]));

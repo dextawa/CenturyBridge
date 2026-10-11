@@ -1,12 +1,10 @@
 package top.dext.centurybridge.data;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -16,122 +14,101 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.RecordComponentVisitor;
 
 /**
- * A compile stub with an access widener applied, as the loader applies it at runtime:
- * the shim tree compiles against the access it will have in the game (CB_STUB=...-aw.jar).
- * Lines: accessible / extendable / mutable for class, method, field (v1/v2 syntax,
- * "transitive-" prefixes read as the plain directive).
+ * A compile stub with access wideners applied as the loader applies them at runtime
+ * (AwRules): the shim tree compiles against the access it will have in the game
+ * (CB_STUB=...-aw.jar), no more -- an entry the loader never applies (a class outside the
+ * game packages) does not widen the stub either, so javac rejects what the JVM would.
  */
 public final class ApplyAw {
 
-    public static void run(Path in, Path out, java.util.List<Path> aws) throws IOException {
-        Set<String> accClass = new HashSet<>();
-        Set<String> extClass = new HashSet<>();
-        Map<String, Set<String>> accMember = new HashMap<>();
-        Map<String, Set<String>> extMethod = new HashMap<>();
-        Map<String, Set<String>> mutField = new HashMap<>();
-        java.util.List<String> lines = new java.util.ArrayList<>();
+    public static void run(Path in, Path out, List<Path> aws) throws IOException {
+        AwRules rules = new AwRules();
         for (Path aw : aws) {
-            lines.addAll(Files.readAllLines(aw));
+            String err = rules.read(AwRules.lines(Files.readString(aw, StandardCharsets.UTF_8)), null);
+            if (err != null) {
+                throw new IOException(aw + " does not load: " + err);
+            }
         }
-        for (String raw : lines) {
-            String ln = raw.contains("#") ? raw.substring(0, raw.indexOf('#')) : raw;
-            String[] t = ln.trim().split("\\s+");
-            if (t.length < 3 || t[0].equals("accessWidener")) {
-                continue;
-            }
-            String dir = t[0].replace("transitive-", "");
-            String kind = t[1];
-            if (kind.equals("class")) {
-                (dir.equals("extendable") ? extClass : accClass).add(t[2]);
-                continue;
-            }
-            if (t.length < 5) {
-                continue;
-            }
-            String key = t[3] + (kind.equals("field") ? ":" : "") + t[4];
-            Map<String, Set<String>> target = switch (dir) {
-                case "extendable" -> extMethod;
-                case "mutable" -> mutField;
-                default -> accMember;
-            };
-            target.computeIfAbsent(t[2], k -> new HashSet<>()).add(key);
-            if (!dir.equals("mutable")) {
-                accClass.add(t[2]); // a member made reachable needs its class reachable
-            }
+        for (String c : rules.untweakable()) {
+            System.out.println("apply-aw: never applied by the loader (not a game class): " + c);
         }
         int changed = 0;
         try (ZipFile z = new ZipFile(in.toFile()); ZipOutputStream zo = new ZipOutputStream(Files.newOutputStream(out))) {
             for (var en : java.util.Collections.list(z.entries())) {
                 byte[] b = z.getInputStream(en).readAllBytes();
                 if (en.getName().endsWith(".class")) {
-                    ClassReader cr = new ClassReader(b);
-                    String cls = cr.getClassName();
                     // every class is rewritten: an inner class made reachable is also recorded
                     // in its outer class's (and its users') InnerClasses attribute, which javac reads
-                    {
-                        ClassWriter cw = new ClassWriter(0);
-                        cr.accept(new ClassVisitor(Opcodes.ASM9, cw) {
-                            @Override
-                            public void visit(int v, int acc, String name, String sig, String sup, String[] itf) {
-                                if (accClass.contains(name) || extClass.contains(name)) {
-                                    acc = (acc & ~(Opcodes.ACC_PRIVATE | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PUBLIC;
-                                }
-                                if (extClass.contains(name)) {
-                                    acc &= ~Opcodes.ACC_FINAL;
-                                }
-                                super.visit(v, acc, name, sig, sup, itf);
-                            }
-
-                            @Override
-                            public void visitInnerClass(String name, String outer, String inner, int acc) {
-                                if (accClass.contains(name) || extClass.contains(name)) {
-                                    acc = (acc & ~(Opcodes.ACC_PRIVATE | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PUBLIC;
-                                }
-                                if (extClass.contains(name)) {
-                                    acc &= ~Opcodes.ACC_FINAL;
-                                }
-                                super.visitInnerClass(name, outer, inner, acc);
-                            }
-
-                            @Override
-                            public FieldVisitor visitField(int acc, String name, String desc, String sig, Object val) {
-                                String k = name + ":" + desc;
-                                if (accMember.getOrDefault(cls, Set.of()).contains(k)) {
-                                    acc = (acc & ~(Opcodes.ACC_PRIVATE | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PUBLIC;
-                                }
-                                if (mutField.getOrDefault(cls, Set.of()).contains(k)) {
-                                    acc &= ~Opcodes.ACC_FINAL;
-                                }
-                                return super.visitField(acc, name, desc, sig, val);
-                            }
-
-                            @Override
-                            public MethodVisitor visitMethod(int acc, String name, String desc, String sig, String[] ex) {
-                                String k = name + desc;
-                                if (accMember.getOrDefault(cls, Set.of()).contains(k)) {
-                                    acc = (acc & ~(Opcodes.ACC_PRIVATE | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PUBLIC;
-                                }
-                                if (extMethod.getOrDefault(cls, Set.of()).contains(k)) {
-                                    if ((acc & Opcodes.ACC_PUBLIC) == 0) {
-                                        acc = (acc & ~Opcodes.ACC_PRIVATE) | Opcodes.ACC_PROTECTED;
-                                    }
-                                    acc &= ~Opcodes.ACC_FINAL;
-                                }
-                                return super.visitMethod(acc, name, desc, sig, ex);
-                            }
-                        }, 0);
-                        b = cw.toByteArray();
-                        changed++;
-                    }
+                    ClassReader cr = new ClassReader(b);
+                    ClassWriter cw = new ClassWriter(0);
+                    cr.accept(new Widen(cw, rules), 0);
+                    b = cw.toByteArray();
+                    changed++;
                 }
                 zo.putNextEntry(new ZipEntry(en.getName()));
                 zo.write(b);
                 zo.closeEntry();
             }
         }
-        System.out.println("apply-aw: " + changed + " classes widened -> " + out);
+        System.out.println("apply-aw: " + changed + " classes rewritten -> " + out);
+    }
+
+    /** AccessWidenerClassVisitor's effect on access flags */
+    private static final class Widen extends ClassVisitor {
+        private final AwRules rules;
+        private String cls;
+        private int classAccess;
+        private final StringBuilder canonical = new StringBuilder("(");
+        private boolean record;
+
+        Widen(ClassVisitor cv, AwRules rules) {
+            super(Opcodes.ASM9, cv);
+            this.rules = rules;
+        }
+
+        @Override
+        public void visit(int v, int acc, String name, String sig, String sup, String[] itf) {
+            cls = name;
+            classAccess = acc;
+            record = (acc & Opcodes.ACC_RECORD) != 0;
+            super.visit(v, rules.classAccess(name, acc), name, sig, sup, itf);
+        }
+
+        @Override
+        public void visitPermittedSubclass(String sub) {
+            if (!rules.unsealed(cls)) {
+                super.visitPermittedSubclass(sub);
+            }
+        }
+
+        @Override
+        public void visitInnerClass(String name, String outer, String inner, int acc) {
+            super.visitInnerClass(name, outer, inner, rules.classAccess(name, acc));
+        }
+
+        @Override
+        public RecordComponentVisitor visitRecordComponent(String name, String desc, String sig) {
+            canonical.append(desc);
+            return super.visitRecordComponent(name, desc, sig);
+        }
+
+        @Override
+        public FieldVisitor visitField(int acc, String name, String desc, String sig, Object val) {
+            return super.visitField(rules.fieldAccess(cls, name, desc, acc, classAccess), name, desc, sig, val);
+        }
+
+        @Override
+        public MethodVisitor visitMethod(int acc, String name, String desc, String sig, String[] ex) {
+            // record components precede methods in the class file, so the canonical
+            // descriptor is complete here (the loader defers the methods to be sure)
+            if (record && name.equals("<init>") && desc.equals(canonical + ")V")) {
+                acc = rules.canonicalConstructorAccess(cls, acc);
+            }
+            return super.visitMethod(rules.methodAccess(cls, name, desc, acc, classAccess), name, desc, sig, ex);
+        }
     }
 
     private ApplyAw() {

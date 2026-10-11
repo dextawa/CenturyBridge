@@ -26,7 +26,7 @@ public abstract class class_195 implements net.minecraft.class_184 {
         return id;
     }
 
-    protected net.minecraft.class_5258 method_27790() {
+    public net.minecraft.class_5258 method_27790() {
         return playerPredicate;
     }
 

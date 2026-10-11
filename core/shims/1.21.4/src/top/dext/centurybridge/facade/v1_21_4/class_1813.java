@@ -27,7 +27,7 @@ public class class_1813 extends net.minecraft.class_1792 {
     /** lengthInTicks */
     public final int field_39480;
 
-    protected class_1813(int comparatorOutput, net.minecraft.class_3414 sound,
+    public class_1813(int comparatorOutput, net.minecraft.class_3414 sound,
             net.minecraft.class_1792.class_1793 props, int lengthInSeconds) {
         super(props);
         this.field_8902 = comparatorOutput;

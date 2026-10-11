@@ -18,8 +18,8 @@ import net.minecraft.world.item.ItemStack;
  */
 public class class_1271<T> {
 
-    private final InteractionResult field_5815;
-    private final T field_5816;
+    public final InteractionResult field_5815;
+    public final T field_5816;
 
     /** 1.20.1 TypedActionResult(ActionResult result, T value) */
     public class_1271(InteractionResult result, T value) {

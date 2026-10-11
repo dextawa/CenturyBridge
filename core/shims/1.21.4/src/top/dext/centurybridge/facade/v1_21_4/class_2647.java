@@ -18,7 +18,7 @@ public abstract class class_2647 {
     }
 
     /** getConfiguredFeature(random, hasFlowers) */
-    protected abstract net.minecraft.class_5321<net.minecraft.class_2975<?, ?>> method_11430(
+    public abstract net.minecraft.class_5321<net.minecraft.class_2975<?, ?>> method_11430(
             net.minecraft.class_5819 random, boolean hasFlowers);
 
     /** generate(level, chunkGenerator, pos, state, random) */
@@ -47,7 +47,7 @@ public abstract class class_2647 {
     }
 
     /** hasFlowers(level, pos): any FLOWERS-tagged block in the 5x3x5 box around the sapling */
-    private boolean method_24282(net.minecraft.class_1936 level, net.minecraft.class_2338 pos) {
+    public boolean method_24282(net.minecraft.class_1936 level, net.minecraft.class_2338 pos) {
         for (net.minecraft.class_2338 p : net.minecraft.class_2338.method_10097(
                 pos.method_10074().method_10076(2).method_10088(2),
                 pos.method_10084().method_10077(2).method_10089(2))) {

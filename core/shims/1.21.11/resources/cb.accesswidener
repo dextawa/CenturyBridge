@@ -6,8 +6,9 @@ accessible field net/minecraft/class_8609 field_45013 Lnet/minecraft/class_2535;
 accessible method net/minecraft/class_2960 <init> (Ljava/lang/String;Ljava/lang/String;)V
 accessible method net/minecraft/class_4970 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
 # ---- BEGIN GENERATED: access narrowed since 1.20.1 (Main access-diff) ----
-# public/protected in 1.20.1, narrowed (or made final) in this release: the same
-# members, so a converted mod calling or overriding them gets the access back.
+# public/protected in 1.20.1, narrowed, made final or sealed in this release: the same
+# members, so a converted mod calling, overriding, extending or writing them gets the
+# access back (core/tools/access_aw.py).
 accessible class net/minecraft/class_1124$class_1125
 accessible class net/minecraft/class_1288
 accessible class net/minecraft/class_1697$class_1698
@@ -133,11 +134,11 @@ accessible field net/minecraft/class_7713 field_40303 Lnet/minecraft/class_265;
 accessible field net/minecraft/class_7714 field_41307 I
 accessible field net/minecraft/class_853 field_4490 Lnet/minecraft/class_1937;
 accessible method net/minecraft/class_1011 method_4315 (II)I
+accessible method net/minecraft/class_10255 method_7557 ()Lnet/minecraft/class_1792;
 accessible method net/minecraft/class_1124$class_1125 <init> ()V
-accessible method net/minecraft/class_1214 method_5172 (Ljava/lang/String;)Ljava/lang/String;
-accessible method net/minecraft/class_1214 method_5173 (Ljava/lang/String;)Ljava/lang/String;
-accessible method net/minecraft/class_1308 method_5972 ()Z
+accessible method net/minecraft/class_1219 makeRule ()Lcom/mojang/datafixers/TypeRewriteRule;
 accessible method net/minecraft/class_1309 method_26318 (Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;
+accessible method net/minecraft/class_1309 method_6023 ()V
 accessible method net/minecraft/class_1438 method_47846 (Lnet/minecraft/class_1438$class_4053;)V
 accessible method net/minecraft/class_1451 method_16087 (Z)V
 accessible method net/minecraft/class_1451 method_16093 ()Z
@@ -152,7 +153,6 @@ accessible method net/minecraft/class_1534 method_43402 (Lnet/minecraft/class_68
 accessible method net/minecraft/class_1606 method_47880 (Ljava/util/Optional;)V
 accessible method net/minecraft/class_1665 method_7451 (B)V
 accessible method net/minecraft/class_1697$class_1698 <init> (Lnet/minecraft/class_1697;)V
-accessible method net/minecraft/class_1706 method_48352 ()Lnet/minecraft/class_8047;
 accessible method net/minecraft/class_1715 <init> (Lnet/minecraft/class_1703;IILnet/minecraft/class_2371;)V
 accessible method net/minecraft/class_186$class_187 <init> ([Lnet/minecraft/class_5341$class_210;)V
 accessible method net/minecraft/class_2189 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
@@ -173,6 +173,7 @@ accessible method net/minecraft/class_2211 method_9542 (Lnet/minecraft/class_268
 accessible method net/minecraft/class_2211 method_9549 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_2211 method_9558 (Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z
 accessible method net/minecraft/class_2211 method_9588 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V
+accessible method net/minecraft/class_2213 method_9545 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;
 accessible method net/minecraft/class_2213 method_9575 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)F
 accessible method net/minecraft/class_2213 method_9604 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_2464;
 accessible method net/minecraft/class_2215 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
@@ -310,6 +311,7 @@ accessible method net/minecraft/class_2323 method_9598 (Lnet/minecraft/class_268
 accessible method net/minecraft/class_2328 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_2328 method_9606 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)V
 accessible method net/minecraft/class_2329 method_22358 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z
+accessible method net/minecraft/class_2329 method_9604 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_2464;
 accessible method net/minecraft/class_2331 method_17454 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Lnet/minecraft/class_3908;
 accessible method net/minecraft/class_2331 method_9526 (Lnet/minecraft/class_2680;)Z
 accessible method net/minecraft/class_2331 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
@@ -320,6 +322,7 @@ accessible method net/minecraft/class_2333 method_9569 (Lnet/minecraft/class_268
 accessible method net/minecraft/class_2333 method_9598 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2470;)Lnet/minecraft/class_2680;
 accessible method net/minecraft/class_2334 method_22358 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z
 accessible method net/minecraft/class_2334 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
+accessible method net/minecraft/class_2334 method_9604 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_2464;
 accessible method net/minecraft/class_2336 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_2336 method_9545 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;
 accessible method net/minecraft/class_2336 method_9569 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2415;)Lnet/minecraft/class_2680;
@@ -346,7 +349,9 @@ accessible method net/minecraft/class_2358 method_9558 (Lnet/minecraft/class_268
 accessible method net/minecraft/class_2358 method_9588 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V
 accessible method net/minecraft/class_2358 method_9615 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)V
 accessible method net/minecraft/class_2360 method_9588 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V
+accessible method net/minecraft/class_2362 method_9514 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V
 accessible method net/minecraft/class_2362 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
+accessible method net/minecraft/class_2362 method_9542 (Lnet/minecraft/class_2680;)Z
 accessible method net/minecraft/class_2363 method_9498 (Lnet/minecraft/class_2680;)Z
 accessible method net/minecraft/class_2363 method_9569 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2415;)Lnet/minecraft/class_2680;
 accessible method net/minecraft/class_2363 method_9598 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2470;)Lnet/minecraft/class_2680;
@@ -374,6 +379,7 @@ accessible method net/minecraft/class_2391 method_9545 (Lnet/minecraft/class_268
 accessible method net/minecraft/class_2393 method_9545 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;
 accessible method net/minecraft/class_2397 method_25959 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_2397 method_9514 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V
+accessible method net/minecraft/class_2397 method_9522 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z
 accessible method net/minecraft/class_2397 method_9542 (Lnet/minecraft/class_2680;)Z
 accessible method net/minecraft/class_2397 method_9545 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;
 accessible method net/minecraft/class_2397 method_9588 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V
@@ -588,6 +594,7 @@ accessible method net/minecraft/class_2667 method_9549 (Lnet/minecraft/class_268
 accessible method net/minecraft/class_2667 method_9560 (Lnet/minecraft/class_2680;Lnet/minecraft/class_8567$class_8568;)Ljava/util/List;
 accessible method net/minecraft/class_2667 method_9569 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2415;)Lnet/minecraft/class_2680;
 accessible method net/minecraft/class_2667 method_9598 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2470;)Lnet/minecraft/class_2680;
+accessible method net/minecraft/class_2667 method_9604 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_2464;
 accessible method net/minecraft/class_2668 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_2670 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_2671 method_9526 (Lnet/minecraft/class_2680;)Z
@@ -660,7 +667,6 @@ accessible method net/minecraft/class_2915 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_2917 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_2923 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_2937 <init> ()V
-accessible method net/minecraft/class_2955 method_12822 ()V
 accessible method net/minecraft/class_310 method_1519 ()V
 accessible method net/minecraft/class_329 method_1749 (Lnet/minecraft/class_332;)V
 accessible method net/minecraft/class_3312 method_14517 ()Ljava/util/List;
@@ -668,6 +674,7 @@ accessible method net/minecraft/class_3360 method_14735 (Lnet/minecraft/class_24
 accessible method net/minecraft/class_338 method_1810 ()I
 accessible method net/minecraft/class_338 method_1811 ()I
 accessible method net/minecraft/class_338 method_1814 ()D
+accessible method net/minecraft/class_339 method_48579 (Lnet/minecraft/class_332;IIF)V
 accessible method net/minecraft/class_3673 <init> ()V
 accessible method net/minecraft/class_3708 method_9498 (Lnet/minecraft/class_2680;)Z
 accessible method net/minecraft/class_3708 method_9569 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2415;)Lnet/minecraft/class_2680;
@@ -734,6 +741,7 @@ accessible method net/minecraft/class_4019 method_47844 (Lnet/minecraft/class_40
 accessible method net/minecraft/class_4048 <init> (FFZ)V
 accessible method net/minecraft/class_4211 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_4239 method_46347 (Ljava/lang/String;)Z
+accessible method net/minecraft/class_4264 method_48579 (Lnet/minecraft/class_332;IIF)V
 accessible method net/minecraft/class_4273 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_4282 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_4341 <init> (Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_310;)V
@@ -780,12 +788,14 @@ accessible method net/minecraft/class_4970 method_9524 (Lnet/minecraft/class_268
 accessible method net/minecraft/class_4970 method_9526 (Lnet/minecraft/class_2680;)Z
 accessible method net/minecraft/class_4970 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_4970 method_9535 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)J
+accessible method net/minecraft/class_4970 method_9542 (Lnet/minecraft/class_2680;)Z
 accessible method net/minecraft/class_4970 method_9545 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;
 accessible method net/minecraft/class_4970 method_9549 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_4970 method_9558 (Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z
 accessible method net/minecraft/class_4970 method_9560 (Lnet/minecraft/class_2680;Lnet/minecraft/class_8567$class_8568;)Ljava/util/List;
 accessible method net/minecraft/class_4970 method_9565 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;Z)V
 accessible method net/minecraft/class_4970 method_9569 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2415;)Lnet/minecraft/class_2680;
+accessible method net/minecraft/class_4970 method_9573 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_2498;
 accessible method net/minecraft/class_4970 method_9575 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)F
 accessible method net/minecraft/class_4970 method_9584 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_4970 method_9588 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V
@@ -825,7 +835,6 @@ accessible method net/minecraft/class_5554 method_9545 (Lnet/minecraft/class_268
 accessible method net/minecraft/class_5554 method_9588 (Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V
 accessible method net/minecraft/class_5554 method_9603 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)I
 accessible method net/minecraft/class_5554 method_9615 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)V
-accessible method net/minecraft/class_5556 method_36994 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V
 accessible method net/minecraft/class_5635 method_26159 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_5635 method_9522 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z
 accessible method net/minecraft/class_5635 method_9549 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
@@ -848,6 +857,7 @@ accessible method net/minecraft/class_5703 method_9588 (Lnet/minecraft/class_268
 accessible method net/minecraft/class_5703 method_9615 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)V
 accessible method net/minecraft/class_5762 method_33219 (Lnet/minecraft/class_5762$class_5767;)V
 accessible method net/minecraft/class_5778 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
+accessible method net/minecraft/class_5778 method_9545 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;
 accessible method net/minecraft/class_5778 method_9558 (Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z
 accessible method net/minecraft/class_5778 method_9569 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2415;)Lnet/minecraft/class_2680;
 accessible method net/minecraft/class_5778 method_9598 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2470;)Lnet/minecraft/class_2680;
@@ -942,93 +952,113 @@ accessible method net/minecraft/class_7761 method_51272 ()F
 accessible method net/minecraft/class_7761 method_51273 ()F
 accessible method net/minecraft/class_7766 method_47663 (Ljava/util/List;ILjava/util/concurrent/Executor;)Lnet/minecraft/class_7766$class_7767;
 accessible method net/minecraft/class_7828 <init> (Lnet/minecraft/class_2540;)V
-accessible method net/minecraft/class_783$class_784 method_3400 (Lcom/google/gson/JsonObject;)I
 accessible method net/minecraft/class_7832 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_7861 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_7938 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_8043 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_8066 method_48486 (Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;)[I
 accessible method net/minecraft/class_8162 method_49184 (Lnet/minecraft/class_1937;Lnet/minecraft/class_3965;Lnet/minecraft/class_2680;Lnet/minecraft/class_243;Lnet/minecraft/class_1306;)V
+accessible method net/minecraft/class_8168 method_19286 (Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_3965;Lnet/minecraft/class_1676;)V
+accessible method net/minecraft/class_8168 method_9498 (Lnet/minecraft/class_2680;)Z
 accessible method net/minecraft/class_8168 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
 accessible method net/minecraft/class_8168 method_9545 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;
 accessible method net/minecraft/class_8168 method_9560 (Lnet/minecraft/class_2680;Lnet/minecraft/class_8567$class_8568;)Ljava/util/List;
+accessible method net/minecraft/class_8168 method_9569 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2415;)Lnet/minecraft/class_2680;
 accessible method net/minecraft/class_8168 method_9573 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_2498;
+accessible method net/minecraft/class_8168 method_9598 (Lnet/minecraft/class_2680;Lnet/minecraft/class_2470;)Lnet/minecraft/class_2680;
 accessible method net/minecraft/class_8212 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_837 method_51272 ()F
 accessible method net/minecraft/class_837 method_51273 ()F
+accessible method net/minecraft/class_8810 method_9530 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
+accessible method net/minecraft/class_8810 method_9558 (Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z
+accessible method net/minecraft/class_8923 method_26159 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;
+accessible method net/minecraft/class_8923 method_9575 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)F
 accessible method net/minecraft/server/MinecraftServer method_16044 ()Lnet/minecraft/class_3695;
 accessible method net/minecraft/server/MinecraftServer method_3813 (Ljava/util/function/BooleanSupplier;)V
+extendable class net/minecraft/class_11
+extendable class net/minecraft/class_2479
+extendable class net/minecraft/class_2483
+extendable class net/minecraft/class_2487
+extendable class net/minecraft/class_2491
+extendable class net/minecraft/class_2495
+extendable class net/minecraft/class_2499
+extendable class net/minecraft/class_2501
+extendable class net/minecraft/class_2514
+extendable class net/minecraft/class_2583
+extendable class net/minecraft/class_2746
+extendable class net/minecraft/class_2754
+extendable class net/minecraft/class_2758
+extendable class net/minecraft/class_284
+extendable class net/minecraft/class_2960
+extendable class net/minecraft/class_5250
+extendable class net/minecraft/class_6012
+extendable class net/minecraft/class_6885$class_6886
+extendable method net/minecraft/class_10255 method_31480 ()Lnet/minecraft/class_1799;
+extendable method net/minecraft/class_1214 method_5172 (Ljava/lang/String;)Ljava/lang/String;
+extendable method net/minecraft/class_1214 method_5173 (Ljava/lang/String;)Ljava/lang/String;
 extendable method net/minecraft/class_1297 method_18381 (Lnet/minecraft/class_4050;)F
 extendable method net/minecraft/class_1297 method_33332 ()Lnet/minecraft/class_238;
 extendable method net/minecraft/class_1297 method_5722 (Lnet/minecraft/class_1297;)Z
 extendable method net/minecraft/class_1297 method_5804 (Lnet/minecraft/class_1297;)Z
+extendable method net/minecraft/class_1308 method_5972 ()Z
 extendable method net/minecraft/class_1309 method_18377 (Lnet/minecraft/class_4050;)Lnet/minecraft/class_4048;
+extendable method net/minecraft/class_1309 method_26318 (Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;
 extendable method net/minecraft/class_1309 method_6073 (F)V
-extendable method net/minecraft/class_1322 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_1322 hashCode ()I
-extendable method net/minecraft/class_1322 toString ()Ljava/lang/String;
+extendable method net/minecraft/class_1438 method_47846 (Lnet/minecraft/class_1438$class_4053;)V
+extendable method net/minecraft/class_1451 method_16094 (Lnet/minecraft/class_1767;)V
+extendable method net/minecraft/class_1453 method_47848 (Lnet/minecraft/class_1453$class_7989;)V
+extendable method net/minecraft/class_1463 method_47853 (Lnet/minecraft/class_1463$class_7990;)V
+extendable method net/minecraft/class_1474 method_47860 (Lnet/minecraft/class_1474$class_1475;)V
+extendable method net/minecraft/class_1493 method_6708 (Lnet/minecraft/class_1767;)V
 extendable method net/minecraft/class_1496 method_6750 ()I
+extendable method net/minecraft/class_1498 method_47873 (Lnet/minecraft/class_5149;)V
+extendable method net/minecraft/class_1501 method_47874 (Lnet/minecraft/class_1501$class_7993;)V
 extendable method net/minecraft/class_1533 method_6895 ()V
-extendable method net/minecraft/class_161 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_161 hashCode ()I
-extendable method net/minecraft/class_161 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_17 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_17 hashCode ()I
-extendable method net/minecraft/class_170 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_179$class_180 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_179$class_180 hashCode ()I
+extendable method net/minecraft/class_1534 method_43402 (Lnet/minecraft/class_6880;)V
+extendable method net/minecraft/class_1606 method_47880 (Ljava/util/Optional;)V
+extendable method net/minecraft/class_1665 method_7451 (B)V
+extendable method net/minecraft/class_1706 method_48352 ()Lnet/minecraft/class_8047;
 extendable method net/minecraft/class_1792 method_7876 ()Ljava/lang/String;
-extendable method net/minecraft/class_20 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_20 hashCode ()I
-extendable method net/minecraft/class_2268 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2268 hashCode ()I
-extendable method net/minecraft/class_2278 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2278 hashCode ()I
-extendable method net/minecraft/class_2280 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2280 hashCode ()I
-extendable method net/minecraft/class_2379 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2481 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2481 hashCode ()I
-extendable method net/minecraft/class_2489 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2489 hashCode ()I
-extendable method net/minecraft/class_2494 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2494 hashCode ()I
-extendable method net/minecraft/class_2497 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2497 hashCode ()I
-extendable method net/minecraft/class_2503 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2503 hashCode ()I
-extendable method net/minecraft/class_2516 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2516 hashCode ()I
-extendable method net/minecraft/class_2519 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2519 hashCode ()I
-extendable method net/minecraft/class_2578 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2578 hashCode ()I
-extendable method net/minecraft/class_2579 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_2579 hashCode ()I
-extendable method net/minecraft/class_3230 toString ()Ljava/lang/String;
+extendable method net/minecraft/class_2955 method_12822 ()V
+extendable method net/minecraft/class_310 method_1519 ()V
+extendable method net/minecraft/class_329 method_1749 (Lnet/minecraft/class_332;)V
+extendable method net/minecraft/class_3312 method_14517 ()Ljava/util/List;
+extendable method net/minecraft/class_3360 method_14735 (Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;
+extendable method net/minecraft/class_338 method_1810 ()I
+extendable method net/minecraft/class_338 method_1811 ()I
+extendable method net/minecraft/class_338 method_1814 ()D
 extendable method net/minecraft/class_339 method_25394 (Lnet/minecraft/class_332;IIF)V
-extendable method net/minecraft/class_3852 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_4048 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_4208 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_4208 hashCode ()I
+extendable method net/minecraft/class_339 method_37020 (Lnet/minecraft/class_6382;)V
+extendable method net/minecraft/class_4019 method_47844 (Lnet/minecraft/class_4019$class_4039;)V
 extendable method net/minecraft/class_4264 method_48579 (Lnet/minecraft/class_332;IIF)V
-extendable method net/minecraft/class_4934 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_4934 hashCode ()I
-extendable method net/minecraft/class_5601 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_5601 hashCode ()I
-extendable method net/minecraft/class_5712 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_790 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_790 hashCode ()I
-extendable method net/minecraft/class_793 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_804 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_804 hashCode ()I
-extendable method net/minecraft/class_8053 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_807 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_807 hashCode ()I
-extendable method net/minecraft/class_813 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_813 hashCode ()I
-extendable method net/minecraft/class_813 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_818 toString ()Ljava/lang/String;
-extendable method net/minecraft/class_819 equals (Ljava/lang/Object;)Z
-extendable method net/minecraft/class_819 hashCode ()I
+extendable method net/minecraft/class_507 method_2579 ()V
+extendable method net/minecraft/class_5556 method_36994 (Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V
+extendable method net/minecraft/class_5762 method_33219 (Lnet/minecraft/class_5762$class_5767;)V
+extendable method net/minecraft/class_634 method_47657 (Lnet/minecraft/class_7427;)V
+extendable method net/minecraft/class_638 method_23789 ()I
+extendable method net/minecraft/class_7766 method_47663 (Ljava/util/List;ILjava/util/concurrent/Executor;)Lnet/minecraft/class_7766$class_7767;
+extendable method net/minecraft/class_783$class_784 method_3400 (Lcom/google/gson/JsonObject;)I
+extendable method net/minecraft/class_8162 method_49184 (Lnet/minecraft/class_1937;Lnet/minecraft/class_3965;Lnet/minecraft/class_2680;Lnet/minecraft/class_243;Lnet/minecraft/class_1306;)V
+extendable method net/minecraft/server/MinecraftServer method_16044 ()Lnet/minecraft/class_3695;
+mutable field net/minecraft/class_2955 field_13350 Lnet/minecraft/class_1661;
+mutable field net/minecraft/class_3390$class_3407 field_14504 Ljava/util/List;
+mutable field net/minecraft/class_3390$class_3407 field_14507 Ljava/util/List;
+mutable field net/minecraft/class_4341$class_4343 field_19589 Ljava/lang/String;
+mutable field net/minecraft/class_4341$class_4343 field_19590 Ljava/lang/String;
+mutable field net/minecraft/class_437 field_22787 Lnet/minecraft/class_310;
+mutable field net/minecraft/class_437 field_22793 Lnet/minecraft/class_327;
+mutable field net/minecraft/class_4410 field_19998 I
+mutable field net/minecraft/class_4844 field_40825 Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/class_4867 field_22569 Ljava/lang/String;
+mutable field net/minecraft/class_4867 field_22571 J
+mutable field net/minecraft/class_4867 field_22572 Ljava/util/Map;
+mutable field net/minecraft/class_4867 field_22573 Ljava/util/Map;
+mutable field net/minecraft/class_507 field_3095 Lnet/minecraft/class_1729;
+mutable field net/minecraft/class_5699 field_42268 Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/class_6595 field_34768 Ljava/lang/String;
+mutable field net/minecraft/class_7110 field_39302 F
+mutable field net/minecraft/class_7110 field_39303 F
+mutable field net/minecraft/class_7952 field_41396 Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/class_7952 field_41397 Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/class_8104 field_42264 Lnet/minecraft/class_8104;
 # ---- END GENERATED ----

@@ -24,7 +24,7 @@ public class class_4005 extends net.minecraft.class_1049 {
         throw new UnsupportedOperationException("CenturyBridge: class_4005.method_18169 is incompatible with Minecraft 1.21.4");
     }
 
-    private static java.util.concurrent.Executor method_22808(java.util.concurrent.Executor arg0) {
+    public static java.util.concurrent.Executor method_22808(java.util.concurrent.Executor arg0) {
         throw new UnsupportedOperationException("CenturyBridge: class_4005.method_22808 is incompatible with Minecraft 1.21.4");
     }
 

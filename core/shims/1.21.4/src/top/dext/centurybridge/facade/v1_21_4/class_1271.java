@@ -1,8 +1,8 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
 public class class_1271<T> {
-    private final net.minecraft.class_1269 field_5815;
-    private final T field_5816;
+    public final net.minecraft.class_1269 field_5815;
+    public final T field_5816;
 
     public class_1271(net.minecraft.class_1269 field_5815, T field_5816) {
         this.field_5815 = field_5815;

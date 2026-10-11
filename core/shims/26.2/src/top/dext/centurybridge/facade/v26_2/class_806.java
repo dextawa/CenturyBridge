@@ -14,7 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
  *  input model. Member names are intermediary tokens. */
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_806 {
-    protected class_806() {}
+    public class_806() {}
 
     @SuppressWarnings("rawtypes")
     public class_806(ModelBaker baker, BlockModel model, java.util.List overrides) {}

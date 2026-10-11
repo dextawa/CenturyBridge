@@ -1,7 +1,7 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
 public class class_285 {
-    private static final org.slf4j.Logger field_1551;
+    public static final org.slf4j.Logger field_1551;
 
     static {
         field_1551 = org.slf4j.LoggerFactory.getLogger(class_285.class);

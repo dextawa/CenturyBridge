@@ -2,8 +2,8 @@ package top.dext.centurybridge.facade.v1_21_4;
 
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public abstract class class_8184<E extends net.minecraft.class_1297> {
-    private final float field_42875;
-    private final float field_42876;
+    public final float field_42875;
+    public final float field_42876;
 
     public class_8184(float childScale, float childTranslation) {
         this.field_42875 = childScale;

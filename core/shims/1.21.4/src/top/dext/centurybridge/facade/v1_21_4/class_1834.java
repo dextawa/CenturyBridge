@@ -8,12 +8,12 @@ public enum class_1834 {
     field_8929(0, 32, 12.0F, 0.0F, 22, class_1834::method_8031),
     field_22033(4, 2031, 9.0F, 4.0F, 15, class_1834::method_8029);
 
-    private final int field_8925;
-    private final int field_8924;
-    private final float field_8932;
-    private final float field_8931;
-    private final int field_8933;
-    private final java.util.function.Supplier<net.minecraft.class_1856> field_8928;
+    public final int field_8925;
+    public final int field_8924;
+    public final float field_8932;
+    public final float field_8931;
+    public final int field_8933;
+    public final java.util.function.Supplier<net.minecraft.class_1856> field_8928;
     private static final class_1834[] field_8926 = method_36684();
 
     private class_1834(

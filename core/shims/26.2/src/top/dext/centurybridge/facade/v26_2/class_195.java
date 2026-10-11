@@ -26,7 +26,7 @@ public abstract class class_195 implements net.minecraft.advancements.CriterionT
         return id;
     }
 
-    protected net.minecraft.advancements.predicates.ContextAwarePredicate method_27790() {
+    public net.minecraft.advancements.predicates.ContextAwarePredicate method_27790() {
         return playerPredicate;
     }
 

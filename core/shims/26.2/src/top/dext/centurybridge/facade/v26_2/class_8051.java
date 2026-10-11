@@ -15,8 +15,8 @@ public enum class_8051 {
     field_41936(EquipmentSlot.LEGS, "leggings"),    // LEGGINGS
     field_41937(EquipmentSlot.FEET, "boots");       // BOOTS
 
-    private final EquipmentSlot field_41938;
-    private final String field_41939;
+    public final EquipmentSlot field_41938;
+    public final String field_41939;
 
     class_8051(EquipmentSlot slot, String name) {
         this.field_41938 = slot;

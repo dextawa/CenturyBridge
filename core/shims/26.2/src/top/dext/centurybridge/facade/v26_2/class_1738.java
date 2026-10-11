@@ -25,7 +25,7 @@ import top.dext.centurybridge.rt.v26_2.Statics;
  */
 public class class_1738 extends Item implements class_5151 {
 
-    protected final class_8051 field_41933;   // Type
+    public final class_8051 field_41933;   // Type
     protected final class_1741 field_7881;     // the legacy ArmorMaterial facade
 
     public class_1738(class_1741 material, class_8051 type, Item.Properties props) {

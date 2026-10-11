@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
  * Extends the DiggerItem facade; old (Tier,int,float,Properties) constructor.
  */
 public class class_1810 extends class_1766 {
-    protected class_1810(class_1832 tier, int attackDamage, float attackSpeed, Item.Properties props) {
+    public class_1810(class_1832 tier, int attackDamage, float attackSpeed, Item.Properties props) {
         super((float) attackDamage, attackSpeed, tier, null, props);
     }
 }

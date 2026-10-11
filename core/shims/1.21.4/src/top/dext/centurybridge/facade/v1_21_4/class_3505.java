@@ -1,12 +1,12 @@
 package top.dext.centurybridge.facade.v1_21_4;
 
 public class class_3505 implements net.minecraft.class_3302 {
-    private static final java.util.Map<
+    public static final java.util.Map<
             net.minecraft.class_5321<? extends net.minecraft.class_2378<?>>,
             java.lang.String> field_36395 = java.util.Collections.emptyMap();
 
-    private final net.minecraft.class_5455 field_28312;
-    private java.util.List<class_6863<?>> field_36396 = java.util.Collections.emptyList();
+    public final net.minecraft.class_5455 field_28312;
+    public java.util.List<class_6863<?>> field_36396 = java.util.Collections.emptyList();
 
     public class_3505(net.minecraft.class_5455 arg) {
         this.field_28312 = java.util.Objects.requireNonNull(arg, "registryManager");
@@ -31,7 +31,7 @@ public class class_3505 implements net.minecraft.class_3302 {
                 "CenturyBridge: registry tag reload depends on the deleted 1.20.1 tag loading API");
     }
 
-    private <T> java.util.concurrent.CompletableFuture<class_6863<T>> method_33178(
+    public <T> java.util.concurrent.CompletableFuture<class_6863<T>> method_33178(
             net.minecraft.class_3300 arg,
             java.util.concurrent.Executor executor,
             net.minecraft.class_5455.class_6892<T> registry) {

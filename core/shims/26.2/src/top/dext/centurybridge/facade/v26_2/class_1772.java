@@ -11,7 +11,7 @@ import top.dext.centurybridge.rt.v26_2.Statics;
  * "x instanceof EnchantedBookItem" is answered by the converter's instanceof
  * redirect (Statics.cbIsEnchantedBook), not by this class.
  */
-public final class class_1772 {
+public class class_1772 {
 
     private class_1772() {
     }

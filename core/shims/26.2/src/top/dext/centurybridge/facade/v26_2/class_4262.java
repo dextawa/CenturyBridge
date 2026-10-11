@@ -12,7 +12,7 @@ import net.minecraft.core.Direction;
  *  so a subclass that calls super (or whose override 26.2 no longer invokes)
  *  still links. Member names are intermediary tokens. */
 public abstract class class_4262 extends HalfTransparentBlock {
-    protected class_4262(BlockBehaviour.Properties props) {
+    public class_4262(BlockBehaviour.Properties props) {
         super(props);
     }
 

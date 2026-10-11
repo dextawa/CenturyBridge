@@ -31,7 +31,7 @@ public class class_1813 extends Item {
     private final int field_lengthTicks;
     private final int field_comparator;
 
-    protected class_1813(int comparatorOutput, SoundEvent sound, Item.Properties props, int lengthTicks) {
+    public class_1813(int comparatorOutput, SoundEvent sound, Item.Properties props, int lengthTicks) {
         super(withJukebox(props, comparatorOutput, sound, lengthTicks));
         this.field_sound = sound;
         this.field_lengthTicks = lengthTicks;

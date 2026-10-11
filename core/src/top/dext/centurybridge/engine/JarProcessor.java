@@ -711,6 +711,9 @@ public final class JarProcessor {
         String tombClass = "centurybridge/gen/Tombstones_" + jarTag
             + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count());
         Tombstones reg = new Tombstones(tombClass, chain.to);
+        // the access widener the loader reads is the file fabric.mod.json names, whatever
+        // its extension (".classtweaker" too); nothing else in the jar is one
+        String awPath = accessWidenerPath(entries.get("fabric.mod.json"));
 
         for (Map.Entry<String, byte[]> e : entries.entrySet()) {
             String name = e.getKey();
@@ -757,9 +760,7 @@ public final class JarProcessor {
                     }
                 }
                 e.setValue(writeJar(nested));
-            } else if (!chain.wallClassFwd.isEmpty()
-                    && (name.endsWith(".accesswidener") || name.endsWith(".accessWidener")
-                        || name.endsWith(".aw"))) {
+            } else if (!chain.wallClassFwd.isEmpty() && name.equals(awPath)) {
                 // A mod's own access widener is a resource, not a class, so the
                 // bytecode rewrite never touches it. Past the namespace wall the
                 // runtime rejects an intermediary-named AW ("Namespace
@@ -798,15 +799,36 @@ public final class JarProcessor {
         res.losses.forEach((what, n) -> rpt.resourceLosses.add(tag + what + (n > 1 ? " (x" + n + ")" : "")));
     }
 
+    /** fabric.mod.json's "accessWidener" entry path, or null */
+    static String accessWidenerPath(byte[] fmj) {
+        if (fmj == null) {
+            return null;
+        }
+        try {
+            var r = new com.google.gson.stream.JsonReader(new java.io.StringReader(
+                new String(fmj, java.nio.charset.StandardCharsets.UTF_8)));
+            r.setLenient(true);
+            var o = com.google.gson.JsonParser.parseReader(r).getAsJsonObject();
+            if (!o.has("accessWidener") || !o.get("accessWidener").isJsonPrimitive()) {
+                return null;
+            }
+            String p = o.get("accessWidener").getAsString();
+            return p.startsWith("/") ? p.substring(1) : p;
+        } catch (RuntimeException ex) {
+            return null;
+        }
+    }
+
     /**
-     * Rewrite a mod's access-widener file across the namespace wall:
+     * Rewrite a mod's access widener / class tweaker across the namespace wall:
      * intermediary owners/names/descriptors -> mojang, header namespace ->
-     * named. Lines are {@code <access> class <owner>}, {@code <access> field
+     * official. Lines are {@code <access> class <owner>}, {@code <access> field
      * <owner> <name> <desc>}, {@code <access> method <owner> <name> <desc>},
-     * plus the {@code accessWidener v1 <ns>} header and {@code #} comments.
-     * An owner/name with no mapping is left as is (survivors keep their name;
-     * only wall-renamed tokens move). Returns null to leave the file unchanged
-     * when nothing needed rewriting.
+     * {@code inject-interface <owner> <interface>}, {@code extend-enum <owner>
+     * <constant>} (any of them "transitive-"), plus the {@code accessWidener} /
+     * {@code classTweaker} header and {@code #} comments. An owner/name with no
+     * mapping is left as is (survivors keep their name; only wall-renamed tokens
+     * move). Returns null to leave the file unchanged when nothing needed rewriting.
      */
     private static byte[] rewriteAccessWidener(byte[] bytes, Chain chain, String tag, Report rpt) {
         String text = new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
@@ -830,7 +852,7 @@ public final class JarProcessor {
                 body = ln.substring(0, hash);
             }
             String[] tok = body.split("\\s+");
-            if (tok.length >= 3 && tok[0].equals("accessWidener")) {
+            if (tok.length >= 3 && (tok[0].equals("accessWidener") || tok[0].equals("classTweaker"))) {
                 // header: accessWidener v1 intermediary -> official. Past the
                 // wall the 26.x runtime names ARE the mojang/official ones the
                 // converted bytecode uses; fabric calls that namespace
@@ -845,6 +867,25 @@ public final class JarProcessor {
             }
             // directive lines start with the access verb; the kind is tok[1]
             if (tok.length < 3) {
+                continue;
+            }
+            String verb = tok[0].startsWith("transitive-") ? tok[0].substring("transitive-".length()) : tok[0];
+            if (verb.equals("inject-interface") || verb.equals("extend-enum")) {
+                // class tweaker: <verb> <class> <interface|constant>; an enum constant is the
+                // mod's own new name, an interface may carry a generic signature
+                String moj = chain.wallClassFwd.get(tok[1]);
+                if (moj != null) { tok[1] = moj; changed = true; moved++; }
+                if (verb.equals("inject-interface")) {
+                    String itf = tok[2];
+                    int lt = itf.indexOf('<');
+                    String raw = lt < 0 ? itf : itf.substring(0, lt);
+                    String rest = lt < 0 ? "" : descCls.matcher(itf.substring(lt)).replaceAll(mr -> "L"
+                        + java.util.regex.Matcher.quoteReplacement(
+                            chain.wallClassFwd.getOrDefault(mr.group(1), mr.group(1))) + ";");
+                    String nitf = chain.wallClassFwd.getOrDefault(raw, raw) + rest;
+                    if (!nitf.equals(itf)) { tok[2] = nitf; changed = true; }
+                }
+                lines[i] = String.join("\t", tok) + comment;
                 continue;
             }
             String kind = tok[1];
@@ -873,7 +914,7 @@ public final class JarProcessor {
         if (!changed) {
             return null;
         }
-        rpt.notes.add(tag + "access widener rewritten across wall (" + moved + " owners/classes -> mojang, header -> named)");
+        rpt.notes.add(tag + "access widener rewritten across wall (" + moved + " owners/classes -> mojang, header -> official)");
         return String.join(nl, lines).getBytes(java.nio.charset.StandardCharsets.UTF_8);
     }
 

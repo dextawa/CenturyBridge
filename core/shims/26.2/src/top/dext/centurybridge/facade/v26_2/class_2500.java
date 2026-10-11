@@ -16,7 +16,7 @@ import com.mojang.serialization.MapCodec;
  *  abstract codec() is satisfied with the generic Block codec (data-driven
  *  serialization is registered separately by the mod). */
 public abstract class class_2500 extends SpreadingSnowyBlock {
-    protected class_2500(BlockBehaviour.Properties props) {
+    public class_2500(BlockBehaviour.Properties props) {
         super(props, Blocks.DIRT.builtInRegistryHolder().key());
     }
 

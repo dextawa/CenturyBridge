@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class class_1831 extends Item {
 
-    private final class_1832 field_8921; // the Tier facade
+    public final class_1832 field_8921; // the Tier facade
 
     public class_1831(class_1832 tier, Item.Properties props) {
         super(props);

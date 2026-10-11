@@ -10,7 +10,7 @@ package top.dext.centurybridge.facade.v26_2;
  * of truth, this object only translates calls.
  */
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
-public final class GuiGraphics {
+public class GuiGraphics {
 
     private final net.minecraft.client.gui.GuiGraphicsExtractor ext;
     private final CbPoseStack poseAdapter;

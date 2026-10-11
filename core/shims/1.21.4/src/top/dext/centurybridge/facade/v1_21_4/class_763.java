@@ -3,8 +3,8 @@ package top.dext.centurybridge.facade.v1_21_4;
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_763 {
     public final it.unimi.dsi.fastutil.ints.Int2ObjectMap<net.minecraft.class_1091> field_4129;
-    private final it.unimi.dsi.fastutil.ints.Int2ObjectMap<net.minecraft.class_1087> field_4130;
-    private final net.minecraft.class_1092 field_4128;
+    public final it.unimi.dsi.fastutil.ints.Int2ObjectMap<net.minecraft.class_1087> field_4130;
+    public final net.minecraft.class_1092 field_4128;
 
     private static final java.util.Map<net.minecraft.class_1792, Integer> CENTURYBRIDGE_IDS =
             java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
@@ -27,7 +27,7 @@ public class class_763 {
         return this.field_4130.get(method_3306(arg0));
     }
 
-    private static int method_3306(net.minecraft.class_1792 arg0) {
+    public static int method_3306(net.minecraft.class_1792 arg0) {
         java.util.Objects.requireNonNull(arg0, "item");
         synchronized (CENTURYBRIDGE_IDS) {
             Integer id = CENTURYBRIDGE_IDS.get(arg0);

@@ -6,8 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.zip.ZipFile;
 import org.objectweb.asm.ClassReader;
@@ -18,92 +21,288 @@ import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.MethodNode;
 
 /**
- * Members a mod could reach in the source release that the target still has -- same
- * name, same descriptor -- but no longer lets it reach: a public field gone private
- * (World.isClient, 1.21.9), a method gone private, a class gone package-private, or a
- * method made final under a mod's override. The death tables see nothing (the member
- * did not die), and a link check that resolves names sees nothing either; the JVM
- * throws IllegalAccessError at the first use.
+ * What a 1.20.1 mod could legally do with a vanilla class or member that the target
+ * forbids by modifiers alone. The member did not die, so the death tables see nothing, and
+ * a link check that only resolves names sees nothing either:
  *
- * The member is the same member, so the faithful bridge is to give the access back:
- * this writes the access-widener lines (accessible / extendable) for the target
- * runtime's namespace.
+ *   reach     a public/protected member now private, package-private or protected
+ *             (World.isClient, 1.21.9) -- IllegalAccessError at the first use;
+ *   override  a method made final under a mod's override -- VerifyError at class load;
+ *   extend    a class made final or sealed -- the subclass does not load;
+ *   write     a field made final -- a putfield from another class is IllegalAccessError.
+ *
+ * References are compared as the JVM resolves them, not declarations: Block declared a
+ * public hasRandomTicks in 1.20.1 and stopped redeclaring it, so a mod's
+ * Block.hasRandomTicks() now resolves to AbstractBlock's protected one -- no declaration
+ * changed, the reference did. For every public class and every member that resolved
+ * through it in the source release, the same reference is resolved in the target; where
+ * it lands narrower, the declaration it lands on is widened. The converter's own member
+ * mappings (methodRenames, lookupHooks of shims-<ver>.json) are followed the same way: a
+ * call moved from a public 1.20.1 method onto a protected target one fails just the same.
+ *
+ * The lines are chosen by what the loader does with each (AwRules): "accessible" alone
+ * turns a private instance method public *final*, so an overridable one gets "extendable"
+ * too; a record or an enum is never un-finalized (Class.isRecord() requires ACC_FINAL --
+ * an old subclass of a class that became one is a facade's job); classes the loader never
+ * tweaks (outside the game packages) cannot be given back this way and are only listed.
+ *
+ *   access-diff <oldStub> <newStub> [<wall.tsv>] [<shims-ver.json>] <out.aw>
  */
 public final class AccessDiff {
 
-    public static void run(Path oldStub, Path newStub, Path wallTable, Path outAw) throws IOException {
-        Map<String, ClassNode> a = read(oldStub);
-        Map<String, ClassNode> b = read(newStub);
+    /** a member as a reference to it resolves: where it is declared, its flags */
+    record Res(String owner, String name, String desc, int access) {
+        boolean method() { return desc.startsWith("("); }
+    }
+
+    private final Map<String, ClassNode> a;
+    private final Map<String, ClassNode> b;
+    private final Remapper wall;
+    private final TreeSet<String> lines = new TreeSet<>();
+    private final TreeSet<String> unreachable = new TreeSet<>();
+    /** source member (owner.name+desc) -> the target member the converter moves its references to */
+    private final Map<String, List<String[]>> moved = new HashMap<>();
+
+    private AccessDiff(Map<String, ClassNode> a, Map<String, ClassNode> b, Remapper wall) {
+        this.a = a;
+        this.b = b;
+        this.wall = wall;
+    }
+
+    public static void run(String[] args) throws IOException {
+        Path wallTable = null;
+        Path shims = null;
+        for (int i = 3; i < args.length - 1; i++) {
+            if (args[i].endsWith(".tsv")) wallTable = Path.of(args[i]);
+            else if (args[i].endsWith(".json")) shims = Path.of(args[i]);
+        }
+        Path oldStub = Path.of(args[1]);
+        Path newStub = Path.of(args[2]);
+        Path outAw = Path.of(args[args.length - 1]);
         Remapper wall = wallTable != null && Files.exists(wallTable) ? JarRemapper.loadTable(wallTable).remapper() : null;
-        TreeSet<String> lines = new TreeSet<>();
-        int fields = 0;
-        int methods = 0;
-        int classes = 0;
-        int finals = 0;
-        for (var e : a.entrySet()) {
-            ClassNode oc = e.getValue();
-            if ((oc.access & Opcodes.ACC_PUBLIC) == 0 && !reachable(oc.access)) {
-                continue;
+        AccessDiff d = new AccessDiff(read(oldStub), read(newStub), wall);
+        if (shims != null) d.loadMoves(shims);
+        d.diff();
+        List<String> out = new ArrayList<>();
+        out.add("# GENERATED by `Main access-diff` " + oldStub.getFileName() + " -> " + newStub.getFileName()
+            + ": what a mod could reach, override, extend or write that the target took away");
+        out.addAll(d.lines);
+        if (!d.unreachable.isEmpty()) {
+            out.add("# not applicable: the loader only tweaks game classes (net/minecraft, com/mojang/blaze3d, ...)");
+            for (String l : d.unreachable) out.add("#   " + l);
+        }
+        Files.write(outAw, out, StandardCharsets.UTF_8);
+        Map<String, Integer> by = new LinkedHashMap<>();
+        for (String l : d.lines) {
+            String[] t = l.split(" ");
+            by.merge(t[0] + " " + t[1], 1, Integer::sum);
+        }
+        System.out.println("access-diff: " + by + "; " + d.unreachable.size() + " outside the loader's reach -> " + outAw);
+    }
+
+    /** the converter's member moves for this target: methodRenames (same desc), lookupHooks (new desc, any owner) */
+    private void loadMoves(Path shims) throws IOException {
+        var root = com.google.gson.JsonParser.parseString(Files.readString(shims)).getAsJsonObject();
+        if (root.has("methodRenames")) {
+            for (var e : root.getAsJsonObject("methodRenames").entrySet()) {
+                String k = e.getKey();
+                int dot = k.indexOf('.');
+                int par = k.indexOf('(');
+                String owner = k.substring(0, dot);
+                String desc = k.substring(par);
+                moved.computeIfAbsent(owner + "." + k.substring(dot + 1, par) + desc, x -> new ArrayList<>())
+                    .add(new String[] {e.getValue().getAsString(), desc});
             }
-            String nname = wall != null ? wall.map(oc.name) : oc.name;
+        }
+        if (root.has("lookupHooks")) {
+            for (var e : root.getAsJsonObject("lookupHooks").entrySet()) {
+                var arr = e.getValue().getAsJsonArray();
+                moved.computeIfAbsent("*." + e.getKey() + arr.get(0).getAsString(), x -> new ArrayList<>())
+                    .add(new String[] {e.getKey(), arr.get(1).getAsString()});
+            }
+        }
+    }
+
+    private void diff() {
+        for (ClassNode oc : a.values()) {
+            if ((oc.access & Opcodes.ACC_PUBLIC) == 0) continue; // a mod can only name a public class
+            String nname = mapClass(oc.name);
             ClassNode nc = b.get(nname);
-            if (nc == null) {
-                continue;
-            }
-            if ((oc.access & Opcodes.ACC_PUBLIC) != 0 && (nc.access & Opcodes.ACC_PUBLIC) == 0) {
-                lines.add("accessible class " + nname);
-                classes++;
-            }
-            Map<String, FieldNode> nf = new HashMap<>();
-            for (FieldNode f : nc.fields) {
-                nf.put(f.name + ":" + f.desc, f);
-            }
-            for (FieldNode f : oc.fields) {
-                if (!reachable(f.access)) {
-                    continue;
-                }
-                String n = wall != null ? wall.mapFieldName(oc.name, f.name, f.desc) : f.name;
-                String d = wall != null ? wall.mapDesc(f.desc) : f.desc;
-                FieldNode g = nf.get(n + ":" + d);
-                if (g != null && narrowed(f.access, g.access)) {
-                    lines.add("accessible field " + nname + " " + n + " " + d);
-                    fields++;
-                }
-            }
-            Map<String, MethodNode> nm = new HashMap<>();
-            for (MethodNode m : nc.methods) {
-                nm.put(m.name + m.desc, m);
-            }
-            for (MethodNode m : oc.methods) {
-                if (!reachable(m.access) || m.name.equals("<clinit>")) {
-                    continue;
-                }
-                String n = m.name.startsWith("<") || wall == null ? m.name : wall.mapMethodName(oc.name, m.name, m.desc);
-                String d = wall != null ? wall.mapMethodDesc(m.desc) : m.desc;
-                MethodNode g = nm.get(n + d);
-                if (g == null) {
-                    continue;
-                }
-                if (narrowed(m.access, g.access)) {
-                    lines.add("accessible method " + nname + " " + n + " " + d);
-                    methods++;
-                }
-                // a method that mods could override and that became final: their override
-                // is a VerifyError at class load ("overrides final method")
-                if ((m.access & (Opcodes.ACC_FINAL | Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) == 0
-                        && (g.access & Opcodes.ACC_FINAL) != 0 && !m.name.startsWith("<")) {
-                    lines.add("extendable method " + nname + " " + n + " " + d);
-                    finals++;
+            if (nc == null) continue;
+            TreeSet<String> into = AwRules.tweakable(nname) ? lines : unreachable;
+            if ((nc.access & Opcodes.ACC_PUBLIC) == 0) into.add("accessible class " + nname);
+            boolean extendable = (oc.access & (Opcodes.ACC_FINAL | Opcodes.ACC_INTERFACE)) == 0
+                && (oc.permittedSubclasses == null || oc.permittedSubclasses.isEmpty());
+            boolean reopened = extendable && !fixedShape(nc) && sealedOrFinal(nc);
+            if (reopened) into.add("extendable class " + nname);
+            // can a mod's subclass of this class exist in the target (as is, or reopened here)
+            boolean subclassable = extendable && !fixedShape(nc) && (!sealedOrFinal(nc) || reopened);
+            for (Res r : reachable(a, oc.name)) {
+                String[] nd = mapMember(r);
+                compare(r, resolve(b, nname, nd[0], nd[1]), subclassable);
+                List<String[]> m = moved.getOrDefault(r.owner + "." + r.name + r.desc, List.of());
+                if (m.isEmpty()) m = moved.getOrDefault("*." + r.name + r.desc, List.of());
+                for (String[] to : m) {
+                    String toDesc = wall != null ? wall.mapMethodDesc(to[1]) : to[1];
+                    String toName = to[0].startsWith("method_") && wall != null ? wall.mapMethodName(r.owner, to[0], to[1]) : to[0];
+                    compare(r, resolve(b, nname, toName, toDesc), subclassable);
                 }
             }
         }
-        List<String> out = new ArrayList<>();
-        out.add("# GENERATED by `Main access-diff` " + oldStub.getFileName() + " -> " + newStub.getFileName()
-            + ": members a mod could reach that the target narrowed");
-        out.addAll(lines);
-        Files.write(outAw, out, StandardCharsets.UTF_8);
-        System.out.println("access-diff: " + classes + " classes, " + fields + " fields, " + methods + " methods narrowed, "
-            + finals + " methods made final -> " + outAw);
+    }
+
+    /** the source member r against where the same reference lands in the target */
+    private void compare(Res r, Res t, boolean subclassable) {
+        if (t == null) return; // gone: the death tables' business
+        TreeSet<String> into = AwRules.tweakable(t.owner) ? lines : unreachable;
+        ClassNode decl = b.get(t.owner);
+        boolean iface = decl != null && (decl.access & Opcodes.ACC_INTERFACE) != 0;
+        String at = " " + t.owner + " " + t.name + " " + t.desc;
+        if (!t.method()) {
+            if (narrowed(r.access, t.access)) into.add("accessible field" + at);
+            if ((r.access & Opcodes.ACC_FINAL) == 0 && (t.access & Opcodes.ACC_FINAL) != 0
+                    && !(iface && (t.access & Opcodes.ACC_STATIC) != 0)) {
+                into.add("mutable field" + at);
+            }
+            return;
+        }
+        // could a mod override it in the source, and can its subclass still exist in the target
+        // ("extendable" on a method also makes the declaring class extendable; never for an interface)
+        boolean overridable = (r.access & (Opcodes.ACC_FINAL | Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) == 0
+            && !r.name.startsWith("<") && subclassable && !iface && decl != null && !fixedShape(decl);
+        if (narrowed(r.access, t.access)) {
+            boolean wasPublic = (r.access & Opcodes.ACC_PUBLIC) != 0;
+            if (!overridable || wasPublic) into.add("accessible method" + at);
+            // public + extendable = public, not final; protected before: extendable alone =
+            // protected, not final, as it was
+            if (overridable && (!wasPublic || (t.access & Opcodes.ACC_PRIVATE) != 0)) into.add("extendable method" + at);
+        } else if (overridable && (t.access & Opcodes.ACC_FINAL) != 0) {
+            into.add("extendable method" + at); // made final under mods' overrides: VerifyError at class load
+        }
+    }
+
+    /**
+     * Every member a reference through {@code cls} resolved to in the source, first match
+     * winning as in the JVM: methods up the class chain, then superinterfaces (not their
+     * static or private ones); fields of the class, its superinterfaces, its superclass.
+     * Only what a mod could reach: public, or protected (from a subclass).
+     */
+    private static List<Res> reachable(Map<String, ClassNode> jar, String cls) {
+        Map<String, Res> methods = new LinkedHashMap<>();
+        Map<String, Res> fields = new LinkedHashMap<>();
+        List<String> ifaces = new ArrayList<>();
+        for (String c = cls; c != null; ) {
+            ClassNode k = jar.get(c);
+            if (k == null) break;
+            for (MethodNode m : k.methods) {
+                if (m.name.equals("<clinit>") || (m.name.equals("<init>") && !c.equals(cls))) continue;
+                methods.putIfAbsent(m.name + m.desc, new Res(c, m.name, m.desc, m.access));
+            }
+            ifaces.addAll(k.interfaces);
+            c = k.superName;
+        }
+        Set<String> seen = new HashSet<>();
+        while (!ifaces.isEmpty()) {
+            String i = ifaces.remove(0);
+            if (!seen.add(i)) continue;
+            ClassNode k = jar.get(i);
+            if (k == null) continue;
+            for (MethodNode m : k.methods) {
+                if ((m.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) != 0 || m.name.startsWith("<")) continue;
+                methods.putIfAbsent(m.name + m.desc, new Res(i, m.name, m.desc, m.access));
+            }
+            ifaces.addAll(k.interfaces);
+        }
+        collectFields(jar, cls, fields, new HashSet<>());
+        List<Res> out = new ArrayList<>();
+        for (Res r : methods.values()) if (reachable(r.access)) out.add(r);
+        for (Res r : fields.values()) if (reachable(r.access)) out.add(r);
+        return out;
+    }
+
+    private static void collectFields(Map<String, ClassNode> jar, String c, Map<String, Res> into, Set<String> seen) {
+        if (!seen.add(c)) return;
+        ClassNode k = jar.get(c);
+        if (k == null) return;
+        for (FieldNode f : k.fields) into.putIfAbsent(f.name + ":" + f.desc, new Res(c, f.name, f.desc, f.access));
+        for (String i : k.interfaces) collectFields(jar, i, into, seen);
+        if (k.superName != null) collectFields(jar, k.superName, into, seen);
+    }
+
+    /** name+desc -> access, per class of the target */
+    private final Map<String, Map<String, Integer>> bMethods = new HashMap<>();
+    private final Map<String, Map<String, Integer>> bFields = new HashMap<>();
+
+    private Map<String, Integer> members(ClassNode k, boolean methods) {
+        return (methods ? bMethods : bFields).computeIfAbsent(k.name, x -> {
+            Map<String, Integer> m = new HashMap<>();
+            if (methods) for (MethodNode mn : k.methods) m.put(mn.name + mn.desc, mn.access);
+            else for (FieldNode f : k.fields) m.put(f.name + ":" + f.desc, f.access);
+            return m;
+        });
+    }
+
+    /** the same reference resolved in the target: a method (desc starts with '(') or a field */
+    private Res resolve(Map<String, ClassNode> jar, String cls, String name, String desc) {
+        if (!desc.startsWith("(")) return resolveField(jar, cls, name, desc, new HashSet<>());
+        String key = name + desc;
+        List<String> ifaces = new ArrayList<>();
+        for (String c = cls; c != null; ) {
+            ClassNode k = jar.get(c);
+            if (k == null) return null;
+            Integer acc = members(k, true).get(key);
+            if (acc != null) return new Res(c, name, desc, acc);
+            if (name.equals("<init>")) return null; // constructors are not inherited
+            ifaces.addAll(k.interfaces);
+            c = k.superName;
+        }
+        Set<String> seen = new HashSet<>();
+        while (!ifaces.isEmpty()) {
+            String i = ifaces.remove(0);
+            if (!seen.add(i)) continue;
+            ClassNode k = jar.get(i);
+            if (k == null) continue;
+            Integer acc = members(k, true).get(key);
+            if (acc != null && (acc & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) == 0) return new Res(i, name, desc, acc);
+            ifaces.addAll(k.interfaces);
+        }
+        return null;
+    }
+
+    private Res resolveField(Map<String, ClassNode> jar, String c, String name, String desc, Set<String> seen) {
+        if (!seen.add(c)) return null;
+        ClassNode k = jar.get(c);
+        if (k == null) return null;
+        Integer acc = members(k, false).get(name + ":" + desc);
+        if (acc != null) return new Res(c, name, desc, acc);
+        for (String i : k.interfaces) {
+            Res r = resolveField(jar, i, name, desc, seen);
+            if (r != null) return r;
+        }
+        return k.superName == null ? null : resolveField(jar, k.superName, name, desc, seen);
+    }
+
+    private String mapClass(String name) {
+        return wall != null ? wall.map(name) : name;
+    }
+
+    /** the source member's name and descriptor as the target spells them */
+    private String[] mapMember(Res r) {
+        if (wall == null) return new String[] {r.name, r.desc};
+        if (r.method()) {
+            String n = r.name.startsWith("<") ? r.name : wall.mapMethodName(r.owner, r.name, r.desc);
+            return new String[] {n, wall.mapMethodDesc(r.desc)};
+        }
+        return new String[] {wall.mapFieldName(r.owner, r.name, r.desc), wall.mapDesc(r.desc)};
+    }
+
+    private static boolean fixedShape(ClassNode c) {
+        return (c.access & (Opcodes.ACC_RECORD | Opcodes.ACC_ENUM)) != 0
+            || "java/lang/Record".equals(c.superName) || "java/lang/Enum".equals(c.superName);
+    }
+
+    private static boolean sealedOrFinal(ClassNode c) {
+        return (c.access & Opcodes.ACC_FINAL) != 0 || c.permittedSubclasses != null && !c.permittedSubclasses.isEmpty();
     }
 
     /** reachable from a mod in another package: public or protected */
@@ -133,8 +332,5 @@ public final class AccessDiff {
             }
         }
         return m;
-    }
-
-    private AccessDiff() {
     }
 }

@@ -2,7 +2,7 @@ package top.dext.centurybridge.facade.v1_21_4;
 
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public abstract class class_5597<E extends net.minecraft.class_1297> extends net.minecraft.class_583 {
-    private static final org.joml.Vector3f field_39195;
+    public static final org.joml.Vector3f field_39195;
 
     public class_5597() {
         super(new net.minecraft.class_630(
@@ -43,7 +43,7 @@ public abstract class class_5597<E extends net.minecraft.class_1297> extends net
         return java.util.Optional.ofNullable(method_41910(name, root));
     }
 
-    protected void method_43781(
+    public void method_43781(
             net.minecraft.class_7094 animationState,
             net.minecraft.class_7184 animation,
             float animationProgress
@@ -53,7 +53,7 @@ public abstract class class_5597<E extends net.minecraft.class_1297> extends net
         );
     }
 
-    protected void method_48741(
+    public void method_48741(
             net.minecraft.class_7184 animation,
             float animationProgress,
             float speedMultiplier,
@@ -65,7 +65,7 @@ public abstract class class_5597<E extends net.minecraft.class_1297> extends net
         );
     }
 
-    protected void method_43782(
+    public void method_43782(
             net.minecraft.class_7094 animationState,
             net.minecraft.class_7184 animation,
             float animationProgress,
@@ -76,7 +76,7 @@ public abstract class class_5597<E extends net.minecraft.class_1297> extends net
         );
     }
 
-    protected void method_52185(net.minecraft.class_7184 animation) {
+    public void method_52185(net.minecraft.class_7184 animation) {
         throw new UnsupportedOperationException(
                 "CenturyBridge: Static animation application is incompatible with the 1.21.4 model API"
         );

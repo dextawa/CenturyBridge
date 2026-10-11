@@ -36,11 +36,11 @@ public abstract class class_5597<T extends EntityRenderState> extends EntityMode
 
     private static final ModelPart EMPTY_ROOT = new ModelPart(List.of(), Map.of());
 
-    protected class_5597() {
+    public class_5597() {
         super(EMPTY_ROOT);
     }
 
-    protected class_5597(java.util.function.Function<net.minecraft.resources.Identifier,
+    public class_5597(java.util.function.Function<net.minecraft.resources.Identifier,
             net.minecraft.client.renderer.rendertype.RenderType> renderType) {
         super(EMPTY_ROOT, renderType);
     }

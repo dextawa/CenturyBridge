@@ -16,7 +16,7 @@ import top.dext.centurybridge.rt.v26_2.Trackers;
  * for (ALL_LOADED) or from the running server's reloadable registries
  * (MODIFY/REPLACE, where 1.20.1 also only saw the previous load's tables).
  */
-public final class class_60 {
+public class class_60 {
 
     private final Registry<LootTable> registry;
 

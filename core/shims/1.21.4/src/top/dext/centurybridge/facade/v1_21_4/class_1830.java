@@ -19,7 +19,7 @@ public class class_1830 extends net.minecraft.class_1792 {
         );
     }
 
-    private static void method_47369(
+    public static void method_47369(
             net.minecraft.class_1799 stack,
             java.util.function.Consumer<net.minecraft.class_1293> effectConsumer) {
         throw new UnsupportedOperationException(

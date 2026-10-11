@@ -2,9 +2,9 @@ package top.dext.centurybridge.facade.v1_21_4;
 
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public class class_505 {
-    private net.minecraft.class_1860<?> field_3079;
-    private final java.util.List<class_506> field_3081;
-    float field_3080;
+    public net.minecraft.class_1860<?> field_3079;
+    public final java.util.List<class_506> field_3081;
+    public float field_3080;
 
     public class_505() {
         this.field_3081 = new java.util.ArrayList<>();

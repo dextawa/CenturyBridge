@@ -40,7 +40,7 @@ public abstract class class_85$class_90<T extends net.minecraft.class_85> extend
     }
 
     /** fromJson(json, ctx, weight, quality, conditions, functions) */
-    protected abstract T method_443(JsonObject json, JsonDeserializationContext context, int weight, int quality,
+    public abstract T method_443(JsonObject json, JsonDeserializationContext context, int weight, int quality,
             net.minecraft.class_5341[] conditions, net.minecraft.class_117[] functions);
 
     /** LootPoolEntry.Serializer.addEntryFields -> this class's shape, as in 1.20.1 */

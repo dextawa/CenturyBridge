@@ -2,18 +2,18 @@ package top.dext.centurybridge.facade.v1_21_4;
 
 @net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)
 public abstract class class_4592<E extends net.minecraft.class_1297> extends net.minecraft.class_583 {
-    private final boolean field_20915;
-    private final float field_20916;
-    private final float field_20917;
-    private final float field_20918;
-    private final float field_20919;
-    private final float field_20920;
+    public final boolean field_20915;
+    public final float field_20916;
+    public final float field_20917;
+    public final float field_20918;
+    public final float field_20919;
+    public final float field_20920;
 
-    protected class_4592(boolean field_20915, float field_20916, float field_20917) {
+    public class_4592(boolean field_20915, float field_20916, float field_20917) {
         this(field_20915, field_20916, field_20917, 2.0F, 2.0F, 24.0F);
     }
 
-    protected class_4592(
+    public class_4592(
             boolean field_20915,
             float field_20916,
             float field_20917,
@@ -31,7 +31,7 @@ public abstract class class_4592<E extends net.minecraft.class_1297> extends net
         );
     }
 
-    protected class_4592(
+    public class_4592(
             java.util.function.Function<net.minecraft.class_2960, net.minecraft.class_1921> layerFactory,
             boolean field_20915,
             float field_20916,
@@ -48,7 +48,7 @@ public abstract class class_4592<E extends net.minecraft.class_1297> extends net
         this.field_20920 = field_20920;
     }
 
-    protected class_4592() {
+    public class_4592() {
         this(false, 5.0F, 2.0F);
     }
 
@@ -66,9 +66,9 @@ public abstract class class_4592<E extends net.minecraft.class_1297> extends net
         );
     }
 
-    protected abstract java.lang.Iterable<net.minecraft.class_630> method_22946();
+    public abstract java.lang.Iterable<net.minecraft.class_630> method_22946();
 
-    protected abstract java.lang.Iterable<net.minecraft.class_630> method_22948();
+    public abstract java.lang.Iterable<net.minecraft.class_630> method_22948();
 
     private static void method_22947(
             net.minecraft.class_4587 matrices,

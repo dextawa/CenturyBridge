@@ -6,8 +6,8 @@ package top.dext.centurybridge.facade.v1_20_4;
  * conditions.toJson(serializer); the bridged toJson ignores it, so an opaque
  * placeholder type is sufficient.
  */
-public final class class_5267 {
+public class class_5267 {
 
-    private class_5267() {
+    public class_5267() {
     }
 }
