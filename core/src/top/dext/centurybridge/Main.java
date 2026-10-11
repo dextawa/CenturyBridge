@@ -156,6 +156,7 @@ public final class Main {
         int unaccounted = 0;
         int ledgered = 0;
         int brokenClasses = 0;
+        int orphans = 0;
         for (Path jar : jars) {
             try {
                 JarProcessor.Report r = JarProcessor.process(jar, outDir, chain);
@@ -174,6 +175,8 @@ public final class Main {
                 r.notes.forEach(n -> lines.add("- " + n));
                 r.strippedMixins.forEach(s -> lines.add("- stripped mixin: " + s));
                 r.disabledInjectors.forEach(s -> lines.add("- disabled injector: " + s));
+                r.orphanedOverrides.forEach(s -> lines.add("- orphaned override (vanilla never calls it): " + s));
+                orphans += r.orphanedOverrides.size();
                 r.issues.forEach(s -> lines.add("- " + s));
                 r.clientIssues.forEach(s -> lines.add("- " + s));
                 if (r.datagenSkipped > 0) {
@@ -191,6 +194,9 @@ public final class Main {
         }
         System.out.println("verdicts: " + verdicts);
         System.out.println("unaccounted runtime refs: " + unaccounted + " (ledgered: " + ledgered + ")");
+        if (orphans > 0) {
+            System.out.println("orphaned overrides: " + orphans + " (mod overrides of a vanilla shape the target no longer has)");
+        }
         if (brokenClasses > 0) {
             System.out.println("broken hierarchy: " + brokenClasses + " mod class(es) cannot load on " + chain.to
                 + " (" + verdicts.getOrDefault("broken_hierarchy", 0) + " mods)");

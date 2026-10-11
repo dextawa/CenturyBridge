@@ -845,8 +845,10 @@ public final class LinkCheck {
             fate = sf != null ? sf : fate != null && !FIXED_FATES.contains(fate) ? fate : null;
             if (fate != null) note = "super() " + note;
         }
-        if (kind.equals("ORPHAN") || kind.equals("VERIFY")) {
-            bucket = "BLIND"; // the audit counts call sites, never declarations or method bodies
+        if (kind.equals("VERIFY") || (kind.equals("ORPHAN") && fate == null)) {
+            bucket = "BLIND"; // the audit counts call sites (and orphaned overrides), never method bodies
+        } else if (kind.equals("ORPHAN")) {
+            bucket = "KNOWN"; // the converter reported this override as orphaned
         } else if (owner.startsWith("top/dext/centurybridge/")) {
             bucket = "CLAIMED"; // the converter pointed the site at a bridge that is not there
         } else if (!platform(owner) || foreignMinecraft(owner)) {

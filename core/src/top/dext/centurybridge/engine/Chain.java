@@ -467,6 +467,13 @@ public final class Chain {
         }
         var idx = top.dext.centurybridge.data.StubDiff.index(stubJar);
         java.util.regex.Pattern cls = java.util.regex.Pattern.compile("L([^;]+);");
+        for (var e : idx.superOf.entrySet()) {
+            targetSuperOf.put(back.getOrDefault(e.getKey(), e.getKey()), back.getOrDefault(e.getValue(), e.getValue()));
+        }
+        for (var e : idx.interfacesOf.entrySet()) {
+            targetInterfacesOf.put(back.getOrDefault(e.getKey(), e.getKey()),
+                e.getValue().stream().map(i -> back.getOrDefault(i, i)).toList());
+        }
         for (var e : idx.classAccess.entrySet()) {
             String owner = back.getOrDefault(e.getKey(), e.getKey());
             targetClasses.add(owner);
@@ -834,6 +841,62 @@ public final class Chain {
     public final java.util.Map<String, java.util.List<String>> interfacesOf = new java.util.HashMap<>();
     /** source-stub classes that were interfaces when the corpus was compiled */
     public final java.util.Set<String> sourceInterfaces = new java.util.HashSet<>();
+    /** overridable methods each source-stub class declares, "name(desc)": the shapes mod overrides bound to */
+    public final java.util.Map<String, java.util.Set<String>> sourceDecls = new java.util.HashMap<>();
+    /** the target stub's hierarchy, analysis namespace */
+    public final java.util.Map<String, String> targetSuperOf = new java.util.HashMap<>();
+    public final java.util.Map<String, java.util.List<String>> targetInterfacesOf = new java.util.HashMap<>();
+
+    public static boolean intermediaryMethod(String name) {
+        return METHOD_PAT.matcher(name).matches();
+    }
+
+    /** the source class a mod declaration overrode: the first ancestor (source hierarchy) declaring the shape */
+    public String sourceDeclarer(String name, String desc, java.util.List<String> roots) {
+        String shape = name + desc;
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(roots);
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c)) {
+                continue;
+            }
+            if (sourceDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
+                return c;
+            }
+            String sup = superOf.get(c);
+            if (sup != null) {
+                todo.add(sup);
+            }
+            todo.addAll(interfacesOf.getOrDefault(c, java.util.List.of()));
+        }
+        return null;
+    }
+
+    /** whether a target ancestor still declares the shape; true when the target is unknown */
+    public boolean targetDeclares(String name, String desc, java.util.List<String> roots) {
+        if (targetDecls.isEmpty()) {
+            return true;
+        }
+        String shape = name + desc;
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(roots);
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c)) {
+                continue;
+            }
+            if (targetDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
+                return true;
+            }
+            String sup = targetSuperOf.get(c);
+            if (sup != null) {
+                todo.add(sup);
+            }
+            todo.addAll(targetInterfacesOf.getOrDefault(c, java.util.List.of()));
+        }
+        return false;
+    }
 
     /** Walk owner and every ancestor, in order, so callers can resolve via any of them. */
     public java.util.List<String> selfAndSupers(String owner) {
@@ -872,6 +935,19 @@ public final class Chain {
                             if ((a & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0) {
                                 sourceInterfaces.add(name);
                             }
+                            owner = name;
+                        }
+
+                        String owner;
+
+                        @Override
+                        public org.objectweb.asm.MethodVisitor visitMethod(int a, String name, String desc,
+                                                                           String sig, String[] ex) {
+                            if ((a & (org.objectweb.asm.Opcodes.ACC_STATIC | org.objectweb.asm.Opcodes.ACC_PRIVATE)) == 0
+                                    && !name.startsWith("<")) {
+                                sourceDecls.computeIfAbsent(owner, k -> new java.util.HashSet<>()).add(name + desc);
+                            }
+                            return null;
                         }
                     }, org.objectweb.asm.ClassReader.SKIP_CODE
                        | org.objectweb.asm.ClassReader.SKIP_DEBUG

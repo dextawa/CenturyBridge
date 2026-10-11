@@ -452,6 +452,10 @@ public final class JarProcessor {
         public List<String> strippedMixins = new ArrayList<>();
         /** injectors set to require=0: anchor gone in the target body, unrepairable -- known loss */
         public List<String> disabledInjectors = new ArrayList<>();
+        /** mod overrides of a vanilla method whose shape is gone from every target
+         *  ancestor and no override hook reconnects: vanilla never calls them again,
+         *  silently -- no crash, the behaviour is just gone */
+        public List<String> orphanedOverrides = new ArrayList<>();
         public List<String> notes = new ArrayList<>();
         public Path outputJar;
     }
@@ -484,7 +488,40 @@ public final class JarProcessor {
      */
     static final class LayerIndex {
         final Map<String, String> superOf = new HashMap<>();
+        final Map<String, List<String>> interfacesOf = new HashMap<>();
         final Map<String, Set<String>> decls = new HashMap<>();
+    }
+
+    /** the vanilla types first reached from a mod class through the jar's own hierarchy */
+    private static List<String> vanillaAncestors(String superName, String[] ifaces, LayerIndex layer) {
+        List<String> out = new ArrayList<>();
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        if (superName != null) {
+            todo.add(superName);
+        }
+        if (ifaces != null) {
+            todo.addAll(List.of(ifaces));
+        }
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String t = todo.poll();
+            if (!seen.add(t)) {
+                continue;
+            }
+            if (t.startsWith("net/minecraft/") || t.startsWith("com/mojang/blaze3d/")) {
+                out.add(t);
+                continue;
+            }
+            if (!layer.superOf.containsKey(t)) {
+                continue; // a library or another mod: not this jar's to judge
+            }
+            String sup = layer.superOf.get(t);
+            if (sup != null) {
+                todo.add(sup);
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(t, List.of()));
+        }
+        return out;
     }
 
     private static LayerIndex indexLayer(Map<String, byte[]> entries) {
@@ -510,6 +547,7 @@ public final class JarProcessor {
                     }
                 }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
                 idx.superOf.put(cr.getClassName(), cr.getSuperName());
+                idx.interfacesOf.put(cr.getClassName(), List.of(cr.getInterfaces()));
                 idx.decls.put(cr.getClassName(), members);
             } catch (RuntimeException ignored) {
                 // not a class file after all
@@ -579,9 +617,9 @@ public final class JarProcessor {
         }
 
         rpt.issues = new ArrayList<>(issues);
-        rpt.verdict = !rpt.strippedMixins.isEmpty() ? "ok_degraded"
-            : issues.isEmpty() ? "ok_direct" : "ok_partial";
-        if (!issues.isEmpty() && !rpt.strippedMixins.isEmpty()) {
+        boolean degraded = !rpt.strippedMixins.isEmpty() || !rpt.orphanedOverrides.isEmpty();
+        rpt.verdict = degraded ? "ok_degraded" : issues.isEmpty() ? "ok_direct" : "ok_partial";
+        if (!issues.isEmpty() && degraded) {
             rpt.verdict = "ok_degraded_partial";
         }
         if (!rpt.brokenHierarchy.isEmpty()) {
@@ -1146,8 +1184,54 @@ public final class JarProcessor {
             }
         }
         ClassVisitor analysis = new ClassVisitor(Opcodes.ASM9) {
+            String cls;
+            String[] itfs;
+            boolean broken;
+            List<String> vanillaRoots;
+
+            /**
+             * An override vanilla no longer calls: the shape it bound to at the
+             * source is gone from every target ancestor and no override hook
+             * reconnects it. Nothing crashes -- the mod's behaviour is just gone
+             * (1.20.2 RecipeSerializer.read(id, json), Recipe.getId, ...). Only
+             * intermediary-named methods can be vanilla overrides. A covariant
+             * override binds through its synthetic bridge (the erased shape), so
+             * bridges are judged too.
+             */
+            private void checkOrphan(int acc, String mName, String mDesc) {
+                if ((acc & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) != 0 || broken
+                        || mName.startsWith("<") || !Chain.intermediaryMethod(mName)) {
+                    return;
+                }
+                if (vanillaRoots == null) {
+                    vanillaRoots = vanillaAncestors(superOf[0], itfs, layer);
+                }
+                for (String r : vanillaRoots) {
+                    if (chain.classRenames.containsKey(r) || chain.superRenames.containsKey(r)) {
+                        return; // a facade keeps the old API and forwards it
+                    }
+                }
+                String overridden = chain.sourceDeclarer(mName, mDesc, vanillaRoots);
+                if (overridden == null || chain.targetDeclares(mName, mDesc, vanillaRoots)) {
+                    return;
+                }
+                String side = chain.sideOf(overridden);
+                if (side.equals("datagen")) {
+                    // dev-time data generation never runs in play; accounted, not damage
+                    top.dext.centurybridge.data.FullAudit.record(cls + "." + mName + mDesc, "datagen-skip");
+                    return;
+                }
+                top.dext.centurybridge.data.FullAudit.record(cls + "." + mName + mDesc,
+                    "ORPHAN[" + side + "] overrode " + overridden + "." + mName + mDesc);
+                rpt.orphanedOverrides.add(tag + cls + "." + mName + mDesc + " overrode " + overridden
+                    + (side.equals("client") ? " [client]" : ""));
+            }
+
             @Override
             public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
+                cls = name;
+                itfs = ifaces;
+                int brokenBefore = brokenSink.size();
                 classAccess[0] = acc;
                 superOf[0] = superName;
                 checkClass(superName);
@@ -1193,6 +1277,7 @@ public final class JarProcessor {
                         }
                     }
                 }
+                broken = brokenSink.size() > brokenBefore;
             }
 
             @Override
@@ -1214,6 +1299,7 @@ public final class JarProcessor {
                         declaredNewHooks.add(mName);
                     }
                 }
+                boolean hooked = false;
                 if ((acc & (Opcodes.ACC_STATIC | Opcodes.ACC_ABSTRACT)) == 0) {
                     for (Chain.OverrideHook oh : chain.overrideHooksForOld(mName, mDesc)) {
                         if (oh.onlyUnder != null && !isUnder(superOf[0], oh.onlyUnder, jarSuper, chain)) {
@@ -1223,7 +1309,14 @@ public final class JarProcessor {
                             continue;
                         }
                         declaredOldOverrides.add(oh);
+                        hooked = true;
                     }
+                }
+                // lookup hooks and the block-use split reconnect their old shapes themselves
+                boolean reconnected = (hk != null && mDesc.equals(hk[0]))
+                    || (chain.blockUseSplit && mName.equals("method_9534"));
+                if (!hooked && !reconnected) {
+                    checkOrphan(acc, mName, mDesc);
                 }
                 Chain.OverrideHook nh = chain.overrideHookForNew(mName, mDesc);
                 if (nh != null) {

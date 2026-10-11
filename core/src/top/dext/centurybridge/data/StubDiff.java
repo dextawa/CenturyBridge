@@ -57,6 +57,9 @@ public final class StubDiff {
         /** "owner.name(desc)" / "owner.name:desc" of static members: a static
          *  original is called with invokestatic, so its bridge shape differs */
         public final Set<String> statics = new HashSet<>();
+        /** class -> superclass / implemented interfaces */
+        public final Map<String, String> superOf = new HashMap<>();
+        public final Map<String, List<String>> interfacesOf = new HashMap<>();
 
         void addMethod(String owner, String name, String desc) {
             methods.computeIfAbsent(owner, k -> new HashMap<>())
@@ -163,6 +166,12 @@ public final class StubDiff {
                         owner = name;
                         idx.classes.add(name);
                         idx.classAccess.put(name, acc);
+                        if (sup != null) {
+                            idx.superOf.put(name, sup);
+                        }
+                        if (itf != null && itf.length > 0) {
+                            idx.interfacesOf.put(name, List.of(itf));
+                        }
                         if ((acc & Opcodes.ACC_INTERFACE) != 0) {
                             idx.interfaces.add(name);
                         }
