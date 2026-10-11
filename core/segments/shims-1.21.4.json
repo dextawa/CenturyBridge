@@ -1013,7 +1013,8 @@
   "net/minecraft/class_4262": "top/dext/centurybridge/facade/v1_21_4/class_4262",
   "net/minecraft/class_2368": "top/dext/centurybridge/facade/v1_21_4/class_2368",
   "net/minecraft/class_2647": "top/dext/centurybridge/facade/v1_21_4/class_2647",
-  "net/minecraft/class_4057": "top/dext/centurybridge/facade/v1_21_4/class_4057"
+  "net/minecraft/class_4057": "top/dext/centurybridge/facade/v1_21_4/class_4057",
+  "net/minecraft/class_1800": "top/dext/centurybridge/facade/v1_21_4/class_1800"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
@@ -6204,7 +6205,6 @@
   "net/minecraft/class_5597.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
   "net/minecraft/class_806.<init>(Lnet/minecraft/class_7775;Ljava/util/List;)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
   "net/minecraft/class_806.method_64063(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;": "the facade does not provide this shape (yet): a reference to it is a known loss",
-  "net/minecraft/class_5272.method_27878(Lnet/minecraft/class_1799;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1800;": "the facade does not provide this shape (yet): a reference to it is a known loss",
   "net/minecraft/class_1866.<init>(Lnet/minecraft/class_1866$class_7711;)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
   "net/minecraft/class_1866.method_53736()Lcom/mojang/serialization/Codec;": "the facade does not provide this shape (yet): a reference to it is a known loss",
   "net/minecraft/class_1866.method_45444(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;": "the facade does not provide this shape (yet): a reference to it is a known loss",
@@ -6231,9 +6231,29 @@
   "net/minecraft/class_1830.method_8021(Lnet/minecraft/class_1799;Ljava/util/List;)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
   "net/minecraft/class_1830.method_53209(Lnet/minecraft/class_1799;Ljava/util/List;)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
   "net/minecraft/class_4005.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "the facade does not provide this shape (yet): a reference to it is a known loss",
-  "net/minecraft/class_1813.method_8012(Lnet/minecraft/class_3414;)Lnet/minecraft/class_1813;": "the facade does not provide this shape (yet): a reference to it is a known loss",
   "net/minecraft/class_1813.method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Ljava/util/List;Lnet/minecraft/class_1836;)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
   "net/minecraft/class_4262.method_9579(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": "the facade does not provide this shape (yet): a reference to it is a known loss",
-  "net/minecraft/class_4057.<init>(Lnet/minecraft/class_1741;Lnet/minecraft/class_1738$class_8051;Lnet/minecraft/class_1792$class_1793;)V": "the facade does not provide this shape (yet): a reference to it is a known loss"
+  "net/minecraft/class_4057.<init>(Lnet/minecraft/class_1741;Lnet/minecraft/class_1738$class_8051;Lnet/minecraft/class_1792$class_1793;)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_5267.field_24421:Lcom/google/gson/Gson;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_195.field_24381:Ljava/util/Optional;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_195.field_1270:Lnet/minecraft/class_2960;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_195.field_24381:Lnet/minecraft/class_5258;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1834.<init>(Ljava/lang/String;ILnet/minecraft/class_6862;IFFILjava/util/function/Supplier;)V": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1834.field_50006:Lnet/minecraft/class_6862;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1834.field_8928:Lnet/minecraft/class_3528;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_806.method_33695(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Lnet/minecraft/class_799;)Lnet/minecraft/class_1087;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_806.field_28792:[Lnet/minecraft/class_806$class_5827;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_5272.method_63532(Lnet/minecraft/class_1799;)I": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1866.field_46106:Lcom/mojang/serialization/MapCodec;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1866.field_48362:Lnet/minecraft/class_9139;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1866.field_9046:Lnet/minecraft/class_1866$class_7711;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1866.field_46106:Lcom/mojang/serialization/Codec;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1831.field_8921:Lnet/minecraft/class_1832;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_763.field_54157:Ljava/util/Map;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_763.field_54158:Ljava/util/function/Supplier;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_763.field_54159:Ljava/util/function/Function;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_505.field_3079:Lnet/minecraft/class_8786;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_4005.field_17894:Ljava/util/concurrent/CompletableFuture;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
+  "net/minecraft/class_1317$class_1319.<init>(Ljava/lang/String;I)V": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state"
  }
 }

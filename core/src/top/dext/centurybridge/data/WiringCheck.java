@@ -103,9 +103,12 @@ public final class WiringCheck {
      * declared -- a missing one is a NoSuchMethodError at a mod's call, super() or
      * super.m() (a LeafEntry.Serializer facade without the typed addEntryFields broke every
      * subclass's super call). A mod may come from any release the class lived in, so the
-     * contract is every shape it had in any of them: non-private constructors, methods and
-     * fields, descriptors through the facade renames; methods and fields may come from the
-     * facade's own superclasses.
+     * contract is every shape it had in any of them: constructors, methods and fields,
+     * descriptors through the facade renames, static where the class had it static (the
+     * call site's opcode is fixed); methods and fields may come from the facade's own
+     * superclasses. Private members count: an access widener opens them -- Fabric API's
+     * transitive one for every mod (ModelPredicateProviderRegistry.register), or the mod's
+     * own -- and the mod then calls them like any other.
      */
     private void checkFacadeSurfaces(com.google.gson.JsonObject root) {
         if (sources.isEmpty() || !root.has("classRenames")) {
@@ -147,35 +150,48 @@ public final class WiringCheck {
                 }
             }
             for (MethodNode m : methods) {
-                if ((m.access & (Opcodes.ACC_PRIVATE | Opcodes.ACC_SYNTHETIC)) != 0 || m.name.equals("<clinit>")) {
+                if ((m.access & Opcodes.ACC_SYNTHETIC) != 0 || m.name.equals("<clinit>")) {
                     continue;
                 }
                 checked++;
                 String desc = methodDesc(m.desc);
                 String gapKey = dead + "." + m.name + m.desc;
-                if (!facadeHasMethod(fac, m.name, desc, m.name.equals("<init>"))) {
+                MethodNode has = facadeMethod(fac, m.name, desc, m.name.equals("<init>"));
+                if (has == null) {
                     if (declared.containsKey(gapKey)) {
                         used.add(gapKey);
                     } else {
-                        missing.add(m.name + desc);
+                        missing.add(m.name + desc + privateMark(m.access));
                     }
+                } else if (has != OBJECT_METHOD && (has.access & Opcodes.ACC_STATIC) != (m.access & Opcodes.ACC_STATIC)) {
+                    problems.add("facade " + fac + " (for dead " + dead + ") declares " + m.name + desc
+                        + ((m.access & Opcodes.ACC_STATIC) != 0 ? " as an instance method; the class had it static"
+                            : " static; the class had it as an instance method")
+                        + " (IncompatibleClassChangeError at every call)");
                 }
             }
             for (FieldNode f : fields) {
-                if ((f.access & (Opcodes.ACC_PRIVATE | Opcodes.ACC_SYNTHETIC)) != 0) {
+                if ((f.access & Opcodes.ACC_SYNTHETIC) != 0) {
                     continue;
                 }
                 checked++;
                 String desc = typeDesc(f.desc);
                 String gapKey = dead + "." + f.name + ":" + f.desc;
-                if (!facadeHasField(fac, f.name, desc)) {
+                FieldNode has = facadeField(fac, f.name, desc);
+                if (has == null) {
                     if (declared.containsKey(gapKey)) {
                         used.add(gapKey);
                     } else {
-                        missing.add(f.name + ":" + desc);
+                        missing.add(f.name + ":" + desc + privateMark(f.access));
                     }
+                } else if ((has.access & Opcodes.ACC_STATIC) != (f.access & Opcodes.ACC_STATIC)) {
+                    problems.add("facade " + fac + " (for dead " + dead + ") declares field " + f.name + ":" + desc
+                        + ((f.access & Opcodes.ACC_STATIC) != 0 ? " as an instance field; the class had it static"
+                            : " static; the class had it as an instance field")
+                        + " (IncompatibleClassChangeError at every access)");
                 }
             }
+            checkFunctional(dead, fac, declared, used);
             if (!missing.isEmpty()) {
                 problems.add("facade " + fac + " (for dead " + dead + ") lacks " + missing.size()
                     + " undeclared member(s) the class had (fill them or list them in facadeGaps): "
@@ -189,52 +205,98 @@ public final class WiringCheck {
         }
     }
 
+    /**
+     * A dead functional interface: mods implemented it with lambdas, which supply exactly
+     * its single abstract method, so the facade has to be an interface whose only abstract
+     * method is that one -- a facade inheriting the reused name's new abstract methods
+     * (ClampedModelPredicateProvider over 1.21.4's NumericProperty) leaves every lambda
+     * an AbstractMethodError.
+     */
+    private void checkFunctional(String dead, String fac, Map<String, String> declared, java.util.Set<String> used) {
+        java.util.Set<String> wanted = new java.util.LinkedHashSet<>();
+        for (java.util.Set<String> abs : sources.abstractShapes(dead)) {
+            if (abs.size() == 1) {
+                String shape = abs.iterator().next();
+                if (declared.containsKey(dead + "." + shape)) {
+                    used.add(dead + "." + shape); // a declared loss: lambdas implementing it are accounted
+                    continue;
+                }
+                int paren = shape.indexOf('(');
+                wanted.add(shape.substring(0, paren) + methodDesc(shape.substring(paren)));
+            }
+        }
+        if (wanted.isEmpty()) {
+            return;
+        }
+        ClassNode fcn = classes.get(fac);
+        java.util.Set<String> have = (fcn.access & Opcodes.ACC_INTERFACE) != 0
+            ? SourceStubs.abstractShapes(fac, c -> classes.containsKey(c) ? classes.get(c) : stub.get(c))
+            : null;
+        for (String sam : wanted) {
+            if (have == null || !have.equals(java.util.Set.of(sam))) {
+                problems.add("facade " + fac + " (for dead functional interface " + dead + ", single abstract "
+                    + sam + ") " + (have == null ? "is not an interface" : "has abstract methods " + have)
+                    + ": a mod lambda implementing it supplies only " + sam + " (AbstractMethodError)");
+            }
+        }
+    }
+
     /** what every class answers through java/lang/Object (records and enums declare their own) */
     private static final java.util.Set<String> OBJECT_METHODS = java.util.Set.of(
         "toString()Ljava/lang/String;", "equals(Ljava/lang/Object;)Z", "hashCode()I", "clone()Ljava/lang/Object;");
+    private static final MethodNode OBJECT_METHOD = new MethodNode();
 
-    private boolean facadeHasMethod(String cls, String name, String desc, boolean ctor) {
+    /** a gap the gate lists: private ones are reachable only through an access widener */
+    private static String privateMark(int access) {
+        return (access & Opcodes.ACC_PRIVATE) != 0 ? " [private]" : "";
+    }
+
+    private MethodNode facadeMethod(String cls, String name, String desc, boolean ctor) {
         if (!ctor && OBJECT_METHODS.contains(name + desc)) {
-            return true;
+            return OBJECT_METHOD;
         }
         for (String c = cls; c != null; ) {
             ClassNode cn = classes.containsKey(c) ? classes.get(c) : stub.get(c);
             if (cn == null) {
-                return false;
+                return null;
             }
             for (MethodNode m : cn.methods) {
                 if (m.name.equals(name) && m.desc.equals(desc)) {
-                    return true;
+                    return m;
                 }
             }
             if (ctor) {
-                return false; // constructors are not inherited
+                return null; // constructors are not inherited
             }
             for (String i : cn.interfaces) {
                 ClassNode in = classes.containsKey(i) ? classes.get(i) : stub.get(i);
-                if (in != null && in.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc))) {
-                    return true;
+                if (in != null) {
+                    for (MethodNode m : in.methods) {
+                        if (m.name.equals(name) && m.desc.equals(desc)) {
+                            return m;
+                        }
+                    }
                 }
             }
             c = cn.superName;
         }
-        return false;
+        return null;
     }
 
-    private boolean facadeHasField(String cls, String name, String desc) {
+    private FieldNode facadeField(String cls, String name, String desc) {
         for (String c = cls; c != null; ) {
             ClassNode cn = classes.containsKey(c) ? classes.get(c) : stub.get(c);
             if (cn == null) {
-                return false;
+                return null;
             }
             for (FieldNode f : cn.fields) {
                 if (f.name.equals(name) && f.desc.equals(desc)) {
-                    return true;
+                    return f;
                 }
             }
             c = cn.superName;
         }
-        return false;
+        return null;
     }
 
     private void check(com.google.gson.JsonObject root) {

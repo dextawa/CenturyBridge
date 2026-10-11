@@ -71,6 +71,63 @@ public final class SourceStubs implements AutoCloseable {
         return out;
     }
 
+    /**
+     * For every older release in which {@code name} is an interface: its abstract methods,
+     * "name(desc)", across the interface hierarchy -- what a lambda implementing it has to
+     * supply. A default in a more specific interface implements a super's abstract one;
+     * Object's public methods redeclared abstract (Comparator.equals) do not count.
+     */
+    public List<Set<String>> abstractShapes(String name) {
+        List<Set<String>> out = new ArrayList<>();
+        for (int i = 0; i < jars.size(); i++) {
+            ClassNode cn = load(i, name);
+            if (cn == null || (cn.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) == 0) {
+                continue;
+            }
+            final int release = i;
+            out.add(abstractShapes(name, c -> load(release, c)));
+        }
+        return out;
+    }
+
+    /** the abstract methods of an interface hierarchy, classes looked up through {@code lookup} */
+    public static Set<String> abstractShapes(String iface, java.util.function.Function<String, ClassNode> lookup) {
+        Map<String, Boolean> decided = new java.util.LinkedHashMap<>();
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(List.of(iface));
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c)) {
+                continue;
+            }
+            ClassNode cn = lookup.apply(c);
+            if (cn == null) {
+                continue;
+            }
+            for (MethodNode m : cn.methods) {
+                if ((m.access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0 || m.name.startsWith("<")
+                        || (m.access & org.objectweb.asm.Opcodes.ACC_PRIVATE) != 0) {
+                    continue;
+                }
+                // breadth-first from the interface itself: the most specific declaration decides
+                decided.putIfAbsent(m.name + m.desc, (m.access & org.objectweb.asm.Opcodes.ACC_ABSTRACT) != 0);
+            }
+            if (cn.interfaces != null) {
+                todo.addAll(cn.interfaces);
+            }
+        }
+        Set<String> out = new java.util.LinkedHashSet<>();
+        for (var e : decided.entrySet()) {
+            if (e.getValue() && !OBJECT_PUBLIC.contains(e.getKey())) {
+                out.add(e.getKey());
+            }
+        }
+        return out;
+    }
+
+    private static final Set<String> OBJECT_PUBLIC = Set.of(
+        "equals(Ljava/lang/Object;)Z", "hashCode()I", "toString()Ljava/lang/String;");
+
     /** access flags of the original method, resolved up the source hierarchy; null when no stub has it */
     public Integer methodAccess(String owner, String name, String desc) {
         for (int i = 0; i < jars.size(); i++) {
