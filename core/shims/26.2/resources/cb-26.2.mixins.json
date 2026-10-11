@@ -110,6 +110,8 @@
   ],
   "client": [
     "AbstractWidgetRenderBridge",
+    "BlockEntityRenderDispatcherCaptureBridge",
+    "BlockEntityRenderStateBridge",
     "ChatHudBridge",
     "ClientLevelEntityIdBridge",
     "EditBoxBridge",

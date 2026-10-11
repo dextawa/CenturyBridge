@@ -8,6 +8,7 @@ public class TestPigRenderer extends net.minecraft.class_927 {
 
     public TestPigRenderer(net.minecraft.class_5617.class_5618 ctx) {
         super(ctx, new TestPigModel(TestPigModel.layer().method_32109()), 0.5F);
+        this.method_4046(new TestPigFeature(this));
         RenderTestMod.once("pig renderer constructed");
     }
 

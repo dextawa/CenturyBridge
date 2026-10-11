@@ -60,7 +60,25 @@ hooks += [
         'onlyUnder': 'net/minecraft/class_583',
     },
 ]
+# feature renderers: render(matrices, buffers, light, entity, 6 floats) -> submit(poseStack, collector, light, state, yRot, xRot)
+hooks = [h for h in hooks if not h.get('bridge', '').startswith(RT + 'CbRenderLayers')]
+hooks.append({
+    'old': 'method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V',
+    'new': f'submit({POSE}{COLL}I{ES}FF)V',
+    'bridge': f'{RT}CbRenderLayers.submit(L{RT}CbLegacyRenderLayer;{POSE}{COLL}I{ES}FF)V',
+    'adapter': f'{RT}CbLegacyRenderLayer',
+    'guard': f'{G}RenderLayerGuard',
+    'onlyUnder': 'net/minecraft/class_3887',
+})
 d['overrideHooks'] = hooks
+# FeatureRenderer's static helpers mods draw with, and LivingEntityRenderer.getOverlay(entity, f)
+d['staticRedirects']['net/minecraft/class_3887.method_23199(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFF)V'] = RT + 'CbRenderLayers'
+d['staticRedirects']['net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFFFF)V'] = RT + 'CbRenderLayers'
+d['staticRedirects']['net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I'] = RT + 'CbRenderLayers#overlay'
+for k in [k for k in d.get('ledger', {}) if k in d['staticRedirects']
+          or k in ('net/minecraft/class_3887.method_23199', 'net/minecraft/class_3887.method_23196')]:
+    print('unledger', k)
+    del d['ledger'][k]
 
 ah = [h for h in d.get('adapterHooks', []) if h['adapter'] not in (RT + 'CbLegacyRenderStateOwner', RT + 'CbLegacyModelRender')]
 ah += [
@@ -77,6 +95,24 @@ ah += [
         'adapter': f'{RT}CbLegacyModelRender',
         'requires': ['method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V'],
         'synth': [],
+    },
+]
+# block entity renderers (an interface: no vanilla super above most of them)
+BES = 'Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;'
+OLD_BER = 'method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V'
+ah = [h for h in ah if h['adapter'] != RT + 'CbLegacyBlockEntityRenderer']
+ah += [
+    {   # createRenderState(): abstract on 26.x BlockEntityRenderer
+        'under': 'net/minecraft/class_827', 'adapter': f'{RT}CbLegacyBlockEntityRenderer',
+        'guard': f'{G}BlockEntityStateGuard', 'requires': [OLD_BER],
+        'synth': [{'new': f'createRenderState(){BES}',
+                   'call': f'{RT}CbBlockEntityRender.createRenderState(L{RT}CbLegacyBlockEntityRenderer;){BES}'}],
+    },
+    {   # render(blockEntity, tickDelta, matrices, buffers, light, overlay) -> submit(state, poseStack, collector, camera)
+        'under': 'net/minecraft/class_827', 'adapter': f'{RT}CbLegacyBlockEntityRenderer',
+        'guard': f'{G}BlockEntitySubmitGuard', 'requires': [OLD_BER],
+        'synth': [{'new': f'submit({BES}{POSE}{COLL}{CAM})V',
+                   'call': f'{RT}CbBlockEntityRender.submit(L{RT}CbLegacyBlockEntityRenderer;{BES}{POSE}{COLL}{CAM})V'}],
     },
 ]
 d['adapterHooks'] = ah
@@ -112,7 +148,8 @@ for k in [k for k in led if k.startswith('net/minecraft/class_583.<init>') or k.
 open(SP, 'w', encoding='utf-8', newline='\n').write(json.dumps(d, indent=1, ensure_ascii=False) + '\n')
 
 c = json.load(open(MX, encoding='utf-8'))
-for m in ['EntityRenderStateEntityBridge', 'EntityRendererCaptureBridge', 'ModelRenderBridge']:
+for m in ['EntityRenderStateEntityBridge', 'EntityRendererCaptureBridge', 'ModelRenderBridge',
+          'BlockEntityRenderStateBridge', 'BlockEntityRenderDispatcherCaptureBridge']:
     if m not in c['client']:
         c['client'].append(m)
 c['client'].sort()

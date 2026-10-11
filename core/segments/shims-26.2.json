@@ -367,7 +367,10 @@
   "net/minecraft/class_8104.comp_1240(I)I": "net/minecraft/util/LightCoordsUtil#block",
   "net/minecraft/class_8104.comp_1241(I)I": "net/minecraft/util/LightCoordsUtil#sky",
   "net/minecraft/class_1704.method_53173(Lnet/minecraft/class_1291;)I": "top/dext/centurybridge/rt/v26_2/CbHolders",
-  "net/minecraft/class_6662.method_38927(Lnet/minecraft/class_1842;)Lnet/minecraft/class_120$class_121;": "top/dext/centurybridge/rt/v26_2/CbHolders"
+  "net/minecraft/class_6662.method_38927(Lnet/minecraft/class_1842;)Lnet/minecraft/class_120$class_121;": "top/dext/centurybridge/rt/v26_2/CbHolders",
+  "net/minecraft/class_3887.method_23199(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFF)V": "top/dext/centurybridge/rt/v26_2/CbRenderLayers",
+  "net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFFFF)V": "top/dext/centurybridge/rt/v26_2/CbRenderLayers",
+  "net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I": "top/dext/centurybridge/rt/v26_2/CbRenderLayers#overlay"
  },
  "instanceRedirects": {
   "net/minecraft/class_4341.method_21021()Ljava/lang/Boolean;": "top/dext/centurybridge/rt/v26_2/ClientStatics",
@@ -2798,7 +2801,6 @@
   "net/minecraft/class_3680.method_17075": "bridge attempted, no faithful equivalent: class_3680.method_17075 was removed in 1.21.2 with no direct replacement; particle spawning moved to class_9953 (field_52884) whose API surface is not available",
   "net/minecraft/class_3729.method_16460": "bridge attempted, no faithful equivalent: class_3729.method_16460 was removed in 1.21.2; method_62430 requires class_10035 which cannot be derived from class_4587 (MatrixStack) without additional context",
   "net/minecraft/class_374$class_375.field_39932": "bridge attempted, no faithful equivalent: field_39932 (int) in class_374$class_375 was deleted in 1.21.2 with no direct replacement; its static constant value cannot be reconstructed from the new API surface",
-  "net/minecraft/class_3887.method_23196": "bridge attempted, no faithful equivalent: class_10042 render state (item stacks, arm poses, 9 floats, 8 booleans) cannot be reconstructed from old params (BakedModel a1, LivingEntity a6, 6 floats) — entity/item/pose data must be pre-computed by the new pipeline",
   "net/minecraft/class_3899.method_21679": "bridge attempted, no faithful equivalent: class_3899.method_21679() returned LongSet of ticketed chunk positions; removed in 1.21.2 chunk loading refactor with no direct equivalent on new API surface",
   "net/minecraft/class_39.field_365": "bridge attempted, no faithful equivalent: field_365 was removed from class_39 with no direct replacement",
   "net/minecraft/class_39.field_385": "bridge attempted, no faithful equivalent: class_39.field_385 was removed in 1.21.2 with no direct replacement",
@@ -3017,7 +3019,6 @@
   "net/minecraft/class_9135$18.field_51475": "bridge attempted, no faithful equivalent: field_51475 was a static RegistryKey on class_9135$18 with no static equivalent in the new API; the new class stores the value as instance field_53746",
   "net/minecraft/class_922.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "forged body did not compile in tree context (unmapped names); queued again",
   "net/minecraft/class_630$class_618.field_3605Lorg/joml/Vector3f;": "forged body did not compile in tree context (unmapped names); queued again",
-  "net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I": "forged body did not compile in tree context (unmapped names); queued again",
   "net/minecraft/class_630$class_593.field_3502[Lnet/minecraft/class_630$class_618;": "forged body did not compile in tree context (unmapped names); queued again",
   "net/minecraft/class_630$class_593.field_21618Lorg/joml/Vector3f;": "forged body did not compile in tree context (unmapped names); queued again",
   "net/minecraft/class_624.method_17131(Lnet/minecraft/class_1493;FFF)V": "forged body did not compile in tree context (unmapped names); queued again",
@@ -3246,8 +3247,6 @@
   "net/minecraft/class_3440.method_32358(Lnet/minecraft/class_2487;)Lnet/minecraft/class_3440;": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): NBT IO / level-storage rework (1.20.2 NbtIo+NbtScanner, 26.x codec-first); no bridge",
   "net/minecraft/class_3558.method_20049(Lnet/minecraft/class_1922;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;I)I": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): member gone at 26.2; no bridge written",
   "net/minecraft/class_3778$class_4182.method_19306(Lnet/minecraft/class_3790;Lorg/apache/commons/lang3/mutable/MutableObject;IZLnet/minecraft/class_5539;Lnet/minecraft/class_7138;)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): member gone at 26.2; no bridge written",
-  "net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFFFF)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 26.x render pipeline (extraction + submit nodes, MultiBufferSource/immediate mode gone); no bridge",
-  "net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFI)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 26.x render pipeline (extraction + submit nodes, MultiBufferSource/immediate mode gone); no bridge",
   "net/minecraft/class_3887.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 26.x render pipeline (extraction + submit nodes, MultiBufferSource/immediate mode gone); no bridge",
   "net/minecraft/class_3924.method_17503(Lnet/minecraft/class_1297;Lnet/minecraft/class_1799;I)Z": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): member gone at 26.2; no bridge written",
   "net/minecraft/class_4004.method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFF)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 26.x render pipeline (extraction + submit nodes, MultiBufferSource/immediate mode gone); no bridge",
@@ -3922,7 +3921,8 @@
   "net/minecraft/class_7832.method_46348(Lnet/minecraft/class_2602;)V": "forge model found no faithful equivalent (unreviewed): Incompatible signature for handle",
   "net/minecraft/class_870.method_3871(Lnet/minecraft/class_3341;Ljava/util/List;Ljava/util/List;Lnet/minecraft/class_2874;)V": "forge model found no faithful equivalent (unreviewed): cannot convert net.minecraft.world.level.dimension.DimensionType (Structure) to net.minecraft.resources.ResourceKey (RegistryKey); Structure does not carry its own registry key, and the removed List parameter has no equivalent in the new API",
   "net/minecraft/class_890.method_4164(Lnet/minecraft/class_1551;Lnet/minecraft/class_4587;FFFF)V": "forge model found no faithful equivalent (unreviewed): setupRotations changed from (net.minecraft.world.entity.monster.zombie.Drowned, com.mojang.blaze3d.vertex.PoseStack, FFFF) to (net.minecraft.client.renderer.entity.state.ZombieRenderState, com.mojang.blaze3d.vertex.PoseStack, FF) -- cannot map net.minecraft.world.entity.monster.zombie.Drowned to net.minecraft.client.renderer.entity.state.ZombieRenderState and cannot determine which 2 of 4 float parameters to pass",
-  "net/minecraft/class_9082.method_55817(Lnet/minecraft/class_9069;FFFFF)V": "forge model found no faithful equivalent (unreviewed): no faithful equivalent"
+  "net/minecraft/class_9082.method_55817(Lnet/minecraft/class_9069;FFFFF)V": "forge model found no faithful equivalent (unreviewed): no faithful equivalent",
+  "net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFI)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 26.x render pipeline (extraction + submit nodes, MultiBufferSource/immediate mode gone); no bridge"
  },
  "interfaceized": [
   "com/mojang/serialization/DataResult"
@@ -4083,6 +4083,14 @@
    "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyEntityModel",
    "guard": "top/dext/centurybridge/rt/v26_2/guard/ModelAnimGuard",
    "onlyUnder": "net/minecraft/class_583"
+  },
+  {
+   "old": "method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V",
+   "new": "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/EntityRenderState;FF)V",
+   "bridge": "top/dext/centurybridge/rt/v26_2/CbRenderLayers.submit(Ltop/dext/centurybridge/rt/v26_2/CbLegacyRenderLayer;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/EntityRenderState;FF)V",
+   "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyRenderLayer",
+   "guard": "top/dext/centurybridge/rt/v26_2/guard/RenderLayerGuard",
+   "onlyUnder": "net/minecraft/class_3887"
   }
  ],
  "depRenames": {
@@ -5817,6 +5825,34 @@
     "method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V"
    ],
    "synth": []
+  },
+  {
+   "under": "net/minecraft/class_827",
+   "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyBlockEntityRenderer",
+   "guard": "top/dext/centurybridge/rt/v26_2/guard/BlockEntityStateGuard",
+   "requires": [
+    "method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V"
+   ],
+   "synth": [
+    {
+     "new": "createRenderState()Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;",
+     "call": "top/dext/centurybridge/rt/v26_2/CbBlockEntityRender.createRenderState(Ltop/dext/centurybridge/rt/v26_2/CbLegacyBlockEntityRenderer;)Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_827",
+   "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyBlockEntityRenderer",
+   "guard": "top/dext/centurybridge/rt/v26_2/guard/BlockEntitySubmitGuard",
+   "requires": [
+    "method_3569(Lnet/minecraft/class_2586;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V"
+   ],
+   "synth": [
+    {
+     "new": "submit(Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
+     "call": "top/dext/centurybridge/rt/v26_2/CbBlockEntityRender.submit(Ltop/dext/centurybridge/rt/v26_2/CbLegacyBlockEntityRenderer;Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V"
+    }
+   ]
   }
  ],
  "superRedirects": {

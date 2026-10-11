@@ -26,6 +26,8 @@ public class RenderTestMod implements ClientModInitializer {
         // EntityRenderers.register is private: opened by this mod's access widener
         net.minecraft.class_5619.method_32173(net.minecraft.class_1299.field_6093, TestPigRenderer::new);
         net.minecraft.class_5619.method_32173(net.minecraft.class_1299.field_6122, TestArrowRenderer::new);
+        // BlockEntityRendererFactories.register is private too
+        net.minecraft.class_5616.method_32144(net.minecraft.class_2591.field_11914, TestChestRenderer::new);
         once("registered renderers");
         Thread t = new Thread(() -> {
             net.minecraft.class_310 mc = net.minecraft.class_310.method_1551();
@@ -72,5 +74,14 @@ public class RenderTestMod implements ClientModInitializer {
         arrow.method_5875(true);
         world.method_2942(-424243, arrow);
         once("spawned pig + arrow at " + (int) x + " " + (int) y + " " + (int) z);
+        // a chest, placed through the integrated server so its block entity exists and syncs
+        net.minecraft.class_1132 server = mc.method_1576();
+        if (server != null) {
+            net.minecraft.class_2338 at = net.minecraft.class_2338.method_49637(x - look.field_1350 * 1.5, y - 0.5, z + look.field_1352 * 1.5);
+            server.execute(() -> {
+                server.method_30002().method_8501(at, net.minecraft.class_2246.field_10034.method_9564());
+                once("placed chest at " + at);
+            });
+        }
     }
 }
