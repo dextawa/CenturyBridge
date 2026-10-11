@@ -690,7 +690,6 @@ public final class JarProcessor {
         }
         stripConfigs(entries, triage, deadMixins);
         markConfigsOptional(entries, triage);
-        relaxBodyInjectors(entries, triage, deadMixins, chain, rpt, tag);
 
         // tombstone stub class must be unique per jar layer (all layers share the runtime classpath)
         String tombClass = "centurybridge/gen/Tombstones_" + jarTag
@@ -958,100 +957,97 @@ public final class JarProcessor {
      * every such failure to logs/centurybridge-mixin.log, so it stays KNOWN.
      */
     /**
-     * Past the namespace wall, {@link MixinRepair} (which downgrades failing
-     * injectors to require=0) does not run, so a mod mixin's "body-level"
-     * injector -- @ModifyConstant / @ModifyExpressionValue / @ModifyReturnValue
-     * -- that no longer matches (the target method body was refactored in 26.x,
-     * so the constant/expression is gone: scan 0, InjectionError) takes the
-     * whole mixin apply down. These injectors are inherently un-bridgeable
-     * statically (they depend on the target's bytecode interior, below the
-     * name/signature level CB works at). Set their require to 0 so a missing
-     * match degrades to "this tweak doesn't apply" instead of a hard crash --
-     * the mod loads, that one body tweak is silently inert (reported). Only
-     * body-level injectors are relaxed; @Inject/@Redirect/@Overwrite keep their
-     * require so a structural miss still surfaces. Config-optional (required
-     * false) governs class load; this governs per-injector match count.
+     * Past the namespace wall the converted jar only gets its mojang names in the final
+     * rename, so the anchor check {@link MixinRepair} runs pre-wall against an
+     * intermediary code jar cannot see 26.x bodies. This runs it again on the renamed
+     * jar against the target's real (unobfuscated) code: per injector, a drifted anchor
+     * is repaired or the injector dropped and reported, a mixin whose target cannot
+     * take it at all is stripped and reported -- instead of every body injector being
+     * set to require=0 blind, which also hid the ones that stayed broken.
+     * Nested (jar-in-jar) mods are repaired the same way. Rewrites {@code jar} in place.
      */
-    private static void relaxBodyInjectors(Map<String, byte[]> entries, MixinTriage.Result triage,
-            Set<String> deadMixins, Chain chain, Report rpt, String tag) {
-        if (chain.wallClassFwd.isEmpty()) {
-            return; // pre-wall: MixinRepair already handled injector downgrade
+    public static void repairPastWall(Path jar, MixinRepair repair, Report rpt) throws IOException {
+        Map<String, byte[]> entries = readAll(Files.readAllBytes(jar));
+        if (repairLayer(entries, repair, rpt, "")) {
+            Files.write(jar, writeJar(entries));
         }
-        // Every require-based injector anchors to an @At/@Constant point INSIDE a
-        // target method body. Post-wall there is no MixinRepair pass checking those
-        // anchors against the real 26.x body (it only runs pre-wall), so an injector
-        // whose target method name survived triage but whose anchor drifted when
-        // vanilla refactored the body throws InvalidInjectionException at APPLY and
-        // takes the whole mod down. require=0 is harmless to an injector that still
-        // matches (it injects normally) and turns a zero-match into a silent skip --
-        // the mod loads, that one hook degrades to a no-op. It cannot save a VerifyError
-        // (anchor matched but the stack type changed): that is the inherent mixin limit.
-        java.util.Set<String> bodyInjectors = java.util.Set.of(
-            "Lorg/spongepowered/asm/mixin/injection/ModifyConstant;",
-            "Lorg/spongepowered/asm/mixin/injection/Inject;",
-            "Lorg/spongepowered/asm/mixin/injection/Redirect;",
-            "Lorg/spongepowered/asm/mixin/injection/ModifyArg;",
-            "Lorg/spongepowered/asm/mixin/injection/ModifyArgs;",
-            "Lorg/spongepowered/asm/mixin/injection/ModifyVariable;",
-            "Lcom/llamalad7/mixinextras/injector/ModifyExpressionValue;",
-            "Lcom/llamalad7/mixinextras/injector/ModifyReturnValue;",
-            "Lcom/llamalad7/mixinextras/injector/ModifyReceiver;",
-            "Lcom/llamalad7/mixinextras/injector/wrapoperation/WrapOperation;",
-            "Lcom/llamalad7/mixinextras/injector/WrapWithCondition;",
-            "Lcom/llamalad7/mixinextras/injector/v2/WrapWithCondition;");
-        int relaxed = 0;
-        for (String cls : triage.configOfClass().keySet()) {
-            if (deadMixins.contains(cls)) {
-                continue; // whole mixin stripped already
-            }
-            byte[] data = entries.get(cls + ".class");
-            if (data == null) {
-                continue;
-            }
-            org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
-            new ClassReader(data).accept(cn, 0);
-            boolean changed = false;
-            if (cn.methods != null) {
-                for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
-                    for (java.util.List<org.objectweb.asm.tree.AnnotationNode> anns
-                            : java.util.Arrays.asList(m.visibleAnnotations, m.invisibleAnnotations)) {
-                        if (anns == null) {
-                            continue;
-                        }
-                        for (org.objectweb.asm.tree.AnnotationNode an : anns) {
-                            if (bodyInjectors.contains(an.desc)) {
-                                setRequireZero(an);
-                                changed = true;
-                                relaxed++;
-                            }
-                        }
-                    }
-                }
-            }
-            if (changed) {
-                org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(0);
-                cn.accept(cw);
-                entries.put(cls + ".class", cw.toByteArray());
-            }
-        }
-        if (relaxed > 0) {
-            rpt.notes.add(tag + "relaxed " + relaxed + " body-level injector(s) to require=0 (wall: anchor @At/@Constant may have drifted when 26.x refactored the target body; a drifted hook degrades to a silent no-op instead of crashing the mod)");
+        if (!rpt.strippedMixins.isEmpty() && rpt.verdict.equals("ok_direct")) {
+            rpt.verdict = "ok_degraded";
+        } else if (!rpt.strippedMixins.isEmpty() && rpt.verdict.equals("ok_partial")) {
+            rpt.verdict = "ok_degraded_partial";
         }
     }
 
-    /** set an injector annotation's require to 0 (body-level downgrade). */
-    private static void setRequireZero(org.objectweb.asm.tree.AnnotationNode an) {
-        if (an.values == null) {
-            an.values = new ArrayList<>();
+    private static boolean repairLayer(Map<String, byte[]> entries, MixinRepair repair, Report rpt, String tag)
+            throws IOException {
+        boolean changed = false;
+        Map<String, byte[]> before = new HashMap<>(entries);
+        MixinRepair.Outcome out = repair.repair(entries);
+        for (String r : out.repairs()) {
+            rpt.notes.add(tag + "mixin repaired past the wall: " + r);
         }
-        for (int i = 0; i + 1 < an.values.size(); i += 2) {
-            if ("require".equals(an.values.get(i))) {
-                an.values.set(i + 1, 0);
-                return;
+        for (String d : out.disabled()) {
+            rpt.disabledInjectors.add(tag + d + " (past the wall)");
+        }
+        if (!out.fatal().isEmpty()) {
+            for (String cls : out.fatal()) {
+                rpt.strippedMixins.add(tag + shortName(cls) + " -- past the wall: " + out.fatalWhy().get(cls));
+            }
+            for (Map.Entry<String, byte[]> e : new ArrayList<>(entries.entrySet())) {
+                if (!e.getKey().endsWith(".json") || e.getKey().contains("/")) {
+                    continue;
+                }
+                String text = new String(e.getValue(), StandardCharsets.UTF_8);
+                if (!text.contains("\"package\"")) {
+                    continue;
+                }
+                JsonObject cfg;
+                try {
+                    cfg = GSON.fromJson(text, JsonObject.class);
+                } catch (RuntimeException ex) {
+                    continue;
+                }
+                if (!cfg.has("package")) {
+                    continue;
+                }
+                String pkg = cfg.get("package").getAsString().replace('.', '/');
+                boolean edited = false;
+                for (String key : new String[] {"mixins", "client", "server"}) {
+                    if (!cfg.has(key)) {
+                        continue;
+                    }
+                    JsonArray kept = new JsonArray();
+                    for (JsonElement m : cfg.getAsJsonArray(key)) {
+                        String cls = (pkg.isEmpty() ? "" : pkg + "/") + m.getAsString().replace('.', '/');
+                        if (out.fatal().contains(cls)) {
+                            edited = true;
+                        } else {
+                            kept.add(m);
+                        }
+                    }
+                    cfg.add(key, kept);
+                }
+                if (edited) {
+                    entries.put(e.getKey(), GSON.toJson(cfg).getBytes(StandardCharsets.UTF_8));
+                }
             }
         }
-        an.values.add("require");
-        an.values.add(0);
+        for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+            if (!java.util.Arrays.equals(e.getValue(), before.get(e.getKey()))) {
+                changed = true;
+            }
+        }
+        for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+            String name = e.getKey();
+            if (name.startsWith("META-INF/jars/") && name.endsWith(".jar")) {
+                Map<String, byte[]> nested = readAll(e.getValue());
+                if (repairLayer(nested, repair, rpt, tag + "(bundled) ")) {
+                    e.setValue(writeJar(nested));
+                    changed = true;
+                }
+            }
+        }
+        return changed;
     }
 
     private static void markConfigsOptional(Map<String, byte[]> entries, MixinTriage.Result triage) {

@@ -151,6 +151,19 @@ public final class Main {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
             }
         }
+        // past the wall the anchors are checked once the jar has its real names, against
+        // the target's own unobfuscated code
+        top.dext.centurybridge.engine.MixinRepair wallRepair = null;
+        if (crossesWall) {
+            Path code = System.getenv("CB_TARGET_CODE") != null ? Path.of(System.getenv("CB_TARGET_CODE"))
+                                                                : Path.of("data/jars/client-" + args[3] + ".jar");
+            if (Files.exists(code)) {
+                wallRepair = new top.dext.centurybridge.engine.MixinRepair(code);
+                System.out.println("mixin anchors past the wall: checked against " + code);
+            } else {
+                System.out.println("mixin anchors past the wall: NOT checked (no " + code + "; set CB_TARGET_CODE)");
+            }
+        }
         java.util.Map<String, Integer> verdicts = new java.util.TreeMap<>();
         int engineErrors = 0;
         int unaccounted = 0;
@@ -165,6 +178,9 @@ public final class Main {
                     Files.move(r.outputJar, tmp);
                     top.dext.centurybridge.data.JarRemapper.remapWithTable(renameTable, tmp, r.outputJar);
                     Files.delete(tmp);
+                    if (wallRepair != null) {
+                        JarProcessor.repairPastWall(r.outputJar, wallRepair, r);
+                    }
                 }
                 verdicts.merge(r.verdict, 1, Integer::sum);
                 unaccounted += r.issues.size();

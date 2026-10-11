@@ -232,6 +232,31 @@ public final class MixinRepair {
         String fatalWhy = null;
         String shortName = cls.substring(cls.lastIndexOf('/') + 1);
 
+        // A class mixin on a target that became an interface dies at PREPARE
+        // ("@Mixin target type mismatch"), whatever its injectors say. 1.21.2
+        // made Explosion an interface over one implementation (ExplosionImpl):
+        // the mixin's members now belong there, so retarget to the single
+        // concrete implementor; with none or several there is no faithful target.
+        if ((mx.access & Opcodes.ACC_INTERFACE) == 0) {
+            for (String t : new ArrayList<>(targets)) {
+                ClassNode tc = target(t);
+                if (tc == null || (tc.access & Opcodes.ACC_INTERFACE) == 0) continue;
+                List<String> impls = implementors(t);
+                if (impls.size() == 1) {
+                    String impl = impls.get(0);
+                    if (retargetMixin(mx, refmap, t, impl)) {
+                        classChanged = true;
+                        if (refmap != null) refmapChanged = true;
+                        targets.set(targets.indexOf(t), impl);
+                        repairs.add("interface-retarget " + shortName + ": " + t + " is an interface now -> " + impl);
+                    }
+                } else {
+                    fatalWhy = "target " + t + " became an interface (" + impls.size() + " concrete implementors)";
+                }
+            }
+            if (fatalWhy != null) return new MixinResult(null, false, repairs, disabled, fatalWhy);
+        }
+
         boolean[] dirty = {false, false}; // class, refmap
         for (MethodNode handler : mx.methods) {
             for (AnnotationNode an : annotations(handler)) {
@@ -334,10 +359,12 @@ public final class MixinRepair {
                 if (!fixes.isEmpty()) {
                     fixes.get(0).run();
                     repairs.add(fixNotes.get(0));
-                } else if (deadWhy != null && require >= 1) {
-                    // only THIS injector is lost: require=0 makes Mixin skip it with a log
-                    // line; the mixin's other injectors and interface merges keep working
-                    setRequireZero(an);
+                } else if (deadWhy != null) {
+                    // only THIS injector is lost. Removing its annotation (the handler stays
+                    // as a plain method) beats require=0: some failures are thrown at apply
+                    // regardless of require ("Found 0 candidate variables"). The mixin's
+                    // other injectors and interface merges keep working.
+                    dropInjector(handler, an);
                     dirty[0] = true;
                     disabled.add(deadWhy);
                 }
@@ -353,6 +380,57 @@ public final class MixinRepair {
         }
         if (out == null && !refmapChanged && repairs.isEmpty() && fatalWhy == null && disabled.isEmpty()) return null;
         return new MixinResult(out, refmapChanged, repairs, disabled, fatalWhy);
+    }
+
+    private Map<String, List<String>> implIndex;
+
+    /** concrete classes in the target jar that directly implement the interface */
+    private List<String> implementors(String iface) {
+        if (implIndex == null) {
+            implIndex = new HashMap<>();
+            var en = code.entries();
+            while (en.hasMoreElements()) {
+                ZipEntry e = en.nextElement();
+                if (!e.getName().endsWith(".class")) continue;
+                try {
+                    ClassReader cr = new ClassReader(code.getInputStream(e).readAllBytes());
+                    if ((cr.getAccess() & (Opcodes.ACC_INTERFACE | Opcodes.ACC_ABSTRACT)) != 0) continue;
+                    for (String i : cr.getInterfaces()) implIndex.computeIfAbsent(i, k -> new ArrayList<>()).add(cr.getClassName());
+                } catch (IOException ex) {
+                    // unreadable entry: skip
+                }
+            }
+        }
+        return implIndex.getOrDefault(iface, List.of());
+    }
+
+    /** replace one @Mixin target (value= Type or targets= string, via refmap if mapped) */
+    @SuppressWarnings("unchecked")
+    private static boolean retargetMixin(ClassNode mx, JsonObject refmap, String from, String to) {
+        boolean done = false;
+        for (AnnotationNode a : mx.invisibleAnnotations != null ? mx.invisibleAnnotations : List.<AnnotationNode>of()) {
+            if (!a.desc.equals(MIXIN) || a.values == null) continue;
+            for (int i = 0; i + 1 < a.values.size(); i += 2) {
+                Object v = a.values.get(i + 1);
+                if (!(v instanceof List<?> l)) continue;
+                List<Object> list = (List<Object>) l;
+                for (int j = 0; j < list.size(); j++) {
+                    Object o = list.get(j);
+                    if (o instanceof Type t && t.getInternalName().equals(from)) {
+                        list.set(j, Type.getObjectType(to));
+                        done = true;
+                    } else if (o instanceof String str) {
+                        String mapped = refmapLookup(refmap, str).replace('.', '/');
+                        if (mapped.startsWith("L") && mapped.endsWith(";")) mapped = mapped.substring(1, mapped.length() - 1);
+                        if (!mapped.equals(from)) continue;
+                        if (refmap != null && refmap.has(str)) refmap.addProperty(str, to);
+                        else list.set(j, to.replace('/', '.'));
+                        done = true;
+                    }
+                }
+            }
+        }
+        return done;
     }
 
     // ------------------------------------------------------------------ selectors
@@ -387,17 +465,46 @@ public final class MixinRepair {
 
     // ------------------------------------------------------------------ anchors
 
-    private record Anchor(String kind, String owner, String name, String desc, Object constant) {
+    private record Anchor(String kind, String owner, String name, String desc, Object constant, int ordinal, String role) {
+        Anchor(String kind, String owner, String name, String desc, Object constant) {
+            this(kind, owner, name, desc, constant, -1, "main");
+        }
+
+        Anchor(String kind, String owner, String name, String desc, Object constant, int ordinal) {
+            this(kind, owner, name, desc, constant, ordinal, "main");
+        }
+
+        Anchor role(String r) {
+            return new Anchor(kind, owner, name, desc, constant, ordinal, r);
+        }
+
         @Override
         public String toString() {
-            return kind + (constant != null ? "=" + constant : " " + (owner != null ? owner + "." : "") + name + (desc != null ? desc : ""));
+            return kind + (constant != null ? "=" + constant : " " + (owner != null ? owner + "." : "") + name + (desc != null ? desc : ""))
+                + (ordinal >= 0 ? "#" + ordinal : "");
         }
     }
+
+    /** marker for HEAD/RETURN/TAIL/LOAD/STORE/JUMP: a position, nothing to look for */
+    private static final Anchor POSITIONAL = new Anchor("POS", null, null, null, null);
 
     /** null = this injector's anchor cannot be evaluated statically */
     private List<Anchor> anchors(AnnotationNode an, Map<String, Object> v, JsonObject refmap) {
         List<Anchor> out = new ArrayList<>();
-        if (v.containsKey("slice")) return null;
+        // slice boundaries are anchors too: a "from" that no longer occurs leaves an
+        // empty slice and Mixin scans 0 targets (porting_lib PlayerMixin.modifyResult:
+        // from = 2nd isSprinting() call in attack(), which 1.21.2 has only once)
+        for (Object sl : list(v.get("slice"))) {
+            if (!(sl instanceof Map<?, ?> sm)) return null;
+            for (String edge : new String[] {"from", "to"}) {
+                Object e = sm.get(edge);
+                if (e == null) continue;
+                if (!(e instanceof Map<?, ?> em)) return null;
+                Anchor a = parseAt(em, refmap);
+                if (a == null) return null;
+                if (a != POSITIONAL) out.add(a.role(edge));
+            }
+        }
         for (Object c : list(v.get("constant"))) {
             if (!(c instanceof Map<?, ?> cm)) return null;
             Object val = null;
@@ -405,68 +512,85 @@ public final class MixinRepair {
                 if (cm.containsKey(k)) val = cm.get(k);
             }
             if (val == null || cm.containsKey("expandZeroConditions")) return null;
-            out.add(new Anchor("CONSTANT", null, null, null, val instanceof Type t ? t : val));
+            int ord = cm.get("ordinal") instanceof Integer i ? i : -1;
+            out.add(new Anchor("CONSTANT", null, null, null, val, ord));
         }
         for (Object a : list(v.get("at"))) {
             if (!(a instanceof Map<?, ?> am)) return null;
             String value = String.valueOf(am.get("value"));
-            switch (value) {
-                case "HEAD", "RETURN", "TAIL", "LOAD", "STORE", "JUMP" -> { }
-                case "INVOKE", "INVOKE_ASSIGN", "INVOKE_STRING", "FIELD", "NEW" -> {
-                    if (!(am.get("target") instanceof String t)) return null;
-                    String m = refmapLookup(refmap, t);
-                    if (value.equals("NEW")) {
-                        String o = m.startsWith("L") && m.contains(";") && !m.contains("(") ? m.substring(1, m.indexOf(';'))
-                            : m.contains("(") ? null : m;
-                        if (o == null) {
-                            Sel s = Sel.parse(m);
-                            o = s.owner != null ? s.owner : Type.getReturnType(s.desc).getInternalName();
-                        }
-                        out.add(new Anchor("NEW", o, null, null, null));
-                    } else {
-                        if (value.equals("FIELD")) {
-                            // Lowner;name:desc -- Sel.parse knows methods only
-                            if (!m.startsWith("L") || !m.contains(";")) return null;
-                            String owner = m.substring(1, m.indexOf(';'));
-                            String rest = m.substring(m.indexOf(';') + 1);
-                            int c = rest.indexOf(':');
-                            out.add(new Anchor("FIELD", owner, c >= 0 ? rest.substring(0, c) : rest,
-                                c >= 0 ? rest.substring(c + 1) : null, null));
-                        } else {
-                            Sel s = Sel.parse(m);
-                            if (s.owner == null) return null;
-                            out.add(new Anchor("INVOKE", s.owner, s.name, s.desc, null));
-                        }
-                    }
-                }
-                case "CONSTANT" -> {
-                    Object args = am.get("args");
-                    Object val = null;
-                    for (Object o : list(args)) {
-                        String s = String.valueOf(o);
-                        int eq = s.indexOf('=');
-                        if (eq < 0) continue;
-                        String k = s.substring(0, eq).trim(), x = s.substring(eq + 1).trim();
-                        try {
-                            switch (k) {
-                                case "intValue" -> val = Integer.valueOf(x);
-                                case "longValue" -> val = Long.valueOf(x);
-                                case "floatValue" -> val = Float.valueOf(x);
-                                case "doubleValue" -> val = Double.valueOf(x);
-                                case "stringValue" -> val = x;
-                                default -> { }
-                            }
-                        } catch (NumberFormatException ex) {
-                            return null;
-                        }
-                    }
-                    if (val == null) return null;
-                    out.add(new Anchor("CONSTANT", null, null, null, val));
-                }
-                default -> { return null; } // MIXINEXTRAS:EXPRESSION, custom points
+            // @ModifyVariable(index = N) at STORE/LOAD needs that slot touched (in the
+            // slice): 1.21.2 reshuffled attack()'s locals and slot 8 left the slice
+            if ((value.equals("STORE") || value.equals("LOAD")) && v.get("index") instanceof Integer idx && idx >= 0) {
+                int op = am.get("opcode") instanceof Integer o ? o : -1;
+                out.add(new Anchor("LOCAL", null, value, null, idx, op));
+                continue;
             }
+            Anchor x = parseAt(am, refmap);
+            if (x == null) return null;
+            if (x != POSITIONAL) out.add(x);
         }
         return out;
+    }
+
+    /** one @At: POSITIONAL, an Anchor (with ordinal), or null when not evaluable */
+    private static Anchor parseAt(Map<?, ?> am, JsonObject refmap) {
+        String value = String.valueOf(am.get("value"));
+        int ord = am.get("ordinal") instanceof Integer i ? i : -1;
+        switch (value) {
+            case "HEAD", "RETURN", "TAIL", "LOAD", "STORE", "JUMP" -> {
+                return POSITIONAL;
+            }
+            case "INVOKE", "INVOKE_ASSIGN", "INVOKE_STRING", "FIELD", "NEW" -> {
+                if (!(am.get("target") instanceof String t)) return null;
+                String m = refmapLookup(refmap, t);
+                if (value.equals("NEW")) {
+                    String o = m.startsWith("L") && m.contains(";") && !m.contains("(") ? m.substring(1, m.indexOf(';'))
+                        : m.contains("(") ? null : m;
+                    if (o == null) {
+                        Sel s = Sel.parse(m);
+                        o = s.owner != null ? s.owner : Type.getReturnType(s.desc).getInternalName();
+                    }
+                    return new Anchor("NEW", o, null, null, null, ord);
+                }
+                if (value.equals("FIELD")) {
+                    if (!m.startsWith("L") || !m.contains(";")) return null;
+                    String owner = m.substring(1, m.indexOf(';'));
+                    String rest = m.substring(m.indexOf(';') + 1);
+                    int c = rest.indexOf(':');
+                    return new Anchor("FIELD", owner, c >= 0 ? rest.substring(0, c) : rest,
+                        c >= 0 ? rest.substring(c + 1) : null, null, ord);
+                }
+                Sel s = Sel.parse(m);
+                if (s.owner == null) return null;
+                return new Anchor("INVOKE", s.owner, s.name, s.desc, null, ord);
+            }
+            case "CONSTANT" -> {
+                Object val = null;
+                for (Object o : list(am.get("args"))) {
+                    String s = String.valueOf(o);
+                    int eq = s.indexOf('=');
+                    if (eq < 0) continue;
+                    String k = s.substring(0, eq).trim(), x = s.substring(eq + 1).trim();
+                    try {
+                        switch (k) {
+                            case "intValue" -> val = Integer.valueOf(x);
+                            case "longValue" -> val = Long.valueOf(x.replaceAll("[lL]$", ""));
+                            case "floatValue" -> val = Float.valueOf(x);
+                            case "doubleValue" -> val = Double.valueOf(x);
+                            case "stringValue" -> val = x;
+                            default -> { }
+                        }
+                    } catch (NumberFormatException ex) {
+                        return null;
+                    }
+                }
+                if (val == null) return null;
+                return new Anchor("CONSTANT", null, null, null, val, ord);
+            }
+            default -> {
+                return null; // MIXINEXTRAS:EXPRESSION, custom points
+            }
+        }
     }
 
     private static String fieldDesc(String spec) {
@@ -475,20 +599,77 @@ public final class MixinRepair {
     }
 
     private static boolean anchorsIn(MethodNode m, ClassNode owner, List<Anchor> anchors) {
-        for (Anchor a : anchors) if (!anchorIn(m, a)) return false;
+        Anchor from = null, to = null;
+        for (Anchor a : anchors) {
+            if (a.role.equals("from")) from = a;
+            else if (a.role.equals("to")) to = a;
+        }
+        for (Anchor a : anchors) {
+            if (a.kind.equals("LOCAL")) {
+                if (!localIn(m, a, from, to)) return false;
+            } else if (!anchorIn(m, a)) {
+                return false;
+            }
+        }
         return true;
+    }
+
+    /** the slot access within [from, to] (whole body when unsliced); opcode = exact insn when given */
+    private static boolean localIn(MethodNode m, Anchor a, Anchor from, Anchor to) {
+        if (m.instructions == null) return false;
+        AbstractInsnNode[] insns = m.instructions.toArray();
+        int lo = 0, hi = insns.length - 1;
+        if (from != null) {
+            int need = Math.max(from.ordinal, 0) + 1, seen = 0;
+            lo = -1;
+            for (int i = 0; i < insns.length; i++) {
+                if (matchesAnchor(insns[i], from) && ++seen >= need) { lo = i; break; }
+            }
+            if (lo < 0) return false;
+        }
+        if (to != null) {
+            int need = Math.max(to.ordinal, 0) + 1, seen = 0;
+            hi = -1;
+            for (int i = 0; i < insns.length; i++) {
+                if (matchesAnchor(insns[i], to) && ++seen >= need) { hi = i; break; }
+            }
+            if (hi < 0) return false;
+        }
+        int slot = (Integer) a.constant;
+        boolean store = a.name.equals("STORE");
+        for (int i = lo; i <= hi && i < insns.length; i++) {
+            if (!(insns[i] instanceof VarInsnNode vi) || vi.var != slot) continue;
+            int op = vi.getOpcode();
+            if (a.ordinal >= 0 ? op == a.ordinal
+                    : store ? op >= Opcodes.ISTORE && op <= Opcodes.ASTORE : op >= Opcodes.ILOAD && op <= Opcodes.ALOAD) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean anchorIn(MethodNode m, Anchor a) {
         if (m.instructions == null) return false;
+        int need = Math.max(a.ordinal, 0) + 1, seen = 0;
         for (AbstractInsnNode in : m.instructions) {
+            if (!matchesAnchor(in, a)) continue;
+            if (++seen >= need) return true;
+        }
+        return false;
+    }
+
+    private static boolean matchesAnchor(AbstractInsnNode in, Anchor a) {
+        {
             switch (a.kind) {
                 case "INVOKE" -> {
+                    // Mixin's target selector compares the owner too
                     if (in instanceof MethodInsnNode mi && mi.name.equals(a.name)
+                            && (a.owner == null || mi.owner.equals(a.owner))
                             && (a.desc == null || mi.desc.equals(a.desc))) return true;
                 }
                 case "FIELD" -> {
                     if (in instanceof FieldInsnNode fi && fi.name.equals(a.name)
+                            && (a.owner == null || fi.owner.equals(a.owner))
                             && (a.desc == null || fi.desc.equals(a.desc))) return true;
                 }
                 case "NEW" -> {
@@ -680,6 +861,11 @@ public final class MixinRepair {
         List<String> out = new ArrayList<>();
         for (Object x : list(o)) if (x instanceof String s) out.add(s);
         return out;
+    }
+
+    private static void dropInjector(MethodNode h, AnnotationNode an) {
+        if (h.visibleAnnotations != null) h.visibleAnnotations.remove(an);
+        if (h.invisibleAnnotations != null) h.invisibleAnnotations.remove(an);
     }
 
     private static void setRequireZero(AnnotationNode an) {
