@@ -308,6 +308,22 @@ public final class Chain {
         public String frames;
         /** "superCalls": "rewrite": a mod's super.old(..) in a class under the hook becomes super.new(..) */
         public boolean superCalls;
+        /**
+         * Narrowing forward ("narrow": true), for a parameter the release widened (1.20.2: a
+         * packet's handle(ClientGamePacketListener) became handle(ClientCommonPacketListener),
+         * because the packet now also arrives in the configuration phase). The old override was
+         * only ever handed the old type, so the synthesized new shape passes vanilla's value on
+         * -- cast to the old type -- only when it is one, and otherwise falls through to super's
+         * new shape (or answers the type's zero value when nothing above declares it) exactly
+         * as if the mod had not overridden anything:
+         * <pre>
+         *   new(a):  if (!(a instanceof Old)) return super.new(a);  return this.old((Old) a);
+         * </pre>
+         * Every argument whose old type differs from its new one is narrowed this way, so the
+         * old type must be a subtype of the new one (wiring-check holds the target to it). No
+         * wrap / bridge / frames; a guard may be combined (it is checked after the type test).
+         */
+        public boolean narrow;
     }
 
     public final java.util.List<OverrideHook> overrideHooks = new java.util.ArrayList<>();
@@ -1349,6 +1365,11 @@ public final class Chain {
                     if (h.superCalls && h.args == null && org.objectweb.asm.Type.getArgumentTypes(h.oldDesc).length
                             != org.objectweb.asm.Type.getArgumentTypes(h.newDesc).length) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": superCalls needs args");
+                    }
+                    h.narrow = o.has("narrow") && o.get("narrow").getAsBoolean();
+                    if (h.narrow && (h.frames != null || h.wrapName != null || o.has("bridge"))) {
+                        throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
+                            + ": narrow forwards the new argument itself (no wrap / bridge / frames)");
                     }
                     if (o.has("bridge")) {
                         String br = o.get("bridge").getAsString();

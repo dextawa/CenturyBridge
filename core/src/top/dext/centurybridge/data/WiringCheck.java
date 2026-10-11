@@ -34,7 +34,8 @@ import org.objectweb.asm.tree.MethodNode;
  * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects,
  * fieldRedirects, fieldGetters, instanceFieldGetters, instanceOfRedirects,
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push
- * statics), lookupRt, overrideHooks (wrap / unwrap / guard), classRenames
+ * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
+ * and the subtype relation a narrowing hook casts along), classRenames
  * onto shipped facades. Covers are checked by MixinCheck against the mixin
  * classes (they are overloads added to vanilla classes, not statics).
  *
@@ -526,6 +527,35 @@ public final class WiringCheck {
                         wantMethod(where + " frames", f + "#cbArg" + t, null, "(Ljava/lang/Object;I)" + t);
                     }
                     wantMethod(where + " frames", f + "#cbArgL", null, "(Ljava/lang/Object;I)Ljava/lang/Object;");
+                }
+                if (o.has("narrow") && o.get("narrow").getAsBoolean()) {
+                    // a narrowing forward casts vanilla's value to the old type after an instanceof
+                    // test: every argument it narrows must be one the new shape could be handed
+                    String old = o.get("old").getAsString();
+                    String nw = o.get("new").getAsString();
+                    org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(old.substring(old.indexOf('(')));
+                    org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(nw.substring(nw.indexOf('(')));
+                    int[] map = new int[oa.length];
+                    for (int i = 0; i < oa.length; i++) {
+                        map[i] = o.has("args") ? o.getAsJsonArray("args").get(i).getAsInt() : i;
+                    }
+                    for (int i = 0; i < oa.length; i++) {
+                        if (map[i] >= na.length) {
+                            problems.add(where + " narrow: argument " + i + " maps past the new shape");
+                            continue;
+                        }
+                        org.objectweb.asm.Type from = oa[i];
+                        org.objectweb.asm.Type to = na[map[i]];
+                        if (from.equals(to)) {
+                            continue;
+                        }
+                        if (from.getSort() != org.objectweb.asm.Type.OBJECT || to.getSort() != org.objectweb.asm.Type.OBJECT
+                                || !isSubtype(targetName(from.getInternalName()), targetName(to.getInternalName()))) {
+                            problems.add(where + " narrow: " + from.getDescriptor() + " is not a subtype of "
+                                + to.getDescriptor() + " on the target");
+                        }
+                        checked++;
+                    }
                 }
                 if (o.has("bridge")) {
                     // bridge mode: the static the synthesized new shape calls, and the adapter

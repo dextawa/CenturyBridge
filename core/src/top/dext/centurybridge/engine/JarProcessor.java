@@ -44,6 +44,10 @@ public final class JarProcessor {
      * </pre>
      * Arguments whose type differs between the shapes go through the hook's
      * wrap static (new type -> old type); everything else passes through.
+     * A narrowing hook ({@link Chain.OverrideHook#narrow}) instead tests each
+     * such argument against the old type first and, on a value of another
+     * type, takes the fall-through path (super.new(..) or the zero value) as
+     * if the mod had not overridden anything.
      * Descriptors are emitted in the analysis namespace and pass through the
      * same ClassRemapper as the rest of the class, so a facade-renamed old
      * parameter type lands on the facade.
@@ -113,6 +117,20 @@ public final class JarProcessor {
         org.objectweb.asm.Label tryEnd = new org.objectweb.asm.Label();
         org.objectweb.asm.Label handler = new org.objectweb.asm.Label();
         boolean guarded = h.guard != null;
+        // narrowing forward: an argument the release widened reaches the old override only when
+        // vanilla's value is of the old type; any other value goes to super's new shape
+        boolean narrowed = false;
+        if (h.narrow && h.bridgeName == null) {
+            for (int i = 0; i < oa.length; i++) {
+                int src = map[i];
+                if (!na[src].equals(oa[i]) && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
+                    mv.visitVarInsn(Opcodes.ALOAD, slotOf[src]);
+                    mv.visitTypeInsn(Opcodes.INSTANCEOF, oa[i].getInternalName());
+                    mv.visitJumpInsn(Opcodes.IFEQ, fallthrough);
+                    narrowed = true;
+                }
+            }
+        }
         if (guarded) {
             mv.visitVarInsn(Opcodes.ALOAD, 0);
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.guard, "cbEnter", "(Ljava/lang/Object;)Z", false);
@@ -131,6 +149,8 @@ public final class JarProcessor {
                 mv.visitVarInsn(na[src].getOpcode(Opcodes.ILOAD), slotOf[src]);
                 if (!na[src].equals(oa[i]) && h.wrapName != null) {
                     mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.wrapOwner, h.wrapName, h.wrapDesc, false);
+                } else if (!na[src].equals(oa[i]) && h.narrow && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
+                    mv.visitTypeInsn(Opcodes.CHECKCAST, oa[i].getInternalName());
                 }
             }
         }
@@ -160,28 +180,46 @@ public final class JarProcessor {
             mv.visitInsn(Opcodes.ATHROW);
             mv.visitLabel(fallthrough);
             mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 0, new Object[0]);
-            if (superName == null || superName.equals("java/lang/Object")) {
-                // nothing above us declares the new shape: a re-entry here is a no-op
-                if (nr.getSort() != org.objectweb.asm.Type.VOID) {
-                    mv.visitInsn(nr.getSort() == org.objectweb.asm.Type.OBJECT || nr.getSort() == org.objectweb.asm.Type.ARRAY
-                        ? Opcodes.ACONST_NULL : Opcodes.ICONST_0);
-                }
-                mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
-            } else {
-                mv.visitVarInsn(Opcodes.ALOAD, 0);
-                slot = 1;
-                for (org.objectweb.asm.Type t : na) {
-                    mv.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
-                    slot += t.getSize();
-                }
-                mv.visitMethodInsn(Opcodes.INVOKESPECIAL, superName, h.newName, h.newDesc, false);
-                mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
-            }
+            emitFallthrough(mv, h, superName, na, nr);
+        } else if (narrowed) {
+            mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+            mv.visitLabel(fallthrough);
+            mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 0, new Object[0]);
+            emitFallthrough(mv, h, superName, na, nr);
         } else {
             mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
         }
         mv.visitMaxs(slot + 3, slot + 1);
         mv.visitEnd();
+    }
+
+    /**
+     * What the synthesized new shape does when it does not forward (guard re-entry, or a narrowed
+     * argument of another type): super's new shape, or -- nothing above declares it -- the return
+     * type's zero value.
+     */
+    private static void emitFallthrough(MethodVisitor mv, Chain.OverrideHook h, String superName,
+                                        org.objectweb.asm.Type[] na, org.objectweb.asm.Type nr) {
+        if (superName == null || superName.equals("java/lang/Object")) {
+            switch (nr.getSort()) {
+                case org.objectweb.asm.Type.VOID -> { }
+                case org.objectweb.asm.Type.OBJECT, org.objectweb.asm.Type.ARRAY -> mv.visitInsn(Opcodes.ACONST_NULL);
+                case org.objectweb.asm.Type.LONG -> mv.visitInsn(Opcodes.LCONST_0);
+                case org.objectweb.asm.Type.FLOAT -> mv.visitInsn(Opcodes.FCONST_0);
+                case org.objectweb.asm.Type.DOUBLE -> mv.visitInsn(Opcodes.DCONST_0);
+                default -> mv.visitInsn(Opcodes.ICONST_0);
+            }
+            mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+            return;
+        }
+        mv.visitVarInsn(Opcodes.ALOAD, 0);
+        int slot = 1;
+        for (org.objectweb.asm.Type t : na) {
+            mv.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
+            slot += t.getSize();
+        }
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, superName, h.newName, h.newDesc, false);
+        mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
     }
 
     /**
