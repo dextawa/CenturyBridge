@@ -30,9 +30,4 @@ public abstract class GenClass22Bridge {
         return state;
     }
 
-    /** was net/minecraft/class_22.method_32371(Lnet/minecraft/class_2487;)Lnet/minecraft/class_22; */
-    public net.minecraft.class_22 method_32371(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_32371(class_2487) in 1.21.8 requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) that the old single-arg signature cannot supply; no default lookup is reachable from class_22 alone");
-        // CB-CONFIDENCE: high -- the new API strictly adds a required WrapperLookup parameter with no field on class_22 holding one and no static accessor in the listed surface, so the old contract is genuinely inexpressible
-    }
 }

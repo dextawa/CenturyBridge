@@ -1021,4 +1021,84 @@ public final class Statics {
     public static net.minecraft.class_634 cbNewclass_634(net.minecraft.class_310 mc, net.minecraft.class_437 screen, net.minecraft.class_2535 conn, net.minecraft.class_642 server, com.mojang.authlib.GameProfile profile, net.minecraft.class_7975 cookie) {
         throw new UnsupportedOperationException("CenturyBridge: ClientPlayNetworkHandler's 1.20.2 ctor takes a ClientConnectionState (class_8675) that bundles state not reconstructable from the old separate args");
     }
+
+    /** was net/minecraft/class_1068.method_4648(Ljava/util/UUID;)Lnet/minecraft/class_2960; */
+    public static net.minecraft.class_2960 method_4648(java.util.UUID a0) {
+        return net.minecraft.class_1068.method_4648(a0).comp_1626();
+    }
+
+    /** was net/minecraft/class_2069$class_2071.method_8967(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_2069$class_2071; */
+    public static net.minecraft.class_2069.class_2071 method_8967(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1, net.minecraft.class_2096.class_2100 a2) {
+        throw new UnsupportedOperationException("CenturyBridge: the new factory returns a criterion wrapper rather than Conditions, and the provided API exposes no faithful way to unwrap it or supply the old factory's default delta range");
+    }
+
+    /** was net/minecraft/class_2102.method_9064(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2102; */
+    public static net.minecraft.class_2102 method_9064(com.google.gson.JsonElement a0) {
+        return net.minecraft.class_2102.method_9064(a0).orElseGet(() -> new net.minecraft.class_2102(java.util.Map.of()));
+    }
+
+    /** was net/minecraft/class_2119.method_27847(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2119$class_2121; */
+    public static net.minecraft.class_2119.class_2121 method_27847(net.minecraft.class_2960 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_27847 returns net.minecraft.class_175, and the provided API exposes no guaranteed conversion to net.minecraft.class_2119.class_2121");
+    }
+
+    /** was net/minecraft/class_2135$class_2137.method_43137(Lnet/minecraft/class_2090;)Lnet/minecraft/class_2135$class_2137; */
+    public static net.minecraft.class_2135.class_2137 method_43137(net.minecraft.class_2090 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new method_43137 accepts class_2090$class_2091 and returns class_175, so it cannot preserve the old class_2090-to-class_2137 contract");
+    }
+
+    /** was net/minecraft/class_2135$class_2137.method_49195()Lnet/minecraft/class_2135$class_2137; */
+    public static net.minecraft.class_2135.class_2137 method_49195() {
+        throw new UnsupportedOperationException("CenturyBridge: the new API has only the same zero-argument method returning net.minecraft.class_175, so the old fluent return contract cannot be preserved");
+    }
+
+    /** was net/minecraft/class_2535.method_10753(Ljava/net/InetSocketAddress;Z)Lnet/minecraft/class_2535; */
+    public static net.minecraft.class_2535 method_10753(java.net.InetSocketAddress a0, boolean a1) {
+        return net.minecraft.class_2535.method_10753(a0, a1, null);
+    }
+
+    /** was net/minecraft/class_4722.method_48480()Lnet/minecraft/class_1921; */
+    public static net.minecraft.class_1921 method_48480() {
+        return net.minecraft.class_4722.method_48480(false);
+    }
+
+    /**
+     * 1.20.1 InventoryScreen.drawEntity(ctx, x, y, size, mouseX, mouseY, entity): x/y is
+     * where the feet go, mouseX/mouseY are already relative to the entity (the caller
+     * subtracts the cursor). 1.20.2 replaced it with a scissor-box form that takes
+     * ABSOLUTE cursor coordinates, so feeding the old arguments into it drew nothing (a
+     * zero size) or looked the wrong way. The 1.20.1 body is ported verbatim instead:
+     * the same head/body rotation, applied to the entity around the old renderer
+     * {@link #method_48472}, then restored.
+     */
+    public static void method_2486(net.minecraft.class_332 context,
+            int x, int y, int size, float mouseX, float mouseY,
+            net.minecraft.class_1309 entity) {
+        float yaw = (float) Math.atan(mouseX / 40.0F);
+        float pitch = (float) Math.atan(mouseY / 40.0F);
+        org.joml.Quaternionf rotation = new org.joml.Quaternionf().rotateZ((float) Math.PI);
+        org.joml.Quaternionf camera = new org.joml.Quaternionf().rotateX(pitch * 20.0F * ((float) Math.PI / 180.0F));
+        rotation.mul(camera);
+        float bodyYaw = entity.field_6283;
+        float entityYaw = entity.method_36454();
+        float entityPitch = entity.method_36455();
+        float prevHeadYaw = entity.field_6259;
+        float headYaw = entity.field_6241;
+        entity.field_6283 = 180.0F + yaw * 20.0F;
+        entity.method_36456(180.0F + yaw * 40.0F);
+        entity.method_36457(-pitch * 20.0F);
+        entity.field_6241 = entity.method_36454();
+        entity.field_6259 = entity.method_36454();
+        method_48472(context, x, y, size, rotation, camera, entity);
+        entity.field_6283 = bodyYaw;
+        entity.method_36456(entityYaw);
+        entity.method_36457(entityPitch);
+        entity.field_6259 = prevHeadYaw;
+        entity.field_6241 = headYaw;
+    }
+
+    /** was net/minecraft/class_490.method_48472(Lnet/minecraft/class_332;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/class_1309;)V */
+    public static void method_48472(net.minecraft.class_332 a0, int a1, int a2, int a3, org.joml.Quaternionf a4, org.joml.Quaternionf a5, net.minecraft.class_1309 a6) {
+        net.minecraft.class_490.method_48472(a0, (float) a1, (float) a2, a3, new org.joml.Vector3f(), a4, a5, a6);
+    }
 }

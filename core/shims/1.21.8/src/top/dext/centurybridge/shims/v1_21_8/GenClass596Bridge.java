@@ -20,9 +20,4 @@ public abstract class GenClass596Bridge {
         throw new UnsupportedOperationException("CenturyBridge: method_17117 now takes class_10059 (1 float, 1 boolean, class_1463.class_7990) instead of class_1463 + 5 floats; cannot construct class_10059 from old parameters");
     }
 
-    /** was net/minecraft/class_596.method_32034()Lnet/minecraft/class_5607; */
-    public net.minecraft.class_5607 method_32034() {
-        return ((net.minecraft.class_596)(Object)this).method_32034(false);
-    }
-
 }

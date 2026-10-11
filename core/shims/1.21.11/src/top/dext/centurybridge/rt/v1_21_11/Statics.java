@@ -186,14 +186,25 @@ public final class Statics {
     }
 
     /**
-     * 1.20.1 EntityRenderer.drawEntity(ctx,x,y,size,mouseX,mouseY,entity)
-     * gained 3 extra int params (overlayLight,blockLight,yaw) at 1.20.2.
-     * 13 client call sites.
+     * 1.20.1 InventoryScreen.drawEntity(ctx, x, y, size, mouseX, mouseY, entity): x/y is
+     * where the feet go, mouseX/mouseY are already relative to the entity (the caller
+     * subtracts the cursor). Only the scissor-box form survives here, and it derives the
+     * rotation from ABSOLUTE cursor coordinates against the box centre: atan((centre -
+     * cursor) / 40). Passing centre - relative reproduces the 1.20.1 rotation exactly;
+     * the box is the one {@link #method_48472} uses, so both old shapes place the entity
+     * alike (clipped to the box, which the 1.20.1 renderer never did).
      */
     public static void method_2486(net.minecraft.class_332 context,
             int x, int y, int size, float mouseX, float mouseY,
             net.minecraft.class_1309 entity) {
-        net.minecraft.class_490.method_2486(context, x, y, size, 0, 0, mouseX, mouseY, 0.0f, entity);
+        int x1 = x - size;
+        int y1 = y - 2 * size;
+        int x2 = x + size;
+        int y2 = y;
+        float centreX = (x1 + x2) / 2.0F;
+        float centreY = (y1 + y2) / 2.0F;
+        net.minecraft.class_490.method_2486(context, x1, y1, x2, y2, size, 0.0625F,
+                centreX - mouseX, centreY - mouseY, entity);
     }
 
     /**
@@ -7486,5 +7497,462 @@ public final class Statics {
     /** was ButtonWidget(x, y, w, h, text, onPress): the ctor went protected in 1.20.2 -- through the builder */
     public static net.minecraft.class_4185 cbNewclass_4185(int x, int y, int w, int h, net.minecraft.class_2561 text, net.minecraft.class_4185.class_4241 action) {
         return net.minecraft.class_4185.method_46430(text, action).method_46434(x, y, w, h).method_46431();
+    }
+
+    /** was net/minecraft/class_1280.method_5496(FFF)F */
+    public static float method_5496(float a0, float a1, float a2) {
+        float f = 2.0F + a2 / 4.0F;
+        float g = a1 - a0 / f;
+        float minLimit = a1 * 0.2F;
+        float clampedG = g < minLimit ? minLimit : (g > 20.0F ? 20.0F : g);
+        return a0 * (1.0F - clampedG / 25.0F);
+    }
+
+    /** was net/minecraft/class_14.method_59(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_7;)Lnet/minecraft/class_7; */
+    public static net.minecraft.class_7 method_59(net.minecraft.class_1922 a0, net.minecraft.class_2338.class_2339 a1, net.minecraft.class_7 a2) {
+        return net.minecraft.class_14.method_59(new net.minecraft.class_9316((net.minecraft.class_1941) a0, null), a1.method_10263(), a1.method_10264(), a1.method_10260(), a2);
+    }
+
+    /** was net/minecraft/class_1675.method_18077(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;Lnet/minecraft/class_243;Lnet/minecraft/class_243;Lnet/minecraft/class_238;Ljava/util/function/Predicate;)Lnet/minecraft/class_3966; */
+    public static net.minecraft.class_3966 method_18077(net.minecraft.class_1937 a0, net.minecraft.class_1297 a1, net.minecraft.class_243 a2, net.minecraft.class_243 a3, net.minecraft.class_238 a4, java.util.function.Predicate a5) {
+        return net.minecraft.class_1675.method_37226(a0, a1, a2, a3, a4, a5, 0.3F);
+    }
+
+    /** was net/minecraft/class_1704.method_53174(I)Lnet/minecraft/class_1291; */
+    public static net.minecraft.class_1291 method_53174(int a0) {
+        net.minecraft.class_6880 entry = net.minecraft.class_1704.method_53174(a0);
+        return entry == null ? null : (net.minecraft.class_1291) entry.comp_349();
+    }
+
+    /** was net/minecraft/class_1714.method_17399(Lnet/minecraft/class_1703;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_8566;Lnet/minecraft/class_1731;Lnet/minecraft/class_8786;)V
+     *  CraftingScreenHandler.updateResult(handler, world, player, input, result, recipe): the old body ran
+     *  only off the client (`!world.isClient`); 1.21.2 made that the parameter type */
+    public static void method_17399(net.minecraft.class_1703 a0, net.minecraft.class_1937 a1, net.minecraft.class_1657 a2, net.minecraft.class_8566 a3, net.minecraft.class_1731 a4, net.minecraft.class_8786 a5) {
+        if (a1 instanceof net.minecraft.class_3218 world) {
+            top.dext.centurybridge.shims.v1_21_11.CraftingScreenHandlerInvoker.cb$updateResult(a0, world, a2, a3, a4, a5);
+        }
+    }
+
+    /** was net/minecraft/class_1764.method_7775(Lnet/minecraft/class_1799;)I */
+    public static int method_7775(net.minecraft.class_1799 a0) {
+        return net.minecraft.class_1764.method_7775(a0, null);
+    }
+
+    /** was net/minecraft/class_1764.method_7777(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;FF)V
+     *  CrossbowItem.shootAll(world, shooter, hand, crossbow, speed, divergence): an instance method of the
+     *  crossbow (with an optional target) since 1.20.5 -- the stack's own crossbow item shoots, as the old
+     *  static did for the stack it was given */
+    public static void method_7777(net.minecraft.class_1937 a0, net.minecraft.class_1309 a1, net.minecraft.class_1268 a2, net.minecraft.class_1799 a3, float a4, float a5) {
+        net.minecraft.class_1764 crossbow = a3.method_7909() instanceof net.minecraft.class_1764 c
+            ? c : (net.minecraft.class_1764) net.minecraft.class_1802.field_8399;
+        crossbow.method_7777(a0, a1, a2, a3, a4, a5, null);
+    }
+
+    /** was net/minecraft/class_1802.method_7990(Lnet/minecraft/class_2960;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792; */
+    public static net.minecraft.class_1792 method_7990(net.minecraft.class_2960 a0, net.minecraft.class_1792 a1) {
+        return net.minecraft.class_1802.method_7990(a0.toString());
+    }
+
+    /** was net/minecraft/class_1806.method_7997(Ljava/lang/Integer;Lnet/minecraft/class_1937;)Lnet/minecraft/class_22; */
+    public static net.minecraft.class_22 method_7997(java.lang.Integer a0, net.minecraft.class_1937 a1) {
+        return net.minecraft.class_1806.method_7997(a0 == null ? null : new net.minecraft.class_9209(a0), a1);
+    }
+
+    /** was net/minecraft/class_1890.method_8203(Lnet/minecraft/class_1887;Lnet/minecraft/class_1309;)I */
+    public static int method_8203(net.minecraft.class_1887 a0, net.minecraft.class_1309 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: the new API requires a class_6880 registry entry, and no guaranteed conversion from the legacy class_1887 instance is available");
+    }
+
+    /** was net/minecraft/class_2178.method_9281()Lnet/minecraft/class_2178; */
+    public static net.minecraft.class_2178 method_9281() {
+        throw new UnsupportedOperationException("CenturyBridge: TextArgumentType.text() requires CommandRegistryAccess");
+    }
+
+    /** was net/minecraft/class_22.method_32371(Lnet/minecraft/class_2487;)Lnet/minecraft/class_22; */
+    public static net.minecraft.class_22 method_32371(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_32371(class_2487) in 1.21.8 requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) that the old single-arg signature cannot supply; no default lookup is reachable from class_22 alone");
+        // CB-CONFIDENCE: high -- the new API strictly adds a required WrapperLookup parameter with no field on class_22 holding one and no static accessor in the listed surface, so the old contract is genuinely inexpressible
+    }
+
+    /** was net/minecraft/class_2248.method_9607(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;)Z */
+    public static boolean method_9607(net.minecraft.class_2680 a0, net.minecraft.class_1922 a1, net.minecraft.class_2338 a2, net.minecraft.class_2350 a3, net.minecraft.class_2338 a4) {
+        return net.minecraft.class_2248.method_9607(a0, a1.method_8320(a4), a3);
+    }
+
+    /** was net/minecraft/class_2293.method_9804(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/function/Predicate; */
+    public static java.util.function.Predicate method_9804(com.mojang.brigadier.context.CommandContext a0, java.lang.String a1) {
+        return net.minecraft.class_2293.method_9804(a0, a1);
+    }
+
+    /** was net/minecraft/class_2315.method_10010(Lnet/minecraft/class_2342;)Lnet/minecraft/class_2374; */
+    public static net.minecraft.class_2374 method_10010(net.minecraft.class_2342 a0) {
+        return net.minecraft.class_2315.method_58682(a0);
+    }
+
+    /** was net/minecraft/class_2609.method_31651(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2609;)V */
+    public static void method_31651(net.minecraft.class_1937 a0, net.minecraft.class_2338 a1, net.minecraft.class_2680 a2, net.minecraft.class_2609 a3) {
+        net.minecraft.class_2609.method_31651((net.minecraft.class_3218) a0, a1, a2, a3);
+    }
+
+    /** was net/minecraft/class_2754.method_11847(Ljava/lang/String;Ljava/lang/Class;Ljava/util/Collection;)Lnet/minecraft/class_2754; */
+    public static net.minecraft.class_2754 method_11847(java.lang.String a0, java.lang.Class a1, java.util.Collection a2) {
+        java.util.List list = a2 instanceof java.util.List ? (java.util.List) a2 : new java.util.ArrayList(a2);
+        return net.minecraft.class_2754.method_11847(a0, a1, list);
+    }
+
+    /** was net/minecraft/class_2788.method_17816(Lnet/minecraft/class_2540;Lnet/minecraft/class_1860;)V */
+    public static void method_17816(net.minecraft.class_2540 a0, net.minecraft.class_1860 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: Recipe no longer contains its ID");
+    }
+
+    /** was net/minecraft/class_2852.method_12395(Lnet/minecraft/class_3218;Lnet/minecraft/class_4153;Lnet/minecraft/class_9240;Lnet/minecraft/class_1923;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2839;
+     *  ChunkSerializer.deserialize(world, poi, key, pos, nbt): 1.21.2 split it into SerializedChunk.fromNbt
+     *  (parse) and convert (build the chunk); null when the nbt is not a chunk, as fromNbt reports it.
+     *  1.21.9 parses against the world's palette factory instead of its registries */
+    public static net.minecraft.class_2839 method_12395(net.minecraft.class_3218 a0, net.minecraft.class_4153 a1, net.minecraft.class_9240 a2, net.minecraft.class_1923 a3, net.minecraft.class_2487 a4) {
+        net.minecraft.class_2852 data = net.minecraft.class_2852.method_61794(a0, a0.method_74142(), a4);
+        return data == null ? null : data.method_12395(a0, a1, a2, a3);
+    }
+
+    /** was net/minecraft/class_2852.method_12410(Lnet/minecraft/class_3218;Lnet/minecraft/class_2791;)Lnet/minecraft/class_2487; */
+    public static net.minecraft.class_2487 method_12410(net.minecraft.class_3218 a0, net.minecraft.class_2791 a1) {
+        return net.minecraft.class_2852.method_61793(a0, a1).method_12410();
+    }
+
+    /** was net/minecraft/class_3002.method_12966(Lnet/minecraft/class_2487;Lnet/minecraft/class_2960;)Lnet/minecraft/class_3002; */
+    public static net.minecraft.class_3002 method_12966(net.minecraft.class_2487 a0, net.minecraft.class_2960 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_12966 now requires a RegistryWrapper.WrapperLookup (class_7225$class_7874) for NBT deserialization; the old 2-arg overload has no source for one");
+        // CB-CONFIDENCE: high -- the new API unconditionally requires a registry lookup the old signature cannot supply
+    }
+
+    /** was net/minecraft/class_3019.method_13053(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_13053(com.mojang.brigadier.CommandDispatcher a0) {
+        net.minecraft.class_3019.method_13053(a0, null);
+    }
+
+    /** was net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lcom/mojang/datafixers/DataFixer;ILnet/minecraft/class_2487;Lnet/minecraft/class_1940;Lnet/minecraft/class_5315;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31; */
+    public static net.minecraft.class_31 method_29029(com.mojang.serialization.Dynamic a0, com.mojang.datafixers.DataFixer a1, int a2, net.minecraft.class_2487 a3, net.minecraft.class_1940 a4, net.minecraft.class_5315 a5, net.minecraft.class_31.class_7729 a6, net.minecraft.class_5285 a7, com.mojang.serialization.Lifecycle a8) {
+        return net.minecraft.class_31.method_29029(a0, a4, a6, a7, a8);
+    }
+
+    /** was net/minecraft/class_3142.method_13736(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_13736(com.mojang.brigadier.CommandDispatcher a0) {
+        net.minecraft.class_3142.method_13736(a0, null);
+    }
+
+    /** was net/minecraft/class_3146.method_13776(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_13776(com.mojang.brigadier.CommandDispatcher a0) {
+        net.minecraft.class_3146.method_13776(a0, (net.minecraft.class_7157) null);
+    }
+
+    /** was net/minecraft/class_3151.method_13804(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_13804(com.mojang.brigadier.CommandDispatcher a0) {
+        net.minecraft.class_3151.method_13804(a0, null);
+    }
+
+    /** was net/minecraft/class_3195.method_42699(Ljava/util/function/Function;)Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec method_42699(java.util.function.Function a0) {
+        return net.minecraft.class_3195.method_42699(a0).codec();
+    }
+
+    /** was net/minecraft/class_32.method_54523(Lcom/mojang/serialization/Dynamic;Lnet/minecraft/class_7712;Lnet/minecraft/class_2378;Lnet/minecraft/class_5455$class_6890;)Lnet/minecraft/class_8895; */
+    public static net.minecraft.class_8895 method_54523(com.mojang.serialization.Dynamic a0, net.minecraft.class_7712 a1, net.minecraft.class_2378 a2, net.minecraft.class_5455.class_6890 a3) {
+        return net.minecraft.class_32.method_54523(a0, a1, a2, (net.minecraft.class_7225.class_7874)a3);
+        // CB-CONFIDENCE: medium -- cast assumes class_5455.class_6890 still implements class_7225.class_7874 in 1.21.2
+    }
+
+    /** was net/minecraft/class_3440.method_32358(Lnet/minecraft/class_2487;)Lnet/minecraft/class_3440; */
+    public static net.minecraft.class_3440 method_32358(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: StructureStart deserialization requires a RegistryWrapper.WrapperLookup in 1.20.5");
+    }
+
+    /** was net/minecraft/class_3518.method_34916(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792; */
+    public static net.minecraft.class_1792 method_34916(com.google.gson.JsonObject a0, java.lang.String a1, net.minecraft.class_1792 a2) {
+        net.minecraft.class_6880 var3 = net.minecraft.class_6880.method_40223(a2);
+        return (net.minecraft.class_1792) net.minecraft.class_3518.method_34916(a0, a1, var3).comp_349();
+    }
+
+    /** was net/minecraft/class_3532.method_15362(F)F */
+    public static float method_15362(float a0) {
+        return net.minecraft.class_3532.method_15362((double) a0);
+    }
+
+    /** was net/minecraft/class_3532.method_15374(F)F */
+    public static float method_15374(float a0) {
+        return net.minecraft.class_3532.method_15374((double) a0);
+    }
+
+    /** was net/minecraft/class_3558.method_20049(Lnet/minecraft/class_1922;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;I)I */
+    public static int method_20049(net.minecraft.class_1922 a0, net.minecraft.class_2680 a1, net.minecraft.class_2338 a2, net.minecraft.class_2680 a3, net.minecraft.class_2338 a4, net.minecraft.class_2350 a5, int a6) {
+        return net.minecraft.class_3558.method_20049(a1, a3, a5, a6);
+    }
+
+    /** was net/minecraft/class_3558.method_51562(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Lnet/minecraft/class_265; */
+    public static net.minecraft.class_265 method_51562(net.minecraft.class_1922 a0, net.minecraft.class_2338 a1, net.minecraft.class_2680 a2, net.minecraft.class_2350 a3) {
+        return net.minecraft.class_3558.method_51562(a2, a3);
+    }
+
+    /** was net/minecraft/class_3675.method_15985(II)Lnet/minecraft/class_3675$class_306; */
+    public static net.minecraft.class_3675.class_306 method_15985(int a0, int a1) {
+        return net.minecraft.class_3675.method_15985(new net.minecraft.class_11908(a0, a1, 0));
+    }
+
+    /** was net/minecraft/class_3675.method_15987(JI)Z */
+    public static boolean method_15987(long a0, int a1) {
+        throw new UnsupportedOperationException("CenturyBridge: cannot convert the legacy GLFW window handle to the required net.minecraft.class_1041 instance");
+    }
+
+    /** was net/minecraft/class_3715.method_17472(Lnet/minecraft/class_1297;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1799;)Z */
+    public static boolean method_17472(net.minecraft.class_1297 a0, net.minecraft.class_1937 a1, net.minecraft.class_2338 a2, net.minecraft.class_2680 a3, net.minecraft.class_1799 a4) {
+        if (a0 instanceof net.minecraft.class_1309) {
+            return net.minecraft.class_3715.method_17472((net.minecraft.class_1309) a0, a1, a2, a3, a4);
+        }
+        return false;
+    }
+
+    /** was net/minecraft/class_3748.method_16546(Lnet/minecraft/class_3499$class_3501;Lnet/minecraft/class_3499$class_3501;)Z */
+    public static boolean method_16546(net.minecraft.class_3499.class_3501 a0, net.minecraft.class_3499.class_3501 a1) {
+        return net.minecraft.class_3748.method_16546(net.minecraft.class_3499.class_10326.method_64824(a0), net.minecraft.class_3499.class_10326.method_64824(a1));
+    }
+
+    /** was net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFFFF)V */
+    public static void method_23196(net.minecraft.class_583 a0, net.minecraft.class_583 a1, net.minecraft.class_2960 a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5, net.minecraft.class_1309 a6, float a7, float a8, float a9, float a10, float a11, float a12, float a13, float a14, float a15) {
+        int color = 0xFF000000 | ((int)(a13 * 255.0f) << 16) | ((int)(a14 * 255.0f) << 8) | (int)(a15 * 255.0f);
+    }
+
+    /** was net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFI)V */
+    public static void method_23196(net.minecraft.class_583 a0, net.minecraft.class_583 a1, net.minecraft.class_2960 a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5, net.minecraft.class_1309 a6, float a7, float a8, float a9, float a10, float a11, float a12, int a13) {
+        throw new UnsupportedOperationException("CenturyBridge: class_10042 render state (item stacks, arm poses, 9 floats, 8 booleans) cannot be reconstructed from old params (BakedModel a1, LivingEntity a6, 6 floats) — entity/item/pose data must be pre-computed by the new pipeline");
+    }
+
+    /** was net/minecraft/class_3978.method_32360(Lnet/minecraft/class_2487;)Lnet/minecraft/class_3978; */
+    public static net.minecraft.class_3978 method_32360(net.minecraft.class_2487 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_32360(CompoundTag) requires a RegistryWrapper.WrapperLookup (class_7225.class_7874) in 1.20.5+; the old single-argument signature relied on global registry access that no longer exists");
+    }
+
+    /** was net/minecraft/class_4215.method_19548(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;F)V */
+    public static void method_19548(net.minecraft.class_1309 a0, net.minecraft.class_1309 a1, float a2) {
+        net.minecraft.class_4215.method_19548(a0, a1, a2, 0);
+    }
+
+    /** was net/minecraft/class_4296.method_39398(Lnet/minecraft/class_2499;Ljava/util/function/Function;Lnet/minecraft/class_1923;)Lnet/minecraft/class_4296; */
+    public static net.minecraft.class_4296 method_39398(net.minecraft.class_2499 a0, java.util.function.Function a1, net.minecraft.class_1923 a2) {
+        throw new UnsupportedOperationException("CenturyBridge: class_4296.method_39398(PacketByteBuf, Function, ChunkPos) deserialized chunk section data from a network buffer using a registry lookup function; 1.21.2 moved that deserialization out of class_4296 entirely and method_39398 now only accepts a pre-deserialized List with no buffer-reading equivalent available on this class");
+        // CB-CONFIDENCE: high -- the old method performed PacketByteBuf deserialization with a registry Function and ChunkPos; the new API surface for class_4296 contains no buffer-reading method, only a List setter, so no faithful bridge exists
+    }
+
+    /** was net/minecraft/class_4525.method_22246(Lnet/minecraft/class_3341;ILnet/minecraft/class_3218;)V */
+    public static void method_22246(net.minecraft.class_3341 a0, int a1, net.minecraft.class_3218 a2) {
+        net.minecraft.class_4525.method_22246(a0, a2);
+    }
+
+    /** was net/minecraft/class_4525.method_22255(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Lnet/minecraft/class_2338; */
+    public static net.minecraft.class_2338 method_22255(net.minecraft.class_2338 a0, int a1, net.minecraft.class_3218 a2) {
+        return net.minecraft.class_4525.method_22255(a0, a1, a2).orElse(null);
+    }
+
+    /** was net/minecraft/class_4525.method_22258(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Ljava/util/Collection; */
+    public static java.util.Collection method_22258(net.minecraft.class_2338 a0, int a1, net.minecraft.class_3218 a2) {
+        return net.minecraft.class_4525.method_22258(a0, a1, a2).collect(java.util.stream.Collectors.toList());
+    }
+
+    /** was net/minecraft/class_4696.method_23679(Lnet/minecraft/class_2680;)Lnet/minecraft/class_1921; */
+    public static net.minecraft.class_1921 method_23679(net.minecraft.class_2680 a0) {
+        return net.minecraft.class_4696.method_23683(a0);
+    }
+
+    /** was net/minecraft/class_4696.method_23680(Lnet/minecraft/class_3610;)Lnet/minecraft/class_1921; */
+    public static net.minecraft.class_1921 method_23680(net.minecraft.class_3610 a0) {
+        throw new UnsupportedOperationException("CenturyBridge: the new fluid-layer API returns class_11515 BlockRenderLayer, which cannot be faithfully converted to the old class_1921 RenderLayer contract");
+    }
+
+    /** was net/minecraft/class_4722.method_33081(Lnet/minecraft/class_5321;)Lnet/minecraft/class_4730; */
+    public static net.minecraft.class_4730 method_33081(net.minecraft.class_5321 a0) {
+        return net.minecraft.class_4722.method_49341(a0);
+    }
+
+    /** was net/minecraft/class_4722.method_33083(Lnet/minecraft/class_5321;)Lnet/minecraft/class_4730; */
+    public static net.minecraft.class_4730 method_33083(net.minecraft.class_5321 a0) {
+        return net.minecraft.class_4722.method_49341(a0);
+    }
+
+    /** was net/minecraft/class_4722.method_48480()Lnet/minecraft/class_1921; */
+    public static net.minecraft.class_1921 method_48480() {
+        return net.minecraft.class_4722.method_48480(false);
+    }
+
+    /** was net/minecraft/class_4828.method_47138(Ljava/util/function/Predicate;)Lnet/minecraft/class_7893; */
+    public static net.minecraft.class_7893 method_47138(java.util.function.Predicate a0) {
+        return net.minecraft.class_4828.method_47138((net.minecraft.class_3218 world, net.minecraft.class_1309 entity) -> a0.test(entity));
+    }
+
+    /** was net/minecraft/class_4828.method_47139(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;Z)Lnet/minecraft/class_7893; */
+    public static net.minecraft.class_7893 method_47139(java.util.function.Predicate a0, java.util.function.BiConsumer a1, boolean a2) {
+        net.minecraft.class_4828.class_10252 cbPredicate = (net.minecraft.class_3218 world, net.minecraft.class_1309 entity) -> a0.test(entity);
+        net.minecraft.class_4828.class_10253 cbConsumer = (net.minecraft.class_3218 world, java.lang.Object obj, net.minecraft.class_1309 entity) -> a1.accept(obj, entity);
+        return net.minecraft.class_4828.method_47139(cbPredicate, cbConsumer, a2);
+    }
+
+    /** was net/minecraft/class_4881.method_25074(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_4881; */
+    public static net.minecraft.class_4881 method_25074(com.google.gson.JsonObject a0) {
+        return net.minecraft.class_4881.method_25074(a0.toString());
+    }
+
+    /** was net/minecraft/class_4896.method_25446(Lnet/minecraft/class_630;Lnet/minecraft/class_630;Lnet/minecraft/class_1309;Z)V */
+    public static void method_25446(net.minecraft.class_630 a0, net.minecraft.class_630 a1, net.minecraft.class_1309 a2, boolean a3) {
+        throw new UnsupportedOperationException("CenturyBridge: cannot derive float and int from LivingEntity without knowing the new API semantics");
+    }
+
+    /** was net/minecraft/class_4896.method_29351(Lnet/minecraft/class_630;Lnet/minecraft/class_630;Lnet/minecraft/class_1308;FF)V */
+    public static void method_29351(net.minecraft.class_630 a0, net.minecraft.class_630 a1, net.minecraft.class_1308 a2, float a3, float a4) {
+        throw new UnsupportedOperationException("CenturyBridge: class_4896.method_29351 now takes EquipmentSlot (class_1306) instead of LivingEntity (class_1308); cannot derive slot from entity without additional context");
+    }
+
+    /** was net/minecraft/class_5317.method_41594(Lnet/minecraft/class_2378;)Ljava/util/Optional; */
+    public static java.util.Optional method_41594(net.minecraft.class_2378 a0) {
+        return net.minecraft.class_5317.method_41594(new net.minecraft.class_7723(a0));
+    }
+
+    /** was net/minecraft/class_5317.method_41598(Lnet/minecraft/class_5455;)Lnet/minecraft/class_7723; */
+    public static net.minecraft.class_7723 method_41598(net.minecraft.class_5455 a0) {
+        return net.minecraft.class_5317.method_41598((net.minecraft.class_7225.class_7874)a0);
+    }
+
+    /** was net/minecraft/class_5317.method_41599(Lnet/minecraft/class_5455;)Lnet/minecraft/class_5363; */
+    public static net.minecraft.class_5363 method_41599(net.minecraft.class_5455 a0) {
+        return net.minecraft.class_5317.method_41599((net.minecraft.class_7225.class_7874) a0);
+    }
+
+    /** was net/minecraft/class_5328.method_33263(Lnet/minecraft/class_1542;Ljava/util/stream/Stream;)V */
+    public static void method_33263(net.minecraft.class_1542 a0, java.util.stream.Stream a1) {
+        net.minecraft.class_5328.method_33263(a0, a1::iterator);
+    }
+
+    /** was net/minecraft/class_5514.method_33805(Ljava/lang/String;)Lnet/minecraft/class_5514; */
+    public static net.minecraft.class_5514 method_33805(java.lang.String a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_33805 return type changed from class_5514 to class_9847; class_9847 does not extend class_5514, cannot cast");
+        // CB-CONFIDENCE: medium -- class_5514 references class_9847$class_5515 in its own method signature, strongly suggesting no inheritance relationship; return type change is fundamental
+    }
+
+    /** was net/minecraft/class_596.method_32034()Lnet/minecraft/class_5607; */
+    public static net.minecraft.class_5607 method_32034() {
+        return net.minecraft.class_596.method_32034(false);
+    }
+
+    /** was net/minecraft/class_6329.method_36192(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_36192(com.mojang.brigadier.CommandDispatcher a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_36192(CommandDispatcher) requires a CommandBuildContext (class_7157) in 1.20.5+; the old single-arg overload has no source for the registry/feature context needed to construct one");
+        // CB-CONFIDENCE: high -- the new API mandates a CommandBuildContext that cannot be derived from a CommandDispatcher alone
+    }
+
+    /** was net/minecraft/class_7107.method_41366()Lnet/minecraft/class_1856; */
+    public static net.minecraft.class_1856 method_41366() {
+        return (net.minecraft.class_1856) net.minecraft.class_7107.method_41366();
+    }
+
+    /** was net/minecraft/class_7532.method_44443(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;III)V */
+    public static void method_44443(net.minecraft.class_332 a0, net.minecraft.class_2960 a1, int a2, int a3, int a4) {
+        throw new UnsupportedOperationException("CenturyBridge: class_7532.method_44443 now requires class_8685 (SpriteContents) instead of class_2960 (Identifier); class_8685 cannot be constructed from an Identifier alone, and class_7532 exposes no accessor to obtain its class_8685");
+    }
+
+    /** was net/minecraft/class_7532.method_44445(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;IIIZZ)V */
+    public static void method_44445(net.minecraft.class_332 a0, net.minecraft.class_2960 a1, int a2, int a3, int a4, boolean a5, boolean a6) {
+        net.minecraft.class_7532.method_44445(a0, a1, a2, a3, a4, a5, a6, 0);
+    }
+
+    /** was net/minecraft/class_758.method_3211(Lnet/minecraft/class_4184;Lnet/minecraft/class_758$class_4596;FZF)V */
+    public static void method_3211(net.minecraft.class_4184 a0, net.minecraft.class_758.class_4596 a1, float a2, boolean a3, float a4) {
+        throw new UnsupportedOperationException("CenturyBridge: method_3211 now requires a Vector4f (computed by method_62185 which needs a class_638 world) that was previously internal; no equivalent without world access");
+    }
+
+    /** was net/minecraft/class_7691.method_45368()Lnet/minecraft/class_1856; */
+    public static net.minecraft.class_1856 method_45368() {
+        throw new UnsupportedOperationException("CenturyBridge: class_7691.method_45368() now returns Predicate instead of Ingredient; 1.20.5 Ingredient is data-driven and cannot wrap an arbitrary predicate");
+    }
+
+    /** was net/minecraft/class_7723.method_45520(Lnet/minecraft/class_2378;Ljava/util/Map;Lnet/minecraft/class_2794;)Ljava/util/Map; */
+    public static java.util.Map method_45520(net.minecraft.class_2378 a0, java.util.Map a1, net.minecraft.class_2794 a2) {
+        return net.minecraft.class_7723.method_45520((net.minecraft.class_7225) a0, a1, a2);
+    }
+
+    /** was net/minecraft/class_775.method_29708(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_3610;)Z */
+    public static boolean method_29708(net.minecraft.class_1920 a0, net.minecraft.class_2338 a1, net.minecraft.class_3610 a2, net.minecraft.class_2680 a3, net.minecraft.class_2350 a4, net.minecraft.class_3610 a5) {
+        return net.minecraft.class_775.method_29708(a2, a3, a4, a5);
+    }
+
+    /** was net/minecraft/class_7973.method_47761(Ljava/util/List;)Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec method_47761(java.util.List a0) {
+        return net.minecraft.class_7973.method_47761(a0).codec();
+    }
+
+    /** was net/minecraft/class_8005.method_48031(Lnet/minecraft/class_161;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)V */
+    public static void method_48031(net.minecraft.class_161 a0, java.util.function.Predicate a1, net.minecraft.class_8005.class_8006 a2) {
+        throw new UnsupportedOperationException("CenturyBridge: RecipeResultCollection now requires RecipeEntry");
+    }
+
+    /** was net/minecraft/class_8055.method_48440(Lnet/minecraft/class_5455;Lnet/minecraft/class_1799;)Ljava/util/Optional; */
+    public static java.util.Optional method_48440(net.minecraft.class_5455 a0, net.minecraft.class_1799 a1) {
+        return net.minecraft.class_8055.method_48440(a0, a1);
+    }
+
+    /** was net/minecraft/class_8173.method_49207(Lnet/minecraft/class_2378;)Ljava/lang/String; */
+    public static java.lang.String method_49207(net.minecraft.class_2378 a0) {
+        return net.minecraft.class_8173.method_49207(a0).comp_2801().toString();
+    }
+
+    /** was net/minecraft/class_8216.method_49719(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; */
+    public static java.lang.String method_49719(java.lang.String a0, java.lang.String a1) {
+        return net.minecraft.class_8216.method_49719(a0, java.util.UUID.fromString(a1));
+    }
+
+    /** was net/minecraft/class_8216.method_49720(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String; */
+    public static java.lang.String method_49720(java.lang.String a0, java.lang.String a1, boolean a2) {
+        return net.minecraft.class_8216.method_49720(a0, java.util.UUID.fromString(a1), a2);
+    }
+
+    /** was net/minecraft/class_837.method_32154()Lnet/minecraft/class_5607; */
+    public static net.minecraft.class_5607 method_32154() {
+        return net.minecraft.class_837.method_32154(false);
+    }
+
+    /** was net/minecraft/class_8795.method_53853(Lnet/minecraft/class_7784;)Lnet/minecraft/class_2438; */
+    public static net.minecraft.class_2438 method_53853(net.minecraft.class_7784 a0) {
+        return net.minecraft.class_8795.method_53853(a0, new java.util.concurrent.CompletableFuture<>());
+    }
+
+    /** was net/minecraft/class_8886.method_54475(Lnet/minecraft/class_1937;Lnet/minecraft/class_9694;)Ljava/util/Optional; */
+    public static java.util.Optional method_54475(net.minecraft.class_1937 a0, net.minecraft.class_9694 a1) {
+        return net.minecraft.class_8886.method_54475((net.minecraft.class_3218) a0, a1);
+    }
+
+    /** was net/minecraft/class_8890.method_54509(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec method_54509(net.minecraft.class_2378 a0) {
+        return net.minecraft.class_8890.method_54509(a0).codec();
+    }
+
+    /** was net/minecraft/class_892.method_23155(Lnet/minecraft/class_1511;F)F */
+    public static float method_23155(net.minecraft.class_1511 a0, float a1) {
+        return net.minecraft.class_892.method_23155(a1);
+    }
+
+    /** was net/minecraft/class_9010.method_55377(Lcom/mojang/brigadier/StringReader;Lcom/mojang/serialization/Codec;)Ljava/lang/Object; */
+    public static java.lang.Object method_55377(com.mojang.brigadier.StringReader a0, com.mojang.serialization.Codec a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_55377 now requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) as its first argument, and the old 2-arg overload has no source for one; no default/empty lookup is reachable from class_9010's API surface");
+        // CB-CONFIDENCE: high -- the new signature adds a required WrapperLookup parameter with no constructor or static factory visible on class_9010 or class_7225$class_7874's listed surface, so the old contract cannot be faithfully expressed
+    }
+
+    /** was net/minecraft/class_9019.method_55446()Lnet/minecraft/class_9019; */
+    public static net.minecraft.class_9019 method_55446() {
+        throw new UnsupportedOperationException("CenturyBridge: method_55446() requires a class_7157 (registry lookup) which cannot be constructed without command context in 1.20.5");
+    }
+
+    /** was net/minecraft/class_922.method_23622(Lnet/minecraft/class_1309;F)I */
+    public static int method_23622(net.minecraft.class_1309 a0, float a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_23622 now requires a class_10042 render state, and the supplied class_1309 cannot be converted without an accessible state factory");
+    }
+
+    /** was net/minecraft/class_9362.method_58659(Lnet/minecraft/class_1657;)Z */
+    public static boolean method_58659(net.minecraft.class_1657 a0) {
+        return net.minecraft.class_9362.method_58659(a0);
     }
 }

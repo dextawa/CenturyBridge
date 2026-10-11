@@ -20,9 +20,4 @@ public abstract class GenClass3002Bridge {
         return ((net.minecraft.class_3002) (Object) this).method_12963(net.minecraft.class_7225.class_7874.method_46761(java.util.stream.Stream.empty()));
     }
 
-    /** was net/minecraft/class_3002.method_12966(Lnet/minecraft/class_2487;Lnet/minecraft/class_2960;)Lnet/minecraft/class_3002; */
-    public net.minecraft.class_3002 method_12966(net.minecraft.class_2487 a0, net.minecraft.class_2960 a1) {
-        return ((net.minecraft.class_3002) (Object) this).method_12966(a0, a1, net.minecraft.class_7225.class_7874.method_46761(java.util.stream.Stream.empty()));
-    }
-
 }

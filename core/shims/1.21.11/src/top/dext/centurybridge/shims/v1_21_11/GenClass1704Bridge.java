@@ -26,10 +26,4 @@ public abstract class GenClass1704Bridge {
         return (net.minecraft.class_1291) ((net.minecraft.class_1704) (Object) this).method_17375().comp_349();
     }
 
-    /** was net/minecraft/class_1704.method_53174(I)Lnet/minecraft/class_1291; */
-    public net.minecraft.class_1291 method_53174(int a0) {
-        net.minecraft.class_6880 entry = ((net.minecraft.class_1704) (Object) this).method_53174(a0);
-        return entry == null ? null : (net.minecraft.class_1291) entry.comp_349();
-    }
-
 }

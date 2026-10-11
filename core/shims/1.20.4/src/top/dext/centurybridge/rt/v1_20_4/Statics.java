@@ -221,14 +221,38 @@ public final class Statics {
     }
 
     /**
-     * 1.20.1 EntityRenderer.drawEntity(ctx,x,y,size,mouseX,mouseY,entity)
-     * gained 3 extra int params (overlayLight,blockLight,yaw) at 1.20.2.
-     * 13 client call sites.
+     * 1.20.1 InventoryScreen.drawEntity(ctx, x, y, size, mouseX, mouseY, entity): x/y is
+     * where the feet go, mouseX/mouseY are already relative to the entity (the caller
+     * subtracts the cursor). 1.20.2 replaced it with a scissor-box form that takes
+     * ABSOLUTE cursor coordinates, so feeding the old arguments into it drew nothing (a
+     * zero size) or looked the wrong way. The 1.20.1 body is ported verbatim instead:
+     * the same head/body rotation, applied to the entity around the old renderer
+     * {@link #method_48472}, then restored.
      */
     public static void method_2486(net.minecraft.class_332 context,
             int x, int y, int size, float mouseX, float mouseY,
             net.minecraft.class_1309 entity) {
-        net.minecraft.class_490.method_2486(context, x, y, size, 0, 0, mouseX, mouseY, 0.0f, entity);
+        float yaw = (float) Math.atan(mouseX / 40.0F);
+        float pitch = (float) Math.atan(mouseY / 40.0F);
+        org.joml.Quaternionf rotation = new org.joml.Quaternionf().rotateZ((float) Math.PI);
+        org.joml.Quaternionf camera = new org.joml.Quaternionf().rotateX(pitch * 20.0F * ((float) Math.PI / 180.0F));
+        rotation.mul(camera);
+        float bodyYaw = entity.field_6283;
+        float entityYaw = entity.method_36454();
+        float entityPitch = entity.method_36455();
+        float prevHeadYaw = entity.field_6259;
+        float headYaw = entity.field_6241;
+        entity.field_6283 = 180.0F + yaw * 20.0F;
+        entity.method_36456(180.0F + yaw * 40.0F);
+        entity.method_36457(-pitch * 20.0F);
+        entity.field_6241 = entity.method_36454();
+        entity.field_6259 = entity.method_36454();
+        method_48472(context, x, y, size, rotation, camera, entity);
+        entity.field_6283 = bodyYaw;
+        entity.method_36456(entityYaw);
+        entity.method_36457(entityPitch);
+        entity.field_6259 = prevHeadYaw;
+        entity.field_6241 = headYaw;
     }
 
     /**
@@ -1926,5 +1950,69 @@ public final class Statics {
      *  returns DataResult since 1.20.3; the 1.20.1 contract was "TextColor or null". */
     public static net.minecraft.class_5251 method_27719(String s) {
         return net.minecraft.class_5251.method_27719(s).result().orElse(null);
+    }
+
+    /** was net/minecraft/class_2788.method_17816(Lnet/minecraft/class_2540;Lnet/minecraft/class_1860;)V */
+    public static void method_17816(net.minecraft.class_2540 a0, net.minecraft.class_1860 a1) {
+        throw new UnsupportedOperationException("CenturyBridge: Recipe no longer contains its ID");
+    }
+
+    /** was net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lcom/mojang/datafixers/DataFixer;ILnet/minecraft/class_2487;Lnet/minecraft/class_1940;Lnet/minecraft/class_5315;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31; */
+    public static net.minecraft.class_31 method_29029(com.mojang.serialization.Dynamic a0, com.mojang.datafixers.DataFixer a1, int a2, net.minecraft.class_2487 a3, net.minecraft.class_1940 a4, net.minecraft.class_5315 a5, net.minecraft.class_31.class_7729 a6, net.minecraft.class_5285 a7, com.mojang.serialization.Lifecycle a8) {
+        return net.minecraft.class_31.method_29029(a0, a4, a6, a7, a8);
+    }
+
+    /** was net/minecraft/class_3281.method_14436(ILnet/minecraft/class_3264;)Lnet/minecraft/class_3281; */
+    public static net.minecraft.class_3281 method_14436(int a0, net.minecraft.class_3264 a1) {
+        int max = net.minecraft.class_3281.values().length - 1;
+        int id = a0;
+        if (a1 != null && "WRAP".equals(a1.name())) {
+            id = a0 % (max + 1);
+            if (id < 0) {
+                id += (max + 1);
+            }
+        }
+        return net.minecraft.class_3281.method_14436(new net.minecraft.class_6497(Integer.valueOf(0), Integer.valueOf(max)), id);
+    }
+
+    /** was net/minecraft/class_3518.method_34916(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792; */
+    public static net.minecraft.class_1792 method_34916(com.google.gson.JsonObject a0, java.lang.String a1, net.minecraft.class_1792 a2) {
+        net.minecraft.class_6880 var3 = net.minecraft.class_6880.method_40223(a2);
+        return (net.minecraft.class_1792) net.minecraft.class_3518.method_34916(a0, a1, var3).comp_349();
+    }
+
+    /** was net/minecraft/class_4525.method_22246(Lnet/minecraft/class_3341;ILnet/minecraft/class_3218;)V */
+    public static void method_22246(net.minecraft.class_3341 a0, int a1, net.minecraft.class_3218 a2) {
+        net.minecraft.class_4525.method_22246(a0, a2);
+    }
+
+    /** was net/minecraft/class_4722.method_48480()Lnet/minecraft/class_1921; */
+    public static net.minecraft.class_1921 method_48480() {
+        return net.minecraft.class_4722.method_48480(false);
+    }
+
+    /** was net/minecraft/class_7766.method_47664(Ljava/util/List;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; */
+    public static java.util.concurrent.CompletableFuture method_47664(java.util.List a0, java.util.concurrent.Executor a1) {
+        return net.minecraft.class_7766.method_47664(net.minecraft.class_8684.create(a0), a0, a1);
+    }
+
+    /** was net/minecraft/class_8005.method_48031(Lnet/minecraft/class_161;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)V */
+    public static void method_48031(net.minecraft.class_161 a0, java.util.function.Predicate a1, net.minecraft.class_8005.class_8006 a2) {
+        throw new UnsupportedOperationException("CenturyBridge: RecipeResultCollection now requires RecipeEntry");
+    }
+
+    /** was net/minecraft/class_8216.method_49719(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; */
+    public static java.lang.String method_49719(java.lang.String a0, java.lang.String a1) {
+        return net.minecraft.class_8216.method_49719(a0, java.util.UUID.fromString(a1));
+    }
+
+    /** was net/minecraft/class_8216.method_49720(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String; */
+    public static java.lang.String method_49720(java.lang.String a0, java.lang.String a1, boolean a2) {
+        return net.minecraft.class_8216.method_49720(a0, java.util.UUID.fromString(a1), a2);
+    }
+
+    /** was net/minecraft/class_8496.method_51260(Lnet/minecraft/class_310;Lnet/minecraft/class_542$class_8495;Lnet/minecraft/class_4011;Lnet/minecraft/class_4341;)V */
+    public static void method_51260(net.minecraft.class_310 a0, net.minecraft.class_542.class_8495 a1, net.minecraft.class_4011 a2, net.minecraft.class_4341 a3) {
+        net.minecraft.class_8496.method_51260(a0, a1, a3);
     }
 }

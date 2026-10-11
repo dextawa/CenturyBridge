@@ -30,9 +30,4 @@ public abstract class GenClass22Bridge {
         return state;
     }
 
-    /** was net/minecraft/class_22.method_32371(Lnet/minecraft/class_2487;)Lnet/minecraft/class_22; */
-    public net.minecraft.class_22 method_32371(net.minecraft.class_2487 a0) {
-        return net.minecraft.class_22.method_32371(a0, net.minecraft.class_7225.class_7874.method_46761(java.util.stream.Stream.empty()));
-    }
-
 }

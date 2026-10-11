@@ -15,10 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_14.class)
 public abstract class GenClass14Bridge {
 
-    /** was net/minecraft/class_14.method_23476(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_7; */
-    public net.minecraft.class_7 method_23476(net.minecraft.class_1922 a0, net.minecraft.class_2338.class_2339 a1) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_9316 path context containing a class_1941 world and class_1308 entity, which cannot be recovered from the old class_1922 argument");
-    }
 
     /** was net/minecraft/class_14.method_29579(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z */
     public boolean method_29579(net.minecraft.class_9 a0, net.minecraft.class_9 a1, net.minecraft.class_9 a2, net.minecraft.class_9 a3) {

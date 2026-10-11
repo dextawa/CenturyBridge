@@ -20,9 +20,4 @@ public abstract class GenClass3978Bridge {
         return ((net.minecraft.class_3978)(Object) this).method_17920().comp_2315();
     }
 
-    /** was net/minecraft/class_3978.method_32360(Lnet/minecraft/class_2487;)Lnet/minecraft/class_3978; */
-    public net.minecraft.class_3978 method_32360(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_32360(CompoundTag) requires a RegistryWrapper.WrapperLookup (class_7225.class_7874) in 1.20.5+; the old single-argument signature relied on global registry access that no longer exists");
-    }
-
 }

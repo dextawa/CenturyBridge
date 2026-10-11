@@ -6150,4 +6150,351 @@ public final class Statics {
             mat.method_7700(), mat.method_24355(), repair,
             net.minecraft.world.item.equipment.EquipmentAssets.IRON);
     }
+
+    /** was net/minecraft/world/ContainerHelper.saveAllItems(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/NonNullList;)Lnet/minecraft/nbt/CompoundTag; */
+    public static net.minecraft.nbt.CompoundTag method_5426(net.minecraft.nbt.CompoundTag a0, net.minecraft.core.NonNullList a1) {
+        throw new UnsupportedOperationException("CenturyBridge: saveAllItems in 1.21.8 requires a RegistryWrapper.WrapperLookup (net.minecraft.core.HolderLookup$class_7874) that RecipeManager does not expose and the 1.20.1 signature did not carry");
+    }
+
+    /** was net/minecraft/world/level/pathfinder/WalkNodeEvaluator/checkNeighbourBlocks(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos$MutableBlockPos;Lnet/minecraft/world/level/pathfinder/PathType;)Lnet/minecraft/world/level/pathfinder/PathType; */
+    public static net.minecraft.world.level.pathfinder.PathType method_59(net.minecraft.world.level.BlockGetter a0, net.minecraft.core.BlockPos.MutableBlockPos a1, net.minecraft.world.level.pathfinder.PathType a2) {
+        return net.minecraft.world.level.pathfinder.WalkNodeEvaluator.checkNeighbourBlocks(new net.minecraft.world.level.pathfinder.PathfindingContext((net.minecraft.world.level.CollisionGetter) a0, null), a1.getX(), a1.getY(), a1.getZ(), a2);
+    }
+
+    /** was net/minecraft/world/inventory/BeaconMenu/decodeEffect(I)Lnet/minecraft/world/effect/MobEffect; */
+    public static net.minecraft.world.effect.MobEffect method_53174(int a0) {
+        net.minecraft.core.Holder entry = net.minecraft.world.inventory.BeaconMenu.decodeEffect(a0);
+        return entry == null ? null : (net.minecraft.world.effect.MobEffect) entry.value();
+    }
+
+    /** was net/minecraft/world/inventory/CraftingMenu.slotChangedCraftingGrid(Lnet/minecraft/world/inventory/AbstractContainerMenu;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/inventory/CraftingContainer;Lnet/minecraft/world/inventory/ResultContainer;Lnet/minecraft/world/item/crafting/RecipeHolder;)V
+     *  CraftingScreenHandler.updateResult(handler, world, player, input, result, recipe): the old body ran
+     *  only off the client (`!world.isClient`); 1.21.2 made that the parameter type */
+    public static void method_17399(net.minecraft.world.inventory.AbstractContainerMenu a0, net.minecraft.world.level.Level a1, net.minecraft.world.entity.player.Player a2, net.minecraft.world.inventory.CraftingContainer a3, net.minecraft.world.inventory.ResultContainer a4, net.minecraft.world.item.crafting.RecipeHolder a5) {
+        if (a1 instanceof net.minecraft.server.level.ServerLevel world) {
+            top.dext.centurybridge.shims.v26_2.CraftingScreenHandlerInvoker.cb$updateResult(a0, world, a2, a3, a4, a5);
+        }
+    }
+
+    /** was net/minecraft/world/item/CrossbowItem/getChargeDuration(Lnet/minecraft/world/item/ItemStack;)I */
+    public static int method_7775(net.minecraft.world.item.ItemStack a0) {
+        return net.minecraft.world.item.CrossbowItem.getChargeDuration(a0, null);
+    }
+
+    /** was net/minecraft/world/item/CrossbowItem/performShooting(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;FF)V
+     *  CrossbowItem.shootAll(world, shooter, hand, crossbow, speed, divergence): an instance method of the
+     *  crossbow (with an optional target) since 1.20.5 -- the stack's own crossbow item shoots, as the old
+     *  static did for the stack it was given */
+    public static void method_7777(net.minecraft.world.level.Level a0, net.minecraft.world.entity.LivingEntity a1, net.minecraft.world.InteractionHand a2, net.minecraft.world.item.ItemStack a3, float a4, float a5) {
+        net.minecraft.world.item.CrossbowItem crossbow = a3.getItem() instanceof net.minecraft.world.item.CrossbowItem c
+            ? c : (net.minecraft.world.item.CrossbowItem) net.minecraft.world.item.Items.CROSSBOW;
+        crossbow.performShooting(a0, a1, a2, a3, a4, a5, null);
+    }
+
+    /** was net/minecraft/world/item/MapItem/getSavedData(Ljava/lang/Integer;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData; */
+    public static net.minecraft.world.level.saveddata.maps.MapItemSavedData method_7997(java.lang.Integer a0, net.minecraft.world.level.Level a1) {
+        return net.minecraft.world.item.MapItem.getSavedData(a0 == null ? null : new net.minecraft.world.level.saveddata.maps.MapId(a0), a1);
+    }
+
+    /** was net/minecraft/world/item/enchantment/EnchantmentHelper.onProjectileSpawned(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/projectile/arrow/AbstractArrow;Ljava/util/function/Consumer;)V */
+    public static void method_60127(net.minecraft.server.level.ServerLevel a0, net.minecraft.world.item.ItemStack a1, net.minecraft.world.entity.projectile.arrow.AbstractArrow a2, java.util.function.Consumer a3) {
+        net.minecraft.world.item.enchantment.EnchantmentHelper.onProjectileSpawned(a0, a1, (net.minecraft.world.entity.projectile.Projectile)a2, a3);
+    }
+
+    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/getDamageProtection(Ljava/lang/Iterable;Lnet/minecraft/world/damagesource/DamageSource;)I */
+    public static int method_8219(java.lang.Iterable a0, net.minecraft.world.damagesource.DamageSource a1) {
+        throw new UnsupportedOperationException("CenturyBridge: getDamageProtection(Iterable, DamageSource) computed protection for explicit equipment; 1.21 getDamageProtection requires World and LivingEntity (the defender), which cannot be derived from an equipment Iterable and DamageSource alone");
+    }
+
+    /** was net/minecraft/world/item/enchantment/EnchantmentHelper/getItemEnchantmentLevel(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I */
+    public static int method_8225(net.minecraft.world.item.enchantment.Enchantment a0, net.minecraft.world.item.ItemStack a1) {
+        // Holder.direct never equals the registry Reference the item component is keyed by (identity), so it always answered 0
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(top.dext.centurybridge.rt.v26_2.Statics.cbEnchHolder(a0), a1);
+    }
+
+    /** was net/minecraft/commands/arguments/ComponentArgument/textComponent()Lnet/minecraft/commands/arguments/ComponentArgument; */
+    public static net.minecraft.commands.arguments.ComponentArgument method_9281() {
+        throw new UnsupportedOperationException("CenturyBridge: TextArgumentType.text() requires CommandRegistryAccess");
+    }
+
+    /** was net/minecraft/world/level/saveddata/maps/MapItemSavedData.method_32371(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData; */
+    public static net.minecraft.world.level.saveddata.maps.MapItemSavedData method_32371(net.minecraft.nbt.CompoundTag a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_32371(net.minecraft.nbt.CompoundTag) in 1.21.8 requires a net.minecraft.core.HolderLookup$class_7874 (RegistryWrapper.WrapperLookup) that the old single-arg signature cannot supply; no default lookup is reachable from net.minecraft.world.level.saveddata.maps.MapItemSavedData alone");
+        // CB-CONFIDENCE: high -- the new API strictly adds a required WrapperLookup parameter with no field on net.minecraft.world.level.saveddata.maps.MapItemSavedData holding one and no static accessor in the listed surface, so the old contract is genuinely inexpressible
+    }
+
+    /** was net/minecraft/commands/arguments/item/ItemPredicateArgument/getItemPredicate(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/function/Predicate; */
+    public static java.util.function.Predicate method_9804(com.mojang.brigadier.context.CommandContext a0, java.lang.String a1) {
+        return net.minecraft.commands.arguments.item.ItemPredicateArgument.getItemPredicate(a0, a1);
+    }
+
+    /** was net/minecraft/nbt/NbtUtils/method_10692(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/nbt/CompoundTag; */
+    public static net.minecraft.nbt.CompoundTag method_10692(net.minecraft.core.BlockPos a0) {
+        net.minecraft.nbt.CompoundTag nbt = new net.minecraft.nbt.CompoundTag();
+        nbt.putFloat("X", a0.getX());
+        nbt.putFloat("Y", a0.getY());
+        nbt.putFloat("Z", a0.getZ());
+        return nbt;
+    }
+
+    /** was net/minecraft/world/level/block/entity/BlockEntity/loadStatic(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/block/entity/BlockEntity; */
+    public static net.minecraft.world.level.block.entity.BlockEntity method_11005(net.minecraft.core.BlockPos a0, net.minecraft.world.level.block.state.BlockState a1, net.minecraft.nbt.CompoundTag a2) {
+        return net.minecraft.world.level.block.entity.BlockEntity.loadStatic(a0, a1, a2, net.minecraft.core.HolderLookup.Provider.create(java.util.stream.Stream.empty()));
+    }
+
+    /** was net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.serverTick(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity;)V */
+    public static void method_31651(net.minecraft.world.level.Level a0, net.minecraft.core.BlockPos a1, net.minecraft.world.level.block.state.BlockState a2, net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity a3) {
+        net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity.serverTick((net.minecraft.server.level.ServerLevel) a0, a1, a2, a3);
+    }
+
+    /** was net/minecraft/world/level/block/state/properties/EnumProperty.create(Ljava/lang/String;Ljava/lang/Class;Ljava/util/Collection;)Lnet/minecraft/world/level/block/state/properties/EnumProperty; */
+    public static net.minecraft.world.level.block.state.properties.EnumProperty method_11847(java.lang.String a0, java.lang.Class a1, java.util.Collection a2) {
+        java.util.List list = a2 instanceof java.util.List ? (java.util.List) a2 : new java.util.ArrayList(a2);
+        return net.minecraft.world.level.block.state.properties.EnumProperty.create(a0, a1, list);
+    }
+
+    /** was net/minecraft/network/protocol/game/ClientboundUpdateRecipesPacket/method_17816(Lnet/minecraft/network/FriendlyByteBuf;Lnet/minecraft/world/item/crafting/Recipe;)V */
+    public static void method_17816(net.minecraft.network.FriendlyByteBuf a0, net.minecraft.world.item.crafting.Recipe a1) {
+        throw new UnsupportedOperationException("CenturyBridge: Recipe no longer contains its ID");
+    }
+
+    /** was net/minecraft/world/level/chunk/storage/SerializableChunkData.read(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/ai/village/poi/PoiManager;Lnet/minecraft/world/level/chunk/storage/RegionStorageInfo;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/chunk/ProtoChunk;
+     *  ChunkSerializer.deserialize(world, poi, key, pos, nbt): 1.21.2 split it into SerializableChunkData.parse
+     *  and read; null when the nbt is not a chunk, as parse reports it */
+    public static net.minecraft.world.level.chunk.ProtoChunk method_12395(net.minecraft.server.level.ServerLevel a0, net.minecraft.world.entity.ai.village.poi.PoiManager a1, net.minecraft.world.level.chunk.storage.RegionStorageInfo a2, net.minecraft.world.level.ChunkPos a3, net.minecraft.nbt.CompoundTag a4) {
+        net.minecraft.world.level.chunk.storage.SerializableChunkData data =
+            net.minecraft.world.level.chunk.storage.SerializableChunkData.parse(a0, a0.palettedContainerFactory(), a4);
+        return data == null ? null : data.read(a0, a1, a2, a3);
+    }
+
+    /** was net/minecraft/world/level/chunk/storage/SerializableChunkData.write(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ChunkAccess;)Lnet/minecraft/nbt/CompoundTag; */
+    public static net.minecraft.nbt.CompoundTag method_12410(net.minecraft.server.level.ServerLevel a0, net.minecraft.world.level.chunk.ChunkAccess a1) {
+        return net.minecraft.world.level.chunk.storage.SerializableChunkData.copyOf(a0, a1).write();
+    }
+
+    /** was net/minecraft/server/bossevents/CustomBossEvent.load(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/server/bossevents/CustomBossEvent; */
+    public static net.minecraft.server.bossevents.CustomBossEvent method_12966(net.minecraft.nbt.CompoundTag a0, net.minecraft.resources.Identifier a1) {
+        throw new UnsupportedOperationException("CenturyBridge: load now requires a RegistryWrapper.WrapperLookup (net.minecraft.core.HolderLookup$class_7874) for NBT deserialization; the old 2-arg overload has no source for one");
+        // CB-CONFIDENCE: high -- the new API unconditionally requires a registry lookup the old signature cannot supply
+    }
+
+    /** was net/minecraft/server/commands/BossBarCommands/register(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_13053(com.mojang.brigadier.CommandDispatcher a0) {
+        net.minecraft.server.commands.BossBarCommands.register(a0, null);
+    }
+
+    /** was net/minecraft/server/commands/TeamCommand/register(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_13736(com.mojang.brigadier.CommandDispatcher a0) {
+        net.minecraft.server.commands.TeamCommand.register(a0, null);
+    }
+
+    /** was net/minecraft/server/commands/TellRawCommand/register(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_13776(com.mojang.brigadier.CommandDispatcher a0) {
+        net.minecraft.server.commands.TellRawCommand.register(a0, (net.minecraft.commands.CommandBuildContext) null);
+    }
+
+    /** was net/minecraft/server/commands/TitleCommand/register(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_13804(com.mojang.brigadier.CommandDispatcher a0) {
+        net.minecraft.server.commands.TitleCommand.register(a0, null);
+    }
+
+    /** was net/minecraft/world/level/levelgen/structure/Structure/simpleCodec(Ljava/util/function/Function;)Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec method_42699(java.util.function.Function a0) {
+        return net.minecraft.world.level.levelgen.structure.Structure.simpleCodec(a0).codec();
+    }
+
+    /** was net/minecraft/util/GsonHelper/getAsItem(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/world/item/Item;)Lnet/minecraft/world/item/Item; */
+    public static net.minecraft.world.item.Item method_34916(com.google.gson.JsonObject a0, java.lang.String a1, net.minecraft.world.item.Item a2) {
+        net.minecraft.core.Holder var3 = net.minecraft.core.Holder.direct(a2);
+        return (net.minecraft.world.item.Item) net.minecraft.util.GsonHelper.getAsItem(a0, a1, var3).value();
+    }
+
+    /** was net/minecraft/world/level/lighting/LightEngine.getOcclusionShape(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape; */
+    public static net.minecraft.world.phys.shapes.VoxelShape method_51562(net.minecraft.world.level.BlockGetter a0, net.minecraft.core.BlockPos a1, net.minecraft.world.level.block.state.BlockState a2, net.minecraft.core.Direction a3) {
+        return net.minecraft.world.level.lighting.LightEngine.getOcclusionShape(a2, a3);
+    }
+
+    /** was net/minecraft/world/level/block/LecternBlock/tryPlaceBook(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/item/ItemStack;)Z */
+    public static boolean method_17472(net.minecraft.world.entity.Entity a0, net.minecraft.world.level.Level a1, net.minecraft.core.BlockPos a2, net.minecraft.world.level.block.state.BlockState a3, net.minecraft.world.item.ItemStack a4) {
+        if (a0 instanceof net.minecraft.world.entity.LivingEntity) {
+            return net.minecraft.world.level.block.LecternBlock.tryPlaceBook((net.minecraft.world.entity.LivingEntity) a0, a1, a2, a3, a4);
+        }
+        return false;
+    }
+
+    /** was net/minecraft/world/level/block/JigsawBlock.canAttach(Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;)Z */
+    public static boolean method_16546(net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo a0, net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo a1) {
+        return net.minecraft.world.level.block.JigsawBlock.canAttach(net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.JigsawBlockInfo.of(a0), net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.JigsawBlockInfo.of(a1));
+    }
+
+    /** was net/minecraft/world/level/saveddata/maps/MapIndex/method_32360(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/saveddata/maps/MapIndex; */
+    public static net.minecraft.world.level.saveddata.maps.MapIndex method_32360(net.minecraft.nbt.CompoundTag a0) {
+        throw new UnsupportedOperationException("CenturyBridge: method_32360(CompoundTag) requires a RegistryWrapper.WrapperLookup (net.minecraft.core.HolderLookup.Provider) in 1.20.5+; the old single-argument signature relied on global registry access that no longer exists");
+    }
+
+    /** was net/minecraft/world/entity/ai/behavior/BehaviorUtils/lockGazeAndWalkToEachOther(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;F)V */
+    public static void method_19548(net.minecraft.world.entity.LivingEntity a0, net.minecraft.world.entity.LivingEntity a1, float a2) {
+        net.minecraft.world.entity.ai.behavior.BehaviorUtils.lockGazeAndWalkToEachOther(a0, a1, a2, 0);
+    }
+
+    /** was net/minecraft/world/ticks/ProtoChunkTicks.load(Lnet/minecraft/nbt/ListTag;Ljava/util/function/Function;Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/ticks/ProtoChunkTicks; */
+    public static net.minecraft.world.ticks.ProtoChunkTicks method_39398(net.minecraft.nbt.ListTag a0, java.util.function.Function a1, net.minecraft.world.level.ChunkPos a2) {
+        throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.ticks.ProtoChunkTicks.load(PacketByteBuf, Function, ChunkPos) deserialized chunk section data from a network buffer using a registry lookup function; 1.21.2 moved that deserialization out of net.minecraft.world.ticks.ProtoChunkTicks entirely and load now only accepts a pre-deserialized List with no buffer-reading equivalent available on this class");
+        // CB-CONFIDENCE: high -- the old method performed PacketByteBuf deserialization with a registry Function and ChunkPos; the new API surface for net.minecraft.world.ticks.ProtoChunkTicks contains no buffer-reading method, only a List setter, so no faithful bridge exists
+    }
+
+    /** was net/minecraft/gametest/framework/StructureUtils/clearSpaceForStructure(Lnet/minecraft/world/level/levelgen/structure/BoundingBox;ILnet/minecraft/server/level/ServerLevel;)V */
+    public static void method_22246(net.minecraft.world.level.levelgen.structure.BoundingBox a0, int a1, net.minecraft.server.level.ServerLevel a2) {
+        net.minecraft.gametest.framework.StructureUtils.clearSpaceForStructure(a0, a2);
+    }
+
+    /** was net/minecraft/gametest/framework/StructureUtils/findNearestTest(Lnet/minecraft/core/BlockPos;ILnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/core/BlockPos; */
+    public static net.minecraft.core.BlockPos method_22255(net.minecraft.core.BlockPos a0, int a1, net.minecraft.server.level.ServerLevel a2) {
+        return net.minecraft.gametest.framework.StructureUtils.findNearestTest(a0, a1, a2).orElse(null);
+    }
+
+    /** was net/minecraft/gametest/framework/StructureUtils/findTestBlocks(Lnet/minecraft/core/BlockPos;ILnet/minecraft/server/level/ServerLevel;)Ljava/util/Collection; */
+    public static java.util.Collection method_22258(net.minecraft.core.BlockPos a0, int a1, net.minecraft.server.level.ServerLevel a2) {
+        return net.minecraft.gametest.framework.StructureUtils.findTestBlocks(a0, a1, a2).collect(java.util.stream.Collectors.toList());
+    }
+
+    /** was net/minecraft/client/renderer/Sheets/armorTrimsSheet()Lnet/minecraft/client/renderer/rendertype/RenderType; */
+    public static net.minecraft.client.renderer.rendertype.RenderType method_48480() {
+        return net.minecraft.client.renderer.Sheets.armorTrimsSheet(false);
+    }
+
+    /** was net/minecraft/world/entity/ai/behavior/StopAttackingIfTargetInvalid.create(Ljava/util/function/Predicate;)Lnet/minecraft/world/entity/ai/behavior/BehaviorControl; */
+    public static net.minecraft.world.entity.ai.behavior.BehaviorControl method_47138(java.util.function.Predicate a0) {
+        return net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid.create((net.minecraft.server.level.ServerLevel world, net.minecraft.world.entity.LivingEntity entity) -> a0.test(entity));
+    }
+
+    /** was net/minecraft/world/entity/ai/behavior/StopAttackingIfTargetInvalid.create(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;Z)Lnet/minecraft/world/entity/ai/behavior/BehaviorControl; */
+    public static net.minecraft.world.entity.ai.behavior.BehaviorControl method_47139(java.util.function.Predicate a0, java.util.function.BiConsumer a1, boolean a2) {
+        net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid.StopAttackCondition cbPredicate = (net.minecraft.server.level.ServerLevel world, net.minecraft.world.entity.LivingEntity entity) -> a0.test(entity);
+        net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid.TargetErasedCallback cbConsumer = (net.minecraft.server.level.ServerLevel world, java.lang.Object obj, net.minecraft.world.entity.LivingEntity entity) -> a1.accept(obj, entity);
+        return net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid.create(cbPredicate, cbConsumer, a2);
+    }
+
+    /** was net/minecraft/com.mojang.realmsclient.dto.RealmsServerPlayerLists.parse(Lcom/google/gson/JsonObject;)Lnet/minecraft/com.mojang.realmsclient.dto.RealmsServerPlayerLists; */
+    public static com.mojang.realmsclient.dto.RealmsServerPlayerLists method_25074(com.google.gson.JsonObject a0) {
+        return com.mojang.realmsclient.dto.RealmsServerPlayerLists.parse(a0.toString());
+    }
+
+    /** was net/minecraft/client/model/AnimationUtils.animateCrossbowCharge(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/world/entity/LivingEntity;Z)V */
+    public static void method_25446(net.minecraft.client.model.geom.ModelPart a0, net.minecraft.client.model.geom.ModelPart a1, net.minecraft.world.entity.LivingEntity a2, boolean a3) {
+        throw new UnsupportedOperationException("CenturyBridge: cannot derive float and int from LivingEntity without knowing the new API semantics");
+    }
+
+    /** was net/minecraft/client/model/AnimationUtils.swingWeaponDown(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/world/entity/Mob;FF)V */
+    public static void method_29351(net.minecraft.client.model.geom.ModelPart a0, net.minecraft.client.model.geom.ModelPart a1, net.minecraft.world.entity.Mob a2, float a3, float a4) {
+        throw new UnsupportedOperationException("CenturyBridge: net.minecraft.client.model.AnimationUtils.swingWeaponDown now takes EquipmentSlot (net.minecraft.world.entity.HumanoidArm) instead of LivingEntity (net.minecraft.world.entity.Mob); cannot derive slot from entity without additional context");
+    }
+
+    /** was net/minecraft/world/level/levelgen/presets/WorldPresets/fromSettings(Lnet/minecraft/core/Registry;)Ljava/util/Optional; */
+    public static java.util.Optional method_41594(net.minecraft.core.Registry a0) {
+        return net.minecraft.world.level.levelgen.presets.WorldPresets.fromSettings(new net.minecraft.world.level.levelgen.WorldDimensions(a0));
+    }
+
+    /** was net/minecraft/world/level/levelgen/presets/WorldPresets.createNormalWorldDimensions(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/level/levelgen/WorldDimensions; */
+    public static net.minecraft.world.level.levelgen.WorldDimensions method_41598(net.minecraft.core.RegistryAccess a0) {
+        return net.minecraft.world.level.levelgen.presets.WorldPresets.createNormalWorldDimensions((net.minecraft.core.HolderLookup.Provider)a0);
+    }
+
+    /** was net/minecraft/world/level/levelgen/presets/WorldPresets.getNormalOverworld(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/level/dimension/LevelStem; */
+    public static net.minecraft.world.level.dimension.LevelStem method_41599(net.minecraft.core.RegistryAccess a0) {
+        return net.minecraft.world.level.levelgen.presets.WorldPresets.getNormalOverworld((net.minecraft.core.HolderLookup.Provider) a0);
+    }
+
+    /** was net/minecraft/server/network/LegacyTextFilter.createTextFilterFromConfig(Ljava/lang/String;)Lnet/minecraft/server/network/LegacyTextFilter; */
+    public static net.minecraft.server.network.LegacyTextFilter method_33805(java.lang.String a0) {
+        throw new UnsupportedOperationException("CenturyBridge: createTextFilterFromConfig return type changed from net.minecraft.server.network.LegacyTextFilter to net.minecraft.server.network.ServerTextFilter; net.minecraft.server.network.ServerTextFilter does not extend net.minecraft.server.network.LegacyTextFilter, cannot cast");
+        // CB-CONFIDENCE: medium -- net.minecraft.server.network.LegacyTextFilter references net.minecraft.server.network.ServerTextFilter$class_5515 in its own method signature, strongly suggesting no inheritance relationship; return type change is fundamental
+    }
+
+    /** was net/minecraft/server/commands/RaidCommand/register(Lcom/mojang/brigadier/CommandDispatcher;)V */
+    public static void method_36192(com.mojang.brigadier.CommandDispatcher a0) {
+        throw new UnsupportedOperationException("CenturyBridge: register(CommandDispatcher) requires a CommandBuildContext (net.minecraft.commands.CommandBuildContext) in 1.20.5+; the old single-arg overload has no source for the registry/feature context needed to construct one");
+        // CB-CONFIDENCE: high -- the new API mandates a CommandBuildContext that cannot be derived from a CommandDispatcher alone
+    }
+
+    /** was net/minecraft/world/entity/animal/frog/FrogAi/getTemptations()Lnet/minecraft/world/item/crafting/Ingredient; */
+    public static net.minecraft.world.item.crafting.Ingredient method_41366() {
+        return (net.minecraft.world.item.crafting.Ingredient) net.minecraft.world.entity.animal.frog.FrogAi.getTemptations();
+    }
+
+    /** was net/minecraft/client/renderer/fog/FogRenderer.setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/fog/FogRenderer$FogMode;FZF)V */
+    public static void method_3211(net.minecraft.client.Camera a0, net.minecraft.client.renderer.fog.FogRenderer.FogMode a1, float a2, boolean a3, float a4) {
+        throw new UnsupportedOperationException("CenturyBridge: setupFog now requires a Vector4f (computed by computeFogColor which needs a net.minecraft.client.multiplayer.ClientLevel world) that was previously internal; no equivalent without world access");
+    }
+
+    /** was net/minecraft/world/entity/animal/camel/CamelAi/method_45368()Lnet/minecraft/world/item/crafting/Ingredient; */
+    public static net.minecraft.world.item.crafting.Ingredient method_45368() {
+        throw new UnsupportedOperationException("CenturyBridge: net.minecraft.world.entity.animal.camel.CamelAi.method_45368() now returns Predicate instead of Ingredient; 1.20.5 Ingredient is data-driven and cannot wrap an arbitrary predicate");
+    }
+
+    /** was net/minecraft/world/level/levelgen/WorldDimensions.withOverworld(Lnet/minecraft/core/Registry;Ljava/util/Map;Lnet/minecraft/world/level/chunk/ChunkGenerator;)Ljava/util/Map; */
+    public static java.util.Map method_45520(net.minecraft.core.Registry a0, java.util.Map a1, net.minecraft.world.level.chunk.ChunkGenerator a2) {
+        return net.minecraft.world.level.levelgen.WorldDimensions.withOverworld((net.minecraft.core.HolderLookup) a0, a1, a2);
+    }
+
+    /** was net/minecraft/client/telemetry/TelemetryPropertyMap/createCodec(Ljava/util/List;)Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec method_47761(java.util.List a0) {
+        return net.minecraft.client.telemetry.TelemetryPropertyMap.createCodec(a0).codec();
+    }
+
+    /** was net/minecraft/server/advancements/AdvancementVisibilityEvaluator/evaluateVisibility(Lnet/minecraft/advancements/Advancement;Ljava/util/function/Predicate;Lnet/minecraft/server/advancements/AdvancementVisibilityEvaluator$Output;)V */
+    public static void method_48031(net.minecraft.advancements.Advancement a0, java.util.function.Predicate a1, net.minecraft.server.advancements.AdvancementVisibilityEvaluator.Output a2) {
+        throw new UnsupportedOperationException("CenturyBridge: RecipeResultCollection now requires RecipeEntry");
+    }
+
+    /** was net/minecraft/world/level/block/entity/DecoratedPotPatterns/bootstrap(Lnet/minecraft/core/Registry;)Ljava/lang/String; */
+    public static java.lang.String method_49207(net.minecraft.core.Registry a0) {
+        return net.minecraft.world.level.block.entity.DecoratedPotPatterns.bootstrap(a0).assetId().toString();
+    }
+
+    /** was net/minecraft/util/CommonLinks/extendRealms(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String; */
+    public static java.lang.String method_49719(java.lang.String a0, java.lang.String a1) {
+        return net.minecraft.util.CommonLinks.extendRealms(a0, java.util.UUID.fromString(a1));
+    }
+
+    /** was net/minecraft/util/CommonLinks/extendRealms(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String; */
+    public static java.lang.String method_49720(java.lang.String a0, java.lang.String a1, boolean a2) {
+        return net.minecraft.util.CommonLinks.extendRealms(a0, java.util.UUID.fromString(a1), a2);
+    }
+
+    /** was net/minecraft/data/loot/packs/TradeRebalanceLootTableProvider/create(Lnet/minecraft/data/PackOutput;)Lnet/minecraft/data/loot/LootTableProvider; */
+    public static net.minecraft.data.loot.LootTableProvider method_53853(net.minecraft.data.PackOutput a0) {
+        return net.minecraft.data.loot.packs.TradeRebalanceLootTableProvider.create(a0, new java.util.concurrent.CompletableFuture<>());
+    }
+
+    /** was net/minecraft/world/level/block/CrafterBlock.getPotentialResults(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/crafting/CraftingInput;)Ljava/util/Optional; */
+    public static java.util.Optional method_54475(net.minecraft.world.level.Level a0, net.minecraft.world.item.crafting.CraftingInput a1) {
+        return net.minecraft.world.level.block.CrafterBlock.getPotentialResults((net.minecraft.server.level.ServerLevel) a0, a1);
+    }
+
+    /** was net/minecraft/world/level/levelgen/structure/pools/alias/PoolAliasBindings/bootstrap(Lnet/minecraft/core/Registry;)Lcom/mojang/serialization/Codec; */
+    public static com.mojang.serialization.Codec method_54509(net.minecraft.core.Registry a0) {
+        return net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBindings.bootstrap(a0).codec();
+    }
+
+    /** was net/minecraft/client/renderer/entity/EndCrystalRenderer.getY(Lnet/minecraft/world/entity/boss/enderdragon/EndCrystal;F)F */
+    public static float method_23155(net.minecraft.world.entity.boss.enderdragon.EndCrystal a0, float a1) {
+        return net.minecraft.client.renderer.entity.EndCrystalRenderer.getY(a1);
+    }
+
+    /** was net/minecraft/commands/ParserUtils.method_55377(Lcom/mojang/brigadier/StringReader;Lcom/mojang/serialization/Codec;)Ljava/lang/Object; */
+    public static java.lang.Object method_55377(com.mojang.brigadier.StringReader a0, com.mojang.serialization.Codec a1) {
+        throw new UnsupportedOperationException("CenturyBridge: method_55377 now requires a net.minecraft.core.HolderLookup$class_7874 (RegistryWrapper.WrapperLookup) as its first argument, and the old 2-arg overload has no source for one; no default/empty lookup is reachable from net.minecraft.commands.ParserUtils's API surface");
+        // CB-CONFIDENCE: high -- the new signature adds a required WrapperLookup parameter with no constructor or static factory visible on net.minecraft.commands.ParserUtils or net.minecraft.core.HolderLookup$class_7874's listed surface, so the old contract cannot be faithfully expressed
+    }
+
+    /** was net/minecraft/commands/arguments/StyleArgument/style()Lnet/minecraft/commands/arguments/StyleArgument; */
+    public static net.minecraft.commands.arguments.StyleArgument method_55446() {
+        throw new UnsupportedOperationException("CenturyBridge: style() requires a net.minecraft.commands.CommandBuildContext (registry lookup) which cannot be constructed without command context in 1.20.5");
+    }
+
+    /** was net/minecraft/world/item/MaceItem/canSmashAttack(Lnet/minecraft/world/entity/player/Player;)Z */
+    public static boolean method_58659(net.minecraft.world.entity.player.Player a0) {
+        return net.minecraft.world.item.MaceItem.canSmashAttack(a0);
+    }
 }

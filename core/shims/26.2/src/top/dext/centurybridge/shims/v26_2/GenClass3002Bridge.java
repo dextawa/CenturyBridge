@@ -20,9 +20,4 @@ public abstract class GenClass3002Bridge {
         throw new UnsupportedOperationException("CenturyBridge: method_12963() in 1.21.8 requires a net.minecraft.core.HolderLookup.Provider (RegistryWrapper.WrapperLookup) argument, and net.minecraft.server.bossevents.CustomBossEvent exposes no accessor to obtain one");
     }
 
-    /** was net/minecraft/server/bossevents/CustomBossEvent.load(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/server/bossevents/CustomBossEvent; */
-    public net.minecraft.server.bossevents.CustomBossEvent load(net.minecraft.nbt.CompoundTag a0, net.minecraft.resources.Identifier a1) {
-        throw new UnsupportedOperationException("CenturyBridge: load now requires a RegistryWrapper.WrapperLookup (net.minecraft.core.HolderLookup$class_7874) for NBT deserialization; the old 2-arg overload has no source for one");
-        // CB-CONFIDENCE: high -- the new API unconditionally requires a registry lookup the old signature cannot supply
-    }
 }

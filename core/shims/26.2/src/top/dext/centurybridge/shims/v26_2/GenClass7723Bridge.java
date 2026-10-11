@@ -21,10 +21,6 @@ public abstract class GenClass7723Bridge {
     }
 
 
-    /** was net/minecraft/world/level/levelgen/WorldDimensions.withOverworld(Lnet/minecraft/core/Registry;Ljava/util/Map;Lnet/minecraft/world/level/chunk/ChunkGenerator;)Ljava/util/Map; */
-    public java.util.Map withOverworld(net.minecraft.core.Registry a0, java.util.Map a1, net.minecraft.world.level.chunk.ChunkGenerator a2) {
-        return ((net.minecraft.world.level.levelgen.WorldDimensions) (Object) this).withOverworld((net.minecraft.core.HolderLookup) a0, a1, a2);
-    }
 
     /** was net/minecraft/world/level/levelgen/WorldDimensions.replaceOverworldGenerator(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/level/chunk/ChunkGenerator;)Lnet/minecraft/world/level/levelgen/WorldDimensions; */
     public net.minecraft.world.level.levelgen.WorldDimensions replaceOverworldGenerator(net.minecraft.core.RegistryAccess a0, net.minecraft.world.level.chunk.ChunkGenerator a1) {

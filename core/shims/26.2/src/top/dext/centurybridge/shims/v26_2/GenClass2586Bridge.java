@@ -15,10 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.block.entity.BlockEntity.class)
 public abstract class GenClass2586Bridge {
 
-    /** was net/minecraft/world/level/block/entity/BlockEntity/loadStatic(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/block/entity/BlockEntity; */
-    public net.minecraft.world.level.block.entity.BlockEntity loadStatic(net.minecraft.core.BlockPos a0, net.minecraft.world.level.block.state.BlockState a1, net.minecraft.nbt.CompoundTag a2) {
-        return net.minecraft.world.level.block.entity.BlockEntity.loadStatic(a0, a1, a2, net.minecraft.core.HolderLookup.Provider.create(java.util.stream.Stream.empty()));
-    }
 
 
 
@@ -28,6 +24,5 @@ public abstract class GenClass2586Bridge {
         net.minecraft.world.level.Level world = self.getLevel();
         return self.getUpdateTag(world != null ? world.registryAccess() : net.minecraft.core.HolderLookup.Provider.create(java.util.stream.Stream.empty()));
     }
-
 
 }

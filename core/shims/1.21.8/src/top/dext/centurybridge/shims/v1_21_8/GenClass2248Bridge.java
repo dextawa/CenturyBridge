@@ -20,9 +20,4 @@ public abstract class GenClass2248Bridge {
         ((net.minecraft.class_2248) (Object) this).method_9554(a0, a1, a2, a3, (double) a4);
     }
 
-    /** was net/minecraft/class_2248.method_9607(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;)Z */
-    public boolean method_9607(net.minecraft.class_2680 a0, net.minecraft.class_1922 a1, net.minecraft.class_2338 a2, net.minecraft.class_2350 a3, net.minecraft.class_2338 a4) {
-        return net.minecraft.class_2248.method_9607(a0, a1.method_8320(a4), a3);
-    }
-
 }

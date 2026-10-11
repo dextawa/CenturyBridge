@@ -20,9 +20,4 @@ public abstract class GenClass7766Bridge {
         return ((net.minecraft.class_7766) (Object) this).method_52849(a0, a1, a2, a3);
     }
 
-    /** was net/minecraft/class_7766.method_47664(Ljava/util/List;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; */
-    public java.util.concurrent.CompletableFuture method_47664(java.util.List a0, java.util.concurrent.Executor a1) {
-        return ((net.minecraft.class_7766) (Object) this).method_47664(net.minecraft.class_8684.create(a0), a0, a1);
-    }
-
 }

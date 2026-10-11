@@ -15,10 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_2586.class)
 public abstract class GenClass2586Bridge {
 
-    /** was net/minecraft/class_2586.method_11005(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2586; */
-    public net.minecraft.class_2586 method_11005(net.minecraft.class_2338 a0, net.minecraft.class_2680 a1, net.minecraft.class_2487 a2) {
-        return net.minecraft.class_2586.method_11005(a0, a1, a2, net.minecraft.class_7225.class_7874.method_46761(java.util.stream.Stream.empty()));
-    }
 
 
 
@@ -39,6 +35,5 @@ public abstract class GenClass2586Bridge {
         }
         return ((net.minecraft.class_2586) (Object) this).method_38243(world.method_30349());
     }
-
 
 }

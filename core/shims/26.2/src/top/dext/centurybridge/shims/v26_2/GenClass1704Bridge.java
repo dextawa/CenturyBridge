@@ -26,12 +26,4 @@ public abstract class GenClass1704Bridge {
         return (net.minecraft.world.effect.MobEffect) ((net.minecraft.world.inventory.BeaconMenu) (Object) this).getSecondaryEffect().value();
     }
 
-    /** was net/minecraft/world/inventory/BeaconMenu/decodeEffect(I)Lnet/minecraft/world/effect/MobEffect; */
-    public net.minecraft.world.effect.MobEffect decodeEffect(int a0) {
-        net.minecraft.core.Holder entry = ((net.minecraft.world.inventory.BeaconMenu) (Object) this).decodeEffect(a0);
-        return entry == null ? null : (net.minecraft.world.effect.MobEffect) entry.value();
-    }
-
-
-
 }

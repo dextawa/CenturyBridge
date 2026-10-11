@@ -20,9 +20,4 @@ public abstract class GenClass3924Bridge {
         return ((net.minecraft.class_3924) (Object) this).method_17503((net.minecraft.class_3218) a0.method_37908(), a0, a1);
     }
 
-    /** was net/minecraft/class_3924.method_31666(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3924;)V */
-    public void method_31666(net.minecraft.class_1937 a0, net.minecraft.class_2338 a1, net.minecraft.class_2680 a2, net.minecraft.class_3924 a3) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_1863.class_7266 recipe matcher that cannot be derived from the old arguments");
-    }
-
 }
