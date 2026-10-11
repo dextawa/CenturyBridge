@@ -13,8 +13,11 @@ set -euo pipefail
 
 VERSION="${1:?usage: build.sh <mcVersion> [outDir]}"
 OUT="${2:-build}"
-SHIM="core/shims/$VERSION"
+# CB_SHIM / CB_WIRING: a climb step's own bridge layer (core/shims/steps/<W>, wiring
+# core/segments/steps/<V>__<W>.json) instead of the version's tree and shims-<ver>.json
+SHIM="${CB_SHIM:-core/shims/$VERSION}"
 [ -d "$SHIM" ] || { echo "no shim tree for $VERSION"; exit 1; }
+WIRING="${CB_WIRING:-core/segments/shims-$VERSION.json}"
 # CB_DATA: the working-set directory (game jars, runtimes, mappings). A git worktree has none of its
 # own; point CB_DATA at the main checkout's data instead of linking it in (a link inside a worktree
 # turns removing the worktree into deleting the data).
@@ -175,7 +178,7 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$
 # redirects, field redirects/getters, instanceof predicates, constructor
 # factories, super-ctor adapters and reshape ops, lookupRt, override-hook
 # wrap/unwrap/guard, facade renames.
-java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "core/segments/shims-$VERSION.json" "$NAMETABLE" "$STUB" \
+java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "$WIRING" "$NAMETABLE" "$STUB" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: dangling redirect wiring"; exit 1; }
 
@@ -186,7 +189,7 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$
 # implemented interface (name AND descriptor), and the original member -- read
 # from the older stubs in data/jars -- must not be static, since a covered call
 # site keeps its invokestatic and no mixin may add a non-private static.
-java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "core/segments/shims-$VERSION.json" "$NAMETABLE" \
+java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 
