@@ -450,6 +450,26 @@ public final class WiringCheck {
                     wantMethod(where + " guard", g + "#cbEnter", null, "(Ljava/lang/Object;)Z");
                     wantMethod(where + " guard", g + "#cbExit", null, "(Ljava/lang/Object;)V");
                 }
+                if (o.has("bridge")) {
+                    // bridge mode: the static the synthesized new shape calls, and the adapter
+                    // interface (declaring the old shape) the bridge reaches the override by
+                    String b = o.get("bridge").getAsString();
+                    int paren = b.indexOf('(');
+                    int dot = b.lastIndexOf('.', paren);
+                    wantMethod(where + " bridge", b.substring(0, dot) + "#" + b.substring(dot + 1, paren),
+                        null, methodDesc(b.substring(paren)));
+                    String adapter = o.has("adapter") ? o.get("adapter").getAsString() : null;
+                    ClassNode an = adapter == null ? null : classes.get(adapter);
+                    String old = o.get("old").getAsString();
+                    int op = old.indexOf('(');
+                    String oname = old.substring(0, op);
+                    String odesc = methodDesc(old.substring(op));
+                    if (an == null || (an.access & Opcodes.ACC_INTERFACE) == 0) {
+                        problems.add(where + " bridge without an adapter interface");
+                    } else if (an.methods.stream().noneMatch(m -> m.name.equals(oname) && m.desc.equals(odesc))) {
+                        problems.add(where + " adapter " + adapter + " does not declare the old shape " + oname + odesc);
+                    }
+                }
             }
         }
     }

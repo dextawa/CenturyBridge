@@ -75,7 +75,9 @@ public final class JarProcessor {
         org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
         org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
         int[] map = h.args;
-        if (map == null) {
+        if (h.bridgeName != null) {
+            map = null; // the bridge takes every new argument as is
+        } else if (map == null) {
             if (na.length != oa.length) {
                 return; // arity change without an explicit argument map
             }
@@ -115,18 +117,28 @@ public final class JarProcessor {
             mv.visitLabel(tryStart);
         }
         mv.visitVarInsn(Opcodes.ALOAD, 0);
-        for (int i = 0; i < oa.length; i++) {
-            int src = map[i];
-            mv.visitVarInsn(na[src].getOpcode(Opcodes.ILOAD), slotOf[src]);
-            if (!na[src].equals(oa[i]) && h.wrapName != null) {
-                mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.wrapOwner, h.wrapName, h.wrapDesc, false);
+        if (h.bridgeName != null) {
+            for (int i = 0; i < na.length; i++) {
+                mv.visitVarInsn(na[i].getOpcode(Opcodes.ILOAD), slotOf[i]);
+            }
+        } else {
+            for (int i = 0; i < oa.length; i++) {
+                int src = map[i];
+                mv.visitVarInsn(na[src].getOpcode(Opcodes.ILOAD), slotOf[src]);
+                if (!na[src].equals(oa[i]) && h.wrapName != null) {
+                    mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.wrapOwner, h.wrapName, h.wrapDesc, false);
+                }
             }
         }
         int slot = 1;
         for (org.objectweb.asm.Type t : na) {
             slot += t.getSize();
         }
-        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
+        if (h.bridgeName != null) {
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.bridgeOwner, h.bridgeName, h.bridgeDesc, false);
+        } else {
+            mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
+        }
         if (h.unwrapName != null) {
             // the old override answers in the old return type; convert it to
             // what vanilla expects from the new shape (facade -> real type)
@@ -1995,7 +2007,8 @@ public final class JarProcessor {
         cr.accept(new ClassVisitor(Opcodes.ASM9, sink) {
             @Override
             public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
-                if (!adapterApply.isEmpty()) {
+                boolean bridged = reconnectOverrides.stream().anyMatch(h -> h.adapter != null);
+                if (!adapterApply.isEmpty() || bridged) {
                     java.util.LinkedHashSet<String> all = new java.util.LinkedHashSet<>();
                     if (ifaces != null) {
                         all.addAll(List.of(ifaces));
@@ -2003,6 +2016,12 @@ public final class JarProcessor {
                     StringBuilder extra = new StringBuilder();
                     for (Chain.AdapterHook h : adapterApply) {
                         if (all.add(h.adapter)) {
+                            extra.append('L').append(h.adapter).append(';');
+                        }
+                    }
+                    // a bridged override hook reaches the old override through its adapter
+                    for (Chain.OverrideHook h : reconnectOverrides) {
+                        if (h.adapter != null && all.add(h.adapter)) {
                             extra.append('L').append(h.adapter).append(';');
                         }
                     }
@@ -2096,6 +2115,11 @@ public final class JarProcessor {
                     if (h.requires.contains(mName + mDesc)) {
                         // the bridge reaches it through a (public) interface method: a
                         // protected implementation is an IllegalAccessError at that call
+                        acc = (acc & ~(Opcodes.ACC_PROTECTED | Opcodes.ACC_PRIVATE)) | Opcodes.ACC_PUBLIC;
+                    }
+                }
+                for (Chain.OverrideHook h : reconnectOverrides) {
+                    if (h.adapter != null && h.oldName.equals(mName) && h.oldDesc.equals(mDesc)) {
                         acc = (acc & ~(Opcodes.ACC_PROTECTED | Opcodes.ACC_PRIVATE)) | Opcodes.ACC_PUBLIC;
                     }
                 }

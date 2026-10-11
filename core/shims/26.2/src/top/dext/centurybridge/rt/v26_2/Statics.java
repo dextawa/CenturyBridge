@@ -3290,6 +3290,58 @@ public final class Statics {
     private static final ThreadLocal<java.util.Set<Object>> CB_IN_OLD_RENDER =
         ThreadLocal.withInitial(() -> java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));
 
+    // ---- 1.20.1 tooltips: appendTooltip(stack, world, list, context) -> appendHoverText ----
+
+    /** the client level, set on the client (MinecraftLevelBridge); null on a dedicated server */
+    public static volatile java.util.function.Supplier<net.minecraft.world.level.Level> cbClientLevel = () -> null;
+
+    /**
+     * The world 1.20.1 tooltip code was given: the player's world -- on the client the
+     * client level; tooltips built without a player (creative search) got null then too.
+     */
+    public static net.minecraft.world.level.Level cbTooltipLevel() {
+        return cbClientLevel.get();
+    }
+
+    /**
+     * overrideHooks bridge: the appendHoverText vanilla calls, answered by the mod's old
+     * appendTooltip -- its lines are added in order to what vanilla collects.
+     */
+    public static void cbAppendHoverText(CbLegacyTooltipItem self, net.minecraft.world.item.ItemStack stack,
+            net.minecraft.world.item.Item.TooltipContext context,
+            net.minecraft.world.item.component.TooltipDisplay display,
+            java.util.function.Consumer<net.minecraft.network.chat.Component> tooltip,
+            net.minecraft.world.item.TooltipFlag flag) {
+        java.util.List<net.minecraft.network.chat.Component> lines = new java.util.ArrayList<>();
+        self.method_7851(stack, cbTooltipLevel(), lines, flag);
+        lines.forEach(tooltip);
+    }
+
+    /**
+     * instanceRedirects: a call to the old shape -- a mod's super.appendTooltip(...) above
+     * all -- runs the item's tooltip as 26.2 has it, its lines into the old list. Through a
+     * converted override this re-enters the synthesized appendHoverText, whose guard sends
+     * it on to the parent's appendHoverText: the super call 1.20.1 made.
+     */
+    public static void method_7851(net.minecraft.world.item.Item self, net.minecraft.world.item.ItemStack stack,
+            net.minecraft.world.level.Level world, java.util.List<net.minecraft.network.chat.Component> tooltip,
+            net.minecraft.world.item.TooltipFlag flag) {
+        self.appendHoverText(stack,
+            world == null ? net.minecraft.world.item.Item.TooltipContext.EMPTY
+                : net.minecraft.world.item.Item.TooltipContext.of(world),
+            net.minecraft.world.item.component.TooltipDisplay.DEFAULT, tooltip::add, flag);
+    }
+
+    /**
+     * instanceRedirects: a converted block's super.appendTooltip(...) -- 1.20.1's
+     * Block.appendTooltip was empty (the vanilla blocks that listed contents, shulker
+     * boxes and the like, show them through item components on 26.2).
+     */
+    public static void method_9568(net.minecraft.world.level.block.Block self, net.minecraft.world.item.ItemStack stack,
+            net.minecraft.world.level.BlockGetter world, java.util.List<net.minecraft.network.chat.Component> tooltip,
+            net.minecraft.world.item.TooltipFlag flag) {
+    }
+
     /** overrideHooks guard: true on first entry for this object on this thread */
     public static boolean cbEnter(Object self) {
         return CB_IN_OLD_RENDER.get().add(self);

@@ -284,6 +284,16 @@ public final class Chain {
          * Null means same arity, positional.
          */
         public int[] args;
+        /**
+         * Bridge mode, for a change no single argument wrap expresses (appendTooltip:
+         * a world became a tooltip context, the list a consumer, a parameter was added):
+         * the synthesized new shape calls this static with (this as {@link #adapter},
+         * every new argument) and the bridge calls the old override through the
+         * adapter -- an interface declaring the old shape, added to the mod class, whose
+         * own method implements it. The guard works as for forwarding hooks.
+         */
+        public String adapter;
+        public String bridgeOwner, bridgeName, bridgeDesc;
     }
 
     public final java.util.List<OverrideHook> overrideHooks = new java.util.ArrayList<>();
@@ -1193,6 +1203,15 @@ public final class Chain {
                         }
                     }
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
+                    if (o.has("bridge")) {
+                        String br = o.get("bridge").getAsString();
+                        int dot = br.lastIndexOf('.', br.indexOf('('));
+                        h.bridgeOwner = br.substring(0, dot);
+                        String[] bsig = splitSig(br.substring(dot + 1));
+                        h.bridgeName = bsig[0];
+                        h.bridgeDesc = bsig[1];
+                        h.adapter = o.get("adapter").getAsString();
+                    }
                     c.overrideHooks.add(h);
                 }
             }

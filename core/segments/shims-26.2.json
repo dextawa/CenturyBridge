@@ -578,7 +578,9 @@
   "net/minecraft/class_1299$class_1300.method_5905(Ljava/lang/String;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/compat/fapi/CbNetworking",
   "net/fabricmc/fabric/api/rendering/data/v1/RenderAttachedBlockView.getBlockEntityRenderAttachment(Lnet/minecraft/class_2338;)Ljava/lang/Object;": "top/dext/centurybridge/compat/fapi/CbRenderAttachments",
-  "net/minecraft/class_2073.method_8971()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_2073.method_8971()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1792.method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Ljava/util/List;Lnet/minecraft/class_1836;)V": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_2248.method_9568(Lnet/minecraft/class_1799;Lnet/minecraft/class_1922;Ljava/util/List;Lnet/minecraft/class_1836;)V": "top/dext/centurybridge/rt/v26_2/Statics"
  },
  "fieldRedirects": {},
  "methodRenames": {
@@ -2901,7 +2903,6 @@
   "net/minecraft/class_2237.method_9576(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): member gone at 26.2; no bridge written",
   "net/minecraft/class_2239.method_9465(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)I": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 1.20.2 advancement/command-argument rework (AdvancementEntry, codec-based arguments); no bridge",
   "net/minecraft/class_2239.method_9466(Lcom/mojang/brigadier/StringReader;)Ljava/lang/Integer;": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): 1.20.2 advancement/command-argument rework (AdvancementEntry, codec-based arguments); no bridge",
-  "net/minecraft/class_2248.method_9568(Lnet/minecraft/class_1799;Lnet/minecraft/class_1922;Ljava/util/List;Lnet/minecraft/class_1836;)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): member gone at 26.2; no bridge written",
   "net/minecraft/class_2248.method_9574(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): member gone at 26.2; no bridge written",
   "net/minecraft/class_2383.method_9574(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): member gone at 26.2; no bridge written",
   "net/minecraft/class_2383.method_9576(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)V": "stale cover (no mixin in the 26.2 tree declares this name+desc; wiring gate 49213e3): member gone at 26.2; no bridge written",
@@ -3704,6 +3705,14 @@
    ],
    "guard": "top/dext/centurybridge/rt/v26_2/Statics",
    "onlyUnder": "net/minecraft/class_1297"
+  },
+  {
+   "old": "method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Ljava/util/List;Lnet/minecraft/class_1836;)V",
+   "new": "appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Lnet/minecraft/world/item/component/TooltipDisplay;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;)V",
+   "bridge": "top/dext/centurybridge/rt/v26_2/Statics.cbAppendHoverText(Ltop/dext/centurybridge/rt/v26_2/CbLegacyTooltipItem;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Lnet/minecraft/world/item/component/TooltipDisplay;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;)V",
+   "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyTooltipItem",
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics",
+   "onlyUnder": "net/minecraft/class_1792"
   }
  ],
  "depRenames": {
@@ -4842,5 +4851,15 @@
   "net/minecraft/class_806.field_28793:[Lnet/minecraft/class_2960;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
   "net/minecraft/class_2500.method_10614(Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
   "net/minecraft/class_2500.method_10613(Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state"
- }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2248",
+   "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyTooltipBlock",
+   "requires": [
+    "method_9568(Lnet/minecraft/class_1799;Lnet/minecraft/class_1922;Ljava/util/List;Lnet/minecraft/class_1836;)V"
+   ],
+   "synth": []
+  }
+ ]
 }
