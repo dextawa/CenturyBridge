@@ -1149,7 +1149,10 @@ public final class Chain {
             c.segments.add(Segment.load(
                 segmentsDir.resolve(RELEASES.get(i) + "__" + RELEASES.get(i + 1) + ".json")));
         }
-        Path shims = segmentsDir.resolve("shims-" + to + ".json");
+        // climbing one release at a time (Main convert-climb) names each step's own wiring;
+        // a path that does not exist means the step has none
+        String stepWiring = System.getProperty("cb.wiring");
+        Path shims = stepWiring != null ? Path.of(stepWiring) : segmentsDir.resolve("shims-" + to + ".json");
         if (java.nio.file.Files.exists(shims)) {
             var gson = new com.google.gson.Gson();
             var root = gson.fromJson(java.nio.file.Files.readString(shims), com.google.gson.JsonObject.class);

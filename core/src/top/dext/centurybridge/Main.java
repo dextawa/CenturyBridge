@@ -22,6 +22,7 @@ public final class Main {
             case "gen-segment" -> genSegment(args[1], args[2], Path.of(args[3]), Path.of(args[4]));
             case "gen-chain" -> genChain(args);
             case "convert" -> convert(args);
+            case "convert-climb" -> convertClimb(args);
             case "remap-jar" -> top.dext.centurybridge.data.JarRemapper
                 .remapToIntermediary(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "remap-mojang" -> top.dext.centurybridge.data.JarRemapper
@@ -163,7 +164,11 @@ public final class Main {
         // real method bodies for injector anchors (the stub has none). Intermediary
         // era only: past the wall the refmaps are renamed later in the pipeline.
         if (!crossesWall) {
-            Path codeJar = System.getenv("CB_TARGET_CODE") != null ? Path.of(System.getenv("CB_TARGET_CODE")) : null;
+            String tc = System.getProperty("cb.targetCode", System.getenv("CB_TARGET_CODE"));
+            Path codeJar = tc != null ? Path.of(tc) : null;
+            if (codeJar == null && Files.exists(Path.of("data/jars/client-" + args[3] + "-intermediary-code.jar"))) {
+                codeJar = Path.of("data/jars/client-" + args[3] + "-intermediary-code.jar");
+            }
             if (codeJar == null) {
                 Path rj = Path.of("data/runtime/client-" + args[3] + "/.fabric/remappedJars");
                 if (Files.isDirectory(rj)) {
@@ -266,6 +271,81 @@ public final class Main {
         System.out.println("full-audit -> " + fullAudit);
     }
 
+    /**
+     * convert-climb <segmentsDir> <from> <to> <outDir> <jar|dir...>: a mod climbs one release at a
+     * time. Each step V -> W is an ordinary conversion over that one segment with that step's own
+     * bridge wiring (core/segments/steps/V__W.json; step 1.20.1 -> 1.20.2 is the 1.20.2 tree,
+     * shims-1.20.2.json) and W's own code for the injector anchors; its output, a W-era mod with the
+     * step's bridge references in it, is the next step's input. Every step keeps its report and audit
+     * under outDir/steps/V__W/; the final jars land in outDir as name+to.jar.
+     */
+    private static void convertClimb(String[] args) throws Exception {
+        Path segs = Path.of(args[1]);
+        String from = args[2];
+        String to = args[3];
+        Path outDir = Path.of(args[4]);
+        int a = Chain.RELEASES.indexOf(from);
+        int b = Chain.RELEASES.indexOf(to);
+        if (a < 0 || b < 0 || a >= b) {
+            throw new IllegalArgumentException("bad climb " + from + " -> " + to);
+        }
+        List<Path> inputs = new ArrayList<>();
+        for (int i = 5; i < args.length; i++) {
+            Path p = Path.of(args[i]);
+            if (Files.isDirectory(p)) {
+                try (var s = Files.list(p)) {
+                    s.filter(f -> f.toString().endsWith(".jar")).sorted().forEach(inputs::add);
+                }
+            } else {
+                inputs.add(p);
+            }
+        }
+        // the name each jar keeps through the climb (a step's output carries "+W")
+        java.util.Map<String, String> baseOf = new java.util.LinkedHashMap<>();
+        for (Path p : inputs) {
+            String n = p.getFileName().toString();
+            baseOf.put(n, n.substring(0, n.length() - 4));
+        }
+        for (int i = a; i < b; i++) {
+            String v = Chain.RELEASES.get(i);
+            String w = Chain.RELEASES.get(i + 1);
+            String seg = v + "__" + w;
+            Path stepWiring = v.equals("1.20.1") && w.equals("1.20.2")
+                ? segs.resolve("shims-1.20.2.json") : segs.resolve("steps").resolve(seg + ".json");
+            System.setProperty("cb.wiring", stepWiring.toString());
+            Path stepOut = outDir.resolve("steps").resolve(seg);
+            System.out.println("== climb " + seg + (Files.exists(stepWiring) ? " (bridges: " + stepWiring + ")" : " (no bridges for this step yet)"));
+            List<String> a2 = new ArrayList<>(List.of("convert", segs.toString(), v, w, stepOut.toString()));
+            inputs.forEach(p -> a2.add(p.toString()));
+            convert(a2.toArray(new String[0]));
+            List<Path> next = new ArrayList<>();
+            java.util.Map<String, String> nextBase = new java.util.LinkedHashMap<>();
+            for (Path p : inputs) {
+                String base = baseOf.get(p.getFileName().toString());
+                String produced = p.getFileName().toString();
+                produced = produced.substring(0, produced.length() - 4) + "+" + w + ".jar";
+                Path o = stepOut.resolve(produced);
+                if (!Files.exists(o)) {
+                    throw new IllegalStateException("step " + seg + " produced no " + o.getFileName() + " (see " + stepOut.resolve("report.md") + ")");
+                }
+                Path staged = stepOut.resolve("next").resolve(base + ".jar");
+                Files.createDirectories(staged.getParent());
+                Files.copy(o, staged, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                next.add(staged);
+                nextBase.put(staged.getFileName().toString(), base);
+            }
+            inputs = next;
+            baseOf = nextBase;
+        }
+        System.clearProperty("cb.wiring");
+        Files.createDirectories(outDir);
+        for (Path p : inputs) {
+            Files.copy(p, outDir.resolve(baseOf.get(p.getFileName().toString()) + "+" + to + ".jar"),
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        }
+        System.out.println("climb " + from + " -> " + to + ": " + inputs.size() + " jar(s) -> " + outDir);
+    }
+
     /** a release's client jar under data/jars: obfuscated before 26.1, plain after */
     private static Path clientJar(String version) {
         Path obf = Path.of("data/jars/client-" + version + "-obf.jar");
@@ -295,6 +375,7 @@ public final class Main {
               gen-segment <from> <to> <mappingsDir> <out.json>
               gen-chain <from> <to> <mappingsDir> <segmentsDir>
               convert <segmentsDir> <from> <to> <outDir> <jar...>
+              convert-climb <segmentsDir> <from> <to> <outDir> <jar...>   (one release at a time, each step its own bridges)
               remap-mojang <inter-to-mojang.tsv> <in.jar> <out.jar>
               mixin-check <compiledShimDir> <targetJar> [<shims.json> [<inter-to-mojang.tsv> [<stubDir> <targetVersion>]]]
               wiring-check <compiledShimDir> <shims.json> [<inter-to-mojang.tsv> [<stub> [<stubDir> <targetVersion>]]]
