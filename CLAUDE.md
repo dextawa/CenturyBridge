@@ -13,7 +13,7 @@ Core concept: the version chain is split into **frozen segments** (one per relea
 - `core/src/` — the production engine, pure Java (deps: ASM + gson only). `top.dext.centurybridge.Main` is the CLI. `engine/` = chain resolution, jar processing, mixin triage; `data/` = segment generation, stub diffing, remapping, bridge-order generation, side annotation.
 - `core/shims/<ver>/` — per-version runtime bridge (shim mixin) source trees: `src/` + `resources/` (fabric.mod.json, mixin config, access widener). Compiled by plain javac against intermediary stub jars (mojang-named plain jar for 26.x) — no loom, no Gradle. Trees exist only for anchor versions (currently 1.20.2, 1.20.4, 1.21.1, 1.21.4, 1.21.8, 1.21.11, 26.2); the full release list the chain walks is `Chain.RELEASES` in `core/src/.../engine/Chain.java`.
 - `core/segments/` — tracked: `shims-<ver>.json` (wiring: covers, static/instance/field redirects, renames, ledger) and `sides-1.20.1.json`. Gitignored but regenerable: `<from>__<to>.json` segment diffs (via `gen-segment`).
-- `core/tools/` — Python kill-list/forging pipeline (gitignored, drives closure work; see below).
+- `core/tools/` — Python kill-list/forging pipeline (tracked; drives closure work; see below). Only `run_*.sh` wrappers (carry the gateway key) and `__pycache__` are gitignored.
 - `core/out-*/` — generated analysis output dirs (gitignored).
 - `data/` — gitignored local working set: game jars + intermediary stubs (`data/jars/`), tiny mappings (`data/mappings/`), test clients/servers (`data/runtime/`), the 270-mod corpus.
 - `analyzer/`, `cb/` — archived Python research prototypes; don't develop there.
