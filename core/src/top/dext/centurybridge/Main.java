@@ -42,6 +42,7 @@ public final class Main {
             // lib-diff <oldLibrariesDir> <newLibrariesDir> <out.tsv>
             case "lib-diff" -> top.dext.centurybridge.data.LibDiff.run(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "api-probe" -> top.dext.centurybridge.data.ApiProbe.run(args);
+            case "anchor-diff" -> top.dext.centurybridge.data.AnchorDiff.run(args);
             // access-diff <oldStub> <newStub> [<wall.tsv>] [<shims-ver.json>] <out.aw>
             case "access-diff" -> top.dext.centurybridge.data.AccessDiff.run(args);
             case "gen-renames" -> {
