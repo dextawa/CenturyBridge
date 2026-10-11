@@ -2055,6 +2055,13 @@ public final class JarProcessor {
 
             @Override
             public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
+                for (Chain.AdapterHook h : adapterApply) {
+                    if (h.requires.contains(mName + mDesc)) {
+                        // the bridge reaches it through a (public) interface method: a
+                        // protected implementation is an IllegalAccessError at that call
+                        acc = (acc & ~(Opcodes.ACC_PROTECTED | Opcodes.ACC_PRIVATE)) | Opcodes.ACC_PUBLIC;
+                    }
+                }
                 MethodVisitor mv = super.visitMethod(acc, mName, mDesc, sig, ex);
                 return new MethodVisitor(Opcodes.ASM9, mv) {
                     @Override

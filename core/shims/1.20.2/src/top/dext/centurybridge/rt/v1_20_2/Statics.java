@@ -86,33 +86,44 @@ public final class Statics {
         net.minecraft.class_5258.method_27973(new net.minecraft.class_219(1.0f));
 
     /** 1.20.1 Criteria.register(trigger) -- private in both eras (mods reached it via AW).
-     *  New shape needs a name; recovered from the legacy trigger's getId via reflection. L3 x12. */
-    @SuppressWarnings("unchecked")
+     *  The new shape needs a name: the legacy trigger's own getId() gives it (adapterHooks
+     *  hand every converted trigger CbLegacyCriterion). L3 x12. */
     public static net.minecraft.class_179<?> method_767(net.minecraft.class_179<?> trigger) {
+        if (!(trigger instanceof CbLegacyCriterion legacy)) {
+            throw new IllegalArgumentException("CenturyBridge: criterion trigger " + trigger.getClass().getName()
+                + " has no 1.20.1 getId(), so nothing names it");
+        }
+        return top.dext.centurybridge.shims.v1_20_2.CriteriaInvoker.cb$register(legacy.method_794().toString(), trigger);
+    }
+
+    /** 1.20.1 RecipeSerializer.read(id, json): parsing moved to codec(). A converted 1.20.1
+     *  serializer keeps its own reader; any other is parsed through its codec with the id
+     *  published, so a legacy serializer nested inside still finds it. L3 x7. */
+    @SuppressWarnings("unchecked")
+    public static <T extends net.minecraft.class_1860<?>> T method_8121(
+            net.minecraft.class_1865<T> self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
+        if (self instanceof CbLegacyRecipeSerializer legacy) {
+            return (T) legacy.method_8121(id, json);
+        }
+        net.minecraft.class_2960 outer = CbRecipes.CURRENT_ID.get();
+        CbRecipes.CURRENT_ID.set(id);
         try {
-            net.minecraft.class_2960 id = (net.minecraft.class_2960)
-                trigger.getClass().getMethod("method_794").invoke(trigger);
-            var register = net.minecraft.class_174.class.getDeclaredMethod(
-                "method_767", String.class, net.minecraft.class_179.class);
-            register.setAccessible(true);
-            return (net.minecraft.class_179<?>) register.invoke(null, id.toString(), trigger);
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException(
-                "CenturyBridge: cannot register legacy criterion trigger " + trigger.getClass().getName(), e);
+            return self.method_53736().parse(JsonOps.INSTANCE, json)
+                .result()
+                .orElseThrow(() -> new JsonSyntaxException("Invalid recipe " + id + ": " + json));
+        } finally {
+            CbRecipes.CURRENT_ID.set(outer);
         }
     }
 
-    /** 1.20.1 RecipeSerializer.read(id, json): parsing moved to codec(); id unused. Interface -> call-site redirect. L3 x7. */
-    public static <T extends net.minecraft.class_1860<?>> T method_8121(
-            net.minecraft.class_1865<T> self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return self.method_53736().parse(JsonOps.INSTANCE, json)
-            .result()
-            .orElseThrow(() -> new JsonSyntaxException("Invalid recipe " + id + ": " + json));
-    }
-
-    /** 1.20.1 RecipeSerializer.read(id, buf): id parameter dropped. Interface -> call-site redirect. L2 x6. */
+    /** 1.20.1 RecipeSerializer.read(id, buf): the id parameter is gone; a converted 1.20.1
+     *  serializer keeps its own reader. L2 x6. */
+    @SuppressWarnings("unchecked")
     public static <T extends net.minecraft.class_1860<?>> T method_8122(
             net.minecraft.class_1865<T> self, net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
+        if (self instanceof CbLegacyRecipeSerializer legacy) {
+            return (T) legacy.method_8122(id, buf);
+        }
         return self.method_8122(buf);
     }
 
@@ -509,6 +520,49 @@ public final class Statics {
     }
 
     // ==== END GENERATED ====
+
+    // ---- 1.20.2 loot: the condition / function arrays became Lists ----
+
+    /** ConditionalLootFunction / LootPoolEntry super(conditions[]) -> super(List) */
+    public static java.util.List<net.minecraft.class_5341> cbConditionList(net.minecraft.class_5341[] conditions) {
+        return java.util.List.of(conditions);
+    }
+
+    /** LeafEntry super(.., functions[]) -> super(.., List) */
+    public static java.util.List<net.minecraft.class_117> cbFunctionList(net.minecraft.class_117[] functions) {
+        return java.util.List.of(functions);
+    }
+
+    /** a mod reading LootPoolEntry.conditions (an array in 1.20.1) */
+    public static net.minecraft.class_5341[] field_988(net.minecraft.class_79 self) {
+        return ((top.dext.centurybridge.shims.v1_20_2.LootPoolEntryAccessor) self).cb$conditions()
+            .toArray(new net.minecraft.class_5341[0]);
+    }
+
+    // ---- 1.20.1 JsonHelper typed item getters, gone with the codec rework; bodies ported ----
+
+    /** JsonHelper.asItem(element, name) */
+    public static net.minecraft.class_1792 method_15256(JsonElement element, String name) {
+        if (element.isJsonPrimitive()) {
+            String id = element.getAsString();
+            return net.minecraft.class_7923.field_41178.method_17966(new net.minecraft.class_2960(id))
+                .orElseThrow(() -> new JsonSyntaxException("Expected " + name + " to be an item, was unknown string '" + id + "'"));
+        }
+        throw new JsonSyntaxException("Expected " + name + " to be an item, was " + net.minecraft.class_3518.method_15266(element));
+    }
+
+    /** JsonHelper.getItem(json, name) */
+    public static net.minecraft.class_1792 method_15288(com.google.gson.JsonObject json, String name) {
+        if (json.has(name)) {
+            return method_15256(json.get(name), name);
+        }
+        throw new JsonSyntaxException("Missing " + name + ", expected to find an item");
+    }
+
+    /** JsonHelper.getItem(json, name, fallback) */
+    public static net.minecraft.class_1792 method_34916(com.google.gson.JsonObject json, String name, net.minecraft.class_1792 fallback) {
+        return json.has(name) ? method_15256(json.get(name), name) : fallback;
+    }
 
     private Statics() {
     }

@@ -118,11 +118,23 @@ public final class CbLootJson {
         }
     };
 
-    /** The codec a 1.20.2 loot type wants, from the JsonSerializer a 1.20.1 mod wrote. */
+    /**
+     * The codec a 1.20.2 loot type wants, from the JsonSerializer a 1.20.1 mod wrote. A MAP
+     * codec: the "function"/"condition"/"type" dispatch hands a map codec the whole object --
+     * the type key included, exactly what 1.20.1's fromJson received -- while a plain codec is
+     * handed only a "value" entry the 1.20.1 JSON never has (every legacy loot function of a
+     * converted mod failed to parse with "Not a json array" until this was a map codec).
+     */
     public static <T> Codec<T> codec(top.dext.centurybridge.facade.v1_20_2.class_5335<T> serializer) {
-        return Codec.PASSTHROUGH.flatXmap(
-            dyn -> {
-                JsonElement el = dyn.convert(JsonOps.INSTANCE).getValue();
+        return new com.mojang.serialization.MapCodec<T>() {
+            @Override
+            public <O> java.util.stream.Stream<O> keys(com.mojang.serialization.DynamicOps<O> ops) {
+                return java.util.stream.Stream.empty();
+            }
+
+            @Override
+            public <O> DataResult<T> decode(com.mojang.serialization.DynamicOps<O> ops, com.mojang.serialization.MapLike<O> input) {
+                JsonElement el = ops.convertTo(JsonOps.INSTANCE, ops.createMap(input.entries()));
                 if (!(el instanceof JsonObject)) {
                     return DataResult.error(() -> "CenturyBridge: legacy JsonSerializer expects a JSON object, got " + el);
                 }
@@ -131,15 +143,22 @@ public final class CbLootJson {
                 } catch (RuntimeException e) {
                     return DataResult.error(() -> "CenturyBridge: legacy JsonSerializer fromJson failed: " + e);
                 }
-            },
-            value -> {
+            }
+
+            @Override
+            public <O> com.mojang.serialization.RecordBuilder<O> encode(T value, com.mojang.serialization.DynamicOps<O> ops,
+                    com.mojang.serialization.RecordBuilder<O> prefix) {
                 JsonObject out = new JsonObject();
                 try {
                     serializer.method_516(out, value, SERIALIZE);
                 } catch (RuntimeException e) {
-                    return DataResult.error(() -> "CenturyBridge: legacy JsonSerializer toJson failed: " + e);
+                    return prefix.withErrorsFrom(DataResult.error(() -> "CenturyBridge: legacy JsonSerializer toJson failed: " + e));
                 }
-                return DataResult.success(new Dynamic<>(JsonOps.INSTANCE, out));
-            });
+                for (var e : out.entrySet()) {
+                    prefix.add(e.getKey(), JsonOps.INSTANCE.convertTo(ops, e.getValue()));
+                }
+                return prefix;
+            }
+        }.codec();
     }
 }

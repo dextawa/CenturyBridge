@@ -25,7 +25,10 @@
   "net/minecraft/class_2535.method_10753(Ljava/net/InetSocketAddress;Z)Lnet/minecraft/class_2535;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_4722.method_48480()Lnet/minecraft/class_1921;": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
   "net/minecraft/class_490.method_2486(Lnet/minecraft/class_332;IIIFFLnet/minecraft/class_1309;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_490.method_48472(Lnet/minecraft/class_332;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics"
+  "net/minecraft/class_490.method_48472(Lnet/minecraft/class_332;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
+  "net/minecraft/class_3518.method_15256(Lcom/google/gson/JsonElement;Ljava/lang/String;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_3518.method_15288(Lcom/google/gson/JsonObject;Ljava/lang/String;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/minecraft/class_3518.method_34916(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/rt/v1_20_2/Statics"
  },
  "instanceRedirects": {
   "net/minecraft/class_1865.method_8121(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1860;": "top/dext/centurybridge/rt/v1_20_2/Statics",
@@ -86,12 +89,17 @@
   "net/minecraft/class_2090.field_9685:Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_2073.field_9640:Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_2048.field_9599:Lnet/minecraft/class_2048;": "top/dext/centurybridge/rt/v1_20_2/Statics",
-  "net/minecraft/class_2105.field_9716:Lnet/minecraft/class_2105;": "top/dext/centurybridge/rt/v1_20_2/Statics"
+  "net/minecraft/class_2105.field_9716:Lnet/minecraft/class_2105;": "top/dext/centurybridge/rt/v1_20_2/Statics",
+  "net/fabricmc/fabric/api/event/registry/RegistryAttribute.PERSISTED:Lnet/fabricmc/fabric/api/event/registry/RegistryAttribute;": "top/dext/centurybridge/compat/fapi/CbRegistryAttributes"
  },
  "classRenames": {
   "net/minecraft/class_5335": "top/dext/centurybridge/facade/v1_20_2/class_5335",
   "net/minecraft/class_5267": "top/dext/centurybridge/facade/v1_20_2/class_5267",
-  "net/minecraft/class_2345": "top/dext/centurybridge/facade/v1_20_2/class_2345"
+  "net/minecraft/class_2345": "top/dext/centurybridge/facade/v1_20_2/class_2345",
+  "net/fabricmc/fabric/api/object/builder/v1/advancement/CriterionRegistry": "top/dext/centurybridge/compat/fapi/CbCriterionRegistry",
+  "net/minecraft/class_120$class_123": "top/dext/centurybridge/facade/v1_20_2/class_120$class_123",
+  "net/minecraft/class_79$class_5337": "top/dext/centurybridge/facade/v1_20_2/class_79$class_5337",
+  "net/minecraft/class_85$class_90": "top/dext/centurybridge/facade/v1_20_2/class_85$class_90"
  },
  "fieldRenames": {
   "net/minecraft/class_3244.field_14127:Lnet/minecraft/class_2535;": "field_45013"
@@ -101,8 +109,6 @@
   "net/minecraft/class_632.method_2863()Lnet/minecraft/class_163;": "method_53814"
  },
  "ledger": {
-  "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
-  "net/minecraft/class_85": "quirk: loot codec rework -- loot entry builders",
   "net/minecraft/class_5270": "quirk: loot codec rework -- LootGsons factories (dead, tombstoned)",
   "net/minecraft/class_47$class_48": "quirk: loot context builder Optional-ization",
   "net/minecraft/class_179$class_180": "quirk: criterion conditions container rework",
@@ -134,8 +140,6 @@
   "net/minecraft/class_4711": "quirk: tick/location criterion rework",
   "net/minecraft/class_5282": "quirk: player-generates-container-loot criterion factory",
   "net/minecraft/class_3735": "quirk: filled-bucket criterion factory (builder-typed args)",
-  "net/minecraft/class_3518.method_15256": "quirk: JsonHelper typed getter rework (registry holders)",
-  "net/minecraft/class_3518.method_15288": "quirk: JsonHelper typed getter rework (registry holders)",
   "net/minecraft/class_2658": "quirk: 1.20.2 network payload rework -- custom-payload packets restructured; fabric networking path recommended",
   "net/minecraft/class_2899": "quirk: 1.20.2 network payload rework (query packets)",
   "net/minecraft/class_634.method_2883": "quirk: 1.20.2 network rework (client send path)",
@@ -182,7 +186,6 @@
   "net/minecraft/class_186.field_1246": "loot condition array became a List in 1.20.2; instance field read (GETFIELD) has no redirect mechanism",
   "net/minecraft/class_55.field_954": "loot pool condition array became a List in 1.20.2; instance field read (GETFIELD) has no redirect mechanism",
   "net/minecraft/class_69.field_982": "loot entry children array became a List in 1.20.2; instance field read (GETFIELD) has no redirect mechanism",
-  "net/minecraft/class_79.field_988": "loot entry condition array became a List in 1.20.2; instance field read (GETFIELD) has no redirect mechanism",
   "net/minecraft/class_2788.method_17816": "SynchronizeRecipesS2CPacket.writeRecipe now takes a RecipeEntry (id+recipe); a bare Recipe carries no id in 1.20.2",
   "net/minecraft/class_1071.method_4652": "PlayerSkinProvider.loadSkin(profile, callback, secure) replaced by fetchSkinTextures futures; the per-texture callback type is gone",
   "net/minecraft/class_1071.method_4656": "PlayerSkinProvider.loadSkin(texture, type) removed; textures are registered internally while loading SkinTextures",
@@ -433,6 +436,53 @@
      "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipes.legacyRead(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyRecipeSerializer;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1860;"
     }
    ]
+  },
+  {
+   "under": "net/minecraft/class_179",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyCriterion",
+   "requires": [
+    "method_794()Lnet/minecraft/class_2960;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_4558",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyAbstractCriterion",
+   "requires": [
+    "method_27854(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_195;"
+   ],
+   "synth": [
+    {
+     "new": "method_27854(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4558$class_8788;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbCriteria.conditionsFromJson(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyAbstractCriterion;Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4558$class_8788;"
+    }
+   ]
   }
- ]
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_120.<init>([Lnet/minecraft/class_5341;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/Statics#cbConditionList([Lnet/minecraft/class_5341;)Ljava/util/List;"
+   ]
+  },
+  "net/minecraft/class_79.<init>([Lnet/minecraft/class_5341;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/Statics#cbConditionList([Lnet/minecraft/class_5341;)Ljava/util/List;"
+   ]
+  },
+  "net/minecraft/class_85.<init>(II[Lnet/minecraft/class_5341;[Lnet/minecraft/class_117;)V": {
+   "desc": "(IILjava/util/List;Ljava/util/List;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/Statics#cbConditionList([Lnet/minecraft/class_5341;)Ljava/util/List;",
+    "conv top/dext/centurybridge/rt/v1_20_2/Statics#cbFunctionList([Lnet/minecraft/class_117;)Ljava/util/List;"
+   ]
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_79.field_988:[Lnet/minecraft/class_5341;": "top/dext/centurybridge/rt/v1_20_2/Statics"
+ }
 }
