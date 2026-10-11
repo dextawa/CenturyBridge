@@ -33,8 +33,8 @@ public final class Main {
             case "class-fate" -> top.dext.centurybridge.data.ClassFate.run(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "forge-orders" -> top.dext.centurybridge.data.BridgeForge.run(
-                Path.of(args[1]), Path.of(args[2]),
-                args.length > 4 ? Path.of(args[3]) : null,
+                Path.of(args[1]), Path.of(args[2]), Path.of(args[3]),
+                args.length > 5 ? Path.of(args[4]) : null,
                 Path.of(args[args.length - 1]));
             case "classify" -> top.dext.centurybridge.data.SymbolAudit.classify(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
@@ -236,6 +236,7 @@ public final class Main {
               mixin-check <compiledShimDir> <targetJar> [<shims.json> [<inter-to-mojang.tsv> [<stubDir> <targetVersion>]]]
               wiring-check <compiledShimDir> <shims.json> [<inter-to-mojang.tsv>]
               server-check <compiledShimDir> <mixins.json> <serverJar> <serverLibraries> <fabricApiJar> [--fix]
+              forge-orders <open.tsv> <oldStub> <newStub> [<full-audit.tsv>] <orders.json>
               stub-dump <stubJar> <out.txt>
               link-check <outDir> <full-audit.tsv|-> <convertedJar|dir...> -- <classpathJar|dir...>""");
     }

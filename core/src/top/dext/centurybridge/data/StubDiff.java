@@ -54,6 +54,9 @@ public final class StubDiff {
         /** "owner.name" of private members: unreachable from call sites, but a
          *  mod mixin can @Shadow them, so their fate still matters to triage */
         final Set<String> privates = new HashSet<>();
+        /** "owner.name(desc)" / "owner.name:desc" of static members: a static
+         *  original is called with invokestatic, so its bridge shape differs */
+        public final Set<String> statics = new HashSet<>();
 
         void addMethod(String owner, String name, String desc) {
             methods.computeIfAbsent(owner, k -> new HashMap<>())
@@ -175,6 +178,9 @@ public final class StubDiff {
                             if ((acc & Opcodes.ACC_PRIVATE) != 0) {
                                 idx.privates.add(owner + "." + name);
                             }
+                            if ((acc & Opcodes.ACC_STATIC) != 0) {
+                                idx.statics.add(owner + "." + name + desc);
+                            }
                         }
                         return null;
                     }
@@ -185,6 +191,9 @@ public final class StubDiff {
                         idx.addField(owner, name, desc);
                         if ((acc & Opcodes.ACC_PRIVATE) != 0) {
                             idx.privates.add(owner + "." + name);
+                        }
+                        if ((acc & Opcodes.ACC_STATIC) != 0) {
+                            idx.statics.add(owner + "." + name + ":" + desc);
                         }
                         return null;
                     }

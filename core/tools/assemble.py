@@ -129,6 +129,11 @@ def main():
     RT = f"top/dext/centurybridge/rt/{VER}/Statics"
     STATICS_PATH = os.path.join(os.path.dirname(os.path.dirname(
         os.path.normpath(src_root))), "rt", VER, "Statics.java")
+    # a dedicated server loads Statics for every server-side redirect: a body for
+    # a client-side owner lands in ClientStatics (@Environment(CLIENT)) instead,
+    # so one client type cannot sink the class (build.sh's server-check enforces it)
+    client_rt = RT.replace("/Statics", "/ClientStatics")
+    client_path = STATICS_PATH.replace("Statics.java", "ClientStatics.java")
     print(f"target {mcver}: RT={RT}")
     print(f"statics: {STATICS_PATH}")
 
@@ -181,6 +186,9 @@ def main():
     statics, fields = [], []
     tombstoned = 0
 
+    def rt_of(r):
+        return client_rt if r.get("side") == "client" else RT
+
     OBF_CALL = re.compile(r"\.\s*([a-z]{1,3}\d?)\s*\(")
     SAFE_SHORT = {"get", "put", "add", "map", "of", "abs", "min", "max", "pow",
                   "run", "set", "log", "cos", "sin", "tan", "key", "val", "idx",
@@ -209,14 +217,18 @@ def main():
         if obf:
             poisoned += 1
             continue
-        is_tomb = "UnsupportedOperationException" in body
-        if is_tomb:
+        # a body that is nothing but a throw is a tombstone, not a bridge: wired as
+        # a cover/redirect it was audited "fixed" while every call threw. Ledger it
+        # (the converter tombstones the call site with the same reason) and land
+        # nothing.
+        if re.fullmatch(r'\s*throw\s+new\s+UnsupportedOperationException\(\s*"(?:[^"\\]|\\.)*"\s*\);\s*(?://[^\n]*\s*)*', body or ""):
             tombstoned += 1
-            key = f"{owner}.{name}"
+            key = f"{owner}.{name}{desc}" if desc.startswith("(") else f"{owner}.{name}:{desc}"
             if key not in ledger:
                 reason = re.search(r'"CenturyBridge: ([^"]+)"', body)
                 ledger[key] = ("bridge attempted, no faithful equivalent: "
-                               + (reason.group(1) if reason else "see generated shim"))
+                               + (reason.group(1) if reason else "see the forge log"))
+            continue
 
         if r["shimKind"] == "MIXIN_OVERLOAD":
             # An anonymous inner class has no source-level name, so it cannot be
@@ -240,14 +252,14 @@ def main():
             # crash); static overloads belong on Statics behind a redirect.
             if r["javaSig"].startswith("public static"):
                 statics.append(r)
-                sred[f"{owner}.{name}{desc}"] = RT
+                sred[f"{owner}.{name}{desc}"] = rt_of(r)
                 continue
             # A class mixin on an interface target fails at PREPARE, before any
             # class loads, so the whole game dies rather than one method. Route
             # these to a call-site redirect instead.
             if owner in INTERFACES:
                 statics.append(r)
-                ired[f"{owner}.{name}{desc}"] = RT
+                ired[f"{owner}.{name}{desc}"] = rt_of(r)
                 continue
             by_target[owner].append(r)
             covers.add(f"{owner}.{name}{desc}")
@@ -261,12 +273,12 @@ def main():
             # receiver-as-arg0 shims are reached by an instance redirect; true
             # statics by a static one. java_signature already encoded which.
             if "self" in r["javaSig"]:
-                ired[f"{owner}.{name}{desc}"] = RT
+                ired[f"{owner}.{name}{desc}"] = rt_of(r)
             else:
-                sred[f"{owner}.{name}{desc}"] = RT
+                sred[f"{owner}.{name}{desc}"] = rt_of(r)
         elif r["shimKind"] == "FIELD_SHIM":
             fields.append(r)
-            fred[f"{owner}.{name}:{desc}"] = RT
+            fred[f"{owner}.{name}:{desc}"] = rt_of(r)
         elif r["shimKind"] == "CTOR_SHIM":
             if not r["javaSig"].startswith("public static"):
                 continue
@@ -276,7 +288,7 @@ def main():
             statics.append(r)
             # the converter derives nothing from the key here: the factory name
             # travels explicitly (class#member), one per old descriptor
-            cred[f"{owner}.<init>{desc}"] = f"{RT}#{m.group(1)}"
+            cred[f"{owner}.<init>{desc}"] = f"{rt_of(r)}#{m.group(1)}"
 
     # Wipe first: this directory is a build product, and a Gen* file left over
     # from an earlier run is a bridge that is no longer verified -- it will
@@ -320,9 +332,11 @@ def main():
     # used to land in a .part file "for review", which meant 259 redirect
     # targets existed only in the JSON: the wiring compiled, and the game threw
     # NoSuchMethodError the moment a mod reached one of them.
-    if statics or fields:
+    def splice(path, recs, cls):
+        if not recs:
+            return 0
         gen, seen_sigs = [], set()
-        for r in sorted(statics + fields, key=lambda x: x["owner"] + x["name"]):
+        for r in sorted(recs, key=lambda x: x["owner"] + x["name"]):
             sig = r["javaSig"]
             if sig in seen_sigs:
                 continue                    # same shape reached from two boundaries
@@ -332,7 +346,13 @@ def main():
             gen.extend("        " + line for line in r["body"].splitlines())
             gen.append("    }\n")
 
-        src = open(STATICS_PATH, encoding="utf-8").read()
+        if not os.path.exists(path):
+            open(path, "w", encoding="utf-8", newline="\n").write(
+                f"package top.dext.centurybridge.rt.{VER};\n\n"
+                "/** The client half of Statics: redirect targets whose bodies name client-only classes. */\n"
+                "@net.fabricmc.api.Environment(net.fabricmc.api.EnvType.CLIENT)\n"
+                f"public final class {cls} {{\n\n    private {cls}() {{\n    }}\n}}\n")
+        src = open(path, encoding="utf-8").read()
         block = (BEGIN_MARK + "\n" + "\n".join(gen) + "\n" + END_MARK + "\n")
         if merge and END_MARK in src:
             # merge mode APPENDS inside the existing block; the full-replace
@@ -344,11 +364,17 @@ def main():
             tail = src[src.index(END_MARK) + len(END_MARK):].lstrip("\n")
             src = head + block + tail
         else:
-            anchor = "    private Statics() {"
+            anchor = f"    private {cls}() {{"
             src = src.replace(anchor, block + "\n" + anchor, 1)
-        with open(STATICS_PATH, "w", encoding="utf-8", newline="\n") as f:
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
             f.write(src)
-        print(f"  spliced {len(seen_sigs)} generated methods into Statics.java")
+        print(f"  spliced {len(seen_sigs)} generated methods into {cls}.java")
+        return len(seen_sigs)
+
+    server_recs = [r for r in statics + fields if rt_of(r) == RT]
+    client_recs = [r for r in statics + fields if rt_of(r) != RT]
+    splice(STATICS_PATH, server_recs, "Statics")
+    splice(client_path, client_recs, "ClientStatics")
 
     shims["covers"] = sorted(covers)
     with open(shims_path, "w", encoding="utf-8", newline="\n") as f:

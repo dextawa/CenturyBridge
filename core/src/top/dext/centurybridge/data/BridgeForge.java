@@ -26,9 +26,12 @@ import com.google.gson.JsonObject;
  * Shim kind is forced by JVM and Mixin rules, never by the model:
  *   MIXIN_OVERLOAD  instance method on a concrete class -> add the old
  *                   descriptor back as an overload; the JVM picks by descriptor
- *   STATIC_SHIM     static method (Mixin forbids non-private statics) or a
- *                   method on an interface (Mixin cannot add instance methods)
- *                   -> body lives in Statics, call sites are redirected
+ *   STATIC_SHIM     static method (Mixin forbids non-private statics, and a
+ *                   covered call site keeps its invokestatic) or a method on an
+ *                   interface (Mixin cannot add instance methods)
+ *                   -> body lives in Statics, call sites are redirected.
+ *                   Static-ness is read from the OLD stub: the new side may have
+ *                   a same-named instance method, or none at all
  *   FIELD_SHIM      dead static field -> constant rebuilt in Statics
  *   TOMBSTONE       no new-side equivalent exists; fail lazily with a reason
  */
@@ -36,10 +39,11 @@ public final class BridgeForge {
 
     public record Order(String id, String kind, String side, String fate,
                         String owner, String name, String oldDesc, String newDesc,
-                        String shimKind, List<String> ownerApi, int corpusRefs) {}
+                        String shimKind, boolean wasStatic, List<String> ownerApi, int corpusRefs) {}
 
-    public static void run(Path openTsv, Path newStub, Path auditTsv, Path outJson)
+    public static void run(Path openTsv, Path oldStub, Path newStub, Path auditTsv, Path outJson)
             throws IOException {
+        StubDiff.Index oldIdx = StubDiff.index(oldStub);
         StubDiff.Index newIdx = StubDiff.index(newStub);
 
         Map<String, Integer> refs = new java.util.HashMap<>();
@@ -76,7 +80,8 @@ public final class BridgeForge {
             String name = symbol.substring(dot + 1);
             boolean isField = !oldDesc.startsWith("(");
 
-            String shimKind = shimKind(fate, isField, owner, name, oldDesc, newIdx);
+            boolean wasStatic = oldIdx.statics.contains(owner + "." + name + (isField ? ":" : "") + oldDesc);
+            String shimKind = shimKind(fate, isField, owner, name, oldDesc, wasStatic, newIdx);
             String newDesc = fate.equals("DESC_CHANGED") ? detail
                            : fate.equals("MOVED") ? detail : "";
 
@@ -95,7 +100,7 @@ public final class BridgeForge {
             orders.add(new Order(
                 owner.replace('/', '.') + "#" + name + oldDesc,
                 isField ? "field" : "method",
-                side, fate, owner, name, oldDesc, newDesc, shimKind,
+                side, fate, owner, name, oldDesc, newDesc, shimKind, wasStatic,
                 api,
                 refs.getOrDefault(symbol, 0)));
         }
@@ -114,6 +119,7 @@ public final class BridgeForge {
             j.addProperty("oldDesc", o.oldDesc());
             j.addProperty("newDesc", o.newDesc());
             j.addProperty("shimKind", o.shimKind());
+            j.addProperty("wasStatic", o.wasStatic());
             j.addProperty("corpusRefs", o.corpusRefs());
             JsonArray api = new JsonArray();
             o.ownerApi().forEach(api::add);
@@ -131,7 +137,7 @@ public final class BridgeForge {
 
     /** JVM + Mixin rules decide this, not the model. */
     private static String shimKind(String fate, boolean isField, String owner, String name,
-                                   String oldDesc, StubDiff.Index newIdx) {
+                                   String oldDesc, boolean wasStatic, StubDiff.Index newIdx) {
         // If the exact descriptor still exists on the destination, there is
         // nothing to bridge -- adding an override here would shadow vanilla's
         // own method and break the game rather than a mod.
@@ -150,6 +156,11 @@ public final class BridgeForge {
             // to a static factory (ctorRedirects): the body builds the instance
             // from a surviving constructor or static factory of the same class
             return "CTOR_SHIM";
+        }
+        // a static original is called with invokestatic: no mixin-added method
+        // (Mixin only adds instance ones) can answer it
+        if (wasStatic) {
+            return "STATIC_SHIM";
         }
         // An interface target cannot take a class mixin (PREPARE fails outright)
         // and cannot gain an instance method either, so the only shape left is

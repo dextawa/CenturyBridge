@@ -176,8 +176,8 @@ def java_signature(order):
         simple = order["owner"].split("/")[-1].replace("$", "")
         return f"public static {owner} cbNew{simple}({args})"
     if order["shimKind"] == "STATIC_SHIM":
-        # instance members become receiver-as-arg0
-        if order["fate"] != "GONE" or not order.get("wasStatic"):
+        # instance members become receiver-as-arg0; a static original has none
+        if not order.get("wasStatic"):
             args = f"{owner} self" + (", " + args if args else "")
         return f"public static {ret} {order['name']}({args})"
     return f"public {ret} {order['name']}({args})"
