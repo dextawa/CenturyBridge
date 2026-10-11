@@ -1,8 +1,8 @@
 package cb.rendertest;
 
 /**
- * An EntityModel with one cube: setAngles spins it with the entity's age, render draws the
- * cube itself. super() gets no root, as 1.20.1 models never passed one.
+ * An EntityModel with one cube: setAngles turns it to a fixed yaw, render draws the cube
+ * itself. super() gets no root, as 1.20.1 models never passed one.
  */
 @SuppressWarnings("rawtypes")
 public class TestPigModel extends net.minecraft.class_583 {
@@ -25,9 +25,11 @@ public class TestPigModel extends net.minecraft.class_583 {
     @Override
     public void method_2819(net.minecraft.class_1297 entity, float limbAngle, float limbDistance,
                             float animationProgress, float headYaw, float headPitch) {
+        // logged once per 100 ticks of age: proves setAngles keeps running with the entity's
+        // advancing age, while the pose stays fixed so native and bridged frames line up
         RenderTestMod.once("pig model setAngles(entity=" + (entity == null ? "null" : entity.getClass().getSimpleName())
-            + ", age=" + (int) animationProgress + ")");
-        this.body.field_3675 = animationProgress * 0.05F;
+            + ", age " + ((int) animationProgress / 100) * 100 + "+)");
+        this.body.field_3675 = 0.6F;
     }
 
     @Override

@@ -59,7 +59,9 @@ public class RenderTestMod implements ClientModInitializer {
         if (world == null || player == null) {
             return;
         }
-        // look up at open sky, so terrain never hides the test entities
+        // face south and look up at open sky, so terrain never hides the test entities and
+        // every run (native or converted) frames them the same way
+        player.method_36456(0.0F);
         player.method_36457(-35.0F);
         net.minecraft.class_243 look = player.method_5720();
         double x = player.method_23317() + look.field_1352 * 4.0;
