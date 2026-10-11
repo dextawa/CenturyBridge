@@ -6,10 +6,10 @@ package top.dext.centurybridge.facade.v1_21_4;
  * registry itself, with the old lookup order (damage / damaged on damageable items, then
  * the global providers, then the item's own), so the providers mods register -- through
  * Fabric API's transitive access widener, register is private in vanilla -- are kept
- * and answered exactly as before. What consumed them -- the "overrides" of the old
- * item model JSON -- is an asset format 1.21.4 no longer reads; until converted assets
- * carry those overrides into item model definitions, registered predicates are kept but
- * never asked by the renderer.
+ * and answered exactly as before. What consumed them, the "overrides" of the old item
+ * model JSON, 1.21.4 no longer reads: the converter carries them into item model
+ * definitions of the centurybridge:legacy_overrides type, which asks this registry
+ * (CbLegacyItemModels).
  *
  * Vanilla's own per-item providers are kept where 1.21.4 still has what they read (bow
  * and crossbow, the ones mods copy onto their own items); the rest answer null as an

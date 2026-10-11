@@ -456,6 +456,9 @@ public final class JarProcessor {
          *  ancestor and no override hook reconnects: vanilla never calls them again,
          *  silently -- no crash, the behaviour is just gone */
         public List<String> orphanedOverrides = new ArrayList<>();
+        /** data and assets the resource translation could not carry to the target
+         *  format: the loader skips or misreads them -- content quietly missing */
+        public List<String> resourceLosses = new ArrayList<>();
         public List<String> notes = new ArrayList<>();
         public Path outputJar;
     }
@@ -617,7 +620,8 @@ public final class JarProcessor {
         }
 
         rpt.issues = new ArrayList<>(issues);
-        boolean degraded = !rpt.strippedMixins.isEmpty() || !rpt.orphanedOverrides.isEmpty();
+        boolean degraded = !rpt.strippedMixins.isEmpty() || !rpt.orphanedOverrides.isEmpty()
+            || !rpt.resourceLosses.isEmpty();
         rpt.verdict = degraded ? "ok_degraded" : issues.isEmpty() ? "ok_direct" : "ok_partial";
         if (!issues.isEmpty() && degraded) {
             rpt.verdict = "ok_degraded_partial";
@@ -768,6 +772,18 @@ public final class JarProcessor {
         if (!reg.stubs.isEmpty()) {
             entries.put(tombClass + ".class", reg.synthesize());
         }
+        // the data pack and resource pack are read by the target's loaders, in the
+        // target's formats: carry them over the same boundaries the bytecode crossed
+        top.dext.centurybridge.engine.res.ResourceTranslator.Outcome res =
+            top.dext.centurybridge.engine.res.ResourceTranslator.apply(entries, chain.from, chain.to, chain.resourceTypes);
+        if (res.changedAnything()) {
+            rpt.notes.add(tag + "resources: " + res.moved + " moved, " + res.rewritten + " rewritten, "
+                + res.generated + " generated for " + chain.to);
+        }
+        for (String n : res.notes) {
+            rpt.notes.add(tag + "resources: " + n);
+        }
+        res.losses.forEach((what, n) -> rpt.resourceLosses.add(tag + what + (n > 1 ? " (x" + n + ")" : "")));
     }
 
     /**

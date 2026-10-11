@@ -1384,6 +1384,12 @@ public final class ClientStatics {
         return net.minecraft.class_9945.method_62080(net.minecraft.class_9945.field_55113);
     }
 
+    /** Fabric API's ColorProviderRegistry.ITEM (gone in 1.21.4's Fabric API): see CbItemColorRegistry */
+    public static net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry<net.minecraft.class_1935,
+            top.dext.centurybridge.facade.v1_21_4.class_326> cbItemColorRegistry() {
+        return CbItemColorRegistry.INSTANCE;
+    }
+
     private ClientStatics() {
     }
 }

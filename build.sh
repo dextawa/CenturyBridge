@@ -134,6 +134,9 @@ case "$STUB" in *intermediary*) ;; *) NAMETABLE="data/mappings/inter-to-mojang-1
 
 echo "compiling $VERSION shims..."
 find "$SHIM/src" -name '*.java' > "$OUT/sources-$VERSION.txt"
+# the data-format library is shared with the converter: the same rules that upgrade a
+# mod's static data files serve the bridges handed a mod's old JSON at runtime
+find core/src/top/dext/centurybridge/res -name '*.java' >> "$OUT/sources-$VERSION.txt"
 # Pin the class-file level to what the target's loader stack accepts: a shim
 # compiled by a newer ambient JDK dies at Mixin PREPARE with "Unsupported
 # class file major version" on servers bundling an older sponge-mixin.

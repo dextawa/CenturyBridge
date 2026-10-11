@@ -888,7 +888,8 @@
   "com/mojang/datafixers/DataFixerBuilder.buildOptimized(Ljava/util/Set;Ljava/util/concurrent/Executor;)Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
   "com/mojang/authlib/minecraft/MinecraftSessionService.joinServer(Lcom/mojang/authlib/GameProfile;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
   "com/mojang/authlib/yggdrasil/response/MinecraftTexturesPayload.getTextures()Ljava/util/Map;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
-  "com/mojang/authlib/yggdrasil/response/BlockListResponse.getBlockedProfiles()Ljava/util/Set;": "top/dext/centurybridge/rt/v1_21_4/CbLibs"
+  "com/mojang/authlib/yggdrasil/response/BlockListResponse.getBlockedProfiles()Ljava/util/Set;": "top/dext/centurybridge/rt/v1_21_4/CbLibs",
+  "net/minecraft/class_4970$class_2251.method_16228(Lnet/minecraft/class_2248;)Lnet/minecraft/class_4970$class_2251;": "top/dext/centurybridge/rt/v1_21_4/Statics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_4/Statics",
@@ -1310,7 +1311,6 @@
   "net/minecraft/class_2505": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_2508": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_2513": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
-  "net/minecraft/class_2527": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_2533": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_2535": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (3 symbols: CLASS_GONEx3)",
   "net/minecraft/class_2538": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
@@ -4077,7 +4077,6 @@
   "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView": "fapi: Fabric Renderer API rewritten for 1.21.4 (RenderContext/QuadTransform stack removed -- emitBlockQuads/emitItemQuads take a QuadEmitter + cull test, MeshBuilder -> MutableMesh, RendererAccess -> Renderer.get(), sprite-index overloads dropped); a 1.20.1 FabricBakedModel needs a re-implementation, not a shim (design task: RenderContext facade over a QuadEmitter)",
   "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry": "fapi: removed in 1.21.4 with the item-model rework -- built-in item renderers are SpecialModelRenderer types selected by the item definition items/<id>.json, which a 1.20.1 jar does not carry (design task: synthesize item definitions + a centurybridge:legacy_builtin special renderer type)",
   "net/fabricmc/fabric/api/client/rendering/v1/CoreShaderRegistrationCallback": "fapi: removed in 1.21.2 -- core shaders are ShaderProgramKeys loaded by key, the callback RegistrationContext handed out ShaderProgram (class_5944) instances that no longer exist; custom shaders need the RenderPipeline-era rewrite",
-  "net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry.ITEM": "fapi: item color providers removed in 1.21.4 -- item tints are data-driven tint sources in items/<id>.json, no runtime provider hook (legacy items render untinted; design task: legacy tint source injected into synthesized item definitions)",
   "net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry": "fapi: model predicates (overrides) removed in 1.21.4 -- item property selection is data-driven (select/range_dispatch item models); no runtime provider hook",
   "net/fabricmc/fabric/api/client/model/ModelVariantProvider": "fapi: pre-1.20.1-deprecated model provider API removed in fapi 0.87 (ModelLoadingPlugin replaced it); 1 corpus mod",
   "net/fabricmc/fabric/api/client/model/ModelProviderContext": "fapi: pre-1.20.1-deprecated model provider API removed in fapi 0.87 (ModelLoadingPlugin replaced it); 1 corpus mod",
@@ -6152,7 +6151,8 @@
   "net/minecraft/class_8173.field_42787:Lnet/minecraft/class_5321;": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_1481.field_28406:Lnet/minecraft/class_1856;": "top/dext/centurybridge/rt/v1_21_4/Statics",
   "net/minecraft/class_1093.field_21864:Z": "top/dext/centurybridge/rt/v1_21_4/Statics",
-  "net/minecraft/class_1093.field_5413:Z": "top/dext/centurybridge/rt/v1_21_4/Statics"
+  "net/minecraft/class_1093.field_5413:Z": "top/dext/centurybridge/rt/v1_21_4/Statics",
+  "net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry.ITEM:Lnet/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry;": "top/dext/centurybridge/rt/v1_21_4/ClientStatics#cbItemColorRegistry"
  },
  "superCtorReshapes": {
   "net/minecraft/class_3857.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;)V": {
@@ -6188,6 +6188,13 @@
     "keep",
     "keep",
     "push top/dext/centurybridge/rt/v1_21_4/CbLibs#cbFalse()Z"
+   ]
+  },
+  "net/minecraft/class_2527.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_2394;)V": {
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:1 top/dext/centurybridge/rt/v1_21_4/Statics#cbToSimpleParticle(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2400;",
+    "keep:0"
    ]
   }
  },
@@ -6255,5 +6262,9 @@
   "net/minecraft/class_505.field_3079:Lnet/minecraft/class_8786;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
   "net/minecraft/class_4005.field_17894:Ljava/util/concurrent/CompletableFuture;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
   "net/minecraft/class_1317$class_1319.<init>(Ljava/lang/String;I)V": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state"
- }
+ },
+ "resourceTypes": [
+  "centurybridge:legacy_overrides",
+  "centurybridge:legacy_color"
+ ]
 }

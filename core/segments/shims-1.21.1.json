@@ -755,7 +755,6 @@
   "net/minecraft/class_2505": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_2508": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_2513": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
-  "net/minecraft/class_2527": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_2533": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
   "net/minecraft/class_2535": "tombstone [common]: class deleted upstream; no facade exists, so references fail lazily with an attributed message (3 symbols: CLASS_GONEx3)",
   "net/minecraft/class_2538": "tombstone [common]: constructor signature changed; a constructor cannot be re-added by Mixin or redirected, so callers fail lazily (1 symbols: DESC_CHANGEDx1)",
@@ -2943,5 +2942,14 @@
   "net/minecraft/class_195.field_24381:Ljava/util/Optional;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
   "net/minecraft/class_195.field_1270:Lnet/minecraft/class_2960;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state",
   "net/minecraft/class_195.field_24381:Lnet/minecraft/class_5258;": "private in the dead class: only an access widener reaches it (the mod's own -- Fabric API's transitive one does not open it); the facade does not mirror the class's private state"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_2527.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_2394;)V": {
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:1 top/dext/centurybridge/rt/v1_21_1/Statics#cbToSimpleParticle(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2400;",
+    "keep:0"
+   ]
+  }
  }
 }

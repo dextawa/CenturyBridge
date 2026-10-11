@@ -28,6 +28,19 @@ public final class Main {
                 .remapWithTable(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "gen-sides" -> top.dext.centurybridge.data.SideAnnotator.generate(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]), Path.of(args[5]));
+            case "res-parity" -> top.dext.centurybridge.data.ResParity.run(
+                Path.of("data/jars/client-" + args[1] + "-obf.jar"), args[1],
+                Path.of("data/jars/client-" + args[2] + "-obf.jar"), args[2],
+                args.length > 3 ? Integer.parseInt(args[3]) : 3);
+            case "gen-renames" -> {
+                // gen-renames <newest client jar> <out.json> [<jarsDir> <IdRenameTable.java>]
+                top.dext.centurybridge.data.IdRenames.run(Path.of(args[1]), Path.of(args[2]));
+                if (args.length > 4) {
+                    top.dext.centurybridge.data.IdRenames.writeTable(Path.of(args[2]), Path.of(args[3]), Path.of(args[4]));
+                }
+            }
+            case "res-diff" -> top.dext.centurybridge.data.ResDiff.run(
+                Path.of(args[1]), Path.of(args[2]), args.length > 3 ? Integer.parseInt(args[3]) : 8);
             case "stub-diff" -> top.dext.centurybridge.data.StubDiff.run(
                 Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "class-fate" -> top.dext.centurybridge.data.ClassFate.run(
@@ -172,6 +185,7 @@ public final class Main {
         int ledgered = 0;
         int brokenClasses = 0;
         int orphans = 0;
+        int resourceLosses = 0;
         for (Path jar : jars) {
             try {
                 JarProcessor.Report r = JarProcessor.process(jar, outDir, chain);
@@ -195,6 +209,8 @@ public final class Main {
                 r.disabledInjectors.forEach(s -> lines.add("- disabled injector: " + s));
                 r.orphanedOverrides.forEach(s -> lines.add("- orphaned override (vanilla never calls it): " + s));
                 orphans += r.orphanedOverrides.size();
+                r.resourceLosses.forEach(s -> lines.add("- resource not carried to " + chain.to + ": " + s));
+                resourceLosses += r.resourceLosses.size();
                 r.issues.forEach(s -> lines.add("- " + s));
                 r.clientIssues.forEach(s -> lines.add("- " + s));
                 if (r.datagenSkipped > 0) {
@@ -214,6 +230,9 @@ public final class Main {
         System.out.println("unaccounted runtime refs: " + unaccounted + " (ledgered: " + ledgered + ")");
         if (orphans > 0) {
             System.out.println("orphaned overrides: " + orphans + " (mod overrides of a vanilla shape the target no longer has)");
+        }
+        if (resourceLosses > 0) {
+            System.out.println("resource losses: " + resourceLosses + " (data/assets the translation could not carry; see report)");
         }
         if (brokenClasses > 0) {
             System.out.println("broken hierarchy: " + brokenClasses + " mod class(es) cannot load on " + chain.to

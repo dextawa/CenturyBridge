@@ -1,0 +1,959 @@
+{
+  "source": "client-26.2.jar",
+  "fixes": [
+    {
+      "dataVersion": 820,
+      "fix": "ItemRenameFix",
+      "name": "totem item renamer",
+      "renames": {
+        "minecraft:totem": "minecraft:totem_of_undying"
+      }
+    },
+    {
+      "dataVersion": 1475,
+      "fix": "BlockRenameFix",
+      "name": "Flowing fixer",
+      "renames": {
+        "minecraft:flowing_water": "minecraft:water",
+        "minecraft:flowing_lava": "minecraft:lava"
+      }
+    },
+    {
+      "dataVersion": 1480,
+      "fix": "BlockRenameFix",
+      "name": "Rename coral blocks",
+      "renames": {
+        "minecraft:blue_coral": "minecraft:tube_coral_block",
+        "minecraft:pink_coral": "minecraft:brain_coral_block",
+        "minecraft:purple_coral": "minecraft:bubble_coral_block",
+        "minecraft:red_coral": "minecraft:fire_coral_block",
+        "minecraft:yellow_coral": "minecraft:horn_coral_block",
+        "minecraft:blue_coral_plant": "minecraft:tube_coral",
+        "minecraft:pink_coral_plant": "minecraft:brain_coral",
+        "minecraft:purple_coral_plant": "minecraft:bubble_coral",
+        "minecraft:red_coral_plant": "minecraft:fire_coral",
+        "minecraft:yellow_coral_plant": "minecraft:horn_coral",
+        "minecraft:blue_coral_fan": "minecraft:tube_coral_fan",
+        "minecraft:pink_coral_fan": "minecraft:brain_coral_fan",
+        "minecraft:purple_coral_fan": "minecraft:bubble_coral_fan",
+        "minecraft:red_coral_fan": "minecraft:fire_coral_fan",
+        "minecraft:yellow_coral_fan": "minecraft:horn_coral_fan",
+        "minecraft:blue_dead_coral": "minecraft:dead_tube_coral",
+        "minecraft:pink_dead_coral": "minecraft:dead_brain_coral",
+        "minecraft:purple_dead_coral": "minecraft:dead_bubble_coral",
+        "minecraft:red_dead_coral": "minecraft:dead_fire_coral",
+        "minecraft:yellow_dead_coral": "minecraft:dead_horn_coral"
+      }
+    },
+    {
+      "dataVersion": 1480,
+      "fix": "ItemRenameFix",
+      "name": "Rename coral items",
+      "renames": {
+        "minecraft:blue_coral": "minecraft:tube_coral_block",
+        "minecraft:pink_coral": "minecraft:brain_coral_block",
+        "minecraft:purple_coral": "minecraft:bubble_coral_block",
+        "minecraft:red_coral": "minecraft:fire_coral_block",
+        "minecraft:yellow_coral": "minecraft:horn_coral_block",
+        "minecraft:blue_coral_plant": "minecraft:tube_coral",
+        "minecraft:pink_coral_plant": "minecraft:brain_coral",
+        "minecraft:purple_coral_plant": "minecraft:bubble_coral",
+        "minecraft:red_coral_plant": "minecraft:fire_coral",
+        "minecraft:yellow_coral_plant": "minecraft:horn_coral",
+        "minecraft:blue_coral_fan": "minecraft:tube_coral_fan",
+        "minecraft:pink_coral_fan": "minecraft:brain_coral_fan",
+        "minecraft:purple_coral_fan": "minecraft:bubble_coral_fan",
+        "minecraft:red_coral_fan": "minecraft:fire_coral_fan",
+        "minecraft:yellow_coral_fan": "minecraft:horn_coral_fan",
+        "minecraft:blue_dead_coral": "minecraft:dead_tube_coral",
+        "minecraft:pink_dead_coral": "minecraft:dead_brain_coral",
+        "minecraft:purple_dead_coral": "minecraft:dead_bubble_coral",
+        "minecraft:red_dead_coral": "minecraft:dead_fire_coral",
+        "minecraft:yellow_dead_coral": "minecraft:dead_horn_coral"
+      }
+    },
+    {
+      "dataVersion": 1483,
+      "fix": "ItemRenameFix",
+      "name": "Rename pufferfish egg item",
+      "renames": {
+        "minecraft:puffer_fish_spawn_egg": "minecraft:pufferfish_spawn_egg"
+      }
+    },
+    {
+      "dataVersion": 1484,
+      "fix": "ItemRenameFix",
+      "name": "Rename seagrass items",
+      "renames": {
+        "minecraft:sea_grass": "minecraft:seagrass",
+        "minecraft:tall_sea_grass": "minecraft:tall_seagrass"
+      }
+    },
+    {
+      "dataVersion": 1484,
+      "fix": "BlockRenameFix",
+      "name": "Rename seagrass blocks",
+      "renames": {
+        "minecraft:sea_grass": "minecraft:seagrass",
+        "minecraft:tall_sea_grass": "minecraft:tall_seagrass"
+      }
+    },
+    {
+      "dataVersion": 1486,
+      "fix": "ItemRenameFix",
+      "name": "Rename cod/salmon egg items",
+      "renames": {
+        "minecraft:salmon_mob_spawn_egg": "minecraft:salmon_spawn_egg",
+        "minecraft:cod_mob_spawn_egg": "minecraft:cod_spawn_egg"
+      }
+    },
+    {
+      "dataVersion": 1487,
+      "fix": "ItemRenameFix",
+      "name": "Rename prismarine_brick(s)_* blocks",
+      "renames": {
+        "minecraft:prismarine_bricks_slab": "minecraft:prismarine_brick_slab",
+        "minecraft:prismarine_bricks_stairs": "minecraft:prismarine_brick_stairs"
+      }
+    },
+    {
+      "dataVersion": 1487,
+      "fix": "BlockRenameFix",
+      "name": "Rename prismarine_brick(s)_* items",
+      "renames": {
+        "minecraft:prismarine_bricks_slab": "minecraft:prismarine_brick_slab",
+        "minecraft:prismarine_bricks_stairs": "minecraft:prismarine_brick_stairs"
+      }
+    },
+    {
+      "dataVersion": 1488,
+      "fix": "BlockRenameFix",
+      "name": "Rename kelp/kelptop",
+      "renames": {
+        "minecraft:kelp_top": "minecraft:kelp",
+        "minecraft:kelp": "minecraft:kelp_plant"
+      }
+    },
+    {
+      "dataVersion": 1488,
+      "fix": "ItemRenameFix",
+      "name": "Rename kelptop",
+      "renames": {
+        "minecraft:kelp_top": "minecraft:kelp"
+      }
+    },
+    {
+      "dataVersion": 1490,
+      "fix": "BlockRenameFix",
+      "name": "Rename melon_block",
+      "renames": {
+        "minecraft:melon_block": "minecraft:melon"
+      }
+    },
+    {
+      "dataVersion": 1490,
+      "fix": "ItemRenameFix",
+      "name": "Rename melon_block/melon/speckled_melon",
+      "renames": {
+        "minecraft:melon_block": "minecraft:melon",
+        "minecraft:melon": "minecraft:melon_slice",
+        "minecraft:speckled_melon": "minecraft:glistering_melon_slice"
+      }
+    },
+    {
+      "dataVersion": 1502,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "RECIPE",
+      "name": "Recipes fix",
+      "renames": {
+        "minecraft:acacia_wooden_slab": "minecraft:acacia_slab",
+        "minecraft:birch_wooden_slab": "minecraft:birch_slab",
+        "minecraft:black_stained_hardened_clay": "minecraft:black_terracotta",
+        "minecraft:blue_stained_hardened_clay": "minecraft:blue_terracotta",
+        "minecraft:boat": "minecraft:oak_boat",
+        "minecraft:bone_meal_from_block": "minecraft:bone_meal_from_bone_block",
+        "minecraft:bone_meal_from_bone": "minecraft:bone_meal",
+        "minecraft:brick_block": "minecraft:bricks",
+        "minecraft:brown_stained_hardened_clay": "minecraft:brown_terracotta",
+        "minecraft:chiseled_stonebrick": "minecraft:chiseled_stone_bricks",
+        "minecraft:cyan_stained_hardened_clay": "minecraft:cyan_terracotta",
+        "minecraft:dark_oak_wooden_slab": "minecraft:dark_oak_slab",
+        "minecraft:end_bricks": "minecraft:end_stone_bricks",
+        "minecraft:fence_gate": "minecraft:oak_fence_gate",
+        "minecraft:fence": "minecraft:oak_fence",
+        "minecraft:golden_rail": "minecraft:powered_rail",
+        "minecraft:gold_ingot_from_block": "minecraft:gold_ingot_from_gold_block",
+        "minecraft:gray_stained_hardened_clay": "minecraft:gray_terracotta",
+        "minecraft:green_stained_hardened_clay": "minecraft:green_terracotta",
+        "minecraft:iron_ingot_from_block": "minecraft:iron_ingot_from_iron_block",
+        "minecraft:jungle_wooden_slab": "minecraft:jungle_slab",
+        "minecraft:light_blue_stained_hardened_clay": "minecraft:light_blue_terracotta",
+        "minecraft:light_gray_stained_hardened_clay": "minecraft:light_gray_terracotta",
+        "minecraft:lime_stained_hardened_clay": "minecraft:lime_terracotta",
+        "minecraft:lit_pumpkin": "minecraft:jack_o_lantern",
+        "minecraft:magenta_stained_hardened_clay": "minecraft:magenta_terracotta",
+        "minecraft:magma": "minecraft:magma_block",
+        "minecraft:melon_block": "minecraft:melon",
+        "minecraft:mossy_stonebrick": "minecraft:mossy_stone_bricks",
+        "minecraft:noteblock": "minecraft:note_block",
+        "minecraft:oak_wooden_slab": "minecraft:oak_slab",
+        "minecraft:orange_stained_hardened_clay": "minecraft:orange_terracotta",
+        "minecraft:pillar_quartz_block": "minecraft:quartz_pillar",
+        "minecraft:pink_stained_hardened_clay": "minecraft:pink_terracotta",
+        "minecraft:purple_shulker_box": "minecraft:shulker_box",
+        "minecraft:purple_stained_hardened_clay": "minecraft:purple_terracotta",
+        "minecraft:red_nether_brick": "minecraft:red_nether_bricks",
+        "minecraft:red_stained_hardened_clay": "minecraft:red_terracotta",
+        "minecraft:slime": "minecraft:slime_block",
+        "minecraft:smooth_red_sandstone": "minecraft:cut_red_sandstone",
+        "minecraft:smooth_sandstone": "minecraft:cut_sandstone",
+        "minecraft:snow_layer": "minecraft:snow",
+        "minecraft:snow": "minecraft:snow_block",
+        "minecraft:speckled_melon": "minecraft:glistering_melon_slice",
+        "minecraft:spruce_wooden_slab": "minecraft:spruce_slab",
+        "minecraft:stonebrick": "minecraft:stone_bricks",
+        "minecraft:stone_stairs": "minecraft:cobblestone_stairs",
+        "minecraft:string_to_wool": "minecraft:white_wool_from_string",
+        "minecraft:trapdoor": "minecraft:oak_trapdoor",
+        "minecraft:white_stained_hardened_clay": "minecraft:white_terracotta",
+        "minecraft:wooden_button": "minecraft:oak_button",
+        "minecraft:wooden_door": "minecraft:oak_door",
+        "minecraft:wooden_pressure_plate": "minecraft:oak_pressure_plate",
+        "minecraft:yellow_stained_hardened_clay": "minecraft:yellow_terracotta"
+      }
+    },
+    {
+      "dataVersion": 1510,
+      "fix": "BlockRenameFix",
+      "name": "Block renamening fix",
+      "renames": {
+        "minecraft:portal": "minecraft:nether_portal",
+        "minecraft:oak_bark": "minecraft:oak_wood",
+        "minecraft:spruce_bark": "minecraft:spruce_wood",
+        "minecraft:birch_bark": "minecraft:birch_wood",
+        "minecraft:jungle_bark": "minecraft:jungle_wood",
+        "minecraft:acacia_bark": "minecraft:acacia_wood",
+        "minecraft:dark_oak_bark": "minecraft:dark_oak_wood",
+        "minecraft:stripped_oak_bark": "minecraft:stripped_oak_wood",
+        "minecraft:stripped_spruce_bark": "minecraft:stripped_spruce_wood",
+        "minecraft:stripped_birch_bark": "minecraft:stripped_birch_wood",
+        "minecraft:stripped_jungle_bark": "minecraft:stripped_jungle_wood",
+        "minecraft:stripped_acacia_bark": "minecraft:stripped_acacia_wood",
+        "minecraft:stripped_dark_oak_bark": "minecraft:stripped_dark_oak_wood",
+        "minecraft:mob_spawner": "minecraft:spawner"
+      }
+    },
+    {
+      "dataVersion": 1510,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "RECIPE",
+      "name": "Recipes renamening fix",
+      "renames": {
+        "minecraft:acacia_bark": "minecraft:acacia_wood",
+        "minecraft:birch_bark": "minecraft:birch_wood",
+        "minecraft:dark_oak_bark": "minecraft:dark_oak_wood",
+        "minecraft:jungle_bark": "minecraft:jungle_wood",
+        "minecraft:oak_bark": "minecraft:oak_wood",
+        "minecraft:spruce_bark": "minecraft:spruce_wood"
+      }
+    },
+    {
+      "dataVersion": 1510,
+      "fix": "StatsRenameFix",
+      "name": "SwimStatsRenameFix",
+      "renames": {
+        "minecraft:swim_one_cm": "minecraft:walk_on_water_one_cm",
+        "minecraft:dive_one_cm": "minecraft:walk_under_water_one_cm"
+      }
+    },
+    {
+      "dataVersion": 1515,
+      "fix": "BlockRenameFix",
+      "name": "Rename coral fan blocks",
+      "renames": {
+        "minecraft:tube_coral_fan": "minecraft:tube_coral_wall_fan",
+        "minecraft:brain_coral_fan": "minecraft:brain_coral_wall_fan",
+        "minecraft:bubble_coral_fan": "minecraft:bubble_coral_wall_fan",
+        "minecraft:fire_coral_fan": "minecraft:fire_coral_wall_fan",
+        "minecraft:horn_coral_fan": "minecraft:horn_coral_wall_fan"
+      }
+    },
+    {
+      "dataVersion": 1800,
+      "fix": "ItemRenameFix",
+      "name": "Rename dye items",
+      "renames": {
+        "minecraft:cactus_green": "minecraft:green_dye",
+        "minecraft:rose_red": "minecraft:red_dye",
+        "minecraft:dandelion_yellow": "minecraft:yellow_dye"
+      }
+    },
+    {
+      "dataVersion": 1802,
+      "fix": "BlockRenameFix",
+      "name": "Rename sign blocks & stone slabs",
+      "renames": {
+        "minecraft:stone_slab": "minecraft:smooth_stone_slab",
+        "minecraft:sign": "minecraft:oak_sign",
+        "minecraft:wall_sign": "minecraft:oak_wall_sign"
+      }
+    },
+    {
+      "dataVersion": 1802,
+      "fix": "ItemRenameFix",
+      "name": "Rename sign item & stone slabs",
+      "renames": {
+        "minecraft:stone_slab": "minecraft:smooth_stone_slab",
+        "minecraft:sign": "minecraft:oak_sign"
+      }
+    },
+    {
+      "dataVersion": 1928,
+      "fix": "ItemRenameFix",
+      "name": "Rename ravager egg item",
+      "renames": {
+        "minecraft:illager_beast_spawn_egg": "minecraft:ravager_spawn_egg"
+      }
+    },
+    {
+      "dataVersion": 2100,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "RECIPE",
+      "name": "Rename sugar recipe",
+      "renames": {
+        "minecraft:sugar": "minecraft:sugar_from_sugar_cane"
+      }
+    },
+    {
+      "dataVersion": 2100,
+      "fix": "AdvancementsRenameFix",
+      "name": "Rename sugar recipe advancement",
+      "renames": {
+        "minecraft:recipes/misc/sugar": "minecraft:recipes/misc/sugar_from_sugar_cane"
+      }
+    },
+    {
+      "dataVersion": 2209,
+      "fix": "ItemRenameFix",
+      "name": "Rename bee_hive item to beehive",
+      "renames": {
+        "minecraft:bee_hive": "minecraft:beehive"
+      }
+    },
+    {
+      "dataVersion": 2209,
+      "fix": "PoiTypeRenameFix",
+      "name": "Rename bee_hive poi to beehive",
+      "renames": {
+        "minecraft:bee_hive": "minecraft:beehive"
+      }
+    },
+    {
+      "dataVersion": 2209,
+      "fix": "BlockRenameFix",
+      "name": "Rename bee_hive block to beehive",
+      "renames": {
+        "minecraft:bee_hive": "minecraft:beehive"
+      }
+    },
+    {
+      "dataVersion": 2503,
+      "fix": "AdvancementsRenameFix",
+      "name": "Composter category change",
+      "renames": {
+        "minecraft:recipes/misc/composter": "minecraft:recipes/decorations/composter"
+      }
+    },
+    {
+      "dataVersion": 2508,
+      "fix": "ItemRenameFix",
+      "name": "Renamed fungi items to fungus",
+      "renames": {
+        "minecraft:warped_fungi": "minecraft:warped_fungus",
+        "minecraft:crimson_fungi": "minecraft:crimson_fungus"
+      }
+    },
+    {
+      "dataVersion": 2508,
+      "fix": "BlockRenameFix",
+      "name": "Renamed fungi blocks to fungus",
+      "renames": {
+        "minecraft:warped_fungi": "minecraft:warped_fungus",
+        "minecraft:crimson_fungi": "minecraft:crimson_fungus"
+      }
+    },
+    {
+      "dataVersion": 2509,
+      "fix": "ItemRenameFix",
+      "name": "Rename zombie pigman egg item",
+      "renames": {
+        "minecraft:zombie_pigman_spawn_egg": "minecraft:zombified_piglin_spawn_egg"
+      }
+    },
+    {
+      "dataVersion": 2523,
+      "fix": "AttributesRenameLegacy",
+      "name": "Attribute renames",
+      "renames": {
+        "generic.maxHealth": "minecraft:generic.max_health",
+        "Max Health": "minecraft:generic.max_health",
+        "zombie.spawnReinforcements": "minecraft:zombie.spawn_reinforcements",
+        "Spawn Reinforcements Chance": "minecraft:zombie.spawn_reinforcements",
+        "horse.jumpStrength": "minecraft:horse.jump_strength",
+        "Jump Strength": "minecraft:horse.jump_strength",
+        "generic.followRange": "minecraft:generic.follow_range",
+        "Follow Range": "minecraft:generic.follow_range",
+        "generic.knockbackResistance": "minecraft:generic.knockback_resistance",
+        "Knockback Resistance": "minecraft:generic.knockback_resistance",
+        "generic.movementSpeed": "minecraft:generic.movement_speed",
+        "Movement Speed": "minecraft:generic.movement_speed",
+        "generic.flyingSpeed": "minecraft:generic.flying_speed",
+        "Flying Speed": "minecraft:generic.flying_speed",
+        "generic.attackDamage": "minecraft:generic.attack_damage",
+        "generic.attackKnockback": "minecraft:generic.attack_knockback",
+        "generic.attackSpeed": "minecraft:generic.attack_speed",
+        "generic.armorToughness": "minecraft:generic.armor_toughness"
+      }
+    },
+    {
+      "dataVersion": 2528,
+      "fix": "ItemRenameFix",
+      "name": "Rename soul fire torch and soul fire lantern",
+      "renames": {
+        "minecraft:soul_fire_torch": "minecraft:soul_torch",
+        "minecraft:soul_fire_lantern": "minecraft:soul_lantern"
+      }
+    },
+    {
+      "dataVersion": 2528,
+      "fix": "BlockRenameFix",
+      "name": "Rename soul fire torch and soul fire lantern",
+      "renames": {
+        "minecraft:soul_fire_torch": "minecraft:soul_torch",
+        "minecraft:soul_fire_wall_torch": "minecraft:soul_wall_torch",
+        "minecraft:soul_fire_lantern": "minecraft:soul_lantern"
+      }
+    },
+    {
+      "dataVersion": 2552,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "BIOME",
+      "name": "Nether biome rename",
+      "renames": {
+        "minecraft:nether": "minecraft:nether_wastes"
+      }
+    },
+    {
+      "dataVersion": 2553,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "BIOME",
+      "name": "Biomes fix",
+      "renames": {
+        "minecraft:extreme_hills": "minecraft:mountains",
+        "minecraft:swampland": "minecraft:swamp",
+        "minecraft:hell": "minecraft:nether_wastes",
+        "minecraft:sky": "minecraft:the_end",
+        "minecraft:ice_flats": "minecraft:snowy_tundra",
+        "minecraft:ice_mountains": "minecraft:snowy_mountains",
+        "minecraft:mushroom_island": "minecraft:mushroom_fields",
+        "minecraft:mushroom_island_shore": "minecraft:mushroom_field_shore",
+        "minecraft:beaches": "minecraft:beach",
+        "minecraft:forest_hills": "minecraft:wooded_hills",
+        "minecraft:smaller_extreme_hills": "minecraft:mountain_edge",
+        "minecraft:stone_beach": "minecraft:stone_shore",
+        "minecraft:cold_beach": "minecraft:snowy_beach",
+        "minecraft:roofed_forest": "minecraft:dark_forest",
+        "minecraft:taiga_cold": "minecraft:snowy_taiga",
+        "minecraft:taiga_cold_hills": "minecraft:snowy_taiga_hills",
+        "minecraft:redwood_taiga": "minecraft:giant_tree_taiga",
+        "minecraft:redwood_taiga_hills": "minecraft:giant_tree_taiga_hills",
+        "minecraft:extreme_hills_with_trees": "minecraft:wooded_mountains",
+        "minecraft:savanna_rock": "minecraft:savanna_plateau",
+        "minecraft:mesa": "minecraft:badlands",
+        "minecraft:mesa_rock": "minecraft:wooded_badlands_plateau",
+        "minecraft:mesa_clear_rock": "minecraft:badlands_plateau",
+        "minecraft:sky_island_low": "minecraft:small_end_islands",
+        "minecraft:sky_island_medium": "minecraft:end_midlands",
+        "minecraft:sky_island_high": "minecraft:end_highlands",
+        "minecraft:sky_island_barren": "minecraft:end_barrens",
+        "minecraft:void": "minecraft:the_void",
+        "minecraft:mutated_plains": "minecraft:sunflower_plains",
+        "minecraft:mutated_desert": "minecraft:desert_lakes",
+        "minecraft:mutated_extreme_hills": "minecraft:gravelly_mountains",
+        "minecraft:mutated_forest": "minecraft:flower_forest",
+        "minecraft:mutated_taiga": "minecraft:taiga_mountains",
+        "minecraft:mutated_swampland": "minecraft:swamp_hills",
+        "minecraft:mutated_ice_flats": "minecraft:ice_spikes",
+        "minecraft:mutated_jungle": "minecraft:modified_jungle",
+        "minecraft:mutated_jungle_edge": "minecraft:modified_jungle_edge",
+        "minecraft:mutated_birch_forest": "minecraft:tall_birch_forest",
+        "minecraft:mutated_birch_forest_hills": "minecraft:tall_birch_hills",
+        "minecraft:mutated_roofed_forest": "minecraft:dark_forest_hills",
+        "minecraft:mutated_taiga_cold": "minecraft:snowy_taiga_mountains",
+        "minecraft:mutated_redwood_taiga": "minecraft:giant_spruce_taiga",
+        "minecraft:mutated_redwood_taiga_hills": "minecraft:giant_spruce_taiga_hills",
+        "minecraft:mutated_extreme_hills_with_trees": "minecraft:modified_gravelly_mountains",
+        "minecraft:mutated_savanna": "minecraft:shattered_savanna",
+        "minecraft:mutated_savanna_rock": "minecraft:shattered_savanna_plateau",
+        "minecraft:mutated_mesa": "minecraft:eroded_badlands",
+        "minecraft:mutated_mesa_rock": "minecraft:modified_wooded_badlands_plateau",
+        "minecraft:mutated_mesa_clear_rock": "minecraft:modified_badlands_plateau",
+        "minecraft:warm_deep_ocean": "minecraft:deep_warm_ocean",
+        "minecraft:lukewarm_deep_ocean": "minecraft:deep_lukewarm_ocean",
+        "minecraft:cold_deep_ocean": "minecraft:deep_cold_ocean",
+        "minecraft:frozen_deep_ocean": "minecraft:deep_frozen_ocean"
+      }
+    },
+    {
+      "dataVersion": 2680,
+      "fix": "ItemRenameFix",
+      "name": "Renamed grass path item to dirt path",
+      "renames": {
+        "minecraft:grass_path": "minecraft:dirt_path"
+      }
+    },
+    {
+      "dataVersion": 2680,
+      "fix": "BlockRenameFix",
+      "name": "Renamed grass path block to dirt path",
+      "renames": {
+        "minecraft:grass_path": "minecraft:dirt_path"
+      }
+    },
+    {
+      "dataVersion": 2690,
+      "fix": "ItemRenameFix",
+      "name": "Renamed copper block items to new oxidized terms",
+      "renames": {
+        "minecraft:weathered_copper_block": "minecraft:oxidized_copper_block",
+        "minecraft:semi_weathered_copper_block": "minecraft:weathered_copper_block",
+        "minecraft:lightly_weathered_copper_block": "minecraft:exposed_copper_block",
+        "minecraft:weathered_cut_copper": "minecraft:oxidized_cut_copper",
+        "minecraft:semi_weathered_cut_copper": "minecraft:weathered_cut_copper",
+        "minecraft:lightly_weathered_cut_copper": "minecraft:exposed_cut_copper",
+        "minecraft:weathered_cut_copper_stairs": "minecraft:oxidized_cut_copper_stairs",
+        "minecraft:semi_weathered_cut_copper_stairs": "minecraft:weathered_cut_copper_stairs",
+        "minecraft:lightly_weathered_cut_copper_stairs": "minecraft:exposed_cut_copper_stairs",
+        "minecraft:weathered_cut_copper_slab": "minecraft:oxidized_cut_copper_slab",
+        "minecraft:semi_weathered_cut_copper_slab": "minecraft:weathered_cut_copper_slab",
+        "minecraft:lightly_weathered_cut_copper_slab": "minecraft:exposed_cut_copper_slab",
+        "minecraft:waxed_semi_weathered_copper": "minecraft:waxed_weathered_copper",
+        "minecraft:waxed_lightly_weathered_copper": "minecraft:waxed_exposed_copper",
+        "minecraft:waxed_semi_weathered_cut_copper": "minecraft:waxed_weathered_cut_copper",
+        "minecraft:waxed_lightly_weathered_cut_copper": "minecraft:waxed_exposed_cut_copper",
+        "minecraft:waxed_semi_weathered_cut_copper_stairs": "minecraft:waxed_weathered_cut_copper_stairs",
+        "minecraft:waxed_lightly_weathered_cut_copper_stairs": "minecraft:waxed_exposed_cut_copper_stairs",
+        "minecraft:waxed_semi_weathered_cut_copper_slab": "minecraft:waxed_weathered_cut_copper_slab",
+        "minecraft:waxed_lightly_weathered_cut_copper_slab": "minecraft:waxed_exposed_cut_copper_slab"
+      }
+    },
+    {
+      "dataVersion": 2690,
+      "fix": "BlockRenameFix",
+      "name": "Renamed copper blocks to new oxidized terms",
+      "renames": {
+        "minecraft:weathered_copper_block": "minecraft:oxidized_copper_block",
+        "minecraft:semi_weathered_copper_block": "minecraft:weathered_copper_block",
+        "minecraft:lightly_weathered_copper_block": "minecraft:exposed_copper_block",
+        "minecraft:weathered_cut_copper": "minecraft:oxidized_cut_copper",
+        "minecraft:semi_weathered_cut_copper": "minecraft:weathered_cut_copper",
+        "minecraft:lightly_weathered_cut_copper": "minecraft:exposed_cut_copper",
+        "minecraft:weathered_cut_copper_stairs": "minecraft:oxidized_cut_copper_stairs",
+        "minecraft:semi_weathered_cut_copper_stairs": "minecraft:weathered_cut_copper_stairs",
+        "minecraft:lightly_weathered_cut_copper_stairs": "minecraft:exposed_cut_copper_stairs",
+        "minecraft:weathered_cut_copper_slab": "minecraft:oxidized_cut_copper_slab",
+        "minecraft:semi_weathered_cut_copper_slab": "minecraft:weathered_cut_copper_slab",
+        "minecraft:lightly_weathered_cut_copper_slab": "minecraft:exposed_cut_copper_slab",
+        "minecraft:waxed_semi_weathered_copper": "minecraft:waxed_weathered_copper",
+        "minecraft:waxed_lightly_weathered_copper": "minecraft:waxed_exposed_copper",
+        "minecraft:waxed_semi_weathered_cut_copper": "minecraft:waxed_weathered_cut_copper",
+        "minecraft:waxed_lightly_weathered_cut_copper": "minecraft:waxed_exposed_cut_copper",
+        "minecraft:waxed_semi_weathered_cut_copper_stairs": "minecraft:waxed_weathered_cut_copper_stairs",
+        "minecraft:waxed_lightly_weathered_cut_copper_stairs": "minecraft:waxed_exposed_cut_copper_stairs",
+        "minecraft:waxed_semi_weathered_cut_copper_slab": "minecraft:waxed_weathered_cut_copper_slab",
+        "minecraft:waxed_lightly_weathered_cut_copper_slab": "minecraft:waxed_exposed_cut_copper_slab"
+      }
+    },
+    {
+      "dataVersion": 2691,
+      "fix": "ItemRenameFix",
+      "name": "Rename copper item suffixes",
+      "renames": {
+        "minecraft:waxed_copper": "minecraft:waxed_copper_block",
+        "minecraft:oxidized_copper_block": "minecraft:oxidized_copper",
+        "minecraft:weathered_copper_block": "minecraft:weathered_copper",
+        "minecraft:exposed_copper_block": "minecraft:exposed_copper"
+      }
+    },
+    {
+      "dataVersion": 2691,
+      "fix": "BlockRenameFix",
+      "name": "Rename copper blocks suffixes",
+      "renames": {
+        "minecraft:waxed_copper": "minecraft:waxed_copper_block",
+        "minecraft:oxidized_copper_block": "minecraft:oxidized_copper",
+        "minecraft:weathered_copper_block": "minecraft:weathered_copper",
+        "minecraft:exposed_copper_block": "minecraft:exposed_copper"
+      }
+    },
+    {
+      "dataVersion": 2696,
+      "fix": "ItemRenameFix",
+      "name": "Renamed grimstone block items to deepslate",
+      "renames": {
+        "minecraft:grimstone": "minecraft:deepslate",
+        "minecraft:grimstone_slab": "minecraft:cobbled_deepslate_slab",
+        "minecraft:grimstone_stairs": "minecraft:cobbled_deepslate_stairs",
+        "minecraft:grimstone_wall": "minecraft:cobbled_deepslate_wall",
+        "minecraft:polished_grimstone": "minecraft:polished_deepslate",
+        "minecraft:polished_grimstone_slab": "minecraft:polished_deepslate_slab",
+        "minecraft:polished_grimstone_stairs": "minecraft:polished_deepslate_stairs",
+        "minecraft:polished_grimstone_wall": "minecraft:polished_deepslate_wall",
+        "minecraft:grimstone_tiles": "minecraft:deepslate_tiles",
+        "minecraft:grimstone_tile_slab": "minecraft:deepslate_tile_slab",
+        "minecraft:grimstone_tile_stairs": "minecraft:deepslate_tile_stairs",
+        "minecraft:grimstone_tile_wall": "minecraft:deepslate_tile_wall",
+        "minecraft:grimstone_bricks": "minecraft:deepslate_bricks",
+        "minecraft:grimstone_brick_slab": "minecraft:deepslate_brick_slab",
+        "minecraft:grimstone_brick_stairs": "minecraft:deepslate_brick_stairs",
+        "minecraft:grimstone_brick_wall": "minecraft:deepslate_brick_wall",
+        "minecraft:chiseled_grimstone": "minecraft:chiseled_deepslate"
+      }
+    },
+    {
+      "dataVersion": 2696,
+      "fix": "BlockRenameFix",
+      "name": "Renamed grimstone blocks to deepslate",
+      "renames": {
+        "minecraft:grimstone": "minecraft:deepslate",
+        "minecraft:grimstone_slab": "minecraft:cobbled_deepslate_slab",
+        "minecraft:grimstone_stairs": "minecraft:cobbled_deepslate_stairs",
+        "minecraft:grimstone_wall": "minecraft:cobbled_deepslate_wall",
+        "minecraft:polished_grimstone": "minecraft:polished_deepslate",
+        "minecraft:polished_grimstone_slab": "minecraft:polished_deepslate_slab",
+        "minecraft:polished_grimstone_stairs": "minecraft:polished_deepslate_stairs",
+        "minecraft:polished_grimstone_wall": "minecraft:polished_deepslate_wall",
+        "minecraft:grimstone_tiles": "minecraft:deepslate_tiles",
+        "minecraft:grimstone_tile_slab": "minecraft:deepslate_tile_slab",
+        "minecraft:grimstone_tile_stairs": "minecraft:deepslate_tile_stairs",
+        "minecraft:grimstone_tile_wall": "minecraft:deepslate_tile_wall",
+        "minecraft:grimstone_bricks": "minecraft:deepslate_bricks",
+        "minecraft:grimstone_brick_slab": "minecraft:deepslate_brick_slab",
+        "minecraft:grimstone_brick_stairs": "minecraft:deepslate_brick_stairs",
+        "minecraft:grimstone_brick_wall": "minecraft:deepslate_brick_wall",
+        "minecraft:chiseled_grimstone": "minecraft:chiseled_deepslate"
+      }
+    },
+    {
+      "dataVersion": 2700,
+      "fix": "BlockRenameFix",
+      "name": "Renamed cave vines blocks",
+      "renames": {
+        "minecraft:cave_vines_head": "minecraft:cave_vines",
+        "minecraft:cave_vines_body": "minecraft:cave_vines_plant"
+      }
+    },
+    {
+      "dataVersion": 2710,
+      "fix": "StatsRenameFix",
+      "name": "Renamed play_one_minute stat to play_time",
+      "renames": {
+        "minecraft:play_one_minute": "minecraft:play_time"
+      }
+    },
+    {
+      "dataVersion": 2717,
+      "fix": "ItemRenameFix",
+      "name": "Rename azalea_leaves_flowers",
+      "renames": {
+        "minecraft:azalea_leaves_flowers": "minecraft:flowering_azalea_leaves"
+      }
+    },
+    {
+      "dataVersion": 2717,
+      "fix": "BlockRenameFix",
+      "name": "Rename azalea_leaves_flowers items",
+      "renames": {
+        "minecraft:azalea_leaves_flowers": "minecraft:flowering_azalea_leaves"
+      }
+    },
+    {
+      "dataVersion": 2838,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "BIOME",
+      "name": "Caves and Cliffs biome renames",
+      "renames": {
+        "minecraft:badlands_plateau": "minecraft:badlands",
+        "minecraft:bamboo_jungle_hills": "minecraft:bamboo_jungle",
+        "minecraft:birch_forest_hills": "minecraft:birch_forest",
+        "minecraft:dark_forest_hills": "minecraft:dark_forest",
+        "minecraft:desert_hills": "minecraft:desert",
+        "minecraft:desert_lakes": "minecraft:desert",
+        "minecraft:giant_spruce_taiga_hills": "minecraft:old_growth_spruce_taiga",
+        "minecraft:giant_spruce_taiga": "minecraft:old_growth_spruce_taiga",
+        "minecraft:giant_tree_taiga_hills": "minecraft:old_growth_pine_taiga",
+        "minecraft:giant_tree_taiga": "minecraft:old_growth_pine_taiga",
+        "minecraft:gravelly_mountains": "minecraft:windswept_gravelly_hills",
+        "minecraft:jungle_edge": "minecraft:sparse_jungle",
+        "minecraft:jungle_hills": "minecraft:jungle",
+        "minecraft:modified_badlands_plateau": "minecraft:badlands",
+        "minecraft:modified_gravelly_mountains": "minecraft:windswept_gravelly_hills",
+        "minecraft:modified_jungle_edge": "minecraft:sparse_jungle",
+        "minecraft:modified_jungle": "minecraft:jungle",
+        "minecraft:modified_wooded_badlands_plateau": "minecraft:wooded_badlands",
+        "minecraft:mountain_edge": "minecraft:windswept_hills",
+        "minecraft:mountains": "minecraft:windswept_hills",
+        "minecraft:mushroom_field_shore": "minecraft:mushroom_fields",
+        "minecraft:shattered_savanna": "minecraft:windswept_savanna",
+        "minecraft:shattered_savanna_plateau": "minecraft:windswept_savanna",
+        "minecraft:snowy_mountains": "minecraft:snowy_plains",
+        "minecraft:snowy_taiga_hills": "minecraft:snowy_taiga",
+        "minecraft:snowy_taiga_mountains": "minecraft:snowy_taiga",
+        "minecraft:snowy_tundra": "minecraft:snowy_plains",
+        "minecraft:stone_shore": "minecraft:stony_shore",
+        "minecraft:swamp_hills": "minecraft:swamp",
+        "minecraft:taiga_hills": "minecraft:taiga",
+        "minecraft:taiga_mountains": "minecraft:taiga",
+        "minecraft:tall_birch_forest": "minecraft:old_growth_birch_forest",
+        "minecraft:tall_birch_hills": "minecraft:old_growth_birch_forest",
+        "minecraft:wooded_badlands_plateau": "minecraft:wooded_badlands",
+        "minecraft:wooded_hills": "minecraft:forest",
+        "minecraft:wooded_mountains": "minecraft:windswept_forest",
+        "minecraft:lofty_peaks": "minecraft:jagged_peaks",
+        "minecraft:snowcapped_peaks": "minecraft:frozen_peaks"
+      }
+    },
+    {
+      "dataVersion": 2843,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "BIOME",
+      "name": "Remove Deep Warm Ocean",
+      "renames": {
+        "minecraft:deep_warm_ocean": "minecraft:warm_ocean"
+      }
+    },
+    {
+      "dataVersion": 2846,
+      "fix": "AdvancementsRenameFix",
+      "name": "Rename some C&C part 2 advancements",
+      "renames": {
+        "minecraft:husbandry/play_jukebox_in_meadows": "minecraft:adventure/play_jukebox_in_meadows",
+        "minecraft:adventure/caves_and_cliff": "minecraft:adventure/fall_from_world_height",
+        "minecraft:adventure/ride_strider_in_overworld_lava": "minecraft:nether/ride_strider_in_overworld_lava"
+      }
+    },
+    {
+      "dataVersion": 3084,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "GAME_EVENT_NAME",
+      "name": "game_event_renames_3084",
+      "renames": {
+        "minecraft:block_press": "minecraft:block_activate",
+        "minecraft:block_switch": "minecraft:block_activate",
+        "minecraft:block_unpress": "minecraft:block_deactivate",
+        "minecraft:block_unswitch": "minecraft:block_deactivate",
+        "minecraft:drinking_finish": "minecraft:drink",
+        "minecraft:elytra_free_fall": "minecraft:elytra_glide",
+        "minecraft:entity_damaged": "minecraft:entity_damage",
+        "minecraft:entity_dying": "minecraft:entity_die",
+        "minecraft:entity_killed": "minecraft:entity_die",
+        "minecraft:mob_interact": "minecraft:entity_interact",
+        "minecraft:ravager_roar": "minecraft:entity_roar",
+        "minecraft:ring_bell": "minecraft:block_change",
+        "minecraft:shulker_close": "minecraft:container_close",
+        "minecraft:shulker_open": "minecraft:container_open",
+        "minecraft:wolf_shaking": "minecraft:entity_shake"
+      }
+    },
+    {
+      "dataVersion": 3086,
+      "fix": "CriteriaRenameFix",
+      "name": "Migrate cat variant advancement",
+      "renames": {
+        "textures/entity/cat/tabby.png": "minecraft:tabby",
+        "textures/entity/cat/black.png": "minecraft:black",
+        "textures/entity/cat/red.png": "minecraft:red",
+        "textures/entity/cat/siamese.png": "minecraft:siamese",
+        "textures/entity/cat/british_shorthair.png": "minecraft:british",
+        "textures/entity/cat/calico.png": "minecraft:calico",
+        "textures/entity/cat/persian.png": "minecraft:persian",
+        "textures/entity/cat/ragdoll.png": "minecraft:ragdoll",
+        "textures/entity/cat/white.png": "minecraft:white",
+        "textures/entity/cat/jellie.png": "minecraft:jellie",
+        "textures/entity/cat/all_black.png": "minecraft:all_black"
+      }
+    },
+    {
+      "dataVersion": 3090,
+      "fix": "EntityFieldsRenameFix",
+      "name": "EntityPaintingFieldsRenameFix",
+      "renames": {
+        "Motive": "variant",
+        "Facing": "facing"
+      }
+    },
+    {
+      "dataVersion": 3097,
+      "fix": "VariantRenameFix",
+      "type": "ENTITY",
+      "name": "Rename british shorthair",
+      "renames": {
+        "minecraft:british": "minecraft:british_shorthair"
+      }
+    },
+    {
+      "dataVersion": 3097,
+      "fix": "CriteriaRenameFix",
+      "name": "Migrate cat variant advancement for british shorthair",
+      "renames": {
+        "minecraft:british": "minecraft:british_shorthair"
+      }
+    },
+    {
+      "dataVersion": 3438,
+      "fix": "BlockEntityRenameFix",
+      "name": "Rename Suspicious Sand to Brushable Block",
+      "renames": {
+        "minecraft:suspicious_sand": "minecraft:brushable_block"
+      }
+    },
+    {
+      "dataVersion": 3438,
+      "fix": "ItemRenameFix",
+      "name": "Pottery shard renaming",
+      "renames": {
+        "minecraft:pottery_shard_archer": "minecraft:archer_pottery_shard",
+        "minecraft:pottery_shard_prize": "minecraft:prize_pottery_shard",
+        "minecraft:pottery_shard_arms_up": "minecraft:arms_up_pottery_shard",
+        "minecraft:pottery_shard_skull": "minecraft:skull_pottery_shard"
+      }
+    },
+    {
+      "dataVersion": 3440,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "MULTI_NOISE_BIOME_SOURCE_PARAMETER_LIST",
+      "name": "Replace experimental 1.20 overworld",
+      "renames": {
+        "minecraft:overworld_update_1_20": "minecraft:overworld"
+      }
+    },
+    {
+      "dataVersion": 3450,
+      "fix": "RemapChunkStatusFix",
+      "name": "Remove liquid_carvers and heightmap chunk statuses",
+      "renames": {
+        "minecraft:liquid_carvers": "minecraft:carvers",
+        "minecraft:heightmaps": "minecraft:spawn"
+      }
+    },
+    {
+      "dataVersion": 3692,
+      "fix": "BlockRenameFix",
+      "name": "Rename grass block to short_grass",
+      "renames": {
+        "minecraft:grass": "minecraft:short_grass"
+      }
+    },
+    {
+      "dataVersion": 3692,
+      "fix": "ItemRenameFix",
+      "name": "Rename grass item to short_grass",
+      "renames": {
+        "minecraft:grass": "minecraft:short_grass"
+      }
+    },
+    {
+      "dataVersion": 3800,
+      "fix": "ItemRenameFix",
+      "name": "Rename scute item to turtle_scute",
+      "renames": {
+        "minecraft:scute": "minecraft:turtle_scute"
+      }
+    },
+    {
+      "dataVersion": 3803,
+      "fix": "RenameEnchantmentsFix",
+      "name": "Rename sweeping enchant to sweeping_edge",
+      "renames": {
+        "minecraft:sweeping": "minecraft:sweeping_edge"
+      }
+    },
+    {
+      "dataVersion": 3814,
+      "fix": "AttributesRenameLegacy",
+      "name": "Rename jump strength attribute",
+      "renames": {
+        "minecraft:horse.jump_strength": "minecraft:generic.jump_strength"
+      }
+    },
+    {
+      "dataVersion": 4173,
+      "fix": "EntityFieldsRenameFix",
+      "name": "Rename TNT Minecart fuse",
+      "renames": {
+        "TNTFuse": "fuse"
+      }
+    },
+    {
+      "dataVersion": 4311,
+      "fix": "AdvancementsRenameFix",
+      "name": "Use lodestone category change",
+      "renames": {
+        "minecraft:nether/use_lodestone": "minecraft:adventure/use_lodestone"
+      }
+    },
+    {
+      "dataVersion": 4541,
+      "fix": "BlockRenameFix",
+      "name": "Rename chain to iron_chain",
+      "renames": {
+        "minecraft:chain": "minecraft:iron_chain"
+      }
+    },
+    {
+      "dataVersion": 4541,
+      "fix": "ItemRenameFix",
+      "name": "Rename chain to iron_chain",
+      "renames": {
+        "minecraft:chain": "minecraft:iron_chain"
+      }
+    },
+    {
+      "dataVersion": 4769,
+      "fix": "NamespacedTypeRenameFix",
+      "type": "RECIPE",
+      "name": "Rename stonecutter recipes",
+      "renames": {
+        "minecraft:chiseled_stone_bricks_stone_from_stonecutting": "minecraft:chiseled_stone_bricks_from_stone_stonecutting",
+        "minecraft:end_stone_brick_slab_from_end_stone_brick_stonecutting": "minecraft:end_stone_brick_slab_from_end_stone_bricks_stonecutting",
+        "minecraft:end_stone_brick_stairs_from_end_stone_brick_stonecutting": "minecraft:end_stone_brick_stairs_from_end_stone_bricks_stonecutting",
+        "minecraft:end_stone_brick_wall_from_end_stone_brick_stonecutting": "minecraft:end_stone_brick_wall_from_end_stone_bricks_stonecutting",
+        "minecraft:mossy_stone_brick_slab_from_mossy_stone_brick_stonecutting": "minecraft:mossy_stone_brick_slab_from_mossy_stone_bricks_stonecutting",
+        "minecraft:mossy_stone_brick_stairs_from_mossy_stone_brick_stonecutting": "minecraft:mossy_stone_brick_stairs_from_mossy_stone_bricks_stonecutting",
+        "minecraft:mossy_stone_brick_wall_from_mossy_stone_brick_stonecutting": "minecraft:mossy_stone_brick_wall_from_mossy_stone_bricks_stonecutting",
+        "minecraft:prismarine_brick_slab_from_prismarine_stonecutting": "minecraft:prismarine_brick_slab_from_prismarine_bricks_stonecutting",
+        "minecraft:prismarine_brick_stairs_from_prismarine_stonecutting": "minecraft:prismarine_brick_stairs_from_prismarine_bricks_stonecutting",
+        "minecraft:quartz_slab_from_stonecutting": "minecraft:quartz_slab_from_quartz_block_stonecutting",
+        "minecraft:stone_brick_walls_from_stone_stonecutting": "minecraft:stone_brick_wall_from_stone_stonecutting"
+      }
+    },
+    {
+      "dataVersion": 4769,
+      "fix": "AdvancementsRenameFix",
+      "name": "Rename stonecutter recipe advancements",
+      "renames": {
+        "minecraft:recipes/building_blocks/chiseled_stone_bricks_stone_from_stonecutting": "minecraft:recipes/building_blocks/chiseled_stone_bricks_from_stone_stonecutting",
+        "minecraft:recipes/building_blocks/end_stone_brick_slab_from_end_stone_brick_stonecutting": "minecraft:recipes/building_blocks/end_stone_brick_slab_from_end_stone_bricks_stonecutting",
+        "minecraft:recipes/building_blocks/end_stone_brick_stairs_from_end_stone_brick_stonecutting": "minecraft:recipes/building_blocks/end_stone_brick_stairs_from_end_stone_bricks_stonecutting",
+        "minecraft:recipes/decorations/end_stone_brick_wall_from_end_stone_brick_stonecutting": "minecraft:recipes/decorations/end_stone_brick_wall_from_end_stone_bricks_stonecutting",
+        "minecraft:recipes/building_blocks/mossy_stone_brick_slab_from_mossy_stone_brick_stonecutting": "minecraft:recipes/building_blocks/mossy_stone_brick_slab_from_mossy_stone_bricks_stonecutting",
+        "minecraft:recipes/building_blocks/mossy_stone_brick_stairs_from_mossy_stone_brick_stonecutting": "minecraft:recipes/building_blocks/mossy_stone_brick_stairs_from_mossy_stone_bricks_stonecutting",
+        "minecraft:recipes/building_blocks/mossy_stone_brick_wall_from_mossy_stone_brick_stonecutting": "minecraft:recipes/decorations/mossy_stone_brick_wall_from_mossy_stone_bricks_stonecutting",
+        "minecraft:recipes/building_blocks/prismarine_brick_slab_from_prismarine_stonecutting": "minecraft:recipes/building_blocks/prismarine_brick_slab_from_prismarine_bricks_stonecutting",
+        "minecraft:recipes/building_blocks/prismarine_brick_stairs_from_prismarine_stonecutting": "minecraft:recipes/building_blocks/prismarine_brick_stairs_from_prismarine_bricks_stonecutting",
+        "minecraft:recipes/building_blocks/quartz_slab_from_stonecutting": "minecraft:recipes/building_blocks/quartz_slab_from_quartz_block_stonecutting",
+        "minecraft:recipes/decorations/stone_brick_walls_from_stone_stonecutting": "minecraft:recipes/decorations/stone_brick_wall_from_stone_stonecutting"
+      }
+    }
+  ]
+}

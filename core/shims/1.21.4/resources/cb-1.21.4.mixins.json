@@ -313,6 +313,8 @@
     "GenClass9975Bridge",
     "HandledScreenBridge",
     "HandledScreensAccessor",
+    "ItemModelTypesBridge",
+    "ItemTintSourcesBridge",
     "MouseScrollBridge",
     "PlayerSkinBridge",
     "ScreenBridge",

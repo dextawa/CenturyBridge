@@ -962,6 +962,26 @@ public final class Statics {
 
     // ==== END GENERATED ====
 
+    private static boolean cbWarnedTorchParticle;
+
+    /**
+     * 1.20.1 TorchBlock(settings, particle) took any ParticleEffect; 1.20.3 takes a
+     * DefaultParticleType first. Vanilla torches and nearly every mod pass FLAME or
+     * SOUL_FIRE_FLAME, which are; a particle with parameters (dust, item...) cannot be a
+     * torch particle any more, so the torch shows FLAME and says so once.
+     */
+    public static net.minecraft.class_2400 cbToSimpleParticle(net.minecraft.class_2394 particle) {
+        if (particle instanceof net.minecraft.class_2400 simple) {
+            return simple;
+        }
+        if (!cbWarnedTorchParticle) {
+            cbWarnedTorchParticle = true;
+            org.slf4j.LoggerFactory.getLogger("CenturyBridge").warn(
+                "a torch block was built with particle {}, which 1.20.3+ torches cannot carry; it shows flame", particle);
+        }
+        return net.minecraft.class_2398.field_11240;
+    }
+
     private Statics() {
     }
 

@@ -15,14 +15,7 @@ import java.util.regex.Pattern;
  */
 public final class Chain {
     /** release order of the intermediary era (frontier + 26.x appended later) */
-    public static final List<String> RELEASES = List.of(
-        "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
-        "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", "1.21.6",
-        "1.21.7", "1.21.8", "1.21.9", "1.21.10", "1.21.11",
-        // year-based era: ships unobfuscated, intermediary is dead -- the
-        // 1.21.11 -> 26.1 segment is a whole-namespace wall (intermediary ->
-        // mojang), not just a stub diff
-        "26.1", "26.1.1", "26.1.2", "26.2");
+    public static final List<String> RELEASES = top.dext.centurybridge.res.Release.ALL;
 
     private static final Pattern METHOD_PAT = Pattern.compile("method_\\d+");
     private static final Pattern FIELD_PAT = Pattern.compile("field_\\d+");
@@ -55,6 +48,11 @@ public final class Chain {
      *  on a runtime class -- for holderified fields whose value must be unwrapped lazily
      *  (a static-field target would evaluate at Statics class-init, before the registry binds) */
     public final java.util.Map<String, String> fieldGetters = new java.util.HashMap<>();
+    /**
+     * the data-driven types the target's CenturyBridge runtime registers (item model types,
+     * tint sources...): converted resources may name them only where the runtime has them
+     */
+    public final java.util.Set<String> resourceTypes = new java.util.HashSet<>();
     /** dead vanilla classes renamed to facade classes shipped in the runtime bridge */
     public final java.util.Map<String, String> classRenames = new java.util.HashMap<>();
     /**
@@ -1133,6 +1131,11 @@ public final class Chain {
                 var fr = root.getAsJsonObject("fieldRedirects");
                 for (String k : fr.keySet()) {
                     c.fieldRedirects.put(k, fr.get(k).getAsString());
+                }
+            }
+            if (root.has("resourceTypes")) {
+                for (var t : root.getAsJsonArray("resourceTypes")) {
+                    c.resourceTypes.add(t.getAsString());
                 }
             }
             if (root.has("fieldGetters")) {
