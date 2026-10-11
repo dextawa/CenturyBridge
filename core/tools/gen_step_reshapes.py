@@ -225,8 +225,29 @@ def main():
     W = load(wjar, False)
     hv, hw = Hierarchy(V), Hierarchy(W)
     base = json.load(open(wiring_path, encoding="utf-8")) if os.path.exists(wiring_path) else {}
-    wired_calls, wired_ctors, wired_shapes = wired_keys(base)
+    # what the step's hand-written wiring serves: the base table and every area fragment (not the
+    # generated one), so an area that bridged a member -- or renamed its class -- keeps it
+    merged = json.loads(json.dumps(base))
+    frag_dir = wiring_path + ".d"
+    for f in sorted(os.listdir(frag_dir)) if os.path.isdir(frag_dir) else []:
+        if f.endswith(".json") and f != "mechanical.json":
+            for k, v in json.load(open(os.path.join(frag_dir, f), encoding="utf-8")).items():
+                if isinstance(v, dict):
+                    merged.setdefault(k, {}).update(v)
+                elif isinstance(v, list):
+                    merged.setdefault(k, []).extend(v)
+    wired_calls, wired_ctors, wired_shapes = wired_keys(merged)
+    renamed = set(merged.get("classRenames", {})) | set(merged.get("superRenames", {}))
     ledgered = set(base.get("ledger", {}).keys())
+    # rows an area has shown the generator cannot judge (owner<TAB>name+desc<TAB>reason): an
+    # intermediary name Fabric's matcher moved to another class (1.20.2 class_7566 is not 1.20.1's)
+    excluded = {}
+    excl = os.path.join(frag_dir, "mechanical-exclude.tsv")
+    if os.path.exists(excl):
+        for line in open(excl, encoding="utf-8"):
+            f = line.rstrip("\n").split("\t")
+            if len(f) >= 3 and not line.startswith("#"):
+                excluded[(f[0], f[1])] = f[2]
     calls, ctors, hooks, report = {}, {}, [], []
     hook_seen = set()
 
@@ -250,6 +271,9 @@ def main():
             wired = any(f"{c}.{name}{desc}" in wired_calls for c in hv.supers(owner))
         if wired:
             note(r, "wired", "the step's wiring already serves it")
+            continue
+        if owner in renamed or (owner, name + desc) in excluded:
+            note(r, "excluded", excluded.get((owner, name + desc), "the owner class is renamed by the step's wiring"))
             continue
         # W is looked at in its own names (across the wall: V's intermediary names translated)
         wowner, wname = wall.cls(owner), wall.member(owner, name, hv)
