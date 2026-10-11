@@ -473,6 +473,73 @@ public final class Chain {
     /** injector anchor check/repair against real target bodies; null = unavailable */
     public MixinRepair mixinRepair;
 
+    /**
+     * Whether a reference resolves on the target the way the JVM resolves it: the owner,
+     * its superclasses, their interfaces. TRUE found, FALSE definitely absent (every class
+     * on the way is a target-stub class and none declares it), null when the answer leaves
+     * the stub (a library supertype) or the owner is not a target class.
+     */
+    public Boolean resolvesOnTarget(String owner, String shape) {
+        if (targetDecls.isEmpty() || !targetClasses.contains(owner)) {
+            return null;
+        }
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(java.util.List.of(owner));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        boolean leftStub = false;
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c)) {
+                continue;
+            }
+            if (!targetClasses.contains(c)) {
+                if (c.startsWith("java/")) {
+                    Boolean jdk = jdkDeclares(c, shape);
+                    if (jdk == null) {
+                        leftStub = true;
+                    } else if (jdk) {
+                        return Boolean.TRUE;
+                    }
+                } else {
+                    leftStub = true;
+                }
+                continue;
+            }
+            if (targetDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
+                return Boolean.TRUE;
+            }
+            String sup = targetSuperOf.get(c);
+            if (sup != null) {
+                todo.add(sup);
+            }
+            todo.addAll(targetInterfacesOf.getOrDefault(c, java.util.List.of()));
+        }
+        return leftStub ? null : Boolean.FALSE;
+    }
+
+    /** whether a JDK class (or its supertypes) declares the shape; null when it cannot be loaded */
+    private static Boolean jdkDeclares(String internalName, String shape) {
+        try {
+            Class<?> k = Class.forName(internalName.replace('/', '.'), false, ClassLoader.getPlatformClassLoader());
+            for (Class<?> c = k; c != null; c = c.getSuperclass()) {
+                for (java.lang.reflect.Method m : c.getDeclaredMethods()) {
+                    if ((m.getName() + org.objectweb.asm.Type.getMethodDescriptor(m)).equals(shape)) {
+                        return Boolean.TRUE;
+                    }
+                }
+                for (Class<?> i : c.getInterfaces()) {
+                    for (java.lang.reflect.Method m : i.getMethods()) {
+                        if ((m.getName() + org.objectweb.asm.Type.getMethodDescriptor(m)).equals(shape)) {
+                            return Boolean.TRUE;
+                        }
+                    }
+                }
+            }
+            return Boolean.FALSE;
+        } catch (ReflectiveOperationException | LinkageError e) {
+            return null;
+        }
+    }
+
     public boolean declaredOnTarget(String owner, String name, String desc) {
         java.util.Set<String> decl = targetDecls.get(owner);
         if (decl == null) {
@@ -902,6 +969,16 @@ public final class Chain {
 
     public static boolean intermediaryMethod(String name) {
         return METHOD_PAT.matcher(name).matches();
+    }
+
+    /** Minecraft's own code: net/minecraft, and the packages Mojang never obfuscated */
+    public static boolean minecraftOwned(String internalName) {
+        return internalName.startsWith("net/minecraft/") || internalName.startsWith("com/mojang/blaze3d/")
+            || internalName.startsWith("com/mojang/realmsclient/");
+    }
+
+    public static boolean intermediaryClass(String internalName) {
+        return CLASS_PAT.matcher(internalName).matches();
     }
 
     /** the source class a mod declaration overrode: the first ancestor (source hierarchy) declaring the shape */

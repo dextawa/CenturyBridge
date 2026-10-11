@@ -1388,7 +1388,7 @@ public final class JarProcessor {
                         // consulted on the VANILLA owner, which differs when the site
                         // names a mod class an inherited vanilla member is reached through
                         final String site = owner + "." + name + desc;
-                        if (!owner.startsWith("net/minecraft/")) {
+                        if (!Chain.minecraftOwned(owner)) {
                             String inh = name.equals("<init>") ? null
                                 : inheritedVanillaOwner(owner, name + desc, layer);
                             if (inh == null) {
@@ -1532,6 +1532,14 @@ public final class JarProcessor {
                             return;
                         }
                         Chain.Issue r = chain.resolveMember('m', name);
+                        if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)
+                                && Boolean.FALSE.equals(chain.resolvesOnTarget(owner, name + desc))) {
+                            // classes Mojang never obfuscated (blaze3d, ...) keep real member names,
+                            // which the death tables -- keyed by intermediary name -- cannot see go:
+                            // the target stub is the judge. (On an intermediary-named class a
+                            // real-named member is a JDK override or another mod's injection.)
+                            r = new Chain.Issue(Chain.Level.L3, "target-decl");
+                        }
                         if (r.level() == Chain.Level.OK) {
                             return;
                         }

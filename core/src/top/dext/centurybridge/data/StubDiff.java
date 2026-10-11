@@ -155,7 +155,10 @@ public final class StubDiff {
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(jar))) {
             ZipEntry e;
             while ((e = zin.getNextEntry()) != null) {
-                if (!e.getName().endsWith(".class") || !e.getName().startsWith("net/minecraft/")) {
+                // Minecraft's own code: net/minecraft plus the packages Mojang never
+                // obfuscated (blaze3d, realms), whose members keep real names
+                if (!e.getName().endsWith(".class") || !(e.getName().startsWith("net/minecraft/")
+                        || e.getName().startsWith("com/mojang/blaze3d/") || e.getName().startsWith("com/mojang/realmsclient/"))) {
                     continue;
                 }
                 new ClassReader(zin.readAllBytes()).accept(new ClassVisitor(Opcodes.ASM9) {
