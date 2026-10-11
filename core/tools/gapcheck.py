@@ -74,12 +74,15 @@ for path in SHIMS:
     ledger.update(d.get("ledger", {}))
 
 
-def ledger_reason(owner, name, fate):
-    """Ledger keys are owner.name, or -- only for a member whose class is itself
+def ledger_reason(owner, name, fate, desc=None):
+    """Ledger keys are the exact shape (owner.name(desc) / owner.name:desc), every
+    member of that name (owner.name), or -- only for a member whose class is itself
     gone (CLASS_GONE) -- the owner or the outer class of an inner class. A class
     entry cannot account for a dead member of a class that survives: that is a
     real NoSuchMethodError/NoSuchFieldError needing its own disposition."""
     keys = [f"{owner}.{name}"]
+    if desc:
+        keys.insert(0, f"{owner}.{name}{desc}" if desc.startswith("(") else f"{owner}.{name}:{desc}")
     if fate == "CLASS_GONE":
         keys += [owner, owner.split("$")[0]]
     for key in keys:
@@ -118,7 +121,7 @@ def verdict(kind, fate, symbol, desc):
         return "rename", ""
     if owner in class_renames:
         return "facade", ""
-    reason = ledger_reason(owner, name, fate)
+    reason = ledger_reason(owner, name, fate, desc)
     if reason:
         return "ledger", reason
     return "OPEN", ""

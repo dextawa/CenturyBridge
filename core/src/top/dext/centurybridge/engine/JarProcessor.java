@@ -1337,10 +1337,10 @@ public final class JarProcessor {
                                     top.dext.centurybridge.data.FullAudit.record(key, "datagen-skip");
                                     return;
                                 }
-                                if (chain.ledgerReason(owner, "<init>") != null) {
+                                if (chain.ledgerReason(owner, "<init>", desc) != null) {
                                     rpt.ledgered++;
                                     top.dext.centurybridge.data.FullAudit.record(key,
-                                        "LEDGERED[" + cside + "] " + what + ": " + chain.ledgerReason(owner, "<init>"));
+                                        "LEDGERED[" + cside + "] " + what + ": " + chain.ledgerReason(owner, "<init>", desc));
                                     return;
                                 }
                                 top.dext.centurybridge.data.FullAudit.record(key,
@@ -1405,10 +1405,10 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(key, "datagen-skip");
                             return;
                         }
-                        if (chain.ledgerReason(owner, name) != null) {
+                        if (chain.ledgerReason(owner, name, desc) != null) {
                             rpt.ledgered++;
                             top.dext.centurybridge.data.FullAudit.record(key,
-                                "LEDGERED[" + side + "]@" + r.boundary() + ": " + chain.ledgerReason(owner, name));
+                                "LEDGERED[" + side + "]@" + r.boundary() + ": " + chain.ledgerReason(owner, name, desc));
                             if (r.level() == Chain.Level.L3 && !name.equals("<init>")
                                     && chain.resolveClass(owner).level() == Chain.Level.OK) {
                                 tombstone.put(site, r.boundary()); // still fail lazily with a message
@@ -1516,10 +1516,10 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(fkey, "datagen-skip");
                             return;
                         }
-                        if (chain.ledgerReason(owner, name) != null) {
+                        if (chain.ledgerReason(owner, name, desc) != null) {
                             rpt.ledgered++;
                             top.dext.centurybridge.data.FullAudit.record(fkey,
-                                "LEDGERED[" + side + "]@" + r.boundary() + ": " + chain.ledgerReason(owner, name));
+                                "LEDGERED[" + side + "]@" + r.boundary() + ": " + chain.ledgerReason(owner, name, desc));
                             return;
                         }
                         // the field's TYPE was merged into a surviving VANILLA class via
@@ -1629,12 +1629,12 @@ public final class JarProcessor {
                                 if (r.level() == Chain.Level.L3 && !h.getName().equals("<init>")
                                         && chain.resolveClass(hOwner).level() == Chain.Level.OK) {
                                     tombstone.put(site, r.boundary());
-                                    if (chain.ledgerReason(hOwner, h.getName()) != null) {
+                                    if (chain.ledgerReason(hOwner, h.getName(), h.getDesc()) != null) {
                                         rpt.ledgered++;
                                         silentTombstones.add(site);
                                         top.dext.centurybridge.data.FullAudit.record(key,
                                             "LEDGERED[" + chain.sideOf(hOwner) + "]@" + r.boundary()
-                                            + ": " + chain.ledgerReason(hOwner, h.getName()));
+                                            + ": " + chain.ledgerReason(hOwner, h.getName(), h.getDesc()));
                                     } else {
                                         top.dext.centurybridge.data.FullAudit.record(key,
                                             "TOMBSTONE[" + chain.sideOf(hOwner) + "]@" + r.boundary());

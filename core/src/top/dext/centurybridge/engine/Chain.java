@@ -144,12 +144,26 @@ public final class Chain {
     }
 
     public String ledgerReason(String owner, String name) {
+        return ledgerReason(owner, name, null);
+    }
+
+    /**
+     * The reason a dead member is accounted for, or null. A key may name the exact
+     * shape ("owner.name(desc)" / "owner.name:desc") or every member of that name
+     * ("owner.name"); the exact one wins, so constructors -- all named <init> --
+     * can be accounted one descriptor at a time.
+     */
+    public String ledgerReason(String owner, String name, String desc) {
         String r = null;
         if (name != null) {
             // the entry may be recorded against any class in the hierarchy, since
             // that is where the member is declared
+            String exact = desc == null ? null : desc.startsWith("(") ? name + desc : name + ":" + desc;
             for (String o : selfAndSupers(owner)) {
-                r = ledger.get(o + "." + name);
+                r = exact == null ? null : ledger.get(o + "." + exact);
+                if (r == null) {
+                    r = ledger.get(o + "." + name);
+                }
                 if (r != null) {
                     break;
                 }

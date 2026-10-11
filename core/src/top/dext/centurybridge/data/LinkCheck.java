@@ -116,6 +116,14 @@ public final class LinkCheck {
     /** subject jar tag -> its class nodes */
     private final Map<String, List<ClassNode>> subjects = new LinkedHashMap<>();
     private final Map<String, String> auditFate = new HashMap<>();
+    /**
+     * Fates the converter recorded for super(...)/this(...) sites, apart from NEW
+     * sites of the same constructor: a factory (ctor-redirect) takes a NEW site and
+     * can never take a delegation, so one symbol is routinely "fixed" at its NEW
+     * sites and ledgered at its super sites. Joined by symbol alone, every super
+     * site of a redirected constructor read as a false CLAIMED.
+     */
+    private final Map<String, String> superCtorFate = new HashMap<>();
 
     record Finding(String bucket, String kind, String jar, String where, String ref, String note) {}
     private final List<Finding> findings = new ArrayList<>();
@@ -154,12 +162,17 @@ public final class LinkCheck {
             String[] f = line.split("\t", 3);
             if (f.length < 3 || f[0].equals("count")) continue;
             String fate = f[1];
+            // the converter spells a delegation site's fate apart: SUPER-CTOR-ISSUE[..],
+            // super-ctor-reshape / -adapt, "LEDGERED[side] super-ctor: reason"
+            boolean superSite = fate.startsWith("SUPER-CTOR-ISSUE") || fate.startsWith("super-ctor-")
+                || fate.matches("LEDGERED\\[[^\\]]*\\] super-ctor:.*");
             int b = fate.indexOf('[');
             if (b > 0) fate = fate.substring(0, b);
             // several fates per symbol are possible (different sites); a KNOWN one wins
             // over a FIXED one only if nothing claimed it fixed -- keep the most "claimed"
-            String prev = auditFate.get(f[2]);
-            if (prev == null || FIXED_FATES.contains(fate)) auditFate.put(f[2], fate);
+            Map<String, String> into = superSite ? superCtorFate : auditFate;
+            String prev = into.get(f[2]);
+            if (prev == null || FIXED_FATES.contains(fate)) into.put(f[2], fate);
         }
     }
 
@@ -376,6 +389,8 @@ public final class LinkCheck {
 
     private String curJar;
     private Set<String> reported; // per jar: dedupe identical (kind, ref)
+    /** the instruction being checked is a constructor's super(...)/this(...) call */
+    private boolean delegationSite;
 
     private void checkAll() {
         for (var e : subjects.entrySet()) {
@@ -396,7 +411,12 @@ public final class LinkCheck {
         for (MethodNode m : cn.methods) {
             String where = cn.name + "." + m.name + m.desc;
             if (m.instructions != null) {
-                for (AbstractInsnNode in : m.instructions) checkInsn(in, where);
+                Map<String, Integer> pendingNew = new HashMap<>();
+                for (AbstractInsnNode in : m.instructions) {
+                    delegationSite = isDelegation(in, pendingNew);
+                    checkInsn(in, where);
+                }
+                delegationSite = false;
             }
         }
         if (mixin) return; // members of mixins are MixinCheck's job
@@ -551,6 +571,29 @@ public final class LinkCheck {
         protected Class<?> getClass(Type type) {
             throw new UnsupportedOperationException("link-check resolves types from its index, never by loading " + type);
         }
+    }
+
+    /**
+     * An invokespecial <init> that no pending NEW of its type pairs with: the
+     * receiver is the object under construction. javac nests NEW/<init> pairs in
+     * code order (new A(new B()) is NEW A, NEW B, <init> B, <init> A), so a count
+     * per type is enough.
+     */
+    private static boolean isDelegation(AbstractInsnNode in, Map<String, Integer> pendingNew) {
+        if (in.getOpcode() == Opcodes.NEW) {
+            pendingNew.merge(((TypeInsnNode) in).desc, 1, Integer::sum);
+            return false;
+        }
+        if (in.getOpcode() != Opcodes.INVOKESPECIAL || !((MethodInsnNode) in).name.equals("<init>")) {
+            return false;
+        }
+        String owner = ((MethodInsnNode) in).owner;
+        Integer n = pendingNew.get(owner);
+        if (n != null && n > 0) {
+            pendingNew.put(owner, n - 1);
+            return false;
+        }
+        return true;
     }
 
     private void checkInsn(AbstractInsnNode in, String where) {
@@ -788,12 +831,20 @@ public final class LinkCheck {
     // ---------------------------------------------------------------- attribution
 
     private void report(String kind, String where, String ref, String note) {
-        if (!reported.add(kind + " " + ref)) return;
+        if (!reported.add(kind + (delegationSite ? " super " : " ") + ref)) return;
         String owner = ref;
         int dot = ref.indexOf('.');
         if (dot > 0) owner = ref.substring(0, dot);
         String bucket;
         String fate = auditFate.get(auditKey(kind, ref));
+        if (delegationSite) {
+            // a delegation site is judged by what the converter said about delegation
+            // sites; a plain-site fate counts only when it claims nothing (datagen,
+            // ledger reasons recorded without the super-ctor spelling)
+            String sf = superCtorFate.get(auditKey(kind, ref));
+            fate = sf != null ? sf : fate != null && !FIXED_FATES.contains(fate) ? fate : null;
+            if (fate != null) note = "super() " + note;
+        }
         if (kind.equals("ORPHAN") || kind.equals("VERIFY")) {
             bucket = "BLIND"; // the audit counts call sites, never declarations or method bodies
         } else if (owner.startsWith("top/dext/centurybridge/")) {
