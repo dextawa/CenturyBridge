@@ -1353,13 +1353,29 @@ public final class LinkCheck {
         }
         int clean = 0;
         Set<String> dirty = new HashSet<>();
-        for (Finding f : findings) if (f.bucket.equals("CLAIMED") || f.bucket.equals("BLIND")) dirty.add(f.jar);
+        // KNOWN is the converter's own "still broken": a hard failure where it is reached,
+        // unless it is an orphaned override (behaviour silently gone, nothing thrown)
+        Set<String> broken = new HashSet<>();
+        Set<String> touched = new HashSet<>();
+        for (Finding f : findings) {
+            boolean ours = f.bucket.equals("CLAIMED") || f.bucket.equals("BLIND");
+            if (ours) dirty.add(f.jar);
+            if (ours || f.bucket.equals("KNOWN")) {
+                touched.add(f.jar);
+                if (!f.kind.equals("ORPHAN")) broken.add(f.jar);
+            }
+        }
         for (String j : subjects.keySet()) if (!dirty.contains(j)) clean++;
+        int unbroken = subjects.size() - broken.size();
+        int intact = subjects.size() - touched.size();
         System.out.println("link-check: " + subjects.size() + " subject jars, " + index.size() + " classes indexed, "
                            + mixins.size() + " mixins folded");
         counts.forEach((k, v) -> System.out.println("  " + k + ": " + v + " (distinct per jar)"));
         jarsByBucket.forEach((k, v) -> System.out.println("  jars with " + k + ": " + v.size()));
         System.out.println("  jars with no CLAIMED/BLIND finding: " + clean + "/" + subjects.size());
+        System.out.println("  jars with no broken reference (CLAIMED/BLIND/KNOWN, orphaned overrides aside): "
+                           + unbroken + "/" + subjects.size());
+        System.out.println("  jars fully intact (no CLAIMED/BLIND/KNOWN at all): " + intact + "/" + subjects.size());
         System.out.println("link-check -> " + outDir.resolve("link-findings.tsv") + ", link-refs.tsv");
     }
 }
