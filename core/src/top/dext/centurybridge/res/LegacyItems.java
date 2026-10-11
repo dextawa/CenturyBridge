@@ -150,12 +150,10 @@ public final class LegacyItems {
             return o;
         }
         JsonObject out = new JsonObject();
+        out.addProperty("count", o.has("count") ? o.get("count").getAsInt() : 1); // the codec writes it
         out.add("id", o.get("item"));
-        if (o.has("count")) {
-            out.add("count", o.get("count"));
-        }
         if (o.has("nbt")) {
-            JsonObject comps = components(nbtOf(o.get("nbt"), losses), losses);
+            JsonObject comps = components(nbtOf(o.get("nbt"), losses), target, losses);
             if (comps != null && comps.size() > 0) {
                 out.add("components", comps);
             }
@@ -182,7 +180,7 @@ public final class LegacyItems {
      * carry are reported and left out rather than misfiled there.
      */
     @SuppressWarnings("unchecked")
-    public static JsonObject components(Map<String, Object> nbt, Losses losses) {
+    public static JsonObject components(Map<String, Object> nbt, String target, Losses losses) {
         if (nbt == null) {
             return null;
         }
@@ -198,7 +196,7 @@ public final class LegacyItems {
                         c.addProperty("minecraft:damage", d);
                     }
                 }
-                case "CustomModelData" -> c.addProperty("minecraft:custom_model_data", num(v));
+                case "CustomModelData" -> c.add("minecraft:custom_model_data", customModelData(num(v), target));
                 case "RepairCost" -> {
                     int r = num(v);
                     if (r != 0) {
@@ -245,11 +243,11 @@ public final class LegacyItems {
                     Map<String, Object> d = (Map<String, Object>) v;
                     for (var de : d.entrySet()) {
                         switch (de.getKey()) {
-                            case "Name" -> c.add("minecraft:custom_name", text(String.valueOf(de.getValue())));
+                            case "Name" -> c.add("minecraft:custom_name", text(String.valueOf(de.getValue()), target));
                             case "Lore" -> {
                                 JsonArray lore = new JsonArray();
                                 for (Object line : (List<Object>) de.getValue()) {
-                                    lore.add(text(String.valueOf(line)));
+                                    lore.add(text(String.valueOf(line), target));
                                 }
                                 c.add("minecraft:lore", lore);
                             }
@@ -278,13 +276,31 @@ public final class LegacyItems {
         return c;
     }
 
-    /** a text component stored as a JSON string in NBT */
-    private static JsonElement text(String json) {
+    /**
+     * A text component stored as a JSON string in item NBT. Components in data files kept
+     * text in that stringified form through 1.21.4; 1.21.5 reads it as the component itself.
+     */
+    private static JsonElement text(String json, String target) {
+        if (!Release.reaches(target, "1.21.5")) {
+            return new JsonPrimitive(json);
+        }
         try {
             return JsonParser.parseString(json);
         } catch (RuntimeException e) {
             return new JsonPrimitive(json);
         }
+    }
+
+    /** custom_model_data: an int through 1.21.3; 1.21.4 made it lists (the int is the first float) */
+    private static JsonElement customModelData(int value, String target) {
+        if (!Release.reaches(target, "1.21.4")) {
+            return new JsonPrimitive(value);
+        }
+        JsonObject cmd = new JsonObject();
+        JsonArray floats = new JsonArray();
+        floats.add((float) value);
+        cmd.add("floats", floats);
+        return cmd;
     }
 
     private static int num(Object v) {
@@ -349,22 +365,15 @@ public final class LegacyItems {
                     dmg.add("durability", v);
                     preds.add("minecraft:damage", dmg);
                 }
-                case "enchantments", "stored_enchantments" -> {
-                    JsonArray l = new JsonArray();
-                    for (JsonElement en : v.getAsJsonArray()) {
-                        JsonObject eo = en.getAsJsonObject().deepCopy();
-                        if (eo.has("enchantment")) {
-                            eo.add("enchantments", eo.remove("enchantment"));
-                        }
-                        l.add(eo);
-                    }
-                    preds.add(k.equals("enchantments") ? "minecraft:enchantments" : "minecraft:stored_enchantments", l);
-                }
+                case "enchantments", "stored_enchantments" ->
+                    // the entries keep their "enchantment" key until 1.21 (LegacyLoot.itemPredicate)
+                    preds.add(k.equals("enchantments") ? "minecraft:enchantments" : "minecraft:stored_enchantments",
+                        v.deepCopy());
                 case "potion" -> preds.add("minecraft:potion_contents", v);
                 case "nbt" -> {
                     Map<String, Object> nbt = nbtOf(v, losses);
                     if (nbt != null) {
-                        JsonObject asComps = components(nbt, losses);
+                        JsonObject asComps = components(nbt, target, losses);
                         // an NBT predicate is a partial match: custom data keeps partial
                         // matching through the custom_data sub-predicate; the vanilla
                         // keys become exact component checks

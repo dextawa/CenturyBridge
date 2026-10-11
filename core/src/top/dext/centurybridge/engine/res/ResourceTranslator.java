@@ -81,6 +81,7 @@ public final class ResourceTranslator {
             dataDirs(entries, out);
         }
         recipes(entries, from, to, out);
+        lootAndAdvancements(entries, from, to, out);
         vanillaIds(entries, from, to, out);
         if (Release.before(from, "1.21.4") && Release.reaches(to, "1.21.4")) {
             itemDefinitions(entries, runtimeTypes, out);
@@ -196,6 +197,71 @@ public final class ResourceTranslator {
             }
         }
         return max;
+    }
+
+    /**
+     * Loot tables, predicates, item modifiers and advancements -- all read by vanilla codecs
+     * whatever mod wrote them (a mod's own loot function or condition type keeps its own
+     * fields, which pass through untouched).
+     */
+    private static void lootAndAdvancements(Map<String, byte[]> entries, String from, String to, Outcome out) {
+        for (var e : entries.entrySet()) {
+            String n = e.getKey();
+            if (!n.startsWith("data/") || !n.endsWith(".json")) {
+                continue;
+            }
+            int ns = n.indexOf('/', 5);
+            if (ns < 0) {
+                continue;
+            }
+            int dirEnd = n.indexOf('/', ns + 1);
+            if (dirEnd < 0) {
+                continue;
+            }
+            String dir = n.substring(ns + 1, dirEnd);
+            String kind = switch (dir) {
+                case "loot_table", "loot_tables" -> "loot table";
+                case "advancement", "advancements" -> "advancement";
+                case "predicate", "predicates" -> "predicate";
+                case "item_modifier", "item_modifiers" -> "item modifier";
+                default -> null;
+            };
+            if (kind == null) {
+                continue;
+            }
+            JsonElement j = Json.tryParse(e.getValue());
+            if (j == null) {
+                continue;
+            }
+            LegacyItems.Losses losses = what -> out.lost(kind + ": " + what);
+            JsonElement up;
+            try {
+                up = switch (kind) {
+                    case "loot table" -> j.isJsonObject() ? top.dext.centurybridge.res.LegacyLoot.table(j.getAsJsonObject(), from, to, losses) : j;
+                    case "advancement" -> j.isJsonObject() ? top.dext.centurybridge.res.LegacyAdvancements.upgrade(j.getAsJsonObject(), from, to, losses) : j;
+                    case "predicate" -> j.isJsonArray() ? top.dext.centurybridge.res.LegacyLoot.conditions(j.getAsJsonArray(), from, to, losses)
+                        : j.isJsonObject() ? top.dext.centurybridge.res.LegacyLoot.condition(j.getAsJsonObject().deepCopy(), from, to, losses) : j;
+                    default -> {
+                        com.google.gson.JsonArray l = j.isJsonArray() ? j.getAsJsonArray() : wrap(j);
+                        com.google.gson.JsonArray f = top.dext.centurybridge.res.LegacyLoot.functions(l, from, to, losses);
+                        yield j.isJsonArray() || f.size() != 1 ? f : f.get(0);
+                    }
+                };
+            } catch (RuntimeException ex) {
+                out.lost(kind + " left as written (" + ex + "): " + n);
+                continue;
+            }
+            if (!up.equals(j)) {
+                e.setValue(Json.write(up));
+                out.rewritten++;
+            }
+        }
+    }
+
+    private static com.google.gson.JsonArray wrap(JsonElement e) {
+        com.google.gson.JsonArray a = new com.google.gson.JsonArray();
+        a.add(e);
+        return a;
     }
 
     /** keys whose string value is a registry id even when written without a namespace */

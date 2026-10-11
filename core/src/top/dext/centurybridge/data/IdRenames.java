@@ -357,6 +357,7 @@ public final class IdRenames {
         b.append("    };\n\n");
         List<String> rel = top.dext.centurybridge.res.Release.ALL;
         Map<String, char[]> presence = new java.util.TreeMap<>();
+        Map<String, char[]> entryPresence = new java.util.TreeMap<>();
         for (int i = 0; i < rel.size(); i++) {
             String v = rel.get(i);
             Path j = jarsDir.resolve("client-" + v + "-obf.jar");
@@ -370,7 +371,18 @@ public final class IdRenames {
                 char[] bits = presence.computeIfAbsent(t, k -> "0".repeat(rel.size()).toCharArray());
                 bits[i] = '1';
             }
+            for (String t : vanillaEntries(j)) {
+                char[] bits = entryPresence.computeIfAbsent(t, k -> "0".repeat(rel.size()).toCharArray());
+                bits[i] = '1';
+            }
         }
+        b.append("    /**\n     * data-driven vanilla registry entries (\"worldgen/biome:minecraft:plains\") -> one 0/1 per\n");
+        b.append("     * release of Release.ALL: whether that release ships it\n     */\n");
+        b.append("    static final String[][] ENTRY_PRESENCE = {\n");
+        for (var e : entryPresence.entrySet()) {
+            b.append("        {\"").append(e.getKey()).append("\", \"").append(new String(e.getValue())).append("\"},\n");
+        }
+        b.append("    };\n\n");
         b.append("    /**\n     * vanilla tags not present in every release (\"block:minecraft:tall_flowers\", registry\n");
         b.append("     * names singular) -> one 0/1 per release of Release.ALL: whether that release ships it\n     */\n");
         b.append("    static final String[][] TAG_PRESENCE = {\n");
@@ -404,6 +416,23 @@ public final class IdRenames {
                     path = path.substring(s2 + 1);
                 }
                 out.add(singular(reg) + ":minecraft:" + path);
+            }
+        }
+        return out;
+    }
+
+    /** the vanilla biomes and structures a client jar ships, by their data files */
+    private static java.util.Set<String> vanillaEntries(Path jar) throws IOException {
+        java.util.Set<String> out = new java.util.TreeSet<>();
+        try (ZipFile z = new ZipFile(jar.toFile())) {
+            for (var en : java.util.Collections.list(z.entries())) {
+                String n = en.getName();
+                for (String reg : new String[] {"worldgen/biome", "worldgen/structure"}) {
+                    String dir = "data/minecraft/" + reg + "/";
+                    if (n.startsWith(dir) && n.endsWith(".json")) {
+                        out.add(reg + ":minecraft:" + n.substring(dir.length(), n.length() - 5));
+                    }
+                }
             }
         }
         return out;

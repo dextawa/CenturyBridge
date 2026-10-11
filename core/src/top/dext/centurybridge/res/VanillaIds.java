@@ -19,6 +19,7 @@ public final class VanillaIds {
 
     private static final List<Rename> RENAMES = new ArrayList<>();
     private static final Map<String, String> TAGS = new HashMap<>();
+    private static final Map<String, String> ENTRIES = new HashMap<>();
 
     static {
         for (String[] r : IdRenameTable.RENAMES) {
@@ -26,6 +27,9 @@ public final class VanillaIds {
         }
         for (String[] t : IdRenameTable.TAG_PRESENCE) {
             TAGS.put(t[0], t[1]);
+        }
+        for (String[] t : IdRenameTable.ENTRY_PRESENCE) {
+            ENTRIES.put(t[0], t[1]);
         }
     }
 
@@ -81,6 +85,19 @@ public final class VanillaIds {
     public static boolean tagGone(String registry, String id, String source, String target) {
         String bits = TAGS.get(registry + ":" + id);
         return bits != null && bits.charAt(Release.index(source)) == '1' && bits.charAt(Release.index(target)) == '0';
+    }
+
+    /**
+     * Whether a minecraft-namespace data-driven entry (registry "worldgen/biome" or
+     * "worldgen/structure") is one the release ships; null for other namespaces, whose
+     * entries come from mods and cannot be judged here.
+     */
+    public static Boolean entryShipped(String registry, String id, String release) {
+        if (!id.startsWith("minecraft:")) {
+            return null;
+        }
+        String bits = ENTRIES.get(registry + ":" + id);
+        return bits != null && bits.charAt(Release.index(release)) == '1';
     }
 
     private VanillaIds() {
