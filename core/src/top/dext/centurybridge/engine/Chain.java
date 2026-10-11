@@ -182,13 +182,50 @@ public final class Chain {
     public final java.util.Set<String> shimCovers = new java.util.HashSet<>();
 
     /**
-     * Owners that were classes when the corpus was compiled and are interfaces
-     * on the target (DFU 7 turned DataResult into one). The JVM verifies the
-     * call-site kind strictly: a Methodref against an interface throws
-     * IncompatibleClassChangeError before any code runs, so these call sites
-     * need their opcode and itf flag rewritten, not their target.
+     * Library owners that were classes when the corpus was compiled and are
+     * interfaces on the target (DFU 7 turned DataResult into one). Declared,
+     * because the stubs carry Minecraft only; Minecraft's own kind changes are
+     * read from the stubs (see {@link #interfaceOnTarget}).
      */
     public final java.util.Set<String> interfaceized = new java.util.HashSet<>();
+
+    /**
+     * Whether a call into {@code owner} must be an interface call on the target,
+     * or null when the converter cannot know the owner's runtime kind (a mod
+     * class, a facade compiled into the bridge jar, no target stub). The JVM
+     * resolves a call-site's constant-pool ref against the RUNTIME class: an
+     * invokeinterface on what is now a class (1.20.2 BlockPointer became a
+     * record) or an invokevirtual on what is now an interface (1.20.2
+     * NumberRange) is an IncompatibleClassChangeError before any bridge runs.
+     */
+    public Boolean interfaceOnTarget(String owner) {
+        if (interfaceized.contains(owner)) {
+            return Boolean.TRUE;
+        }
+        if (targetClasses.contains(owner)) {
+            return targetInterfaces.contains(owner);
+        }
+        return null;
+    }
+
+    private java.util.Set<String> kindFlips;
+
+    /**
+     * Owners whose kind differs between the source and the target: a class that
+     * merely calls one has damage even when nothing it names is gone.
+     */
+    public java.util.Set<String> kindFlips() {
+        if (kindFlips == null) {
+            java.util.Set<String> out = new java.util.HashSet<>(interfaceized);
+            for (String c : superOf.keySet()) {
+                if (targetClasses.contains(c) && sourceInterfaces.contains(c) != targetInterfaces.contains(c)) {
+                    out.add(c);
+                }
+            }
+            kindFlips = out;
+        }
+        return kindFlips;
+    }
 
     /**
      * Hooks that gained a trailing RegistryWrapper.WrapperLookup parameter on
@@ -781,6 +818,8 @@ public final class Chain {
     public final java.util.Map<String, String> superOf = new java.util.HashMap<>();
     /** source-version class -> its directly implemented interfaces (game classes only) */
     public final java.util.Map<String, java.util.List<String>> interfacesOf = new java.util.HashMap<>();
+    /** source-stub classes that were interfaces when the corpus was compiled */
+    public final java.util.Set<String> sourceInterfaces = new java.util.HashSet<>();
 
     /** Walk owner and every ancestor, in order, so callers can resolve via any of them. */
     public java.util.List<String> selfAndSupers(String owner) {
@@ -815,6 +854,9 @@ public final class Chain {
                             }
                             if (itf != null && itf.length > 0) {
                                 interfacesOf.put(name, java.util.List.of(itf));
+                            }
+                            if ((a & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0) {
+                                sourceInterfaces.add(name);
                             }
                         }
                     }, org.objectweb.asm.ClassReader.SKIP_CODE

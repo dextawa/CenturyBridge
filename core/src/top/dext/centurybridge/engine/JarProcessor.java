@@ -1122,11 +1122,14 @@ public final class JarProcessor {
         // fix used to ride along on other damage and silently skip these
         final Set<String> hookCallSites = new HashSet<>();
         final Map<String, String> superRedirectSites = new HashMap<>(); // call-site key -> runtime target
+        // a call into an owner whose kind flipped (class <-> interface) is damage
+        // even when every member it names survives: the rewrite pass must run so
+        // the kind normalizer sees it
         boolean needIfaceFix = false;
-        if (!chain.interfaceized.isEmpty()) {
+        if (!chain.kindFlips().isEmpty()) {
             String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
-            for (String dead : chain.interfaceized) {
-                if (raw.contains(dead)) {
+            for (String flipped : chain.kindFlips()) {
+                if (raw.contains(flipped)) {
                     needIfaceFix = true;
                     break;
                 }
@@ -1764,10 +1767,19 @@ public final class JarProcessor {
         // ironchests only survived on incidental headroom from adjacent code
         org.objectweb.asm.ClassWriter cw =
             new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        // last stage before the writer, after every rewrite and rename: a call is
+        // judged by the owner it finally names
+        final Set<String> kindFixed = new java.util.TreeSet<>();
+        ClassVisitor kinds = new ClassVisitor(Opcodes.ASM9, cw) {
+            @Override
+            public MethodVisitor visitMethod(int acc, String mName, String mDesc, String sig, String[] ex) {
+                return new KindNormalizer(super.visitMethod(acc, mName, mDesc, sig, ex), chain, kindFixed);
+            }
+        };
         ClassVisitor sink = needClassRename
-            ? new org.objectweb.asm.commons.ClassRemapper(cw,
+            ? new org.objectweb.asm.commons.ClassRemapper(kinds,
                 new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames))
-            : cw;
+            : kinds;
         // super/implements-only rename layer: rewrites the hierarchy declaration
         // and super-invocations to the facade, leaving every other reference to
         // the dead type on the real type. Sits outside the classRename remapper
@@ -1870,14 +1882,6 @@ public final class JarProcessor {
                 return new MethodVisitor(Opcodes.ASM9, mv) {
                     @Override
                     public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
-                        // owner became an interface on the target: the verifier
-                        // rejects a Methodref there outright, so fix the call
-                        // kind (opcode + itf flag) while leaving the target alone
-                        if (!itf && chain.interfaceized.contains(owner)) {
-                            int fixed = op == Opcodes.INVOKEVIRTUAL ? Opcodes.INVOKEINTERFACE : op;
-                            super.visitMethodInsn(fixed, owner, name, desc, true);
-                            return;
-                        }
                         String[] hk = chain.lookupHooks.get(name);
                         if (hk != null && desc.equals(hk[0])) {
                             // append the builtin lookup and call the new shape;
@@ -1977,17 +1981,6 @@ public final class JarProcessor {
                             if (!(rewritten[i] instanceof org.objectweb.asm.Handle h)) {
                                 continue;
                             }
-                            // a method REFERENCE to an interfaceized owner carries its
-                            // own isInterface flag inside the Handle -- the plain
-                            // call-site fix never sees it, which is exactly where
-                            // DataResult::success kept crashing after the fix
-                            if (!h.isInterface() && chain.interfaceized.contains(h.getOwner())) {
-                                int tag = h.getTag() == Opcodes.H_INVOKEVIRTUAL
-                                    ? Opcodes.H_INVOKEINTERFACE : h.getTag();
-                                h = new org.objectweb.asm.Handle(
-                                    tag, h.getOwner(), h.getName(), h.getDesc(), true);
-                                rewritten[i] = h;
-                            }
                             String key = h.getOwner() + "." + h.getName() + h.getDesc();
                             String recv = emitOwner.getOrDefault(key, h.getOwner());
                             String rt = redirects.get(key);
@@ -2017,7 +2010,78 @@ public final class JarProcessor {
                 };
             }
         }, 0);
+        for (String o : kindFixed) {
+            rpt.notes.add(tag + "kind-fixed: calls into " + o + " follow its target kind ("
+                + (Boolean.TRUE.equals(chain.interfaceOnTarget(o)) ? "interface" : "class") + ") in " + clsName[0]);
+        }
         return cw.toByteArray();
+    }
+
+    /**
+     * Gives every emitted call into an owner of known target kind the opcode and
+     * interface flag that kind demands (see {@link Chain#interfaceOnTarget}). A
+     * method reference carries its own flag inside the Handle, which the plain
+     * call-site fix never sees -- DataResult::success kept crashing until handles
+     * were normalized too.
+     */
+    static final class KindNormalizer extends MethodVisitor {
+        private final Chain chain;
+        private final Set<String> fixed;
+
+        KindNormalizer(MethodVisitor mv, Chain chain, Set<String> fixed) {
+            super(Opcodes.ASM9, mv);
+            this.chain = chain;
+            this.fixed = fixed;
+        }
+
+        @Override
+        public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
+            Boolean iface = chain.interfaceOnTarget(owner);
+            if (iface != null && iface != itf) {
+                if (op == Opcodes.INVOKEVIRTUAL && iface) {
+                    op = Opcodes.INVOKEINTERFACE;
+                } else if (op == Opcodes.INVOKEINTERFACE && !iface) {
+                    op = Opcodes.INVOKEVIRTUAL;
+                }
+                itf = iface;
+                fixed.add(owner);
+            }
+            super.visitMethodInsn(op, owner, name, desc, itf);
+        }
+
+        @Override
+        public void visitInvokeDynamicInsn(String name, String desc, org.objectweb.asm.Handle bsm, Object... args) {
+            Object[] out = args.clone();
+            for (int i = 0; i < out.length; i++) {
+                if (out[i] instanceof org.objectweb.asm.Handle h) {
+                    out[i] = fix(h);
+                }
+            }
+            super.visitInvokeDynamicInsn(name, desc, fix(bsm), out);
+        }
+
+        @Override
+        public void visitLdcInsn(Object value) {
+            super.visitLdcInsn(value instanceof org.objectweb.asm.Handle h ? fix(h) : value);
+        }
+
+        private org.objectweb.asm.Handle fix(org.objectweb.asm.Handle h) {
+            if (h.getTag() < Opcodes.H_INVOKEVIRTUAL) {
+                return h; // field handles carry no interface flag
+            }
+            Boolean iface = chain.interfaceOnTarget(h.getOwner());
+            if (iface == null || iface == h.isInterface()) {
+                return h;
+            }
+            int tag = h.getTag();
+            if (tag == Opcodes.H_INVOKEVIRTUAL && iface) {
+                tag = Opcodes.H_INVOKEINTERFACE;
+            } else if (tag == Opcodes.H_INVOKEINTERFACE && !iface) {
+                tag = Opcodes.H_INVOKEVIRTUAL;
+            }
+            fixed.add(h.getOwner());
+            return new org.objectweb.asm.Handle(tag, h.getOwner(), h.getName(), h.getDesc(), iface);
+        }
     }
 
     private static byte[] patchFmj(byte[] data, Chain chain, Report rpt) {
