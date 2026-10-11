@@ -1,0 +1,902 @@
+{
+ "superCtorReshapes": {
+  "net/minecraft/class_1848.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1849.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1850.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1851.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1852.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1853.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1854.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1855.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1861.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1867.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Lnet/minecraft/class_2371;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Lnet/minecraft/class_2371;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1869.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;IILnet/minecraft/class_2371;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7710;IILnet/minecraft/class_2371;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1869.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;IILnet/minecraft/class_2371;Lnet/minecraft/class_1799;Z)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7710;IILnet/minecraft/class_2371;Lnet/minecraft/class_1799;Z)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1871.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1872.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1873.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1874.<init>(Lnet/minecraft/class_3956;Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Lnet/minecraft/class_3956;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V",
+   "ops": [
+    "keep:0",
+    "drop:1 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_1876.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_3859.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_3861.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_3862.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_3920.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_3972.<init>(Lnet/minecraft/class_3956;Lnet/minecraft/class_1865;Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_3956;Lnet/minecraft/class_1865;Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "drop:2 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_3975.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_4317.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_8060.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_8062.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;)V": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_8164.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": {
+   "desc": "(Lnet/minecraft/class_7710;)V",
+   "ops": [
+    "drop:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#stash(Lnet/minecraft/class_2960;)V",
+    "keep:1"
+   ],
+   "basis": "1.20.2 dropped the recipe id argument; the id goes to CbRecipeIds.stash, claimed by the recipe base constructor as it returns"
+  },
+  "net/minecraft/class_2505.<init>(J)V": {
+   "desc": "(JI)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNbt#maxDepth()I"
+   ],
+   "basis": "1.20.2 NbtAccounter(maxBytes, maxDepth): 1.20.1 readers stopped at depth 512 themselves"
+  }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1848.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewBannerDuplicateRecipe",
+  "net/minecraft/class_1849.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewArmorDyeRecipe",
+  "net/minecraft/class_1850.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewBookCloningRecipe",
+  "net/minecraft/class_1851.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewFireworkRocketRecipe",
+  "net/minecraft/class_1853.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewFireworkStarRecipe",
+  "net/minecraft/class_1854.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewFireworkStarFadeRecipe",
+  "net/minecraft/class_1855.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewMapCloningRecipe",
+  "net/minecraft/class_1861.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewMapExtendingRecipe",
+  "net/minecraft/class_1867.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Lnet/minecraft/class_2371;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewShapelessRecipe",
+  "net/minecraft/class_1869.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;IILnet/minecraft/class_2371;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewShapedRecipe",
+  "net/minecraft/class_1869.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;IILnet/minecraft/class_2371;Lnet/minecraft/class_1799;Z)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewShapedRecipe",
+  "net/minecraft/class_1871.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewShulkerBoxColoring",
+  "net/minecraft/class_1872.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewShieldDecorationRecipe",
+  "net/minecraft/class_1873.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewSuspiciousStewRecipe",
+  "net/minecraft/class_1876.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewTippedArrowRecipe",
+  "net/minecraft/class_3859.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewBlastingRecipe",
+  "net/minecraft/class_3861.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewSmeltingRecipe",
+  "net/minecraft/class_3862.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewSmokingRecipe",
+  "net/minecraft/class_3920.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewCampfireCookingRecipe",
+  "net/minecraft/class_3975.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewStonecutterRecipe",
+  "net/minecraft/class_4317.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewRepairItemRecipe",
+  "net/minecraft/class_8060.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewSmithingTransformRecipe",
+  "net/minecraft/class_8062.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewSmithingTrimRecipe",
+  "net/minecraft/class_8164.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)V": "top/dext/centurybridge/rt/v1_20_2/CbRecipeCtors#cbNewDecoratedPotRecipe"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1866.method_45443(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3955;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_1866.method_45444(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_1867$class_1868.method_8142(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1867;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_1867$class_1868.method_8141(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1867;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_1869$class_1870.method_8164(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1869;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_1869$class_1870.method_8163(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_3957.method_17736(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1874;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_3957.method_17737(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1874;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_3972$class_3973.method_17881(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3972;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_3972$class_3973.method_17882(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_3972;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_8060$class_8061.method_48455(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8060;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_8060$class_8061.method_48456(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_8060;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_8062$class_8063.method_48459(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8062;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers",
+  "net/minecraft/class_8062$class_8063.method_48460(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_8062;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1852.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#storedId",
+  "net/minecraft/class_1867.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#storedId",
+  "net/minecraft/class_1869.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#storedId",
+  "net/minecraft/class_1874.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#storedId",
+  "net/minecraft/class_3972.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#storedId",
+  "net/minecraft/class_8060.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#storedId",
+  "net/minecraft/class_8062.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#storedId",
+  "net/minecraft/class_1866.method_45443(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3955;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_45443",
+  "net/minecraft/class_1866.method_45444(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_45444",
+  "net/minecraft/class_1867$class_1868.method_8142(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1867;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_8142",
+  "net/minecraft/class_1867$class_1868.method_8141(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1867;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_8141",
+  "net/minecraft/class_1869$class_1870.method_8164(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1869;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_8164",
+  "net/minecraft/class_1869$class_1870.method_8163(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_8163",
+  "net/minecraft/class_3957.method_17736(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1874;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_17736",
+  "net/minecraft/class_3957.method_17737(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1874;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_17737",
+  "net/minecraft/class_3972$class_3973.method_17881(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3972;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_17881",
+  "net/minecraft/class_3972$class_3973.method_17882(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_3972;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_17882",
+  "net/minecraft/class_8060$class_8061.method_48455(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8060;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_48455",
+  "net/minecraft/class_8060$class_8061.method_48456(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_8060;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_48456",
+  "net/minecraft/class_8062$class_8063.method_48459(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8062;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_48459",
+  "net/minecraft/class_8062$class_8063.method_48460(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_8062;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers#super_method_48460"
+ },
+ "callReshapes": {
+  "net/minecraft/class_2232.method_9439(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_161;": {
+   "desc": "(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_8779;",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbCommandArguments#advancement(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;",
+   "basis": "1.20.2 IdentifierArgument.getAdvancement returns the AdvancementEntry; 1.20.1 code gets its advancement"
+  },
+  "net/minecraft/class_2232.method_9442(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_1860;": {
+   "desc": "(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_8786;",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_2952.method_12816(IIILnet/minecraft/class_1860;Ljava/util/Iterator;I)V": {
+   "desc": "(IIILnet/minecraft/class_8786;Ljava/util/Iterator;I)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_2955.method_12826(Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;Z)V": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;Z)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;",
+    "keep:2"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_2955.method_12821(Lnet/minecraft/class_1860;Z)V": {
+   "desc": "(Lnet/minecraft/class_8786;Z)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;",
+    "keep:1"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_1657.method_51283(Lnet/minecraft/class_1860;Ljava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_8786;Ljava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;",
+    "keep:1"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_3439.method_14876(Lnet/minecraft/class_1860;)V": {
+   "desc": "(Lnet/minecraft/class_8786;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_3439.method_14878(Lnet/minecraft/class_1860;)Z": {
+   "desc": "(Lnet/minecraft/class_8786;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_3439.method_14893(Lnet/minecraft/class_1860;)V": {
+   "desc": "(Lnet/minecraft/class_8786;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_3439.method_14883(Lnet/minecraft/class_1860;)Z": {
+   "desc": "(Lnet/minecraft/class_8786;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_3439.method_14886(Lnet/minecraft/class_1860;)V": {
+   "desc": "(Lnet/minecraft/class_8786;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_3439.method_14885(Lnet/minecraft/class_1860;)V": {
+   "desc": "(Lnet/minecraft/class_8786;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_1662.method_7407(Lnet/minecraft/class_1860;Lit/unimi/dsi/fastutil/ints/IntList;)I": {
+   "desc": "(Lnet/minecraft/class_8786;Lit/unimi/dsi/fastutil/ints/IntList;)I",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;",
+    "keep:1"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_1662.method_7403(Lnet/minecraft/class_1860;ILit/unimi/dsi/fastutil/ints/IntList;)I": {
+   "desc": "(Lnet/minecraft/class_8786;ILit/unimi/dsi/fastutil/ints/IntList;)I",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_1729.method_7652(Lnet/minecraft/class_1860;)Z": {
+   "desc": "(Lnet/minecraft/class_8786;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_1729.method_17697(ZLnet/minecraft/class_1860;Lnet/minecraft/class_3222;)V": {
+   "desc": "(ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;",
+    "keep:2"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_1732.method_7662(Lnet/minecraft/class_1860;)V": {
+   "desc": "(Lnet/minecraft/class_8786;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_1732.method_7663()Lnet/minecraft/class_1860;": {
+   "desc": "()Lnet/minecraft/class_8786;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_1732.method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;)Z": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "1.20.2 passes the RecipeEntry where 1.20.1 passed the bare Recipe: the recipe goes in as the entry vanilla holds for it (equal by id), comes back as its recipe"
+  },
+  "net/minecraft/class_2507.method_39855(Ljava/io/DataInput;Lnet/minecraft/class_6836;)V": {
+   "desc": "(Ljava/io/DataInput;Lnet/minecraft/class_6836;Lnet/minecraft/class_2505;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+   ],
+   "basis": "1.20.1 scans counted no bytes"
+  },
+  "net/minecraft/class_2507.method_40057(Ljava/io/File;Lnet/minecraft/class_6836;)V": {
+   "desc": "(Ljava/io/File;Lnet/minecraft/class_6836;Lnet/minecraft/class_2505;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+   ],
+   "basis": "1.20.1 scans counted no bytes"
+  },
+  "net/minecraft/class_2507.method_40058(Ljava/io/InputStream;Lnet/minecraft/class_6836;)V": {
+   "desc": "(Ljava/io/InputStream;Lnet/minecraft/class_6836;Lnet/minecraft/class_2505;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+   ],
+   "basis": "1.20.1 scans counted no bytes"
+  },
+  "net/minecraft/class_4614.method_39851(Ljava/io/DataInput;)V": {
+   "desc": "(Ljava/io/DataInput;Lnet/minecraft/class_2505;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+   ],
+   "basis": "1.20.1 skips counted no bytes"
+  },
+  "net/minecraft/class_4614.method_39854(Ljava/io/DataInput;I)V": {
+   "desc": "(Ljava/io/DataInput;ILnet/minecraft/class_2505;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+   ],
+   "basis": "1.20.1 skips counted no bytes"
+  },
+  "net/minecraft/class_4614.method_39852(Ljava/io/DataInput;Lnet/minecraft/class_6836;)Lnet/minecraft/class_6836$class_6838;": {
+   "desc": "(Ljava/io/DataInput;Lnet/minecraft/class_6836;Lnet/minecraft/class_2505;)Lnet/minecraft/class_6836$class_6838;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+   ],
+   "basis": "1.20.1 scans counted no bytes"
+  },
+  "net/minecraft/class_4614.method_39877(Ljava/io/DataInput;Lnet/minecraft/class_6836;)V": {
+   "desc": "(Ljava/io/DataInput;Lnet/minecraft/class_6836;Lnet/minecraft/class_2505;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+   ],
+   "basis": "1.20.1 scans counted no bytes"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyRecipe",
+   "requires": [
+    "method_8114()Lnet/minecraft/class_2960;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1866",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SimpleCraftingRecipeSerializerJson",
+   "requires": [
+    "method_45443(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3955;"
+   ],
+   "synth": [
+    {
+     "new": "method_53736()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyCodec(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SimpleCraftingRecipeSerializerJson;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_1866",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SimpleCraftingRecipeSerializerBuf",
+   "requires": [
+    "method_45444(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;"
+   ],
+   "synth": [
+    {
+     "new": "method_45444(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyRead(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SimpleCraftingRecipeSerializerBuf;Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_1867$class_1868",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$ShapelessRecipe_SerializerJson",
+   "requires": [
+    "method_8142(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1867;"
+   ],
+   "synth": [
+    {
+     "new": "method_53736()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyCodec(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$ShapelessRecipe_SerializerJson;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_1867$class_1868",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$ShapelessRecipe_SerializerBuf",
+   "requires": [
+    "method_8141(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1867;"
+   ],
+   "synth": [
+    {
+     "new": "method_8141(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1867;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyRead(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$ShapelessRecipe_SerializerBuf;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1867;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_1869$class_1870",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$ShapedRecipe_SerializerJson",
+   "requires": [
+    "method_8164(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1869;"
+   ],
+   "synth": [
+    {
+     "new": "method_53736()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyCodec(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$ShapedRecipe_SerializerJson;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_1869$class_1870",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$ShapedRecipe_SerializerBuf",
+   "requires": [
+    "method_8163(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;"
+   ],
+   "synth": [
+    {
+     "new": "method_8163(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyRead(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$ShapedRecipe_SerializerBuf;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_3957",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SimpleCookingSerializerJson",
+   "requires": [
+    "method_17736(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1874;"
+   ],
+   "synth": [
+    {
+     "new": "method_53736()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyCodec(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SimpleCookingSerializerJson;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_3957",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SimpleCookingSerializerBuf",
+   "requires": [
+    "method_17737(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1874;"
+   ],
+   "synth": [
+    {
+     "new": "method_17737(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1874;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyRead(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SimpleCookingSerializerBuf;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1874;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_3972$class_3973",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SingleItemRecipe_SerializerJson",
+   "requires": [
+    "method_17881(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_3972;"
+   ],
+   "synth": [
+    {
+     "new": "method_53736()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyCodec(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SingleItemRecipe_SerializerJson;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_3972$class_3973",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SingleItemRecipe_SerializerBuf",
+   "requires": [
+    "method_17882(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_3972;"
+   ],
+   "synth": [
+    {
+     "new": "method_17882(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3972;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyRead(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SingleItemRecipe_SerializerBuf;Lnet/minecraft/class_2540;)Lnet/minecraft/class_3972;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_8060$class_8061",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SmithingTransformRecipe_SerializerJson",
+   "requires": [
+    "method_48455(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8060;"
+   ],
+   "synth": [
+    {
+     "new": "method_53736()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyCodec(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SmithingTransformRecipe_SerializerJson;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_8060$class_8061",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SmithingTransformRecipe_SerializerBuf",
+   "requires": [
+    "method_48456(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_8060;"
+   ],
+   "synth": [
+    {
+     "new": "method_48456(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8060;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyRead(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SmithingTransformRecipe_SerializerBuf;Lnet/minecraft/class_2540;)Lnet/minecraft/class_8060;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_8062$class_8063",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SmithingTrimRecipe_SerializerJson",
+   "requires": [
+    "method_48459(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8062;"
+   ],
+   "synth": [
+    {
+     "new": "method_53736()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyCodec(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SmithingTrimRecipe_SerializerJson;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_8062$class_8063",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SmithingTrimRecipe_SerializerBuf",
+   "requires": [
+    "method_48460(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_8062;"
+   ],
+   "synth": [
+    {
+     "new": "method_48460(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8062;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializers.legacyRead(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySerializers$SmithingTrimRecipe_SerializerBuf;Lnet/minecraft/class_2540;)Lnet/minecraft/class_8062;"
+    }
+   ]
+  }
+ ],
+ "overrideHooks": [
+  {
+   "old": "create(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)Lnet/minecraft/class_3955;",
+   "new": "create(Lnet/minecraft/class_7710;)Lnet/minecraft/class_3955;",
+   "onlyUnder": "net/minecraft/class_1866$class_7711",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySpecialRecipeFactory",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializerSupport.specialCreate(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySpecialRecipeFactory;Lnet/minecraft/class_7710;)Lnet/minecraft/class_3955;",
+   "basis": "1.20.2 SpecialRecipeSerializer.Factory.create(category) has no id; the 1.20.1 create(id, category) gets the id of the recipe being decoded"
+  },
+  {
+   "old": "method_23262(Ljava/io/DataInput;ILnet/minecraft/class_2505;)Lnet/minecraft/class_2520;",
+   "new": "method_23262(Ljava/io/DataInput;Lnet/minecraft/class_2505;)Lnet/minecraft/class_2520;",
+   "onlyUnder": "net/minecraft/class_4614",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyTagType",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNbt.load(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyTagType;Ljava/io/DataInput;Lnet/minecraft/class_2505;)Lnet/minecraft/class_2520;",
+   "basis": "1.20.2 TagType.load(input, accounter): the 1.20.1 load(input, depth, accounter) gets the depth the accounter tracks"
+  },
+  {
+   "old": "method_12816(IIILnet/minecraft/class_1860;Ljava/util/Iterator;I)V",
+   "new": "method_12816(IIILnet/minecraft/class_8786;Ljava/util/Iterator;I)V",
+   "onlyUnder": "net/minecraft/class_2952",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_12826(Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;Z)V",
+   "new": "method_12826(Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;Z)V",
+   "onlyUnder": "net/minecraft/class_2955",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_12821(Lnet/minecraft/class_1860;Z)V",
+   "new": "method_12821(Lnet/minecraft/class_8786;Z)V",
+   "onlyUnder": "net/minecraft/class_2955",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_51283(Lnet/minecraft/class_1860;Ljava/util/List;)V",
+   "new": "method_51283(Lnet/minecraft/class_8786;Ljava/util/List;)V",
+   "onlyUnder": "net/minecraft/class_1657",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_14876(Lnet/minecraft/class_1860;)V",
+   "new": "method_14876(Lnet/minecraft/class_8786;)V",
+   "onlyUnder": "net/minecraft/class_3439",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_14878(Lnet/minecraft/class_1860;)Z",
+   "new": "method_14878(Lnet/minecraft/class_8786;)Z",
+   "onlyUnder": "net/minecraft/class_3439",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_14893(Lnet/minecraft/class_1860;)V",
+   "new": "method_14893(Lnet/minecraft/class_8786;)V",
+   "onlyUnder": "net/minecraft/class_3439",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_14883(Lnet/minecraft/class_1860;)Z",
+   "new": "method_14883(Lnet/minecraft/class_8786;)Z",
+   "onlyUnder": "net/minecraft/class_3439",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_14886(Lnet/minecraft/class_1860;)V",
+   "new": "method_14886(Lnet/minecraft/class_8786;)V",
+   "onlyUnder": "net/minecraft/class_3439",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_14885(Lnet/minecraft/class_1860;)V",
+   "new": "method_14885(Lnet/minecraft/class_8786;)V",
+   "onlyUnder": "net/minecraft/class_3439",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_7407(Lnet/minecraft/class_1860;Lit/unimi/dsi/fastutil/ints/IntList;)I",
+   "new": "method_7407(Lnet/minecraft/class_8786;Lit/unimi/dsi/fastutil/ints/IntList;)I",
+   "onlyUnder": "net/minecraft/class_1662",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_7403(Lnet/minecraft/class_1860;ILit/unimi/dsi/fastutil/ints/IntList;)I",
+   "new": "method_7403(Lnet/minecraft/class_8786;ILit/unimi/dsi/fastutil/ints/IntList;)I",
+   "onlyUnder": "net/minecraft/class_1662",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_7652(Lnet/minecraft/class_1860;)Z",
+   "new": "method_7652(Lnet/minecraft/class_8786;)Z",
+   "onlyUnder": "net/minecraft/class_1729",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_17697(ZLnet/minecraft/class_1860;Lnet/minecraft/class_3222;)V",
+   "new": "method_17697(ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V",
+   "onlyUnder": "net/minecraft/class_1729",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_7662(Lnet/minecraft/class_1860;)V",
+   "new": "method_7662(Lnet/minecraft/class_8786;)V",
+   "onlyUnder": "net/minecraft/class_1732",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_7663()Lnet/minecraft/class_1860;",
+   "new": "method_7663()Lnet/minecraft/class_8786;",
+   "onlyUnder": "net/minecraft/class_1732",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  },
+  {
+   "old": "method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;)Z",
+   "new": "method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)Z",
+   "onlyUnder": "net/minecraft/class_1732",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "vanilla 1.20.2 calls the RecipeEntry shape; it forwards to the mod's Recipe override, whose own super call is reshaped to the new shape (callReshapes), so nothing comes back here"
+  }
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_1874.field_9060:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds",
+  "net/minecraft/class_3972.field_17644:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_1866$class_7711.create(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)Lnet/minecraft/class_3955;": {
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySpecialRecipeFactory",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializerSupport#specialFactory(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySpecialRecipeFactory;)Lnet/minecraft/class_1866$class_7711;"
+  }
+ },
+ "fieldGetters": {
+  "net/minecraft/class_2505.field_11556:Lnet/minecraft/class_2505;": "top/dext/centurybridge/rt/v1_20_2/CbNbt"
+ }
+}

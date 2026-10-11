@@ -456,6 +456,31 @@ public final class WiringCheck {
                                                   : "()Lnet/minecraft/class_7225$class_7874;";
             wantMethod("lookupRt", root.get("lookupRt").getAsString(), "cbLookup", methodDesc(desc));
         }
+        // lambdaAdapters: the invokedynamic builds the adapter, so it must be an interface
+        // declaring the old method abstract under the same name; the wrap static must exist
+        if (root.has("lambdaAdapters")) {
+            for (var e : root.getAsJsonObject("lambdaAdapters").entrySet()) {
+                var o = e.getValue().getAsJsonObject();
+                String where = "lambdaAdapters " + e.getKey();
+                checked++;
+                String k = e.getKey();
+                int paren = k.indexOf('(');
+                int dot = k.lastIndexOf('.', paren);
+                String sam = k.substring(dot + 1, paren);
+                String samDesc = methodDesc(k.substring(paren));
+                String adapter = o.get("adapter").getAsString();
+                ClassNode an = classes.get(adapter);
+                if (an == null || (an.access & Opcodes.ACC_INTERFACE) == 0) {
+                    problems.add(where + " (no such adapter interface " + adapter + ")");
+                } else if (an.methods.stream().noneMatch(m -> m.name.equals(sam) && m.desc.equals(samDesc)
+                        && (m.access & Opcodes.ACC_ABSTRACT) != 0)) {
+                    problems.add(where + ": adapter " + adapter + " does not declare " + sam + samDesc);
+                }
+                String w = o.get("wrap").getAsString();
+                int wp = w.indexOf('(');
+                wantMethod(where + " wrap", w.substring(0, wp), null, methodDesc(w.substring(wp)));
+            }
+        }
         // adapterHooks: the bridge interface must declare every required old shape
         // exactly (the mod's own methods implement it by name+descriptor), and every
         // synthesized new shape calls a static that exists with the exact descriptor
