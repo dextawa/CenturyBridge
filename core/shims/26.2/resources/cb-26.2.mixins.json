@@ -12,6 +12,7 @@
     "BlockBridge",
     "BlockPointerBridge",
     "ChatHudBridge",
+    "ChunkStateReplacedBridge",
     "Class1792Accessor",
     "Class1793Accessor",
     "Class2251Accessor",

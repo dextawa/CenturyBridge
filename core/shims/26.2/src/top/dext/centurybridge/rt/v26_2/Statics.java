@@ -3342,6 +3342,75 @@ public final class Statics {
             net.minecraft.world.item.TooltipFlag flag) {
     }
 
+    // ---- 1.20.1 AbstractBlock.onStateReplaced super calls (see ChunkStateReplacedBridge) ----
+
+    /**
+     * instanceRedirects: super.onStateReplaced into AbstractBlock / Block / BlockWithEntity:
+     * the 1.20.1 body removed the block entity when the block itself changed.
+     */
+    public static void method_9536(net.minecraft.world.level.block.state.BlockBehaviour self,
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world,
+            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState newState, boolean moved) {
+        if (state.hasBlockEntity() && !state.is(newState.getBlock())) {
+            world.removeBlockEntity(pos);
+        }
+    }
+
+    /**
+     * superRedirects: super.onStateReplaced into a vanilla container block (chest, barrel,
+     * furnaces, brewing stand, dispenser, hopper): 1.20.1 scattered the block entity's
+     * inventory and updated comparators before the AbstractBlock body.
+     */
+    // the converter types the receiver as the super-call owner: one overload per container block
+    public static void cbStateReplacedDropping(net.minecraft.world.level.block.ChestBlock self,
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world,
+            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState newState, boolean moved) {
+        stateReplacedDropping(self, state, world, pos, newState, moved);
+    }
+
+    public static void cbStateReplacedDropping(net.minecraft.world.level.block.BarrelBlock self,
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world,
+            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState newState, boolean moved) {
+        stateReplacedDropping(self, state, world, pos, newState, moved);
+    }
+
+    public static void cbStateReplacedDropping(net.minecraft.world.level.block.AbstractFurnaceBlock self,
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world,
+            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState newState, boolean moved) {
+        stateReplacedDropping(self, state, world, pos, newState, moved);
+    }
+
+    public static void cbStateReplacedDropping(net.minecraft.world.level.block.BrewingStandBlock self,
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world,
+            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState newState, boolean moved) {
+        stateReplacedDropping(self, state, world, pos, newState, moved);
+    }
+
+    public static void cbStateReplacedDropping(net.minecraft.world.level.block.DispenserBlock self,
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world,
+            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState newState, boolean moved) {
+        stateReplacedDropping(self, state, world, pos, newState, moved);
+    }
+
+    public static void cbStateReplacedDropping(net.minecraft.world.level.block.HopperBlock self,
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world,
+            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState newState, boolean moved) {
+        stateReplacedDropping(self, state, world, pos, newState, moved);
+    }
+
+    private static void stateReplacedDropping(net.minecraft.world.level.block.state.BlockBehaviour self,
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world,
+            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState newState, boolean moved) {
+        if (!state.is(newState.getBlock())) {
+            net.minecraft.world.level.block.entity.BlockEntity be = world.getBlockEntity(pos);
+            if (be instanceof net.minecraft.world.Container container) {
+                net.minecraft.world.Containers.dropContents(world, pos, container);
+                world.updateNeighbourForOutputSignal(pos, state.getBlock());
+            }
+        }
+        method_9536(self, state, world, pos, newState, moved);
+    }
+
     /** overrideHooks guard: true on first entry for this object on this thread */
     public static boolean cbEnter(Object self) {
         return CB_IN_OLD_RENDER.get().add(self);
