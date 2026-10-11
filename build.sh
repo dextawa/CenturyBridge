@@ -79,7 +79,7 @@ if cfgs:
                       and "@Mixin" in open(os.path.join(srcdir, f), encoding="utf-8").read())
     if unlisted:
         print(f"{len(unlisted)} @Mixin sources not listed in the mixin config (never applied): "
-              f"{unlisted[:5]}{'...' if len(unlisted) > 5 else ''} -- core/tools/sync_mixin_config.py")
+              f"{unlisted[:5]}{'...' if len(unlisted) > 5 else ''} -- Main server-check ... --fix lists them")
         sys.exit(1)
 
     # A class mixin whose target is an interface fails at PREPARE and takes the
@@ -140,16 +140,23 @@ find "$SHIM/src" -name '*.java' > "$OUT/sources-$VERSION.txt"
 case "$VERSION" in 1.20.*) RELEASE=17;; *) RELEASE=21;; esac
 javac -nowarn -proc:none --release "$RELEASE" -cp "$CP" -d "$CLASSES" "@$OUT/sources-$VERSION.txt"
 
-# Which side a mixin loads on is derived, not hand-placed: "client" only when it
-# references a class the dedicated server jar lacks. A server bridge parked in
-# "client" never applies on a dedicated server, so the call site its cover left
-# untouched throws NoSuchMethodError there -- while every other gate and a client
-# test pass. Checked against the real server jar.
+# What may load on a dedicated server is derived, not hand-placed. A bridge class
+# naming a client-only type sinks at verification on a server (one blaze3d type in
+# the 26.2 Statics took the whole server down at the first static redirect); a
+# server-capable mixin parked in "client" never applies there, so the call site
+# its cover left untouched throws NoSuchMethodError -- while every other gate and
+# a client test pass. Checked against the real server jar, its libraries and the
+# fabric-api modules a server loads; client-only plain classes carry
+# @Environment(EnvType.CLIENT). `Main server-check ... --fix` re-sides the config.
 SERVER="${CB_SERVER:-$(find "data/runtime/server-$VERSION" -name server-intermediary.jar 2>/dev/null | head -1)}"
 [ -n "$SERVER" ] || SERVER="data/runtime/server-$VERSION/versions/$VERSION/server-$VERSION.jar"
-[ -f "$SERVER" ] || { echo "dedicated server jar not found (set CB_SERVER): needed to verify mixin sides"; exit 1; }
-python3 core/tools/sync_mixin_config.py "$VERSION" "$CLASSES" "$SERVER" --check \
-    || { echo "build aborted: mixin config sides disagree with the server jar -- core/tools/sync_mixin_config.py --fix"; exit 1; }
+[ -f "$SERVER" ] || { echo "dedicated server jar not found (set CB_SERVER): needed to verify what loads on a server"; exit 1; }
+SERVER_LIBS="${CB_SERVER_LIBS:-data/runtime/server-$VERSION/libraries}"
+FAPI_JAR="${CB_FAPI_JAR:-$(ls data/runtime/client-$VERSION/mods/fabric-api-*.jar 2>/dev/null | head -1)}"
+[ -f "$FAPI_JAR" ] || { echo "fabric-api jar not found (set CB_FAPI_JAR): needed to verify what loads on a server"; exit 1; }
+MIXIN_CFG=$(ls "$SHIM"/resources/*.mixins.json | head -1)
+java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$CLASSES" "$MIXIN_CFG" "$SERVER" "$SERVER_LIBS" "$FAPI_JAR" \
+    || { echo "build aborted: client-only code reachable on a dedicated server"; exit 1; }
 
 # Every redirect must point at a static that actually exists WITH THE EXACT
 # DESCRIPTOR the converter emits: INVOKESTATIC resolves by name+descriptor,

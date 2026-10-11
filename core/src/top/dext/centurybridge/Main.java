@@ -45,6 +45,9 @@ public final class Main {
                 args.length > 4 && !args[4].isEmpty() ? Path.of(args[4]) : null,
                 args.length > 6 ? Path.of(args[5]) : null,
                 args.length > 6 ? args[6] : null);
+            case "server-check" -> top.dext.centurybridge.data.ServerCheck.run(
+                Path.of(args[1]), Path.of(args[2]), Path.of(args[3]), Path.of(args[4]), Path.of(args[5]),
+                args.length > 6 && args[6].equals("--fix"));
             case "wiring-check" -> top.dext.centurybridge.data.WiringCheck.run(
                 Path.of(args[1]), Path.of(args[2]),
                 args.length > 3 && !args[3].isEmpty() ? Path.of(args[3]) : null,
@@ -232,6 +235,7 @@ public final class Main {
               remap-mojang <inter-to-mojang.tsv> <in.jar> <out.jar>
               mixin-check <compiledShimDir> <targetJar> [<shims.json> [<inter-to-mojang.tsv> [<stubDir> <targetVersion>]]]
               wiring-check <compiledShimDir> <shims.json> [<inter-to-mojang.tsv>]
+              server-check <compiledShimDir> <mixins.json> <serverJar> <serverLibraries> <fabricApiJar> [--fix]
               stub-dump <stubJar> <out.txt>
               link-check <outDir> <full-audit.tsv|-> <convertedJar|dir...> -- <classpathJar|dir...>""");
     }
