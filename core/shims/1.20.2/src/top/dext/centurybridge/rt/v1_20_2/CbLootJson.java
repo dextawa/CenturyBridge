@@ -71,6 +71,11 @@ public final class CbLootJson {
         return b.create();
     }
 
+    /** a loot value (or array of them) as 1.20.1 JSON, through the surviving codecs */
+    public static JsonElement toJsonTree(Object value) {
+        return gson().toJsonTree(value);
+    }
+
     private static <T> void hier(GsonBuilder b, Class<T> type, Codec<T> codec) {
         b.registerTypeHierarchyAdapter(type, new CodecAdapter<>(codec));
     }

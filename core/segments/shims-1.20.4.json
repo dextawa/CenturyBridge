@@ -1747,5 +1747,11 @@
  },
  "superRenames": {
   "net/minecraft/class_2096": "top/dext/centurybridge/facade/v1_20_4/class_2096"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_5267.method_27849([Lnet/minecraft/class_5341;)Lcom/google/gson/JsonElement;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_5267.field_24420:Lnet/minecraft/class_5267;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_195.<init>(Ljava/util/Optional;)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_195.method_27790()Ljava/util/Optional;": "the facade does not provide this shape (yet): a reference to it is a known loss"
  }
 }

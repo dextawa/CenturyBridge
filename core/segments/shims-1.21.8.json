@@ -4007,5 +4007,11 @@
   "net/minecraft/class_2544.field_22156:Lnet/minecraft/class_2754;": "top/dext/centurybridge/rt/v1_21_8/Statics",
   "net/minecraft/class_3852.field_17061:Lnet/minecraft/class_3852;": "top/dext/centurybridge/rt/v1_21_8/Statics",
   "net/minecraft/class_7375.field_38710:Lnet/minecraft/class_5321;": "top/dext/centurybridge/rt/v1_21_8/Statics"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_5267.method_27849([Lnet/minecraft/class_5341;)Lcom/google/gson/JsonElement;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_5267.field_24420:Lnet/minecraft/class_5267;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_195.<init>(Ljava/util/Optional;)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_195.method_27790()Ljava/util/Optional;": "the facade does not provide this shape (yet): a reference to it is a known loss"
  }
 }

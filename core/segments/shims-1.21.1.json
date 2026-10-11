@@ -2929,5 +2929,15 @@
   "net/minecraft/class_8216.field_46769:Ljava/lang/String;": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1835.field_8006:Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1835.field_8001:Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_21_1/Statics"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_5267.method_27849([Lnet/minecraft/class_5341;)Lcom/google/gson/JsonElement;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_5267.field_24420:Lnet/minecraft/class_5267;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_195.<init>(Ljava/util/Optional;)V": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_195.method_27790()Ljava/util/Optional;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_8489.getElement(Lnet/minecraft/class_8488;)Ljava/lang/Object;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_8489.getElement(Lnet/minecraft/class_8490;Lnet/minecraft/class_2960;)Ljava/lang/Object;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_8489.getElementOptional(Lnet/minecraft/class_8488;)Ljava/util/Optional;": "the facade does not provide this shape (yet): a reference to it is a known loss",
+  "net/minecraft/class_8489.getElementOptional(Lnet/minecraft/class_8490;Lnet/minecraft/class_2960;)Ljava/util/Optional;": "the facade does not provide this shape (yet): a reference to it is a known loss"
  }
 }
