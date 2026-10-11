@@ -7,6 +7,8 @@
 # libraries; both come from a local runtime the repo deliberately does not
 # carry (game jars are not ours to distribute). Point CB_STUB and CB_LIBS at
 # them, or let the script find them under data/ if you have a working tree.
+# CB_STUBS names the directory holding the older releases' intermediary stubs
+# (client-<ver>-intermediary.jar), which the covers gate reads.
 set -euo pipefail
 
 VERSION="${1:?usage: build.sh <mcVersion> [outDir]}"
@@ -166,8 +168,11 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$
 # targets, injection selectors) is invisible to javac. Check all of it against
 # the real target jar now, not one failure per boot. Covers are checked here
 # too: the shape must be declared by a mixin on the owner, an ancestor, or an
-# implemented interface (name AND descriptor).
+# implemented interface (name AND descriptor), and the original member -- read
+# from the older stubs in data/jars -- must not be static, since a covered call
+# site keeps its invokestatic and no mixin may add a non-private static.
 java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "core/segments/shims-$VERSION.json" "$NAMETABLE" \
+    "${CB_STUBS:-data/jars}" "$VERSION" \
     || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 
 # fabric.mod.json, the mixin config and the access widener are mod SOURCE and

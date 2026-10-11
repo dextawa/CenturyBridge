@@ -30,8 +30,13 @@ import org.objectweb.asm.tree.MethodNode;
  *   @Overwrite             method must be declared on the target
  *   @Inject & friends      every "method" entry must resolve on the target
  *   @At(target = ...)      the selector's owner must declare the member
+ *   non-private statics    Mixin throws InvalidMixinException at apply for a
+ *                          class mixin's static method unless it is private,
+ *                          synthetic or an @Overwrite
+ *   covers                 a mixin declares the exact old shape, with the
+ *                          static-ness of the ORIGINAL member (older stubs)
  *
- *   mixin-check <compiledShimDir> <targetJar>
+ *   mixin-check <compiledShimDir> <targetJar> [<shims.json> [<inter-to-mojang.tsv> [<stubDir> <targetVersion>]]]
  */
 public final class MixinCheck {
 
@@ -62,8 +67,16 @@ public final class MixinCheck {
     private final Map<String, String> memberMap = new HashMap<>();
 
     public static void run(Path classesDir, Path targetJar, Path shimsJson, Path table) throws IOException {
+        run(classesDir, targetJar, shimsJson, table, null, null);
+    }
+
+    public static void run(Path classesDir, Path targetJar, Path shimsJson, Path table,
+                           Path stubDir, String targetVersion) throws IOException {
         MixinCheck c = new MixinCheck();
         c.index(targetJar);
+        if (stubDir != null && targetVersion != null) {
+            c.sources = SourceStubs.before(stubDir, targetVersion);
+        }
         if (table != null && Files.exists(table)) {
             for (String ln : Files.readAllLines(table)) {
                 String[] p = ln.split("\t");
@@ -90,6 +103,7 @@ public final class MixinCheck {
         if (shimsJson != null && Files.exists(shimsJson)) {
             c.checkCovers(shimsJson);
         }
+        c.sources.close();
         System.out.println("mixin-check: " + mixins + " mixin classes against " + targetJar.getFileName()
             + ", " + c.problems.size() + " unresolved targets");
         for (String s : c.problems) {
@@ -141,6 +155,18 @@ public final class MixinCheck {
         String me = cn.name.substring(cn.name.lastIndexOf('/') + 1);
         mixinTargets.put(cn.name, targets);
         mixinNodes.put(cn.name, cn);
+        // MixinApplicatorStandard.checkMethodVisibility: a whole-game crash at apply
+        if ((cn.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) == 0) {
+            for (MethodNode m : cn.methods) {
+                if ((m.access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0
+                        && (m.access & (org.objectweb.asm.Opcodes.ACC_PRIVATE | org.objectweb.asm.Opcodes.ACC_SYNTHETIC)) == 0
+                        && !m.name.equals("<clinit>")
+                        && !has(m.visibleAnnotations, m.invisibleAnnotations, OVERWRITE)) {
+                    problems.add(me + ": non-private static method " + m.name + m.desc
+                        + " (Mixin refuses it at apply; a static shape belongs on Statics behind a staticRedirect)");
+                }
+            }
+        }
         for (String t : targets) {
             ClassNode target = jar.get(t);
             if (target == null) {
@@ -231,6 +257,7 @@ public final class MixinCheck {
             if (key.substring(paren).equals(hooked.get(name))) {
                 continue; // rewritten by the converter, not served by an overload
             }
+            Integer orig = sources.methodAccess(owner, name, key.substring(paren));
             String desc = facade.mapMethodDesc(key.substring(paren));
             if (!classMap.isEmpty()) {
                 // real-name target: the bridge declares mojang names for members
@@ -244,6 +271,30 @@ public final class MixinCheck {
                 owner = classMap.getOrDefault(owner, owner);
                 desc = java.util.regex.Pattern.compile("L([^;]+);").matcher(desc).replaceAll(
                     mr -> "L" + java.util.regex.Matcher.quoteReplacement(classMap.getOrDefault(mr.group(1), mr.group(1))) + ";");
+            }
+            // the converter leaves a covered call site alone, opcode included: a
+            // static original is called with invokestatic, which no mixin-added
+            // (necessarily instance) method answers -- IncompatibleClassChangeError
+            if (orig != null && (orig & org.objectweb.asm.Opcodes.ACC_STATIC) != 0) {
+                ClassNode native_ = jar.get(owner);
+                final String sName = name;
+                final String sDesc = desc;
+                if (native_ != null && walk(native_, cn -> cn.methods.stream().anyMatch(m -> m.name.equals(sName)
+                        && m.desc.equals(sDesc) && (m.access & org.objectweb.asm.Opcodes.ACC_STATIC) != 0))) {
+                    continue; // the shape came back on the target as a static: served natively
+                }
+                List<String> by = new ArrayList<>();
+                for (var e : mixinNodes.entrySet()) {
+                    for (MethodNode m : e.getValue().methods) {
+                        if (m.name.equals(name) && m.desc.equals(desc)) {
+                            by.add(e.getKey());
+                        }
+                    }
+                }
+                problems.add("cover of a static method (call sites are invokestatic; serve it with a staticRedirect): " + key
+                    + (by.isEmpty() ? "" : " [declared by " + String.join(",", by) + " as " + name + desc + "]"));
+                missing++;
+                continue;
             }
             // a bridge on an ancestor serves subclass call sites (the converter
             // climbs the same way), and an interface mixin's default method
@@ -455,6 +506,9 @@ public final class MixinCheck {
     private boolean hasMethodNamed(ClassNode c, String name) {
         return hasMethod(c, name, null);
     }
+
+    /** older releases' stubs: a cover's ORIGINAL member is looked up there */
+    private SourceStubs sources = SourceStubs.none();
 
     private boolean walk(ClassNode c, java.util.function.Predicate<ClassNode> test) {
         java.util.ArrayDeque<ClassNode> todo = new java.util.ArrayDeque<>();

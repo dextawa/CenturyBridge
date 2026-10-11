@@ -42,7 +42,9 @@ public final class Main {
             case "mixin-check" -> top.dext.centurybridge.data.MixinCheck.run(
                 Path.of(args[1]), Path.of(args[2]),
                 args.length > 3 && !args[3].isEmpty() ? Path.of(args[3]) : null,
-                args.length > 4 && !args[4].isEmpty() ? Path.of(args[4]) : null);
+                args.length > 4 && !args[4].isEmpty() ? Path.of(args[4]) : null,
+                args.length > 6 ? Path.of(args[5]) : null,
+                args.length > 6 ? args[6] : null);
             case "wiring-check" -> top.dext.centurybridge.data.WiringCheck.run(
                 Path.of(args[1]), Path.of(args[2]),
                 args.length > 3 && !args[3].isEmpty() ? Path.of(args[3]) : null,
@@ -228,7 +230,7 @@ public final class Main {
               gen-chain <from> <to> <mappingsDir> <segmentsDir>
               convert <segmentsDir> <from> <to> <outDir> <jar...>
               remap-mojang <inter-to-mojang.tsv> <in.jar> <out.jar>
-              mixin-check <compiledShimDir> <targetJar> [<shims.json> [<inter-to-mojang.tsv>]]
+              mixin-check <compiledShimDir> <targetJar> [<shims.json> [<inter-to-mojang.tsv> [<stubDir> <targetVersion>]]]
               wiring-check <compiledShimDir> <shims.json> [<inter-to-mojang.tsv>]
               stub-dump <stubJar> <out.txt>
               link-check <outDir> <full-audit.tsv|-> <convertedJar|dir...> -- <classpathJar|dir...>""");
