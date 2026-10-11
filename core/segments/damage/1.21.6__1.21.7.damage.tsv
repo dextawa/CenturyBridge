@@ -1,0 +1,9 @@
+usage	owner	name	desc	kinds	w
+implement-interface	com/mojang/blaze3d/systems/CommandEncoder			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/minecraft/class_10444	method_70949	()Ljava/lang/Object;	METHOD	method not declared on the owner
+call	net/minecraft/class_10444	method_71658	()V	METHOD	method not declared on the owner
+override+super	net/minecraft/class_10444	method_70949	()Ljava/lang/Object;	ORPHAN	method not declared on the owner
+override+super	net/minecraft/class_10444	method_71658	()V	ORPHAN	method not declared on the owner
+get-static	net/minecraft/class_11228	field_59901	F	ACCESS	field F private static final
+new	net/minecraft/class_11245	<init>	(Ljava/lang/String;Lorg/joml/Matrix3x2f;Lnet/minecraft/class_10444;IILnet/minecraft/class_8030;)V	METHOD	constructors (Ljava/lang/String;Lorg/joml/Matrix3x2f;Lnet/minecraft/class_11540;IILnet/minecraft/class_8030;)V
+call	net/minecraft/class_11245	method_72121	()Lnet/minecraft/class_10444;	METHOD	method method_72121()Lnet/minecraft/class_11540; public
