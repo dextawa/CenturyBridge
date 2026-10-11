@@ -17,7 +17,10 @@ invented:
   overrides (a mod method vanilla called in V)                              -> "overrideHooks"
       the new shape vanilla now calls forwards to the mod's old method, each old parameter fed
       from the new argument of its type (a new argument the old method never had is not passed),
-      when what the old method returns is what the new shape returns (or a subtype of it).
+      when what the old method returns is what the new shape returns (or a subtype of it). The
+      hook carries its arguments ("frames": the layer's Guard) and rewrites the old method's own
+      super call to the new shape ("superCalls"), so vanilla's implementation still gets every
+      argument vanilla passed -- the ones the old method never saw included.
 
 Arguments of distinct types may change places (1.20.3 moved a block's Settings to the end of its
 constructor); arguments of one type keep their relative order, since types alone cannot tell them
@@ -229,7 +232,7 @@ def main():
             hook_seen.add(hk)
             na, _ = split_args(m.desc)
             unpassed = [na[j] for j in range(len(na)) if j not in amap]
-            hooks.append({"old": name + desc, "new": name + m.desc, "args": amap, "onlyUnder": owner, "guard": guard,
+            hooks.append({"old": name + desc, "new": name + m.desc, "args": amap, "onlyUnder": owner, "frames": guard, "superCalls": "rewrite",
                           "basis": "mechanical: the old method gets every parameter it had"
                                    + ("" if amap == sorted(amap) else ", reordered by type")
                                    + (f"; new {','.join(unpassed)} not passed" if unpassed else "")})

@@ -1,0 +1,10 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_11245.method_72121()Lnet/minecraft/class_10444;": {
+   "desc": "()Lnet/minecraft/class_11540;",
+   "ops": [],
+   "ret": "keep",
+   "basis": "mechanical: same values; returns a subtype of the old type"
+  }
+ }
+}

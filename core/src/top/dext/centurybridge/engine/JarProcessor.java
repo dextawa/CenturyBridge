@@ -71,6 +71,10 @@ public final class JarProcessor {
     }
 
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName) {
+        if (h.frames != null) {
+            synthesizeFramedOverride(cv, h, cls);
+            return;
+        }
         org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
         org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
         org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
@@ -178,6 +182,212 @@ public final class JarProcessor {
         }
         mv.visitMaxs(slot + 3, slot + 1);
         mv.visitEnd();
+    }
+
+    /**
+     * The new shape for a hook that carries its arguments ({@link Chain.OverrideHook#frames}):
+     * <pre>
+     *   new(a0..an):
+     *     frames.cbPush(this, new Object[] {a0..an});
+     *     try { return this.old(a[args[0]]..a[args[k]]); } finally { frames.cbPop(); }
+     * </pre>
+     * The old method's own super call, rewritten to the new shape, reads back the arguments the
+     * old shape has no place for ({@link #rewriteHookSuperCalls}).
+     */
+    private static void synthesizeFramedOverride(ClassVisitor cv, Chain.OverrideHook h, String cls) {
+        org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
+        org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
+        org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
+        org.objectweb.asm.Type or = org.objectweb.asm.Type.getReturnType(h.oldDesc);
+        int[] map = h.args;
+        if (map == null) {
+            map = new int[oa.length];
+            for (int i = 0; i < map.length; i++) {
+                map[i] = i;
+            }
+        }
+        int[] slotOf = new int[na.length];
+        int slot = 1;
+        for (int i = 0; i < na.length; i++) {
+            slotOf[i] = slot;
+            slot += na[i].getSize();
+        }
+        Object[] locals = new Object[na.length + 1];
+        locals[0] = cls;
+        for (int i = 0; i < na.length; i++) {
+            locals[i + 1] = frameType(na[i]);
+        }
+        MethodVisitor mv = cv.visitMethod(Opcodes.ACC_PUBLIC, h.newName, h.newDesc, null, null);
+        mv.visitCode();
+        org.objectweb.asm.Label tryStart = new org.objectweb.asm.Label();
+        org.objectweb.asm.Label tryEnd = new org.objectweb.asm.Label();
+        org.objectweb.asm.Label handler = new org.objectweb.asm.Label();
+        mv.visitTryCatchBlock(tryStart, tryEnd, handler, null);
+        mv.visitVarInsn(Opcodes.ALOAD, 0);
+        mv.visitLdcInsn(na.length);
+        mv.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
+        for (int i = 0; i < na.length; i++) {
+            mv.visitInsn(Opcodes.DUP);
+            mv.visitLdcInsn(i);
+            mv.visitVarInsn(na[i].getOpcode(Opcodes.ILOAD), slotOf[i]);
+            box(mv, na[i]);
+            mv.visitInsn(Opcodes.AASTORE);
+        }
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.frames, "cbPush", "(Ljava/lang/Object;[Ljava/lang/Object;)V", false);
+        mv.visitLabel(tryStart);
+        mv.visitVarInsn(Opcodes.ALOAD, 0);
+        for (int i = 0; i < oa.length; i++) {
+            mv.visitVarInsn(na[map[i]].getOpcode(Opcodes.ILOAD), slotOf[map[i]]);
+        }
+        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
+        if (nr.getSort() == org.objectweb.asm.Type.VOID && or.getSort() != org.objectweb.asm.Type.VOID) {
+            mv.visitInsn(or.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP);
+        }
+        mv.visitLabel(tryEnd);
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.frames, "cbPop", "()V", false);
+        mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+        mv.visitLabel(handler);
+        mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 1, new Object[] {"java/lang/Throwable"});
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.frames, "cbPop", "()V", false);
+        mv.visitInsn(Opcodes.ATHROW);
+        mv.visitMaxs(slot + 6, slot);
+        mv.visitEnd();
+    }
+
+    private static void box(MethodVisitor mv, org.objectweb.asm.Type t) {
+        String w = switch (t.getSort()) {
+            case org.objectweb.asm.Type.BOOLEAN -> "java/lang/Boolean";
+            case org.objectweb.asm.Type.BYTE -> "java/lang/Byte";
+            case org.objectweb.asm.Type.CHAR -> "java/lang/Character";
+            case org.objectweb.asm.Type.SHORT -> "java/lang/Short";
+            case org.objectweb.asm.Type.INT -> "java/lang/Integer";
+            case org.objectweb.asm.Type.LONG -> "java/lang/Long";
+            case org.objectweb.asm.Type.FLOAT -> "java/lang/Float";
+            case org.objectweb.asm.Type.DOUBLE -> "java/lang/Double";
+            default -> null;
+        };
+        if (w != null) {
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, w, "valueOf", "(" + t.getDescriptor() + ")L" + w + ";", false);
+        }
+    }
+
+    /** the frames accessor answering a carried argument of this type: {name, return descriptor} */
+    private static String[] frameArg(org.objectweb.asm.Type t) {
+        return switch (t.getSort()) {
+            case org.objectweb.asm.Type.BOOLEAN -> new String[] {"cbArgZ", "Z"};
+            case org.objectweb.asm.Type.BYTE -> new String[] {"cbArgB", "B"};
+            case org.objectweb.asm.Type.CHAR -> new String[] {"cbArgC", "C"};
+            case org.objectweb.asm.Type.SHORT -> new String[] {"cbArgS", "S"};
+            case org.objectweb.asm.Type.INT -> new String[] {"cbArgI", "I"};
+            case org.objectweb.asm.Type.LONG -> new String[] {"cbArgJ", "J"};
+            case org.objectweb.asm.Type.FLOAT -> new String[] {"cbArgF", "F"};
+            case org.objectweb.asm.Type.DOUBLE -> new String[] {"cbArgD", "D"};
+            default -> new String[] {"cbArgL", "Ljava/lang/Object;"};
+        };
+    }
+
+    /**
+     * A mod's super.old(..) inside a class under a hook with {@code superCalls}: the old shape is
+     * gone from vanilla, the new one takes more (or other) arguments. The call becomes
+     * INVOKESPECIAL super.new(..): each new argument is the old argument the hook maps it from
+     * (cast down when the new shape declares a subtype -- the value vanilla handed the mod's
+     * method), and an argument the old shape has no place for is read back from the frame the
+     * synthesized new shape pushed for this object -- what vanilla passed. Outside such a call
+     * (the mod calling its super's old shape from another method) there is no frame and the
+     * argument is its type's zero value.
+     */
+    private static byte[] rewriteHookSuperCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
+        java.util.Map<String, Chain.OverrideHook> byOld = new HashMap<>();
+        for (Chain.OverrideHook h : chain.overrideHooks) {
+            if (h.superCalls) {
+                byOld.putIfAbsent(h.oldName + h.oldDesc, h);
+            }
+        }
+        if (byOld.isEmpty()) {
+            return bytes;
+        }
+        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+        boolean any = false;
+        for (Chain.OverrideHook h : byOld.values()) {
+            if (raw.contains(h.oldName)) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return bytes;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new ClassReader(bytes).accept(cn, 0);
+        String[] ifaces = cn.interfaces.toArray(new String[0]);
+        int rewrites = 0;
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if (m.instructions == null || (m.access & Opcodes.ACC_STATIC) != 0) {
+                continue;
+            }
+            org.objectweb.asm.tree.AbstractInsnNode next;
+            for (org.objectweb.asm.tree.AbstractInsnNode in = m.instructions.getFirst(); in != null; in = next) {
+                next = in.getNext();
+                if (in.getOpcode() != Opcodes.INVOKESPECIAL) {
+                    continue;
+                }
+                org.objectweb.asm.tree.MethodInsnNode mi = (org.objectweb.asm.tree.MethodInsnNode) in;
+                Chain.OverrideHook h = byOld.get(mi.name + mi.desc);
+                if (h == null || mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
+                        || h.onlyUnder != null && !isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain)
+                        || h.notUnder != null && isUnder(cn.superName, ifaces, h.notUnder, layer, chain)) {
+                    continue;
+                }
+                org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
+                org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
+                int[] from = new int[na.length];
+                java.util.Arrays.fill(from, -1);
+                for (int i = 0; i < oa.length; i++) {
+                    from[h.args == null ? i : h.args[i]] = i;
+                }
+                int[] slots = spillArgs(m, mi, oa);
+                org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
+                for (int j = 0; j < na.length; j++) {
+                    if (from[j] >= 0) {
+                        int i = from[j];
+                        seq.add(new org.objectweb.asm.tree.VarInsnNode(oa[i].getOpcode(Opcodes.ILOAD), slots[i]));
+                        if (!oa[i].equals(na[j]) && na[j].getSort() >= org.objectweb.asm.Type.ARRAY) {
+                            seq.add(new org.objectweb.asm.tree.TypeInsnNode(Opcodes.CHECKCAST, na[j].getInternalName()));
+                        }
+                    } else {
+                        String[] acc = frameArg(na[j]);
+                        seq.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+                        seq.add(new org.objectweb.asm.tree.LdcInsnNode(j));
+                        seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.frames, acc[0],
+                            "(Ljava/lang/Object;I)" + acc[1], false));
+                        if (na[j].getSort() >= org.objectweb.asm.Type.ARRAY && !na[j].getInternalName().equals("java/lang/Object")) {
+                            seq.add(new org.objectweb.asm.tree.TypeInsnNode(Opcodes.CHECKCAST, na[j].getInternalName()));
+                        }
+                    }
+                }
+                m.instructions.insertBefore(mi, seq);
+                mi.name = h.newName;
+                mi.desc = h.newDesc;
+                org.objectweb.asm.Type or = org.objectweb.asm.Type.getReturnType(h.oldDesc);
+                org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
+                if (!or.equals(nr)) {
+                    if (or.getSort() == org.objectweb.asm.Type.VOID) {
+                        m.instructions.insert(mi, new org.objectweb.asm.tree.InsnNode(nr.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP));
+                    } else if (or.getSort() >= org.objectweb.asm.Type.ARRAY) {
+                        m.instructions.insert(mi, new org.objectweb.asm.tree.TypeInsnNode(Opcodes.CHECKCAST, or.getInternalName()));
+                    }
+                }
+                rewrites++;
+                top.dext.centurybridge.data.FullAudit.record(mi.owner + "." + h.oldName + h.oldDesc, "hook-super-call");
+            }
+        }
+        if (rewrites == 0) {
+            return bytes;
+        }
+        rpt.notes.add(tag + "hook-super-calls: " + rewrites + " in " + cn.name);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
     }
 
     /**
@@ -1276,6 +1486,11 @@ public final class JarProcessor {
             byte[] b3 = rewriteCalls(bytes, chain, rpt, tag);
             ctorChanged |= b3 != bytes;
             bytes = b3;
+        }
+        if (!chain.overrideHooks.isEmpty()) {
+            byte[] b4 = rewriteHookSuperCalls(bytes, chain, layer, rpt, tag);
+            ctorChanged |= b4 != bytes;
+            bytes = b4;
         }
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0

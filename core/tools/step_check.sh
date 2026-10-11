@@ -21,7 +21,7 @@ WIRING="$WD/core/segments/steps/$SEG.json"
 [ "$SEG" = "1.20.1__1.20.2" ] && WIRING="$WD/core/segments/shims-1.20.2.json"
 "$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/conv" \
     "probe/seg/$SEG/probe-$V.jar" > "$OUT/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$OUT/convert.log"; exit 1; }
-"$JAVA" -Xmx32g -cp "core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
+"$JAVA" -Xmx32g -Dcb.linkcheck.perSite=true -cp "core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
     "$WD/build/centurybridge-0.3.0+$W.jar" "$GAME" $FAPI "data/runtime/client-$W/libraries" > "$OUT/linkcheck.log" 2>&1
 python3 probe/probe_report.py "probe/seg/$SEG/probe-$V.jar.index.tsv" "$(ls "$OUT"/conv/*.jar | head -1)" "$OUT/lc/link-findings.tsv" \
     "$OUT/report.tsv" > "$OUT/report.txt" 2>&1

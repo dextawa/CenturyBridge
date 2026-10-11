@@ -831,7 +831,7 @@ public final class LinkCheck {
 
     private void reportType(String where, Type expected, Type actual, String message) {
         String exp = expected.getSort() == Type.OBJECT ? expected.getInternalName() : expected.getDescriptor();
-        if (!reported.add("TYPE " + exp)) return;
+        if (!reported.add("TYPE " + exp + (PER_SITE ? " @" + where : ""))) return;
         String bucket;
         if (actual.getSort() == Type.OBJECT && hasFacadeAncestor(actual.getInternalName())) {
             bucket = "CLAIMED"; // the converter moved this value's hierarchy onto a facade the slot rejects
@@ -1264,8 +1264,17 @@ public final class LinkCheck {
 
     // ---------------------------------------------------------------- attribution
 
+    /**
+     * -Dcb.linkcheck.perSite=true: every site of a broken reference is its own finding, not just
+     * the first one per jar. A mod jar is counted by its distinct broken symbols; the API probe
+     * is one jar holding every usage of every member -- a call, the super call inside an
+     * override, a protected call from a subclass of the same member all share one reference, and
+     * per-jar deduplication would report the first and hide the rest.
+     */
+    private static final boolean PER_SITE = Boolean.getBoolean("cb.linkcheck.perSite");
+
     private void report(String kind, String where, String ref, String note) {
-        if (!reported.add(kind + (delegationSite ? " super " : " ") + ref)) return;
+        if (!reported.add(kind + (delegationSite ? " super " : " ") + ref + (PER_SITE ? " @" + where : ""))) return;
         String owner = ref;
         int dot = ref.indexOf('.');
         if (dot > 0) owner = ref.substring(0, dot);

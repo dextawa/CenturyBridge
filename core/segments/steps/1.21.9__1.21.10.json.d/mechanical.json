@@ -1,0 +1,33 @@
+{
+ "overrideHooks": [
+  {
+   "old": "method_9548(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;)V",
+   "new": "method_9548(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;Z)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_4970",
+   "frames": "top/dext/centurybridge/step/v1_21_10/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+  },
+  {
+   "old": "method_26178(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;)V",
+   "new": "method_26178(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;Z)V",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "frames": "top/dext/centurybridge/step/v1_21_10/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+  }
+ ]
+}

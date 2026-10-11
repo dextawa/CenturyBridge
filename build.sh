@@ -65,7 +65,7 @@ if cfgs:
     # a source file that no longer declares its class (a prune that ate the
     # header) leaves the config pointing at nothing -- fatal at PREPARE
     present = set()
-    for f in os.listdir(srcdir):
+    for f in (os.listdir(srcdir) if os.path.isdir(srcdir) else []):
         if f.endswith(".java"):
             txt = open(os.path.join(srcdir, f), encoding="utf-8").read()
             if re.search(r"\b(class|interface)\s+" + re.escape(f[:-5]) + r"\b", txt):
@@ -81,7 +81,7 @@ if cfgs:
     # passes mixin-check and satisfies the covers audit -- and never loads. 313
     # of 531 bridges in the 1.21.4 tree sat like that, all audited "covered".
     listed = {m for side in ("mixins", "client", "server") for m in cfg.get(side, [])}
-    unlisted = sorted(f[:-5] for f in os.listdir(srcdir)
+    unlisted = sorted(f[:-5] for f in (os.listdir(srcdir) if os.path.isdir(srcdir) else [])
                       if f.endswith(".java") and f[:-5] in present and f[:-5] not in listed
                       and "@Mixin" in open(os.path.join(srcdir, f), encoding="utf-8").read())
     if unlisted:
@@ -114,7 +114,7 @@ if cfgs:
                 if struct.unpack(">H", d[idx:idx+2])[0] & 0x0200:
                     ifaces.add(n[:-6])
         bad = []
-        for f in os.listdir(srcdir):
+        for f in (os.listdir(srcdir) if os.path.isdir(srcdir) else []):
             if not f.endswith(".java"):
                 continue
             txt = open(os.path.join(srcdir, f), encoding="utf-8").read()

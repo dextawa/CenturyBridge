@@ -294,6 +294,20 @@ public final class Chain {
          */
         public String adapter;
         public String bridgeOwner, bridgeName, bridgeDesc;
+        /**
+         * Carried arguments ("frames": class providing cbPush / cbPop / cbArg*): the synthesized
+         * new shape records the arguments vanilla passed before forwarding to the old method, and
+         * the old method's own super call -- rewritten from the old shape to the new one
+         * ({@link #superCalls}) -- takes the values the old shape has no place for from that
+         * record, so vanilla's implementation sees exactly what vanilla passed. Replaces the
+         * guard: with every super call rewritten to an INVOKESPECIAL of the new shape there is
+         * no path back into the synthesized method, and a guard keyed by the object would turn a
+         * legitimately nested call on the same instance (a block is a singleton) into a
+         * fall-through that skips the mod's method.
+         */
+        public String frames;
+        /** "superCalls": "rewrite": a mod's super.old(..) in a class under the hook becomes super.new(..) */
+        public boolean superCalls;
     }
 
     public final java.util.List<OverrideHook> overrideHooks = new java.util.ArrayList<>();
@@ -1326,6 +1340,16 @@ public final class Chain {
                         }
                     }
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
+                    h.frames = o.has("frames") ? o.get("frames").getAsString() : null;
+                    h.superCalls = o.has("superCalls") && o.get("superCalls").getAsString().equals("rewrite");
+                    if (h.frames != null && (h.guard != null || h.wrapName != null || h.unwrapName != null || o.has("bridge"))) {
+                        throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
+                            + ": frames go with plain argument forwarding only (no guard / wrap / unwrap / bridge)");
+                    }
+                    if (h.superCalls && h.args == null && org.objectweb.asm.Type.getArgumentTypes(h.oldDesc).length
+                            != org.objectweb.asm.Type.getArgumentTypes(h.newDesc).length) {
+                        throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": superCalls needs args");
+                    }
                     if (o.has("bridge")) {
                         String br = o.get("bridge").getAsString();
                         int dot = br.lastIndexOf('.', br.indexOf('('));

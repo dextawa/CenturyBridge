@@ -5,7 +5,11 @@
 # no CenturyBridge, no conversion, nothing bridged. What breaks is that segment's complete
 # usage-level damage, independent of any corpus. The namespace wall (1.21.11 -> 26.1) only
 # renames: the 1.21.11 probe goes through remap-mojang first, nothing else.
-# Run from ~/cbwork on beta2 (needs data/jars stubs, data/runtime/client-<ver>/libraries).
+# Findings are per site (-Dcb.linkcheck.perSite): the probe holds every usage of every member in one
+# jar, and per-jar deduplication by reference would keep only the first usage of a broken member.
+# Each segment's damage table lands in probe/damage/<V>__<W>.damage.tsv (copy it to
+# core/segments/damage/ in the repo). Run from ~/cbwork on beta2 (needs data/jars stubs,
+# data/runtime/client-<ver>/libraries, probe/probe_report.py and probe/segment_damage.py).
 set -uo pipefail
 cd ~/cbwork
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
@@ -20,12 +24,13 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
   V=${RELEASES[$i]}; W=${RELEASES[$((i + 1))]}
   SEG="${V}__${W}"
   mkdir -p "$OUT/$SEG/probe"
-  "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main api-probe "$(jar_of "$V")" "$OUT/$SEG/probe-$V.jar" "data/runtime/client-$V/libraries" \
-      > "$OUT/$SEG/probe.log" 2>&1
+  # the probe of V depends only on V's stub: kept when it is already there
+  [ -f "$OUT/$SEG/probe-$V.jar.index.tsv" ] || "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main api-probe "$(jar_of "$V")" \
+      "$OUT/$SEG/probe-$V.jar" "data/runtime/client-$V/libraries" > "$OUT/$SEG/probe.log" 2>&1
   # control: the raw probe on its own release must be clean, or the probe (not the segment) is wrong
   mkdir -p "$OUT/$SEG/self" && cp "$OUT/$SEG/probe-$V.jar" "$OUT/$SEG/self/"
   rm -rf "$OUT/$SEG/control"
-  "$JAVA" -Xmx32g -cp "$CP" top.dext.centurybridge.Main link-check "$OUT/$SEG/control" - "$OUT/$SEG/self" -- \
+  "$JAVA" -Xmx32g -Dcb.linkcheck.perSite=true -cp "$CP" top.dext.centurybridge.Main link-check "$OUT/$SEG/control" - "$OUT/$SEG/self" -- \
       "$(jar_of "$V")" "data/runtime/client-$V/libraries" > "$OUT/$SEG/control.log" 2>&1
   if [ "$V" = "1.21.11" ]; then
     # the wall: the same probe under mojang names, nothing more
@@ -35,8 +40,14 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
     cp "$OUT/$SEG/probe-$V.jar" "$OUT/$SEG/probe/"
   fi
   rm -rf "$OUT/$SEG/lc"
-  "$JAVA" -Xmx32g -cp "$CP" top.dext.centurybridge.Main link-check "$OUT/$SEG/lc" - "$OUT/$SEG/probe" -- \
+  "$JAVA" -Xmx32g -Dcb.linkcheck.perSite=true -cp "$CP" top.dext.centurybridge.Main link-check "$OUT/$SEG/lc" - "$OUT/$SEG/probe" -- \
       "$(jar_of "$W")" "data/runtime/client-$W/libraries" > "$OUT/$SEG/linkcheck.log" 2>&1
-  echo "done $SEG $(date +%H:%M) control=$(($(grep -c . "$OUT/$SEG/control/link-findings.tsv" 2>/dev/null) - 1)) findings=$(($(grep -c . "$OUT/$SEG/lc/link-findings.tsv" 2>/dev/null) - 1))" >> "$OUT/progress.txt"
+  # the segment's damage table: findings mapped back to probe sites, then to V members and usages
+  python3 probe/probe_report.py "$OUT/$SEG/probe-$V.jar.index.tsv" "$(ls "$OUT/$SEG/probe"/*.jar | head -1)" \
+      "$OUT/$SEG/lc/link-findings.tsv" "$OUT/$SEG/report.tsv" > "$OUT/$SEG/report.txt" 2>&1
+  WALL=""; [ "$V" = "1.21.11" ] && WALL=data/mappings/inter-to-mojang-1.21.11.tsv
+  mkdir -p probe/damage
+  python3 probe/segment_damage.py "$OUT/$SEG/report.tsv" "$(jar_of "$W")" "probe/damage/$SEG.damage.tsv" $WALL >> "$OUT/$SEG/report.txt" 2>&1
+  echo "done $SEG $(date +%H:%M) control=$(($(grep -c . "$OUT/$SEG/control/link-findings.tsv" 2>/dev/null) - 1)) findings=$(($(grep -c . "$OUT/$SEG/lc/link-findings.tsv" 2>/dev/null) - 1)) damage=$(($(grep -c . "probe/damage/$SEG.damage.tsv" 2>/dev/null) - 1))" >> "$OUT/progress.txt"
 done
 echo ALL_DONE >> "$OUT/progress.txt"

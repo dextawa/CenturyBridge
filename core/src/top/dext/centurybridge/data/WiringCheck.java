@@ -516,6 +516,17 @@ public final class WiringCheck {
                     wantMethod(where + " guard", g + "#cbEnter", null, "(Ljava/lang/Object;)Z");
                     wantMethod(where + " guard", g + "#cbExit", null, "(Ljava/lang/Object;)V");
                 }
+                if (o.has("frames")) {
+                    // carried arguments: the synthesized new shape pushes / pops a frame, a rewritten
+                    // super call reads an argument back with the accessor of its type
+                    String f = o.get("frames").getAsString();
+                    wantMethod(where + " frames", f + "#cbPush", null, "(Ljava/lang/Object;[Ljava/lang/Object;)V");
+                    wantMethod(where + " frames", f + "#cbPop", null, "()V");
+                    for (String t : new String[] {"Z", "B", "C", "S", "I", "J", "F", "D"}) {
+                        wantMethod(where + " frames", f + "#cbArg" + t, null, "(Ljava/lang/Object;I)" + t);
+                    }
+                    wantMethod(where + " frames", f + "#cbArgL", null, "(Ljava/lang/Object;I)Ljava/lang/Object;");
+                }
                 if (o.has("bridge")) {
                     // bridge mode: the static the synthesized new shape calls, and the adapter
                     // interface (declaring the old shape) the bridge reaches the override by
