@@ -34,22 +34,42 @@ public final class LegacyLoot {
         }
         if (t.has("pools") && t.get("pools").isJsonArray()) {
             for (JsonElement p : t.getAsJsonArray("pools")) {
-                if (!p.isJsonObject()) {
-                    continue;
-                }
-                JsonObject pool = p.getAsJsonObject();
-                if (pool.has("conditions")) {
-                    pool.add("conditions", conditions(pool.getAsJsonArray("conditions"), from, to, losses));
-                }
-                if (pool.has("functions")) {
-                    pool.add("functions", functions(pool.getAsJsonArray("functions"), from, to, losses));
-                }
-                if (pool.has("entries")) {
-                    entries(pool.getAsJsonArray("entries"), from, to, losses);
+                if (p.isJsonObject()) {
+                    poolInPlace(p.getAsJsonObject(), from, to, losses);
                 }
             }
         }
         return t;
+    }
+
+    /**
+     * One loot pool on its own (a runtime bridge handed a pool's JSON, outside any table):
+     * the same rules {@link #table} applies to each of its pools, on a copy.
+     */
+    public static JsonObject pool(JsonObject in, String from, String to, LegacyItems.Losses losses) {
+        JsonObject pool = in.deepCopy();
+        poolInPlace(pool, from, to, losses);
+        return pool;
+    }
+
+    /** One pool entry on its own (children included), on a copy -- see {@link #pool}. */
+    public static JsonObject entry(JsonObject in, String from, String to, LegacyItems.Losses losses) {
+        JsonArray one = new JsonArray();
+        one.add(in.deepCopy());
+        entries(one, from, to, losses);
+        return one.get(0).getAsJsonObject();
+    }
+
+    private static void poolInPlace(JsonObject pool, String from, String to, LegacyItems.Losses losses) {
+        if (pool.has("conditions")) {
+            pool.add("conditions", conditions(pool.getAsJsonArray("conditions"), from, to, losses));
+        }
+        if (pool.has("functions")) {
+            pool.add("functions", functions(pool.getAsJsonArray("functions"), from, to, losses));
+        }
+        if (pool.has("entries")) {
+            entries(pool.getAsJsonArray("entries"), from, to, losses);
+        }
     }
 
     private static void entries(JsonArray entries, String from, String to, LegacyItems.Losses losses) {
