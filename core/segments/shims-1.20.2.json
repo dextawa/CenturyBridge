@@ -457,6 +457,32 @@
      "call": "top/dext/centurybridge/rt/v1_20_2/CbCriteria.conditionsFromJson(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyAbstractCriterion;Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4558$class_8788;"
     }
    ]
+  },
+  {
+   "under": "net/minecraft/class_2256",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyFertilizable",
+   "requires": [
+    "method_9651(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Z"
+   ],
+   "synth": [
+    {
+     "new": "method_9651(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Z",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbBlocks.isFertilizable(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyFertilizable;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Z"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2402",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyFluidFillable",
+   "requires": [
+    "method_10310(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z"
+   ],
+   "synth": [
+    {
+     "new": "method_10310(Lnet/minecraft/class_1657;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbBlocks.canFillWithFluid(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyFluidFillable;Lnet/minecraft/class_1657;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z"
+    }
+   ]
   }
  ],
  "superCtorReshapes": {
