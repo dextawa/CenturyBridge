@@ -13,7 +13,10 @@ import java.util.regex.Pattern;
  * this class as the datagen tool grows.)
  */
 public final class SegmentGen {
-    private static final Pattern CLASS_PAT = Pattern.compile("net/minecraft/class_\\d+");
+    /** intermediary classes, named inner ones included: 121 of the 140 classes 1.20.2 removed
+     *  are inner classes (loot/recipe/criterion Serializers...), and the death table that
+     *  stopped at the outer name never recorded one of them */
+    private static final Pattern CLASS_PAT = Pattern.compile("net/minecraft/class_\\d+(?:\\$class_\\d+)*");
     private static final Pattern METHOD_PAT = Pattern.compile("method_\\d+");
     private static final Pattern FIELD_PAT = Pattern.compile("field_\\d+");
 

@@ -26,7 +26,10 @@ public final class Chain {
 
     private static final Pattern METHOD_PAT = Pattern.compile("method_\\d+");
     private static final Pattern FIELD_PAT = Pattern.compile("field_\\d+");
-    private static final Pattern CLASS_PAT = Pattern.compile("net/minecraft/class_\\d+");
+    /** an intermediary class name, named inner classes included (the dead Serializer/Builder
+     *  inner classes of 1.20.2 were invisible to every death table while this stopped at the
+     *  outer name) */
+    private static final Pattern CLASS_PAT = Pattern.compile("net/minecraft/class_\\d+(?:\\$class_\\d+)*");
 
     public enum Level { OK, L2, L3 }
 
