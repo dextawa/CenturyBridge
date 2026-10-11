@@ -15,13 +15,17 @@ VERSION="${1:?usage: build.sh <mcVersion> [outDir]}"
 OUT="${2:-build}"
 SHIM="core/shims/$VERSION"
 [ -d "$SHIM" ] || { echo "no shim tree for $VERSION"; exit 1; }
+# CB_DATA: the working-set directory (game jars, runtimes, mappings). A git worktree has none of its
+# own; point CB_DATA at the main checkout's data instead of linking it in (a link inside a worktree
+# turns removing the worktree into deleting the data).
+DATA="${CB_DATA:-data}"
 
-STUB="${CB_STUB:-data/jars/client-$VERSION-intermediary.jar}"
+STUB="${CB_STUB:-$DATA/jars/client-$VERSION-intermediary.jar}"
 [ -f "$STUB" ] || { echo "stub not found: $STUB (set CB_STUB)"; exit 1; }
 
 # Loader-side deps the shims compile against: mixin, and whatever the game
 # itself pulls in (gson, datafixerupper, joml, netty...).
-LIBS="${CB_LIBS:-data/runtime/client-$VERSION/libraries}"
+LIBS="${CB_LIBS:-$DATA/runtime/client-$VERSION/libraries}"
 CP="$STUB"
 if [ -d "$LIBS" ]; then
     while IFS= read -r jar; do CP="$CP:$jar"; done < <(find "$LIBS" -name '*.jar')
@@ -29,11 +33,11 @@ fi
 # fabric-api modules: the fat jar nests them (jar-in-jar), so compile against
 # the copies the loader extracts on first launch. Without these the compat
 # shims (CbNetworking & friends) cannot build.
-FAPI="${CB_FAPI:-data/runtime/client-$VERSION/.fabric/processedMods}"
+FAPI="${CB_FAPI:-$DATA/runtime/client-$VERSION/.fabric/processedMods}"
 if [ -d "$FAPI" ]; then
     while IFS= read -r jar; do CP="$CP:$jar"; done < <(find "$FAPI" -name '*.jar')
 fi
-for extra in $(find data/runtime -name 'sponge-mixin-*.jar' 2>/dev/null | head -1); do
+for extra in $(find "$DATA/runtime" -name 'sponge-mixin-*.jar' 2>/dev/null | head -1); do
     CP="$CP:$extra"
 done
 # Windows toolchains want ';' between classpath entries
@@ -130,7 +134,7 @@ PYGATE
 # past the namespace wall the bridge declares mojang names; wiring keys and
 # covers are in the analysis namespace and need the table to compare
 NAMETABLE=""
-case "$STUB" in *intermediary*) ;; *) NAMETABLE="data/mappings/inter-to-mojang-1.21.11.tsv";; esac
+case "$STUB" in *intermediary*) ;; *) NAMETABLE="$DATA/mappings/inter-to-mojang-1.21.11.tsv";; esac
 
 echo "compiling $VERSION shims..."
 find "$SHIM/src" -name '*.java' > "$OUT/sources-$VERSION.txt"
@@ -151,11 +155,11 @@ javac -nowarn -proc:none --release "$RELEASE" -cp "$CP" -d "$CLASSES" "@$OUT/sou
 # a client test pass. Checked against the real server jar, its libraries and the
 # fabric-api modules a server loads; client-only plain classes carry
 # @Environment(EnvType.CLIENT). `Main server-check ... --fix` re-sides the config.
-SERVER="${CB_SERVER:-$(find "data/runtime/server-$VERSION" -name server-intermediary.jar 2>/dev/null | head -1)}"
-[ -n "$SERVER" ] || SERVER="data/runtime/server-$VERSION/versions/$VERSION/server-$VERSION.jar"
+SERVER="${CB_SERVER:-$(find "$DATA/runtime/server-$VERSION" -name server-intermediary.jar 2>/dev/null | head -1)}"
+[ -n "$SERVER" ] || SERVER="$DATA/runtime/server-$VERSION/versions/$VERSION/server-$VERSION.jar"
 [ -f "$SERVER" ] || { echo "dedicated server jar not found (set CB_SERVER): needed to verify what loads on a server"; exit 1; }
-SERVER_LIBS="${CB_SERVER_LIBS:-data/runtime/server-$VERSION/libraries}"
-FAPI_JAR="${CB_FAPI_JAR:-$(ls data/runtime/client-$VERSION/mods/fabric-api-*.jar 2>/dev/null | head -1)}"
+SERVER_LIBS="${CB_SERVER_LIBS:-$DATA/runtime/server-$VERSION/libraries}"
+FAPI_JAR="${CB_FAPI_JAR:-$(ls $DATA/runtime/client-$VERSION/mods/fabric-api-*.jar 2>/dev/null | head -1)}"
 [ -f "$FAPI_JAR" ] || { echo "fabric-api jar not found (set CB_FAPI_JAR): needed to verify what loads on a server"; exit 1; }
 MIXIN_CFG=$(ls "$SHIM"/resources/*.mixins.json | head -1)
 java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$CLASSES" "$MIXIN_CFG" "$SERVER" "$SERVER_LIBS" "$FAPI_JAR" \
@@ -172,7 +176,7 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$
 # factories, super-ctor adapters and reshape ops, lookupRt, override-hook
 # wrap/unwrap/guard, facade renames.
 java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "core/segments/shims-$VERSION.json" "$NAMETABLE" "$STUB" \
-    "${CB_STUBS:-data/jars}" "$VERSION" \
+    "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: dangling redirect wiring"; exit 1; }
 
 # Everything Mixin resolves by NAME at PREPARE (accessor/invoker/shadow
@@ -183,7 +187,7 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$
 # from the older stubs in data/jars -- must not be static, since a covered call
 # site keeps its invokestatic and no mixin may add a non-private static.
 java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "core/segments/shims-$VERSION.json" "$NAMETABLE" \
-    "${CB_STUBS:-data/jars}" "$VERSION" \
+    "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 
 # fabric.mod.json, the mixin config, the access widener and the resource pack
