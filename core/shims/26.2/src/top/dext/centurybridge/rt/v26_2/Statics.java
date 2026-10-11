@@ -3283,6 +3283,1866 @@ public final class Statics {
         return cbLookupCache;
     }
 
+    // ---- 26.2 colour collections ----
+    // 26.2 keeps the sixteen colours of a block or item in one ColorCollection field
+    // (Blocks.WOOL.white()); the per-colour fields of every older release answer from it.
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_CONCRETE() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.GLAZED_TERRACOTTA.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_WALL_BANNER() {
+        return net.minecraft.world.level.block.Blocks.WALL_BANNER.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_SHULKER_BOX() {
+        return net.minecraft.world.level.block.Blocks.DYED_SHULKER_BOX.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_WOOL() {
+        return net.minecraft.world.level.block.Blocks.WOOL.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_BED() {
+        return net.minecraft.world.level.block.Blocks.BED.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_TERRACOTTA() {
+        return net.minecraft.world.level.block.Blocks.DYED_TERRACOTTA.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_CONCRETE_POWDER() {
+        return net.minecraft.world.level.block.Blocks.CONCRETE_POWDER.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_CANDLE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_MAGENTA_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.magenta();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_BLUE_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.lightBlue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_YELLOW_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.yellow();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIME_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.lime();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PINK_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.pink();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GRAY_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.gray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_CYAN_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.cyan();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_PURPLE_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.purple();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BROWN_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.brown();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_GREEN_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.green();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_RED_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.red();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_CANDLE_CAKE() {
+        return net.minecraft.world.level.block.Blocks.DYED_CANDLE_CAKE.black();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_ORANGE_CARPET() {
+        return net.minecraft.world.level.block.Blocks.CARPET.orange();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLUE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.blue();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_BANNER() {
+        return net.minecraft.world.level.block.Blocks.BANNER.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_WHITE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS_PANE.white();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_LIGHT_GRAY_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.lightGray();
+    }
+
+    public static net.minecraft.world.level.block.Block cbBlock_BLACK_STAINED_GLASS() {
+        return net.minecraft.world.level.block.Blocks.STAINED_GLASS.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_WOOL() {
+        return net.minecraft.world.item.Items.WOOL.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_CANDLE() {
+        return net.minecraft.world.item.Items.DYED_CANDLE.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_BUNDLE() {
+        return net.minecraft.world.item.Items.DYED_BUNDLE.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_HARNESS() {
+        return net.minecraft.world.item.Items.HARNESS.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_BED() {
+        return net.minecraft.world.item.Items.BED.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_DYE() {
+        return net.minecraft.world.item.Items.DYE.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_BED() {
+        return net.minecraft.world.item.Items.BED.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_DYE() {
+        return net.minecraft.world.item.Items.DYE.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_BED() {
+        return net.minecraft.world.item.Items.BED.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_DYE() {
+        return net.minecraft.world.item.Items.DYE.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_DYE() {
+        return net.minecraft.world.item.Items.DYE.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_BED() {
+        return net.minecraft.world.item.Items.BED.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_BED() {
+        return net.minecraft.world.item.Items.BED.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_DYE() {
+        return net.minecraft.world.item.Items.DYE.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_DYE() {
+        return net.minecraft.world.item.Items.DYE.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_BED() {
+        return net.minecraft.world.item.Items.BED.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_DYE() {
+        return net.minecraft.world.item.Items.DYE.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_DYE() {
+        return net.minecraft.world.item.Items.DYE.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_DYE() {
+        return net.minecraft.world.item.Items.DYE.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_DYE() {
+        return net.minecraft.world.item.Items.DYE.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_BED() {
+        return net.minecraft.world.item.Items.BED.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_BED() {
+        return net.minecraft.world.item.Items.BED.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_BED() {
+        return net.minecraft.world.item.Items.BED.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_DYE() {
+        return net.minecraft.world.item.Items.DYE.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_BED() {
+        return net.minecraft.world.item.Items.BED.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_DYE() {
+        return net.minecraft.world.item.Items.DYE.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_BED() {
+        return net.minecraft.world.item.Items.BED.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_DYE() {
+        return net.minecraft.world.item.Items.DYE.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_DYE() {
+        return net.minecraft.world.item.Items.DYE.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_DYE() {
+        return net.minecraft.world.item.Items.DYE.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_BED() {
+        return net.minecraft.world.item.Items.BED.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLACK_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.black();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.blue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_BED() {
+        return net.minecraft.world.item.Items.BED.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BROWN_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.brown();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_MAGENTA_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.magenta();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_BED() {
+        return net.minecraft.world.item.Items.BED.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GREEN_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.green();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_CONCRETE_POWDER() {
+        return net.minecraft.world.item.Items.CONCRETE_POWDER.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_CYAN_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.cyan();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_ORANGE_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.orange();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_SHULKER_BOX() {
+        return net.minecraft.world.item.Items.DYED_SHULKER_BOX.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PURPLE_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.purple();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIME_CONCRETE() {
+        return net.minecraft.world.item.Items.CONCRETE.lime();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_WHITE_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.white();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_DYE() {
+        return net.minecraft.world.item.Items.DYE.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_PINK_TERRACOTTA() {
+        return net.minecraft.world.item.Items.DYED_TERRACOTTA.pink();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_GRAY_BANNER() {
+        return net.minecraft.world.item.Items.BANNER.lightGray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_BED() {
+        return net.minecraft.world.item.Items.BED.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_LIGHT_BLUE_STAINED_GLASS() {
+        return net.minecraft.world.item.Items.STAINED_GLASS.lightBlue();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_CARPET() {
+        return net.minecraft.world.item.Items.CARPET.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_RED_STAINED_GLASS_PANE() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.red();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_GRAY_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.gray();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_YELLOW_GLAZED_TERRACOTTA() {
+        return net.minecraft.world.item.Items.GLAZED_TERRACOTTA.yellow();
+    }
+
+    public static net.minecraft.world.item.Item cbItem_BLUE_BED() {
+        return net.minecraft.world.item.Items.BED.blue();
+    }
+
     private Statics() {
     }
 
