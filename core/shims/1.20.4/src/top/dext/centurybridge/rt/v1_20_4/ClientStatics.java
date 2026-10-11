@@ -61,11 +61,6 @@ public final class ClientStatics {
                 new org.joml.Vector3f(0, 0, 0), rotation, cameraAngle, entity);
     }
 
-    /** was net/minecraft/class_1124.field_5496Lnet/minecraft/class_1124$class_1125; */
-    public static net.minecraft.class_1124.class_1125 field_5496() {
-        throw new UnsupportedOperationException("CenturyBridge: field_5496 was deleted in 1.20.2 with no direct replacement");
-    }
-
     /** was net/minecraft/class_1145.method_4884(Lnet/minecraft/class_1113;Lnet/minecraft/class_1146;)V */
     public void method_4884(net.minecraft.class_1113 a0, net.minecraft.class_1146 a1) {
         ((net.minecraft.class_1145) (Object) this).method_4884(a0, a1, 1.0f);
@@ -74,16 +69,6 @@ public final class ClientStatics {
     /** was net/minecraft/class_1921.method_23585()Lnet/minecraft/class_1921; */
     public static net.minecraft.class_1921 method_23585(net.minecraft.class_1921 self) {
         return net.minecraft.class_1921.method_23584(new net.minecraft.class_2960("textures/misc/enchanted_glint_item.png"));
-    }
-
-    /** was net/minecraft/class_310.method_1519()V */
-    public static void method_1519(net.minecraft.class_310 self) {
-        throw new UnsupportedOperationException("CenturyBridge: method_1519 (handleInputEvents) was removed and its functionality was merged into client tick");
-    }
-
-    /** was net/minecraft/class_310.method_1537(Z)V */
-    public static void method_1537(net.minecraft.class_310 self, boolean a0) {
-        throw new UnsupportedOperationException("CenturyBridge: setConnectedToRealms is no longer supported as this state is now automatically derived from the network handler.");
     }
 
     /** was net/minecraft/class_310.method_1589()Z */
@@ -154,49 +139,14 @@ public final class ClientStatics {
         return ((net.minecraft.class_364) (Object) this).method_25401(a0, a1, 0.0, a2);
     }
 
-    /** was net/minecraft/class_4227.method_19671(Lnet/minecraft/class_243;)V */
-    public static void method_19671(net.minecraft.class_4227 self, net.minecraft.class_243 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_19671 is no longer supported on FogData");
-    }
-
-    /** was net/minecraft/class_4227.method_19672(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V */
-    public static void method_19672(net.minecraft.class_4227 self, org.joml.Vector3f a0, org.joml.Vector3f a1) {
-        throw new UnsupportedOperationException("CenturyBridge: method_19672 was deleted and cannot be reconstructed from the new Camera API");
-    }
-
-    /** was net/minecraft/class_4227.method_27268()Lnet/minecraft/class_243; */
-    public static net.minecraft.class_243 method_27268(net.minecraft.class_4227 self) {
-        throw new UnsupportedOperationException("CenturyBridge: method_27268 was removed from class_4227 with no replacement");
-    }
-
     /** was net/minecraft/class_4341.field_19576Lnet/minecraft/class_4341$class_4343; */
     public static net.minecraft.class_4341.class_4343 field_19576() {
         return net.minecraft.class_4341.field_45232;
     }
 
-    /** was net/minecraft/class_4341.method_21001()V */
-    public static void method_21001(net.minecraft.class_4341 self) {
-        throw new UnsupportedOperationException("CenturyBridge: class_4341.method_21001() was removed in 1.20.2 with no direct replacement");
-    }
-
-    /** was net/minecraft/class_4341.method_21008()V */
-    public static void method_21008(net.minecraft.class_4341 self) {
-        throw new UnsupportedOperationException("CenturyBridge: method_21008 has no replacement");
-    }
-
-    /** was net/minecraft/class_4341.method_21012()V */
-    public static void method_21012(net.minecraft.class_4341 self) {
-        throw new UnsupportedOperationException("CenturyBridge: class_4341.method_21012 was removed in 1.20.2 with no direct replacement");
-    }
-
     /** was net/minecraft/class_4341.method_21021()Ljava/lang/Boolean; */
     public static java.lang.Boolean method_21021(net.minecraft.class_4341 self) {
         return java.lang.Boolean.FALSE;
-    }
-
-    /** was net/minecraft/class_4341.method_21024()Ljava/lang/Boolean; */
-    public static java.lang.Boolean method_21024(net.minecraft.class_4341 self) {
-        throw new UnsupportedOperationException("CenturyBridge: RealmsClient.trialAvailable (method_21024) was removed in 1.20.2");
     }
 
     /** was net/minecraft/class_4346.method_35685(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/class_4346; */
@@ -205,44 +155,9 @@ public final class ClientStatics {
         return self;
     }
 
-    /** was net/minecraft/class_4358.field_19638Lnet/minecraft/class_4398; */
-    public static net.minecraft.class_4398 field_19638() {
-        throw new UnsupportedOperationException("CenturyBridge: class_4358.field_19638 (class_4398) was removed in 1.20.2 with no direct replacement");
-    }
-
-    /** was net/minecraft/class_4358.method_21066(Lnet/minecraft/class_4398;)V */
-    public static void method_21066(net.minecraft.class_4358 self, net.minecraft.class_4398 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_21066 (addLabel) is no longer supported as RealmsLabel has been removed in 1.20.2");
-    }
-
-    /** was net/minecraft/class_4406.method_25191(I)I */
-    public static int method_25191(net.minecraft.class_4406 self, int a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_25191 was removed from class_4406 in 1.20.3 with no direct replacement");
-    }
-
-    /** was net/minecraft/class_4419.method_21440()V */
-    public static void method_21440(net.minecraft.class_4419 self) {
-        throw new UnsupportedOperationException("CenturyBridge: method_21440 was removed from ConnectScreen in 1.20.2 with no direct equivalent");
-    }
-
     /** was net/minecraft/class_4419.method_25228(I)I */
     public static int method_25228(net.minecraft.class_4419 self, int a0) {
         return 40 + a0 * 13;
-    }
-
-    /** was net/minecraft/class_447.method_19399()Lnet/minecraft/class_4280; */
-    public static net.minecraft.class_4280 method_19399(net.minecraft.class_447 self) {
-        throw new UnsupportedOperationException("CenturyBridge: State getter was removed and state is no longer accessible");
-    }
-
-    /** was net/minecraft/class_455.method_2320()I */
-    public static int method_2320(net.minecraft.class_455 self) {
-        throw new UnsupportedOperationException("CenturyBridge: class_455.method_2320() (Difficulty.getId()) was removed in 1.20.2; difficulties are now registry-backed and identified by ResourceLocation via method_52753(), with no stable int id equivalent");
-    }
-
-    /** was net/minecraft/class_4667.method_45626(Lnet/minecraft/class_332;Lnet/minecraft/class_353;IIF)V */
-    public static void method_45626(net.minecraft.class_4667 self, net.minecraft.class_332 a0, net.minecraft.class_353 a1, int a2, int a3, float a4) {
-        throw new UnsupportedOperationException("CenturyBridge: method_45626 was deleted in 1.20.3 and has no direct replacement");
     }
 
     /** was net/minecraft/class_632$class_633.method_2866(Lnet/minecraft/class_161;)V */
@@ -275,94 +190,14 @@ public final class ClientStatics {
         return self.method_45742();
     }
 
-    /** was net/minecraft/class_7196.method_41890(Lnet/minecraft/class_32$class_5143;Z)Lnet/minecraft/class_6904; */
-    public static net.minecraft.class_6904 method_41890(net.minecraft.class_7196 self, net.minecraft.class_32.class_5143 a0, boolean a1) {
-        throw new UnsupportedOperationException("CenturyBridge: synchronous world loading from session is no longer supported");
-    }
-
-    /** was net/minecraft/class_7196.method_41894(Lnet/minecraft/class_437;Ljava/lang/String;)V */
-    public static void method_41894(net.minecraft.class_7196 self, net.minecraft.class_437 a0, java.lang.String a1) {
-        throw new UnsupportedOperationException("CenturyBridge: class_7196.method_41894(Screen,String) created a world from the CreateWorldScreen instance's internal state (data packs, level storage, generator options); 1.20.3 replaced it with method_41895(String,class_1940,class_5285,Function,class_437) which requires those as explicit arguments, and the shim has no access to the receiver's fields to supply them");
-    }
-
     /** was net/minecraft/class_742.method_3117()Lnet/minecraft/class_2960; */
     public static net.minecraft.class_2960 method_3117(net.minecraft.class_742 self) {
         return self.method_52814().comp_1626();
     }
 
-    /** was net/minecraft/class_742.method_3120(Lnet/minecraft/class_2960;Ljava/lang/String;)V */
-    public static void method_3120(net.minecraft.class_742 self, net.minecraft.class_2960 a0, java.lang.String a1) {
-        throw new UnsupportedOperationException("CenturyBridge: registerSkinTexture is not supported in 1.20.2 as skin loading is managed by PlayerSkinProvider");
-    }
-
-    /** was net/minecraft/class_742.method_3121()Ljava/lang/String; */
-    public static java.lang.String method_3121(net.minecraft.class_742 self) {
-        throw new UnsupportedOperationException("CenturyBridge: method_3121 (getSkinType) was removed; use method_52814 (getSkinTextures) and extract the model from class_8685 instead");
-    }
-
-    /** was net/minecraft/class_742.method_3126()Z */
-    public static boolean method_3126(net.minecraft.class_742 self) {
-        throw new UnsupportedOperationException("CenturyBridge: class_742.method_3126()Z was deleted in 1.20.2 with no direct replacement");
-    }
-
     /** was net/minecraft/class_7529.method_44406()V */
     public static void method_44406(net.minecraft.class_7529 self) {
         return;
-    }
-
-    /** was net/minecraft/class_7578.field_39684Lnet/minecraft/class_7581$class_7586; */
-    public static net.minecraft.class_7581.class_7586 field_39684() {
-        throw new UnsupportedOperationException("CenturyBridge: field_39684 was removed in 1.20.2 with no direct replacement; the registered class_7581$class_7586 instance no longer exists");
-    }
-
-    /** was net/minecraft/class_757.method_34500()Lnet/minecraft/class_5944; */
-    public static net.minecraft.class_5944 method_34500(net.minecraft.class_757 self) {
-        throw new UnsupportedOperationException("CenturyBridge: getPositionColorLightmapShader was removed");
-    }
-
-    /** was net/minecraft/class_7766.method_45829(Lnet/minecraft/class_2960;Lnet/minecraft/class_3298;)Lnet/minecraft/class_7764; */
-    public static net.minecraft.class_7764 method_45829(net.minecraft.class_7766 self, net.minecraft.class_2960 a0, net.minecraft.class_3298 a1) {
-        throw new UnsupportedOperationException("CenturyBridge: method_45829 (SpriteLoader.load(Identifier, Resource)) was removed in 1.20.2; the new API is async (CompletableFuture-based) and takes a ResourceManager or List instead of a single Resource, with no synchronous single-resource equivalent");
-    }
-
-    /** was net/minecraft/class_8087.method_48613()V */
-    public static void method_48613(net.minecraft.class_8087 self) {
-        throw new UnsupportedOperationException("CenturyBridge: class_8087.method_48613 was removed in 1.20.2 with no direct equivalent");
-    }
-
-    /** was net/minecraft/class_8088.method_48617()V */
-    public static void method_48617(net.minecraft.class_8088 self) {
-        throw new UnsupportedOperationException("CenturyBridge: class_8088.method_48617 was removed in 1.20.2 with no direct replacement");
-    }
-
-    /** was net/minecraft/class_8132.method_49001()Lnet/minecraft/class_7847; */
-    public static net.minecraft.class_7847 method_49001(net.minecraft.class_8132 self) {
-        throw new UnsupportedOperationException("CenturyBridge: HeaderAndFooterLayoutWidget no longer exposes its default positioner");
-    }
-
-    /** was net/minecraft/class_8132.method_49002()Lnet/minecraft/class_7847; */
-    public static net.minecraft.class_7847 method_49002(net.minecraft.class_8132 self) {
-        throw new UnsupportedOperationException("CenturyBridge: class_8132.method_49002() was deleted in 1.20.2 with no direct replacement returning class_7847");
-    }
-
-    /** was net/minecraft/class_8132.method_49003()Lnet/minecraft/class_7847; */
-    public static net.minecraft.class_7847 method_49003(net.minecraft.class_8132 self) {
-        throw new UnsupportedOperationException("CenturyBridge: method_49003() was removed in 1.20.2 with no direct replacement; the new class_8132 API does not produce class_7847 instances");
-    }
-
-    /** was net/minecraft/class_8209.method_49607()I */
-    public static int method_49607(net.minecraft.class_8209 self) {
-        throw new UnsupportedOperationException("CenturyBridge: method_49607 returned a creative tab index (int), but 1.20.2 replaced tab indices with ItemGroup references (class_8087); use method_49609() instead");
-    }
-
-    /** was net/minecraft/class_879.method_3882(Lnet/minecraft/class_1420;Lnet/minecraft/class_4587;FFF)V */
-    public static void method_3882(net.minecraft.class_879 self, net.minecraft.class_1420 a0, net.minecraft.class_4587 a1, float a2, float a3, float a4) {
-        throw new UnsupportedOperationException("CenturyBridge: method_3882(class_1420, class_4587, float, float, float) was deleted in 1.20.3 with no direct replacement; remaining method_3883(class_1420) returns class_2960 and drops the MatrixStack/position parameters, so the old render-style contract cannot be expressed");
-    }
-
-    /** was net/minecraft/class_879.method_3884(Lnet/minecraft/class_1420;Lnet/minecraft/class_4587;F)V */
-    public static void method_3884(net.minecraft.class_879 self, net.minecraft.class_1420 a0, net.minecraft.class_4587 a1, float a2) {
-        throw new UnsupportedOperationException("CenturyBridge: method_3884 is unsupported because modern rendering requires a VertexConsumerProvider and light map coordinates which are missing from this signature.");
     }
 
     /**

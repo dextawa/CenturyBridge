@@ -20,11 +20,6 @@ public abstract class GenClass1657Bridge {
         return ((net.minecraft.class_1657) (Object) this).method_7328(a0, false);
     }
 
-    /** was net/minecraft/class_1657.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
-    public net.minecraft.class_1324 method_5996(net.minecraft.class_1320 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new attribute lookup requires a registry entry, and the legacy raw class_1320 cannot be converted faithfully from the provided API");
-    }
-
     /** was net/minecraft/class_1657.method_6016(Lnet/minecraft/class_1291;)Z */
     public boolean method_6016(net.minecraft.class_1291 a0) {
         return ((net.minecraft.class_1657) (Object) this).method_6016(net.minecraft.class_6880.method_40223(a0));

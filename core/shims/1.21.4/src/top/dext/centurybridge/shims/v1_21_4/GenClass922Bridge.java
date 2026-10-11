@@ -20,24 +20,4 @@ public abstract class GenClass922Bridge {
         return ((net.minecraft.class_922) (Object) this).method_38563(a0);
     }
 
-    /** was net/minecraft/class_922.method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
-    public void method_4054(net.minecraft.class_1309 a0, float a1, float a2, net.minecraft.class_4587 a3, net.minecraft.class_4597 a4, int a5) {
-        throw new UnsupportedOperationException("CenturyBridge: the new renderer requires a renderer-specific class_10042 render state, but the provided API exposes no state factory capable of preserving subclass rendering semantics");
-    }
-
-    /** was net/minecraft/class_922.method_4055(Lnet/minecraft/class_1309;)Z */
-    public boolean method_4055(net.minecraft.class_1309 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_4055 requires squared camera distance, which the old overload cannot obtain from the available API");
-    }
-
-    /** was net/minecraft/class_922.method_4058(Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;FFFF)V */
-    public void method_4058(net.minecraft.class_1309 a0, net.minecraft.class_4587 a1, float a2, float a3, float a4, float a5) {
-        throw new UnsupportedOperationException("CenturyBridge: the new transform API requires a populated render state, and the supplied API cannot faithfully preserve the old independent animationProgress and tickDelta inputs");
-    }
-
-    /** was net/minecraft/class_922.method_55832(Lnet/minecraft/class_1309;)F */
-    public float method_55832(net.minecraft.class_1309 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_10042 render state, which cannot be faithfully constructed from class_1309 using the available API");
-    }
-
 }

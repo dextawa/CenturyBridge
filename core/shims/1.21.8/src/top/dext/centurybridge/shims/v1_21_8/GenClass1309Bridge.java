@@ -15,11 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1309.class)
 public abstract class GenClass1309Bridge {
 
-    /** was net/minecraft/class_1309.method_5652(Lnet/minecraft/class_2487;)V */
-    public void method_5652(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the old NbtCompound write contract cannot be adapted to the new write-view API without a conversion context");
-    }
-
     /** was net/minecraft/class_1309.method_5679(Lnet/minecraft/class_1282;)Z */
     public boolean method_5679(net.minecraft.class_1282 a0) {
         net.minecraft.class_1937 world = ((net.minecraft.class_1309) (Object) this).method_37908();
@@ -27,16 +22,6 @@ public abstract class GenClass1309Bridge {
             throw new UnsupportedOperationException("CenturyBridge: the new damage-source invulnerability API requires a server world");
         }
         return ((net.minecraft.class_1309) (Object) this).method_5679((net.minecraft.class_3218) world, a0);
-    }
-
-    /** was net/minecraft/class_1309.method_5749(Lnet/minecraft/class_2487;)V */
-    public void method_5749(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: legacy NBT compound cannot be converted to the new write-view API without serialization context");
-    }
-
-    /** was net/minecraft/class_1309.method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542; */
-    public net.minecraft.class_1542 method_5775(net.minecraft.class_1799 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new drop-item API requires a ServerWorld, which the old signature cannot safely provide");
     }
 
     /** was net/minecraft/class_1309.method_6016(Lnet/minecraft/class_1291;)Z */

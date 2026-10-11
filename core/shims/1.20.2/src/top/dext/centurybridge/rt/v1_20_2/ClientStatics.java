@@ -20,31 +20,6 @@ public final class ClientStatics {
         return new net.minecraft.class_332(mc, mc.method_22940().method_23000());
     }
 
-    /** was net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;IILnet/minecraft/class_4185$class_4241;)V */
-    public static net.minecraft.class_344 cbNewclass_344(int a0, int a1, int a2, int a3, int a4, int a5, int a6, net.minecraft.class_2960 a7, int a8, int a9, net.minecraft.class_4185.class_4241 a10) {
-        throw new UnsupportedOperationException("CenturyBridge: the new class_8666 sprite-based constructor cannot represent the old texture atlas UV coordinates and dimensions");
-    }
-
-    /** was net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V */
-    public static net.minecraft.class_344 cbNewclass_344(int a0, int a1, int a2, int a3, int a4, int a5, int a6, net.minecraft.class_2960 a7, net.minecraft.class_4185.class_4241 a8) {
-        throw new UnsupportedOperationException("CenturyBridge: the old texture-atlas UV and hover-offset contract cannot be represented by the new class_8666 sprite-based constructor");
-    }
-
-    /** was net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;IILnet/minecraft/class_4185$class_4241;Lnet/minecraft/class_2561;)V */
-    public static net.minecraft.class_344 cbNewclass_344(int a0, int a1, int a2, int a3, int a4, int a5, int a6, net.minecraft.class_2960 a7, int a8, int a9, net.minecraft.class_4185.class_4241 a10, net.minecraft.class_2561 a11) {
-        throw new UnsupportedOperationException("CenturyBridge: the new class_8666 sprite API cannot represent the old texture atlas UV coordinates and dimensions");
-    }
-
-    /** was net/minecraft/class_344.<init>(IIIIIILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V */
-    public static net.minecraft.class_344 cbNewclass_344(int a0, int a1, int a2, int a3, int a4, int a5, net.minecraft.class_2960 a6, net.minecraft.class_4185.class_4241 a7) {
-        throw new UnsupportedOperationException("CenturyBridge: the old texture coordinates and identifier cannot be converted to the required class_8666 without its construction API");
-    }
-
-    /** was net/minecraft/class_7193.<init>(Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_5350;)V */
-    public static net.minecraft.class_7193 cbNewclass_7193(net.minecraft.class_5285 a0, com.mojang.serialization.Lifecycle a1, net.minecraft.class_5455.class_6890 a2, net.minecraft.class_5350 a3) {
-        throw new UnsupportedOperationException("CenturyBridge: the new constructors require class_7723, class_7780, and class_7712 values that cannot be derived from the old Lifecycle and class_5455.class_6890 arguments");
-    }
-
     /** was net/minecraft/class_8208.<init>(IILnet/minecraft/class_2960;)V */
     public static net.minecraft.class_8208 cbNewclass_8208(int a0, int a1, net.minecraft.class_2960 a2) {
         return net.minecraft.class_8208.method_52720(a0, a1, a2);
@@ -242,17 +217,6 @@ public final class ClientStatics {
      *  protected since 1.19.3; Button.builder is the public path */
     public static net.minecraft.class_4185 cbNewclass_4185(int x, int y, int w, int h, net.minecraft.class_2561 text, net.minecraft.class_4185.class_4241 action) {
         return net.minecraft.class_4185.method_46430(text, action).method_46434(x, y, w, h).method_46431();
-    }
-
-    /** EnchantmentScreen-family ctor gained two extra Identifier args in 1.20.2. */
-    public static net.minecraft.class_489 cbNewclass_489(net.minecraft.class_1720 handler, net.minecraft.class_517 a, net.minecraft.class_1661 inv, net.minecraft.class_2561 title, net.minecraft.class_2960 tex) {
-        throw new UnsupportedOperationException("CenturyBridge: this screen's 1.20.2 ctor requires two additional texture Identifiers not present in the 1.20.1 call");
-    }
-
-    /** ClientPlayNetworkHandler ctor collapsed its args into a single class_8675
-     *  ClientConnectionState in 1.20.2. */
-    public static net.minecraft.class_634 cbNewclass_634(net.minecraft.class_310 mc, net.minecraft.class_437 screen, net.minecraft.class_2535 conn, net.minecraft.class_642 server, com.mojang.authlib.GameProfile profile, net.minecraft.class_7975 cookie) {
-        throw new UnsupportedOperationException("CenturyBridge: ClientPlayNetworkHandler's 1.20.2 ctor takes a ClientConnectionState (class_8675) that bundles state not reconstructable from the old separate args");
     }
 
     /** was net/minecraft/class_1068.method_4648(Ljava/util/UUID;)Lnet/minecraft/class_2960; */

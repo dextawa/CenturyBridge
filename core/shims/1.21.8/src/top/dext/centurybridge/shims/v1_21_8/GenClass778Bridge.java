@@ -20,9 +20,4 @@ public abstract class GenClass778Bridge {
         ((net.minecraft.class_778) (Object) this).method_3367(a0, a1, a3, a4, a5, a6, a7, a8);
     }
 
-    /** was net/minecraft/class_778.method_3374(Lnet/minecraft/class_1920;Lnet/minecraft/class_1087;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;ZLnet/minecraft/class_5819;JI)V */
-    public void method_3374(net.minecraft.class_1920 a0, net.minecraft.class_1087 a1, net.minecraft.class_2680 a2, net.minecraft.class_2338 a3, net.minecraft.class_4587 a4, net.minecraft.class_4588 a5, boolean a6, net.minecraft.class_5819 a7, long a8, int a9) {
-        throw new UnsupportedOperationException("CenturyBridge: the new API requires a precomputed render-data list and cannot derive it from the old model, random supplier, and seed arguments");
-    }
-
 }

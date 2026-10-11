@@ -25,29 +25,14 @@ public abstract class GenClass3218Bridge {
         return ((net.minecraft.class_3218) (Object) this).method_14199(a0, false, false, a1, a2, a3, a4, a5, a6, a7, a8);
     }
 
-    /** was net/minecraft/class_3218.method_33596(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;)V */
-    public void method_33596(net.minecraft.class_1297 a0, net.minecraft.class_5712 a1, net.minecraft.class_2338 a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the old raw class_5712 game event cannot be converted faithfully to the registry-entry event required by the new API");
-    }
-
     /** was net/minecraft/class_3218.method_43275(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_243;)V */
     public void method_43275(net.minecraft.class_1297 a0, net.minecraft.class_5712 a1, net.minecraft.class_243 a2) {
         ((net.minecraft.class_3218) (Object) this).method_43275(a0, net.minecraft.class_6880.method_40223(a1), a2);
     }
 
-    /** was net/minecraft/class_3218.method_43276(Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712$class_7397;)V */
-    public void method_43276(net.minecraft.class_5712 a0, net.minecraft.class_2338 a1, net.minecraft.class_5712.class_7397 a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the new API requires a RegistryEntry<GameEvent>, but the old GameEvent value cannot be faithfully converted without registry lookup semantics");
-    }
-
     /** was net/minecraft/class_3218.method_8433()Lnet/minecraft/class_1863; */
     public net.minecraft.class_1863 method_8433() {
         return (net.minecraft.class_1863) ((net.minecraft.class_3218) (Object) this).method_8433();
-    }
-
-    /** was net/minecraft/class_3218.method_8437(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927; */
-    public net.minecraft.class_1927 method_8437(net.minecraft.class_1297 a0, double a1, double a2, double a3, float a4, net.minecraft.class_1937.class_7867 a5) {
-        throw new UnsupportedOperationException("CenturyBridge: the 1.21.8 explosion API returns void and cannot provide the class_1927 result required by the old contract");
     }
 
     /** was net/minecraft/class_3218.method_8452(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;)V */

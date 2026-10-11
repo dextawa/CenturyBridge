@@ -15,16 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1309.class)
 public abstract class GenClass1309Bridge {
 
-    /** was net/minecraft/class_1309.method_5749(Lnet/minecraft/class_2487;)V */
-    public void method_5749(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_5749 requires class_11368 and cannot faithfully write into the supplied class_2487");
-    }
-
-    /** was net/minecraft/class_1309.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
-    public net.minecraft.class_1324 method_5996(net.minecraft.class_1320 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a class_6880 registry entry, but the old class_1320 value cannot be faithfully converted using the available API");
-    }
-
     /** was net/minecraft/class_1309.method_6016(Lnet/minecraft/class_1291;)Z */
     public boolean method_6016(net.minecraft.class_1291 a0) {
         return ((net.minecraft.class_1309) (Object) this).method_6016(net.minecraft.class_6880.method_40223(a0));

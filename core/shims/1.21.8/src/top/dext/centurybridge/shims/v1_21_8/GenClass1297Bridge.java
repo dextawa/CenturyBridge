@@ -15,21 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1297.class)
 public abstract class GenClass1297Bridge {
 
-    /** was net/minecraft/class_1297.method_5647(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487; */
-    public net.minecraft.class_2487 method_5647(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_5647 requires a class_11372 write view and no supplied API can faithfully adapt class_2487 or preserve the returned compound");
-    }
-
-    /** was net/minecraft/class_1297.method_5651(Lnet/minecraft/class_2487;)V */
-    public void method_5651(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new readData contract requires a registry-aware ReadView, which cannot be faithfully constructed from the old NbtCompound argument alone");
-    }
-
-    /** was net/minecraft/class_1297.method_5662(Lnet/minecraft/class_2487;)Z */
-    public boolean method_5662(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: old NBT compound argument cannot be converted to the new class_11372 read-view contract");
-    }
-
     /** was net/minecraft/class_1297.method_5671()Lnet/minecraft/class_2168; */
     public net.minecraft.class_2168 method_5671() {
         return ((net.minecraft.class_1297) (Object) this).method_5671((net.minecraft.class_3218) ((net.minecraft.class_1297) (Object) this).method_37908());

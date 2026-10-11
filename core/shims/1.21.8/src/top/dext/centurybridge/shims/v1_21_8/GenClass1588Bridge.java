@@ -15,26 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1588.class)
 public abstract class GenClass1588Bridge {
 
-    /** was net/minecraft/class_1588.method_16077(Lnet/minecraft/class_1282;Z)V */
-    public void method_16077(net.minecraft.class_1282 a0, boolean a1) {
-        throw new UnsupportedOperationException("CenturyBridge: the new class_1588 API exposes no equivalent for method_16077(class_1282, boolean)");
-    }
-
-    /** was net/minecraft/class_1588.method_5652(Lnet/minecraft/class_2487;)V */
-    public void method_5652(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: class_1588 no longer exposes an equivalent for deserializing state from class_2487");
-    }
-
-    /** was net/minecraft/class_1588.method_5749(Lnet/minecraft/class_2487;)V */
-    public void method_5749(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new class_1588 API has no equivalent accepting or converting class_2487 for method_5749");
-    }
-
-    /** was net/minecraft/class_1588.method_5958()V */
-    public void method_5958() {
-        throw new UnsupportedOperationException("CenturyBridge: the old inherited method_5958 contract has no callable equivalent on class_1588 in the new API");
-    }
-
     /** was net/minecraft/class_1588.method_6121(Lnet/minecraft/class_1297;)Z */
     public boolean method_6121(net.minecraft.class_1297 a0) {
         return ((net.minecraft.class_1588) (Object) this).method_6121((net.minecraft.class_3218) ((net.minecraft.class_1588) (Object) this).method_37908(), a0);

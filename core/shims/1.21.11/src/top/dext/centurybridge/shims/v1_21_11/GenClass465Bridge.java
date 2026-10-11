@@ -20,11 +20,6 @@ public abstract class GenClass465Bridge {
         return ((net.minecraft.class_465) (Object) this).method_25402(new net.minecraft.class_11909(a0, a1, new net.minecraft.class_11910(a2, 0)), false);
     }
 
-    /** was net/minecraft/class_465.method_25403(DDIDD)Z */
-    public boolean method_25403(double a0, double a1, int a2, double a3, double a4) {
-        throw new UnsupportedOperationException("CenturyBridge: the old integer mouse button cannot be converted to the new class_11909 click input from the available API");
-    }
-
     /** was net/minecraft/class_465.method_25404(III)Z */
     public boolean method_25404(int a0, int a1, int a2) {
         return ((net.minecraft.class_465) (Object) this).method_25404(new net.minecraft.class_11908(a0, a1, a2));

@@ -15,16 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1308.class)
 public abstract class GenClass1308Bridge {
 
-    /** was net/minecraft/class_1308.method_16080(Lnet/minecraft/class_1282;)V */
-    public void method_16080(net.minecraft.class_1282 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the old drop(DamageSource) contract cannot be reproduced by dropLoot(DamageSource, boolean) because the required caused-by-player state and non-loot-table drop processing are unavailable");
-    }
-
-    /** was net/minecraft/class_1308.method_5996(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324; */
-    public net.minecraft.class_1324 method_5996(net.minecraft.class_1320 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a canonical RegistryEntry for the attribute, which cannot be recovered faithfully from the raw attribute argument");
-    }
-
     /** was net/minecraft/class_1308.method_6059(Lnet/minecraft/class_1291;)Z */
     public boolean method_6059(net.minecraft.class_1291 a0) {
         return ((net.minecraft.class_1308) (Object) this).method_6059(net.minecraft.class_7923.field_41174.method_47983(a0));

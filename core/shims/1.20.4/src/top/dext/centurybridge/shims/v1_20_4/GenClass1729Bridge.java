@@ -15,11 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1729.class)
 public abstract class GenClass1729Bridge {
 
-    /** was net/minecraft/class_1729.method_17697(ZLnet/minecraft/class_1860;Lnet/minecraft/class_3222;)V */
-    public void method_17697(boolean a0, net.minecraft.class_1860 a1, net.minecraft.class_3222 a2) {
-        throw new UnsupportedOperationException("CenturyBridge: class_1860 (Recipe) no longer has getId() in 1.20.2; cannot construct class_8786 (RecipeEntry) without an Identifier");
-    }
-
     /** was net/minecraft/class_1729.method_7652(Lnet/minecraft/class_1860;)Z */
     public boolean method_7652(net.minecraft.class_1860 a0) {
         return ((net.minecraft.class_1729)(Object)this).method_7652(new net.minecraft.class_8786(new net.minecraft.class_2960("minecraft", "century_bridge"), a0));

@@ -15,12 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1657.class)
 public abstract class GenClass1657Bridge {
 
-
-    /** was net/minecraft/class_1657.method_6059(Lnet/minecraft/class_1291;)Z */
-    public boolean method_6059(net.minecraft.class_1291 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new API requires a RegistryEntry<StatusEffect>, but no guaranteed conversion from the old raw StatusEffect is available");
-    }
-
     /** was net/minecraft/class_1657.method_6112(Lnet/minecraft/class_1291;)Lnet/minecraft/class_1293; */
     public net.minecraft.class_1293 method_6112(net.minecraft.class_1291 a0) {
         for (net.minecraft.class_1293 effect : ((net.minecraft.class_1657) (Object) this).method_6026()) {
@@ -29,11 +23,6 @@ public abstract class GenClass1657Bridge {
             }
         }
         return null;
-    }
-
-    /** was net/minecraft/class_1657.method_7263()V */
-    public void method_7263() {
-        throw new UnsupportedOperationException("CenturyBridge: the old no-argument sweep attack particle operation has no equivalent in the new API");
     }
 
 }

@@ -20,21 +20,6 @@ public abstract class GenClass437Bridge {
         return ((net.minecraft.class_437) (Object) this).method_16803(new net.minecraft.class_11908(a0, a1, a2));
     }
 
-    /** was net/minecraft/class_437.method_25400(CI)Z */
-    public boolean method_25400(char a0, int a1) {
-        throw new UnsupportedOperationException("CenturyBridge: the new character input API requires a class_11908 event, but no guaranteed construction path from the old char and modifiers arguments is available");
-    }
-
-    /** was net/minecraft/class_437.method_25401(DDD)Z */
-    public boolean method_25401(double a0, double a1, double a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_25404 requires a class_11908 input event, which cannot be faithfully constructed from only the old three double arguments");
-    }
-
-    /** was net/minecraft/class_437.method_25402(DDI)Z */
-    public boolean method_25402(double a0, double a1, int a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the old coordinates-and-button contract cannot construct the required new mouse event or infer its additional boolean state");
-    }
-
     /** was net/minecraft/class_437.method_25403(DDIDD)Z */
     public boolean method_25403(double a0, double a1, int a2, double a3, double a4) {
         return ((net.minecraft.class_437) (Object) this).method_25403(new net.minecraft.class_11909(a0, a1, new net.minecraft.class_11910(a2, 0)), a3, a4);
@@ -43,11 +28,6 @@ public abstract class GenClass437Bridge {
     /** was net/minecraft/class_437.method_25404(III)Z */
     public boolean method_25404(int a0, int a1, int a2) {
         return ((net.minecraft.class_437) (Object) this).method_25404(new net.minecraft.class_11908(a0, a1, a2));
-    }
-
-    /** was net/minecraft/class_437.method_25406(DDI)Z */
-    public boolean method_25406(double a0, double a1, int a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the new input-event API cannot reconstruct the old mouse release contract from x, y, and button arguments alone");
     }
 
     /** was net/minecraft/class_437.method_25423(Lnet/minecraft/class_310;II)V */

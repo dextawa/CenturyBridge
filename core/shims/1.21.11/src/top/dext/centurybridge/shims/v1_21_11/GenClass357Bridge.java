@@ -15,11 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_357.class)
 public abstract class GenClass357Bridge {
 
-    /** was net/minecraft/class_357.method_25403(DDIDD)Z */
-    public boolean method_25403(double a0, double a1, int a2, double a3, double a4) {
-        throw new UnsupportedOperationException("CenturyBridge: the old primitive input-event parameters were replaced by class_11908, which cannot be faithfully constructed from the available API");
-    }
-
     /** was net/minecraft/class_357.method_25404(III)Z */
     public boolean method_25404(int a0, int a1, int a2) {
         return ((net.minecraft.class_357) (Object) this).method_25404(new net.minecraft.class_11908(a0, a1, a2));

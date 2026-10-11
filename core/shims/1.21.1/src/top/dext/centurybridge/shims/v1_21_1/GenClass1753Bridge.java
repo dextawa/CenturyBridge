@@ -20,11 +20,6 @@ public abstract class GenClass1753Bridge {
         return com.google.common.collect.ImmutableMultimap.of();
     }
 
-    /** was net/minecraft/class_1753.method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Ljava/util/List;Lnet/minecraft/class_1836;)V */
-    public void method_7851(net.minecraft.class_1799 a0, net.minecraft.class_1937 a1, java.util.List a2, net.minecraft.class_1836 a3) {
-        throw new UnsupportedOperationException("CenturyBridge: the new API surface provides no tooltip-appending equivalent for the old method_7851 contract");
-    }
-
     /** was net/minecraft/class_1753.method_7881(Lnet/minecraft/class_1799;)I */
     public int method_7881(net.minecraft.class_1799 a0) {
         return ((net.minecraft.class_1753) (Object) this).method_7881(a0, null);

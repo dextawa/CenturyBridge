@@ -25,9 +25,4 @@ public abstract class GenClass276Bridge {
         return ((net.minecraft.class_276) (Object) this).field_1481;
     }
 
-    /** was net/minecraft/class_276.method_30278()I */
-    public int method_30278() {
-        throw new UnsupportedOperationException("CenturyBridge: the old integer OpenGL texture ID cannot be represented by the new GpuTexture API");
-    }
-
 }

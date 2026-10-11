@@ -15,13 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.world.level.levelgen.WorldDimensions.class)
 public abstract class GenClass7723Bridge {
 
-    /** was net/minecraft/world/level/levelgen/WorldDimensions/dimensions()Lnet/minecraft/core/Registry; */
-    public net.minecraft.core.Registry dimensions() {
-        throw new UnsupportedOperationException("CenturyBridge: dimensions() now returns Map instead of Registry; no method in the new net.minecraft.world.level.levelgen.WorldDimensions API surface converts the Map back to a net.minecraft.core.Registry Registry");
-    }
-
-
-
     /** was net/minecraft/world/level/levelgen/WorldDimensions.replaceOverworldGenerator(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/level/chunk/ChunkGenerator;)Lnet/minecraft/world/level/levelgen/WorldDimensions; */
     public net.minecraft.world.level.levelgen.WorldDimensions replaceOverworldGenerator(net.minecraft.core.RegistryAccess a0, net.minecraft.world.level.chunk.ChunkGenerator a1) {
         return ((net.minecraft.world.level.levelgen.WorldDimensions) (Object) this).replaceOverworldGenerator((net.minecraft.core.HolderLookup.Provider) a0, a1);

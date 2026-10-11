@@ -15,16 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1297.class)
 public abstract class GenClass1297Bridge {
 
-    /** was net/minecraft/class_1297.method_5651(Lnet/minecraft/class_2487;)V */
-    public void method_5651(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the legacy class_2487 NBT compound cannot be safely converted to the class_11368 input required by the new API");
-    }
-
-    /** was net/minecraft/class_1297.method_5662(Lnet/minecraft/class_2487;)Z */
-    public boolean method_5662(net.minecraft.class_2487 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method requires a WriteView, and no guaranteed NbtCompound-to-WriteView adapter is available from the supplied API surface");
-    }
-
     /** was net/minecraft/class_1297.method_5747(FFLnet/minecraft/class_1282;)Z */
     public boolean method_5747(float a0, float a1, net.minecraft.class_1282 a2) {
         return ((net.minecraft.class_1297) (Object) this).method_5747((double) a0, a1, a2);

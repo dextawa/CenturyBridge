@@ -20,11 +20,6 @@ public abstract class GenClass9304Class9305Bridge {
         return ((net.minecraft.class_9304.class_9305) (Object) this).method_57546(net.minecraft.class_6880.method_40223(a0));
     }
 
-    /** was net/minecraft/class_9304$class_9305.method_57547(Lnet/minecraft/class_1887;I)V */
-    public void method_57547(net.minecraft.class_1887 a0, int a1) {
-        throw new UnsupportedOperationException("CenturyBridge: cannot faithfully convert an enchantment instance to its registered class_6880 reference");
-    }
-
     /** was net/minecraft/class_9304$class_9305.method_57550(Lnet/minecraft/class_1887;I)V */
     public void method_57550(net.minecraft.class_1887 a0, int a1) {
         ((net.minecraft.class_9304.class_9305) (Object) this).method_57550(net.minecraft.class_6880.method_40223(a0), a1);

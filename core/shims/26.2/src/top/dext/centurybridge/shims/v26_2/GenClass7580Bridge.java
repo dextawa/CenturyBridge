@@ -15,16 +15,10 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(com.mojang.realmsclient.gui.RealmsServerList.class)
 public abstract class GenClass7580Bridge {
 
-    /** was net/minecraft/com.mojang.realmsclient.gui.RealmsServerList.removeItem(Lnet/minecraft/com.mojang.realmsclient.dto.RealmsServer;)Ljava/util/List; */
-    public java.util.List removeItem(com.mojang.realmsclient.dto.RealmsServer a0) {
-        throw new UnsupportedOperationException("CenturyBridge: removeItem returning List is not supported because the underlying pack lists are not accessible in 1.20.2");
-    }
-
     /** was net/minecraft/com.mojang.realmsclient.gui.RealmsServerList.updateServersList(Ljava/util/List;)Ljava/util/List; */
     public java.util.List updateServersList(java.util.List a0) {
         ((com.mojang.realmsclient.gui.RealmsServerList)(Object)this).updateServersList(a0);
         return a0;
     }
-
 
 }

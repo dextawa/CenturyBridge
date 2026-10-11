@@ -244,15 +244,6 @@ public final class Statics {
     }
 
     // ==== GENERATED BRIDGES (assemble.py) ====
-    /** was net/minecraft/class_161.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_161;Lnet/minecraft/class_185;Lnet/minecraft/class_170;Ljava/util/Map;[[Ljava/lang/String;Z)V */
-    public static net.minecraft.class_161 cbNewclass_161(net.minecraft.class_2960 a0, net.minecraft.class_161 a1, net.minecraft.class_185 a2, net.minecraft.class_170 a3, java.util.Map a4, java.lang.String[][] a5, boolean a6) {
-        throw new UnsupportedOperationException("CenturyBridge: the new advancement API requires the parent's identifier, but the old constructor supplies only a parent advancement whose identifier is no longer stored");
-    }
-
-    /** was net/minecraft/class_175.<init>(Lnet/minecraft/class_184;)V */
-    public static net.minecraft.class_175 cbNewclass_175(net.minecraft.class_184 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new constructor requires a net.minecraft.class_179 value that the old constructor argument cannot provide");
-    }
 
     /** was net/minecraft/class_1867.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Lnet/minecraft/class_2371;)V */
     public static net.minecraft.class_1867 cbNewclass_1867(net.minecraft.class_2960 a0, java.lang.String a1, net.minecraft.class_7710 a2, net.minecraft.class_1799 a3, net.minecraft.class_2371 a4) {
@@ -324,21 +315,6 @@ public final class Statics {
         return new net.minecraft.class_2069.class_2071(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), a2, a3);
     }
 
-    /** was net/minecraft/class_2073.<init>()V */
-    public static net.minecraft.class_2073 cbNewclass_2073() {
-        throw new UnsupportedOperationException("CenturyBridge: the old no-argument constructor has no faithful equivalent because the new constructor requires two net.minecraft.class_2096.class_2100 values and no valid defaults or factories are exposed");
-    }
-
-    /** was net/minecraft/class_2073.<init>(Lnet/minecraft/class_6862;Ljava/util/Set;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;[Lnet/minecraft/class_2035;[Lnet/minecraft/class_2035;Lnet/minecraft/class_1842;Lnet/minecraft/class_2105;)V */
-    public static net.minecraft.class_2073 cbNewclass_2073(net.minecraft.class_6862 a0, java.util.Set a1, net.minecraft.class_2096.class_2100 a2, net.minecraft.class_2096.class_2100 a3, net.minecraft.class_2035[] a4, net.minecraft.class_2035[] a5, net.minecraft.class_1842 a6, net.minecraft.class_2105 a7) {
-        throw new UnsupportedOperationException("CenturyBridge: old raw item and potion values cannot be converted to the new registry-entry-backed fields without registry access");
-    }
-
-    /** was net/minecraft/class_2073.field_9644Ljava/util/Set; */
-    public static java.util.Set field_9644() {
-        throw new UnsupportedOperationException("CenturyBridge: field_9644 was instance-specific item predicate state, but this static shim has no receiver from which to read comp_1784");
-    }
-
     /** was net/minecraft/class_2076$class_2078.<init>(Lnet/minecraft/class_5258;[Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;)V */
     public static net.minecraft.class_2076.class_2078 cbNewclass_2076class_2078(net.minecraft.class_5258 a0, net.minecraft.class_5258[] a1, net.minecraft.class_2096.class_2100 a2) {
         return new net.minecraft.class_2076.class_2078(java.util.Optional.ofNullable(a0), java.util.Arrays.asList(a1), a2);
@@ -394,11 +370,6 @@ public final class Statics {
         return new net.minecraft.class_2135.class_2137(java.util.Optional.ofNullable(a1));
     }
 
-    /** was net/minecraft/class_2135.<init>(Lnet/minecraft/class_2960;)V */
-    public static net.minecraft.class_2135 cbNewclass_2135(net.minecraft.class_2960 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the resource identifier constructor argument has no equivalent in the surviving no-argument constructor or API");
-    }
-
     /** was net/minecraft/class_2140$class_2142.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V */
     public static net.minecraft.class_2140.class_2142 cbNewclass_2140class_2142(net.minecraft.class_5258 a0, net.minecraft.class_5258 a1, net.minecraft.class_2073 a2) {
         return new net.minecraft.class_2140.class_2142(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2));
@@ -412,11 +383,6 @@ public final class Statics {
     /** was net/minecraft/class_2148$class_2150.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V */
     public static net.minecraft.class_2148.class_2150 cbNewclass_2148class_2150(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1) {
         return new net.minecraft.class_2148.class_2150(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1));
-    }
-
-    /** was net/minecraft/class_223.field_1298Lnet/minecraft/class_2073; */
-    public static net.minecraft.class_2073 field_1298() {
-        throw new UnsupportedOperationException("CenturyBridge: the old field was instance-specific, but the zero-argument static shim has no receiver from which to obtain the new Optional-backed predicate");
     }
 
     /** was net/minecraft/class_2319.<init>(Ljava/util/function/Supplier;)V */
@@ -439,16 +405,6 @@ public final class Statics {
         return new net.minecraft.class_2588(a0, a0, new Object[0]);
     }
 
-    /** was net/minecraft/class_2724.<init>(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;JLnet/minecraft/class_1934;Lnet/minecraft/class_1934;ZZBLjava/util/Optional;I)V */
-    public static net.minecraft.class_2724 cbNewclass_2724(net.minecraft.class_5321 a0, net.minecraft.class_5321 a1, long a2, net.minecraft.class_1934 a3, net.minecraft.class_1934 a4, boolean a5, boolean a6, byte a7, java.util.Optional a8, int a9) {
-        throw new UnsupportedOperationException("CenturyBridge: the old constructor arguments cannot be converted to the required class_8589 payload using the provided API surface");
-    }
-
-    /** was net/minecraft/class_2889.<init>(Ljava/lang/String;ILnet/minecraft/class_2539;)V */
-    public static net.minecraft.class_2889 cbNewclass_2889(java.lang.String a0, int a1, net.minecraft.class_2539 a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the old NetworkState argument cannot be converted to the new ConnectionIntent type using the available API");
-    }
-
     /** was net/minecraft/class_2915.<init>(Ljava/lang/String;Ljava/util/Optional;)V */
     public static net.minecraft.class_2915 cbNewclass_2915(java.lang.String a0, java.util.Optional a1) {
         return new net.minecraft.class_2915(a0, (java.util.UUID) a1.orElse(null));
@@ -457,26 +413,6 @@ public final class Statics {
     /** was net/minecraft/class_3222.<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_3218;Lcom/mojang/authlib/GameProfile;)V */
     public static net.minecraft.class_3222 cbNewclass_3222(net.minecraft.server.MinecraftServer a0, net.minecraft.class_3218 a1, com.mojang.authlib.GameProfile a2) {
         return new net.minecraft.class_3222(a0, a1, a2, net.minecraft.class_8791.method_53821());
-    }
-
-    /** was net/minecraft/class_3244.<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)V */
-    public static net.minecraft.class_3244 cbNewclass_3244(net.minecraft.server.MinecraftServer a0, net.minecraft.class_2535 a1, net.minecraft.class_3222 a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the surviving constructor requires a class_8792 argument that cannot be derived faithfully from the old constructor arguments");
-    }
-
-    /** was net/minecraft/class_3255.<init>(Ljava/io/File;)V */
-    public static net.minecraft.class_3255 cbNewclass_3255(java.io.File a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the abstract class has no instantiable factory, and the File argument cannot supply the required alwaysStable constructor value");
-    }
-
-    /** was net/minecraft/class_3258.<init>(Ljava/lang/String;Ljava/io/File;Z)V */
-    public static net.minecraft.class_3258 cbNewclass_3258(java.lang.String a0, java.io.File a1, boolean a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the surviving constructor requires the inaccessible private class_3258.class_8616 wrapper, and no public factory accepts the old File argument");
-    }
-
-    /** was net/minecraft/class_3258.<init>(Ljava/io/File;)V */
-    public static net.minecraft.class_3258 cbNewclass_3258(java.io.File a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the surviving constructor requires an inaccessible class_3258.class_8616 wrapper, and no equivalent static factory exists");
     }
 
     /** was net/minecraft/class_3259.<init>(Ljava/io/File;)V */
@@ -489,19 +425,9 @@ public final class Statics {
         return new net.minecraft.class_3272(a0, a1, java.util.Optional.empty());
     }
 
-    /** was net/minecraft/class_3279.<init>(Ljava/nio/file/Path;Lnet/minecraft/class_3264;Lnet/minecraft/class_5352;)V */
-    public static net.minecraft.class_3279 cbNewclass_3279(java.nio.file.Path a0, net.minecraft.class_3264 a1, net.minecraft.class_5352 a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the new constructor requires a class_8580 argument that cannot be derived from the old constructor arguments");
-    }
-
     /** was net/minecraft/class_3283.<init>(Lnet/minecraft/class_3264;[Lnet/minecraft/class_3285;)V */
     public static net.minecraft.class_3283 cbNewclass_3283(net.minecraft.class_3264 a0, net.minecraft.class_3285[] a1) {
         return new net.minecraft.class_3283(a1);
-    }
-
-    /** was net/minecraft/class_3286.<init>()V */
-    public static net.minecraft.class_3286 cbNewclass_3286() {
-        throw new UnsupportedOperationException("CenturyBridge: the surviving constructor requires a class_8580 instance, but the old no-argument constructor provides no equivalent value");
     }
 
     /** was net/minecraft/class_3288.<init>(Ljava/lang/String;Lnet/minecraft/class_2561;ZLjava/util/function/Supplier;Lnet/minecraft/class_3272;Lnet/minecraft/class_3264;Lnet/minecraft/class_3288$class_3289;Lnet/minecraft/class_5352;)V */
@@ -726,67 +652,21 @@ public final class Statics {
         return new net.minecraft.class_5338(CbLootJson.codec(serializer));
     }
 
-    /** AdvancementRewards-area LootContextPredicate wrapper: 1.20.2's class_195 is
-     *  abstract -- no faithful standalone construction. */
-    public static net.minecraft.class_195 cbNewclass_195(net.minecraft.class_2960 id, net.minecraft.class_5258 pred) {
-        throw new UnsupportedOperationException("CenturyBridge: class_195 became abstract in 1.20.2; the old concrete (Identifier, LootContextPredicate) ctor has no faithful standalone equivalent");
-    }
-
-    /** CraftingRecipe-category ctor: 1.20.2's class_1852 is abstract with new
-     *  abstract methods a legacy call cannot satisfy. */
-    public static net.minecraft.class_1852 cbNewclass_1852(net.minecraft.class_2960 id, net.minecraft.class_7710 category) {
-        throw new UnsupportedOperationException("CenturyBridge: SpecialCraftingRecipe is abstract in 1.20.2 and its id moved to the registry key; the old (Identifier, category) ctor cannot be reconstructed here");
-    }
-
     /** GameEvent(String name, int range) -> 1.20.2 takes range only (the registry
      *  holds the name). */
     public static net.minecraft.class_5712 cbNewclass_5712(String name, int range) {
         return new net.minecraft.class_5712(range);
     }
 
-    /** AbstractCookingRecipe: 1.20.2's class_1874 is abstract (CookingRecipeSerializer
-     *  builds concrete subtypes); no faithful standalone construction. */
-    public static net.minecraft.class_1874 cbNewclass_1874(net.minecraft.class_3956 type, net.minecraft.class_2960 id,
-            String group, net.minecraft.class_7709 category, net.minecraft.class_1856 ingredient,
-            net.minecraft.class_1799 result, float xp, int cookTime) {
-        throw new UnsupportedOperationException("CenturyBridge: AbstractCookingRecipe is abstract in 1.20.2 and its id moved to the registry key; the old concrete ctor has no faithful equivalent");
-    }
-
     // ---- unbridgeable dead ctors: tombstone stubs (mod loads; lazy-fails only if
     //      a mod actually constructs these vanilla-internal screens/packets) ----
-
-    /** ServerboundCustomQueryAnswerPacket(int, PacketByteBuf): 1.20.2 takes a typed
-     *  QueryAnswerPayload (class_8594) with no lossless path from raw bytes. */
-    public static net.minecraft.class_2913 cbNewclass_2913(int id, net.minecraft.class_2540 data) {
-        throw new UnsupportedOperationException("CenturyBridge: ServerboundCustomQueryAnswerPacket became a typed QueryAnswerPayload in 1.20.2; raw PacketByteBuf has no faithful conversion");
-    }
 
     /** SimpleOptionsScreen / CreditsScreen ctors are unbridgeable (deleted/package-private
      *  arg types); their ctorRedirect entries were removed and ledgered instead. */
 
-    /** was net/minecraft/class_2069$class_2071.method_8967(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_2069$class_2071; */
-    public static net.minecraft.class_2069.class_2071 method_8967(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1, net.minecraft.class_2096.class_2100 a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the new factory returns a criterion wrapper rather than Conditions, and the provided API exposes no faithful way to unwrap it or supply the old factory's default delta range");
-    }
-
     /** was net/minecraft/class_2102.method_9064(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2102; */
     public static net.minecraft.class_2102 method_9064(com.google.gson.JsonElement a0) {
         return net.minecraft.class_2102.method_9064(a0).orElseGet(() -> new net.minecraft.class_2102(java.util.Map.of()));
-    }
-
-    /** was net/minecraft/class_2119.method_27847(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2119$class_2121; */
-    public static net.minecraft.class_2119.class_2121 method_27847(net.minecraft.class_2960 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_27847 returns net.minecraft.class_175, and the provided API exposes no guaranteed conversion to net.minecraft.class_2119.class_2121");
-    }
-
-    /** was net/minecraft/class_2135$class_2137.method_43137(Lnet/minecraft/class_2090;)Lnet/minecraft/class_2135$class_2137; */
-    public static net.minecraft.class_2135.class_2137 method_43137(net.minecraft.class_2090 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_43137 accepts class_2090$class_2091 and returns class_175, so it cannot preserve the old class_2090-to-class_2137 contract");
-    }
-
-    /** was net/minecraft/class_2135$class_2137.method_49195()Lnet/minecraft/class_2135$class_2137; */
-    public static net.minecraft.class_2135.class_2137 method_49195() {
-        throw new UnsupportedOperationException("CenturyBridge: the new API has only the same zero-argument method returning net.minecraft.class_175, so the old fluent return contract cannot be preserved");
     }
 
     /** was net/minecraft/class_2535.method_10753(Ljava/net/InetSocketAddress;Z)Lnet/minecraft/class_2535; */

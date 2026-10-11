@@ -25,7 +25,6 @@ public abstract class GenClass3218Bridge {
         ((net.minecraft.class_3218) (Object) this).method_33596(a0, net.minecraft.class_6880.method_40223(a1), a2);
     }
 
-
     /** was net/minecraft/class_3218.method_43129(Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V */
     public void method_43129(net.minecraft.class_1657 a0, net.minecraft.class_1297 a1, net.minecraft.class_3414 a2, net.minecraft.class_3419 a3, float a4, float a5) {
         ((net.minecraft.class_3218) (Object) this).method_43129((net.minecraft.class_1297) a0, a1, a2, a3, a4, a5);
@@ -39,11 +38,6 @@ public abstract class GenClass3218Bridge {
     /** was net/minecraft/class_3218.method_8396(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Lnet/minecraft/class_3414;Lnet/minecraft/class_3419;FF)V */
     public void method_8396(net.minecraft.class_1657 a0, net.minecraft.class_2338 a1, net.minecraft.class_3414 a2, net.minecraft.class_3419 a3, float a4, float a5) {
         ((net.minecraft.class_3218) (Object) this).method_8396((net.minecraft.class_1297) a0, a1, a2, a3, a4, a5);
-    }
-
-    /** was net/minecraft/class_3218.method_8437(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927; */
-    public net.minecraft.class_1927 method_8437(net.minecraft.class_1297 a0, double a1, double a2, double a3, float a4, net.minecraft.class_1937.class_7867 a5) {
-        throw new UnsupportedOperationException("CenturyBridge: the new explosion API returns void and cannot provide the old class_1927 result");
     }
 
     /** was net/minecraft/class_3218.method_8452(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;)V */

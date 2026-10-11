@@ -15,11 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_7280.class)
 public abstract class GenClass7280Bridge {
 
-    /** was net/minecraft/class_7280.method_42580(Lnet/minecraft/class_7260;FFFFF)V */
-    public void method_42580(net.minecraft.class_7260 a0, float a1, float a2, float a3, float a4, float a5) {
-        throw new UnsupportedOperationException("CenturyBridge: class_7280.method_42580(PoseStack,5F) cannot be bridged to method_42580(class_10081); PoseStack has no equivalent in class_10081 and the 5 float parameters cannot be mapped to the new state object's 2 floats and 6 class_7094 fields without field-semantic knowledge");
-    }
-
     /** was net/minecraft/class_7280.method_42738()Ljava/util/List; */
     public java.util.List method_42738() {
         return ((net.minecraft.class_7280)(Object)this).method_42738(new net.minecraft.class_10081());

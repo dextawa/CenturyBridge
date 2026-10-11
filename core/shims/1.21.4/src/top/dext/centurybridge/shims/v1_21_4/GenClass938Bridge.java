@@ -15,11 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_938.class)
 public abstract class GenClass938Bridge {
 
-    /** was net/minecraft/class_938.method_4100(Lnet/minecraft/class_1462;Lnet/minecraft/class_4587;FFFF)V */
-    public void method_4100(net.minecraft.class_1462 a0, net.minecraft.class_4587 a1, float a2, float a3, float a4, float a5) {
-        throw new UnsupportedOperationException("CenturyBridge: method_4100 changed from (class_1462, class_4587, FFFF) to (class_10062, class_4587, FF) -- 4 floats reduced to 2, cannot determine which floats map to the new signature");
-    }
-
     /** was net/minecraft/class_938.method_4101(Lnet/minecraft/class_1462;)Lnet/minecraft/class_2960; */
     public net.minecraft.class_2960 method_4101(net.minecraft.class_1462 a0) {
         net.minecraft.class_10062 state = new net.minecraft.class_10062();

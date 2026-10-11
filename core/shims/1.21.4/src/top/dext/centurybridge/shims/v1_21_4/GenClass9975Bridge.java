@@ -15,16 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_9975.class)
 public abstract class GenClass9975Bridge {
 
-    /** was net/minecraft/class_9975.method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FI)V */
-    public void method_62306(net.minecraft.class_4587 a0, net.minecraft.class_289 a1, float a2, int a3) {
-        throw new UnsupportedOperationException("CenturyBridge: old class_289 argument cannot be converted to the required class_4597.class_4598 buffer provider");
-    }
-
-    /** was net/minecraft/class_9975.method_62307(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FIFFLnet/minecraft/class_9958;)V */
-    public void method_62307(net.minecraft.class_4587 a0, net.minecraft.class_289 a1, float a2, int a3, float a4, float a5, net.minecraft.class_9958 a6) {
-        throw new UnsupportedOperationException("CenturyBridge: the old class_289 buffer builder cannot be converted to the required class_4597.class_4598 vertex consumer provider");
-    }
-
     /** was net/minecraft/class_9975.method_62312(Lnet/minecraft/class_4587;)V */
     public void method_62312(net.minecraft.class_4587 a0) {
         ((net.minecraft.class_9975) (Object) this).method_62312();

@@ -15,16 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_342.class)
 public abstract class GenClass342Bridge {
 
-    /** was net/minecraft/class_342.method_25400(CI)Z */
-    public boolean method_25400(char a0, int a1) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_25400 requires a class_11905 input event, which cannot be constructed faithfully from only the legacy char and modifier arguments");
-    }
-
-    /** was net/minecraft/class_342.method_25402(DDI)Z */
-    public boolean method_25402(double a0, double a1, int a2) {
-        throw new UnsupportedOperationException("CenturyBridge: the new click handler requires a net.minecraft.class_11905 event object, which cannot be faithfully constructed from only the old x, y, and button arguments");
-    }
-
     /** was net/minecraft/class_342.method_25404(III)Z */
     public boolean method_25404(int a0, int a1, int a2) {
         return ((net.minecraft.class_342) (Object) this).method_25404(new net.minecraft.class_11908(a0, a1, a2));

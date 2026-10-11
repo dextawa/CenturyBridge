@@ -15,11 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_7580.class)
 public abstract class GenClass7580Bridge {
 
-    /** was net/minecraft/class_7580.method_44622(Lnet/minecraft/class_4877;)Ljava/util/List; */
-    public java.util.List method_44622(net.minecraft.class_4877 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: method_44622 returning List is not supported because the underlying pack lists are not accessible in 1.20.2");
-    }
-
     /** was net/minecraft/class_7580.method_44623(Ljava/util/List;)Ljava/util/List; */
     public java.util.List method_44623(java.util.List a0) {
         ((net.minecraft.class_7580)(Object)this).method_44623(a0);

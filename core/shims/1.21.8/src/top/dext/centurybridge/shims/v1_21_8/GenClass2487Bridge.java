@@ -30,11 +30,6 @@ public abstract class GenClass2487Bridge {
         return ((net.minecraft.class_2487) (Object) this).method_10550(a0).orElse(0);
     }
 
-    /** was net/minecraft/class_2487.method_10554(Ljava/lang/String;I)Lnet/minecraft/class_2499; */
-    public net.minecraft.class_2499 method_10554(java.lang.String a0, int a1) {
-        throw new UnsupportedOperationException("CenturyBridge: the new method_10554(String) omits the required element-type validation");
-    }
-
     /** was net/minecraft/class_2487.method_10558(Ljava/lang/String;)Ljava/lang/String; */
     public java.lang.String method_10558(java.lang.String a0) {
         return ((net.minecraft.class_2487) (Object) this).method_10558(a0).orElse("");

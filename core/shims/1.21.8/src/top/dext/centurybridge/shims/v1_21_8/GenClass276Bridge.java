@@ -20,14 +20,4 @@ public abstract class GenClass276Bridge {
         ((net.minecraft.class_276) (Object) this).method_1234(a0, a1);
     }
 
-    /** was net/minecraft/class_276.method_30277()I */
-    public int method_30277() {
-        throw new UnsupportedOperationException("CenturyBridge: the new API exposes a GpuTexture instead of the legacy integer OpenGL texture ID");
-    }
-
-    /** was net/minecraft/class_276.method_30278()I */
-    public int method_30278() {
-        throw new UnsupportedOperationException("CenturyBridge: the new API exposes a GpuTexture instead of the old integer OpenGL texture ID");
-    }
-
 }

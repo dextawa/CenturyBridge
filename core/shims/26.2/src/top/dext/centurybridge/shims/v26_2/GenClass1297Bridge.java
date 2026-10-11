@@ -30,23 +30,10 @@ public abstract class GenClass1297Bridge {
         ((net.minecraft.world.entity.Entity) (Object) this).gameEvent(net.minecraft.core.Holder.direct(a0));
     }
 
-
-
-
-    /** was net/minecraft/world/entity/Entity/defineSynchedData()V */
-    public void defineSynchedData() {
-        throw new UnsupportedOperationException("CenturyBridge: defineSynchedData without arguments is unsupported");
-    }
-
     /** was net/minecraft/world/entity/Entity/igniteForSeconds(I)V */
     public void igniteForSeconds(int a0) {
         ((net.minecraft.world.entity.Entity) (Object) this).igniteForSeconds((float) a0);
     }
-
-
-
-
-
 
     /** was net/minecraft/world/entity/Entity.mayInteract(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z */
     public boolean mayInteract(net.minecraft.world.level.Level a0, net.minecraft.core.BlockPos a1) {

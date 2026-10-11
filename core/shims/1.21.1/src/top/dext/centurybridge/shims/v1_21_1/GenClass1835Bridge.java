@@ -15,16 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_1835.class)
 public abstract class GenClass1835Bridge {
 
-    /** was net/minecraft/class_1835.method_7844(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap; */
-    public com.google.common.collect.Multimap method_7844(net.minecraft.class_1304 a0) {
-        throw new UnsupportedOperationException("CenturyBridge: the new API surface has no equivalent for retrieving the class_1304-specific attribute Multimap");
-    }
-
-    /** was net/minecraft/class_1835.method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Ljava/util/List;Lnet/minecraft/class_1836;)V */
-    public void method_7851(net.minecraft.class_1799 a0, net.minecraft.class_1937 a1, java.util.List a2, net.minecraft.class_1836 a3) {
-        throw new UnsupportedOperationException("CenturyBridge: the 1.21.1 API no longer exposes an equivalent item tooltip-appending hook");
-    }
-
     /** was net/minecraft/class_1835.method_7881(Lnet/minecraft/class_1799;)I */
     public int method_7881(net.minecraft.class_1799 a0) {
         return ((net.minecraft.class_1835) (Object) this).method_7881(a0, null);
