@@ -1,0 +1,302 @@
+{
+ "callReshapes": {
+  "net/minecraft/client/particle/ParticleGroup.add(Lnet/minecraft/client/particle/Particle;)V": {
+   "desc": "(Lnet/minecraft/client/particle/Particle;)Z",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "pop",
+   "basis": "mechanical: same values; return value popped"
+  },
+  "net/minecraft/client/renderer/ViewArea.repositionCamera(Lnet/minecraft/core/SectionPos;)V": {
+   "desc": "(Lnet/minecraft/core/SectionPos;)Z",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "pop",
+   "basis": "mechanical: same values; return value popped"
+  },
+  "net/minecraft/client/renderer/state/level/ParticlesRenderState.submit(Lnet/minecraft/client/renderer/SubmitNodeStorage;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V": {
+   "desc": "(Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/client/renderer/SubmitNodeCollector;",
+    "keep:1"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/server/dedicated/DedicatedServer.setStatusHeartbeatInterval(I)V": {
+   "desc": "(I)Z",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "pop",
+   "basis": "mechanical: same values; return value popped"
+  },
+  "net/minecraft/util/filefix/access/ChunkNbt.updateChunk(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/nbt/CompoundTag;Ljava/util/function/UnaryOperator;)V": {
+   "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/nbt/CompoundTag;Ljava/util/function/UnaryOperator;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "ret": "pop",
+   "basis": "mechanical: same values; return value popped"
+  },
+  "net/minecraft/world/inventory/BeaconMenu.updateEffects(Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)Z",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "ret": "pop",
+   "basis": "mechanical: same values; return value popped"
+  },
+  "net/minecraft/world/phys/Vec2.equals(Lnet/minecraft/world/phys/Vec2;)Z": {
+   "desc": "(Ljava/lang/Object;)Z",
+   "ops": [
+    "keep:0 Ljava/lang/Object;"
+   ],
+   "basis": "mechanical: same values"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/world/item/AirItem.<init>(Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/item/Item$Properties;)V": {
+   "desc": "(Lnet/minecraft/world/item/Item$Properties;)V",
+   "ops": [
+    "keep:1",
+    "drop:0"
+   ],
+   "basis": "mechanical: same values; dropped Lnet/minecraft/world/level/block/Block;, never read in V"
+  },
+  "net/minecraft/world/level/levelgen/feature/configurations/MultifaceGrowthConfiguration.<init>(Lnet/minecraft/world/level/block/MultifaceSpreadeableBlock;IZZZFLnet/minecraft/core/HolderSet;)V": {
+   "desc": "(Lnet/minecraft/world/level/block/Block;IZZZFLnet/minecraft/core/HolderSet;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/world/level/block/Block;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "mechanical: same values"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "createDevice(JLcom/mojang/blaze3d/shaders/ShaderSource;Lcom/mojang/blaze3d/shaders/GpuDebugOptions;)Lcom/mojang/blaze3d/systems/GpuDevice;",
+   "new": "createDevice(JLcom/mojang/blaze3d/shaders/ShaderSource;Lcom/mojang/blaze3d/shaders/GpuDebugOptions;Ljava/lang/Runnable;)Lcom/mojang/blaze3d/systems/GpuDevice;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "onlyUnder": "com/mojang/blaze3d/opengl/GlBackend",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Ljava/lang/Runnable; not passed"
+  },
+  {
+   "old": "applyLabel(Lcom/mojang/blaze3d/opengl/GlBuffer;)V",
+   "new": "applyLabel(Lcom/mojang/blaze3d/opengl/GlBuffer;Ljava/util/function/Supplier;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "com/mojang/blaze3d/opengl/GlDebugLabel",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Ljava/util/function/Supplier; not passed"
+  },
+  {
+   "old": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiBannerResultRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+   "new": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiBannerResultRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/client/gui/render/pip/GuiBannerResultRenderer",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/SubmitNodeCollector; not passed"
+  },
+  {
+   "old": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiBookModelRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+   "new": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiBookModelRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/client/gui/render/pip/GuiBookModelRenderer",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/SubmitNodeCollector; not passed"
+  },
+  {
+   "old": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+   "new": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/client/gui/render/pip/GuiEntityRenderer",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/SubmitNodeCollector; not passed"
+  },
+  {
+   "old": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiProfilerChartRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+   "new": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiProfilerChartRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/client/gui/render/pip/GuiProfilerChartRenderer",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/SubmitNodeCollector; not passed"
+  },
+  {
+   "old": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiSkinRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+   "new": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/GuiSkinRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/client/gui/render/pip/GuiSkinRenderer",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/SubmitNodeCollector; not passed"
+  },
+  {
+   "old": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/OversizedItemRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+   "new": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/OversizedItemRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/client/gui/render/pip/OversizedItemRenderer",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/SubmitNodeCollector; not passed"
+  },
+  {
+   "old": "prepare(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lnet/minecraft/client/renderer/state/gui/GuiRenderState;I)V",
+   "new": "prepare(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lnet/minecraft/client/renderer/state/gui/GuiRenderState;Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher;I)V",
+   "args": [
+    0,
+    1,
+    3
+   ],
+   "onlyUnder": "net/minecraft/client/gui/render/pip/PictureInPictureRenderer",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher; not passed"
+  },
+  {
+   "old": "submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V",
+   "new": "submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;I)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/client/renderer/SubmitNodeCollection",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new I not passed"
+  },
+  {
+   "old": "submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V",
+   "new": "submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;I)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/client/renderer/SubmitNodeStorage",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new I not passed"
+  },
+  {
+   "old": "tryExtractRenderState(Lnet/minecraft/world/level/block/entity/BlockEntity;FLnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;",
+   "new": "tryExtractRenderState(Lnet/minecraft/world/level/block/entity/BlockEntity;FLnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;Z)Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+  },
+  {
+   "old": "renderAllFeatures()V",
+   "new": "renderAllFeatures(Lnet/minecraft/client/renderer/SubmitNodeStorage;)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/client/renderer/feature/FeatureRenderDispatcher",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/SubmitNodeStorage; not passed"
+  },
+  {
+   "old": "publishServer(Lnet/minecraft/world/level/GameType;ZI)Z",
+   "new": "publishServer(Lnet/minecraft/server/MinecraftServer$MultiplayerScope;Lnet/minecraft/world/level/GameType;ZI)Z",
+   "args": [
+    1,
+    2,
+    3
+   ],
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/server/MinecraftServer$MultiplayerScope; not passed"
+  },
+  {
+   "old": "createWorldSessionManager(ZLjava/time/Duration;Ljava/lang/String;)Lnet/minecraft/client/telemetry/WorldSessionTelemetryManager;",
+   "new": "createWorldSessionManager(ZLjava/time/Duration;Ljava/lang/String;Ljava/util/UUID;)Lnet/minecraft/client/telemetry/WorldSessionTelemetryManager;",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/client/telemetry/ClientTelemetryManager",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Ljava/util/UUID; not passed"
+  },
+  {
+   "old": "send(Lnet/minecraft/client/telemetry/TelemetryEventSender;)Z",
+   "new": "send(Lnet/minecraft/client/telemetry/TelemetryEventSender;Z)Z",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/client/telemetry/events/WorldLoadEvent",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+  },
+  {
+   "old": "blockUsingItem(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)V",
+   "new": "blockUsingItem(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/world/entity/LivingEntity",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/world/damagesource/DamageSource;,F not passed"
+  },
+  {
+   "old": "blockedByItem(Lnet/minecraft/world/entity/LivingEntity;)V",
+   "new": "blockedByItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/world/entity/LivingEntity",
+   "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/world/damagesource/DamageSource;,F not passed"
+  }
+ ]
+}

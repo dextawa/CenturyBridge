@@ -1048,7 +1048,9 @@ public final class JarProcessor {
         markConfigsOptional(entries, triage);
 
         // tombstone stub class must be unique per jar layer (all layers share the runtime classpath)
-        String tombClass = "centurybridge/gen/Tombstones_" + jarTag
+        // and per climb step: each step converts the jar again, and a later step's Tombstones class
+        // of the same name would replace the earlier step's, whose call sites still point into it
+        String tombClass = "centurybridge/gen/Tombstones_" + jarTag + "_" + chain.to.replace('.', '_')
             + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count());
         Tombstones reg = new Tombstones(tombClass, chain.to);
         // the access widener the loader reads is the file fabric.mod.json names, whatever

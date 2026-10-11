@@ -1,0 +1,106 @@
+usage	owner	name	desc	kinds	w
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_6005;)V	METHOD	method setMusic(Ljava/util/Optional;)V public abstract ; setMusic(Lnet/minecraft/class_6012;)V public ; setMusic(Lnet/minecraft/class_5195;)V public
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_6005;)V	METHOD	method setMusic(Ljava/util/Optional;)V public abstract ; setMusic(Lnet/minecraft/class_6012;)V public ; setMusic(Lnet/minecraft/class_5195;)V public
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext	addSpawn	(Lnet/minecraft/class_1311;Lnet/minecraft/class_5483$class_1964;)V	METHOD	method addSpawn(Lnet/minecraft/class_1311;Lnet/minecraft/class_5483$class_1964;I)V public abstract
+implement-interface	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context	setModel	(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V	METHOD	method setModel(Lnet/minecraft/class_2680;Lnet/minecraft/class_1087$class_9979;)V public abstract
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/model/loading/v1/FabricBakedModelManager	getModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;	METHOD	method getModel(Lnet/fabricmc/fabric/api/client/model/loading/v1/ExtraModelKey;)Ljava/lang/Object; public
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/FabricBakedModelManager	getModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;	METHOD	method getModel(Lnet/fabricmc/fabric/api/client/model/loading/v1/ExtraModelKey;)Ljava/lang/Object; public
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context	addModels	([Lnet/minecraft/class_2960;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context	addModels	(Ljava/util/Collection;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context	modifyModelBeforeBake	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context	modifyModelAfterBake	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	id	()Lnet/minecraft/class_2960;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	sourceModel	()Lnet/minecraft/class_1100;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	settings	()Lnet/minecraft/class_3665;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	baker	()Lnet/minecraft/class_7775;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context			CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake	modifyModelAfterBake	(Lnet/minecraft/class_1087;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context;)Lnet/minecraft/class_1087;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake			CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBakeBlock$Context	id	()Lnet/minecraft/class_1091;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBakeBlock$Context	sourceModel	()Lnet/minecraft/class_9979;	METHOD	method sourceModel()Lnet/minecraft/class_1087$class_9979; public abstract
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBakeBlock$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	id	()Lnet/minecraft/class_2960;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	settings	()Lnet/minecraft/class_3665;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	baker	()Lnet/minecraft/class_7775;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context			CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake	modifyModelBeforeBake	(Lnet/minecraft/class_1100;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context;)Lnet/minecraft/class_1100;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake			CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeBlock$Context	id	()Lnet/minecraft/class_1091;	METHOD	method not declared on the owner
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeBlock$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeBlock	modifyModelBeforeBake	(Lnet/minecraft/class_9979;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeBlock$Context;)Lnet/minecraft/class_9979;	METHOD	method modifyModelBeforeBake(Lnet/minecraft/class_1087$class_9979;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeBlock$Context;)Lnet/minecraft/class_1087$class_9979; public abstract
+lambda	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeBlock	modifyModelBeforeBake	(Lnet/minecraft/class_9979;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeBlock$Context;)Lnet/minecraft/class_9979;	LAMBDA	method modifyModelBeforeBake(Lnet/minecraft/class_1087$class_9979;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeBlock$Context;)Lnet/minecraft/class_1087$class_9979; public abstract
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeBlock			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoadBlock$Context	id	()Lnet/minecraft/class_1091;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoadBlock	modifyModelOnLoad	(Lnet/minecraft/class_9979;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoadBlock$Context;)Lnet/minecraft/class_9979;	METHOD	method modifyModelOnLoad(Lnet/minecraft/class_1087$class_9979;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoadBlock$Context;)Lnet/minecraft/class_1087$class_9979; public abstract
+lambda	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoadBlock	modifyModelOnLoad	(Lnet/minecraft/class_9979;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoadBlock$Context;)Lnet/minecraft/class_9979;	LAMBDA	method modifyModelOnLoad(Lnet/minecraft/class_1087$class_9979;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoadBlock$Context;)Lnet/minecraft/class_1087$class_9979; public abstract
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoadBlock			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/model/loading/v1/UnwrappableBakedModel	getWrappedModel	()Lnet/minecraft/class_1087;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/model/loading/v1/UnwrappableBakedModel	unwrap	(Lnet/minecraft/class_1087;Ljava/util/function/Predicate;)Lnet/minecraft/class_1087;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/model/loading/v1/UnwrappableBakedModel	unwrap	(Lnet/minecraft/class_1087;)Lnet/minecraft/class_1087;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/UnwrappableBakedModel			CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/UnwrappableBakedModel	getWrappedModel	()Lnet/minecraft/class_1087;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperGroupableModel	method_62326	(Lnet/minecraft/class_10526$class_10103;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperGroupableModel	method_65542	(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperGroupableModel	method_62332	(Lnet/minecraft/class_2680;)Ljava/lang/Object;	CLASS	class gone
+extend	net/fabricmc/fabric/api/client/model/loading/v1/WrapperGroupableModel			CLASS	class gone
+super-ctor	net/fabricmc/fabric/api/client/model/loading/v1/WrapperGroupableModel	<init>	()V	CLASS	class gone
+super-ctor	net/fabricmc/fabric/api/client/model/loading/v1/WrapperGroupableModel	<init>	(Lnet/minecraft/class_9979;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperGroupableModel	method_62326	(Lnet/minecraft/class_10526$class_10103;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperGroupableModel	method_65542	(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperGroupableModel	method_62332	(Lnet/minecraft/class_2680;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_62326	(Lnet/minecraft/class_10526$class_10103;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_4753	(Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;Lnet/minecraft/class_3665;ZZLnet/minecraft/class_809;)Lnet/minecraft/class_1087;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_65537	()Ljava/lang/Boolean;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_24298	()Lnet/minecraft/class_1100$class_4751;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_65540	()Lnet/minecraft/class_809;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_65539	()Lnet/minecraft/class_10419$class_10420;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_65538	()Lnet/minecraft/class_1100;	CLASS	class gone
+extend	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel			CLASS	class gone
+super-ctor	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	<init>	()V	CLASS	class gone
+super-ctor	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	<init>	(Lnet/minecraft/class_1100;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_62326	(Lnet/minecraft/class_10526$class_10103;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_4753	(Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;Lnet/minecraft/class_3665;ZZLnet/minecraft/class_809;)Lnet/minecraft/class_1087;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_65537	()Ljava/lang/Boolean;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_24298	()Lnet/minecraft/class_1100$class_4751;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_65540	()Lnet/minecraft/class_809;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_65539	()Lnet/minecraft/class_10419$class_10420;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/WrapperUnbakedModel	method_65538	()Lnet/minecraft/class_1100;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/AtlasSourceTypeRegistry	register	(Lnet/minecraft/class_2960;Lnet/minecraft/class_7951;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper	registerVillagerOffers	(Lnet/minecraft/class_3852;ILjava/util/function/Consumer;)V	METHOD	method registerVillagerOffers(Lnet/minecraft/class_5321;ILjava/util/function/Consumer;)V public static ; registerVillagerOffers(Lnet/minecraft/class_5321;ILnet/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper$VillagerOffersAdder;)V public static
+call-static	net/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper	registerVillagerOffers	(Lnet/minecraft/class_3852;ILnet/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper$VillagerOffersAdder;)V	METHOD	method registerVillagerOffers(Lnet/minecraft/class_5321;ILjava/util/function/Consumer;)V public static ; registerVillagerOffers(Lnet/minecraft/class_5321;ILnet/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper$VillagerOffersAdder;)V public static
+call-static	net/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper	registerWanderingTraderOffers	(ILjava/util/function/Consumer;)V	METHOD	method registerWanderingTraderOffers(Ljava/util/function/Consumer;)V public static
+call-static	net/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper	registerRebalancedWanderingTraderOffers	(Ljava/util/function/Consumer;)V	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/api/object/builder/v1/trade/TradeOfferHelper	refreshOffers	()V	METHOD	method not declared on the owner
+call-static	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	create	()Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	id	(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	workstation	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	workstation	(Ljava/util/function/Predicate;)Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	jobSite	(Ljava/util/function/Predicate;)Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	harvestableItems	([Lnet/minecraft/class_1792;)Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	harvestableItems	(Ljava/lang/Iterable;)Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	secondaryJobSites	([Lnet/minecraft/class_2248;)Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	secondaryJobSites	(Ljava/lang/Iterable;)Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	workSound	(Lnet/minecraft/class_3414;)Lnet/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerProfessionBuilder	build	()Lnet/minecraft/class_3852;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerTypeHelper	register	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_3854;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/object/builder/v1/villager/VillagerTypeHelper	addVillagerTypeToBiome	(Lnet/minecraft/class_5321;Lnet/minecraft/class_3854;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/api/registry/VillagerInteractionRegistries	registerGiftLootTable	(Lnet/minecraft/class_3852;Lnet/minecraft/class_2960;)V	METHOD	method registerGiftLootTable(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)V public static
+call-static	net/fabricmc/fabric/api/registry/VillagerInteractionRegistries	registerGiftLootTable	(Lnet/minecraft/class_3852;Lnet/minecraft/class_5321;)V	METHOD	method registerGiftLootTable(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)V public static
+implement-interface	net/fabricmc/fabric/api/renderer/v1/Renderer			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	isVanillaAdapter	()Z	CLASS	class gone
+call	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitBlockQuads	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitItemQuads	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel			CLASS	class gone
+override+super	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	isVanillaAdapter	()Z	CLASS	class gone
+override+super	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitBlockQuads	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitItemQuads	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	TRANSFORM_BLOCK_GUI	Lnet/minecraft/class_804;	FIELD	field not declared on the owner
+get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	TRANSFORM_BLOCK_GROUND	Lnet/minecraft/class_804;	FIELD	field not declared on the owner
+get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	TRANSFORM_BLOCK_FIXED	Lnet/minecraft/class_804;	FIELD	field not declared on the owner
+get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	TRANSFORM_BLOCK_3RD_PERSON_RIGHT	Lnet/minecraft/class_804;	FIELD	field not declared on the owner
+get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	TRANSFORM_BLOCK_1ST_PERSON_RIGHT	Lnet/minecraft/class_804;	FIELD	field not declared on the owner
+get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	TRANSFORM_BLOCK_1ST_PERSON_LEFT	Lnet/minecraft/class_804;	FIELD	field not declared on the owner
+get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	MODEL_TRANSFORM_BLOCK	Lnet/minecraft/class_809;	FIELD	field not declared on the owner

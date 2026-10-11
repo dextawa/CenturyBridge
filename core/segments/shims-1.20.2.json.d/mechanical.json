@@ -221,17 +221,6 @@
    "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_8776; not passed"
   },
   {
-   "old": "method_44569(I)V",
-   "new": "method_44569(ILcom/mojang/authlib/minecraft/report/AbuseReportLimits;)V",
-   "args": [
-    0
-   ],
-   "onlyUnder": "net/minecraft/class_7566",
-   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lcom/mojang/authlib/minecraft/report/AbuseReportLimits; not passed"
-  },
-  {
    "old": "method_1855(I)V",
    "new": "method_1855(IZ)V",
    "args": [

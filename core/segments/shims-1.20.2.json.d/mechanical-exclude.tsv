@@ -1,0 +1,2 @@
+# owner	name+desc	reason (rows gen_step_reshapes.py must not bridge mechanically)
+net/minecraft/class_7566	method_44569(I)V	class_7566 is ChatReportBuilder in 1.20.1 but ChatReport in 1.20.2 (Fabric intermediary moved the name to another class); the builder lives on as class_7566$class_8772, so a same-name hook pairs two unrelated methods -- s1net wires the swap

@@ -1,0 +1,3 @@
+usage	owner	name	desc	kinds	w
+implement-interface	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder			ABSTRACT	class public abstract interface extends java/lang/Object
+implement-interface	net/fabricmc/fabric/api/attachment/v1/AttachmentType			ABSTRACT	class public abstract interface extends java/lang/Object
