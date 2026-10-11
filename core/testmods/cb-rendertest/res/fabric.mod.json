@@ -1,0 +1,10 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_rendertest",
+ "version": "1.0.0",
+ "name": "CB Render Test",
+ "environment": "client",
+ "entrypoints": { "client": ["cb.rendertest.RenderTestMod"] },
+ "accessWidener": "cb_rendertest.accesswidener",
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.1" }
+}

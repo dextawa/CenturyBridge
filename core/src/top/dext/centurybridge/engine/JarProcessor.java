@@ -423,6 +423,21 @@ public final class JarProcessor {
             if (op.drop) {
                 continue;
             }
+            if (op.param != null) {
+                // the enclosing method's own first parameter of that type, else the supplier
+                int slot = (m.access & Opcodes.ACC_STATIC) != 0 ? 0 : 1;
+                int found = -1;
+                for (org.objectweb.asm.Type t : org.objectweb.asm.Type.getArgumentTypes(m.desc)) {
+                    if (t.equals(op.param)) {
+                        found = slot;
+                        break;
+                    }
+                    slot += t.getSize();
+                }
+                seq.add(found >= 0 ? new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, found)
+                    : new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, op.owner, op.name, op.desc, false));
+                continue;
+            }
             for (int idx : op.from) {
                 seq.add(new org.objectweb.asm.tree.VarInsnNode(old[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
             }
@@ -2081,6 +2096,20 @@ public final class JarProcessor {
                     for (String[] sy : h.synth) {
                         if (declaredShapes.contains(sy[0] + sy[1])) {
                             continue; // the mod already speaks the new shape
+                        }
+                        if (h.guard != null) {
+                            // guarded: the bridge runs on first entry; calling the method again
+                            // from the bridge reaches super's shape (a vanilla implementation)
+                            Chain.OverrideHook g = new Chain.OverrideHook();
+                            g.oldName = g.newName = sy[0];
+                            g.oldDesc = g.newDesc = sy[1];
+                            g.bridgeOwner = sy[2];
+                            g.bridgeName = sy[3];
+                            g.bridgeDesc = sy[4];
+                            g.guard = h.guard;
+                            synthesizeOverride(this, g, clsName[0], superOf[0]);
+                            rpt.notes.add(tag + "adapter-synthesized (guarded): " + clsName[0] + "." + sy[0] + sy[1]);
+                            continue;
                         }
                         // new shape vanilla calls -> static bridge(this-as-adapter, args...)
                         MethodVisitor mv = super.visitMethod(Opcodes.ACC_PUBLIC, sy[0], sy[1], null, null);

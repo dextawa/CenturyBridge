@@ -311,6 +311,12 @@ public final class Chain {
      */
     public static final class AdapterHook {
         public String under, adapter;
+        /**
+         * Optional cbEnter/cbExit guard class: each synthesized method then calls its bridge
+         * only on first entry and falls through to super's shape on re-entry, so a bridge can
+         * defer to a vanilla implementation above the mod class by calling the method again.
+         */
+        public String guard;
         public final java.util.List<String> requires = new java.util.ArrayList<>();
         /** {new name, new desc, call owner, call name, call desc} */
         public final java.util.List<String[]> synth = new java.util.ArrayList<>();
@@ -814,6 +820,8 @@ public final class Chain {
         /** static converter/supplier; null for keep and drop */
         public final String owner, name, desc;
         public final boolean drop;
+        /** "param": the enclosing method's first parameter of this type; owner/name/desc then supply the fallback */
+        public org.objectweb.asm.Type param;
 
         ReshapeOp(int[] from, String owner, String name, String desc, boolean drop) {
             this.from = from;
@@ -853,7 +861,7 @@ public final class Chain {
                 idxs = head.substring(colon + 1);
             }
             int[] from;
-            if (kind.equals("push")) {
+            if (kind.equals("push") || kind.equals("param")) {
                 from = new int[0];
             } else if (idxs != null) {
                 explicit = true;
@@ -912,6 +920,26 @@ public final class Chain {
                     }
                     ops.add(new ReshapeOp(from, cOwner, cName, cDesc, false));
                     produced.add(r);
+                }
+                case "param" -> {
+                    // "param:<desc> OWNER#name()R": the enclosing constructor's own first
+                    // parameter of that type (a 26.x model's root ModelPart, which super()
+                    // now wants and the mod's constructor was handed), else the supplier
+                    if (idxs == null || idxs.isEmpty()) {
+                        throw new IllegalArgumentException(where + ": op '" + t + "' needs param:<type descriptor>");
+                    }
+                    org.objectweb.asm.Type pt = org.objectweb.asm.Type.getType(idxs);
+                    int hash = rest.indexOf('#');
+                    int paren = rest.indexOf('(');
+                    if (hash <= 0 || paren <= hash || org.objectweb.asm.Type.getArgumentTypes(rest.substring(paren)).length != 0
+                            || !org.objectweb.asm.Type.getReturnType(rest.substring(paren)).equals(pt)) {
+                        throw new IllegalArgumentException(where + ": op '" + t + "' needs a fallback OWNER#name()" + idxs);
+                    }
+                    ReshapeOp op = new ReshapeOp(from, rest.substring(0, hash), rest.substring(hash + 1, paren),
+                        rest.substring(paren), false);
+                    op.param = pt;
+                    ops.add(op);
+                    produced.add(pt);
                 }
                 default -> throw new IllegalArgumentException(where + ": unknown op '" + t + "'");
             }
@@ -1226,6 +1254,9 @@ public final class Chain {
                     AdapterHook h = new AdapterHook();
                     h.under = o.get("under").getAsString();
                     h.adapter = o.get("adapter").getAsString();
+                    if (o.has("guard")) {
+                        h.guard = o.get("guard").getAsString();
+                    }
                     for (var r : o.getAsJsonArray("requires")) {
                         h.requires.add(r.getAsString());
                     }

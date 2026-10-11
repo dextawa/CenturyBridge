@@ -276,8 +276,12 @@ public final class ClientStatics {
         return new com.mojang.authlib.GameProfile(self.method_44717(), self.method_1676());
     }
 
-    /** was net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V */
-    public static void method_2942(net.minecraft.class_638 self, int id, net.minecraft.class_1297 e) { self.method_53875(e); }
+    /** was net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V -- ClientWorld.addEntity(id, entity):
+     *  1.20.1 discarded whatever entity held that id, then added this one */
+    public static void method_2942(net.minecraft.class_638 self, int id, net.minecraft.class_1297 e) {
+        self.method_2945(id, net.minecraft.class_1297.class_5529.field_26999);
+        self.method_53875(e);
+    }
 
     /** was net/minecraft/class_632.method_2864(Lnet/minecraft/class_161;Z)V selectTab(Advancement, boolean): locate its entry in the tree */
     public static void method_2864(net.minecraft.class_632 self, net.minecraft.class_161 adv, boolean b) {

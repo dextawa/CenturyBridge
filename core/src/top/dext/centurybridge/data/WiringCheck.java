@@ -454,6 +454,11 @@ public final class WiringCheck {
                         }
                     }
                 }
+                if (o.has("guard")) {
+                    String g = o.get("guard").getAsString();
+                    wantMethod(where + " guard", g + "#cbEnter", null, "(Ljava/lang/Object;)Z");
+                    wantMethod(where + " guard", g + "#cbExit", null, "(Ljava/lang/Object;)V");
+                }
                 for (var sy : o.getAsJsonArray("synth")) {
                     String call = sy.getAsJsonObject().get("call").getAsString();
                     int paren = call.indexOf('(');
@@ -594,6 +599,10 @@ public final class WiringCheck {
         String cls = hash < 0 ? target : target.substring(0, hash);
         String name = hash < 0 ? defaultName : target.substring(hash + 1);
         ClassNode cn = classes.get(cls);
+        if (cn == null && stub.containsKey(cls)) {
+            cn = stub.get(cls); // a vanilla owner: see wantField
+            if (wall != null && hash < 0 && name != null) name = wall.mapMethodName(cls, name, desc);
+        }
         if (cn == null) {
             problems.add(where + " -> " + target + " (no such shim class)");
             return;
@@ -625,6 +634,12 @@ public final class WiringCheck {
         String cls = hash < 0 ? target : target.substring(0, hash);
         String name = hash < 0 ? defaultName : target.substring(hash + 1);
         ClassNode cn = classes.get(cls);
+        if (cn == null && stub.containsKey(cls)) {
+            // a vanilla owner (a member 26.x moved to another class): the converter keeps the
+            // call site's name, which the namespace wall then maps like any other
+            cn = stub.get(cls);
+            if (wall != null && hash < 0) name = wall.mapFieldName(cls, name, desc);
+        }
         if (cn == null) {
             problems.add(where + " -> " + target + " (no such shim class)");
             return;

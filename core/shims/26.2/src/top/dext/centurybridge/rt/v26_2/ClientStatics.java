@@ -690,4 +690,11 @@ public final class ClientStatics {
     public static float method_23155(net.minecraft.world.entity.boss.enderdragon.EndCrystal a0, float a1) {
         return net.minecraft.client.renderer.entity.EndCrystalRenderer.getY(a1);
     }
+
+    /** was net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V -- ClientWorld.addEntity(id, entity):
+     *  1.20.1 discarded whatever entity held that id, then added this one */
+    public static void method_2942(net.minecraft.client.multiplayer.ClientLevel self, int id, net.minecraft.world.entity.Entity e) {
+        self.removeEntity(id, net.minecraft.world.entity.Entity.RemovalReason.DISCARDED);
+        self.addEntity(e);
+    }
 }

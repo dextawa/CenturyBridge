@@ -596,7 +596,8 @@
   "com/mojang/serialization/DataResult.error()Ljava/util/Optional;": "top/dext/centurybridge/rt/v1_21_11/CbDfu",
   "com/mojang/authlib/GameProfile.getName()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_21_11/CbAuthlib",
   "com/mojang/authlib/GameProfile.getId()Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_21_11/CbAuthlib",
-  "com/mojang/authlib/GameProfile.getProperties()Lcom/mojang/authlib/properties/PropertyMap;": "top/dext/centurybridge/rt/v1_21_11/CbAuthlib"
+  "com/mojang/authlib/GameProfile.getProperties()Lcom/mojang/authlib/properties/PropertyMap;": "top/dext/centurybridge/rt/v1_21_11/CbAuthlib",
+  "net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V": "top/dext/centurybridge/rt/v1_21_11/ClientStatics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_11/Statics",
@@ -1363,7 +1364,6 @@
   "net/minecraft/class_3242.field_14111": "unbridgeable after 6 rounds: javac rejects every attempted implementation: line 6: 不兼容的类型: NioEventLoopGroup无法转换为class_3528",
   "net/minecraft/class_8132.method_48997": "unbridgeable after 6 rounds: javac rejects every attempted implementation: line 8: 方法引用无效",
   "net/minecraft/class_742.method_3127": "unbridgeable after 6 rounds: target member is protected: unreachable from a shim outside the declaring package",
-  "net/minecraft/class_638.method_2942": "unbridgeable after 6 rounds: generic signature clash: the old descriptor and the new one erase to the same method, so both cannot coexist on the class",
   "net/minecraft/class_1408.method_6351": "unbridgeable after 6 rounds: target member is protected: unreachable from a shim outside the declaring package",
   "net/minecraft/class_2580.method_10934": "unbridgeable after 6 rounds: javac rejects every attempted implementation: line 6: field_11795在class_2580中不是公共的; 无法从外部程序包中对其进行访问",
   "net/minecraft/class_339.method_48588": "unbridgeable after 6 rounds: target member is protected: unreachable from a shim outside the declaring package",
