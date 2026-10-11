@@ -357,6 +357,67 @@ public final class JarProcessor {
     }
 
     /**
+     * Method calls whose descriptor changed at this step ({@link Chain#callReshapes}): every call
+     * site whose JVM-resolved home is a reshaped key -- whatever its opcode, a mod's own
+     * super.m(..) included, so the call keeps its dispatch -- has its arguments re-pushed per the
+     * ops and takes the new descriptor; the return value is dropped, converted or supplied right
+     * after. Straight-line code at the call, so existing frames stay exact.
+     */
+    private static byte[] rewriteCalls(byte[] bytes, Chain chain, Report rpt, String tag) {
+        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+        boolean any = false;
+        for (String n : chain.callReshapeNames) {
+            if (raw.contains(n)) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return bytes;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new ClassReader(bytes).accept(cn, 0);
+        int rewrites = 0;
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if (m.instructions == null) {
+                continue;
+            }
+            org.objectweb.asm.tree.AbstractInsnNode next;
+            for (org.objectweb.asm.tree.AbstractInsnNode in = m.instructions.getFirst(); in != null; in = next) {
+                next = in.getNext();
+                if (!(in instanceof org.objectweb.asm.tree.MethodInsnNode mi) || mi.name.startsWith("<")) {
+                    continue;
+                }
+                String nameDesc = mi.name + mi.desc;
+                String home = chain.instanceRedirectHome(chain.callReshapeIndex, mi.owner, nameDesc);
+                if (home == null) {
+                    continue;
+                }
+                String key = home + "." + nameDesc;
+                Chain.CallReshape r = chain.callReshapes.get(key);
+                reshapeArgs(m, mi, r.args);
+                mi.desc = r.newDesc;
+                if (r.retKind != null) {
+                    org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
+                    org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
+                        ? new org.objectweb.asm.tree.InsnNode(newRet.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP)
+                        : new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, r.retOwner, r.retName, r.retDesc, false);
+                    m.instructions.insert(mi, after);
+                }
+                rewrites++;
+                top.dext.centurybridge.data.FullAudit.record(key, "call-reshape");
+            }
+        }
+        if (rewrites == 0) {
+            return bytes;
+        }
+        rpt.notes.add(tag + "call-reshaped: " + rewrites + " call site(s) in " + cn.name);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
+    }
+
+    /**
      * If {@code h} is a {@code owner::new} constructor method handle
      * (REF_newInvokeSpecial) whose owner has a ctorRedirect factory, return an
      * equivalent REF_invokeStatic handle to that factory (same arg types, with
@@ -491,18 +552,34 @@ public final class JarProcessor {
     }
 
     /** Walk superclasses through the mod's own classes, then the vanilla hierarchy. */
-    private static boolean isUnder(String superName, String target, Map<String, String> jarSuper, Chain chain) {
-        String cur = superName;
-        int guard = 0;
-        while (cur != null && guard++ < 64) {
+    /**
+     * Whether a class with this superclass and these interfaces is a subtype of {@code target},
+     * through the jar's own classes and the source release's: superclasses and interfaces both
+     * (a hook on FluidDrainable must reach a mod block that implements it directly).
+     */
+    private static boolean isUnder(String superName, String[] ifaces, String target, LayerIndex layer, Chain chain) {
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        if (superName != null) {
+            todo.add(superName);
+        }
+        if (ifaces != null) {
+            todo.addAll(List.of(ifaces));
+        }
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String cur = todo.poll();
+            if (!seen.add(cur)) {
+                continue;
+            }
             if (cur.equals(target)) {
                 return true;
             }
-            String next = jarSuper.get(cur);
-            if (next == null) {
-                next = chain.superOf.get(cur);
+            String sup = layer.superOf.containsKey(cur) ? layer.superOf.get(cur) : chain.superOf.get(cur);
+            if (sup != null) {
+                todo.add(sup);
             }
-            cur = next;
+            todo.addAll(layer.superOf.containsKey(cur) ? layer.interfacesOf.getOrDefault(cur, List.of())
+                : chain.interfacesOf.getOrDefault(cur, List.of()));
         }
         return false;
     }
@@ -1195,6 +1272,11 @@ public final class JarProcessor {
             ctorChanged = b2 != bytes;
             bytes = b2;
         }
+        if (!chain.callReshapes.isEmpty()) {
+            byte[] b3 = rewriteCalls(bytes, chain, rpt, tag);
+            ctorChanged |= b3 != bytes;
+            bytes = b3;
+        }
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
@@ -1416,10 +1498,10 @@ public final class JarProcessor {
                 boolean hooked = false;
                 if ((acc & (Opcodes.ACC_STATIC | Opcodes.ACC_ABSTRACT)) == 0) {
                     for (Chain.OverrideHook oh : chain.overrideHooksForOld(mName, mDesc)) {
-                        if (oh.onlyUnder != null && !isUnder(superOf[0], oh.onlyUnder, jarSuper, chain)) {
+                        if (oh.onlyUnder != null && !isUnder(superOf[0], itfs, oh.onlyUnder, layer, chain)) {
                             continue;
                         }
-                        if (oh.notUnder != null && isUnder(superOf[0], oh.notUnder, jarSuper, chain)) {
+                        if (oh.notUnder != null && isUnder(superOf[0], itfs, oh.notUnder, layer, chain)) {
                             continue;
                         }
                         declaredOldOverrides.add(oh);
@@ -1614,6 +1696,9 @@ public final class JarProcessor {
                             mthRenames.put(site, mrn);
                             top.dext.centurybridge.data.FullAudit.record(key, "method-rename");
                             return;
+                        }
+                        if (chain.callReshapeTargets.contains(name + desc)) {
+                            return; // the call pre-pass (rewriteCalls) already gave it the step's new shape
                         }
                         Chain.Issue r = chain.resolveMember('m', name);
                         if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)

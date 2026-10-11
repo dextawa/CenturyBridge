@@ -100,7 +100,7 @@ public final class MixinCheck {
                 }
             }
         }
-        if (shimsJson != null && Files.exists(shimsJson)) {
+        if (shimsJson != null && top.dext.centurybridge.engine.Wiring.exists(shimsJson)) {
             c.checkCovers(shimsJson);
         }
         c.sources.close();
@@ -215,7 +215,7 @@ public final class MixinCheck {
      * NoSuchMethodError. Prunes that cut a method but not its cover did this.
      */
     private void checkCovers(Path shimsJson) throws IOException {
-        var root = new com.google.gson.Gson().fromJson(Files.readString(shimsJson), com.google.gson.JsonObject.class);
+        var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
         if (!root.has("covers")) {
             return;
         }

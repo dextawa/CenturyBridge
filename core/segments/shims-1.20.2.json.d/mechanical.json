@@ -1,0 +1,417 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_7380.method_43117(Ljava/lang/Object;)Lnet/minecraft/class_7376;": {
+   "desc": "(Ljava/lang/Object;)Lnet/minecraft/class_7380$class_8746;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "keep",
+   "basis": "mechanical: same values; returns a subtype of the old type"
+  },
+  "net/minecraft/class_2062$class_2063.method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;": {
+   "desc": "()Lcom/google/gson/JsonObject;",
+   "ops": [
+    "drop:0"
+   ],
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_5267;, never read in V"
+  },
+  "net/minecraft/class_4614.method_23262(Ljava/io/DataInput;ILnet/minecraft/class_2505;)Lnet/minecraft/class_2520;": {
+   "desc": "(Ljava/io/DataInput;Lnet/minecraft/class_2505;)Lnet/minecraft/class_2520;",
+   "ops": [
+    "keep:0",
+    "keep:2",
+    "drop:1"
+   ],
+   "basis": "mechanical: same values; dropped I, never read in V"
+  },
+  "net/minecraft/class_2540.method_29172(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Ljava/lang/Object;)V": {
+   "desc": "(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Ljava/lang/Object;)Lnet/minecraft/class_2540;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "ret": "pop",
+   "basis": "mechanical: same values; return value popped"
+  },
+  "net/minecraft/class_2661.method_11467(Lnet/minecraft/class_2602;)V": {
+   "desc": "(Lnet/minecraft/class_8705;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8705;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2670.method_11518(Lnet/minecraft/class_2602;)V": {
+   "desc": "(Lnet/minecraft/class_8705;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8705;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_6373.method_36949(Lnet/minecraft/class_2602;)V": {
+   "desc": "(Lnet/minecraft/class_8705;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8705;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2720.method_11774(Lnet/minecraft/class_2602;)V": {
+   "desc": "(Lnet/minecraft/class_8705;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8705;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2790.method_12001(Lnet/minecraft/class_2602;)V": {
+   "desc": "(Lnet/minecraft/class_8705;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8705;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2803.method_12133(Lnet/minecraft/class_2792;)V": {
+   "desc": "(Lnet/minecraft/class_8706;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8706;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2817.method_12199(Lnet/minecraft/class_2792;)V": {
+   "desc": "(Lnet/minecraft/class_8706;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8706;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2827.method_12266(Lnet/minecraft/class_2792;)V": {
+   "desc": "(Lnet/minecraft/class_8706;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8706;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_6374.method_36959(Lnet/minecraft/class_2792;)V": {
+   "desc": "(Lnet/minecraft/class_8706;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8706;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2856.method_12409(Lnet/minecraft/class_2792;)V": {
+   "desc": "(Lnet/minecraft/class_8706;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8706;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2923.method_12670(Lnet/minecraft/class_2921;)V": {
+   "desc": "(Lnet/minecraft/class_8763;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8763;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2935.method_12699(Lnet/minecraft/class_2933;)V": {
+   "desc": "(Lnet/minecraft/class_8740;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_8740;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_3210.method_14083(J)Ljava/util/Set;": {
+   "desc": "()Ljava/util/Set;",
+   "ops": [
+    "drop:0"
+   ],
+   "basis": "mechanical: same values; dropped J, never read in V"
+  },
+  "net/minecraft/class_3210.method_14085(JLnet/minecraft/class_3222;Z)V": {
+   "desc": "(Lnet/minecraft/class_3222;Z)V",
+   "ops": [
+    "keep:1",
+    "keep:2",
+    "drop:0"
+   ],
+   "basis": "mechanical: same values; dropped J, never read in V"
+  },
+  "net/minecraft/class_3210.method_14084(JLnet/minecraft/class_3222;)V": {
+   "desc": "(Lnet/minecraft/class_3222;)V",
+   "ops": [
+    "keep:1",
+    "drop:0"
+   ],
+   "basis": "mechanical: same values; dropped J, never read in V"
+  },
+  "net/minecraft/class_1866$class_7711.create(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)Lnet/minecraft/class_3955;": {
+   "desc": "(Lnet/minecraft/class_7710;)Lnet/minecraft/class_3955;",
+   "ops": [
+    "keep:1",
+    "drop:0"
+   ],
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2960;, never read in V"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_8019.<init>(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;I)V": {
+   "desc": "(ILnet/minecraft/class_2561;Lnet/minecraft/class_327;)V",
+   "ops": [
+    "keep:2",
+    "keep:1",
+    "keep:0"
+   ],
+   "basis": "mechanical: same values, reordered by type"
+  },
+  "net/minecraft/class_8580.<init>(Lnet/minecraft/class_8582;)V": {
+   "desc": "(Ljava/nio/file/PathMatcher;)V",
+   "ops": [
+    "keep:0 Ljava/nio/file/PathMatcher;"
+   ],
+   "basis": "mechanical: same values"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_31186(Ljava/lang/Throwable;Lnet/minecraft/class_2561;)V",
+   "new": "method_31186(Ljava/lang/Throwable;Lnet/minecraft/class_2561;Lnet/minecraft/class_310$class_8764;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_310",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_310$class_8764; not passed"
+  },
+  {
+   "old": "method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;",
+   "args": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "onlyUnder": "net/minecraft/class_7766",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Ljava/util/Collection; not passed"
+  },
+  {
+   "old": "method_19430(ILjava/util/List;)V",
+   "new": "method_19430(ILnet/minecraft/class_2338;Ljava/util/List;)V",
+   "args": [
+    0,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_4205",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2338; not passed"
+  },
+  {
+   "old": "method_44563(Ljava/util/UUID;Lcom/mojang/authlib/minecraft/report/AbuseReport;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_44563(Ljava/util/UUID;Lnet/minecraft/class_8776;Lcom/mojang/authlib/minecraft/report/AbuseReport;)Ljava/util/concurrent/CompletableFuture;",
+   "args": [
+    0,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_7563",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_8776; not passed"
+  },
+  {
+   "old": "method_44569(I)V",
+   "new": "method_44569(ILcom/mojang/authlib/minecraft/report/AbuseReportLimits;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_7566",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lcom/mojang/authlib/minecraft/report/AbuseReportLimits; not passed"
+  },
+  {
+   "old": "method_1855(I)V",
+   "new": "method_1855(IZ)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_342",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+  },
+  {
+   "old": "method_1883(I)V",
+   "new": "method_1883(IZ)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_342",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+  },
+  {
+   "old": "method_1870()V",
+   "new": "method_1870(Z)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_342",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+  },
+  {
+   "old": "method_1872()V",
+   "new": "method_1872(Z)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_342",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+  },
+  {
+   "old": "method_25420(Lnet/minecraft/class_332;)V",
+   "new": "method_25420(Lnet/minecraft/class_332;IIF)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_437",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new I,I,F not passed"
+  },
+  {
+   "old": "method_43735(Lnet/minecraft/class_7448;)Lnet/minecraft/class_2168;",
+   "new": "method_43735(Lnet/minecraft/class_7448;Lnet/minecraft/class_7620;)Lnet/minecraft/class_2168;",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2168",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_7620; not passed"
+  },
+  {
+   "old": "method_39851(Ljava/io/DataInput;)V",
+   "new": "method_39851(Ljava/io/DataInput;Lnet/minecraft/class_2505;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_4614",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2505; not passed"
+  },
+  {
+   "old": "method_39854(Ljava/io/DataInput;I)V",
+   "new": "method_39854(Ljava/io/DataInput;ILnet/minecraft/class_2505;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_4614",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2505; not passed"
+  },
+  {
+   "old": "method_39852(Ljava/io/DataInput;Lnet/minecraft/class_6836;)Lnet/minecraft/class_6836$class_6838;",
+   "new": "method_39852(Ljava/io/DataInput;Lnet/minecraft/class_6836;Lnet/minecraft/class_2505;)Lnet/minecraft/class_6836$class_6838;",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_4614",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2505; not passed"
+  },
+  {
+   "old": "method_39877(Ljava/io/DataInput;Lnet/minecraft/class_6836;)V",
+   "new": "method_39877(Ljava/io/DataInput;Lnet/minecraft/class_6836;Lnet/minecraft/class_2505;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_4614",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2505; not passed"
+  },
+  {
+   "old": "method_29171(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;)Ljava/lang/Object;",
+   "new": "method_29171(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_2505;)Ljava/lang/Object;",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_2540",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2505; not passed"
+  },
+  {
+   "old": "method_30616(Lnet/minecraft/class_2505;)Lnet/minecraft/class_2487;",
+   "new": "method_30616(Lnet/minecraft/class_2505;)Lnet/minecraft/class_2520;",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2540",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had"
+  },
+  {
+   "old": "method_36341(Lnet/minecraft/class_2158;Lnet/minecraft/class_2168;Lnet/minecraft/class_2991$class_6346;)I",
+   "new": "method_36341(Lnet/minecraft/class_2158;Lnet/minecraft/class_2168;Lnet/minecraft/class_2991$class_6346;Lnet/minecraft/class_2487;)I",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_2991",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2487; not passed"
+  },
+  {
+   "old": "method_14570(Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)V",
+   "new": "method_14570(Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;Lnet/minecraft/class_8792;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_3324",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_8792; not passed"
+  },
+  {
+   "old": "method_14613(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_3222;",
+   "new": "method_14613(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_8791;)Lnet/minecraft/class_3222;",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_3324",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_8791; not passed"
+  },
+  {
+   "old": "method_9700(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;",
+   "new": "method_9700(Lnet/minecraft/class_1657;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;",
+   "args": [
+    1,
+    2,
+    3
+   ],
+   "onlyUnder": "net/minecraft/class_2263",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_1657; not passed"
+  },
+  {
+   "old": "method_10012(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)V",
+   "new": "method_10012(Lnet/minecraft/class_3218;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)V",
+   "args": [
+    0,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_2315",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2680; not passed"
+  },
+  {
+   "old": "method_17923(Ljava/lang/String;I)Lnet/minecraft/class_2487;",
+   "new": "method_17923(Ljava/lang/String;Lnet/minecraft/class_4284;I)Lnet/minecraft/class_2487;",
+   "args": [
+    0,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_26",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_4284; not passed"
+  }
+ ]
+}

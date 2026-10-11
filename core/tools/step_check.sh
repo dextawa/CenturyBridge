@@ -16,7 +16,10 @@ OUT="$WD/step/$SEG"
 rm -rf "$OUT" && mkdir -p "$OUT"
 case "$W" in 26.*) GAME="data/jars/client-$W.jar" ;; *) GAME="data/jars/client-$W-intermediary.jar" ;; esac
 FAPI=$(ls data/runtime/client-$W/mods/fabric-api-*.jar 2>/dev/null | head -1)
-"$JAVA" -Xmx16g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/conv" \
+# the step's own bridge wiring (step 1 is the 1.20.2 tree's shims-1.20.2.json)
+WIRING="$WD/core/segments/steps/$SEG.json"
+[ "$SEG" = "1.20.1__1.20.2" ] && WIRING="$WD/core/segments/shims-1.20.2.json"
+"$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/conv" \
     "probe/seg/$SEG/probe-$V.jar" > "$OUT/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$OUT/convert.log"; exit 1; }
 "$JAVA" -Xmx32g -cp "core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
     "$WD/build/centurybridge-0.3.0+$W.jar" "$GAME" $FAPI "data/runtime/client-$W/libraries" > "$OUT/linkcheck.log" 2>&1

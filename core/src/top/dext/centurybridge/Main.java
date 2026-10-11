@@ -314,7 +314,7 @@ public final class Main {
                 ? segs.resolve("shims-1.20.2.json") : segs.resolve("steps").resolve(seg + ".json");
             System.setProperty("cb.wiring", stepWiring.toString());
             Path stepOut = outDir.resolve("steps").resolve(seg);
-            System.out.println("== climb " + seg + (Files.exists(stepWiring) ? " (bridges: " + stepWiring + ")" : " (no bridges for this step yet)"));
+            System.out.println("== climb " + seg + (top.dext.centurybridge.engine.Wiring.exists(stepWiring) ? " (bridges: " + stepWiring + ")" : " (no bridges for this step yet)"));
             List<String> a2 = new ArrayList<>(List.of("convert", segs.toString(), v, w, stepOut.toString()));
             inputs.forEach(p -> a2.add(p.toString()));
             convert(a2.toArray(new String[0]));

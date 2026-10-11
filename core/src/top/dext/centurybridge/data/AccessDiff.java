@@ -102,7 +102,7 @@ public final class AccessDiff {
 
     /** the converter's member moves for this target: methodRenames (same desc), lookupHooks (new desc, any owner) */
     private void loadMoves(Path shims) throws IOException {
-        var root = com.google.gson.JsonParser.parseString(Files.readString(shims)).getAsJsonObject();
+        var root = top.dext.centurybridge.engine.Wiring.read(shims);
         if (root.has("methodRenames")) {
             for (var e : root.getAsJsonObject("methodRenames").entrySet()) {
                 String k = e.getKey();

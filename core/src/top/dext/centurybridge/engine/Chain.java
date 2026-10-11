@@ -802,6 +802,96 @@ public final class Chain {
      */
     public final java.util.Map<String, CtorReshape> superCtorReshapes = new java.util.HashMap<>();
 
+    /**
+     * Method calls whose descriptor changed at the boundary, reshaped in place ("callReshapes"
+     * in a step's wiring): "owner.name(oldDesc)R" -> {"desc": "(newArgs)R'", "ops": [...],
+     * "ret": "pop" | "conv OWNER#name(R')R" | "push OWNER#name()R"}. Every call site whose
+     * JVM-resolved home is that key -- virtual, interface, static, and a mod's own super.m(..)
+     * alike, so super semantics survive -- has its arguments spilled and re-pushed per the ops
+     * (the {@link #superCtorReshapes} grammar: keep / drop / conv / push / param) and takes the
+     * new descriptor; the return value is adapted after the call: dropped when the old shape
+     * returned nothing, converted when it returned another type, supplied when the new shape
+     * returns nothing but the old one did, passed on ("ret": "keep") when the new shape returns a
+     * subtype of the old return type. Validated when the wiring loads.
+     */
+    public static final class CallReshape {
+        public final CtorReshape args;
+        public final String oldDesc;
+        public final String newDesc;
+        /** after the call: null (same return), "pop", or a static {owner, name, desc} */
+        public final String retKind;
+        public final String retOwner, retName, retDesc;
+
+        CallReshape(CtorReshape args, String oldDesc, String newDesc, String retKind, String retOwner, String retName, String retDesc) {
+            this.args = args;
+            this.oldDesc = oldDesc;
+            this.newDesc = newDesc;
+            this.retKind = retKind;
+            this.retOwner = retOwner;
+            this.retName = retName;
+            this.retDesc = retDesc;
+        }
+    }
+
+    public final java.util.Map<String, CallReshape> callReshapes = new java.util.HashMap<>();
+    /** key -> key, for {@link #instanceRedirectHome}'s JVM-order lookup */
+    public final java.util.Map<String, String> callReshapeIndex = new java.util.HashMap<>();
+    /** member names with a reshape: a class whose bytes mention none of them is skipped */
+    public final java.util.Set<String> callReshapeNames = new java.util.HashSet<>();
+    /** name + new descriptor of every reshape: what the rewritten call sites now reference */
+    public final java.util.Set<String> callReshapeTargets = new java.util.HashSet<>();
+
+    public static CallReshape parseCallReshape(String key, String newDesc, java.util.List<String> ops, String ret) {
+        String where = "callReshapes " + key;
+        String oldDesc = key.substring(key.indexOf('('));
+        CtorReshape args = parseReshape(key, newDesc, ops);
+        org.objectweb.asm.Type oldRet = org.objectweb.asm.Type.getReturnType(oldDesc);
+        org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(newDesc);
+        if (oldRet.equals(newRet)) {
+            if (ret != null) {
+                throw new IllegalArgumentException(where + ": return type unchanged, 'ret' must be absent");
+            }
+            return new CallReshape(args, oldDesc, newDesc, null, null, null, null);
+        }
+        if (oldRet.getSort() == org.objectweb.asm.Type.VOID) {
+            if (ret != null && !ret.equals("pop")) {
+                throw new IllegalArgumentException(where + ": the old shape returned nothing; 'ret' can only be pop");
+            }
+            return new CallReshape(args, oldDesc, newDesc, "pop", null, null, null);
+        }
+        if (ret == null) {
+            throw new IllegalArgumentException(where + ": return " + newRet + " -> " + oldRet + " needs 'ret'");
+        }
+        if (ret.equals("keep")) {
+            // the new shape returns a subtype of the old return type: the value passes unchanged
+            // (the wiring gate checks the subtype relation on the target)
+            if (oldRet.getSort() != org.objectweb.asm.Type.OBJECT || newRet.getSort() != org.objectweb.asm.Type.OBJECT) {
+                throw new IllegalArgumentException(where + ": ret keep needs object return types, not " + newRet + " -> " + oldRet);
+            }
+            return new CallReshape(args, oldDesc, newDesc, null, null, null, null);
+        }
+        String[] kv = ret.trim().split(" ", 2);
+        if (kv.length != 2 || !(kv[0].equals("conv") || kv[0].equals("push"))) {
+            throw new IllegalArgumentException(where + ": malformed ret '" + ret + "'");
+        }
+        String rest = kv[1].trim();
+        int hash = rest.indexOf('#');
+        int paren = rest.indexOf('(');
+        if (hash <= 0 || paren <= hash) {
+            throw new IllegalArgumentException(where + ": ret needs OWNER#name(desc)R");
+        }
+        String rd = rest.substring(paren);
+        org.objectweb.asm.Type[] rp = org.objectweb.asm.Type.getArgumentTypes(rd);
+        org.objectweb.asm.Type rr = org.objectweb.asm.Type.getReturnType(rd);
+        boolean ok = kv[0].equals("conv")
+            ? rp.length == 1 && rp[0].equals(newRet) && rr.equals(oldRet)
+            : rp.length == 0 && rr.equals(oldRet) && newRet.getSort() == org.objectweb.asm.Type.VOID;
+        if (!ok) {
+            throw new IllegalArgumentException(where + ": ret " + ret + " does not turn " + newRet + " into " + oldRet);
+        }
+        return new CallReshape(args, oldDesc, newDesc, kv[0], rest.substring(0, hash), rest.substring(hash + 1, paren), rd);
+    }
+
     /** one parsed "superCtorReshapes" entry: the new descriptor and the ops that build its arguments */
     public static final class CtorReshape {
         public final String newDesc;
@@ -882,11 +972,14 @@ public final class Chain {
             }
             switch (kind) {
                 case "keep" -> {
-                    if (!rest.isEmpty() || from.length != 1) {
+                    if (from.length != 1) {
                         throw new IllegalArgumentException(where + ": malformed op '" + t + "'");
                     }
                     ops.add(new ReshapeOp(from, null, null, null, false));
-                    produced.add(old[from[0]]);
+                    // "keep:N <type>": the old argument passed, unchanged, where the new shape
+                    // declares a supertype of it (whoever writes the entry has checked the
+                    // hierarchy; the verifier holds it to that at load)
+                    produced.add(rest.isEmpty() ? old[from[0]] : org.objectweb.asm.Type.getType(rest));
                 }
                 case "drop" -> {
                     if (!rest.isEmpty() || from.length != 1) {
@@ -1153,9 +1246,8 @@ public final class Chain {
         // a path that does not exist means the step has none
         String stepWiring = System.getProperty("cb.wiring");
         Path shims = stepWiring != null ? Path.of(stepWiring) : segmentsDir.resolve("shims-" + to + ".json");
-        if (java.nio.file.Files.exists(shims)) {
-            var gson = new com.google.gson.Gson();
-            var root = gson.fromJson(java.nio.file.Files.readString(shims), com.google.gson.JsonObject.class);
+        if (Wiring.exists(shims)) {
+            var root = Wiring.read(shims);
             if (root.has("staticRedirects")) {
                 var sr = root.getAsJsonObject("staticRedirects");
                 for (String k : sr.keySet()) {
@@ -1318,6 +1410,22 @@ public final class Chain {
                     }
                     c.superCtorReshapes.put(k, parseReshape(k, o.get("desc").getAsString(), ops));
                     c.ctorRedirectOwners.add(k.substring(0, k.indexOf(".<init>")));
+                }
+            }
+            if (root.has("callReshapes")) {
+                var cr = root.getAsJsonObject("callReshapes");
+                for (String k : cr.keySet()) {
+                    var o = cr.getAsJsonObject(k);
+                    java.util.List<String> ops = new java.util.ArrayList<>();
+                    for (var el : o.getAsJsonArray("ops")) {
+                        ops.add(el.getAsString());
+                    }
+                    String ret = o.has("ret") ? o.get("ret").getAsString() : null;
+                    c.callReshapes.put(k, parseCallReshape(k, o.get("desc").getAsString(), ops, ret));
+                    c.callReshapeIndex.put(k, k);
+                    String nm = k.substring(k.lastIndexOf('.', k.indexOf('(')) + 1, k.indexOf('('));
+                    c.callReshapeNames.add(nm);
+                    c.callReshapeTargets.add(nm + o.get("desc").getAsString());
                 }
             }
             if (root.has("ctorRedirects")) {

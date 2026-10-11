@@ -83,7 +83,7 @@ public final class WiringCheck {
         if (table != null && Files.exists(table)) {
             w.wall = JarRemapper.loadTable(table).remapper();
         }
-        var root = new com.google.gson.Gson().fromJson(Files.readString(shimsJson), com.google.gson.JsonObject.class);
+        var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
         w.check(root);
         w.checkFacadeSurfaces(root);
         w.sources.close();
@@ -406,20 +406,48 @@ public final class WiringCheck {
             for (var e : root.getAsJsonObject("superCtorReshapes").entrySet()) {
                 var o = e.getValue().getAsJsonObject();
                 if (!stub.isEmpty()) checkReshapeTarget(e.getKey(), o.get("desc").getAsString(), superRen);
-                for (var op : o.getAsJsonArray("ops")) {
-                    String t = op.getAsString().trim();
-                    int sp = t.indexOf(' ');
-                    if (sp < 0) {
-                        continue; // keep / drop
+                checkReshapeOps("superCtorReshapes " + e.getKey(), e.getKey(), o.getAsJsonArray("ops"));
+            }
+        }
+        // callReshapes: the reshaped call must resolve on the target (the owner or a supertype
+        // declares the new shape), and every converter / supplier it runs must exist
+        if (root.has("callReshapes")) {
+            for (var e : root.getAsJsonObject("callReshapes").entrySet()) {
+                var o = e.getValue().getAsJsonObject();
+                String where = "callReshapes " + e.getKey();
+                checked++;
+                if (!stub.isEmpty()) {
+                    Sym s = Sym.method(e.getKey());
+                    String owner = targetName(facade.mapType(s.owner));
+                    String nd = methodDesc(o.get("desc").getAsString());
+                    String name = wall == null ? s.name : wall.mapMethodName(s.owner, s.name, s.desc);
+                    if (!resolves(owner, name, nd)) {
+                        problems.add(where + ": " + owner + "." + name + nd + " does not resolve on the target");
                     }
-                    String rest = t.substring(sp + 1).trim();   // OWNER#name(desc)R
-                    int paren = rest.indexOf('(');
-                    if (paren < 0) {
-                        problems.add("superCtorReshapes " + e.getKey() + ": malformed op '" + t + "'");
-                        continue;
+                }
+                checkReshapeOps(where, e.getKey(), o.getAsJsonArray("ops"));
+                if (o.has("ret")) {
+                    String r = o.get("ret").getAsString().trim();
+                    int sp = r.indexOf(' ');
+                    if (r.equals("keep")) {
+                        org.objectweb.asm.Type or = org.objectweb.asm.Type.getReturnType(e.getKey().substring(e.getKey().indexOf('(')));
+                        org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(o.get("desc").getAsString());
+                        if (!stub.isEmpty() && or.getSort() == org.objectweb.asm.Type.OBJECT && nr.getSort() == org.objectweb.asm.Type.OBJECT) {
+                            String from = targetName(facade.mapType(nr.getInternalName()));
+                            String to = targetName(facade.mapType(or.getInternalName()));
+                            if (!to.equals("java/lang/Object") && !isSubtype(from, to)) {
+                                problems.add(where + ": ret keep: " + from + " is not a subtype of " + to + " on the target");
+                            }
+                        }
+                    } else if (!r.equals("pop")) {
+                        String rest = sp < 0 ? "" : r.substring(sp + 1).trim();
+                        int paren = rest.indexOf('(');
+                        if (paren < 0) {
+                            problems.add(where + ": malformed ret '" + r + "'");
+                        } else {
+                            wantMethod(where + " ret", rest.substring(0, paren), null, methodDesc(rest.substring(paren)));
+                        }
                     }
-                    wantMethod("superCtorReshapes " + e.getKey() + " op '" + t + "'",
-                        rest.substring(0, paren), null, methodDesc(rest.substring(paren)));
                 }
             }
         }
@@ -561,6 +589,71 @@ public final class WiringCheck {
         } else if (tn.methods.stream().noneMatch(m -> m.name.equals("<init>") && m.desc.equals(nd))) {
             problems.add("superCtorReshapes " + key + ": " + tc + ".<init>" + nd + " is not a constructor there");
         }
+    }
+
+    /**
+     * The reshape ops' runtime references: every converter / supplier static exists with the exact
+     * descriptor, and a typed keep ("keep:N Ltype;": the old argument passed where the new shape
+     * declares a supertype of it) really names a supertype of old argument N.
+     */
+    private void checkReshapeOps(String where, String key, com.google.gson.JsonArray ops) {
+        org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(key.substring(key.indexOf('(')));
+        for (var op : ops) {
+            String t = op.getAsString().trim();
+            int sp = t.indexOf(' ');
+            if (sp < 0) {
+                continue; // keep / drop
+            }
+            String head = t.substring(0, sp);
+            String rest = t.substring(sp + 1).trim();
+            if (head.equals("keep") || head.startsWith("keep:")) {
+                if (!head.startsWith("keep:")) {
+                    problems.add(where + ": typed op '" + t + "' needs an explicit index (keep:N <type>)");
+                    continue;
+                }
+                int i = Integer.parseInt(head.substring(5));
+                org.objectweb.asm.Type want = org.objectweb.asm.Type.getType(rest);
+                if (i >= old.length || old[i].getSort() != org.objectweb.asm.Type.OBJECT || want.getSort() != org.objectweb.asm.Type.OBJECT) {
+                    problems.add(where + ": typed op '" + t + "' passes no object argument");
+                } else if (!stub.isEmpty()) {
+                    String from = targetName(facade.mapType(old[i].getInternalName()));
+                    String to = targetName(facade.mapType(want.getInternalName()));
+                    if (!to.equals("java/lang/Object") && !isSubtype(from, to)) {
+                        problems.add(where + ": op '" + t + "': " + from + " is not a subtype of " + to + " on the target");
+                    }
+                }
+                continue;
+            }
+            int paren = rest.indexOf('(');   // OWNER#name(desc)R
+            if (paren < 0) {
+                problems.add(where + ": malformed op '" + t + "'");
+                continue;
+            }
+            wantMethod(where + " op '" + t + "'", rest.substring(0, paren), null, methodDesc(rest.substring(paren)));
+        }
+    }
+
+    /** whether name+desc is declared on the owner or one of its supertypes (shim tree or target stub) */
+    private boolean resolves(String owner, String name, String desc) {
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.pop();
+            if (!seen.add(c)) continue;
+            ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            if (n == null) {
+                if (!c.startsWith("net/minecraft/") && !c.startsWith("com/mojang/blaze3d/")) {
+                    return true; // a library owner the stub does not carry: not this gate's to judge
+                }
+                continue;
+            }
+            for (MethodNode m : n.methods) {
+                if (m.name.equals(name) && m.desc.equals(desc)) return true;
+            }
+            if (n.superName != null) todo.push(n.superName);
+            todo.addAll(n.interfaces);
+        }
+        return false;
     }
 
     private String targetName(String internalName) {
