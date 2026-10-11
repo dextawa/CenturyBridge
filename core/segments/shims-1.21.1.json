@@ -402,7 +402,10 @@
   "net/minecraft/class_3218.method_43275(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_243;)V": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_3218.method_32888(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;)V": "top/dext/centurybridge/rt/v1_21_1/Statics",
   "net/minecraft/class_1657.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/rt/v1_21_1/Statics",
-  "net/minecraft/class_2688.method_11656()Lcom/google/common/collect/ImmutableMap;": "top/dext/centurybridge/rt/v1_21_1/Statics"
+  "net/minecraft/class_2688.method_11656()Lcom/google/common/collect/ImmutableMap;": "top/dext/centurybridge/rt/v1_21_1/Statics",
+  "com/mojang/serialization/DataResult.getOrThrow(ZLjava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/rt/v1_21_1/CbDfu",
+  "com/mojang/serialization/DataResult.get()Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/rt/v1_21_1/CbDfu",
+  "com/mojang/serialization/DataResult.error()Ljava/util/Optional;": "top/dext/centurybridge/rt/v1_21_1/CbDfu"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_1/Statics",
@@ -456,7 +459,8 @@
   "net/fabricmc/fabric/api/client/model/ExtraModelProvider": "top/dext/centurybridge/compat/fapi/CbExtraModelProvider",
   "net/fabricmc/fabric/api/client/model/BakedModelManagerHelper": "top/dext/centurybridge/compat/fapi/CbBakedModelManagerHelper",
   "net/minecraft/class_8489": "top/dext/centurybridge/facade/v1_21_1/class_8489",
-  "net/minecraft/class_5150": "top/dext/centurybridge/facade/v1_21_1/class_5150"
+  "net/minecraft/class_5150": "top/dext/centurybridge/facade/v1_21_1/class_5150",
+  "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/facade/v1_21_1/DfuPartialResult"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",

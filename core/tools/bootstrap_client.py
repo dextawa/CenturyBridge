@@ -5,7 +5,9 @@ writes classpath/jvmargs files for a KnotClient launch. The asset store is
 content-addressed, so an existing store from another version is reused and only
 missing objects are fetched.
 
-  python bootstrap_client.py <mcVersion> <outDir> [--assets-from <existingRuntime>]
+  python bootstrap_client.py <mcVersion> <outDir> [--assets-from <existingRuntime>] [--no-assets]
+
+--no-assets skips the asset store (a classpath-only runtime: link-check, lib-diff).
 """
 import hashlib
 import json
@@ -116,6 +118,13 @@ def main():
 
     # ---- assets ----
     aidx = vj["assetIndex"]
+    if "--no-assets" in sys.argv:
+        print("assets: skipped (--no-assets)")
+        with open(os.path.join(out, "classpath.txt"), "w", encoding="utf-8") as f:
+            f.write(os.pathsep.join(os.path.abspath(p) for p in cp))
+        os.makedirs(os.path.join(out, "mods"), exist_ok=True)
+        print(f"READY (no assets): {out}")
+        return
     assets = os.path.join(out, "assets")
     if assets_from and os.path.isdir(os.path.join(assets_from, "assets", "objects")):
         # content-addressed store: link/copy the whole objects dir reference

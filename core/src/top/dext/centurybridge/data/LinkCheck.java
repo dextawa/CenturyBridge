@@ -88,6 +88,9 @@ import org.objectweb.asm.tree.analysis.SimpleVerifier;
  *   KNOWN    engine reported it (ISSUE/LEDGERED/TOMBSTONE/...)
  *   BLIND    engine never flagged it
  *   EXTDEP   owner outside the platform (another mod's API missing) -- not ours
+ *   DATAGEN  the site is data-generation code (a DataProvider, the fabric-datagen
+ *            entrypoint, a "datagen" package): it only runs when someone runs datagen,
+ *            never in play -- reported, not counted against the jar
  *
  *   link-check <outDir> <full-audit.tsv|-> <subjects...> -- <classpath...>
  *
@@ -271,6 +274,45 @@ public final class LinkCheck {
     private static final Pattern ASSET = Pattern.compile(
         "\\.(png|ogg|json|nbt|mcmeta|wav|ttf|otf|bin|jpg|jpeg|gif|psd|bbmodel|obj|mtl|fsh|vsh|glsl|lang|properties|md|MF)$");
 
+    /** classes the mods name as their fabric-datagen entrypoint */
+    private final Set<String> datagenEntry = new HashSet<>();
+    private final Map<String, Boolean> datagenCache = new HashMap<>();
+    private static final Pattern DATAGEN_PACKAGE = Pattern.compile("(?i)datagen");
+
+    /**
+     * Code that only runs when data generation runs: a DataProvider (vanilla's or Fabric
+     * API's provider types), the fabric-datagen entrypoint, a class in a "datagen" package --
+     * or nested in one of those (lambdas and inner classes of a provider).
+     */
+    private boolean datagenOnly(String where) {
+        String c = where;
+        int dot = c.indexOf('.');
+        if (dot > 0) c = c.substring(0, dot);
+        while (true) {
+            if (datagenType(c)) return true;
+            int d = c.lastIndexOf('$');
+            if (d < 0) return false;
+            c = c.substring(0, d);
+        }
+    }
+
+    private boolean datagenType(String c) {
+        Boolean hit = datagenCache.get(c);
+        if (hit != null) return hit;
+        boolean r = datagenEntry.contains(c) || DATAGEN_PACKAGE.matcher(c).find();
+        if (!r && cls(c) != null) {
+            for (String sup : supertypes(c)) {
+                if (sup.equals("net/minecraft/data/DataProvider") || sup.equals("net/minecraft/class_2405")
+                        || sup.startsWith("net/fabricmc/fabric/api/datagen/")) {
+                    r = true;
+                    break;
+                }
+            }
+        }
+        datagenCache.put(c, r);
+        return r;
+    }
+
     /** mod ids the classpath brings (Fabric API's modules, CenturyBridge, the loader's builtins) */
     private final Set<String> runtimeIds = new HashSet<>(Set.of("minecraft", "java", "fabricloader"));
     /** subject tag -> the mod ids it brings (its own, its jar-in-jar mods', their "provides") */
@@ -295,6 +337,15 @@ public final class LinkCheck {
             else provides.computeIfAbsent(subjectTag, k -> new HashSet<>()).addAll(ids);
             if (o.has("depends") && o.get("depends").isJsonObject())
                 modDepends.computeIfAbsent(id, k -> new HashSet<>()).addAll(o.getAsJsonObject("depends").keySet());
+            if (o.has("entrypoints") && o.get("entrypoints").isJsonObject()
+                    && o.getAsJsonObject("entrypoints").has("fabric-datagen")
+                    && o.getAsJsonObject("entrypoints").get("fabric-datagen").isJsonArray()) {
+                for (var el : o.getAsJsonObject("entrypoints").getAsJsonArray("fabric-datagen")) {
+                    String v = el.isJsonObject() && el.getAsJsonObject().has("value")
+                        ? el.getAsJsonObject().get("value").getAsString() : el.isJsonPrimitive() ? el.getAsString() : null;
+                    if (v != null) datagenEntry.add((v.contains("::") ? v.substring(0, v.indexOf("::")) : v).replace('.', '/'));
+                }
+            }
             if (o.has("accessWidener") && o.get("accessWidener").isJsonPrimitive()) path = o.get("accessWidener").getAsString();
         } catch (RuntimeException ex) {
             return; // not a fabric.mod.json the loader reads either
@@ -1228,7 +1279,9 @@ public final class LinkCheck {
             fate = sf != null ? sf : fate != null && !FIXED_FATES.contains(fate) ? fate : null;
             if (fate != null) note = "super() " + note;
         }
-        if (ACCESS_KINDS.contains(kind) && platform(owner) && !owner.startsWith("top/dext/centurybridge/")
+        if (datagenOnly(where)) {
+            bucket = "DATAGEN"; // never executes in play; whatever it references is moot there
+        } else if (ACCESS_KINDS.contains(kind) && platform(owner) && !owner.startsWith("top/dext/centurybridge/")
                 && !absentDeps.isEmpty() && !ownAwText.contains(memberName(ref))) {
             // a vanilla member only an access widener ever opened, and the subject's own never
             // named it: what it relies on is a dependency this run does not have
@@ -1300,7 +1353,7 @@ public final class LinkCheck {
         }
         int clean = 0;
         Set<String> dirty = new HashSet<>();
-        for (Finding f : findings) if (!f.bucket.equals("EXTDEP") && !f.bucket.equals("KNOWN")) dirty.add(f.jar);
+        for (Finding f : findings) if (f.bucket.equals("CLAIMED") || f.bucket.equals("BLIND")) dirty.add(f.jar);
         for (String j : subjects.keySet()) if (!dirty.contains(j)) clean++;
         System.out.println("link-check: " + subjects.size() + " subject jars, " + index.size() + " classes indexed, "
                            + mixins.size() + " mixins folded");

@@ -357,7 +357,9 @@
   "net/minecraft/class_8886.method_54475(Lnet/minecraft/class_1937;Lnet/minecraft/class_9694;)Ljava/util/Optional;": "top/dext/centurybridge/rt/v1_21_11/Statics",
   "net/minecraft/class_8890.method_54509(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/rt/v1_21_11/Statics",
   "net/minecraft/class_892.method_23155(Lnet/minecraft/class_1511;F)F": "top/dext/centurybridge/rt/v1_21_11/ClientStatics",
-  "net/minecraft/class_9362.method_58659(Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/rt/v1_21_11/Statics"
+  "net/minecraft/class_9362.method_58659(Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/rt/v1_21_11/Statics",
+  "com/mojang/serialization/Codec.unit(Ljava/lang/Object;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/rt/v1_21_11/CbDfu",
+  "com/mojang/serialization/Codec.unit(Ljava/util/function/Supplier;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/rt/v1_21_11/CbDfu"
  },
  "instanceRedirects": {
   "net/minecraft/class_4341.method_21021()Ljava/lang/Boolean;": "top/dext/centurybridge/rt/v1_21_11/ClientStatics",
@@ -588,7 +590,13 @@
   "net/minecraft/class_3924.method_17503(Lnet/minecraft/class_1297;Lnet/minecraft/class_1799;I)Z": "top/dext/centurybridge/rt/v1_21_11/Statics",
   "net/minecraft/class_757.method_22973(D)Lorg/joml/Matrix4f;": "top/dext/centurybridge/rt/v1_21_11/ClientStatics",
   "net/minecraft/class_630.method_22699(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": "top/dext/centurybridge/rt/v1_21_11/ClientStatics",
-  "net/minecraft/class_4970$class_2251.method_16228(Lnet/minecraft/class_2248;)Lnet/minecraft/class_4970$class_2251;": "top/dext/centurybridge/rt/v1_21_11/Statics"
+  "net/minecraft/class_4970$class_2251.method_16228(Lnet/minecraft/class_2248;)Lnet/minecraft/class_4970$class_2251;": "top/dext/centurybridge/rt/v1_21_11/Statics",
+  "com/mojang/serialization/DataResult.getOrThrow(ZLjava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/rt/v1_21_11/CbDfu",
+  "com/mojang/serialization/DataResult.get()Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/rt/v1_21_11/CbDfu",
+  "com/mojang/serialization/DataResult.error()Ljava/util/Optional;": "top/dext/centurybridge/rt/v1_21_11/CbDfu",
+  "com/mojang/authlib/GameProfile.getName()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_21_11/CbAuthlib",
+  "com/mojang/authlib/GameProfile.getId()Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_21_11/CbAuthlib",
+  "com/mojang/authlib/GameProfile.getProperties()Lcom/mojang/authlib/properties/PropertyMap;": "top/dext/centurybridge/rt/v1_21_11/CbAuthlib"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_21_11/Statics",
@@ -641,7 +649,8 @@
   "net/fabricmc/fabric/api/client/model/ModelLoadingRegistry": "top/dext/centurybridge/compat/fapi/CbModelLoadingRegistry",
   "net/fabricmc/fabric/api/client/model/ExtraModelProvider": "top/dext/centurybridge/compat/fapi/CbExtraModelProvider",
   "net/fabricmc/fabric/api/client/model/BakedModelManagerHelper": "top/dext/centurybridge/compat/fapi/CbBakedModelManagerHelper",
-  "net/minecraft/class_2753": "net/minecraft/class_2754"
+  "net/minecraft/class_2753": "net/minecraft/class_2754",
+  "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/facade/v1_21_11/DfuPartialResult"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",

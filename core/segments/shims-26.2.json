@@ -310,7 +310,9 @@
   "net/minecraft/class_1890.method_8225(Lnet/minecraft/class_6880;Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_1262.method_5429(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
   "net/minecraft/class_1262.method_5426(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
-  "net/minecraft/class_1262.method_5427(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v26_2/CbNbtStorage"
+  "net/minecraft/class_1262.method_5427(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
+  "com/mojang/serialization/Codec.unit(Ljava/lang/Object;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/rt/v26_2/CbDfu",
+  "com/mojang/serialization/Codec.unit(Ljava/util/function/Supplier;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/rt/v26_2/CbDfu"
  },
  "instanceRedirects": {
   "net/minecraft/class_4341.method_21021()Ljava/lang/Boolean;": "top/dext/centurybridge/rt/v26_2/ClientStatics",
@@ -594,7 +596,13 @@
   "net/minecraft/class_2586.method_11007(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
   "net/minecraft/class_2586.method_11007(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
   "net/minecraft/class_1297.method_5749(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
-  "net/minecraft/class_1297.method_5652(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage"
+  "net/minecraft/class_1297.method_5652(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
+  "com/mojang/serialization/DataResult.getOrThrow(ZLjava/util/function/Consumer;)Ljava/lang/Object;": "top/dext/centurybridge/rt/v26_2/CbDfu",
+  "com/mojang/serialization/DataResult.get()Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/rt/v26_2/CbDfu",
+  "com/mojang/serialization/DataResult.error()Ljava/util/Optional;": "top/dext/centurybridge/rt/v26_2/CbDfu",
+  "com/mojang/authlib/GameProfile.getName()Ljava/lang/String;": "top/dext/centurybridge/rt/v26_2/CbAuthlib",
+  "com/mojang/authlib/GameProfile.getId()Ljava/util/UUID;": "top/dext/centurybridge/rt/v26_2/CbAuthlib",
+  "com/mojang/authlib/GameProfile.getProperties()Lcom/mojang/authlib/properties/PropertyMap;": "top/dext/centurybridge/rt/v26_2/CbAuthlib"
  },
  "fieldRedirects": {},
  "methodRenames": {
@@ -872,7 +880,8 @@
   "net/minecraft/class_4668": "top/dext/centurybridge/facade/v26_2/class_4668",
   "net/minecraft/class_4597": "top/dext/centurybridge/facade/v26_2/class_4597",
   "net/minecraft/class_806": "top/dext/centurybridge/facade/v26_2/class_806",
-  "net/minecraft/class_2500": "top/dext/centurybridge/facade/v26_2/class_2500"
+  "net/minecraft/class_2500": "top/dext/centurybridge/facade/v26_2/class_2500",
+  "com/mojang/serialization/DataResult$PartialResult": "top/dext/centurybridge/facade/v26_2/DfuPartialResult"
  },
  "ledger": {
   "net/minecraft/class_120": "quirk: loot codec rework -- legacy serializer paths (facade design pending)",
