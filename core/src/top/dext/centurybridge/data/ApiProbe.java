@@ -407,8 +407,8 @@ public final class ApiProbe {
         }
         for (Map.Entry<String, MethodNode> e : toImplement.entrySet()) {
             MethodNode m = e.getValue();
-            if (declared.contains(m.name + m.desc)) {
-                continue;
+            if (declared.contains(m.name + m.desc) || !memberReachable(m.access)) {
+                continue; // package-private abstract: no other package overrides it (the probe is abstract then)
             }
             MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, m.name, m.desc, null, null);
             mv.visitCode();
@@ -518,7 +518,7 @@ public final class ApiProbe {
         }
         for (Map.Entry<String, MethodNode> e : toImplement.entrySet()) {
             MethodNode m = e.getValue();
-            if (done.contains(m.name + m.desc)) {
+            if (done.contains(m.name + m.desc) || !memberReachable(m.access)) {
                 continue;
             }
             MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, m.name, m.desc, null, null);

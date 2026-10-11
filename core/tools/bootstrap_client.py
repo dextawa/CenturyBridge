@@ -8,6 +8,8 @@ missing objects are fetched.
   python bootstrap_client.py <mcVersion> <outDir> [--assets-from <existingRuntime>] [--no-assets]
 
 --no-assets skips the asset store (a classpath-only runtime: link-check, lib-diff).
+--vanilla-only skips the Fabric loader too (a version Fabric does not support yet, or a
+pure vanilla classpath for the per-segment API probe).
 """
 import hashlib
 import json
@@ -57,6 +59,26 @@ def maven_path(coord):
     return f"{group.replace('.', '/')}/{artifact}/{version}/{artifact}-{version}.jar"
 
 
+def fabric_loader(ver, libdir, cp):
+    """the Fabric loader libraries for this version onto the classpath; returns the launch main class"""
+    loaders = json.loads(fetch(FABRIC_META.format(v=ver)))
+    loader_ver = loaders[0]["loader"]["version"]
+    profile = json.loads(fetch(
+        FABRIC_META.format(v=ver) + f"/{loader_ver}/profile/json"))
+    for lib in profile["libraries"]:
+        coord = lib["name"]
+        base = lib.get("url", "https://maven.fabricmc.net/")
+        path = maven_path(coord)
+        dest = os.path.join(libdir, path.replace("/", os.sep))
+        cp.append(dest)
+        if not os.path.exists(dest):
+            fetch(base.rstrip("/") + "/" + path, dest)
+    main_class = profile["mainClass"]
+    print(f"fabric loader {loader_ver}, mainClass {main_class}")
+
+    return main_class
+
+
 def main():
     ver = sys.argv[1]
     out = sys.argv[2]
@@ -90,20 +112,11 @@ def main():
     print(f"vanilla libs: {len(cp)} ({len(jobs)} downloaded)")
 
     # ---- fabric loader ----
-    loaders = json.loads(fetch(FABRIC_META.format(v=ver)))
-    loader_ver = loaders[0]["loader"]["version"]
-    profile = json.loads(fetch(
-        FABRIC_META.format(v=ver) + f"/{loader_ver}/profile/json"))
-    for lib in profile["libraries"]:
-        coord = lib["name"]
-        base = lib.get("url", "https://maven.fabricmc.net/")
-        path = maven_path(coord)
-        dest = os.path.join(libdir, path.replace("/", os.sep))
-        cp.append(dest)
-        if not os.path.exists(dest):
-            fetch(base.rstrip("/") + "/" + path, dest)
-    main_class = profile["mainClass"]
-    print(f"fabric loader {loader_ver}, mainClass {main_class}")
+    if "--vanilla-only" in sys.argv:
+        main_class = vj["mainClass"]
+        print("fabric loader: skipped (--vanilla-only)")
+    else:
+        main_class = fabric_loader(ver, libdir, cp)
 
     # ---- client jar (the intermediary-era launch uses the obf jar) ----
     client = os.path.join(out, f"client-{ver}-obf.jar")
