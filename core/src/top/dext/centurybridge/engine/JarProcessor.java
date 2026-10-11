@@ -1323,9 +1323,11 @@ public final class JarProcessor {
                     declaredNewOverrides.add(nh);
                 }
                 return new MethodVisitor(Opcodes.ASM9) {
-                    /** NEW sites awaiting their <init>, LIFO per type -- the same
-                     *  matching the constructor pre-pass does, so the audit credits a
-                     *  factory only where a factory can actually be applied */
+                    /** NEW sites awaiting their <init>, LIFO per type: an <init> no pending
+                     *  NEW pairs with is a super()/this() delegation. Every type is tracked --
+                     *  tracking only factory-redirected owners filed every NEW site of any
+                     *  other class as a super-constructor call (90 Box(BlockPos, BlockPos)
+                     *  NEW sites read as SUPER-CTOR-ISSUE at 1.20.4) */
                     final Map<String, java.util.ArrayDeque<Boolean>> pendingNew = new HashMap<>();
 
                     @Override
@@ -1654,7 +1656,7 @@ public final class JarProcessor {
                                 return; // answered by the predicate; the type itself is not loaded here
                             }
                         }
-                        if (op == Opcodes.NEW && chain.ctorRedirectOwners.contains(type)) {
+                        if (op == Opcodes.NEW) {
                             pendingNew.computeIfAbsent(type, k -> new java.util.ArrayDeque<>()).push(Boolean.TRUE);
                         }
                         checkClass(type);
