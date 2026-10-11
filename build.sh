@@ -169,6 +169,7 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$
 # factories, super-ctor adapters and reshape ops, lookupRt, override-hook
 # wrap/unwrap/guard, facade renames.
 java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "core/segments/shims-$VERSION.json" "$NAMETABLE" "$STUB" \
+    "${CB_STUBS:-data/jars}" "$VERSION" \
     || { echo "build aborted: dangling redirect wiring"; exit 1; }
 
 # Everything Mixin resolves by NAME at PREPARE (accessor/invoker/shadow

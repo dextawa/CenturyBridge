@@ -51,7 +51,18 @@ public final class WiringCheck {
     private int checked;
 
     public static void run(Path classesDir, Path shimsJson, Path table, Path stubJar) throws IOException {
+        run(classesDir, shimsJson, table, stubJar, null, null);
+    }
+
+    /** older releases' stubs: what a facade stands in for */
+    private SourceStubs sources = SourceStubs.none();
+
+    public static void run(Path classesDir, Path shimsJson, Path table, Path stubJar, Path stubDir, String version)
+            throws IOException {
         WiringCheck w = new WiringCheck();
+        if (stubDir != null && version != null) {
+            w.sources = SourceStubs.before(stubDir, version);
+        }
         if (stubJar != null && Files.exists(stubJar)) {
             try (var z = new java.util.zip.ZipFile(stubJar.toFile())) {
                 for (var en : java.util.Collections.list(z.entries())) {
@@ -74,6 +85,8 @@ public final class WiringCheck {
         }
         var root = new com.google.gson.Gson().fromJson(Files.readString(shimsJson), com.google.gson.JsonObject.class);
         w.check(root);
+        w.checkFacadeSurfaces(root);
+        w.sources.close();
         System.out.println("wiring-check: " + w.checked + " wired targets against " + classesDir
             + ", " + w.problems.size() + " dangling");
         for (String s : w.problems) {
@@ -82,6 +95,146 @@ public final class WiringCheck {
         if (!w.problems.isEmpty()) {
             System.exit(1);
         }
+    }
+
+    /**
+     * A facade stands in for a class that is gone: every reference a mod had to it is
+     * renamed onto the facade, so the facade has to answer every member the dead class
+     * declared -- a missing one is a NoSuchMethodError at a mod's call, super() or
+     * super.m() (a LeafEntry.Serializer facade without the typed addEntryFields broke every
+     * subclass's super call). A mod may come from any release the class lived in, so the
+     * contract is every shape it had in any of them: non-private constructors, methods and
+     * fields, descriptors through the facade renames; methods and fields may come from the
+     * facade's own superclasses.
+     */
+    private void checkFacadeSurfaces(com.google.gson.JsonObject root) {
+        if (sources.isEmpty() || !root.has("classRenames")) {
+            return;
+        }
+        // a gap the facade does not fill must be declared, with its reason, so the
+        // converter accounts the references instead of taking them as served
+        Map<String, String> declared = new HashMap<>();
+        if (root.has("facadeGaps")) {
+            for (var g : root.getAsJsonObject("facadeGaps").entrySet()) {
+                declared.put(g.getKey(), g.getValue().getAsString());
+            }
+        }
+        java.util.Set<String> used = new java.util.HashSet<>();
+        for (var e : root.getAsJsonObject("classRenames").entrySet()) {
+            String dead = e.getKey();
+            String fac = e.getValue().getAsString();
+            if (!fac.startsWith("top/dext/") || !classes.containsKey(fac)) {
+                continue;
+            }
+            List<ClassNode> lives = sources.versionsOf(dead);
+            if (lives.isEmpty()) {
+                continue;
+            }
+            List<String> missing = new ArrayList<>();
+            java.util.Set<String> seen = new java.util.HashSet<>();
+            List<MethodNode> methods = new ArrayList<>();
+            List<FieldNode> fields = new ArrayList<>();
+            for (ClassNode v : lives) {
+                for (MethodNode m : v.methods) {
+                    if (seen.add(m.name + m.desc)) {
+                        methods.add(m);
+                    }
+                }
+                for (FieldNode f : v.fields) {
+                    if (seen.add(f.name + ":" + f.desc)) {
+                        fields.add(f);
+                    }
+                }
+            }
+            for (MethodNode m : methods) {
+                if ((m.access & (Opcodes.ACC_PRIVATE | Opcodes.ACC_SYNTHETIC)) != 0 || m.name.equals("<clinit>")) {
+                    continue;
+                }
+                checked++;
+                String desc = methodDesc(m.desc);
+                String gapKey = dead + "." + m.name + m.desc;
+                if (!facadeHasMethod(fac, m.name, desc, m.name.equals("<init>"))) {
+                    if (declared.containsKey(gapKey)) {
+                        used.add(gapKey);
+                    } else {
+                        missing.add(m.name + desc);
+                    }
+                }
+            }
+            for (FieldNode f : fields) {
+                if ((f.access & (Opcodes.ACC_PRIVATE | Opcodes.ACC_SYNTHETIC)) != 0) {
+                    continue;
+                }
+                checked++;
+                String desc = typeDesc(f.desc);
+                String gapKey = dead + "." + f.name + ":" + f.desc;
+                if (!facadeHasField(fac, f.name, desc)) {
+                    if (declared.containsKey(gapKey)) {
+                        used.add(gapKey);
+                    } else {
+                        missing.add(f.name + ":" + desc);
+                    }
+                }
+            }
+            if (!missing.isEmpty()) {
+                problems.add("facade " + fac + " (for dead " + dead + ") lacks " + missing.size()
+                    + " undeclared member(s) the class had (fill them or list them in facadeGaps): "
+                    + String.join(", ", missing));
+            }
+        }
+        for (String k : declared.keySet()) {
+            if (!used.contains(k)) {
+                problems.add("facadeGaps " + k + ": stale -- the facade provides it now, or it never was a member");
+            }
+        }
+    }
+
+    /** what every class answers through java/lang/Object (records and enums declare their own) */
+    private static final java.util.Set<String> OBJECT_METHODS = java.util.Set.of(
+        "toString()Ljava/lang/String;", "equals(Ljava/lang/Object;)Z", "hashCode()I", "clone()Ljava/lang/Object;");
+
+    private boolean facadeHasMethod(String cls, String name, String desc, boolean ctor) {
+        if (!ctor && OBJECT_METHODS.contains(name + desc)) {
+            return true;
+        }
+        for (String c = cls; c != null; ) {
+            ClassNode cn = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            if (cn == null) {
+                return false;
+            }
+            for (MethodNode m : cn.methods) {
+                if (m.name.equals(name) && m.desc.equals(desc)) {
+                    return true;
+                }
+            }
+            if (ctor) {
+                return false; // constructors are not inherited
+            }
+            for (String i : cn.interfaces) {
+                ClassNode in = classes.containsKey(i) ? classes.get(i) : stub.get(i);
+                if (in != null && in.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc))) {
+                    return true;
+                }
+            }
+            c = cn.superName;
+        }
+        return false;
+    }
+
+    private boolean facadeHasField(String cls, String name, String desc) {
+        for (String c = cls; c != null; ) {
+            ClassNode cn = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            if (cn == null) {
+                return false;
+            }
+            for (FieldNode f : cn.fields) {
+                if (f.name.equals(name) && f.desc.equals(desc)) {
+                    return true;
+                }
+            }
+            c = cn.superName;
+        }
+        return false;
     }
 
     private void check(com.google.gson.JsonObject root) {

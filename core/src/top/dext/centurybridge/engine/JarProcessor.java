@@ -1434,6 +1434,17 @@ public final class JarProcessor {
                                 top.dext.centurybridge.data.FullAudit.record(rkey, "static-redirect");
                                 return;
                             }
+                            String gap = chain.facadeGaps.get(rkey);
+                            if (gap != null) {
+                                // the facade does not provide this shape: a dead member like any other
+                                rpt.ledgered++;
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "LEDGERED[" + chain.sideOf(owner)
+                                    + "] facade gap: " + gap);
+                                if (!name.equals("<init>")) {
+                                    tombstone.put(site, "facade " + chain.classRenames.get(owner));
+                                    silentTombstones.add(site);
+                                }
+                            }
                             return; // owner facade-renamed; the member lives on the facade
                         }
                         String key = owner + "." + name + desc;
@@ -1597,6 +1608,12 @@ public final class JarProcessor {
                             emitOwner.put(fsite, inh);
                         }
                         if (chain.classRenames.containsKey(owner)) {
+                            String gap = chain.facadeGaps.get(owner + "." + name + ":" + desc);
+                            if (gap != null) {
+                                rpt.ledgered++;
+                                top.dext.centurybridge.data.FullAudit.record(owner + "." + name + ":" + desc,
+                                    "LEDGERED[" + chain.sideOf(owner) + "] facade gap: " + gap);
+                            }
                             return;
                         }
                         String fkey = owner + "." + name + ":" + desc;

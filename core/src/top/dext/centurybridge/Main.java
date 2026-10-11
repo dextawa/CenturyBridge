@@ -51,7 +51,9 @@ public final class Main {
             case "wiring-check" -> top.dext.centurybridge.data.WiringCheck.run(
                 Path.of(args[1]), Path.of(args[2]),
                 args.length > 3 && !args[3].isEmpty() ? Path.of(args[3]) : null,
-                args.length > 4 && !args[4].isEmpty() ? Path.of(args[4]) : null);
+                args.length > 4 && !args[4].isEmpty() ? Path.of(args[4]) : null,
+                args.length > 6 ? Path.of(args[5]) : null,
+                args.length > 6 ? args[6] : null);
             case "mixin-anchors" -> top.dext.centurybridge.engine.MixinRepair.audit(args);
             case "link-check" -> top.dext.centurybridge.data.LinkCheck.run(args);
             case "audit" -> top.dext.centurybridge.data.SymbolAudit.run(
@@ -256,7 +258,7 @@ public final class Main {
               convert <segmentsDir> <from> <to> <outDir> <jar...>
               remap-mojang <inter-to-mojang.tsv> <in.jar> <out.jar>
               mixin-check <compiledShimDir> <targetJar> [<shims.json> [<inter-to-mojang.tsv> [<stubDir> <targetVersion>]]]
-              wiring-check <compiledShimDir> <shims.json> [<inter-to-mojang.tsv>]
+              wiring-check <compiledShimDir> <shims.json> [<inter-to-mojang.tsv> [<stub> [<stubDir> <targetVersion>]]]
               server-check <compiledShimDir> <mixins.json> <serverJar> <serverLibraries> <fabricApiJar> [--fix]
               forge-orders <open.tsv> <oldStub> <newStub> [<full-audit.tsv>] <orders.json>
               stub-dump <stubJar> <out.txt>

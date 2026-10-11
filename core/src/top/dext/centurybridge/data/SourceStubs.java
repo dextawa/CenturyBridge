@@ -59,6 +59,18 @@ public final class SourceStubs implements AutoCloseable {
         return jars.isEmpty();
     }
 
+    /** the class in every older release that has it, newest first (members only) */
+    public List<ClassNode> versionsOf(String name) {
+        List<ClassNode> out = new ArrayList<>();
+        for (int i = 0; i < jars.size(); i++) {
+            ClassNode cn = load(i, name);
+            if (cn != null) {
+                out.add(cn);
+            }
+        }
+        return out;
+    }
+
     /** access flags of the original method, resolved up the source hierarchy; null when no stub has it */
     public Integer methodAccess(String owner, String name, String desc) {
         for (int i = 0; i < jars.size(); i++) {

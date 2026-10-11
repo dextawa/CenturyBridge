@@ -310,6 +310,15 @@ public final class Chain {
 
     public final java.util.List<AdapterHook> adapterHooks = new java.util.ArrayList<>();
 
+    /**
+     * Members of a dead class its facade does not provide ("facadeGaps" in
+     * shims-<to>.json, "owner.name(desc)" / "owner.name:desc" -> reason), gated by
+     * wiring-check against every shape the class ever had. A reference to one is
+     * accounted (and tombstoned) like any other dead member instead of being taken
+     * as served because the class has a facade.
+     */
+    public final java.util.Map<String, String> facadeGaps = new java.util.HashMap<>();
+
     /** whether {@code type} is reached from these vanilla roots through the source hierarchy */
     public boolean sourceSubtype(java.util.List<String> roots, String type) {
         java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>(roots);
@@ -1105,6 +1114,11 @@ public final class Chain {
                     }
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
                     c.overrideHooks.add(h);
+                }
+            }
+            if (root.has("facadeGaps")) {
+                for (var e : root.getAsJsonObject("facadeGaps").entrySet()) {
+                    c.facadeGaps.put(e.getKey(), e.getValue().getAsString());
                 }
             }
             if (root.has("adapterHooks")) {
