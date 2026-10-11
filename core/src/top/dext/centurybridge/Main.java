@@ -31,6 +31,8 @@ public final class Main {
             case "res-parity" -> top.dext.centurybridge.data.ResParity.run(
                 clientJar(args[1]), args[1], clientJar(args[2]), args[2],
                 args.length > 3 ? Integer.parseInt(args[3]) : 3);
+            case "access-diff" -> top.dext.centurybridge.data.AccessDiff.run(Path.of(args[1]), Path.of(args[2]),
+                args.length > 4 && !args[3].isEmpty() ? Path.of(args[3]) : null, Path.of(args[args.length - 1]));
             case "gen-renames" -> {
                 // gen-renames <newest client jar> <out.json> [<jarsDir> <IdRenameTable.java>]
                 top.dext.centurybridge.data.IdRenames.run(Path.of(args[1]), Path.of(args[2]));

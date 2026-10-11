@@ -5143,6 +5143,47 @@ public final class Statics {
         return net.minecraft.world.item.Items.BED.blue();
     }
 
+    // ---- 26.1 generalized descriptors ----
+    // 26.1 widened these parameters (TypedInstance<T>.is(T), erased to Object; ItemStack ->
+    // ItemInstance): the same method, so a call compiled against the narrow descriptor is
+    // answered by the wide one with the same arguments.
+
+    /** BlockState.is(Block) -> TypedInstance.is(Object) */
+    public static boolean method_27852(net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase self,
+            net.minecraft.world.level.block.Block block) {
+        return self.is(block);
+    }
+
+    /** ItemStack.is(Item) -> TypedInstance.is(Object) */
+    public static boolean method_31574(net.minecraft.world.item.ItemStack self, net.minecraft.world.item.Item item) {
+        return self.is(item);
+    }
+
+    /** FluidState.is(Fluid) -> TypedInstance.is(Object) */
+    public static boolean method_39360(net.minecraft.world.level.material.FluidState self,
+            net.minecraft.world.level.material.Fluid fluid) {
+        return self.is(fluid);
+    }
+
+    /** Block.getDrops(state, level, pos, blockEntity, entity, tool): the tool became an ItemInstance */
+    public static java.util.List<net.minecraft.world.item.ItemStack> method_9609(
+            net.minecraft.world.level.block.state.BlockState state, net.minecraft.server.level.ServerLevel level,
+            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.entity.BlockEntity blockEntity,
+            net.minecraft.world.entity.Entity entity, net.minecraft.world.item.ItemStack tool) {
+        return net.minecraft.world.level.block.Block.getDrops(state, level, pos, blockEntity, entity, tool);
+    }
+
+    /** EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack): the stack became an ItemInstance */
+    public static int method_8225(net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> enchantment,
+            net.minecraft.world.item.ItemStack stack) {
+        return net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack);
+    }
+
+    /** Vec2.equals(Vec2) -> equals(Object) */
+    public static boolean method_1016(net.minecraft.world.phys.Vec2 self, net.minecraft.world.phys.Vec2 other) {
+        return self.equals(other);
+    }
+
     private Statics() {
     }
 

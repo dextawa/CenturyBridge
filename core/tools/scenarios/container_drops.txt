@@ -1,0 +1,13 @@
+# 1.20.1 container behaviour: an iron chest's inventory drops when the chest is broken
+# (ChunkStateReplacedBridge on 26.2; native onStateReplaced before 1.21.5)
+forceload add 0 0
+setblock 0 100 0 ironchests:iron_chest
+item replace block 0 100 0 container.0 with minecraft:diamond 5
+item replace block 0 100 0 container.1 with minecraft:emerald 3
+data get block 0 100 0
+setblock 0 100 0 minecraft:air destroy
+sleep 2
+execute if entity @e[type=item,nbt={Item:{id:"minecraft:diamond",count:5}}]
+execute if entity @e[type=item,nbt={Item:{id:"minecraft:emerald",count:3}}]
+execute if entity @e[type=item,nbt={Item:{id:"ironchests:iron_chest"}}]
+execute if entity @e[type=item]

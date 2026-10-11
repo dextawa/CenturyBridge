@@ -7,3 +7,35 @@ extendable class net/minecraft/class_3754
 extendable class net/minecraft/class_5251
 extendable class net/minecraft/class_5604
 extendable class net/minecraft/class_630
+# ---- BEGIN GENERATED: access narrowed since 1.20.1 (Main access-diff) ----
+# public/protected in 1.20.1, narrowed (or made final) in this release: the same
+# members, so a converted mod calling or overriding them gets the access back.
+accessible class net/minecraft/class_1288
+accessible field net/minecraft/class_101$class_102 field_1024 Lnet/minecraft/class_169;
+accessible field net/minecraft/class_101$class_102 field_1025 Ljava/lang/String;
+accessible field net/minecraft/class_1071 field_32970 Ljava/lang/String;
+accessible field net/minecraft/class_4367 field_22681 Lnet/minecraft/class_2960;
+accessible field net/minecraft/class_4367 field_39067 Lnet/minecraft/class_2960;
+accessible field net/minecraft/class_4895 field_42047 I
+accessible field net/minecraft/class_4895 field_42048 Lorg/joml/Quaternionf;
+accessible field net/minecraft/class_4895 field_42049 I
+accessible field net/minecraft/class_4895 field_42050 I
+accessible field net/minecraft/class_4895 field_42051 I
+accessible field net/minecraft/class_4895 field_42068 I
+accessible method net/minecraft/class_1214 method_5172 (Ljava/lang/String;)Ljava/lang/String;
+accessible method net/minecraft/class_1214 method_5173 (Ljava/lang/String;)Ljava/lang/String;
+accessible method net/minecraft/class_1324 method_6202 (Lnet/minecraft/class_1322;)V
+accessible method net/minecraft/class_186$class_187 <init> ([Lnet/minecraft/class_5341$class_210;)V
+accessible method net/minecraft/class_2995 method_32704 (Lnet/minecraft/class_2487;)Lnet/minecraft/class_273;
+accessible method net/minecraft/class_2995 method_32705 ()Lnet/minecraft/class_273;
+accessible method net/minecraft/class_4358 method_21067 (Lnet/minecraft/class_2561;)V
+accessible method net/minecraft/class_8162 method_49184 (Lnet/minecraft/class_1937;Lnet/minecraft/class_3965;Lnet/minecraft/class_2680;Lnet/minecraft/class_243;Lnet/minecraft/class_1306;)V
+extendable method net/minecraft/class_1309 method_6073 (F)V
+extendable method net/minecraft/class_161 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_161 hashCode ()I
+extendable method net/minecraft/class_161 toString ()Ljava/lang/String;
+extendable method net/minecraft/class_179$class_180 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_179$class_180 hashCode ()I
+extendable method net/minecraft/class_20 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_20 hashCode ()I
+# ---- END GENERATED ----
