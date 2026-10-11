@@ -5,6 +5,8 @@
 # build/centurybridge-0.3.0+<W>.jar), link-checks it on W's real runtime (game + libraries +
 # fabric-api + that bridge jar), and lists the step's damage entries (core/segments/damage) that
 # are still open -- optionally only those whose owner's mojang name matches areaRegex.
+# CB_PROBE=fapi measures the Fabric API side instead: V's Fabric API probe (probe/fapi, from
+# fapi_probe_segments.sh) against the step's Fabric API damage table (probe/fapi-damage).
 # Run on beta2 from ~/cbwork; <workDir> is relative to it (an agent's own directory, or "." for main).
 set -uo pipefail
 cd ~/cbwork
@@ -12,7 +14,8 @@ WD="$1"; V="$2"; W="$3"; AREA="${4:-}"
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
 SEG="${V}__${W}"
-OUT="$WD/step/$SEG"
+PROBES=probe/seg; DAMAGE=probe/damage; OUT="$WD/step/$SEG"
+[ "${CB_PROBE:-}" = fapi ] && { PROBES=probe/fapi; DAMAGE=probe/fapi-damage; OUT="$WD/step-fapi/$SEG"; }
 rm -rf "$OUT" && mkdir -p "$OUT"
 case "$W" in 26.*) GAME="data/jars/client-$W.jar" ;; *) GAME="data/jars/client-$W-intermediary.jar" ;; esac
 FAPI=$(ls data/runtime/client-$W/mods/fabric-api-*.jar 2>/dev/null | head -1)
@@ -20,12 +23,12 @@ FAPI=$(ls data/runtime/client-$W/mods/fabric-api-*.jar 2>/dev/null | head -1)
 WIRING="$WD/core/segments/steps/$SEG.json"
 [ "$SEG" = "1.20.1__1.20.2" ] && WIRING="$WD/core/segments/shims-1.20.2.json"
 "$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/conv" \
-    "probe/seg/$SEG/probe-$V.jar" > "$OUT/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$OUT/convert.log"; exit 1; }
+    "$PROBES/$SEG/probe-$V.jar" > "$OUT/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$OUT/convert.log"; exit 1; }
 "$JAVA" -Xmx32g -Dcb.linkcheck.perSite=true -cp "core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
     "$WD/build/centurybridge-0.3.0+$W.jar" "$GAME" $FAPI "data/runtime/client-$W/libraries" > "$OUT/linkcheck.log" 2>&1
-python3 probe/probe_report.py "probe/seg/$SEG/probe-$V.jar.index.tsv" "$(ls "$OUT"/conv/*.jar | head -1)" "$OUT/lc/link-findings.tsv" \
+python3 probe/probe_report.py "$PROBES/$SEG/probe-$V.jar.index.tsv" "$(ls "$OUT"/conv/*.jar | head -1)" "$OUT/lc/link-findings.tsv" \
     "$OUT/report.tsv" > "$OUT/report.txt" 2>&1
-python3 - "$OUT/report.tsv" "probe/damage/$SEG.damage.tsv" "$AREA" <<'EOF'
+python3 - "$OUT/report.tsv" "$DAMAGE/$SEG.damage.tsv" "$AREA" <<'EOF'
 import collections, os, re, sys
 report, damage, area = sys.argv[1], sys.argv[2], sys.argv[3]
 cm = {}

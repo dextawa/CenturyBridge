@@ -47,7 +47,22 @@ EOF
     if [ -z "$(find "data/runtime/server-$W" -name server-intermediary.jar 2>/dev/null | head -1)" ] \
             && [ ! -f "data/runtime/server-$W/versions/$W/server-$W.jar" ]; then
         case "$W" in
-            26.*) echo "$W: post-wall server runtime is not generated here (no intermediary); provide it" ;;
+            26.*)
+                # past the wall the server jar is plain (mojang names): Mojang's bundler as it ships
+                TMP=$(mktemp -d)
+                python3 - "$W" "$TMP/bundler.jar" <<'EOF'
+import json, sys, urllib.request
+v, dest = sys.argv[1], sys.argv[2]
+mf = json.load(urllib.request.urlopen("https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"))
+vj = json.load(urllib.request.urlopen(next(x["url"] for x in mf["versions"] if x["id"] == v)))
+urllib.request.urlretrieve(vj["downloads"]["server"]["url"], dest)
+EOF
+                (cd "$TMP" && unzip -q -o bundler.jar 'META-INF/versions/*' 'META-INF/libraries/*')
+                mkdir -p "data/runtime/server-$W/versions/$W" "data/runtime/server-$W/libraries"
+                cp "$(ls "$TMP"/META-INF/versions/*/server-*.jar | head -1)" "data/runtime/server-$W/versions/$W/server-$W.jar"
+                cp -r "$TMP/META-INF/libraries/." "data/runtime/server-$W/libraries/"
+                rm -rf "$TMP"
+                echo "server-$W: $(du -sh "data/runtime/server-$W" | cut -f1)" ;;
             *) bash server_stub.sh "$W" ;;
         esac
     fi
