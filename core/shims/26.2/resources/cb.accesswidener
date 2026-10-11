@@ -16,6 +16,12 @@ extendable class net/minecraft/client/model/geom/builders/CubeDefinition
 extendable class net/minecraft/nbt/ListTag
 extendable class net/minecraft/world/level/pathfinder/Path
 extendable class net/minecraft/world/level/levelgen/feature/configurations/GeodeConfiguration
+# 1.21.6 save/load: the NBT bridges (CbNbtStorage) run a block entity's / entity's own
+# load and save from outside the class hierarchy.
+accessible method net/minecraft/world/level/block/entity/BlockEntity loadAdditional (Lnet/minecraft/world/level/storage/ValueInput;)V
+accessible method net/minecraft/world/level/block/entity/BlockEntity saveAdditional (Lnet/minecraft/world/level/storage/ValueOutput;)V
+accessible method net/minecraft/world/entity/Entity readAdditionalSaveData (Lnet/minecraft/world/level/storage/ValueInput;)V
+accessible method net/minecraft/world/entity/Entity addAdditionalSaveData (Lnet/minecraft/world/level/storage/ValueOutput;)V
 # ---- BEGIN GENERATED: access narrowed since 1.20.1 (Main access-diff) ----
 # public/protected in 1.20.1, narrowed (or made final) in this release: the same
 # members, so a converted mod calling or overriding them gets the access back.

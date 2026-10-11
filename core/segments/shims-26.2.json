@@ -1,8 +1,6 @@
 {
  "covers": [
   "net/minecraft/class_1007.method_23206(Lnet/minecraft/class_742;F)Lnet/minecraft/class_243;",
-  "net/minecraft/class_1262.method_5427(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487;",
-  "net/minecraft/class_1262.method_5429(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)V",
   "net/minecraft/class_128.method_569(Ljava/io/File;)Z",
   "net/minecraft/class_128.method_572()Ljava/io/File;",
   "net/minecraft/class_1297.method_32875(Lnet/minecraft/class_5712;Lnet/minecraft/class_1297;)V",
@@ -309,7 +307,10 @@
   "net/minecraft/class_892.method_23155(Lnet/minecraft/class_1511;F)F": "top/dext/centurybridge/rt/v26_2/ClientStatics",
   "net/minecraft/class_9362.method_58659(Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_2248.method_9609(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2586;Lnet/minecraft/class_1297;Lnet/minecraft/class_1799;)Ljava/util/List;": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_1890.method_8225(Lnet/minecraft/class_6880;Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_1890.method_8225(Lnet/minecraft/class_6880;Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_1262.method_5429(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
+  "net/minecraft/class_1262.method_5426(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
+  "net/minecraft/class_1262.method_5427(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487;": "top/dext/centurybridge/rt/v26_2/CbNbtStorage"
  },
  "instanceRedirects": {
   "net/minecraft/class_4341.method_21021()Ljava/lang/Boolean;": "top/dext/centurybridge/rt/v26_2/ClientStatics",
@@ -587,7 +588,13 @@
   "net/minecraft/class_4970$class_4971.method_27852(Lnet/minecraft/class_2248;)Z": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_1799.method_31574(Lnet/minecraft/class_1792;)Z": "top/dext/centurybridge/rt/v26_2/Statics",
   "net/minecraft/class_3610.method_39360(Lnet/minecraft/class_3611;)Z": "top/dext/centurybridge/rt/v26_2/Statics",
-  "net/minecraft/class_241.method_1016(Lnet/minecraft/class_241;)Z": "top/dext/centurybridge/rt/v26_2/Statics"
+  "net/minecraft/class_241.method_1016(Lnet/minecraft/class_241;)Z": "top/dext/centurybridge/rt/v26_2/Statics",
+  "net/minecraft/class_2586.method_11014(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
+  "net/minecraft/class_2586.method_11014(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
+  "net/minecraft/class_2586.method_11007(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
+  "net/minecraft/class_2586.method_11007(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
+  "net/minecraft/class_1297.method_5749(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage",
+  "net/minecraft/class_1297.method_5652(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/rt/v26_2/CbNbtStorage"
  },
  "fieldRedirects": {},
  "methodRenames": {
@@ -2123,7 +2130,6 @@
   "net/minecraft/class_315.field_1893": "bridge attempted, no faithful equivalent: field_1893 is no longer available",
   "net/minecraft/class_3439.method_14878": "bridge attempted, no faithful equivalent: Recipe no longer contains its ID in 1.20.2",
   "net/minecraft/class_2303.<init>": "EntitySelectorReader ctor gained an atAllowed flag @1.21->1.21.1; constructors cannot be re-added or redirected, callers fail lazily",
-  "net/minecraft/class_1262.method_5427": "bridge attempted, no faithful equivalent: Inventories.writeNbt requires a RegistryWrapper.WrapperLookup in 1.20.5",
   "net/minecraft/class_1297.method_5693": "bridge attempted, no faithful equivalent: defineSynchedData without arguments is unsupported",
   "net/minecraft/class_131.field_25233": "bridge attempted, no faithful equivalent: LootConditionTypes.KILLED_BY_PLAYER was removed in 1.20.5",
   "net/minecraft/class_131.field_25217": "bridge attempted, no faithful equivalent: CHEST model layer (field_25217) was removed in 1.20.5",
@@ -2332,8 +2338,6 @@
   "net/minecraft/class_8973.method_55233": "bridge attempted, no faithful equivalent: method_55233 now requires two int parameters absent from the old no-arg signature; cannot infer correct values without knowing their semantics",
   "net/minecraft/class_1932.method_32350": "bridge attempted, no faithful equivalent: method_32350 now requires a RegistryWrapper.Wrapper (class_7225$class_7874) that is not available from within class_1932",
   "net/minecraft/class_4525.method_22250": "bridge attempted, no faithful equivalent: class_4525.method_22250 (load-and-place structure by name with flags and initializeMobs) has no direct replacement; the new API's method_22251 requires a precomputed BlockBox, omits the int flags and boolean initializeMobs parameters, and returns void rather than a Structure, and no method on the new class_4525 surface loads a Structure by name",
-  "net/minecraft/class_1262.method_5429": "bridge attempted, no faithful equivalent: method_5429 now requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) that the old two-argument signature does not provide; no lookup is reachable from this Inventory instance",
-  "net/minecraft/class_1262.method_5426": "bridge attempted, no faithful equivalent: method_5426 in 1.21.8 requires a RegistryWrapper.WrapperLookup (class_7225$class_7874) that RecipeManager does not expose and the 1.20.1 signature did not carry",
   "net/minecraft/class_1277.method_7660": "bridge attempted, no faithful equivalent: Ingredient.method_7660() in 1.21+ requires a RegistryWrapper.WrapperLookup to serialize item references; none is available from the no-arg overload",
   "net/minecraft/class_22.method_32371": "bridge attempted, no faithful equivalent: method_32371(class_2487) in 1.21.8 requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) that the old single-arg signature cannot supply; no default lookup is reachable from class_22 alone",
   "net/minecraft/class_273.method_32481": "bridge attempted, no faithful equivalent: method_32481(class_2487) in 1.21.8 requires a class_7225$class_7874 (RegistryWrapper.WrapperLookup) to deserialize Style from NBT; the old single-arg signature has no source for one and no default lookup is reachable from this context",
@@ -3065,7 +3069,6 @@
   "net/fabricmc/fabric/api/object/builder/v1/advancement/CriterionRegistry": "1.20.2 advancement rework: triggers are registered by ResourceKey (Registry.register(BuiltInRegistries.TRIGGER_TYPES, id, trigger)); the 1.20.1 register(trigger) read the id from the dead getId()",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context": "1.21.4 model-loading rework: after-bake modifiers are per model kind (block state / item) with new context types; the corpus BakedModel-based wrappers are dead with BakedModel",
   "net/minecraft/class_2859.method_12418(Lnet/minecraft/class_161;)Lnet/minecraft/class_2859;": "1.20.2 moved the advancement id into AdvancementEntry; a client-side Advancement (decoded from the sync packet) carries no id and nothing tracks it yet",
-  "net/minecraft/class_1262.method_5426(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)Lnet/minecraft/class_2487;": "forge model found no faithful equivalent (unreviewed): saveAllItems in 1.21.8 requires a RegistryWrapper.WrapperLookup (net.minecraft.core.HolderLookup$class_7874) that RecipeManager does not expose and the 1.20.1 signature did not carry",
   "net/minecraft/class_1890.method_8219(Ljava/lang/Iterable;Lnet/minecraft/class_1282;)I": "forge model found no faithful equivalent (unreviewed): getDamageProtection(Iterable, DamageSource) computed protection for explicit equipment; 1.21 getDamageProtection requires World and LivingEntity (the defender), which cannot be derived from an equipment Iterable and DamageSource alone",
   "net/minecraft/class_2178.method_9281()Lnet/minecraft/class_2178;": "forge model found no faithful equivalent (unreviewed): TextArgumentType.text() requires CommandRegistryAccess",
   "net/minecraft/class_22.method_32371(Lnet/minecraft/class_2487;)Lnet/minecraft/class_22;": "forge model found no faithful equivalent (unreviewed): method_32371(net.minecraft.nbt.CompoundTag) in 1.21.8 requires a net.minecraft.core.HolderLookup$class_7874 (RegistryWrapper.WrapperLookup) that the old single-arg signature cannot supply; no default lookup is reachable from net.minecraft.world.level.saveddata.maps.MapItemSavedData alone",
@@ -3623,14 +3626,6 @@
  "lookupRt": "top/dext/centurybridge/rt/v26_2/Statics",
  "blockUseSplit": true,
  "lookupHooks": {
-  "method_11007": [
-   "(Lnet/minecraft/class_2487;)V",
-   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V"
-  ],
-  "method_11014": [
-   "(Lnet/minecraft/class_2487;)V",
-   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V"
-  ],
   "method_16887": [
    "()Lnet/minecraft/class_2487;",
    "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"
@@ -3638,14 +3633,6 @@
   "method_38244": [
    "()Lnet/minecraft/class_2487;",
    "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"
-  ],
-  "method_5427": [
-   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Z)Lnet/minecraft/class_2487;",
-   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;ZLnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;"
-  ],
-  "method_5429": [
-   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;)V",
-   "(Lnet/minecraft/class_2487;Lnet/minecraft/class_2371;Lnet/minecraft/class_7225$class_7874;)V"
   ]
  },
  "lookupDesc": "()Lnet/minecraft/core/HolderLookup$Provider;",
@@ -3720,6 +3707,38 @@
    "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyTooltipItem",
    "guard": "top/dext/centurybridge/rt/v26_2/Statics",
    "onlyUnder": "net/minecraft/class_1792"
+  },
+  {
+   "old": "method_11014(Lnet/minecraft/class_2487;)V",
+   "new": "loadAdditional(Lnet/minecraft/world/level/storage/ValueInput;)V",
+   "bridge": "top/dext/centurybridge/rt/v26_2/CbNbtStorage.loadAdditional(Ltop/dext/centurybridge/rt/v26_2/CbLegacyBlockEntityRead;Lnet/minecraft/world/level/storage/ValueInput;)V",
+   "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyBlockEntityRead",
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics",
+   "onlyUnder": "net/minecraft/class_2586"
+  },
+  {
+   "old": "method_11007(Lnet/minecraft/class_2487;)V",
+   "new": "saveAdditional(Lnet/minecraft/world/level/storage/ValueOutput;)V",
+   "bridge": "top/dext/centurybridge/rt/v26_2/CbNbtStorage.saveAdditional(Ltop/dext/centurybridge/rt/v26_2/CbLegacyBlockEntityWrite;Lnet/minecraft/world/level/storage/ValueOutput;)V",
+   "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyBlockEntityWrite",
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics",
+   "onlyUnder": "net/minecraft/class_2586"
+  },
+  {
+   "old": "method_5749(Lnet/minecraft/class_2487;)V",
+   "new": "readAdditionalSaveData(Lnet/minecraft/world/level/storage/ValueInput;)V",
+   "bridge": "top/dext/centurybridge/rt/v26_2/CbNbtStorage.readAdditionalSaveData(Ltop/dext/centurybridge/rt/v26_2/CbLegacyEntityRead;Lnet/minecraft/world/level/storage/ValueInput;)V",
+   "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyEntityRead",
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics",
+   "onlyUnder": "net/minecraft/class_1297"
+  },
+  {
+   "old": "method_5652(Lnet/minecraft/class_2487;)V",
+   "new": "addAdditionalSaveData(Lnet/minecraft/world/level/storage/ValueOutput;)V",
+   "bridge": "top/dext/centurybridge/rt/v26_2/CbNbtStorage.addAdditionalSaveData(Ltop/dext/centurybridge/rt/v26_2/CbLegacyEntityWrite;Lnet/minecraft/world/level/storage/ValueOutput;)V",
+   "adapter": "top/dext/centurybridge/rt/v26_2/CbLegacyEntityWrite",
+   "guard": "top/dext/centurybridge/rt/v26_2/Statics",
+   "onlyUnder": "net/minecraft/class_1297"
   }
  ],
  "depRenames": {

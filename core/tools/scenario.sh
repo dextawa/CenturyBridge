@@ -8,7 +8,8 @@
 set -uo pipefail
 SRV="$1"; FAPI="$2"; CB="$3"; TAG="$4"; MODS="$5"; CMDS="$6"
 cd "$SRV" || exit 1
-rm -rf world-$TAG mods logs
+[ -n "${KEEP_WORLD:-}" ] || rm -rf world-$TAG
+rm -rf mods logs
 mkdir mods
 [ -f server.properties ] || cp server.properties.orig server.properties
 sed -i 's/^level-name=.*/level-name=world-'"$TAG"'/' server.properties

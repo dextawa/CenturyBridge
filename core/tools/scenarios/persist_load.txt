@@ -1,0 +1,7 @@
+# 1.20.1 block entity persistence, part 2 (same world, after a restart): the contents came back
+forceload add 0 0
+data get block 0 100 0
+setblock 0 100 0 minecraft:air destroy
+sleep 2
+execute if entity @e[type=item,nbt={Item:{id:"minecraft:diamond",count:5}}]
+execute if entity @e[type=item,nbt={Item:{id:"minecraft:emerald",count:3}}]

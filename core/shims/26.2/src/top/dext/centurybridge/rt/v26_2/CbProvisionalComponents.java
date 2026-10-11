@@ -24,14 +24,20 @@ public final class CbProvisionalComponents {
     private static HolderLookup.Provider registries;
     private static boolean warned;
 
-    public static synchronized DataComponentMap of(Holder.Reference<?> holder) {
-        if (holder.key() == null) {
-            return null;
-        }
+    /** the built-in (static) registries as a lookup, for code that runs before any level has one */
+    public static synchronized HolderLookup.Provider staticRegistries() {
         if (registries == null) {
             registries = HolderLookup.Provider.create(BuiltInRegistries.REGISTRY.stream()
                 .map(r -> (HolderLookup.RegistryLookup<?>) r));
         }
+        return registries;
+    }
+
+    public static synchronized DataComponentMap of(Holder.Reference<?> holder) {
+        if (holder.key() == null) {
+            return null;
+        }
+        staticRegistries();
         DataComponentMap.Builder builder = DataComponentMap.builder();
         boolean any = false;
         for (Object e : ((ComponentInitializersAccessor) BuiltInRegistries.DATA_COMPONENT_INITIALIZERS).cbInitializers()) {

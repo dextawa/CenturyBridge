@@ -104,7 +104,9 @@
     "PlayerSkinBridge",
     "RecipeManagerBridge",
     "RegistryAddBridge",
-    "SlotBridge"
+    "SlotBridge",
+    "TagValueInputAccessor",
+    "TagValueOutputAccessor"
   ],
   "client": [
     "AbstractWidgetRenderBridge",

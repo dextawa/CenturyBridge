@@ -31,6 +31,14 @@ public final class Main {
             case "res-parity" -> top.dext.centurybridge.data.ResParity.run(
                 clientJar(args[1]), args[1], clientJar(args[2]), args[2],
                 args.length > 3 ? Integer.parseInt(args[3]) : 3);
+            case "apply-aw" -> {
+                // apply-aw <in.jar> <out.jar> <aw...>
+                java.util.List<Path> aws = new ArrayList<>();
+                for (int i = 3; i < args.length; i++) {
+                    aws.add(Path.of(args[i]));
+                }
+                top.dext.centurybridge.data.ApplyAw.run(Path.of(args[1]), Path.of(args[2]), aws);
+            }
             case "access-diff" -> top.dext.centurybridge.data.AccessDiff.run(Path.of(args[1]), Path.of(args[2]),
                 args.length > 4 && !args[3].isEmpty() ? Path.of(args[3]) : null, Path.of(args[args.length - 1]));
             case "gen-renames" -> {

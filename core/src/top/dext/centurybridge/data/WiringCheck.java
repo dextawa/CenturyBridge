@@ -409,10 +409,11 @@ public final class WiringCheck {
                 if (an == null || (an.access & Opcodes.ACC_INTERFACE) == 0) {
                     problems.add(where + " (no such bridge interface)");
                 } else {
+                    String under = o.get("under").getAsString();
                     for (var r : o.getAsJsonArray("requires")) {
                         String shape = r.getAsString();
                         int paren = shape.indexOf('(');
-                        String name = shape.substring(0, paren);
+                        String name = postWallName(under, shape.substring(0, paren), shape.substring(paren));
                         String desc = methodDesc(shape.substring(paren));
                         boolean declared = an.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc)
                             && (m.access & Opcodes.ACC_ABSTRACT) != 0);
@@ -462,7 +463,9 @@ public final class WiringCheck {
                     ClassNode an = adapter == null ? null : classes.get(adapter);
                     String old = o.get("old").getAsString();
                     int op = old.indexOf('(');
-                    String oname = old.substring(0, op);
+                    // the mod's override carries the name the namespace wall gives it
+                    String oname = postWallName(o.has("onlyUnder") ? o.get("onlyUnder").getAsString() : null,
+                        old.substring(0, op), old.substring(op));
                     String odesc = methodDesc(old.substring(op));
                     if (an == null || (an.access & Opcodes.ACC_INTERFACE) == 0) {
                         problems.add(where + " bridge without an adapter interface");
@@ -472,6 +475,16 @@ public final class WiringCheck {
                 }
             }
         }
+    }
+
+    /**
+     * The name a mod's override of {@code owner.name} has in the converted jar: past the
+     * wall the whole-jar rename gives an intermediary method id its mojang name whatever
+     * the descriptor (an old-shape readNbt override becomes loadAdditional(CompoundTag)),
+     * so an adapter interface must declare that name.
+     */
+    private String postWallName(String owner, String name, String rawDesc) {
+        return wall == null || owner == null ? name : wall.mapMethodName(owner, name, rawDesc);
     }
 
     /** the converter's view of a descriptor: facade renames, then the namespace wall */
