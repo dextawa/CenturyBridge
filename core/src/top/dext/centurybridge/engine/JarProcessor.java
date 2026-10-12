@@ -572,8 +572,16 @@ public final class JarProcessor {
      * super.m(..) included, so the call keeps its dispatch -- has its arguments re-pushed per the
      * ops and takes the new descriptor; the return value is dropped, converted or supplied right
      * after. Straight-line code at the call, so existing frames stay exact.
+     *
+     * A call may name a class of the mod's own jar while the member is a vanilla one it inherits:
+     * javac's qualifying type for an unqualified call to an inherited member is the subclass
+     * itself (a mod's RecipeProvider calling offerSmelting(..), a loot function builder calling
+     * this.getConditions()). The JVM resolves such a call on the first vanilla class up the mod's
+     * own hierarchy when no mod class on the way declares the member, so the key is looked up from
+     * there ({@link #inheritedVanillaOwner}); a mod class that does declare the old shape keeps the
+     * call (its own method, reconnected to the new shape by an override hook if there is one).
      */
-    private static byte[] rewriteCalls(byte[] bytes, Chain chain, Report rpt, String tag) {
+    private static byte[] rewriteCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
         String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
         boolean any = false;
         for (String n : chain.callReshapeNames) {
@@ -600,6 +608,12 @@ public final class JarProcessor {
                 }
                 String nameDesc = mi.name + mi.desc;
                 String home = chain.instanceRedirectHome(chain.callReshapeIndex, mi.owner, nameDesc);
+                if (home == null && !Chain.minecraftOwned(mi.owner)) {
+                    String inh = inheritedVanillaOwner(mi.owner, nameDesc, layer);
+                    if (inh != null) {
+                        home = chain.instanceRedirectHome(chain.callReshapeIndex, inh, nameDesc);
+                    }
+                }
                 if (home == null) {
                     continue;
                 }
@@ -1485,7 +1499,7 @@ public final class JarProcessor {
             bytes = b2;
         }
         if (!chain.callReshapes.isEmpty()) {
-            byte[] b3 = rewriteCalls(bytes, chain, rpt, tag);
+            byte[] b3 = rewriteCalls(bytes, chain, layer, rpt, tag);
             ctorChanged |= b3 != bytes;
             bytes = b3;
         }
