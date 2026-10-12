@@ -348,5 +348,11 @@
   "net/minecraft/class_4048.field_18067:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntity",
   "net/minecraft/class_4048.field_18068:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntity",
   "net/minecraft/class_4048.field_18069:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntity"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2512.method_10683(Lnet/minecraft/class_2487;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/step/v1_20_5/rt/CbProfiles#readGameProfile",
+  "net/minecraft/class_2512.method_10684(Lnet/minecraft/class_2487;Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbProfiles#writeGameProfile",
+  "net/minecraft/class_2512.method_10691(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestNbt",
+  "net/minecraft/class_2512.method_10692(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestNbt"
  }
 }
