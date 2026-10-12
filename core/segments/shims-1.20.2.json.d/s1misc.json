@@ -377,7 +377,9 @@
   "net/minecraft/server/MinecraftServer.method_15876()Lnet/minecraft/class_3517;": "top/dext/centurybridge/rt/v1_20_2/CbServerMetrics",
   "net/minecraft/class_7298.method_45342()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs",
   "net/minecraft/class_7689.method_45348()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs",
-  "net/minecraft/class_8153.method_49147()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs"
+  "net/minecraft/class_8153.method_49147()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs",
+  "net/minecraft/class_7917.method_10188()Lnet/minecraft/class_1291;": "top/dext/centurybridge/rt/v1_20_2/CbEffects",
+  "net/minecraft/class_7917.method_10187()I": "top/dext/centurybridge/rt/v1_20_2/CbEffects"
  },
  "superRedirects": {
   "net/minecraft/class_1852.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#storedId",
@@ -924,6 +926,78 @@
     "method_48863()Lorg/joml/Quaternionf;"
    ],
    "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1291",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyMobEffectOverride",
+   "requires": [
+    "method_5555(Lnet/minecraft/class_1309;Lnet/minecraft/class_5131;I)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1291",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyMobEffectOverride",
+   "requires": [
+    "method_5562(Lnet/minecraft/class_1309;Lnet/minecraft/class_5131;I)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1291",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyMobEffectOverride",
+   "requires": [
+    "method_5563(ILnet/minecraft/class_1322;)D"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1293",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyEffectInstanceOverride",
+   "requires": [
+    "method_5589(Lnet/minecraft/class_1309;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_7917",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySuspiciousEffectHolder",
+   "requires": [
+    "method_10188()Lnet/minecraft/class_1291;",
+    "method_10187()I"
+   ],
+   "synth": [
+    {
+     "new": "method_53233()Ljava/util/List;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbEffects.suspiciousEffects(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySuspiciousEffectHolder;)Ljava/util/List;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2356",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySuspiciousEffectHolder",
+   "requires": [
+    "method_10188()Lnet/minecraft/class_1291;"
+   ],
+   "synth": [
+    {
+     "new": "method_53233()Ljava/util/List;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbEffects.suspiciousEffects(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySuspiciousEffectHolder;)Ljava/util/List;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2356",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySuspiciousEffectHolder",
+   "requires": [
+    "method_10187()I"
+   ],
+   "synth": [
+    {
+     "new": "method_53233()Ljava/util/List;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbEffects.suspiciousEffects(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySuspiciousEffectHolder;)Ljava/util/List;"
+    }
+   ]
   }
  ],
  "overrideHooks": [
@@ -1222,12 +1296,17 @@
   "net/minecraft/class_8216.method_49720(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbMisc",
   "net/minecraft/class_7428.method_43550(Lnet/minecraft/class_7500;Ljava/util/UUID;Lnet/minecraft/class_7428$class_7443;Ljava/time/Duration;)Lnet/minecraft/class_7428;": "top/dext/centurybridge/rt/v1_20_2/CbMisc",
   "net/minecraft/class_2357.method_27042(Lnet/minecraft/class_2342;Lnet/minecraft/class_1297;Lnet/minecraft/class_2350;)V": "top/dext/centurybridge/rt/v1_20_2/CbMisc",
-  "net/minecraft/class_1830.method_8021(Lnet/minecraft/class_1799;Lnet/minecraft/class_1291;I)V": "top/dext/centurybridge/rt/v1_20_2/CbMisc"
+  "net/minecraft/class_1830.method_8021(Lnet/minecraft/class_1799;Lnet/minecraft/class_1291;I)V": "top/dext/centurybridge/rt/v1_20_2/CbMisc",
+  "net/minecraft/class_1291.method_5569(I)Lnet/minecraft/class_1291;": "top/dext/centurybridge/rt/v1_20_2/CbEffects",
+  "net/minecraft/class_1291.method_5554(Lnet/minecraft/class_1291;)I": "top/dext/centurybridge/rt/v1_20_2/CbEffects",
+  "net/minecraft/class_1291.method_43257(Lnet/minecraft/class_1291;)I": "top/dext/centurybridge/rt/v1_20_2/CbEffects"
  },
  "classRenames": {
   "net/minecraft/class_3517": "top/dext/centurybridge/facade/v1_20_2/class_3517",
   "net/minecraft/class_2376": "top/dext/centurybridge/facade/v1_20_2/class_2376",
-  "net/minecraft/class_7997": "top/dext/centurybridge/facade/v1_20_2/class_7997"
+  "net/minecraft/class_7997": "top/dext/centurybridge/facade/v1_20_2/class_7997",
+  "net/minecraft/class_1287": "top/dext/centurybridge/facade/v1_20_2/class_1287",
+  "net/minecraft/class_1290": "top/dext/centurybridge/facade/v1_20_2/class_1290"
  },
  "covers": [
   "net/minecraft/class_2342.method_10216()D",
@@ -1244,7 +1323,10 @@
   "net/minecraft/class_1297.method_20233(Lnet/minecraft/class_4050;)Z",
   "net/minecraft/class_1297.method_20343(Lnet/minecraft/class_4050;)Lnet/minecraft/class_238;",
   "net/minecraft/class_1408.method_6351()Z",
-  "net/minecraft/class_8113.method_48863()Lorg/joml/Quaternionf;"
+  "net/minecraft/class_8113.method_48863()Lorg/joml/Quaternionf;",
+  "net/minecraft/class_1293.method_5589(Lnet/minecraft/class_1309;)V",
+  "net/minecraft/class_2356.method_10188()Lnet/minecraft/class_1291;",
+  "net/minecraft/class_2356.method_10187()I"
  ],
  "fieldRenames": {
   "net/minecraft/class_1309.field_6242:D": "field_45123",
