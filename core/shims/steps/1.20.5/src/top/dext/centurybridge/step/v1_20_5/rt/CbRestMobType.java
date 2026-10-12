@@ -68,6 +68,46 @@ public final class CbRestMobType {
         return d != null ? d : of(entity.method_5864());
     }
 
+    // ------------------------------------------------------------------ the entity being attacked
+
+    /** stands for "no target" on the stack below (ArrayDeque holds no null) */
+    private static final Object NO_TARGET = new Object();
+
+    /** the entities whose damage bonus is being evaluated on this thread, innermost first */
+    private static final ThreadLocal<java.util.ArrayDeque<Object>> TARGETS = ThreadLocal.withInitial(java.util.ArrayDeque::new);
+
+    /**
+     * EnchantmentHelper.getDamageBonus(stack, type) evaluated with {@code target} as the entity being
+     * attacked. 1.20.4 handed the damage bonus the target's MobType; 1.20.5 hands it the target's
+     * EntityType, which knows nothing of a class declaring a MobType. The attacks that ask for it
+     * (Player.attack, Mob.doHurtTarget, ThrownTrident.onHitEntity: mixin/CbRestAttackMixins) come
+     * through here, so the enchantments' side can ask {@link #targetDeclared}. Per thread and re-entrant
+     * (an attack inside a bonus evaluation keeps its own target); the target is dropped again however
+     * the evaluation ends.
+     */
+    public static float cbDamageBonus(net.minecraft.class_1799 stack, net.minecraft.class_1299<?> type, net.minecraft.class_1297 target) {
+        java.util.ArrayDeque<Object> s = TARGETS.get();
+        s.push(target == null ? NO_TARGET : target);
+        try {
+            return net.minecraft.class_1890.method_8218(stack, type);
+        } finally {
+            s.pop();
+        }
+    }
+
+    /**
+     * The MobType the class of the entity being attacked declares, when a damage bonus is being
+     * evaluated for it on this thread and {@code type} is that entity's type; else null (no attack
+     * under way, a call about another type, or a class that leaves its MobType to the type's tags).
+     */
+    public static class_1310 targetDeclared(net.minecraft.class_1299<?> type) {
+        Object t = TARGETS.get().peek();
+        if (t instanceof net.minecraft.class_1297 target && target.method_5864() == type) {
+            return declared(target);
+        }
+        return null;
+    }
+
     private CbRestMobType() {
     }
 }
