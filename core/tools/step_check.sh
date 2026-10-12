@@ -68,3 +68,37 @@ with open(report.replace("report.tsv", "open.tsv"), "w", encoding="utf-8") as o:
         o.write("\t".join(r) + "\n")
 print("open entries ->", report.replace("report.tsv", "open.tsv"))
 EOF
+# Generic drift (generic_drift.py): members whose erased descriptor V and W share while their type
+# arguments changed -- linked fine, so the probe above cannot see them; the first element a mod takes
+# out is a ClassCastException. Counted against the same wiring (and area) as the probe's rows.
+if [ "${CB_PROBE:-}" != fapi ]; then
+    case "$V" in 26.*) VJAR="data/jars/client-$V.jar" ;; *) VJAR="data/jars/client-$V-intermediary.jar" ;; esac
+    WALL=""
+    [ "$SEG" = "1.21.11__26.1" ] && WALL="--wall data/mappings/inter-to-mojang-1.21.11.tsv"
+    python3 "$WD/core/tools/generic_drift.py" "$VJAR" "$GAME" "$OUT/generic.tsv" $WALL --wiring "$WIRING" > /dev/null \
+        || { echo "generic drift failed"; exit 1; }
+    python3 - "$OUT/generic.tsv" "$AREA" <<'EOF'
+import os, re, sys
+table, area = sys.argv[1], sys.argv[2]
+cm = {}
+names = "data/mappings/inter-to-mojang-classes.tsv"
+for line in open(names if os.path.exists(names) else "data/mappings/inter-to-mojang-1.21.11.tsv", encoding="utf-8"):
+    f = line.rstrip("\n").split("\t")
+    if len(f) >= 3 and f[0] == "C":
+        cm[f[1]] = f[2]
+def moj(c):
+    if c in cm:
+        return cm[c]
+    d = c.rfind("$")
+    return moj(c[:d]) + c[d:] if d > 0 else c
+rows = [l.rstrip("\n").split("\t") for l in open(table, encoding="utf-8")][1:]
+rows = [r for r in rows if not area or re.search(area, moj(r[1]))]
+open_rows = [r for r in rows if not r[8]]
+print(f"generic drift: {len(open_rows)} of {len(rows)} member usages still open" + (f" (area /{area}/)" if area else ""))
+with open(table.replace("generic.tsv", "generic-open.tsv"), "w", encoding="utf-8") as o:
+    o.write("usage\towner\tmojang\tname\tdesc\tchanged\tV signature\tW signature\tV classes W lacks\n")
+    for r in open_rows:
+        o.write("\t".join([r[0], r[1], moj(r[1])] + r[2:8]) + "\n")
+print("open generic drift ->", table.replace("generic.tsv", "generic-open.tsv"))
+EOF
+fi
