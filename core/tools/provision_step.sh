@@ -66,4 +66,24 @@ EOF
             *) bash server_stub.sh "$W" ;;
         esac
     fi
+    # The Fabric server's own libraries next to the game's: the loader, sponge-mixin, ASM and
+    # intermediary its launcher puts on the classpath (Fabric meta's server profile for W at the
+    # loader the tests run). Without them server-check cannot resolve what every server mixin
+    # names (CallbackInfo) and reads each one as reaching a class the server lacks.
+    if [ -z "$(find "data/runtime/server-$W/libraries/net/fabricmc" -name 'sponge-mixin-*.jar' 2>/dev/null | head -1)" ]; then
+        python3 - "$W" "${CB_LOADER:-0.19.3}" "data/runtime/server-$W/libraries" <<'EOF'
+import json, os, sys, urllib.request
+w, loader, dest = sys.argv[1:4]
+prof = json.load(urllib.request.urlopen(f"https://meta.fabricmc.net/v2/versions/loader/{w}/{loader}/server/json"))
+for lib in prof["libraries"]:
+    g, a, v = lib["name"].split(":")[:3]
+    rel = f"{g.replace('.', '/')}/{a}/{v}/{a}-{v}.jar"
+    out = os.path.join(dest, rel)
+    if not os.path.exists(out):
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        urllib.request.urlretrieve(lib.get("url", "https://maven.fabricmc.net/").rstrip("/") + "/" + rel, out + ".part")
+        os.replace(out + ".part", out)
+print(f"server-{w}: {len(prof['libraries'])} Fabric server libraries (loader {loader})")
+EOF
+    fi
 done

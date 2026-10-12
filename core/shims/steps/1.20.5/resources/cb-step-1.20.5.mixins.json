@@ -7,9 +7,12 @@
     "CbNetEntityDataBridge",
     "CbNetEntityDataBuilderBridge",
     "CbNetEntityDataConstructionBridge",
-    "CbNetEntityDataInvoker"
+    "CbNetEntityDataInvoker",
+    "CbRegistriesServerMixin"
   ],
-  "client": [],
+  "client": [
+    "CbRegistriesClientMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1
