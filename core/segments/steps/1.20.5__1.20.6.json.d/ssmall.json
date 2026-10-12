@@ -1,0 +1,29 @@
+{
+ "abstractFills": [
+  {
+   "under": "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context",
+   "method": "client()Lnet/minecraft/class_310;",
+   "call": "top/dext/centurybridge/step/v1_20_6/rt/CbClientNetworkingContexts.client(Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context;)Lnet/minecraft/class_310;",
+   "basis": "javadoc (abstract, no Fabric default): the MinecraftClient instance; Fabric's own context holds the game's one client"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$Context",
+   "method": "server()Lnet/minecraft/server/MinecraftServer;",
+   "call": "top/dext/centurybridge/step/v1_20_6/rt/CbServerNetworkingContexts.configurationServer(Lnet/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$Context;)Lnet/minecraft/server/MinecraftServer;",
+   "basis": "javadoc (abstract, no Fabric default): the server the handler belongs to, through Fabric API's own ServerConfigurationNetworking.getServer(networkHandler())"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$Context",
+   "method": "server()Lnet/minecraft/server/MinecraftServer;",
+   "call": "top/dext/centurybridge/step/v1_20_6/rt/CbServerNetworkingContexts.playServer(Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$Context;)Lnet/minecraft/server/MinecraftServer;",
+   "basis": "javadoc (abstract, no Fabric default): the server the context's player is on, the server of the play handler Fabric's own context is built with"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context.responseSender()Lnet/fabricmc/fabric/api/networking/v1/PacketSender;": {
+   "iface": "top/dext/centurybridge/step/v1_20_6/rt/CbLegacyClientConfigurationContext",
+   "adapt": "top/dext/centurybridge/step/v1_20_6/rt/CbClientNetworkingContexts#adapt(Ltop/dext/centurybridge/step/v1_20_6/rt/CbLegacyClientConfigurationContext;)Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context;",
+   "basis": "1.20.5's Context had responseSender() alone (a functional interface); 1.20.6 added an abstract client(), which the adapted context answers with the game's client"
+  }
+ }
+}
