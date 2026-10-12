@@ -383,7 +383,7 @@ public final class JarProcessor {
     private static byte[] rewriteHookSuperCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
         java.util.Map<String, Chain.OverrideHook> byOld = new HashMap<>();
         for (Chain.OverrideHook h : chain.overrideHooks) {
-            if (h.superCalls) {
+            if (h.superCalls || h.superBridgeName != null) {
                 byOld.putIfAbsent(h.oldName + h.oldDesc, h);
             }
         }
@@ -405,6 +405,10 @@ public final class JarProcessor {
         new ClassReader(bytes).accept(cn, 0);
         String[] ifaces = cn.interfaces.toArray(new String[0]);
         int rewrites = 0;
+        // hooks whose super bridge this class now calls: it gets their accessors (Chain.OverrideHook#superAccess),
+        // each calling super where the rewritten super call did -- {owner, "itf"} of the first one: the
+        // superclass, or the interface of an Iface.super.m() call to a default method
+        java.util.LinkedHashMap<Chain.OverrideHook, String[]> needAccess = new java.util.LinkedHashMap<>();
         for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
             if (m.instructions == null || (m.access & Opcodes.ACC_STATIC) != 0) {
                 continue;
@@ -423,6 +427,19 @@ public final class JarProcessor {
                         && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null
                         || h.onlyUnder != null && !isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain)
                         || h.notUnder != null && isUnder(cn.superName, ifaces, h.notUnder, layer, chain)) {
+                    continue;
+                }
+                if (h.superBridgeName != null) {
+                    // the old contract through a bridge: this + the old arguments are on the stack as
+                    // they are, the static takes the receiver as the hook's super-access interface
+                    needAccess.putIfAbsent(h, new String[] {mi.owner, mi.itf ? "itf" : ""});
+                    mi.setOpcode(Opcodes.INVOKESTATIC);
+                    mi.owner = h.superBridgeOwner;
+                    mi.name = h.superBridgeName;
+                    mi.desc = h.superBridgeDesc;
+                    mi.itf = false;
+                    rewrites++;
+                    top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "hook-super-bridge");
                     continue;
                 }
                 org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
@@ -488,6 +505,42 @@ public final class JarProcessor {
         }
         if (rewrites == 0) {
             return bytes;
+        }
+        for (java.util.Map.Entry<Chain.OverrideHook, String[]> na : needAccess.entrySet()) {
+            Chain.OverrideHook h = na.getKey();
+            String superOwner = na.getValue()[0];
+            boolean superItf = !na.getValue()[1].isEmpty();
+            // the super bridge reaches super's implementations through accessors this class carries
+            if (!cn.interfaces.contains(h.superAccess)) {
+                cn.interfaces.add(h.superAccess);
+                if (cn.signature != null) {
+                    cn.signature = cn.signature + "L" + h.superAccess + ";"; // a generic signature lists them too
+                }
+            }
+            for (String shape : h.superAccessors) {
+                int p = shape.indexOf('(');
+                String name = shape.substring(0, p);
+                String desc = shape.substring(p);
+                String accName = Chain.SUPER_ACCESSOR_PREFIX + name;
+                boolean have = cn.methods.stream().anyMatch(x -> x.name.equals(accName) && x.desc.equals(desc));
+                if (have) {
+                    continue;
+                }
+                org.objectweb.asm.tree.MethodNode acc = new org.objectweb.asm.tree.MethodNode(
+                    Opcodes.ACC_PUBLIC, accName, desc, null, null);
+                acc.instructions.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+                int slot = 1;
+                for (org.objectweb.asm.Type t : org.objectweb.asm.Type.getArgumentTypes(desc)) {
+                    acc.instructions.add(new org.objectweb.asm.tree.VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+                    slot += t.getSize();
+                }
+                acc.instructions.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESPECIAL, superOwner,
+                    name, desc, superItf));
+                acc.instructions.add(new org.objectweb.asm.tree.InsnNode(
+                    org.objectweb.asm.Type.getReturnType(desc).getOpcode(Opcodes.IRETURN)));
+                cn.methods.add(acc);
+            }
+            rpt.notes.add(tag + "super-accessors (" + h.superAccess + "): " + cn.name);
         }
         rpt.notes.add(tag + "hook-super-calls: " + rewrites + " in " + cn.name);
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
@@ -1839,10 +1892,95 @@ public final class JarProcessor {
      * Triage + strip + verify one jar's entry map, recursing into JIJ-nested
      * jars (bundled libraries carry their own mixins -- a nested mixin whose
      * target died crashes the whole game just as hard as a top-level one).
+     *
+     * Two things are settled first. A CenturyBridge layer's classes that retire at this step
+     * ({@link Chain#retiredClasses}) leave the jar and its mixin configs. And classRenames, which move
+     * references to a class the jar does not define (a dead vanilla class onto its facade, a compat API
+     * onto the native one that came back), leave the jar's own classes alone: renaming a class's own
+     * declaration leaves an entry whose class carries another name -- a jar that cannot load (a bundled
+     * Fabric API module declaring a class step 1 renames, a bridge layer's own compat classes).
      */
     private static void processEntries(Map<String, byte[]> entries, Chain chain,
                                        Report rpt, Set<String> issues, String tag,
                                        String jarTag) throws IOException {
+        retire(entries, chain, rpt, tag);
+        Map<String, String> own = new HashMap<>();
+        for (String n : entries.keySet()) {
+            if (n.endsWith(".class")) {
+                String cls = n.substring(0, n.length() - 6);
+                String to = chain.classRenames.remove(cls);
+                if (to != null) {
+                    own.put(cls, to);
+                    rpt.notes.add(tag + "own class keeps its name: " + cls + " (its classRenames entry, -> " + to
+                        + ", moves other jars' references)");
+                }
+            }
+        }
+        try {
+            processLayer(entries, chain, rpt, issues, tag, jarTag, own);
+        } finally {
+            chain.classRenames.putAll(own);
+        }
+    }
+
+    /**
+     * {@link Chain#retiredClasses}: the jar's classes an entry names leave it, and the mixin configs its
+     * fabric.mod.json names stop listing them -- before anything else reads the jar, so the triage and the
+     * rewrite see the layer as it is from this step on.
+     */
+    private static void retire(Map<String, byte[]> entries, Chain chain, Report rpt, String tag) {
+        if (chain.retiredClasses.isEmpty()) {
+            return;
+        }
+        Set<String> gone = new TreeSet<>();
+        for (String n : new ArrayList<>(entries.keySet())) {
+            if (n.endsWith(".class")) {
+                String cls = n.substring(0, n.length() - 6);
+                String why = chain.retiredReason(cls);
+                if (why != null) {
+                    entries.remove(n);
+                    gone.add(cls);
+                    rpt.notes.add(tag + "retired at " + chain.to + ": " + cls + " -- " + why);
+                }
+            }
+        }
+        byte[] fmjBytes = entries.get("fabric.mod.json");
+        if (gone.isEmpty() || fmjBytes == null) {
+            return;
+        }
+        JsonObject fmj = GSON.fromJson(new String(fmjBytes, StandardCharsets.UTF_8), JsonObject.class);
+        for (JsonElement ref : fmj.has("mixins") ? fmj.getAsJsonArray("mixins") : new JsonArray()) {
+            String cfgName = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+            byte[] data = entries.get(cfgName);
+            if (data == null) {
+                continue;
+            }
+            JsonObject cfg = GSON.fromJson(new String(data, StandardCharsets.UTF_8), JsonObject.class);
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            boolean edited = false;
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (!cfg.has(key)) {
+                    continue;
+                }
+                JsonArray kept = new JsonArray();
+                for (JsonElement m : cfg.getAsJsonArray(key)) {
+                    if (gone.contains((pkg.isEmpty() ? "" : pkg + "/") + m.getAsString().replace('.', '/'))) {
+                        edited = true;
+                    } else {
+                        kept.add(m);
+                    }
+                }
+                cfg.add(key, kept);
+            }
+            if (edited) {
+                entries.put(cfgName, GSON.toJson(cfg).getBytes(StandardCharsets.UTF_8));
+            }
+        }
+    }
+
+    private static void processLayer(Map<String, byte[]> entries, Chain chain,
+                                     Report rpt, Set<String> issues, String tag,
+                                     String jarTag, Map<String, String> ownRenames) throws IOException {
         LayerIndex layer = indexLayer(entries);
         Map<String, String> jarSuper = layer.superOf;
         stripSignatures(entries, rpt, tag);
@@ -1933,7 +2071,13 @@ public final class JarProcessor {
                 // the nested jar's own name joins the uniqueness tag
                 String nestedTag = jarTag + "_" + name.substring("META-INF/jars/".length())
                     .replaceAll("\\.jar$", "").replaceAll("[^A-Za-z0-9]", "_");
-                processEntries(nested, chain, rpt, issues, tag + "(bundled) ", nestedTag);
+                // a bundled jar is another jar: the renames kept off this jar's own classes apply to it
+                chain.classRenames.putAll(ownRenames);
+                try {
+                    processEntries(nested, chain, rpt, issues, tag + "(bundled) ", nestedTag);
+                } finally {
+                    ownRenames.keySet().forEach(chain.classRenames::remove);
+                }
                 // a bundled mod is a mod to the loader: its own minecraft range
                 // still says the source version, and dependency resolution
                 // refuses the whole pack before a class loads (293 nested mods
@@ -2399,6 +2543,7 @@ public final class JarProcessor {
         Map<String, String> ifaceCallRedirects = new HashMap<>(); // INVOKEINTERFACE only: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
+        Map<String, String> fldSetters = new HashMap<>();    // PUTSTATIC -> INVOKESTATIC setter(value)V on runtime class
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
         Map<String, String> instFldSetters = new HashMap<>(); // PUTFIELD -> INVOKESTATIC setter(receiver, value) on runtime class
         Map<String, String> instOfSites = new HashMap<>();   // INSTANCEOF type -> INVOKESTATIC predicate(Object)Z
@@ -2973,6 +3118,12 @@ public final class JarProcessor {
                                     top.dext.centurybridge.data.FullAudit.record(fsite, "field-getter");
                                     return;
                                 }
+                                String ffst = chain.staticFieldSetters.get(fsite);
+                                if (ffst != null && op == Opcodes.PUTSTATIC) {
+                                    fldSetters.put(fsite, ffst);
+                                    top.dext.centurybridge.data.FullAudit.record(fsite, "field-setter");
+                                    return;
+                                }
                                 return;
                             }
                             // this.field_22789 inside a Screen subclass: an inherited
@@ -2981,6 +3132,29 @@ public final class JarProcessor {
                             emitOwner.put(fsite, inh);
                         }
                         if (chain.classRenames.containsKey(owner)) {
+                            // as for methods: a class merged into a surviving vanilla class keeps an old
+                            // static field the new class lacks only where a redirect or getter is wired
+                            // on the old owner (1.20.5 moved SuspiciousEffectHolder.EffectEntry into
+                            // SuspiciousStewEffects.Entry without its LIST_CODEC)
+                            String rkey = owner + "." + name + ":" + desc;
+                            String rfrt = chain.fieldRedirects.get(rkey);
+                            if (rfrt != null && op == Opcodes.GETSTATIC) {
+                                fldRedirects.put(fsite, rfrt);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "field-redirect");
+                                return;
+                            }
+                            String rfgt = chain.fieldGetters.get(rkey);
+                            if (rfgt != null && op == Opcodes.GETSTATIC) {
+                                fldGetters.put(fsite, rfgt);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "field-getter");
+                                return;
+                            }
+                            String rfst = chain.staticFieldSetters.get(rkey);
+                            if (rfst != null && op == Opcodes.PUTSTATIC) {
+                                fldSetters.put(fsite, rfst);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "field-setter");
+                                return;
+                            }
                             String gap = chain.facadeGaps.get(owner + "." + name + ":" + desc);
                             if (gap != null) {
                                 rpt.ledgered++;
@@ -3007,6 +3181,12 @@ public final class JarProcessor {
                         if (fgt != null && op == Opcodes.GETSTATIC) {
                             fldGetters.put(fsite, fgt);
                             top.dext.centurybridge.data.FullAudit.record(fkey, "field-getter");
+                            return;
+                        }
+                        String fst = chain.staticFieldSetters.get(fkey);
+                        if (fst != null && op == Opcodes.PUTSTATIC) {
+                            fldSetters.put(fsite, fst);
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "field-setter");
                             return;
                         }
                         // an instance field is keyed on the class that declares it, but javac names
@@ -3263,6 +3443,9 @@ public final class JarProcessor {
                         || inheritedVanillaOwner(superOf[0], shape, layer) == null && layer.superOf.containsKey(superOf[0])) {
                     continue; // declared here, not under the type, or a jar superclass declares it
                 }
+                if (fillApply.stream().anyMatch(x -> (x.name + x.desc).equals(shape))) {
+                    continue; // two entries give the class the same method (it is under both types): the first fills it
+                }
                 boolean synthesized = declaredOldOverrides.stream().anyMatch(h -> (h.newName + h.newDesc).equals(shape))
                     || adapterApply.stream().anyMatch(h -> h.synth.stream().anyMatch(sy -> (sy[0] + sy[1]).equals(shape)));
                 if (synthesized) {
@@ -3280,7 +3463,7 @@ public final class JarProcessor {
             }
         }
         if (redirects.isEmpty() && instRedirects.isEmpty() && ifaceCallRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldGetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
+                && fldGetters.isEmpty() && fldSetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty() && declaredRenames.isEmpty()
@@ -3334,6 +3517,9 @@ public final class JarProcessor {
         }
         for (String k : fldGetters.keySet()) {
             rpt.notes.add(tag + "field-gettered: " + k + " -> " + fldGetters.get(k));
+        }
+        for (String k : fldSetters.keySet()) {
+            rpt.notes.add(tag + "field-settered: " + k + " -> " + fldSetters.get(k));
         }
         for (String k : instFldGetters.keySet()) {
             rpt.notes.add(tag + "instance-field-gettered: " + k + " -> " + instFldGetters.get(k));
@@ -3728,6 +3914,12 @@ public final class JarProcessor {
                             String fv = fldGetters.get(fkey);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),
                                 redirName(fv, name), "()" + desc, false);
+                            return;
+                        }
+                        if (op == Opcodes.PUTSTATIC && fldSetters.containsKey(fkey)) {
+                            String fv = fldSetters.get(fkey);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),
+                                redirName(fv, name), "(" + desc + ")V", false);
                             return;
                         }
                         if (op == Opcodes.GETSTATIC && fldRedirects.containsKey(fkey)) {

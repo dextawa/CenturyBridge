@@ -54,11 +54,11 @@ public final class CbItemGenerics {
 
     // ---------------------------------------------------------------- loot table ids (location <-> key)
 
-    private static Object toLootKey(Object o) {
+    static Object toLootKey(Object o) {
         return o instanceof net.minecraft.class_2960 rl ? CbItemHolders.lootTableKey(rl) : o;
     }
 
-    private static Object toLocation(Object o) {
+    static Object toLocation(Object o) {
         return o instanceof net.minecraft.class_5321 k ? k.method_29177() : o;
     }
 
@@ -130,33 +130,50 @@ public final class CbItemGenerics {
         if (set == null || all(set, net.minecraft.class_2960.class)) {
             return set;
         }
-        return new AbstractSet<Object>() {
-            @Override
-            public Iterator<Object> iterator() {
-                Iterator it = set.iterator();
-                return new Iterator<Object>() {
-                    @Override
-                    public boolean hasNext() {
-                        return it.hasNext();
-                    }
+        return new LocationSet(set);
+    }
 
-                    @Override
-                    public Object next() {
-                        return toLocation(it.next());
-                    }
-                };
-            }
+    /** the set of keys a {@link #lootTableLocationSet} view reads, null for any other set */
+    static Set keysBehind(Set set) {
+        return set instanceof LocationSet v ? v.keys : null;
+    }
 
-            @Override
-            public boolean contains(Object o) {
-                return set.contains(toLootKey(o));
-            }
+    static final class LocationSet extends AbstractSet<Object> {
+        final Set keys;
 
-            @Override
-            public int size() {
-                return set.size();
-            }
-        };
+        LocationSet(Set keys) {
+            this.keys = keys;
+        }
+
+        private Set set() {
+            return keys;
+        }
+
+        @Override
+        public Iterator<Object> iterator() {
+            Iterator it = set().iterator();
+            return new Iterator<Object>() {
+                @Override
+                public boolean hasNext() {
+                    return it.hasNext();
+                }
+
+                @Override
+                public Object next() {
+                    return toLocation(it.next());
+                }
+            };
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return set().contains(toLootKey(o));
+        }
+
+        @Override
+        public int size() {
+            return set().size();
+        }
     }
 
     /**
