@@ -16,11 +16,10 @@
     "CbItemRecipeCraftingMenuMixin",
     "CbItemRecipeInventoryMenuMixin",
     "CbItemRecipeResultSlotMixin",
-    "CbItemServerMixin",
     "CbItemShapedPatternAccessor",
     "CbLegacyRegistryLoaderMixin",
-    "CbLegacyRegistryServerMixin",
-    "CbLegacyRegistryTagsMixin"
+    "CbLegacyRegistryTagsMixin",
+    "CbServersMixin"
   ],
   "client": [
     "CbLegacyRegistryClientMixin"

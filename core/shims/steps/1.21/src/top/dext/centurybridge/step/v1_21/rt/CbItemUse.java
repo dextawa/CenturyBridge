@@ -154,7 +154,7 @@ public final class CbItemUse {
             return;
         }
         if (amount > 0) {
-            class_3218 level = player != null ? player.method_51469() : CbItemServers.levelFor(random);
+            class_3218 level = player != null ? player.method_51469() : CbServers.levelFor(random);
             if (level != null) {
                 amount = class_1890.method_60117(level, stack, amount);
             } else {
