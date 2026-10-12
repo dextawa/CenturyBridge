@@ -8,10 +8,19 @@
     "CbItemStackMixin",
     "CbItemStackStreamMixin",
     "CbRegistriesServerMixin",
-    "CbTooltipLevelAccessor"
+    "CbRestEntityMixin",
+    "CbRestEntityInvoker",
+    "CbRestLivingEntityMixin",
+    "CbRestAbstractHorseMixin",
+    "CbRestPlayerMixin",
+    "CbTooltipLevelAccessor",
+    "CbRestAbstractIllagerMixin",
+    "CbRestWitherBossMixin",
+    "CbRestArmadilloMixin"
   ],
   "client": [
-    "CbRegistriesClientMixin"
+    "CbRegistriesClientMixin",
+    "CbRestEntityRendererMixin"
   ],
   "server": [],
   "injectors": {

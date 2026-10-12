@@ -1,1 +1,35 @@
 accessWidener	v2	intermediary
+
+# s4rest: AttributeSupplier(Map) was public in 1.20.4 (package-private since 1.20.5)
+accessible method net/minecraft/class_5132 <init> (Ljava/util/Map;)V
+
+# s4rest: classes 1.20.4 mods could extend that 1.20.5 made records (final), and methods 1.20.5 made
+# final that a 1.20.4 mod overrides. Re-opened so the 1.20.4 subclass loads and stays a real instance
+# vanilla takes back; each record's members and constructors are bridged by the step's wiring.
+extendable class net/minecraft/class_1273
+extendable class net/minecraft/class_1322
+extendable method net/minecraft/class_1322 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_1322 hashCode ()I
+extendable method net/minecraft/class_1322 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_17
+extendable method net/minecraft/class_17 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_17 hashCode ()I
+extendable class net/minecraft/class_2196$class_2197
+extendable class net/minecraft/class_2196$class_2198
+extendable class net/minecraft/class_22$class_5637
+extendable class net/minecraft/class_4048
+extendable method net/minecraft/class_4048 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_4514
+extendable class net/minecraft/class_4529
+extendable class net/minecraft/class_5631
+extendable class net/minecraft/class_5712
+extendable method net/minecraft/class_5712 toString ()Ljava/lang/String;
+# Entity.setSecondsOnFire(I) (1.20.5: igniteForSeconds, final): same member, same contract (fire for
+# seconds * 20 ticks, LivingEntity's fire protection applied -- 1.20.5 in igniteForTicks)
+extendable method net/minecraft/class_1297 method_5639 (I)V
+# Entity.getEyeHeight(Pose) (final in 1.20.5)
+extendable method net/minecraft/class_1297 method_18381 (Lnet/minecraft/class_4050;)F
+# LivingEntity.getDimensions(Pose) (final in 1.20.5; its default part is getDefaultDimensions)
+extendable method net/minecraft/class_1309 method_18377 (Lnet/minecraft/class_4050;)Lnet/minecraft/class_4048;
+# EntityDimensions(width, height, fixed) was public in 1.20.4 (1.20.5 keeps it private: default eye height and attachments)
+accessible method net/minecraft/class_4048 <init> (FFZ)V
