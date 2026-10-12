@@ -1,0 +1,919 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_101.field_45817:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_104.field_45815:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_106.field_45825:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_109.field_45823:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_111.field_45826:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_114.field_45829:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_125.field_45833:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_16595:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_18980:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_38092:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5898:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5899:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5900:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5901:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5902:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5903:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5904:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5905:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5906:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5907:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5908:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5909:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5910:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5911:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5912:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5913:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5914:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5915:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5916:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5917:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5918:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5919:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5920:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5921:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5922:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5923:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5924:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5925:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5926:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1294.field_5927:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_134.field_45841:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_137.field_45836:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_141.field_45845:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_144.field_45842:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_149.field_45846:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_152.field_45851:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_159.field_45849:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_165.field_45855:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1747.field_30849:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1747.field_30850:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1759.field_30860:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1759.field_30861:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1759.field_30862:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1772.field_30874:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1781.field_30875:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1781.field_30876:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1781.field_30877:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1781.field_30878:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1781.field_30879:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1781.field_30880:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1781.field_30881:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1781.field_30882:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1781.field_30883:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1792.field_30888:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1799.field_30890:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1799.field_30893:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1799.field_30894:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1799.field_30895:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1799.field_30896:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1799.field_30897:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1806.field_41067:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1806.field_41068:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1809.field_30916:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1819.field_30920:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_182.field_45860:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1830.field_30923:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30929:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30930:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30931:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30932:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30933:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30934:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30935:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30936:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30937:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30938:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30939:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30940:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1843.field_30941:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1844.field_30943:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1844.field_30944:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1844.field_30945:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8963:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8964:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8965:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8966:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8967:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8968:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8969:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8970:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8971:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8972:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8973:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8974:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8975:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8976:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8977:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8978:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8979:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8980:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8981:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8982:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8983:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8985:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8986:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8987:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8988:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8989:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8990:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8991:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8992:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8993:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8994:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8995:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8996:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8997:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8998:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_8999:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_9000:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_9001:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_9002:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_9003:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_9004:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1847.field_9005:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1869$class_1870.field_46102:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1882.field_30947:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1882.field_30948:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_1882.field_30949:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_190.field_45862:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_199.field_45863:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_201.field_45864:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_205.field_45866:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_207.field_45865:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_212.field_45868:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_215.field_45871:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_219.field_45873:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_221.field_45872:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_223.field_45875:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_225.field_45874:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_227.field_45878:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_2390.field_25124:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_3668.field_45827:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_3670.field_45848:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_3671.field_45847:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_3837.field_45819:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_16216:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_16593:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_16748:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_16749:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_16750:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_16751:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_16752:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_16753:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_16754:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_17009:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_17010:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_17011:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_17012:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_17107:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_17108:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_17109:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_18007:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19062:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19063:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19064:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19065:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19066:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19067:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19068:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19069:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19070:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19071:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19072:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19073:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_19074:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_224:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_22402:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_24046:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_24047:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_24048:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_24049:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_24050:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_251:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_266:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_274:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_285:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_300:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_353:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_356:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_365:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_38438:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_38439:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_385:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_394:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_397:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_43353:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_43354:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_43356:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_43357:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_434:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_44648:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_44649:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_44748:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_461:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_472:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47415:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47416:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47417:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47418:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47419:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47420:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47421:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47422:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47423:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47424:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47425:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_47426:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_484:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_489:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_607:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_615:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_629:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_662:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_665:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_683:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_702:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_716:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_751:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_778:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_795:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_800:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_803:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_806:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_814:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_841:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_842:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_844:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_850:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_854:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_869:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_878:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_880:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_39.field_885:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_40.field_45885:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_44.field_45886:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_4488.field_45816:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_4568.field_45861:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_4571.field_45876:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5537.field_30857:I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5592.field_45839:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5641.field_45834:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5642.field_45843:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5644.field_45877:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5646.field_45879:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5653.field_45884:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5660.field_45890:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5662.field_45891:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5664.field_45892:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5667.field_45894:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5743.field_28269:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_5745.field_28277:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_65.field_45797:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_6662.field_45850:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_67.field_45798:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_72.field_45804:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_7227.field_38005:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_7290.field_38358:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_73.field_45799:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_7431.field_45844:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_77.field_45801:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_8053.field_41995:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_83.field_45803:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_8492.field_45828:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_8548.field_45857:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_8551.field_45859:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_91.field_45805:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_93.field_45800:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields",
+  "net/minecraft/class_94.field_45806:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemFields"
+ },
+ "callReshapes": {
+  "net/minecraft/class_1291.method_5566(Lnet/minecraft/class_1320;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)Lnet/minecraft/class_1291;": {
+   "desc": "(Lnet/minecraft/class_6880;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)Lnet/minecraft/class_1291;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#attributeHolder(Lnet/minecraft/class_1320;)Lnet/minecraft/class_6880;",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_1293.method_5579()Lnet/minecraft/class_1291;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_137$class_6156.method_35529(Lnet/minecraft/class_1304;)Lnet/minecraft/class_137$class_6156;": {
+   "desc": "(Lnet/minecraft/class_9274;)Lnet/minecraft/class_137$class_6156;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#slotGroup(Lnet/minecraft/class_1304;)Lnet/minecraft/class_9274;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_144.method_35534(Lnet/minecraft/class_2591;Lnet/minecraft/class_2960;)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_2591;Lnet/minecraft/class_5321;)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_144.method_35535(Lnet/minecraft/class_2591;Lnet/minecraft/class_2960;J)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_2591;Lnet/minecraft/class_5321;J)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep:2"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_152$class_153.method_640(Lnet/minecraft/class_1291;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_170$class_171.method_34899(Lnet/minecraft/class_2960;)Lnet/minecraft/class_170$class_171;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_170$class_171;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_170$class_171.method_34900(Lnet/minecraft/class_2960;)Lnet/minecraft/class_170$class_171;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_170$class_171;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_1738.method_31570()Lnet/minecraft/class_3414;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_1770.method_31570()Lnet/minecraft/class_3414;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_1806.method_7997(Ljava/lang/Integer;Lnet/minecraft/class_1937;)Lnet/minecraft/class_22;": {
+   "desc": "(Lnet/minecraft/class_9209;Lnet/minecraft/class_1937;)Lnet/minecraft/class_22;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#mapId(Ljava/lang/Integer;)Lnet/minecraft/class_9209;",
+    "keep:1"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_186.method_53407(Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": {
+   "desc": "(Ljava/util/function/Function;)Lcom/mojang/serialization/MapCodec;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_1865.method_53736()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_1866.method_53736()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_1867$class_1868.method_53736()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_1869$class_1870.method_53736()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_2102$class_8748.method_53201(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102$class_8748;": {
+   "desc": "(Lnet/minecraft/class_6880;)Lnet/minecraft/class_2102$class_8748;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_2102$class_8748.method_53202(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102$class_8748;": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102$class_8748;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_2370.method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;": {
+   "desc": "(Lnet/minecraft/class_5321;Ljava/lang/Object;Lnet/minecraft/class_9248;)Lnet/minecraft/class_6880$class_6883;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#registrationInfo(Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_9248;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_2385.method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;": {
+   "desc": "(Lnet/minecraft/class_5321;Ljava/lang/Object;Lnet/minecraft/class_9248;)Lnet/minecraft/class_6880$class_6883;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#registrationInfo(Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_9248;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_2388.method_29128(Lnet/minecraft/class_2396;)Lcom/mojang/serialization/Codec;": {
+   "desc": "(Lnet/minecraft/class_2396;)Lcom/mojang/serialization/MapCodec;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_2392.method_29136(Lnet/minecraft/class_2396;)Lcom/mojang/serialization/Codec;": {
+   "desc": "(Lnet/minecraft/class_2396;)Lcom/mojang/serialization/MapCodec;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_2396.method_29138()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_2400.method_29138()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_3957.method_53736()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_3972$class_3973.method_53736()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_4568.comp_1869()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_5321;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_4568.method_35555(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5341$class_210;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_5341$class_210;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#predicateKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5151.method_31570()Lnet/minecraft/class_3414;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5282$class_5283.comp_2074()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_5321;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5282$class_5283.method_27995(Lnet/minecraft/class_2960;)Lnet/minecraft/class_175;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_175;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5282$class_5283.method_27996(Lnet/minecraft/class_2960;)Z": {
+   "desc": "(Lnet/minecraft/class_5321;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5282.method_27993(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5328.method_33263(Lnet/minecraft/class_1542;Ljava/util/stream/Stream;)V": {
+   "desc": "(Lnet/minecraft/class_1542;Ljava/lang/Iterable;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#iterable(Ljava/util/stream/Stream;)Ljava/lang/Iterable;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5338.comp_1847()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5339.comp_1858()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5342.comp_1878()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5650.comp_1891()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5657.comp_1896()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_5669.comp_1904()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_6662.method_38927(Lnet/minecraft/class_1842;)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_6880;)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#potion(Lnet/minecraft/class_1842;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_69.method_53279(Lnet/minecraft/class_69$class_70;)Lcom/mojang/serialization/Codec;": {
+   "desc": "(Lnet/minecraft/class_69$class_70;)Lcom/mojang/serialization/MapCodec;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_7789.method_46028(Lnet/minecraft/class_1299;Lnet/minecraft/class_2960;Lnet/minecraft/class_52$class_53;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_5321;Lnet/minecraft/class_52$class_53;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep:2"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_8060$class_8061.method_53736()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_8062$class_8063.method_53736()Lcom/mojang/serialization/Codec;": {
+   "desc": "()Lcom/mojang/serialization/MapCodec;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_83.method_428(Lnet/minecraft/class_2960;)Lnet/minecraft/class_85$class_86;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_85$class_86;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  },
+  "net/minecraft/class_8492.method_51224(Lnet/minecraft/class_2960;)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#itemModifierKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments / return (gen_s4item.py)"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;)V": {
+   "desc": "(Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;I)V": {
+   "desc": "(Lnet/minecraft/class_6880;I)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;II)V": {
+   "desc": "(Lnet/minecraft/class_6880;II)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;IIZZ)V": {
+   "desc": "(Lnet/minecraft/class_6880;IIZZ)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;IIZZZ)V": {
+   "desc": "(Lnet/minecraft/class_6880;IIZZZ)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_4568.<init>(Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#predicateKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_5282$class_5283.<init>(Ljava/util/Optional;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#lootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_5338.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_5339.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_5342.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_5650.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_5657.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  },
+  "net/minecraft/class_5669.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "s4item: converted arguments (gen_s4item.py)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_34900(Lnet/minecraft/class_2960;)Lnet/minecraft/class_170$class_171;",
+   "new": "method_34900(Lnet/minecraft/class_5321;)Lnet/minecraft/class_170$class_171;",
+   "onlyUnder": "net/minecraft/class_170$class_171",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_27993(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;)V",
+   "new": "method_27993(Lnet/minecraft/class_3222;Lnet/minecraft/class_5321;)V",
+   "onlyUnder": "net/minecraft/class_5282",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_53201(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102$class_8748;",
+   "new": "method_53201(Lnet/minecraft/class_6880;)Lnet/minecraft/class_2102$class_8748;",
+   "onlyUnder": "net/minecraft/class_2102$class_8748",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_53202(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102$class_8748;",
+   "new": "method_53202(Lnet/minecraft/class_6880;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102$class_8748;",
+   "onlyUnder": "net/minecraft/class_2102$class_8748",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;",
+   "new": "method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lnet/minecraft/class_9248;)Lnet/minecraft/class_6880$class_6883;",
+   "onlyUnder": "net/minecraft/class_2385",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.lifecycle(Lnet/minecraft/class_9248;)Lcom/mojang/serialization/Lifecycle;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_46028(Lnet/minecraft/class_1299;Lnet/minecraft/class_2960;Lnet/minecraft/class_52$class_53;)V",
+   "new": "method_46028(Lnet/minecraft/class_1299;Lnet/minecraft/class_5321;Lnet/minecraft/class_52$class_53;)V",
+   "onlyUnder": "net/minecraft/class_7789",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_5566(Lnet/minecraft/class_1320;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)Lnet/minecraft/class_1291;",
+   "new": "method_5566(Lnet/minecraft/class_6880;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)Lnet/minecraft/class_1291;",
+   "onlyUnder": "net/minecraft/class_1291",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.attribute(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1320;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_5579()Lnet/minecraft/class_1291;",
+   "new": "method_5579()Lnet/minecraft/class_6880;",
+   "onlyUnder": "net/minecraft/class_1293",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_31570()Lnet/minecraft/class_3414;",
+   "new": "method_31570()Lnet/minecraft/class_6880;",
+   "onlyUnder": "net/minecraft/class_5151",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1860",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_8110(Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1860",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17700(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17700(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1849",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17702(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17702(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1848",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17705(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17705(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1850",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_49187(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_49187(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_8164",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17708(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17708(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1851",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17710(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17710(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1854",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17712(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17712(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1853",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17714(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17714(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1855",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17727(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17727(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1869",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_20807(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_20807(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_4317",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17729(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17729(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1867",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17731(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17731(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1872",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17733(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17733(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1871",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17738(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17738(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1873",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_17740(Lnet/minecraft/class_8566;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;",
+   "new": "method_17740(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1876",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.access(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5455;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  },
+  {
+   "old": "method_640(Lnet/minecraft/class_1291;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;",
+   "new": "method_640(Lnet/minecraft/class_6880;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;",
+   "onlyUnder": "net/minecraft/class_152$class_153",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
+  }
+ ]
+}

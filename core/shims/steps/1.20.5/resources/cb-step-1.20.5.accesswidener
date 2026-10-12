@@ -33,3 +33,11 @@ extendable method net/minecraft/class_1297 method_18381 (Lnet/minecraft/class_40
 extendable method net/minecraft/class_1309 method_18377 (Lnet/minecraft/class_4050;)Lnet/minecraft/class_4048;
 # EntityDimensions(width, height, fixed) was public in 1.20.4 (1.20.5 keeps it private: default eye height and attachments)
 accessible method net/minecraft/class_4048 <init> (FFZ)V
+
+# s4item: Enchantment.getMinLevel / getMaxLevel / getMinCost / getMaxCost, which 1.20.4 enchantments override
+# (every mod enchantment does) and 1.20.5 made final, answering from the definition: re-opened so the 1.20.4
+# subclass loads and its override is what the enchanting table, loot and commands call (rt/CbEnchant)
+extendable method net/minecraft/class_1887 method_8187 ()I
+extendable method net/minecraft/class_1887 method_8183 ()I
+extendable method net/minecraft/class_1887 method_8182 (I)I
+extendable method net/minecraft/class_1887 method_20742 (I)I

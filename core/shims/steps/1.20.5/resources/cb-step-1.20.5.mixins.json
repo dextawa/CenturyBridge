@@ -4,6 +4,9 @@
   "package": "top.dext.centurybridge.step.v1_20_5.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CbItemBlockLootAccessor",
+    "CbItemStackMixin",
+    "CbItemStackStreamMixin",
     "CbRegistriesServerMixin",
     "CbRestEntityMixin",
     "CbRestEntityInvoker",
@@ -16,6 +19,11 @@
     "CbRestArmadilloMixin",
     "CbRestMobMixin",
     "CbRestThrownTridentMixin",
+    "CbLevelDataPrimaryMixin",
+    "CbLevelDataDerivedMixin",
+    "CbLevelStoragePlayerDataAccessor",
+    "CbEnchantmentMixin",
+    "CbEnchantDamageMixin",
     "CbRestEntityTypeMixin",
     "CbRestStructureTemplateMixin",
     "CbRestMapBannerMixin",
@@ -27,11 +35,19 @@
     "CbRestRecGameTestBatchMixin",
     "CbRestRecTestFunctionMixin",
     "CbRestRecGameEventMixin",
-    "CbRestRecWeightedEntryWrapperMixin"
+    "CbRestRecWeightedEntryWrapperMixin",
+    "CbItemMixin",
+    "CbItemStackPropsMixin",
+    "CbFoodBuilderMixin",
+    "CbItemPropertiesAccessor",
+    "CbComponentBuilderAccessor",
+    "CbArmorItemAccessor",
+    "CbSpawnEggAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin",
-    "CbRestEntityRendererMixin"
+    "CbRestEntityRendererMixin",
+    "CbLevelDataClientMixin"
   ],
   "server": [],
   "injectors": {
