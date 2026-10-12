@@ -1,0 +1,191 @@
+usage	owner	name	desc	kinds	w
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder	persistent	(Lcom/mojang/serialization/Codec;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder	copyOnDeath	()Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder	initializer	(Ljava/util/function/Supplier;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder	buildAndRegister	(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder			CLASS	class gone
+call-static	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry	create	(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry	createDefaulted	(Lnet/minecraft/class_2960;Ljava/util/function/Supplier;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry	createPersistent	(Lnet/minecraft/class_2960;Lcom/mojang/serialization/Codec;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry	builder	()Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrThrow	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrSet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrElse	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrGet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	setAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	hasAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Z	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	removeAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	modifyAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	NBT_ATTACHMENT_KEY	Ljava/lang/String;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget			CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrThrow	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrSet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrElse	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	getAttachedOrGet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	setAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	hasAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Z	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	removeAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentTarget	modifyAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentType	identifier	()Lnet/minecraft/class_2960;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentType	persistenceCodec	()Lcom/mojang/serialization/Codec;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentType	isPersistent	()Z	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentType	initializer	()Ljava/util/function/Supplier;	CLASS	class gone
+call	net/fabricmc/fabric/api/attachment/v1/AttachmentType	copyOnDeath	()Z	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/attachment/v1/AttachmentType			CLASS	class gone
+override+super	net/fabricmc/fabric/api/attachment/v1/AttachmentType	isPersistent	()Z	CLASS	class gone
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	setReplace	(Z)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	forceAddTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	remove	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	remove	([Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	removeAll	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	removeAll	(Ljava/util/stream/Stream;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	removeTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder			CLASS	class gone
+override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	setReplace	(Z)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	forceAddTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	remove	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	remove	([Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	removeAll	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	removeAll	(Ljava/util/stream/Stream;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	removeTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_10419	(Ljava/util/function/Consumer;)V	METHOD	method method_10419(Lnet/minecraft/class_8790;)V public abstract
+extend	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider			ABSTRACT	class public abstract extends net/minecraft/class_2446
+implement	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_10419	(Ljava/util/function/Consumer;)V	ORPHAN	method method_10419(Lnet/minecraft/class_8790;)V public abstract
+override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	withConditions	(Ljava/util/function/Consumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Ljava/util/function/Consumer;	METHOD	method withConditions(Lnet/minecraft/class_8790;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Lnet/minecraft/class_8790; protected
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	([Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	([Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	removeAll	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	removeAll	(Ljava/util/stream/Stream;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	removeTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/entity/FakePlayer	method_14213	(Lnet/minecraft/class_2803;)V	METHOD	method method_14213(Lnet/minecraft/class_8791;)V public
+override+super	net/fabricmc/fabric/api/entity/FakePlayer	method_14213	(Lnet/minecraft/class_2803;)V	METHOD,ORPHAN	method method_14213(Lnet/minecraft/class_8791;)V public
+call	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion	onConversion	(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion			CLASS	class gone
+get-static	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents	MOB_CONVERSION	Lnet/fabricmc/fabric/api/event/Event;	FIELD	field not declared on the owner
+call	net/fabricmc/fabric/api/event/network/C2SPacketTypeCallback	accept	(Lnet/minecraft/class_1657;Ljava/util/Collection;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/api/event/network/C2SPacketTypeCallback	REGISTERED	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/event/network/C2SPacketTypeCallback	UNREGISTERED	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/event/network/C2SPacketTypeCallback			CLASS	class gone
+call	net/fabricmc/fabric/api/event/network/S2CPacketTypeCallback	accept	(Ljava/util/Collection;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/api/event/network/S2CPacketTypeCallback	REGISTERED	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/event/network/S2CPacketTypeCallback	UNREGISTERED	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/event/network/S2CPacketTypeCallback			CLASS	class gone
+call	net/fabricmc/fabric/api/event/registry/FabricRegistry	addAlias	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/event/registry/FabricRegistry			CLASS	class gone
+override+super	net/fabricmc/fabric/api/event/registry/FabricRegistry	addAlias	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/api/event/registry/RegistryAttribute	PERSISTED	Lnet/fabricmc/fabric/api/event/registry/RegistryAttribute;	FIELD	field not declared on the owner
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPool	asVanilla	()Lnet/minecraft/class_55;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPool	getEntries	()Ljava/util/List;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPool	getConditions	()Ljava/util/List;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPool	getFunctions	()Ljava/util/List;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPool	getRolls	()Lnet/minecraft/class_5658;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/loot/v1/FabricLootPool			CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootPool	asVanilla	()Lnet/minecraft/class_55;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	rolls	(Lnet/minecraft/class_5658;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	with	(Lnet/minecraft/class_79$class_80;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	conditionally	(Lnet/minecraft/class_5341$class_210;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	apply	(Lnet/minecraft/class_117$class_118;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	withEntry	(Lnet/minecraft/class_79;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	withCondition	(Lnet/minecraft/class_5341;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	withFunction	(Lnet/minecraft/class_117;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	copyFrom	(Lnet/minecraft/class_55;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	copyFrom	(Lnet/minecraft/class_55;Z)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	builder	()Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder	of	(Lnet/minecraft/class_55;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplier	asVanilla	()Lnet/minecraft/class_52;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplier	getPools	()Ljava/util/List;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplier	getFunctions	()Ljava/util/List;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplier	getType	()Lnet/minecraft/class_176;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/loot/v1/FabricLootSupplier			CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplier	asVanilla	()Lnet/minecraft/class_52;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplier	getType	()Lnet/minecraft/class_176;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	pool	(Lnet/minecraft/class_55$class_56;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	type	(Lnet/minecraft/class_176;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	apply	(Lnet/minecraft/class_117$class_118;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	withPool	(Lnet/minecraft/class_55;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	withFunction	(Lnet/minecraft/class_117;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	withPools	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	withFunctions	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	copyFrom	(Lnet/minecraft/class_52;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	copyFrom	(Lnet/minecraft/class_52;Z)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	builder	()Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	of	(Lnet/minecraft/class_52;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+extend	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder			CLASS	class gone
+super-ctor	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	<init>	()V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	pool	(Lnet/minecraft/class_55$class_56;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	type	(Lnet/minecraft/class_176;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	apply	(Lnet/minecraft/class_117$class_118;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	withPool	(Lnet/minecraft/class_55;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	withFunction	(Lnet/minecraft/class_117;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	withPools	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	withFunctions	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	copyFrom	(Lnet/minecraft/class_52;)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+override+super	net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder	copyFrom	(Lnet/minecraft/class_52;Z)Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/LootEntryTypeRegistry	register	(Lnet/minecraft/class_2960;Lnet/minecraft/class_5335;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/api/loot/v1/LootEntryTypeRegistry	INSTANCE	Lnet/fabricmc/fabric/api/loot/v1/LootEntryTypeRegistry;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/loot/v1/LootEntryTypeRegistry			CLASS	class gone
+call-static	net/fabricmc/fabric/api/loot/v1/LootJsonParser	read	(Ljava/io/Reader;Ljava/lang/Class;)Ljava/lang/Object;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/loot/v1/LootJsonParser	read	(Ljava/lang/String;Ljava/lang/Class;)Ljava/lang/Object;	CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/event/LootTableLoadingCallback$LootTableSetter	set	(Lnet/minecraft/class_52;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/loot/v1/event/LootTableLoadingCallback$LootTableSetter			CLASS	class gone
+call	net/fabricmc/fabric/api/loot/v1/event/LootTableLoadingCallback	onLootTableLoading	(Lnet/minecraft/class_3300;Lnet/minecraft/class_60;Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder;Lnet/fabricmc/fabric/api/loot/v1/event/LootTableLoadingCallback$LootTableSetter;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/api/loot/v1/event/LootTableLoadingCallback	EVENT	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/loot/v1/event/LootTableLoadingCallback			CLASS	class gone
+call	net/fabricmc/fabric/api/network/ClientSidePacketRegistry	canServerReceive	(Lnet/minecraft/class_2960;)Z	CLASS	class gone
+call	net/fabricmc/fabric/api/network/ClientSidePacketRegistry	sendToServer	(Lnet/minecraft/class_2596;Lio/netty/util/concurrent/GenericFutureListener;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/network/ClientSidePacketRegistry	sendToServer	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lio/netty/util/concurrent/GenericFutureListener;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/network/ClientSidePacketRegistry	sendToServer	(Lnet/minecraft/class_2596;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/network/ClientSidePacketRegistry	sendToServer	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/api/network/ClientSidePacketRegistry	INSTANCE	Lnet/fabricmc/fabric/api/network/ClientSidePacketRegistry;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/network/ClientSidePacketRegistry			CLASS	class gone
+override+super	net/fabricmc/fabric/api/network/ClientSidePacketRegistry	sendToServer	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lio/netty/util/concurrent/GenericFutureListener;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/network/ClientSidePacketRegistry	sendToServer	(Lnet/minecraft/class_2596;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/network/ClientSidePacketRegistry	sendToServer	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/network/PacketConsumer	accept	(Lnet/fabricmc/fabric/api/network/PacketContext;Lnet/minecraft/class_2540;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/network/PacketConsumer			CLASS	class gone
+call	net/fabricmc/fabric/api/network/PacketContext	getPacketEnvironment	()Lnet/fabricmc/api/EnvType;	CLASS	class gone
+call	net/fabricmc/fabric/api/network/PacketContext	getPlayer	()Lnet/minecraft/class_1657;	CLASS	class gone
+call	net/fabricmc/fabric/api/network/PacketContext	getTaskQueue	()Lnet/minecraft/class_1255;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/network/PacketContext			CLASS	class gone
+call	net/fabricmc/fabric/api/network/PacketRegistry	toPacket	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;	CLASS	class gone
+call	net/fabricmc/fabric/api/network/PacketRegistry	register	(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/network/PacketConsumer;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/network/PacketRegistry	unregister	(Lnet/minecraft/class_2960;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/network/PacketRegistry			CLASS	class gone
+call	net/fabricmc/fabric/api/network/ServerSidePacketRegistry	canPlayerReceive	(Lnet/minecraft/class_1657;Lnet/minecraft/class_2960;)Z	CLASS	class gone
+call	net/fabricmc/fabric/api/network/ServerSidePacketRegistry	sendToPlayer	(Lnet/minecraft/class_1657;Lnet/minecraft/class_2596;Lio/netty/util/concurrent/GenericFutureListener;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/network/ServerSidePacketRegistry	sendToPlayer	(Lnet/minecraft/class_1657;Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lio/netty/util/concurrent/GenericFutureListener;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/network/ServerSidePacketRegistry	sendToPlayer	(Lnet/minecraft/class_1657;Lnet/minecraft/class_2596;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/network/ServerSidePacketRegistry	sendToPlayer	(Lnet/minecraft/class_1657;Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/api/network/ServerSidePacketRegistry	INSTANCE	Lnet/fabricmc/fabric/api/network/ServerSidePacketRegistry;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/network/ServerSidePacketRegistry			CLASS	class gone
+override+super	net/fabricmc/fabric/api/network/ServerSidePacketRegistry	sendToPlayer	(Lnet/minecraft/class_1657;Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lio/netty/util/concurrent/GenericFutureListener;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/network/ServerSidePacketRegistry	sendToPlayer	(Lnet/minecraft/class_1657;Lnet/minecraft/class_2596;)V	CLASS	class gone
+override+super	net/fabricmc/fabric/api/network/ServerSidePacketRegistry	sendToPlayer	(Lnet/minecraft/class_1657;Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/networking/v1/PacketSender			ABSTRACT	class public abstract interface extends java/lang/Object
+new	net/fabricmc/fabric/api/object/builder/v1/advancement/CriterionRegistry	<init>	()V	CLASS	class gone
+call-static	net/fabricmc/fabric/api/object/builder/v1/advancement/CriterionRegistry	register	(Lnet/minecraft/class_179;)Lnet/minecraft/class_179;	CLASS	class gone
+call	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer	read	(Lcom/google/gson/JsonObject;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;	METHOD	method read(Lnet/minecraft/class_2540;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient; public abstract
+call	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer	write	(Lcom/google/gson/JsonObject;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V	METHOD	method write(Lnet/minecraft/class_2540;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V public abstract
+implement-interface	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/registry/LootEntryTypeRegistry	register	(Lnet/minecraft/class_79$class_5337;)V	CLASS	class gone
+get-static	net/fabricmc/fabric/api/registry/LootEntryTypeRegistry	INSTANCE	Lnet/fabricmc/fabric/api/registry/LootEntryTypeRegistry;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/registry/LootEntryTypeRegistry			CLASS	class gone
+call-static	net/fabricmc/fabric/api/server/PlayerStream	all	(Lnet/minecraft/server/MinecraftServer;)Ljava/util/stream/Stream;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/server/PlayerStream	world	(Lnet/minecraft/class_1937;)Ljava/util/stream/Stream;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/server/PlayerStream	watching	(Lnet/minecraft/class_1937;Lnet/minecraft/class_1923;)Ljava/util/stream/Stream;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/server/PlayerStream	watching	(Lnet/minecraft/class_1297;)Ljava/util/stream/Stream;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/server/PlayerStream	watching	(Lnet/minecraft/class_2586;)Ljava/util/stream/Stream;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/server/PlayerStream	watching	(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Ljava/util/stream/Stream;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/server/PlayerStream	around	(Lnet/minecraft/class_1937;Lnet/minecraft/class_243;D)Ljava/util/stream/Stream;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/server/PlayerStream	around	(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;D)Ljava/util/stream/Stream;	CLASS	class gone
+call	net/fabricmc/fabric/api/tag/v1/FabricTagFile	remove	()Ljava/util/List;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/tag/v1/FabricTagFile			CLASS	class gone
+override+super	net/fabricmc/fabric/api/tag/v1/FabricTagFile	remove	()Ljava/util/List;	CLASS	class gone
