@@ -8,6 +8,7 @@
 # later step is core/shims/steps/<W> with core/segments/steps/<V>__<W>.json) with build.sh's gates,
 # then runs ~/cbwork/step_check.sh on it. Prints the build gates' verdicts and the step's open count;
 # the open entries land in ~/cbwork/agents/<name>/step/<V>__<W>/open.tsv (fetch with scp).
+# CB_PROBE=fapi measures the Fabric API side (open list under step-fapi/ instead).
 #
 # Run from the root of a checkout (the main one or a worktree). beta2's working set (~/cbwork/data)
 # must hold W's stub, client runtime (libraries, mods/fabric-api, .fabric/processedMods) and
@@ -36,4 +37,4 @@ $SSH "set -e; cd ~/cbwork/agents/$NAME && rm -rf core build.sh build && tar xf u
   CB_DATA=\$HOME/cbwork/data $LAYER > build.log 2>&1 || { tail -30 build.log; echo 'BUILD FAILED'; exit 1; }
   grep -E 'check:|^->' build.log
   echo '== step'
-  cd ~/cbwork && ./step_check.sh agents/$NAME $V $W '$AREA'"
+  cd ~/cbwork && CB_PROBE='${CB_PROBE:-}' ./step_check.sh agents/$NAME $V $W '$AREA'"

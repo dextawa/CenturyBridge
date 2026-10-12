@@ -106,7 +106,7 @@ public final class CbCommands {
 
     /**
      * the protected 1.20.2 constructor's ResultConsumer and return-value consumer, as 1.20.3's one callback (the
-     * constructor's after fills in the source the consumer gets)
+     * constructor reshape's post static fills in the source the consumer gets)
      */
     public static net.minecraft.class_8935 cbCallback(ResultConsumer<net.minecraft.class_2168> consumer, IntConsumer returnValueConsumer) {
         net.minecraft.class_8935 callback = consumer == null ? net.minecraft.class_8935.field_47158 : new CbLegacyResultCallback(consumer);

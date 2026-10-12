@@ -79,9 +79,11 @@ public final class Chain {
     public final java.util.Map<String, String> instanceFieldGetters = new java.util.HashMap<>();
     /**
      * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field write rewritten to a
-     * static setter taking the receiver and the value, the write side of {@link #instanceFieldGetters}
-     * (1.20.2 AbstractSelectionList's x0/x1/y0/y1/width/height, which 1.20.3 keeps as the widget's
-     * geometry: a write moves the widget, as the field write moved the list).
+     * static setter(receiver, value)V, the write side of {@link #instanceFieldGetters} -- for a
+     * public field whose type changed (1.20.2 PendingInvite.worldOwnerUuid: String -> UUID, the
+     * setter converts) or one that is gone and lives on as other state (1.20.2 AbstractSelectionList's
+     * x0/x1/y0/y1/width/height, which 1.20.3 keeps as the widget's geometry: a write moves the widget,
+     * as the field write moved the list). Found up the hierarchy from the site's owner, as a getter.
      */
     public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
     /**
@@ -116,6 +118,30 @@ public final class Chain {
         for (String o : selfAndSupers(owner)) {
             if (map.containsKey(o + "." + nameDesc)) {
                 return o;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Home for a super call ({@link #superRedirects}): the class the JVM resolved
+     * {@code invokespecial owner.name(desc)} to in the source version -- the first class up the
+     * chain declaring the member there -- when a super redirect is keyed on it; null otherwise.
+     * A super call names the class the mod extends, which need not be the declaring one: a mod
+     * extending ServerScoreboard calls super.getObjective on ServerScoreboard, declared by
+     * Scoreboard. Keyed only on Scoreboard, such a call used to miss its super redirect and take
+     * the instance redirect, whose virtual dispatch lands back in the mod's own override. A vanilla
+     * class in between that declares the member itself (its own source body) stops the walk:
+     * only a super redirect keyed on that class serves it. Without a source stub the first keyed
+     * ancestor is taken.
+     */
+    public String superRedirectHome(String owner, String nameDesc) {
+        for (String o : selfAndSupers(owner)) {
+            if (superRedirects.containsKey(o + "." + nameDesc)) {
+                return o;
+            }
+            if (sourceDecls.getOrDefault(o, java.util.Set.of()).contains(nameDesc)) {
+                return null;
             }
         }
         return null;
@@ -281,7 +307,12 @@ public final class Chain {
          * InteractionResult). Null when the return type did not change.
          */
         public String unwrapOwner, unwrapName, unwrapDesc;
-        /** internal class name providing cbEnter(Object)Z and cbExit(Object)V */
+        /**
+         * internal class name providing cbEnter(Object)Z and cbExit(Object)V. A guarded (or narrowing)
+         * fall-through calls super's new shape; when the class's vanilla superclass chain has none but a
+         * direct vanilla superinterface has it as a default method (1.20.3's ChangeOverTimeBlock.getNextState
+         * under a copper block extending Block), it calls that interface's default instead.
+         */
         public String guard;
         /** hierarchy filters: apply only to classes under / not under this vanilla class */
         public String onlyUnder, notUnder;
@@ -386,6 +417,72 @@ public final class Chain {
     }
 
     public final java.util.List<OverrideRename> overrideRenames = new java.util.ArrayList<>();
+
+    /**
+     * Implementations a vanilla type newly demands ("abstractFills" in a step's wiring): a method the
+     * target declares abstract that a mod class written against the source cannot implement, because
+     * the source had no such method (1.20.3's BlockBehaviour.codec(), Level.tickRateManager(),
+     * ContainerSingleItem.getTheItem()). Left alone, the class loads and the first call is an
+     * AbstractMethodError. A concrete class of the converted jar under {@code under} that would
+     * inherit the method only as abstract on the target -- no class of the jar on its way declares
+     * it, no override or adapter hook synthesizes it, and the nearest declaration up its target
+     * ancestry ({@link #concreteOnTarget}) is abstract or missing -- gets it synthesized as
+     * {@code public R m(args) { return call(this, args...); }}: the static answers what the source
+     * API made of the situation. A class that inherits a concrete implementation keeps it, so the
+     * fill never replaces vanilla behaviour.
+     * <pre>
+     *   "abstractFills": [{"under": "net/minecraft/class_4970", "method": "method_53969()Lcom/mojang/serialization/MapCodec;",
+     *                      "call": "Owner.name(Lnet/minecraft/class_4970;)Lcom/mojang/serialization/MapCodec;"}]
+     * </pre>
+     * The call's first parameter is {@code under} (the receiver), the rest the method's own.
+     */
+    public static final class AbstractFill {
+        public String under, name, desc, callOwner, callName, callDesc;
+    }
+
+    public final java.util.List<AbstractFill> abstractFills = new java.util.ArrayList<>();
+
+    /** target-stub methods declared abstract, "owner.name(desc)" in the analysis namespace */
+    public final java.util.Set<String> targetAbstracts = new java.util.HashSet<>();
+
+    /**
+     * Whether the target gives a class with these vanilla ancestors a concrete name+desc, the way the
+     * JVM selects one: the nearest declaration up the superclass chain decides (an abstract
+     * redeclaration -- 1.20.3's HorizontalDirectionalBlock.codec() under Block's concrete one --
+     * counts as abstract); without one, a default method of an implemented interface. True when the
+     * target is unknown.
+     */
+    public boolean concreteOnTarget(String name, String desc, java.util.List<String> roots) {
+        if (targetDecls.isEmpty()) {
+            return true;
+        }
+        String shape = name + desc;
+        java.util.ArrayDeque<String> ifaces = new java.util.ArrayDeque<>();
+        for (String r : roots) {
+            if (targetInterfaces.contains(r)) {
+                ifaces.add(r);
+                continue;
+            }
+            for (String c = r; c != null; c = targetSuperOf.get(c)) {
+                if (targetDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
+                    return !targetAbstracts.contains(c + "." + shape);
+                }
+                ifaces.addAll(targetInterfacesOf.getOrDefault(c, java.util.List.of()));
+            }
+        }
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!ifaces.isEmpty()) {
+            String i = ifaces.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            if (targetDecls.getOrDefault(i, java.util.Set.of()).contains(shape) && !targetAbstracts.contains(i + "." + shape)) {
+                return true;
+            }
+            ifaces.addAll(targetInterfacesOf.getOrDefault(i, java.util.List.of()));
+        }
+        return false;
+    }
 
     /**
      * Lambdas whose functional interface's abstract method changed shape ("lambdaAdapters"): 1.20.2's
@@ -758,6 +855,9 @@ public final class Chain {
                         : cls.matcher(d).replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
                             back.getOrDefault(mr.group(1), mr.group(1))) + ";");
                     decls.add(name + bd);
+                    if (idx.abstracts.contains(e.getKey() + "." + me.getKey() + d)) {
+                        targetAbstracts.add(owner + "." + name + bd);
+                    }
                     if (!name.equals(me.getKey())) {
                         // past the wall the runtime name IS the mojang one: a mixin
                         // spelling it that way (mojang-mapped bundled jar, whose
@@ -916,6 +1016,11 @@ public final class Chain {
      * <ul>
      * <li>{@code keep} -- re-push the next old argument unchanged.</li>
      * <li>{@code drop} -- consume the next old argument, push nothing.</li>
+     * <li>{@code drop OWNER#name(T)V} -- consume the next old argument and hand it to a void
+     *     static instead of pushing it: a value the new shape has no parameter for but the
+     *     bridge still needs (1.20.2 recipes lost their id argument; the id goes to the bridge
+     *     that records it for the recipe being built). {@code T} must equal the old argument
+     *     type. The call is made at the op's place in the sequence, before the invoke.</li>
      * <li>{@code conv OWNER#name(desc)R} -- push the next old argument and run
      *     the static converter on it; its return type is the new argument.
      *     The converter's parameter type must equal the old argument type.</li>
@@ -932,6 +1037,15 @@ public final class Chain {
      * exactly; a mismatch is rejected when the wiring loads, not at a mod's
      * call site. Old ops in sequence must cover every old argument (add
      * {@code drop} for the ones that go away).
+     *
+     * An old argument the new constructor has no place for, but whose value the
+     * instance still takes another way (1.20.1 RealmsUploadScreen's after-upload
+     * callback, a parameter in 1.20.1 and set on the instance by the layer in 1.20.2),
+     * is handed over right after the constructor returns: {@code "post":
+     * "OWNER#name(Lowner;...)V"} with {@code "postArgs": [old argument indices]} runs
+     * the static on the constructed object (the NEW site's object, or {@code this}
+     * after a mod constructor's super(...)) and those old arguments, still in their
+     * spill locals. Straight-line code after the INVOKESPECIAL, so frames stay exact.
      *
      * Precedence at one call site: a NEW site with a {@code ctorRedirects}
      * factory takes the factory; otherwise a reshape wins over a
@@ -962,6 +1076,19 @@ public final class Chain {
         public final String retKind;
         public final String retOwner, retName, retDesc;
 
+        /** whether the call's values change at all (a converter on an argument or the return), not just its shape */
+        public boolean converts() {
+            if ("conv".equals(retKind)) {
+                return true;
+            }
+            for (ReshapeOp op : args.ops) {
+                if (op.owner != null && !op.drop && op.from.length > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         CallReshape(CtorReshape args, String oldDesc, String newDesc, String retKind, String retOwner, String retName, String retDesc) {
             this.args = args;
             this.oldDesc = oldDesc;
@@ -980,6 +1107,112 @@ public final class Chain {
     public final java.util.Set<String> callReshapeNames = new java.util.HashSet<>();
     /** name + new descriptor of every reshape: what the rewritten call sites now reference */
     public final java.util.Set<String> callReshapeTargets = new java.util.HashSet<>();
+    /**
+     * name + descriptor of the reshapes that keep the descriptor -- conversions of values whose
+     * erased type stayed while their type arguments changed (generic drift). Such a member keeps
+     * its shape on a mod class that overrides it too ({@link #convertHooks} puts a converting
+     * bridge in front of the mod's own method), so a call naming that mod class is converted as
+     * well: the bridge expects what vanilla passes.
+     */
+    public final java.util.Set<String> sameShapeCalls = new java.util.HashSet<>();
+
+    /**
+     * An override of a member whose descriptor stayed while the type arguments of its parameters or
+     * return changed ("convertHooks", the override side of a same-shape callReshape). Vanilla calls
+     * the mod's method with W's values and reads W's from what it answers; the mod's body was written
+     * for V's. The engine renames the mod's method ({@link #renamed}) and puts a bridge with the
+     * original name and descriptor in its place:
+     * <pre>
+     *   m(a0..an):  return ret(this.m$cbW(arg0(a0) .. argn(an)));
+     * </pre>
+     * each converter optional. A mod's own call of m -- this.m(..), super.m(..) from a subclass --
+     * goes through the call side's conversion and then the bridge, so the renamed body always sees
+     * V's values. Converters should be adaptive (a value already of the wanted kind passes through)
+     * and undo each other, because erasure cannot tell where a value came from.
+     */
+    public static final class ConvertHook {
+        public final String under, name, desc;
+        /** per parameter: {owner, name, desc} of the static turning W's value into V's, or null */
+        public final String[][] args;
+        /** {owner, name, desc} of the static turning the old body's V value into W's, or null */
+        public final String[] ret;
+        public final String renamed;
+
+        ConvertHook(String under, String name, String desc, String[][] args, String[] ret, String renamed) {
+            this.under = under;
+            this.name = name;
+            this.desc = desc;
+            this.args = args;
+            this.ret = ret;
+            this.renamed = renamed;
+        }
+    }
+
+    /** convertHooks by name + descriptor */
+    public final java.util.Map<String, java.util.List<ConvertHook>> convertHooks = new java.util.HashMap<>();
+
+    static String[] parseStaticRef(String where, String s) {
+        String t = s.trim();
+        int hash = t.indexOf('#');
+        int paren = t.indexOf('(');
+        if (hash <= 0 || paren <= hash) {
+            throw new IllegalArgumentException(where + ": '" + s + "' is not OWNER#name(desc)R");
+        }
+        return new String[] {t.substring(0, hash), t.substring(hash + 1, paren), t.substring(paren)};
+    }
+
+    /** one "convertHooks" entry: {"under", "member": "name(desc)", "args": [ref|null..], "ret": ref} */
+    public static ConvertHook parseConvertHook(com.google.gson.JsonObject o, String step) {
+        String under = o.get("under").getAsString();
+        String member = o.get("member").getAsString();
+        String where = "convertHooks " + under + "." + member;
+        int paren = member.indexOf('(');
+        if (paren <= 0) {
+            throw new IllegalArgumentException(where + ": member must be name(desc)");
+        }
+        String name = member.substring(0, paren);
+        String desc = member.substring(paren);
+        if (name.startsWith("<")) {
+            throw new IllegalArgumentException(where + ": constructors are not overridden (superCtorReshapes)");
+        }
+        org.objectweb.asm.Type[] params = org.objectweb.asm.Type.getArgumentTypes(desc);
+        org.objectweb.asm.Type rt = org.objectweb.asm.Type.getReturnType(desc);
+        String[][] args = new String[params.length][];
+        boolean any = false;
+        if (o.has("args")) {
+            var a = o.getAsJsonArray("args");
+            if (a.size() != params.length) {
+                throw new IllegalArgumentException(where + ": args lists " + a.size() + " converters for " + params.length + " parameters");
+            }
+            for (int i = 0; i < params.length; i++) {
+                if (a.get(i).isJsonNull()) {
+                    continue;
+                }
+                String[] ref = parseStaticRef(where, a.get(i).getAsString());
+                org.objectweb.asm.Type[] cp = org.objectweb.asm.Type.getArgumentTypes(ref[2]);
+                if (cp.length != 1 || !cp[0].equals(params[i]) || !org.objectweb.asm.Type.getReturnType(ref[2]).equals(params[i])) {
+                    throw new IllegalArgumentException(where + ": converter " + i + " must be (" + params[i].getDescriptor()
+                        + ")" + params[i].getDescriptor());
+                }
+                args[i] = ref;
+                any = true;
+            }
+        }
+        String[] ret = null;
+        if (o.has("ret") && !o.get("ret").isJsonNull()) {
+            ret = parseStaticRef(where, o.get("ret").getAsString());
+            org.objectweb.asm.Type[] cp = org.objectweb.asm.Type.getArgumentTypes(ret[2]);
+            if (rt.getSort() == org.objectweb.asm.Type.VOID || cp.length != 1 || !cp[0].equals(rt)
+                    || !org.objectweb.asm.Type.getReturnType(ret[2]).equals(rt)) {
+                throw new IllegalArgumentException(where + ": ret must be (" + rt.getDescriptor() + ")" + rt.getDescriptor());
+            }
+            any = true;
+        }
+        if (!any) {
+            throw new IllegalArgumentException(where + ": converts nothing");
+        }
+        return new ConvertHook(under, name, desc, args, ret, name + "$cb" + step.replace('.', '_'));
+    }
 
     public static CallReshape parseCallReshape(String key, String newDesc, java.util.List<String> ops, String ret) {
         String where = "callReshapes " + key;
@@ -988,10 +1221,15 @@ public final class Chain {
         org.objectweb.asm.Type oldRet = org.objectweb.asm.Type.getReturnType(oldDesc);
         org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(newDesc);
         if (oldRet.equals(newRet)) {
-            if (ret != null) {
-                throw new IllegalArgumentException(where + ": return type unchanged, 'ret' must be absent");
+            if (ret == null) {
+                return new CallReshape(args, oldDesc, newDesc, null, null, null, null);
             }
-            return new CallReshape(args, oldDesc, newDesc, null, null, null, null);
+            // the erased return type stayed while its type arguments changed (generic drift:
+            // RecipeManager.getFirstMatch answers Optional<RecipeHolder<T>> where it answered
+            // Optional<T>): only a conversion of the value makes sense
+            if (!ret.trim().startsWith("conv ")) {
+                throw new IllegalArgumentException(where + ": return type unchanged, 'ret' can only be a same-type conv");
+            }
         }
         if (oldRet.getSort() == org.objectweb.asm.Type.VOID) {
             if (ret != null && !ret.equals("pop")) {
@@ -1036,40 +1274,45 @@ public final class Chain {
     public static final class CtorReshape {
         public final String newDesc;
         public final java.util.List<ReshapeOp> ops;
-        /**
-         * "after": "OWNER#name(Lowner;oldArgs...)V" -- a static run right after the constructor
-         * returns, with the object it built (the NEW site's instance, or {@code this} after a
-         * super(...) / this(...) call) and the OLD arguments exactly as the call site passed them.
-         * For what the old constructor did with an argument the new one has no place for: state the
-         * new constructor cannot take (1.20.2 Checkbox's width, height and showLabel, a list's 1.20.2
-         * height) is set on the finished object. Null when the entry has none.
-         */
-        public String afterOwner, afterName, afterDesc;
+        /** static run on the constructed object and {@link #postArgs} after the call (null = none) */
+        public String postOwner, postName, postDesc;
+        /** old argument indices the post static takes after the object */
+        public int[] postArgs = new int[0];
 
         CtorReshape(String newDesc, java.util.List<ReshapeOp> ops) {
             this.newDesc = newDesc;
             this.ops = ops;
         }
-    }
 
-    /** "after" of a superCtorReshapes entry: the static must take (owner, every old argument) and return void */
-    static void parseAfter(String key, CtorReshape r, String after) {
-        String where = "superCtorReshapes " + key;
-        int hash = after.indexOf('#');
-        int paren = after.indexOf('(');
-        if (hash <= 0 || paren <= hash) {
-            throw new IllegalArgumentException(where + ": after needs OWNER#name(desc)V");
+        /**
+         * "post": "OWNER#name(Lowner;...)V" with "postArgs": [i...] -- validated against the
+         * key: the static takes the constructed class, then the named old arguments' types.
+         */
+        void setPost(String key, String post, int[] args) {
+            String where = "superCtorReshapes " + key;
+            int hash = post.indexOf('#');
+            int paren = post.indexOf('(');
+            if (hash <= 0 || paren <= hash) {
+                throw new IllegalArgumentException(where + ": post '" + post + "' needs OWNER#name(desc)V");
+            }
+            org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(key.substring(key.indexOf('(')));
+            StringBuilder want = new StringBuilder("(L").append(key, 0, key.indexOf(".<init>")).append(';');
+            for (int i : args) {
+                if (i < 0 || i >= old.length) {
+                    throw new IllegalArgumentException(where + ": postArgs names old argument " + i
+                        + " but the old constructor has " + old.length);
+                }
+                want.append(old[i].getDescriptor());
+            }
+            want.append(")V");
+            if (!post.substring(paren).equals(want.toString())) {
+                throw new IllegalArgumentException(where + ": post '" + post + "' must have the descriptor " + want);
+            }
+            this.postOwner = post.substring(0, hash);
+            this.postName = post.substring(hash + 1, paren);
+            this.postDesc = post.substring(paren);
+            this.postArgs = args;
         }
-        String owner = key.substring(0, key.indexOf(".<init>"));
-        String oldDesc = key.substring(key.indexOf('('));
-        String want = "(L" + owner + ";" + oldDesc.substring(1, oldDesc.lastIndexOf(')')) + ")V";
-        String desc = after.substring(paren);
-        if (!desc.equals(want)) {
-            throw new IllegalArgumentException(where + ": after must take the built object and the old arguments: " + want);
-        }
-        r.afterOwner = after.substring(0, hash);
-        r.afterName = after.substring(hash + 1, paren);
-        r.afterDesc = desc;
     }
 
     /** one reshape op: which old arguments to re-push, and the static to run on them (null = plain keep/drop) */
@@ -1151,10 +1394,27 @@ public final class Chain {
                     produced.add(rest.isEmpty() ? old[from[0]] : org.objectweb.asm.Type.getType(rest));
                 }
                 case "drop" -> {
-                    if (!rest.isEmpty() || from.length != 1) {
+                    if (from.length != 1) {
                         throw new IllegalArgumentException(where + ": malformed op '" + t + "'");
                     }
-                    ops.add(new ReshapeOp(from, null, null, null, true));
+                    if (rest.isEmpty()) {
+                        ops.add(new ReshapeOp(from, null, null, null, true));
+                    } else {
+                        // "drop OWNER#name(T)V": the dropped old argument goes to a void static
+                        int hash = rest.indexOf('#');
+                        int paren = rest.indexOf('(');
+                        if (hash <= 0 || paren <= hash) {
+                            throw new IllegalArgumentException(where + ": op '" + t + "' needs OWNER#name(desc)V");
+                        }
+                        String sDesc = rest.substring(paren);
+                        org.objectweb.asm.Type[] sp2 = org.objectweb.asm.Type.getArgumentTypes(sDesc);
+                        if (sp2.length != 1 || !sp2[0].equals(old[from[0]])
+                                || org.objectweb.asm.Type.getReturnType(sDesc).getSort() != org.objectweb.asm.Type.VOID) {
+                            throw new IllegalArgumentException(where + ": op '" + t + "' must take exactly old argument "
+                                + from[0] + " (" + old[from[0]].getDescriptor() + ") and return void");
+                        }
+                        ops.add(new ReshapeOp(from, rest.substring(0, hash), rest.substring(hash + 1, paren), sDesc, true));
+                    }
                 }
                 case "conv", "push" -> {
                     int hash = rest.indexOf('#');
@@ -1527,6 +1787,28 @@ public final class Chain {
                     c.facadeGaps.put(e.getKey(), e.getValue().getAsString());
                 }
             }
+            if (root.has("abstractFills")) {
+                for (var el : root.getAsJsonArray("abstractFills")) {
+                    var o = el.getAsJsonObject();
+                    AbstractFill f = new AbstractFill();
+                    f.under = o.get("under").getAsString();
+                    String[] msig = splitSig(o.get("method").getAsString());
+                    f.name = msig[0];
+                    f.desc = msig[1];
+                    String call = o.get("call").getAsString();
+                    int dot = call.lastIndexOf('.', call.indexOf('('));
+                    f.callOwner = call.substring(0, dot);
+                    String[] csig = splitSig(call.substring(dot + 1));
+                    f.callName = csig[0];
+                    f.callDesc = csig[1];
+                    String want = "(L" + f.under + ";" + f.desc.substring(1);
+                    if (!f.callDesc.equals(want)) {
+                        throw new IllegalArgumentException("abstractFills " + f.under + "." + f.name + f.desc
+                            + ": call must take the receiver and the method's arguments and return its type: " + want);
+                    }
+                    c.abstractFills.add(f);
+                }
+            }
             if (root.has("adapterHooks")) {
                 for (var el : root.getAsJsonArray("adapterHooks")) {
                     var o = el.getAsJsonObject();
@@ -1623,11 +1905,16 @@ public final class Chain {
                     for (var el : o.getAsJsonArray("ops")) {
                         ops.add(el.getAsString());
                     }
-                    CtorReshape reshape = parseReshape(k, o.get("desc").getAsString(), ops);
-                    if (o.has("after")) {
-                        parseAfter(k, reshape, o.get("after").getAsString());
+                    CtorReshape cr = parseReshape(k, o.get("desc").getAsString(), ops);
+                    if (o.has("post")) {
+                        var pa = o.has("postArgs") ? o.getAsJsonArray("postArgs") : new com.google.gson.JsonArray();
+                        int[] idx = new int[pa.size()];
+                        for (int i = 0; i < idx.length; i++) {
+                            idx[i] = pa.get(i).getAsInt();
+                        }
+                        cr.setPost(k, o.get("post").getAsString(), idx);
                     }
-                    c.superCtorReshapes.put(k, reshape);
+                    c.superCtorReshapes.put(k, cr);
                     c.ctorRedirectOwners.add(k.substring(0, k.indexOf(".<init>")));
                 }
             }
@@ -1640,11 +1927,21 @@ public final class Chain {
                         ops.add(el.getAsString());
                     }
                     String ret = o.has("ret") ? o.get("ret").getAsString() : null;
-                    c.callReshapes.put(k, parseCallReshape(k, o.get("desc").getAsString(), ops, ret));
+                    CallReshape parsed = parseCallReshape(k, o.get("desc").getAsString(), ops, ret);
+                    c.callReshapes.put(k, parsed);
                     c.callReshapeIndex.put(k, k);
                     String nm = k.substring(k.lastIndexOf('.', k.indexOf('(')) + 1, k.indexOf('('));
                     c.callReshapeNames.add(nm);
                     c.callReshapeTargets.add(nm + o.get("desc").getAsString());
+                    if (parsed.converts() && parsed.newDesc.equals(parsed.oldDesc)) {
+                        c.sameShapeCalls.add(nm + parsed.newDesc);
+                    }
+                }
+            }
+            if (root.has("convertHooks")) {
+                for (var e : root.getAsJsonArray("convertHooks")) {
+                    ConvertHook h = parseConvertHook(e.getAsJsonObject(), c.to);
+                    c.convertHooks.computeIfAbsent(h.name + h.desc, x -> new java.util.ArrayList<>()).add(h);
                 }
             }
             if (root.has("ctorRedirects")) {

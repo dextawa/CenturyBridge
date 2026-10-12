@@ -1,4 +1,184 @@
 accessWidener	v2	intermediary
+# s2world: LayeredCauldronBlock.handleEntityOnFireInside was protected in 1.20.2 (1.20.2 cauldrons override it); private since 1.20.3
+extendable	method	net/minecraft/class_5556	method_36994	(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V
+# s2world: AbstractMinecart.destroy(DamageSource) was public in 1.20.2; 1.20.3 inherits it, protected, from VehicleEntity
+accessible	method	net/minecraft/class_8836	method_7516	(Lnet/minecraft/class_1282;)V
+# s2world: LivingEntity.canBreatheUnderwater() is final since 1.20.3; 1.20.2 entities override it
+extendable	method	net/minecraft/class_1309	method_6094	()Z
+# s2world: ValidationContext(reporter, params, resolver, visited) is private since 1.20.3; 1.20.2's public full constructor is reshaped onto it
+accessible	method	net/minecraft/class_58	<init>	(Lnet/minecraft/class_8942;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;Ljava/util/Set;)V
+# s2world: Scoreboard / ServerScoreboard.onScoreChanged(Score) was public in 1.20.2; its 1.20.3 shape (holder, objective, score) is protected
+accessible	method	net/minecraft/class_269	method_1176	(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V
+accessible	method	net/minecraft/class_2995	method_1176	(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V
+
+# s2adv: 1.20.2 classes a mod could extend that 1.20.3 made final records -- AdvancementRewards and every
+# vanilla criterion TriggerInstance. A 1.20.2 subclass loads again as a real instance of the class (its
+# super(...) reshaped to the record's constructor); the record's final equals / hashCode / toString are
+# opened too, since 1.20.2 inherited them from Object and a subclass could override them.
+extendable class net/minecraft/class_170
+extendable method net/minecraft/class_170 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_170 hashCode ()I
+extendable method net/minecraft/class_170 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_196$class_198
+extendable method net/minecraft/class_196$class_198 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_196$class_198 hashCode ()I
+extendable method net/minecraft/class_196$class_198 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_1996$class_1998
+extendable method net/minecraft/class_1996$class_1998 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_1996$class_1998 hashCode ()I
+extendable method net/minecraft/class_1996$class_1998 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_1999$class_2001
+extendable method net/minecraft/class_1999$class_2001 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_1999$class_2001 hashCode ()I
+extendable method net/minecraft/class_1999$class_2001 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2002$class_2004
+extendable method net/minecraft/class_2002$class_2004 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2002$class_2004 hashCode ()I
+extendable method net/minecraft/class_2002$class_2004 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2006$class_2008
+extendable method net/minecraft/class_2006$class_2008 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2006$class_2008 hashCode ()I
+extendable method net/minecraft/class_2006$class_2008 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2010$class_2012
+extendable method net/minecraft/class_2010$class_2012 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2010$class_2012 hashCode ()I
+extendable method net/minecraft/class_2010$class_2012 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2014$class_2016
+extendable method net/minecraft/class_2014$class_2016 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2014$class_2016 hashCode ()I
+extendable method net/minecraft/class_2014$class_2016 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2027$class_2029
+extendable method net/minecraft/class_2027$class_2029 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2027$class_2029 hashCode ()I
+extendable method net/minecraft/class_2027$class_2029 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2030$class_2032
+extendable method net/minecraft/class_2030$class_2032 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2030$class_2032 hashCode ()I
+extendable method net/minecraft/class_2030$class_2032 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2037$class_2039
+extendable method net/minecraft/class_2037$class_2039 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2037$class_2039 hashCode ()I
+extendable method net/minecraft/class_2037$class_2039 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2044$class_2046
+extendable method net/minecraft/class_2044$class_2046 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2044$class_2046 hashCode ()I
+extendable method net/minecraft/class_2044$class_2046 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2054$class_2056
+extendable method net/minecraft/class_2054$class_2056 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2054$class_2056 hashCode ()I
+extendable method net/minecraft/class_2054$class_2056 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2058$class_2060
+extendable method net/minecraft/class_2058$class_2060 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2058$class_2060 hashCode ()I
+extendable method net/minecraft/class_2058$class_2060 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2062$class_2063
+extendable method net/minecraft/class_2062$class_2063 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2062$class_2063 hashCode ()I
+extendable method net/minecraft/class_2062$class_2063 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2066$class_2068
+extendable method net/minecraft/class_2066$class_2068 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2066$class_2068 hashCode ()I
+extendable method net/minecraft/class_2066$class_2068 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2069$class_2071
+extendable method net/minecraft/class_2069$class_2071 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2069$class_2071 hashCode ()I
+extendable method net/minecraft/class_2069$class_2071 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2076$class_2078
+extendable method net/minecraft/class_2076$class_2078 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2076$class_2078 hashCode ()I
+extendable method net/minecraft/class_2076$class_2078 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2080$class_2083
+extendable method net/minecraft/class_2080$class_2083 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2080$class_2083 hashCode ()I
+extendable method net/minecraft/class_2080$class_2083 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2085$class_2087
+extendable method net/minecraft/class_2085$class_2087 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2085$class_2087 hashCode ()I
+extendable method net/minecraft/class_2085$class_2087 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2108$class_2110
+extendable method net/minecraft/class_2108$class_2110 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2108$class_2110 hashCode ()I
+extendable method net/minecraft/class_2108$class_2110 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2115$class_2117
+extendable method net/minecraft/class_2115$class_2117 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2115$class_2117 hashCode ()I
+extendable method net/minecraft/class_2115$class_2117 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2119$class_2121
+extendable method net/minecraft/class_2119$class_2121 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2119$class_2121 hashCode ()I
+extendable method net/minecraft/class_2119$class_2121 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2123$class_2125
+extendable method net/minecraft/class_2123$class_2125 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2123$class_2125 hashCode ()I
+extendable method net/minecraft/class_2123$class_2125 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2128$class_2130
+extendable method net/minecraft/class_2128$class_2130 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2128$class_2130 hashCode ()I
+extendable method net/minecraft/class_2128$class_2130 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2131$class_2133
+extendable method net/minecraft/class_2131$class_2133 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2131$class_2133 hashCode ()I
+extendable method net/minecraft/class_2131$class_2133 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2135$class_2137
+extendable method net/minecraft/class_2135$class_2137 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2135$class_2137 hashCode ()I
+extendable method net/minecraft/class_2135$class_2137 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2140$class_2142
+extendable method net/minecraft/class_2140$class_2142 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2140$class_2142 hashCode ()I
+extendable method net/minecraft/class_2140$class_2142 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2143$class_2145
+extendable method net/minecraft/class_2143$class_2145 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2143$class_2145 hashCode ()I
+extendable method net/minecraft/class_2143$class_2145 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2148$class_2150
+extendable method net/minecraft/class_2148$class_2150 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2148$class_2150 hashCode ()I
+extendable method net/minecraft/class_2148$class_2150 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_4708$class_4709
+extendable method net/minecraft/class_4708$class_4709 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_4708$class_4709 hashCode ()I
+extendable method net/minecraft/class_4708$class_4709 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_4711$class_4712
+extendable method net/minecraft/class_4711$class_4712 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_4711$class_4712 hashCode ()I
+extendable method net/minecraft/class_4711$class_4712 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_4713$class_4714
+extendable method net/minecraft/class_4713$class_4714 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_4713$class_4714 hashCode ()I
+extendable method net/minecraft/class_4713$class_4714 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_4851$class_4852
+extendable method net/minecraft/class_4851$class_4852 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_4851$class_4852 hashCode ()I
+extendable method net/minecraft/class_4851$class_4852 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_5279$class_5280
+extendable method net/minecraft/class_5279$class_5280 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_5279$class_5280 hashCode ()I
+extendable method net/minecraft/class_5279$class_5280 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_5282$class_5283
+extendable method net/minecraft/class_5282$class_5283 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_5282$class_5283 hashCode ()I
+extendable method net/minecraft/class_5282$class_5283 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_5409$class_5410
+extendable method net/minecraft/class_5409$class_5410 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_5409$class_5410 hashCode ()I
+extendable method net/minecraft/class_5409$class_5410 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_6405$class_6406
+extendable method net/minecraft/class_6405$class_6406 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_6405$class_6406 hashCode ()I
+extendable method net/minecraft/class_6405$class_6406 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_6407$class_6408
+extendable method net/minecraft/class_6407$class_6408 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_6407$class_6408 hashCode ()I
+extendable method net/minecraft/class_6407$class_6408 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_6409$class_6410
+extendable method net/minecraft/class_6409$class_6410 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_6409$class_6410 hashCode ()I
+extendable method net/minecraft/class_6409$class_6410 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_8508$class_8509
+extendable method net/minecraft/class_8508$class_8509 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_8508$class_8509 hashCode ()I
+extendable method net/minecraft/class_8508$class_8509 toString ()Ljava/lang/String;
 
 # s2rest: 1.20.3 Checkbox constructor, the target of the 1.20.2 constructors' reshape (s2rest.json)
 accessible	method	net/minecraft/class_4286	<init>	(IILnet/minecraft/class_2561;Lnet/minecraft/class_327;ZLnet/minecraft/class_4286$class_8930;)V

@@ -400,7 +400,15 @@
     "keep:3",
     "keep:5"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbListBuilt(Lnet/minecraft/class_350;Lnet/minecraft/class_310;IIIII)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbListBuilt(Lnet/minecraft/class_350;Lnet/minecraft/class_310;IIIII)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
    "basis": "1.20.2 lists took (.., width, height, y0, y1, itemHeight) and spanned y0..y1; 1.20.3's are widgets of (.., width, height = y1 - y0, y = y0, itemHeight); the 1.20.2 height is kept for the height field"
   },
   "net/minecraft/class_4280.<init>(Lnet/minecraft/class_310;IIIII)V": {
@@ -412,7 +420,15 @@
     "keep:3",
     "keep:5"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbObjectListBuilt(Lnet/minecraft/class_4280;Lnet/minecraft/class_310;IIIII)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbObjectListBuilt(Lnet/minecraft/class_4280;Lnet/minecraft/class_310;IIIII)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
    "basis": "1.20.2 lists took (.., width, height, y0, y1, itemHeight) and spanned y0..y1; 1.20.3's are widgets of (.., width, height = y1 - y0, y = y0, itemHeight); the 1.20.2 height is kept for the height field"
   },
   "net/minecraft/class_4265.<init>(Lnet/minecraft/class_310;IIIII)V": {
@@ -424,7 +440,15 @@
     "keep:3",
     "keep:5"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbContainerListBuilt(Lnet/minecraft/class_4265;Lnet/minecraft/class_310;IIIII)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbContainerListBuilt(Lnet/minecraft/class_4265;Lnet/minecraft/class_310;IIIII)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
    "basis": "1.20.2 lists took (.., width, height, y0, y1, itemHeight) and spanned y0..y1; 1.20.3's are widgets of (.., width, height = y1 - y0, y = y0, itemHeight); the 1.20.2 height is kept for the height field"
   },
   "net/minecraft/class_353.<init>(Lnet/minecraft/class_310;IIIII)V": {
@@ -436,7 +460,15 @@
     "keep:3",
     "keep:5"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbOptionsListBuilt(Lnet/minecraft/class_353;Lnet/minecraft/class_310;IIIII)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbOptionsListBuilt(Lnet/minecraft/class_353;Lnet/minecraft/class_310;IIIII)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
    "basis": "1.20.2 lists took (.., width, height, y0, y1, itemHeight) and spanned y0..y1; 1.20.3's are widgets of (.., width, height = y1 - y0, y = y0, itemHeight); the 1.20.2 height is kept for the height field"
   },
   "net/minecraft/class_4267.<init>(Lnet/minecraft/class_500;Lnet/minecraft/class_310;IIIII)V": {
@@ -449,7 +481,16 @@
     "keep:4",
     "keep:6"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbServerListBuilt(Lnet/minecraft/class_4267;Lnet/minecraft/class_500;Lnet/minecraft/class_310;IIIII)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbServerListBuilt(Lnet/minecraft/class_4267;Lnet/minecraft/class_500;Lnet/minecraft/class_310;IIIII)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
    "basis": "1.20.2 lists took (.., width, height, y0, y1, itemHeight) and spanned y0..y1; 1.20.3's are widgets of (.., width, height = y1 - y0, y = y0, itemHeight); the 1.20.2 height is kept for the height field"
   },
   "net/minecraft/class_5521.<init>(Lnet/minecraft/class_5522;Lnet/minecraft/class_310;IIIII)V": {
@@ -462,7 +503,16 @@
     "keep:4",
     "keep:6"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbSocialListBuilt(Lnet/minecraft/class_5521;Lnet/minecraft/class_5522;Lnet/minecraft/class_310;IIIII)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbSocialListBuilt(Lnet/minecraft/class_5521;Lnet/minecraft/class_5522;Lnet/minecraft/class_310;IIIII)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
    "basis": "1.20.2 lists took (.., width, height, y0, y1, itemHeight) and spanned y0..y1; 1.20.3's are widgets of (.., width, height = y1 - y0, y = y0, itemHeight); the 1.20.2 height is kept for the height field"
   },
   "net/minecraft/class_528.<init>(Lnet/minecraft/class_526;Lnet/minecraft/class_310;IIIIILjava/lang/String;Lnet/minecraft/class_528;)V": {
@@ -477,7 +527,18 @@
     "keep:7",
     "keep:8"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbWorldListBuilt(Lnet/minecraft/class_528;Lnet/minecraft/class_526;Lnet/minecraft/class_310;IIIIILjava/lang/String;Lnet/minecraft/class_528;)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbWorldListBuilt(Lnet/minecraft/class_528;Lnet/minecraft/class_526;Lnet/minecraft/class_310;IIIIILjava/lang/String;Lnet/minecraft/class_528;)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
    "basis": "1.20.2 lists took (.., width, height, y0, y1, itemHeight) and spanned y0..y1; 1.20.3's are widgets of (.., width, height = y1 - y0, y = y0, itemHeight); the 1.20.2 height is kept for the height field"
   },
   "net/minecraft/class_4904.<init>(IIIII)V": {
@@ -488,7 +549,14 @@
     "keep:2",
     "keep:4"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbRealmsListBuilt(Lnet/minecraft/class_4904;IIIII)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbRealmsListBuilt(Lnet/minecraft/class_4904;IIIII)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
    "basis": "1.20.2 lists took (.., width, height, y0, y1, itemHeight) and spanned y0..y1; 1.20.3's are widgets of (.., width, height = y1 - y0, y = y0, itemHeight); the 1.20.2 height is kept for the height field"
   },
   "net/minecraft/class_4286.<init>(IIIILnet/minecraft/class_2561;Z)V": {
@@ -501,7 +569,15 @@
     "keep:5",
     "push top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbNoValueChange()Lnet/minecraft/class_4286$class_8930;"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbCheckboxBuilt(Lnet/minecraft/class_4286;IIIILnet/minecraft/class_2561;Z)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbCheckboxBuilt(Lnet/minecraft/class_4286;IIIILnet/minecraft/class_2561;Z)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
    "basis": "1.20.3 builds a checkbox from the font (no size, always labelled) with a value-change callback; the 1.20.2 size and label flag are applied after, and it is drawn the 1.20.2 way"
   },
   "net/minecraft/class_4286.<init>(IIIILnet/minecraft/class_2561;ZZ)V": {
@@ -514,7 +590,16 @@
     "keep:5",
     "push top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbNoValueChange()Lnet/minecraft/class_4286$class_8930;"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbCheckboxBuilt(Lnet/minecraft/class_4286;IIIILnet/minecraft/class_2561;ZZ)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbCheckboxBuilt(Lnet/minecraft/class_4286;IIIILnet/minecraft/class_2561;ZZ)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
    "basis": "1.20.3 builds a checkbox from the font (no size, always labelled) with a value-change callback; the 1.20.2 size and label flag are applied after, and it is drawn the 1.20.2 way"
   },
   "net/minecraft/class_370.<init>(Lnet/minecraft/class_370$class_371;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;)V": {
@@ -620,7 +705,14 @@
     "keep:2",
     "conv:3,4 top/dext/centurybridge/step/v1_20_3/rt/CbClient#cbRenderBuffers(ZLnet/minecraft/class_750;)Lnet/minecraft/class_4599;"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbClient#cbSectionDispatcherBuilt(Lnet/minecraft/class_846;Lnet/minecraft/class_638;Lnet/minecraft/class_761;Ljava/util/concurrent/Executor;ZLnet/minecraft/class_750;)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbClient#cbSectionDispatcherBuilt(Lnet/minecraft/class_846;Lnet/minecraft/class_638;Lnet/minecraft/class_761;Ljava/util/concurrent/Executor;ZLnet/minecraft/class_750;)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
    "basis": "1.20.3's SectionRenderDispatcher takes its buffer pool and fixed pack from a RenderBuffers"
   },
   "net/minecraft/class_4599.<init>()V": {
@@ -635,7 +727,10 @@
    "ops": [
     "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbWidgetArea(Lnet/minecraft/class_339;)Lnet/minecraft/class_8030;"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbFollowWidget(Lnet/minecraft/class_7999;Lnet/minecraft/class_339;)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbFollowWidget(Lnet/minecraft/class_7999;Lnet/minecraft/class_339;)V",
+   "postArgs": [
+    0
+   ],
    "basis": "the positioner took the widget in 1.20.2 and placed by its position at each use"
   },
   "net/minecraft/class_8092.<init>(Lnet/minecraft/class_339;)V": {
@@ -643,7 +738,10 @@
    "ops": [
     "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbWidgetArea(Lnet/minecraft/class_339;)Lnet/minecraft/class_8030;"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbFollowWidget(Lnet/minecraft/class_8092;Lnet/minecraft/class_339;)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbFollowWidget(Lnet/minecraft/class_8092;Lnet/minecraft/class_339;)V",
+   "postArgs": [
+    0
+   ],
    "basis": "the positioner took the widget in 1.20.2 and placed by its position at each use"
   },
   "net/minecraft/class_434.<init>()V": {
@@ -651,7 +749,8 @@
    "ops": [
     "push top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbLegacyLoading()Ljava/util/function/BooleanSupplier;"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbReceivingLevelBuilt(Lnet/minecraft/class_434;)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbReceivingLevelBuilt(Lnet/minecraft/class_434;)V",
+   "postArgs": [],
    "basis": "1.20.3's ReceivingLevelScreen closes by a supplier; 1.20.2's by loadingPacketsReceived() and the player's section being ready"
   },
   "net/minecraft/class_4883.<init>(ZZZZIZIIZLjava/lang/String;)V": {
@@ -693,7 +792,17 @@
     "keep:6",
     "keep:7"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbSlotButtonBuilt(Lnet/minecraft/class_4367;IIIILjava/util/function/Supplier;Ljava/util/function/Consumer;ILnet/minecraft/class_4185$class_4241;)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbSlotButtonBuilt(Lnet/minecraft/class_4367;IIIILjava/util/function/Supplier;Ljava/util/function/Consumer;ILnet/minecraft/class_4185$class_4241;)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
    "basis": "1.20.2's slot button pulled its server from a supplier and handed its tooltip to a setter (CbRealmsWorldSlotButtonMixin)"
   },
   "net/minecraft/class_4398.<init>(Lnet/minecraft/class_437;Lnet/minecraft/class_4358;)V": {
@@ -721,7 +830,13 @@
     "keep:1",
     "keep:2"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbCreationTaskBuilt(Lnet/minecraft/class_4445;JLjava/lang/String;Ljava/lang/String;Lnet/minecraft/class_437;)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbCreationTaskBuilt(Lnet/minecraft/class_4445;JLjava/lang/String;Ljava/lang/String;Lnet/minecraft/class_437;)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3
+   ],
    "basis": "1.20.2's RealmCreationTask went to the screen it was given once the realm was initialized (CbRealmCreationTaskMixin)"
   },
   "net/minecraft/class_1066.<init>(Ljava/io/File;)V": {
@@ -731,7 +846,10 @@
     "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbPacks#cbQueueDir(Ljava/io/File;)Ljava/nio/file/Path;",
     "push top/dext/centurybridge/step/v1_20_3/rt/CbPacks#cbUserData()Lnet/minecraft/class_542$class_547;"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbPacks#cbPackSourceBuilt(Lnet/minecraft/class_1066;Ljava/io/File;)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbPacks#cbPackSourceBuilt(Lnet/minecraft/class_1066;Ljava/io/File;)V",
+   "postArgs": [
+    0
+   ],
    "basis": "1.20.3's DownloadedPackSource is a download queue under server control; the 1.20.2 single server-pack slot lives on it (CbPacks), in the directory the 1.20.2 constructor was given"
   },
   "net/minecraft/class_2168.<init>(Lnet/minecraft/class_2165;Lnet/minecraft/class_243;Lnet/minecraft/class_241;Lnet/minecraft/class_3218;ILjava/lang/String;Lnet/minecraft/class_2561;Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_1297;ZLcom/mojang/brigadier/ResultConsumer;Lnet/minecraft/class_2183$class_2184;Lnet/minecraft/class_7448;Lnet/minecraft/class_7620;Ljava/util/function/IntConsumer;)V": {
@@ -752,7 +870,24 @@
     "keep:12",
     "keep:13"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbSourceBuilt(Lnet/minecraft/class_2168;Lnet/minecraft/class_2165;Lnet/minecraft/class_243;Lnet/minecraft/class_241;Lnet/minecraft/class_3218;ILjava/lang/String;Lnet/minecraft/class_2561;Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_1297;ZLcom/mojang/brigadier/ResultConsumer;Lnet/minecraft/class_2183$class_2184;Lnet/minecraft/class_7448;Lnet/minecraft/class_7620;Ljava/util/function/IntConsumer;)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbSourceBuilt(Lnet/minecraft/class_2168;Lnet/minecraft/class_2165;Lnet/minecraft/class_243;Lnet/minecraft/class_241;Lnet/minecraft/class_3218;ILjava/lang/String;Lnet/minecraft/class_2561;Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_1297;ZLcom/mojang/brigadier/ResultConsumer;Lnet/minecraft/class_2183$class_2184;Lnet/minecraft/class_7448;Lnet/minecraft/class_7620;Ljava/util/function/IntConsumer;)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ],
    "basis": "1.20.3's CommandSourceStack has one CommandResultCallback for 1.20.2's ResultConsumer and return-value consumer"
   },
   "net/minecraft/class_2720.<init>(Ljava/lang/String;Ljava/lang/String;ZLnet/minecraft/class_2561;)V": {
@@ -799,7 +934,13 @@
     "push top/dext/centurybridge/step/v1_20_3/rt/CbNet#cbNoDisplay()Lnet/minecraft/class_2561;",
     "push top/dext/centurybridge/step/v1_20_3/rt/CbNet#cbNoNumberFormat()Lnet/minecraft/class_9022;"
    ],
-   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbNet#cbSetScoreBuilt(Lnet/minecraft/class_2757;Lnet/minecraft/class_2995$class_2996;Ljava/lang/String;Ljava/lang/String;I)V",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbNet#cbSetScoreBuilt(Lnet/minecraft/class_2757;Lnet/minecraft/class_2995$class_2996;Ljava/lang/String;Ljava/lang/String;I)V",
+   "postArgs": [
+    0,
+    1,
+    2,
+    3
+   ],
    "basis": "1.20.3's score packet has no method (a removal is its own packet, sent for a REMOVE by CbConnectionMixin)"
   },
   "net/minecraft/class_3753.<init>(Lnet/minecraft/class_2338;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_3751$class_4991;)V": {

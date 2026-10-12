@@ -57,6 +57,8 @@ override+super	net/minecraft/class_879	method_3882	(Lnet/minecraft/class_1420;Ln
 call-static	net/minecraft/class_1921	method_23585	()Lnet/minecraft/class_1921;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_1921	field_32773	I	FIELD	field not declared on the owner
 call-static	net/minecraft/class_757	method_34500	()Lnet/minecraft/class_5944;	METHOD	method not declared on the owner
+new	net/minecraft/class_4599	<init>	()V	METHOD	constructors (I)V
+super-ctor	net/minecraft/class_4599	<init>	()V	METHOD	constructors (I)V
 new	net/minecraft/class_846	<init>	(Lnet/minecraft/class_638;Lnet/minecraft/class_761;Ljava/util/concurrent/Executor;ZLnet/minecraft/class_750;)V	METHOD	constructors (Lnet/minecraft/class_638;Lnet/minecraft/class_761;Ljava/util/concurrent/Executor;Lnet/minecraft/class_4599;)V
 super-ctor	net/minecraft/class_846	<init>	(Lnet/minecraft/class_638;Lnet/minecraft/class_761;Ljava/util/concurrent/Executor;ZLnet/minecraft/class_750;)V	METHOD	constructors (Lnet/minecraft/class_638;Lnet/minecraft/class_761;Ljava/util/concurrent/Executor;Lnet/minecraft/class_4599;)V
 new	net/minecraft/class_317	<init>	(FJ)V	METHOD	constructors (FJLit/unimi/dsi/fastutil/floats/FloatUnaryOperator;)V
@@ -90,7 +92,8 @@ new	net/minecraft/class_359$class_360	<init>	(Lnet/minecraft/class_2561;Lnet/min
 super-ctor	net/minecraft/class_359$class_360	<init>	(Lnet/minecraft/class_2561;Lnet/minecraft/class_243;)V	METHOD	constructors (Lnet/minecraft/class_2561;FLnet/minecraft/class_243;)V
 new	net/minecraft/class_353	<init>	(Lnet/minecraft/class_310;IIIII)V	METHOD	constructors (Lnet/minecraft/class_310;IIII)V
 super-ctor	net/minecraft/class_353	<init>	(Lnet/minecraft/class_310;IIIII)V	METHOD	constructors (Lnet/minecraft/class_310;IIII)V
-new	net/minecraft/class_8759	<init>	(Lnet/minecraft/class_327;Lnet/minecraft/class_8743;)V	ACCESS	constructors (Lnet/minecraft/class_327;Lnet/minecraft/class_8743;Ljava/util/function/Supplier;)V
+new	net/minecraft/class_8759	<init>	(Lnet/minecraft/class_327;Lnet/minecraft/class_8743;)V	METHOD	constructors (Lnet/minecraft/class_327;Lnet/minecraft/class_8743;Ljava/util/function/Supplier;)V
+super-ctor	net/minecraft/class_8759	<init>	(Lnet/minecraft/class_327;Lnet/minecraft/class_8743;)V	METHOD	constructors (Lnet/minecraft/class_327;Lnet/minecraft/class_8743;Ljava/util/function/Supplier;)V
 call	net/minecraft/class_350	method_25323	(IIII)V	METHOD	method not declared on the owner
 call	net/minecraft/class_350	method_25333	(I)V	METHOD	method not declared on the owner
 call	net/minecraft/class_350	method_35721	()I	METHOD	method not declared on the owner
@@ -136,7 +139,9 @@ new	net/minecraft/class_5521	<init>	(Lnet/minecraft/class_5522;Lnet/minecraft/cl
 super-ctor	net/minecraft/class_5521	<init>	(Lnet/minecraft/class_5522;Lnet/minecraft/class_310;IIIII)V	METHOD	constructors (Lnet/minecraft/class_5522;Lnet/minecraft/class_310;IIII)V
 new	net/minecraft/class_5346	<init>	(Ljava/lang/Runnable;)V	METHOD	constructors (Ljava/lang/Runnable;Ljava/lang/Runnable;)V
 super-ctor	net/minecraft/class_5346	<init>	(Ljava/lang/Runnable;)V	METHOD	constructors (Ljava/lang/Runnable;Ljava/lang/Runnable;)V
+new	net/minecraft/class_434	<init>	()V	METHOD	constructors (Ljava/util/function/BooleanSupplier;)V
 call	net/minecraft/class_434	method_40040	()V	METHOD	method not declared on the owner
+super-ctor	net/minecraft/class_434	<init>	()V	METHOD	constructors (Ljava/util/function/BooleanSupplier;)V
 override+super	net/minecraft/class_434	method_40040	()V	METHOD,ORPHAN	method not declared on the owner
 call	net/minecraft/class_528$class_7414	method_43465	()Z	METHOD	method not declared on the owner
 implement	net/minecraft/class_528$class_7414	method_43465	()Z	ORPHAN	method not declared on the owner
@@ -823,7 +828,7 @@ call	net/minecraft/class_1657	method_7335	([Lnet/minecraft/class_2960;)V	METHOD	
 call	net/minecraft/class_1657	method_7282	(DDD)V	METHOD	method not declared on the owner
 override+super	net/minecraft/class_1657	method_7335	([Lnet/minecraft/class_2960;)V	METHOD,ORPHAN	method method_7335(Ljava/util/List;)V public
 override+super	net/minecraft/class_1657	method_7282	(DDD)V	METHOD,ORPHAN	method not declared on the owner
-super-ctor	net/minecraft/class_1665	<init>	(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V	ACCESS	constructors (Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V (Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V (Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V
+super-ctor	net/minecraft/class_1665	<init>	(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V	METHOD	constructors (Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V (Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V (Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V
 super-ctor	net/minecraft/class_1665	<init>	(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;)V	METHOD	constructors (Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V (Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V (Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V
 super-ctor	net/minecraft/class_1665	<init>	(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;)V	METHOD	constructors (Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V (Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V (Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V
 new	net/minecraft/class_1667	<init>	(Lnet/minecraft/class_1937;DDD)V	METHOD	constructors (Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V (Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V (Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V
@@ -975,7 +980,9 @@ super-ctor	net/minecraft/class_2323	<init>	(Lnet/minecraft/class_4970$class_2251
 override+super	net/minecraft/class_2323	method_9576	(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)V	METHOD,ORPHAN	method method_9576(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2680; public
 call	net/minecraft/class_2320	method_9576	(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)V	METHOD	method method_9576(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2680; public
 override+super	net/minecraft/class_2320	method_9576	(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)V	METHOD,ORPHAN	method method_9576(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2680; public
+new	net/minecraft/class_2431	<init>	(Lnet/minecraft/class_4970$class_2251;)V	METHOD	constructors (Lnet/minecraft/class_6017;Lnet/minecraft/class_4970$class_2251;)V
 new	net/minecraft/class_2431	<init>	(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_6017;)V	METHOD	constructors (Lnet/minecraft/class_6017;Lnet/minecraft/class_4970$class_2251;)V
+super-ctor	net/minecraft/class_2431	<init>	(Lnet/minecraft/class_4970$class_2251;)V	METHOD	constructors (Lnet/minecraft/class_6017;Lnet/minecraft/class_4970$class_2251;)V
 super-ctor	net/minecraft/class_2431	<init>	(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_6017;)V	METHOD	constructors (Lnet/minecraft/class_6017;Lnet/minecraft/class_4970$class_2251;)V
 call	net/minecraft/class_2329	method_9574	(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;	METHOD	method method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799; public
 override+super	net/minecraft/class_2329	method_9574	(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;	METHOD,ORPHAN	method method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799; public
@@ -1005,7 +1012,8 @@ super-ctor	net/minecraft/class_5556	<init>	(Lnet/minecraft/class_4970$class_2251
 override+super	net/minecraft/class_5556	method_36994	(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V	ACCESS	method method_36994(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V private
 call	net/minecraft/class_6089	method_9574	(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;	METHOD	method method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799; public
 override+super	net/minecraft/class_6089	method_9574	(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;	METHOD,ORPHAN	method method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799; public
-new	net/minecraft/class_7115	<init>	(Lnet/minecraft/class_4970$class_2251;)V	ACCESS	constructors (Lnet/minecraft/class_8813;Lnet/minecraft/class_4970$class_2251;)V
+new	net/minecraft/class_7115	<init>	(Lnet/minecraft/class_4970$class_2251;)V	METHOD	constructors (Lnet/minecraft/class_8813;Lnet/minecraft/class_4970$class_2251;)V
+super-ctor	net/minecraft/class_7115	<init>	(Lnet/minecraft/class_4970$class_2251;)V	METHOD	constructors (Lnet/minecraft/class_8813;Lnet/minecraft/class_4970$class_2251;)V
 call	net/minecraft/class_2411	method_10679	()Lnet/minecraft/class_2513;	CLASS	class gone
 call	net/minecraft/class_2411	method_10680	()Lnet/minecraft/class_2195;	CLASS	class gone
 extend	net/minecraft/class_2411			CLASS	class gone

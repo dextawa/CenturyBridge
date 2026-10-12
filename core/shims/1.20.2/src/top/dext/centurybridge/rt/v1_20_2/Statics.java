@@ -59,15 +59,9 @@ public final class Statics {
         return self.method_9651(world, pos, state);
     }
 
-    /** legacy Recipe.getId(): ids moved to RecipeEntry in 1.20.2; answered from the tracker map. */
+    /** legacy Recipe.getId(): ids moved to RecipeEntry in 1.20.2; the recipe's own getId() or its recorded id (CbRecipeIds). */
     public static net.minecraft.class_2960 method_8114(net.minecraft.class_1860<?> self) {
-        net.minecraft.class_2960 id = Trackers.RECIPE_IDS.get(self);
-        if (id == null) {
-            throw new UnsupportedOperationException(
-                "CenturyBridge: recipe id unavailable -- 1.20.2 moved ids to RecipeEntry"
-                + " and this recipe was not registered through RecipeManager");
-        }
-        return id;
+        return CbRecipeIds.idOf(self);
     }
 
     public static net.minecraft.class_2960 method_8114(net.minecraft.class_1869 self) {
@@ -105,15 +99,7 @@ public final class Statics {
         if (self instanceof CbLegacyRecipeSerializer legacy) {
             return (T) legacy.method_8121(id, json);
         }
-        net.minecraft.class_2960 outer = CbRecipes.CURRENT_ID.get();
-        CbRecipes.CURRENT_ID.set(id);
-        try {
-            return self.method_53736().parse(JsonOps.INSTANCE, json)
-                .result()
-                .orElseThrow(() -> new JsonSyntaxException("Invalid recipe " + id + ": " + json));
-        } finally {
-            CbRecipes.CURRENT_ID.set(outer);
-        }
+        return CbRecipeSerializerSupport.decode(self.method_53736(), id, json);
     }
 
     /** 1.20.1 RecipeSerializer.read(id, buf): the id parameter is gone; a converted 1.20.1
@@ -124,7 +110,7 @@ public final class Statics {
         if (self instanceof CbLegacyRecipeSerializer legacy) {
             return (T) legacy.method_8122(id, buf);
         }
-        return self.method_8122(buf);
+        return CbRecipeSerializerSupport.withId(id, () -> self.method_8122(buf));
     }
 
     /** 1.20.1 ItemPredicate.fromJson: return became Optional in 1.20.2; old callers expect a
@@ -141,7 +127,7 @@ public final class Statics {
                 "method_17720", net.minecraft.class_2960.class, com.google.gson.JsonObject.class);
             m.setAccessible(true);
             net.minecraft.class_8786<?> entry = (net.minecraft.class_8786<?>) m.invoke(null, id, json);
-            return entry.comp_1933();
+            return CbRecipeIds.value(entry);
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException("CenturyBridge: recipe deserialize failed for " + id, e);
         }
@@ -197,20 +183,6 @@ public final class Statics {
     public static final net.minecraft.class_2105 field_9716 =
         new net.minecraft.class_2105((net.minecraft.class_2487) null);
 
-    /** 1.20.1 ShapedRecipe.Serializer read pair (id parameter dropped / json moved to codec). */
-    public static net.minecraft.class_1869 method_8163(net.minecraft.class_1869.class_1870 self,
-            net.minecraft.class_2960 id, net.minecraft.class_2540 buf) {
-        return self.method_8163(buf);
-    }
-
-    public static net.minecraft.class_1869 method_8164(net.minecraft.class_1869.class_1870 self,
-            net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return ((net.minecraft.class_1865<net.minecraft.class_1869>) self).method_53736()
-            .parse(JsonOps.INSTANCE, json)
-            .result()
-            .orElseThrow(() -> new JsonSyntaxException("Invalid shaped recipe " + id));
-    }
-
     public static net.minecraft.class_2960 method_8114(net.minecraft.class_1874 self) {
         return method_8114((net.minecraft.class_1860<?>) self);
     }
@@ -243,28 +215,7 @@ public final class Statics {
         return ((net.minecraft.class_2402) self).method_10310(null, world, pos, state, fluid);
     }
 
-    /** 1.20.1 CraftingResultInventory.setLastRecipe(Recipe) -> new takes RecipeEntry; rebuilt via tracker. */
-    public static void method_7662(net.minecraft.class_1731 self, net.minecraft.class_1860<?> recipe) {
-        if (recipe == null) {
-            ((net.minecraft.class_1732) self).method_7662(null);
-            return;
-        }
-        net.minecraft.class_2960 id = Trackers.RECIPE_IDS.get(recipe);
-        ((net.minecraft.class_1732) self).method_7662(
-            id == null ? null : new net.minecraft.class_8786<>(id, recipe));
-    }
-
     // ==== GENERATED BRIDGES (assemble.py) ====
-
-    /** was net/minecraft/class_1867.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Lnet/minecraft/class_2371;)V */
-    public static net.minecraft.class_1867 cbNewclass_1867(net.minecraft.class_2960 a0, java.lang.String a1, net.minecraft.class_7710 a2, net.minecraft.class_1799 a3, net.minecraft.class_2371 a4) {
-        return new net.minecraft.class_1867(a1, a2, a3, a4);
-    }
-
-    /** was net/minecraft/class_1869.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;IILnet/minecraft/class_2371;Lnet/minecraft/class_1799;)V */
-    public static net.minecraft.class_1869 cbNewclass_1869(net.minecraft.class_2960 a0, java.lang.String a1, net.minecraft.class_7710 a2, int a3, int a4, net.minecraft.class_2371 a5, net.minecraft.class_1799 a6) {
-        return new net.minecraft.class_1869(a1, a2, a3, a4, a5, a6);
-    }
 
     /** was net/minecraft/class_196$class_198.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V */
     public static net.minecraft.class_196.class_198 cbNewclass_196class_198(net.minecraft.class_5258 a0, net.minecraft.class_5258 a1, net.minecraft.class_5258 a2, net.minecraft.class_5258 a3) {
@@ -401,9 +352,10 @@ public final class Statics {
         return net.minecraft.class_2319.method_41999(a0);
     }
 
-    /** was net/minecraft/class_2505.<init>(J)V */
+    /** was net/minecraft/class_2505.<init>(J)V -- NbtAccounter(maxBytes); 1.20.2's of(maxBytes) adds the
+     *  depth limit of 512 that every 1.20.1 reader checked itself */
     public static net.minecraft.class_2505 cbNewclass_2505(long a0) {
-        return new net.minecraft.class_2505(a0, 0);
+        return net.minecraft.class_2505.method_53899(a0);
     }
 
     /** was net/minecraft/class_2588.<init>(Ljava/lang/String;[Ljava/lang/Object;)V */
@@ -464,11 +416,6 @@ public final class Statics {
         return new net.minecraft.class_2960("textures/gui/widgets.png");
     }
 
-    /** was net/minecraft/class_3975.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V */
-    public static net.minecraft.class_3975 cbNewclass_3975(net.minecraft.class_2960 a0, java.lang.String a1, net.minecraft.class_1856 a2, net.minecraft.class_1799 a3) {
-        return new net.minecraft.class_3975(a1, a2, a3);
-    }
-
     /** was net/minecraft/class_4708$class_4709.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)V */
     public static net.minecraft.class_4708.class_4709 cbNewclass_4708class_4709(net.minecraft.class_5258 a0, net.minecraft.class_2248 a1, net.minecraft.class_2073 a2, net.minecraft.class_2096.class_2100 a3) {
         return new net.minecraft.class_4708.class_4709(java.util.Optional.ofNullable(a0), a1, java.util.Optional.ofNullable(a2), a3);
@@ -507,11 +454,6 @@ public final class Statics {
     /** was net/minecraft/class_6409$class_6410.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V */
     public static net.minecraft.class_6409.class_6410 cbNewclass_6409class_6410(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1) {
         return new net.minecraft.class_6409.class_6410(java.util.Optional.of(a0), java.util.Optional.of(a1));
-    }
-
-    /** was net/minecraft/class_8060.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V */
-    public static net.minecraft.class_8060 cbNewclass_8060(net.minecraft.class_2960 a0, net.minecraft.class_1856 a1, net.minecraft.class_1856 a2, net.minecraft.class_1856 a3, net.minecraft.class_1799 a4) {
-        return new net.minecraft.class_8060(a1, a2, a3, a4);
     }
 
     /** was net/minecraft/class_8508$class_8509.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2960;Ljava/util/List;)V */
@@ -613,12 +555,6 @@ public final class Statics {
 
     // ---- Entity.getMountedHeightOffset removed (1.20.2 moved to passenger attachment points);
     // the 1.20.1 default was height * 0.75 (horses used the same formula).
-    /** was net/minecraft/class_1297.method_5621()D */
-    public static double method_5621(net.minecraft.class_1297 self) { return self.method_17682() * 0.75; }
-    /** was net/minecraft/class_1496.method_5621()D */
-    public static double method_5621(net.minecraft.class_1496 self) { return self.method_17682() * 0.75; }
-    /** was net/minecraft/class_1498.method_5621()D */
-    public static double method_5621(net.minecraft.class_1498 self) { return self.method_17682() * 0.75; }
 
     // ---- Predicates / criteria: builders became Optional-typed, factories return AdvancementCriterion.
     /** was net/minecraft/class_2090.method_9017(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090; LocationPredicate.feature(structure) */
@@ -646,17 +582,8 @@ public final class Statics {
         return n < (long) k;
     }
 
-    // ---- Recipes: json read via the serializer codec; ghost recipe via the client recipe manager.
-    /** was net/minecraft/class_1867$class_1868.method_8142(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1867; */
-    public static net.minecraft.class_1867 method_8142(net.minecraft.class_1867.class_1868 self, net.minecraft.class_2960 id, com.google.gson.JsonObject json) {
-        return self.method_53736().parse(JsonOps.INSTANCE, json).result()
-            .orElseThrow(() -> new JsonSyntaxException("CenturyBridge: invalid shapeless recipe " + id));
-    }
-
     // ---- super(...) argument adapters for 1.20.2 constructor reshapes (engine superCtorAdapts:
     // a static converter runs on the stack tail right before INVOKESPECIAL <init>).
-    /** SpecialCraftingRecipe(Identifier, category) -> (category): the id moved to RecipeEntry. */
-    public static net.minecraft.class_7710 cbDropRecipeId(net.minecraft.class_2960 id, net.minecraft.class_7710 category) { return category; }
     /** AbstractCriterionConditions(Identifier, LootContextPredicate) -> (Optional<LootContextPredicate>) */
     public static java.util.Optional<net.minecraft.class_5258> cbCriterionPlayer(net.minecraft.class_2960 id, net.minecraft.class_5258 p) { return java.util.Optional.ofNullable(p); }
     /** ServerPlayerEntity(server, world, profile) gained SyncedClientOptions */

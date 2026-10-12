@@ -35,4 +35,19 @@ public abstract class BlockPointerBridge {
     public class_3218 method_10207() {
         return self().comp_1967();
     }
+
+    /** getX(): 1.20.1 BlockPointer was a Position at the block's centre, which 1.20.2 calls center() */
+    public double method_10216() {
+        return self().method_53906().field_1352;
+    }
+
+    /** getY() */
+    public double method_10214() {
+        return self().method_53906().field_1351;
+    }
+
+    /** getZ() */
+    public double method_10215() {
+        return self().method_53906().field_1350;
+    }
 }

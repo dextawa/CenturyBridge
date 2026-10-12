@@ -1,0 +1,1046 @@
+{
+ "classRenames": {
+  "net/minecraft/class_195": "top/dext/centurybridge/step/v1_20_3/facade/AbstractCriterionTriggerInstance",
+  "net/minecraft/class_2158$class_2159": "top/dext/centurybridge/step/v1_20_3/facade/class_2158$class_2159",
+  "net/minecraft/class_2444": "top/dext/centurybridge/step/v1_20_3/facade/FinishedRecipe",
+  "net/minecraft/class_2450$class_2451": "top/dext/centurybridge/step/v1_20_3/facade/ShapelessRecipeBuilderResult",
+  "net/minecraft/class_3981$class_3982": "top/dext/centurybridge/step/v1_20_3/facade/SingleItemRecipeBuilderResult",
+  "net/minecraft/class_5257": "top/dext/centurybridge/step/v1_20_3/facade/DeserializationContext",
+  "net/minecraft/class_6308": "top/dext/centurybridge/step/v1_20_3/facade/TeamcityTestReporter",
+  "net/minecraft/class_7798": "top/dext/centurybridge/step/v1_20_3/facade/CraftingRecipeBuilder",
+  "net/minecraft/class_7798$class_7799": "top/dext/centurybridge/step/v1_20_3/facade/CraftingRecipeBuilder$CraftingResult",
+  "net/minecraft/class_8074$class_8075": "top/dext/centurybridge/step/v1_20_3/facade/SmithingTransformRecipeBuilderResult",
+  "net/minecraft/class_8076$class_8077": "top/dext/centurybridge/step/v1_20_3/facade/SmithingTrimRecipeBuilderResult"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_161.method_53626(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_161;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#advancementFromJson",
+  "net/minecraft/class_170.method_27912(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_170;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#rewardsFromJson",
+  "net/minecraft/class_174.method_53697(Lnet/minecraft/class_179;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#getId",
+  "net/minecraft/class_174.method_765(Lnet/minecraft/class_2960;)Lnet/minecraft/class_179;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#getCriterion",
+  "net/minecraft/class_174.method_766()Ljava/lang/Iterable;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#all",
+  "net/minecraft/class_175.method_770(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#criterionFromJson",
+  "net/minecraft/class_175.method_772(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#criteriaFromJson",
+  "net/minecraft/class_185.method_809(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_185;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#displayFromJson",
+  "net/minecraft/class_189.method_833(Ljava/lang/String;)Lnet/minecraft/class_189;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#frameByName",
+  "net/minecraft/class_2019.method_8839(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2022.method_8846(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2025.method_8857(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2048.method_51705(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_5257;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2048.method_51707(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_5257;)Ljava/util/List;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2048.method_8913(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2073.method_53164(Ljava/util/List;)Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2073.method_8969(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2073.method_8972(Lcom/google/gson/JsonElement;)Ljava/util/List;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2090.method_9021(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2096$class_2099.method_9051(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2096$class_2099;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2096$class_2100.method_9056(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2096$class_2100;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2102.method_9064(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_4525.method_22246(Lnet/minecraft/class_3341;ILnet/minecraft/class_3218;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest#clearSpaceForStructure",
+  "net/minecraft/class_4525.method_22250(Ljava/lang/String;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;ILnet/minecraft/class_3218;Z)Lnet/minecraft/class_2633;": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest#spawnStructure",
+  "net/minecraft/class_4559.method_22519(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_5258.method_27807(Ljava/lang/String;Lnet/minecraft/class_5257;Lcom/google/gson/JsonElement;Lnet/minecraft/class_176;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_5258.method_27808(Ljava/util/List;)Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_8782.method_53666(Lcom/google/gson/JsonArray;Ljava/util/Set;)Lnet/minecraft/class_8782;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#requirementsFromJson"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_161.method_53621()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#advancementToJson",
+  "net/minecraft/class_175.method_773()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#criterionToJson",
+  "net/minecraft/class_179.method_795(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_184;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#createInstance",
+  "net/minecraft/class_184.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#serializeToJson",
+  "net/minecraft/class_189.method_831()Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#frameName",
+  "net/minecraft/class_196.method_854(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_196$class_198;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_BredAnimalsTrigger",
+  "net/minecraft/class_1996.method_8785(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1996$class_1998;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_BrewedPotionTrigger",
+  "net/minecraft/class_1999.method_8793(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1999$class_2001;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_ChangeDimensionTrigger",
+  "net/minecraft/class_2002.method_8801(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2002$class_2004;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_ChanneledLightningTrigger",
+  "net/minecraft/class_2006.method_8811(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2006$class_2008;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_ConstructBeaconTrigger",
+  "net/minecraft/class_2010.method_8820(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2010$class_2012;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_ConsumeItemTrigger",
+  "net/minecraft/class_2014.method_8830(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2014$class_2016;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_CuredZombieVillagerTrigger",
+  "net/minecraft/class_2019.method_8840()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2022.method_8848()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2025.method_8858()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2027.method_8862(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2027$class_2029;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_EffectsChangedTrigger",
+  "net/minecraft/class_2030.method_8872(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2030$class_2032;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_EnchantedItemTrigger",
+  "net/minecraft/class_2037.method_8883(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2037$class_2039;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_EnterBlockTrigger",
+  "net/minecraft/class_2044.method_8902(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2044$class_2046;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_EntityHurtPlayerTrigger",
+  "net/minecraft/class_2048.method_8912()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2054.method_8931(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2054$class_2056;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_FilledBucketTrigger",
+  "net/minecraft/class_2058.method_8941(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2058$class_2060;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_FishingRodHookedTrigger",
+  "net/minecraft/class_2062.method_8949(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2062$class_2063;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_ImpossibleTrigger",
+  "net/minecraft/class_2066.method_8952(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2066$class_2068;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_InventoryChangeTrigger",
+  "net/minecraft/class_2069.method_8962(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2069$class_2071;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_ItemDurabilityTrigger",
+  "net/minecraft/class_2073.method_8971()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2076.method_8979(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2076$class_2078;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_KilledByArrowTrigger",
+  "net/minecraft/class_2080.method_8989(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_KilledTrigger",
+  "net/minecraft/class_2085.method_9006(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2085$class_2087;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_LevitationTrigger",
+  "net/minecraft/class_2090.method_9019()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2096$class_2099.method_53196()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2096$class_2100.method_53199()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2102.method_9068()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_2108.method_9078(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2108$class_2110;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_DistanceTrigger",
+  "net/minecraft/class_2115.method_9098(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2115$class_2117;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_PlayerHurtEntityTrigger",
+  "net/minecraft/class_2119.method_9106(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2119$class_2121;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_RecipeUnlockedTrigger",
+  "net/minecraft/class_2123.method_9114(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2123$class_2125;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_ShotCrossbowTrigger",
+  "net/minecraft/class_2128.method_9123(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2128$class_2130;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_SummonedEntityTrigger",
+  "net/minecraft/class_2131.method_9133(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2131$class_2133;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_TameAnimalTrigger",
+  "net/minecraft/class_2135.method_9140(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2135$class_2137;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_PlayerTrigger",
+  "net/minecraft/class_2140.method_9148(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2140$class_2142;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_TradeTrigger",
+  "net/minecraft/class_2143.method_9156(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2143$class_2145;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_UsedEnderEyeTrigger",
+  "net/minecraft/class_2148.method_9163(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2148$class_2150;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_UsedTotemTrigger",
+  "net/minecraft/class_4558$class_8788.method_27790()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#playerPredicate",
+  "net/minecraft/class_4558.method_27853(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4558$class_8788;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#createSimpleInstance",
+  "net/minecraft/class_4559.method_22513()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_4559.method_22516(Lnet/minecraft/class_2689;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_4708.method_23877(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4708$class_4709;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_BeeNestDestroyedTrigger",
+  "net/minecraft/class_4711.method_23890(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4711$class_4712;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_ItemUsedOnLocationTrigger",
+  "net/minecraft/class_4713.method_23911(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4713$class_4714;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_SlideDownBlockTrigger",
+  "net/minecraft/class_4851.method_24863(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4851$class_4852;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_TargetBlockTrigger",
+  "net/minecraft/class_5258.method_27804()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_5279.method_27974(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5279$class_5280;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_PickedUpItemTrigger",
+  "net/minecraft/class_5282.method_27991(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5282$class_5283;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_LootTableTrigger",
+  "net/minecraft/class_5409.method_30096(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5409$class_5410;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_PlayerInteractTrigger",
+  "net/minecraft/class_6405.method_37241(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6405$class_6406;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_LightningStrikeTrigger",
+  "net/minecraft/class_6407.method_37258(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6407$class_6408;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_StartRidingTrigger",
+  "net/minecraft/class_6409.method_37264(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6409$class_6410;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_UsingItemTrigger",
+  "net/minecraft/class_8508.method_51351(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_RecipeCraftedTrigger",
+  "net/minecraft/class_8782.method_53672()Lcom/google/gson/JsonArray;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#requirementsToJson",
+  "net/minecraft/class_8790.method_53819(Lnet/minecraft/class_2444;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#accept"
+ },
+ "superRedirects": {
+  "net/minecraft/class_196$class_198.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_BredAnimalsTrigger_TriggerInstance",
+  "net/minecraft/class_196.method_854(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_196$class_198;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_BredAnimalsTrigger",
+  "net/minecraft/class_1996$class_1998.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_BrewedPotionTrigger_TriggerInstance",
+  "net/minecraft/class_1996.method_8785(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1996$class_1998;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_BrewedPotionTrigger",
+  "net/minecraft/class_1999$class_2001.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_ChangeDimensionTrigger_TriggerInstance",
+  "net/minecraft/class_1999.method_8793(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1999$class_2001;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_ChangeDimensionTrigger",
+  "net/minecraft/class_2002$class_2004.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_ChanneledLightningTrigger_TriggerInstance",
+  "net/minecraft/class_2002.method_8801(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2002$class_2004;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_ChanneledLightningTrigger",
+  "net/minecraft/class_2006$class_2008.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_ConstructBeaconTrigger_TriggerInstance",
+  "net/minecraft/class_2006.method_8811(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2006$class_2008;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_ConstructBeaconTrigger",
+  "net/minecraft/class_2010$class_2012.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_ConsumeItemTrigger_TriggerInstance",
+  "net/minecraft/class_2010.method_8820(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2010$class_2012;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_ConsumeItemTrigger",
+  "net/minecraft/class_2014$class_2016.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_CuredZombieVillagerTrigger_TriggerInstance",
+  "net/minecraft/class_2014.method_8830(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2014$class_2016;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_CuredZombieVillagerTrigger",
+  "net/minecraft/class_2027$class_2029.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_EffectsChangedTrigger_TriggerInstance",
+  "net/minecraft/class_2027.method_8862(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2027$class_2029;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_EffectsChangedTrigger",
+  "net/minecraft/class_2030$class_2032.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_EnchantedItemTrigger_TriggerInstance",
+  "net/minecraft/class_2030.method_8872(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2030$class_2032;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_EnchantedItemTrigger",
+  "net/minecraft/class_2037$class_2039.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_EnterBlockTrigger_TriggerInstance",
+  "net/minecraft/class_2037.method_8883(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2037$class_2039;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_EnterBlockTrigger",
+  "net/minecraft/class_2044$class_2046.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_EntityHurtPlayerTrigger_TriggerInstance",
+  "net/minecraft/class_2044.method_8902(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2044$class_2046;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_EntityHurtPlayerTrigger",
+  "net/minecraft/class_2054$class_2056.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_FilledBucketTrigger_TriggerInstance",
+  "net/minecraft/class_2054.method_8931(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2054$class_2056;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_FilledBucketTrigger",
+  "net/minecraft/class_2058$class_2060.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_FishingRodHookedTrigger_TriggerInstance",
+  "net/minecraft/class_2058.method_8941(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2058$class_2060;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_FishingRodHookedTrigger",
+  "net/minecraft/class_2062$class_2063.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_ImpossibleTrigger_TriggerInstance",
+  "net/minecraft/class_2062.method_8949(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2062$class_2063;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_ImpossibleTrigger",
+  "net/minecraft/class_2066$class_2068.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_InventoryChangeTrigger_TriggerInstance",
+  "net/minecraft/class_2066.method_8952(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2066$class_2068;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_InventoryChangeTrigger",
+  "net/minecraft/class_2069$class_2071.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_ItemDurabilityTrigger_TriggerInstance",
+  "net/minecraft/class_2069.method_8962(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2069$class_2071;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_ItemDurabilityTrigger",
+  "net/minecraft/class_2076$class_2078.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_KilledByArrowTrigger_TriggerInstance",
+  "net/minecraft/class_2076.method_8979(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2076$class_2078;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_KilledByArrowTrigger",
+  "net/minecraft/class_2080$class_2083.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_KilledTrigger_TriggerInstance",
+  "net/minecraft/class_2080.method_8989(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_KilledTrigger",
+  "net/minecraft/class_2085$class_2087.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_LevitationTrigger_TriggerInstance",
+  "net/minecraft/class_2085.method_9006(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2085$class_2087;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_LevitationTrigger",
+  "net/minecraft/class_2108$class_2110.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_DistanceTrigger_TriggerInstance",
+  "net/minecraft/class_2108.method_9078(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2108$class_2110;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_DistanceTrigger",
+  "net/minecraft/class_2115$class_2117.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_PlayerHurtEntityTrigger_TriggerInstance",
+  "net/minecraft/class_2115.method_9098(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2115$class_2117;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_PlayerHurtEntityTrigger",
+  "net/minecraft/class_2119$class_2121.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_RecipeUnlockedTrigger_TriggerInstance",
+  "net/minecraft/class_2119.method_9106(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2119$class_2121;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_RecipeUnlockedTrigger",
+  "net/minecraft/class_2123$class_2125.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_ShotCrossbowTrigger_TriggerInstance",
+  "net/minecraft/class_2123.method_9114(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2123$class_2125;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_ShotCrossbowTrigger",
+  "net/minecraft/class_2128$class_2130.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_SummonedEntityTrigger_TriggerInstance",
+  "net/minecraft/class_2128.method_9123(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2128$class_2130;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_SummonedEntityTrigger",
+  "net/minecraft/class_2131$class_2133.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_TameAnimalTrigger_TriggerInstance",
+  "net/minecraft/class_2131.method_9133(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2131$class_2133;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_TameAnimalTrigger",
+  "net/minecraft/class_2135$class_2137.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_PlayerTrigger_TriggerInstance",
+  "net/minecraft/class_2135.method_9140(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2135$class_2137;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_PlayerTrigger",
+  "net/minecraft/class_2140$class_2142.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_TradeTrigger_TriggerInstance",
+  "net/minecraft/class_2140.method_9148(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2140$class_2142;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_TradeTrigger",
+  "net/minecraft/class_2143$class_2145.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_UsedEnderEyeTrigger_TriggerInstance",
+  "net/minecraft/class_2143.method_9156(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2143$class_2145;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_UsedEnderEyeTrigger",
+  "net/minecraft/class_2148$class_2150.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_UsedTotemTrigger_TriggerInstance",
+  "net/minecraft/class_2148.method_9163(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2148$class_2150;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_UsedTotemTrigger",
+  "net/minecraft/class_4708$class_4709.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_BeeNestDestroyedTrigger_TriggerInstance",
+  "net/minecraft/class_4708.method_23877(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4708$class_4709;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_BeeNestDestroyedTrigger",
+  "net/minecraft/class_4711$class_4712.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_ItemUsedOnLocationTrigger_TriggerInstance",
+  "net/minecraft/class_4711.method_23890(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4711$class_4712;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_ItemUsedOnLocationTrigger",
+  "net/minecraft/class_4713$class_4714.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_SlideDownBlockTrigger_TriggerInstance",
+  "net/minecraft/class_4713.method_23911(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4713$class_4714;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_SlideDownBlockTrigger",
+  "net/minecraft/class_4851$class_4852.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_TargetBlockTrigger_TriggerInstance",
+  "net/minecraft/class_4851.method_24863(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4851$class_4852;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_TargetBlockTrigger",
+  "net/minecraft/class_5279$class_5280.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_PickedUpItemTrigger_TriggerInstance",
+  "net/minecraft/class_5279.method_27974(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5279$class_5280;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_PickedUpItemTrigger",
+  "net/minecraft/class_5282$class_5283.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_LootTableTrigger_TriggerInstance",
+  "net/minecraft/class_5282.method_27991(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5282$class_5283;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_LootTableTrigger",
+  "net/minecraft/class_5409$class_5410.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_PlayerInteractTrigger_TriggerInstance",
+  "net/minecraft/class_5409.method_30096(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5409$class_5410;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_PlayerInteractTrigger",
+  "net/minecraft/class_6405$class_6406.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_LightningStrikeTrigger_TriggerInstance",
+  "net/minecraft/class_6405.method_37241(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6405$class_6406;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_LightningStrikeTrigger",
+  "net/minecraft/class_6407$class_6408.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_StartRidingTrigger_TriggerInstance",
+  "net/minecraft/class_6407.method_37258(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6407$class_6408;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_StartRidingTrigger",
+  "net/minecraft/class_6409$class_6410.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_UsingItemTrigger_TriggerInstance",
+  "net/minecraft/class_6409.method_37264(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6409$class_6410;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_UsingItemTrigger",
+  "net/minecraft/class_8508$class_8509.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_RecipeCraftedTrigger_TriggerInstance",
+  "net/minecraft/class_8508.method_51351(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#vanilla_RecipeCraftedTrigger"
+ },
+ "callReshapes": {
+  "net/minecraft/class_185.method_812()Lnet/minecraft/class_2960;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#backgroundOrNull(Ljava/util/Optional;)Lnet/minecraft/class_2960;"
+  },
+  "net/minecraft/class_1996$class_1998.method_8790(Lnet/minecraft/class_1842;)Z": {
+   "desc": "(Lnet/minecraft/class_6880;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#potionHolder(Lnet/minecraft/class_1842;)Lnet/minecraft/class_6880;"
+   ]
+  },
+  "net/minecraft/class_1996.method_8784(Lnet/minecraft/class_3222;Lnet/minecraft/class_1842;)V": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#potionHolder(Lnet/minecraft/class_1842;)Lnet/minecraft/class_6880;"
+   ]
+  },
+  "net/minecraft/class_2446.method_17585(Lnet/minecraft/class_8790;Ljava/lang/String;Lnet/minecraft/class_1865;I)V": {
+   "desc": "(Lnet/minecraft/class_8790;Ljava/lang/String;Lnet/minecraft/class_1865;Lnet/minecraft/class_1874$class_3958;I)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:2 top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#cookingFactory(Lnet/minecraft/class_1865;)Lnet/minecraft/class_1874$class_3958;",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_2446.method_33535(Lnet/minecraft/class_8790;Lnet/minecraft/class_5794;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5794;Lnet/minecraft/class_7699;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#allFeatures()Lnet/minecraft/class_7699;"
+   ]
+  },
+  "net/minecraft/class_2446.method_34854(Lnet/minecraft/class_8790;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_7699;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#allFeatures()Lnet/minecraft/class_7699;"
+   ]
+  },
+  "net/minecraft/class_2454.method_17801(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILnet/minecraft/class_1865;)Lnet/minecraft/class_2454;": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILnet/minecraft/class_1865;Lnet/minecraft/class_1874$class_3958;)Lnet/minecraft/class_2454;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "conv:5 top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#cookingFactory(Lnet/minecraft/class_1865;)Lnet/minecraft/class_1874$class_3958;"
+   ]
+  },
+  "net/minecraft/class_2456.method_10476(Lnet/minecraft/class_1865;)Lnet/minecraft/class_2456;": {
+   "desc": "(Ljava/util/function/Function;)Lnet/minecraft/class_2456;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#specialFactory(Lnet/minecraft/class_1865;)Ljava/util/function/Function;"
+   ]
+  },
+  "net/minecraft/class_7803.method_51694()Ljava/util/Map;": {
+   "desc": "()Ljava/util/stream/Stream;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#trimTemplates(Ljava/util/stream/Stream;)Ljava/util/Map;"
+  },
+  "net/minecraft/class_8782.comp_1922()[[Ljava/lang/String;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#requirementsArray(Ljava/util/List;)[[Ljava/lang/String;"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_170.<init>(I[Lnet/minecraft/class_2960;[Lnet/minecraft/class_2960;Lnet/minecraft/class_2158$class_2159;)V": {
+   "desc": "(ILjava/util/List;Ljava/util/List;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#locations([Lnet/minecraft/class_2960;)Ljava/util/List;",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#locations([Lnet/minecraft/class_2960;)Ljava/util/List;",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#function(Lnet/minecraft/class_2158$class_2159;)Ljava/util/Optional;"
+   ]
+  },
+  "net/minecraft/class_185.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_189;ZZZ)V": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/Optional;Lnet/minecraft/class_189;ZZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#background(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_1996$class_1998.<init>(Ljava/util/Optional;Lnet/minecraft/class_1842;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#potionCondition(Lnet/minecraft/class_1842;)Ljava/util/Optional;"
+   ]
+  },
+  "net/minecraft/class_1999$class_2001.<init>(Ljava/util/Optional;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#dimension(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#dimension(Lnet/minecraft/class_5321;)Ljava/util/Optional;"
+   ]
+  },
+  "net/minecraft/class_2037$class_2039.<init>(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#block(Lnet/minecraft/class_2248;)Ljava/util/Optional;",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_2066$class_2068.<init>(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/util/List;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2066$class_2068$class_8948;Ljava/util/List;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#slots(Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_2066$class_2068$class_8948;",
+    "keep:4"
+   ]
+  },
+  "net/minecraft/class_2456.<init>(Lnet/minecraft/class_1865;)V": {
+   "desc": "(Ljava/util/function/Function;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#specialFactory(Lnet/minecraft/class_1865;)Ljava/util/function/Function;"
+   ]
+  },
+  "net/minecraft/class_3981.<init>(Lnet/minecraft/class_7800;Lnet/minecraft/class_1865;Lnet/minecraft/class_1856;Lnet/minecraft/class_1935;I)V": {
+   "desc": "(Lnet/minecraft/class_7800;Lnet/minecraft/class_3972$class_3974;Lnet/minecraft/class_1856;Lnet/minecraft/class_1935;I)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#singleItemFactory(Lnet/minecraft/class_1865;)Lnet/minecraft/class_3972$class_3974;",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4708$class_4709.<init>(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#block(Lnet/minecraft/class_2248;)Ljava/util/Optional;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_4713$class_4714.<init>(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#block(Lnet/minecraft/class_2248;)Ljava/util/Optional;",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_8782.<init>([[Ljava/lang/String;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#requirementsList([[Ljava/lang/String;)Ljava/util/List;"
+   ]
+  }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_8074.<init>(Lnet/minecraft/class_1865;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#smithingTransform",
+  "net/minecraft/class_8076.<init>(Lnet/minecraft/class_1865;Lnet/minecraft/class_7800;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#smithingTrim"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_27790()Ljava/util/Optional;",
+   "new": "comp_2029()Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_4558$class_8788"
+  },
+  {
+   "old": "method_812()Lnet/minecraft/class_2960;",
+   "new": "method_812()Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_185",
+   "unwrap": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson.background(Lnet/minecraft/class_2960;)Ljava/util/Optional;"
+  },
+  {
+   "old": "method_8784(Lnet/minecraft/class_3222;Lnet/minecraft/class_1842;)V",
+   "new": "method_8784(Lnet/minecraft/class_3222;Lnet/minecraft/class_6880;)V",
+   "onlyUnder": "net/minecraft/class_1996",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues.potion(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1842;"
+  },
+  {
+   "old": "method_8790(Lnet/minecraft/class_1842;)Z",
+   "new": "method_8790(Lnet/minecraft/class_6880;)Z",
+   "onlyUnder": "net/minecraft/class_1996$class_1998",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues.potion(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1842;"
+  },
+  {
+   "old": "method_22166(Lnet/minecraft/class_2338;I)V",
+   "new": "method_22166(Lnet/minecraft/class_2338;)V",
+   "onlyUnder": "net/minecraft/class_4517",
+   "bridge": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest.prepareTestStructure(Ltop/dext/centurybridge/step/v1_20_3/rt/CbGameTest$LegacyTestInfo;Lnet/minecraft/class_2338;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest$LegacyTestInfo",
+   "guard": "top/dext/centurybridge/step/v1_20_3/rt/Guard"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_4708",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$BeeNestDestroyedTrigger",
+   "requires": [
+    "method_23877(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4708$class_4709;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_BeeNestDestroyedTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$BeeNestDestroyedTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_196",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$BredAnimalsTrigger",
+   "requires": [
+    "method_854(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_196$class_198;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_BredAnimalsTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$BredAnimalsTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_1996",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$BrewedPotionTrigger",
+   "requires": [
+    "method_8785(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1996$class_1998;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_BrewedPotionTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$BrewedPotionTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_1999",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ChangeDimensionTrigger",
+   "requires": [
+    "method_8793(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1999$class_2001;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_ChangeDimensionTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ChangeDimensionTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2002",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ChanneledLightningTrigger",
+   "requires": [
+    "method_8801(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2002$class_2004;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_ChanneledLightningTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ChanneledLightningTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2006",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ConstructBeaconTrigger",
+   "requires": [
+    "method_8811(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2006$class_2008;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_ConstructBeaconTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ConstructBeaconTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2010",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ConsumeItemTrigger",
+   "requires": [
+    "method_8820(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2010$class_2012;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_ConsumeItemTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ConsumeItemTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2014",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$CuredZombieVillagerTrigger",
+   "requires": [
+    "method_8830(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2014$class_2016;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_CuredZombieVillagerTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$CuredZombieVillagerTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2108",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$DistanceTrigger",
+   "requires": [
+    "method_9078(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2108$class_2110;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_DistanceTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$DistanceTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2027",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$EffectsChangedTrigger",
+   "requires": [
+    "method_8862(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2027$class_2029;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_EffectsChangedTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$EffectsChangedTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2030",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$EnchantedItemTrigger",
+   "requires": [
+    "method_8872(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2030$class_2032;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_EnchantedItemTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$EnchantedItemTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2037",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$EnterBlockTrigger",
+   "requires": [
+    "method_8883(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2037$class_2039;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_EnterBlockTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$EnterBlockTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2044",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$EntityHurtPlayerTrigger",
+   "requires": [
+    "method_8902(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2044$class_2046;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_EntityHurtPlayerTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$EntityHurtPlayerTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2054",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$FilledBucketTrigger",
+   "requires": [
+    "method_8931(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2054$class_2056;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_FilledBucketTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$FilledBucketTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2058",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$FishingRodHookedTrigger",
+   "requires": [
+    "method_8941(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2058$class_2060;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_FishingRodHookedTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$FishingRodHookedTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2062",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ImpossibleTrigger",
+   "requires": [
+    "method_8949(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2062$class_2063;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_ImpossibleTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ImpossibleTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2066",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$InventoryChangeTrigger",
+   "requires": [
+    "method_8952(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2066$class_2068;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_InventoryChangeTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$InventoryChangeTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2069",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ItemDurabilityTrigger",
+   "requires": [
+    "method_8962(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2069$class_2071;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_ItemDurabilityTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ItemDurabilityTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_4711",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ItemUsedOnLocationTrigger",
+   "requires": [
+    "method_23890(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4711$class_4712;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_ItemUsedOnLocationTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ItemUsedOnLocationTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2076",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$KilledByArrowTrigger",
+   "requires": [
+    "method_8979(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2076$class_2078;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_KilledByArrowTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$KilledByArrowTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2080",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$KilledTrigger",
+   "requires": [
+    "method_8989(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2080$class_2083;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_KilledTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$KilledTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2085",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$LevitationTrigger",
+   "requires": [
+    "method_9006(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2085$class_2087;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_LevitationTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$LevitationTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_6405",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$LightningStrikeTrigger",
+   "requires": [
+    "method_37241(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6405$class_6406;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_LightningStrikeTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$LightningStrikeTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5282",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$LootTableTrigger",
+   "requires": [
+    "method_27991(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5282$class_5283;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_LootTableTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$LootTableTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5279",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$PickedUpItemTrigger",
+   "requires": [
+    "method_27974(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5279$class_5280;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_PickedUpItemTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$PickedUpItemTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2115",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$PlayerHurtEntityTrigger",
+   "requires": [
+    "method_9098(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2115$class_2117;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_PlayerHurtEntityTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$PlayerHurtEntityTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5409",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$PlayerInteractTrigger",
+   "requires": [
+    "method_30096(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5409$class_5410;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_PlayerInteractTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$PlayerInteractTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2135",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$PlayerTrigger",
+   "requires": [
+    "method_9140(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2135$class_2137;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_PlayerTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$PlayerTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_8508",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$RecipeCraftedTrigger",
+   "requires": [
+    "method_51351(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_RecipeCraftedTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$RecipeCraftedTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2119",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$RecipeUnlockedTrigger",
+   "requires": [
+    "method_9106(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2119$class_2121;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_RecipeUnlockedTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$RecipeUnlockedTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2123",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ShotCrossbowTrigger",
+   "requires": [
+    "method_9114(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2123$class_2125;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_ShotCrossbowTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$ShotCrossbowTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_4713",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$SlideDownBlockTrigger",
+   "requires": [
+    "method_23911(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4713$class_4714;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_SlideDownBlockTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$SlideDownBlockTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_6407",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$StartRidingTrigger",
+   "requires": [
+    "method_37258(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6407$class_6408;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_StartRidingTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$StartRidingTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2128",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$SummonedEntityTrigger",
+   "requires": [
+    "method_9123(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2128$class_2130;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_SummonedEntityTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$SummonedEntityTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2131",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$TameAnimalTrigger",
+   "requires": [
+    "method_9133(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2131$class_2133;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_TameAnimalTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$TameAnimalTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_4851",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$TargetBlockTrigger",
+   "requires": [
+    "method_24863(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4851$class_4852;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_TargetBlockTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$TargetBlockTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2140",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$TradeTrigger",
+   "requires": [
+    "method_9148(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2140$class_2142;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_TradeTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$TradeTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2143",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$UsedEnderEyeTrigger",
+   "requires": [
+    "method_9156(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2143$class_2145;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_UsedEnderEyeTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$UsedEnderEyeTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_2148",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$UsedTotemTrigger",
+   "requires": [
+    "method_9163(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2148$class_2150;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_UsedTotemTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$UsedTotemTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_6409",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$UsingItemTrigger",
+   "requires": [
+    "method_37264(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6409$class_6410;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers.codec_UsingItemTrigger(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacyTriggers$UsingItemTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_184",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$Instance",
+   "guard": "top/dext/centurybridge/step/v1_20_3/rt/Guard",
+   "requires": [
+    "method_807()Lcom/google/gson/JsonObject;"
+   ],
+   "synth": [
+    {
+     "new": "method_54938(Lnet/minecraft/class_8944;)V",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria.validateLegacy(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$Instance;Lnet/minecraft/class_8944;)V"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_179",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$Trigger",
+   "requires": [
+    "method_795(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_184;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria.triggerCodec(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$Trigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_4558",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$SimpleTrigger",
+   "requires": [
+    "method_27854(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4558$class_8788;"
+   ],
+   "synth": [
+    {
+     "new": "method_54937()Lcom/mojang/serialization/Codec;",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria.simpleCodec(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$SimpleTrigger;)Lcom/mojang/serialization/Codec;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_8790",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes$LegacyOutput",
+   "requires": [
+    "method_53819(Lnet/minecraft/class_2444;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_53819(Lnet/minecraft/class_2960;Lnet/minecraft/class_1860;Lnet/minecraft/class_8779;)V",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes.acceptRecipe(Ltop/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes$LegacyOutput;Lnet/minecraft/class_2960;Lnet/minecraft/class_1860;Lnet/minecraft/class_8779;)V"
+    }
+   ]
+  }
+ ],
+ "covers": [
+  "net/minecraft/class_185.method_814()Lcom/google/gson/JsonElement;",
+  "net/minecraft/class_170.method_747()Lcom/google/gson/JsonElement;",
+  "net/minecraft/class_170.method_34898()[Lnet/minecraft/class_2960;",
+  "net/minecraft/class_4517.method_22166(Lnet/minecraft/class_2338;I)V",
+  "net/minecraft/class_5794.method_33478(Lnet/minecraft/class_7699;)Z",
+  "net/minecraft/class_5794$class_5795.method_45964([Lnet/minecraft/class_7696;)Lnet/minecraft/class_5794$class_5795;"
+ ],
+ "fieldRedirects": {
+  "net/minecraft/class_4520.field_33148:I": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_195.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;)V": "1.20.1 constructor (id, predicate), gone at 1.20.2, whose class_195 takes (Optional): the 1.20.1->1.20.2 step reshapes every super(...) of it to that shape (superCtorAdapts in shims-1.20.2.json), and the class was abstract (no NEW site)",
+  "net/minecraft/class_195.field_1270:Lnet/minecraft/class_2960;": "1.20.1 private field (the id), gone at 1.20.2: only an access widener ever reached it",
+  "net/minecraft/class_195.field_24381:Lnet/minecraft/class_5258;": "1.20.1 private field of another type (1.20.2's is the Optional the facade has), gone at 1.20.2: only an access widener ever reached it",
+  "net/minecraft/class_195.method_27790()Lnet/minecraft/class_5258;": "1.20.1 shape (the predicate itself; 1.20.2 returns an Optional, which the facade has): damage of the 1.20.1->1.20.2 step",
+  "net/minecraft/class_195.method_806()Lnet/minecraft/class_2960;": "1.20.1 getId(), gone at 1.20.2 (criteria lost their id there): damage of the 1.20.1->1.20.2 step, not part of the 1.20.2 API this layer gives back",
+  "net/minecraft/class_195.method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;": "1.20.1 toJson(serializer) over class_5267, which died at 1.20.2: the 1.20.1->1.20.2 step covers it with a mixin on class_195 in its own layer (CriterionConditionsBridge); this layer has no class_5267 to declare it over",
+  "net/minecraft/class_2444.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2444.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2444.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2444.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2450$class_2451.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1792;ILjava/lang/String;Lnet/minecraft/class_7710;Ljava/util/List;Lnet/minecraft/class_161$class_162;Lnet/minecraft/class_2960;)V": "1.20.1 constructor (an Advancement.Builder and the advancement id where 1.20.2 takes an AdvancementHolder), gone at 1.20.2: the 1.20.1->1.20.2 step reshapes every new and super() of it to the 1.20.2 constructor, which the facade has",
+  "net/minecraft/class_2450$class_2451.field_11401:Lnet/minecraft/class_161$class_162;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_2450$class_2451.field_11405:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_2450$class_2451.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2450$class_2451.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2450$class_2451.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2450$class_2451.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_3981$class_3982.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1865;Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1792;ILnet/minecraft/class_161$class_162;Lnet/minecraft/class_2960;)V": "1.20.1 constructor (an Advancement.Builder and the advancement id where 1.20.2 takes an AdvancementHolder), gone at 1.20.2: the 1.20.1->1.20.2 step reshapes every new and super() of it to the 1.20.2 constructor, which the facade has",
+  "net/minecraft/class_3981$class_3982.field_17696:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17697:Ljava/lang/String;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17698:Lnet/minecraft/class_1856;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17699:Lnet/minecraft/class_1792;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17700:I": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17701:Lnet/minecraft/class_161$class_162;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17702:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17703:Lnet/minecraft/class_1865;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_3981$class_3982.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_3981$class_3982.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_3981$class_3982.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_5257.field_24386:Lcom/google/gson/Gson;": "1.20.1 private field, gone at 1.20.2: only an access widener ever reached it",
+  "net/minecraft/class_5257.method_27796(Lcom/google/gson/JsonArray;Ljava/lang/String;Lnet/minecraft/class_176;)[Lnet/minecraft/class_5341;": "1.20.1 shape (an array of conditions; 1.20.2 returns the List the facade has): damage of the 1.20.1->1.20.2 step",
+  "net/minecraft/class_8074$class_8075.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1865;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1792;Lnet/minecraft/class_161$class_162;Lnet/minecraft/class_2960;)V": "1.20.1 constructor (an Advancement.Builder and the advancement id where 1.20.2 takes an AdvancementHolder), gone at 1.20.2: the 1.20.1->1.20.2 step reshapes every new and super() of it to the 1.20.2 constructor, which the facade has",
+  "net/minecraft/class_8074$class_8075.comp_1222()Lnet/minecraft/class_2960;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8074$class_8075.comp_1222:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8074$class_8075.comp_1223()Lnet/minecraft/class_1865;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8074$class_8075.comp_1223:Lnet/minecraft/class_1865;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8074$class_8075.comp_1228()Lnet/minecraft/class_161$class_162;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8074$class_8075.comp_1228:Lnet/minecraft/class_161$class_162;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8074$class_8075.comp_1229()Lnet/minecraft/class_2960;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8074$class_8075.comp_1229:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8074$class_8075.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8074$class_8075.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8074$class_8075.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8074$class_8075.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8076$class_8077.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1865;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_161$class_162;Lnet/minecraft/class_2960;)V": "1.20.1 constructor (an Advancement.Builder and the advancement id where 1.20.2 takes an AdvancementHolder), gone at 1.20.2: the 1.20.1->1.20.2 step reshapes every new and super() of it to the 1.20.2 constructor, which the facade has",
+  "net/minecraft/class_8076$class_8077.comp_1235()Lnet/minecraft/class_161$class_162;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8076$class_8077.comp_1235:Lnet/minecraft/class_161$class_162;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8076$class_8077.comp_1236()Lnet/minecraft/class_2960;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8076$class_8077.comp_1236:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8076$class_8077.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8076$class_8077.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8076$class_8077.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8076$class_8077.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API"
+ },
+ "superRenames": {
+  "net/minecraft/class_8074": "top/dext/centurybridge/step/v1_20_3/facade/LegacySmithingTransformRecipeBuilder",
+  "net/minecraft/class_8076": "top/dext/centurybridge/step/v1_20_3/facade/LegacySmithingTrimRecipeBuilder"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_184.method_807()Lcom/google/gson/JsonObject;": {
+   "iface": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$Instance",
+   "adapt": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#fromLambda(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$Instance;)Lnet/minecraft/class_184;"
+  }
+ }
+}
