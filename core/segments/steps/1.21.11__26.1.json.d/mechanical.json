@@ -39,7 +39,7 @@
     "keep:7",
     "drop:1"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/world/item/ItemDisplayContext;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/world/item/ItemDisplayContext;: no body of V reads it, but net/minecraft/class_10515 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_11533.method_72178(Lnet/minecraft/class_11786$class_11787;Lnet/minecraft/class_811;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V": {
    "desc": "(Lnet/minecraft/class_11786$class_11787;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;IIZI)V",
@@ -228,7 +228,7 @@
     "keep:0",
     "drop:1"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/core/HolderLookup$Provider;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/core/HolderLookup$Provider;: no body of V reads it, but net/minecraft/class_1860 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_1890.method_8225(Lnet/minecraft/class_6880;Lnet/minecraft/class_1799;)I": {
    "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/world/item/ItemInstance;)I",
