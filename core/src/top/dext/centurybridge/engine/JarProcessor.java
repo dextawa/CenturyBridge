@@ -381,19 +381,14 @@ public final class JarProcessor {
      * argument is its type's zero value.
      */
     private static byte[] rewriteHookSuperCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
-        java.util.Map<String, Chain.OverrideHook> byOld = new HashMap<>();
-        for (Chain.OverrideHook h : chain.overrideHooks) {
-            if (h.superCalls || h.superBridgeName != null) {
-                byOld.putIfAbsent(h.oldName + h.oldDesc, h);
-            }
-        }
+        java.util.Map<String, java.util.List<Chain.OverrideHook>> byOld = superCallHooks(chain);
         if (byOld.isEmpty()) {
             return bytes;
         }
         String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
         boolean any = false;
-        for (Chain.OverrideHook h : byOld.values()) {
-            if (raw.contains(h.oldName)) {
+        for (java.util.List<Chain.OverrideHook> hs : byOld.values()) {
+            if (raw.contains(hs.get(0).oldName)) {
                 any = true;
                 break;
             }
@@ -420,13 +415,8 @@ public final class JarProcessor {
                     continue;
                 }
                 org.objectweb.asm.tree.MethodInsnNode mi = (org.objectweb.asm.tree.MethodInsnNode) in;
-                Chain.OverrideHook h = byOld.get(mi.name + mi.desc);
-                // the super call's owner is the direct superclass: a mod class in between inherits the
-                // vanilla method (this layer's hierarchy says from where) unless it declares it itself
-                if (h == null || mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
-                        && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null
-                        || h.onlyUnder != null && !isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain)
-                        || h.notUnder != null && isUnder(cn.superName, ifaces, h.notUnder, layer, chain)) {
+                Chain.OverrideHook h = superCallHook(byOld.get(mi.name + mi.desc), chain, layer, cn, ifaces, mi);
+                if (h == null) {
                     continue;
                 }
                 if (h.superBridgeName != null) {
@@ -887,7 +877,8 @@ public final class JarProcessor {
      * One exception: a mod's super.old(..) in a class under an override hook that carries its
      * arguments ("frames" + "superCalls": "rewrite") belongs to that hook. Its rewrite hands the
      * super call what vanilla passed to the synthesized new shape; a reshape's ops could only
-     * supply a fixed value there, so such a call is left for {@link #rewriteHookSuperCalls}.
+     * supply a fixed value there, so such a call is left for {@link #rewriteHookSuperCalls}. So is
+     * one under a hook with a super bridge ("superBridge"), which makes the super call itself.
      * A call may name a class of the mod's own jar while the member is a vanilla one it inherits:
      * javac's qualifying type for an unqualified call to an inherited member is the subclass
      * itself (a mod's RecipeProvider calling offerSmelting(..), a loot function builder calling
@@ -927,10 +918,13 @@ public final class JarProcessor {
                 // a key's own owner (vanilla, com/mojang/blaze3d, a library such as DFU) directly; a
                 // class of the mod's jar through the vanilla class or interface it inherits the member
                 // from (javac qualifies such a call by the class it is made in, JLS 13.1). The call keeps
-                // its owner: the JVM resolves the new descriptor up the hierarchy as it did the old one
+                // its owner: the JVM resolves the new descriptor up the hierarchy as it did the old one --
+                // except a static call (below)
                 String home = chain.instanceRedirectHome(chain.callReshapeIndex, mi.owner, nameDesc);
+                boolean inherited = false;
                 if (home == null && layer.decls.containsKey(mi.owner)) {
                     home = inheritedReshapeHome(mi.owner, nameDesc, layer, chain);
+                    inherited = home != null;
                 }
                 if (home == null) {
                     continue;
@@ -942,6 +936,19 @@ public final class JarProcessor {
                 Chain.CallReshape r = chain.callReshapes.get(key);
                 reshapeArgs(m, mi, r.args);
                 mi.desc = r.newDesc;
+                if (inherited && mi.getOpcode() == Opcodes.INVOKESTATIC) {
+                    // a static call through a class of the jar resolved, in the source, to the class
+                    // declaring it -- the home. Named through the mod class it no longer resolves when
+                    // the mod class's ancestry changed at this step: a superRenames facade in place of
+                    // the vanilla class (static members are not inherited past it), or a home that is an
+                    // interface on the target (1.20.3's CommandFunction; an interface's static methods are
+                    // never inherited, JVMS 5.4.3.3). The call names the home, as the JVM resolved it
+                    mi.owner = home;
+                    Boolean itf = chain.interfaceOnTarget(home);
+                    if (itf != null) {
+                        mi.itf = itf;
+                    }
+                }
                 if (r.retKind != null) {
                     org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
                     org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
@@ -964,25 +971,53 @@ public final class JarProcessor {
 
     /**
      * Whether a super call is one {@link #rewriteHookSuperCalls} rewrites with a carrying hook: the
-     * same choice it makes (the first superCalls hook for the call's old shape, in wiring order) and
-     * the same test (the call into a vanilla supertype, directly or through a mod class that
-     * inherits it; the class under the hook), for a hook with frames.
+     * same choice it makes ({@link #superCallHook}), for a hook with frames or a super bridge.
+     * A super bridge reaches super's implementation of the new shape through the class's accessors;
+     * reshaped here instead, a super call whose new shape is a bridge onto a typed method of another
+     * name (1.21's AbstractCookingRecipe.matches(RecipeInput) onto matches(SingleRecipeInput)) would
+     * come back into the class's own override of the typed method.
      */
     private static boolean framedSuperCall(Chain chain, LayerIndex layer, org.objectweb.asm.tree.ClassNode cn,
                                            org.objectweb.asm.tree.MethodInsnNode mi) {
-        if (mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
-                && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null) {
-            return false;
-        }
-        String[] ifaces = cn.interfaces.toArray(new String[0]);
+        Chain.OverrideHook h = superCallHook(superCallHooks(chain).get(mi.name + mi.desc), chain, layer, cn,
+            cn.interfaces.toArray(new String[0]), mi);
+        return h != null && (h.frames != null || h.superBridgeName != null);
+    }
+
+    /** the superCalls and superBridge hooks by old shape, each list in wiring order */
+    private static java.util.Map<String, java.util.List<Chain.OverrideHook>> superCallHooks(Chain chain) {
+        java.util.Map<String, java.util.List<Chain.OverrideHook>> byOld = new HashMap<>();
         for (Chain.OverrideHook h : chain.overrideHooks) {
-            if (h.superCalls && h.oldName.equals(mi.name) && h.oldDesc.equals(mi.desc)) {
-                return h.frames != null
-                    && (h.onlyUnder == null || isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain))
-                    && (h.notUnder == null || !isUnder(cn.superName, ifaces, h.notUnder, layer, chain));
+            if (h.superCalls || h.superBridgeName != null) {
+                byOld.computeIfAbsent(h.oldName + h.oldDesc, k -> new ArrayList<>()).add(h);
             }
         }
-        return false;
+        return byOld;
+    }
+
+    /**
+     * The hook that takes a mod's super.old(..): of the superCalls / superBridge hooks for the call's old
+     * shape, the first in wiring order whose hierarchy filter the class meets -- one old shape can have a
+     * hook per vanilla class that declared it (1.21's typed matches of AbstractCookingRecipe,
+     * StonecutterRecipe and the two smithing recipes, each for the classes under its own) -- and only for
+     * a call into a vanilla supertype: the super call's owner is the direct superclass, and a mod class in
+     * between inherits the vanilla method (this layer's hierarchy says from where) unless it declares it
+     * itself. Null when none takes it.
+     */
+    private static Chain.OverrideHook superCallHook(java.util.List<Chain.OverrideHook> candidates, Chain chain, LayerIndex layer,
+                                                    org.objectweb.asm.tree.ClassNode cn, String[] ifaces,
+                                                    org.objectweb.asm.tree.MethodInsnNode mi) {
+        if (candidates == null || mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
+                && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null) {
+            return null;
+        }
+        for (Chain.OverrideHook h : candidates) {
+            if ((h.onlyUnder == null || isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain))
+                    && (h.notUnder == null || !isUnder(cn.superName, ifaces, h.notUnder, layer, chain))) {
+                return h;
+            }
+        }
+        return null;
     }
 
     /**
@@ -1705,6 +1740,57 @@ public final class JarProcessor {
     }
 
     /**
+     * For a call naming a class of this jar layer whose member no class or interface of the layer on
+     * the way declares, and which inherits no vanilla member of that shape: the library type -- a Fabric
+     * API class the layer's classes extend, or a library interface they implement -- on which
+     * {@code map} keys the member, in JVM resolution order (the superclass chain, then the interfaces,
+     * the layer's own first). The library's members are not this layer's to judge, but a key on the
+     * library type says the member changed there; called through the mod's own class (call-inherited:
+     * this.read(json) in a mod's abstract CustomIngredientSerializer) it is the same member, as
+     * {@link #inheritedReshapeHome} has it for reshapes. Null when the layer declares it, the
+     * superclass chain leaves into a library class with no key (that class's own ancestry is not
+     * known here), or no key applies.
+     */
+    private static String inheritedLibraryKeyOwner(String owner, String member, LayerIndex layer, Map<String, String> map) {
+        List<String> layerTypes = new ArrayList<>();
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64 && !Chain.minecraftOwned(cur) && !cur.startsWith("java/"); hops++) {
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                return map.containsKey(cur + "." + member) ? cur : null; // a library superclass
+            }
+            if (d.contains(member)) {
+                return null; // the mod's own member
+            }
+            layerTypes.add(cur);
+            cur = layer.superOf.get(cur);
+        }
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        for (String c : layerTypes) {
+            todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
+        }
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String t = todo.poll();
+            if (!seen.add(t) || Chain.minecraftOwned(t) || t.startsWith("java/")) {
+                continue;
+            }
+            Set<String> d = layer.decls.get(t);
+            if (d == null) {
+                if (map.containsKey(t + "." + member)) {
+                    return t; // a library interface the layer's class implements
+                }
+                continue;
+            }
+            if (d.contains(member)) {
+                return null; // a default method of the mod's own interface
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(t, List.of()));
+        }
+        return null;
+    }
+
+    /**
      * For a call naming a class of this jar layer: the reshape key's home when the member is a
      * vanilla one the class inherits -- no class or interface of the layer on the way declares it --
      * found in JVM resolution order: the superclass chain to the first vanilla class (the walk of
@@ -1761,6 +1847,11 @@ public final class JarProcessor {
             }
             Set<String> d = layer.decls.get(t);
             if (d == null) {
+                // a library interface (a Fabric API one the mod class implements): only a reshape keyed on
+                // that interface itself applies, as for a library superclass above
+                if (chain.callReshapeIndex.containsKey(t + "." + member)) {
+                    return t;
+                }
                 continue;
             }
             if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
@@ -1832,10 +1923,95 @@ public final class JarProcessor {
      * Triage + strip + verify one jar's entry map, recursing into JIJ-nested
      * jars (bundled libraries carry their own mixins -- a nested mixin whose
      * target died crashes the whole game just as hard as a top-level one).
+     *
+     * Two things are settled first. A CenturyBridge layer's classes that retire at this step
+     * ({@link Chain#retiredClasses}) leave the jar and its mixin configs. And classRenames, which move
+     * references to a class the jar does not define (a dead vanilla class onto its facade, a compat API
+     * onto the native one that came back), leave the jar's own classes alone: renaming a class's own
+     * declaration leaves an entry whose class carries another name -- a jar that cannot load (a bundled
+     * Fabric API module declaring a class step 1 renames, a bridge layer's own compat classes).
      */
     private static void processEntries(Map<String, byte[]> entries, Chain chain,
                                        Report rpt, Set<String> issues, String tag,
                                        String jarTag) throws IOException {
+        retire(entries, chain, rpt, tag);
+        Map<String, String> own = new HashMap<>();
+        for (String n : entries.keySet()) {
+            if (n.endsWith(".class")) {
+                String cls = n.substring(0, n.length() - 6);
+                String to = chain.classRenames.remove(cls);
+                if (to != null) {
+                    own.put(cls, to);
+                    rpt.notes.add(tag + "own class keeps its name: " + cls + " (its classRenames entry, -> " + to
+                        + ", moves other jars' references)");
+                }
+            }
+        }
+        try {
+            processLayer(entries, chain, rpt, issues, tag, jarTag, own);
+        } finally {
+            chain.classRenames.putAll(own);
+        }
+    }
+
+    /**
+     * {@link Chain#retiredClasses}: the jar's classes an entry names leave it, and the mixin configs its
+     * fabric.mod.json names stop listing them -- before anything else reads the jar, so the triage and the
+     * rewrite see the layer as it is from this step on.
+     */
+    private static void retire(Map<String, byte[]> entries, Chain chain, Report rpt, String tag) {
+        if (chain.retiredClasses.isEmpty()) {
+            return;
+        }
+        Set<String> gone = new TreeSet<>();
+        for (String n : new ArrayList<>(entries.keySet())) {
+            if (n.endsWith(".class")) {
+                String cls = n.substring(0, n.length() - 6);
+                String why = chain.retiredReason(cls);
+                if (why != null) {
+                    entries.remove(n);
+                    gone.add(cls);
+                    rpt.notes.add(tag + "retired at " + chain.to + ": " + cls + " -- " + why);
+                }
+            }
+        }
+        byte[] fmjBytes = entries.get("fabric.mod.json");
+        if (gone.isEmpty() || fmjBytes == null) {
+            return;
+        }
+        JsonObject fmj = GSON.fromJson(new String(fmjBytes, StandardCharsets.UTF_8), JsonObject.class);
+        for (JsonElement ref : fmj.has("mixins") ? fmj.getAsJsonArray("mixins") : new JsonArray()) {
+            String cfgName = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+            byte[] data = entries.get(cfgName);
+            if (data == null) {
+                continue;
+            }
+            JsonObject cfg = GSON.fromJson(new String(data, StandardCharsets.UTF_8), JsonObject.class);
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            boolean edited = false;
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (!cfg.has(key)) {
+                    continue;
+                }
+                JsonArray kept = new JsonArray();
+                for (JsonElement m : cfg.getAsJsonArray(key)) {
+                    if (gone.contains((pkg.isEmpty() ? "" : pkg + "/") + m.getAsString().replace('.', '/'))) {
+                        edited = true;
+                    } else {
+                        kept.add(m);
+                    }
+                }
+                cfg.add(key, kept);
+            }
+            if (edited) {
+                entries.put(cfgName, GSON.toJson(cfg).getBytes(StandardCharsets.UTF_8));
+            }
+        }
+    }
+
+    private static void processLayer(Map<String, byte[]> entries, Chain chain,
+                                     Report rpt, Set<String> issues, String tag,
+                                     String jarTag, Map<String, String> ownRenames) throws IOException {
         LayerIndex layer = indexLayer(entries);
         Map<String, String> jarSuper = layer.superOf;
         stripSignatures(entries, rpt, tag);
@@ -1926,7 +2102,13 @@ public final class JarProcessor {
                 // the nested jar's own name joins the uniqueness tag
                 String nestedTag = jarTag + "_" + name.substring("META-INF/jars/".length())
                     .replaceAll("\\.jar$", "").replaceAll("[^A-Za-z0-9]", "_");
-                processEntries(nested, chain, rpt, issues, tag + "(bundled) ", nestedTag);
+                // a bundled jar is another jar: the renames kept off this jar's own classes apply to it
+                chain.classRenames.putAll(ownRenames);
+                try {
+                    processEntries(nested, chain, rpt, issues, tag + "(bundled) ", nestedTag);
+                } finally {
+                    ownRenames.keySet().forEach(chain.classRenames::remove);
+                }
                 // a bundled mod is a mod to the loader: its own minecraft range
                 // still says the source version, and dependency resolution
                 // refuses the whole pack before a class loads (293 nested mods
@@ -2700,10 +2882,43 @@ public final class JarProcessor {
                                 // redirect wired explicitly (DFU's Codec.dispatch
                                 // contract change hides behind generic erasure)
                                 // still applies
+                                // a super call to a library supertype's member -- a Fabric API interface's
+                                // default -- is rerouted like a vanilla one (Chain.superRedirects), keyed on
+                                // the library type the call names
+                                String lsr = op == Opcodes.INVOKESPECIAL && !name.equals("<init>") ? chain.superRedirects.get(site) : null;
+                                String lsrHome = null;
+                                if (lsr == null && op == Opcodes.INVOKESPECIAL && !name.equals("<init>")) {
+                                    // the same through a class of the jar that inherits the library member
+                                    // (super.simulateInsert(..) in a subclass of a mod's own Storage)
+                                    lsrHome = inheritedLibraryKeyOwner(owner, name + desc, layer, chain.superRedirects);
+                                    lsr = lsrHome == null ? null : chain.superRedirects.get(lsrHome + "." + name + desc);
+                                }
+                                if (lsr != null) {
+                                    superRedirectSites.put(site, lsr);
+                                    if (lsrHome != null) {
+                                        emitOwner.put(site, lsrHome);
+                                    }
+                                    top.dext.centurybridge.data.FullAudit.record(lsrHome != null ? lsrHome + "." + name + desc : site,
+                                        "super-redirect");
+                                    return;
+                                }
                                 String lrt = chain.instanceRedirects.get(site);
+                                String lrtHome = null;
+                                if (lrt == null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE)) {
+                                    // a library member the jar's class inherits (call-inherited through a mod
+                                    // class implementing a Fabric API interface): the redirect wired on that
+                                    // library type serves it, the receiver typed as that type. Not a super call:
+                                    // the redirect's own dispatch would come back into the caller's override
+                                    lrtHome = inheritedLibraryKeyOwner(owner, name + desc, layer, chain.instanceRedirects);
+                                    lrt = lrtHome == null ? null : chain.instanceRedirects.get(lrtHome + "." + name + desc);
+                                }
                                 if (lrt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
                                     instRedirects.put(site, lrt);
-                                    top.dext.centurybridge.data.FullAudit.record(site, "instance-redirect");
+                                    if (lrtHome != null) {
+                                        emitOwner.put(site, lrtHome);
+                                    }
+                                    top.dext.centurybridge.data.FullAudit.record(lrtHome != null ? lrtHome + "." + name + desc : site,
+                                        "instance-redirect");
                                 }
                                 String lsrt = chain.staticRedirects.get(site);
                                 if (lsrt != null && op == Opcodes.INVOKESTATIC) {
@@ -2863,6 +3078,9 @@ public final class JarProcessor {
                         }
                         if (chain.callReshapeTargets.contains(name + desc)) {
                             return; // the call pre-pass (rewriteCalls) already gave it the step's new shape
+                        }
+                        if (op == Opcodes.INVOKESPECIAL && chain.superAccessorTargets.contains(name + desc)) {
+                            return; // a super-bridge accessor (rewriteHookSuperCalls) calling super's new shape
                         }
                         Chain.Issue r = chain.resolveMember('m', name);
                         if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)
@@ -3138,6 +3356,15 @@ public final class JarProcessor {
                                     // (Codec::dispatch as a lambda breaks identically)
                                     boolean hStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
                                     String lrt = chain.instanceRedirects.get(site);
+                                    if (lrt == null && (h.getTag() == Opcodes.H_INVOKEVIRTUAL || h.getTag() == Opcodes.H_INVOKEINTERFACE)) {
+                                        // a library member inherited through the jar's class, as for a call
+                                        String lrtHome = inheritedLibraryKeyOwner(hOwner, h.getName() + h.getDesc(), layer,
+                                            chain.instanceRedirects);
+                                        if (lrtHome != null) {
+                                            lrt = chain.instanceRedirects.get(lrtHome + "." + h.getName() + h.getDesc());
+                                            emitOwner.put(site, lrtHome);
+                                        }
+                                    }
                                     if (lrt != null && !hStatic && !h.getName().equals("<init>")) {
                                         instRedirects.put(site, lrt);
                                         top.dext.centurybridge.data.FullAudit.record(site, "instance-redirect");
@@ -3250,6 +3477,9 @@ public final class JarProcessor {
                 if (declaredShapes.contains(shape) || !isUnder(superOf[0], ifacesOf[0], f.under, layer, chain)
                         || inheritedVanillaOwner(superOf[0], shape, layer) == null && layer.superOf.containsKey(superOf[0])) {
                     continue; // declared here, not under the type, or a jar superclass declares it
+                }
+                if (fillApply.stream().anyMatch(x -> (x.name + x.desc).equals(shape))) {
+                    continue; // two entries give the class the same method (it is under both types): the first fills it
                 }
                 boolean synthesized = declaredOldOverrides.stream().anyMatch(h -> (h.newName + h.newDesc).equals(shape))
                     || adapterApply.stream().anyMatch(h -> h.synth.stream().anyMatch(sy -> (sy[0] + sy[1]).equals(shape)));

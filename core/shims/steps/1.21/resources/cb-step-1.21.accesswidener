@@ -3,3 +3,6 @@ accessible class net/minecraft/class_359$class_360
 accessible class net/minecraft/class_359$class_9772
 accessible method net/minecraft/class_359$class_9772 <init> (Lnet/minecraft/class_243;J)V
 accessible method net/minecraft/class_293 <init> (Ljava/util/List;Ljava/util/List;Lit/unimi/dsi/fastutil/ints/IntList;I)V
+
+# ItemStack.transmuteCopyIgnoreEmpty(item, count): public in 1.20.6, private in 1.21 with the same body (s6item)
+accessible method net/minecraft/class_1799 method_56704 (Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1799;

@@ -116,6 +116,35 @@ public final class Chain {
     /** examined-and-classified damage (quirk tier / structural / etc): "owner" or "owner.name" -> reason */
     public final java.util.Map<String, String> ledger = new java.util.HashMap<>();
 
+    /**
+     * Classes of CenturyBridge's own bridge layers that retire at this step ("retiredClasses" in a step's
+     * wiring: an internal class name, or a package prefix ending in '/', -> reason). A layer climbs on like
+     * any mod, and an API one step gave back under CenturyBridge's own names (step 1's 1.20.1 attachment
+     * API, absent from 1.20.2's Fabric API) can come back natively in a later release (1.20.4's Fabric
+     * API). From that step on, converted mods' references move to the native classes (classRenames), and
+     * the layer's own copy -- its classes and the mixins that implement them -- must stop acting, or two
+     * implementations would serve one API at once (both writing the same save key, an event fired twice).
+     * Every class of a converted jar an entry names leaves the jar, and the jar's mixin configs stop
+     * listing it. Only CenturyBridge classes can retire (the wiring gate holds entries to that).
+     */
+    public final java.util.Map<String, String> retiredClasses = new java.util.HashMap<>();
+
+    /** why a class retires at this step ({@link #retiredClasses}: its own entry, else the longest package prefix), or null */
+    public String retiredReason(String internalName) {
+        String r = retiredClasses.get(internalName);
+        if (r != null) {
+            return r;
+        }
+        String best = null;
+        for (var e : retiredClasses.entrySet()) {
+            String k = e.getKey();
+            if (k.endsWith("/") && internalName.startsWith(k) && (best == null || k.length() > best.length())) {
+                best = k;
+            }
+        }
+        return best == null ? null : retiredClasses.get(best);
+    }
+
 
     /** A cover/redirect recorded on any ancestor applies to this call site too. */
     public boolean coveredAnywhere(String owner, String nameDesc) {
@@ -490,6 +519,12 @@ public final class Chain {
      *                      "call": "Owner.name(Lnet/minecraft/class_4970;)Lcom/mojang/serialization/MapCodec;"}]
      * </pre>
      * The call's first parameter is {@code under} (the receiver), the rest the method's own.
+     *
+     * {@code under} is matched through the converted jar's own hierarchy and the source release's
+     * Minecraft stub, which knows no library type: a fill on a member of a Fabric API interface names
+     * every interface a mod class may implement directly (FluidVariant, ItemVariant and TransferVariant
+     * for TransferVariant.getComponentMap). When two entries give one class the same method -- it is
+     * under both types -- the first in wiring order fills it.
      */
     public static final class AbstractFill {
         public String under, name, desc, callOwner, callName, callDesc;
@@ -1078,7 +1113,9 @@ public final class Chain {
      *     type. The call is made at the op's place in the sequence, before the invoke.</li>
      * <li>{@code conv OWNER#name(desc)R} -- push the next old argument and run
      *     the static converter on it; its return type is the new argument.
-     *     The converter's parameter type must equal the old argument type.</li>
+     *     The converter's parameter type must equal the old argument type -- or be Object / Object[]
+     *     where the old type is a reference / reference array the shim cannot name (a package-private
+     *     class, {@link #nameableSupertype}).</li>
      * <li>{@code push OWNER#name()R} -- call a zero-argument static supplier;
      *     consumes no old argument (a new parameter with a default).</li>
      * <li>{@code keep:N} / {@code conv:I,J,... OWNER#name(desc)R} -- the
@@ -1167,6 +1204,12 @@ public final class Chain {
     public final java.util.Set<String> callReshapeNames = new java.util.HashSet<>();
     /** name + new descriptor of every reshape: what the rewritten call sites now reference */
     public final java.util.Set<String> callReshapeTargets = new java.util.HashSet<>();
+    /**
+     * name + descriptor of every super-bridge accessor shape ({@link OverrideHook#superAccessors}): the
+     * target-release member a class's cb$super$ accessor calls super's implementation of -- a call the
+     * engine itself writes in the target's shape, not a reference of the mod's to judge
+     */
+    public final java.util.Set<String> superAccessorTargets = new java.util.HashSet<>();
     /**
      * name + descriptor of the reshapes that keep the descriptor -- conversions of values whose
      * erased type stayed while their type arguments changed (generic drift). Such a member keeps
@@ -1521,7 +1564,7 @@ public final class Chain {
                             + " parameter(s) but consumes " + from.length + " old argument(s)");
                     }
                     for (int i = 0; i < p.length; i++) {
-                        if (!p[i].equals(old[from[i]])) {
+                        if (!p[i].equals(old[from[i]]) && !nameableSupertype(p[i], old[from[i]])) {
                             throw new IllegalArgumentException(where + ": op '" + t + "' parameter " + i + " is "
                                 + p[i].getDescriptor() + " but old argument " + from[i] + " is " + old[from[i]].getDescriptor());
                         }
@@ -1573,6 +1616,20 @@ public final class Chain {
     }
 
     /**
+     * Whether a converter may take {@code param} for an old argument of type {@code arg} that it cannot
+     * name: Object for any reference, Object[] for an array of references (a package-private element type
+     * such as 1.20.1 CompositeEntryBase.compose's ComposableEntryContainer[], which the shim cannot write
+     * in Java -- the verifier passes the argument by assignment, as it passes the old call's).
+     */
+    static boolean nameableSupertype(org.objectweb.asm.Type param, org.objectweb.asm.Type arg) {
+        if (param.getDescriptor().equals("Ljava/lang/Object;")) {
+            return arg.getSort() == org.objectweb.asm.Type.OBJECT || arg.getSort() == org.objectweb.asm.Type.ARRAY;
+        }
+        return param.getDescriptor().equals("[Ljava/lang/Object;") && arg.getSort() == org.objectweb.asm.Type.ARRAY
+            && arg.getDimensions() == 1 && arg.getElementType().getSort() == org.objectweb.asm.Type.OBJECT;
+    }
+
+    /**
      * Redirects that apply to INVOKESPECIAL super-calls only ("superRedirects"):
      * "owner.name(desc)" -> "runtimeClass[#member]", receiver as arg 0. The
      * method still exists on the target with the same descriptor, so a plain
@@ -1580,6 +1637,12 @@ public final class Chain {
      * super-call contract differs (1.20.1 Screen.render drew the widgets and
      * nothing else; since 1.20.2 it draws the background first, over whatever
      * the mod drew). Only a mod's own super.render(..) is rerouted.
+     *
+     * A key may name a library type the converted jar extends or implements (a Fabric API
+     * interface whose default the mod's super call reaches): it is matched on the type the super
+     * call names, exactly, the receiver passed as that type. A super call reshaped earlier in the
+     * step (callReshapes rewrite super calls too) is matched in its new shape: 26.1.1's
+     * FabricOrderedSubmitNodeCollector.submitBlockModel, whose 26.1 default the mod's super call meant.
      */
     public final java.util.Map<String, String> superRedirects = new java.util.HashMap<>();
 
@@ -1693,6 +1756,103 @@ public final class Chain {
             }
         }
         return chainUp;
+    }
+
+    /**
+     * The interfaces a release's Fabric API injects into vanilla classes: class -> interfaces, read from
+     * every module jar in {@code processedMods} (data/runtime/client-&lt;ver&gt;/.fabric/processedMods) --
+     * the "loom:injected_interfaces" of its fabric.mod.json (through 1.21.11) and the inject-interface /
+     * transitive-inject-interface lines of the access widener or class tweaker it names (26.x). A mod
+     * compiled against Fabric API calls an injected member through the vanilla class it holds
+     * (OrderedSubmitNodeCollector.submitBlockModel is FabricOrderedSubmitNodeCollector's), and a mod class
+     * extending or implementing the vanilla type overrides it there; at runtime Fabric's mixins and class
+     * tweakers make the vanilla class implement the interface. So the hierarchy walks see these interfaces
+     * too: a reshape, redirect or hook keyed on the Fabric API interface serves the call through the vanilla
+     * class and the mod class under it. Generic arguments of an injected interface are dropped. A release
+     * whose Fabric API modules are not there fails loudly rather than converting blind.
+     */
+    public static java.util.Map<String, java.util.List<String>> readInjectedInterfaces(Path processedMods) throws IOException {
+        if (!Files.isDirectory(processedMods)) {
+            throw new IllegalStateException(processedMods.toAbsolutePath() + " is missing: the interfaces that release's Fabric API"
+                + " injects into vanilla classes come from its modules there (or set -Dcb.allowMissingStubs=true to convert without"
+                + " them, knowingly)");
+        }
+        java.util.Map<String, java.util.LinkedHashSet<String>> found = new java.util.TreeMap<>();
+        java.util.List<Path> jars;
+        try (var s = Files.list(processedMods)) {
+            jars = s.filter(p -> p.toString().endsWith(".jar")).sorted().toList();
+        }
+        for (Path jar : jars) {
+            try (var z = new java.util.zip.ZipFile(jar.toFile())) {
+                var fmjEntry = z.getEntry("fabric.mod.json");
+                if (fmjEntry == null) {
+                    continue;
+                }
+                var reader = new com.google.gson.stream.JsonReader(new java.io.InputStreamReader(
+                    z.getInputStream(fmjEntry), java.nio.charset.StandardCharsets.UTF_8));
+                reader.setLenient(true);
+                var fmj = com.google.gson.JsonParser.parseReader(reader).getAsJsonObject();
+                if (fmj.has("custom") && fmj.getAsJsonObject("custom").has("loom:injected_interfaces")) {
+                    for (var e : fmj.getAsJsonObject("custom").getAsJsonObject("loom:injected_interfaces").entrySet()) {
+                        for (var itf : e.getValue().getAsJsonArray()) {
+                            found.computeIfAbsent(e.getKey(), k -> new java.util.LinkedHashSet<>()).add(rawType(itf.getAsString()));
+                        }
+                    }
+                }
+                if (fmj.has("accessWidener") && fmj.get("accessWidener").isJsonPrimitive()) {
+                    String aw = fmj.get("accessWidener").getAsString();
+                    var awEntry = z.getEntry(aw.startsWith("/") ? aw.substring(1) : aw);
+                    if (awEntry != null) {
+                        String text = new String(z.getInputStream(awEntry).readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+                        for (String ln : text.split("\r?\n")) {
+                            int hash = ln.indexOf('#');
+                            String[] tok = (hash >= 0 ? ln.substring(0, hash) : ln).trim().split("\\s+");
+                            if (tok.length >= 3 && (tok[0].equals("inject-interface") || tok[0].equals("transitive-inject-interface"))) {
+                                found.computeIfAbsent(tok[1], k -> new java.util.LinkedHashSet<>()).add(rawType(tok[2]));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        java.util.Map<String, java.util.List<String>> out = new java.util.TreeMap<>();
+        found.forEach((k, v) -> out.put(k, java.util.List.copyOf(v)));
+        return out;
+    }
+
+    /** an injected interface without its generic arguments: Foo<TT;> is Foo */
+    private static String rawType(String itf) {
+        int lt = itf.indexOf('<');
+        return lt < 0 ? itf : itf.substring(0, lt);
+    }
+
+    /** the injections (source release's Fabric API) into the source hierarchy ({@link #interfacesOf}) */
+    public void addSourceInjections(java.util.Map<String, java.util.List<String>> injected) {
+        injected.forEach((cls, itfs) -> interfacesOf.merge(cls, itfs, Chain::union));
+    }
+
+    /**
+     * The injections (target release's Fabric API) into the target hierarchy ({@link #targetInterfacesOf}),
+     * in the analysis namespace: across the namespace wall the target's mojang class names are translated
+     * back through the inter-&gt;mojang table ({@code wallTable}; null otherwise).
+     */
+    public void addTargetInjections(java.util.Map<String, java.util.List<String>> injected, Path wallTable) throws IOException {
+        java.util.Map<String, String> back = new java.util.HashMap<>();
+        if (wallTable != null && Files.exists(wallTable)) {
+            for (String ln : Files.readAllLines(wallTable)) {
+                String[] p = ln.split("\t");
+                if (p.length >= 3 && p[0].equals("C")) {
+                    back.put(p[2], p[1]);
+                }
+            }
+        }
+        injected.forEach((cls, itfs) -> targetInterfacesOf.merge(back.getOrDefault(cls, cls), itfs, Chain::union));
+    }
+
+    private static java.util.List<String> union(java.util.List<String> a, java.util.List<String> b) {
+        java.util.LinkedHashSet<String> s = new java.util.LinkedHashSet<>(a);
+        s.addAll(b);
+        return java.util.List.copyOf(s);
     }
 
     /** Load the class hierarchy of a stub jar so member lookups can walk it. */
@@ -1897,6 +2057,7 @@ public final class Chain {
                         if (o.has("superAccessors")) {
                             for (var acc : o.getAsJsonArray("superAccessors")) {
                                 h.superAccessors.add(acc.getAsString());
+                                c.superAccessorTargets.add(acc.getAsString());
                             }
                         }
                         String want = h.superAccess == null ? null : "(L" + h.superAccess + ";" + h.oldDesc.substring(1);
@@ -2160,6 +2321,12 @@ public final class Chain {
                 var lg = root.getAsJsonObject("ledger");
                 for (String k : lg.keySet()) {
                     c.ledger.put(k, lg.get(k).getAsString());
+                }
+            }
+            if (root.has("retiredClasses")) {
+                var rc = root.getAsJsonObject("retiredClasses");
+                for (String k : rc.keySet()) {
+                    c.retiredClasses.put(k, rc.get(k).getAsString());
                 }
             }
             if (root.has("covers")) {

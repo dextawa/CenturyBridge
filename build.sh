@@ -186,8 +186,10 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$
 # every wiring key that names a runtime member: static/instance/super
 # redirects, field redirects/getters, instanceof predicates, constructor
 # factories, super-ctor adapters and reshape ops, lookupRt, override-hook
-# wrap/unwrap/guard, facade renames.
-java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "$WIRING" "$NAMETABLE" "$STUB" \
+# wrap/unwrap/guard, facade renames. A member a vanilla class has only through an
+# interface the target's Fabric API injects into it is judged on that interface
+# (-Dcb.fapi: the modules the shims compiled against).
+java -Dcb.fapi="$FAPI" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "$WIRING" "$NAMETABLE" "$STUB" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: dangling redirect wiring"; exit 1; }
 

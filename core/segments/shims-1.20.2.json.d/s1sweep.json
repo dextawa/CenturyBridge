@@ -1,0 +1,136 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_2315.method_10012(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/rt/v1_20_2/CbDispense#stateAt(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
+    "keep:1"
+   ],
+   "basis": "DispenserBlock.dispenseFrom(level, pos) takes the block state too since 1.20.2 (dispenseFrom(level, state, pos)): a dispenser or dropper subclass's own this.dispenseFrom(level, pos) passes the state at pos -- 1.20.1's BlockSourceImpl(level, pos).getBlockState() read level.getBlockState(pos). Dropper redeclares it in both releases; the reshaped call dispatches to it as before"
+  },
+  "net/minecraft/class_69.method_394([Lnet/minecraft/class_64;)Lnet/minecraft/class_64;": {
+   "desc": "(Ljava/util/List;)Lnet/minecraft/class_64;",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbLootCompose#children([Ljava/lang/Object;)Ljava/util/List;"
+   ],
+   "basis": "CompositeEntryBase.compose(children) takes a List since 1.20.2: a composite subclass's own this.compose(children) passes the same entries in the same order (a view of the array); a 1.20.1 implementation behind it gets them back as an array (s1loot's hook, CbLootBridges.combinerArray)"
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1214.method_5172(Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbStatsCounterFix",
+  "net/minecraft/class_1214.method_5173(Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbStatsCounterFix"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1214.method_5172(Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbStatsCounterFix#superUpgradeItem",
+  "net/minecraft/class_1214.method_5173(Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbStatsCounterFix#superUpgradeBlock"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1214",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbStatsCounterFix$LegacyItem",
+   "requires": [
+    "method_5172(Ljava/lang/String;)Ljava/lang/String;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 StatsCounterFix subclass's upgradeItem override: 1.20.2's stats rule asks it again while the fix applies (CbStatsCounterFixLegacy)"
+  },
+  {
+   "under": "net/minecraft/class_1214",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbStatsCounterFix$LegacyBlock",
+   "requires": [
+    "method_5173(Ljava/lang/String;)Ljava/lang/String;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 StatsCounterFix subclass's upgradeBlock override: 1.20.2's stats rule asks it again while the fix applies (CbStatsCounterFixLegacy)"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyPlayerSpawn",
+   "requires": [
+    "method_11097(Lnet/minecraft/class_2613;)V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 play listener implementing onPlayerSpawn -- a ClientPlayPacketListener implementation, or a ClientPlayNetworkHandler subclass that overrides onEntitySpawn as well, which s1net's hook cannot reach: 1.20.2's player spawns (entity spawns of type PLAYER) are handed to it as 1.20.1's player spawn packets were (CbNetLegacyPlayerSpawnRoute)"
+  },
+  {
+   "under": "net/minecraft/class_634",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyPlayFeatures",
+   "requires": [
+    "method_45728(Lnet/minecraft/class_7832;)V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 ClientPlayNetworkHandler subclass's onFeatures override: 1.20.2 sends the features to the configuration listener only; the override gets them after the login packet, where 1.20.1's server sent them (CbNetLegacyPlayFeaturesDelivery)"
+  }
+ ],
+ "frameDefaults": {
+  "method_31186(Ljava/lang/Throwable;Lnet/minecraft/class_2561;)V": {
+   "2": "zero: null is the reload that is not the game's first load -- 1.20.2's own reloadResourcePacks() passes null (method_1521), and method_53528 takes a null cookie to the title screen; 1.20.1's clearResourcePacksOnError had no load cookie and the old shape's cover passes null too (CbGuiMinecraftBridge)"
+  },
+  "method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
+   "4": "top/dext/centurybridge/rt/v1_20_2/CbFrameDefaultsClient#spriteMetadataSections()Ljava/util/Collection;"
+  },
+  "method_44563(Ljava/util/UUID;Lcom/mojang/authlib/minecraft/report/AbuseReport;)Ljava/util/concurrent/CompletableFuture;": {
+   "1": "top/dext/centurybridge/rt/v1_20_2/CbNetClient#cbChatReportType()Lnet/minecraft/class_8776;"
+  },
+  "method_1855(I)V": {
+   "1": "top/dext/centurybridge/rt/v1_20_2/CbFrameDefaultsClient#editBoxShift(Lnet/minecraft/class_342;)Z"
+  },
+  "method_1883(I)V": {
+   "1": "top/dext/centurybridge/rt/v1_20_2/CbFrameDefaultsClient#editBoxShift(Lnet/minecraft/class_342;)Z"
+  },
+  "method_1870()V": {
+   "0": "top/dext/centurybridge/rt/v1_20_2/CbFrameDefaultsClient#editBoxShift(Lnet/minecraft/class_342;)Z"
+  },
+  "method_1872()V": {
+   "0": "top/dext/centurybridge/rt/v1_20_2/CbFrameDefaultsClient#editBoxShift(Lnet/minecraft/class_342;)Z"
+  },
+  "method_25420(Lnet/minecraft/class_332;)V": {
+   "1": "zero: 1.20.1's renderBackground(context) drew without a cursor (the gradient or the dirt, Screen.method_25420(class_332)); 1.20.2's Screen body reads neither coordinate, and the old shape's cover passes the same zeros (ScreenBridge)",
+   "2": "zero: as the x coordinate: 1.20.1's renderBackground had no cursor",
+   "3": "zero: 1.20.1's renderBackground had no partial tick; 1.20.2's Screen body does not read it, and the old shape's cover passes 0 (ScreenBridge)"
+  },
+  "method_43735(Lnet/minecraft/class_7448;)Lnet/minecraft/class_2168;": {
+   "1": "top/dext/centurybridge/rt/v1_20_2/CbFrameDefaults#chatMessageChainer(Lnet/minecraft/class_2168;)Lnet/minecraft/class_7620;"
+  },
+  "method_39851(Ljava/io/DataInput;)V": {
+   "1": "top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+  },
+  "method_39854(Ljava/io/DataInput;I)V": {
+   "2": "top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+  },
+  "method_39852(Ljava/io/DataInput;Lnet/minecraft/class_6836;)Lnet/minecraft/class_6836$class_6838;": {
+   "2": "top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+  },
+  "method_39877(Ljava/io/DataInput;Lnet/minecraft/class_6836;)V": {
+   "2": "top/dext/centurybridge/rt/v1_20_2/CbNbt#unlimited()Lnet/minecraft/class_2505;"
+  },
+  "method_29171(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;)Ljava/lang/Object;": {
+   "2": "top/dext/centurybridge/rt/v1_20_2/CbNet#cbUnlimitedNbt()Lnet/minecraft/class_2505;"
+  },
+  "method_36341(Lnet/minecraft/class_2158;Lnet/minecraft/class_2168;Lnet/minecraft/class_2991$class_6346;)I": {
+   "3": "zero: null is a function run without macro arguments -- all a 1.20.1 function could be (1.20.2 added macros; a plain function's instantiate ignores the arguments, class_2158.method_52595 answers itself), and 1.20.2's own execute(function, source) passes null (method_12904)"
+  },
+  "method_14570(Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)V": {
+   "2": "top/dext/centurybridge/rt/v1_20_2/CbFrameDefaults#listenerCookie(Lnet/minecraft/class_3324;Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)Lnet/minecraft/class_8792;"
+  },
+  "method_14613(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_3222;": {
+   "1": "top/dext/centurybridge/rt/v1_20_2/CbFrameDefaults#clientInformation()Lnet/minecraft/class_8791;"
+  },
+  "method_9700(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "0": "zero: null is a pickup with no player -- 1.20.2's own dispenser bucket behaviour (class_2357$9) and sponge (class_2502) pass null; 1.20.1's pickupBlock had no player, and its call side passes null too (Statics.method_9700)"
+  },
+  "method_10012(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)V": {
+   "1": "top/dext/centurybridge/rt/v1_20_2/CbDispense#stateAt(Lnet/minecraft/class_2315;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;"
+  },
+  "method_17923(Ljava/lang/String;I)Lnet/minecraft/class_2487;": {
+   "1": "zero: null is no fix type, the tag as read (Fabric API's PersistentStateManagerMixin.handleNullDataFixType returns it); 1.20.1 ran saved data through the one DataFixTypes.SAVED_DATA, which 1.20.2 split into per-vanilla-file types with no fix for any other file, and the old shape's cover returns the tag as read (CbSavedDataReadCover)"
+  },
+  "method_25401(DDD)Z": {
+   "2": "zero: 1.20.1's scroll amount was the vertical wheel (it is passed on as 1.20.2's vertical amount); 1.20.1 had no horizontal scroll, which is 0"
+  },
+  "method_48931(Lnet/minecraft/class_1799;)V": {
+   "1": "top/dext/centurybridge/rt/v1_20_2/CbFrameDefaults#slotItem(Lnet/minecraft/class_1735;)Lnet/minecraft/class_1799;"
+  }
+ }
+}
