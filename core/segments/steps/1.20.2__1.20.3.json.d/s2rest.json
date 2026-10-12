@@ -230,7 +230,7 @@
     "keep",
     "conv top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbLegacyConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
    ],
-   "basis": "a 1.20.2 consumer of a data fetcher task: RealmsDataFetcher.serverListUpdateTask answers a ServerListData since 1.20.3 where it answered the servers; the consumer is handed the servers (CbRealms.cbLegacyConsumer), any other task's value as it is"
+   "basis": "a 1.20.2 consumer of a data fetcher task: RealmsDataFetcher.serverListUpdateTask answers a ServerListData since 1.20.3 where it answered the servers; the consumer is handed the servers (CbRealms.cbLegacyConsumer), any other task's value as it is; the override side is the convertHooks entry"
   }
  },
  "instanceFieldGetters": {
@@ -1340,6 +1340,15 @@
    ],
    "ret": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbHolders(Ljava/util/Collection;)Ljava/util/Collection;",
    "basis": "a 1.20.2 ScoreHolderArgument.Result (or SelectorResult subclass) answers names and takes default names: vanilla's default holders handed in as names, its names handed back as holders (ScoreHolder.forNameOnly)"
+  },
+  {
+   "under": "net/minecraft/class_7581$class_7584",
+   "member": "method_44635(Lnet/minecraft/class_7581$class_7586;Ljava/util/function/Consumer;)V",
+   "args": [
+    null,
+    "top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbModernConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "the override side of the subscribe reshape: vanilla's consumer handed to a 1.20.2 Subscription subclass goes on to super as it was (CbRealms.cbModernConsumer marks it, cbLegacyConsumer unwraps it), a 1.20.2 consumer of the mod's own call reaches the body unwrapped"
   }
  ],
  "genericWitnesses": {

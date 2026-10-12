@@ -116,14 +116,30 @@ public final class CbRealms {
      * answers a ServerListData since 1.20.3, under the same field -- the servers, and the realms a snapshot
      * client may join. Its servers are the list 1.20.2's task answered (the servers of the client's server list
      * request, method_21015); ServerListData is 1.20.3's own, so no consumer written for 1.20.2 takes one. Every
-     * other task's value is handed on as it is.
+     * other task's value is handed on as it is. A vanilla consumer that a 1.20.2 Subscription override hands on
+     * to super ({@link #cbModernConsumer}) goes back to vanilla as it was.
      */
     public static Consumer<?> cbLegacyConsumer(Consumer<?> consumer) {
+        if (consumer instanceof CbModernConsumer modern) {
+            return modern.to;
+        }
         return consumer == null || consumer instanceof CbLegacyConsumer ? consumer : new CbLegacyConsumer(consumer);
     }
 
+    /**
+     * The override side (convertHooks on Subscription.subscribe): the consumer vanilla hands a 1.20.2 subclass's
+     * subscribe, marked as vanilla's so that the override's super.subscribe gives vanilla the same consumer back;
+     * a 1.20.2 consumer the mod's own call wrapped on the way in is handed to the body as it was.
+     */
+    public static Consumer<?> cbModernConsumer(Consumer<?> consumer) {
+        if (consumer instanceof CbLegacyConsumer legacy) {
+            return legacy.to;
+        }
+        return consumer == null || consumer instanceof CbModernConsumer ? consumer : new CbModernConsumer(consumer);
+    }
+
     private static final class CbLegacyConsumer implements Consumer<Object> {
-        private final Consumer<Object> to;
+        final Consumer<Object> to;
 
         @SuppressWarnings("unchecked")
         CbLegacyConsumer(Consumer<?> to) {
@@ -133,6 +149,21 @@ public final class CbRealms {
         @Override
         public void accept(Object value) {
             to.accept(value instanceof net.minecraft.class_7578.class_8843 data ? data.comp_1989() : value);
+        }
+    }
+
+    /** vanilla's consumer inside a 1.20.2 override: what it is handed reaches vanilla's consumer as it is */
+    private static final class CbModernConsumer implements Consumer<Object> {
+        final Consumer<Object> to;
+
+        @SuppressWarnings("unchecked")
+        CbModernConsumer(Consumer<?> to) {
+            this.to = (Consumer<Object>) to;
+        }
+
+        @Override
+        public void accept(Object value) {
+            to.accept(value);
         }
     }
 
