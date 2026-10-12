@@ -1,0 +1,80 @@
+{
+ "staticRedirects": {
+  "net/minecraft/class_156.method_655()Lit/unimi/dsi/fastutil/Hash$Strategy;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_156.method_27760(Ljava/io/File;Ljava/io/File;Ljava/io/File;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_156.method_41203(Ljava/io/File;Ljava/io/File;Ljava/io/File;Z)V": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_156.method_44146(Ljava/util/List;Ljava/util/function/IntFunction;)Ljava/util/function/ToIntFunction;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_3544.method_15439(I)Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_2507.method_30613(Ljava/io/File;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_2507.method_10629(Ljava/io/InputStream;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_2507.method_40057(Ljava/io/File;Lnet/minecraft/class_6836;Lnet/minecraft/class_2505;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_2507.method_30614(Lnet/minecraft/class_2487;Ljava/io/File;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_2507.method_10630(Lnet/minecraft/class_2487;Ljava/io/File;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_2507.method_10633(Ljava/io/File;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_3521.method_15301(Ljava/io/File;Ljava/net/URL;Ljava/util/Map;ILnet/minecraft/class_3536;Ljava/net/Proxy;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_5699.method_53054(Ljava/util/function/Function;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_5620.method_32206()Lit/unimi/dsi/fastutil/objects/Object2ObjectOpenHashMap;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_5251.method_27719(Ljava/lang/String;)Lnet/minecraft/class_5251;": "top/dext/centurybridge/step/v1_20_3/rt/CbText"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_3521.field_15664:Lcom/google/common/util/concurrent/ListeningExecutorService;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_7923.field_41154:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_5620.field_27775:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_5620.field_27776:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_5620.field_27777:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_5620.field_28011:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/class_5699.field_40722:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_3/rt/CbText",
+  "net/minecraft/class_5699.field_43173:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_3/rt/CbText"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_8216.field_43134:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
+  "net/minecraft/server/MinecraftServer.field_33206:I": "top/dext/centurybridge/step/v1_20_3/rt/CbServer"
+ },
+ "callReshapes": {
+  "net/minecraft/class_156.method_43028(Lit/unimi/dsi/fastutil/objects/ObjectArrayList;Lnet/minecraft/class_5819;)V": {
+   "desc": "(Ljava/util/List;Lnet/minecraft/class_5819;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbUtil#cbAsList(Lit/unimi/dsi/fastutil/objects/ObjectArrayList;)Ljava/util/List;",
+    "keep:1"
+   ]
+  },
+  "net/minecraft/class_5699.method_53052(Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": {
+   "desc": "(Ljava/lang/String;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbUtil#cbRecursiveName(Ljava/util/function/Function;)Ljava/lang/String;",
+    "keep:0"
+   ]
+  },
+  "net/minecraft/class_3222.method_7335([Lnet/minecraft/class_2960;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbServer#cbRecipeIds([Lnet/minecraft/class_2960;)Ljava/util/List;"
+   ]
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/server/MinecraftServer.field_4573:[J": "top/dext/centurybridge/step/v1_20_3/rt/CbServer"
+ },
+ "instanceRedirects": {
+  "net/minecraft/server/MinecraftServer.method_3830()F": "top/dext/centurybridge/step/v1_20_3/rt/CbServer",
+  "net/minecraft/class_3218.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_20_3/rt/CbServer"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_3830()F",
+   "new": "method_54832()F",
+   "args": [],
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "frames": "top/dext/centurybridge/step/v1_20_3/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "MinecraftServer.getAverageTickTime() is getCurrentSmoothedTickTime() since 1.20.3: same smoothed ms per tick"
+  },
+  {
+   "old": "method_7335([Lnet/minecraft/class_2960;)V",
+   "new": "method_7335(Ljava/util/List;)V",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbServer.cbRecipeIdArray(Ljava/util/List;)[Lnet/minecraft/class_2960;",
+   "onlyUnder": "net/minecraft/class_3222",
+   "basis": "ServerPlayer.awardRecipesByKey: the same ids, an array in 1.20.2 and a List since 1.20.3; the mod's super call is reshaped by callReshapes"
+  }
+ ]
+}
