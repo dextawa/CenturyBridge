@@ -1,0 +1,18 @@
+{
+ "fieldRedirects": {
+  "net/minecraft/class_2573.field_31297:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_2573.field_31298:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_2573.field_31299:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_2627.field_31361:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_2631.field_31363:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_2631.field_41602:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_4482.field_31306:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_4482.field_31307:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_4482.field_31308:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_4482.field_31309:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_4482.field_31310:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_4482.field_31311:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_6088.field_31148:I": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
+  "net/minecraft/class_6088.field_47339:I": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants"
+ }
+}
