@@ -16,7 +16,9 @@
     "CbTooltipLevelAccessor",
     "CbRestAbstractIllagerMixin",
     "CbRestWitherBossMixin",
-    "CbRestArmadilloMixin"
+    "CbRestArmadilloMixin",
+    "CbRestMobMixin",
+    "CbRestThrownTridentMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",
