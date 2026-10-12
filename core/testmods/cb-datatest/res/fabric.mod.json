@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_datatest",
+  "version": "1.0.0",
+  "name": "CenturyBridge entity data test (1.20.4)",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["cb.datatest.DataTestMod"]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-lifecycle-events-v1": "*",
+    "minecraft": "1.20.4"
+  }
+}

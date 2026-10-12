@@ -1,1 +1,5 @@
 accessWidener	v2	intermediary
+
+# s4net: SynchedEntityData's constructor over an item array, which a 1.20.4 mod's
+# new SynchedEntityData(entity) / super(entity) is reshaped to (CbNetEntityData.cbNoItems)
+accessible method net/minecraft/class_2945 <init> (Lnet/minecraft/class_9221;[Lnet/minecraft/class_2945$class_2946;)V

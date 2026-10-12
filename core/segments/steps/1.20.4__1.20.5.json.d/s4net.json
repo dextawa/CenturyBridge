@@ -1,0 +1,34 @@
+{
+ "covers": [
+  "net/minecraft/class_2945.method_12784(Lnet/minecraft/class_2940;Ljava/lang/Object;)V",
+  "net/minecraft/class_2945.method_51696(Lnet/minecraft/class_2940;)Z",
+  "net/minecraft/class_2945.method_12790()Z"
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_2945.<init>(Lnet/minecraft/class_1297;)V": {
+   "desc": "(Lnet/minecraft/class_9221;[Lnet/minecraft/class_2945$class_2946;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_9221;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbNoItems(Lnet/minecraft/class_1297;)[Lnet/minecraft/class_2945$class_2946;"
+   ],
+   "basis": "s4net: 1.20.4 made an empty data object for the entity; 1.20.5 takes the (empty) item array, sized as the builder sizes it"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_2945$class_7834.method_46361(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net: DataValue.write writes through a RegistryFriendlyByteBuf in 1.20.5 (the serializer's stream codec)"
+  },
+  "net/minecraft/class_2945$class_7834.method_46362(Lnet/minecraft/class_2540;I)Lnet/minecraft/class_2945$class_7834;": {
+   "desc": "(Lnet/minecraft/class_9129;I)Lnet/minecraft/class_2945$class_7834;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;",
+    "keep"
+   ],
+   "basis": "s4net: DataValue.read reads through a RegistryFriendlyByteBuf in 1.20.5 (the serializer's stream codec)"
+  }
+ }
+}
