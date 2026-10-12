@@ -2880,9 +2880,20 @@ public final class JarProcessor {
                                 // default -- is rerouted like a vanilla one (Chain.superRedirects), keyed on
                                 // the library type the call names
                                 String lsr = op == Opcodes.INVOKESPECIAL && !name.equals("<init>") ? chain.superRedirects.get(site) : null;
+                                String lsrHome = null;
+                                if (lsr == null && op == Opcodes.INVOKESPECIAL && !name.equals("<init>")) {
+                                    // the same through a class of the jar that inherits the library member
+                                    // (super.simulateInsert(..) in a subclass of a mod's own Storage)
+                                    lsrHome = inheritedLibraryKeyOwner(owner, name + desc, layer, chain.superRedirects);
+                                    lsr = lsrHome == null ? null : chain.superRedirects.get(lsrHome + "." + name + desc);
+                                }
                                 if (lsr != null) {
                                     superRedirectSites.put(site, lsr);
-                                    top.dext.centurybridge.data.FullAudit.record(site, "super-redirect");
+                                    if (lsrHome != null) {
+                                        emitOwner.put(site, lsrHome);
+                                    }
+                                    top.dext.centurybridge.data.FullAudit.record(lsrHome != null ? lsrHome + "." + name + desc : site,
+                                        "super-redirect");
                                     return;
                                 }
                                 String lrt = chain.instanceRedirects.get(site);
