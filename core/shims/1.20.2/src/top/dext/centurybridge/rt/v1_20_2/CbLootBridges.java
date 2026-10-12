@@ -275,6 +275,37 @@ public final class CbLootBridges {
         return value;
     }
 
+    // ------------------------------------------------------------------ JsonSerializableType.getJsonSerializer()
+
+    // In 1.20.1 the six loot types extended JsonSerializableType, so a mod's call on one of them
+    // (LootFunctionTypes.SET_COUNT.getJsonSerializer()) names the type as owner; 1.20.2's records
+    // have only their codec. The serializer is answered as JsonSerializableType did: the mod's own
+    // one for a type it registered with a 1.20.1 serializer, else the codec as a JsonSerializer.
+
+    public static top.dext.centurybridge.facade.v1_20_2.class_5335<?> method_29312(net.minecraft.class_5339 type) {
+        return CbLootSerializers.serializerOfType(type);
+    }
+
+    public static top.dext.centurybridge.facade.v1_20_2.class_5335<?> method_29312(net.minecraft.class_5342 type) {
+        return CbLootSerializers.serializerOfType(type);
+    }
+
+    public static top.dext.centurybridge.facade.v1_20_2.class_5335<?> method_29312(net.minecraft.class_5338 type) {
+        return CbLootSerializers.serializerOfType(type);
+    }
+
+    public static top.dext.centurybridge.facade.v1_20_2.class_5335<?> method_29312(net.minecraft.class_5657 type) {
+        return CbLootSerializers.serializerOfType(type);
+    }
+
+    public static top.dext.centurybridge.facade.v1_20_2.class_5335<?> method_29312(net.minecraft.class_5650 type) {
+        return CbLootSerializers.serializerOfType(type);
+    }
+
+    public static top.dext.centurybridge.facade.v1_20_2.class_5335<?> method_29312(net.minecraft.class_5669 type) {
+        return CbLootSerializers.serializerOfType(type);
+    }
+
     // ------------------------------------------------------------------ constants
 
     /** ExplorationMapFunction.DEFAULT_DECORATION_NAME: removed in 1.20.2, the 1.20.1 constant */

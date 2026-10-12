@@ -91,6 +91,12 @@
   "net/minecraft/class_7785.method_48496(Ljava/lang/String;)Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeDatagen"
  },
  "instanceRedirects": {
+  "net/minecraft/class_5339.method_29312()Lnet/minecraft/class_5335;": "top/dext/centurybridge/rt/v1_20_2/CbLootBridges",
+  "net/minecraft/class_5342.method_29312()Lnet/minecraft/class_5335;": "top/dext/centurybridge/rt/v1_20_2/CbLootBridges",
+  "net/minecraft/class_5338.method_29312()Lnet/minecraft/class_5335;": "top/dext/centurybridge/rt/v1_20_2/CbLootBridges",
+  "net/minecraft/class_5657.method_29312()Lnet/minecraft/class_5335;": "top/dext/centurybridge/rt/v1_20_2/CbLootBridges",
+  "net/minecraft/class_5650.method_29312()Lnet/minecraft/class_5335;": "top/dext/centurybridge/rt/v1_20_2/CbLootBridges",
+  "net/minecraft/class_5669.method_29312()Lnet/minecraft/class_5335;": "top/dext/centurybridge/rt/v1_20_2/CbLootBridges",
   "net/minecraft/class_8490.method_51203()Lcom/google/gson/Gson;": "top/dext/centurybridge/rt/v1_20_2/CbLootGson",
   "net/minecraft/class_227$class_6165.method_35565(Ljava/lang/Boolean;)Lnet/minecraft/class_227$class_6165;": "top/dext/centurybridge/rt/v1_20_2/CbLootBridges",
   "net/minecraft/class_227$class_6165.method_35567(Ljava/lang/Boolean;)Lnet/minecraft/class_227$class_6165;": "top/dext/centurybridge/rt/v1_20_2/CbLootBridges",
