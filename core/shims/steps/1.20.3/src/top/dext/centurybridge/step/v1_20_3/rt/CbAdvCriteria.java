@@ -77,6 +77,34 @@ public final class CbAdvCriteria {
 
     // ---------------------------------------------------------------- CriterionTriggerInstance (class_184)
 
+    /**
+     * A 1.20.2 lambda (or method reference) implementing CriterionTriggerInstance, whose single
+     * method was serializeToJson (lambdaAdapters: the converter builds it as CbAdvLegacy.Instance and
+     * passes it here): an instance answering that method with the lambda's, and validate -- new in
+     * 1.20.3, which such an instance never had -- with nothing.
+     */
+    public static net.minecraft.class_184 fromLambda(CbAdvLegacy.Instance lambda) {
+        return new LambdaInstance(lambda);
+    }
+
+    /** see {@link #fromLambda} */
+    public static final class LambdaInstance implements net.minecraft.class_184, CbAdvLegacy.Instance {
+        private final CbAdvLegacy.Instance lambda;
+
+        LambdaInstance(CbAdvLegacy.Instance lambda) {
+            this.lambda = lambda;
+        }
+
+        @Override
+        public JsonObject method_807() {
+            return lambda.method_807();
+        }
+
+        @Override
+        public void method_54938(net.minecraft.class_8944 validator) {
+        }
+    }
+
     /** CriterionTriggerInstance.serializeToJson() */
     public static JsonObject serializeToJson(net.minecraft.class_184 instance) {
         return instanceJson(instance);

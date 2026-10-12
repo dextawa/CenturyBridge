@@ -2,7 +2,15 @@
  "classRenames": {
   "net/minecraft/class_195": "top/dext/centurybridge/step/v1_20_3/facade/AbstractCriterionTriggerInstance",
   "net/minecraft/class_2158$class_2159": "top/dext/centurybridge/step/v1_20_3/facade/class_2158$class_2159",
-  "net/minecraft/class_5257": "top/dext/centurybridge/step/v1_20_3/facade/DeserializationContext"
+  "net/minecraft/class_2444": "top/dext/centurybridge/step/v1_20_3/facade/FinishedRecipe",
+  "net/minecraft/class_2450$class_2451": "top/dext/centurybridge/step/v1_20_3/facade/ShapelessRecipeBuilderResult",
+  "net/minecraft/class_3981$class_3982": "top/dext/centurybridge/step/v1_20_3/facade/SingleItemRecipeBuilderResult",
+  "net/minecraft/class_5257": "top/dext/centurybridge/step/v1_20_3/facade/DeserializationContext",
+  "net/minecraft/class_6308": "top/dext/centurybridge/step/v1_20_3/facade/TeamcityTestReporter",
+  "net/minecraft/class_7798": "top/dext/centurybridge/step/v1_20_3/facade/CraftingRecipeBuilder",
+  "net/minecraft/class_7798$class_7799": "top/dext/centurybridge/step/v1_20_3/facade/CraftingRecipeBuilder$CraftingResult",
+  "net/minecraft/class_8074$class_8075": "top/dext/centurybridge/step/v1_20_3/facade/SmithingTransformRecipeBuilderResult",
+  "net/minecraft/class_8076$class_8077": "top/dext/centurybridge/step/v1_20_3/facade/SmithingTrimRecipeBuilderResult"
  },
  "staticRedirects": {
   "net/minecraft/class_161.method_53626(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_161;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#advancementFromJson",
@@ -27,6 +35,8 @@
   "net/minecraft/class_2096$class_2099.method_9051(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2096$class_2099;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
   "net/minecraft/class_2096$class_2100.method_9056(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2096$class_2100;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
   "net/minecraft/class_2102.method_9064(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
+  "net/minecraft/class_4525.method_22246(Lnet/minecraft/class_3341;ILnet/minecraft/class_3218;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest#clearSpaceForStructure",
+  "net/minecraft/class_4525.method_22250(Ljava/lang/String;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;ILnet/minecraft/class_3218;Z)Lnet/minecraft/class_2633;": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest#spawnStructure",
   "net/minecraft/class_4559.method_22519(Lcom/google/gson/JsonElement;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
   "net/minecraft/class_5258.method_27807(Ljava/lang/String;Lnet/minecraft/class_5257;Lcom/google/gson/JsonElement;Lnet/minecraft/class_176;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
   "net/minecraft/class_5258.method_27808(Ljava/util/List;)Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvPredicates",
@@ -92,7 +102,8 @@
   "net/minecraft/class_6407.method_37258(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6407$class_6408;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_StartRidingTrigger",
   "net/minecraft/class_6409.method_37264(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6409$class_6410;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_UsingItemTrigger",
   "net/minecraft/class_8508.method_51351(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#create_RecipeCraftedTrigger",
-  "net/minecraft/class_8782.method_53672()Lcom/google/gson/JsonArray;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#requirementsToJson"
+  "net/minecraft/class_8782.method_53672()Lcom/google/gson/JsonArray;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvJson#requirementsToJson",
+  "net/minecraft/class_8790.method_53819(Lnet/minecraft/class_2444;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#accept"
  },
  "superRedirects": {
   "net/minecraft/class_196$class_198.method_807()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvTriggers#json_BredAnimalsTrigger_TriggerInstance",
@@ -195,6 +206,54 @@
     "conv top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues#potionHolder(Lnet/minecraft/class_1842;)Lnet/minecraft/class_6880;"
    ]
   },
+  "net/minecraft/class_2446.method_17585(Lnet/minecraft/class_8790;Ljava/lang/String;Lnet/minecraft/class_1865;I)V": {
+   "desc": "(Lnet/minecraft/class_8790;Ljava/lang/String;Lnet/minecraft/class_1865;Lnet/minecraft/class_1874$class_3958;I)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:2 top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#cookingFactory(Lnet/minecraft/class_1865;)Lnet/minecraft/class_1874$class_3958;",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_2446.method_33535(Lnet/minecraft/class_8790;Lnet/minecraft/class_5794;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_5794;Lnet/minecraft/class_7699;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#allFeatures()Lnet/minecraft/class_7699;"
+   ]
+  },
+  "net/minecraft/class_2446.method_34854(Lnet/minecraft/class_8790;)V": {
+   "desc": "(Lnet/minecraft/class_8790;Lnet/minecraft/class_7699;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#allFeatures()Lnet/minecraft/class_7699;"
+   ]
+  },
+  "net/minecraft/class_2454.method_17801(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILnet/minecraft/class_1865;)Lnet/minecraft/class_2454;": {
+   "desc": "(Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1935;FILnet/minecraft/class_1865;Lnet/minecraft/class_1874$class_3958;)Lnet/minecraft/class_2454;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "conv:5 top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#cookingFactory(Lnet/minecraft/class_1865;)Lnet/minecraft/class_1874$class_3958;"
+   ]
+  },
+  "net/minecraft/class_2456.method_10476(Lnet/minecraft/class_1865;)Lnet/minecraft/class_2456;": {
+   "desc": "(Ljava/util/function/Function;)Lnet/minecraft/class_2456;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#specialFactory(Lnet/minecraft/class_1865;)Ljava/util/function/Function;"
+   ]
+  },
+  "net/minecraft/class_7803.method_51694()Ljava/util/Map;": {
+   "desc": "()Ljava/util/stream/Stream;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#trimTemplates(Ljava/util/stream/Stream;)Ljava/util/Map;"
+  },
   "net/minecraft/class_8782.comp_1922()[[Ljava/lang/String;": {
    "desc": "()Ljava/util/List;",
    "ops": [],
@@ -255,6 +314,22 @@
     "keep:4"
    ]
   },
+  "net/minecraft/class_2456.<init>(Lnet/minecraft/class_1865;)V": {
+   "desc": "(Ljava/util/function/Function;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#specialFactory(Lnet/minecraft/class_1865;)Ljava/util/function/Function;"
+   ]
+  },
+  "net/minecraft/class_3981.<init>(Lnet/minecraft/class_7800;Lnet/minecraft/class_1865;Lnet/minecraft/class_1856;Lnet/minecraft/class_1935;I)V": {
+   "desc": "(Lnet/minecraft/class_7800;Lnet/minecraft/class_3972$class_3974;Lnet/minecraft/class_1856;Lnet/minecraft/class_1935;I)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#singleItemFactory(Lnet/minecraft/class_1865;)Lnet/minecraft/class_3972$class_3974;",
+    "keep",
+    "keep",
+    "keep"
+   ]
+  },
   "net/minecraft/class_4708$class_4709.<init>(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
    "ops": [
@@ -279,6 +354,10 @@
    ]
   }
  },
+ "ctorRedirects": {
+  "net/minecraft/class_8074.<init>(Lnet/minecraft/class_1865;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_7800;Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#smithingTransform",
+  "net/minecraft/class_8076.<init>(Lnet/minecraft/class_1865;Lnet/minecraft/class_7800;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes#smithingTrim"
+ },
  "overrideHooks": [
   {
    "old": "method_27790()Ljava/util/Optional;",
@@ -302,6 +381,14 @@
    "new": "method_8790(Lnet/minecraft/class_6880;)Z",
    "onlyUnder": "net/minecraft/class_1996$class_1998",
    "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvValues.potion(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1842;"
+  },
+  {
+   "old": "method_22166(Lnet/minecraft/class_2338;I)V",
+   "new": "method_22166(Lnet/minecraft/class_2338;)V",
+   "onlyUnder": "net/minecraft/class_4517",
+   "bridge": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest.prepareTestStructure(Ltop/dext/centurybridge/step/v1_20_3/rt/CbGameTest$LegacyTestInfo;Lnet/minecraft/class_2338;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest$LegacyTestInfo",
+   "guard": "top/dext/centurybridge/step/v1_20_3/rt/Guard"
   }
  ],
  "adapterHooks": [
@@ -864,13 +951,32 @@
      "call": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria.simpleCodec(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$SimpleTrigger;)Lcom/mojang/serialization/Codec;"
     }
    ]
+  },
+  {
+   "under": "net/minecraft/class_8790",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes$LegacyOutput",
+   "requires": [
+    "method_53819(Lnet/minecraft/class_2444;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_53819(Lnet/minecraft/class_2960;Lnet/minecraft/class_1860;Lnet/minecraft/class_8779;)V",
+     "call": "top/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes.acceptRecipe(Ltop/dext/centurybridge/step/v1_20_3/rt/CbDataRecipes$LegacyOutput;Lnet/minecraft/class_2960;Lnet/minecraft/class_1860;Lnet/minecraft/class_8779;)V"
+    }
+   ]
   }
  ],
  "covers": [
   "net/minecraft/class_185.method_814()Lcom/google/gson/JsonElement;",
   "net/minecraft/class_170.method_747()Lcom/google/gson/JsonElement;",
-  "net/minecraft/class_170.method_34898()[Lnet/minecraft/class_2960;"
+  "net/minecraft/class_170.method_34898()[Lnet/minecraft/class_2960;",
+  "net/minecraft/class_4517.method_22166(Lnet/minecraft/class_2338;I)V",
+  "net/minecraft/class_5794.method_33478(Lnet/minecraft/class_7699;)Z",
+  "net/minecraft/class_5794$class_5795.method_45964([Lnet/minecraft/class_7696;)Lnet/minecraft/class_5794$class_5795;"
  ],
+ "fieldRedirects": {
+  "net/minecraft/class_4520.field_33148:I": "top/dext/centurybridge/step/v1_20_3/rt/CbGameTest"
+ },
  "facadeGaps": {
   "net/minecraft/class_195.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;)V": "1.20.1 constructor (id, predicate), gone at 1.20.2, whose class_195 takes (Optional): the 1.20.1->1.20.2 step reshapes every super(...) of it to that shape (superCtorAdapts in shims-1.20.2.json), and the class was abstract (no NEW site)",
   "net/minecraft/class_195.field_1270:Lnet/minecraft/class_2960;": "1.20.1 private field (the id), gone at 1.20.2: only an access widener ever reached it",
@@ -878,7 +984,63 @@
   "net/minecraft/class_195.method_27790()Lnet/minecraft/class_5258;": "1.20.1 shape (the predicate itself; 1.20.2 returns an Optional, which the facade has): damage of the 1.20.1->1.20.2 step",
   "net/minecraft/class_195.method_806()Lnet/minecraft/class_2960;": "1.20.1 getId(), gone at 1.20.2 (criteria lost their id there): damage of the 1.20.1->1.20.2 step, not part of the 1.20.2 API this layer gives back",
   "net/minecraft/class_195.method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;": "1.20.1 toJson(serializer) over class_5267, which died at 1.20.2: the 1.20.1->1.20.2 step covers it with a mixin on class_195 in its own layer (CriterionConditionsBridge); this layer has no class_5267 to declare it over",
+  "net/minecraft/class_2444.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2444.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2444.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2444.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2450$class_2451.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1792;ILjava/lang/String;Lnet/minecraft/class_7710;Ljava/util/List;Lnet/minecraft/class_161$class_162;Lnet/minecraft/class_2960;)V": "1.20.1 constructor (an Advancement.Builder and the advancement id where 1.20.2 takes an AdvancementHolder), gone at 1.20.2: the 1.20.1->1.20.2 step reshapes every new and super() of it to the 1.20.2 constructor, which the facade has",
+  "net/minecraft/class_2450$class_2451.field_11401:Lnet/minecraft/class_161$class_162;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_2450$class_2451.field_11405:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_2450$class_2451.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2450$class_2451.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2450$class_2451.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_2450$class_2451.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_3981$class_3982.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1865;Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1792;ILnet/minecraft/class_161$class_162;Lnet/minecraft/class_2960;)V": "1.20.1 constructor (an Advancement.Builder and the advancement id where 1.20.2 takes an AdvancementHolder), gone at 1.20.2: the 1.20.1->1.20.2 step reshapes every new and super() of it to the 1.20.2 constructor, which the facade has",
+  "net/minecraft/class_3981$class_3982.field_17696:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17697:Ljava/lang/String;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17698:Lnet/minecraft/class_1856;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17699:Lnet/minecraft/class_1792;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17700:I": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17701:Lnet/minecraft/class_161$class_162;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17702:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.field_17703:Lnet/minecraft/class_1865;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_3981$class_3982.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_3981$class_3982.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_3981$class_3982.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_3981$class_3982.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
   "net/minecraft/class_5257.field_24386:Lcom/google/gson/Gson;": "1.20.1 private field, gone at 1.20.2: only an access widener ever reached it",
-  "net/minecraft/class_5257.method_27796(Lcom/google/gson/JsonArray;Ljava/lang/String;Lnet/minecraft/class_176;)[Lnet/minecraft/class_5341;": "1.20.1 shape (an array of conditions; 1.20.2 returns the List the facade has): damage of the 1.20.1->1.20.2 step"
+  "net/minecraft/class_5257.method_27796(Lcom/google/gson/JsonArray;Ljava/lang/String;Lnet/minecraft/class_176;)[Lnet/minecraft/class_5341;": "1.20.1 shape (an array of conditions; 1.20.2 returns the List the facade has): damage of the 1.20.1->1.20.2 step",
+  "net/minecraft/class_8074$class_8075.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1865;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1792;Lnet/minecraft/class_161$class_162;Lnet/minecraft/class_2960;)V": "1.20.1 constructor (an Advancement.Builder and the advancement id where 1.20.2 takes an AdvancementHolder), gone at 1.20.2: the 1.20.1->1.20.2 step reshapes every new and super() of it to the 1.20.2 constructor, which the facade has",
+  "net/minecraft/class_8074$class_8075.comp_1222()Lnet/minecraft/class_2960;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8074$class_8075.comp_1222:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8074$class_8075.comp_1223()Lnet/minecraft/class_1865;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8074$class_8075.comp_1223:Lnet/minecraft/class_1865;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8074$class_8075.comp_1228()Lnet/minecraft/class_161$class_162;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8074$class_8075.comp_1228:Lnet/minecraft/class_161$class_162;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8074$class_8075.comp_1229()Lnet/minecraft/class_2960;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8074$class_8075.comp_1229:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8074$class_8075.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8074$class_8075.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8074$class_8075.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8074$class_8075.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8076$class_8077.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1865;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_161$class_162;Lnet/minecraft/class_2960;)V": "1.20.1 constructor (an Advancement.Builder and the advancement id where 1.20.2 takes an AdvancementHolder), gone at 1.20.2: the 1.20.1->1.20.2 step reshapes every new and super() of it to the 1.20.2 constructor, which the facade has",
+  "net/minecraft/class_8076$class_8077.comp_1235()Lnet/minecraft/class_161$class_162;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8076$class_8077.comp_1235:Lnet/minecraft/class_161$class_162;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8076$class_8077.comp_1236()Lnet/minecraft/class_2960;": "1.20.1 record component accessor, gone at 1.20.2: the 1.20.1->1.20.2 step renames a 1.20.1 mod's calls to it (id, type) onto the 1.20.2 accessors or redirects them into its own layer (the advancement builder and id)",
+  "net/minecraft/class_8076$class_8077.comp_1236:Lnet/minecraft/class_2960;": "1.20.1 private field of the data-generation recipe Result (a record component's or the class's own), gone at 1.20.2 with the 1.20.1 shape: only an access widener ever reached it",
+  "net/minecraft/class_8076$class_8077.method_10415()Lcom/google/gson/JsonObject;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8076$class_8077.method_10417()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8076$class_8077.method_10418()Lnet/minecraft/class_2960;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API",
+  "net/minecraft/class_8076$class_8077.method_17800()Lnet/minecraft/class_1865;": "1.20.1 FinishedRecipe getId/getType/serializeAdvancement/getAdvancementId, gone at 1.20.2 (id(), type() and an AdvancementHolder advancement() there): the 1.20.1->1.20.2 step redirects a 1.20.1 mod's calls to it into its own layer and hooks a 1.20.1 implementation onto the 1.20.2 methods, so no reference to it reaches this layer, which gives back the 1.20.2 API"
+ },
+ "superRenames": {
+  "net/minecraft/class_8074": "top/dext/centurybridge/step/v1_20_3/facade/LegacySmithingTransformRecipeBuilder",
+  "net/minecraft/class_8076": "top/dext/centurybridge/step/v1_20_3/facade/LegacySmithingTrimRecipeBuilder"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_184.method_807()Lcom/google/gson/JsonObject;": {
+   "iface": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$Instance",
+   "adapt": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvCriteria#fromLambda(Ltop/dext/centurybridge/step/v1_20_3/rt/CbAdvLegacy$Instance;)Lnet/minecraft/class_184;"
+  }
  }
 }
