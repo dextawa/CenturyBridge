@@ -36,7 +36,9 @@ LIBS="${CB_LIBS:-$DATA/runtime/client-$VERSION/libraries}"
 # against 0.17.4 encodes `at` as an array -- and 0.17.3 (what Fabric Loader 0.19.3 servers run) reads
 # that as a ClassCastException at the first mixin applied (MixinExtras' redirect wrapper). The single
 # encoding is the one every Mixin version reads.
-MIXIN_API=$(find "$DATA/runtime" -name 'sponge-mixin-*.jar' 2>/dev/null | awk -F/ '{print $NF "\t" $0}' | sort -V | head -1 | cut -f2)
+# (sed -n 1p, not head -1: head exits after one line, and sort still writing the rest of a listing
+# longer than one pipe write dies of SIGPIPE -- under pipefail that ended this script with no output)
+MIXIN_API=$(find "$DATA/runtime" -name 'sponge-mixin-*.jar' 2>/dev/null | awk -F/ '{print $NF "\t" $0}' | sort -V | sed -n 1p | cut -f2)
 CP="$STUB"
 [ -n "$MIXIN_API" ] && CP="$MIXIN_API:$CP"
 if [ -d "$LIBS" ]; then

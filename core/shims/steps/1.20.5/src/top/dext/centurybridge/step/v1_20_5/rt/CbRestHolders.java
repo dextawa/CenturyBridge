@@ -57,6 +57,31 @@ public final class CbRestHolders {
         return id == null ? null : net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_50079, id);
     }
 
+    /** a nullable 1.20.4 Component as the Optional 1.20.5 takes: empty for null */
+    public static java.util.Optional<net.minecraft.class_2561> cbOptionalComponent(net.minecraft.class_2561 value) {
+        return java.util.Optional.ofNullable(value);
+    }
+
+    /** a nullable 1.20.4 CompoundTag as the Optional 1.20.5 takes: empty for null */
+    public static java.util.Optional<net.minecraft.class_2487> cbOptionalCompoundTag(net.minecraft.class_2487 value) {
+        return java.util.Optional.ofNullable(value);
+    }
+
+    /** the 1.20.4 BlockPos a 1.20.5 Optional holds: null for empty */
+    public static net.minecraft.class_2338 cbOrNullBlockPos(java.util.Optional<net.minecraft.class_2338> value) {
+        return value.orElse(null);
+    }
+
+    /** the 1.20.4 Component a 1.20.5 Optional holds: null for empty */
+    public static net.minecraft.class_2561 cbOrNullComponent(java.util.Optional<net.minecraft.class_2561> value) {
+        return value.orElse(null);
+    }
+
+    /** the 1.20.4 CompoundTag a 1.20.5 Optional holds: null for empty */
+    public static net.minecraft.class_2487 cbOrNullCompoundTag(java.util.Optional<net.minecraft.class_2487> value) {
+        return value.orElse(null);
+    }
+
     private CbRestHolders() {
     }
 }

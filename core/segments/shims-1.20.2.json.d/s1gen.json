@@ -1,0 +1,322 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_1863.method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/List;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeManager.getRecipesFor(type, container, level): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  "net/minecraft/class_1863.method_30027(Lnet/minecraft/class_3956;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_3956;)Ljava/util/List;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeManager.getAllRecipesFor(type): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  "net/minecraft/class_1863.method_8126()Ljava/util/Collection;": {
+   "desc": "()Ljava/util/Collection;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "RecipeManager.getRecipes(): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view); a set stays a Set"
+  },
+  "net/minecraft/class_1863.method_8130(Lnet/minecraft/class_2960;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "RecipeManager.byKey(id): the RecipeHolder in 1.20.2 where 1.20.1 answered the recipe"
+  },
+  "net/minecraft/class_1863.method_8132(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "RecipeManager.getRecipeFor(type, container, level): the RecipeHolder in 1.20.2 where 1.20.1 answered the recipe"
+  },
+  "net/minecraft/class_1863.method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#pairRecipes(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "RecipeManager.getRecipeFor(type, container, level, lastId): 1.20.2's pair holds the RecipeHolder where 1.20.1's held the recipe; the pair's id (the lookup's cache key) stays"
+  },
+  "net/minecraft/class_1863.method_20702(Ljava/lang/Iterable;)V": {
+   "desc": "(Ljava/lang/Iterable;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/lang/Iterable;)Ljava/lang/Iterable;"
+   ],
+   "basis": "RecipeManager.replaceRecipes(recipes): RecipeHolders in 1.20.2 where 1.20.1 took the recipes (a live view, iterated once)"
+  },
+  "net/minecraft/class_1863$class_7266.method_42303(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "RecipeManager.CachedCheck.getRecipeFor(container, level): the RecipeHolder in 1.20.2 where 1.20.1 answered the recipe"
+  },
+  "net/minecraft/class_2788.method_11998()Ljava/util/List;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;",
+   "basis": "ClientboundUpdateRecipesPacket.getRecipes(): the packet's own list in both releases, of RecipeHolders in 1.20.2; a live view, so 1.20.1 code changing it changes the packet as it did"
+  },
+  "net/minecraft/class_299.method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V": {
+   "desc": "(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/lang/Iterable;)Ljava/lang/Iterable;",
+    "keep"
+   ],
+   "basis": "ClientRecipeBook.setupCollections(recipes, registries): RecipeHolders in 1.20.2 where 1.20.1 took the recipes"
+  },
+  "net/minecraft/class_3441.method_14903(Ljava/util/Collection;Lnet/minecraft/class_3222;)I": {
+   "desc": "(Ljava/util/Collection;Lnet/minecraft/class_3222;)I",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Collection;)Ljava/util/Collection;",
+    "keep"
+   ],
+   "basis": "ServerRecipeBook.addRecipes(recipes, player): RecipeHolders in 1.20.2 where 1.20.1 took the recipes (a live view, iterated)"
+  },
+  "net/minecraft/class_3441.method_14900(Ljava/util/Collection;Lnet/minecraft/class_3222;)I": {
+   "desc": "(Ljava/util/Collection;Lnet/minecraft/class_3222;)I",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Collection;)Ljava/util/Collection;",
+    "keep"
+   ],
+   "basis": "ServerRecipeBook.removeRecipes(recipes, player): RecipeHolders in 1.20.2 where 1.20.1 took the recipes (a live view, iterated)"
+  },
+  "net/minecraft/class_507.method_2646(Ljava/util/List;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "RecipeBookComponent.recipesShown(recipes): RecipeHolders in 1.20.2 where 1.20.1 took the recipes (its overrides: the RecipeShownListener hook, which the component implements)"
+  },
+  "net/minecraft/class_515.method_2646(Ljava/util/List;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "RecipeShownListener.recipesShown(recipes): RecipeHolders in 1.20.2 where 1.20.1 passed the recipes; the hook under the interface takes RecipeBookComponent's subclasses too"
+  },
+  "net/minecraft/class_513.method_2629(Ljava/util/List;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "RecipeBookPage.recipesShown(recipes): RecipeHolders in 1.20.2 where 1.20.1 took the recipes"
+  },
+  "net/minecraft/class_516.method_2648(Z)Ljava/util/List;": {
+   "desc": "(Z)Ljava/util/List;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeCollection.getRecipes(craftable): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  "net/minecraft/class_516.method_2650()Ljava/util/List;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeCollection.getRecipes(): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  "net/minecraft/class_516.method_2651(Z)Ljava/util/List;": {
+   "desc": "(Z)Ljava/util/List;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeCollection.getDisplayRecipes(craftable): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  "net/minecraft/class_7947.method_47667(Lnet/minecraft/class_3300;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_3300;)Ljava/util/List;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbGenSprites#suppliers(Ljava/util/List;)Ljava/util/List;",
+   "basis": "SpriteSourceList.list(resources): functions of a SpriteResourceLoader in 1.20.2 where 1.20.1 had suppliers (CbGenSprites: applied to the default loader; SpriteSuppliers stay SpriteSuppliers)"
+  },
+  "net/minecraft/class_5619.method_32177(Lnet/minecraft/class_5617$class_5618;)Ljava/util/Map;": {
+   "desc": "(Lnet/minecraft/class_5617$class_5618;)Ljava/util/Map;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbGenSkins#cbPlayerRenderers(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "EntityRenderers.createPlayerRenderers(context): keyed by PlayerSkin.Model in 1.20.2, by the model's name in 1.20.1 (Model.id() is that name); a static, so no override side"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_1863",
+   "member": "method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/List;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeManager.getRecipesFor(type, container, level): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "member": "method_30027(Lnet/minecraft/class_3956;)Ljava/util/List;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeManager.getAllRecipesFor(type): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "member": "method_8126()Ljava/util/Collection;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "RecipeManager.getRecipes(): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view); a set stays a Set"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "member": "method_8130(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "RecipeManager.byKey(id): the RecipeHolder in 1.20.2 where 1.20.1 answered the recipe"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "member": "method_8132(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "RecipeManager.getRecipeFor(type, container, level): the RecipeHolder in 1.20.2 where 1.20.1 answered the recipe"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "member": "method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#pairHolders(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "RecipeManager.getRecipeFor(type, container, level, lastId): 1.20.2's pair holds the RecipeHolder where 1.20.1's held the recipe; the pair's id (the lookup's cache key) stays"
+  },
+  {
+   "under": "net/minecraft/class_1863",
+   "member": "method_20702(Ljava/lang/Iterable;)V",
+   "args": [
+    "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/lang/Iterable;)Ljava/lang/Iterable;"
+   ],
+   "basis": "RecipeManager.replaceRecipes(recipes): RecipeHolders in 1.20.2 where 1.20.1 took the recipes (a live view, iterated once)"
+  },
+  {
+   "under": "net/minecraft/class_1863$class_7266",
+   "member": "method_42303(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "RecipeManager.CachedCheck.getRecipeFor(container, level): the RecipeHolder in 1.20.2 where 1.20.1 answered the recipe"
+  },
+  {
+   "under": "net/minecraft/class_2788",
+   "member": "method_11998()Ljava/util/List;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;",
+   "basis": "ClientboundUpdateRecipesPacket.getRecipes(): the packet's own list in both releases, of RecipeHolders in 1.20.2; a live view, so 1.20.1 code changing it changes the packet as it did"
+  },
+  {
+   "under": "net/minecraft/class_299",
+   "member": "method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V",
+   "args": [
+    "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/lang/Iterable;)Ljava/lang/Iterable;",
+    null
+   ],
+   "basis": "ClientRecipeBook.setupCollections(recipes, registries): RecipeHolders in 1.20.2 where 1.20.1 took the recipes"
+  },
+  {
+   "under": "net/minecraft/class_3441",
+   "member": "method_14903(Ljava/util/Collection;Lnet/minecraft/class_3222;)I",
+   "args": [
+    "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/Collection;)Ljava/util/Collection;",
+    null
+   ],
+   "basis": "ServerRecipeBook.addRecipes(recipes, player): RecipeHolders in 1.20.2 where 1.20.1 took the recipes (a live view, iterated)"
+  },
+  {
+   "under": "net/minecraft/class_3441",
+   "member": "method_14900(Ljava/util/Collection;Lnet/minecraft/class_3222;)I",
+   "args": [
+    "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/Collection;)Ljava/util/Collection;",
+    null
+   ],
+   "basis": "ServerRecipeBook.removeRecipes(recipes, player): RecipeHolders in 1.20.2 where 1.20.1 took the recipes (a live view, iterated)"
+  },
+  {
+   "under": "net/minecraft/class_515",
+   "member": "method_2646(Ljava/util/List;)V",
+   "args": [
+    "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "RecipeShownListener.recipesShown(recipes): RecipeHolders in 1.20.2 where 1.20.1 passed the recipes; the hook under the interface takes RecipeBookComponent's subclasses too"
+  },
+  {
+   "under": "net/minecraft/class_513",
+   "member": "method_2629(Ljava/util/List;)V",
+   "args": [
+    "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "RecipeBookPage.recipesShown(recipes): RecipeHolders in 1.20.2 where 1.20.1 took the recipes"
+  },
+  {
+   "under": "net/minecraft/class_516",
+   "member": "method_2648(Z)Ljava/util/List;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeCollection.getRecipes(craftable): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  {
+   "under": "net/minecraft/class_516",
+   "member": "method_2650()Ljava/util/List;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeCollection.getRecipes(): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  {
+   "under": "net/minecraft/class_516",
+   "member": "method_2651(Z)Ljava/util/List;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;",
+   "basis": "RecipeCollection.getDisplayRecipes(craftable): RecipeHolders in 1.20.2 where 1.20.1 answered the recipes (CbRecipeHolders: the recipes with their ids, a live view)"
+  },
+  {
+   "under": "net/minecraft/class_7947",
+   "member": "method_47667(Lnet/minecraft/class_3300;)Ljava/util/List;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbGenSprites#functions(Ljava/util/List;)Ljava/util/List;",
+   "basis": "SpriteSourceList.list(resources): functions of a SpriteResourceLoader in 1.20.2 where 1.20.1 had suppliers (CbGenSprites: applied to the default loader; SpriteSuppliers stay SpriteSuppliers)"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_2788.<init>(Ljava/util/Collection;)V": {
+   "desc": "(Ljava/util/Collection;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "ClientboundUpdateRecipesPacket(recipes): RecipeHolders in 1.20.2 where 1.20.1 took the recipes (copied from the view at once, in both releases)"
+  },
+  "net/minecraft/class_516.<init>(Lnet/minecraft/class_5455;Ljava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_5455;Ljava/util/List;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "RecipeCollection(registries, recipes): RecipeHolders in 1.20.2 where 1.20.1 took the recipes (copied from the view at once, in both releases)"
+  },
+  "net/minecraft/class_5519.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_5522;Ljava/util/UUID;Ljava/lang/String;Ljava/util/function/Supplier;Z)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_5522;Ljava/util/UUID;Ljava/lang/String;Ljava/util/function/Supplier;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:2,4 top/dext/centurybridge/rt/v1_20_2/CbGenSkins#cbSkins(Ljava/util/UUID;Ljava/util/function/Supplier;)Ljava/util/function/Supplier;",
+    "keep:5"
+   ],
+   "basis": "PlayerEntry(.., uuid, name, skin, ..): a Supplier of the PlayerSkin in 1.20.2 where 1.20.1 took one of the skin texture (CbGenSkins: the skin the client has for that player and texture)"
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_4881.field_22627:Ljava/util/List;": "top/dext/centurybridge/rt/v1_20_2/CbGenRealms"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_4881.field_22627:Ljava/util/List;": "top/dext/centurybridge/rt/v1_20_2/CbGenRealms"
+ }
+}
