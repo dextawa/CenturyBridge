@@ -461,16 +461,7 @@
    "old": "method_55055()V",
    "new": "method_55055(Lnet/minecraft/class_243;)V",
    "args": [],
-   "onlyUnder": "net/minecraft/class_9238",
-   "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_243; not passed"
-  },
-  {
-   "old": "method_55055()V",
-   "new": "method_55055(Lnet/minecraft/class_243;)V",
-   "args": [],
-   "onlyUnder": "net/minecraft/class_8956",
+   "onlyUnder": "net/minecraft/class_9236",
    "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_243; not passed"
