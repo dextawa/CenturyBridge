@@ -186,6 +186,11 @@ def generic_change(v_sig, w_sig, pairs, compare_return, wall):
         # a raw type on one side (a class generified in W) carries no element type to disagree with
         if ta and tb and ta != tb:
             return f"generic type {a} -> {b}"
+        # a bare type variable on exactly one side: the erasure (Object, or the bound) makes the other
+        # side "assignable", but the value is another thing altogether -- 1.21's PlaceRecipe.addItemToSlot
+        # takes the element T where 1.20.6's took the Iterator<T> it came from
+        if (a.lstrip("[").startswith("T")) != (b.lstrip("[").startswith("T")):
+            return f"generic type {a} -> {b}"
     return None
 
 
