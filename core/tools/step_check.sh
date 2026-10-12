@@ -91,14 +91,16 @@ def moj(c):
         return cm[c]
     d = c.rfind("$")
     return moj(c[:d]) + c[d:] if d > 0 else c
-rows = [l.rstrip("\n").split("\t") for l in open(table, encoding="utf-8")][1:]
-rows = [r for r in rows if not area or re.search(area, moj(r[1]))]
-open_rows = [r for r in rows if not r[8]]
+lines = [l.rstrip("\n").split("\t") for l in open(table, encoding="utf-8")]
+head, rows = lines[0], [dict(zip(lines[0], r)) for r in lines[1:]]
+rows = [r for r in rows if not area or re.search(area, moj(r["owner"]))]
+open_rows = [r for r in rows if not r.get("closed")]
 print(f"generic drift: {len(open_rows)} of {len(rows)} member usages still open" + (f" (area /{area}/)" if area else ""))
 with open(table.replace("generic.tsv", "generic-open.tsv"), "w", encoding="utf-8") as o:
-    o.write("usage\towner\tmojang\tname\tdesc\tchanged\tV signature\tW signature\tV classes W lacks\n")
+    cols = [c for c in head if c != "closed"]
+    o.write("\t".join(cols[:2] + ["mojang"] + cols[2:]) + "\n")
     for r in open_rows:
-        o.write("\t".join([r[0], r[1], moj(r[1])] + r[2:8]) + "\n")
+        o.write("\t".join([r[c] for c in cols[:2]] + [moj(r["owner"])] + [r.get(c, "") for c in cols[2:]]) + "\n")
 print("open generic drift ->", table.replace("generic.tsv", "generic-open.tsv"))
 EOF
 fi

@@ -59,6 +59,46 @@ public final class WiringCheck {
 
     /** older releases' stubs: what a facade stands in for */
     private SourceStubs sources = SourceStubs.none();
+    /** member keys whose override the step's generic-drift table lists as damage; null: no table */
+    private java.util.Set<String> genericOverrides;
+
+    /**
+     * The override rows of the step's generic-drift table (core/segments/damage-generic/V__W.tsv
+     * beside the wiring's segments directory; step 1's wiring is shims-1.20.2.json). The table
+     * decides which usages of a member drifted harmfully: an override whose answer only widens the
+     * way vanilla reads it (OptionsList.getMouseOver: Optional<AbstractWidget> where 1.20.5 reads an
+     * Optional<GuiEventListener>) has no row, and needs no converting bridge.
+     */
+    private static java.util.Set<String> genericOverrideRows(Path wiring) throws IOException {
+        Path dir = wiring.toAbsolutePath().getParent();
+        String fn = wiring.getFileName().toString();
+        String step;
+        if (dir.getFileName().toString().equals("steps") && fn.endsWith(".json")) {
+            step = fn.substring(0, fn.length() - 5);
+            dir = dir.getParent();
+        } else if (fn.startsWith("shims-") && fn.endsWith(".json")) {
+            String w = fn.substring(6, fn.length() - 5);
+            int i = top.dext.centurybridge.engine.Chain.RELEASES.indexOf(w);
+            if (i <= 0) {
+                return null;
+            }
+            step = top.dext.centurybridge.engine.Chain.RELEASES.get(i - 1) + "__" + w;
+        } else {
+            return null;
+        }
+        Path t = dir.resolve("damage-generic").resolve(step + ".tsv");
+        if (!Files.exists(t)) {
+            return null;
+        }
+        java.util.Set<String> out = new java.util.HashSet<>();
+        for (String line : Files.readAllLines(t)) {
+            String[] f = line.split("	");
+            if (f.length > 3 && f[0].equals("override")) {
+                out.add(f[1] + "." + f[2] + f[3]);
+            }
+        }
+        return out;
+    }
 
     public static void run(Path classesDir, Path shimsJson, Path table, Path stubJar, Path stubDir, String version)
             throws IOException {
@@ -87,6 +127,7 @@ public final class WiringCheck {
             w.wall = JarRemapper.loadTable(table).remapper();
         }
         var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
+        w.genericOverrides = genericOverrideRows(shimsJson);
         w.check(root);
         w.checkFacadeSurfaces(root);
         w.sources.close();
@@ -553,6 +594,7 @@ public final class WiringCheck {
                 String desc = methodDesc(od);
                 MethodNode m = owner.methods.stream().filter(x -> x.name.equals(name) && x.desc.equals(desc)).findFirst().orElse(null);
                 if (m != null && (m.access & (Opcodes.ACC_STATIC | Opcodes.ACC_FINAL | Opcodes.ACC_PRIVATE)) == 0
+                        && (genericOverrides == null || genericOverrides.contains(k))
                         && !convertHooked.contains(s.name + od)
                         && !(root.has("ledger") && root.getAsJsonObject("ledger").has(k))) {
                     problems.add("callReshapes " + k + ": keeps the descriptor of an overridable member but has no convertHooks"
