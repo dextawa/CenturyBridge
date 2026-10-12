@@ -4,7 +4,12 @@
   "net/minecraft/class_131.field_45832:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#itemFunctionCodec",
   "net/minecraft/class_217.field_45869:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#conditionCodec",
   "net/minecraft/class_52.field_45796:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootTableCodec",
-  "net/minecraft/class_7444.field_39122:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#instrumentCodec"
+  "net/minecraft/class_7444.field_39122:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#instrumentCodec",
+  "net/minecraft/class_1799.field_47308:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#advancementIconCodec",
+  "net/minecraft/class_1799.field_47309:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#itemWithCountCodec",
+  "net/minecraft/class_1799.field_47310:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#singleItemCodec",
+  "net/minecraft/class_1799.field_47311:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#resultCodec",
+  "net/minecraft/class_1799.field_8029:Ljava/text/DecimalFormat;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#attributeModifierFormat"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_7788.field_40610:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#blockLootMap"
@@ -89,6 +94,25 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootTableLocationSet(Ljava/util/Set;)Ljava/util/Set;",
    "basis": "s4item generic drift: BuiltInLootTables.all() answers keys, 1.20.4 code reads locations"
+  },
+  "net/minecraft/class_1799.method_7950(Lnet/minecraft/class_1657;Lnet/minecraft/class_1836;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_1792$class_9635;Lnet/minecraft/class_1657;Lnet/minecraft/class_1836;)Ljava/util/List;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#tooltipContext(Lnet/minecraft/class_1657;)Lnet/minecraft/class_1792$class_9635;",
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "s4item: 1.20.4 handed the item the player's level (null without one); 1.20.5 takes its tooltip context"
+  },
+  "net/minecraft/class_1792.method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Ljava/util/List;Lnet/minecraft/class_1836;)V": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1792$class_9635;Ljava/util/List;Lnet/minecraft/class_1836;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbTooltips#fromLevel(Lnet/minecraft/class_1937;)Lnet/minecraft/class_1792$class_9635;",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "s4item: Item.appendHoverText takes a tooltip context where 1.20.4 took the level (CbTooltips)"
   }
  },
  "convertHooks": [
@@ -114,9 +138,38 @@
   "net/minecraft/class_1799.method_7921()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#getEnchantmentTags",
   "net/minecraft/class_1799.method_7980(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#setTag",
   "net/minecraft/class_1799.method_7959(Ljava/lang/String;Lnet/minecraft/class_2520;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#addTagElement",
-  "net/minecraft/class_1799.method_7953(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#save"
+  "net/minecraft/class_1799.method_7953(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#save",
+  "net/minecraft/class_1799.method_7977(Lnet/minecraft/class_2561;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#setHoverName",
+  "net/minecraft/class_1799.method_7925()V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#resetHoverName",
+  "net/minecraft/class_1799.method_7938()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hasCustomHoverName",
+  "net/minecraft/class_1799.method_30268(Lnet/minecraft/class_1799$class_5422;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hideTooltipPart",
+  "net/minecraft/class_1799.method_7928()I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#getBaseRepairCost",
+  "net/minecraft/class_1799.method_7927(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#setRepairCost",
+  "net/minecraft/class_1799.method_7926(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#getAttributeModifiers",
+  "net/minecraft/class_1799.method_7916(Lnet/minecraft/class_1320;Lnet/minecraft/class_1322;Lnet/minecraft/class_1304;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#addAttributeModifier",
+  "net/minecraft/class_1799.method_7944(Lnet/minecraft/class_2378;Lnet/minecraft/class_2694;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hasAdventureModePlaceTagForBlock",
+  "net/minecraft/class_1799.method_7940(Lnet/minecraft/class_2378;Lnet/minecraft/class_2694;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hasAdventureModeBreakTagForBlock",
+  "net/minecraft/class_1799.method_19267()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#isEdible",
+  "net/minecraft/class_1799.method_7970(ILnet/minecraft/class_5819;Lnet/minecraft/class_3222;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hurt",
+  "net/minecraft/class_1799.method_7956(ILnet/minecraft/class_1309;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hurtAndBreak"
  },
  "staticRedirects": {
-  "net/minecraft/class_1799.method_7915(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#of"
- }
+  "net/minecraft/class_1799.method_7915(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#of",
+  "net/minecraft/class_1799.method_17870(Ljava/util/List;Lnet/minecraft/class_2499;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#appendEnchantmentNames"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1799.<init>(Lnet/minecraft/class_6880;ILjava/util/Optional;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks"
+ },
+ "classRenames": {
+  "net/minecraft/class_1799$class_5422": "top/dext/centurybridge/step/v1_20_5/facade/TooltipPart"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Ljava/util/List;Lnet/minecraft/class_1836;)V",
+   "new": "method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1792$class_9635;Ljava/util/List;Lnet/minecraft/class_1836;)V",
+   "onlyUnder": "net/minecraft/class_1792",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbTooltips.level(Lnet/minecraft/class_1792$class_9635;)Lnet/minecraft/class_1937;",
+   "basis": "s4item: a mod's 1.20.4 appendHoverText gets the level its tooltip context was made for (CbTooltips); its super call goes through the call reshape"
+  }
+ ]
 }
