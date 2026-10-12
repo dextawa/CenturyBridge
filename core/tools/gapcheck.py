@@ -58,7 +58,7 @@ for path in SHIMS:
     covers |= set(d.get("covers", []))
     for key in ("staticRedirects", "instanceRedirects", "fieldRedirects", "superRedirects"):
         redirects.update(d.get(key, {}))
-    for key in ("fieldGetters", "instanceFieldGetters"):
+    for key in ("fieldGetters", "instanceFieldGetters", "instanceFieldSetters"):
         getters |= set(d.get(key, {}))
     for key in ("ctorRedirects", "superCtorReshapes", "superCtorAdapts"):
         ctors |= set(d.get(key, {}))
