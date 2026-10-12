@@ -105,3 +105,9 @@ with open(table.replace("generic.tsv", "generic-open.tsv"), "w", encoding="utf-8
 print("open generic drift ->", table.replace("generic.tsv", "generic-open.tsv"))
 EOF
 fi
+# Frames hooks (frames_review.py): an argument the old shape has no place for, read back from the frame
+# when vanilla called the new shape, is its type's zero when the mod enters its old method itself --
+# a NullPointerException where V had a real value. Each needs a frameDefaults judgment.
+if [ "${CB_PROBE:-}" != fapi ]; then
+    python3 "$WD/core/tools/frames_review.py" "$WIRING" "$OUT/frames-open.tsv" || echo "frames review failed"
+fi

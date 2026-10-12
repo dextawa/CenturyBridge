@@ -5,10 +5,21 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CbRegistriesServerMixin",
-    "CbTooltipLevelAccessor"
+    "CbRestEntityMixin",
+    "CbRestEntityInvoker",
+    "CbRestLivingEntityMixin",
+    "CbRestAbstractHorseMixin",
+    "CbRestPlayerMixin",
+    "CbTooltipLevelAccessor",
+    "CbRestAbstractIllagerMixin",
+    "CbRestWitherBossMixin",
+    "CbRestArmadilloMixin",
+    "CbRestMobMixin",
+    "CbRestThrownTridentMixin"
   ],
   "client": [
-    "CbRegistriesClientMixin"
+    "CbRegistriesClientMixin",
+    "CbRestEntityRendererMixin"
   ],
   "server": [],
   "injectors": {
