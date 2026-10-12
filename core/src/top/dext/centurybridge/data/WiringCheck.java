@@ -376,6 +376,19 @@ public final class WiringCheck {
     }
 
     private void check(com.google.gson.JsonObject root) {
+        // retiredClasses (Chain.retiredClasses) take classes out of every jar the step converts: only a
+        // CenturyBridge layer's own may go, with a reason
+        if (root.has("retiredClasses")) {
+            for (var e : root.getAsJsonObject("retiredClasses").entrySet()) {
+                checked++;
+                if (!e.getKey().startsWith("top/dext/centurybridge/")) {
+                    problems.add("retiredClasses " + e.getKey() + ": only CenturyBridge's own classes retire");
+                }
+                if (!e.getValue().isJsonPrimitive() || e.getValue().getAsString().isBlank()) {
+                    problems.add("retiredClasses " + e.getKey() + ": needs the reason it retires at this step");
+                }
+            }
+        }
         if (root.has("classRenames")) {
             Map<String, String> ren = new HashMap<>();
             for (var e : root.getAsJsonObject("classRenames").entrySet()) {

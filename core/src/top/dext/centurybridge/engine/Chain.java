@@ -108,6 +108,35 @@ public final class Chain {
     /** examined-and-classified damage (quirk tier / structural / etc): "owner" or "owner.name" -> reason */
     public final java.util.Map<String, String> ledger = new java.util.HashMap<>();
 
+    /**
+     * Classes of CenturyBridge's own bridge layers that retire at this step ("retiredClasses" in a step's
+     * wiring: an internal class name, or a package prefix ending in '/', -> reason). A layer climbs on like
+     * any mod, and an API one step gave back under CenturyBridge's own names (step 1's 1.20.1 attachment
+     * API, absent from 1.20.2's Fabric API) can come back natively in a later release (1.20.4's Fabric
+     * API). From that step on, converted mods' references move to the native classes (classRenames), and
+     * the layer's own copy -- its classes and the mixins that implement them -- must stop acting, or two
+     * implementations would serve one API at once (both writing the same save key, an event fired twice).
+     * Every class of a converted jar an entry names leaves the jar, and the jar's mixin configs stop
+     * listing it. Only CenturyBridge classes can retire (the wiring gate holds entries to that).
+     */
+    public final java.util.Map<String, String> retiredClasses = new java.util.HashMap<>();
+
+    /** why a class retires at this step ({@link #retiredClasses}: its own entry, else the longest package prefix), or null */
+    public String retiredReason(String internalName) {
+        String r = retiredClasses.get(internalName);
+        if (r != null) {
+            return r;
+        }
+        String best = null;
+        for (var e : retiredClasses.entrySet()) {
+            String k = e.getKey();
+            if (k.endsWith("/") && internalName.startsWith(k) && (best == null || k.length() > best.length())) {
+                best = k;
+            }
+        }
+        return best == null ? null : retiredClasses.get(best);
+    }
+
 
     /** A cover/redirect recorded on any ancestor applies to this call site too. */
     public boolean coveredAnywhere(String owner, String nameDesc) {
@@ -2099,6 +2128,12 @@ public final class Chain {
                 var lg = root.getAsJsonObject("ledger");
                 for (String k : lg.keySet()) {
                     c.ledger.put(k, lg.get(k).getAsString());
+                }
+            }
+            if (root.has("retiredClasses")) {
+                var rc = root.getAsJsonObject("retiredClasses");
+                for (String k : rc.keySet()) {
+                    c.retiredClasses.put(k, rc.get(k).getAsString());
                 }
             }
             if (root.has("covers")) {
