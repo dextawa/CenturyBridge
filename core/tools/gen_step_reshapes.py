@@ -24,7 +24,10 @@ invented:
 
 Arguments of distinct types may change places (1.20.3 moved a block's Settings to the end of its
 constructor); arguments of one type keep their relative order, since types alone cannot tell them
-apart -- a release that swapped two of them would need a hand-written entry. Everything else -- a value the new shape
+apart -- a release that swapped two of them would need a hand-written entry. Erased descriptors
+are not enough either: where both releases' generic signatures are known and a connected parameter
+or the return value changed its type arguments (a List of 1.20.1 goal records that is a List of
+1.20.2 payload records now), the value would pass the verifier and fail at the first element. Everything else -- a value the new shape
 needs that the old call does not have, a narrowing, a dropped argument V used, a converted
 return -- is listed as "design" with the reason. Members the step's hand-written wiring already
 handles are skipped ("wired"). The output is a wiring fragment for the step
@@ -36,6 +39,7 @@ handles are skipped ("wired"). The output is a wiring fragment for the step
 import collections
 import json
 import os
+import re
 import sys
 import zipfile
 
@@ -137,6 +141,52 @@ def implementations(V, hv, owner, name, desc):
                 if c == owner or owner in hv.supers(c) or c in hv.supers(owner):
                     out.append((c, m))
     return out
+
+
+# a type variable where a type signature starts (TFoo;) -- compared by position, not by name
+TYPEVAR = re.compile(r"(?:^|(?<=[<;(\[)*+\-:]))T[^;<>/]+;")
+
+
+def v_signature(V, hv, owner, name, desc):
+    """the generic signature of the member as V declares it on the owner or a supertype"""
+    for c in [owner] if name == "<init>" else hv.supers(owner):
+        k = V.get(c)
+        m = next((m for m in k.methods if m.name == name and m.desc == desc), None) if k else None
+        if m:
+            return m.signature
+    return None
+
+
+def generic_change(v_sig, w_sig, pairs, compare_return, wall):
+    """Where the erased descriptors agree but the generic types do not -- a List<A> that is a List<B>
+    now -- the value passes the verifier and fails later with a ClassCastException. pairs: (V parameter,
+    W parameter) the bridge would connect. A reason string, or None when nothing generic changed (or
+    either side has no signature to compare)."""
+    if not v_sig or not w_sig:
+        return None
+    vs, ws = classfile.split_signature(v_sig), classfile.split_signature(w_sig)
+    if not vs or not ws:
+        return None
+
+    def norm(s, translate):
+        s = TYPEVAR.sub("T*;", s)
+        return re.sub(r"L([^;<>]+)", lambda m: "L" + wall.cls(m.group(1)), s) if translate else s
+
+    def type_args(s):
+        """the type-argument part of a type signature, '' for a raw or non-generic type: what has to
+        agree (the erased types are the matcher's business, a subtype may stand for its supertype)"""
+        k = s.find("<")
+        return s[k:s.rfind(">") + 1] if k >= 0 else ""
+
+    checks = [(vs[0][i], ws[0][j]) for i, j in pairs if i < len(vs[0]) and j < len(ws[0])]
+    if compare_return:
+        checks.append((vs[1], ws[1]))
+    for a, b in checks:
+        ta, tb = type_args(norm(a, True)), type_args(norm(b, False))
+        # a raw type on one side (a class generified in W) carries no element type to disagree with
+        if ta and tb and ta != tb:
+            return f"generic type {a} -> {b}"
+    return None
 
 
 def wired_keys(wiring):
@@ -310,6 +360,11 @@ def main():
                 if not (nr == orr or hw.assignable(orr, nr)):
                     fits.append((c, m, None, f"returns {orr}, the new shape {nr}"))
                     continue
+                gen = generic_change(v_signature(V, hv, owner, name, desc), m.signature,
+                                     [(i, amap[i]) for i in range(len(oa))], nr == orr, wall)
+                if gen:
+                    fits.append((c, m, None, gen))
+                    continue
                 fits.append((c, m, amap, None))
             good = [f for f in fits if f[2] is not None]
             if len(good) != 1:
@@ -344,6 +399,11 @@ def main():
                 continue
             if not (nr == orr or orr == "V" or hw.assignable(nr, orr)):
                 fits.append((c, m, None, f"returns {nr}, the old call wants {orr}"))
+                continue
+            gen = generic_change(v_signature(V, hv, owner, name, desc), m.signature,
+                                 [(amap[j], j) for j in range(len(na))], nr == orr, wall)
+            if gen:
+                fits.append((c, m, None, gen))
                 continue
             fits.append((c, m, amap, None))
         good = [f for f in fits if f[2] is not None]

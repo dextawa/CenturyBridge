@@ -78,10 +78,11 @@ public final class Chain {
      */
     public final java.util.Map<String, String> instanceFieldGetters = new java.util.HashMap<>();
     /**
-     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field write rewritten
-     * to a static setter taking the receiver and the value, (Lowner;desc)V -- the write half of
-     * {@link #instanceFieldGetters}, for a field whose state moved to another object (1.20.2:
-     * ServerPlayer.latency now lives on the player's connection).
+     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": the write side of
+     * {@link #instanceFieldGetters}, for a public field whose type changed (1.20.2
+     * PendingInvite.worldOwnerUuid: String -> UUID). The receiver and the value the mod
+     * stores are exactly what a static setter(owner, desc)V takes, so the PUTFIELD becomes
+     * INVOKESTATIC setter(receiver, value) and the setter converts.
      */
     public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
     /**
@@ -943,6 +944,15 @@ public final class Chain {
      * call site. Old ops in sequence must cover every old argument (add
      * {@code drop} for the ones that go away).
      *
+     * An old argument the new constructor has no place for, but whose value the
+     * instance still takes another way (1.20.1 RealmsUploadScreen's after-upload
+     * callback, a parameter in 1.20.1 and set on the instance by the layer in 1.20.2),
+     * is handed over right after the constructor returns: {@code "post":
+     * "OWNER#name(Lowner;...)V"} with {@code "postArgs": [old argument indices]} runs
+     * the static on the constructed object (the NEW site's object, or {@code this}
+     * after a mod constructor's super(...)) and those old arguments, still in their
+     * spill locals. Straight-line code after the INVOKESPECIAL, so frames stay exact.
+     *
      * Precedence at one call site: a NEW site with a {@code ctorRedirects}
      * factory takes the factory; otherwise a reshape wins over a
      * {@code superCtorAdapts} tail adapter for the same key. The full audit
@@ -1046,10 +1056,44 @@ public final class Chain {
     public static final class CtorReshape {
         public final String newDesc;
         public final java.util.List<ReshapeOp> ops;
+        /** static run on the constructed object and {@link #postArgs} after the call (null = none) */
+        public String postOwner, postName, postDesc;
+        /** old argument indices the post static takes after the object */
+        public int[] postArgs = new int[0];
 
         CtorReshape(String newDesc, java.util.List<ReshapeOp> ops) {
             this.newDesc = newDesc;
             this.ops = ops;
+        }
+
+        /**
+         * "post": "OWNER#name(Lowner;...)V" with "postArgs": [i...] -- validated against the
+         * key: the static takes the constructed class, then the named old arguments' types.
+         */
+        void setPost(String key, String post, int[] args) {
+            String where = "superCtorReshapes " + key;
+            int hash = post.indexOf('#');
+            int paren = post.indexOf('(');
+            if (hash <= 0 || paren <= hash) {
+                throw new IllegalArgumentException(where + ": post '" + post + "' needs OWNER#name(desc)V");
+            }
+            org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(key.substring(key.indexOf('(')));
+            StringBuilder want = new StringBuilder("(L").append(key, 0, key.indexOf(".<init>")).append(';');
+            for (int i : args) {
+                if (i < 0 || i >= old.length) {
+                    throw new IllegalArgumentException(where + ": postArgs names old argument " + i
+                        + " but the old constructor has " + old.length);
+                }
+                want.append(old[i].getDescriptor());
+            }
+            want.append(")V");
+            if (!post.substring(paren).equals(want.toString())) {
+                throw new IllegalArgumentException(where + ": post '" + post + "' must have the descriptor " + want);
+            }
+            this.postOwner = post.substring(0, hash);
+            this.postName = post.substring(hash + 1, paren);
+            this.postDesc = post.substring(paren);
+            this.postArgs = args;
         }
     }
 
@@ -1620,7 +1664,16 @@ public final class Chain {
                     for (var el : o.getAsJsonArray("ops")) {
                         ops.add(el.getAsString());
                     }
-                    c.superCtorReshapes.put(k, parseReshape(k, o.get("desc").getAsString(), ops));
+                    CtorReshape cr = parseReshape(k, o.get("desc").getAsString(), ops);
+                    if (o.has("post")) {
+                        var pa = o.has("postArgs") ? o.getAsJsonArray("postArgs") : new com.google.gson.JsonArray();
+                        int[] idx = new int[pa.size()];
+                        for (int i = 0; i < idx.length; i++) {
+                            idx[i] = pa.get(i).getAsInt();
+                        }
+                        cr.setPost(k, o.get("post").getAsString(), idx);
+                    }
+                    c.superCtorReshapes.put(k, cr);
                     c.ctorRedirectOwners.add(k.substring(0, k.indexOf(".<init>")));
                 }
             }

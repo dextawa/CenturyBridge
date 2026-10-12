@@ -33,7 +33,7 @@ import org.objectweb.asm.tree.MethodNode;
  *
  * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects,
  * fieldRedirects, fieldGetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
- * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push
+ * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
  * interface declares exactly the old SAM; the adapter's exact descriptor), classRenames
@@ -385,6 +385,7 @@ public final class WiringCheck {
             Sym s = Sym.field(k);
             wantMethod("instanceFieldGetters " + k, v, s.name, methodDesc("(L" + s.owner + ";)" + s.desc));
         });
+        // "owner.name:desc" -> static setter(owner, desc)V: the PUTFIELD's receiver and value
         obj(root, "instanceFieldSetters", (k, v) -> {
             Sym s = Sym.field(k);
             wantMethod("instanceFieldSetters " + k, v, s.name, methodDesc("(L" + s.owner + ";" + s.desc + ")V"));
@@ -413,6 +414,17 @@ public final class WiringCheck {
                 var o = e.getValue().getAsJsonObject();
                 if (!stub.isEmpty()) checkReshapeTarget(e.getKey(), o.get("desc").getAsString(), superRen);
                 checkReshapeOps("superCtorReshapes " + e.getKey(), e.getKey(), o.getAsJsonArray("ops"));
+                if (o.has("post")) {
+                    // the descriptor itself is held to the key when the wiring loads (Chain.CtorReshape)
+                    String post = o.get("post").getAsString().trim();
+                    int paren = post.indexOf('(');
+                    if (paren < 0) {
+                        problems.add("superCtorReshapes " + e.getKey() + ": malformed post '" + post + "'");
+                    } else {
+                        wantMethod("superCtorReshapes " + e.getKey() + " post", post.substring(0, paren), null,
+                            methodDesc(post.substring(paren)));
+                    }
+                }
             }
         }
         // callReshapes: the reshaped call must resolve on the target (the owner or a supertype

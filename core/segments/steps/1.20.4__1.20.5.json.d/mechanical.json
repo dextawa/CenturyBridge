@@ -399,17 +399,6 @@
  },
  "overrideHooks": [
   {
-   "old": "method_2004(Ljava/util/List;)V",
-   "new": "method_2004(Ljava/util/List;Ljava/util/Set;)V",
-   "args": [
-    0
-   ],
-   "onlyUnder": "net/minecraft/class_377",
-   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Ljava/util/Set; not passed"
-  },
-  {
    "old": "method_1805(Lnet/minecraft/class_332;III)V",
    "new": "method_1805(Lnet/minecraft/class_332;IIIZ)V",
    "args": [
@@ -533,17 +522,6 @@
    "new": "method_9782(Lnet/minecraft/class_7225$class_7874;)Ljava/lang/String;",
    "args": [],
    "onlyUnder": "net/minecraft/class_2290",
-   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_7225$class_7874; not passed"
-  },
-  {
-   "old": "method_10399(Ljava/util/function/BiConsumer;)V",
-   "new": "method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V",
-   "args": [
-    1
-   ],
-   "onlyUnder": "net/minecraft/class_7791",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_7225$class_7874; not passed"
