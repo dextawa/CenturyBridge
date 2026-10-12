@@ -150,9 +150,6 @@
    "onlyUnder": "net/minecraft/class_2586",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
-   "fills": {
-    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
-   },
    "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
   },
   {
@@ -164,9 +161,6 @@
    "onlyUnder": "net/minecraft/class_2586",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
-   "fills": {
-    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
-   },
    "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
   },
   {
@@ -176,9 +170,6 @@
    "onlyUnder": "net/minecraft/class_2586",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
-   "fills": {
-    "0": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
-   },
    "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
   },
   {
@@ -190,9 +181,6 @@
    "onlyUnder": "net/minecraft/class_2586",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
-   "fills": {
-    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
-   },
    "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
   },
   {
@@ -204,9 +192,6 @@
    "onlyUnder": "net/minecraft/class_2627",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
-   "fills": {
-    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
-   },
    "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
   },
   {
@@ -218,9 +203,6 @@
    "onlyUnder": "net/minecraft/class_2791",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
-   "fills": {
-    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2791;)Lnet/minecraft/class_7225$class_7874;"
-   },
    "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
   },
   {
@@ -232,9 +214,6 @@
    "onlyUnder": "net/minecraft/class_1918",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
-   "fills": {
-    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orCurrent(Ljava/lang/Object;Lnet/minecraft/class_1918;)Lnet/minecraft/class_7225$class_7874;"
-   },
    "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
   },
   {
@@ -246,9 +225,6 @@
    "onlyUnder": "net/minecraft/class_1918",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
-   "fills": {
-    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orCurrent(Ljava/lang/Object;Lnet/minecraft/class_1918;)Lnet/minecraft/class_7225$class_7874;"
-   },
    "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
   },
   {
@@ -419,9 +395,6 @@
    "onlyUnder": "net/minecraft/class_5138",
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
-   "fills": {
-    "2": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStructures.orNoRestriction(Ljava/lang/Object;Lnet/minecraft/class_5138;)Lnet/minecraft/class_6874;"
-   },
    "basis": "the old method gets every parameter it had; its super call gets vanilla's placement, or -- called by the mod itself -- one that restricts nothing, as 1.20.4's check did not (CbBlockStructures)"
   },
   {
@@ -1091,5 +1064,34 @@
   "net/minecraft/class_7917$class_8751": "net/minecraft/class_9298$class_8751",
   "net/minecraft/class_8172$class_8526": "net/minecraft/class_8526",
   "net/minecraft/class_2806$class_2808": "net/minecraft/class_2808"
+ },
+ "frameDefaults": {
+  "method_11014(Lnet/minecraft/class_2487;)V": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries#of(Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_11007(Lnet/minecraft/class_2487;)V": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries#of(Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_16887()Lnet/minecraft/class_2487;": {
+   "0": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries#of(Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_38240(Lnet/minecraft/class_1799;)V": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries#of(Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_11319(Lnet/minecraft/class_2487;)V": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries#of(Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_20598(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries#of(Lnet/minecraft/class_2791;)Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_8305(Lnet/minecraft/class_2487;)V": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_8297(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_39783(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833;": {
+   "2": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStructures#noRestriction()Lnet/minecraft/class_6874;"
+  }
  }
 }

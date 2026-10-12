@@ -179,3 +179,29 @@ extendable class net/minecraft/class_8508$class_8509
 extendable method net/minecraft/class_8508$class_8509 equals (Ljava/lang/Object;)Z
 extendable method net/minecraft/class_8508$class_8509 hashCode ()I
 extendable method net/minecraft/class_8508$class_8509 toString ()Ljava/lang/String;
+
+# s2rest: 1.20.3 Checkbox constructor, the target of the 1.20.2 constructors' reshape (s2rest.json)
+accessible	method	net/minecraft/class_4286	<init>	(IILnet/minecraft/class_2561;Lnet/minecraft/class_327;ZLnet/minecraft/class_4286$class_8930;)V
+# s2rest: 1.20.3 EditWorldScreen constructor, the target of the 1.20.2 constructor's reshape
+accessible	method	net/minecraft/class_524	<init>	(Lnet/minecraft/class_310;Lnet/minecraft/class_32$class_5143;Ljava/lang/String;Lit/unimi/dsi/fastutil/booleans/BooleanConsumer;)V
+# s2rest: Minecraft.emergencySave() was public (and overridable) in 1.20.2
+accessible	method	net/minecraft/class_310	method_1519	()V
+extendable	method	net/minecraft/class_310	method_1519	()V
+# s2rest: Realms WorldGenerationInfo was a plain class in 1.20.2, subclassable, its members overridable
+extendable	class	net/minecraft/class_4413
+extendable	method	net/minecraft/class_4413	toString	()Ljava/lang/String;
+extendable	method	net/minecraft/class_4413	hashCode	()I
+extendable	method	net/minecraft/class_4413	equals	(Ljava/lang/Object;)Z
+# s2rest: 1.20.2 packet classes that 1.20.3 made final records: subclassable again, their members overridable
+extendable	class	net/minecraft/class_2720
+extendable	method	net/minecraft/class_2720	toString	()Ljava/lang/String;
+extendable	method	net/minecraft/class_2720	hashCode	()I
+extendable	method	net/minecraft/class_2720	equals	(Ljava/lang/Object;)Z
+extendable	class	net/minecraft/class_2856
+extendable	method	net/minecraft/class_2856	toString	()Ljava/lang/String;
+extendable	method	net/minecraft/class_2856	hashCode	()I
+extendable	method	net/minecraft/class_2856	equals	(Ljava/lang/Object;)Z
+extendable	class	net/minecraft/class_2757
+extendable	method	net/minecraft/class_2757	toString	()Ljava/lang/String;
+extendable	method	net/minecraft/class_2757	hashCode	()I
+extendable	method	net/minecraft/class_2757	equals	(Ljava/lang/Object;)Z

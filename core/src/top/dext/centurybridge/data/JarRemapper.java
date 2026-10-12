@@ -261,6 +261,11 @@ public final class JarRemapper {
         java.util.Map<String, byte[]> entries = new java.util.LinkedHashMap<>();
         java.util.Map<String, String> superOf = new java.util.HashMap<>();
         java.util.Map<String, String[]> ifacesOf = new java.util.HashMap<>();
+        // owner.name+desc of every private method: a private method is not inherited, so a subclass
+        // method of the same obf name and descriptor is never "its" override (ChestBoat's
+        // clearItemStacks once took Boat's private controlBoat's name: the loader names it after
+        // ContainerEntity, which declares it)
+        java.util.Set<String> privates = new java.util.HashSet<>();
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar))) {
             ZipEntry e;
             while ((e = zin.getNextEntry()) != null) {
@@ -272,6 +277,16 @@ public final class JarRemapper {
                 ClassReader cr = new ClassReader(data);
                 superOf.put(cr.getClassName(), cr.getSuperName());
                 ifacesOf.put(cr.getClassName(), cr.getInterfaces());
+                String cls = cr.getClassName();
+                cr.accept(new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9) {
+                    @Override
+                    public org.objectweb.asm.MethodVisitor visitMethod(int acc, String n, String d, String s, String[] x) {
+                        if ((acc & org.objectweb.asm.Opcodes.ACC_PRIVATE) != 0) {
+                            privates.add(cls + "." + n + d);
+                        }
+                        return null;
+                    }
+                }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
             }
         }
 
@@ -287,28 +302,37 @@ public final class JarRemapper {
                 if (hit != null) {
                     return hit;
                 }
-                // climb: the declaring ancestor owns the mapping
+                // climb as the JVM resolves: the superclass chain first, then the interfaces; a private
+                // method of an ancestor is not inherited and owns nothing below it
+                java.util.List<String> chain = new java.util.ArrayList<>();
+                for (String cur = superOf.get(owner); cur != null; cur = superOf.get(cur)) {
+                    chain.add(cur);
+                }
+                for (String cur : chain) {
+                    String h = obf.methods.get(cur + "." + name + desc);
+                    if (h != null && !privates.contains(cur + "." + name + desc)) {
+                        return h;
+                    }
+                }
                 java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
                 java.util.Set<String> seen = new java.util.HashSet<>();
                 todo.add(owner);
+                todo.addAll(chain);
                 while (!todo.isEmpty()) {
                     String cur = todo.poll();
                     if (!seen.add(cur)) {
                         continue;
                     }
-                    String h = obf.methods.get(cur + "." + name + desc);
-                    if (h != null) {
-                        return h;
-                    }
-                    String sup = superOf.get(cur);
-                    if (sup != null) {
-                        todo.add(sup);
-                    }
                     String[] ifs = ifacesOf.get(cur);
-                    if (ifs != null) {
-                        for (String i : ifs) {
-                            todo.add(i);
+                    if (ifs == null) {
+                        continue;
+                    }
+                    for (String i : ifs) {
+                        String h = obf.methods.get(i + "." + name + desc);
+                        if (h != null && !privates.contains(i + "." + name + desc)) {
+                            return h;
                         }
+                        todo.add(i);
                     }
                 }
                 return name;

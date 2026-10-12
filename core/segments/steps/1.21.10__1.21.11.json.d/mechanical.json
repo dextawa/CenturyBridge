@@ -6,7 +6,7 @@
     "keep:0",
     "drop:1"
    ],
-   "basis": "mechanical: same values; dropped Ljava/util/function/BiFunction;, never read in V"
+   "basis": "mechanical: same values; dropped Ljava/util/function/BiFunction;: no body of V reads it, but com/mojang/blaze3d/systems/GpuDevice declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_11768.method_73399(FFIILnet/minecraft/class_2583;FF)Lnet/minecraft/class_11767;": {
    "desc": "(FFIILnet/minecraft/class_2583;FF)Lnet/minecraft/class_11767$class_12238;",

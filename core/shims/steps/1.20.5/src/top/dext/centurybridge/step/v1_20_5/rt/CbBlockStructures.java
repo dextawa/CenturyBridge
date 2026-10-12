@@ -61,9 +61,9 @@ public final class CbBlockStructures {
         return self.method_39783(chunk, structure, NO_RESTRICTION, skipKnownStructures);
     }
 
-    /** a frame fill of the checkStructurePresence hook: vanilla's placement, else (the mod calling its old method itself) none */
-    public static net.minecraft.class_6874 orNoRestriction(Object passed, net.minecraft.class_5138 self) {
-        return passed != null ? (net.minecraft.class_6874) passed : NO_RESTRICTION;
+    /** the frame default of the checkStructurePresence hook (the mod calling its old method itself): a placement that restricts nothing */
+    public static net.minecraft.class_6874 noRestriction() {
+        return NO_RESTRICTION;
     }
 
     private CbBlockStructures() {

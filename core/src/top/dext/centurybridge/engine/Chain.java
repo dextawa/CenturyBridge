@@ -78,11 +78,12 @@ public final class Chain {
      */
     public final java.util.Map<String, String> instanceFieldGetters = new java.util.HashMap<>();
     /**
-     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": the write side of
-     * {@link #instanceFieldGetters}, for a public field whose type changed (1.20.2
-     * PendingInvite.worldOwnerUuid: String -> UUID). The receiver and the value the mod
-     * stores are exactly what a static setter(owner, desc)V takes, so the PUTFIELD becomes
-     * INVOKESTATIC setter(receiver, value) and the setter converts.
+     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field write rewritten to a
+     * static setter(receiver, value)V, the write side of {@link #instanceFieldGetters} -- for a
+     * public field whose type changed (1.20.2 PendingInvite.worldOwnerUuid: String -> UUID, the
+     * setter converts) or one that is gone and lives on as other state (1.20.2 AbstractSelectionList's
+     * x0/x1/y0/y1/width/height, which 1.20.3 keeps as the widget's geometry: a write moves the widget,
+     * as the field write moved the list). Found up the hierarchy from the site's owner, as a getter.
      */
     public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
     /**
@@ -343,20 +344,15 @@ public final class Chain {
          * fall-through that skips the mod's method.
          */
         public String frames;
+        /**
+         * "frameDefaults" (a section of its own, keyed by the old shape): per new-argument index, the
+         * static {owner, name, desc} whose value the rewritten super call passes when no frame holds the
+         * object -- the old override entered directly rather than through the synthesized new shape.
+         * Without one the argument is its type's zero value.
+         */
+        public final java.util.Map<Integer, String[]> frameDefaults = new java.util.HashMap<>();
         /** "superCalls": "rewrite": a mod's super.old(..) in a class under the hook becomes super.new(..) */
         public boolean superCalls;
-        /**
-         * Frame fills ("fills": {"newArgIndex": "Owner.name(Ljava/lang/Object;LReceiver;)T"}), with
-         * {@link #frames}: what a rewritten super call passes for a new argument the old shape has no
-         * place for when no frame exists for the object -- the mod calling its own old method
-         * directly (this.load(tag) on its own block entity), not through the synthesized new shape.
-         * Without a fill that argument is its type's zero value, which is wrong for an argument
-         * vanilla dereferences (1.20.5's BlockEntity.loadAdditional(tag, registries) parses the
-         * items through the registries). The static gets the frame's value (null without a frame)
-         * and the receiver, and answers the argument: the frame's value when there is one, else
-         * what the receiver itself provides (its level's registries).
-         */
-        public final java.util.Map<Integer, String[]> fills = new java.util.HashMap<>();
         /**
          * Narrowing forward ("narrow": true), for a parameter the release widened (1.20.2: a
          * packet's handle(ClientGamePacketListener) became handle(ClientCommonPacketListener),
@@ -431,6 +427,30 @@ public final class Chain {
     }
 
     public final java.util.List<AdapterHook> adapterHooks = new java.util.ArrayList<>();
+
+    /**
+     * Mod overrides of a vanilla method the target made final, or replaced by one of another name
+     * that vanilla calls instead ("overrideRenames"). Overriding a final method is a class load
+     * failure, so no hook that leaves the old declaration in place can help: in a mod class under
+     * {@code onlyUnder} (source hierarchy) a declared, non-static old shape is renamed to
+     * {@code newName}, same descriptor.
+     * <ul>
+     * <li>with {@code superCalls} ("rename"), the class's super.old(..) calls follow it -- for a
+     *     vanilla method that lives on under the new name (1.20.3: AbstractSelectionList.render is
+     *     AbstractWidget.renderWidget, its updateNarration is updateWidgetNarration);</li>
+     * <li>with an {@code adapter} interface (declaring the new name), the class gets the interface
+     *     and the renamed method is made public, so a mixin on the final method can hand the call to
+     *     the mod's method when the object implements the adapter (1.20.3's final AbstractWidget.render
+     *     calling a 1.20.2 widget's own render); the mod's super.old(..) then reaches the final
+     *     vanilla method again, where the mixin's guard lets it run.</li>
+     * </ul>
+     */
+    public static final class OverrideRename {
+        public String oldName, oldDesc, newName, onlyUnder, adapter;
+        public boolean superCalls;
+    }
+
+    public final java.util.List<OverrideRename> overrideRenames = new java.util.ArrayList<>();
 
     /**
      * Implementations a vanilla type newly demands ("abstractFills" in a step's wiring): a method the
@@ -1811,25 +1831,6 @@ public final class Chain {
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
                     h.frames = o.has("frames") ? o.get("frames").getAsString() : null;
                     h.superCalls = o.has("superCalls") && o.get("superCalls").getAsString().equals("rewrite");
-                    if (o.has("fills")) {
-                        org.objectweb.asm.Type[] nat = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
-                        for (var fe : o.getAsJsonObject("fills").entrySet()) {
-                            int j = Integer.parseInt(fe.getKey());
-                            String f = fe.getValue().getAsString();
-                            int dot = f.lastIndexOf('.', f.indexOf('('));
-                            String[] fsig = splitSig(f.substring(dot + 1));
-                            org.objectweb.asm.Type[] fp = org.objectweb.asm.Type.getArgumentTypes(fsig[1]);
-                            if (h.frames == null || j < 0 || j >= nat.length || nat[j].getSort() < org.objectweb.asm.Type.ARRAY
-                                    || fp.length != 2 || !fp[0].getDescriptor().equals("Ljava/lang/Object;")
-                                    || fp[1].getSort() != org.objectweb.asm.Type.OBJECT
-                                    || !org.objectweb.asm.Type.getReturnType(fsig[1]).equals(nat[j])) {
-                                throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": fill " + j
-                                    + " needs frames and a static (Ljava/lang/Object;LReceiver;)" + (j >= 0 && j < nat.length
-                                    ? nat[j].getDescriptor() : "<new argument type>") + " for an object argument");
-                            }
-                            h.fills.put(j, new String[] {f.substring(0, dot), fsig[0], fsig[1]});
-                        }
-                    }
                     if (h.frames != null && (h.guard != null || h.wrapName != null || h.unwrapName != null || o.has("bridge"))) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
                             + ": frames go with plain argument forwarding only (no guard / wrap / unwrap / bridge)");
@@ -1873,6 +1874,51 @@ public final class Chain {
                         }
                     }
                     c.overrideHooks.add(h);
+                }
+            }
+            if (root.has("frameDefaults")) {
+                // what a rewritten super call passes for an argument the old shape has no place for when
+                // there is no frame to read it from: the mod's old override entered directly (the mod's
+                // own call, not vanilla's through the synthesized new shape) -- a null NbtAccounter there
+                // is an NPE in vanilla's body. Keyed by the hook's old shape; per new argument index a
+                // static OWNER#name()T, OWNER#name(LX;)T taking the receiver, or OWNER#name(LX;<old args>)T
+                // taking the receiver and the old call's arguments, computing what V used
+                for (var e : root.getAsJsonObject("frameDefaults").entrySet()) {
+                    String[] osig = splitSig(e.getKey());
+                    boolean found = false;
+                    for (OverrideHook h : c.overrideHooks) {
+                        if (!h.oldName.equals(osig[0]) || !h.oldDesc.equals(osig[1])) {
+                            continue;
+                        }
+                        if (h.frames == null) {
+                            throw new IllegalArgumentException("frameDefaults " + e.getKey() + ": the hook carries no frames");
+                        }
+                        org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
+                        for (var d : e.getValue().getAsJsonObject().entrySet()) {
+                            int j = Integer.parseInt(d.getKey());
+                            if (d.getValue().getAsString().startsWith("zero:")) {
+                                continue; // judged: the type's zero value is what V meant ("zero: <why>")
+                            }
+                            String[] ref = parseStaticRef("frameDefaults " + e.getKey(), d.getValue().getAsString());
+                            org.objectweb.asm.Type[] dp = org.objectweb.asm.Type.getArgumentTypes(ref[2]);
+                            org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
+                            // ()T, (receiver)T, or (receiver, every old argument)T -- DispenserBlock.dispense's
+                            // new BlockState is the state at the old position: level.getBlockState(pos)
+                            boolean shape = dp.length == 0 || dp[0].getSort() == org.objectweb.asm.Type.OBJECT
+                                && (dp.length == 1 || dp.length == oa.length + 1
+                                    && java.util.Arrays.equals(java.util.Arrays.copyOfRange(dp, 1, dp.length), oa));
+                            if (j < 0 || j >= na.length || !org.objectweb.asm.Type.getReturnType(ref[2]).equals(na[j]) || !shape) {
+                                throw new IllegalArgumentException("frameDefaults " + e.getKey() + ": " + d.getKey()
+                                    + " must name a new argument and a static ()T, (receiver)T or (receiver, old arguments)T"
+                                    + " returning that argument's type");
+                            }
+                            h.frameDefaults.put(j, ref);
+                        }
+                        found = true;
+                    }
+                    if (!found) {
+                        throw new IllegalArgumentException("frameDefaults " + e.getKey() + ": no override hook has that old shape");
+                    }
                 }
             }
             if (root.has("facadeGaps")) {
@@ -1948,6 +1994,24 @@ public final class Chain {
                 var ifs = root.getAsJsonObject("instanceFieldSetters");
                 for (String k : ifs.keySet()) {
                     c.instanceFieldSetters.put(k, ifs.get(k).getAsString());
+                }
+            }
+            if (root.has("overrideRenames")) {
+                for (var el : root.getAsJsonArray("overrideRenames")) {
+                    var o = el.getAsJsonObject();
+                    OverrideRename r = new OverrideRename();
+                    String[] osig = splitSig(o.get("old").getAsString());
+                    r.oldName = osig[0];
+                    r.oldDesc = osig[1];
+                    r.newName = o.get("new").getAsString();
+                    r.onlyUnder = o.get("onlyUnder").getAsString();
+                    r.adapter = o.has("adapter") ? o.get("adapter").getAsString() : null;
+                    r.superCalls = o.has("superCalls") && o.get("superCalls").getAsString().equals("rename");
+                    if (r.newName.contains("(")) {
+                        throw new IllegalArgumentException("overrideRenames " + r.oldName + r.oldDesc
+                            + ": new is a method name; the descriptor stays");
+                    }
+                    c.overrideRenames.add(r);
                 }
             }
             if (root.has("instanceOfRedirects")) {
