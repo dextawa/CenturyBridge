@@ -124,6 +124,16 @@ public final class Main {
         // hierarchy of the SOURCE version: mods were compiled against it, so a call
         // site's owner and the class actually declaring the member are related there
         Path srcStub = stubOf(args[2]);
+        Path tgtStub = stubOf(args[3]);
+        // both stubs are read relative to the working directory (data/jars): run from anywhere else and
+        // the hierarchy, the target's constructors and the interface-kind fixes are silently absent --
+        // a converted jar that links on paper and throws IncompatibleClassChangeError (s2rest's harness)
+        for (Path stub : new Path[] {srcStub, tgtStub}) {
+            if (!Files.exists(stub) && !Boolean.getBoolean("cb.allowMissingStubs")) {
+                throw new IllegalStateException(stub.toAbsolutePath() + " is missing: run from the checkout that holds"
+                    + " data/jars (or set -Dcb.allowMissingStubs=true to convert without it, knowingly)");
+            }
+        }
         if (Files.exists(srcStub)) {
             chain.loadHierarchy(srcStub);
             System.out.println("hierarchy: " + chain.superOf.size() + " classes from " + srcStub.getFileName());
