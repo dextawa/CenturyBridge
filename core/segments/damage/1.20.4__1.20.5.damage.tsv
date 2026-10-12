@@ -148,8 +148,10 @@ override+super	net/minecraft/class_339	method_47402	(I)V	METHOD,ORPHAN	method me
 call	net/minecraft/class_4069	method_20086	(Lnet/minecraft/class_364;)V	METHOD	method not declared on the owner
 override+super	net/minecraft/class_4069	method_20086	(Lnet/minecraft/class_364;)V	METHOD,ORPHAN	method not declared on the owner
 super-ctor	net/minecraft/class_8662$class_8665	<init>	(IILnet/minecraft/class_2561;IILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V	METHOD	constructors (IILnet/minecraft/class_2561;IILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;Lnet/minecraft/class_4185$class_7841;)V
+new	net/minecraft/class_353	<init>	(Lnet/minecraft/class_310;IIII)V	METHOD	constructors (Lnet/minecraft/class_310;IILnet/minecraft/class_4667;)V
 call	net/minecraft/class_353	method_20406	(Lnet/minecraft/class_7172;)I	METHOD	method method_20406(Lnet/minecraft/class_7172;)V public
 call	net/minecraft/class_353	method_20407	(Lnet/minecraft/class_7172;Lnet/minecraft/class_7172;)V	METHOD	method method_20407(Lnet/minecraft/class_339;Lnet/minecraft/class_339;)V public
+super-ctor	net/minecraft/class_353	<init>	(Lnet/minecraft/class_310;IIII)V	METHOD	constructors (Lnet/minecraft/class_310;IILnet/minecraft/class_4667;)V
 override+super	net/minecraft/class_353	method_20406	(Lnet/minecraft/class_7172;)I	METHOD,ORPHAN	method method_20406(Lnet/minecraft/class_7172;)V public
 override+super	net/minecraft/class_353	method_20407	(Lnet/minecraft/class_7172;Lnet/minecraft/class_7172;)V	METHOD,ORPHAN	method method_20407(Lnet/minecraft/class_339;Lnet/minecraft/class_339;)V public
 call	net/minecraft/class_350	method_31322	(Z)V	METHOD	method not declared on the owner
@@ -312,6 +314,8 @@ call	net/minecraft/class_7478	method_44029	(Lnet/minecraft/class_437;)V	CLASS	cl
 extend	net/minecraft/class_7478			CLASS	class gone
 super-ctor	net/minecraft/class_7478	<init>	(Lnet/minecraft/class_310;)V	CLASS	class gone
 override+super	net/minecraft/class_7478	method_44029	(Lnet/minecraft/class_437;)V	CLASS	class gone
+new	net/minecraft/class_8979$class_8980	<init>	()V	METHOD	constructors (DII)V
+super-ctor	net/minecraft/class_8979$class_8980	<init>	()V	METHOD	constructors (DII)V
 call	net/minecraft/class_702	method_3049	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V	METHOD	method method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V public
 override+super	net/minecraft/class_702	method_3049	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V	METHOD,ORPHAN	method method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V public
 call	net/minecraft/class_8975	method_3074	(Lnet/minecraft/class_4588;Lnet/minecraft/class_4184;F)V	CLASS	class gone
@@ -528,6 +532,7 @@ call	net/minecraft/class_7225$class_7226$class_7875	method_46746	(Lnet/minecraft
 call	net/minecraft/class_7225$class_7226$class_7875	method_42017	()Ljava/util/stream/Stream;	ICCE	method method_42017()Ljava/util/stream/Stream; public
 call	net/minecraft/class_7225$class_7226$class_7875	method_46733	(Lnet/minecraft/class_6862;)Ljava/util/Optional;	ICCE	method method_46733(Lnet/minecraft/class_6862;)Ljava/util/Optional; public
 call	net/minecraft/class_7225$class_7226$class_7875	method_42020	()Ljava/util/stream/Stream;	ICCE	method method_42020()Ljava/util/stream/Stream; public
+super-ctor	net/minecraft/class_7225$class_7226$class_7875	<init>	()V	METHOD	constructors (none reachable)
 call	net/minecraft/class_7225$class_7226	method_45919	(Lnet/minecraft/class_7699;)Lnet/minecraft/class_7225;	METHOD	method method_45919(Lnet/minecraft/class_7699;)Lnet/minecraft/class_7225$class_7226; public
 override+super	net/minecraft/class_7225$class_7226	method_45919	(Lnet/minecraft/class_7699;)Lnet/minecraft/class_7225;	METHOD,ORPHAN	method method_45919(Lnet/minecraft/class_7699;)Lnet/minecraft/class_7225$class_7226; public
 call	net/minecraft/class_7225	method_46753	(Ljava/util/function/Predicate;)Lnet/minecraft/class_7225;	METHOD	method not declared on the owner
@@ -555,6 +560,7 @@ call-static	net/minecraft/class_5620	method_32210	(Lnet/minecraft/class_2680;Lne
 call-static	net/minecraft/class_5620	method_32207	(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;	METHOD	method method_32207(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_3414;)Lnet/minecraft/class_9062; public static
 lambda	net/minecraft/class_5620	interact	(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1269;	LAMBDA	method interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_9062; public abstract
 implement-interface	net/minecraft/class_5620			ABSTRACT	class public abstract interface extends java/lang/Object
+super-ctor	net/minecraft/class_2965	<init>	()V	METHOD	constructors (Lnet/minecraft/class_1792;)V
 override+super	net/minecraft/class_2965	method_12845	()F	METHOD	method not declared on the owner
 override+super	net/minecraft/class_2965	method_12846	()F	METHOD	method not declared on the owner
 call-static	net/minecraft/class_2357	method_27042	(Lnet/minecraft/class_2342;Lnet/minecraft/class_1299;Lnet/minecraft/class_2350;)Lnet/minecraft/class_243;	METHOD	method not declared on the owner
@@ -727,6 +733,7 @@ implement	net/minecraft/class_4518	method_33317	(Lnet/minecraft/class_4517;)V	OR
 implement	net/minecraft/class_4518	method_22190	(Lnet/minecraft/class_4517;)V	ORPHAN	method method_22190(Lnet/minecraft/class_4517;Lnet/minecraft/class_4520;)V public abstract
 call-static	net/minecraft/class_4519	method_22193	(Ljava/lang/String;)Ljava/util/Collection;	METHOD	method method_22193(Ljava/lang/String;)Ljava/util/stream/Stream; public static
 call-static	net/minecraft/class_4519	method_29405	()Ljava/util/Collection;	METHOD	method method_29405()Ljava/util/stream/Stream; public static
+new	net/minecraft/class_4520	<init>	()V	METHOD	constructors (Lnet/minecraft/class_4520$class_9116;Ljava/util/Collection;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;Lnet/minecraft/class_4520$class_9117;Lnet/minecraft/class_4520$class_9117;)V
 call-static	net/minecraft/class_4520	method_22203	(Lnet/minecraft/class_4517;Lnet/minecraft/class_2338;Lnet/minecraft/class_4521;)V	METHOD	method not declared on the owner
 call-static	net/minecraft/class_4520	method_22210	(Ljava/util/Collection;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;I)Ljava/util/Collection;	METHOD	method not declared on the owner
 call-static	net/minecraft/class_4520	method_22222	(Ljava/util/Collection;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;I)Ljava/util/Collection;	METHOD	method not declared on the owner
@@ -734,6 +741,7 @@ call-static	net/minecraft/class_4520	method_22209	(Ljava/util/Collection;)Ljava/
 call-static	net/minecraft/class_4520	method_22216	(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_4521;I)V	METHOD	method not declared on the owner
 get-static	net/minecraft/class_4520	field_33149	I	FIELD	field not declared on the owner
 get-static	net/minecraft/class_4520	field_33150	I	FIELD	field not declared on the owner
+super-ctor	net/minecraft/class_4520	<init>	()V	METHOD	constructors (Lnet/minecraft/class_4520$class_9116;Ljava/util/Collection;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;Lnet/minecraft/class_4520$class_9117;Lnet/minecraft/class_4520$class_9117;)V
 new	net/minecraft/class_4521	<init>	()V	ACCESS	constructors (none reachable)
 super-ctor	net/minecraft/class_4521	<init>	()V	ACCESS	constructors (none reachable)
 call-static	net/minecraft/class_4525	method_22255	(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Lnet/minecraft/class_2338;	METHOD	method method_22255(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Ljava/util/Optional; public static
@@ -897,6 +905,8 @@ call-static	net/minecraft/class_2561$class_2562	method_10868	(Lnet/minecraft/cla
 call-static	net/minecraft/class_2561$class_2562	method_10877	(Ljava/lang/String;)Lnet/minecraft/class_5250;	METHOD	method method_10877(Ljava/lang/String;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5250; public static
 call-static	net/minecraft/class_2561$class_2562	method_10872	(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_5250;	METHOD	method method_10872(Lcom/google/gson/JsonElement;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5250; public static
 call-static	net/minecraft/class_2561$class_2562	method_10873	(Ljava/lang/String;)Lnet/minecraft/class_5250;	METHOD	method method_10873(Ljava/lang/String;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5250; public static
+new	net/minecraft/class_2561$class_8822	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
+super-ctor	net/minecraft/class_2561$class_8822	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 new	net/minecraft/class_2568$class_5247	<init>	(Ljava/lang/String;ZLcom/mojang/serialization/Codec;Ljava/util/function/Function;)V	METHOD	constructors (Ljava/lang/String;ZLcom/mojang/serialization/Codec;Lnet/minecraft/class_2568$class_9341;)V
 super-ctor	net/minecraft/class_2568$class_5247	<init>	(Ljava/lang/String;ZLcom/mojang/serialization/Codec;Ljava/util/function/Function;)V	METHOD	constructors (Ljava/lang/String;ZLcom/mojang/serialization/Codec;Lnet/minecraft/class_2568$class_9341;)V
 call-static	net/minecraft/class_2568$class_5248	method_54195	(Lnet/minecraft/class_2561;)Lcom/mojang/serialization/DataResult;	METHOD	method method_54195(Lnet/minecraft/class_2561;Lnet/minecraft/class_6903;)Lcom/mojang/serialization/DataResult; public static
@@ -2046,6 +2056,7 @@ get-static	net/minecraft/class_8806	field_46239	Lnet/minecraft/class_8806;	CLASS
 new	net/minecraft/class_7243	<init>	(Lcom/mojang/serialization/Codec;)V	METHOD	constructors (Lcom/mojang/serialization/MapCodec;)V
 call-static	net/minecraft/class_7243	method_42115	(Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_7243;	METHOD	method not declared on the owner
 call	net/minecraft/class_7243	comp_640	()Lcom/mojang/serialization/Codec;	METHOD	method comp_640()Lcom/mojang/serialization/MapCodec; public
+new	net/minecraft/class_8743	<init>	()V	METHOD	constructors (none reachable)
 call	net/minecraft/class_8743	method_53066	(J)V	ICCE	method method_53066(J)V public abstract
 call	net/minecraft/class_8743	method_53064	()I	METHOD	method not declared on the owner
 call	net/minecraft/class_8743	method_53067	()I	METHOD	method not declared on the owner
@@ -2053,6 +2064,7 @@ call	net/minecraft/class_8743	method_53065	(I)J	METHOD	method not declared on th
 call	net/minecraft/class_8743	method_53069	()V	METHOD	method not declared on the owner
 get-static	net/minecraft/class_8743	field_45719	I	FIELD	field not declared on the owner
 extend	net/minecraft/class_8743			ABSTRACT	class public abstract interface extends java/lang/Object
+super-ctor	net/minecraft/class_8743	<init>	()V	METHOD	constructors (none reachable)
 override+super	net/minecraft/class_8743	method_53064	()I	METHOD,ORPHAN	method not declared on the owner
 override+super	net/minecraft/class_8743	method_53067	()I	METHOD,ORPHAN	method not declared on the owner
 override+super	net/minecraft/class_8743	method_53065	(I)J	METHOD,ORPHAN	method not declared on the owner
@@ -2066,7 +2078,13 @@ call-static	net/minecraft/class_5527	method_31446	(Lcom/mojang/datafixers/schema
 extend	net/minecraft/class_5527			CLASS	class gone
 super-ctor	net/minecraft/class_5527	<init>	(Lcom/mojang/datafixers/schemas/Schema;Ljava/lang/String;)V	CLASS	class gone
 override+super	net/minecraft/class_5527	makeRule	()Lcom/mojang/datafixers/TypeRewriteRule;	CLASS	class gone
+new	net/minecraft/class_3605	<init>	(Lcom/mojang/datafixers/schemas/Schema;Z)V	METHOD	constructors (Lcom/mojang/datafixers/schemas/Schema;)V
+super-ctor	net/minecraft/class_3605	<init>	(Lcom/mojang/datafixers/schemas/Schema;Z)V	METHOD	constructors (Lcom/mojang/datafixers/schemas/Schema;)V
+new	net/minecraft/class_1175	<init>	(Lcom/mojang/datafixers/schemas/Schema;Z)V	METHOD	constructors (Lcom/mojang/datafixers/schemas/Schema;)V
+super-ctor	net/minecraft/class_1175	<init>	(Lcom/mojang/datafixers/schemas/Schema;Z)V	METHOD	constructors (Lcom/mojang/datafixers/schemas/Schema;)V
 override+super	net/minecraft/class_1175	method_5164	(Ljava/lang/String;Lcom/mojang/serialization/Dynamic;)Lcom/mojang/datafixers/util/Pair;	METHOD	method not declared on the owner
+new	net/minecraft/class_1219	<init>	(Lcom/mojang/datafixers/schemas/Schema;Z)V	METHOD	constructors (Lcom/mojang/datafixers/schemas/Schema;)V
+super-ctor	net/minecraft/class_1219	<init>	(Lcom/mojang/datafixers/schemas/Schema;Z)V	METHOD	constructors (Lcom/mojang/datafixers/schemas/Schema;)V
 override+super	net/minecraft/class_1219	method_5105	(Lcom/mojang/datafixers/Typed;)Lcom/mojang/datafixers/Typed;	METHOD	method not declared on the owner
 call-static-protected	net/minecraft/class_3984	method_17997	(Lcom/mojang/datafixers/schemas/Schema;)Lcom/mojang/datafixers/types/templates/TypeTemplate;	METHOD	method not declared on the owner
 call-static-protected	net/minecraft/class_7294	method_42645	(Lcom/mojang/datafixers/schemas/Schema;Ljava/util/Map;Ljava/lang/String;)V	METHOD	method not declared on the owner
@@ -3233,16 +3251,18 @@ call	net/minecraft/class_1842	method_8051	(Ljava/lang/String;)Ljava/lang/String;
 call	net/minecraft/class_1842	method_53211	()Lnet/minecraft/class_6880$class_6883;	METHOD	method not declared on the owner
 override+super	net/minecraft/class_1842	method_8051	(Ljava/lang/String;)Ljava/lang/String;	METHOD,ORPHAN	method method_8051(Ljava/util/Optional;Ljava/lang/String;)Ljava/lang/String; public static
 override+super	net/minecraft/class_1842	method_53211	()Lnet/minecraft/class_6880$class_6883;	METHOD,ORPHAN	method not declared on the owner
+new	net/minecraft/class_1845	<init>	()V	METHOD	constructors (Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
 call-static	net/minecraft/class_1845	method_8077	(Lnet/minecraft/class_1799;)Z	ICCE	method method_8077(Lnet/minecraft/class_1799;)Z public
 call-static	net/minecraft/class_1845	method_20361	(Lnet/minecraft/class_1842;)Z	METHOD	method method_20361(Lnet/minecraft/class_6880;)Z public
 call-static	net/minecraft/class_1845	method_8072	(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z	ICCE	method method_8072(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z public
 call-static	net/minecraft/class_1845	method_8078	(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;	ICCE	method method_8078(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799; public
 call-static	net/minecraft/class_1845	method_8076	()V	METHOD	method method_8076(Lnet/minecraft/class_7699;)Lnet/minecraft/class_1845; public static
+super-ctor	net/minecraft/class_1845	<init>	()V	METHOD	constructors (Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
 call-static-protected	net/minecraft/class_1845	method_8079	(Lnet/minecraft/class_1799;)Z	ICCE	method method_8079(Lnet/minecraft/class_1799;)Z public
 call-static-protected	net/minecraft/class_1845	method_8069	(Lnet/minecraft/class_1799;)Z	ICCE	method method_8069(Lnet/minecraft/class_1799;)Z public
 call-static-protected	net/minecraft/class_1845	method_8070	(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z	ICCE	method method_8070(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z public
 call-static-protected	net/minecraft/class_1845	method_8075	(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z	ICCE	method method_8075(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z public
-new	net/minecraft/class_1844	<init>	()V	ACCESS	constructors (Lnet/minecraft/class_6880;)V (Ljava/util/Optional;Ljava/util/Optional;Ljava/util/List;)V
+new	net/minecraft/class_1844	<init>	()V	METHOD	constructors (Lnet/minecraft/class_6880;)V (Ljava/util/Optional;Ljava/util/Optional;Ljava/util/List;)V
 call-static	net/minecraft/class_1844	method_8067	(Lnet/minecraft/class_1799;)Ljava/util/List;	METHOD	method not declared on the owner
 call-static	net/minecraft/class_1844	method_8059	(Lnet/minecraft/class_1842;Ljava/util/Collection;)Ljava/util/List;	METHOD	method not declared on the owner
 call-static	net/minecraft/class_1844	method_8066	(Lnet/minecraft/class_2487;)Ljava/util/List;	METHOD	method not declared on the owner
@@ -3262,6 +3282,7 @@ get-static	net/minecraft/class_1844	field_30943	Ljava/lang/String;	FIELD	field n
 get-static	net/minecraft/class_1844	field_30944	Ljava/lang/String;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_1844	field_30945	Ljava/lang/String;	FIELD	field not declared on the owner
 extend	net/minecraft/class_1844			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_1844	<init>	()V	METHOD	constructors (Lnet/minecraft/class_6880;)V (Ljava/util/Optional;Ljava/util/Optional;Ljava/util/List;)V
 get-static	net/minecraft/class_1847	field_42473	Lnet/minecraft/class_5321;	FIELD	field not declared on the owner
 put-static	net/minecraft/class_1847	field_42473	Lnet/minecraft/class_5321;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_1847	field_8984	Lnet/minecraft/class_1842;	FIELD	field not declared on the owner
@@ -3357,6 +3378,8 @@ call	net/minecraft/class_1860	method_8110	(Lnet/minecraft/class_5455;)Lnet/minec
 implement-interface	net/minecraft/class_1860			ABSTRACT	class public abstract interface extends java/lang/Object
 implement	net/minecraft/class_1860	method_8116	(Lnet/minecraft/class_1263;Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;	ORPHAN	method method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799; public abstract
 implement	net/minecraft/class_1860	method_8110	(Lnet/minecraft/class_5455;)Lnet/minecraft/class_1799;	ORPHAN	method method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799; public abstract
+new	net/minecraft/class_1863	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
+super-ctor	net/minecraft/class_1863	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call-static-protected	net/minecraft/class_1863	method_17720	(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8786;	METHOD	method method_17720(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_8786; protected static
 call	net/minecraft/class_1865	method_53736	()Lcom/mojang/serialization/Codec;	METHOD	method method_53736()Lcom/mojang/serialization/MapCodec; public abstract
 call	net/minecraft/class_1865	method_8122	(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1860;	METHOD	method not declared on the owner
