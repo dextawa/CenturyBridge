@@ -9,7 +9,16 @@
   "net/minecraft/class_1799.field_47309:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#itemWithCountCodec",
   "net/minecraft/class_1799.field_47310:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#singleItemCodec",
   "net/minecraft/class_1799.field_47311:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#resultCodec",
-  "net/minecraft/class_1799.field_8029:Ljava/text/DecimalFormat;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#attributeModifierFormat"
+  "net/minecraft/class_1799.field_8029:Ljava/text/DecimalFormat;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#attributeModifierFormat",
+  "net/minecraft/class_7923.field_41156:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#biomeSource",
+  "net/minecraft/class_7923.field_41157:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#chunkGenerator",
+  "net/minecraft/class_7923.field_41158:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#materialCondition",
+  "net/minecraft/class_7923.field_41159:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#materialRule",
+  "net/minecraft/class_7923.field_41160:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#densityFunctionType",
+  "net/minecraft/class_7923.field_46912:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#poolAliasBindingType",
+  "net/minecraft/class_2437.field_11346:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#inJungle",
+  "net/minecraft/class_2437.field_35165:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#inSparseJungle",
+  "net/minecraft/class_2437.field_11349:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#inBambooJungle"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_7788.field_40610:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#blockLootMap",
@@ -251,6 +260,16 @@
     "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbTools#shears(Lnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
    ],
    "basis": "s4item: a converted ShearsItem gets 1.20.4's shears mining (1.20.5's shears tool, given at its registration)"
+  },
+  "net/minecraft/class_2438.<init>(Lnet/minecraft/class_7784;Ljava/util/Set;Ljava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_7784;Ljava/util/Set;Ljava/util/List;Ljava/util/concurrent/CompletableFuture;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbLoot#lootTableKeySet(Ljava/util/Set;)Ljava/util/Set;",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbLoot#registriesFuture()Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "s4item: LootTableProvider(output, required table locations, sub providers): the required set as keys, the registries added"
   }
  },
  "callReshapes": {
@@ -349,6 +368,51 @@
     "keep:3"
    ],
    "basis": "s4item: enchantItem takes the world's feature flags"
+  },
+  "net/minecraft/class_7789.method_46030(Lnet/minecraft/class_7106;)Lnet/minecraft/class_5341$class_210;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_5341$class_210;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbLoot#frogKey(Lnet/minecraft/class_7106;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "s4item: killedByFrogVariant(variant) -> (the variant's key)"
+  },
+  "net/minecraft/class_2090$class_2091.method_9024(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090$class_2091;": {
+   "desc": "(Lnet/minecraft/class_6885;)Lnet/minecraft/class_2090$class_2091;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#biomeKeySet(Lnet/minecraft/class_5321;)Lnet/minecraft/class_6885;"
+   ],
+   "basis": "s4item: setBiome(key) -> setBiomes(the one-key set, matching by key as 1.20.4 did)"
+  },
+  "net/minecraft/class_2090$class_2091.method_35277(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090$class_2091;": {
+   "desc": "(Lnet/minecraft/class_6885;)Lnet/minecraft/class_2090$class_2091;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#structureKeySet(Lnet/minecraft/class_5321;)Lnet/minecraft/class_6885;"
+   ],
+   "basis": "s4item: setStructure(key) -> setStructures(the one-key set)"
+  },
+  "net/minecraft/class_8795.method_53853(Lnet/minecraft/class_7784;)Lnet/minecraft/class_2438;": {
+   "desc": "(Lnet/minecraft/class_7784;Ljava/util/concurrent/CompletableFuture;)Lnet/minecraft/class_2438;",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbLoot#registriesFuture()Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "s4item: the loot table provider takes its registries since 1.20.5 (the running world's, CbLoot.registriesFuture)"
+  },
+  "net/minecraft/class_8903.method_54653(Lnet/minecraft/class_7784;)Lnet/minecraft/class_2438;": {
+   "desc": "(Lnet/minecraft/class_7784;Ljava/util/concurrent/CompletableFuture;)Lnet/minecraft/class_2438;",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbLoot#registriesFuture()Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "s4item: the loot table provider takes its registries since 1.20.5 (the running world's, CbLoot.registriesFuture)"
+  },
+  "net/minecraft/class_7794.method_46184(Lnet/minecraft/class_7784;)Lnet/minecraft/class_2438;": {
+   "desc": "(Lnet/minecraft/class_7784;Ljava/util/concurrent/CompletableFuture;)Lnet/minecraft/class_2438;",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbLoot#registriesFuture()Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "s4item: the loot table provider takes its registries since 1.20.5 (the running world's, CbLoot.registriesFuture)"
   }
  },
  "convertHooks": [
@@ -362,6 +426,30 @@
     null
    ],
    "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#recipeOfPair(Ljava/util/Optional;)Ljava/util/Optional;"
+  },
+  {
+   "under": "net/minecraft/class_5455",
+   "member": "method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#real(Lnet/minecraft/class_2378;)Lnet/minecraft/class_2378;",
+   "basis": "s4item: a mod RegistryAccess's 1.20.4 registryOrThrow answers a mirror as its real registry"
+  },
+  {
+   "under": "net/minecraft/class_5455",
+   "member": "method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#realOptional(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4item: a mod RegistryAccess's registry(key), the same way"
+  },
+  {
+   "under": "net/minecraft/class_7225$class_7874",
+   "member": "method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#realLookupOptional(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4item: a mod HolderLookup.Provider's lookup(key) answers a mirror's lookup as the real one"
+  },
+  {
+   "under": "net/minecraft/class_7225$class_7874",
+   "member": "method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#realLookup(Lnet/minecraft/class_7225$class_7226;)Lnet/minecraft/class_7225$class_7226;",
+   "basis": "s4item: a mod HolderLookup.Provider's lookupOrThrow(key), the same way"
   }
  ],
  "instanceRedirects": {
@@ -426,7 +514,10 @@
   "net/minecraft/class_4174.method_19234()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#isFastFood",
   "net/minecraft/class_4174.method_19235()Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#effects",
   "net/minecraft/class_4174$class_4175.method_19236()Lnet/minecraft/class_4174$class_4175;": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#meat",
-  "net/minecraft/class_1702.method_7579(Lnet/minecraft/class_1792;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#eat"
+  "net/minecraft/class_1702.method_7579(Lnet/minecraft/class_1792;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#eat",
+  "net/minecraft/class_7791.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#call",
+  "net/minecraft/class_2090.comp_1795()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#biome",
+  "net/minecraft/class_2090.comp_1796()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#structure"
  },
  "staticRedirects": {
   "net/minecraft/class_1799.method_7915(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#of",
@@ -441,7 +532,9 @@
   "net/minecraft/class_1890.method_8214(Ljava/util/Map;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#setEnchantments",
   "net/minecraft/class_1890.method_8222(Lnet/minecraft/class_1799;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#getEnchantments",
   "net/minecraft/class_1772.method_7806(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#bookEnchantments",
-  "net/minecraft/class_1772.method_7807(Lnet/minecraft/class_1799;Lnet/minecraft/class_1889;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#addBookEnchantment"
+  "net/minecraft/class_1772.method_7807(Lnet/minecraft/class_1799;Lnet/minecraft/class_1889;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#addBookEnchantment",
+  "net/minecraft/class_2090$class_2091.method_53180(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090$class_2091;": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#inBiome",
+  "net/minecraft/class_2090$class_2091.method_53183(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090$class_2091;": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#inStructure"
  },
  "ctorRedirects": {
   "net/minecraft/class_1799.<init>(Lnet/minecraft/class_6880;ILjava/util/Optional;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks"
@@ -546,6 +639,36 @@
    ],
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbFood.itemOf(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1792;",
    "basis": "s4item: FoodData.eat(stack) asks a 1.20.4 eat(item, stack) with the stack's item"
+  },
+  {
+   "old": "method_10399(Ljava/util/function/BiConsumer;)V",
+   "new": "method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V",
+   "onlyUnder": "net/minecraft/class_7791",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot.generate(Ltop/dext/centurybridge/step/v1_20_5/rt/CbLoot$Generate;Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot$Generate",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "basis": "s4item: 1.20.5's generate(registries, consumer of keys) runs a 1.20.4 generate(consumer of locations), keeping the registries for its super call"
+  },
+  {
+   "old": "method_46030(Lnet/minecraft/class_7106;)Lnet/minecraft/class_5341$class_210;",
+   "new": "method_46030(Lnet/minecraft/class_5321;)Lnet/minecraft/class_5341$class_210;",
+   "onlyUnder": "net/minecraft/class_7789",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot.frogVariant(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7106;",
+   "basis": "s4item: killedByFrogVariant takes the variant's key in 1.20.5; a 1.20.4 override gets the variant"
+  },
+  {
+   "old": "method_9024(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090$class_2091;",
+   "new": "method_9024(Lnet/minecraft/class_6885;)Lnet/minecraft/class_2090$class_2091;",
+   "onlyUnder": "net/minecraft/class_2090$class_2091",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates.keyOf(Lnet/minecraft/class_6885;)Lnet/minecraft/class_5321;",
+   "basis": "s4item: LocationPredicate.Builder.setBiomes(set) reaches a 1.20.4 setBiome(key) override with the set's key"
+  },
+  {
+   "old": "method_35277(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090$class_2091;",
+   "new": "method_35277(Lnet/minecraft/class_6885;)Lnet/minecraft/class_2090$class_2091;",
+   "onlyUnder": "net/minecraft/class_2090$class_2091",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates.keyOf(Lnet/minecraft/class_6885;)Lnet/minecraft/class_5321;",
+   "basis": "s4item: setStructures(set) reaches a 1.20.4 setStructure(key) override with the set's key"
   }
  ],
  "superRedirects": {
@@ -604,7 +727,16 @@
   "net/minecraft/class_1820.method_7865(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superGetDestroySpeed",
   "net/minecraft/class_1820.method_7856(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superIsCorrectToolForDrops",
   "net/minecraft/class_1792.method_7860(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#superVerifyTagAfterLoad",
-  "net/minecraft/class_1809.method_7860(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#superVerifyTagAfterLoad"
+  "net/minecraft/class_1809.method_7860(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#superVerifyTagAfterLoad",
+  "net/minecraft/class_7788.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#superGenerate",
+  "net/minecraft/class_7789.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#superGenerate",
+  "net/minecraft/class_2432.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#superGenerate",
+  "net/minecraft/class_2437.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#superGenerate",
+  "net/minecraft/class_3714.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#superGenerate",
+  "net/minecraft/class_4845.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#superGenerate",
+  "net/minecraft/class_8255.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#superGenerate",
+  "net/minecraft/class_8794.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#superGenerate",
+  "net/minecraft/class_8994.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#superGenerate"
  },
  "adapterHooks": [
   {
@@ -872,5 +1004,74 @@
    "call": "top/dext/centurybridge/step/v1_20_5/rt/CbTools.shootProjectile(Lnet/minecraft/class_1811;Lnet/minecraft/class_1309;Lnet/minecraft/class_1676;IFFFLnet/minecraft/class_1309;)V",
    "basis": "s4item: 1.20.5's new abstract shot of a projectile weapon, for a 1.20.4 subclass: a bow's"
   }
- ]
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_7924.field_41253:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41156:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_41260:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41157:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_41204:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41158:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_41205:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41159:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_41264:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41160:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_46913:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_46912:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  }
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_7791.method_10399(Ljava/util/function/BiConsumer;)V": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot$Generate",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbLoot#adapt(Ltop/dext/centurybridge/step/v1_20_5/rt/CbLoot$Generate;)Lnet/minecraft/class_7791;",
+   "basis": "s4item: a 1.20.4 lambda loot table provider, adapted to 1.20.5's shape"
+  }
+ }
 }
