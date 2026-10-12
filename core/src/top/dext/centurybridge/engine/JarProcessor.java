@@ -3385,11 +3385,20 @@ public final class JarProcessor {
                 for (Map.Entry<String, String> e : set.entrySet()) {
                     if (dep.has(e.getKey())) {
                         JsonElement v = dep.remove(e.getKey());
-                        // several old ids may collapse onto one provider: keep the wider range
-                        if (!dep.has(e.getValue())) {
-                            dep.add(e.getValue(), v);
+                        // "newId@range": the new provider's own versions are not the old module's (a
+                        // Fabric API module CenturyBridge gives back after the release removed it), so
+                        // the range the mod asked of the old id would not fit -- the wiring names one
+                        String target = e.getValue();
+                        int at = target.indexOf('@');
+                        if (at > 0) {
+                            v = new JsonPrimitive(target.substring(at + 1));
+                            target = target.substring(0, at);
                         }
-                        rpt.notes.add("dep " + e.getKey() + " -> " + e.getValue());
+                        // several old ids may collapse onto one provider: keep the wider range
+                        if (!dep.has(target)) {
+                            dep.add(target, v);
+                        }
+                        rpt.notes.add("dep " + e.getKey() + " -> " + target);
                     }
                 }
             }
