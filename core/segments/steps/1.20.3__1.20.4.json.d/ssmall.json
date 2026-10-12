@@ -1,0 +1,43 @@
+{
+ "classRenames": {
+  "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentRegistry": "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry",
+  "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentRegistry$Builder": "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder",
+  "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentTarget": "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget",
+  "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentType": "net/fabricmc/fabric/api/attachment/v1/AttachmentType",
+  "top/dext/centurybridge/compat/fapi/entity/event/v1/ServerLivingEntityEvents": "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents",
+  "top/dext/centurybridge/compat/fapi/entity/event/v1/ServerLivingEntityEvents$MobConversion": "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion"
+ },
+ "retiredClasses": {
+  "top/dext/centurybridge/compat/fapi/attachment/": "native returns: step 1 gave back 1.20.1's attachment API under CB's names because 1.20.2's Fabric API lacks it; 1.20.4's Fabric API (fabric-data-attachment-api-v1 1.1.5) ships it again, every member byte-for-byte the same shape (names, descriptors, flags, generic signatures), and converted mods' references move to it at this step (classRenames)",
+  "top/dext/centurybridge/compat/fapi/impl/attachment/": "native returns: the 1.20.1 attachment implementation (registry, NBT under fabric:attachments, world state fabric_attachments, respawn / world-change / conversion transfers) that 1.20.4's Fabric API implements again with the same keys and layout",
+  "top/dext/centurybridge/compat/fapi/entity/event/v1/ServerLivingEntityEvents": "native returns: 1.20.4's Fabric API (fabric-entity-events-v1 1.6.2) has ServerLivingEntityEvents.MOB_CONVERSION again, same field type; converted mods' listeners move to it at this step. Known difference, left as is: the native event also fires when a sheared mooshroom becomes a cow (1.20.4's MooshroomEntityMixin, which 1.20.1's Fabric API did not have) -- the native platform's own 1.20.4 behaviour",
+  "top/dext/centurybridge/compat/fapi/entity/event/v1/ServerLivingEntityEvents$MobConversion": "native returns: 1.20.4's MobConversion has the same single method onConversion(MobEntity, MobEntity, boolean)",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiAttachmentTargets": "native returns: 1.20.4's AttachmentTargetsMixin makes the same four target classes hold attachments",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiBlockEntityAttachments": "native returns: 1.20.4's BlockEntityMixin reads and writes block entity attachments at the same points",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiBlockEntityUpdatePacket": "native returns: 1.20.4's BlockEntityUpdateS2CPacketMixin strips fabric:attachments from the update packet the same way",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiChunkSerializerAttachments": "native returns: 1.20.4's ChunkSerializerMixin saves and loads chunk attachments",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiClientRespawnAttachments": "native returns: 1.20.4's client ClientPlayNetworkHandlerMixin copies attachments on a client respawn",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiEntityAttachments": "native returns: 1.20.4's EntityMixin reads and writes entity attachments at the same points",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiServerWorldAttachments": "native returns: 1.20.4's ServerWorldMixin registers the fabric_attachments world state",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiWorldChunkAttachments": "native returns: 1.20.4's WorldChunkMixin moves proto chunk attachments to the world chunk",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiWrapperProtoChunkAttachments": "native returns: 1.20.4's WrapperProtoChunkMixin delegates to the wrapped chunk",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiMobConversion": "native returns: 1.20.4's MobEntityMixin fires MOB_CONVERSION in convertTo",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiPigConversion": "native returns: 1.20.4's PigEntityMixin fires MOB_CONVERSION for the zombified piglin",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiTadpoleConversion": "native returns: 1.20.4's TadpoleEntityMixin fires MOB_CONVERSION for the frog",
+  "top/dext/centurybridge/shims/v1_20_2/CbFapiVillagerConversion": "native returns: 1.20.4's VillagerEntityMixin fires MOB_CONVERSION for the witch"
+ },
+ "abstractFills": [
+  {
+   "under": "net/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandlerRegistry",
+   "method": "getOverride(Lnet/minecraft/class_3611;)Lnet/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandler;",
+   "call": "top/dext/centurybridge/step/v1_20_4/rt/CbFluidRenderRegistries.getOverride(Lnet/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandlerRegistry;Lnet/minecraft/class_3611;)Lnet/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandler;",
+   "basis": "javadoc contract (Fabric API made it abstract, no default): the registry's own get(fluid), null where that is Fabric's default handler for the fluid"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/resource/ModResourcePack",
+   "method": "createOverlay(Ljava/lang/String;)Lnet/fabricmc/fabric/api/resource/ModResourcePack;",
+   "call": "top/dext/centurybridge/step/v1_20_4/rt/CbModResourcePacks.createOverlay(Lnet/fabricmc/fabric/api/resource/ModResourcePack;Ljava/lang/String;)Lnet/fabricmc/fabric/api/resource/ModResourcePack;",
+   "basis": "1.20.3's behaviour (Fabric API made it abstract, no default): 1.20.3 served overlays only from the packs it built itself, never from a mod's ModResourcePack, so the overlay of one holds nothing"
+  }
+ ]
+}

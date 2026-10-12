@@ -1,0 +1,114 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_2186.method_9318(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2300;": "method_61178",
+  "net/minecraft/class_2191.method_9331(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2191$class_2192;": "method_61180",
+  "net/minecraft/class_2233.method_9453(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2233$class_2234;": "method_61183"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_9318(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2300;",
+   "new": "method_61178(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2300;",
+   "onlyUnder": "net/minecraft/class_2186",
+   "basis": "EntityArgument.parse(StringReader): 1.21's public method_9318 is 1.21.1's method_61178 (both parse with selectors allowed: 1.21 through EntitySelectorParser(reader) = this(reader, true), 1.21.1 through method_9318(reader, true)); brigadier's parse(StringReader) bridge calls it in both"
+  },
+  {
+   "old": "method_9318(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2300;",
+   "new": "method_61179(Lcom/mojang/brigadier/StringReader;Ljava/lang/Object;)Lnet/minecraft/class_2300;",
+   "args": [0],
+   "onlyUnder": "net/minecraft/class_2186",
+   "basis": "1.21.1's brigadier 1.3.10 parses command arguments through ArgumentType.parse(reader, source) (ArgumentCommandNode.parse), which EntityArgument answers with method_61179; in 1.21 (brigadier 1.2.9) every parse went through parse(reader) to the 1.21 override, so the override answers this entry point too, with V's super semantics (super.method_9318 is renamed to method_61178: selectors allowed at parse, permission still checked at resolution by EntitySelector.checkPermissions in both)"
+  },
+  {
+   "old": "method_9331(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2191$class_2192;",
+   "new": "method_61180(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2191$class_2192;",
+   "onlyUnder": "net/minecraft/class_2191",
+   "basis": "GameProfileArgument.parse(StringReader): 1.21's public method_9331 is 1.21.1's method_61180 (static method_9331(reader, true), the same body)"
+  },
+  {
+   "old": "method_9331(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2191$class_2192;",
+   "new": "method_61181(Lcom/mojang/brigadier/StringReader;Ljava/lang/Object;)Lnet/minecraft/class_2191$class_2192;",
+   "args": [0],
+   "onlyUnder": "net/minecraft/class_2191",
+   "basis": "1.21.1's command parsing entry point parse(reader, source) for GameProfileArgument (see EntityArgument)"
+  },
+  {
+   "old": "method_9453(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2233$class_2234;",
+   "new": "method_61183(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2233$class_2234;",
+   "onlyUnder": "net/minecraft/class_2233",
+   "basis": "ScoreHolderArgument.parse(StringReader): 1.21's public method_9453 is 1.21.1's method_61183 (method_9453(reader, true), the same body)"
+  },
+  {
+   "old": "method_9453(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2233$class_2234;",
+   "new": "method_61184(Lcom/mojang/brigadier/StringReader;Ljava/lang/Object;)Lnet/minecraft/class_2233$class_2234;",
+   "args": [0],
+   "onlyUnder": "net/minecraft/class_2233",
+   "basis": "1.21.1's command parsing entry point parse(reader, source) for ScoreHolderArgument (see EntityArgument)"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_2303.<init>(Lcom/mojang/brigadier/StringReader;)V": {
+   "desc": "(Lcom/mojang/brigadier/StringReader;Z)V",
+   "ops": ["keep", "push top/dext/centurybridge/step/v1_21_1/rt/CbSelectorParsers#allowSelectors()Z"],
+   "basis": "1.21's EntitySelectorParser(StringReader) was this(reader, true); the two-argument constructor's body is the same in 1.21 and 1.21.1"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "net/fabricmc/fabric/api/attachment/v1/AttachmentType",
+   "method": "isSynced()Z",
+   "call": "top/dext/centurybridge/step/v1_21_1/rt/CbAttachmentTypes.isSynced(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Z",
+   "basis": "javadoc (abstract, no default): a 1.21 type has no sync codec or predicate, so it cannot be synchronized; Fabric's sync code casts every type answering true to its own AttachmentTypeImpl"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context",
+   "method": "networkHandler()Lnet/minecraft/class_8674;",
+   "call": "top/dext/centurybridge/step/v1_21_1/rt/CbClientConfigurationHandlers.networkHandler(Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context;)Lnet/minecraft/class_8674;",
+   "basis": "javadoc (abstract, no default): the handler of the connection being configured, tracked as Fabric tracks its configuration addon; outside configuration it throws as ClientConfigurationNetworking.getSender() does"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant",
+   "method": "getComponentMap()Lnet/minecraft/class_9323;",
+   "call": "top/dext/centurybridge/step/v1_21_1/rt/CbTransferVariants.getComponentMap(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;)Lnet/minecraft/class_9323;",
+   "basis": "FluidVariantImpl (abstract, no default): no default components, the variant's changes applied; named per interface because a fill's under is matched without Fabric API's hierarchy"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/item/ItemVariant",
+   "method": "getComponentMap()Lnet/minecraft/class_9323;",
+   "call": "top/dext/centurybridge/step/v1_21_1/rt/CbTransferVariants.getComponentMap(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;)Lnet/minecraft/class_9323;",
+   "basis": "ItemVariantImpl (abstract, no default): the component map of the stack toStack() makes"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant",
+   "method": "getComponentMap()Lnet/minecraft/class_9323;",
+   "call": "top/dext/centurybridge/step/v1_21_1/rt/CbTransferVariants.getComponentMap(Lnet/fabricmc/fabric/api/transfer/v1/storage/TransferVariant;)Lnet/minecraft/class_9323;",
+   "basis": "Fabric's own implementations (abstract, no default): an ItemVariant's stack components, else the object's default components (an item's, none for a fluid) with the variant's changes applied"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant",
+   "method": "withComponentChanges(Lnet/minecraft/class_9326;)Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;",
+   "call": "top/dext/centurybridge/step/v1_21_1/rt/CbTransferVariants.withComponentChanges(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;Lnet/minecraft/class_9326;)Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;",
+   "basis": "FluidVariantImpl (abstract, no default): the same fluid with the variant's changes and then the given ones merged"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant",
+   "method": "withComponentChanges(Lnet/minecraft/class_9326;)Lnet/fabricmc/fabric/api/transfer/v1/storage/TransferVariant;",
+   "call": "top/dext/centurybridge/step/v1_21_1/rt/CbTransferVariants.withComponentChangesBridge(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;Lnet/minecraft/class_9326;)Lnet/fabricmc/fabric/api/transfer/v1/storage/TransferVariant;",
+   "basis": "the javac bridge a FluidVariant compiled against 1.21.1 has: TransferVariant's own default of this descriptor throws, FluidVariant's covariant redeclaration is the implementation"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/item/ItemVariant",
+   "method": "withComponentChanges(Lnet/minecraft/class_9326;)Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;",
+   "call": "top/dext/centurybridge/step/v1_21_1/rt/CbTransferVariants.withComponentChanges(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;Lnet/minecraft/class_9326;)Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;",
+   "basis": "ItemVariantImpl (abstract, no default): the same item with the variant's changes and then the given ones merged"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/item/ItemVariant",
+   "method": "withComponentChanges(Lnet/minecraft/class_9326;)Lnet/fabricmc/fabric/api/transfer/v1/storage/TransferVariant;",
+   "call": "top/dext/centurybridge/step/v1_21_1/rt/CbTransferVariants.withComponentChangesBridge(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;Lnet/minecraft/class_9326;)Lnet/fabricmc/fabric/api/transfer/v1/storage/TransferVariant;",
+   "basis": "the javac bridge an ItemVariant compiled against 1.21.1 has (see FluidVariant)"
+  }
+ ],
+ "ledger": {
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder.syncWith": "not bridgeable: a 1.21 builder builds types that cannot be synchronized -- 1.21.1's Fabric sync code (AttachmentTargetsMixin, the chunk / entity / world sync mixins) reads the packet codec and sync predicate off Fabric's own AttachmentTypeImpl, which only Fabric's BuilderImpl makes, and no API attaches them to another type; accepting the call and building an unsynced type would silently drop the synchronization the caller asked for"
+ }
+}

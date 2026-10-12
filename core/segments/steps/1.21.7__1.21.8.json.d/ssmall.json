@@ -1,0 +1,20 @@
+{
+ "abstractFills": [
+  {
+   "under": "net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry",
+   "method": "registerLarge(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;I)Lnet/minecraft/class_8710$class_9155;",
+   "call": "top/dext/centurybridge/step/v1_21_8/rt/CbPayloadTypeRegistries.registerLarge(Lnet/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry;Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;I)Lnet/minecraft/class_8710$class_9155;",
+   "basis": "1.21.7's behaviour (abstract, no default): 1.21.7's Fabric API had no payload splitting, so a 1.21.7 registry registers the type with vanilla's size limit; the size is validated as Fabric's registerLarge does"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry.register(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;)Lnet/minecraft/class_8710$class_9155;": {
+   "iface": "top/dext/centurybridge/step/v1_21_8/rt/CbLegacyPayloadTypeRegistry",
+   "adapt": "top/dext/centurybridge/step/v1_21_8/rt/CbPayloadTypeRegistries#adapt(Ltop/dext/centurybridge/step/v1_21_8/rt/CbLegacyPayloadTypeRegistry;)Lnet/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry;",
+   "basis": "1.21.7's PayloadTypeRegistry had register alone (a functional interface); 1.21.8 added an abstract registerLarge, which the adapted registry answers as above"
+  }
+ },
+ "ledger": {
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext.getSpawnEntries": "not bridgeable: 1.21.8 added an abstract view of a spawn group's weighted entries (List<Weighted<SpawnEntry>>); a 1.21.7 SpawnSettingsContext exposes its spawns only to removeSpawns' (group, entry) predicate, and SpawnEntry carries no weight (EntityType, min and max group size; the weight lives in Weighted since 1.21.5), so the weights the view must answer are nowhere a 1.21.7 context gives them"
+ }
+}

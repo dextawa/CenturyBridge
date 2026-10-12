@@ -1,0 +1,52 @@
+{
+ "callReshapes": {
+  "net/fabricmc/fabric/api/client/renderer/v1/render/FabricOrderedSubmitNodeCollector.submitBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;Ljava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#renderTypeFunction(Lnet/minecraft/client/renderer/rendertype/RenderType;)Ljava/util/function/Function;",
+    "conv:1 top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#translucent(Lnet/minecraft/client/renderer/rendertype/RenderType;)Z",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "13.0.0's javadoc: one render type is a function always answering it plus its hasBlending() as translucent"
+  }
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/client/renderer/v1/render/FabricOrderedSubmitNodeCollector.submitBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V": "top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#superSubmitBlockModel"
+ },
+ "overrideHooks": [
+  {
+   "old": "submitBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;Ljava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V",
+   "new": "submitBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/renderer/v1/render/FabricOrderedSubmitNodeCollector",
+   "adapter": "top/dext/centurybridge/step/v26_1_1/rt/CbLegacyBlockModelSubmitter",
+   "bridge": "top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits.submitBlockModel(Ltop/dext/centurybridge/step/v26_1_1/rt/CbLegacyBlockModelSubmitter;Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V",
+   "basis": "26.1.1's renderer calls the function-and-flag shape; a 26.1 override is handed one render type for them (CbBlockModelSubmits.renderType)"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/fabricmc/fabric/api/client/renderer/v1/render/FabricSubmitNodeCollection$ExtendedBlockModelSubmit.<init>(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/renderer/rendertype/RenderType;Ljava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V": {
+   "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#renderTypeFunction(Lnet/minecraft/client/renderer/rendertype/RenderType;)Ljava/util/function/Function;",
+    "conv:1 top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#translucent(Lnet/minecraft/client/renderer/rendertype/RenderType;)Z",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "the record's render type becomes the function and flag 13.0.0's javadoc gives for one render type"
+  }
+ },
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/client/renderer/v1/render/FabricSubmitNodeCollection$ExtendedBlockModelSubmit.renderType()Lnet/minecraft/client/renderer/rendertype/RenderType;": "top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#renderType"
+ }
+}
