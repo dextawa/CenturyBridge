@@ -387,8 +387,12 @@ public final class MixinCheck {
                     if (name == null) {
                         name = derive(m.name, "call", "invoke", "new", "create");
                     }
-                    if (name == null || !hasMethod(target, name, m.desc)) {
-                        problems.add(me + ": @Invoker " + m.name + " -> " + target.name + "." + name + m.desc + " missing");
+                    // a constructor invoker (@Invoker("<init>"), static, returning the target type)
+                    // binds the constructor taking the invoker's arguments
+                    String want = "<init>".equals(name)
+                        ? m.desc.substring(0, m.desc.lastIndexOf(')') + 1) + "V" : m.desc;
+                    if (name == null || !hasMethod(target, name, want)) {
+                        problems.add(me + ": @Invoker " + m.name + " -> " + target.name + "." + name + want + " missing");
                     }
                 }
                 default -> {
@@ -399,6 +403,13 @@ public final class MixinCheck {
             }
         }
     }
+
+    /** injectors that take exactly one @At (in the Mixin API the runtimes load) */
+    private static final java.util.Set<String> SINGLE_AT = java.util.Set.of(
+        "Lorg/spongepowered/asm/mixin/injection/Redirect;",
+        "Lorg/spongepowered/asm/mixin/injection/ModifyVariable;",
+        "Lorg/spongepowered/asm/mixin/injection/ModifyArg;",
+        "Lorg/spongepowered/asm/mixin/injection/ModifyArgs;");
 
     private void checkInjection(String me, MethodNode m, AnnotationNode a, ClassNode target) {
         Object methods = get(a, "method");
@@ -414,6 +425,13 @@ public final class MixinCheck {
             }
         }
         Object at = get(a, "at");
+        // Redirect / ModifyVariable / ModifyArg(s) take ONE @At in sponge-mixin 0.17.3 (Fabric Loader
+        // 0.19.3 servers run it) and an array in 0.17.4: compiled against the newer API the value is
+        // an array, which the older reads as a ClassCastException before any mixin applies
+        if (at instanceof List<?> && SINGLE_AT.contains(a.desc)) {
+            problems.add(me + ": " + short_(a.desc) + " " + m.name + " encodes at as an array (compiled against a Mixin API"
+                + " newer than the runtimes'; build against the oldest sponge-mixin)");
+        }
         List<AnnotationNode> ats = new ArrayList<>();
         if (at instanceof AnnotationNode an) {
             ats.add(an);

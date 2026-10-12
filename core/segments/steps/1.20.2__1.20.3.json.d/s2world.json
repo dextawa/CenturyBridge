@@ -619,12 +619,17 @@
   "net/minecraft/class_1322.<init>(Ljava/util/UUID;Ljava/util/function/Supplier;DLnet/minecraft/class_1322$class_1323;)V": {
    "desc": "(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V",
    "ops": [
-    "keep:0",
-    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldAttributes#legacyName(Ljava/util/function/Supplier;)Ljava/lang/String;",
-    "keep:2",
-    "keep:3"
+    "keep",
+    "drop",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldAttributes#placeholderName()Ljava/lang/String;",
+    "keep",
+    "keep"
    ],
-   "basis": "the name supplier goes to the modifier, asked whenever 1.20.2 asked it (CbWorldAttributeModifierMixin)"
+   "basis": "the name supplier goes to the constructed modifier, asked whenever 1.20.2 asked it (CbWorldAttributeModifierMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldAttributes#attachName(Lnet/minecraft/class_1322;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    1
+   ]
   },
   "net/minecraft/class_58.<init>(Lnet/minecraft/class_176;Lnet/minecraft/class_8489;)V": {
    "desc": "(Lnet/minecraft/class_8942;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;)V",
@@ -661,9 +666,17 @@
   "net/minecraft/class_267.<init>(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V": {
    "desc": "()V",
    "ops": [
-    "tap:0,1,2 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#pendingScore(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V"
+    "drop",
+    "drop",
+    "drop"
    ],
-   "basis": "the scoreboard, objective and owner go to the score under construction (CbWorldScoreMixin)"
+   "basis": "the scoreboard, objective and owner go to the constructed score (CbWorldScoreMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#attachNew(Lnet/minecraft/class_267;Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V",
+   "postArgs": [
+    0,
+    1,
+    2
+   ]
   }
  },
  "staticRedirects": {

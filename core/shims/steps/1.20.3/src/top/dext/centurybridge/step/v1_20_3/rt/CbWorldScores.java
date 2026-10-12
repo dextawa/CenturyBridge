@@ -59,27 +59,13 @@ public final class CbWorldScores {
         return ((CbWorldScoreV) b).method_1129().compareToIgnoreCase(((CbWorldScoreV) a).method_1129());
     };
 
-    private record Pending(class_269 scoreboard, class_266 objective, String owner) {
-    }
-
-    private static final ThreadLocal<Pending> PENDING_SCORE = new ThreadLocal<>();
-
     /**
-     * new Score(scoreboard, objective, owner) of 1.20.2 is 1.20.3's Score(): the constructor's arguments go to the
-     * score under construction (CbWorldScoreMixin takes them when Score() returns), a new 1.20.2 score whose first
-     * setScore is announced whatever its value.
+     * new Score(scoreboard, objective, owner) of 1.20.2 is 1.20.3's Score() (a constructor reshape whose post step
+     * hands the constructed score its 1.20.2 arguments): a new 1.20.2 score, whose first setScore is announced
+     * whatever its value.
      */
-    public static void pendingScore(class_269 scoreboard, class_266 objective, String owner) {
-        PENDING_SCORE.set(new Pending(scoreboard, objective, owner));
-    }
-
-    /** gives a score being constructed the 1.20.2 constructor arguments that came just before it, if any */
-    public static void takePendingScore(class_267 score) {
-        Pending p = PENDING_SCORE.get();
-        if (p != null) {
-            PENDING_SCORE.remove();
-            ((CbWorldScoreV) score).cb$attach(p.scoreboard(), p.objective(), p.owner(), true);
-        }
+    public static void attachNew(class_267 score, class_269 scoreboard, class_266 objective, String owner) {
+        ((CbWorldScoreV) score).cb$attach(scoreboard, objective, owner, true);
     }
 
     /**

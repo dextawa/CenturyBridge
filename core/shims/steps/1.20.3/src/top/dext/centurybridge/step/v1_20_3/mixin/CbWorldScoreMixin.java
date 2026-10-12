@@ -6,9 +6,6 @@ import net.minecraft.class_269;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldScoreV;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldScores;
 
@@ -38,11 +35,6 @@ public abstract class CbWorldScoreMixin implements CbWorldScoreV {
 
     @Unique
     private boolean cb$forceUpdate;
-
-    @Inject(method = "<init>()V", at = @At("RETURN"))
-    private void cb$legacyConstructor(CallbackInfo ci) {
-        CbWorldScores.takePendingScore((class_267) (Object) this);
-    }
 
     @Override
     public void cb$attach(class_269 scoreboard, class_266 objective, String owner, boolean forceUpdate) {

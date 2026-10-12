@@ -371,14 +371,6 @@
   }
  },
  "superCtorReshapes": {
-  "net/minecraft/class_973.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_922;)V": {
-   "desc": "(Lnet/minecraft/class_922;Lnet/minecraft/class_5617$class_5618;)V",
-   "ops": [
-    "keep:1",
-    "keep:0"
-   ],
-   "basis": "mechanical: same values, reordered by type"
-  },
   "net/minecraft/class_9383$class_9385.<init>(Lnet/minecraft/class_5455$class_6890;)V": {
    "desc": "(Lnet/minecraft/class_7225$class_7874;)V",
    "ops": [
@@ -419,6 +411,14 @@
     "keep:1",
     "keep:3",
     "keep:2"
+   ],
+   "basis": "mechanical: same values, reordered by type"
+  },
+  "net/minecraft/class_2281.<init>(Lnet/minecraft/class_4970$class_2251;Ljava/util/function/Supplier;)V": {
+   "desc": "(Ljava/util/function/Supplier;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:1",
+    "keep:0"
    ],
    "basis": "mechanical: same values, reordered by type"
   }

@@ -32,8 +32,8 @@ import org.objectweb.asm.tree.MethodNode;
  * that table, so they compare verbatim.
  *
  * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects,
- * fieldRedirects, fieldGetters, instanceFieldGetters, instanceOfRedirects,
- * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push
+ * fieldRedirects, fieldGetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
+ * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
  * interface declares exactly the old SAM; the adapter's exact descriptor), abstractFills (the
@@ -386,6 +386,11 @@ public final class WiringCheck {
             Sym s = Sym.field(k);
             wantMethod("instanceFieldGetters " + k, v, s.name, methodDesc("(L" + s.owner + ";)" + s.desc));
         });
+        // "owner.name:desc" -> static setter(owner, desc)V: the PUTFIELD's receiver and value
+        obj(root, "instanceFieldSetters", (k, v) -> {
+            Sym s = Sym.field(k);
+            wantMethod("instanceFieldSetters " + k, v, s.name, methodDesc("(L" + s.owner + ";" + s.desc + ")V"));
+        });
         obj(root, "instanceOfRedirects", (k, v) ->
             wantMethod("instanceOfRedirects " + k, v, "cbInstanceOf", "(Ljava/lang/Object;)Z"));
         // "owner.<init>(args)V" -> factory (args)Lowner;
@@ -410,6 +415,17 @@ public final class WiringCheck {
                 var o = e.getValue().getAsJsonObject();
                 if (!stub.isEmpty()) checkReshapeTarget(e.getKey(), o.get("desc").getAsString(), superRen);
                 checkReshapeOps("superCtorReshapes " + e.getKey(), e.getKey(), o.getAsJsonArray("ops"));
+                if (o.has("post")) {
+                    // the descriptor itself is held to the key when the wiring loads (Chain.CtorReshape)
+                    String post = o.get("post").getAsString().trim();
+                    int paren = post.indexOf('(');
+                    if (paren < 0) {
+                        problems.add("superCtorReshapes " + e.getKey() + ": malformed post '" + post + "'");
+                    } else {
+                        wantMethod("superCtorReshapes " + e.getKey() + " post", post.substring(0, paren), null,
+                            methodDesc(post.substring(paren)));
+                    }
+                }
             }
         }
         // callReshapes: the reshaped call must resolve on the target (the owner or a supertype
@@ -757,7 +773,22 @@ public final class WiringCheck {
             if (c.equals(sup)) return true;
             if (!seen.add(c)) continue;
             ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
-            if (n == null) continue;
+            if (n == null) {
+                // a JDK type (java.util.List where a reshape passes it as a Collection) is
+                // judged by the JDK itself; the game stub does not carry it
+                if (c.startsWith("java/") && sup.startsWith("java/")) {
+                    try {
+                        ClassLoader platform = ClassLoader.getPlatformClassLoader();
+                        if (Class.forName(sup.replace('/', '.'), false, platform)
+                                .isAssignableFrom(Class.forName(c.replace('/', '.'), false, platform))) {
+                            return true;
+                        }
+                    } catch (ClassNotFoundException e) {
+                        // not a JDK class after all: undecided, as before
+                    }
+                }
+                continue;
+            }
             if (n.superName != null) todo.push(n.superName);
             todo.addAll(n.interfaces);
         }

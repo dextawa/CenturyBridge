@@ -196,6 +196,13 @@ public final class JarProcessor {
             // what vanilla expects from the new shape (facade -> real type)
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.unwrapOwner, h.unwrapName, h.unwrapDesc, false);
         }
+        // a new shape that returns nothing where the forwarded call answers a value (1.20.2
+        // RealmsServerList.updateServersList: the 1.20.1 override returned the list) drops it
+        org.objectweb.asm.Type produced = org.objectweb.asm.Type.getReturnType(h.bridgeName != null ? h.bridgeDesc
+            : h.unwrapName != null ? h.unwrapDesc : h.oldDesc);
+        if (nr.getSort() == org.objectweb.asm.Type.VOID && produced.getSort() != org.objectweb.asm.Type.VOID) {
+            mv.visitInsn(produced.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP);
+        }
         if (guarded) {
             mv.visitLabel(tryEnd);
             mv.visitVarInsn(Opcodes.ALOAD, 0);
@@ -410,7 +417,10 @@ public final class JarProcessor {
                 }
                 org.objectweb.asm.tree.MethodInsnNode mi = (org.objectweb.asm.tree.MethodInsnNode) in;
                 Chain.OverrideHook h = byOld.get(mi.name + mi.desc);
+                // the super call's owner is the direct superclass: a mod class in between inherits the
+                // vanilla method (this layer's hierarchy says from where) unless it declares it itself
                 if (h == null || mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
+                        && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null
                         || h.onlyUnder != null && !isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain)
                         || h.notUnder != null && isUnder(cn.superName, ifaces, h.notUnder, layer, chain)) {
                     continue;
@@ -530,7 +540,31 @@ public final class JarProcessor {
                         // site no factory claims: a factory cannot replace the call,
                         // but the arguments can be reshaped / adapted in place
                         if (reshape != null) {
-                            reshapeArgs(m, mi, reshape);
+                            org.objectweb.asm.Type[] oldArgs = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
+                            int[] slots = reshapeArgs(m, mi, reshape);
+                            if (reshape.postName != null) {
+                                // hand the constructed object and the old arguments the new
+                                // constructor has no place for to the post static: the NEW site's
+                                // object is on the stack after the call, a super(...) has `this`
+                                boolean superCall = newInsn == null && m.name.equals("<init>") && mi.owner.equals(cn.superName);
+                                boolean newDup = newInsn != null && newInsn.getNext() != null
+                                    && newInsn.getNext().getOpcode() == Opcodes.DUP;
+                                if (!superCall && !newDup) {
+                                    // the call is reshaped but the value the post static carries is lost: an issue, not a note
+                                    rpt.issues.add(tag + "ctor reshape post skipped (neither a NEW DUP site nor this class's super(...)): "
+                                        + key + " in " + cn.name + "." + m.name);
+                                } else {
+                                    org.objectweb.asm.tree.InsnList post = new org.objectweb.asm.tree.InsnList();
+                                    post.add(superCall ? new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0)
+                                        : new org.objectweb.asm.tree.InsnNode(Opcodes.DUP));
+                                    for (int idx : reshape.postArgs) {
+                                        post.add(new org.objectweb.asm.tree.VarInsnNode(oldArgs[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
+                                    }
+                                    post.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC,
+                                        reshape.postOwner, reshape.postName, reshape.postDesc, false));
+                                    m.instructions.insert(mi, post);
+                                }
+                            }
                             rewrites++;
                             rpt.notes.add(tag + (newInsn == null ? "super-ctor-reshaped: " : "ctor-reshaped: ")
                                 + key + " -> " + reshape.newDesc + " in " + cn.name);
@@ -648,9 +682,17 @@ public final class JarProcessor {
      * site whose JVM-resolved home is a reshaped key -- whatever its opcode, a mod's own
      * super.m(..) included, so the call keeps its dispatch -- has its arguments re-pushed per the
      * ops and takes the new descriptor; the return value is dropped, converted or supplied right
-     * after. Straight-line code at the call, so existing frames stay exact. A call naming one of
-     * the jar's own classes (this.m(..) on a member the mod inherits) is homed on the vanilla
-     * type it resolves in ({@link #inheritedVanillaOwner}); one the mod declares itself is left.
+     * after. Straight-line code at the call, so existing frames stay exact.
+     *
+     * A call may name a class of the mod's own jar while the member is a vanilla one it inherits:
+     * javac's qualifying type for an unqualified call to an inherited member is the subclass
+     * itself (a mod's RecipeProvider calling offerSmelting(..), a loot function builder calling
+     * this.getConditions()). The JVM resolves such a call on the first vanilla class up the mod's
+     * own hierarchy when no mod class on the way declares the member, so the key is looked up from
+     * there ({@link #inheritedReshapeHome}: the superclass chain first, then the vanilla interfaces
+     * the mod's types implement -- a default method such as RecipeBuilder.save(consumer) reached
+     * through a mod builder); a mod class that does declare the old shape keeps the call (its own
+     * method, reconnected to the new shape by an override hook if there is one).
      */
     private static byte[] rewriteCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
         String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
@@ -678,14 +720,14 @@ public final class JarProcessor {
                     continue;
                 }
                 String nameDesc = mi.name + mi.desc;
-                String owner = mi.owner;
-                if (!Chain.minecraftOwned(owner)) {
-                    owner = inheritedVanillaOwner(owner, nameDesc, layer, chain);
-                    if (owner == null) {
-                        continue;
-                    }
+                // a key's own owner (vanilla, com/mojang/blaze3d, a library such as DFU) directly; a
+                // class of the mod's jar through the vanilla class or interface it inherits the member
+                // from (javac qualifies such a call by the class it is made in, JLS 13.1). The call keeps
+                // its owner: the JVM resolves the new descriptor up the hierarchy as it did the old one
+                String home = chain.instanceRedirectHome(chain.callReshapeIndex, mi.owner, nameDesc);
+                if (home == null && layer.decls.containsKey(mi.owner)) {
+                    home = inheritedReshapeHome(mi.owner, nameDesc, layer, chain);
                 }
-                String home = chain.instanceRedirectHome(chain.callReshapeIndex, owner, nameDesc);
                 if (home == null) {
                     continue;
                 }
@@ -770,14 +812,20 @@ public final class JarProcessor {
      * sits below the arguments (uninitializedThis, or NEW DUP's two refs) is
      * untouched, so existing frames stay exact.
      */
-    private static void reshapeArgs(org.objectweb.asm.tree.MethodNode m,
-                                    org.objectweb.asm.tree.MethodInsnNode mi,
-                                    Chain.CtorReshape r) {
+    private static int[] reshapeArgs(org.objectweb.asm.tree.MethodNode m,
+                                     org.objectweb.asm.tree.MethodInsnNode mi,
+                                     Chain.CtorReshape r) {
         org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
         int[] slots = spillArgs(m, mi, old);
         org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
         for (Chain.ReshapeOp op : r.ops) {
             if (op.drop) {
+                if (op.owner != null) {
+                    // "drop OWNER#name(T)V": the dropped value goes to the sink, nothing is pushed
+                    int idx = op.from[0];
+                    seq.add(new org.objectweb.asm.tree.VarInsnNode(old[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
+                    seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, op.owner, op.name, op.desc, false));
+                }
                 continue;
             }
             if (op.param != null) {
@@ -804,6 +852,7 @@ public final class JarProcessor {
         }
         m.instructions.insertBefore(mi, seq);
         mi.desc = r.newDesc;
+        return slots;
     }
 
     /** Redirect values are a class name, optionally "class#member" past the
@@ -1046,6 +1095,74 @@ public final class JarProcessor {
                 return null; // the mod's own member
             }
             cur = layer.superOf.get(cur);
+        }
+        return null;
+    }
+
+    /**
+     * For a call naming a class of this jar layer: the reshape key's home when the member is a
+     * vanilla one the class inherits -- no class or interface of the layer on the way declares it --
+     * found in JVM resolution order: the superclass chain to the first vanilla class (the walk of
+     * {@link #inheritedVanillaOwner}), then, when that has no key or the chain ends in the JDK, the
+     * vanilla interfaces the layer's types implement (a default method, RecipeBuilder.save(consumer)
+     * called on a mod builder). Null when the mod declares the member, the chain leaves into a
+     * library (its classes are not this layer's to judge), or no key applies.
+     */
+    private static String inheritedReshapeHome(String owner, String member, LayerIndex layer, Chain chain) {
+        // the superclass chain first, as the JVM resolves: the layer's own classes, then the first vanilla one
+        List<String> layerClasses = new ArrayList<>();
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64 && !Chain.minecraftOwned(cur); hops++) {
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                if (cur.startsWith("java/")) {
+                    cur = null; // the JDK ends the chain (it declares no game member): on to the interfaces
+                    break;
+                }
+                return null; // a library or another jar: not this layer's to judge
+            }
+            if (d.contains(member)) {
+                return null; // the mod's own member
+            }
+            layerClasses.add(cur);
+            cur = layer.superOf.get(cur);
+        }
+        if (cur != null && Chain.minecraftOwned(cur)) {
+            String home = chain.instanceRedirectHome(chain.callReshapeIndex, cur, member);
+            if (home != null) {
+                return home;
+            }
+        }
+        // then the interfaces the layer's classes implement (a default method), the layer's own first
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        for (String c : layerClasses) {
+            todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
+        }
+        Set<String> seen = new HashSet<>();
+        List<String> vanilla = new ArrayList<>();
+        while (!todo.isEmpty()) {
+            String t = todo.poll();
+            if (!seen.add(t)) {
+                continue;
+            }
+            if (Chain.minecraftOwned(t)) {
+                vanilla.add(t);
+                continue;
+            }
+            Set<String> d = layer.decls.get(t);
+            if (d == null) {
+                continue;
+            }
+            if (d.contains(member)) {
+                return null; // a default method of the mod's own interface
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(t, List.of()));
+        }
+        for (String v : vanilla) {
+            String home = chain.instanceRedirectHome(chain.callReshapeIndex, v, member);
+            if (home != null) {
+                return home;
+            }
         }
         return null;
     }
@@ -1649,6 +1766,7 @@ public final class JarProcessor {
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
+        Map<String, String> instFldSetters = new HashMap<>(); // PUTFIELD -> INVOKESTATIC setter(receiver, value) on runtime class
         Map<String, String> instOfSites = new HashMap<>();   // INSTANCEOF type -> INVOKESTATIC predicate(Object)Z
         Map<String, String> fldRenames = new HashMap<>();    // instance fields renamed in place
         Map<String, String> mthRenames = new HashMap<>();    // methods renamed in place (relocated to super)
@@ -2032,10 +2150,20 @@ public final class JarProcessor {
                             }
                             return; // live constructor (a dead owner is reported by checkClass)
                         }
-                        if (op == Opcodes.INVOKESPECIAL && chain.superRedirects.containsKey(key)) {
-                            superRedirectSites.put(site, chain.superRedirects.get(key));
-                            top.dext.centurybridge.data.FullAudit.record(key, "super-redirect");
-                            return;
+                        if (op == Opcodes.INVOKESPECIAL) {
+                            // a super call resolves where the source version declared the member
+                            // (Chain.superRedirectHome): a vanilla subclass in between that does not
+                            // redeclare it takes the declaring class's super redirect, and the
+                            // emitted static names that class as the receiver type
+                            String srHome = chain.superRedirectHome(owner, name + desc);
+                            if (srHome != null) {
+                                superRedirectSites.put(site, chain.superRedirects.get(srHome + "." + name + desc));
+                                if (!srHome.equals(owner)) {
+                                    emitOwner.put(site, srHome);
+                                }
+                                top.dext.centurybridge.data.FullAudit.record(srHome + "." + name + desc, "super-redirect");
+                                return;
+                            }
                         }
                         // a shim on any ancestor satisfies this call site: the mod
                         // holds a subclass reference, but the member is declared
@@ -2188,6 +2316,12 @@ public final class JarProcessor {
                         if (ifgt != null && op == Opcodes.GETFIELD) {
                             instFldGetters.put(fsite, ifgt);
                             top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-getter");
+                            return;
+                        }
+                        String ifst = chain.instanceFieldSetters.get(fkey);
+                        if (ifst != null && op == Opcodes.PUTFIELD) {
+                            instFldSetters.put(fsite, ifst);
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-setter");
                             return;
                         }
                         String rename = chain.fieldRenames.get(fkey);
@@ -2419,7 +2553,7 @@ public final class JarProcessor {
             }
         }
         if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldGetters.isEmpty() && instFldGetters.isEmpty() && instOfSites.isEmpty()
+                && fldGetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty() && fillApply.isEmpty()
@@ -2472,6 +2606,9 @@ public final class JarProcessor {
         }
         for (String k : instFldGetters.keySet()) {
             rpt.notes.add(tag + "instance-field-gettered: " + k + " -> " + instFldGetters.get(k));
+        }
+        for (String k : instFldSetters.keySet()) {
+            rpt.notes.add(tag + "instance-field-settered: " + k + " -> " + instFldSetters.get(k));
         }
         for (String k : instOfSites.keySet()) {
             rpt.notes.add(tag + "instanceof-redirected: " + k + " -> " + instOfSites.get(k));
@@ -2785,6 +2922,12 @@ public final class JarProcessor {
                     @Override
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
                         String fkey = owner + "." + name + ":" + desc;
+                        if (op == Opcodes.PUTFIELD && instFldSetters.containsKey(fkey)) {
+                            String fv = instFldSetters.get(fkey);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv), redirName(fv, name),
+                                "(L" + emitOwner.getOrDefault(fkey, owner) + ";" + desc + ")V", false);
+                            return;
+                        }
                         if (op == Opcodes.GETFIELD && instFldGetters.containsKey(fkey)) {
                             String fv = instFldGetters.get(fkey);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),

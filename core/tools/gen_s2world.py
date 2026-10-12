@@ -163,8 +163,11 @@ def main():
     # ---------------------------------------------------------------- constructors
     P = "Lnet/minecraft/class_4970$class_2251;"
 
-    def ctor(key, desc, ops, basis):
-        w["superCtorReshapes"][key] = {"desc": desc, "ops": ops, "basis": basis}
+    def ctor(key, desc, ops, basis, post=None, post_args=None):
+        e = {"desc": desc, "ops": ops, "basis": basis}
+        if post:
+            e["post"], e["postArgs"] = post, post_args
+        w["superCtorReshapes"][key] = e
 
     imap = "conv:1 " + RT + "/CbWorldBlocks#interactionMap(Ljava/util/Map;)Lnet/minecraft/class_5620$class_8821;"
     ctor(MC + "class_2275.<init>(" + P + "Ljava/util/Map;)V", "(" + P + "Lnet/minecraft/class_5620$class_8821;)V",
@@ -397,8 +400,9 @@ def main():
     # AttributeModifier: the name supplier and getName()
     ctor(MC + "class_1322.<init>(Ljava/util/UUID;Ljava/util/function/Supplier;DLnet/minecraft/class_1322$class_1323;)V",
          "(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V",
-         ["keep:0", "conv:1 " + RT + "/CbWorldAttributes#legacyName(Ljava/util/function/Supplier;)Ljava/lang/String;", "keep:2", "keep:3"],
-         "the name supplier goes to the modifier, asked whenever 1.20.2 asked it (CbWorldAttributeModifierMixin)")
+         ["keep", "drop", "push " + RT + "/CbWorldAttributes#placeholderName()Ljava/lang/String;", "keep", "keep"],
+         "the name supplier goes to the constructed modifier, asked whenever 1.20.2 asked it (CbWorldAttributeModifierMixin)",
+         post=RT + "/CbWorldAttributes#attachName(Lnet/minecraft/class_1322;Ljava/util/function/Supplier;)V", post_args=[1])
     w["covers"].append(MC + "class_1322.method_6185()Ljava/lang/String;")
 
     # RandomizableContainerBlockEntity: the loot table methods are 1.20.3's RandomizableContainer defaults
@@ -475,9 +479,10 @@ def main():
     w["covers"] += [SC + "." + m for m in ("method_1122()Lnet/minecraft/class_269;", "method_1124(I)V", "method_1126()I",
                                           "method_1127()Lnet/minecraft/class_266;", "method_1128(I)V",
                                           "method_1129()Ljava/lang/String;", "method_1130()V", "method_1132()V")]
-    ctor(SC + ".<init>(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V", "()V",
-         ["tap:0,1,2 " + RT + "/CbWorldScores#pendingScore(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V"],
-         "the scoreboard, objective and owner go to the score under construction (CbWorldScoreMixin)")
+    ctor(SC + ".<init>(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V", "()V", ["drop", "drop", "drop"],
+         "the scoreboard, objective and owner go to the constructed score (CbWorldScoreMixin)",
+         post=RT + "/CbWorldScores#attachNew(Lnet/minecraft/class_267;Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V",
+         post_args=[0, 1, 2])
     w["fieldRedirects"][SC + ".field_1413:Ljava/util/Comparator;"] = RT + "/CbWorldScores#SCORE_COMPARATOR"
 
     # Scoreboard: the owner-name methods come back (covers); the notifications take holders
