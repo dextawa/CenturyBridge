@@ -1,0 +1,38 @@
+{
+ "covers": [
+  "net/minecraft/class_10444.method_70949()Ljava/lang/Object;",
+  "net/minecraft/class_10444.method_71658()V"
+ ],
+ "ctorRedirects": {
+  "net/minecraft/class_10444.<init>()V": "top/dext/centurybridge/step/v1_21_7/rt/CbItemRenderStates#newItemStackRenderState"
+ },
+ "superRenames": {
+  "net/minecraft/class_10444": "net/minecraft/class_11540"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_70949()Ljava/lang/Object;",
+   "new": "method_72239()Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_10444",
+   "superCalls": "rewrite",
+   "basis": "1.21.6's GUI read a state's model identity through ItemStackRenderState.getModelIdentity(); 1.21.7's reads it through TrackingItemStackRenderState.getModelIdentity() (method_72239), the class a 1.21.6 subclass now extends (superRenames): the subclass's override answers it, its super call reaches the tracking state's own"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_11245.<init>(Ljava/lang/String;Lorg/joml/Matrix3x2f;Lnet/minecraft/class_10444;IILnet/minecraft/class_8030;)V": {
+   "desc": "(Ljava/lang/String;Lorg/joml/Matrix3x2f;Lnet/minecraft/class_11540;IILnet/minecraft/class_8030;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_7/rt/CbItemRenderStates#tracking(Lnet/minecraft/class_10444;)Lnet/minecraft/class_11540;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.21.6's GuiItemRenderState took any ItemStackRenderState, 1.21.7's a TrackingItemStackRenderState: a tracking state (every state a 1.21.6 mod makes) as it is, a plain one as a tracking view of itself"
+  }
+ },
+ "ledger": {
+  "com/mojang/blaze3d/systems/CommandEncoder.copyToBuffer": "not bridgeable: 1.21.7 added an abstract buffer-to-buffer copy to the GPU command encoder; a 1.21.6 implementation (a GPU backend or a wrapper around one) has none, and the only composition of 1.21.6's encoder operations -- mapBuffer(source, read) then writeToBuffer(target, bytes) -- needs the source mapped for reading, which 1.21.6/1.21.7's GlCommandEncoder.mapBuffer refuses without USAGE_MAP_READ ('Buffer is not readable') while copyToBuffer's sources need not have it (vanilla's one caller, VertexFormat.uploadToBufferWithWorkaround, copies from a staging buffer made with the target's usage)"
+ }
+}
