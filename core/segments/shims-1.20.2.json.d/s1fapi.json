@@ -1,5 +1,10 @@
 {
  "classRenames": {
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry": "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentRegistry",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder": "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentRegistry$Builder",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget": "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentTarget",
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentType": "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentType",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion": "top/dext/centurybridge/compat/fapi/entity/event/v1/ServerLivingEntityEvents$MobConversion",
   "net/fabricmc/fabric/api/event/network/C2SPacketTypeCallback": "top/dext/centurybridge/compat/fapi/event/network/C2SPacketTypeCallback",
   "net/fabricmc/fabric/api/event/network/S2CPacketTypeCallback": "top/dext/centurybridge/compat/fapi/event/network/S2CPacketTypeCallback",
   "net/fabricmc/fabric/api/loot/v1/FabricLootPool": "top/dext/centurybridge/compat/fapi/loot/v1/FabricLootPool",
@@ -17,5 +22,8 @@
   "net/fabricmc/fabric/api/network/ServerSidePacketRegistry": "top/dext/centurybridge/compat/fapi/network/ServerSidePacketRegistry",
   "net/fabricmc/fabric/api/registry/LootEntryTypeRegistry": "top/dext/centurybridge/compat/fapi/registry/LootEntryTypeRegistry",
   "net/fabricmc/fabric/api/server/PlayerStream": "top/dext/centurybridge/compat/fapi/server/PlayerStream"
+ },
+ "fieldRedirects": {
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents.MOB_CONVERSION:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/compat/fapi/entity/event/v1/ServerLivingEntityEvents"
  }
 }
