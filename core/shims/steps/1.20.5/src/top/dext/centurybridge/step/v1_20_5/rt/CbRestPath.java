@@ -63,29 +63,20 @@ public final class CbRestPath {
         net.minecraft.class_7 cbRest$cachedPathType(int x, int y, int z);
     }
 
-    /** whether a WalkNodeEvaluator class overrides 1.20.4's getBlockPathType(mob, pos) (the cover is class_14's own) */
-    private static final ClassValue<Boolean> OVERRIDES_START_TYPE = new ClassValue<>() {
-        @Override
-        protected Boolean computeValue(Class<?> type) {
-            for (Class<?> c = type; c != null && c != net.minecraft.class_14.class; c = c.getSuperclass()) {
-                try {
-                    c.getDeclaredMethod("method_63", net.minecraft.class_1308.class, net.minecraft.class_2338.class);
-                    return true;
-                } catch (NoSuchMethodException e) {
-                    // not declared here
-                }
-            }
-            return false;
-        }
-    };
+    /**
+     * Added to a mod WalkNodeEvaluator class that overrides 1.20.4's getBlockPathType(mob, pos) (adapter
+     * hook; the cover is class_14's own)
+     */
+    public interface OwnStartType {
+        net.minecraft.class_7 method_63(net.minecraft.class_1308 mob, net.minecraft.class_2338 pos);
+    }
 
     /** canStartAt / getStartNode's type: 1.20.4's getBlockPathType(mob, pos) where the class overrides it, else 1.20.5's cached type */
     public static net.minecraft.class_7 startType(net.minecraft.class_14 self, int x, int y, int z) {
-        LegacyWalk walk = (LegacyWalk) self;
-        if (OVERRIDES_START_TYPE.get(self.getClass())) {
-            return walk.method_63(((Evaluator) self).cbRest$mob(), new net.minecraft.class_2338(x, y, z));
+        if (self instanceof OwnStartType own) {
+            return own.method_63(((Evaluator) self).cbRest$mob(), new net.minecraft.class_2338(x, y, z));
         }
-        return walk.cbRest$cachedPathType(x, y, z);
+        return ((LegacyWalk) self).cbRest$cachedPathType(x, y, z);
     }
 
     /** getCachedPathType(x, y, z) of a class overriding 1.20.4's getCachedBlockType(mob, x, y, z): the evaluator's mob */

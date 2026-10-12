@@ -1176,6 +1176,30 @@
      "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestServer.updateRegistryTags(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestServer$LegacyRegistryTags;)V"
     }
    ]
+  },
+  {
+   "under": "net/minecraft/class_17",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps$OwnSave",
+   "requires": [
+    "method_74()Lnet/minecraft/class_2487;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobType$Declares",
+   "requires": [
+    "method_6046()Lnet/minecraft/class_1310;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_14",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath$OwnStartType",
+   "requires": [
+    "method_63(Lnet/minecraft/class_1308;Lnet/minecraft/class_2338;)Lnet/minecraft/class_7;"
+   ],
+   "synth": []
   }
  ],
  "ctorRedirects": {

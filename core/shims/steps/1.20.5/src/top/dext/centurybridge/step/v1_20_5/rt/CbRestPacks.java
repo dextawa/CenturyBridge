@@ -14,41 +14,13 @@ package top.dext.centurybridge.step.v1_20_5.rt;
  */
 public final class CbRestPacks {
 
-    /** a pack class's own 1.20.4 isBuiltin(), when its class declares one (1.20.4's default was false) */
-    private static final ClassValue<java.lang.invoke.MethodHandle> IS_BUILTIN = new ClassValue<>() {
-        @Override
-        protected java.lang.invoke.MethodHandle computeValue(Class<?> type) {
-            for (Class<?> c = type; c != null && c != Object.class; c = c.getSuperclass()) {
-                try {
-                    java.lang.reflect.Method m = c.getDeclaredMethod("method_45178");
-                    if (m.getReturnType() == boolean.class && !java.lang.reflect.Modifier.isStatic(m.getModifiers())) {
-                        m.setAccessible(true);
-                        return java.lang.invoke.MethodHandles.lookup().unreflect(m);
-                    }
-                } catch (NoSuchMethodException | IllegalAccessException e) {
-                    // not declared here: look further up
-                }
-            }
-            return null;
-        }
-    };
-
     /** pack suppliers 1.20.4 built as builtin (the flag 1.20.5's suppliers no longer take) */
     private static final java.util.Map<Object, Boolean> BUILTIN_SUPPLIERS =
         java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
 
-    private static boolean own(net.minecraft.class_3262 pack, boolean fallback) {
-        java.lang.invoke.MethodHandle m = IS_BUILTIN.get(pack.getClass());
-        if (m == null) {
-            return fallback;
-        }
-        try {
-            return (boolean) m.invoke(pack);
-        } catch (RuntimeException | Error e) {
-            throw e;
-        } catch (Throwable t) {
-            throw new RuntimeException(t);
-        }
+    /** a pack's own 1.20.4 isBuiltin() where its class declares one (it carries LegacyBuiltin), else 1.20.4's default: false */
+    private static boolean own(net.minecraft.class_3262 pack) {
+        return pack instanceof LegacyBuiltin legacy && legacy.method_45178();
     }
 
     /** whether a 1.20.5 location stands for what 1.20.4 called a builtin pack */
@@ -101,8 +73,7 @@ public final class CbRestPacks {
      * one (a mod's pack), else what its location says
      */
     public static boolean method_45178(net.minecraft.class_3262 pack) {
-        java.lang.invoke.MethodHandle m = IS_BUILTIN.get(pack.getClass());
-        return m != null ? own(pack, false) : builtin(pack.method_56926());
+        return pack instanceof LegacyBuiltin legacy ? legacy.method_45178() : builtin(pack.method_56926());
     }
 
     /** 1.20.4 PackResources.super.isBuiltin(): the interface's default, false */
@@ -118,7 +89,10 @@ public final class CbRestPacks {
         net.minecraft.class_9224 cbRest$location();
     }
 
-    /** 1.20.4 PackResources.isBuiltin(), the shape a mod's pack class overrides */
+    /**
+     * 1.20.4 PackResources.isBuiltin(), the shape a mod's pack class overrides: the override hook adds it
+     * to every mod pack class declaring one
+     */
     public interface LegacyBuiltin {
         boolean method_45178();
     }
@@ -167,7 +141,7 @@ public final class CbRestPacks {
      * otherwise), no known pack
      */
     public static net.minecraft.class_9224 location(net.minecraft.class_3262 pack) {
-        return locationOf(pack.method_14409(), own(pack, false));
+        return locationOf(pack.method_14409(), own(pack));
     }
 
     /** a supplier 1.20.4 built with the builtin flag (the constructor's post step) */

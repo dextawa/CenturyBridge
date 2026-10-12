@@ -26,7 +26,7 @@ import top.dext.centurybridge.step.v1_20_5.rt.Guard;
  * falls through to its superclass instead of forwarding back.
  */
 @Mixin(net.minecraft.class_1309.class)
-public abstract class CbRestLivingEntityMixin implements CbRestMobType.Api {
+public abstract class CbRestLivingEntityMixin {
 
     @Shadow
     public abstract double method_45325(net.minecraft.class_6880<net.minecraft.class_1320> attribute);
@@ -86,11 +86,6 @@ public abstract class CbRestLivingEntityMixin implements CbRestMobType.Api {
     /** 1.20.4 LivingEntity.getMobType(): what the entity type's tags say */
     public class_1310 method_6046() {
         return CbRestMobType.of(((net.minecraft.class_1297) (Object) this).method_5864());
-    }
-
-    @Override
-    public class_1310 cbRest$mobType() {
-        return this.method_6046();
     }
 
     @Redirect(method = {"method_6049", "method_5999"}, at = @At(value = "INVOKE",
