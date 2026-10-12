@@ -1004,3 +1004,7 @@ extendable method net/minecraft/class_1887 method_8187 ()I
 extendable method net/minecraft/class_1887 method_8183 ()I
 extendable method net/minecraft/class_1887 method_8182 (I)I
 extendable method net/minecraft/class_1887 method_20742 (I)I
+
+# s4item: PotionBrewing(containers, potionMixes, containerMixes) is package-private in 1.20.5; a 1.20.4 subclass's super() (1.20.4's
+# public no-argument constructor) is reshaped onto it with empty mixes (rt/CbBrewing)
+accessible method net/minecraft/class_1845 <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;)V

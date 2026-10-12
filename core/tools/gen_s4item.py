@@ -225,11 +225,19 @@ def main():
 
     getters = {}   # (owner, name, desc) -> (rule, java body, comment)
     report = []
+    # a class the hand-written fragment renames to a facade keeps its fields there (classRenames)
+    renamed = set()
+    for f in sorted(os.listdir(os.path.dirname(out_frag))):
+        if f.endswith(".json") and f != os.path.basename(out_frag):
+            renamed |= set(json.load(open(os.path.join(os.path.dirname(out_frag), f), encoding="utf-8")).get("classRenames", {}))
     for usage, owner, name, desc, kinds, w in rows:
         if usage != "get-static" or "FIELD" not in kinds.split(","):
             continue
         key = (owner, name, desc)
         if key in getters:
+            continue
+        if owner in renamed:
+            report.append((usage, owner, name, desc, "facade", "the class is renamed to a facade that keeps the field"))
             continue
         wf = javap_fields(wjar, owner).get(name) if owner in wclasses else None
         vf = javap_fields(vjar, owner).get(name)

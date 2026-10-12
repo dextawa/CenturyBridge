@@ -75,7 +75,12 @@
     "CbParticleItemAccessor",
     "CbParticleShriekAccessor",
     "CbParticleVibrationAccessor",
-    "CbParticleScaleAccessor"
+    "CbParticleScaleAccessor",
+    "CbPotionNameMixin",
+    "CbAttributeTemplateMixin",
+    "CbMobEffectMixin",
+    "CbEffectInstanceMixin",
+    "CbEffectTickMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",
