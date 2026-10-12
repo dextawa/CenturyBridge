@@ -4,13 +4,15 @@
   "net/minecraft/class_1310": "top/dext/centurybridge/step/v1_20_5/facade/class_1310",
   "net/minecraft/class_20$class_21": "top/dext/centurybridge/step/v1_20_5/facade/class_20$class_21",
   "net/minecraft/class_8806": "top/dext/centurybridge/step/v1_20_5/facade/class_8806",
-  "net/minecraft/class_1317$class_1319": "top/dext/centurybridge/step/v1_20_5/facade/class_1317$class_1319"
+  "net/minecraft/class_1317$class_1319": "top/dext/centurybridge/step/v1_20_5/facade/class_1317$class_1319",
+  "net/minecraft/class_5699$class_6495": "com/mojang/serialization/codecs/EitherCodec"
  },
  "fieldGetters": {
   "net/minecraft/class_3193.field_16426:Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
   "net/minecraft/class_3193.field_16427:Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
   "net/minecraft/class_3193.field_16430:Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
-  "net/minecraft/class_8514.field_44639:Ljava/util/function/ToIntFunction;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric"
+  "net/minecraft/class_8514.field_44639:Ljava/util/function/ToIntFunction;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric",
+  "net/minecraft/class_5699.field_43173:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs"
  },
  "callReshapes": {
   "net/minecraft/class_1309.method_6088()Ljava/util/Map;": {
@@ -627,7 +629,8 @@
   }
  ],
  "methodRenames": {
-  "net/minecraft/class_1297.method_36601()Lnet/minecraft/class_2680;": "method_55667"
+  "net/minecraft/class_1297.method_36601()Lnet/minecraft/class_2680;": "method_55667",
+  "net/minecraft/class_5699$class_6495.method_37945(Lcom/mojang/datafixers/util/Either;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;": "encode"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_4048.field_18067:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntity",
@@ -649,7 +652,19 @@
   "net/minecraft/class_155.method_643(C)Z": "net/minecraft/class_3544#method_57175",
   "net/minecraft/class_155.method_644(Ljava/lang/String;)Ljava/lang/String;": "net/minecraft/class_3544#method_57180",
   "net/minecraft/class_155.method_44355(Ljava/lang/String;Z)Ljava/lang/String;": "net/minecraft/class_3544#method_57177",
-  "net/minecraft/class_14.method_27138(Lnet/minecraft/class_2680;)Z": "net/minecraft/class_8#method_57082"
+  "net/minecraft/class_14.method_27138(Lnet/minecraft/class_2680;)Z": "net/minecraft/class_8#method_57082",
+  "net/minecraft/class_5699.method_33817(Lcom/mojang/serialization/Codec;Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_53702(Lcom/mojang/serialization/Codec;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_5699$class_6495;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_39508(Ljava/util/function/Function;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_48112(Lcom/mojang/serialization/Codec;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_51699(Lcom/mojang/serialization/MapCodec;Ljava/util/function/Function;)Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_53052(Ljava/lang/String;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_39240(Ljava/util/function/Supplier;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_53048(Lcom/mojang/serialization/Codec;Ljava/lang/String;)Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_53049(Lcom/mojang/serialization/Codec;Ljava/lang/String;Ljava/lang/Object;)Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_48109(II)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_52465(Lcom/mojang/serialization/Codec;Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5699.method_52458(Lcom/mojang/serialization/Codec;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs"
  },
  "instanceRedirects": {
   "net/minecraft/class_20.method_92()B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
