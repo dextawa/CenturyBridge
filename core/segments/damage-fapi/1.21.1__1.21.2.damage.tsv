@@ -419,3 +419,18 @@ get-static	net/fabricmc/fabric/api/tag/convention/v2/ConventionalItemTags	ORES_I
 call	net/fabricmc/fabric/api/tag/v1/FabricTagFile	remove	()Ljava/util/List;	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/tag/v1/FabricTagFile			CLASS	class gone
 override+super	net/fabricmc/fabric/api/tag/v1/FabricTagFile	remove	()Ljava/util/List;	CLASS	class gone
+call-injected	net/minecraft/class_2474$class_5124	setReplace	(Z)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	forceAddTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	remove	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	remove	([Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	removeAll	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	removeAll	(Ljava/util/stream/Stream;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	removeTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_8790	getRecipeIdentifier	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2378	addAlias	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1792	getCreatorNamespace	(Lnet/minecraft/class_1799;)Ljava/lang/String;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1799	getCreatorNamespace	()Ljava/lang/String;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1836	shouldDisplayAllInformation	()Z	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2591$class_2592	build	()Lnet/minecraft/class_2591;	CLASS	class gone
+call-injected	net/minecraft/class_1299$class_1300	build	()Lnet/minecraft/class_1299;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_7475	remove	()Ljava/util/List;	METHOD	method not declared on the owner

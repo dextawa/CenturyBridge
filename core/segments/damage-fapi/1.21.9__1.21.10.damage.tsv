@@ -1,3 +1,4 @@
 usage	owner	name	desc	kinds	w
 lambda	net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry	register	(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;)Lnet/minecraft/class_8710$class_9155;	LAMBDA	method register(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;)Lnet/minecraft/class_8710$class_9155; public abstract
 implement-interface	net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry			ABSTRACT	class public abstract interface extends java/lang/Object
+call-injected	net/minecraft/class_8790	getRecipeIdentifier	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;	METHOD	method not declared on the owner

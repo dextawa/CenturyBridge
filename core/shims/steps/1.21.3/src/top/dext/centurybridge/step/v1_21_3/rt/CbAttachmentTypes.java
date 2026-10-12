@@ -1,0 +1,22 @@
+package top.dext.centurybridge.step.v1_21_3.rt;
+
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
+
+/**
+ * 1.21.3's Fabric API (fabric-data-attachment-api-v1 1.4.0) gave AttachmentType an abstract isSynced():
+ * "whether this attachment type can be synchronized with clients ... as per its AttachmentSyncPredicate"
+ * (javadoc; abstract, no default). A type written against 1.21.2 (1.1.38: no synchronization at all) has no
+ * sync codec and no sync predicate, so it cannot be synchronized: false. It must be false, too: Fabric's
+ * sync code (AttachmentTargetsMixin and the entity / block entity / world / chunk sync mixins of 1.4.0)
+ * takes the codec and predicate of every type that answers true off Fabric's own AttachmentTypeImpl, which
+ * a mod's type is not.
+ */
+public final class CbAttachmentTypes {
+
+    private CbAttachmentTypes() {
+    }
+
+    public static boolean isSynced(AttachmentType<?> type) {
+        return false;
+    }
+}

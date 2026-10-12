@@ -1,0 +1,14 @@
+{
+ "schemaVersion": 1,
+ "id": "centurybridge_step_26_1_2",
+ "version": "0.3.0+26.1.2",
+ "name": "CenturyBridge: 26.1.1 API on 26.1.2",
+ "environment": "*",
+ "mixins": [
+  "cb-step-26.1.2.mixins.json"
+ ],
+ "accessWidener": "cb-step-26.1.2.accesswidener",
+ "depends": {
+  "fabricloader": ">=0.15.0"
+ }
+}

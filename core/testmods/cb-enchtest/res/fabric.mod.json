@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_enchtest",
+ "version": "1.0.0",
+ "name": "CB Enchantment Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.enchtest.EnchTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.6" }
+}

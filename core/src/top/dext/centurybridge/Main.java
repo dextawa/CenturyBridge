@@ -138,6 +138,11 @@ public final class Main {
             chain.loadHierarchy(srcStub);
             System.out.println("hierarchy: " + chain.superOf.size() + " classes from " + srcStub.getFileName());
         }
+        // the interfaces the source release's Fabric API injects into vanilla classes: a mod compiled against
+        // it calls (and overrides) them through the vanilla class (Chain.readInjectedInterfaces)
+        java.util.Map<String, List<String>> srcInjected = injectedInterfacesOf(args[2]);
+        chain.addSourceInjections(srcInjected);
+        System.out.println("injected interfaces: " + srcInjected.size() + " vanilla classes in " + args[2] + "'s Fabric API");
         Path outDir = Path.of(args[4]);
         top.dext.centurybridge.data.FullAudit.enabled = true;
         top.dext.centurybridge.data.FullAudit.reset();
@@ -170,6 +175,10 @@ public final class Main {
             chain.loadTargetCtors(targetStub, crossesWall ? renameTable : null);
             System.out.println("target constructors: " + chain.targetCtors.size() + " owners from " + targetStub.getFileName());
         }
+        // and the target release's, into the target hierarchy (after loadTargetCtors, which writes it)
+        java.util.Map<String, List<String>> tgtInjected = injectedInterfacesOf(args[3]);
+        chain.addTargetInjections(tgtInjected, crossesWall ? renameTable : null);
+        System.out.println("injected interfaces: " + tgtInjected.size() + " vanilla classes in " + args[3] + "'s Fabric API");
         // real method bodies for injector anchors (the stub has none). Intermediary
         // era only: past the wall the refmaps are renamed later in the pipeline.
         if (!crossesWall) {
@@ -401,6 +410,19 @@ public final class Main {
     private static Path stubOf(String version) {
         return Path.of(postWall(version) ? "data/jars/client-" + version + ".jar"
                                           : "data/jars/client-" + version + "-intermediary.jar");
+    }
+
+    /**
+     * The interfaces a release's Fabric API injects into vanilla classes, from its modules under
+     * data/runtime/client-&lt;version&gt;/.fabric/processedMods (Chain.readInjectedInterfaces): missing modules
+     * fail the conversion, unless -Dcb.allowMissingStubs=true says to go on without them, knowingly.
+     */
+    private static java.util.Map<String, List<String>> injectedInterfacesOf(String version) throws java.io.IOException {
+        Path mods = Path.of("data/runtime/client-" + version + "/.fabric/processedMods");
+        if (!Files.isDirectory(mods) && Boolean.getBoolean("cb.allowMissingStubs")) {
+            return java.util.Map.of();
+        }
+        return Chain.readInjectedInterfaces(mods);
     }
 
     /** a release's jar with real method bodies, for mixin anchors: past the wall the plain jar carries them */

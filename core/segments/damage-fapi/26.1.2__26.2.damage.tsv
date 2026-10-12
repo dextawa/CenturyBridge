@@ -161,3 +161,9 @@ override+super	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType
 override+super	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder	build	(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/entity/EntityType;	CLASS	class gone
 call-static	net/fabricmc/fabric/api/registry/DecoratedPotPatternRegistry	registerPattern	(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)V	METHOD	method registerPattern(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceKey;)V public static
 call-static	net/fabricmc/fabric/api/registry/OxidizableBlocksRegistry	registerWeatheringCopperBlocks	(Lnet/minecraft/world/level/block/WeatheringCopperBlocks;)V	METHOD	method registerWeatheringCopperBlocks(Lnet/minecraft/world/level/block/WeatheringCopperCollection;)V public static
+call-injected	net/minecraft/client/renderer/SubmitNodeCollection	getExtendedBlockModelSubmits	()Ljava/util/List;	METHOD	method not declared on the owner
+call-injected	net/minecraft/client/renderer/SubmitNodeCollection	getExtendedItemSubmits	()Ljava/util/List;	METHOD	method not declared on the owner
+call-injected	net/minecraft/client/resources/model/sprite/MaterialBaker	spriteFinder	(Lnet/minecraft/resources/Identifier;)Lnet/fabricmc/fabric/api/client/renderer/v1/sprite/SpriteFinder;	ICCE	method not declared on the owner
+call-injected	net/minecraft/client/resources/model/sprite/MaterialBaker	spriteFinder	(Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/QuadAtlas;)Lnet/fabricmc/fabric/api/client/renderer/v1/sprite/SpriteFinder;	ICCE	method not declared on the owner
+call-injected	net/minecraft/data/tags/TagAppender	remove	(Ljava/lang/Object;)Lnet/minecraft/data/tags/TagAppender;	METHOD	method not declared on the owner
+call-injected	net/minecraft/data/tags/TagAppender	remove	([Ljava/lang/Object;)Lnet/minecraft/data/tags/TagAppender;	METHOD	method not declared on the owner

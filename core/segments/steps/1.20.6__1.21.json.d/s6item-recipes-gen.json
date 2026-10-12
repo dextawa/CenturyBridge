@@ -1,0 +1,652 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_1848.method_17702(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17702 takes"
+  },
+  "net/minecraft/class_1848.method_17703(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17703 takes"
+  },
+  "net/minecraft/class_1849.method_17700(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17700 takes"
+  },
+  "net/minecraft/class_1849.method_17701(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17701 takes"
+  },
+  "net/minecraft/class_1850.method_17705(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17705 takes"
+  },
+  "net/minecraft/class_1850.method_17706(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17706 takes"
+  },
+  "net/minecraft/class_1851.method_17708(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17708 takes"
+  },
+  "net/minecraft/class_1851.method_17709(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17709 takes"
+  },
+  "net/minecraft/class_1853.method_17712(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17712 takes"
+  },
+  "net/minecraft/class_1853.method_17713(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17713 takes"
+  },
+  "net/minecraft/class_1854.method_17710(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17710 takes"
+  },
+  "net/minecraft/class_1854.method_17711(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17711 takes"
+  },
+  "net/minecraft/class_1855.method_17714(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17714 takes"
+  },
+  "net/minecraft/class_1855.method_17715(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17715 takes"
+  },
+  "net/minecraft/class_1861.method_17727(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17727 takes"
+  },
+  "net/minecraft/class_1861.method_17728(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17728 takes"
+  },
+  "net/minecraft/class_1867.method_17729(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17729 takes"
+  },
+  "net/minecraft/class_1867.method_17730(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17730 takes"
+  },
+  "net/minecraft/class_1869.method_17727(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17727 takes"
+  },
+  "net/minecraft/class_1869.method_17728(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17728 takes"
+  },
+  "net/minecraft/class_1871.method_17733(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17733 takes"
+  },
+  "net/minecraft/class_1871.method_17734(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17734 takes"
+  },
+  "net/minecraft/class_1872.method_17731(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17731 takes"
+  },
+  "net/minecraft/class_1872.method_17732(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17732 takes"
+  },
+  "net/minecraft/class_1873.method_17738(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17738 takes"
+  },
+  "net/minecraft/class_1873.method_17739(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17739 takes"
+  },
+  "net/minecraft/class_1874.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbSingleRecipeInput(Lnet/minecraft/class_1263;)Lnet/minecraft/class_9695;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_59981 takes (through its bridge)"
+  },
+  "net/minecraft/class_1874.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9695;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbSingleRecipeInput(Lnet/minecraft/class_1263;)Lnet/minecraft/class_9695;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_59982 takes (through its bridge)"
+  },
+  "net/minecraft/class_1876.method_17740(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17740 takes"
+  },
+  "net/minecraft/class_1876.method_17741(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_17741 takes"
+  },
+  "net/minecraft/class_3972.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9695;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbSingleRecipeInput(Lnet/minecraft/class_1263;)Lnet/minecraft/class_9695;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_59998 takes (through its bridge)"
+  },
+  "net/minecraft/class_3975.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbSingleRecipeInput(Lnet/minecraft/class_1263;)Lnet/minecraft/class_9695;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_60003 takes (through its bridge)"
+  },
+  "net/minecraft/class_4317.method_20807(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_20807 takes"
+  },
+  "net/minecraft/class_4317.method_20808(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_20808 takes"
+  },
+  "net/minecraft/class_8060.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbSmithingRecipeInput(Lnet/minecraft/class_1263;)Lnet/minecraft/class_9695;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_59999 takes (through its bridge)"
+  },
+  "net/minecraft/class_8060.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9695;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbSmithingRecipeInput(Lnet/minecraft/class_1263;)Lnet/minecraft/class_9695;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_60000 takes (through its bridge)"
+  },
+  "net/minecraft/class_8062.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbSmithingRecipeInput(Lnet/minecraft/class_1263;)Lnet/minecraft/class_9695;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_60001 takes (through its bridge)"
+  },
+  "net/minecraft/class_8062.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9695;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbSmithingRecipeInput(Lnet/minecraft/class_1263;)Lnet/minecraft/class_9695;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_60002 takes (through its bridge)"
+  },
+  "net/minecraft/class_8164.method_49186(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_49186 takes"
+  },
+  "net/minecraft/class_8164.method_49187(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;",
+    "keep"
+   ],
+   "basis": "generated: the 1.20.6 container as the input 1.21's method_49187 takes"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+   "new": "method_59981(Lnet/minecraft/class_9696;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1874",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers.super_method_59981(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_1874;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_1874",
+   "superAccessors": [
+    "method_59981(Lnet/minecraft/class_9696;Lnet/minecraft/class_1937;)Z",
+    "method_59982(Lnet/minecraft/class_9696;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "generated: 1.21 calls method_8115(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Z, a bridge onto method_59981: the mod class gets method_59981, forwarding to its 1.20.6 method with the input as its container; its super call reaches super's method_59981 (CbItemRecipeSupers)"
+  },
+  {
+   "old": "method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_59982(Lnet/minecraft/class_9696;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1874",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers.super_method_59982(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_1874;Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_1874",
+   "superAccessors": [
+    "method_59981(Lnet/minecraft/class_9696;Lnet/minecraft/class_1937;)Z",
+    "method_59982(Lnet/minecraft/class_9696;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "generated: 1.21 calls method_8116(Lnet/minecraft/class_9695;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;, a bridge onto method_59982: the mod class gets method_59982, forwarding to its 1.20.6 method with the input as its container; its super call reaches super's method_59982 (CbItemRecipeSupers)"
+  },
+  {
+   "old": "method_17701(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17701(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1849",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17700(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17700(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1849",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17703(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17703(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1848",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17702(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17702(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1848",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17706(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17706(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1850",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17705(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17705(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1850",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_49186(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_49186(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_8164",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_49187(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_49187(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_8164",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17709(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17709(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1851",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17708(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17708(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1851",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17711(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17711(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1854",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17710(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17710(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1854",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17713(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17713(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1853",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17712(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17712(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1853",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17715(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17715(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1855",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17714(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17714(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1855",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17728(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17728(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1861",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17727(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17727(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1861",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_20808(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_20808(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_4317",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_20807(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_20807(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_4317",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17728(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17728(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1869",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17727(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17727(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1869",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17730(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17730(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1867",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17729(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17729(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1867",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17732(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17732(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1872",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17731(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17731(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1872",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17734(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17734(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1871",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17733(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17733(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1871",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_59998(Lnet/minecraft/class_9696;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_3972",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers.super_method_59998(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_3972;Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_3972",
+   "superAccessors": [
+    "method_59998(Lnet/minecraft/class_9696;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "generated: 1.21 calls method_8116(Lnet/minecraft/class_9695;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;, a bridge onto method_59998: the mod class gets method_59998, forwarding to its 1.20.6 method with the input as its container; its super call reaches super's method_59998 (CbItemRecipeSupers)"
+  },
+  {
+   "old": "method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+   "new": "method_59999(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_8060",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers.super_method_59999(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_8060;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_8060",
+   "superAccessors": [
+    "method_59999(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z",
+    "method_60000(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "generated: 1.21 calls method_8115(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Z, a bridge onto method_59999: the mod class gets method_59999, forwarding to its 1.20.6 method with the input as its container; its super call reaches super's method_59999 (CbItemRecipeSupers)"
+  },
+  {
+   "old": "method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_60000(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_8060",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers.super_method_60000(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_8060;Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_8060",
+   "superAccessors": [
+    "method_59999(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z",
+    "method_60000(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "generated: 1.21 calls method_8116(Lnet/minecraft/class_9695;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;, a bridge onto method_60000: the mod class gets method_60000, forwarding to its 1.20.6 method with the input as its container; its super call reaches super's method_60000 (CbItemRecipeSupers)"
+  },
+  {
+   "old": "method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+   "new": "method_60001(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_8062",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers.super_method_60001(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_8062;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_8062",
+   "superAccessors": [
+    "method_60001(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z",
+    "method_60002(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "generated: 1.21 calls method_8115(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Z, a bridge onto method_60001: the mod class gets method_60001, forwarding to its 1.20.6 method with the input as its container; its super call reaches super's method_60001 (CbItemRecipeSupers)"
+  },
+  {
+   "old": "method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_60002(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_8062",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers.super_method_60002(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_8062;Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_8062",
+   "superAccessors": [
+    "method_60001(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z",
+    "method_60002(Lnet/minecraft/class_9697;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "generated: 1.21 calls method_8116(Lnet/minecraft/class_9695;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;, a bridge onto method_60002: the mod class gets method_60002, forwarding to its 1.20.6 method with the input as its container; its super call reaches super's method_60002 (CbItemRecipeSupers)"
+  },
+  {
+   "old": "method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+   "new": "method_60003(Lnet/minecraft/class_9696;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_3975",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers.super_method_60003(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_3975;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipeSupers$Super_class_3975",
+   "superAccessors": [
+    "method_60003(Lnet/minecraft/class_9696;Lnet/minecraft/class_1937;)Z"
+   ],
+   "basis": "generated: 1.21 calls method_8115(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Z, a bridge onto method_60003: the mod class gets method_60003, forwarding to its 1.20.6 method with the input as its container; its super call reaches super's method_60003 (CbItemRecipeSupers)"
+  },
+  {
+   "old": "method_17739(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17739(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1873",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17738(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17738(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1873",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17741(Lnet/minecraft/class_8566;Lnet/minecraft/class_1937;)Z",
+   "new": "method_17741(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1876",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  },
+  {
+   "old": "method_17740(Lnet/minecraft/class_8566;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1876",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "generated: 1.21 hands the recipe input, the mod's 1.20.6 method takes the container it was made from"
+  }
+ ]
+}
