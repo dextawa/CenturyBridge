@@ -40,7 +40,9 @@
   "net/minecraft/class_4482.method_21848(Lnet/minecraft/class_1297;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive",
   "net/minecraft/class_4482.method_21849(Lnet/minecraft/class_1297;ZI)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive",
   "net/minecraft/class_4482.method_35292(Lnet/minecraft/class_2487;IZ)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive",
-  "net/minecraft/class_4482.method_21859()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive"
+  "net/minecraft/class_4482.method_21859()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive",
+  "net/minecraft/class_2624.method_17488(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers",
+  "net/minecraft/class_2573.method_16842(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers"
  },
  "overrideHooks": [
   {
@@ -469,6 +471,20 @@
     "method_35292(Lnet/minecraft/class_4482$class_9309;)V"
    ],
    "basis": "the occupant as 1.20.4's tag, ticks and nectar (minimum ticks 2400); super stores 1.20.4's BeeData (CbBlockBeehive)"
+  },
+  {
+   "old": "method_11334()Lcom/mojang/authlib/GameProfile;",
+   "new": "method_11334()Lnet/minecraft/class_9296;",
+   "onlyUnder": "net/minecraft/class_2631",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull.profile(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_9296;",
+   "basis": "the override's profile wrapped; its super call is reshaped back (CbBlockSkull)"
+  },
+  {
+   "old": "method_11333(Lcom/mojang/authlib/GameProfile;)V",
+   "new": "method_11333(Lnet/minecraft/class_9296;)V",
+   "onlyUnder": "net/minecraft/class_2631",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull.gameProfile(Lnet/minecraft/class_9296;)Lcom/mojang/authlib/GameProfile;",
+   "basis": "the old override gets the wrapped profile; its super call is reshaped (CbBlockSkull)"
   }
  ],
  "fieldGetters": {
@@ -730,12 +746,27 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockPot#sorted(Ljava/util/List;)Ljava/util/stream/Stream;",
    "basis": "1.20.5's ordered sides (brick when plain) as 1.20.4's stream (CbBlockPot)"
+  },
+  "net/minecraft/class_2631.method_11334()Lcom/mojang/authlib/GameProfile;": {
+   "desc": "()Lnet/minecraft/class_9296;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull#gameProfile(Lnet/minecraft/class_9296;)Lcom/mojang/authlib/GameProfile;",
+   "basis": "the owner's GameProfile (CbBlockSkull)"
+  },
+  "net/minecraft/class_2631.method_11333(Lcom/mojang/authlib/GameProfile;)V": {
+   "desc": "(Lnet/minecraft/class_9296;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull#profile(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_9296;"
+   ],
+   "basis": "the owner profile as the ResolvableProfile 1.20.5 keeps (CbBlockSkull)"
   }
  },
  "staticRedirects": {
   "net/minecraft/class_2586.method_11005(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2586;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
   "net/minecraft/class_1932.method_32350(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1932;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
-  "net/minecraft/class_2356.method_54015(Lnet/minecraft/class_1291;I)Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious"
+  "net/minecraft/class_2356.method_54015(Lnet/minecraft/class_1291;I)Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious",
+  "net/minecraft/class_2631.method_52589(Lnet/minecraft/class_2487;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull",
+  "net/minecraft/class_2631.method_52590(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V": {
@@ -896,13 +927,27 @@
    "method": "method_59547()Lnet/minecraft/class_1845;",
    "call": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel.potionBrewing(Lnet/minecraft/class_1937;)Lnet/minecraft/class_1845;",
    "basis": "1.20.4 brewing was static; a 1.20.4 level gets its server's, else the one built for its features (CbBlockLevel)"
+  },
+  {
+   "under": "net/minecraft/class_2624",
+   "method": "method_11282()Lnet/minecraft/class_2371;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers.getItems(Lnet/minecraft/class_2624;)Lnet/minecraft/class_2371;",
+   "basis": "a 1.20.4 container's slots through its own getItem/setItem/getContainerSize (CbBlockContainers)"
+  },
+  {
+   "under": "net/minecraft/class_2624",
+   "method": "method_11281(Lnet/minecraft/class_2371;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers.setItems(Lnet/minecraft/class_2624;Lnet/minecraft/class_2371;)V",
+   "basis": "each slot set through the container's own setItem (CbBlockContainers)"
   }
  ],
  "superRedirects": {
   "net/minecraft/class_1937.method_44013()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel#superDimensionTypeId",
   "net/minecraft/class_5138.method_41034(Lnet/minecraft/class_2338;Lnet/minecraft/class_5321;)Lnet/minecraft/class_3449;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStructures#superWithPieceAt",
   "net/minecraft/class_4482.method_21848(Lnet/minecraft/class_1297;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive#superAddOccupant",
-  "net/minecraft/class_4482.method_21849(Lnet/minecraft/class_1297;ZI)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive#superAddWithTicks"
+  "net/minecraft/class_4482.method_21849(Lnet/minecraft/class_1297;ZI)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive#superAddWithTicks",
+  "net/minecraft/class_2624.method_17488(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers#superSetCustomName",
+  "net/minecraft/class_2573.method_16842(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers#superSetBannerName"
  },
  "adapterHooks": [
   {
@@ -931,6 +976,24 @@
    ],
    "synth": [],
    "basis": "1.20.5 dropped writeBees(); a hive class overriding it has its list saved and put on the item (CbBlockBeehiveMixin)"
+  },
+  {
+   "under": "net/minecraft/class_2624",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers$LegacyCustomName",
+   "requires": [
+    "method_17488(Lnet/minecraft/class_2561;)V"
+   ],
+   "synth": [],
+   "basis": "1.20.5 dropped setCustomName; a container class overriding it is still called with an item's custom name (CbBlockContainerNameMixin)"
+  },
+  {
+   "under": "net/minecraft/class_2573",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers$LegacyBannerName",
+   "requires": [
+    "method_16842(Lnet/minecraft/class_2561;)V"
+   ],
+   "synth": [],
+   "basis": "as for containers (CbBlockBannerNameMixin)"
   }
  ],
  "genericWitnesses": {
