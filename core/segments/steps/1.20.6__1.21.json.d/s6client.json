@@ -444,6 +444,16 @@
       "wrap": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbSingleIngredient(Ljava/lang/Object;)Ljava/util/Iterator;",
       "onlyUnder": "net/minecraft/class_507",
       "basis": "a 1.20.6 RecipeBookComponent subclass's addItemToSlot gets 1.21's element as the one-element iterator it took next() of, and y, x in its own order"
+    },
+    {
+      "old": "method_1352(Lnet/minecraft/class_287$class_7433;)V",
+      "new": "method_1352(Lnet/minecraft/class_9801;)V",
+      "args": [
+        0
+      ],
+      "wrap": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers.cbAsRendered(Lnet/minecraft/class_9801;)Lnet/minecraft/class_287$class_7433;",
+      "onlyUnder": "net/minecraft/class_291",
+      "basis": "1.21 uploads a MeshData where 1.20.6 uploaded a RenderedBuffer: a 1.20.6 subclass's upload(RenderedBuffer) gets the mesh as the batch it stands for (released by the upload, as 1.21's closes the mesh)"
     }
   ],
   "superRedirects": {
@@ -453,7 +463,8 @@
     "net/minecraft/class_927.method_4068(Lnet/minecraft/class_1308;Lnet/minecraft/class_4604;DDD)Z": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperShouldRender",
     "net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperMobRender",
     "net/minecraft/class_437.method_59870()F": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbAdvancePanoramaTime",
-    "net/minecraft/class_437.method_37072()V": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbSuperNarrationEnabled"
+    "net/minecraft/class_437.method_37072()V": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbSuperNarrationEnabled",
+    "net/minecraft/class_291.method_1352(Lnet/minecraft/class_287$class_7433;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbUploadToBody"
   },
   "instanceRedirects": {
     "net/minecraft/class_2535.method_10748()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbDisconnectedReason",
@@ -471,7 +482,30 @@
     "net/minecraft/class_5489.method_30893(Lnet/minecraft/class_332;IIII)I": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbRenderLeftAligned",
     "net/minecraft/class_5489.method_41154(Lnet/minecraft/class_332;IIIII)V": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbRenderBackgroundCentered",
     "net/minecraft/class_437.method_59870()F": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbPanoramaTime",
-    "net/minecraft/class_437.method_37072()V": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbNarrationEnabled"
+    "net/minecraft/class_437.method_37072()V": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbNarrationEnabled",
+    "net/minecraft/class_4588.method_22912(DDD)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbVertex",
+    "net/minecraft/class_4588.method_22918(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbVertexMatrix",
+    "net/minecraft/class_4588.method_56824(Lnet/minecraft/class_4587$class_4665;FFF)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbVertexPose",
+    "net/minecraft/class_4588.method_22917(II)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbOverlayCoords",
+    "net/minecraft/class_4588.method_22916(I)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbUv2",
+    "net/minecraft/class_4588.method_23763(Lnet/minecraft/class_4587$class_4665;FFF)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbNormalPose",
+    "net/minecraft/class_4588.method_23919(FFFFFFFFFIIFFF)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBulkVertex",
+    "net/minecraft/class_4588.method_1344()V": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbEndVertex",
+    "net/minecraft/class_4588.method_22901(IIII)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbDefaultColor",
+    "net/minecraft/class_4588.method_35666()V": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbUnsetDefaultColor",
+    "net/minecraft/class_4584.method_22900()Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferCurrentElement",
+    "net/minecraft/class_4584.method_1325()V": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferNextElement",
+    "net/minecraft/class_4584.method_22896(IB)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferPutByte",
+    "net/minecraft/class_4584.method_22898(IS)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferPutShort",
+    "net/minecraft/class_4584.method_22897(IF)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferPutFloat",
+    "net/minecraft/class_4584.method_22912(DDD)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferVertex",
+    "net/minecraft/class_4584.method_1336(IIII)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferColor",
+    "net/minecraft/class_4584.method_22913(FF)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferUv",
+    "net/minecraft/class_4584.method_22917(II)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferOverlayCoords",
+    "net/minecraft/class_4584.method_22921(II)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferUv2",
+    "net/minecraft/class_4584.method_22899(SSI)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferUvShort",
+    "net/minecraft/class_4584.method_22914(FFF)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21/rt/CbRenderVertex#cbBufferNormal",
+    "net/minecraft/class_291.method_1352(Lnet/minecraft/class_287$class_7433;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbUploadTo"
   },
   "staticRedirects": {
     "net/minecraft/class_9147.method_56457(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;": "top/dext/centurybridge/step/v1_21/rt/CbNet",
@@ -480,7 +514,9 @@
     "net/minecraft/class_5489.method_30891(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;II)Lnet/minecraft/class_5489;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui",
     "net/minecraft/class_5489.method_35726(Lnet/minecraft/class_327;Ljava/util/List;)Lnet/minecraft/class_5489;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui",
     "net/minecraft/class_5489.method_30895(Lnet/minecraft/class_327;Ljava/util/List;)Lnet/minecraft/class_5489;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui",
-    "net/minecraft/class_6777.method_47621(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Lnet/minecraft/class_315;)Lnet/minecraft/class_6777;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui"
+    "net/minecraft/class_6777.method_47621(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Lnet/minecraft/class_315;)Lnet/minecraft/class_6777;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui",
+    "net/minecraft/class_286.method_43433(Lnet/minecraft/class_287$class_7433;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbDrawWithShader",
+    "net/minecraft/class_286.method_43437(Lnet/minecraft/class_287$class_7433;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbDraw"
   },
   "frameDefaults": {
     "method_55597(Lnet/minecraft/class_129;)V": {
@@ -540,6 +576,34 @@
       "new": "method_61107",
       "onlyUnder": "net/minecraft/class_9127$class_9128",
       "basis": "ProtocolInfo.Unbound.bind is intermediary method_61107 since 1.21 (1.20.6's kept the source name): same method"
+    },
+    {
+      "old": "method_1344()V",
+      "new": "cbLegacyEndVertex",
+      "onlyUnder": "net/minecraft/class_4588",
+      "superCalls": "rename",
+      "basis": "a 1.20.6 consumer's own endVertex() is the body CbRenderLegacyConsumer's entry runs: every endVertex() call, 1.20.6's or the one ending a vertex 1.21 code began, passes the entry, which keeps the open-vertex bookkeeping exact"
+    },
+    {
+      "old": "method_22912(DDD)Lnet/minecraft/class_4588;",
+      "new": "cbLegacyVertex",
+      "onlyUnder": "net/minecraft/class_4588",
+      "superCalls": "rename",
+      "basis": "a 1.20.6 consumer's own vertex(double..) is the body the entries run (1.21's addVertex and 1.20.6's vertex call): a vertex 1.21 code left open ends before 1.20.6 code begins one"
+    },
+    {
+      "old": "method_22918(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588;",
+      "new": "cbLegacyVertexMatrix",
+      "onlyUnder": "net/minecraft/class_4588",
+      "superCalls": "rename",
+      "basis": "1.21 begins most vertices with addVertex(matrix, ..), the same name and shape as 1.20.6's vertex(matrix, ..): a 1.20.6 consumer's own is renamed so 1.21's call passes the entry, which marks the vertex open for its endVertex()"
+    },
+    {
+      "old": "method_56824(Lnet/minecraft/class_4587$class_4665;FFF)Lnet/minecraft/class_4588;",
+      "new": "cbLegacyVertexPose",
+      "onlyUnder": "net/minecraft/class_4588",
+      "superCalls": "rename",
+      "basis": "1.21's addVertex(pose, ..) has 1.20.6's vertex(pose, ..) name and shape: renamed as vertex(matrix, ..)"
     }
   ],
   "lambdaAdapters": {
@@ -685,6 +749,17 @@
         "conv:2 top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbHorseColumns(Lnet/minecraft/class_1496;)I"
       ],
       "basis": "HorseInventoryScreen takes the chest's column count since 1.21; 1.20.6 drew the chest grid for a chested horse with a chest, getInventoryColumns() wide"
+    },
+    "net/minecraft/class_287.<init>(I)V": {
+      "desc": "(Lnet/minecraft/class_9799;Lnet/minecraft/class_293$class_5596;Lnet/minecraft/class_293;)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbNewBytes(I)Lnet/minecraft/class_9799;",
+        "push top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbIdleMode()Lnet/minecraft/class_293$class_5596;",
+        "push top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbIdleFormat()Lnet/minecraft/class_293;"
+      ],
+      "post": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbBuilt(Lnet/minecraft/class_287;)V",
+      "postArgs": [],
+      "basis": "BufferBuilder(capacity) of 1.20.6 owned a growable buffer that size and stood idle until begun; 1.21's takes a ByteBufferBuilder, a mode and a format and starts building: a ByteBufferBuilder of that capacity, any mode and format (begin() sets both), then idle"
     }
   },
   "adapterHooks": [
@@ -736,11 +811,25 @@
       ],
       "synth": [],
       "basis": "Screen.advancePanoramaTime is gone since 1.21: a 1.20.6 screen's override is what its panorama spins by (CbClientScreenPanoramaMixin)"
+    },
+    {
+      "under": "net/minecraft/class_291",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers$CbLegacyUpload",
+      "requires": [
+        "method_1352(Lnet/minecraft/class_287$class_7433;)V"
+      ],
+      "synth": [],
+      "basis": "VertexBuffer.upload(RenderedBuffer) is upload(MeshData) since 1.21: a 1.20.6 subclass's own upload is what 1.20.6-style uploads of it reach (CbRenderBuffers.cbUploadTo), its super.upload 1.20.6's body"
     }
   ],
   "classRenames": {
     "net/minecraft/class_317": "top/dext/centurybridge/step/v1_21/facade/Timer",
-    "net/minecraft/class_5500": "top/dext/centurybridge/step/v1_21/facade/SimpleOptionsSubScreen"
+    "net/minecraft/class_5500": "top/dext/centurybridge/step/v1_21/facade/SimpleOptionsSubScreen",
+    "net/minecraft/class_4584": "top/dext/centurybridge/step/v1_21/facade/BufferVertexConsumer",
+    "net/minecraft/class_4585": "top/dext/centurybridge/step/v1_21/facade/DefaultedVertexConsumer",
+    "net/minecraft/class_287$class_4574": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderDrawState",
+    "net/minecraft/class_287$class_7433": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderRenderedBuffer",
+    "net/minecraft/class_287$class_5594": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderSortState"
   },
   "facadeGaps": {
     "net/minecraft/class_317.<init>(FJ)V": "Timer(ticksPerSecond, now) is 1.20.2's constructor; 1.20.3 replaced it with (ticksPerSecond, now, targetMsptProvider) and the 1.20.2 -> 1.20.3 step reshapes every call into that one (CbClient.cbFixedTickRate), so no class climbing into 1.20.6 names it"
@@ -759,6 +848,43 @@
   ],
   "covers": [
     "net/minecraft/class_359$class_360.method_1959()Lnet/minecraft/class_243;",
-    "net/minecraft/class_359$class_360.method_1961()J"
-  ]
+    "net/minecraft/class_359$class_360.method_1961()J",
+    "net/minecraft/class_287.method_1328(Lnet/minecraft/class_293$class_5596;Lnet/minecraft/class_293;)V",
+    "net/minecraft/class_287.method_1326()Lnet/minecraft/class_287$class_7433;",
+    "net/minecraft/class_287.method_43575()Lnet/minecraft/class_287$class_7433;",
+    "net/minecraft/class_287.method_43574()Z",
+    "net/minecraft/class_287.method_22893()Z",
+    "net/minecraft/class_287.method_1343()V",
+    "net/minecraft/class_287.method_23477()V",
+    "net/minecraft/class_287.method_54558()V",
+    "net/minecraft/class_287.method_49904(Lnet/minecraft/class_8251;)V",
+    "net/minecraft/class_287.method_1334()Lnet/minecraft/class_287$class_5594;",
+    "net/minecraft/class_287.method_1324(Lnet/minecraft/class_287$class_5594;)V",
+    "net/minecraft/class_287.method_22900()Lnet/minecraft/class_296;",
+    "net/minecraft/class_287.method_1325()V",
+    "net/minecraft/class_287.method_22896(IB)V",
+    "net/minecraft/class_287.method_22898(IS)V",
+    "net/minecraft/class_287.method_22897(IF)V",
+    "net/minecraft/class_287.method_22899(SSI)Lnet/minecraft/class_4588;",
+    "net/minecraft/class_287.method_22912(DDD)Lnet/minecraft/class_4588;",
+    "net/minecraft/class_287.method_22917(II)Lnet/minecraft/class_4588;",
+    "net/minecraft/class_287.method_22916(I)Lnet/minecraft/class_4588;",
+    "net/minecraft/class_287.method_23763(Lnet/minecraft/class_4587$class_4665;FFF)Lnet/minecraft/class_4588;",
+    "net/minecraft/class_287.method_23919(FFFFFFFFFIIFFF)V",
+    "net/minecraft/class_287.method_1344()V",
+    "net/minecraft/class_287.method_22901(IIII)V",
+    "net/minecraft/class_287.method_35666()V",
+    "net/minecraft/class_289.method_1349()Lnet/minecraft/class_287;",
+    "net/minecraft/class_289.method_1350()V"
+  ],
+  "superRenames": {
+    "net/minecraft/class_4588": "top/dext/centurybridge/step/v1_21/rt/CbRenderLegacyConsumer",
+    "net/minecraft/class_4723": "top/dext/centurybridge/step/v1_21/rt/CbRenderLegacySprite",
+    "net/minecraft/class_4583": "top/dext/centurybridge/step/v1_21/rt/CbRenderLegacyDecal"
+  },
+  "ctorRedirects": {
+    "net/minecraft/class_287.<init>(I)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbNewBuilder"
+  },
+  "instanceFieldGetters": {},
+  "instanceFieldSetters": {}
 }

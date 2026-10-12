@@ -32,7 +32,17 @@
     "CbClientScreenAccess",
     "CbClientScreenPanoramaMixin",
     "CbClientSubtitleMixin",
-    "CbEnchClientMixin"
+    "CbEnchClientMixin",
+    "CbRenderBufferBuilderMixin",
+    "CbRenderByteBufferBuilderAccess",
+    "CbRenderDecalAccess",
+    "CbRenderDoubleAccess",
+    "CbRenderMultipleAccess",
+    "CbRenderOutlineAccess",
+    "CbRenderSpriteAccess",
+    "CbRenderTesselatorMixin",
+    "CbRenderUploaderAccess",
+    "CbRenderVertexBufferAccess"
   ],
   "server": [],
   "injectors": {

@@ -2726,6 +2726,16 @@ public final class JarProcessor {
                             // renamed type because the emitted descriptor goes through the same
                             // ClassRemapper. Everything else lives on the facade / renamed class.
                             String rkey = owner + "." + name + desc;
+                            // a super call into a dead class renamed to a CenturyBridge facade resolves on the
+                            // facade, which serves the class's members itself (the build gate holds it to the
+                            // whole surface), as a super call into a superRenames facade does: an instance
+                            // redirect wired for the type's other callers would turn it into a virtual call
+                            // again -- back into the class's own override
+                            if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>")
+                                    && chain.classRenames.get(owner).startsWith("top/dext/") && !chain.facadeGaps.containsKey(rkey)) {
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "super-facade");
+                                return;
+                            }
                             String rirt = chain.instanceRedirects.get(rkey);
                             if (rirt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
                                 instRedirects.put(site, rirt);
@@ -3606,10 +3616,14 @@ public final class JarProcessor {
                                 && name.equals(covariantBridge.oldName) && desc.equals(covariantBridge.oldDesc)) {
                             desc = covariantBridge.newDesc;
                         }
-                        if (op == Opcodes.INVOKESPECIAL && !owner.equals(clsName[0]) && owner.startsWith("net/minecraft/")) {
+                        if (op == Opcodes.INVOKESPECIAL && !owner.equals(clsName[0])) {
                             for (Chain.OverrideRename r : declaredRenames) {
                                 if (r.superCalls && r.oldName.equals(name) && r.oldDesc.equals(desc)) {
-                                    // super.old(..): the vanilla method lives on under the new name
+                                    // super.old(..): the method lives on under the new name -- in vanilla, and in a
+                                    // mod superclass too, whose own declaration (under the same onlyUnder) was
+                                    // renamed with this one. Left on the old name, a mod superclass's call would
+                                    // resolve past its renamed body to whatever still answers the old name, which
+                                    // calls the new name virtually: back into this class's override, forever.
                                     name = r.newName;
                                     break;
                                 }
