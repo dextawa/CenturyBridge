@@ -481,6 +481,41 @@ def bodies(jar, owner):
     return _bodies[k]
 
 
+_constants = {}
+
+
+def constant_of(jar, owner, name, desc):
+    """the Java literal of 1.20.4's compile-time constant owner.name (static final with a ConstantValue), or None"""
+    if owner not in _constants:
+        out = subprocess.run(['javap', '-p', '-constants', '-cp', jar, owner.replace('/', '.')],
+                             capture_output=True, text=True, encoding='utf-8', errors='replace').stdout
+        found = {}
+        for line in out.splitlines():
+            m = re.match(r'^\s+(?:\w+\s+)*static final (\S+) (\w+) = (.*);$', line)
+            if m:
+                found[m.group(2)] = (m.group(1), m.group(3))
+        _constants[owner] = found
+    hit = _constants[owner].get(name)
+    if not hit:
+        return None
+    jtype, value = hit
+    want = {'Z': 'boolean', 'B': 'byte', 'C': 'char', 'S': 'short', 'I': 'int', 'J': 'long', 'F': 'float',
+            'D': 'double', 'Ljava/lang/String;': 'java.lang.String'}.get(desc)
+    if want != jtype:
+        return None
+    if jtype == 'byte':
+        return f'(byte) {value}'
+    if jtype == 'short':
+        return f'(short) {value}'
+    if jtype == 'char':
+        return f'(char) {int(value)}' if value.lstrip('-').isdigit() else value
+    if jtype == 'long':
+        return value if value.endswith(('l', 'L')) else value + 'L'
+    if jtype == 'java.lang.String':
+        return value if value.startswith('"') else json.dumps(value)
+    return value
+
+
 def getter_field(jar, owner, name, desc):
     """the field owner.name(desc) returns as a plain getter (this.f, returned), or None"""
     code = bodies(jar, owner).get((name, desc))
@@ -586,6 +621,7 @@ def main():
     frag['overrideHooks'] = []
     frag['lambdaAdapters'] = {}
     static_getters = {}    # (owner, name, desc) -> (class, converter)
+    constants = {}         # (owner, name, desc) -> (class, Java literal): 1.20.4 compile-time constants 1.20.5 dropped
     inst_getters = {}      # (owner, name, desc, wdesc) -> (class, converter)
     inst_setters = {}
     legacy = {}            # iface -> (sam, old desc, converter, short, side)
@@ -601,7 +637,15 @@ def main():
     for r in rows:
         usage, owner, name, desc, kinds = r[:5]
         fate, detail = 'design', ''
-        if usage in ('get-static', 'get-static-protected') and kinds == 'FIELD':
+        if usage in ('get-static', 'get-static-protected') and kinds == 'FIELD' \
+                and not any(f[0] == name for f in (W[owner].fields if owner in W else [])) \
+                and constant_of(vjar, owner, name, desc) is not None:
+            lit = constant_of(vjar, owner, name, desc)
+            cls = FIELDS if side(owner) == 'common' else CLIENT_FIELDS
+            frag['fieldGetters'][f'{owner}.{name}:{desc}'] = cls
+            constants[(owner, name, desc)] = (cls, lit)
+            fate, detail = 'constant', lit
+        elif usage in ('get-static', 'get-static-protected') and kinds == 'FIELD':
             wf = [f for f in (W[owner].fields if owner in W else []) if f[0] == name]
             if not wf:
                 detail = 'no 1.20.5 field of this name'
@@ -797,10 +841,11 @@ def main():
     # ---- Java: field accessors, per side
     for cls, client in ((FIELDS, False), (CLIENT_FIELDS, True)):
         sg = sorted((k, v) for k, v in static_getters.items() if v[0] == cls)
+        cg = sorted((k, v) for k, v in constants.items() if v[0] == cls)
         ig = sorted((k, v) for k, v in inst_getters.items() if v[0] == cls)
         isx = sorted((k, v) for k, v in inst_setters.items() if v[0] == cls)
         path = os.path.join(src, cls + '.java')
-        if not (sg or ig or isx):
+        if not (sg or ig or isx or cg):
             if os.path.exists(path):
                 os.remove(path)
             continue
@@ -821,6 +866,11 @@ def main():
             out += [f'    /** {mojang(owner, cm)}.{name} */',
                     f'    public static {jt(desc)} {name}() {{',
                     f'        return {conv[0].rsplit("/", 1)[1]}.{conv[1]}({jt("L" + owner + ";")}.{name});',
+                    '    }', '']
+        for (owner, name, desc), (_, lit) in cg:
+            out += [f'    /** {mojang(owner, cm)}.{name}: the constant 1.20.4 had (1.20.5 dropped the field) */',
+                    f'    public static {jt(desc)} {name}() {{',
+                    f'        return {lit};',
                     '    }', '']
         for (owner, name, desc, wdesc), (_, conv) in ig:
             out += [f'    /** {mojang(owner, cm)}.{name}, read */',
