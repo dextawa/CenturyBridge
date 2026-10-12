@@ -8,14 +8,13 @@ import net.minecraft.class_2350;
 import net.minecraft.class_2513;
 import net.minecraft.class_2680;
 import net.minecraft.class_4538;
-import net.minecraft.class_4970;
-import net.minecraft.class_5321;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import top.dext.centurybridge.step.v1_20_3.rt.CbWorldStemAccess;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldStems;
 
 /**
@@ -23,15 +22,14 @@ import top.dext.centurybridge.step.v1_20_3.rt.CbWorldStems;
  * and picks its seed through the 1.20.2 fruit and seed supplier.
  */
 @Mixin(class_2195.class)
-public abstract class CbWorldAttachedStemMixin {
+public abstract class CbWorldAttachedStemMixin implements CbWorldStemAccess {
 
     @Unique
     private CbWorldStems.LegacyStem cb$legacy;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
-    private void cb$takeLegacy(class_5321<?> stem, class_5321<?> fruit, class_5321<?> seed,
-                               class_4970.class_2251 properties, CallbackInfo ci) {
-        this.cb$legacy = CbWorldStems.takePending();
+    @Override
+    public void cb$setLegacyStem(CbWorldStems.LegacyStem legacy) {
+        this.cb$legacy = legacy;
     }
 
     /**

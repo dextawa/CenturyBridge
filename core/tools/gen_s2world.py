@@ -174,9 +174,10 @@ def main():
          ["keep:0", imap], "interactions as a named InteractionMap (CbWorldBlocks.interactionMap)")
     ctor(MC + "class_5556.<init>(" + P + "Ljava/util/function/Predicate;Ljava/util/Map;)V",
          "(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/class_5620$class_8821;" + P + ")V",
-         ["conv:1 " + RT + "/CbWorldBlocks#legacyLayeredFill(Ljava/util/function/Predicate;)Lnet/minecraft/class_1959$class_1963;",
+         ["conv:1 " + RT + "/CbWorldBlocks#fillPrecipitation(Ljava/util/function/Predicate;)Lnet/minecraft/class_1959$class_1963;",
           imap.replace("conv:1", "conv:2"), "keep:0"],
-         "the fill predicate goes to the cauldron (CbWorldLayeredCauldronMixin); interactions as an InteractionMap")
+         "the fill predicate goes to the constructed cauldron (CbWorldLayeredCauldronMixin); interactions as an InteractionMap",
+         post=RT + "/CbWorldBlocks#legacyLayeredCauldron(Lnet/minecraft/class_5556;Ljava/util/function/Predicate;)V", post_args=[1])
     ctor(MC + "class_5542.<init>(II" + P + ")V", "(FF" + P + ")V",
          ["conv:0 " + RT + "/CbWorldBlocks#intToFloat(I)F", "conv:1 " + RT + "/CbWorldBlocks#intToFloat(I)F", "keep:2"],
          "the same height and offset, as floats")
@@ -186,16 +187,18 @@ def main():
     ctor(MC + "class_2440.<init>(Lnet/minecraft/class_2440$class_2441;" + P + "Lnet/minecraft/class_8177;)V", "(Lnet/minecraft/class_8177;" + P + ")V",
          ["conv:0,2 " + RT + "/CbWorldBlocks#plateType(Lnet/minecraft/class_2440$class_2441;Lnet/minecraft/class_8177;)Lnet/minecraft/class_8177;", "keep:1"],
          "the sensitivity moved into the BlockSetType (CbWorldBlocks.plateType)")
-    for torch in ("class_2527", "class_2555"):
+    for torch, post in (("class_2527", "legacyTorchFlame"), ("class_2555", "legacyWallTorchFlame")):
         ctor(MC + torch + ".<init>(" + P + "Lnet/minecraft/class_2394;)V", "(Lnet/minecraft/class_2400;" + P + ")V",
              ["conv:1 " + RT + "/CbWorldBlocks#torchFlame(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2400;", "keep:0"],
-             "the flame narrowed to SimpleParticleType; any other particle is kept by the torch (CbWorldTorchMixin)")
+             "the flame narrowed to SimpleParticleType; any other particle is kept by the constructed torch (CbWorldTorchMixin)",
+             post=RT + "/CbWorldBlocks#" + post + "(Lnet/minecraft/" + torch + ";Lnet/minecraft/class_2394;)V", post_args=[1])
     ctor(MC + "class_2563.<init>(Lnet/minecraft/class_1291;" + P + ")V", "(Lnet/minecraft/class_1291;I" + P + ")V",
          ["keep:0", "push " + RT + "/CbWorldBlocks#witherRoseEffectSeconds()I", "keep:1"],
          "1.20.2 passed an 8 second effect to FlowerBlock")
     ctor(MC + "class_2473.<init>(Lnet/minecraft/class_2647;" + P + ")V", "(Lnet/minecraft/class_8813;" + P + ")V",
          ["conv:0 " + RT + "/CbWorldTrees#legacyGrower(Lnet/minecraft/class_2647;)Lnet/minecraft/class_8813;", "keep:1"],
-         "the sapling keeps its 1.20.2 grower and grows through it (CbWorldTrees, CbWorldSaplingMixin)")
+         "the sapling keeps its 1.20.2 grower and grows through it (CbWorldTrees, CbWorldSaplingMixin)",
+         post=RT + "/CbWorldTrees#attachGrower(Lnet/minecraft/class_2473;Lnet/minecraft/class_2647;)V", post_args=[0])
     ctor(MC + "class_7115.<init>(" + P + ")V", "(Lnet/minecraft/class_8813;" + P + ")V",
          ["push " + RT + "/CbWorldBlocks#mangroveGrower()Lnet/minecraft/class_8813;", "keep:0"],
          "1.20.2 grew a MangroveTreeGrower(0.85F): TreeGrower.MANGROVE is the same choice")
@@ -210,13 +213,15 @@ def main():
          + ["keep:%d" % i for i in range(2, 11)],
          "1.20.2's set carried no wind-charge, arrow or plate setting (buttons and plates carried their own): "
          "a hand-openable set gets 1.20.2's wooden pairing (all on, any-entity plates), the others its stone one")
-    stem_ops = ["conv:0,1 " + RT + "/CbWorldStems#legacyStem(Lnet/minecraft/class_2511;Ljava/util/function/Supplier;)Lnet/minecraft/class_5321;",
+    stem_ops = ["push " + RT + "/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
                 "push " + RT + "/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
                 "push " + RT + "/CbWorldStems#noItem()Lnet/minecraft/class_5321;", "keep:2"]
-    for stem in ("class_2513", "class_2195"):
+    for stem, post in (("class_2513", "attachStem"), ("class_2195", "attachAttachedStem")):
         ctor(MC + stem + ".<init>(Lnet/minecraft/class_2511;Ljava/util/function/Supplier;" + P + ")V",
              "(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;" + P + ")V", stem_ops,
-             "the stem keeps its 1.20.2 fruit and seed and works through them (CbWorldStems)")
+             "the constructed stem keeps its 1.20.2 fruit and seed and works through them (CbWorldStems)",
+             post=RT + "/CbWorldStems#" + post + "(Lnet/minecraft/" + stem + ";Lnet/minecraft/class_2511;Ljava/util/function/Supplier;)V",
+             post_args=[0, 1])
 
     # ---------------------------------------------------------------- fields
     w["fieldRedirects"][MC + "class_5556.field_27880:Ljava/util/function/Predicate;"] = RT + "/CbWorldBlocks#LAYERED_RAIN"

@@ -24,6 +24,8 @@ import net.minecraft.class_2398;
 import net.minecraft.class_2400;
 import net.minecraft.class_2527;
 import net.minecraft.class_2537;
+import net.minecraft.class_2555;
+import net.minecraft.class_5556;
 import net.minecraft.class_2633;
 import net.minecraft.class_2680;
 import net.minecraft.class_2960;
@@ -139,29 +141,27 @@ public final class CbWorldBlocks {
 
     // ------------------------------------------------------------------ torches
 
-    private static final ThreadLocal<class_2394> PENDING_TORCH_FLAME = new ThreadLocal<>();
-
     /**
      * TorchBlock / WallTorchBlock(props, ParticleOptions flame) became (SimpleParticleType, props).
      * A simple particle type passes as itself. Any other ParticleOptions (a dust colour, a mod's
-     * own options) has no place in the 1.20.3 field: the torch is built with FLAME there and the
-     * real particle is handed to the torch being constructed (CbWorldTorchMixin takes it when the
-     * constructor returns), which then emits it where 1.20.2 emitted its flame.
+     * own options) has no place in the 1.20.3 field: the torch is built with FLAME there, and the
+     * constructor reshape's post step hands it the real particle ({@link #legacyTorchFlame}), which
+     * it then emits where 1.20.2 emitted its flame (CbWorldTorchMixin).
      */
     public static class_2400 torchFlame(class_2394 flame) {
-        if (flame instanceof class_2400 simple) {
-            PENDING_TORCH_FLAME.remove();
-            return simple;
-        }
-        PENDING_TORCH_FLAME.set(flame);
-        return class_2398.field_11240;
+        return flame instanceof class_2400 simple ? simple : class_2398.field_11240;
     }
 
-    /** the flame particle a 1.20.2 constructor gave the torch under construction, once */
-    public static class_2394 takePendingTorchFlame() {
-        class_2394 p = PENDING_TORCH_FLAME.get();
-        PENDING_TORCH_FLAME.remove();
-        return p;
+    /** post step of TorchBlock(props, flame): a flame the 1.20.3 field could not hold stays with the torch */
+    public static void legacyTorchFlame(class_2527 torch, class_2394 flame) {
+        if (!(flame instanceof class_2400)) {
+            ((CbWorldTorchAccess) torch).cb$setLegacyFlame(flame);
+        }
+    }
+
+    /** post step of WallTorchBlock(props, flame), as {@link #legacyTorchFlame} */
+    public static void legacyWallTorchFlame(class_2555 torch, class_2394 flame) {
+        legacyTorchFlame(torch, flame);
     }
 
     /** a 1.20.2 read of the protected TorchBlock.flameParticle (typed ParticleOptions then) */
@@ -267,29 +267,16 @@ public final class CbWorldBlocks {
     public record LegacyCauldron(Predicate<class_1959.class_1963> fill, boolean powderSnow) {
     }
 
-    private static final ThreadLocal<LegacyCauldron> PENDING_CAULDRON = new ThreadLocal<>();
-
     /**
      * LayeredCauldronBlock(props, Predicate fill, interactions) became (Precipitation, InteractionMap,
      * props): 1.20.3 fills on exactly one precipitation and lets that one decide the fire behaviour
      * too (SNOW melts into a water cauldron, which only PowderSnowCauldronBlock did in 1.20.2). The
-     * 1.20.2 predicate is handed to the cauldron under construction (CbWorldLayeredCauldronMixin),
-     * which answers precipitation, stalactite drips and fire the 1.20.2 way; the precipitation
-     * returned is the one the predicate accepts alone (NONE when it accepts neither), for the code
-     * that only reads the 1.20.3 field.
+     * 1.20.3 field gets the precipitation the predicate accepts alone (NONE when it accepts neither),
+     * for the code that only reads the field; the constructor reshape's post step hands the predicate
+     * itself to the cauldron ({@link #legacyLayeredCauldron}), which answers precipitation, stalactite
+     * drips and fire the 1.20.2 way (CbWorldLayeredCauldronMixin).
      */
-    public static class_1959.class_1963 legacyLayeredFill(Predicate<class_1959.class_1963> fill) {
-        PENDING_CAULDRON.set(new LegacyCauldron(fill, false));
-        return onlyPrecipitation(fill);
-    }
-
-    /** the same for the 1.20.2 PowderSnowCauldronBlock constructor (the facade's), keeping its fire behaviour */
-    public static class_1959.class_1963 legacyPowderSnowFill(Predicate<class_1959.class_1963> fill) {
-        PENDING_CAULDRON.set(new LegacyCauldron(fill, true));
-        return onlyPrecipitation(fill);
-    }
-
-    private static class_1959.class_1963 onlyPrecipitation(Predicate<class_1959.class_1963> fill) {
+    public static class_1959.class_1963 fillPrecipitation(Predicate<class_1959.class_1963> fill) {
         boolean rain = fill.test(class_1959.class_1963.field_9382);
         boolean snow = fill.test(class_1959.class_1963.field_9383);
         if (rain && !snow) {
@@ -301,11 +288,14 @@ public final class CbWorldBlocks {
         return rain ? class_1959.class_1963.field_9382 : class_1959.class_1963.field_9384;
     }
 
-    /** the 1.20.2 fill predicate handed to the cauldron under construction, once */
-    public static LegacyCauldron takePendingCauldron() {
-        LegacyCauldron c = PENDING_CAULDRON.get();
-        PENDING_CAULDRON.remove();
-        return c;
+    /** post step of LayeredCauldronBlock(props, fill, interactions): the cauldron keeps the 1.20.2 predicate */
+    public static void legacyLayeredCauldron(class_5556 cauldron, Predicate<class_1959.class_1963> fill) {
+        ((CbWorldLayeredCauldronAccess) cauldron).cb$setLegacy(new LegacyCauldron(fill, false));
+    }
+
+    /** the 1.20.2 PowderSnowCauldronBlock (the facade's constructor): its predicate, and its fire behaviour */
+    public static void legacyPowderSnowCauldron(class_5556 cauldron, Predicate<class_1959.class_1963> fill) {
+        ((CbWorldLayeredCauldronAccess) cauldron).cb$setLegacy(new LegacyCauldron(fill, true));
     }
 
     private static int legacyMaps;

@@ -340,11 +340,15 @@
   "net/minecraft/class_5556.<init>(Lnet/minecraft/class_4970$class_2251;Ljava/util/function/Predicate;Ljava/util/Map;)V": {
    "desc": "(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/class_5620$class_8821;Lnet/minecraft/class_4970$class_2251;)V",
    "ops": [
-    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#legacyLayeredFill(Ljava/util/function/Predicate;)Lnet/minecraft/class_1959$class_1963;",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#fillPrecipitation(Ljava/util/function/Predicate;)Lnet/minecraft/class_1959$class_1963;",
     "conv:2 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#interactionMap(Ljava/util/Map;)Lnet/minecraft/class_5620$class_8821;",
     "keep:0"
    ],
-   "basis": "the fill predicate goes to the cauldron (CbWorldLayeredCauldronMixin); interactions as an InteractionMap"
+   "basis": "the fill predicate goes to the constructed cauldron (CbWorldLayeredCauldronMixin); interactions as an InteractionMap",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#legacyLayeredCauldron(Lnet/minecraft/class_5556;Ljava/util/function/Predicate;)V",
+   "postArgs": [
+    1
+   ]
   },
   "net/minecraft/class_5542.<init>(IILnet/minecraft/class_4970$class_2251;)V": {
    "desc": "(FFLnet/minecraft/class_4970$class_2251;)V",
@@ -378,7 +382,11 @@
     "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#torchFlame(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2400;",
     "keep:0"
    ],
-   "basis": "the flame narrowed to SimpleParticleType; any other particle is kept by the torch (CbWorldTorchMixin)"
+   "basis": "the flame narrowed to SimpleParticleType; any other particle is kept by the constructed torch (CbWorldTorchMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#legacyTorchFlame(Lnet/minecraft/class_2527;Lnet/minecraft/class_2394;)V",
+   "postArgs": [
+    1
+   ]
   },
   "net/minecraft/class_2555.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_2394;)V": {
    "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_4970$class_2251;)V",
@@ -386,7 +394,11 @@
     "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#torchFlame(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2400;",
     "keep:0"
    ],
-   "basis": "the flame narrowed to SimpleParticleType; any other particle is kept by the torch (CbWorldTorchMixin)"
+   "basis": "the flame narrowed to SimpleParticleType; any other particle is kept by the constructed torch (CbWorldTorchMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#legacyWallTorchFlame(Lnet/minecraft/class_2555;Lnet/minecraft/class_2394;)V",
+   "postArgs": [
+    1
+   ]
   },
   "net/minecraft/class_2563.<init>(Lnet/minecraft/class_1291;Lnet/minecraft/class_4970$class_2251;)V": {
    "desc": "(Lnet/minecraft/class_1291;ILnet/minecraft/class_4970$class_2251;)V",
@@ -403,7 +415,11 @@
     "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldTrees#legacyGrower(Lnet/minecraft/class_2647;)Lnet/minecraft/class_8813;",
     "keep:1"
    ],
-   "basis": "the sapling keeps its 1.20.2 grower and grows through it (CbWorldTrees, CbWorldSaplingMixin)"
+   "basis": "the sapling keeps its 1.20.2 grower and grows through it (CbWorldTrees, CbWorldSaplingMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldTrees#attachGrower(Lnet/minecraft/class_2473;Lnet/minecraft/class_2647;)V",
+   "postArgs": [
+    0
+   ]
   },
   "net/minecraft/class_7115.<init>(Lnet/minecraft/class_4970$class_2251;)V": {
    "desc": "(Lnet/minecraft/class_8813;Lnet/minecraft/class_4970$class_2251;)V",
@@ -444,22 +460,32 @@
   "net/minecraft/class_2513.<init>(Lnet/minecraft/class_2511;Ljava/util/function/Supplier;Lnet/minecraft/class_4970$class_2251;)V": {
    "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_4970$class_2251;)V",
    "ops": [
-    "conv:0,1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#legacyStem(Lnet/minecraft/class_2511;Ljava/util/function/Supplier;)Lnet/minecraft/class_5321;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
     "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
     "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noItem()Lnet/minecraft/class_5321;",
     "keep:2"
    ],
-   "basis": "the stem keeps its 1.20.2 fruit and seed and works through them (CbWorldStems)"
+   "basis": "the constructed stem keeps its 1.20.2 fruit and seed and works through them (CbWorldStems)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#attachStem(Lnet/minecraft/class_2513;Lnet/minecraft/class_2511;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    0,
+    1
+   ]
   },
   "net/minecraft/class_2195.<init>(Lnet/minecraft/class_2511;Ljava/util/function/Supplier;Lnet/minecraft/class_4970$class_2251;)V": {
    "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_4970$class_2251;)V",
    "ops": [
-    "conv:0,1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#legacyStem(Lnet/minecraft/class_2511;Ljava/util/function/Supplier;)Lnet/minecraft/class_5321;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
     "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
     "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noItem()Lnet/minecraft/class_5321;",
     "keep:2"
    ],
-   "basis": "the stem keeps its 1.20.2 fruit and seed and works through them (CbWorldStems)"
+   "basis": "the constructed stem keeps its 1.20.2 fruit and seed and works through them (CbWorldStems)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#attachAttachedStem(Lnet/minecraft/class_2195;Lnet/minecraft/class_2511;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    0,
+    1
+   ]
   },
   "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;)V": {
    "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V",

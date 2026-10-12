@@ -6,9 +6,7 @@ import net.minecraft.class_2338;
 import net.minecraft.class_2680;
 import net.minecraft.class_3611;
 import net.minecraft.class_3612;
-import net.minecraft.class_4970;
 import net.minecraft.class_5556;
-import net.minecraft.class_5620;
 import net.minecraft.class_5712;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -17,24 +15,24 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.dext.centurybridge.step.v1_20_3.rt.CbWorldBlocks;
+import top.dext.centurybridge.step.v1_20_3.rt.CbWorldLayeredCauldronAccess;
 
 /**
  * A layered cauldron built through a 1.20.2 constructor fills the way its 1.20.2 predicate says, takes
  * stalactite water when that predicate was LayeredCauldronBlock.RAIN, and handles a burning entity
  * the way its 1.20.2 class did: LayeredCauldronBlock lowered the level, PowderSnowCauldronBlock melted
- * into a water cauldron (1.20.3 decides both by its one precipitation, see CbWorldBlocks.legacyLayeredFill).
+ * into a water cauldron (1.20.3 decides both by its one precipitation, see CbWorldBlocks.fillPrecipitation).
  * Cauldrons vanilla 1.20.3 builds itself carry no 1.20.2 predicate and are untouched.
  */
 @Mixin(class_5556.class)
-public abstract class CbWorldLayeredCauldronMixin {
+public abstract class CbWorldLayeredCauldronMixin implements CbWorldLayeredCauldronAccess {
 
     @Unique
     private CbWorldBlocks.LegacyCauldron cb$legacy;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
-    private void cb$takeLegacy(class_1959.class_1963 precipitation, class_5620.class_8821 interactions,
-                               class_4970.class_2251 properties, CallbackInfo ci) {
-        this.cb$legacy = CbWorldBlocks.takePendingCauldron();
+    @Override
+    public void cb$setLegacy(CbWorldBlocks.LegacyCauldron legacy) {
+        this.cb$legacy = legacy;
     }
 
     /** 1.20.2 LayeredCauldronBlock.handlePrecipitation, with the predicate in place of 1.20.3's one precipitation */

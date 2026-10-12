@@ -3,6 +3,7 @@ package top.dext.centurybridge.step.v1_20_3.rt;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import net.minecraft.class_2473;
 import net.minecraft.class_8813;
 import top.dext.centurybridge.step.v1_20_3.facade.AbstractTreeGrower;
 import top.dext.centurybridge.step.v1_20_3.facade.AcaciaTreeGrower;
@@ -18,17 +19,16 @@ import top.dext.centurybridge.step.v1_20_3.facade.SpruceTreeGrower;
 /**
  * Saplings: 1.20.2's SaplingBlock grew through an AbstractTreeGrower object, whose subclasses chose the
  * feature in code; 1.20.3's takes a TreeGrower, a fixed table of feature keys. A sapling built through
- * the 1.20.2 constructor keeps its 1.20.2 grower and grows through it (CbWorldSaplingMixin takes it when
- * the constructor returns). The 1.20.3 field gets the TreeGrower of the same vanilla tree for 1.20.2's
- * own growers, and for any other one a registered TreeGrower naming no feature: the sapling never asks it.
+ * the 1.20.2 constructor keeps its 1.20.2 grower (the constructor reshape's post step, {@link #attachGrower})
+ * and grows through it (CbWorldSaplingMixin). The 1.20.3 field gets the TreeGrower of the same vanilla tree
+ * for 1.20.2's own growers, and for any other one a registered TreeGrower naming no feature: the sapling
+ * never asks it.
  */
 public final class CbWorldTrees {
 
-    private static final ThreadLocal<AbstractTreeGrower> PENDING = new ThreadLocal<>();
     private static final Map<Class<?>, class_8813> STAND_INS = new ConcurrentHashMap<>();
 
     public static class_8813 legacyGrower(AbstractTreeGrower grower) {
-        PENDING.set(grower);
         if (grower == null) {
             return null;
         }
@@ -66,11 +66,9 @@ public final class CbWorldTrees {
             Optional.empty(), Optional.empty(), Optional.empty()));
     }
 
-    /** the 1.20.2 grower handed to the sapling under construction, once */
-    public static AbstractTreeGrower takePending() {
-        AbstractTreeGrower g = PENDING.get();
-        PENDING.remove();
-        return g;
+    /** post step of SaplingBlock(grower, props): the sapling keeps the 1.20.2 grower */
+    public static void attachGrower(class_2473 sapling, AbstractTreeGrower grower) {
+        ((CbWorldSaplingAccess) sapling).cb$setLegacyGrower(grower);
     }
 
     private CbWorldTrees() {
