@@ -806,7 +806,12 @@
   "net/minecraft/class_8153.method_58151()Z": "method_60954",
   "net/minecraft/class_8949.method_58151()Z": "method_60954",
   "net/minecraft/class_9069.method_58151()Z": "method_60954",
-  "net/minecraft/class_9254.method_58151()Z": "method_60954"
+  "net/minecraft/class_9254.method_58151()Z": "method_60954",
+  "net/minecraft/class_1530.method_6896()Lnet/minecraft/class_2338;": "method_59940",
+  "net/minecraft/class_1532.method_6896()Lnet/minecraft/class_2338;": "method_59940",
+  "net/minecraft/class_1533.method_6896()Lnet/minecraft/class_2338;": "method_59940",
+  "net/minecraft/class_1534.method_6896()Lnet/minecraft/class_2338;": "method_59940",
+  "net/minecraft/class_5915.method_6896()Lnet/minecraft/class_2338;": "method_59940"
  },
  "callReshapes": {
   "net/minecraft/class_1322.comp_2447()Ljava/util/UUID;": {
@@ -1098,7 +1103,7 @@
     "keep:7"
    ],
    "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
-   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_3855;DDD)V",
    "postArgs": [
     4,
     5,
@@ -1114,7 +1119,7 @@
     "keep:5"
    ],
    "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
-   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_3855;DDD)V",
    "postArgs": [
     2,
     3,
@@ -1129,7 +1134,7 @@
     "conv:2,3,4 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
    ],
    "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
-   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1670;DDD)V",
    "postArgs": [
     2,
     3,
@@ -1145,7 +1150,7 @@
     "keep:5"
    ],
    "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
-   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1674;DDD)V",
    "postArgs": [
     2,
     3,
@@ -1160,7 +1165,7 @@
     "conv:2,3,4 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
    ],
    "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
-   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1677;DDD)V",
    "postArgs": [
     2,
     3,
@@ -1177,7 +1182,7 @@
     "conv:4,5,6 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
    ],
    "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
-   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1677;DDD)V",
    "postArgs": [
     4,
     5,
@@ -1192,7 +1197,7 @@
     "conv:2,3,4 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
    ],
    "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
-   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1687;DDD)V",
    "postArgs": [
     2,
     3,
@@ -1209,7 +1214,7 @@
     "conv:4,5,6 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
    ],
    "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
-   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_8956;DDD)V",
    "postArgs": [
     4,
     5,
@@ -1303,7 +1308,8 @@
   "net/minecraft/class_1322.<init>(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#newModifier",
   "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#newResourceLocation",
   "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#newResourceLocation",
-  "net/minecraft/class_5454.<init>(Lnet/minecraft/class_243;Lnet/minecraft/class_243;FF)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalInfo"
+  "net/minecraft/class_5454.<init>(Lnet/minecraft/class_243;Lnet/minecraft/class_243;FF)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalInfo",
+  "net/minecraft/class_1535.<init>(II)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#newVariant"
  },
  "staticRedirects": {
   "net/minecraft/class_155.method_43250()V": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#enableDataFixerOptimizations",
@@ -1315,7 +1321,9 @@
   "net/minecraft/class_2643.method_30276(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#canEntityTeleport",
   "net/minecraft/class_1657.method_26091(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;FZZ)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#findRespawnPositionAndUseSpawnBlock",
   "net/minecraft/class_1309.method_32326(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21/rt/CbEntityLiving#getEquipmentSlotForItem",
-  "net/minecraft/class_1675.method_18813(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#getMobArrow"
+  "net/minecraft/class_1675.method_18813(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#getMobArrow",
+  "net/minecraft/class_1534.method_48928(Lnet/minecraft/class_2487;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#storeVariant",
+  "net/minecraft/class_7408.method_43406(Lnet/minecraft/class_2378;)Lnet/minecraft/class_1535;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#bootstrap"
  },
  "instanceRedirects": {
   "net/minecraft/class_1322.comp_2448()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#name",
@@ -1362,7 +1370,16 @@
   "net/minecraft/class_1665.method_7449(I)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#setKnockback",
   "net/minecraft/class_1665.method_7442(Z)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#setShotFromCrossbow",
   "net/minecraft/class_1665.method_7435(Lnet/minecraft/class_1309;F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#setEnchantmentEffectsFromEntity",
-  "net/minecraft/class_1547.method_6996(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#getArrow"
+  "net/minecraft/class_1547.method_6996(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#getArrow",
+  "net/minecraft/class_1530.method_6897()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#getWidth",
+  "net/minecraft/class_1532.method_6897()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#getWidth",
+  "net/minecraft/class_1530.method_6891()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#getHeight",
+  "net/minecraft/class_1532.method_6891()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#getHeight",
+  "net/minecraft/class_1532.method_6892(Lnet/minecraft/class_2350;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#setDirection",
+  "net/minecraft/class_1532.method_6894()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#playPlacementSound",
+  "net/minecraft/class_1533.method_43272()Lnet/minecraft/class_9209;": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#getFramedMapId",
+  "net/minecraft/class_1535.method_6945()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#getWidth",
+  "net/minecraft/class_1535.method_6943()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#getHeight"
  },
  "fieldRedirects": {
   "net/minecraft/class_1320.field_30097:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#MAX_NAME_LENGTH",
@@ -1431,7 +1448,8 @@
   "net/minecraft/class_7110.field_39302:F": "top/dext/centurybridge/step/v1_21/rt/CbEntityAnimals#tadpoleHitboxWidth",
   "net/minecraft/class_7110.field_39303:F": "top/dext/centurybridge/step/v1_21/rt/CbEntityAnimals#tadpoleHitboxHeight",
   "net/minecraft/class_7701.field_46779:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants",
-  "net/minecraft/class_9236.field_50137:Lnet/minecraft/class_9236$class_9237;": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles"
+  "net/minecraft/class_9236.field_50137:Lnet/minecraft/class_9236$class_9237;": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles",
+  "net/minecraft/class_7923.field_41182:Lnet/minecraft/class_7922;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings"
  },
  "staticFieldSetters": {
   "net/minecraft/class_155.field_43095:Ljava/util/Set;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#setDataFixTypesToOptimize",
@@ -1524,7 +1542,15 @@
   "net/minecraft/class_1665.method_35207()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#superGetKnockback",
   "net/minecraft/class_1665.method_7449(I)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#superSetKnockback",
   "net/minecraft/class_1665.method_7442(Z)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#superSetShotFromCrossbow",
-  "net/minecraft/class_1665.method_7435(Lnet/minecraft/class_1309;F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#superSetEnchantmentEffectsFromEntity"
+  "net/minecraft/class_1665.method_7435(Lnet/minecraft/class_1309;F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#superSetEnchantmentEffectsFromEntity",
+  "net/minecraft/class_1532.method_6897()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superGetWidth",
+  "net/minecraft/class_1533.method_6897()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superGetWidth",
+  "net/minecraft/class_1534.method_6897()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superGetWidth",
+  "net/minecraft/class_1532.method_6891()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superGetHeight",
+  "net/minecraft/class_1533.method_6891()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superGetHeight",
+  "net/minecraft/class_1534.method_6891()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superGetHeight",
+  "net/minecraft/class_1532.method_6892(Lnet/minecraft/class_2350;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superSetDirection",
+  "net/minecraft/class_1532.method_6894()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superPlayPlacementSound"
  },
  "covers": [
   "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z",
@@ -1785,6 +1811,20 @@
    "onlyUnder": "net/minecraft/class_1496",
    "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityAnimals$LegacyInventorySize",
    "basis": "1.21 made AbstractHorse.getInventorySize() final: a 1.20.6 override is renamed and answers through CbEntityHorseInventoryMixin (its super call reaches 1.21's body, the same number for vanilla horses)"
+  },
+  {
+   "old": "method_6895()V",
+   "new": "method_6895$cb1_21",
+   "onlyUnder": "net/minecraft/class_1530",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations$LegacyRecalculate",
+   "basis": "1.21 made HangingEntity.recalculateBoundingBox() final: a 1.20.6 override is renamed and answers through CbEntityHangingMixin (CbEntityKnotMixin for a knot, no hanging entity in 1.21); its super call reaches 1.21's body"
+  },
+  {
+   "old": "method_6896()Lnet/minecraft/class_2338;",
+   "new": "method_59940",
+   "onlyUnder": "net/minecraft/class_1530",
+   "superCalls": "rename",
+   "basis": "HangingEntity.getPos() is 1.21's BlockAttachedEntity.getPos(): the same position field"
   }
  ],
  "frameDefaults": {
@@ -1842,6 +1882,9 @@
   },
   "method_6996(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;": {
    "2": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#weaponOf(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1799;"
+  },
+  "method_43272()Lnet/minecraft/class_9209;": {
+   "0": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#framedItem(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1799;"
   }
  },
  "convertHooks": [
@@ -2045,10 +2088,64 @@
    ],
    "synth": [],
    "basis": "a 1.20.6 caller's setEnchantmentEffectsFromEntity answers through a 1.20.6 arrow class's own override (CbEntityArrows)"
+  },
+  {
+   "under": "net/minecraft/class_1530",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations$LegacyWidth",
+   "requires": [
+    "method_6897()I"
+   ],
+   "synth": [],
+   "basis": "1.20.6's getWidth() of a hanging entity, in pixels, answers through a 1.20.6 class's own (CbEntityDecorations)"
+  },
+  {
+   "under": "net/minecraft/class_1530",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations$LegacyHeight",
+   "requires": [
+    "method_6891()I"
+   ],
+   "synth": [],
+   "basis": "1.20.6's getHeight() of a hanging entity, in pixels, answers through a 1.20.6 class's own (CbEntityDecorations)"
+  },
+  {
+   "under": "net/minecraft/class_1532",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations$LegacyKnotDirection",
+   "requires": [
+    "method_6892(Lnet/minecraft/class_2350;)V"
+   ],
+   "synth": [],
+   "basis": "1.20.6's LeashFenceKnotEntity.setDirection (a hanging entity's then) answers through a 1.20.6 subclass's own"
+  },
+  {
+   "under": "net/minecraft/class_1532",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations$LegacyKnotPlacementSound",
+   "requires": [
+    "method_6894()V"
+   ],
+   "synth": [],
+   "basis": "1.20.6's LeashFenceKnotEntity.playPlacementSound (a hanging entity's then) answers through a 1.20.6 subclass's own"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_1530",
+   "method": "method_59943(Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)Lnet/minecraft/class_238;",
+   "call": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations.calculateBoundingBox(Lnet/minecraft/class_1530;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)Lnet/minecraft/class_238;",
+   "basis": "a 1.20.6 hanging entity sized its box from getWidth()/getHeight() in recalculateBoundingBox; 1.21 asks calculateBoundingBox(pos, direction): 1.20.6's computation (CbEntityDecorations)"
   }
  ],
  "classRenames": {
   "net/minecraft/class_9236$class_9237": "top/dext/centurybridge/step/v1_21/facade/class_9236$class_9237",
   "net/minecraft/class_8956$class_9036": "top/dext/centurybridge/step/v1_21/facade/class_8956$class_9036"
+ },
+ "fieldRenames": {
+  "net/minecraft/class_1530.field_7100:Lnet/minecraft/class_2338;": "field_51589",
+  "net/minecraft/class_1532.field_7100:Lnet/minecraft/class_2338;": "field_51589",
+  "net/minecraft/class_1533.field_7100:Lnet/minecraft/class_2338;": "field_51589",
+  "net/minecraft/class_1534.field_7100:Lnet/minecraft/class_2338;": "field_51589",
+  "net/minecraft/class_5915.field_7100:Lnet/minecraft/class_2338;": "field_51589"
+ },
+ "ledger": {
+  "net/minecraft/class_1535": "not bridgeable: a 1.20.6 subclass of PaintingVariant. 1.21's PaintingVariant is a final record (width, height, assetId) that no class can extend, and a stand-in superclass would split the type: the mod's own code hands its instance on where a PaintingVariant is expected, which the verifier rejects, and 1.21's registry and painting take only the record. 1.20.6's variant objects themselves, new PaintingVariant(width, height), are bridged as records (CbEntityPaintings)"
  }
 }

@@ -46,6 +46,31 @@ public final class CbEntityProjectiles {
         legacyPower(projectile, direction.field_1352, direction.field_1351, direction.field_1350);
     }
 
+    // the constructor reshapes' post step names the constructed class: one per class with a 1.20.6 constructor
+    public static void legacyPower(net.minecraft.class_3855 fireball, double dx, double dy, double dz) {
+        legacyPower((class_1668) fireball, dx, dy, dz);
+    }
+
+    public static void legacyPower(net.minecraft.class_1670 dragonFireball, double dx, double dy, double dz) {
+        legacyPower((class_1668) dragonFireball, dx, dy, dz);
+    }
+
+    public static void legacyPower(net.minecraft.class_1674 largeFireball, double dx, double dy, double dz) {
+        legacyPower((class_1668) largeFireball, dx, dy, dz);
+    }
+
+    public static void legacyPower(net.minecraft.class_1677 smallFireball, double dx, double dy, double dz) {
+        legacyPower((class_1668) smallFireball, dx, dy, dz);
+    }
+
+    public static void legacyPower(net.minecraft.class_1687 witherSkull, double dx, double dy, double dz) {
+        legacyPower((class_1668) witherSkull, dx, dy, dz);
+    }
+
+    public static void legacyPower(net.minecraft.class_8956 windCharge, double dx, double dy, double dz) {
+        legacyPower((class_1668) windCharge, dx, dy, dz);
+    }
+
     /** a 1.20.6 constructor's direction, as the Vec3 1.21's takes */
     public static class_243 direction(double dx, double dy, double dz) {
         return new class_243(dx, dy, dz);

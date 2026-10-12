@@ -69,7 +69,7 @@ class Fragment:
             "staticRedirects": {}, "instanceRedirects": {}, "fieldRedirects": {}, "fieldGetters": {},
             "staticFieldSetters": {}, "instanceFieldGetters": {}, "instanceFieldSetters": {}, "superRedirects": {}, "covers": [],
             "overrideHooks": [], "overrideRenames": [], "frameDefaults": {}, "convertHooks": [], "adapterHooks": [],
-            "abstractFills": [], "classRenames": {}, "superRenames": {}, "genericWitnesses": {}, "ledger": {},
+            "abstractFills": [], "classRenames": {}, "fieldRenames": {}, "superRenames": {}, "genericWitnesses": {}, "ledger": {},
         }
 
     def reshape(self, key, desc, ops, basis, ret=None):
@@ -688,7 +688,6 @@ def projectiles(f, vc):
     P, AR = RT + "/CbEntityProjectiles", RT + "/CbEntityArrows"
     ET, LV, LE, ST, V3 = L("class_1299"), L("class_1937"), L("class_1309"), L("class_1799"), L("class_243")
     # hurting projectiles: 1.20.6's (dx, dy, dz) is 1.21's direction, then 1.20.6's power vector and rest
-    post = P + "#legacyPower(" + L("class_1668") + "DDD)V"
     direction = "conv:%d,%d,%d " + P + "#direction(DDD)" + V3
     hurting = (("class_1668", ET + "DDDDDD" + LV, ET + "DDD" + V3 + LV, ["keep:0", "keep:1", "keep:2", "keep:3", direction % (4, 5, 6), "keep:7"], [4, 5, 6]),
                ("class_1668", ET + LE + "DDD" + LV, ET + LE + V3 + LV, ["keep:0", "keep:1", direction % (2, 3, 4), "keep:5"], [2, 3, 4]),
@@ -703,7 +702,7 @@ def projectiles(f, vc):
     for owner, old, new, ops, dirs in hurting:
         f.ctor(MC + owner + ".<init>(" + old + ")V", "(" + new + ")V", ops,
                "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and "
-               "rest (CbEntityProjectiles.legacyPower)", post=post, post_args=dirs)
+               "rest (CbEntityProjectiles.legacyPower)", post=P + "#legacyPower(" + L(owner) + "DDD)V", post_args=dirs)
     for axis, field in (("X", "field_7601"), ("Y", "field_7600"), ("Z", "field_7599")):
         f.put("instanceFieldGetters", MC + "class_1668." + field + ":D", P + "#" + axis.lower() + "Power")
         f.put("instanceFieldSetters", MC + "class_1668." + field + ":D", P + "#set" + axis + "Power")
@@ -748,6 +747,65 @@ def projectiles(f, vc):
     f.put("frameDefaults", ga, {"2": AR + "#weaponOf(" + L("class_1297") + ")" + ST})
 
 
+# ------------------------------------------------------------------------------------------------ hanging entities, paintings
+def decorations(f, v, vc):
+    D, PA = RT + "/CbEntityDecorations", RT + "/CbEntityPaintings"
+    HE, KNOT, FRAME, PAINT, PV = MC + "class_1530", MC + "class_1532", MC + "class_1533", MC + "class_1534", MC + "class_1535"
+    BP, DIR, AABB = L("class_2338"), L("class_2350"), L("class_238")
+    # the box: 1.21 asks calculateBoundingBox(pos, direction) of a hanging entity, 1.20.6 computed it from the pixel sizes
+    f.w["abstractFills"].append({
+        "under": HE, "method": "method_59943(" + BP + DIR + ")" + AABB,
+        "call": D + ".calculateBoundingBox(L" + HE + ";" + BP + DIR + ")" + AABB,
+        "basis": "a 1.20.6 hanging entity sized its box from getWidth()/getHeight() in recalculateBoundingBox; 1.21 asks "
+                 "calculateBoundingBox(pos, direction): 1.20.6's computation (CbEntityDecorations)"})
+    assert declarers(vc, "method_6895()V") == [HE, KNOT, FRAME], declarers(vc, "method_6895()V")
+    f.w["overrideRenames"].append({
+        "old": "method_6895()V", "new": "method_6895$cb1_21", "onlyUnder": HE, "adapter": D + "$LegacyRecalculate",
+        "basis": "1.21 made HangingEntity.recalculateBoundingBox() final: a 1.20.6 override is renamed and answers through "
+                 "CbEntityHangingMixin (CbEntityKnotMixin for a knot, no hanging entity in 1.21); its super call reaches 1.21's body"})
+    # getWidth()/getHeight(): pixels, gone in 1.21
+    for shape, name, adapter in (("method_6897()I", "getWidth", "LegacyWidth"), ("method_6891()I", "getHeight", "LegacyHeight")):
+        assert declarers(vc, shape) == [HE, KNOT, FRAME, PAINT], (shape, declarers(vc, shape))
+        f.put("instanceRedirects", HE + "." + shape, D + "#" + name)
+        f.put("instanceRedirects", KNOT + "." + shape, D + "#" + name)
+        for home in (KNOT, FRAME, PAINT):
+            f.put("superRedirects", home + "." + shape, D + "#super" + name[0].upper() + name[1:])
+        f.w["adapterHooks"].append({
+            "under": HE, "adapter": D + "$" + adapter, "requires": [shape], "synth": [],
+            "basis": "1.20.6's " + name + "() of a hanging entity, in pixels, answers through a 1.20.6 class's own (CbEntityDecorations)"})
+    # getPos() and the pos field moved up to BlockAttachedEntity
+    for owner in with_subclasses(v, HE):
+        f.put("methodRenames", owner + ".method_6896()" + BP, "method_59940")
+        f.put("fieldRenames", owner + ".field_7100:" + BP, "field_51589")
+    f.w["overrideRenames"].append({
+        "old": "method_6896()" + BP, "new": "method_59940", "onlyUnder": HE, "superCalls": "rename",
+        "basis": "HangingEntity.getPos() is 1.21's BlockAttachedEntity.getPos(): the same position field"})
+    # the knot: no hanging entity in 1.21
+    for shape, name, adapter in (("method_6892(" + DIR + ")V", "setDirection", "LegacyKnotDirection"),
+                                 ("method_6894()V", "playPlacementSound", "LegacyKnotPlacementSound")):
+        f.put("instanceRedirects", KNOT + "." + shape, D + "#" + name)
+        f.put("superRedirects", KNOT + "." + shape, D + "#super" + name[0].upper() + name[1:])
+        f.w["adapterHooks"].append({
+            "under": KNOT, "adapter": D + "$" + adapter, "requires": [shape], "synth": [],
+            "basis": "1.20.6's LeashFenceKnotEntity." + name + " (a hanging entity's then) answers through a 1.20.6 subclass's own"})
+    # item frames
+    f.put("instanceRedirects", FRAME + ".method_43272()" + L("class_9209"), D + "#getFramedMapId")
+    f.put("frameDefaults", "method_43272()" + L("class_9209"), {"0": D + "#framedItem(" + L("class_1297") + ")" + L("class_1799")})
+    # paintings and their variants
+    HOLDER, TAG = L("class_6880"), L("class_2487")
+    f.put("staticRedirects", PAINT + ".method_48928(" + TAG + HOLDER + ")V", PA + "#storeVariant")
+    f.put("ctorRedirects", PV + ".<init>(II)V", PA + "#newVariant")
+    f.put("instanceRedirects", PV + ".method_6945()I", PA + "#getWidth")
+    f.put("instanceRedirects", PV + ".method_6943()I", PA + "#getHeight")
+    f.put("staticRedirects", MC + "class_7408.method_43406(" + L("class_2378") + ")" + L("class_1535"), PA + "#bootstrap")
+    f.put("fieldGetters", MC + "class_7923.field_41182:" + L("class_7922"), PA)
+    f.put("ledger", PV, "not bridgeable: a 1.20.6 subclass of PaintingVariant. 1.21's PaintingVariant is a final record "
+          "(width, height, assetId) that no class can extend, and a stand-in superclass would split the type: the mod's own "
+          "code hands its instance on where a PaintingVariant is expected, which the verifier rejects, and 1.21's registry "
+          "and painting take only the record. 1.20.6's variant objects themselves, new PaintingVariant(width, height), are "
+          "bridged as records (CbEntityPaintings)")
+
+
 def main():
     v, w = load(sys.argv[1]), load(sys.argv[2])
     vc = load(sys.argv[3], code=True)
@@ -763,6 +821,7 @@ def main():
     horses(f, vc)
     enchanting(f, vc)
     projectiles(f, vc)
+    decorations(f, v, vc)
     f.write()
 
 
