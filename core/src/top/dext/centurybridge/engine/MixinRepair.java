@@ -76,7 +76,7 @@ public final class MixinRepair {
         this.code = new ZipFile(codeJar.toFile());
     }
 
-    private ClassNode target(String owner) {
+    ClassNode target(String owner) {
         return cache.computeIfAbsent(owner, o -> {
             try {
                 ZipEntry e = code.getEntry(o + ".class");
@@ -435,7 +435,7 @@ public final class MixinRepair {
 
     // ------------------------------------------------------------------ selectors
 
-    private record Sel(String owner, String name, String desc, boolean wildcard) {
+    record Sel(String owner, String name, String desc, boolean wildcard) {
         static Sel parse(String spec) {
             String owner = null;
             if (spec.startsWith("L") && spec.contains(";")) {
@@ -465,7 +465,7 @@ public final class MixinRepair {
 
     // ------------------------------------------------------------------ anchors
 
-    private record Anchor(String kind, String owner, String name, String desc, Object constant, int ordinal, String role) {
+    record Anchor(String kind, String owner, String name, String desc, Object constant, int ordinal, String role) {
         Anchor(String kind, String owner, String name, String desc, Object constant) {
             this(kind, owner, name, desc, constant, -1, "main");
         }
@@ -486,7 +486,7 @@ public final class MixinRepair {
     }
 
     /** marker for HEAD/RETURN/TAIL/LOAD/STORE/JUMP: a position, nothing to look for */
-    private static final Anchor POSITIONAL = new Anchor("POS", null, null, null, null);
+    static final Anchor POSITIONAL = new Anchor("POS", null, null, null, null);
 
     /** null = this injector's anchor cannot be evaluated statically */
     private List<Anchor> anchors(AnnotationNode an, Map<String, Object> v, JsonObject refmap) {
@@ -533,7 +533,7 @@ public final class MixinRepair {
     }
 
     /** one @At: POSITIONAL, an Anchor (with ordinal), or null when not evaluable */
-    private static Anchor parseAt(Map<?, ?> am, JsonObject refmap) {
+    static Anchor parseAt(Map<?, ?> am, JsonObject refmap) {
         String value = String.valueOf(am.get("value"));
         int ord = am.get("ordinal") instanceof Integer i ? i : -1;
         switch (value) {
@@ -648,7 +648,7 @@ public final class MixinRepair {
         return false;
     }
 
-    private static boolean anchorIn(MethodNode m, Anchor a) {
+    static boolean anchorIn(MethodNode m, Anchor a) {
         if (m.instructions == null) return false;
         int need = Math.max(a.ordinal, 0) + 1, seen = 0;
         for (AbstractInsnNode in : m.instructions) {
@@ -658,7 +658,7 @@ public final class MixinRepair {
         return false;
     }
 
-    private static boolean matchesAnchor(AbstractInsnNode in, Anchor a) {
+    static boolean matchesAnchor(AbstractInsnNode in, Anchor a) {
         {
             switch (a.kind) {
                 case "INVOKE" -> {
@@ -752,7 +752,7 @@ public final class MixinRepair {
 
     /** rewrite the single @At's target (refmap entry if it came from one, else the annotation) */
     @SuppressWarnings("unchecked")
-    private static boolean setAtTarget(AnnotationNode an, JsonObject refmap, String value) {
+    static boolean setAtTarget(AnnotationNode an, JsonObject refmap, String value) {
         for (int i = 0; i + 1 < an.values.size(); i += 2) {
             if (!"at".equals(an.values.get(i))) continue;
             Object v = an.values.get(i + 1);
@@ -826,14 +826,14 @@ public final class MixinRepair {
 
     // ------------------------------------------------------------------ annotations / refmap
 
-    private static List<AnnotationNode> annotations(MethodNode m) {
+    static List<AnnotationNode> annotations(MethodNode m) {
         List<AnnotationNode> out = new ArrayList<>();
         if (m.visibleAnnotations != null) out.addAll(m.visibleAnnotations);
         if (m.invisibleAnnotations != null) out.addAll(m.invisibleAnnotations);
         return out;
     }
 
-    private static Map<String, Object> values(AnnotationNode an) {
+    static Map<String, Object> values(AnnotationNode an) {
         Map<String, Object> out = new LinkedHashMap<>();
         if (an.values == null) return out;
         for (int i = 0; i + 1 < an.values.size(); i += 2) out.put((String) an.values.get(i), unwrap(an.values.get(i + 1)));
@@ -851,13 +851,13 @@ public final class MixinRepair {
         return o;
     }
 
-    private static List<Object> list(Object o) {
+    static List<Object> list(Object o) {
         if (o == null) return List.of();
         if (o instanceof List<?> l) return new ArrayList<>(l);
         return List.of(o);
     }
 
-    private static List<String> strings(Object o) {
+    static List<String> strings(Object o) {
         List<String> out = new ArrayList<>();
         for (Object x : list(o)) if (x instanceof String s) out.add(s);
         return out;
@@ -881,7 +881,7 @@ public final class MixinRepair {
     }
 
     @SuppressWarnings("unchecked")
-    private static void setMethodSelector(AnnotationNode an, int index, String value) {
+    static void setMethodSelector(AnnotationNode an, int index, String value) {
         for (int i = 0; i + 1 < an.values.size(); i += 2) {
             if ("method".equals(an.values.get(i))) {
                 Object v = an.values.get(i + 1);
@@ -891,7 +891,7 @@ public final class MixinRepair {
         }
     }
 
-    private static List<String> mixinTargets(ClassNode mx, JsonObject refmap) {
+    static List<String> mixinTargets(ClassNode mx, JsonObject refmap) {
         List<String> out = new ArrayList<>();
         for (AnnotationNode a : mx.invisibleAnnotations != null ? mx.invisibleAnnotations : List.<AnnotationNode>of()) {
             if (!a.desc.equals(MIXIN)) continue;
@@ -908,13 +908,13 @@ public final class MixinRepair {
         return out;
     }
 
-    private static String refmapLookup(JsonObject refmap, String s) {
+    static String refmapLookup(JsonObject refmap, String s) {
         if (refmap == null) return s;
         if (refmap.has(s)) return refmap.get(s).getAsString();
         return s;
     }
 
-    private static void refmapPut(JsonObject refmap, String key, String value) {
+    static void refmapPut(JsonObject refmap, String key, String value) {
         refmap.addProperty(key, value);
     }
 }

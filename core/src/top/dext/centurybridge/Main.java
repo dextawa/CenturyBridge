@@ -182,6 +182,13 @@ public final class Main {
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
             }
+            // the source release's bodies: an @At anchor the step's wiring moves is counted where the
+            // mod wrote it before it is retargeted (MixinBridge)
+            String sc = System.getProperty("cb.sourceCode", System.getenv("CB_SOURCE_CODE"));
+            Path srcCode = sc != null ? Path.of(sc) : codeOf(args[2]);
+            if (Files.exists(srcCode)) {
+                chain.sourceCode = new top.dext.centurybridge.engine.MixinRepair(srcCode);
+            }
         }
         // past the wall the anchors are checked once the jar has its real names, against
         // the target's own unobfuscated code

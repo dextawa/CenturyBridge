@@ -53,7 +53,7 @@ public final class JarProcessor {
      * parameter type lands on the facade.
      */
     /** verifier frame type for one parameter (locals are never widened here) */
-    private static Object frameType(org.objectweb.asm.Type t) {
+    static Object frameType(org.objectweb.asm.Type t) {
         switch (t.getSort()) {
             case org.objectweb.asm.Type.BOOLEAN, org.objectweb.asm.Type.CHAR, org.objectweb.asm.Type.BYTE,
                  org.objectweb.asm.Type.SHORT, org.objectweb.asm.Type.INT -> {
@@ -732,16 +732,7 @@ public final class JarProcessor {
                     continue;
                 }
                 String key = home + "." + nameDesc;
-                Chain.CallReshape r = chain.callReshapes.get(key);
-                reshapeArgs(m, mi, r.args);
-                mi.desc = r.newDesc;
-                if (r.retKind != null) {
-                    org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
-                    org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
-                        ? new org.objectweb.asm.tree.InsnNode(newRet.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP)
-                        : new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, r.retOwner, r.retName, r.retDesc, false);
-                    m.instructions.insert(mi, after);
-                }
+                reshapeCall(m, mi, chain.callReshapes.get(key));
                 rewrites++;
                 top.dext.centurybridge.data.FullAudit.record(key, "call-reshape");
             }
@@ -753,6 +744,25 @@ public final class JarProcessor {
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
         cn.accept(cw);
         return cw.toByteArray();
+    }
+
+    /**
+     * One call site through a {@link Chain.CallReshape}: the arguments on the stack are re-pushed per
+     * the ops, the call takes the new descriptor, and the return value is dropped, converted or
+     * supplied right after it. Straight-line code at the call, so existing frames stay exact. Shared
+     * by {@link #rewriteCalls} and {@link MixinBridge} (a mixin's call through a renamed invoker).
+     */
+    static void reshapeCall(org.objectweb.asm.tree.MethodNode m, org.objectweb.asm.tree.MethodInsnNode mi,
+                            Chain.CallReshape r) {
+        reshapeArgs(m, mi, r.args);
+        mi.desc = r.newDesc;
+        if (r.retKind != null) {
+            org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
+            org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
+                ? new org.objectweb.asm.tree.InsnNode(newRet.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP)
+                : new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, r.retOwner, r.retName, r.retDesc, false);
+            m.instructions.insert(mi, after);
+        }
     }
 
     /**
@@ -925,9 +935,9 @@ public final class JarProcessor {
      * sits below the arguments (uninitializedThis, or NEW DUP's two refs) is
      * untouched, so existing frames stay exact.
      */
-    private static int[] reshapeArgs(org.objectweb.asm.tree.MethodNode m,
-                                     org.objectweb.asm.tree.MethodInsnNode mi,
-                                     Chain.CtorReshape r) {
+    static int[] reshapeArgs(org.objectweb.asm.tree.MethodNode m,
+                             org.objectweb.asm.tree.MethodInsnNode mi,
+                             Chain.CtorReshape r) {
         org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
         int[] slots = spillArgs(m, mi, old);
         org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
@@ -974,12 +984,12 @@ public final class JarProcessor {
 
     /** Redirect values are a class name, optionally "class#member" past the
      *  namespace wall where call-site names are no longer globally unique. */
-    private static String redirCls(String v) {
+    static String redirCls(String v) {
         int i = v.indexOf('#');
         return i < 0 ? v : v.substring(0, i);
     }
 
-    private static String redirName(String v, String callSiteName) {
+    static String redirName(String v, String callSiteName) {
         int i = v.indexOf('#');
         return i < 0 ? callSiteName : v.substring(i + 1);
     }
@@ -1346,6 +1356,17 @@ public final class JarProcessor {
         LayerIndex layer = indexLayer(entries);
         Map<String, String> jarSuper = layer.superOf;
         stripSignatures(entries, rpt, tag);
+        // the step's wiring knows what became of most members a mixin names: carry the mixins'
+        // invokers, accessors, shadows, injector selectors and @At targets across it first, so
+        // repair and triage judge the retargeted mixin (MixinBridge; intermediary era only --
+        // past the namespace wall the refmaps take their names later, see repairPastWall)
+        if (MixinBridge.applies(chain)) {
+            MixinBridge.Result bridged = MixinBridge.run(entries, chain,
+                "centurybridge/gen/MixinBridges_" + jarTag + "_" + chain.to.replace('.', '_')
+                    + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count()));
+            for (String b : bridged.bridged) rpt.notes.add(tag + "mixin bridged: " + b);
+            for (String l : bridged.left) rpt.notes.add(tag + "mixin not bridged: " + l);
+        }
         // anchors are checked against real target bodies BEFORE triage: a repair
         // (desc-drop / descend) rewrites the selector triage then reads
         MixinRepair.Outcome repaired = chain.mixinRepair != null ? chain.mixinRepair.repair(entries) : null;

@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "cb.mixintest.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "ServerDriverMixin",
+    "ScoreboardAccess",
+    "LivingEntityAccess",
+    "BoatAccess",
+    "BlocksAccess",
+    "UtilAccess",
+    "ScoreboardMixin",
+    "EntityMixin",
+    "LivingEntityMixin",
+    "BoatMixin",
+    "BlockMixin",
+    "UtilMixin"
+  ],
+  "injectors": { "defaultRequire": 1 },
+  "refmap": "cb_mixintest.refmap.json"
+}

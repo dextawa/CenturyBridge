@@ -1,0 +1,2015 @@
+package top.dext.centurybridge.engine;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Handle;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
+import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.AnnotationNode;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.FieldNode;
+import org.objectweb.asm.tree.FrameNode;
+import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.InvokeDynamicInsnNode;
+import org.objectweb.asm.tree.JumpInsnNode;
+import org.objectweb.asm.tree.LabelNode;
+import org.objectweb.asm.tree.LdcInsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.TypeInsnNode;
+import org.objectweb.asm.tree.VarInsnNode;
+
+/**
+ * Mixins carried across one climb step through that step's own wiring, before {@link MixinRepair}
+ * and {@link MixinTriage} judge them.
+ *
+ * The step's wiring already says what became of most members V's mods name -- a call reshape, a
+ * rename, a redirect, an override hook -- and the mod's plain code is rewritten through it. A mixin
+ * aimed at the same member got nothing from it: triage stripped it, repair dropped its injector.
+ * Here each mixin member is carried by the mechanism the wiring names for its member, never per mod:
+ *
+ *   @Shadow method / field   its uses become uses of the target's own member (the call or field
+ *                            access names the target class instead of the mixin), and the step's call
+ *                            and field wiring takes them exactly as it takes the same access in plain
+ *                            code: reshaped, renamed, redirected, or reaching a member W moved up the
+ *                            hierarchy. A field renamed on the target itself stays a shadow under its
+ *                            new name, so @Mutable / @Final keep their meaning.
+ *   @Invoker                 renamed on the target: retargeted. Reshaped: the invoker takes W's shape
+ *                            under a new name with its target pinned, and the V shape the mod calls is
+ *                            put back as a synthetic method converting V's arguments to W's and W's
+ *                            answer back with the call reshape's own ops (JarProcessor.reshapeCall).
+ *                            In an accessor interface that conversion lives in a static of the jar's
+ *                            bridge class: the interface's own method and the copy Mixin merges into
+ *                            the target both reach it. Redirected / restored by the layer / inherited:
+ *                            the invoker becomes a synthetic method making that call.
+ *   @Accessor                a renamed field: retargeted; an instance field getter / setter, field
+ *                            redirect or getter, or a field W moved up: a synthetic method doing that.
+ *   injector selectors       a target method an override hook, rename or reshape moves: the selector
+ *                            follows it; a handler that takes the target's arguments gets a W-shaped
+ *                            handler mapping W's arguments to V's through the hook's argument map and
+ *                            wrap converters (or the inverse of the reshape's keep ops), forwarding to
+ *                            the mod's own body -- what JarProcessor.synthesizeOverride does for an
+ *                            override.
+ *   @At INVOKE / FIELD       an anchor the step renames or reshapes: retargeted to what stands there
+ *                            now, once the new anchor is counted in W's body as often as the old one
+ *                            stood in V's.
+ *
+ * Every bridging is reported ("mixin bridged: ..."); a member the wiring maps but this cannot carry
+ * faithfully is reported with the reason ("mixin not bridged: ...") and left to repair and triage,
+ * which drop or strip it as before. Refmap entries are rewritten where a value came from one and no
+ * other annotation of the mixin shares the key; otherwise the annotation carries the intermediary
+ * target itself.
+ *
+ * Intermediary era only ({@link #applies}): past the 1.21.11 -> 26.1 namespace wall the converted
+ * jar takes its mojang names after this pass and the refmaps with them, while the wiring keys stay
+ * intermediary, so the same lookups would compare two namespaces (see repairPastWall).
+ */
+final class MixinBridge {
+    private static final Gson GSON = new Gson();
+    static final String SHADOW = "Lorg/spongepowered/asm/mixin/Shadow;";
+    static final String MUTABLE = "Lorg/spongepowered/asm/mixin/Mutable;";
+    static final String OVERWRITE = "Lorg/spongepowered/asm/mixin/Overwrite;";
+    static final String ACCESSOR = "Lorg/spongepowered/asm/mixin/gen/Accessor;";
+    static final String INVOKER = "Lorg/spongepowered/asm/mixin/gen/Invoker;";
+    static final String CI = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;";
+    static final String CIR = "Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;";
+    static final String COERCE = "Lorg/spongepowered/asm/mixin/injection/Coerce;";
+    /** MixinExtras' parameter sugar (@Local, @Share, @Cancellable): handler values besides the injector's own */
+    static final String SUGAR = "Lcom/llamalad7/mixinextras/sugar/";
+    /** Mixin's AccessorInfo.AccessorName pattern: the prefix, then the target name it inflects */
+    private static final Pattern ACCESSOR_NAME = Pattern.compile("^(get|is|set|call|invoke|new|create)(([A-Z])(.*?))(_\\$md.*)?$");
+
+    /** what one jar layer's pass did: bridged members, and wired members it could not carry (with why) */
+    static final class Result {
+        final List<String> bridged = new ArrayList<>();
+        final List<String> left = new ArrayList<>();
+    }
+
+    private final Chain chain;
+    private final Map<String, byte[]> entries;
+    private final String helperName;
+    private final String step;
+    private ClassNode helper;
+    private int helperSeq;
+
+    private MixinBridge(Chain chain, Map<String, byte[]> entries, String helperName) {
+        this.chain = chain;
+        this.entries = entries;
+        this.helperName = helperName;
+        this.step = chain.to.replace('.', '_');
+    }
+
+    /** intermediary-era steps only: wiring keys and the jar's names are the same namespace there */
+    static boolean applies(Chain chain) {
+        int to = Chain.RELEASES.indexOf(chain.to);
+        return to >= 0 && to <= Chain.RELEASES.indexOf("1.21.11") && chain.wallClassFwd.isEmpty();
+    }
+
+    /**
+     * The target name Mixin inflects from an accessor or invoker method's own name when the
+     * annotation names none (AccessorInfo.AccessorName.of(name, true)): get/is/set name a field,
+     * call/invoke a method, new/create a constructor; the first letter is lowered unless the rest is
+     * all upper case (getCRITERIA -> CRITERIA). Null when the name has no such prefix (Mixin then
+     * fails the accessor).
+     */
+    static String inflect(String methodName) {
+        Matcher m = ACCESSOR_NAME.matcher(methodName);
+        if (!m.matches()) {
+            return null;
+        }
+        boolean upper = m.group(2).equals(m.group(2).toUpperCase(Locale.ROOT));
+        return (upper ? m.group(3) : m.group(3).toLowerCase(Locale.ROOT)) + m.group(4);
+    }
+
+    /** the accessor prefix of a method name (get, call, new...), or null */
+    static String inflectPrefix(String methodName) {
+        Matcher m = ACCESSOR_NAME.matcher(methodName);
+        return m.matches() ? m.group(1) : null;
+    }
+
+    /** the name part after the prefix, case kept (AccessorName.of(name, false)), or null */
+    static String inflectRaw(String methodName) {
+        Matcher m = ACCESSOR_NAME.matcher(methodName);
+        return m.matches() ? m.group(3) + m.group(4) : null;
+    }
+
+    /** rewrites mixin classes, refmaps and the classes that use them in {@code entries} in place */
+    static Result run(Map<String, byte[]> entries, Chain chain, String helperName) {
+        Result res = new Result();
+        byte[] fmjBytes = entries.get("fabric.mod.json");
+        if (fmjBytes == null) {
+            return res;
+        }
+        JsonObject fmj;
+        try {
+            fmj = GSON.fromJson(new String(fmjBytes, StandardCharsets.UTF_8), JsonObject.class);
+        } catch (RuntimeException ex) {
+            return res;
+        }
+        if (fmj == null || !fmj.has("mixins") || !fmj.get("mixins").isJsonArray()) {
+            return res;
+        }
+        MixinBridge b = new MixinBridge(chain, entries, helperName);
+        for (JsonElement ref : fmj.getAsJsonArray("mixins")) {
+            String cfgName;
+            JsonObject cfg;
+            try {
+                cfgName = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+                byte[] cfgBytes = entries.get(cfgName);
+                if (cfgBytes == null) {
+                    continue;
+                }
+                cfg = GSON.fromJson(new String(cfgBytes, StandardCharsets.UTF_8), JsonObject.class);
+            } catch (RuntimeException ex) {
+                continue;
+            }
+            if (cfg == null) {
+                continue;
+            }
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            String refmapName = cfg.has("refmap") ? cfg.get("refmap").getAsString() : null;
+            JsonObject refmapRoot = null;
+            if (refmapName != null && entries.get(refmapName) != null) {
+                try {
+                    refmapRoot = GSON.fromJson(new String(entries.get(refmapName), StandardCharsets.UTF_8), JsonObject.class);
+                } catch (RuntimeException ex) {
+                    refmapRoot = null;
+                }
+            }
+            JsonObject mappings = refmapRoot != null && refmapRoot.has("mappings") && refmapRoot.get("mappings").isJsonObject()
+                ? refmapRoot.getAsJsonObject("mappings") : null;
+            boolean refmapDirty = false;
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (!cfg.has(key) || !cfg.get(key).isJsonArray()) {
+                    continue;
+                }
+                for (JsonElement e : cfg.getAsJsonArray(key)) {
+                    String cls = (pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/');
+                    byte[] bytes = entries.get(cls + ".class");
+                    if (bytes == null) {
+                        continue;
+                    }
+                    JsonObject table = mappings != null && mappings.has(cls) && mappings.get(cls).isJsonObject()
+                        ? mappings.getAsJsonObject(cls) : null;
+                    refmapDirty |= b.bridgeOne(cls, bytes, table, mappings, res);
+                }
+            }
+            if (refmapDirty) {
+                entries.put(refmapName, GSON.toJson(refmapRoot).getBytes(StandardCharsets.UTF_8));
+            }
+        }
+        if (b.helper != null) {
+            entries.put(helperName + ".class", write(b.helper));
+        }
+        return res;
+    }
+
+    /**
+     * One mixin, all or nothing: the class, a working copy of its refmap table, the other classes of
+     * the jar whose references it retargets and its bridge-class statics are committed together, or
+     * -- an engine error part way -- not at all. Returns whether the refmap changed.
+     */
+    private boolean bridgeOne(String cls, byte[] bytes, JsonObject table, JsonObject mappings, Result res) {
+        ClassNode mx = new ClassNode();
+        try {
+            new ClassReader(bytes).accept(mx, 0);
+        } catch (RuntimeException ex) {
+            return false;
+        }
+        Mixin m = new Mixin(mx, table == null ? null : table.deepCopy());
+        byte[] out;
+        Map<String, byte[]> others = new LinkedHashMap<>();
+        try {
+            if (!m.bridge()) {
+                res.left.addAll(m.left);
+                return false;
+            }
+            out = write(mx);
+            for (Map.Entry<String, ClassNode> o : m.others.entrySet()) {
+                others.put(o.getKey(), write(o.getValue()));
+            }
+        } catch (RuntimeException ex) {
+            res.left.add(shortName(cls) + ": not bridged, engine error " + ex);
+            return false;
+        }
+        entries.put(cls + ".class", out);
+        for (Map.Entry<String, byte[]> o : others.entrySet()) {
+            entries.put(o.getKey() + ".class", o.getValue());
+        }
+        for (MethodNode hm : m.helperMethods) {
+            helper().methods.add(hm);
+        }
+        res.bridged.addAll(m.bridged);
+        res.left.addAll(m.left);
+        if (m.refmapDirty && mappings != null) {
+            mappings.add(cls, m.table);
+            return true;
+        }
+        return false;
+    }
+
+    /** the jar layer's bridge class: statics an accessor interface's synthetic methods call */
+    private ClassNode helper() {
+        if (helper == null) {
+            helper = new ClassNode();
+            helper.version = Opcodes.V17;
+            helper.access = Opcodes.ACC_PUBLIC | Opcodes.ACC_FINAL | Opcodes.ACC_SYNTHETIC;
+            helper.name = helperName;
+            helper.superName = "java/lang/Object";
+        }
+        return helper;
+    }
+
+    private static byte[] write(ClassNode cn) {
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
+    }
+
+    // ------------------------------------------------------------------ what W has
+
+    /** W's class with its real bodies (the step's code jar), or null */
+    private ClassNode w(String owner) {
+        return chain.mixinRepair == null ? null : chain.mixinRepair.target(owner);
+    }
+
+    /** V's class with its real bodies, or null */
+    private ClassNode v(String owner) {
+        return chain.sourceCode == null ? null : chain.sourceCode.target(owner);
+    }
+
+    /** whether W's class itself declares the method; null when W's class is not known */
+    private Boolean wDeclares(String owner, String name, String desc) {
+        ClassNode c = w(owner);
+        if (c != null) {
+            return method(c, name, desc) != null;
+        }
+        Set<String> d = chain.targetDecls.get(owner);
+        return d == null ? null : d.contains(name + desc);
+    }
+
+    private Boolean wDeclaresField(String owner, String name, String desc) {
+        ClassNode c = w(owner);
+        if (c != null) {
+            return field(c, name, desc) != null;
+        }
+        Set<String> d = chain.targetDecls.get(owner);
+        return d == null ? null : d.contains(name + ":" + desc);
+    }
+
+    /** where a reference resolves on W, and the member's access flags there */
+    record Found(String owner, int access) {
+        boolean isPublic() {
+            return (access & Opcodes.ACC_PUBLIC) != 0;
+        }
+
+        boolean isStatic() {
+            return (access & Opcodes.ACC_STATIC) != 0;
+        }
+    }
+
+    /**
+     * The W class a reference to owner.name(desc), made from code merged into owner, resolves to the
+     * JVM's way -- the class, its superclasses, then their superinterfaces -- when the member found
+     * there is accessible from owner (private only on owner itself, package-private only within its
+     * package). Null when it does not resolve, or W's bodies are not at hand (access cannot be
+     * judged from names alone).
+     */
+    private Found wResolveMethod(String owner, String name, String desc) {
+        List<String> up = new ArrayList<>();
+        for (String c = owner; c != null; ) {
+            ClassNode cn = w(c);
+            if (cn == null) {
+                break;
+            }
+            MethodNode m = method(cn, name, desc);
+            if (m != null) {
+                return accessible(owner, c, m.access) ? new Found(c, m.access) : null;
+            }
+            up.add(c);
+            c = cn.superName;
+        }
+        ArrayDeque<String> todo = new ArrayDeque<>();
+        for (String c : up) {
+            todo.addAll(w(c).interfaces);
+        }
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String i = todo.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            ClassNode cn = w(i);
+            if (cn == null) {
+                continue;
+            }
+            MethodNode m = method(cn, name, desc);
+            if (m != null && (m.access & (Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC)) == 0) {
+                return new Found(i, m.access);
+            }
+            todo.addAll(cn.interfaces);
+        }
+        return null;
+    }
+
+    /** field form of {@link #wResolveMethod}: the superclass chain */
+    private Found wResolveField(String owner, String name, String desc) {
+        for (String c = owner; c != null; ) {
+            ClassNode cn = w(c);
+            if (cn == null) {
+                return null;
+            }
+            FieldNode f = field(cn, name, desc);
+            if (f != null) {
+                return accessible(owner, c, f.access) ? new Found(c, f.access) : null;
+            }
+            c = cn.superName;
+        }
+        return null;
+    }
+
+    private static boolean accessible(String from, String declarer, int access) {
+        if ((access & Opcodes.ACC_PRIVATE) != 0) {
+            return declarer.equals(from);
+        }
+        if ((access & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) == 0) {
+            return pkgOf(declarer).equals(pkgOf(from));
+        }
+        return true;
+    }
+
+    private boolean isInterfaceOnW(String owner) {
+        ClassNode c = w(owner);
+        if (c != null) {
+            return (c.access & Opcodes.ACC_INTERFACE) != 0;
+        }
+        return chain.targetInterfaces.contains(owner);
+    }
+
+    /**
+     * Whether a W value of type {@code sub} is a {@code sup} on W (its superclasses and interfaces):
+     * a parameter W narrowed (1.20.3 Block.getCloneItemStack takes a LevelReader, which is a
+     * BlockGetter) hands a V handler a value of the type it declared.
+     */
+    private boolean wAssignable(Type sub, Type sup) {
+        if (sub.getSort() != Type.OBJECT || sup.getSort() != Type.OBJECT) {
+            return false;
+        }
+        if (sup.getInternalName().equals("java/lang/Object")) {
+            return true;
+        }
+        ArrayDeque<String> todo = new ArrayDeque<>(List.of(sub.getInternalName()));
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.poll();
+            if (!seen.add(c)) {
+                continue;
+            }
+            if (c.equals(sup.getInternalName())) {
+                return true;
+            }
+            ClassNode cn = w(c);
+            if (cn == null) {
+                continue;
+            }
+            if (cn.superName != null) {
+                todo.add(cn.superName);
+            }
+            todo.addAll(cn.interfaces);
+        }
+        return false;
+    }
+
+    // ------------------------------------------------------------------ what the step does to an access
+
+    /**
+     * What the step's wiring does to a call naming the vanilla class owner -- the lookups
+     * JarProcessor makes, in its order (the call pass's reshape first, then cover, redirect,
+     * rename) -- and the W member the call then reaches ({@code at}; null for a member the layer
+     * restores or a redirect static). A member W moved up the hierarchy needs no wiring: the call
+     * resolves there. Null when nothing carries the call; {@code why} then says what was rejected.
+     */
+    record CallFate(String how, String name, String desc, Chain.CallReshape reshape, String redirect,
+                    String home, Found at) {}
+
+    private CallFate callFate(String owner, String name, String desc, boolean isStatic, List<String> why) {
+        String nd = name + desc;
+        String rh = chain.instanceRedirectHome(chain.callReshapeIndex, owner, nd);
+        if (rh != null) {
+            Chain.CallReshape r = chain.callReshapes.get(rh + "." + nd);
+            Found at = wResolveMethod(owner, name, r.newDesc);
+            if (at == null) {
+                why.add("the call reshape's " + name + r.newDesc + " does not resolve on " + shortName(owner) + " in " + chain.to);
+                return null;
+            }
+            return new CallFate("call reshape", name, r.newDesc, r, null, null, at);
+        }
+        if (chain.coveredAnywhere(owner, nd)) {
+            return new CallFate("restored by the step layer", name, desc, null, null, null, null);
+        }
+        if (isStatic) {
+            String rt = chain.redirectAnywhere(chain.staticRedirects, owner, nd);
+            if (rt != null) {
+                return new CallFate("static redirect", name, desc, null, rt, null, null);
+            }
+        } else {
+            String ih = chain.instanceRedirectHome(chain.instanceRedirects, owner, nd);
+            if (ih != null) {
+                return new CallFate("instance redirect", name, desc, null, chain.instanceRedirects.get(ih + "." + nd), ih, null);
+            }
+        }
+        String mrn = chain.methodRenames.get(owner + "." + nd);
+        if (mrn != null) {
+            Found at = wResolveMethod(owner, mrn, desc);
+            if (at == null) {
+                why.add("renamed to " + mrn + ", which does not resolve on " + shortName(owner) + " in " + chain.to);
+                return null;
+            }
+            return new CallFate("renamed to " + mrn, mrn, desc, null, null, null, at);
+        }
+        Found at = wResolveMethod(owner, name, desc);
+        if (at != null && !at.owner().equals(owner)) {
+            return new CallFate("inherited from " + shortName(at.owner()), name, desc, null, null, null, at);
+        }
+        return null;
+    }
+
+    /**
+     * Field form of {@link #callFate}, in JarProcessor's field order: cover, static field redirect /
+     * getter (reads only), instance field getter / setter (each kind of access it is used for),
+     * rename, a field W moved up. Returns how, or null ({@code why} says what was rejected).
+     */
+    private String fieldFate(String owner, String name, String desc, boolean isStatic, Refs refs, List<String> why) {
+        String key = owner + "." + name + ":" + desc;
+        if (chain.coveredAnywhere(owner, name + ":" + desc)) {
+            return "restored by the step layer";
+        }
+        if (isStatic) {
+            boolean redirected = chain.fieldRedirects.containsKey(key) || chain.fieldGetters.containsKey(key);
+            if (redirected && refs.puts == 0) {
+                return chain.fieldRedirects.containsKey(key) ? "field redirect" : "field getter";
+            }
+            if (redirected) {
+                why.add("written, and its redirect serves reads only");
+                return null;
+            }
+        } else {
+            boolean g = chain.instanceFieldGetters.containsKey(key);
+            boolean s = chain.instanceFieldSetters.containsKey(key);
+            if ((g || s) && (refs.gets == 0 || g) && (refs.puts == 0 || s)) {
+                return "instance field " + (g && s ? "getter and setter" : g ? "getter" : "setter");
+            }
+            if (g || s) {
+                why.add("the step has a " + (g ? "getter" : "setter") + " for it, the mixin also " + (g ? "writes" : "reads") + " it");
+                return null;
+            }
+        }
+        String rn = chain.fieldRenames.get(key);
+        if (rn != null) {
+            Found at = wResolveField(owner, rn, desc);
+            if (at == null) {
+                why.add("renamed to " + rn + ", which does not resolve on " + shortName(owner) + " in " + chain.to);
+                return null;
+            }
+            return "renamed to " + rn + (at.owner().equals(owner) ? "" : " on " + shortName(at.owner()));
+        }
+        Found at = wResolveField(owner, name, desc);
+        if (at != null && !at.owner().equals(owner)) {
+            return "inherited from " + shortName(at.owner());
+        }
+        return null;
+    }
+
+    /** every reference to one member of the mixin, in the mixin and in the jar's other classes */
+    static final class Refs {
+        final List<MethodInsnNode> calls = new ArrayList<>();
+        final List<FieldInsnNode> fieldInsns = new ArrayList<>();
+        /** {container (InvokeDynamicInsnNode / LdcInsnNode), index in bsmArgs or -1} */
+        final List<Object[]> handles = new ArrayList<>();
+        int gets;
+        int puts;
+    }
+
+    // ------------------------------------------------------------------ one mixin
+
+    private final class Mixin {
+        final ClassNode mx;
+        /** this mixin's refmap table (a working copy, committed with the class), or null */
+        final JsonObject table;
+        final List<String> targets;
+        /** the one target; a mixin of several targets is left as it is (each would need its own fate) */
+        final String target;
+        final boolean itf;
+        final String sn;
+        /** how many annotation values of this mixin name each refmap key */
+        final Map<String, Integer> keyUses = new HashMap<>();
+        /** other classes of the jar whose references to the mixin's members were retargeted */
+        final Map<String, ClassNode> others = new LinkedHashMap<>();
+        final List<MethodNode> helperMethods = new ArrayList<>();
+        final List<String> bridged = new ArrayList<>();
+        final List<String> left = new ArrayList<>();
+        boolean changed;
+        boolean refmapDirty;
+
+        Mixin(ClassNode mx, JsonObject table) {
+            this.mx = mx;
+            this.table = table;
+            this.targets = MixinRepair.mixinTargets(mx, table);
+            this.target = targets.size() == 1 ? targets.get(0) : null;
+            this.itf = (mx.access & Opcodes.ACC_INTERFACE) != 0;
+            this.sn = shortName(mx.name);
+        }
+
+        boolean bridge() {
+            if (target == null || !Chain.minecraftOwned(target)) {
+                return false;
+            }
+            if (w(target) == null && !chain.targetDecls.containsKey(target)) {
+                return false; // nothing to judge the mixin against
+            }
+            countKeys();
+            for (FieldNode f : new ArrayList<>(mx.fields)) {
+                if (has(f.visibleAnnotations, f.invisibleAnnotations, SHADOW)) {
+                    shadowField(f);
+                }
+            }
+            for (MethodNode m : new ArrayList<>(mx.methods)) {
+                List<AnnotationNode> ans = MixinRepair.annotations(m);
+                AnnotationNode sh = find(ans, SHADOW);
+                AnnotationNode inv = find(ans, INVOKER);
+                AnnotationNode acc = find(ans, ACCESSOR);
+                if (sh != null) {
+                    shadowMethod(m, sh);
+                } else if (inv != null) {
+                    invoker(m, inv);
+                } else if (acc != null) {
+                    accessor(m, acc);
+                } else if (find(ans, OVERWRITE) != null) {
+                    overwrite(m);
+                } else {
+                    for (AnnotationNode an : ans) {
+                        if (MixinRepair.values(an).containsKey("method")) {
+                            injector(m, an);
+                            break; // one injector per handler; a synthesized handler took the annotations
+                        }
+                    }
+                }
+            }
+            return changed;
+        }
+
+        // -------------------------------------------------------------- refmap keys
+
+        private void countKeys() {
+            if (table == null) {
+                return;
+            }
+            countIn(mx.visibleAnnotations);
+            countIn(mx.invisibleAnnotations);
+            for (FieldNode f : mx.fields) {
+                countIn(f.visibleAnnotations);
+                countIn(f.invisibleAnnotations);
+            }
+            for (MethodNode m : mx.methods) {
+                for (AnnotationNode an : MixinRepair.annotations(m)) {
+                    countIn(an);
+                    // an accessor or invoker naming no target inflects its refmap key from its name
+                    if ((an.desc.equals(ACCESSOR) || an.desc.equals(INVOKER)) && str(an, "value", "").isEmpty()) {
+                        String k = inflect(m.name);
+                        if (k != null && table.has(k)) {
+                            keyUses.merge(k, 1, Integer::sum);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void countIn(Object v) {
+            if (v instanceof String s) {
+                if (table.has(s)) {
+                    keyUses.merge(s, 1, Integer::sum);
+                }
+            } else if (v instanceof AnnotationNode a) {
+                if (a.values != null) {
+                    for (int i = 1; i < a.values.size(); i += 2) {
+                        countIn(a.values.get(i));
+                    }
+                }
+            } else if (v instanceof List<?> l) {
+                for (Object o : l) {
+                    countIn(o);
+                }
+            }
+        }
+
+        /** whether this refmap key can be rewritten for one annotation without moving another */
+        private boolean ownKey(String key) {
+            return table != null && table.has(key) && keyUses.getOrDefault(key, 0) == 1;
+        }
+
+        /**
+         * Point an accessor / invoker at its W target: through its refmap entry when the value came
+         * from one no other annotation shares (the annotation then names that key, so a renamed
+         * method still finds it), else in the annotation itself.
+         */
+        private void pin(AnnotationNode an, String key, String target) {
+            if (ownKey(key)) {
+                MixinRepair.refmapPut(table, key, target);
+                refmapDirty = true;
+                setValue(an, "value", key);
+            } else {
+                setValue(an, "value", target);
+            }
+            changed = true;
+        }
+
+        // -------------------------------------------------------------- references
+
+        /**
+         * Every reference to the mixin's own member name+desc (a field when {@code field}): calls or
+         * field instructions and method handles, in the mixin and in the jar's other classes that
+         * name the mixin (its inner classes). Other classes are parsed once and kept in
+         * {@link #others}, to be written back when the mixin commits.
+         */
+        Refs refs(String name, String desc, boolean field) {
+            Refs r = new Refs();
+            collect(mx, name, desc, field, r);
+            byte[] needle = mx.name.getBytes(StandardCharsets.ISO_8859_1);
+            for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+                String k = e.getKey();
+                if (!k.endsWith(".class") || k.equals(mx.name + ".class")) {
+                    continue;
+                }
+                String cls = k.substring(0, k.length() - 6);
+                ClassNode cn = others.get(cls);
+                if (cn == null) {
+                    if (!contains(e.getValue(), needle)) {
+                        continue;
+                    }
+                    cn = new ClassNode();
+                    try {
+                        new ClassReader(e.getValue()).accept(cn, 0);
+                    } catch (RuntimeException ex) {
+                        continue;
+                    }
+                }
+                int before = r.calls.size() + r.fieldInsns.size() + r.handles.size();
+                collect(cn, name, desc, field, r);
+                if (r.calls.size() + r.fieldInsns.size() + r.handles.size() > before) {
+                    others.put(cls, cn);
+                }
+            }
+            return r;
+        }
+
+        private void collect(ClassNode cn, String name, String desc, boolean field, Refs r) {
+            for (MethodNode m : cn.methods) {
+                if (m.instructions == null) {
+                    continue;
+                }
+                for (AbstractInsnNode in : m.instructions) {
+                    if (!field && in instanceof MethodInsnNode mi && mi.owner.equals(mx.name)
+                            && mi.name.equals(name) && mi.desc.equals(desc)) {
+                        r.calls.add(mi);
+                    } else if (field && in instanceof FieldInsnNode fi && fi.owner.equals(mx.name)
+                            && fi.name.equals(name) && fi.desc.equals(desc)) {
+                        r.fieldInsns.add(fi);
+                        if (fi.getOpcode() == Opcodes.PUTFIELD || fi.getOpcode() == Opcodes.PUTSTATIC) {
+                            r.puts++;
+                        } else {
+                            r.gets++;
+                        }
+                    } else if (in instanceof InvokeDynamicInsnNode id && id.bsmArgs != null) {
+                        for (int i = 0; i < id.bsmArgs.length; i++) {
+                            if (id.bsmArgs[i] instanceof Handle h && names(h, name, desc, field)) {
+                                r.handles.add(new Object[] {id, i});
+                            }
+                        }
+                    } else if (in instanceof LdcInsnNode ldc && ldc.cst instanceof Handle h && names(h, name, desc, field)) {
+                        r.handles.add(new Object[] {ldc, -1});
+                    }
+                }
+            }
+        }
+
+        private boolean names(Handle h, String name, String desc, boolean field) {
+            boolean isField = h.getTag() <= Opcodes.H_PUTSTATIC;
+            return isField == field && h.getOwner().equals(mx.name) && h.getName().equals(name) && h.getDesc().equals(desc);
+        }
+
+        /** point the collected method handles at owner.name instead (same desc and kind) */
+        void retargetHandles(Refs r, String owner, String name, boolean ownerItf) {
+            for (Object[] h : r.handles) {
+                Handle old = h[0] instanceof InvokeDynamicInsnNode id ? (Handle) id.bsmArgs[(Integer) h[1]]
+                    : (Handle) ((LdcInsnNode) h[0]).cst;
+                Handle nh = new Handle(old.getTag(), owner, name, old.getDesc(),
+                    old.getTag() > Opcodes.H_PUTSTATIC && ownerItf);
+                if (h[0] instanceof InvokeDynamicInsnNode id) {
+                    id.bsmArgs[(Integer) h[1]] = nh;
+                } else {
+                    ((LdcInsnNode) h[0]).cst = nh;
+                }
+            }
+        }
+
+        // -------------------------------------------------------------- @Shadow
+
+        /**
+         * A shadow method the target no longer declares: Mixin would fail the whole mixin at apply.
+         * Its uses become calls naming the target class itself -- what Mixin makes of them when it
+         * merges the mixin -- and the shadow goes; the step's call wiring then carries those calls
+         * like the same call anywhere in the mod's code (JarProcessor runs over mixin classes too).
+         */
+        void shadowMethod(MethodNode m, AnnotationNode sh) {
+            String prefix = str(sh, "prefix", "shadow$");
+            String name = m.name.startsWith(prefix) ? m.name.substring(prefix.length()) : m.name;
+            Boolean live = wDeclares(target, name, m.desc);
+            if (live == null || live) {
+                return;
+            }
+            for (String alias : MixinRepair.strings(MixinRepair.values(sh).get("aliases"))) {
+                if (Boolean.TRUE.equals(wDeclares(target, alias, m.desc))) {
+                    return; // Mixin tries the aliases too
+                }
+            }
+            boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
+            String what = "shadow " + sn + "." + m.name + m.desc;
+            List<String> why = new ArrayList<>();
+            CallFate f = callFate(target, name, m.desc, isStatic, why);
+            if (f == null) {
+                if (!why.isEmpty()) {
+                    left.add(what + ": " + why.get(0));
+                }
+                return;
+            }
+            if (f.at() != null && f.at().isStatic() != isStatic) {
+                left.add(what + ": " + f.how() + " reaches a " + (isStatic ? "non-static" : "static") + " member");
+                return;
+            }
+            Refs r = refs(m.name, m.desc, false);
+            if (!r.handles.isEmpty() && (f.reshape() != null || f.how().startsWith("renamed"))) {
+                // JarProcessor reshapes and renames call instructions, not method handles
+                left.add(what + ": taken as a method reference, and " + f.how() + " applies to calls");
+                return;
+            }
+            boolean tItf = isInterfaceOnW(target);
+            for (MethodInsnNode mi : r.calls) {
+                mi.owner = target;
+                mi.name = name;
+                mi.itf = tItf;
+                // a private V method called directly; when W's member is not private any more the
+                // call dispatches as calls on it do
+                if (mi.getOpcode() == Opcodes.INVOKESPECIAL && f.at() != null && (f.at().access() & Opcodes.ACC_PRIVATE) == 0) {
+                    mi.setOpcode(tItf ? Opcodes.INVOKEINTERFACE : Opcodes.INVOKEVIRTUAL);
+                }
+            }
+            retargetHandles(r, target, name, tItf);
+            mx.methods.remove(m);
+            changed = true;
+            bridged.add(what + " -> calls on " + shortName(target) + " (" + f.how() + ")");
+        }
+
+        /**
+         * A shadow field the target no longer declares. Renamed on the target itself: the shadow
+         * keeps being a shadow under the new name (its @Final / @Mutable keep their meaning).
+         * Otherwise its reads and writes become accesses naming the target class, which the step's
+         * field wiring carries; a write of a final field (the mixin's @Mutable lifted its finality
+         * through the shadow) cannot be carried that way.
+         */
+        void shadowField(FieldNode f) {
+            Boolean live = wDeclaresField(target, f.name, f.desc);
+            if (live == null || live) {
+                return;
+            }
+            boolean isStatic = (f.access & Opcodes.ACC_STATIC) != 0;
+            String what = "shadow field " + sn + "." + f.name + ":" + f.desc;
+            Refs r = refs(f.name, f.desc, true);
+            String rn = chain.fieldRenames.get(target + "." + f.name + ":" + f.desc);
+            if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, f.desc))) {
+                for (FieldInsnNode fi : r.fieldInsns) {
+                    fi.name = rn;
+                }
+                for (Object[] h : r.handles) {
+                    Handle old = h[0] instanceof InvokeDynamicInsnNode id ? (Handle) id.bsmArgs[(Integer) h[1]]
+                        : (Handle) ((LdcInsnNode) h[0]).cst;
+                    Handle nh = new Handle(old.getTag(), old.getOwner(), rn, old.getDesc(), false);
+                    if (h[0] instanceof InvokeDynamicInsnNode id) {
+                        id.bsmArgs[(Integer) h[1]] = nh;
+                    } else {
+                        ((LdcInsnNode) h[0]).cst = nh;
+                    }
+                }
+                String old = f.name;
+                f.name = rn;
+                changed = true;
+                bridged.add(what + " -> shadow of " + rn + " (renamed " + old + " -> " + rn + ")");
+                return;
+            }
+            List<String> why = new ArrayList<>();
+            String how = fieldFate(target, f.name, f.desc, isStatic, r, why);
+            if (how == null) {
+                if (!why.isEmpty()) {
+                    left.add(what + ": " + why.get(0));
+                }
+                return;
+            }
+            if (!r.handles.isEmpty()) {
+                left.add(what + ": taken as a field handle");
+                return;
+            }
+            if (r.puts > 0) {
+                boolean mutable = has(f.visibleAnnotations, f.invisibleAnnotations, MUTABLE);
+                Found at = wResolveField(target, rn != null ? rn : f.name, f.desc);
+                if (mutable || at != null && (at.access() & Opcodes.ACC_FINAL) != 0) {
+                    left.add(what + ": written, and the field is final on " + chain.to + " (@Mutable lifts that only through the shadow)");
+                    return;
+                }
+            }
+            for (FieldInsnNode fi : r.fieldInsns) {
+                fi.owner = target;
+            }
+            mx.fields.remove(f);
+            changed = true;
+            bridged.add(what + " -> accesses of " + shortName(target) + "." + f.name + " (" + how + ")");
+        }
+
+        // -------------------------------------------------------------- @Invoker
+
+        /**
+         * An invoker of a method the target no longer declares in that shape. Renamed on the target:
+         * retargeted. Reshaped there: the invoker takes W's shape under a new name with its target
+         * pinned, and the V shape the mod calls comes back as a synthetic method converting the way
+         * the call reshape converts the same call in plain code. Redirected: the method makes the
+         * redirect call. Restored by the layer or moved up W's hierarchy: the method calls it.
+         */
+        void invoker(MethodNode m, AnnotationNode an) {
+            String value = str(an, "value", "");
+            boolean implicit = value.isEmpty();
+            String key = implicit ? inflect(m.name) : value;
+            if (key == null) {
+                return;
+            }
+            String mapped = MixinRepair.refmapLookup(table, key);
+            MixinRepair.Sel s = MixinRepair.Sel.parse(mapped);
+            if (s.owner() != null && !s.owner().equals(target)) {
+                return;
+            }
+            String name = s.name();
+            String simple = shortName(target);
+            String pfx = inflectPrefix(m.name);
+            if (name.equals("<init>") || name.equals(simple)
+                    || implicit && ("new".equals(pfx) || "create".equals(pfx)) && simple.equals(inflectRaw(m.name))) {
+                return; // a constructor invoker: not carried here
+            }
+            boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
+            Boolean live = wDeclares(target, name, m.desc);
+            if (live == null || live) {
+                return;
+            }
+            String what = "invoker " + sn + "." + m.name + m.desc;
+            List<String> why = new ArrayList<>();
+            CallFate f = callFate(target, name, m.desc, isStatic, why);
+            if (f == null) {
+                if (!why.isEmpty()) {
+                    left.add(what + ": " + why.get(0));
+                }
+                return;
+            }
+            if (f.at() != null && f.at().isStatic() != isStatic) {
+                left.add(what + ": " + f.how() + " reaches a " + (isStatic ? "non-static" : "static") + " member");
+                return;
+            }
+            if (f.reshape() != null) {
+                for (Chain.ReshapeOp op : f.reshape().args.ops) {
+                    if (op.param != null) {
+                        left.add(what + ": the call reshape takes an argument from the caller's own parameters");
+                        return;
+                    }
+                }
+                if (f.at().owner().equals(target)) {
+                    reshapeInvoker(m, an, key, mapped, f, what);
+                    return;
+                }
+            }
+            if (f.redirect() != null) {
+                redirectInvoker(m, an, f, what);
+                return;
+            }
+            if (f.reshape() == null && f.at() != null && f.at().owner().equals(target)) {
+                pin(an, key, respell(mapped, f.name(), s.desc()));
+                bridged.add(what + " -> " + f.name() + " (" + f.how() + ")");
+                return;
+            }
+            // the layer's own member, or one W moved up its hierarchy: no invoker can be generated for
+            // it (Mixin looks in the target class itself); the method makes the call. A static method
+            // of an accessor interface runs in the interface, where only public members are reachable
+            if (itf && isStatic && (f.at() == null || !f.at().isPublic())) {
+                left.add(what + ": " + f.how() + ", and a static invoker's body runs in the interface, which cannot reach it");
+                return;
+            }
+            directInvoker(m, an, f, what);
+        }
+
+        private void reshapeInvoker(MethodNode m, AnnotationNode an, String key, String mapped, CallFate f, String what) {
+            boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
+            String vName = m.name;
+            String vDesc = m.desc;
+            String renamed = unique(vName + "$cb" + step);
+            m.name = renamed;
+            m.desc = f.desc();
+            m.signature = null;
+            pin(an, key, respell(mapped, f.name(), f.desc()));
+            MethodNode vm = new MethodNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_SYNTHETIC | (isStatic ? Opcodes.ACC_STATIC : 0),
+                vName, vDesc, null, exceptions(m));
+            Type ret = Type.getReturnType(vDesc);
+            if (itf) {
+                // an accessor interface: the conversion lives in the jar's bridge class, which both the
+                // interface's own method and the copy Mixin merges into the target reach
+                String hDesc = isStatic ? vDesc : "(Ljava/lang/Object;" + vDesc.substring(1);
+                MethodNode hm = new MethodNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC,
+                    "b" + (helperSeq++) + "$" + sn.replace('$', '_') + "$" + vName, hDesc, null, null);
+                int slot = 0;
+                if (!isStatic) {
+                    hm.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                    hm.instructions.add(new TypeInsnNode(Opcodes.CHECKCAST, mx.name));
+                    slot = 1;
+                }
+                loadArgs(hm.instructions, vDesc, slot);
+                MethodInsnNode call = new MethodInsnNode(isStatic ? Opcodes.INVOKESTATIC : Opcodes.INVOKEINTERFACE,
+                    mx.name, vName, vDesc, true);
+                hm.instructions.add(call);
+                hm.instructions.add(new InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+                hm.maxLocals = argSlots(hDesc, true);
+                JarProcessor.reshapeCall(hm, call, f.reshape());
+                call.name = renamed;
+                helperMethods.add(hm);
+                int vs = 0;
+                if (!isStatic) {
+                    vm.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                    vs = 1;
+                }
+                loadArgs(vm.instructions, vDesc, vs);
+                vm.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, helperName, hm.name, hDesc, false));
+                vm.instructions.add(new InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+            } else {
+                // a class mixin's own calls run merged into the target: the conversion in place
+                int vs = 0;
+                if (!isStatic) {
+                    vm.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                    vs = 1;
+                }
+                loadArgs(vm.instructions, vDesc, vs);
+                int op = isStatic ? Opcodes.INVOKESTATIC
+                    : (m.access & Opcodes.ACC_PRIVATE) != 0 ? Opcodes.INVOKESPECIAL : Opcodes.INVOKEVIRTUAL;
+                MethodInsnNode call = new MethodInsnNode(op, mx.name, vName, vDesc, false);
+                vm.instructions.add(call);
+                vm.instructions.add(new InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+                vm.maxLocals = argSlots(vDesc, isStatic);
+                JarProcessor.reshapeCall(vm, call, f.reshape());
+                call.name = renamed;
+            }
+            mx.methods.add(vm);
+            changed = true;
+            bridged.add(what + " -> " + renamed + f.desc() + " invoking " + f.name() + f.desc()
+                + " (call reshape; " + vName + vDesc + " converts as the reshape does)");
+        }
+
+        private void redirectInvoker(MethodNode m, AnnotationNode an, CallFate f, String what) {
+            boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
+            InsnList in = concrete(m, an);
+            String cdesc = m.desc;
+            int slot = 0;
+            if (!isStatic) {
+                in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                in.add(new TypeInsnNode(Opcodes.CHECKCAST, f.home()));
+                cdesc = "(L" + f.home() + ";" + m.desc.substring(1);
+                slot = 1;
+            }
+            loadArgs(in, m.desc, slot);
+            String owner = JarProcessor.redirCls(f.redirect());
+            String name = JarProcessor.redirName(f.redirect(), f.name());
+            in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, name, cdesc, false));
+            in.add(new InsnNode(Type.getReturnType(m.desc).getOpcode(Opcodes.IRETURN)));
+            changed = true;
+            bridged.add(what + " -> " + owner + "." + name + " (" + f.how() + ")");
+        }
+
+        private void directInvoker(MethodNode m, AnnotationNode an, CallFate f, String what) {
+            boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
+            InsnList in = concrete(m, an);
+            int slot = 0;
+            if (!isStatic) {
+                in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                in.add(new TypeInsnNode(Opcodes.CHECKCAST, target));
+                slot = 1;
+            }
+            loadArgs(in, m.desc, slot);
+            boolean tItf = isInterfaceOnW(target);
+            MethodInsnNode call = new MethodInsnNode(isStatic ? Opcodes.INVOKESTATIC : tItf ? Opcodes.INVOKEINTERFACE
+                : Opcodes.INVOKEVIRTUAL, target, f.name(), m.desc, tItf);
+            in.add(call);
+            in.add(new InsnNode(Type.getReturnType(m.desc).getOpcode(Opcodes.IRETURN)));
+            m.maxLocals = argSlots(m.desc, isStatic);
+            if (f.reshape() != null) {
+                JarProcessor.reshapeCall(m, call, f.reshape());
+            }
+            changed = true;
+            bridged.add(what + " -> calls " + shortName(target) + "." + f.name() + call.desc + " (" + f.how() + ")");
+        }
+
+        /** an accessor / invoker method turned into a plain synthetic one; returns its emptied body */
+        private InsnList concrete(MethodNode m, AnnotationNode an) {
+            removeAnnotation(m, an);
+            m.access = (m.access & ~(Opcodes.ACC_ABSTRACT | Opcodes.ACC_NATIVE)) | Opcodes.ACC_SYNTHETIC;
+            m.instructions = new InsnList();
+            m.tryCatchBlocks = new ArrayList<>();
+            m.localVariables = null;
+            m.visibleLocalVariableAnnotations = null;
+            m.invisibleLocalVariableAnnotations = null;
+            m.maxLocals = argSlots(m.desc, (m.access & Opcodes.ACC_STATIC) != 0);
+            return m.instructions;
+        }
+
+        // -------------------------------------------------------------- @Accessor
+
+        /**
+         * An accessor of a field the target no longer declares. Renamed on the target: retargeted.
+         * An instance field getter / setter, a static field redirect or getter: the accessor becomes
+         * a synthetic method making that call. A field W moved up the hierarchy, or the layer's own:
+         * the method accesses it.
+         */
+        void accessor(MethodNode m, AnnotationNode an) {
+            String value = str(an, "value", "");
+            String key = value.isEmpty() ? inflect(m.name) : value;
+            if (key == null) {
+                return;
+            }
+            String mapped = MixinRepair.refmapLookup(table, key);
+            String spec = mapped;
+            if (spec.startsWith("L") && spec.contains(";")) {
+                if (!spec.substring(1, spec.indexOf(';')).equals(target)) {
+                    return;
+                }
+                spec = spec.substring(spec.indexOf(';') + 1);
+            }
+            String name = spec.contains(":") ? spec.substring(0, spec.indexOf(':')) : spec;
+            Type[] args = Type.getArgumentTypes(m.desc);
+            boolean getter = args.length == 0;
+            if (!getter && args.length != 1) {
+                return;
+            }
+            String fdesc = (getter ? Type.getReturnType(m.desc) : args[0]).getDescriptor();
+            boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
+            Boolean live = wDeclaresField(target, name, fdesc);
+            if (live == null || live) {
+                return;
+            }
+            String what = "accessor " + sn + "." + m.name + m.desc;
+            String fkey = target + "." + name + ":" + fdesc;
+            String rn = chain.fieldRenames.get(fkey);
+            if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, fdesc))) {
+                pin(an, key, respell(mapped, rn, spec.contains(":") ? fdesc : null));
+                bridged.add(what + " -> " + rn + " (renamed " + name + " -> " + rn + ")");
+                return;
+            }
+            InsnList body = new InsnList();
+            String how;
+            if (!isStatic && getter && chain.instanceFieldGetters.containsKey(fkey)) {
+                String v = chain.instanceFieldGetters.get(fkey);
+                body.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                body.add(new TypeInsnNode(Opcodes.CHECKCAST, target));
+                body.add(new MethodInsnNode(Opcodes.INVOKESTATIC, JarProcessor.redirCls(v), JarProcessor.redirName(v, name),
+                    "(L" + target + ";)" + fdesc, false));
+                how = "instance field getter " + JarProcessor.redirCls(v);
+            } else if (!isStatic && !getter && chain.instanceFieldSetters.containsKey(fkey)) {
+                String v = chain.instanceFieldSetters.get(fkey);
+                body.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                body.add(new TypeInsnNode(Opcodes.CHECKCAST, target));
+                body.add(new VarInsnNode(args[0].getOpcode(Opcodes.ILOAD), 1));
+                body.add(new MethodInsnNode(Opcodes.INVOKESTATIC, JarProcessor.redirCls(v), JarProcessor.redirName(v, name),
+                    "(L" + target + ";" + fdesc + ")V", false));
+                how = "instance field setter " + JarProcessor.redirCls(v);
+            } else if (isStatic && getter && chain.fieldRedirects.containsKey(fkey)) {
+                String v = chain.fieldRedirects.get(fkey);
+                body.add(new FieldInsnNode(Opcodes.GETSTATIC, JarProcessor.redirCls(v), JarProcessor.redirName(v, name), fdesc));
+                how = "field redirect " + JarProcessor.redirCls(v);
+            } else if (isStatic && getter && chain.fieldGetters.containsKey(fkey)) {
+                String v = chain.fieldGetters.get(fkey);
+                body.add(new MethodInsnNode(Opcodes.INVOKESTATIC, JarProcessor.redirCls(v), JarProcessor.redirName(v, name),
+                    "()" + fdesc, false));
+                how = "field getter " + JarProcessor.redirCls(v);
+            } else {
+                String fname = rn != null ? rn : name;
+                Found at = wResolveField(target, fname, fdesc);
+                boolean covered = rn == null && chain.coveredAnywhere(target, name + ":" + fdesc);
+                if (at == null && !covered) {
+                    if (rn != null) {
+                        left.add(what + ": renamed to " + rn + ", which does not resolve on " + shortName(target) + " in " + chain.to);
+                    }
+                    return;
+                }
+                if (at != null && at.isStatic() != isStatic) {
+                    return;
+                }
+                if (itf && isStatic && (at == null || !at.isPublic())) {
+                    left.add(what + ": a static accessor's body runs in the interface, which cannot reach the field");
+                    return;
+                }
+                if (!getter && at != null && (at.access() & Opcodes.ACC_FINAL) != 0) {
+                    left.add(what + ": a setter of a field that is final in " + chain.to);
+                    return;
+                }
+                if (!isStatic) {
+                    body.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                    body.add(new TypeInsnNode(Opcodes.CHECKCAST, target));
+                }
+                if (!getter) {
+                    body.add(new VarInsnNode(args[0].getOpcode(Opcodes.ILOAD), isStatic ? 0 : 1));
+                }
+                int op = isStatic ? (getter ? Opcodes.GETSTATIC : Opcodes.PUTSTATIC) : (getter ? Opcodes.GETFIELD : Opcodes.PUTFIELD);
+                body.add(new FieldInsnNode(op, target, fname, fdesc));
+                how = covered ? "restored by the step layer"
+                    : "on " + shortName(at.owner()) + (rn != null ? ", renamed " + name + " -> " + rn : "");
+            }
+            body.add(new InsnNode(Type.getReturnType(m.desc).getOpcode(Opcodes.IRETURN)));
+            concrete(m, an).add(body);
+            changed = true;
+            bridged.add(what + " -> " + how);
+        }
+
+        // -------------------------------------------------------------- @Overwrite
+
+        /** an overwrite of a method the target renamed (same shape): it follows the name */
+        void overwrite(MethodNode m) {
+            Boolean live = wDeclares(target, m.name, m.desc);
+            if (live == null || live) {
+                return;
+            }
+            String what = "overwrite " + sn + "." + m.name + m.desc;
+            String rn = chain.methodRenames.get(target + "." + m.name + m.desc);
+            if (rn != null && Boolean.TRUE.equals(wDeclares(target, rn, m.desc))) {
+                Refs r = refs(m.name, m.desc, false);
+                if (!r.handles.isEmpty()) {
+                    left.add(what + ": taken as a method reference");
+                    return;
+                }
+                for (MethodInsnNode mi : r.calls) {
+                    mi.name = rn;
+                }
+                String old = m.name;
+                m.name = rn;
+                changed = true;
+                bridged.add(what + " -> " + rn + " (renamed " + old + " -> " + rn + ")");
+                return;
+            }
+            if (!chain.overrideHooksForOld(m.name, m.desc).isEmpty()
+                    || chain.instanceRedirectHome(chain.callReshapeIndex, target, m.name + m.desc) != null) {
+                left.add(what + ": the method's shape changed, and an overwrite's body is not re-shaped");
+            }
+        }
+
+        /** a method name not yet used in the mixin */
+        private String unique(String base) {
+            String n = base;
+            while (true) {
+                boolean taken = false;
+                for (MethodNode m : mx.methods) {
+                    taken |= m.name.equals(n);
+                }
+                if (!taken) {
+                    return n;
+                }
+                n = n + "_";
+            }
+        }
+
+        // -------------------------------------------------------------- injectors
+
+        /**
+         * An injector whose target method the step moved: the selector follows the method to its W
+         * shape, and a handler written for V's arguments gets a W-shaped one in front of it. Then
+         * its @At anchors, in the methods it now targets.
+         */
+        void injector(MethodNode h, AnnotationNode an) {
+            List<String> sels = MixinRepair.strings(MixinRepair.values(an).get("method"));
+            ClassNode wt = w(target);
+            if (sels.isEmpty() || wt == null) {
+                return; // judged against W's real bodies only
+            }
+            String kind = kind(an);
+            Selection sel = select(h, an, kind, sels, wt, v(target));
+            if (sel != null) {
+                ats(sel, kind);
+            }
+        }
+
+        private Selection select(MethodNode h, AnnotationNode an, String kind, List<String> sels, ClassNode wt, ClassNode vt) {
+            // any alternative that still selects a method of W: nothing moved under it
+            for (String sel : sels) {
+                if (sel.startsWith("/") || sel.contains("*")) {
+                    return null; // regex / wildcard selectors: MixinRepair's to judge
+                }
+                MixinRepair.Sel s = MixinRepair.Sel.parse(MixinRepair.refmapLookup(table, sel));
+                if (s.owner() != null && !s.owner().equals(target)) {
+                    return null;
+                }
+                List<MethodNode> wm = s.match(wt);
+                if (!wm.isEmpty()) {
+                    return new Selection(h, an, vt == null ? List.of() : s.match(vt), wm);
+                }
+            }
+            if (vt == null || itf) {
+                return null; // which V method was meant cannot be read / an interface mixin's injectors: not carried
+            }
+            for (int idx = 0; idx < sels.size(); idx++) {
+                String sel = sels.get(idx);
+                String mapped = MixinRepair.refmapLookup(table, sel);
+                List<MethodNode> vm = MixinRepair.Sel.parse(mapped).match(vt);
+                if (vm.size() != 1) {
+                    continue; // the fate of exactly one V method can be looked up
+                }
+                MethodNode vmeth = vm.get(0);
+                String where = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "." + vmeth.name + vmeth.desc;
+                List<String> why = new ArrayList<>();
+                Fate fate = selectorFate(target, vmeth.name, vmeth.desc, why);
+                if (fate == null) {
+                    if (!why.isEmpty()) {
+                        left.add(where + ": " + why.get(0));
+                    }
+                    continue;
+                }
+                MethodNode wmeth = method(wt, fate.name(), fate.desc());
+                if (wmeth == null) {
+                    left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", which "
+                        + shortName(target) + " does not declare in " + chain.to);
+                    continue;
+                }
+                if (((wmeth.access ^ vmeth.access) & Opcodes.ACC_STATIC) != 0) {
+                    left.add(where + ": static in one release and not in the other");
+                    continue;
+                }
+                Plan p = plan(h, an, kind, vmeth, fate, why);
+                if (p == null) {
+                    left.add(where + ": " + why.get(0));
+                    continue;
+                }
+                String nm = respell(mapped, fate.name(), fate.desc());
+                if (ownKey(sel)) {
+                    MixinRepair.refmapPut(table, sel, nm);
+                    refmapDirty = true;
+                } else {
+                    MixinRepair.setMethodSelector(an, idx, nm);
+                }
+                MethodNode handler = p.synth() ? synthesizeInject(h, fate, p) : h;
+                changed = true;
+                bridged.add(where + " => " + fate.name() + fate.desc() + " (" + fate.how()
+                    + (p.synth() ? "; a " + chain.to + "-shaped handler forwards to the mod's" : "") + ")");
+                return new Selection(handler, an, List.of(vmeth), List.of(wmeth));
+            }
+            return null;
+        }
+
+        /**
+         * Can the handler take the W method? @Inject: its arguments are the target's (all or none) and
+         * a CallbackInfo(Returnable) matching W's return; captured arguments need the wiring to say
+         * which W arguments are V's, a handler capturing locals cannot follow. Other injectors take
+         * the anchor's operands, which a new target signature does not move -- unless the handler
+         * also captures the target's arguments.
+         */
+        private Plan plan(MethodNode h, AnnotationNode an, String kind, MethodNode vmeth, Fate fate, List<String> why) {
+            Type[] va = Type.getArgumentTypes(vmeth.desc);
+            Type[] wa = Type.getArgumentTypes(fate.desc());
+            Type vr = Type.getReturnType(vmeth.desc);
+            Type wr = Type.getReturnType(fate.desc());
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            boolean sameArgs = Arrays.equals(va, wa);
+            if (kind.equals("Inject")) {
+                int ci = -1;
+                for (int i = 0; i < hp.length && ci < 0; i++) {
+                    if (hp[i].getDescriptor().equals(CI) || hp[i].getDescriptor().equals(CIR)) {
+                        ci = i;
+                    }
+                }
+                if (ci < 0) {
+                    why.add("the handler takes no CallbackInfo");
+                    return null;
+                }
+                if (hp.length > ci + 1) {
+                    why.add("the handler captures the target's locals");
+                    return null;
+                }
+                boolean capture = ci > 0;
+                if (capture) {
+                    if (ci != va.length) {
+                        why.add("the handler takes " + ci + " of the target's " + va.length + " arguments");
+                        return null;
+                    }
+                    for (int i = 0; i < ci; i++) {
+                        if (!hp[i].equals(va[i]) && !(coerced(h, i) && hp[i].getSort() == Type.OBJECT)) {
+                            why.add("handler argument " + i + " is not the target's");
+                            return null;
+                        }
+                    }
+                    if ((!sameArgs || fate.converts()) && !fate.argsKnown()) {
+                        why.add(fate.how() + ": the wiring does not say which of " + chain.to + "'s arguments are " + chain.from + "'s");
+                        return null;
+                    }
+                }
+                boolean wVoid = wr.getSort() == Type.VOID;
+                String have = hp[ci].getDescriptor();
+                if (have.equals(CIR) && wVoid) {
+                    why.add("the target returns nothing in " + chain.to + ", the handler takes CallbackInfoReturnable");
+                    return null;
+                }
+                boolean cbChange = have.equals(CI) && !wVoid;
+                if (cbChange && bool(an, "cancellable")) {
+                    why.add("cancellable, and the target now returns a value: a cancel would answer null where " + chain.from + "'s caller went on");
+                    return null;
+                }
+                if (have.equals(CIR) && !vr.equals(wr) && touchesReturnValue(h)) {
+                    why.add("the handler reads or sets the return value, whose type changed");
+                    return null;
+                }
+                return new Plan(cbChange || capture && (!sameArgs || fate.converts()), capture, wVoid ? CI : CIR, ci);
+            }
+            if (kind.equals("ModifyReturnValue") && !vr.equals(wr)) {
+                why.add("the return type changed");
+                return null;
+            }
+            if (sameArgs) {
+                return new Plan(false, false, null, -1);
+            }
+            if (kind.equals("ModifyVariable") || hasSugar(h, "Local;")) {
+                why.add("@" + kind + (kind.equals("ModifyVariable") ? "" : " with @Local") + ": the target's locals move with its new arguments");
+                return null;
+            }
+            int base = anchorBase(h, an, kind, vmeth);
+            if (base < 0) {
+                why.add("@" + kind + ": its own arguments cannot be told from captured ones");
+                return null;
+            }
+            if (hp.length - sugarCount(h) != base) {
+                why.add("the @" + kind + " handler captures the target's arguments");
+                return null;
+            }
+            return new Plan(false, false, null, -1);
+        }
+
+        /** how many handler arguments the injector itself defines (the anchor's), -1 when unknown */
+        private int anchorBase(MethodNode h, AnnotationNode an, String kind, MethodNode vmeth) {
+            switch (kind) {
+                case "ModifyExpressionValue", "ModifyReturnValue", "ModifyConstant", "ModifyReceiver", "ModifyArgs" -> {
+                    return 1;
+                }
+                default -> { }
+            }
+            List<AnnotationNode> ats = new ArrayList<>();
+            if (an.values != null) {
+                for (int i = 0; i + 1 < an.values.size(); i += 2) {
+                    if ("at".equals(an.values.get(i))) {
+                        collectAts(an.values.get(i + 1), ats);
+                    }
+                }
+            }
+            if (ats.size() != 1 || vmeth.instructions == null) {
+                return -1;
+            }
+            Map<String, Object> av = MixinRepair.values(ats.get(0));
+            String value = String.valueOf(av.get("value"));
+            MixinRepair.Anchor a = value.equals("INVOKE") || value.equals("INVOKE_ASSIGN") ? MixinRepair.parseAt(av, table) : null;
+            if (a == null || a.desc() == null) {
+                return -1;
+            }
+            int op = -1;
+            for (AbstractInsnNode in : vmeth.instructions) {
+                if (MixinRepair.matchesAnchor(in, a)) {
+                    op = in.getOpcode();
+                    break;
+                }
+            }
+            if (op < 0) {
+                return -1;
+            }
+            int n = Type.getArgumentTypes(a.desc()).length + (op == Opcodes.INVOKESTATIC ? 0 : 1);
+            return switch (kind) {
+                case "Redirect", "WrapWithCondition" -> n;
+                case "WrapOperation" -> n + 1;
+                case "ModifyArg" -> Type.getArgumentTypes(h.desc).length - sugarCount(h) == 1 ? 1 : -1;
+                default -> -1;
+            };
+        }
+
+        /**
+         * The W-shaped @Inject handler: what JarProcessor.synthesizeOverride is for an override. It
+         * takes W's arguments (when the handler took the target's) and the callback W's return
+         * calls for, and forwards to the mod's own handler -- kept under a private name of its own --
+         * with V's arguments: W's argument the wiring maps each from, through the hook's wrap
+         * converter where the type changed; a widened argument (narrowing hook, keep with a wider
+         * type) reaches the handler only when it is V's type, as V only ever passed that.
+         */
+        private MethodNode synthesizeInject(MethodNode h, Fate fate, Plan p) {
+            boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
+            Type[] hp = Type.getArgumentTypes(h.desc);
+            Type[] wa = Type.getArgumentTypes(fate.desc());
+            String oldName = h.name;
+            String oldDesc = h.desc;
+            String del = unique(oldName + "$cb" + step);
+            StringBuilder d = new StringBuilder("(");
+            if (p.capture()) {
+                for (Type t : wa) {
+                    d.append(t.getDescriptor());
+                }
+            }
+            d.append(p.cb()).append(")V");
+            MethodNode syn = new MethodNode(h.access & ~(Opcodes.ACC_ABSTRACT | Opcodes.ACC_NATIVE | Opcodes.ACC_BRIDGE
+                | Opcodes.ACC_VARARGS), oldName, d.toString(), null, exceptions(h));
+            syn.visibleAnnotations = h.visibleAnnotations;
+            syn.invisibleAnnotations = h.invisibleAnnotations;
+            h.visibleAnnotations = null;
+            h.invisibleAnnotations = null;
+            Refs r = refs(oldName, oldDesc, false);
+            for (MethodInsnNode mi : r.calls) {
+                mi.name = del;
+            }
+            retargetHandles(r, mx.name, del, itf);
+            h.name = del;
+            h.access = (h.access & ~(Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PRIVATE;
+            int[] wslot = new int[wa.length];
+            int s = st ? 0 : 1;
+            for (int j = 0; j < wa.length; j++) {
+                wslot[j] = s;
+                s += wa[j].getSize();
+            }
+            int cbSlot = p.capture() ? s : (st ? 0 : 1);
+            InsnList in = syn.instructions;
+            LabelNode skip = null;
+            for (int i = 0; p.capture() && i < p.ci(); i++) {
+                if (fate.narrow()[i]) {
+                    skip = skip == null ? new LabelNode() : skip;
+                    in.add(new VarInsnNode(Opcodes.ALOAD, wslot[fate.from()[i]]));
+                    in.add(new TypeInsnNode(Opcodes.INSTANCEOF, hp[i].getInternalName()));
+                    in.add(new JumpInsnNode(Opcodes.IFEQ, skip));
+                }
+            }
+            if (!st) {
+                in.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            }
+            for (int i = 0; p.capture() && i < p.ci(); i++) {
+                int j = fate.from()[i];
+                in.add(new VarInsnNode(wa[j].getOpcode(Opcodes.ILOAD), wslot[j]));
+                String[] wr = fate.wrap()[i];
+                if (wr != null) {
+                    in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, wr[0], wr[1], wr[2], false));
+                }
+                Type got = wr != null ? Type.getReturnType(wr[2]) : wa[j];
+                if (!got.equals(hp[i]) && hp[i].getSort() >= Type.ARRAY) {
+                    in.add(new TypeInsnNode(Opcodes.CHECKCAST, hp[i].getInternalName()));
+                }
+            }
+            in.add(new VarInsnNode(Opcodes.ALOAD, cbSlot));
+            in.add(new MethodInsnNode(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKESPECIAL, mx.name, del, oldDesc, false));
+            in.add(new InsnNode(Opcodes.RETURN));
+            if (skip != null) {
+                List<Object> locals = new ArrayList<>();
+                if (!st) {
+                    locals.add(mx.name);
+                }
+                for (Type t : wa) {
+                    locals.add(JarProcessor.frameType(t));
+                }
+                locals.add(p.cb().substring(1, p.cb().length() - 1));
+                in.add(skip);
+                in.add(new FrameNode(Opcodes.F_NEW, locals.size(), locals.toArray(), 0, new Object[0]));
+                in.add(new InsnNode(Opcodes.RETURN));
+            }
+            syn.maxLocals = s + 1;
+            syn.maxStack = s + 2;
+            mx.methods.add(syn);
+            return syn;
+        }
+
+        /**
+         * @At INVOKE / FIELD anchors the step moved, in the methods the injector targets: retargeted
+         * to what the wiring says stands there now, once that is counted in W's methods exactly as
+         * often as the old anchor stood in V's (an ordinal keeps pointing at the same occurrence).
+         * A call whose shape changed carries only a positional @Inject: other injectors take the
+         * call's operands.
+         */
+        private void ats(Selection sel, String kind) {
+            if (sel.v().isEmpty() || sel.w().isEmpty()) {
+                return;
+            }
+            for (AnnotationNode at : atNodes(sel.an())) {
+                Map<String, Object> av = MixinRepair.values(at);
+                String value = String.valueOf(av.get("value"));
+                if (!value.equals("INVOKE") && !value.equals("INVOKE_ASSIGN") && !value.equals("FIELD")
+                        || !(av.get("target") instanceof String t)) {
+                    continue;
+                }
+                MixinRepair.Anchor a = MixinRepair.parseAt(av, table);
+                if (a == null || a.owner() == null || a.desc() == null || count(sel.w(), a) > 0) {
+                    continue;
+                }
+                int vc = count(sel.v(), a);
+                if (vc == 0) {
+                    continue; // not where the mod wrote it in V either: not this step's doing
+                }
+                boolean fld = a.kind().equals("FIELD");
+                String where = "@" + kind + " " + sn + "." + sel.handler().name + " @At " + value + " " + shortName(a.owner())
+                    + "." + a.name() + (fld ? ":" : "") + a.desc();
+                AtFate af = atFate(a);
+                if (af == null) {
+                    continue;
+                }
+                MixinRepair.Anchor na = new MixinRepair.Anchor(a.kind(), af.owner(), af.name(), af.desc(), null, a.ordinal());
+                int wc = count(sel.w(), na);
+                if (wc != vc) {
+                    left.add(where + ": " + af.how() + " gives " + af.name() + af.desc() + ", standing " + wc + " time(s) in "
+                        + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from);
+                    continue;
+                }
+                if (!af.desc().equals(a.desc()) && !kind.equals("Inject")) {
+                    left.add(where + ": the call's shape changed (" + af.how() + "), and @" + kind + " handles the call itself");
+                    continue;
+                }
+                String nt = "L" + af.owner() + ";" + af.name() + (fld ? ":" : "") + af.desc();
+                if (ownKey(t)) {
+                    MixinRepair.refmapPut(table, t, nt);
+                    refmapDirty = true;
+                } else {
+                    setValue(at, "target", nt);
+                }
+                changed = true;
+                bridged.add(where + " => " + af.name() + (fld ? ":" : "") + af.desc() + " (" + af.how() + ")");
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------ injector fates
+
+    /**
+     * What became of a V method an injector selects, as the step's wiring says: W's name and
+     * descriptor, and for each V argument the W argument it comes from ({@code from}), through
+     * {@code wrap} (W type -> V type) or a type test ({@code narrow}) where the type differs.
+     * {@code argsKnown} is false when the wiring gives no such map (an adapter-bridged hook).
+     */
+    record Fate(String name, String desc, int[] from, String[][] wrap, boolean[] narrow, boolean argsKnown, String how) {
+        boolean converts() {
+            for (int i = 0; wrap != null && i < wrap.length; i++) {
+                if (wrap[i] != null || narrow[i]) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    record Plan(boolean synth, boolean capture, String cb, int ci) {}
+
+    record Selection(MethodNode handler, AnnotationNode an, List<MethodNode> v, List<MethodNode> w) {}
+
+    record AtFate(String owner, String name, String desc, String how) {}
+
+    /**
+     * Override hook (applicable to the mixin's target class) first: it describes the method itself
+     * as overriders see it, argument map included. One that bridges through an adapter carries only
+     * handlers that take none of the target's arguments, and only when the method kept its name
+     * (an adapter into another method can stand for something wider). Then a rename, a call reshape
+     * (the inverse of its keep ops), a constructor reshape or adapter.
+     */
+    private Fate selectorFate(String owner, String name, String vdesc, List<String> why) {
+        Type[] va = Type.getArgumentTypes(vdesc);
+        for (Chain.OverrideHook h : chain.overrideHooksForOld(name, vdesc)) {
+            if (h.onlyUnder != null && !chain.sourceSubtype(List.of(owner), h.onlyUnder)
+                    || h.notUnder != null && chain.sourceSubtype(List.of(owner), h.notUnder)) {
+                continue;
+            }
+            if (h.bridgeName != null) {
+                if (!h.oldName.equals(h.newName)) {
+                    why.add("its override hook reaches " + h.newName + h.newDesc + ", another method, through an adapter");
+                    return null;
+                }
+                return new Fate(h.newName, h.newDesc, null, null, null, false, "override hook through " + shortName(h.adapter));
+            }
+            Type[] na = Type.getArgumentTypes(h.newDesc);
+            int[] map = h.args;
+            if (map == null) {
+                if (na.length != va.length) {
+                    why.add("its override hook changes the arity without an argument map");
+                    return null;
+                }
+                map = identity(va.length);
+            }
+            int[] from = new int[va.length];
+            String[][] wrap = new String[va.length][];
+            boolean[] narrow = new boolean[va.length];
+            boolean known = map.length == va.length;
+            for (int i = 0; known && i < va.length; i++) {
+                int j = map[i];
+                from[i] = j;
+                if (j < 0 || j >= na.length) {
+                    known = false;
+                } else if (!na[j].equals(va[i]) && !wAssignable(na[j], va[i])) {
+                    if (h.wrapName != null && Arrays.equals(Type.getArgumentTypes(h.wrapDesc), new Type[] {na[j]})
+                            && Type.getReturnType(h.wrapDesc).equals(va[i])) {
+                        wrap[i] = new String[] {h.wrapOwner, h.wrapName, h.wrapDesc};
+                    } else if (h.narrow && va[i].getSort() >= Type.ARRAY) {
+                        narrow[i] = true;
+                    } else {
+                        known = false;
+                    }
+                }
+            }
+            return new Fate(h.newName, h.newDesc, from, wrap, narrow, known,
+                "override hook" + (h.wrapName != null ? " (wraps " + h.wrapName + ")" : h.narrow ? " (narrows)" : ""));
+        }
+        String nd = name + vdesc;
+        String rh = chain.instanceRedirectHome(chain.methodRenames, owner, nd);
+        if (rh != null) {
+            return new Fate(chain.methodRenames.get(rh + "." + nd), vdesc, identity(va.length), new String[va.length][],
+                new boolean[va.length], true, "renamed");
+        }
+        String ch = chain.instanceRedirectHome(chain.callReshapeIndex, owner, nd);
+        if (ch != null) {
+            Chain.CallReshape r = chain.callReshapes.get(ch + "." + nd);
+            return inverse(name, r.args, va, r.newDesc, "call reshape");
+        }
+        if (name.equals("<init>")) {
+            Chain.CtorReshape cr = chain.superCtorReshapes.get(owner + ".<init>" + vdesc);
+            if (cr != null) {
+                return inverse(name, cr, va, cr.newDesc, "constructor reshape");
+            }
+            String[] ad = chain.superCtorAdapts.get(owner + ".<init>" + vdesc);
+            if (ad != null) {
+                // the adapter supplies a new tail argument (no parameters) or converts the old tail
+                Type[] na = Type.getArgumentTypes(ad[0]);
+                boolean supplies = Type.getArgumentTypes(ad[2]).length == 0 && na.length == va.length + 1;
+                int[] from = new int[va.length];
+                boolean known = supplies;
+                for (int i = 0; i < va.length; i++) {
+                    from[i] = supplies && na[i].equals(va[i]) ? i : -1;
+                    known &= from[i] >= 0;
+                }
+                return new Fate(name, ad[0], from, new String[va.length][], new boolean[va.length], known, "constructor adapter");
+            }
+        }
+        return null;
+    }
+
+    /** W argument j of a reshape's "keep" ops is V argument i; drops, conversions and supplies give none */
+    private static Fate inverse(String name, Chain.CtorReshape r, Type[] va, String newDesc, String how) {
+        Type[] na = Type.getArgumentTypes(newDesc);
+        int[] from = new int[va.length];
+        Arrays.fill(from, -1);
+        boolean[] narrow = new boolean[va.length];
+        int j = 0;
+        for (Chain.ReshapeOp op : r.ops) {
+            if (op.drop) {
+                continue;
+            }
+            if (op.param == null && op.owner == null && op.from.length == 1 && j < na.length && from[op.from[0]] < 0) {
+                int i = op.from[0];
+                if (na[j].equals(va[i])) {
+                    from[i] = j;
+                } else if (va[i].getSort() >= Type.ARRAY && na[j].getSort() >= Type.ARRAY) {
+                    from[i] = j; // "keep:N <wider type>": W's callers may pass any instance of it
+                    narrow[i] = true;
+                }
+            }
+            j++;
+        }
+        boolean known = true;
+        for (int f : from) {
+            known &= f >= 0;
+        }
+        return new Fate(name, newDesc, from, new String[va.length][], narrow, known, how);
+    }
+
+    /** what the wiring says stands where a V call or field access stood: rename, call reshape, override hook */
+    private AtFate atFate(MixinRepair.Anchor a) {
+        if (a.kind().equals("FIELD")) {
+            for (String o : chain.selfAndSupers(a.owner())) {
+                String rn = chain.fieldRenames.get(o + "." + a.name() + ":" + a.desc());
+                if (rn != null) {
+                    return new AtFate(a.owner(), rn, a.desc(), "field renamed");
+                }
+            }
+            return null;
+        }
+        String nd = a.name() + a.desc();
+        String rh = chain.instanceRedirectHome(chain.methodRenames, a.owner(), nd);
+        if (rh != null) {
+            return new AtFate(a.owner(), chain.methodRenames.get(rh + "." + nd), a.desc(), "renamed");
+        }
+        String ch = chain.instanceRedirectHome(chain.callReshapeIndex, a.owner(), nd);
+        if (ch != null) {
+            return new AtFate(a.owner(), a.name(), chain.callReshapes.get(ch + "." + nd).newDesc, "call reshape");
+        }
+        for (Chain.OverrideHook h : chain.overrideHooksForOld(a.name(), a.desc())) {
+            if (h.onlyUnder != null && !chain.sourceSubtype(List.of(a.owner()), h.onlyUnder)
+                    && !chain.sourceSubtype(List.of(h.onlyUnder), a.owner())
+                    || h.notUnder != null && chain.sourceSubtype(List.of(a.owner()), h.notUnder)) {
+                continue;
+            }
+            return new AtFate(a.owner(), h.newName, h.newDesc, "override hook");
+        }
+        return null;
+    }
+
+    private static int count(List<MethodNode> ms, MixinRepair.Anchor a) {
+        int n = 0;
+        for (MethodNode m : ms) {
+            if (m.instructions != null) {
+                for (AbstractInsnNode in : m.instructions) {
+                    if (MixinRepair.matchesAnchor(in, a)) {
+                        n++;
+                    }
+                }
+            }
+        }
+        return n;
+    }
+
+    /** the injector's @At nodes: "at" and its slice's from / to */
+    private static List<AnnotationNode> atNodes(AnnotationNode an) {
+        List<AnnotationNode> out = new ArrayList<>();
+        for (int i = 0; an.values != null && i + 1 < an.values.size(); i += 2) {
+            Object k = an.values.get(i);
+            Object v = an.values.get(i + 1);
+            if ("at".equals(k)) {
+                collectAts(v, out);
+            } else if ("slice".equals(k)) {
+                for (Object sl : v instanceof List<?> l ? l : List.of(v)) {
+                    if (sl instanceof AnnotationNode s && s.values != null) {
+                        for (int j = 0; j + 1 < s.values.size(); j += 2) {
+                            if ("from".equals(s.values.get(j)) || "to".equals(s.values.get(j))) {
+                                collectAts(s.values.get(j + 1), out);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return out;
+    }
+
+    private static void collectAts(Object v, List<AnnotationNode> out) {
+        if (v instanceof AnnotationNode a) {
+            out.add(a);
+        } else if (v instanceof List<?> l) {
+            for (Object o : l) {
+                if (o instanceof AnnotationNode a) {
+                    out.add(a);
+                }
+            }
+        }
+    }
+
+    private static int[] identity(int n) {
+        int[] m = new int[n];
+        for (int i = 0; i < n; i++) {
+            m[i] = i;
+        }
+        return m;
+    }
+
+    private static boolean coerced(MethodNode h, int i) {
+        return h.invisibleParameterAnnotations != null && i < h.invisibleParameterAnnotations.length
+            && h.invisibleParameterAnnotations[i] != null && find(h.invisibleParameterAnnotations[i], COERCE) != null;
+    }
+
+    /** handler arguments carrying MixinExtras sugar (@Local, @Share...) */
+    private static int sugarCount(MethodNode h) {
+        int n = 0;
+        int params = Type.getArgumentTypes(h.desc).length;
+        for (int i = 0; i < params; i++) {
+            n += sugarAt(h, i, "") ? 1 : 0;
+        }
+        return n;
+    }
+
+    private static boolean hasSugar(MethodNode h, String suffix) {
+        int params = Type.getArgumentTypes(h.desc).length;
+        for (int i = 0; i < params; i++) {
+            if (sugarAt(h, i, suffix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean sugarAt(MethodNode h, int i, String suffix) {
+        return sugarIn(h.visibleParameterAnnotations, i, suffix) || sugarIn(h.invisibleParameterAnnotations, i, suffix);
+    }
+
+    private static boolean sugarIn(List<AnnotationNode>[] pa, int i, String suffix) {
+        if (pa == null || i >= pa.length || pa[i] == null) {
+            return false;
+        }
+        for (AnnotationNode a : pa[i]) {
+            if (a.desc.startsWith(SUGAR) && a.desc.endsWith(suffix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** does the handler read or set its CallbackInfoReturnable's value */
+    private static boolean touchesReturnValue(MethodNode h) {
+        if (h.instructions == null) {
+            return false;
+        }
+        String cir = CIR.substring(1, CIR.length() - 1);
+        for (AbstractInsnNode in : h.instructions) {
+            if (in instanceof MethodInsnNode mi && mi.owner.equals(cir)
+                    && (mi.name.startsWith("getReturnValue") || mi.name.equals("setReturnValue"))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean contains(byte[] hay, byte[] needle) {
+        outer:
+        for (int i = 0; i + needle.length <= hay.length; i++) {
+            for (int j = 0; j < needle.length; j++) {
+                if (hay[i + j] != needle[j]) {
+                    continue outer;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /** load a method's parameters onto the stack, from slot {@code slot} on */
+    private static void loadArgs(InsnList in, String desc, int slot) {
+        for (Type t : Type.getArgumentTypes(desc)) {
+            in.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+            slot += t.getSize();
+        }
+    }
+
+    private static String[] exceptions(MethodNode m) {
+        return m.exceptions == null ? null : m.exceptions.toArray(new String[0]);
+    }
+
+    // ------------------------------------------------------------------ small helpers
+
+    static String shortName(String internal) {
+        int i = internal.lastIndexOf('/');
+        return i < 0 ? internal : internal.substring(i + 1);
+    }
+
+    private static String pkgOf(String internal) {
+        int i = internal.lastIndexOf('/');
+        return i < 0 ? "" : internal.substring(0, i);
+    }
+
+    static MethodNode method(ClassNode c, String name, String desc) {
+        for (MethodNode m : c.methods) {
+            if (m.name.equals(name) && m.desc.equals(desc)) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    static FieldNode field(ClassNode c, String name, String desc) {
+        for (FieldNode f : c.fields) {
+            if (f.name.equals(name) && f.desc.equals(desc)) {
+                return f;
+            }
+        }
+        return null;
+    }
+
+    private static AnnotationNode find(List<AnnotationNode> ans, String desc) {
+        for (AnnotationNode a : ans) {
+            if (a.desc.equals(desc)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    private static boolean has(List<AnnotationNode> a, List<AnnotationNode> b, String desc) {
+        return (a != null && find(a, desc) != null) || (b != null && find(b, desc) != null);
+    }
+
+    private static String str(AnnotationNode an, String key, String def) {
+        return MixinRepair.values(an).get(key) instanceof String s ? s : def;
+    }
+
+    private static boolean bool(AnnotationNode an, String key) {
+        return Boolean.TRUE.equals(MixinRepair.values(an).get(key));
+    }
+
+    /** set (or add) one annotation value */
+    private static void setValue(AnnotationNode an, String key, Object v) {
+        if (an.values == null) {
+            an.values = new ArrayList<>();
+        }
+        for (int i = 0; i + 1 < an.values.size(); i += 2) {
+            if (key.equals(an.values.get(i))) {
+                an.values.set(i + 1, v);
+                return;
+            }
+        }
+        an.values.add(key);
+        an.values.add(v);
+    }
+
+    private static void removeAnnotation(MethodNode m, AnnotationNode an) {
+        if (m.visibleAnnotations != null) {
+            m.visibleAnnotations.remove(an);
+        }
+        if (m.invisibleAnnotations != null) {
+            m.invisibleAnnotations.remove(an);
+        }
+    }
+
+    /** the injector's simple name: Inject, Redirect, ModifyArg, WrapOperation... */
+    private static String kind(AnnotationNode an) {
+        return an.desc.substring(an.desc.lastIndexOf('/') + 1, an.desc.length() - 1);
+    }
+
+    private static int argSlots(String desc, boolean isStatic) {
+        int s = isStatic ? 0 : 1;
+        for (Type t : Type.getArgumentTypes(desc)) {
+            s += t.getSize();
+        }
+        return s;
+    }
+
+    /** "Lowner;name(desc)" / "name(desc)" / "owner.name(desc)" with another name or descriptor, prefix kept */
+    private static String respell(String mapped, String name, String desc) {
+        String prefix = "";
+        String rest = mapped;
+        if (rest.startsWith("L") && rest.contains(";")) {
+            prefix = rest.substring(0, rest.indexOf(';') + 1);
+            rest = rest.substring(rest.indexOf(';') + 1);
+        }
+        boolean field = desc != null && !desc.startsWith("(");
+        return prefix + name + (desc == null ? "" : (field ? ":" : "") + desc);
+    }
+}
