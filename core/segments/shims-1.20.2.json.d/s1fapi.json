@@ -1,0 +1,12 @@
+{
+ "classRenames": {
+  "net/fabricmc/fabric/api/event/network/C2SPacketTypeCallback": "top/dext/centurybridge/compat/fapi/event/network/C2SPacketTypeCallback",
+  "net/fabricmc/fabric/api/event/network/S2CPacketTypeCallback": "top/dext/centurybridge/compat/fapi/event/network/S2CPacketTypeCallback",
+  "net/fabricmc/fabric/api/network/ClientSidePacketRegistry": "top/dext/centurybridge/compat/fapi/network/ClientSidePacketRegistry",
+  "net/fabricmc/fabric/api/network/PacketConsumer": "top/dext/centurybridge/compat/fapi/network/PacketConsumer",
+  "net/fabricmc/fabric/api/network/PacketContext": "top/dext/centurybridge/compat/fapi/network/PacketContext",
+  "net/fabricmc/fabric/api/network/PacketRegistry": "top/dext/centurybridge/compat/fapi/network/PacketRegistry",
+  "net/fabricmc/fabric/api/network/ServerSidePacketRegistry": "top/dext/centurybridge/compat/fapi/network/ServerSidePacketRegistry",
+  "net/fabricmc/fabric/api/server/PlayerStream": "top/dext/centurybridge/compat/fapi/server/PlayerStream"
+ }
+}
