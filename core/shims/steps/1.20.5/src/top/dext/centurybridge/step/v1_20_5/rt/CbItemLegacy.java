@@ -87,32 +87,8 @@ public final class CbItemLegacy {
     static final List<String> DYES = List.of("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink",
         "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black");
 
-    /**
-     * 1.20.4's banner pattern codes ("b", "bl", ...) by the pattern id 1.20.5 keys the registry on, as
-     * the game's BannerPatternFormatFix maps them (shared: s4block's banner bridge reads it too).
-     */
-    public static final Map<String, String> PATTERN_CODES = Map.ofEntries(
-        Map.entry("minecraft:base", "b"), Map.entry("minecraft:square_bottom_left", "bl"),
-        Map.entry("minecraft:square_bottom_right", "br"), Map.entry("minecraft:square_top_left", "tl"),
-        Map.entry("minecraft:square_top_right", "tr"), Map.entry("minecraft:stripe_bottom", "bs"),
-        Map.entry("minecraft:stripe_top", "ts"), Map.entry("minecraft:stripe_left", "ls"),
-        Map.entry("minecraft:stripe_right", "rs"), Map.entry("minecraft:stripe_center", "cs"),
-        Map.entry("minecraft:stripe_middle", "ms"), Map.entry("minecraft:stripe_downright", "drs"),
-        Map.entry("minecraft:stripe_downleft", "dls"), Map.entry("minecraft:small_stripes", "ss"),
-        Map.entry("minecraft:cross", "cr"), Map.entry("minecraft:straight_cross", "sc"),
-        Map.entry("minecraft:triangle_bottom", "bt"), Map.entry("minecraft:triangle_top", "tt"),
-        Map.entry("minecraft:triangles_bottom", "bts"), Map.entry("minecraft:triangles_top", "tts"),
-        Map.entry("minecraft:diagonal_left", "ld"), Map.entry("minecraft:diagonal_up_right", "rd"),
-        Map.entry("minecraft:diagonal_up_left", "lud"), Map.entry("minecraft:diagonal_right", "rud"),
-        Map.entry("minecraft:circle", "mc"), Map.entry("minecraft:rhombus", "mr"),
-        Map.entry("minecraft:half_vertical", "vh"), Map.entry("minecraft:half_horizontal", "hh"),
-        Map.entry("minecraft:half_vertical_right", "vhr"), Map.entry("minecraft:half_horizontal_bottom", "hhb"),
-        Map.entry("minecraft:border", "bo"), Map.entry("minecraft:curly_border", "cbo"),
-        Map.entry("minecraft:gradient", "gra"), Map.entry("minecraft:gradient_up", "gru"),
-        Map.entry("minecraft:bricks", "bri"), Map.entry("minecraft:globe", "glb"),
-        Map.entry("minecraft:creeper", "cre"), Map.entry("minecraft:skull", "sku"),
-        Map.entry("minecraft:flower", "flo"), Map.entry("minecraft:mojang", "moj"),
-        Map.entry("minecraft:piglin", "pig"));
+    /** 1.20.4's banner pattern codes by pattern id (shared: rt/CbBannerPatterns) */
+    static final Map<String, String> PATTERN_CODES = CbBannerPatterns.CODES;
 
     // NBT type ids
     private static final int NUMERIC = 99;
