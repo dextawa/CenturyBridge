@@ -70,9 +70,73 @@ public final class CbMisc {
         return false;
     }
 
-    /** ArmorTrim.getTrim(registries, stack): 1.20.1 always reported decoding problems */
+    /** ArmorTrim.getTrim(registries, stack): 1.20.1 always logged decoding problems -- 1.20.2's suppressErrors flag off */
     public static boolean reportTrimErrors() {
         return false;
+    }
+
+    // ---- UUIDUtil.getOrCreatePlayerUUID(profile): gone in 1.20.2 (authlib 5 profiles always carry an id)
+
+    /** getOrCreatePlayerUUID(profile), 1.20.1 body: the profile's id, else the offline-mode id of its name */
+    public static java.util.UUID method_43343(com.mojang.authlib.GameProfile profile) {
+        java.util.UUID id = profile.getId();
+        return id != null ? id : net.minecraft.class_4844.method_43344(profile.getName());
+    }
+
+    // ---- ExtraCodecs.instantCodec(formatter): gone in 1.20.2
+
+    /** instantCodec(formatter), 1.20.1 body: an Instant as the formatter's string */
+    public static com.mojang.serialization.Codec<java.time.Instant> method_43532(java.time.format.DateTimeFormatter formatter) {
+        return com.mojang.serialization.Codec.STRING.comapFlatMap(s -> {
+            try {
+                return com.mojang.serialization.DataResult.success(java.time.Instant.from(formatter.parse(s)));
+            } catch (Exception e) {
+                return com.mojang.serialization.DataResult.error(e::getMessage);
+            }
+        }, formatter::format);
+    }
+
+    // ---- DecoratedPotRecipe.createDecoratedPotItem(decorations): moved to DecoratedPotBlockEntity in 1.20.2, same body
+
+    /** createDecoratedPotItem(decorations) */
+    public static net.minecraft.class_1799 method_51509(net.minecraft.class_8172.class_8526 decorations) {
+        return net.minecraft.class_8172.method_52577(decorations);
+    }
+
+    // ---- ShapedRecipe.itemFromJson(json): gone in 1.20.2 (recipes decode through codecs)
+
+    /** itemFromJson(json), 1.20.1 body: the "item" id, which must name an item other than air */
+    public static net.minecraft.class_1792 method_8155(com.google.gson.JsonObject json) {
+        String id = net.minecraft.class_3518.method_15265(json, "item");
+        net.minecraft.class_1792 item = net.minecraft.class_7923.field_41178.method_17966(net.minecraft.class_2960.method_12829(id))
+            .orElseThrow(() -> new com.google.gson.JsonSyntaxException("Unknown item '" + id + "'"));
+        if (item == net.minecraft.class_1802.field_8162) {
+            throw new com.google.gson.JsonSyntaxException("Empty ingredient not allowed here");
+        }
+        return item;
+    }
+
+    // ---- PlayerMap.updatePlayer(oldSection, newSection, player): 1.20.1's body was empty; 1.20.2 removed it
+
+    /** updatePlayer(oldSection, newSection, player): nothing, as in 1.20.1 */
+    public static void method_14081(net.minecraft.class_3210 map, long oldSection, long newSection, net.minecraft.class_3222 player) {
+    }
+
+    // ---- DataFixTypes.SAVED_DATA / References.SAVED_DATA: 1.20.1 updated every saved-data file through one
+    // generic "saved_data" type, whose fixes rewrite only vanilla structures in it (raids, map ids, scoreboard
+    // objectives and teams, structure features). 1.20.2 split it into one type per vanilla kind and dropped
+    // "saved_data" from its schemas. A mod's own saved data matched none of those structures, so 1.20.1's
+    // generic update left it as it was; the 1.20.2 type that does exactly that for any data is
+    // saved_data/command_storage, a remainder type no fix targets.
+
+    /** DataFixTypes.SAVED_DATA */
+    public static net.minecraft.class_4284 field_19219() {
+        return net.minecraft.class_4284.field_45077;
+    }
+
+    /** References.SAVED_DATA */
+    public static com.mojang.datafixers.DSL.TypeReference field_5732() {
+        return net.minecraft.class_1208.field_45090;
     }
 
     private CbMisc() {
