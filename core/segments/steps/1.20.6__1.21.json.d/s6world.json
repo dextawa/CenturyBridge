@@ -1,0 +1,178 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_5131.method_26841()Ljava/util/Set;": "method_60497"
+ },
+ "callReshapes": {
+  "net/minecraft/class_1322.comp_2447()Ljava/util/UUID;": {
+   "desc": "()Lnet/minecraft/class_2960;",
+   "ops": [],
+   "basis": "id() answers the ResourceLocation 1.21 names the modifier by; its 1.20.6 uuid is the inverse of the data fixer's mapping (CbEntityAttributes.uuidOf)",
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#uuidOf(Lnet/minecraft/class_2960;)Ljava/util/UUID;"
+  },
+  "net/minecraft/class_1324.method_6199(Ljava/util/UUID;)Lnet/minecraft/class_1322;": {
+   "desc": "(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1322;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#idOf(Ljava/util/UUID;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "getModifier by the id the data fixer gives the uuid; a mod's super call included"
+  },
+  "net/minecraft/class_1324.method_6196(Lnet/minecraft/class_1322;)Z": {
+   "desc": "(Lnet/minecraft/class_2960;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#idOfModifier(Lnet/minecraft/class_1322;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "1.20.6's hasModifier(modifier) looked the modifier's id up; 1.21's takes the id"
+  },
+  "net/minecraft/class_1324.method_6200(Ljava/util/UUID;)V": {
+   "desc": "(Lnet/minecraft/class_2960;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#idOf(Ljava/util/UUID;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "removeModifier by the id of the uuid; 1.21 answers whether one was removed, 1.20.6 answered nothing",
+   "ret": "pop"
+  },
+  "net/minecraft/class_5131.method_45332(Lnet/minecraft/class_6880;Ljava/util/UUID;)D": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;)D",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#idOf(Ljava/util/UUID;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "AttributeMap.getModifierValue by the id of the uuid"
+  },
+  "net/minecraft/class_5131.method_45330(Lnet/minecraft/class_6880;Ljava/util/UUID;)Z": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;)Z",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#idOf(Ljava/util/UUID;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "AttributeMap.hasModifier by the id of the uuid"
+  },
+  "net/minecraft/class_5132.method_27308(Lnet/minecraft/class_6880;Ljava/util/UUID;)D": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;)D",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#idOf(Ljava/util/UUID;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "AttributeSupplier.getModifierValue by the id of the uuid"
+  },
+  "net/minecraft/class_5132.method_27309(Lnet/minecraft/class_6880;Ljava/util/UUID;)Z": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;)Z",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#idOf(Ljava/util/UUID;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "AttributeSupplier.hasModifier by the id of the uuid"
+  }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1322.<init>(Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#newModifier",
+  "net/minecraft/class_1322.<init>(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#newModifier"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1322.comp_2448()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#name"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_1320.field_30097:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#MAX_NAME_LENGTH"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_3417.field_14578:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14592:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14606:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14626:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14654:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14656:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14717:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14744:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14759:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14765:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14806:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14829:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14838:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14860:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14896:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14916:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_14944:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_15001:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_15011:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_15039:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_15059:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_15089:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_15169:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_23060:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_23968:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_35343:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_38924:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_3417.field_44700:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
+  "net/minecraft/class_8216.field_43117:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43118:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43119:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43120:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43121:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43122:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43123:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43124:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43125:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43126:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43127:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43128:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43129:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43130:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43131:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43132:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_43133:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_44949:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_45074:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_8216.field_46769:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks"
+ },
+ "covers": [
+  "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z"
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_6199(Ljava/util/UUID;)Lnet/minecraft/class_1322;",
+   "new": "method_6199(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1322;",
+   "onlyUnder": "net/minecraft/class_1324",
+   "basis": "1.21 asks getModifier(id): a 1.20.6 subclass's getModifier(UUID) answers for the id's uuid",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes.uuidOf(Lnet/minecraft/class_2960;)Ljava/util/UUID;"
+  },
+  {
+   "old": "method_6196(Lnet/minecraft/class_1322;)Z",
+   "new": "method_6196(Lnet/minecraft/class_2960;)Z",
+   "onlyUnder": "net/minecraft/class_1324",
+   "basis": "1.21 asks hasModifier(id): a 1.20.6 subclass's hasModifier(AttributeModifier) is handed the instance's own modifier of that id, else one carrying the id (CbEntityAttributes.hasModifier)",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes.hasModifier(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityAttributes$LegacyHasModifier;Lnet/minecraft/class_2960;)Z",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes$LegacyHasModifier"
+  },
+  {
+   "old": "method_6200(Ljava/util/UUID;)V",
+   "new": "method_6200(Lnet/minecraft/class_2960;)Z",
+   "onlyUnder": "net/minecraft/class_1324",
+   "basis": "1.21 asks removeModifier(id) and reads whether one went: the 1.20.6 subclass's removeModifier(UUID) runs and the answer is whether the id was there before and is gone after (CbEntityAttributes.removeModifier)",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes.removeModifier(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityAttributes$LegacyRemoveModifier;Lnet/minecraft/class_2960;)Z",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes$LegacyRemoveModifier"
+  },
+  {
+   "old": "method_45332(Lnet/minecraft/class_6880;Ljava/util/UUID;)D",
+   "new": "method_45332(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;)D",
+   "onlyUnder": "net/minecraft/class_5131",
+   "basis": "1.21 asks AttributeMap.getModifierValue(holder, id): a 1.20.6 subclass's override answers for the id's uuid",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes.uuidOf(Lnet/minecraft/class_2960;)Ljava/util/UUID;"
+  },
+  {
+   "old": "method_45330(Lnet/minecraft/class_6880;Ljava/util/UUID;)Z",
+   "new": "method_45330(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;)Z",
+   "onlyUnder": "net/minecraft/class_5131",
+   "basis": "1.21 asks AttributeMap.hasModifier(holder, id): a 1.20.6 subclass's override answers for the id's uuid",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes.uuidOf(Lnet/minecraft/class_2960;)Ljava/util/UUID;"
+  }
+ ],
+ "overrideRenames": [
+  {
+   "old": "method_26841()Ljava/util/Set;",
+   "new": "method_60497",
+   "onlyUnder": "net/minecraft/class_5131",
+   "superCalls": "rename",
+   "basis": "getDirtyAttributes is 1.21's getAttributesToSync: the same set (the client-syncable instances that changed), filled and cleared where 1.20.6 filled and cleared it"
+  }
+ ]
+}
