@@ -1,0 +1,207 @@
+{
+ "classRenames": {
+  "net/minecraft/class_3193$class_3724": "top/dext/centurybridge/step/v1_20_5/facade/class_3193$class_3724"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_3193.field_16426:Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
+  "net/minecraft/class_3193.field_16427:Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
+  "net/minecraft/class_3193.field_16430:Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
+  "net/minecraft/class_8514.field_44639:Ljava/util/function/ToIntFunction;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric"
+ },
+ "callReshapes": {
+  "net/minecraft/class_1309.method_6088()Ljava/util/Map;": {
+   "desc": "()Ljava/util/Map;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric#cbEffectsByValue(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "generic drift: LivingEntity.getActiveEffectsMap() keys the live effect map by Holder<MobEffect> since 1.20.5; a 1.20.4 caller gets a live view keyed by MobEffect"
+  },
+  "net/minecraft/class_1704.method_17372(Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric#cbEffectHolderOptional(Ljava/util/Optional;)Ljava/util/Optional;",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric#cbEffectHolderOptional(Ljava/util/Optional;)Ljava/util/Optional;"
+   ],
+   "basis": "generic drift: BeaconMenu.updateEffects takes Optional<Holder<MobEffect>> since 1.20.5"
+  },
+  "net/minecraft/class_3288$class_3289.method_14468(Ljava/util/List;Ljava/lang/Object;Ljava/util/function/Function;Z)I": {
+   "desc": "(Ljava/util/List;Ljava/lang/Object;Ljava/util/function/Function;Z)I",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric#cbPackSelection(Ljava/util/function/Function;)Ljava/util/function/Function;",
+    "keep:3"
+   ],
+   "basis": "generic drift: Pack.Position.insert reads the position from a PackSelectionConfig since 1.20.5 (1.20.4: from the Pack)"
+  },
+  "net/minecraft/class_3193.method_13993(Lnet/minecraft/class_2806;Lnet/minecraft/class_3898;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_2806;Lnet/minecraft/class_3898;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": ["keep:0", "keep:1"],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3193.method_14003()Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "()Ljava/util/concurrent/CompletableFuture;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3193.method_16145()Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "()Ljava/util/concurrent/CompletableFuture;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3193.method_16146(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": ["keep:0"],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3193.method_20725()Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "()Ljava/util/concurrent/CompletableFuture;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3193.method_21737(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": ["keep:0"],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3193.method_40066()Ljava/util/List;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFutures(Ljava/util/List;)Ljava/util/List;",
+   "basis": "generic drift: ChunkHolder.getAllFutures pairs each status with a ChunkResult future since 1.20.5; 1.20.4 built a fresh list as well"
+  },
+  "net/minecraft/class_3215.method_17299(IILnet/minecraft/class_2806;Z)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(IILnet/minecraft/class_2806;Z)Ljava/util/concurrent/CompletableFuture;",
+   "ops": ["keep:0", "keep:1", "keep:2", "keep:3"],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3898.method_17235(Lnet/minecraft/class_3193;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_3193;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": ["keep:0"],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3898.method_17236(Lnet/minecraft/class_3193;Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_3193;Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": ["keep:0", "keep:1"],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3898.method_17247(Lnet/minecraft/class_3193;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_3193;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": ["keep:0"],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_3898.method_31417(Lnet/minecraft/class_3193;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_3193;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": ["keep:0"],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_5132.<init>(Ljava/util/Map;)V": {
+   "desc": "(Ljava/util/Map;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric#cbAttributesByHolder(Ljava/util/Map;)Ljava/util/Map;"
+   ],
+   "basis": "generic drift: AttributeSupplier is keyed by Holder<Attribute> since 1.20.5; 1.20.4's constructor kept an immutable copy, so does the converter (the 1.20.5 one keeps the map it is handed); the constructor is package-private since 1.20.5 and widened again by the layer's access widener"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_1309",
+   "member": "method_6088()Ljava/util/Map;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric#cbEffectsByHolder(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "a 1.20.4 override answers a MobEffect-keyed map; vanilla reads it keyed by holders"
+  },
+  {
+   "under": "net/minecraft/class_1704",
+   "member": "method_17372(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric#cbEffectValueOptional(Ljava/util/Optional;)Ljava/util/Optional;",
+    "top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric#cbEffectValueOptional(Ljava/util/Optional;)Ljava/util/Optional;"
+   ],
+   "basis": "vanilla hands a 1.20.4 override Optional<Holder<MobEffect>>; its body reads Optional<MobEffect>"
+  },
+  {
+   "under": "net/minecraft/class_3193",
+   "member": "method_13993(Lnet/minecraft/class_2806;Lnet/minecraft/class_3898;)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3193",
+   "member": "method_14003()Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3193",
+   "member": "method_16145()Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3193",
+   "member": "method_16146(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3193",
+   "member": "method_20725()Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3193",
+   "member": "method_21737(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3193",
+   "member": "method_40066()Ljava/util/List;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFutures(Ljava/util/List;)Ljava/util/List;",
+   "basis": "a 1.20.4 override answers (status, Either future) pairs; vanilla reads ChunkResult futures"
+  },
+  {
+   "under": "net/minecraft/class_3215",
+   "member": "method_17299(IILnet/minecraft/class_2806;Z)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3898",
+   "member": "method_17235(Lnet/minecraft/class_3193;)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3898",
+   "member": "method_17236(Lnet/minecraft/class_3193;Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3898",
+   "member": "method_17247(Lnet/minecraft/class_3193;)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  },
+  {
+   "under": "net/minecraft/class_3898",
+   "member": "method_31417(Lnet/minecraft/class_3193;)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbResultFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "a 1.20.4 override answers an Either future; vanilla reads a ChunkResult future"
+  }
+ ]
+}

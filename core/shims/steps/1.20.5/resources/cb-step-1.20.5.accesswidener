@@ -1,1 +1,4 @@
 accessWidener	v2	intermediary
+
+# s4rest: AttributeSupplier(Map) was public in 1.20.4 (package-private since 1.20.5)
+accessible method net/minecraft/class_5132 <init> (Ljava/util/Map;)V
