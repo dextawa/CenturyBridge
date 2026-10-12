@@ -11,16 +11,6 @@
    "ret": "pop",
    "basis": "mechanical: same values; return value popped"
   },
-  "net/minecraft/class_2158.method_9195(Lnet/minecraft/class_2960;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_2168;Ljava/util/List;)Lnet/minecraft/class_2158;": {
-   "desc": "(Lnet/minecraft/class_2960;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_8839;Ljava/util/List;)Lnet/minecraft/class_2158;",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:2 Lnet/minecraft/class_8839;",
-    "keep:3"
-   ],
-   "basis": "mechanical: same values"
-  },
   "net/minecraft/class_1297.method_5781()Lnet/minecraft/class_270;": {
    "desc": "()Lnet/minecraft/class_268;",
    "ops": [],

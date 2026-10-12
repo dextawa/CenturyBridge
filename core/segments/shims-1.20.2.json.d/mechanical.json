@@ -197,18 +197,6 @@
    "basis": "mechanical: the old method gets every parameter it had; new Ljava/util/Collection; not passed"
   },
   {
-   "old": "method_19430(ILjava/util/List;)V",
-   "new": "method_19430(ILnet/minecraft/class_2338;Ljava/util/List;)V",
-   "args": [
-    0,
-    2
-   ],
-   "onlyUnder": "net/minecraft/class_4205",
-   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2338; not passed"
-  },
-  {
    "old": "method_44563(Ljava/util/UUID;Lcom/mojang/authlib/minecraft/report/AbuseReport;)Ljava/util/concurrent/CompletableFuture;",
    "new": "method_44563(Ljava/util/UUID;Lnet/minecraft/class_8776;Lcom/mojang/authlib/minecraft/report/AbuseReport;)Ljava/util/concurrent/CompletableFuture;",
    "args": [
