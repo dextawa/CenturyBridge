@@ -345,7 +345,9 @@ call	net/minecraft/class_9962$class_9970	comp_3033	()Ljava/util/Optional;	CLASS	
 get-static	net/minecraft/class_9962$class_9970	field_53120	Lcom/mojang/serialization/Codec;	CLASS	class gone
 call	net/minecraft/class_283$class_9972	method_62260	(Lcom/mojang/blaze3d/systems/RenderPass;Ljava/util/Map;)V	METHOD	method not declared on the owner
 call	net/minecraft/class_283$class_9972	comp_3034	()Ljava/lang/String;	METHOD	method not declared on the owner
+new	net/minecraft/class_4603	<init>	()V	METHOD	constructors (Lnet/minecraft/class_310;Lnet/minecraft/class_4597;)V
 call-static	net/minecraft/class_4603	method_23067	(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;)V	METHOD	method method_23067(ZF)V public
+super-ctor	net/minecraft/class_4603	<init>	()V	METHOD	constructors (Lnet/minecraft/class_310;Lnet/minecraft/class_4597;)V
 get	net/minecraft/class_10017	field_53324	Lnet/minecraft/class_10017$class_10018;	FIELD	field not declared on the owner
 put	net/minecraft/class_10017	field_53324	Lnet/minecraft/class_10017$class_10018;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_918	field_32937	I	FIELD	field not declared on the owner
@@ -524,8 +526,10 @@ call	com/mojang/blaze3d/systems/GpuDevice	createTexture	(Ljava/lang/String;Lcom/
 call	com/mojang/blaze3d/systems/GpuDevice	createBuffer	(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;I)Lcom/mojang/blaze3d/buffers/GpuBuffer;	METHOD	method createBuffer(Ljava/util/function/Supplier;II)Lcom/mojang/blaze3d/buffers/GpuBuffer; public abstract ; createBuffer(Ljava/util/function/Supplier;ILjava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer; public abstract
 call	com/mojang/blaze3d/systems/GpuDevice	createBuffer	(Ljava/util/function/Supplier;Lcom/mojang/blaze3d/buffers/BufferType;Lcom/mojang/blaze3d/buffers/BufferUsage;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer;	METHOD	method createBuffer(Ljava/util/function/Supplier;II)Lcom/mojang/blaze3d/buffers/GpuBuffer; public abstract ; createBuffer(Ljava/util/function/Supplier;ILjava/nio/ByteBuffer;)Lcom/mojang/blaze3d/buffers/GpuBuffer; public abstract
 implement-interface	com/mojang/blaze3d/systems/GpuDevice			ABSTRACT	class public abstract interface extends java/lang/Object
+new	com/mojang/blaze3d/buffers/GpuFence	<init>	()V	METHOD	constructors (none reachable)
 call	com/mojang/blaze3d/buffers/GpuFence	close	()V	ICCE	method close()V public abstract
 call	com/mojang/blaze3d/buffers/GpuFence	awaitCompletion	(J)Z	ICCE	method awaitCompletion(J)Z public abstract
+super-ctor	com/mojang/blaze3d/buffers/GpuFence	<init>	()V	METHOD	constructors (none reachable)
 call-static	com/mojang/blaze3d/buffers/BufferType	values	()[Lcom/mojang/blaze3d/buffers/BufferType;	CLASS	class gone
 call-static	com/mojang/blaze3d/buffers/BufferType	valueOf	(Ljava/lang/String;)Lcom/mojang/blaze3d/buffers/BufferType;	CLASS	class gone
 get-static	com/mojang/blaze3d/buffers/BufferType	VERTICES	Lcom/mojang/blaze3d/buffers/BufferType;	CLASS	class gone
