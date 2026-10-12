@@ -7,10 +7,18 @@ written every way 1.20.4 allowed it:
 - `ProbeChild` extends `Probe` and chains to its mod parent's `defineSynchedData()`;
 - `ProbeCloud` extends vanilla `AreaEffectCloud` and chains to vanilla's.
 
-When the server has started it constructs each, reads, sets and packs the data, sends it through
-the 1.20.4 wire format (`DataValue.write` / `DataValue.read`) into a second instance, checks a
-duplicate define is refused with 1.20.4's message, and spawns one into the overworld. Every check
-prints a `CBDATATEST OK` / `CBDATATEST FAIL` line; `CBDATATEST DONE` ends a clean run.
+When the server has started it constructs each, reads, sets and packs the data (a cat variant
+among it, which 1.20.5's serializer carries as a holder), sends it through the 1.20.4 wire format
+(`DataValue.write` / `DataValue.read`) into a second instance, checks a duplicate define is refused
+with 1.20.4's message, and spawns one into the overworld.
+
+`NetTest` then works the 1.20.4 packet surface: `write(buf)` / `new P(buf)` round trips (a plain
+class, a packet 1.20.5 made a record, one carrying an item stack through a registry codec),
+`Packet.write` through the interface, a 1.20.4 subclass of the record-ified cooldown packet (its
+getter override answers, `super(buf)` and super getters work), a unit packet, `nextProtocol()`, and
+a mod's own `Packet` implementation (written through the interface, given a `type()`).
+
+Every check prints a `CBDATATEST OK` / `CBDATATEST FAIL` line; `CBDATATEST DONE` ends a clean run.
 
 Build against 1.20.4 (`--release 17`), convert one step, boot a 1.20.5 Fabric server with
 fabric-api and the 1.20.5 step layer:
