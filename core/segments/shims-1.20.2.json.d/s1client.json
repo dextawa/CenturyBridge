@@ -52,12 +52,33 @@
   "net/minecraft/class_8132.method_49001()Lnet/minecraft/class_7847;",
   "net/minecraft/class_8132.method_49002()Lnet/minecraft/class_7847;",
   "net/minecraft/class_8132.method_49003()Lnet/minecraft/class_7847;",
-  "net/minecraft/class_342.method_1855(I)V"
+  "net/minecraft/class_342.method_1855(I)V",
+  "net/minecraft/class_742.method_3125()Z",
+  "net/minecraft/class_742.method_3127()Z",
+  "net/minecraft/class_742.method_3117()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_742.method_3119()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_742.method_3126()Z",
+  "net/minecraft/class_742.method_3122()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_742.method_3121()Ljava/lang/String;",
+  "net/minecraft/class_1071.method_4656(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;)Lnet/minecraft/class_2960;",
+  "net/minecraft/class_1071.method_4652(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_1071$class_1072;Z)V",
+  "net/minecraft/class_1071.method_4654(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map;",
+  "net/minecraft/class_1071.method_44705(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_2960;",
+  "net/minecraft/class_320.method_1673()Ljava/lang/String;",
+  "net/minecraft/class_320.method_1677()Lcom/mojang/authlib/GameProfile;",
+  "net/minecraft/class_746.method_3135()Ljava/lang/String;",
+  "net/minecraft/class_746.method_3146(Ljava/lang/String;)V",
+  "net/minecraft/class_310.method_31186(Ljava/lang/Throwable;Lnet/minecraft/class_2561;)V",
+  "net/minecraft/class_310.method_44649()Z",
+  "net/minecraft/class_310.method_1539()Lcom/mojang/authlib/properties/PropertyMap;",
+  "net/minecraft/class_310.method_1589()Z",
+  "net/minecraft/class_310.method_1537(Z)V"
  ],
  "classRenames": {
   "net/minecraft/class_8084": "top/dext/centurybridge/facade/v1_20_2/class_8084",
   "net/minecraft/class_8084$class_8085": "top/dext/centurybridge/facade/v1_20_2/class_8084$class_8085",
-  "net/minecraft/class_8586": "top/dext/centurybridge/facade/v1_20_2/class_8586"
+  "net/minecraft/class_8586": "top/dext/centurybridge/facade/v1_20_2/class_8586",
+  "net/minecraft/class_1071$class_1072": "top/dext/centurybridge/facade/v1_20_2/class_1071$class_1072"
  },
  "superRenames": {
   "net/minecraft/class_344": "top/dext/centurybridge/facade/v1_20_2/class_344"
@@ -73,7 +94,9 @@
  "staticRedirects": {
   "net/minecraft/class_8082.method_48592(Lnet/minecraft/class_4185$class_4241;)Lnet/minecraft/class_8084;": "top/dext/centurybridge/rt/v1_20_2/CbGuiButtons",
   "net/minecraft/class_8082.method_48594(Lnet/minecraft/class_4185$class_4241;)Lnet/minecraft/class_8084;": "top/dext/centurybridge/rt/v1_20_2/CbGuiButtons",
-  "net/minecraft/class_366.method_1985(Lnet/minecraft/class_374;Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiRecipes"
+  "net/minecraft/class_366.method_1985(Lnet/minecraft/class_374;Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiRecipes",
+  "net/minecraft/class_742.method_3120(Lnet/minecraft/class_2960;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiSkins",
+  "net/minecraft/class_742.method_3124(Ljava/lang/String;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbGuiSkins"
  },
  "superCtorReshapes": {
   "net/minecraft/class_8208.<init>(IILnet/minecraft/class_2960;)V": {
@@ -130,6 +153,28 @@
     "push top/dext/centurybridge/rt/v1_20_2/CbGuiFurnace#cbLegacyBurn()Lnet/minecraft/class_2960;"
    ],
    "basis": "markers: CbGuiFurnaceScreenBridge draws the flame and arrow from the screen's own sheet, as 1.20.1 did"
+  },
+  "net/minecraft/class_1071.<init>(Lnet/minecraft/class_1060;Ljava/io/File;Lcom/mojang/authlib/minecraft/MinecraftSessionService;)V": {
+   "desc": "(Lnet/minecraft/class_1060;Ljava/nio/file/Path;Lcom/mojang/authlib/minecraft/MinecraftSessionService;Ljava/util/concurrent/Executor;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbGuiSkins#cbPath(Ljava/io/File;)Ljava/nio/file/Path;",
+    "keep",
+    "push top/dext/centurybridge/rt/v1_20_2/CbGuiSkins#cbExecutor()Ljava/util/concurrent/Executor;"
+   ],
+   "basis": "the same cache directory as a Path; the executor 1.20.2's own SkinManager gets (the client)"
+  },
+  "net/minecraft/class_320.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_320$class_321;)V": {
+   "desc": "(Ljava/lang/String;Ljava/util/UUID;Ljava/lang/String;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_320$class_321;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbGuiSkins#cbUuid(Ljava/lang/String;)Ljava/util/UUID;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "the UUID string parsed as 1.20.1's getProfileId parsed it; the string rides to the constructor (CbGuiUserBridge)"
   }
  },
  "callReshapes": {

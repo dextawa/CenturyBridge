@@ -46,33 +46,6 @@ public final class ClientStatics {
                      : net.minecraft.class_642.class_8678.field_45611;  // OTHER
     }
 
-    /** was net/minecraft/class_742.method_3117()Lnet/minecraft/class_2960; getSkinTexture */
-    public static net.minecraft.class_2960 method_3117(net.minecraft.class_742 self) { return self.method_52814().comp_1626(); }
-
-    /** was net/minecraft/class_746.method_3117()Lnet/minecraft/class_2960; */
-    public static net.minecraft.class_2960 method_3117(net.minecraft.class_746 self) { return self.method_52814().comp_1626(); }
-
-    /** was net/minecraft/class_742.method_3121()Ljava/lang/String; getModel */
-    public static String method_3121(net.minecraft.class_742 self) { return self.method_52814().comp_1629().method_52856(); }
-
-    /** was net/minecraft/class_746.method_3121()Ljava/lang/String; */
-    public static String method_3121(net.minecraft.class_746 self) { return self.method_52814().comp_1629().method_52856(); }
-
-    /** was net/minecraft/class_742.method_3119()Lnet/minecraft/class_2960; getCapeTexture */
-    public static net.minecraft.class_2960 method_3119(net.minecraft.class_742 self) { return self.method_52814().comp_1627(); }
-
-    /** was net/minecraft/class_742.method_3122()Lnet/minecraft/class_2960; getElytraTexture */
-    public static net.minecraft.class_2960 method_3122(net.minecraft.class_742 self) { return self.method_52814().comp_1628(); }
-
-    /** was net/minecraft/class_742.method_3125()Z isCapeLoaded */
-    public static boolean method_3125(net.minecraft.class_742 self) { return self.method_52814().comp_1627() != null; }
-
-    /** was net/minecraft/class_742.method_3126()Z isElytraLoaded */
-    public static boolean method_3126(net.minecraft.class_742 self) { return self.method_52814().comp_1628() != null; }
-
-    /** was net/minecraft/class_742.method_3127()Z isSkinLoaded */
-    public static boolean method_3127(net.minecraft.class_742 self) { return self.method_52814().comp_1626() != null; }
-
     /** was net/minecraft/class_640.method_2968()Lnet/minecraft/class_2960; PlayerListEntry.getSkinTexture */
     public static net.minecraft.class_2960 method_2968(net.minecraft.class_640 self) { return self.method_52810().comp_1626(); }
 
@@ -87,36 +60,6 @@ public final class ClientStatics {
 
     /** was net/minecraft/class_1068.method_4647(Ljava/util/UUID;)Ljava/lang/String; DefaultSkinHelper.getModel */
     public static String method_4647(java.util.UUID uuid) { return net.minecraft.class_1068.method_4648(uuid).comp_1629().method_52856(); }
-
-    /** was net/minecraft/class_1071.method_4654(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map; PlayerSkinProvider.getTextures.
-     *  Rebuilt from the synchronous SkinTextures: SKIN carries the real URL + model metadata; CAPE/ELYTRA
-     *  entries are present when the texture is, with the registered texture id standing in for a URL. */
-    public static java.util.Map<com.mojang.authlib.minecraft.MinecraftProfileTexture.Type, com.mojang.authlib.minecraft.MinecraftProfileTexture> method_4654(net.minecraft.class_1071 self, com.mojang.authlib.GameProfile profile) {
-        net.minecraft.class_8685 t = self.method_52862(profile);
-        java.util.Map<com.mojang.authlib.minecraft.MinecraftProfileTexture.Type, com.mojang.authlib.minecraft.MinecraftProfileTexture> m =
-            new java.util.EnumMap<>(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.class);
-        if (t.comp_1911() != null) {
-            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.SKIN,
-                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1911(), java.util.Map.of("model", t.comp_1629().method_52856())));
-        }
-        if (t.comp_1627() != null) {
-            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.CAPE,
-                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1627().toString(), null));
-        }
-        if (t.comp_1628() != null) {
-            m.put(com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.ELYTRA,
-                new com.mojang.authlib.minecraft.MinecraftProfileTexture(t.comp_1628().toString(), null));
-        }
-        return m;
-    }
-
-    /** was net/minecraft/class_320.method_1673()Ljava/lang/String; Session.getUuid (1.20.2 stores a UUID) */
-    public static String method_1673(net.minecraft.class_320 self) { java.util.UUID u = self.method_44717(); return u == null ? "" : u.toString(); }
-
-    /** was net/minecraft/class_320.method_1677()Lcom/mojang/authlib/GameProfile; Session.getProfile */
-    public static com.mojang.authlib.GameProfile method_1677(net.minecraft.class_320 self) {
-        return new com.mojang.authlib.GameProfile(self.method_44717(), self.method_1676());
-    }
 
     /** was net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V -- ClientWorld.addEntity(id, entity):
      *  1.20.1 discarded whatever entity held that id, then added this one */
