@@ -1627,6 +1627,67 @@ public final class JarProcessor {
         return false;
     }
 
+    /**
+     * For a call naming a class of this jar layer whose member it inherits from a library type (Fabric API's
+     * PacketSender implemented by a mod's sender, FabricBlockLootTableProvider extended by a mod's provider): that
+     * library type, when wiring is keyed on it for the member -- found as the JVM resolves the call. First the
+     * superclass chain to the first class outside the layer (a library class: static and instance members alike);
+     * then, for an instance member whose superclass chain is not a library class declaring the key, the library
+     * interfaces the layer's classes on the way implement, the layer's own interfaces' superinterfaces included (a
+     * default method). The library's own hierarchy is not known here, so only a key on the type the layer reaches
+     * first applies. Null when a class or interface of the layer declares the member (the mod's own), the chain
+     * reaches Minecraft (vanilla wiring answers there), or no such key exists ({@link #inheritedVanillaOwner}
+     * leaves library classes alone because their own members may answer: a key on the member says it changed there).
+     */
+    private static String libraryHome(String owner, String member, boolean isStatic, LayerIndex layer,
+                                      java.util.function.Predicate<String> keyed) {
+        List<String> layerClasses = new ArrayList<>();
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64; hops++) {
+            if (Chain.minecraftOwned(cur)) {
+                return null;
+            }
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                if (!cur.startsWith("java/") && keyed.test(cur + "." + member)) {
+                    return cur;
+                }
+                break;
+            }
+            if (d.contains(member)) {
+                return null;
+            }
+            layerClasses.add(cur);
+            cur = layer.superOf.get(cur);
+        }
+        if (isStatic || layerClasses.isEmpty()) {
+            return null; // a static interface method is not inherited; a library owner names its member itself
+        }
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        for (String c : layerClasses) {
+            todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
+        }
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String t = todo.poll();
+            if (!seen.add(t) || Chain.minecraftOwned(t) || t.startsWith("java/")) {
+                continue;
+            }
+            Set<String> d = layer.decls.get(t);
+            if (d == null) {
+                if (keyed.test(t + "." + member)) {
+                    return t;
+                }
+                continue;
+            }
+            if (d.contains(member)) {
+                return null; // a default method of the mod's own interface
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(t, List.of()));
+        }
+        return null;
+    }
+
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
@@ -1702,6 +1763,11 @@ public final class JarProcessor {
             }
             Set<String> d = layer.decls.get(t);
             if (d == null) {
+                // a library interface (Fabric API's PacketSender implemented by a mod's sender): a reshape
+                // keyed on it serves the inherited default, as on a library superclass above
+                if (!t.startsWith("java/") && chain.callReshapeIndex.containsKey(t + "." + member)) {
+                    return t;
+                }
                 continue;
             }
             if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
@@ -2347,6 +2413,10 @@ public final class JarProcessor {
         // through when the site names a mod class. The bridge static is declared
         // on that class; the actual receiver is assignable to it.
         Map<String, String> emitOwner = new HashMap<>();
+        // a library type's member is keyed for the call / handle rewrite (libraryHome)
+        final java.util.function.Predicate<String> libraryKeyed = k -> chain.instanceRedirects.containsKey(k)
+            || chain.staticRedirects.containsKey(k) || chain.interfaceCallRedirects.containsKey(k)
+            || chain.methodRenames.containsKey(k);
 
         // dead-class facade renames touch descriptors/signatures everywhere, so the
         // trigger is a raw byte scan rather than per-ref analysis
@@ -2639,22 +2709,42 @@ public final class JarProcessor {
                                 // library owners are outside the stub diffs, but a
                                 // redirect wired explicitly (DFU's Codec.dispatch
                                 // contract change hides behind generic erasure)
-                                // still applies
-                                String lrt = chain.instanceRedirects.get(site);
+                                // still applies -- also when the site names a class of
+                                // this jar that inherits the member from that library
+                                // type (libraryHome: a mod's PacketSender calling
+                                // this.sendPacket(channel, buf))
+                                String lib = name.equals("<init>") ? null
+                                    : libraryHome(owner, name + desc, op == Opcodes.INVOKESTATIC, layer, libraryKeyed);
+                                final String lsite = lib != null ? lib + "." + name + desc : site;
+                                String lrt = chain.instanceRedirects.get(lsite);
                                 if (lrt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
                                     instRedirects.put(site, lrt);
-                                    top.dext.centurybridge.data.FullAudit.record(site, "instance-redirect");
+                                    if (lib != null) {
+                                        emitOwner.put(site, lib);
+                                    }
+                                    top.dext.centurybridge.data.FullAudit.record(lsite, "instance-redirect");
                                 }
-                                String lsrt = chain.staticRedirects.get(site);
+                                String lsrt = chain.staticRedirects.get(lsite);
                                 if (lsrt != null && op == Opcodes.INVOKESTATIC) {
                                     redirects.put(site, lsrt);
-                                    top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
+                                    top.dext.centurybridge.data.FullAudit.record(lsite, "static-redirect");
                                 }
                                 // interface calls only: a super call to the interface's default stays (Chain.interfaceCallRedirects)
-                                String licr = chain.interfaceCallRedirects.get(site);
+                                String licr = chain.interfaceCallRedirects.get(lsite);
                                 if (licr != null && op == Opcodes.INVOKEINTERFACE) {
                                     ifaceCallRedirects.put(site, licr);
-                                    top.dext.centurybridge.data.FullAudit.record(site, "interface-call-redirect");
+                                    if (lib != null) {
+                                        emitOwner.put(site, lib);
+                                    }
+                                    top.dext.centurybridge.data.FullAudit.record(lsite, "interface-call-redirect");
+                                }
+                                // a library member that only changed its name (Fabric API's
+                                // FabricItem.allowNbtUpdateAnimation -> allowComponentsUpdateAnimation):
+                                // the site keeps its owner, the JVM resolves the new name the same way
+                                String lmr = lrt == null && lsrt == null && licr == null ? chain.methodRenames.get(lsite) : null;
+                                if (lmr != null) {
+                                    mthRenames.put(site, lmr);
+                                    top.dext.centurybridge.data.FullAudit.record(lsite, "method-rename");
                                 }
                                 return; // mod-owned members (incl. overrides of dead interface methods) still exist
                             }
@@ -3030,22 +3120,37 @@ public final class JarProcessor {
                                 if (inh == null) {
                                     // library-owner method references carry the same
                                     // explicitly-wired redirects as direct calls
-                                    // (Codec::dispatch as a lambda breaks identically)
+                                    // (Codec::dispatch as a lambda breaks identically),
+                                    // through this jar's classes too (libraryHome)
                                     boolean hStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
-                                    String lrt = chain.instanceRedirects.get(site);
+                                    String lib = h.getName().equals("<init>") ? null
+                                        : libraryHome(hOwner, h.getName() + h.getDesc(), hStatic, layer, libraryKeyed);
+                                    final String lsite = lib != null ? lib + "." + h.getName() + h.getDesc() : site;
+                                    String lrt = chain.instanceRedirects.get(lsite);
                                     if (lrt != null && !hStatic && !h.getName().equals("<init>")) {
                                         instRedirects.put(site, lrt);
-                                        top.dext.centurybridge.data.FullAudit.record(site, "instance-redirect");
+                                        if (lib != null) {
+                                            emitOwner.put(site, lib);
+                                        }
+                                        top.dext.centurybridge.data.FullAudit.record(lsite, "instance-redirect");
                                     }
-                                    String lsrt = chain.staticRedirects.get(site);
+                                    String lsrt = chain.staticRedirects.get(lsite);
                                     if (lsrt != null && hStatic) {
                                         redirects.put(site, lsrt);
-                                        top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
+                                        top.dext.centurybridge.data.FullAudit.record(lsite, "static-redirect");
                                     }
-                                    String licr = chain.interfaceCallRedirects.get(site);
+                                    String licr = chain.interfaceCallRedirects.get(lsite);
                                     if (licr != null && h.getTag() == Opcodes.H_INVOKEINTERFACE) {
                                         ifaceCallRedirects.put(site, licr);
-                                        top.dext.centurybridge.data.FullAudit.record(site, "interface-call-redirect");
+                                        if (lib != null) {
+                                            emitOwner.put(site, lib);
+                                        }
+                                        top.dext.centurybridge.data.FullAudit.record(lsite, "interface-call-redirect");
+                                    }
+                                    String lmr = lrt == null && lsrt == null && licr == null ? chain.methodRenames.get(lsite) : null;
+                                    if (lmr != null) {
+                                        mthRenames.put(site, lmr);
+                                        top.dext.centurybridge.data.FullAudit.record(lsite, "method-rename");
                                     }
                                     continue;
                                 }
@@ -3655,6 +3760,12 @@ public final class JarProcessor {
                             if (icrt != null && h.getTag() == Opcodes.H_INVOKEINTERFACE) {
                                 rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, redirCls(icrt),
                                     redirName(icrt, h.getName()), "(L" + recv + ";" + h.getDesc().substring(1), false);
+                                continue;
+                            }
+                            String hmrn = mthRenames.get(key);
+                            if (hmrn != null) {
+                                // a method reference to a renamed member: same owner and kind, the new name
+                                rewritten[i] = new org.objectweb.asm.Handle(h.getTag(), h.getOwner(), hmrn, h.getDesc(), h.isInterface());
                                 continue;
                             }
                             String boundary = tombstone.get(key);
