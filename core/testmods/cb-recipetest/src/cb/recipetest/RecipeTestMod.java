@@ -316,6 +316,29 @@ public class RecipeTestMod implements ModInitializer {
         class_1863.class.getMethod("method_20702", Iterable.class).invoke(tm, vanillaHolders);
         check(tm.log.contains("replaceRecipes " + total), "vanilla handing our replaceRecipes RecipeHolders: the body read recipes: " + tm.log);
         check(tm.method_8130(id).get() == smelt, "and the manager holds the recipe after that");
+
+        // lambdas implementing CachedCheck (a functional interface): called by this mod, and the way vanilla calls one
+        class_1863.class_7266<class_1263, class_3861> fixed = (container, lvl) -> Optional.of(smelt);
+        check(fixed.method_42303(inv, level).get() == smelt, "our CachedCheck lambda answers the recipe to us");
+        Method checkGet = class_1863.class_7266.class.getMethod("method_42303", class_1263.class, class_1937.class);
+        Object wl = checkGet.invoke(fixed, inv, level);
+        check(wl instanceof Optional<?> o && holderValue(o.orElse(null)), "vanilla calling our CachedCheck lambda gets a RecipeHolder: " + wl);
+        class_1863.class_7266<class_1263, class_3861> lookingUp = (container, lvl) -> rm.method_8132(class_3956.field_17546, container, lvl);
+        check(lookingUp.method_42303(inv, level).get() == smelt, "a CachedCheck lambda that asks the manager answers the recipe to us");
+        Object wl2 = checkGet.invoke(lookingUp, inv, level);
+        check(wl2 instanceof Optional<?> o && holderValue(o.orElse(null)), "vanilla calling that lambda gets a RecipeHolder");
+        class_1863.class_7266<class_1263, class_3861> ref = RecipeTestMod::ownCheck;
+        OWN = smelt;
+        check(ref.method_42303(inv, level).get() == smelt, "a CachedCheck method reference to our own method answers the recipe to us");
+        Object wl3 = checkGet.invoke(ref, inv, level);
+        check(wl3 instanceof Optional<?> o && holderValue(o.orElse(null)), "vanilla calling that method reference gets a RecipeHolder");
+    }
+
+    static class_3861 OWN;
+
+    /** a CachedCheck-shaped method of our own, written for 1.20.1: it answers the recipe */
+    static Optional<class_3861> ownCheck(class_1263 container, class_1937 level) {
+        return Optional.ofNullable(OWN);
     }
 
     // ---------------------------------------------------------------- the recipe-sync packet
