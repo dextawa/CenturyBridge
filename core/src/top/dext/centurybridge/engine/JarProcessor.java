@@ -918,10 +918,13 @@ public final class JarProcessor {
                 // a key's own owner (vanilla, com/mojang/blaze3d, a library such as DFU) directly; a
                 // class of the mod's jar through the vanilla class or interface it inherits the member
                 // from (javac qualifies such a call by the class it is made in, JLS 13.1). The call keeps
-                // its owner: the JVM resolves the new descriptor up the hierarchy as it did the old one
+                // its owner: the JVM resolves the new descriptor up the hierarchy as it did the old one --
+                // except a static call (below)
                 String home = chain.instanceRedirectHome(chain.callReshapeIndex, mi.owner, nameDesc);
+                boolean inherited = false;
                 if (home == null && layer.decls.containsKey(mi.owner)) {
                     home = inheritedReshapeHome(mi.owner, nameDesc, layer, chain);
+                    inherited = home != null;
                 }
                 if (home == null) {
                     continue;
@@ -933,6 +936,19 @@ public final class JarProcessor {
                 Chain.CallReshape r = chain.callReshapes.get(key);
                 reshapeArgs(m, mi, r.args);
                 mi.desc = r.newDesc;
+                if (inherited && mi.getOpcode() == Opcodes.INVOKESTATIC) {
+                    // a static call through a class of the jar resolved, in the source, to the class
+                    // declaring it -- the home. Named through the mod class it no longer resolves when
+                    // the mod class's ancestry changed at this step: a superRenames facade in place of
+                    // the vanilla class (static members are not inherited past it), or a home that is an
+                    // interface on the target (1.20.3's CommandFunction; an interface's static methods are
+                    // never inherited, JVMS 5.4.3.3). The call names the home, as the JVM resolved it
+                    mi.owner = home;
+                    Boolean itf = chain.interfaceOnTarget(home);
+                    if (itf != null) {
+                        mi.itf = itf;
+                    }
+                }
                 if (r.retKind != null) {
                     org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
                     org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
@@ -1713,6 +1729,57 @@ public final class JarProcessor {
                 return null; // the mod's own member
             }
             cur = layer.superOf.get(cur);
+        }
+        return null;
+    }
+
+    /**
+     * For a call naming a class of this jar layer whose member no class or interface of the layer on
+     * the way declares, and which inherits no vanilla member of that shape: the library type -- a Fabric
+     * API class the layer's classes extend, or a library interface they implement -- on which
+     * {@code map} keys the member, in JVM resolution order (the superclass chain, then the interfaces,
+     * the layer's own first). The library's members are not this layer's to judge, but a key on the
+     * library type says the member changed there; called through the mod's own class (call-inherited:
+     * this.read(json) in a mod's abstract CustomIngredientSerializer) it is the same member, as
+     * {@link #inheritedReshapeHome} has it for reshapes. Null when the layer declares it, the
+     * superclass chain leaves into a library class with no key (that class's own ancestry is not
+     * known here), or no key applies.
+     */
+    private static String inheritedLibraryKeyOwner(String owner, String member, LayerIndex layer, Map<String, String> map) {
+        List<String> layerTypes = new ArrayList<>();
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64 && !Chain.minecraftOwned(cur) && !cur.startsWith("java/"); hops++) {
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                return map.containsKey(cur + "." + member) ? cur : null; // a library superclass
+            }
+            if (d.contains(member)) {
+                return null; // the mod's own member
+            }
+            layerTypes.add(cur);
+            cur = layer.superOf.get(cur);
+        }
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        for (String c : layerTypes) {
+            todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
+        }
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String t = todo.poll();
+            if (!seen.add(t) || Chain.minecraftOwned(t) || t.startsWith("java/")) {
+                continue;
+            }
+            Set<String> d = layer.decls.get(t);
+            if (d == null) {
+                if (map.containsKey(t + "." + member)) {
+                    return t; // a library interface the layer's class implements
+                }
+                continue;
+            }
+            if (d.contains(member)) {
+                return null; // a default method of the mod's own interface
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(t, List.of()));
         }
         return null;
     }
@@ -2813,15 +2880,39 @@ public final class JarProcessor {
                                 // default -- is rerouted like a vanilla one (Chain.superRedirects), keyed on
                                 // the library type the call names
                                 String lsr = op == Opcodes.INVOKESPECIAL && !name.equals("<init>") ? chain.superRedirects.get(site) : null;
+                                String lsrHome = null;
+                                if (lsr == null && op == Opcodes.INVOKESPECIAL && !name.equals("<init>")) {
+                                    // the same through a class of the jar that inherits the library member
+                                    // (super.simulateInsert(..) in a subclass of a mod's own Storage)
+                                    lsrHome = inheritedLibraryKeyOwner(owner, name + desc, layer, chain.superRedirects);
+                                    lsr = lsrHome == null ? null : chain.superRedirects.get(lsrHome + "." + name + desc);
+                                }
                                 if (lsr != null) {
                                     superRedirectSites.put(site, lsr);
-                                    top.dext.centurybridge.data.FullAudit.record(site, "super-redirect");
+                                    if (lsrHome != null) {
+                                        emitOwner.put(site, lsrHome);
+                                    }
+                                    top.dext.centurybridge.data.FullAudit.record(lsrHome != null ? lsrHome + "." + name + desc : site,
+                                        "super-redirect");
                                     return;
                                 }
                                 String lrt = chain.instanceRedirects.get(site);
+                                String lrtHome = null;
+                                if (lrt == null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE)) {
+                                    // a library member the jar's class inherits (call-inherited through a mod
+                                    // class implementing a Fabric API interface): the redirect wired on that
+                                    // library type serves it, the receiver typed as that type. Not a super call:
+                                    // the redirect's own dispatch would come back into the caller's override
+                                    lrtHome = inheritedLibraryKeyOwner(owner, name + desc, layer, chain.instanceRedirects);
+                                    lrt = lrtHome == null ? null : chain.instanceRedirects.get(lrtHome + "." + name + desc);
+                                }
                                 if (lrt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
                                     instRedirects.put(site, lrt);
-                                    top.dext.centurybridge.data.FullAudit.record(site, "instance-redirect");
+                                    if (lrtHome != null) {
+                                        emitOwner.put(site, lrtHome);
+                                    }
+                                    top.dext.centurybridge.data.FullAudit.record(lrtHome != null ? lrtHome + "." + name + desc : site,
+                                        "instance-redirect");
                                 }
                                 String lsrt = chain.staticRedirects.get(site);
                                 if (lsrt != null && op == Opcodes.INVOKESTATIC) {
@@ -3249,6 +3340,15 @@ public final class JarProcessor {
                                     // (Codec::dispatch as a lambda breaks identically)
                                     boolean hStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
                                     String lrt = chain.instanceRedirects.get(site);
+                                    if (lrt == null && (h.getTag() == Opcodes.H_INVOKEVIRTUAL || h.getTag() == Opcodes.H_INVOKEINTERFACE)) {
+                                        // a library member inherited through the jar's class, as for a call
+                                        String lrtHome = inheritedLibraryKeyOwner(hOwner, h.getName() + h.getDesc(), layer,
+                                            chain.instanceRedirects);
+                                        if (lrtHome != null) {
+                                            lrt = chain.instanceRedirects.get(lrtHome + "." + h.getName() + h.getDesc());
+                                            emitOwner.put(site, lrtHome);
+                                        }
+                                    }
                                     if (lrt != null && !hStatic && !h.getName().equals("<init>")) {
                                         instRedirects.put(site, lrt);
                                         top.dext.centurybridge.data.FullAudit.record(site, "instance-redirect");

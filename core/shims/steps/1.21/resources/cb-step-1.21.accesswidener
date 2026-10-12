@@ -21,3 +21,6 @@ accessible method net/minecraft/class_7655 method_45121 (Lnet/minecraft/class_76
 accessible method net/minecraft/class_7655$class_7657 <init> (Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;)V
 extendable method net/minecraft/class_1665 method_7451 (B)V
 # ---- END GENERATED (s6world) ----
+
+# ItemStack.transmuteCopyIgnoreEmpty(item, count): public in 1.20.6, private in 1.21 with the same body (s6item)
+accessible method net/minecraft/class_1799 method_56704 (Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1799;

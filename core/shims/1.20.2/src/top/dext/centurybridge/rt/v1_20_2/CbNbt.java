@@ -18,11 +18,14 @@ public final class CbNbt {
     }
 
     /**
-     * The accounter a 1.20.1 scan or skip ran without: no byte limit, 1.20.2's depth limit (the 512
-     * every 1.20.1 reader checked itself).
+     * The accounter a 1.20.1 scan or skip ran without: no byte limit and no depth limit. 1.20.1's
+     * TagType.skip / parse / parseRoot took no accounter and recursed without a depth argument
+     * (CompoundTag.TYPE.skip, ListTag.TYPE.skip and their parse read nested types straight away); only
+     * loads (load(input, depth, accounter)) checked 512 themselves. 1.20.2's unlimitedHeap() would hold
+     * a scan to 512 levels, which 1.20.1's never was.
      */
     public static net.minecraft.class_2505 unlimited() {
-        return net.minecraft.class_2505.method_53898();
+        return new net.minecraft.class_2505(Long.MAX_VALUE, Integer.MAX_VALUE);
     }
 
     /** the depth limit a 1.20.1 NbtAccounter(maxBytes) subclass gets from 1.20.2's two-argument constructor */
