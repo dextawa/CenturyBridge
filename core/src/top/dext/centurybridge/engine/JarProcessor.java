@@ -186,6 +186,13 @@ public final class JarProcessor {
             // what vanilla expects from the new shape (facade -> real type)
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.unwrapOwner, h.unwrapName, h.unwrapDesc, false);
         }
+        // a new shape that returns nothing where the forwarded call answers a value (1.20.2
+        // RealmsServerList.updateServersList: the 1.20.1 override returned the list) drops it
+        org.objectweb.asm.Type produced = org.objectweb.asm.Type.getReturnType(h.bridgeName != null ? h.bridgeDesc
+            : h.unwrapName != null ? h.unwrapDesc : h.oldDesc);
+        if (nr.getSort() == org.objectweb.asm.Type.VOID && produced.getSort() != org.objectweb.asm.Type.VOID) {
+            mv.visitInsn(produced.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP);
+        }
         if (guarded) {
             mv.visitLabel(tryEnd);
             mv.visitVarInsn(Opcodes.ALOAD, 0);
@@ -560,7 +567,31 @@ public final class JarProcessor {
                         // site no factory claims: a factory cannot replace the call,
                         // but the arguments can be reshaped / adapted in place
                         if (reshape != null) {
-                            reshapeArgs(m, mi, reshape);
+                            org.objectweb.asm.Type[] oldArgs = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
+                            int[] slots = reshapeArgs(m, mi, reshape);
+                            if (reshape.postName != null) {
+                                // hand the constructed object and the old arguments the new
+                                // constructor has no place for to the post static: the NEW site's
+                                // object is on the stack after the call, a super(...) has `this`
+                                boolean superCall = newInsn == null && m.name.equals("<init>") && mi.owner.equals(cn.superName);
+                                boolean newDup = newInsn != null && newInsn.getNext() != null
+                                    && newInsn.getNext().getOpcode() == Opcodes.DUP;
+                                if (!superCall && !newDup) {
+                                    // the call is reshaped but the value the post static carries is lost: an issue, not a note
+                                    rpt.issues.add(tag + "ctor reshape post skipped (neither a NEW DUP site nor this class's super(...)): "
+                                        + key + " in " + cn.name + "." + m.name);
+                                } else {
+                                    org.objectweb.asm.tree.InsnList post = new org.objectweb.asm.tree.InsnList();
+                                    post.add(superCall ? new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0)
+                                        : new org.objectweb.asm.tree.InsnNode(Opcodes.DUP));
+                                    for (int idx : reshape.postArgs) {
+                                        post.add(new org.objectweb.asm.tree.VarInsnNode(oldArgs[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
+                                    }
+                                    post.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC,
+                                        reshape.postOwner, reshape.postName, reshape.postDesc, false));
+                                    m.instructions.insert(mi, post);
+                                }
+                            }
                             rewrites++;
                             rpt.notes.add(tag + (newInsn == null ? "super-ctor-reshaped: " : "ctor-reshaped: ")
                                 + key + " -> " + reshape.newDesc + " in " + cn.name);
@@ -808,9 +839,9 @@ public final class JarProcessor {
      * sits below the arguments (uninitializedThis, or NEW DUP's two refs) is
      * untouched, so existing frames stay exact.
      */
-    private static void reshapeArgs(org.objectweb.asm.tree.MethodNode m,
-                                    org.objectweb.asm.tree.MethodInsnNode mi,
-                                    Chain.CtorReshape r) {
+    private static int[] reshapeArgs(org.objectweb.asm.tree.MethodNode m,
+                                     org.objectweb.asm.tree.MethodInsnNode mi,
+                                     Chain.CtorReshape r) {
         org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
         int[] slots = spillArgs(m, mi, old);
         org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
@@ -848,6 +879,7 @@ public final class JarProcessor {
         }
         m.instructions.insertBefore(mi, seq);
         mi.desc = r.newDesc;
+        return slots;
     }
 
     /** Redirect values are a class name, optionally "class#member" past the
@@ -1697,6 +1729,7 @@ public final class JarProcessor {
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
+        Map<String, String> instFldSetters = new HashMap<>(); // PUTFIELD -> INVOKESTATIC setter(receiver, value) on runtime class
         Map<String, String> instOfSites = new HashMap<>();   // INSTANCEOF type -> INVOKESTATIC predicate(Object)Z
         Map<String, String> fldRenames = new HashMap<>();    // instance fields renamed in place
         Map<String, String> mthRenames = new HashMap<>();    // methods renamed in place (relocated to super)
@@ -2246,6 +2279,12 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-getter");
                             return;
                         }
+                        String ifst = chain.instanceFieldSetters.get(fkey);
+                        if (ifst != null && op == Opcodes.PUTFIELD) {
+                            instFldSetters.put(fsite, ifst);
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-setter");
+                            return;
+                        }
                         String rename = chain.fieldRenames.get(fkey);
                         if (rename != null) {
                             fldRenames.put(fsite, rename);
@@ -2449,7 +2488,7 @@ public final class JarProcessor {
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
         if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldGetters.isEmpty() && instFldGetters.isEmpty() && instOfSites.isEmpty()
+                && fldGetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty()
@@ -2502,6 +2541,9 @@ public final class JarProcessor {
         }
         for (String k : instFldGetters.keySet()) {
             rpt.notes.add(tag + "instance-field-gettered: " + k + " -> " + instFldGetters.get(k));
+        }
+        for (String k : instFldSetters.keySet()) {
+            rpt.notes.add(tag + "instance-field-settered: " + k + " -> " + instFldSetters.get(k));
         }
         for (String k : instOfSites.keySet()) {
             rpt.notes.add(tag + "instanceof-redirected: " + k + " -> " + instOfSites.get(k));
@@ -2799,6 +2841,12 @@ public final class JarProcessor {
                     @Override
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
                         String fkey = owner + "." + name + ":" + desc;
+                        if (op == Opcodes.PUTFIELD && instFldSetters.containsKey(fkey)) {
+                            String fv = instFldSetters.get(fkey);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv), redirName(fv, name),
+                                "(L" + emitOwner.getOrDefault(fkey, owner) + ";" + desc + ")V", false);
+                            return;
+                        }
                         if (op == Opcodes.GETFIELD && instFldGetters.containsKey(fkey)) {
                             String fv = instFldGetters.get(fkey);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),

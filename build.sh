@@ -31,7 +31,14 @@ STUB="${CB_STUB:-$DEFAULT_STUB}"
 # Loader-side deps the shims compile against: mixin, and whatever the game
 # itself pulls in (gson, datafixerupper, joml, netty...).
 LIBS="${CB_LIBS:-$DATA/runtime/client-$VERSION/libraries}"
+# Mixin's own annotations come first, and from the OLDEST sponge-mixin in the working set: 0.17.4
+# declares Redirect.at / ModifyVariable.at as At[] where 0.17.3 has a single At, so a bridge compiled
+# against 0.17.4 encodes `at` as an array -- and 0.17.3 (what Fabric Loader 0.19.3 servers run) reads
+# that as a ClassCastException at the first mixin applied (MixinExtras' redirect wrapper). The single
+# encoding is the one every Mixin version reads.
+MIXIN_API=$(find "$DATA/runtime" -name 'sponge-mixin-*.jar' 2>/dev/null | awk -F/ '{print $NF "\t" $0}' | sort -V | head -1 | cut -f2)
 CP="$STUB"
+[ -n "$MIXIN_API" ] && CP="$MIXIN_API:$CP"
 if [ -d "$LIBS" ]; then
     while IFS= read -r jar; do CP="$CP:$jar"; done < <(find "$LIBS" -name '*.jar')
 fi
@@ -42,9 +49,6 @@ FAPI="${CB_FAPI:-$DATA/runtime/client-$VERSION/.fabric/processedMods}"
 if [ -d "$FAPI" ]; then
     while IFS= read -r jar; do CP="$CP:$jar"; done < <(find "$FAPI" -name '*.jar')
 fi
-for extra in $(find "$DATA/runtime" -name 'sponge-mixin-*.jar' 2>/dev/null | head -1); do
-    CP="$CP:$extra"
-done
 # Windows toolchains want ';' between classpath entries
 SEP=":"
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) CP="${CP//:/;}"; SEP=";";; esac
