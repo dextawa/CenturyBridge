@@ -17,7 +17,12 @@
   }
  },
  "superRedirects": {
-  "net/fabricmc/fabric/api/client/renderer/v1/render/FabricOrderedSubmitNodeCollector.submitBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V": "top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#superSubmitBlockModel"
+  "net/fabricmc/fabric/api/client/renderer/v1/render/FabricOrderedSubmitNodeCollector.submitBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V": "top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#superSubmitBlockModel",
+  "net/minecraft/client/renderer/OrderedSubmitNodeCollector.submitBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V": "top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#superSubmitBlockModel",
+  "net/minecraft/client/renderer/SubmitNodeCollector.submitBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V": "top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#superSubmitBlockModel"
+ },
+ "interfaceCallRedirects": {
+  "net/fabricmc/fabric/api/client/renderer/v1/render/FabricOrderedSubmitNodeCollector.submitBlockModel(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/function/Function;ZLjava/util/List;Lnet/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh;[IIII)V": "top/dext/centurybridge/step/v26_1_1/rt/CbBlockModelSubmits#callSubmitBlockModel"
  },
  "overrideHooks": [
   {
