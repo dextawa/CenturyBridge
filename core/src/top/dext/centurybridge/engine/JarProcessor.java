@@ -384,8 +384,10 @@ public final class JarProcessor {
         new ClassReader(bytes).accept(cn, 0);
         String[] ifaces = cn.interfaces.toArray(new String[0]);
         int rewrites = 0;
-        // hooks whose super bridge this class now calls: it gets their accessors (Chain.OverrideHook#superAccess)
-        java.util.LinkedHashSet<Chain.OverrideHook> needAccess = new java.util.LinkedHashSet<>();
+        // hooks whose super bridge this class now calls: it gets their accessors (Chain.OverrideHook#superAccess),
+        // each calling super where the rewritten super call did -- {owner, "itf"} of the first one: the
+        // superclass, or the interface of an Iface.super.m() call to a default method
+        java.util.LinkedHashMap<Chain.OverrideHook, String[]> needAccess = new java.util.LinkedHashMap<>();
         for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
             if (m.instructions == null || (m.access & Opcodes.ACC_STATIC) != 0) {
                 continue;
@@ -409,12 +411,12 @@ public final class JarProcessor {
                 if (h.superBridgeName != null) {
                     // the old contract through a bridge: this + the old arguments are on the stack as
                     // they are, the static takes the receiver as the hook's super-access interface
+                    needAccess.putIfAbsent(h, new String[] {mi.owner, mi.itf ? "itf" : ""});
                     mi.setOpcode(Opcodes.INVOKESTATIC);
                     mi.owner = h.superBridgeOwner;
                     mi.name = h.superBridgeName;
                     mi.desc = h.superBridgeDesc;
                     mi.itf = false;
-                    needAccess.add(h);
                     rewrites++;
                     top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "hook-super-bridge");
                     continue;
@@ -472,7 +474,10 @@ public final class JarProcessor {
         if (rewrites == 0) {
             return bytes;
         }
-        for (Chain.OverrideHook h : needAccess) {
+        for (java.util.Map.Entry<Chain.OverrideHook, String[]> na : needAccess.entrySet()) {
+            Chain.OverrideHook h = na.getKey();
+            String superOwner = na.getValue()[0];
+            boolean superItf = !na.getValue()[1].isEmpty();
             // the super bridge reaches super's implementations through accessors this class carries
             if (!cn.interfaces.contains(h.superAccess)) {
                 cn.interfaces.add(h.superAccess);
@@ -497,8 +502,8 @@ public final class JarProcessor {
                     acc.instructions.add(new org.objectweb.asm.tree.VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
                     slot += t.getSize();
                 }
-                acc.instructions.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESPECIAL, cn.superName,
-                    name, desc, false));
+                acc.instructions.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESPECIAL, superOwner,
+                    name, desc, superItf));
                 acc.instructions.add(new org.objectweb.asm.tree.InsnNode(
                     org.objectweb.asm.Type.getReturnType(desc).getOpcode(Opcodes.IRETURN)));
                 cn.methods.add(acc);
