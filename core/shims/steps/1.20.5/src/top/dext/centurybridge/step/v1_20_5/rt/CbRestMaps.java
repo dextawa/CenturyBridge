@@ -90,16 +90,10 @@ public final class CbRestMaps {
     }
 
     /**
-     * 1.20.4 MapBanner's getters and save(), on 1.20.5's MapBanner through CbRestMapBannerMixin; a mod's
-     * MapBanner class overrides them as it did in 1.20.4.
+     * 1.20.4 MapBanner.save(), on 1.20.5's MapBanner through CbRestMapBannerMixin; a mod's MapBanner class
+     * overrides it as it did in 1.20.4.
      */
     public interface LegacyBanner {
-        net.minecraft.class_2338 method_70();
-
-        net.minecraft.class_1767 method_35502();
-
-        net.minecraft.class_2561 method_68();
-
         net.minecraft.class_2487 method_74();
     }
 

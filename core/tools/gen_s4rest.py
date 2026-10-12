@@ -46,6 +46,12 @@ anything; the 1.20.5 generic signature has to say the holder / key holds the 1.2
     lambda            lambdaAdapters: the functional interface's method answers the changed type; the
                       mod's lambda is built as a CenturyBridge interface of the old shape and adapted. A
                       named class implementing the interface gets the override hook.
+    getter (call / override of a member 1.20.5 dropped)
+                      1.20.4's method was a plain getter (this.field, returned) and 1.20.5 keeps that field
+                      -- the same Mojang name and type -- behind a plain getter of another name (a record's
+                      accessor, most often): the 1.20.4 method comes back as a cover returning the field
+                      (a generated mixin, mixin/CbRestRec*), and an override hook makes 1.20.5's getter
+                      call a mod's override of the 1.20.4 one (its super call is the cover).
 
 Keys sit on the topmost 1.20.4 class declaring the member (calls and hooks climb to it); a key whose
 home lies in another area's owner is left to that area. A row no rule covers is reported as "design"
@@ -53,6 +59,10 @@ and left to hand-written wiring (s4rest.json).
 
   python core/tools/gen_s4rest.py <damage.tsv> <V code jar> <W stub jar> <V server jar>
          <inter-to-mojang-classes.tsv> <layer src root> <out fragment.json> <out report.tsv>
+         <W code jar> <mappings dir>
+The mappings dir holds intermediary-<v>.tiny; Mojang's client mappings of both releases (field names,
+for the getter rule) are read from $CB_MOJANG/mojang-<v>.txt when present, else downloaded (not kept).
+The getter rule's mixins are listed in the layer's mixin config (entries CbRestRec*, kept in sync).
 """
 import collections
 import json
@@ -61,6 +71,8 @@ import re
 import subprocess
 import sys
 import zipfile
+
+import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import classfile  # noqa: E402
@@ -374,6 +386,83 @@ def reshape_entry(amap, rsw, new_desc):
     return entry
 
 
+# ---------------------------------------------------------------- Mojang field names, method bodies
+
+MANIFEST = 'https://piston-meta.mojang.com/mc/game/version_manifest_v2.json'
+
+
+def mojang_text(v):
+    d = os.environ.get('CB_MOJANG')
+    if d and os.path.exists(os.path.join(d, f'mojang-{v}.txt')):
+        return open(os.path.join(d, f'mojang-{v}.txt'), encoding='utf-8').read()
+    manifest = json.load(urllib.request.urlopen(MANIFEST))
+    vj = json.load(urllib.request.urlopen(next(x['url'] for x in manifest['versions'] if x['id'] == v)))
+    return urllib.request.urlopen(vj['downloads']['client_mappings']['url']).read().decode('utf-8')
+
+
+def field_names(mdir, v):
+    """intermediary class -> {intermediary field: its Mojang name} of release v"""
+    off, cur = {}, None
+    for line in mojang_text(v).splitlines():
+        if line.startswith('#'):
+            continue
+        if not line.startswith(' '):
+            m = re.match(r'(\S+) -> (\S+):', line)
+            cur = off.setdefault(m.group(2).replace('.', '/'), {}) if m else None
+            continue
+        m = re.match(r'(\S+) (\S+) -> (\S+)$', line.strip())
+        if cur is not None and m and '(' not in line:
+            cur[m.group(3)] = m.group(2)
+    out, owner = {}, None
+    for line in open(os.path.join(mdir, f'intermediary-{v}.tiny'), encoding='utf-8'):
+        f = line.rstrip('\n').split('\t')
+        if f[0] == 'c' and len(f) >= 3:
+            owner = (f[1], f[2])
+        elif owner and len(f) >= 5 and f[0] == '' and f[1] == 'f':
+            mj = off.get(owner[0], {}).get(f[3])
+            if mj:
+                out.setdefault(owner[1], {})[f[4]] = mj
+    return out
+
+
+_bodies = {}
+
+
+def bodies(jar, owner):
+    """(name, desc) -> the method's instructions (opcode and operand text, javap -c), of jar's class"""
+    k = (jar, owner)
+    if k not in _bodies:
+        out = subprocess.run(['javap', '-c', '-p', '-s', '-cp', jar, owner.replace('/', '.')],
+                             capture_output=True, text=True, encoding='utf-8', errors='replace').stdout
+        res, name, desc, code = {}, None, None, None
+        for line in out.splitlines():
+            if line.startswith('  ') and not line.startswith('   ') and line.rstrip().endswith(';'):
+                head = line.strip()
+                name = re.search(r'(\S+)\(', head)
+                name = name.group(1).rsplit('.', 1)[-1] if name else None
+                if name == owner.replace('/', '.').rsplit('.', 1)[-1] or (name and name == owner.replace('/', '.')):
+                    name = '<init>'
+                desc, code = None, None
+            elif line.strip().startswith('descriptor:') and name:
+                desc = line.strip().split(' ', 1)[1]
+                code = res.setdefault((name, desc), [])
+            elif code is not None and re.match(r'^\s+\d+: ', line):
+                code.append(re.sub(r'^\s+\d+: ', '', line).strip())
+        _bodies[k] = res
+    return _bodies[k]
+
+
+def getter_field(jar, owner, name, desc):
+    """the field owner.name(desc) returns as a plain getter (this.f, returned), or None"""
+    code = bodies(jar, owner).get((name, desc))
+    if not code or len(code) != 3 or code[0] != 'aload_0' or not code[2].endswith('return'):
+        return None
+    m = re.match(r'getfield\s+#\d+\s+// Field (?:(\S+)\.)?(\w+):(\S+)$', code[1])
+    if not m or m.group(3) != split_args(desc)[1]:
+        return None
+    return m.group(1) or owner, m.group(2)
+
+
 # ---------------------------------------------------------------- 1.20.4 initializers
 
 _javap = {}
@@ -441,7 +530,8 @@ def initializer_kind(jar, owner, field, V):
 # ---------------------------------------------------------------- main
 
 def main():
-    damage, vjar, wjar, vserver, names, src, out_json, out_report = sys.argv[1:9]
+    damage, vjar, wjar, vserver, names, src, out_json, out_report, wcode, mdir = sys.argv[1:11]
+    vnames, wnames = field_names(mdir, '1.20.4'), field_names(mdir, '1.20.5')
     cm = class_names(names)
     SIMPLE.update({c: m.rsplit('/', 1)[-1].replace('$', '') for c, m in cm.items()})
     V = load(vjar)
@@ -473,6 +563,8 @@ def main():
     hooks = {}             # (old shape, onlyUnder) -> hook
     super_keys = {}        # callReshapes key -> entry, for hooks' super calls
     report = []
+    covers = set()         # generated covers (the getter rule)
+    rec_mixins = {}        # class -> {old shape: (name, desc, 1.20.5 field, Mojang field name)}
 
     for r in rows:
         usage, owner, name, desc, kinds = r[:5]
@@ -519,6 +611,39 @@ def main():
                     frag[sec][f'{owner}.{name}:{desc}'] = cls
                     (inst_getters if usage == 'get' else inst_setters)[(owner, name, desc, wdesc)] = (cls, cv)
                     fate, detail = 'field-' + usage, sw[0]
+        elif usage in ('call', 'override+super') and 'METHOD' in kinds and desc.startswith('()') \
+                and not desc.endswith(')V') and not find_methods(W, owner, name):
+            decl = [c for c, m in find_methods(V, owner, name) if m.desc == desc and not (m.access & ACC_STATIC)]
+            g = getter_field(vjar, decl[0], name, desc) if decl else None
+            vf = vnames.get(g[0], {}).get(g[1]) if g else None
+            home = decl[0] if decl else owner
+            wk = W.get(home)
+            wf = [f for f in (wk.fields if wk else []) if not (f[2] & ACC_STATIC) and f[1] == split_args(desc)[1]
+                  and wnames.get(home, {}).get(f[0]) == vf] if vf else []
+            acc = [m for m in (wk.methods if wk and wf else []) if m.desc == desc and (m.access & ACC_PUBLIC)
+                   and not (m.access & ACC_STATIC) and getter_field(wcode, home, m.name, desc) == (home, wf[0][0])]
+            if len(acc) > 1:  # a record's accessor is named as its field (toString may read the same field)
+                acc = [m for m in acc if m.name == wf[0][0]] or acc
+            if not decl:
+                detail = 'no instance method of this shape in 1.20.4'
+            elif g is None:
+                detail = '1.20.4 body is not a plain getter'
+            elif g[0] != home:
+                detail = "the getter reads another class's field"
+            elif not wf:
+                detail = f'1.20.5 {mojang(home, cm)} keeps no field {vf} of that type'
+            elif len(acc) != 1:
+                detail = f'{len(acc)} plain 1.20.5 getters of field {vf}'
+            elif not mine(home):
+                fate, detail = 'other-area', mojang(home, cm)
+            else:
+                covers.add(f'{home}.{name}{desc}')
+                rec_mixins.setdefault(home, {})[name + desc] = (name, desc, wf[0][0], vf)
+                hooks[(name + desc, home)] = {
+                    'old': name + desc, 'new': acc[0].name + desc, 'onlyUnder': home,
+                    'basis': f'generated: getter; 1.20.5 reads {vf} through {acc[0].name}(), a mod\'s 1.20.4 '
+                             f'{name}() override answers it (its super call is the cover)'}
+                fate, detail = 'getter-cover', f'{vf} -> {acc[0].name}()'
         elif usage.startswith('call') and kinds == 'METHOD':
             hits = {m.desc: (c, m, match(desc, m.desc, m.signature)) for c, m in find_methods(W, owner, name)
                     if m.desc != desc}
@@ -608,6 +733,7 @@ def main():
 
     for k, e in super_keys.items():
         frag['callReshapes'].setdefault(k, e)
+    frag['covers'] = sorted(covers)
     frag['overrideHooks'] = sorted(hooks.values(), key=lambda h: (h['onlyUnder'], h['old']))
     frag = {k: v for k, v in frag.items() if v}
 
@@ -695,6 +821,48 @@ def main():
         open(path, 'w', encoding='utf-8', newline='\n').write('\n'.join(out))
     elif os.path.exists(path):
         os.remove(path)
+
+    # ---- Java: the getter rule's covers, one mixin per class, listed in the layer's mixin config
+    mixin_dir = os.path.join(src, PKG.rsplit('/', 1)[0], 'mixin')
+    for f in os.listdir(mixin_dir):
+        if f.startswith('CbRestRec') and f.endswith('Mixin.java'):
+            os.remove(os.path.join(mixin_dir, f))
+    listed = {'common': [], 'client': []}
+    for owner in sorted(rec_mixins):
+        short = mojang(owner, cm).rsplit('/', 1)[-1].replace('$', '')
+        cls = f'CbRestRec{short}Mixin'
+        client = side(owner) == 'client'
+        listed['client' if client else 'common'].append(cls)
+        out = ['package ' + PKG.rsplit('/', 1)[0].replace('/', '.') + '.mixin;', '']
+        if client:
+            out += ['import net.fabricmc.api.EnvType;', 'import net.fabricmc.api.Environment;']
+        out += ['import org.spongepowered.asm.mixin.Final;', 'import org.spongepowered.asm.mixin.Mixin;',
+                'import org.spongepowered.asm.mixin.Shadow;', '',
+                '/**',
+                f' * Generated by core/tools/gen_s4rest.py (getter rule): 1.20.4 {mojang(owner, cm)} getters 1.20.5',
+                ' * dropped, with 1.20.4\'s bodies -- each returns the field 1.20.5 still keeps under that Mojang name',
+                ' * (read in 1.20.5 through the getter the override hooks connect a mod\'s override to).',
+                ' */']
+        if client:
+            out.append('@Environment(EnvType.CLIENT)')
+        out += [f'@Mixin({jt("L" + owner + ";")}.class)', f'public abstract class {cls} {{', '']
+        fields = {}
+        for name, desc, wfield, vf in rec_mixins[owner].values():
+            fields[wfield] = split_args(desc)[1]
+        for wfield, fdesc in sorted(fields.items()):
+            out += ['    @Shadow', '    @Final', f'    private {jt(fdesc)} {wfield};', '']
+        for key in sorted(rec_mixins[owner]):
+            name, desc, wfield, vf = rec_mixins[owner][key]
+            out += [f'    /** 1.20.4 {vf} getter */', f'    public {jt(split_args(desc)[1])} {name}() {{',
+                    f'        return this.{wfield};', '    }', '']
+        out += ['}', '']
+        open(os.path.join(mixin_dir, cls + '.java'), 'w', encoding='utf-8', newline='\n').write('\n'.join(out))
+    config = os.path.join(os.path.dirname(src.rstrip('/\\')), 'resources', 'cb-step-1.20.5.mixins.json')
+    mc = json.load(open(config, encoding='utf-8'))
+    for section, names_ in (('mixins', listed['common']), ('client', listed['client'])):
+        mc[section] = [m for m in mc.get(section, []) if not m.startswith('CbRestRec')] + names_
+    with open(config, 'w', encoding='utf-8', newline='\n') as o:
+        o.write(json.dumps(mc, indent=2) + '\n')
 
     with open(out_json, 'w', encoding='utf-8', newline='\n') as o:
         json.dump(frag, o, indent=1)

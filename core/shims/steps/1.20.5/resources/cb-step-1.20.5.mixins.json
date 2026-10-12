@@ -19,7 +19,15 @@
     "CbRestEntityTypeMixin",
     "CbRestStructureTemplateMixin",
     "CbRestMapBannerMixin",
-    "CbRestMapItemSavedDataMixin"
+    "CbRestMapItemSavedDataMixin",
+    "CbRestRecAttributeModifierMixin",
+    "CbRestRecMapBannerMixin",
+    "CbRestRecMessageArgumentMessageMixin",
+    "CbRestRecMessageArgumentPartMixin",
+    "CbRestRecGameTestBatchMixin",
+    "CbRestRecTestFunctionMixin",
+    "CbRestRecGameEventMixin",
+    "CbRestRecWeightedEntryWrapperMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",

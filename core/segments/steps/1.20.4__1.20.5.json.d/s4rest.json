@@ -2,7 +2,8 @@
  "classRenames": {
   "net/minecraft/class_3193$class_3724": "top/dext/centurybridge/step/v1_20_5/facade/class_3193$class_3724",
   "net/minecraft/class_1310": "top/dext/centurybridge/step/v1_20_5/facade/class_1310",
-  "net/minecraft/class_20$class_21": "top/dext/centurybridge/step/v1_20_5/facade/class_20$class_21"
+  "net/minecraft/class_20$class_21": "top/dext/centurybridge/step/v1_20_5/facade/class_20$class_21",
+  "net/minecraft/class_8806": "top/dext/centurybridge/step/v1_20_5/facade/class_8806"
  },
  "fieldGetters": {
   "net/minecraft/class_3193.field_16426:Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
@@ -287,8 +288,6 @@
   "net/minecraft/class_1496.method_52550(Lnet/minecraft/class_4048;F)F",
   "net/minecraft/class_1657.method_18394(Lnet/minecraft/class_4050;Lnet/minecraft/class_4048;)F",
   "net/minecraft/class_1309.method_6046()Lnet/minecraft/class_1310;",
-  "net/minecraft/class_17.method_70()Lnet/minecraft/class_2338;",
-  "net/minecraft/class_17.method_35502()Lnet/minecraft/class_1767;",
   "net/minecraft/class_17.method_68()Lnet/minecraft/class_2561;",
   "net/minecraft/class_17.method_74()Lnet/minecraft/class_2487;"
  ],
@@ -352,18 +351,6 @@
    "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn$CbLegacyEntityTypeSpawn",
    "onlyUnder": "net/minecraft/class_1299",
    "basis": "a mod EntityType's 1.20.4 create override gets the tag a 1.20.4 caller handed over"
-  },
-  {
-   "old": "method_70()Lnet/minecraft/class_2338;",
-   "new": "comp_2312()Lnet/minecraft/class_2338;",
-   "onlyUnder": "net/minecraft/class_17",
-   "basis": "1.20.5 reads a banner's position through the record accessor pos(); a mod's 1.20.4 getPos() override answers it (its super call is the cover, the field)"
-  },
-  {
-   "old": "method_35502()Lnet/minecraft/class_1767;",
-   "new": "comp_2313()Lnet/minecraft/class_1767;",
-   "onlyUnder": "net/minecraft/class_17",
-   "basis": "1.20.5 reads a banner's color through the record accessor color(); a mod's 1.20.4 getColor() override answers it"
   },
   {
    "old": "method_68()Lnet/minecraft/class_2561;",

@@ -1336,6 +1336,24 @@
    "basis": "generated: holder; the mod's super call is reshaped (callReshapes)"
   },
   {
+   "old": "method_6182()Lnet/minecraft/class_1322$class_1323;",
+   "new": "comp_2450()Lnet/minecraft/class_1322$class_1323;",
+   "onlyUnder": "net/minecraft/class_1322",
+   "basis": "generated: getter; 1.20.5 reads operation through comp_2450(), a mod's 1.20.4 method_6182() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_6186()D",
+   "new": "comp_2449()D",
+   "onlyUnder": "net/minecraft/class_1322",
+   "basis": "generated: getter; 1.20.5 reads amount through comp_2449(), a mod's 1.20.4 method_6186() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_6189()Ljava/util/UUID;",
+   "new": "comp_2447()Ljava/util/UUID;",
+   "onlyUnder": "net/minecraft/class_1322",
+   "basis": "generated: getter; 1.20.5 reads id through comp_2447(), a mod's 1.20.4 method_6189() override answers it (its super call is the cover)"
+  },
+  {
    "old": "method_6198()Lnet/minecraft/class_1320;",
    "new": "method_6198()Lnet/minecraft/class_6880;",
    "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders.cbAttributeHolder(Lnet/minecraft/class_1320;)Lnet/minecraft/class_6880;",
@@ -1369,6 +1387,18 @@
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders.cbLootTableId(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
    "onlyUnder": "net/minecraft/class_1693",
    "basis": "generated: loot; the mod's super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_35502()Lnet/minecraft/class_1767;",
+   "new": "comp_2313()Lnet/minecraft/class_1767;",
+   "onlyUnder": "net/minecraft/class_17",
+   "basis": "generated: getter; 1.20.5 reads color through comp_2313(), a mod's 1.20.4 method_35502() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_70()Lnet/minecraft/class_2338;",
+   "new": "comp_2312()Lnet/minecraft/class_2338;",
+   "onlyUnder": "net/minecraft/class_17",
+   "basis": "generated: getter; 1.20.5 reads pos through comp_2312(), a mod's 1.20.4 method_70() override answers it (its super call is the cover)"
   },
   {
    "old": "method_72()Lnet/minecraft/class_20$class_21;",
@@ -1408,6 +1438,36 @@
    ],
    "onlyUnder": "net/minecraft/class_18",
    "basis": "generated: provider; the mod's super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_35691()Ljava/lang/String;",
+   "new": "comp_2653()Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_2196$class_2197",
+   "basis": "generated: getter; 1.20.5 reads text through comp_2653(), a mod's 1.20.4 method_35691() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_35692()[Lnet/minecraft/class_2196$class_2198;",
+   "new": "comp_2654()[Lnet/minecraft/class_2196$class_2198;",
+   "onlyUnder": "net/minecraft/class_2196$class_2197",
+   "basis": "generated: getter; 1.20.5 reads parts through comp_2654(), a mod's 1.20.4 method_35692() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_35693()Lnet/minecraft/class_2300;",
+   "new": "comp_2657()Lnet/minecraft/class_2300;",
+   "onlyUnder": "net/minecraft/class_2196$class_2198",
+   "basis": "generated: getter; 1.20.5 reads selector through comp_2657(), a mod's 1.20.4 method_35693() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_9343()I",
+   "new": "comp_2655()I",
+   "onlyUnder": "net/minecraft/class_2196$class_2198",
+   "basis": "generated: getter; 1.20.5 reads start through comp_2655(), a mod's 1.20.4 method_9343() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_9344()I",
+   "new": "comp_2656()I",
+   "onlyUnder": "net/minecraft/class_2196$class_2198",
+   "basis": "generated: getter; 1.20.5 reads end through comp_2656(), a mod's 1.20.4 method_9344() override answers it (its super call is the cover)"
   },
   {
    "old": "method_9782()Ljava/lang/String;",
@@ -1563,11 +1623,71 @@
    "basis": "generated: holder; the mod's super call is reshaped (callReshapes)"
   },
   {
+   "old": "method_22152()Ljava/lang/String;",
+   "new": "comp_2209()Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_4514",
+   "basis": "generated: getter; 1.20.5 reads name through comp_2209(), a mod's 1.20.4 method_22152() override answers it (its super call is the cover)"
+  },
+  {
    "old": "method_52889(Lnet/minecraft/class_1309;Lnet/minecraft/class_1291;I)V",
    "new": "method_52889(Lnet/minecraft/class_1309;Lnet/minecraft/class_6880;I)V",
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
    "onlyUnder": "net/minecraft/class_4516",
    "basis": "generated: holder; the mod's super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_22296()Ljava/lang/String;",
+   "new": "comp_2219()Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_4529",
+   "basis": "generated: getter; 1.20.5 reads testName through comp_2219(), a mod's 1.20.4 method_22296() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_22298()Ljava/lang/String;",
+   "new": "comp_2220()Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_4529",
+   "basis": "generated: getter; 1.20.5 reads structureName through comp_2220(), a mod's 1.20.4 method_22298() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_22299()I",
+   "new": "comp_2222()I",
+   "onlyUnder": "net/minecraft/class_4529",
+   "basis": "generated: getter; 1.20.5 reads maxTicks through comp_2222(), a mod's 1.20.4 method_22299() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_22300()Z",
+   "new": "comp_2224()Z",
+   "onlyUnder": "net/minecraft/class_4529",
+   "basis": "generated: getter; 1.20.5 reads required through comp_2224(), a mod's 1.20.4 method_22300() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_22301()Ljava/lang/String;",
+   "new": "comp_2218()Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_4529",
+   "basis": "generated: getter; 1.20.5 reads batchName through comp_2218(), a mod's 1.20.4 method_22301() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_23649()J",
+   "new": "comp_2223()J",
+   "onlyUnder": "net/minecraft/class_4529",
+   "basis": "generated: getter; 1.20.5 reads setupTicks through comp_2223(), a mod's 1.20.4 method_23649() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_29424()Lnet/minecraft/class_2470;",
+   "new": "comp_2221()Lnet/minecraft/class_2470;",
+   "onlyUnder": "net/minecraft/class_4529",
+   "basis": "generated: getter; 1.20.5 reads rotation through comp_2221(), a mod's 1.20.4 method_29424() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_32258()I",
+   "new": "comp_2225()I",
+   "onlyUnder": "net/minecraft/class_4529",
+   "basis": "generated: getter; 1.20.5 reads maxAttempts through comp_2225(), a mod's 1.20.4 method_32258() override answers it (its super call is the cover)"
+  },
+  {
+   "old": "method_32259()I",
+   "new": "comp_2226()I",
+   "onlyUnder": "net/minecraft/class_4529",
+   "basis": "generated: getter; 1.20.5 reads requiredSuccesses through comp_2226(), a mod's 1.20.4 method_32259() override answers it (its super call is the cover)"
   },
   {
    "old": "codec()Lcom/mojang/serialization/Codec;",
@@ -1647,6 +1767,12 @@
    "basis": "generated: holder; the mod's super call is reshaped (callReshapes)"
   },
   {
+   "old": "method_32941()I",
+   "new": "comp_2193()I",
+   "onlyUnder": "net/minecraft/class_5712",
+   "basis": "generated: getter; 1.20.5 reads notificationRadius through comp_2193(), a mod's 1.20.4 method_32941() override answers it (its super call is the cover)"
+  },
+  {
    "old": "method_32943(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_5713$class_7721;)Z",
    "new": "method_32943(Lnet/minecraft/class_6880;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_5713$class_7721;)Z",
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.gameEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5712;",
@@ -1673,6 +1799,12 @@
    "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecs.toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;",
    "onlyUnder": "net/minecraft/class_5864",
    "basis": "generated: codec (a named class implementing the interface)"
+  },
+  {
+   "old": "method_34983()Ljava/lang/Object;",
+   "new": "comp_2542()Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_6008$class_6010",
+   "basis": "generated: getter; 1.20.5 reads data through comp_2542(), a mod's 1.20.4 method_34983() override answers it (its super call is the cover)"
   },
   {
    "old": "codec()Lcom/mojang/serialization/Codec;",
@@ -1900,5 +2032,29 @@
    "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbRestLegacy$CbRuleBlockEntityModifierType",
    "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbRestLegacy#adaptRuleBlockEntityModifierType(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestLegacy$CbRuleBlockEntityModifierType;)Lnet/minecraft/class_8249;"
   }
- }
+ },
+ "covers": [
+  "net/minecraft/class_1322.method_6182()Lnet/minecraft/class_1322$class_1323;",
+  "net/minecraft/class_1322.method_6186()D",
+  "net/minecraft/class_1322.method_6189()Ljava/util/UUID;",
+  "net/minecraft/class_17.method_35502()Lnet/minecraft/class_1767;",
+  "net/minecraft/class_17.method_70()Lnet/minecraft/class_2338;",
+  "net/minecraft/class_2196$class_2197.method_35691()Ljava/lang/String;",
+  "net/minecraft/class_2196$class_2197.method_35692()[Lnet/minecraft/class_2196$class_2198;",
+  "net/minecraft/class_2196$class_2198.method_35693()Lnet/minecraft/class_2300;",
+  "net/minecraft/class_2196$class_2198.method_9343()I",
+  "net/minecraft/class_2196$class_2198.method_9344()I",
+  "net/minecraft/class_4514.method_22152()Ljava/lang/String;",
+  "net/minecraft/class_4529.method_22296()Ljava/lang/String;",
+  "net/minecraft/class_4529.method_22298()Ljava/lang/String;",
+  "net/minecraft/class_4529.method_22299()I",
+  "net/minecraft/class_4529.method_22300()Z",
+  "net/minecraft/class_4529.method_22301()Ljava/lang/String;",
+  "net/minecraft/class_4529.method_23649()J",
+  "net/minecraft/class_4529.method_29424()Lnet/minecraft/class_2470;",
+  "net/minecraft/class_4529.method_32258()I",
+  "net/minecraft/class_4529.method_32259()I",
+  "net/minecraft/class_5712.method_32941()I",
+  "net/minecraft/class_6008$class_6010.method_34983()Ljava/lang/Object;"
+ ]
 }
