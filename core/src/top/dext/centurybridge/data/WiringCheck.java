@@ -469,6 +469,27 @@ public final class WiringCheck {
                 }
             }
         }
+        // overrideRenames: an adapter interface must declare the new name with the old descriptor
+        // (the mod's renamed method implements it; the mixin on the final method calls it)
+        if (root.has("overrideRenames")) {
+            for (var el : root.getAsJsonArray("overrideRenames")) {
+                var o = el.getAsJsonObject();
+                checked++;
+                if (!o.has("adapter")) {
+                    continue;
+                }
+                String old = o.get("old").getAsString();
+                String desc = methodDesc(old.substring(old.indexOf('(')));
+                String name = o.get("new").getAsString();
+                String adapter = o.get("adapter").getAsString();
+                ClassNode an = classes.get(adapter);
+                if (an == null || (an.access & Opcodes.ACC_INTERFACE) == 0) {
+                    problems.add("overrideRenames " + old + " (no such adapter interface " + adapter + ")");
+                } else if (an.methods.stream().noneMatch(m -> m.name.equals(name) && m.desc.equals(desc))) {
+                    problems.add("overrideRenames " + old + ": adapter " + adapter + " does not declare " + name + desc);
+                }
+            }
+        }
         // callReshapes: the reshaped call must resolve on the target (the owner or a supertype
         // declares the new shape), and every converter / supplier it runs must exist
         if (root.has("callReshapes")) {
@@ -718,6 +739,23 @@ public final class WiringCheck {
                         wantMethod(where + " frames", f + "#cbArg" + t, null, "(Ljava/lang/Object;I)" + t);
                     }
                     wantMethod(where + " frames", f + "#cbArgL", null, "(Ljava/lang/Object;I)Ljava/lang/Object;");
+                    if (root.has("frameDefaults") && root.getAsJsonObject("frameDefaults").has(o.get("old").getAsString())) {
+                        // a default answered when no frame holds the object: the frames class reads it
+                        // through cbArgOr*, and the static it names must exist exactly
+                        for (String t : new String[] {"Z", "B", "C", "S", "I", "J", "F", "D"}) {
+                            wantMethod(where + " frames", f + "#cbArgOr" + t, null, "(Ljava/lang/Object;I" + t + ")" + t);
+                        }
+                        wantMethod(where + " frames", f + "#cbArgOrL", null,
+                            "(Ljava/lang/Object;ILjava/lang/Object;)Ljava/lang/Object;");
+                        for (var d : root.getAsJsonObject("frameDefaults").getAsJsonObject(o.get("old").getAsString()).entrySet()) {
+                            String r = d.getValue().getAsString().trim();
+                            if (r.startsWith("zero:")) {
+                                continue;
+                            }
+                            int p = r.indexOf('(');
+                            wantMethod(where + " frameDefaults " + d.getKey(), r.substring(0, p), null, methodDesc(r.substring(p)));
+                        }
+                    }
                 }
                 if (o.has("narrow") && o.get("narrow").getAsBoolean()) {
                     // a narrowing forward casts vanilla's value to the old type after an instanceof

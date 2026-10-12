@@ -153,7 +153,7 @@
     "keep:1",
     "drop:0"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1799;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1799;: no body of V reads it, but net/minecraft/class_9365 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_9329.method_57868(Lnet/minecraft/class_9323;)Z": {
    "desc": "(Lnet/minecraft/class_9473;)Z",
