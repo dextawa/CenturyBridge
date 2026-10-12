@@ -1,6 +1,7 @@
 {
  "classRenames": {
-  "net/minecraft/class_3193$class_3724": "top/dext/centurybridge/step/v1_20_5/facade/class_3193$class_3724"
+  "net/minecraft/class_3193$class_3724": "top/dext/centurybridge/step/v1_20_5/facade/class_3193$class_3724",
+  "net/minecraft/class_1310": "top/dext/centurybridge/step/v1_20_5/facade/class_1310"
  },
  "fieldGetters": {
   "net/minecraft/class_3193.field_16426:Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
@@ -239,7 +240,8 @@
   "net/minecraft/class_1297.method_5673(Lnet/minecraft/class_1304;Lnet/minecraft/class_1799;)V",
   "net/minecraft/class_1297.method_49477(F)V",
   "net/minecraft/class_1496.method_52550(Lnet/minecraft/class_4048;F)F",
-  "net/minecraft/class_1657.method_18394(Lnet/minecraft/class_4050;Lnet/minecraft/class_4048;)F"
+  "net/minecraft/class_1657.method_18394(Lnet/minecraft/class_4050;Lnet/minecraft/class_4048;)F",
+  "net/minecraft/class_1309.method_6046()Lnet/minecraft/class_1310;"
  ],
  "overrideHooks": [
   {

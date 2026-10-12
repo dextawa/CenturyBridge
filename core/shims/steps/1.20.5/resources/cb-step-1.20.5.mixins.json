@@ -10,7 +10,10 @@
     "CbRestLivingEntityMixin",
     "CbRestAbstractHorseMixin",
     "CbRestPlayerMixin",
-    "CbTooltipLevelAccessor"
+    "CbTooltipLevelAccessor",
+    "CbRestAbstractIllagerMixin",
+    "CbRestWitherBossMixin",
+    "CbRestArmadilloMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",
