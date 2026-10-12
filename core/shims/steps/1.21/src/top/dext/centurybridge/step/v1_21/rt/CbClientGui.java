@@ -468,6 +468,23 @@ public final class CbClientGui {
         }
     }
 
+    // ------------------------------------------------------------------ RecipeBookComponent.addItemToSlot (class_507)
+
+    /**
+     * PlaceRecipe.addItemToSlot(ingredients, slot, maxAmount, y, x) of 1.20.6 took an Iterator, and every 1.20.6
+     * implementation (RecipeBookComponent's included) placed ingredients.next(); since 1.21 placeRecipe takes
+     * next() itself and hands addItemToSlot(item, slot, maxAmount, x, y) the element -- with x and y swapped. A
+     * 1.20.6 call gives 1.21's method the element the 1.20.6 body took.
+     */
+    public static Object cbNextIngredient(java.util.Iterator<?> ingredients) {
+        return ingredients.next();
+    }
+
+    /** the element 1.21 hands a 1.20.6 override, as the iterator 1.20.6 handed it (the override takes next()) */
+    public static java.util.Iterator<?> cbSingleIngredient(Object item) {
+        return java.util.Collections.singletonList(item).iterator();
+    }
+
     // ------------------------------------------------------------------ Camera.move (class_4184), RealmsScreen
 
     /** Camera.move(dx, dy, dz) took doubles in 1.20.6 and cast them to float first; 1.21 takes floats */

@@ -218,6 +218,17 @@
         "conv:2 top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbNarrow(D)F"
       ],
       "basis": "Camera.move(dx, dy, dz) takes floats since 1.21; 1.20.6's body cast its doubles to float first"
+    },
+    "net/minecraft/class_507.method_12815(Ljava/util/Iterator;IIII)V": {
+      "desc": "(Ljava/lang/Object;IIII)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbNextIngredient(Ljava/util/Iterator;)Ljava/lang/Object;",
+        "keep:1",
+        "keep:2",
+        "keep:4",
+        "keep:3"
+      ],
+      "basis": "RecipeBookComponent.addItemToSlot(ingredients, slot, maxAmount, y, x) took the iterator and placed its next() in 1.20.6; 1.21 passes (item, slot, maxAmount, x, y): the next element, x and y in their new places (mechanical.json had passed the iterator itself as the item and kept the order)"
     }
   },
   "overrideHooks": [
@@ -419,6 +430,20 @@
       "wrap": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbWiden(F)D",
       "onlyUnder": "net/minecraft/class_4184",
       "basis": "a 1.20.6 Camera subclass's move(double..) gets 1.21's floats, widened exactly"
+    },
+    {
+      "old": "method_12815(Ljava/util/Iterator;IIII)V",
+      "new": "method_12815(Ljava/lang/Object;IIII)V",
+      "args": [
+        0,
+        1,
+        2,
+        4,
+        3
+      ],
+      "wrap": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbSingleIngredient(Ljava/lang/Object;)Ljava/util/Iterator;",
+      "onlyUnder": "net/minecraft/class_507",
+      "basis": "a 1.20.6 RecipeBookComponent subclass's addItemToSlot gets 1.21's element as the one-element iterator it took next() of, and y, x in its own order"
     }
   ],
   "superRedirects": {
