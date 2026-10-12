@@ -108,6 +108,34 @@ public final class CbRealms {
         ((CbLegacyCreationTask) task).cb$returnTo(lastScreen);
     }
 
+    // ------------------------------------------------------------------ DataFetcher.Subscription (class_7581$class_7584)
+
+    /**
+     * A 1.20.2 consumer subscribed to a data fetcher task (Subscription.subscribe(task, consumer), converted in
+     * place): RealmsDataFetcher's serverListUpdateTask (field_39683) answered the realms servers in 1.20.2 and
+     * answers a ServerListData since 1.20.3, under the same field -- the servers, and the realms a snapshot
+     * client may join. Its servers are the list 1.20.2's task answered (the servers of the client's server list
+     * request, method_21015); ServerListData is 1.20.3's own, so no consumer written for 1.20.2 takes one. Every
+     * other task's value is handed on as it is.
+     */
+    public static Consumer<?> cbLegacyConsumer(Consumer<?> consumer) {
+        return consumer == null || consumer instanceof CbLegacyConsumer ? consumer : new CbLegacyConsumer(consumer);
+    }
+
+    private static final class CbLegacyConsumer implements Consumer<Object> {
+        private final Consumer<Object> to;
+
+        @SuppressWarnings("unchecked")
+        CbLegacyConsumer(Consumer<?> to) {
+            this.to = (Consumer<Object>) to;
+        }
+
+        @Override
+        public void accept(Object value) {
+            to.accept(value instanceof net.minecraft.class_7578.class_8843 data ? data.comp_1989() : value);
+        }
+    }
+
     private CbRealms() {
     }
 }

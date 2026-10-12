@@ -33,9 +33,6 @@
   "net/minecraft/class_7620.immediate(Ljava/util/concurrent/Executor;)Lnet/minecraft/class_7620;": "top/dext/centurybridge/step/v1_20_3/rt/CbTasks",
   "net/minecraft/class_2158.method_52594(Ljava/lang/String;I)Lnet/minecraft/class_2158$class_8642;": "top/dext/centurybridge/step/v1_20_3/rt/CbFunctions",
   "net/minecraft/class_3062.method_52312(Lnet/minecraft/class_2168;Lnet/minecraft/class_2158;Lnet/minecraft/class_2487;)Lnet/minecraft/class_3062$class_8601;": "top/dext/centurybridge/step/v1_20_3/rt/CbFunctions",
-  "net/minecraft/class_2233.method_9458(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands",
-  "net/minecraft/class_2233.method_9449(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands",
-  "net/minecraft/class_2233.method_9450(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands",
   "net/minecraft/class_3248.method_40085(Ljava/lang/String;)Z": "top/dext/centurybridge/step/v1_20_3/rt/CbServer",
   "net/minecraft/class_3248.method_52418(Ljava/lang/String;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/step/v1_20_3/rt/CbServer"
  },
@@ -170,6 +167,70 @@
    ],
    "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbName(Lnet/minecraft/class_9015;)Ljava/lang/String;",
    "basis": "ScoreHolderArgument.getName answers a ScoreHolder since 1.20.3"
+  },
+  "net/minecraft/class_2233.method_9458(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/Collection;": {
+   "desc": "(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/Collection;",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbNames(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "same shape, ScoreHolders where 1.20.2 had names (generic drift): the answer converted to names, a holder by its scoreboard name (CbCommands.cbNames)"
+  },
+  "net/minecraft/class_2233.method_9449(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/Collection;": {
+   "desc": "(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/Collection;",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbNames(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "same shape, ScoreHolders where 1.20.2 had names (generic drift): the answer converted to names, a holder by its scoreboard name (CbCommands.cbNames)"
+  },
+  "net/minecraft/class_2233.method_9450(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/Collection;": {
+   "desc": "(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/Collection;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbHolderSupplier(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbNames(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "same shape, ScoreHolders where 1.20.2 had names (generic drift): the answer converted to names, a holder by its scoreboard name (CbCommands.cbNames); the default names handed in as holders (ScoreHolder.forNameOnly, CbCommands.cbHolderSupplier)"
+  },
+  "net/minecraft/class_2233$class_2234.getNames(Lnet/minecraft/class_2168;Ljava/util/function/Supplier;)Ljava/util/Collection;": {
+   "desc": "(Lnet/minecraft/class_2168;Ljava/util/function/Supplier;)Ljava/util/Collection;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbHolderSupplier(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbNames(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "same shape, ScoreHolders where 1.20.2 had names (generic drift): the answer converted to names, a holder by its scoreboard name (CbCommands.cbNames); the default names handed in as holders. A 1.20.2 Result's own getNames sits behind the convertHooks bridge (lambdas: lambdaAdapters)"
+  },
+  "net/minecraft/class_2233$class_2235.getNames(Lnet/minecraft/class_2168;Ljava/util/function/Supplier;)Ljava/util/Collection;": {
+   "desc": "(Lnet/minecraft/class_2168;Ljava/util/function/Supplier;)Ljava/util/Collection;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbHolderSupplier(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbNames(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "same shape, ScoreHolders where 1.20.2 had names (generic drift): the answer converted to names, a holder by its scoreboard name (CbCommands.cbNames); the default names handed in as holders. A 1.20.2 Result's own getNames sits behind the convertHooks bridge (lambdas: lambdaAdapters)"
+  },
+  "net/minecraft/class_2158.method_9195(Lnet/minecraft/class_2960;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_2168;Ljava/util/List;)Lnet/minecraft/class_2158;": {
+   "desc": "(Lnet/minecraft/class_2960;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_8839;Ljava/util/List;)Lnet/minecraft/class_2158;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2 Lnet/minecraft/class_8839;",
+    "keep:3"
+   ],
+   "basis": "CommandFunction.fromLines is generic in its source since 1.20.3 (T extends ExecutionCommandSource<T>); CommandSourceStack is one, so T is CommandSourceStack exactly as 1.20.3's ServerFunctionLibrary calls it, and the CommandFunction<CommandSourceStack> it answers is used by 1.20.2 code through the class_2158 members bridged here (getId renamed, getEntries / instantiate redirected)"
+  },
+  "net/minecraft/class_7581$class_7584.method_44635(Lnet/minecraft/class_7581$class_7586;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_7581$class_7586;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbLegacyConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "a 1.20.2 consumer of a data fetcher task: RealmsDataFetcher.serverListUpdateTask answers a ServerListData since 1.20.3 where it answered the servers; the consumer is handed the servers (CbRealms.cbLegacyConsumer), any other task's value as it is"
   }
  },
  "instanceFieldGetters": {
@@ -193,8 +254,7 @@
   "net/minecraft/class_3542$class_7292.method_42631(Ljava/lang/Enum;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
   "net/minecraft/class_7620.append(Lnet/minecraft/class_7620$class_7621;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbTasks",
   "net/minecraft/class_2158.method_9193()[Lnet/minecraft/class_2158$class_2161;": "top/dext/centurybridge/step/v1_20_3/rt/CbFunctions",
-  "net/minecraft/class_2158.method_52595(Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_2168;)Lnet/minecraft/class_2158;": "top/dext/centurybridge/step/v1_20_3/rt/CbFunctions",
-  "net/minecraft/class_2233$class_2234.getNames(Lnet/minecraft/class_2168;Ljava/util/function/Supplier;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands"
+  "net/minecraft/class_2158.method_52595(Lnet/minecraft/class_2487;Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_2168;)Lnet/minecraft/class_2158;": "top/dext/centurybridge/step/v1_20_3/rt/CbFunctions"
  },
  "overrideHooks": [
   {
@@ -1255,6 +1315,10 @@
   "net/minecraft/class_7419.method_10916(Lnet/minecraft/class_2168;)Ljava/util/stream/Stream;": {
    "iface": "top/dext/centurybridge/step/v1_20_3/rt/CbText$CbLegacyDataSource",
    "adapt": "top/dext/centurybridge/step/v1_20_3/rt/CbText#cbDataSource(Ltop/dext/centurybridge/step/v1_20_3/rt/CbText$CbLegacyDataSource;)Lnet/minecraft/class_7419;"
+  },
+  "net/minecraft/class_2233$class_2234.getNames(Lnet/minecraft/class_2168;Ljava/util/function/Supplier;)Ljava/util/Collection;": {
+   "iface": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands$CbLegacyScoreHolderResult",
+   "adapt": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbScoreHolderResult(Ltop/dext/centurybridge/step/v1_20_3/rt/CbCommands$CbLegacyScoreHolderResult;)Lnet/minecraft/class_2233$class_2234;"
   }
  },
  "facadeGaps": {
@@ -1265,5 +1329,25 @@
  },
  "methodRenames": {
   "net/minecraft/class_2158.method_9194()Lnet/minecraft/class_2960;": "comp_1994"
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_2233$class_2234",
+   "member": "getNames(Lnet/minecraft/class_2168;Ljava/util/function/Supplier;)Ljava/util/Collection;",
+   "args": [
+    null,
+    "top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbNameSupplier(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+   ],
+   "ret": "top/dext/centurybridge/step/v1_20_3/rt/CbCommands#cbHolders(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "a 1.20.2 ScoreHolderArgument.Result (or SelectorResult subclass) answers names and takes default names: vanilla's default holders handed in as names, its names handed back as holders (ScoreHolder.forNameOnly)"
+  }
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_7578.field_39683:Lnet/minecraft/class_7581$class_7586;": {
+   "by": [
+    "net/minecraft/class_7581$class_7584.method_44635(Lnet/minecraft/class_7581$class_7586;Ljava/util/function/Consumer;)V"
+   ],
+   "basis": "RealmsDataFetcher.serverListUpdateTask: the task passes unchanged; 1.20.2 code takes its value out only through DataFetcher.Subscription.subscribe(task, consumer) (Task's only public member is reset()), where the 1.20.2 consumer is handed the servers of 1.20.3's ServerListData"
+  }
  }
 }

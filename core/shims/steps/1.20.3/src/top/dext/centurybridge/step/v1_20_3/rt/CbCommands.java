@@ -4,7 +4,6 @@ import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.ResultConsumer;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.context.StringRange;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -206,55 +205,129 @@ public final class CbCommands {
     }
 
     // ------------------------------------------------------------------ ScoreHolderArgument (class_2233)
+    //
+    // 1.20.3 kept the shapes of ScoreHolderArgument's getNames family -- a Collection, a Supplier of one --
+    // and made the elements ScoreHolders where 1.20.2 had names. A holder's name is its scoreboard name
+    // (ScoreHolder.getScoreboardName); a name stands for ScoreHolder.forNameOnly(name), the holder 1.20.3's
+    // own name arguments make of a plain name. Calls are converted in place (the step's same-shape
+    // callReshapes), a 1.20.2 Result class's getNames sits behind a converting bridge (convertHooks), a 1.20.2
+    // Result lambda behind cbScoreHolderResult. Erasure cannot tell where a value came from, so each converter
+    // remembers what it converted and the opposite one hands that back: a value crossing twice -- a 1.20.2
+    // result's names that vanilla passes on to a 1.20.2 caller, vanilla's holders a 1.20.2 override hands to
+    // super -- is the value it was. An element already of the wanted kind is left as it is.
 
-    private static Collection<String> names(Collection<net.minecraft.class_9015> holders) {
-        List<String> out = new ArrayList<>(holders.size());
-        for (net.minecraft.class_9015 holder : holders) {
-            out.add(holder.method_5820());
-        }
-        return out;
+    /** a holder as its name; a name as it is */
+    private static Object nameOf(Object element) {
+        return element instanceof net.minecraft.class_9015 holder ? holder.method_5820() : element;
     }
 
-    private static Supplier<Collection<net.minecraft.class_9015>> holders(Supplier<Collection<String>> names) {
-        return () -> {
-            Collection<String> got = names.get();
-            List<net.minecraft.class_9015> out = new ArrayList<>(got.size());
-            for (String name : got) {
-                out.add(net.minecraft.class_9015.method_55422(name));
+    /** a name as its holder; a holder as it is */
+    private static Object holderOf(Object element) {
+        return element instanceof String name ? net.minecraft.class_9015.method_55422(name) : element;
+    }
+
+    /**
+     * A collection converted for the other release: its elements as converted when it was made (getNames
+     * answers a fresh, unmodifiable collection in both releases' vanilla paths) and the collection they came
+     * from, which the opposite converter hands back.
+     */
+    private static final class CbConvertedNames<E> extends java.util.AbstractList<E> {
+        final Collection<?> from;
+        /** true: names made from holders; false: holders made from names */
+        final boolean names;
+        private final Object[] elements;
+
+        CbConvertedNames(Collection<?> from, boolean names) {
+            this.from = from;
+            this.names = names;
+            Object[] in = from.toArray();
+            for (int i = 0; i < in.length; i++) {
+                in[i] = names ? nameOf(in[i]) : holderOf(in[i]);
             }
-            return out;
-        };
+            this.elements = in;
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public E get(int index) {
+            return (E) elements[index];
+        }
+
+        @Override
+        public int size() {
+            return elements.length;
+        }
+    }
+
+    /** 1.20.3's holders as the names 1.20.2 answered */
+    @SuppressWarnings("unchecked")
+    public static Collection<String> cbNames(Collection<?> holders) {
+        if (holders instanceof CbConvertedNames<?> c) {
+            return (Collection<String>) (c.names ? c : c.from);
+        }
+        return holders == null ? null : new CbConvertedNames<>(holders, true);
+    }
+
+    /** 1.20.2's names as the holders 1.20.3 answers */
+    @SuppressWarnings("unchecked")
+    public static Collection<net.minecraft.class_9015> cbHolders(Collection<?> names) {
+        if (names instanceof CbConvertedNames<?> c) {
+            return (Collection<net.minecraft.class_9015>) (c.names ? c.from : c);
+        }
+        return names == null ? null : new CbConvertedNames<>(names, false);
+    }
+
+    /** a supplier of one release's collection as the other's: each collection it gives, converted */
+    private static final class CbConvertedSupplier<E> implements Supplier<Collection<E>> {
+        final Supplier<?> from;
+        final boolean names;
+
+        CbConvertedSupplier(Supplier<?> from, boolean names) {
+            this.from = from;
+            this.names = names;
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public Collection<E> get() {
+            Collection<?> got = (Collection<?>) from.get();
+            return (Collection<E>) (names ? cbNames(got) : cbHolders(got));
+        }
+    }
+
+    /** a 1.20.3 supplier of default holders as 1.20.2's supplier of default names */
+    @SuppressWarnings("unchecked")
+    public static Supplier<Collection<String>> cbNameSupplier(Supplier<?> holders) {
+        if (holders instanceof CbConvertedSupplier<?> s) {
+            return (Supplier<Collection<String>>) (s.names ? s : s.from);
+        }
+        return holders == null ? null : new CbConvertedSupplier<>(holders, true);
+    }
+
+    /** a 1.20.2 supplier of default names as 1.20.3's supplier of default holders */
+    @SuppressWarnings("unchecked")
+    public static Supplier<Collection<net.minecraft.class_9015>> cbHolderSupplier(Supplier<?> names) {
+        if (names instanceof CbConvertedSupplier<?> s) {
+            return (Supplier<Collection<net.minecraft.class_9015>>) (s.names ? s.from : s);
+        }
+        return names == null ? null : new CbConvertedSupplier<>(names, false);
+    }
+
+    /** 1.20.2's ScoreHolderArgument.Result -- names in and out -- as a 1.20.2 lambda or method reference built it */
+    @FunctionalInterface
+    public interface CbLegacyScoreHolderResult {
+        Collection<String> getNames(net.minecraft.class_2168 source, Supplier<Collection<String>> defaults)
+            throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+    }
+
+    /** a 1.20.2 Result lambda as 1.20.3's Result (lambdaAdapters): vanilla's default holders in, its names out as holders */
+    public static net.minecraft.class_2233.class_2234 cbScoreHolderResult(CbLegacyScoreHolderResult legacy) {
+        return (source, defaults) -> cbHolders(legacy.getNames(source, cbNameSupplier(defaults)));
     }
 
     /** was ScoreHolderArgument.getName(context, name) (method_9452): the holder's scoreboard name */
     public static String cbName(net.minecraft.class_9015 holder) {
         return holder.method_5820();
-    }
-
-    /** ScoreHolderArgument.getNames(context, name) (method_9458): names in 1.20.2, ScoreHolders since 1.20.3 */
-    public static Collection<String> method_9458(CommandContext<net.minecraft.class_2168> context, String name)
-            throws com.mojang.brigadier.exceptions.CommandSyntaxException {
-        return names(net.minecraft.class_2233.method_9458(context, name));
-    }
-
-    /** ScoreHolderArgument.getNamesWithDefaultWildcard(context, name) (method_9449): as {@link #method_9458} */
-    public static Collection<String> method_9449(CommandContext<net.minecraft.class_2168> context, String name)
-            throws com.mojang.brigadier.exceptions.CommandSyntaxException {
-        return names(net.minecraft.class_2233.method_9449(context, name));
-    }
-
-    /** ScoreHolderArgument.getNames(context, name, defaults) (method_9450): the defaults are names too, in 1.20.2 */
-    public static Collection<String> method_9450(CommandContext<net.minecraft.class_2168> context, String name,
-                                                 Supplier<Collection<String>> defaults)
-            throws com.mojang.brigadier.exceptions.CommandSyntaxException {
-        return names(net.minecraft.class_2233.method_9450(context, name, holders(defaults)));
-    }
-
-    /** ScoreHolderArgument.Result.getNames(source, defaults): names in 1.20.2, ScoreHolders since 1.20.3 */
-    public static Collection<String> getNames(net.minecraft.class_2233.class_2234 result, net.minecraft.class_2168 source,
-                                              Supplier<Collection<String>> defaults)
-            throws com.mojang.brigadier.exceptions.CommandSyntaxException {
-        return names(result.getNames(source, holders(defaults)));
     }
 
     // ------------------------------------------------------------------ FunctionArgument.Result (class_2284$class_2285)
