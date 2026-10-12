@@ -25,5 +25,59 @@
  },
  "fieldRedirects": {
   "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents.MOB_CONVERSION:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/compat/fapi/entity/event/v1/ServerLivingEntityEvents"
+ },
+ "callReshapes": {
+  "net/fabricmc/fabric/api/entity/FakePlayer.method_14213(Lnet/minecraft/class_2803;)V": {
+   "desc": "(Lnet/minecraft/class_8791;)V",
+   "ops": [
+    "conv top/dext/centurybridge/compat/fapi/impl/entity/CbFapiFakePlayers#clientInformation(Lnet/minecraft/class_2803;)Lnet/minecraft/class_8791;"
+   ]
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider.method_10419(Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_8790;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeDatagen#exporterOf(Ljava/util/function/Consumer;)Lnet/minecraft/class_8790;"
+   ]
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider.withConditions(Ljava/util/function/Consumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Ljava/util/function/Consumer;": {
+   "desc": "(Lnet/minecraft/class_8790;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Lnet/minecraft/class_8790;",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeDatagen#exporterOf(Ljava/util/function/Consumer;)Lnet/minecraft/class_8790;",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeDatagen#consumerOf(Lnet/minecraft/class_8790;)Ljava/util/function/Consumer;"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_14213(Lnet/minecraft/class_2803;)V",
+   "new": "method_14213(Lnet/minecraft/class_8791;)V",
+   "wrap": "top/dext/centurybridge/compat/fapi/impl/entity/CbFapiFakePlayers.clientInformationPacket(Lnet/minecraft/class_8791;)Lnet/minecraft/class_2803;",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/FakePlayer"
+  },
+  {
+   "old": "method_10419(Ljava/util/function/Consumer;)V",
+   "new": "method_10419(Lnet/minecraft/class_8790;)V",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeDatagen.consumerOf(Lnet/minecraft/class_8790;)Ljava/util/function/Consumer;",
+   "onlyUnder": "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider"
+  },
+  {
+   "old": "createPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;",
+   "new": "createPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)Lnet/minecraft/class_2596;",
+   "bridge": "top/dext/centurybridge/compat/fapi/impl/networking/CbFapiPacketSenders.createPacket(Ltop/dext/centurybridge/compat/fapi/impl/networking/CbLegacyPacketSender;Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)Lnet/minecraft/class_2596;",
+   "adapter": "top/dext/centurybridge/compat/fapi/impl/networking/CbLegacyPacketSender",
+   "onlyUnder": "net/fabricmc/fabric/api/networking/v1/PacketSender"
+  },
+  {
+   "old": "read(Lcom/google/gson/JsonObject;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;",
+   "new": "getCodec(Z)Lcom/mojang/serialization/Codec;",
+   "bridge": "top/dext/centurybridge/compat/fapi/impl/recipe/CbFapiIngredients.getCodec(Ltop/dext/centurybridge/compat/fapi/impl/recipe/CbLegacyIngredientSerializer;Z)Lcom/mojang/serialization/Codec;",
+   "adapter": "top/dext/centurybridge/compat/fapi/impl/recipe/CbLegacyIngredientSerializer",
+   "onlyUnder": "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer"
+  }
+ ],
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer.read(Lcom/google/gson/JsonObject;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;": "top/dext/centurybridge/compat/fapi/impl/recipe/CbFapiIngredients",
+  "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer.write(Lcom/google/gson/JsonObject;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V": "top/dext/centurybridge/compat/fapi/impl/recipe/CbFapiIngredients"
  }
 }

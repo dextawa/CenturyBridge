@@ -988,8 +988,12 @@ public final class JarProcessor {
      * found in JVM resolution order: the superclass chain to the first vanilla class (the walk of
      * {@link #inheritedVanillaOwner}), then, when that has no key or the chain ends in the JDK, the
      * vanilla interfaces the layer's types implement (a default method, RecipeBuilder.save(consumer)
-     * called on a mod builder). Null when the mod declares the member, the chain leaves into a
-     * library (its classes are not this layer's to judge), or no key applies.
+     * called on a mod builder). A chain that leaves into a library class (Fabric API's
+     * FabricRecipeProvider, FakePlayer) takes a reshape keyed on that library class itself: its
+     * members are not this layer's to judge, but the key says the member changed there, and the
+     * JVM resolves the call through the mod's subclass up to it exactly as for a vanilla class.
+     * Null when the mod declares the member, the chain leaves into a library class no reshape is
+     * keyed on, or no key applies.
      */
     private static String inheritedReshapeHome(String owner, String member, LayerIndex layer, Chain chain) {
         // the superclass chain first, as the JVM resolves: the layer's own classes, then the first vanilla one
@@ -1002,7 +1006,8 @@ public final class JarProcessor {
                     cur = null; // the JDK ends the chain (it declares no game member): on to the interfaces
                     break;
                 }
-                return null; // a library or another jar: not this layer's to judge
+                // a library or another jar: only a reshape keyed on that class itself applies
+                return chain.callReshapeIndex.containsKey(cur + "." + member) ? cur : null;
             }
             if (d.contains(member)) {
                 return null; // the mod's own member
