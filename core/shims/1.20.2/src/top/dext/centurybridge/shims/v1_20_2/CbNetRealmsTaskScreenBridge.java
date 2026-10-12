@@ -40,12 +40,14 @@ public abstract class CbNetRealmsTaskScreenBridge extends class_4905 implements 
     }
 
     /**
-     * was error(message): the task failed with this message. 1.20.1 showed it in place of the progress
-     * with a Back button to the screen before; here the player gets it on the generic error screen,
-     * whose button leads to that same screen. Narrated as in 1.20.1.
+     * was error(message): the task failed with this message. 1.20.1 showed it in place of the progress,
+     * with a Back button that aborted the task and returned to the screen before; here the task is
+     * aborted at once (as 1.20.2 aborts a task that reports an error itself) and the message is shown
+     * on the generic error screen, whose button leads to that same screen. Narrated as in 1.20.1.
      */
     @Override
     public void method_21067(class_2561 message) {
+        field_19919.method_21071();
         class_310 client = class_310.method_1551();
         client.method_44713().method_37015(message);
         client.execute(() -> client.method_1507(new class_4394(message, field_19912)));
