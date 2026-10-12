@@ -58,6 +58,7 @@
     "CbComponentBuilderAccessor",
     "CbArmorItemAccessor",
     "CbSpawnEggAccessor",
+    "CbCodecRegistryMixin",
     "CbBlockEntityInvoker",
     "CbBlockBiomeSourceInvoker",
     "CbBlockChunkGeneratorInvoker",

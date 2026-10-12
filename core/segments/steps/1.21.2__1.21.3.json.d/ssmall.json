@@ -1,0 +1,13 @@
+{
+ "abstractFills": [
+  {
+   "under": "net/fabricmc/fabric/api/attachment/v1/AttachmentType",
+   "method": "isSynced()Z",
+   "call": "top/dext/centurybridge/step/v1_21_3/rt/CbAttachmentTypes.isSynced(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Z",
+   "basis": "javadoc (abstract, no default): a 1.21.2 type has no sync codec or predicate, so it cannot be synchronized; Fabric's sync code casts every type answering true to its own AttachmentTypeImpl"
+  }
+ ],
+ "ledger": {
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder.syncWith": "not bridgeable: a 1.21.2 builder builds types that cannot be synchronized -- 1.21.3's Fabric sync code (AttachmentTargetsMixin, the chunk / entity / world sync mixins of fabric-data-attachment-api-v1 1.4.0) reads the packet codec and sync predicate off Fabric's own AttachmentTypeImpl, which only Fabric's BuilderImpl makes, and no API attaches them to another type; accepting the call and building an unsynced type would silently drop the synchronization the caller asked for"
+ }
+}

@@ -27,6 +27,11 @@ import top.dext.centurybridge.step.v1_20_5.facade.class_2582;
  * the facade registered under its key (one is made, with the id as its hash name, for a pattern only a
  * datapack defines), a facade handed to the game the world's record of its key. The facade registry
  * mirrors the world's tags (CbBlockBannerTagsMixin).
+ *
+ * <p>It also holds the step's RegistryAccess / HolderLookup.Provider lookups for 1.20.4 code (registryOrThrow,
+ * registry, lookupOrThrow, lookup and their super calls): banner patterns as above, plus the six
+ * registries 1.20.5 turned from codecs into map codecs, handed out as their mirrors of codecs
+ * (CbCodecRegistries); every other registry passes through unchanged.
  */
 public final class CbBlockBanner {
 
@@ -254,30 +259,33 @@ public final class CbBlockBanner {
         return last;
     }
 
-    // ---------------------------------------------------------------- the 1.20.4 registry through the world's registry access
+    // ---------------------------------------------------------------- RegistryAccess / HolderLookup.Provider lookups for 1.20.4 code
+    // (these statics are the step's one redirect of those four lookups: banner patterns as above, plus the six
+    // registries 1.20.5 turned from codecs into map codecs, handed out as their mirrors of codecs through
+    // CbCodecRegistries -- every other registry passes through unchanged)
 
     /** RegistryAccess.registryOrThrow(key): 1.20.4 code asking for the banner pattern registry gets 1.20.4's */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static net.minecraft.class_2378 method_30530(net.minecraft.class_5455 access, net.minecraft.class_5321 key) {
-        return key == net.minecraft.class_7924.field_41252 ? registry() : access.method_30530(key);
+        return key == net.minecraft.class_7924.field_41252 ? registry() : CbCodecRegistries.view(access.method_30530(key));
     }
 
     /** RegistryAccess.registry(key) */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static Optional method_33310(net.minecraft.class_5455 access, net.minecraft.class_5321 key) {
-        return key == net.minecraft.class_7924.field_41252 ? Optional.of(registry()) : access.method_33310(key);
+        return key == net.minecraft.class_7924.field_41252 ? Optional.of(registry()) : CbCodecRegistries.viewOptional(access.method_33310(key));
     }
 
     /** HolderLookup.Provider.lookupOrThrow(key) */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static net.minecraft.class_7225.class_7226 method_46762(net.minecraft.class_7225.class_7874 provider, net.minecraft.class_5321 key) {
-        return key == net.minecraft.class_7924.field_41252 ? registry().method_46771() : provider.method_46762(key);
+        return key == net.minecraft.class_7924.field_41252 ? registry().method_46771() : CbCodecRegistries.viewLookup(provider.method_46762(key));
     }
 
     /** HolderLookup.Provider.lookup(key) */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static Optional method_46759(net.minecraft.class_7225.class_7874 provider, net.minecraft.class_5321 key) {
-        return key == net.minecraft.class_7924.field_41252 ? Optional.of(registry().method_46771()) : provider.method_46759(key);
+        return key == net.minecraft.class_7924.field_41252 ? Optional.of(registry().method_46771()) : CbCodecRegistries.viewLookupOptional(provider.method_46759(key));
     }
 
     /** RegistryAccess.super.registryOrThrow(key) from a mod's own registry access: the interface's default body, the banner key as above */
@@ -286,8 +294,8 @@ public final class CbBlockBanner {
         if (key == net.minecraft.class_7924.field_41252) {
             return registry();
         }
-        return (net.minecraft.class_2378) ((Optional<Object>) access.method_33310(key))
-            .orElseThrow(() -> new IllegalStateException("Missing registry: " + key));
+        return CbCodecRegistries.view((net.minecraft.class_2378) ((Optional<Object>) access.method_33310(key))
+            .orElseThrow(() -> new IllegalStateException("Missing registry: " + key)));
     }
 
     /** HolderLookup.Provider.super.lookupOrThrow(key), likewise */
@@ -296,8 +304,8 @@ public final class CbBlockBanner {
         if (key == net.minecraft.class_7924.field_41252) {
             return registry().method_46771();
         }
-        return (net.minecraft.class_7225.class_7226) ((Optional<Object>) provider.method_46759(key))
-            .orElseThrow(() -> new IllegalStateException("Registry " + key.method_29177() + " not found"));
+        return CbCodecRegistries.viewLookup((net.minecraft.class_7225.class_7226) ((Optional<Object>) provider.method_46759(key))
+            .orElseThrow(() -> new IllegalStateException("Registry " + key.method_29177() + " not found")));
     }
 
     // ---------------------------------------------------------------- BannerBlockEntity

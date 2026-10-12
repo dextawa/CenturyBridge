@@ -1755,6 +1755,11 @@ public final class JarProcessor {
             }
             Set<String> d = layer.decls.get(t);
             if (d == null) {
+                // a library interface (a Fabric API one the mod class implements): only a reshape keyed on
+                // that interface itself applies, as for a library superclass above
+                if (chain.callReshapeIndex.containsKey(t + "." + member)) {
+                    return t;
+                }
                 continue;
             }
             if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
@@ -1826,10 +1831,95 @@ public final class JarProcessor {
      * Triage + strip + verify one jar's entry map, recursing into JIJ-nested
      * jars (bundled libraries carry their own mixins -- a nested mixin whose
      * target died crashes the whole game just as hard as a top-level one).
+     *
+     * Two things are settled first. A CenturyBridge layer's classes that retire at this step
+     * ({@link Chain#retiredClasses}) leave the jar and its mixin configs. And classRenames, which move
+     * references to a class the jar does not define (a dead vanilla class onto its facade, a compat API
+     * onto the native one that came back), leave the jar's own classes alone: renaming a class's own
+     * declaration leaves an entry whose class carries another name -- a jar that cannot load (a bundled
+     * Fabric API module declaring a class step 1 renames, a bridge layer's own compat classes).
      */
     private static void processEntries(Map<String, byte[]> entries, Chain chain,
                                        Report rpt, Set<String> issues, String tag,
                                        String jarTag) throws IOException {
+        retire(entries, chain, rpt, tag);
+        Map<String, String> own = new HashMap<>();
+        for (String n : entries.keySet()) {
+            if (n.endsWith(".class")) {
+                String cls = n.substring(0, n.length() - 6);
+                String to = chain.classRenames.remove(cls);
+                if (to != null) {
+                    own.put(cls, to);
+                    rpt.notes.add(tag + "own class keeps its name: " + cls + " (its classRenames entry, -> " + to
+                        + ", moves other jars' references)");
+                }
+            }
+        }
+        try {
+            processLayer(entries, chain, rpt, issues, tag, jarTag, own);
+        } finally {
+            chain.classRenames.putAll(own);
+        }
+    }
+
+    /**
+     * {@link Chain#retiredClasses}: the jar's classes an entry names leave it, and the mixin configs its
+     * fabric.mod.json names stop listing them -- before anything else reads the jar, so the triage and the
+     * rewrite see the layer as it is from this step on.
+     */
+    private static void retire(Map<String, byte[]> entries, Chain chain, Report rpt, String tag) {
+        if (chain.retiredClasses.isEmpty()) {
+            return;
+        }
+        Set<String> gone = new TreeSet<>();
+        for (String n : new ArrayList<>(entries.keySet())) {
+            if (n.endsWith(".class")) {
+                String cls = n.substring(0, n.length() - 6);
+                String why = chain.retiredReason(cls);
+                if (why != null) {
+                    entries.remove(n);
+                    gone.add(cls);
+                    rpt.notes.add(tag + "retired at " + chain.to + ": " + cls + " -- " + why);
+                }
+            }
+        }
+        byte[] fmjBytes = entries.get("fabric.mod.json");
+        if (gone.isEmpty() || fmjBytes == null) {
+            return;
+        }
+        JsonObject fmj = GSON.fromJson(new String(fmjBytes, StandardCharsets.UTF_8), JsonObject.class);
+        for (JsonElement ref : fmj.has("mixins") ? fmj.getAsJsonArray("mixins") : new JsonArray()) {
+            String cfgName = ref.isJsonObject() ? ref.getAsJsonObject().get("config").getAsString() : ref.getAsString();
+            byte[] data = entries.get(cfgName);
+            if (data == null) {
+                continue;
+            }
+            JsonObject cfg = GSON.fromJson(new String(data, StandardCharsets.UTF_8), JsonObject.class);
+            String pkg = cfg.has("package") ? cfg.get("package").getAsString().replace('.', '/') : "";
+            boolean edited = false;
+            for (String key : new String[] {"mixins", "client", "server"}) {
+                if (!cfg.has(key)) {
+                    continue;
+                }
+                JsonArray kept = new JsonArray();
+                for (JsonElement m : cfg.getAsJsonArray(key)) {
+                    if (gone.contains((pkg.isEmpty() ? "" : pkg + "/") + m.getAsString().replace('.', '/'))) {
+                        edited = true;
+                    } else {
+                        kept.add(m);
+                    }
+                }
+                cfg.add(key, kept);
+            }
+            if (edited) {
+                entries.put(cfgName, GSON.toJson(cfg).getBytes(StandardCharsets.UTF_8));
+            }
+        }
+    }
+
+    private static void processLayer(Map<String, byte[]> entries, Chain chain,
+                                     Report rpt, Set<String> issues, String tag,
+                                     String jarTag, Map<String, String> ownRenames) throws IOException {
         LayerIndex layer = indexLayer(entries);
         Map<String, String> jarSuper = layer.superOf;
         stripSignatures(entries, rpt, tag);
@@ -1920,7 +2010,13 @@ public final class JarProcessor {
                 // the nested jar's own name joins the uniqueness tag
                 String nestedTag = jarTag + "_" + name.substring("META-INF/jars/".length())
                     .replaceAll("\\.jar$", "").replaceAll("[^A-Za-z0-9]", "_");
-                processEntries(nested, chain, rpt, issues, tag + "(bundled) ", nestedTag);
+                // a bundled jar is another jar: the renames kept off this jar's own classes apply to it
+                chain.classRenames.putAll(ownRenames);
+                try {
+                    processEntries(nested, chain, rpt, issues, tag + "(bundled) ", nestedTag);
+                } finally {
+                    ownRenames.keySet().forEach(chain.classRenames::remove);
+                }
                 // a bundled mod is a mod to the loader: its own minecraft range
                 // still says the source version, and dependency resolution
                 // refuses the whole pack before a class loads (293 nested mods
@@ -2694,6 +2790,15 @@ public final class JarProcessor {
                                 // redirect wired explicitly (DFU's Codec.dispatch
                                 // contract change hides behind generic erasure)
                                 // still applies
+                                // a super call to a library supertype's member -- a Fabric API interface's
+                                // default -- is rerouted like a vanilla one (Chain.superRedirects), keyed on
+                                // the library type the call names
+                                String lsr = op == Opcodes.INVOKESPECIAL && !name.equals("<init>") ? chain.superRedirects.get(site) : null;
+                                if (lsr != null) {
+                                    superRedirectSites.put(site, lsr);
+                                    top.dext.centurybridge.data.FullAudit.record(site, "super-redirect");
+                                    return;
+                                }
                                 String lrt = chain.instanceRedirects.get(site);
                                 if (lrt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
                                     instRedirects.put(site, lrt);
@@ -3234,6 +3339,9 @@ public final class JarProcessor {
                 if (declaredShapes.contains(shape) || !isUnder(superOf[0], ifacesOf[0], f.under, layer, chain)
                         || inheritedVanillaOwner(superOf[0], shape, layer) == null && layer.superOf.containsKey(superOf[0])) {
                     continue; // declared here, not under the type, or a jar superclass declares it
+                }
+                if (fillApply.stream().anyMatch(x -> (x.name + x.desc).equals(shape))) {
+                    continue; // two entries give the class the same method (it is under both types): the first fills it
                 }
                 boolean synthesized = declaredOldOverrides.stream().anyMatch(h -> (h.newName + h.newDesc).equals(shape))
                     || adapterApply.stream().anyMatch(h -> h.synth.stream().anyMatch(sy -> (sy[0] + sy[1]).equals(shape)));

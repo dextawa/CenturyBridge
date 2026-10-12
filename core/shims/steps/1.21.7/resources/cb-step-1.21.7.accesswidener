@@ -1,1 +1,3 @@
 accessWidener	v2	intermediary
+# ssmall: GuiRenderer.MIN_GUI_Z (0.0f) was public static final in 1.21.6; private since 1.21.7, the same constant
+accessible	field	net/minecraft/class_11228	field_59901	F
