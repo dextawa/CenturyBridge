@@ -12,7 +12,9 @@
   "net/minecraft/class_1799.field_8029:Ljava/text/DecimalFormat;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#attributeModifierFormat"
  },
  "instanceFieldGetters": {
-  "net/minecraft/class_7788.field_40610:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#blockLootMap"
+  "net/minecraft/class_7788.field_40610:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#blockLootMap",
+  "net/minecraft/class_1887.field_9083:Lnet/minecraft/class_1886;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#category",
+  "net/minecraft/class_1882.field_9067:I": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#damageType"
  },
  "superCtorReshapes": {
   "net/minecraft/class_170.<init>(ILjava/util/List;Ljava/util/List;Ljava/util/Optional;)V": {
@@ -56,6 +58,134 @@
     "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
    ],
    "basis": "s4item: DimensionDataStorage takes the registries its saved data loads with; 1.20.4 had none to pass"
+  },
+  "net/minecraft/class_1887.<init>(Lnet/minecraft/class_1887$class_1888;Lnet/minecraft/class_1886;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#definition(Lnet/minecraft/class_1887$class_1888;Lnet/minecraft/class_1886;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: a 1.20.4 enchantment's definition from its rarity, category and slots (rt/CbEnchant)"
+  },
+  "net/minecraft/class_1880.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#infinity(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: ArrowInfiniteEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1881.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#piercing(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: ArrowPiercingEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1883.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#bindingCurse(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: BindingCurseEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1885.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#unbreaking(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: DigDurabilityEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1894.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#frostWalker(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: FrostWalkerEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1898.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#multishot(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: MultiShotEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1899.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#mending(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: MendingEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1906.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#thorns(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: ThornsEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1909.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#silkTouch(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: UntouchingEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1910.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#riptide(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: TridentRiptideEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1911.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#vanishingCurse(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: VanishingCurseEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1913.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#depthStrider(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: WaterWalkerEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_4948.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#soulSpeed(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: SoulSpeedEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_7267.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#swiftSneak(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: SwiftSneakEnchantment's 1.20.4 constructor, with the category and costs its 1.20.4 class had"
+  },
+  "net/minecraft/class_1882.<init>(Lnet/minecraft/class_1887$class_1888;I[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#damage(Lnet/minecraft/class_1887$class_1888;I[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#damageTargets(I)Ljava/util/Optional;"
+   ],
+   "basis": "s4item: DamageEnchantment(rarity, type, slots): its definition and the entity tag for the type"
+  },
+  "net/minecraft/class_1896.<init>(Lnet/minecraft/class_1887$class_1888;Lnet/minecraft/class_1886;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#lootBonus(Lnet/minecraft/class_1887$class_1888;Lnet/minecraft/class_1886;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;"
+   ],
+   "basis": "s4item: LootBonusEnchantment(rarity, category, slots)"
+  },
+  "net/minecraft/class_1900.<init>(Lnet/minecraft/class_1887$class_1888;Lnet/minecraft/class_1900$class_1901;[Lnet/minecraft/class_1304;)V": {
+   "desc": "(Lnet/minecraft/class_1887$class_9427;Lnet/minecraft/class_1900$class_1901;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#protection(Lnet/minecraft/class_1887$class_1888;Lnet/minecraft/class_1900$class_1901;[Lnet/minecraft/class_1304;)Lnet/minecraft/class_1887$class_9427;",
+    "keep:1"
+   ],
+   "basis": "s4item: ProtectionEnchantment(rarity, type, slots): its definition, the type kept"
   }
  },
  "callReshapes": {
@@ -122,6 +252,38 @@
     "keep:3"
    ],
    "basis": "s4item: Item.appendHoverText takes a tooltip context where 1.20.4 took the level (CbTooltips)"
+  },
+  "net/minecraft/class_1890.method_8229(ILnet/minecraft/class_1799;Z)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_7699;ILnet/minecraft/class_1799;Z)Ljava/util/List;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#enabledFeatures()Lnet/minecraft/class_7699;",
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "s4item: getAvailableEnchantmentResults takes the world's feature flags (CbEnchant.enabledFeatures)"
+  },
+  "net/minecraft/class_1890.method_8230(Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_7699;Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Ljava/util/List;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#enabledFeatures()Lnet/minecraft/class_7699;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "s4item: selectEnchantment takes the world's feature flags"
+  },
+  "net/minecraft/class_1890.method_8233(Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_7699;Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Lnet/minecraft/class_1799;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#enabledFeatures()Lnet/minecraft/class_7699;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "s4item: enchantItem takes the world's feature flags"
   }
  },
  "convertHooks": [
@@ -169,17 +331,49 @@
   "net/minecraft/class_5269.method_27419(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#setZSpawn",
   "net/minecraft/class_5269.method_30657(F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#setSpawnAngle",
   "net/minecraft/class_29.method_261(Lnet/minecraft/class_1657;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#load",
-  "net/minecraft/class_29.method_263()[Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#getSeenPlayers"
+  "net/minecraft/class_29.method_263()[Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#getSeenPlayers",
+  "net/minecraft/class_1887.method_8186()Lnet/minecraft/class_1887$class_1888;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#getRarity",
+  "net/minecraft/class_1887.method_8196(ILnet/minecraft/class_1310;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#getDamageBonus",
+  "net/minecraft/class_1900$class_1901.method_8240()I": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#protectionMinCost",
+  "net/minecraft/class_1900$class_1901.method_8239()I": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#protectionLevelCost"
  },
  "staticRedirects": {
   "net/minecraft/class_1799.method_7915(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#of",
-  "net/minecraft/class_1799.method_17870(Ljava/util/List;Lnet/minecraft/class_2499;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#appendEnchantmentNames"
+  "net/minecraft/class_1799.method_17870(Ljava/util/List;Lnet/minecraft/class_2499;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#appendEnchantmentNames",
+  "net/minecraft/class_1890.method_8218(Lnet/minecraft/class_1799;Lnet/minecraft/class_1310;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#damageBonus",
+  "net/minecraft/class_1890.method_22445(Lnet/minecraft/class_2499;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#deserializeEnchantments",
+  "net/minecraft/class_1890.method_37423(Lnet/minecraft/class_1887;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#getEnchantmentId",
+  "net/minecraft/class_1890.method_37424(Lnet/minecraft/class_2487;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#getEnchantmentLevel",
+  "net/minecraft/class_1890.method_37425(Lnet/minecraft/class_2487;I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#setEnchantmentLevel",
+  "net/minecraft/class_1890.method_37426(Lnet/minecraft/class_2960;I)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#storeEnchantment",
+  "net/minecraft/class_1890.method_37427(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#getEnchantmentIdOf",
+  "net/minecraft/class_1890.method_8214(Ljava/util/Map;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#setEnchantments",
+  "net/minecraft/class_1890.method_8222(Lnet/minecraft/class_1799;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#getEnchantments",
+  "net/minecraft/class_1772.method_7806(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#bookEnchantments",
+  "net/minecraft/class_1772.method_7807(Lnet/minecraft/class_1799;Lnet/minecraft/class_1889;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchantNbt#addBookEnchantment"
  },
  "ctorRedirects": {
   "net/minecraft/class_1799.<init>(Lnet/minecraft/class_6880;ILjava/util/Optional;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks"
  },
  "classRenames": {
-  "net/minecraft/class_1799$class_5422": "top/dext/centurybridge/step/v1_20_5/facade/TooltipPart"
+  "net/minecraft/class_1799$class_5422": "top/dext/centurybridge/step/v1_20_5/facade/TooltipPart",
+  "net/minecraft/class_1887$class_1888": "top/dext/centurybridge/step/v1_20_5/facade/EnchantmentRarity",
+  "net/minecraft/class_1886": "top/dext/centurybridge/step/v1_20_5/facade/EnchantmentCategory",
+  "net/minecraft/class_5150": "top/dext/centurybridge/step/v1_20_5/facade/Vanishable",
+  "net/minecraft/class_1877": "top/dext/centurybridge/step/v1_20_5/facade/ArrowFireEnchantment",
+  "net/minecraft/class_1878": "top/dext/centurybridge/step/v1_20_5/facade/ArrowDamageEnchantment",
+  "net/minecraft/class_1879": "top/dext/centurybridge/step/v1_20_5/facade/ArrowKnockbackEnchantment",
+  "net/minecraft/class_1884": "top/dext/centurybridge/step/v1_20_5/facade/DiggingEnchantment",
+  "net/minecraft/class_1892": "top/dext/centurybridge/step/v1_20_5/facade/FireAspectEnchantment",
+  "net/minecraft/class_1895": "top/dext/centurybridge/step/v1_20_5/facade/FishingSpeedEnchantment",
+  "net/minecraft/class_1897": "top/dext/centurybridge/step/v1_20_5/facade/KnockbackEnchantment",
+  "net/minecraft/class_1902": "top/dext/centurybridge/step/v1_20_5/facade/OxygenEnchantment",
+  "net/minecraft/class_1903": "top/dext/centurybridge/step/v1_20_5/facade/SweepingEdgeEnchantment",
+  "net/minecraft/class_1904": "top/dext/centurybridge/step/v1_20_5/facade/QuickChargeEnchantment",
+  "net/minecraft/class_1905": "top/dext/centurybridge/step/v1_20_5/facade/TridentChannelingEnchantment",
+  "net/minecraft/class_1907": "top/dext/centurybridge/step/v1_20_5/facade/TridentLoyaltyEnchantment",
+  "net/minecraft/class_1908": "top/dext/centurybridge/step/v1_20_5/facade/TridentImpalerEnchantment",
+  "net/minecraft/class_1912": "top/dext/centurybridge/step/v1_20_5/facade/WaterWorkerEnchantment"
  },
  "overrideHooks": [
   {
@@ -196,6 +390,13 @@
    "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage.optional(Lnet/minecraft/class_2487;)Ljava/util/Optional;",
    "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "basis": "s4item: 1.20.5's PlayerList loads a player through load(player) -> Optional; a 1.20.4 override of load(player) -> tag answers it, its super call (CbLevelStorage.superLoad) reaching vanilla's"
+  },
+  {
+   "old": "method_8196(ILnet/minecraft/class_1310;)F",
+   "new": "method_8196(ILnet/minecraft/class_1299;)F",
+   "onlyUnder": "net/minecraft/class_1887",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant.mobType(Lnet/minecraft/class_1299;)Lnet/minecraft/class_1310;",
+   "basis": "s4item: 1.20.5 asks the bonus against an entity type; a 1.20.4 override gets the entity's MobType (its class's declaration when it is the one attacked, else the type's tags)"
   }
  ],
  "superRedirects": {
@@ -222,7 +423,10 @@
   "net/minecraft/class_638$class_5271.method_30657(F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelDataClient#superSetSpawnAngle",
   "net/minecraft/class_5269.method_187(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetSpawn",
   "net/minecraft/class_29.method_261(Lnet/minecraft/class_1657;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#superLoad",
-  "net/minecraft/class_29.method_263()[Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#superSeenPlayers"
+  "net/minecraft/class_29.method_263()[Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#superSeenPlayers",
+  "net/minecraft/class_1887.method_8186()Lnet/minecraft/class_1887$class_1888;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#superGetRarity",
+  "net/minecraft/class_1887.method_8196(ILnet/minecraft/class_1310;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#superDamageBonus",
+  "net/minecraft/class_1882.method_8196(ILnet/minecraft/class_1310;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#superDamageBonusDamage"
  },
  "adapterHooks": [
   {
@@ -335,6 +539,24 @@
    ],
    "synth": [],
    "basis": "s4item: marks a 1.20.4 getSeenPlayers override, which calls through PlayerDataStorage reach (1.20.5 dropped the method; vanilla never called it)"
+  },
+  {
+   "under": "net/minecraft/class_1887",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant$RarityOverride",
+   "requires": [
+    "method_8186()Lnet/minecraft/class_1887$class_1888;"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 getRarity override, which 1.20.5's weight and anvil cost answer from"
+  },
+  {
+   "under": "net/minecraft/class_1887",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant$DamageBonus",
+   "requires": [
+    "method_8196(ILnet/minecraft/class_1310;)F"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 getDamageBonus(level, MobType) override, which calls reach directly"
   }
  ]
 }

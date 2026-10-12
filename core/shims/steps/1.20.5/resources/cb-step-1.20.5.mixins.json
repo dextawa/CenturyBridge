@@ -21,7 +21,9 @@
     "CbRestThrownTridentMixin",
     "CbLevelDataPrimaryMixin",
     "CbLevelDataDerivedMixin",
-    "CbLevelStoragePlayerDataAccessor"
+    "CbLevelStoragePlayerDataAccessor",
+    "CbEnchantmentMixin",
+    "CbEnchantDamageMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",
