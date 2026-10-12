@@ -18,6 +18,7 @@
     "CbCommonListenerLatencyAccess",
     "CbDisplayOrientation",
     "CbEffectInstanceLegacy",
+    "CbEffectModifierOwner",
     "CbEffectTemplateAccess",
     "CbEffectTemplateLegacyValue",
     "CbEnderDragonBodyAccess",

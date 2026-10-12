@@ -1109,6 +1109,12 @@ public final class Chain {
      * goes through the call side's conversion and then the bridge, so the renamed body always sees
      * V's values. Converters should be adaptive (a value already of the wanted kind passes through)
      * and undo each other, because erasure cannot tell where a value came from.
+     *
+     * A converter may take the mod object first, OWNER#name(LX;T)T with X the hooked class or a
+     * supertype of it, for a value whose W form depends on whose member answered it: the W
+     * AttributeModifierTemplates standing for a 1.20.1 effect's own modifier map compute that
+     * effect's getAttributeModifierValue, so MobEffect.getAttributeModifiers' override converter
+     * needs the effect. The bridge then passes {@code this}: {@code ret(this, this.m$cbW(..))}.
      */
     public static final class ConvertHook {
         public final String under, name, desc;
@@ -1141,6 +1147,20 @@ public final class Chain {
         return new String[] {t.substring(0, hash), t.substring(hash + 1, paren), t.substring(paren)};
     }
 
+    /** a convertHooks converter: (T)T, or (LX;T)T taking the mod object first ({@link ConvertHook}) */
+    static boolean convertsInPlace(String convDesc, org.objectweb.asm.Type t) {
+        org.objectweb.asm.Type[] cp = org.objectweb.asm.Type.getArgumentTypes(convDesc);
+        if (!org.objectweb.asm.Type.getReturnType(convDesc).equals(t) || cp.length < 1 || cp.length > 2) {
+            return false;
+        }
+        return cp[cp.length - 1].equals(t) && (cp.length == 1 || cp[0].getSort() == org.objectweb.asm.Type.OBJECT);
+    }
+
+    /** whether a convertHooks converter takes the mod object before the value */
+    public static boolean takesReceiver(String[] conv) {
+        return org.objectweb.asm.Type.getArgumentTypes(conv[2]).length == 2;
+    }
+
     /** one "convertHooks" entry: {"under", "member": "name(desc)", "args": [ref|null..], "ret": ref} */
     public static ConvertHook parseConvertHook(com.google.gson.JsonObject o, String step) {
         String under = o.get("under").getAsString();
@@ -1169,10 +1189,9 @@ public final class Chain {
                     continue;
                 }
                 String[] ref = parseStaticRef(where, a.get(i).getAsString());
-                org.objectweb.asm.Type[] cp = org.objectweb.asm.Type.getArgumentTypes(ref[2]);
-                if (cp.length != 1 || !cp[0].equals(params[i]) || !org.objectweb.asm.Type.getReturnType(ref[2]).equals(params[i])) {
+                if (!convertsInPlace(ref[2], params[i])) {
                     throw new IllegalArgumentException(where + ": converter " + i + " must be (" + params[i].getDescriptor()
-                        + ")" + params[i].getDescriptor());
+                        + ")" + params[i].getDescriptor() + " or take the mod object first");
                 }
                 args[i] = ref;
                 any = true;
@@ -1181,10 +1200,9 @@ public final class Chain {
         String[] ret = null;
         if (o.has("ret") && !o.get("ret").isJsonNull()) {
             ret = parseStaticRef(where, o.get("ret").getAsString());
-            org.objectweb.asm.Type[] cp = org.objectweb.asm.Type.getArgumentTypes(ret[2]);
-            if (rt.getSort() == org.objectweb.asm.Type.VOID || cp.length != 1 || !cp[0].equals(rt)
-                    || !org.objectweb.asm.Type.getReturnType(ret[2]).equals(rt)) {
-                throw new IllegalArgumentException(where + ": ret must be (" + rt.getDescriptor() + ")" + rt.getDescriptor());
+            if (rt.getSort() == org.objectweb.asm.Type.VOID || !convertsInPlace(ret[2], rt)) {
+                throw new IllegalArgumentException(where + ": ret must be (" + rt.getDescriptor() + ")" + rt.getDescriptor()
+                    + " or take the mod object first");
             }
             any = true;
         }

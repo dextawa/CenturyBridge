@@ -763,6 +763,7 @@ public final class JarProcessor {
      * <pre>
      *   m(a0..an):  return ret(this.m$cbW(arg0(a0) .. argn(an)));
      * </pre>
+     * (a converter that takes the mod object is called as conv(this, value)).
      * An abstract redeclaration is renamed too and gets the same bridge, which dispatches to the
      * subclass's renamed body; a javac bridge with the member's descriptor (a covariant override's)
      * is what gets renamed, and still forwards to the mod's own method. Calls are converted on the
@@ -834,6 +835,9 @@ public final class JarProcessor {
         in.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
         int slot = 1;
         for (int i = 0; i < params.length; i++) {
+            if (h.args[i] != null && Chain.takesReceiver(h.args[i])) {
+                in.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0)); // the converter's mod object
+            }
             in.add(new org.objectweb.asm.tree.VarInsnNode(params[i].getOpcode(Opcodes.ILOAD), slot));
             slot += params[i].getSize();
             if (h.args[i] != null) {
@@ -843,11 +847,16 @@ public final class JarProcessor {
         in.add(new org.objectweb.asm.tree.MethodInsnNode(itf ? Opcodes.INVOKEINTERFACE : Opcodes.INVOKEVIRTUAL,
             cls, h.renamed, h.desc, itf));
         if (h.ret != null) {
+            if (Chain.takesReceiver(h.ret)) {
+                // ret(this, value): converted values are references, one slot each
+                in.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+                in.add(new org.objectweb.asm.tree.InsnNode(Opcodes.SWAP));
+            }
             in.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.ret[0], h.ret[1], h.ret[2], false));
         }
         in.add(new org.objectweb.asm.tree.InsnNode(org.objectweb.asm.Type.getReturnType(h.desc).getOpcode(Opcodes.IRETURN)));
         b.maxLocals = slot;
-        b.maxStack = slot + 1;
+        b.maxStack = slot + 2;
         return b;
     }
 

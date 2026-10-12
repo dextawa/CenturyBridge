@@ -761,6 +761,12 @@
     "keep:1 Ljava/util/Collection;"
    ],
    "basis": "1.20.2 HolderSet.direct(function, values) takes any Collection; the List passes"
+  },
+  "net/minecraft/class_1291.method_5565()Ljava/util/Map;": {
+   "desc": "()Ljava/util/Map;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbEffects#legacyModifiers(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "generic drift: MobEffect.getAttributeModifiers() answers Map<Attribute, AttributeModifierTemplate> where 1.20.1 answered the effect's own Map<Attribute, AttributeModifier>; a converted call reads a live 1.20.1 view of it (templates read as the modifiers 1.20.1 stored, modifiers put in become templates of the effect computing 1.20.1's value)"
   }
  },
  "adapterHooks": [
@@ -1603,5 +1609,13 @@
   "net/minecraft/class_20.method_88()Lnet/minecraft/class_2561;": "comp_1846",
   "net/minecraft/class_3272.method_14423()Lnet/minecraft/class_2561;": "comp_1580",
   "net/minecraft/class_3272.method_14424()I": "comp_1581"
- }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_1291",
+   "member": "method_5565()Ljava/util/Map;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbEffects#templates(Lnet/minecraft/class_1291;Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "a 1.20.1 override of getAttributeModifiers() answers modifiers; 1.20.2's potion tooltip reads templates and creates each at the amplifier: a view of that effect's modifiers as templates creating what 1.20.1 applied (the effect's getAttributeModifierValue)"
+  }
+ ]
 }
