@@ -704,7 +704,22 @@ public final class WiringCheck {
             if (c.equals(sup)) return true;
             if (!seen.add(c)) continue;
             ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
-            if (n == null) continue;
+            if (n == null) {
+                // a JDK type (java.util.List where a reshape passes it as a Collection) is
+                // judged by the JDK itself; the game stub does not carry it
+                if (c.startsWith("java/") && sup.startsWith("java/")) {
+                    try {
+                        ClassLoader platform = ClassLoader.getPlatformClassLoader();
+                        if (Class.forName(sup.replace('/', '.'), false, platform)
+                                .isAssignableFrom(Class.forName(c.replace('/', '.'), false, platform))) {
+                            return true;
+                        }
+                    } catch (ClassNotFoundException e) {
+                        // not a JDK class after all: undecided, as before
+                    }
+                }
+                continue;
+            }
             if (n.superName != null) todo.push(n.superName);
             todo.addAll(n.interfaces);
         }

@@ -13,6 +13,8 @@
     "CbAdvancementBuilderCriteria",
     "CbLootContextTypesAccessor",
     "CbRecipeIdClaim",
+    "CbScoreboardObjectiveCalls",
+    "CbServerMetricsRecorder",
     "CriteriaInvoker",
     "CriterionConditionsBridge",
     "DimensionDataStorageBridge",
@@ -33,9 +35,11 @@
     "RecipeSyncIdBridge",
     "SlotBridge",
     "SmithingTrimRecipeCtor",
-    "StatusEffectBridge"
+    "StatusEffectBridge",
+    "UserCacheExecutorAccessor"
   ],
   "client": [
+    "CbScoreboardClientObjectiveCalls",
     "EditBoxBridge",
     "GameOptionsBridge",
     "GenClass1058Bridge",
