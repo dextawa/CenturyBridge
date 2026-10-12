@@ -2,7 +2,8 @@
  "covers": [
   "net/minecraft/class_2945.method_12784(Lnet/minecraft/class_2940;Ljava/lang/Object;)V",
   "net/minecraft/class_2945.method_51696(Lnet/minecraft/class_2940;)Z",
-  "net/minecraft/class_2945.method_12790()Z"
+  "net/minecraft/class_2945.method_12790()Z",
+  "net/minecraft/class_7495.method_45058()Z"
  ],
  "superCtorReshapes": {
   "net/minecraft/class_2945.<init>(Lnet/minecraft/class_1297;)V": {

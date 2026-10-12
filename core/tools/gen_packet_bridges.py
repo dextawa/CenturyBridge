@@ -24,6 +24,11 @@ both releases' bytecode, how 1.20.4's member comes back:
   new P()         a unit packet (1.20.5 keeps one instance and its codec encodes only that one): the
                   factory answers the instance; a subclass's super() gets the private constructor opened.
   P.read(buf)     a static reader 1.20.5 made private: opened.
+  records         the 20 classes 1.20.5 turned into final records (RECORDS, RECORD_CTORS below): reopened
+                  (extendable), each getter renamed to its component accessor -- or, where the accessor
+                  answers another type, called through a converting static -- with an override hook so a
+                  1.20.4 subclass's getter answers vanilla's accessor calls, and the constructors whose
+                  shape changed reshaped.
 
 Anything else in those rows is reported as "design" and left to the hand-written wiring. Members the
 hand-written wiring (the step's other fragments) handles already are skipped.
@@ -31,7 +36,10 @@ hand-written wiring (the step's other fragments) handles already are skipped.
 Outputs (regenerate, never hand-edit):
   <layer>/src/.../mixin/CbNetWrite<Name>.java      one per packet whose write comes back by mixin
   <layer>/src/.../rt/CbNetPacketReaders.java       the factories and the spread helpers
-  <wiring>.d/s4net-packets.json                    covers, ctorRedirects, superCtorReshapes
+  <layer>/src/.../rt/CbNetRecordPackets.java       the records' converting getters
+  <layer>/src/.../mixin/CbNetRecordFields<Name>    the record fields those read for a subclass's super call
+  <wiring>.d/s4net-packets.json                    covers, ctorRedirects, superCtorReshapes, the records' renames,
+                                                   hooks and redirects
   <layer>/resources/cb-step-1.20.5.accesswidener    the block between the s4net-packets markers
   <layer>/resources/cb-step-1.20.5.mixins.json      the CbNetWrite* entries of "mixins" (others kept)
 
@@ -62,6 +70,74 @@ AW_END = "# --- end s4net packets ---"
 # hand-written elsewhere: the Packet interface, the custom-payload packets (their payloads), and
 # whatever another wiring fragment of the step names
 SKIP = {"net/minecraft/class_2596", "net/minecraft/class_2658", "net/minecraft/class_2817"}
+
+# ---- the classes 1.20.5 turned into (final) records
+#
+# Each 1.20.4 getter answered a field; 1.20.5's record answers the same value under the component
+# accessor's name. "same": the descriptor and the value stayed -- calls are renamed, and a 1.20.4
+# subclass's override answers vanilla's accessor calls (an override hook; its super call becomes a
+# super call of the accessor). Otherwise (to-V, to-W) statics convert the accessor's value for 1.20.4
+# callers and an override's answer for vanilla; the call goes through a static, the super call reads
+# the record's field (an accessor mixin: a virtual call of the accessor would come back into the
+# override). Constructors whose shape changed are listed by hand with their reshape. The record is
+# reopened (extendable) so a 1.20.4 subclass loads: no 1.20.5 game or Fabric API code asks a packet
+# Class.isRecord() (checked), the only thing a record that is not final answers differently.
+PKT = PKG + "/rt/CbNetPackets"
+HOLD = PKG + "/rt/CbHolders"
+RECORDS = {
+    "net/minecraft/class_2617": {"method_11273": ("comp_2197", None, PKT + "#cbStatsMap(Ljava/util/Map;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;")},
+    "net/minecraft/class_2639": {"method_11399": ("comp_2262", "same")},
+    "net/minecraft/class_2656": {"method_11453": ("comp_2198", "same"), "method_11454": ("comp_2199", "same")},
+    "net/minecraft/class_2661": {"method_11468": ("comp_2325", "same")},
+    "net/minecraft/class_2683": {"method_11644": ("comp_2270", PKT + "#cbMapIdInt(Lnet/minecraft/class_9209;)I", PKT + "#cbMapId(I)Lnet/minecraft/class_9209;"),
+                                 "method_32701": ("comp_2271", "same"), "method_32702": ("comp_2272", "same")},
+    "net/minecraft/class_2718": {"method_11768": ("comp_2176", HOLD + "#mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+                                                  HOLD + "#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;")},
+    "net/minecraft/class_2772": {"method_11908": ("comp_2282", "same"), "method_11906": ("comp_2283", "same")},
+    "net/minecraft/class_2781$class_2782": {"method_11940": ("comp_2177", PKT + "#cbAttributeValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1320;",
+                                                             PKT + "#cbAttribute(Lnet/minecraft/class_1320;)Lnet/minecraft/class_6880;"),
+                                            "method_11941": ("comp_2178", "same"), "method_11939": ("comp_2179", "same")},
+    "net/minecraft/class_2811": {"method_12187": ("comp_2649", "same"), "method_12186": ("comp_2650", "same")},
+    "net/minecraft/class_2820": {"method_12235": ("comp_2285", "same"), "method_37442": ("comp_2286", "same"), "method_37445": ("comp_2287", "same")},
+    "net/minecraft/class_2866": {"method_12436": ("comp_2180", PKT + "#cbEffectValue(Ljava/util/Optional;)Ljava/util/Optional;",
+                                                  PKT + "#cbEffectHolder(Ljava/util/Optional;)Ljava/util/Optional;"),
+                                 "method_12435": ("comp_2181", PKT + "#cbEffectValue(Ljava/util/Optional;)Ljava/util/Optional;",
+                                                  PKT + "#cbEffectHolder(Ljava/util/Optional;)Ljava/util/Optional;")},
+    "net/minecraft/class_2873": {"method_12481": ("comp_2609", PKT + "#cbIntOfShort(S)I", PKT + "#cbShortOfInt(I)S"),
+                                 "method_12479": ("comp_2610", "same")},
+    "net/minecraft/class_2901": {"method_12593": ("comp_2363", "same")},
+    "net/minecraft/class_2923": {"method_36180": ("comp_2201", "same")},
+    "net/minecraft/class_2940": {"method_12713": ("comp_2327", "same"), "method_12712": ("comp_2328", "same")},
+    "net/minecraft/class_5892": {"method_34144": ("comp_2275", "same"), "method_34145": ("comp_2276", "same")},
+    "net/minecraft/class_5894": {"method_34155": ("comp_2279", "same")},
+    "net/minecraft/class_5903": {"method_34190": ("comp_2280", "same")},
+    "net/minecraft/class_5904": {"method_34192": ("comp_2281", "same")},
+    "net/minecraft/class_7495": {"method_44132": ("comp_2277", "same"), "method_49398": ("comp_2278", "same")},
+}
+RECORD_CTORS = {
+    "net/minecraft/class_2683.<init>(IBZLjava/util/Collection;Lnet/minecraft/class_22$class_5637;)V": {
+        "desc": "(Lnet/minecraft/class_9209;BZLjava/util/Collection;Lnet/minecraft/class_22$class_5637;)V",
+        "ops": [f"conv {PKT}#cbMapId(I)Lnet/minecraft/class_9209;", "keep", "keep", "keep", "keep"],
+        "basis": "s4net records: the map is a MapId in 1.20.5 (of the same id)"},
+    "net/minecraft/class_2718.<init>(ILnet/minecraft/class_1291;)V": {
+        "desc": "(ILnet/minecraft/class_6880;)V",
+        "ops": ["keep", f"conv {HOLD}#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"],
+        "basis": "s4net records: the effect is a Holder in 1.20.5"},
+    "net/minecraft/class_2781$class_2782.<init>(Lnet/minecraft/class_1320;DLjava/util/Collection;)V": {
+        "desc": "(Lnet/minecraft/class_6880;DLjava/util/Collection;)V",
+        "ops": [f"conv {PKT}#cbAttribute(Lnet/minecraft/class_1320;)Lnet/minecraft/class_6880;", "keep", "keep"],
+        "basis": "s4net records: the attribute is a Holder in 1.20.5"},
+    "net/minecraft/class_2901.<init>(Lcom/mojang/authlib/GameProfile;)V": {
+        "desc": "(Lcom/mojang/authlib/GameProfile;Z)V",
+        "ops": ["keep", f"push {PKT}#cbStrictErrorHandling()Z"],
+        "basis": "s4net records: 1.20.5 adds strictErrorHandling, which its own server always sends as true"},
+    "net/minecraft/class_7495.<init>(Lnet/minecraft/class_2561;Ljava/util/Optional;Z)V": {
+        "desc": "(Lnet/minecraft/class_2561;Ljava/util/Optional;)V",
+        "ops": ["keep", "keep", "drop"],
+        "post": f"{PKT}#cbSecureChat(Lnet/minecraft/class_7495;Z)V", "postArgs": [2],
+        "basis": "s4net records: 1.20.5 sends enforcesSecureChat in the login packet instead; the value stays with the packet "
+                 "for 1.20.4 readers (CbNetServerDataBridge)"},
+}
 
 
 def load(jar, names):
@@ -291,6 +367,8 @@ def main():
         usage, owner, name, desc = r[0], r[1], r[2], r[3]
         key = f"{owner}.{name}{desc}"
         v, w = V.get(owner), W.get(owner)
+        if owner in RECORDS and (usage == "extend" or name in RECORDS[owner] or key in RECORD_CTORS):
+            continue  # the records phase below
         if key in taken:
             fate(r, "wired", "hand-written fragment")
             continue
@@ -421,11 +499,97 @@ def main():
                 continue
         fate(r, "other", "")
 
+    # ---- the records: reopened, getters renamed / converted, override hooks, constructors
+    renames, hooks, inst_redirects, super_redirects = {}, [], {}, {}
+    record_fields, record_statics = {}, []
+    by_owner = {}
+    for r in rows:
+        by_owner.setdefault(r[1], []).append(r)
+    rec = load(vjar, list(RECORDS)), load(wjar, list(RECORDS))
+
+    def java_call(ref, arg):
+        """'owner#name(desc)R' applied to a Java expression"""
+        owner, rest = ref.split("#", 1)
+        return f"{jtype('L' + owner + ';').rsplit('.', 1)[-1]}.{rest[:rest.index('(')]}({arg})"
+
+    def dotted(ref):
+        owner, rest = ref.split("#", 1)
+        return owner + "." + rest
+
+    for owner, getters in sorted(RECORDS.items()):
+        v, w = rec[0][owner], rec[1][owner]
+        simple = names.simple(owner)
+        t = jtype("L" + owner + ";")
+        aw.append((f"extendable class {owner}", f"{simple}: a final record in 1.20.5; reopened so a 1.20.4 subclass loads"))
+        wfields = {f[0]: f[1] for f in instance_fields(w)}
+        for gname, spec in sorted(getters.items()):
+            vm = [m for m in v.methods if m.name == gname and m.desc.startswith("()")]
+            aname = spec[0]
+            adesc = "()" + wfields[aname]
+            if len(vm) != 1 or method(w, aname, adesc) is None:
+                raise SystemExit(f"records: {owner}.{gname} -> {aname}: not as the table says")
+            gdesc = vm[0].desc
+            key = f"{owner}.{gname}{gdesc}"
+            if spec[1] == "same":
+                if gdesc != adesc:
+                    raise SystemExit(f"records: {key} is not the same shape as {aname}{adesc}")
+                renames[key] = aname
+                hooks.append({"old": gname + gdesc, "new": aname + adesc, "args": [], "onlyUnder": owner, "superCalls": "rewrite",
+                              "basis": f"s4net records: {simple}'s getter is the record accessor in 1.20.5"})
+                continue
+            to_v, to_w = spec[1], spec[2]
+            rt_t = jtype(classfile.split_args(gdesc)[1])
+            got = f"p.{aname}()"
+            record_statics.append(
+                f"    /** was {simple}.{gname}(): the record's {aname}(){', converted' if to_v else ''} */\n"
+                f"    public static {rt_t} {gname}({t} p) {{\n"
+                f"        return {java_call(to_v, got) if to_v else got};\n    }}\n")
+            acc = f"CbNetRecordFields{simple}"
+            record_fields.setdefault(owner, (acc, simple, set()))[2].add((aname, wfields[aname]))
+            field = f"(({acc}) (Object) p).cb${aname}()"
+            record_statics.append(
+                f"    /** super.{gname}() of a 1.20.4 subclass of {simple}: the record's field, as its accessor answers it */\n"
+                f"    public static {rt_t} cbSuper{gname}({t} p) {{\n"
+                f"        return {java_call(to_v, field) if to_v else field};\n    }}\n")
+            inst_redirects[key] = READERS.replace("CbNetPacketReaders", "CbNetRecordPackets")
+            super_redirects[key] = READERS.replace("CbNetPacketReaders", "CbNetRecordPackets") + "#cbSuper" + gname
+            hook = {"old": gname + gdesc, "new": aname + adesc, "args": [], "onlyUnder": owner,
+                    "basis": f"s4net records: {simple}'s getter is the record accessor in 1.20.5, of another type"}
+            if to_w:
+                hook["unwrap"] = dotted(to_w)
+            hooks.append(hook)
+        for r in by_owner.get(owner, []):
+            if r[0] == "extend":
+                fate(r, "record", "extendable")
+            elif r[2] in getters:
+                fate(r, "record", "getter")
+    for key, spec in RECORD_CTORS.items():
+        reshapes[key] = spec
+        for r in rows:
+            if f"{r[1]}.{r[2]}{r[3]}" == key:
+                fate(r, "record", "constructor reshape")
+
     # ---- write everything out
     src = os.path.join(layer, "src", PKG)
     for f in os.listdir(os.path.join(src, "mixin")):
-        if f.startswith("CbNetWrite") and f.endswith(".java"):
+        if (f.startswith("CbNetWrite") or f.startswith("CbNetRecordFields")) and f.endswith(".java"):
             os.remove(os.path.join(src, "mixin", f))
+    for owner, (acc, simple, fields) in sorted(record_fields.items()):
+        t = jtype("L" + owner + ";")
+        lines = "".join(f"\n    @Accessor(\"{n}\")\n    {jtype(d)} cb${n}();\n" for n, d in sorted(fields))
+        java = (f"package {PKG.replace('/', '.')}.mixin;\n\nimport org.spongepowered.asm.mixin.Mixin;\n"
+                f"import org.spongepowered.asm.mixin.gen.Accessor;\n\n"
+                f"/** Generated by core/tools/gen_packet_bridges.py: {names.mojang(owner)}'s record fields, for a 1.20.4 subclass's super calls. */\n"
+                f"@Mixin({t}.class)\npublic interface {acc} {{\n{lines}}}\n")
+        open(os.path.join(src, "mixin", f"{acc}.java"), "w", encoding="utf-8", newline="\n").write(java)
+    statics = "".join(x + "\n" for x in record_statics).rstrip("\n") + "\n"
+    imports = "".join(f"import {PKG.replace('/', '.')}.mixin.{a};\n" for a, _, _ in sorted(record_fields.values()))
+    rt = (f"package {PKG.replace('/', '.')}.rt;\n\n{imports}\n"
+          "/**\n * Generated by core/tools/gen_packet_bridges.py (area s4net): the getters of the packets 1.20.5 turned into\n"
+          " * records whose accessor answers another type -- for 1.20.4 callers through the accessor (so a subclass's\n"
+          " * override still answers), for a 1.20.4 subclass's super call from the record's field.\n */\n"
+          f"public final class CbNetRecordPackets {{\n\n{statics}\n    private CbNetRecordPackets() {{\n    }}\n}}\n")
+    open(os.path.join(src, "rt", "CbNetRecordPackets.java"), "w", encoding="utf-8", newline="\n").write(rt)
     for owner, (simple, body, acc) in sorted(mixins.items()):
         t = jtype("L" + owner + ";")
         imp = "import net.minecraft.class_2540;\n" + ("import " + jtype("L" + BUFS + ";") + ";\n" if body and body[1] == REG_BUF else "")
@@ -454,7 +618,11 @@ def main():
     open(os.path.join(src, "rt", "CbNetPacketReaders.java"), "w", encoding="utf-8", newline="\n").write(rt)
 
     frag = {"covers": sorted(covers), "ctorRedirects": dict(sorted(ctor_redirects.items())),
-            "superCtorReshapes": dict(sorted(reshapes.items()))}
+            "superCtorReshapes": dict(sorted(reshapes.items())),
+            "methodRenames": dict(sorted(renames.items())),
+            "instanceRedirects": dict(sorted(inst_redirects.items())),
+            "superRedirects": dict(sorted(super_redirects.items())),
+            "overrideHooks": hooks}
     with open(wiring + ".d/s4net-packets.json", "w", encoding="utf-8", newline="\n") as o:
         json.dump(frag, o, indent=1, ensure_ascii=False)
         o.write("\n")
@@ -471,8 +639,9 @@ def main():
 
     cfgp = os.path.join(layer, "resources", "cb-step-1.20.5.mixins.json")
     cfg = json.load(open(cfgp, encoding="utf-8"))
-    cfg["mixins"] = [m for m in cfg.get("mixins", []) if not m.startswith("CbNetWrite")] \
-        + [f"CbNetWrite{s}" for s, _, _ in sorted(mixins.values())]
+    cfg["mixins"] = [m for m in cfg.get("mixins", []) if not m.startswith("CbNetWrite") and not m.startswith("CbNetRecordFields")] \
+        + [f"CbNetWrite{s}" for s, _, _ in sorted(mixins.values())] \
+        + [a for a, _, _ in sorted(record_fields.values())]
     with open(cfgp, "w", encoding="utf-8", newline="\n") as o:
         json.dump(cfg, o, indent=2)
         o.write("\n")

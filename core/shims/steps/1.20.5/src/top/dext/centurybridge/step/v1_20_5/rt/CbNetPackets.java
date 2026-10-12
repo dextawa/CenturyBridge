@@ -69,6 +69,83 @@ public final class CbNetPackets {
             + " made every one as map_<id>); 1.20.5 keys a client's map data by MapId");
     }
 
+    // ---------------------------------------------------------------- packets 1.20.5 turned into records
+
+    /** ClientboundAwardStatsPacket.getStats() answered the packet's Object2IntMap as a Map; an override's map back as one */
+    public static it.unimi.dsi.fastutil.objects.Object2IntMap<?> cbStatsMap(Map<?, ?> stats) {
+        if (stats == null || stats instanceof it.unimi.dsi.fastutil.objects.Object2IntMap<?>) {
+            return (it.unimi.dsi.fastutil.objects.Object2IntMap<?>) stats;
+        }
+        it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap<Object> out = new it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap<>();
+        stats.forEach((k, v) -> out.put(k, ((Number) v).intValue()));
+        return out;
+    }
+
+    /** ClientboundMapItemDataPacket: 1.20.4's int map id is 1.20.5's MapId of that id */
+    public static int cbMapIdInt(class_9209 id) {
+        return id.comp_2315();
+    }
+
+    public static class_9209 cbMapId(int id) {
+        return new class_9209(id);
+    }
+
+    /** ServerboundSetCreativeModeSlotPacket's slot: an int in 1.20.4's packet, a short in 1.20.5's (1.20.4 sent it as a short too) */
+    public static int cbIntOfShort(short slot) {
+        return slot;
+    }
+
+    public static short cbShortOfInt(int slot) {
+        return (short) slot;
+    }
+
+    /** ClientboundUpdateAttributesPacket.AttributeSnapshot's attribute: a Holder in 1.20.5 (BuiltInRegistries.ATTRIBUTE.wrapAsHolder, as CbHolders) */
+    public static class_6880<net.minecraft.class_1320> cbAttribute(net.minecraft.class_1320 attribute) {
+        return attribute == null ? null : net.minecraft.class_7923.field_41190.method_47983(attribute);
+    }
+
+    public static net.minecraft.class_1320 cbAttributeValue(class_6880<net.minecraft.class_1320> holder) {
+        return holder == null ? null : holder.comp_349();
+    }
+
+    /**
+     * new ClientboundGameProfilePacket(profile): 1.20.5 adds strictErrorHandling, which its own server
+     * always sends as true (ServerLoginPacketListenerImpl.finishLoginAndWaitForClient).
+     */
+    public static boolean cbStrictErrorHandling() {
+        return true;
+    }
+
+    /** the enforcesSecureChat a ClientboundServerDataPacket was made with by 1.20.4 code, which 1.20.5's packet does not carry */
+    private static final Map<Object, Boolean> SECURE_CHAT = new com.google.common.collect.MapMaker().weakKeys().makeMap();
+
+    /** new ClientboundServerDataPacket(motd, icon, enforcesSecureChat), after the 1.20.5 constructor: the flag stays with the packet */
+    public static void cbSecureChat(net.minecraft.class_7495 packet, boolean enforcesSecureChat) {
+        SECURE_CHAT.put(packet, enforcesSecureChat);
+    }
+
+    /**
+     * ClientboundServerDataPacket.enforcesSecureChat(): the flag 1.20.4 code made the packet with; for
+     * a packet 1.20.5 made or received, the session's -- what 1.20.4 put into it: a server sent
+     * enforceSecureProfile(), and a client received it. 1.20.5 sends that flag in the login packet,
+     * which the client keeps for the connection.
+     */
+    public static boolean cbSecureChatOf(net.minecraft.class_7495 packet) {
+        Boolean made = SECURE_CHAT.get(packet);
+        if (made != null) {
+            return made;
+        }
+        if (net.fabricmc.loader.api.FabricLoader.getInstance().getEnvironmentType() == net.fabricmc.api.EnvType.CLIENT) {
+            Boolean connected = CbNetClientState.cbServerEnforcesSecureChat();
+            if (connected != null) {
+                return connected;
+            }
+        } else if (net.fabricmc.loader.api.FabricLoader.getInstance().getGameInstance() instanceof net.minecraft.server.MinecraftServer server) {
+            return server.method_43500();
+        }
+        return false;
+    }
+
     private CbNetPackets() {
     }
 }

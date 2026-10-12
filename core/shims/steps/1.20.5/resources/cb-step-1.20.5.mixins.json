@@ -9,7 +9,9 @@
     "CbNetEntityDataConstructionBridge",
     "CbNetEntityDataInvoker",
     "CbNetDispatchAccess",
+    "CbNetServerDataBridge",
     "CbRegistriesServerMixin",
+    "CbTooltipLevelAccessor",
     "CbNetWriteBundleDelimiterPacket",
     "CbNetWriteBundlePacket",
     "CbNetWriteClientIntentionPacket",
@@ -196,10 +198,16 @@
     "CbNetWriteServerboundTeleportToEntityPacket",
     "CbNetWriteServerboundUseItemOnPacket",
     "CbNetWriteServerboundUseItemPacket",
-    "CbTooltipLevelAccessor"
+    "CbNetRecordFieldsClientboundAwardStatsPacket",
+    "CbNetRecordFieldsClientboundMapItemDataPacket",
+    "CbNetRecordFieldsClientboundRemoveMobEffectPacket",
+    "CbNetRecordFieldsClientboundUpdateAttributesPacketAttributeSnapshot",
+    "CbNetRecordFieldsServerboundSetBeaconPacket",
+    "CbNetRecordFieldsServerboundSetCreativeModeSlotPacket"
   ],
   "client": [
-    "CbRegistriesClientMixin"
+    "CbRegistriesClientMixin",
+    "CbNetClientPacketListenerAccess"
   ],
   "server": [],
   "injectors": {

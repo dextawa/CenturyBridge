@@ -351,4 +351,44 @@ accessible method net/minecraft/class_9004 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_9006 <init> (Lnet/minecraft/class_2540;)V
 # ClientboundResourcePackPopPacket: the read constructor, private in 1.20.5
 accessible method net/minecraft/class_9053 <init> (Lnet/minecraft/class_2540;)V
+# ClientboundAwardStatsPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2617
+# ClientboundCommandSuggestionsPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2639
+# ClientboundCooldownPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2656
+# ClientboundDisconnectPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2661
+# ClientboundMapItemDataPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2683
+# ClientboundRemoveMobEffectPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2718
+# ClientboundTabListPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2772
+# ClientboundUpdateAttributesPacketAttributeSnapshot: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2781$class_2782
+# ServerboundContainerButtonClickPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2811
+# ServerboundEditBookPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2820
+# ServerboundSetBeaconPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2866
+# ServerboundSetCreativeModeSlotPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2873
+# ClientboundLoginFinishedPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2901
+# ClientboundPongResponsePacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2923
+# EntityDataAccessor: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_2940
+# ClientboundPlayerCombatKillPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_5892
+# ClientboundSetActionBarTextPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_5894
+# ClientboundSetSubtitleTextPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_5903
+# ClientboundSetTitleTextPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_5904
+# ClientboundServerDataPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
+extendable class net/minecraft/class_7495
 # --- end s4net packets ---

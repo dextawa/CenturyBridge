@@ -346,6 +346,17 @@
    ],
    "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
   },
+  "net/minecraft/class_2683.<init>(IBZLjava/util/Collection;Lnet/minecraft/class_22$class_5637;)V": {
+   "desc": "(Lnet/minecraft/class_9209;BZLjava/util/Collection;Lnet/minecraft/class_22$class_5637;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbMapId(I)Lnet/minecraft/class_9209;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4net records: the map is a MapId in 1.20.5 (of the same id)"
+  },
   "net/minecraft/class_2683.<init>(Lnet/minecraft/class_2540;)V": {
    "desc": "(Lnet/minecraft/class_9209;BZLjava/util/Optional;Ljava/util/Optional;)V",
    "ops": [
@@ -363,6 +374,14 @@
     "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
    ],
    "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2718.<init>(ILnet/minecraft/class_1291;)V": {
+   "desc": "(ILnet/minecraft/class_6880;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "s4net records: the effect is a Holder in 1.20.5"
   },
   "net/minecraft/class_2718.<init>(Lnet/minecraft/class_2540;)V": {
    "desc": "(ILnet/minecraft/class_6880;)V",
@@ -429,6 +448,15 @@
    ],
    "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
   },
+  "net/minecraft/class_2781$class_2782.<init>(Lnet/minecraft/class_1320;DLjava/util/Collection;)V": {
+   "desc": "(Lnet/minecraft/class_6880;DLjava/util/Collection;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbAttribute(Lnet/minecraft/class_1320;)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4net records: the attribute is a Holder in 1.20.5"
+  },
   "net/minecraft/class_2781.<init>(Lnet/minecraft/class_2540;)V": {
    "desc": "(ILjava/util/List;)V",
    "ops": [
@@ -490,6 +518,14 @@
     "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundSetCreativeModeSlotPacket_1(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1799;"
    ],
    "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2901.<init>(Lcom/mojang/authlib/GameProfile;)V": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;Z)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbStrictErrorHandling()Z"
+   ],
+   "basis": "s4net records: 1.20.5 adds strictErrorHandling, which its own server always sends as true"
   },
   "net/minecraft/class_2901.<init>(Lnet/minecraft/class_2540;)V": {
    "desc": "(Lcom/mojang/authlib/GameProfile;Z)V",
@@ -587,6 +623,19 @@
    ],
    "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
   },
+  "net/minecraft/class_7495.<init>(Lnet/minecraft/class_2561;Ljava/util/Optional;Z)V": {
+   "desc": "(Lnet/minecraft/class_2561;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbSecureChat(Lnet/minecraft/class_7495;Z)V",
+   "postArgs": [
+    2
+   ],
+   "basis": "s4net records: 1.20.5 sends enforcesSecureChat in the login packet instead; the value stays with the packet for 1.20.4 readers (CbNetServerDataBridge)"
+  },
   "net/minecraft/class_8143.<init>(Lnet/minecraft/class_2540;)V": {
    "desc": "(Lnet/minecraft/class_9129;)V",
    "ops": [
@@ -601,5 +650,326 @@
    ],
    "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
   }
- }
+ },
+ "methodRenames": {
+  "net/minecraft/class_2639.method_11399()I": "comp_2262",
+  "net/minecraft/class_2656.method_11453()Lnet/minecraft/class_1792;": "comp_2198",
+  "net/minecraft/class_2656.method_11454()I": "comp_2199",
+  "net/minecraft/class_2661.method_11468()Lnet/minecraft/class_2561;": "comp_2325",
+  "net/minecraft/class_2683.method_32701()B": "comp_2271",
+  "net/minecraft/class_2683.method_32702()Z": "comp_2272",
+  "net/minecraft/class_2772.method_11906()Lnet/minecraft/class_2561;": "comp_2283",
+  "net/minecraft/class_2772.method_11908()Lnet/minecraft/class_2561;": "comp_2282",
+  "net/minecraft/class_2781$class_2782.method_11939()Ljava/util/Collection;": "comp_2179",
+  "net/minecraft/class_2781$class_2782.method_11941()D": "comp_2178",
+  "net/minecraft/class_2811.method_12186()I": "comp_2650",
+  "net/minecraft/class_2811.method_12187()I": "comp_2649",
+  "net/minecraft/class_2820.method_12235()I": "comp_2285",
+  "net/minecraft/class_2820.method_37442()Ljava/util/List;": "comp_2286",
+  "net/minecraft/class_2820.method_37445()Ljava/util/Optional;": "comp_2287",
+  "net/minecraft/class_2873.method_12479()Lnet/minecraft/class_1799;": "comp_2610",
+  "net/minecraft/class_2901.method_12593()Lcom/mojang/authlib/GameProfile;": "comp_2363",
+  "net/minecraft/class_2923.method_36180()J": "comp_2201",
+  "net/minecraft/class_2940.method_12712()Lnet/minecraft/class_2941;": "comp_2328",
+  "net/minecraft/class_2940.method_12713()I": "comp_2327",
+  "net/minecraft/class_5892.method_34144()I": "comp_2275",
+  "net/minecraft/class_5892.method_34145()Lnet/minecraft/class_2561;": "comp_2276",
+  "net/minecraft/class_5894.method_34155()Lnet/minecraft/class_2561;": "comp_2279",
+  "net/minecraft/class_5903.method_34190()Lnet/minecraft/class_2561;": "comp_2280",
+  "net/minecraft/class_5904.method_34192()Lnet/minecraft/class_2561;": "comp_2281",
+  "net/minecraft/class_7495.method_44132()Lnet/minecraft/class_2561;": "comp_2277",
+  "net/minecraft/class_7495.method_49398()Ljava/util/Optional;": "comp_2278"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2617.method_11273()Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2683.method_11644()I": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2718.method_11768()Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2781$class_2782.method_11940()Lnet/minecraft/class_1320;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2866.method_12435()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2866.method_12436()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2873.method_12481()I": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2617.method_11273()Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_11273",
+  "net/minecraft/class_2683.method_11644()I": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_11644",
+  "net/minecraft/class_2718.method_11768()Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_11768",
+  "net/minecraft/class_2781$class_2782.method_11940()Lnet/minecraft/class_1320;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_11940",
+  "net/minecraft/class_2866.method_12435()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_12435",
+  "net/minecraft/class_2866.method_12436()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_12436",
+  "net/minecraft/class_2873.method_12481()I": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_12481"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_11273()Ljava/util/Map;",
+   "new": "comp_2197()Lit/unimi/dsi/fastutil/objects/Object2IntMap;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2617",
+   "basis": "s4net records: ClientboundAwardStatsPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbStatsMap(Ljava/util/Map;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;"
+  },
+  {
+   "old": "method_11399()I",
+   "new": "comp_2262()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2639",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundCommandSuggestionsPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11453()Lnet/minecraft/class_1792;",
+   "new": "comp_2198()Lnet/minecraft/class_1792;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2656",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundCooldownPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11454()I",
+   "new": "comp_2199()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2656",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundCooldownPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11468()Lnet/minecraft/class_2561;",
+   "new": "comp_2325()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2661",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundDisconnectPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11644()I",
+   "new": "comp_2270()Lnet/minecraft/class_9209;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2683",
+   "basis": "s4net records: ClientboundMapItemDataPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbMapId(I)Lnet/minecraft/class_9209;"
+  },
+  {
+   "old": "method_32701()B",
+   "new": "comp_2271()B",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2683",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundMapItemDataPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_32702()Z",
+   "new": "comp_2272()Z",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2683",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundMapItemDataPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11768()Lnet/minecraft/class_1291;",
+   "new": "comp_2176()Lnet/minecraft/class_6880;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2718",
+   "basis": "s4net records: ClientboundRemoveMobEffectPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
+  },
+  {
+   "old": "method_11906()Lnet/minecraft/class_2561;",
+   "new": "comp_2283()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2772",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundTabListPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11908()Lnet/minecraft/class_2561;",
+   "new": "comp_2282()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2772",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundTabListPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11939()Ljava/util/Collection;",
+   "new": "comp_2179()Ljava/util/Collection;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2781$class_2782",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundUpdateAttributesPacketAttributeSnapshot's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11940()Lnet/minecraft/class_1320;",
+   "new": "comp_2177()Lnet/minecraft/class_6880;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2781$class_2782",
+   "basis": "s4net records: ClientboundUpdateAttributesPacketAttributeSnapshot's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbAttribute(Lnet/minecraft/class_1320;)Lnet/minecraft/class_6880;"
+  },
+  {
+   "old": "method_11941()D",
+   "new": "comp_2178()D",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2781$class_2782",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundUpdateAttributesPacketAttributeSnapshot's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12186()I",
+   "new": "comp_2650()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2811",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundContainerButtonClickPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12187()I",
+   "new": "comp_2649()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2811",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundContainerButtonClickPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12235()I",
+   "new": "comp_2285()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2820",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundEditBookPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_37442()Ljava/util/List;",
+   "new": "comp_2286()Ljava/util/List;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2820",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundEditBookPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_37445()Ljava/util/Optional;",
+   "new": "comp_2287()Ljava/util/Optional;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2820",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundEditBookPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12435()Ljava/util/Optional;",
+   "new": "comp_2181()Ljava/util/Optional;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2866",
+   "basis": "s4net records: ServerboundSetBeaconPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbEffectHolder(Ljava/util/Optional;)Ljava/util/Optional;"
+  },
+  {
+   "old": "method_12436()Ljava/util/Optional;",
+   "new": "comp_2180()Ljava/util/Optional;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2866",
+   "basis": "s4net records: ServerboundSetBeaconPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbEffectHolder(Ljava/util/Optional;)Ljava/util/Optional;"
+  },
+  {
+   "old": "method_12479()Lnet/minecraft/class_1799;",
+   "new": "comp_2610()Lnet/minecraft/class_1799;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2873",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundSetCreativeModeSlotPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12481()I",
+   "new": "comp_2609()S",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2873",
+   "basis": "s4net records: ServerboundSetCreativeModeSlotPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbShortOfInt(I)S"
+  },
+  {
+   "old": "method_12593()Lcom/mojang/authlib/GameProfile;",
+   "new": "comp_2363()Lcom/mojang/authlib/GameProfile;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2901",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundLoginFinishedPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_36180()J",
+   "new": "comp_2201()J",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2923",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundPongResponsePacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12712()Lnet/minecraft/class_2941;",
+   "new": "comp_2328()Lnet/minecraft/class_2941;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2940",
+   "superCalls": "rewrite",
+   "basis": "s4net records: EntityDataAccessor's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12713()I",
+   "new": "comp_2327()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2940",
+   "superCalls": "rewrite",
+   "basis": "s4net records: EntityDataAccessor's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34144()I",
+   "new": "comp_2275()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5892",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundPlayerCombatKillPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34145()Lnet/minecraft/class_2561;",
+   "new": "comp_2276()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5892",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundPlayerCombatKillPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34155()Lnet/minecraft/class_2561;",
+   "new": "comp_2279()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5894",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundSetActionBarTextPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34190()Lnet/minecraft/class_2561;",
+   "new": "comp_2280()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5903",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundSetSubtitleTextPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34192()Lnet/minecraft/class_2561;",
+   "new": "comp_2281()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5904",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundSetTitleTextPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_44132()Lnet/minecraft/class_2561;",
+   "new": "comp_2277()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7495",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundServerDataPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_49398()Ljava/util/Optional;",
+   "new": "comp_2278()Ljava/util/Optional;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7495",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundServerDataPacket's getter is the record accessor in 1.20.5"
+  }
+ ]
 }
