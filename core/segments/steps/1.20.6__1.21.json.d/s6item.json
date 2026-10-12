@@ -30,7 +30,9 @@
   "net/minecraft/class_7923.field_41176:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments",
   "net/minecraft/class_9304.field_50014:I": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments",
   "net/minecraft/class_1792.field_8006:Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc",
-  "net/minecraft/class_1792.field_8001:Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc"
+  "net/minecraft/class_1792.field_8001:Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc",
+  "net/minecraft/class_3489.field_15541:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21/rt/CbItemTags",
+  "net/minecraft/class_8103.field_47214:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21/rt/CbItemTags"
  },
  "methodRenames": {
   "net/minecraft/class_1887$class_9426.comp_2505()I": "comp_2690"
@@ -417,6 +419,31 @@
     "conv top/dext/centurybridge/step/v1_21/rt/CbItemTabs#textureOf(Ljava/lang/String;)Lnet/minecraft/class_2960;"
    ],
    "basis": "CreativeModeTab.Builder.backgroundSuffix: 1.20.6's suffix as 1.21's texture location"
+  },
+  "net/minecraft/class_2048.comp_1763()Ljava/util/Optional;": {
+   "desc": "()Lnet/minecraft/class_2048$class_9777;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#located(Lnet/minecraft/class_2048$class_9777;)Ljava/util/Optional;",
+   "basis": "EntityPredicate.location(): the wrapper's located"
+  },
+  "net/minecraft/class_4553.comp_1818()Ljava/util/Optional;": {
+   "desc": "()Lnet/minecraft/class_9789;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#gameTypeOf(Lnet/minecraft/class_9789;)Ljava/util/Optional;",
+   "basis": "PlayerPredicate.gameType(): 1.21's predicate as 1.20.6's optional game type"
+  },
+  "net/minecraft/class_4553$class_4557.method_35312(Lnet/minecraft/class_1934;)Lnet/minecraft/class_4553$class_4557;": {
+   "desc": "(Lnet/minecraft/class_9789;)Lnet/minecraft/class_4553$class_4557;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#gameTypeOf(Lnet/minecraft/class_1934;)Lnet/minecraft/class_9789;"
+   ],
+   "basis": "PlayerPredicate.Builder.setGameType(gameType): that one game type"
+  },
+  "net/minecraft/class_9653$class_9654.comp_2625()Ljava/util/Optional;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#modifierUuid(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "EntryPredicate.id(): 1.21's id as the 1.20.6 uuid (generic drift: same descriptor)"
   }
  },
  "overrideHooks": [
@@ -639,6 +666,13 @@
    "onlyUnder": "net/minecraft/class_1761$class_7913",
    "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemTabs.suffixOf(Lnet/minecraft/class_2960;)Ljava/lang/String;",
    "basis": "CreativeModeTab.Builder.backgroundSuffix overridden by a mod: 1.21's texture location as the suffix"
+  },
+  {
+   "old": "method_35312(Lnet/minecraft/class_1934;)Lnet/minecraft/class_4553$class_4557;",
+   "new": "method_35312(Lnet/minecraft/class_9789;)Lnet/minecraft/class_4553$class_4557;",
+   "onlyUnder": "net/minecraft/class_4553$class_4557",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemPredicates.singleGameType(Lnet/minecraft/class_9789;)Lnet/minecraft/class_1934;",
+   "basis": "PlayerPredicate.Builder.setGameType overridden by a mod: 1.21's predicate as its one game type"
   }
  ],
  "convertHooks": [
@@ -688,6 +722,89 @@
     "keep:4"
    ],
    "basis": "FoodProperties gained usingConvertsTo; 1.20.6's food left nothing"
+  },
+  "net/minecraft/class_2022.<init>(Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#none()Ljava/util/Optional;"
+   ],
+   "basis": "DamageSourcePredicate gained isDirect, which 1.20.6's predicate did not require"
+  },
+  "net/minecraft/class_2040.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#none()Ljava/util/Optional;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#none()Ljava/util/Optional;",
+    "keep:4"
+   ],
+   "basis": "EntityFlagsPredicate gained isOnGround (first) and isFlying (before isBaby), which 1.20.6's did not require"
+  },
+  "net/minecraft/class_2090.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#none()Ljava/util/Optional;"
+   ],
+   "basis": "LocationPredicate gained canSeeSky, which 1.20.6's did not require"
+  },
+  "net/minecraft/class_2048.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2048$class_9777;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#none()Ljava/util/Optional;",
+    "conv:2,3 top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#locationWrapper(Ljava/util/Optional;Ljava/util/Optional;)Lnet/minecraft/class_2048$class_9777;",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#none()Ljava/util/Optional;",
+    "keep:9",
+    "keep:10",
+    "keep:11",
+    "keep:12",
+    "keep:13"
+   ],
+   "basis": "EntityPredicate: movement and periodicTick are new (no requirement), location and steppingOnLocation one LocationWrapper"
+  },
+  "net/minecraft/class_4553.<init>(Lnet/minecraft/class_2096$class_2100;Ljava/util/Optional;Ljava/util/List;Lit/unimi/dsi/fastutil/objects/Object2BooleanMap;Ljava/util/Map;Ljava/util/Optional;)V": {
+   "desc": "(Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_9789;Ljava/util/List;Lit/unimi/dsi/fastutil/objects/Object2BooleanMap;Ljava/util/Map;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#gameTypes(Ljava/util/Optional;)Lnet/minecraft/class_9789;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "PlayerPredicate: the optional game type as 1.21's GameTypePredicate (none: every game type)"
+  },
+  "net/minecraft/class_9653$class_9654.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2099;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2099;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#modifierId(Ljava/util/Optional;)Ljava/util/Optional;",
+    "drop:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "AttributeModifiersPredicate.EntryPredicate: the modifier uuid as 1.21's id; 1.21's modifiers carry no name and the predicate cannot require one, so the name is not carried (CbItemPredicates)"
   }
  },
  "instanceFieldGetters": {
@@ -714,7 +831,9 @@
   "net/minecraft/class_1799.method_7956(ILnet/minecraft/class_5819;Lnet/minecraft/class_3222;Ljava/lang/Runnable;)V": "top/dext/centurybridge/step/v1_21/rt/CbItemUse",
   "net/minecraft/class_1702.method_7579(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_21/rt/CbItemFood",
   "net/minecraft/class_1761.method_47308(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbItemTabs",
-  "net/minecraft/class_1761.method_47314()V": "top/dext/centurybridge/step/v1_21/rt/CbItemTabs"
+  "net/minecraft/class_1761.method_47314()V": "top/dext/centurybridge/step/v1_21/rt/CbItemTabs",
+  "net/minecraft/class_2048.comp_1764()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemPredicates",
+  "net/minecraft/class_9653$class_9654.comp_2626()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemPredicates"
  },
  "lambdaAdapters": {
   "net/minecraft/class_2952.method_12815(Ljava/util/Iterator;IIII)V": {
@@ -732,6 +851,54 @@
   },
   "method_7702(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)Lnet/minecraft/class_1665;": {
    "3": "zero: null -- no weapon, what a 1.20.6 createArrow had; 1.21's arrow takes null as fired from no weapon"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_2378",
+   "method": "method_60385()Ljava/util/Optional;",
+   "call": "top/dext/centurybridge/step/v1_21/rt/CbItemCore.getAny(Lnet/minecraft/class_2378;)Ljava/util/Optional;",
+   "basis": "Registry.getAny(), new in 1.21: the registry's first entry, as 1.21's MappedRegistry answers"
+  }
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_1887$class_9427.comp_2507()Ljava/util/Optional;": {
+   "by": [
+    "net/minecraft/class_1887$class_9427"
+   ],
+   "basis": "the call lands on the facade (classRenames of EnchantmentDefinition), whose comp_2507 answers 1.20.6's Optional<TagKey<Item>>"
+  },
+  "net/minecraft/class_2955.<init>(Lnet/minecraft/class_1729;)V": {
+   "by": [
+    "net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+    "net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+    "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "ServerPlaceRecipe's menu and recipe holders pass unchanged (RecipeBookMenu<C> / RecipeHolder<? extends Recipe<C>> became <I, R> / RecipeHolder<R>, the same objects); what a 1.20.6 placer does with a holder's recipe goes through Recipe's container calls, converted (CbItemRecipes)"
+  },
+  "net/minecraft/class_2955.field_13348:Lnet/minecraft/class_1729;": {
+   "by": [
+    "net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+    "net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+    "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "ServerPlaceRecipe's menu and recipe holders pass unchanged (RecipeBookMenu<C> / RecipeHolder<? extends Recipe<C>> became <I, R> / RecipeHolder<R>, the same objects); what a 1.20.6 placer does with a holder's recipe goes through Recipe's container calls, converted (CbItemRecipes)"
+  },
+  "net/minecraft/class_2955.method_12821(Lnet/minecraft/class_8786;Z)V": {
+   "by": [
+    "net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+    "net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+    "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "ServerPlaceRecipe's menu and recipe holders pass unchanged (RecipeBookMenu<C> / RecipeHolder<? extends Recipe<C>> became <I, R> / RecipeHolder<R>, the same objects); what a 1.20.6 placer does with a holder's recipe goes through Recipe's container calls, converted (CbItemRecipes)"
+  },
+  "net/minecraft/class_2955.method_12826(Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;Z)V": {
+   "by": [
+    "net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+    "net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+    "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "ServerPlaceRecipe's menu and recipe holders pass unchanged (RecipeBookMenu<C> / RecipeHolder<? extends Recipe<C>> became <I, R> / RecipeHolder<R>, the same objects); what a 1.20.6 placer does with a holder's recipe goes through Recipe's container calls, converted (CbItemRecipes)"
   }
  }
 }

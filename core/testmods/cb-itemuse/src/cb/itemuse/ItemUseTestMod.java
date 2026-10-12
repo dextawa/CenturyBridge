@@ -271,6 +271,26 @@ public class ItemUseTestMod implements ModInitializer {
             check(built[0] == 1, "setSearchTreeBuilder + rebuildSearchTree");
             check("tags/block".equals(class_3505.method_40099(class_7924.field_41254)), "TagManager.getTagDir(BLOCK): " + class_3505.method_40099(class_7924.field_41254));
             check(class_4609.method_23221(class_4590.method_22931(), class_2350.field_11043, () -> "never") != null, "BlockMath.getUVLockTransform");
+
+            // ---- predicates, dropped tags ----
+            Optional e = Optional.empty();
+            check(new net.minecraft.class_2022(List.of(), e, e) != null, "DamageSourcePredicate's 1.20.6 constructor");
+            net.minecraft.class_2040 flags = new net.minecraft.class_2040(Optional.of(true), e, e, e, e);
+            check(flags.comp_1756().orElse(false), "EntityFlagsPredicate's 1.20.6 constructor keeps isOnFire");
+            check(new net.minecraft.class_2090(e, e, e, e, e, e, e, e) != null, "LocationPredicate's 1.20.6 constructor");
+            net.minecraft.class_2048 entity = new net.minecraft.class_2048(e, e, e, e, e, e, e, e, e, e, e, e, e, e);
+            check(entity.comp_1763().isEmpty() && entity.comp_1764().isEmpty(), "EntityPredicate: location() and steppingOnLocation()");
+            net.minecraft.class_4553 playerPredicate = new net.minecraft.class_4553(net.minecraft.class_2096.class_2100.field_9708,
+                Optional.of(net.minecraft.class_1934.field_9220), List.of(), it.unimi.dsi.fastutil.objects.Object2BooleanMaps.emptyMap(), Map.of(), e);
+            check(playerPredicate.comp_1818().equals(Optional.of(net.minecraft.class_1934.field_9220)), "PlayerPredicate.gameType() round trip");
+            UUID modUuid = UUID.fromString("0b2a2a1e-0000-4000-8000-000000000002");
+            net.minecraft.class_9653.class_9654 entry = new net.minecraft.class_9653.class_9654(e, Optional.of(modUuid), Optional.of("n"),
+                net.minecraft.class_2096.class_2099.field_9705, e, e);
+            check(entry.comp_2625().equals(Optional.of(modUuid)) && entry.comp_2626().isEmpty(), "EntryPredicate: id() round trip, name() none");
+            check(new class_1799(class_1802.field_23984).method_31573(net.minecraft.class_3489.field_15541), "pigstep is in #music_discs");
+            check(new class_1799(class_1802.field_8144).method_31573(net.minecraft.class_3489.field_15541), "a creeper disc is in #music_discs");
+            check(server.method_30611().method_30530(class_7924.field_42534).method_40290(net.minecraft.class_8111.field_42321)
+                .method_40220(net.minecraft.class_8103.field_47214), "the arrow damage type is in #breeze_immune_to");
         } catch (Throwable e) {
             e.printStackTrace(System.out);
             check(false, "threw " + e);
