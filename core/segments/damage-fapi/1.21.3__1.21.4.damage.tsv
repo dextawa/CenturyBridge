@@ -244,3 +244,5 @@ implement-interface	net/fabricmc/fabric/api/renderer/v1/render/RenderContext			C
 override+super	net/fabricmc/fabric/api/renderer/v1/render/RenderContext	meshConsumer	()Ljava/util/function/Consumer;	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/resource/ModResourcePack			ABSTRACT	class public abstract interface extends java/lang/Object
 implement-inherited	net/minecraft/class_3262	method_14407	(Lnet/minecraft/class_3270;)Ljava/lang/Object;	ORPHAN	method method_14407(Lnet/minecraft/class_7677;)Ljava/lang/Object; public abstract
+call-injected	net/minecraft/class_1087	emitBlockQuads	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1087	emitItemQuads	(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method not declared on the owner

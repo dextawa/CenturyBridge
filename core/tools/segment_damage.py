@@ -9,9 +9,13 @@ its place -- so the engine can work from the whole diff rather than from name li
   usage  owner  name  desc  kinds  w (what W has: other descriptors of the name on the owner,
                                       the owner's constructors, the class's new shape, ...)
 
-  python segment_damage.py <probe report.tsv> <W jar> <out.tsv> [<inter-to-mojang.tsv>] [--w-extra <jar|dir>...]
-(the tsv translates V's intermediary owner and member names on the 1.21.11 -> 26.1 wall; --w-extra adds
-W classes from other jars -- Fabric API's modules, for the Fabric API probe)
+  python segment_damage.py <probe report.tsv> <W jar> <out.tsv> [<inter-to-mojang.tsv>] [--control <report.tsv>]
+                           [--w-extra <jar|dir>...]
+(the tsv translates V's intermediary owner and member names on the 1.21.11 -> 26.1 wall; --control is
+probe_report.py's report of the control -- the same probe on V's own classpath -- and its sites are left
+out: a site that does not link on V either is no damage of the step (Fabric API's datagen interfaces are
+declared for loom's dev-time injection only, nothing gives them to the vanilla classes at runtime);
+--w-extra adds W classes from other jars -- Fabric API's modules, for the Fabric API probe)
 """
 import os
 import struct
@@ -110,6 +114,13 @@ def main():
         k = args.index("--w-extra")
         extra = args[k + 1:]
         args = args[:k]
+    control = set()
+    if "--control" in args:
+        k = args.index("--control")
+        with open(args[k + 1], encoding="utf-8") as f:
+            next(f)
+            control = {line.split("\t", 1)[0] for line in f if line.strip()}
+        args = args[:k] + args[k + 2:]
     report, wjar, out = args[0:3]
     cmap, mmap = {}, {}
     if len(args) > 3:
@@ -141,12 +152,15 @@ def main():
                     p = parse(z.read(n))
                     if p and p[0] not in W:
                         W[p[0]] = p
-    rows = 0
+    rows = dropped = 0
     with open(report, encoding="utf-8") as f, open(out, "w", encoding="utf-8", newline="\n") as o:
         next(f)
         o.write("usage\towner\tname\tdesc\tkinds\tw\n")
         for line in f:
             r = line.rstrip("\n").split("\t")
+            if r[0] in control:
+                dropped += 1
+                continue
             usage, owner, name, desc, kinds = r[1], r[2], r[3], r[4], r[6]
             wo = tcls(owner)
             wn = mmap.get(owner + "." + name, name) if mmap else name
@@ -168,7 +182,7 @@ def main():
                 w = "method " + (" ; ".join(f"{wn}{d} {flags(a)}" for d, a in same) if same else "not declared on the owner")
             o.write("\t".join([usage, owner, name, desc, kinds, w]) + "\n")
             rows += 1
-    print(f"segment damage: {rows} rows -> {out}")
+    print(f"segment damage: {rows} rows -> {out}" + (f" ({dropped} sites broken on V too, left out)" if dropped else ""))
 
 
 if __name__ == "__main__":

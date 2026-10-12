@@ -48,6 +48,12 @@ public final class WiringCheck {
     private final Map<String, ClassNode> classes = new HashMap<>();
     /** target stub classes (members only): what superRenames and reshapes must agree with */
     private final Map<String, ClassNode> stub = new HashMap<>();
+    /**
+     * the interfaces the target's Fabric API injects into vanilla classes (Chain.readInjectedInterfaces), and
+     * its modules' classes: a member a vanilla class has only through an injected interface resolves there
+     */
+    private Map<String, List<String>> injected = Map.of();
+    private final Map<String, ClassNode> lib = new HashMap<>();
     private final List<String> problems = new ArrayList<>();
     private Remapper facade = new SimpleRemapper(Map.of());
     private Remapper wall;
@@ -105,6 +111,25 @@ public final class WiringCheck {
         WiringCheck w = new WiringCheck();
         if (stubDir != null && version != null) {
             w.sources = SourceStubs.before(stubDir, version);
+        }
+        // the target release's Fabric API (-Dcb.fapi=<its processedMods>): the interfaces it injects into vanilla
+        // classes, and its modules' classes, so a target reached through an injected interface is judged there
+        String fapi = System.getProperty("cb.fapi");
+        if (fapi != null && !fapi.isEmpty()) {
+            Path mods = Path.of(fapi);
+            w.injected = top.dext.centurybridge.engine.Chain.readInjectedInterfaces(mods);
+            try (var s = Files.list(mods)) {
+                for (Path jar : (Iterable<Path>) s.filter(f -> f.toString().endsWith(".jar")).sorted()::iterator) {
+                    try (var z = new java.util.zip.ZipFile(jar.toFile())) {
+                        for (var en : java.util.Collections.list(z.entries())) {
+                            if (!en.getName().endsWith(".class") || !en.getName().startsWith("net/fabricmc/")) continue;
+                            ClassNode cn = new ClassNode();
+                            new ClassReader(z.getInputStream(en).readAllBytes()).accept(cn, ClassReader.SKIP_CODE);
+                            w.lib.putIfAbsent(cn.name, cn);
+                        }
+                    }
+                }
+            }
         }
         if (stubJar != null && Files.exists(stubJar)) {
             try (var z = new java.util.zip.ZipFile(stubJar.toFile())) {
@@ -376,6 +401,19 @@ public final class WiringCheck {
     }
 
     private void check(com.google.gson.JsonObject root) {
+        // retiredClasses (Chain.retiredClasses) take classes out of every jar the step converts: only a
+        // CenturyBridge layer's own may go, with a reason
+        if (root.has("retiredClasses")) {
+            for (var e : root.getAsJsonObject("retiredClasses").entrySet()) {
+                checked++;
+                if (!e.getKey().startsWith("top/dext/centurybridge/")) {
+                    problems.add("retiredClasses " + e.getKey() + ": only CenturyBridge's own classes retire");
+                }
+                if (!e.getValue().isJsonPrimitive() || e.getValue().getAsString().isBlank()) {
+                    problems.add("retiredClasses " + e.getKey() + ": needs the reason it retires at this step");
+                }
+            }
+        }
         if (root.has("classRenames")) {
             Map<String, String> ren = new HashMap<>();
             for (var e : root.getAsJsonObject("classRenames").entrySet()) {
@@ -871,7 +909,13 @@ public final class WiringCheck {
      * wherever they meet a slot of that type -- always the case for a final class.
      */
     private void checkSuperRename(String key, String fac) {
-        String kt = targetName(key);
+        // A key classRenames also sends to a surviving class -- a dead class merged into a vanilla one
+        // (1.20.5: DustParticleOptionsBase into ScalableParticleOptionsBase), its mod subclasses keeping
+        // the old fields and constructor on a facade below that class -- survives as that class: every
+        // reference but the hierarchy names it (the converter's superRename layer runs before its
+        // classRename remapper), so it is the type the facade must be a subtype of.
+        String merged = facade.map(key);
+        String kt = targetName(merged != null && !merged.startsWith("top/dext/") ? merged : key);
         ClassNode kn = stub.get(kt);
         if (kn == null) {
             problems.add("superRename " + key + ": the class is gone on the target -- superRenames only move"
@@ -949,10 +993,25 @@ public final class WiringCheck {
     private boolean resolves(String owner, String name, String desc) {
         java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
         java.util.Set<String> seen = new java.util.HashSet<>();
+        // library types reached through an interface the target's Fabric API injects into a vanilla class: judged
+        // by their own members (a library owner named directly stays outside this gate, as before)
+        java.util.Set<String> viaInjection = new java.util.HashSet<>();
         while (!todo.isEmpty()) {
             String c = todo.pop();
             if (!seen.add(c)) continue;
             ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            if (n == null && viaInjection.contains(c)) {
+                n = lib.get(c);
+                if (n == null) {
+                    return true; // an injected interface whose module is not here: not this gate's to judge
+                }
+                for (MethodNode m : n.methods) {
+                    if (m.name.equals(name) && m.desc.equals(desc)) return true;
+                }
+                viaInjection.addAll(n.interfaces);
+                todo.addAll(n.interfaces);
+                continue;
+            }
             if (n == null) {
                 if (!c.startsWith("net/minecraft/") && !c.startsWith("com/mojang/blaze3d/")) {
                     return true; // a library owner the stub does not carry: not this gate's to judge
@@ -964,6 +1023,10 @@ public final class WiringCheck {
             }
             if (n.superName != null) todo.push(n.superName);
             todo.addAll(n.interfaces);
+            for (String i : injected.getOrDefault(c, List.of())) {
+                viaInjection.add(i);
+                todo.add(i);
+            }
         }
         return false;
     }
@@ -998,6 +1061,7 @@ public final class WiringCheck {
             }
             if (n.superName != null) todo.push(n.superName);
             todo.addAll(n.interfaces);
+            todo.addAll(injected.getOrDefault(c, List.of())); // a vanilla class is its injected interfaces' subtype
         }
         return false;
     }
