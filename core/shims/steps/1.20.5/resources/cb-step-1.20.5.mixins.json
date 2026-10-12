@@ -42,7 +42,8 @@
     "CbItemPropertiesAccessor",
     "CbComponentBuilderAccessor",
     "CbArmorItemAccessor",
-    "CbSpawnEggAccessor"
+    "CbSpawnEggAccessor",
+    "CbCodecRegistryMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",

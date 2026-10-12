@@ -9,7 +9,13 @@
   "net/minecraft/class_1799.field_47309:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#itemWithCountCodec",
   "net/minecraft/class_1799.field_47310:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#singleItemCodec",
   "net/minecraft/class_1799.field_47311:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#resultCodec",
-  "net/minecraft/class_1799.field_8029:Ljava/text/DecimalFormat;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#attributeModifierFormat"
+  "net/minecraft/class_1799.field_8029:Ljava/text/DecimalFormat;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#attributeModifierFormat",
+  "net/minecraft/class_7923.field_41156:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#biomeSource",
+  "net/minecraft/class_7923.field_41157:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#chunkGenerator",
+  "net/minecraft/class_7923.field_41158:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#materialCondition",
+  "net/minecraft/class_7923.field_41159:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#materialRule",
+  "net/minecraft/class_7923.field_41160:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#densityFunctionType",
+  "net/minecraft/class_7923.field_46912:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#poolAliasBindingType"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_7788.field_40610:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#blockLootMap",
@@ -349,6 +355,38 @@
     "keep:3"
    ],
    "basis": "s4item: enchantItem takes the world's feature flags"
+  },
+  "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#view(Lnet/minecraft/class_2378;)Lnet/minecraft/class_2378;",
+   "basis": "s4item generic drift: a registry of codecs 1.20.5 made one of map codecs comes out as its mirror (CbCodecRegistries); any other passes"
+  },
+  "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#viewOptional(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4item generic drift: RegistryAccess.registry(key), as registryOrThrow"
+  },
+  "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#viewLookupOptional(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4item generic drift: HolderLookup.Provider.lookup(key) of a codec registry gives its mirror's lookup"
+  },
+  "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#viewLookup(Lnet/minecraft/class_7225$class_7226;)Lnet/minecraft/class_7225$class_7226;",
+   "basis": "s4item generic drift: HolderLookup.Provider.lookupOrThrow(key), as lookup"
   }
  },
  "convertHooks": [
@@ -362,6 +400,30 @@
     null
    ],
    "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#recipeOfPair(Ljava/util/Optional;)Ljava/util/Optional;"
+  },
+  {
+   "under": "net/minecraft/class_5455",
+   "member": "method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#real(Lnet/minecraft/class_2378;)Lnet/minecraft/class_2378;",
+   "basis": "s4item: a mod RegistryAccess's 1.20.4 registryOrThrow answers a mirror as its real registry"
+  },
+  {
+   "under": "net/minecraft/class_5455",
+   "member": "method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#realOptional(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4item: a mod RegistryAccess's registry(key), the same way"
+  },
+  {
+   "under": "net/minecraft/class_7225$class_7874",
+   "member": "method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#realLookupOptional(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4item: a mod HolderLookup.Provider's lookup(key) answers a mirror's lookup as the real one"
+  },
+  {
+   "under": "net/minecraft/class_7225$class_7874",
+   "member": "method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;",
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#realLookup(Lnet/minecraft/class_7225$class_7226;)Lnet/minecraft/class_7225$class_7226;",
+   "basis": "s4item: a mod HolderLookup.Provider's lookupOrThrow(key), the same way"
   }
  ],
  "instanceRedirects": {
@@ -872,5 +934,67 @@
    "call": "top/dext/centurybridge/step/v1_20_5/rt/CbTools.shootProjectile(Lnet/minecraft/class_1811;Lnet/minecraft/class_1309;Lnet/minecraft/class_1676;IFFFLnet/minecraft/class_1309;)V",
    "basis": "s4item: 1.20.5's new abstract shot of a projectile weapon, for a 1.20.4 subclass: a bow's"
   }
- ]
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_7924.field_41253:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41156:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_41260:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41157:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_41204:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41158:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_41205:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41159:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_41264:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_41160:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  },
+  "net/minecraft/class_7924.field_46913:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_46912:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
+    "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "basis": "s4item: the key passes unchanged; 1.20.4 code takes its registry out through the BuiltInRegistries field or a lookup by key, both of which answer the mirror of codecs"
+  }
+ }
 }
