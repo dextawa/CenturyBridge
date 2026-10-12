@@ -42,6 +42,19 @@ public final class Chain {
     public final java.util.Map<String, String> staticRedirects = new java.util.HashMap<>();
     /** instance calls redirected to a static (receiver becomes arg 0) -- for interface targets Mixin cannot touch */
     public final java.util.Map<String, String> instanceRedirects = new java.util.HashMap<>();
+    /**
+     * Interface calls redirected to a static, receiver as arg 0 ("interfaceCallRedirects"): like
+     * {@link #instanceRedirects}, but only the INVOKEINTERFACE sites (and interface method handles)
+     * of the key are rewritten. For an interface this layer provides under its own name (a
+     * classRenamed library interface) that a library class surviving on the target implemented on
+     * the source and no longer does (1.20.1's Fabric API FabricTagBuilder implemented
+     * FabricProvidedTagBuilder; 1.20.2's cannot implement the bridge's interface): the static serves
+     * such receivers and calls the interface method on any other. A super call to the interface's
+     * default method (INVOKESPECIAL, from a mod's own implementation) stays what it is -- redirecting
+     * it to a static that calls the method on the receiver would re-enter the implementation's own
+     * override.
+     */
+    public final java.util.Map<String, String> interfaceCallRedirects = new java.util.HashMap<>();
     /** GETSTATIC field reads redirected to a same-name field on a runtime class */
     public final java.util.Map<String, String> fieldRedirects = new java.util.HashMap<>();
     /** GETSTATIC field reads redirected to a zero-arg getter method (name = field name)
@@ -1413,6 +1426,12 @@ public final class Chain {
                 var ir = root.getAsJsonObject("instanceRedirects");
                 for (String k : ir.keySet()) {
                     c.instanceRedirects.put(k, ir.get(k).getAsString());
+                }
+            }
+            if (root.has("interfaceCallRedirects")) {
+                var icr = root.getAsJsonObject("interfaceCallRedirects");
+                for (String k : icr.keySet()) {
+                    c.interfaceCallRedirects.put(k, icr.get(k).getAsString());
                 }
             }
             if (root.has("fieldRedirects")) {

@@ -4,9 +4,11 @@
   "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder": "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentRegistry$Builder",
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget": "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentTarget",
   "net/fabricmc/fabric/api/attachment/v1/AttachmentType": "top/dext/centurybridge/compat/fapi/attachment/v1/AttachmentType",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder": "top/dext/centurybridge/compat/fapi/datagen/v1/provider/FabricProvidedTagBuilder",
   "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion": "top/dext/centurybridge/compat/fapi/entity/event/v1/ServerLivingEntityEvents$MobConversion",
   "net/fabricmc/fabric/api/event/network/C2SPacketTypeCallback": "top/dext/centurybridge/compat/fapi/event/network/C2SPacketTypeCallback",
   "net/fabricmc/fabric/api/event/network/S2CPacketTypeCallback": "top/dext/centurybridge/compat/fapi/event/network/S2CPacketTypeCallback",
+  "net/fabricmc/fabric/api/event/registry/FabricRegistry": "top/dext/centurybridge/compat/fapi/event/registry/FabricRegistry",
   "net/fabricmc/fabric/api/loot/v1/FabricLootPool": "top/dext/centurybridge/compat/fapi/loot/v1/FabricLootPool",
   "net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder": "top/dext/centurybridge/compat/fapi/loot/v1/FabricLootPoolBuilder",
   "net/fabricmc/fabric/api/loot/v1/FabricLootSupplier": "top/dext/centurybridge/compat/fapi/loot/v1/FabricLootSupplier",
@@ -21,7 +23,8 @@
   "net/fabricmc/fabric/api/network/PacketRegistry": "top/dext/centurybridge/compat/fapi/network/PacketRegistry",
   "net/fabricmc/fabric/api/network/ServerSidePacketRegistry": "top/dext/centurybridge/compat/fapi/network/ServerSidePacketRegistry",
   "net/fabricmc/fabric/api/registry/LootEntryTypeRegistry": "top/dext/centurybridge/compat/fapi/registry/LootEntryTypeRegistry",
-  "net/fabricmc/fabric/api/server/PlayerStream": "top/dext/centurybridge/compat/fapi/server/PlayerStream"
+  "net/fabricmc/fabric/api/server/PlayerStream": "top/dext/centurybridge/compat/fapi/server/PlayerStream",
+  "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/compat/fapi/tag/v1/FabricTagFile"
  },
  "fieldRedirects": {
   "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents.MOB_CONVERSION:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/compat/fapi/entity/event/v1/ServerLivingEntityEvents"
@@ -77,7 +80,26 @@
   }
  ],
  "instanceRedirects": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.remove(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.remove(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.remove([Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.removeAll(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiTagBuilders",
   "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer.read(Lcom/google/gson/JsonObject;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;": "top/dext/centurybridge/compat/fapi/impl/recipe/CbFapiIngredients",
   "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer.write(Lcom/google/gson/JsonObject;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V": "top/dext/centurybridge/compat/fapi/impl/recipe/CbFapiIngredients"
+ },
+ "interfaceCallRedirects": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.forceAddTag(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiProvidedTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiProvidedTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiProvidedTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiProvidedTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiProvidedTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiProvidedTagBuilders",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.setReplace(Z)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiProvidedTagBuilders"
+ },
+ "instanceOfRedirects": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder": "top/dext/centurybridge/compat/fapi/impl/datagen/CbFapiProvidedTagBuilders"
  }
 }

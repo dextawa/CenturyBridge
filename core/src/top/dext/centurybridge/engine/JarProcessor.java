@@ -1651,6 +1651,7 @@ public final class JarProcessor {
         }
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
+        Map<String, String> ifaceCallRedirects = new HashMap<>(); // INVOKEINTERFACE only: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
@@ -1945,6 +1946,12 @@ public final class JarProcessor {
                                 if (lsrt != null && op == Opcodes.INVOKESTATIC) {
                                     redirects.put(site, lsrt);
                                     top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
+                                }
+                                // interface calls only: a super call to the interface's default stays (Chain.interfaceCallRedirects)
+                                String licr = chain.interfaceCallRedirects.get(site);
+                                if (licr != null && op == Opcodes.INVOKEINTERFACE) {
+                                    ifaceCallRedirects.put(site, licr);
+                                    top.dext.centurybridge.data.FullAudit.record(site, "interface-call-redirect");
                                 }
                                 return; // mod-owned members (incl. overrides of dead interface methods) still exist
                             }
@@ -2316,6 +2323,11 @@ public final class JarProcessor {
                                         redirects.put(site, lsrt);
                                         top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
                                     }
+                                    String licr = chain.interfaceCallRedirects.get(site);
+                                    if (licr != null && h.getTag() == Opcodes.H_INVOKEINTERFACE) {
+                                        ifaceCallRedirects.put(site, licr);
+                                        top.dext.centurybridge.data.FullAudit.record(site, "interface-call-redirect");
+                                    }
                                     continue;
                                 }
                                 hOwner = inh;
@@ -2405,7 +2417,7 @@ public final class JarProcessor {
         };
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
-        if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
+        if (redirects.isEmpty() && instRedirects.isEmpty() && ifaceCallRedirects.isEmpty() && fldRedirects.isEmpty()
                 && fldGetters.isEmpty() && instFldGetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
@@ -2450,6 +2462,9 @@ public final class JarProcessor {
         }
         for (String k : instRedirects.keySet()) {
             rpt.notes.add(tag + "instance-redirected: " + k + " -> " + instRedirects.get(k));
+        }
+        for (String k : ifaceCallRedirects.keySet()) {
+            rpt.notes.add(tag + "interface-call-redirected: " + k + " -> " + ifaceCallRedirects.get(k));
         }
         for (String k : fldRedirects.keySet()) {
             rpt.notes.add(tag + "field-redirected: " + k + " -> " + fldRedirects.get(k));
@@ -2728,6 +2743,13 @@ public final class JarProcessor {
                                 "(L" + recv + ";" + desc.substring(1), false);
                             return;
                         }
+                        String icrt = ifaceCallRedirects.get(key);
+                        if (icrt != null && op == Opcodes.INVOKEINTERFACE) {
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(icrt),
+                                redirName(icrt, name),
+                                "(L" + recv + ";" + desc.substring(1), false);
+                            return;
+                        }
                         String mrn = mthRenames.get(key);
                         if (mrn != null) {
                             super.visitMethodInsn(op, owner, mrn, desc, itf);
@@ -2804,6 +2826,12 @@ public final class JarProcessor {
                                     || h.getTag() == Opcodes.H_INVOKEINTERFACE)) {
                                 rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, redirCls(irt),
                                     redirName(irt, h.getName()), "(L" + recv + ";" + h.getDesc().substring(1), false);
+                                continue;
+                            }
+                            String icrt = ifaceCallRedirects.get(key);
+                            if (icrt != null && h.getTag() == Opcodes.H_INVOKEINTERFACE) {
+                                rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, redirCls(icrt),
+                                    redirName(icrt, h.getName()), "(L" + recv + ";" + h.getDesc().substring(1), false);
                                 continue;
                             }
                             String boundary = tombstone.get(key);
