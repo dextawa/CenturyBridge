@@ -636,6 +636,14 @@ public final class LinkCheck {
         boolean incomplete = false;
         String name = nameDesc.substring(0, nameDesc.indexOf('('));
         String desc = nameDesc.substring(name.length());
+        if (name.equals("<init>") || name.equals("<clinit>")) {
+            // constructors are not inherited: invokespecial <init> must name a class that declares
+            // that exact descriptor (JVMS 6.5), whatever its superclasses have -- Object's ()V included
+            Cls k = cls(owner);
+            if (k == null) return UNKNOWN;
+            Integer acc = k.methods.get(nameDesc);
+            return acc != null ? new Member(owner, name, desc, acc) : null;
+        }
         for (String c = owner; c != null; ) {
             Cls k = cls(c);
             if (k == null) { incomplete = true; break; }

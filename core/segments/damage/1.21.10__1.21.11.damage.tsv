@@ -1,14 +1,15 @@
 usage	owner	name	desc	kinds	w
 call-static	net/minecraft/class_11310	method_71189	(Lnet/minecraft/class_4869;Ljava/lang/String;)Lnet/minecraft/class_11310;	METHOD	method not declared on the owner
 put	net/minecraft/class_11310	field_60223	Lnet/minecraft/class_11311;	ACCESS	field Lnet/minecraft/class_11311; public final
-new	net/minecraft/class_4876	<init>	()V	ACCESS	constructors (Ljava/lang/String;)V
+new	net/minecraft/class_4876	<init>	()V	METHOD	constructors (Ljava/lang/String;)V
 get	net/minecraft/class_4876	field_22597	Ljava/lang/String;	FIELD	field not declared on the owner
 put	net/minecraft/class_4876	field_22597	Ljava/lang/String;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4876			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_4876	<init>	()V	METHOD	constructors (Ljava/lang/String;)V
 call	net/minecraft/class_4888	method_25087	()Ljava/lang/String;	METHOD	method not declared on the owner
 call	net/minecraft/class_4888	method_25089	()Ljava/net/URI;	METHOD	method not declared on the owner
 call	net/minecraft/class_4888	method_25091	()Z	METHOD	method not declared on the owner
-new	net/minecraft/class_4871	<init>	()V	ACCESS	constructors (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/UUID;Ljava/time/Instant;)V
+new	net/minecraft/class_4871	<init>	()V	METHOD	constructors (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/UUID;Ljava/time/Instant;)V
 get	net/minecraft/class_4871	field_22580	Ljava/lang/String;	FIELD	field not declared on the owner
 put	net/minecraft/class_4871	field_22580	Ljava/lang/String;	FIELD	field not declared on the owner
 get	net/minecraft/class_4871	field_22581	Ljava/lang/String;	FIELD	field not declared on the owner
@@ -20,6 +21,7 @@ put	net/minecraft/class_4871	field_22583	Ljava/util/UUID;	FIELD	field not declar
 get	net/minecraft/class_4871	field_22584	Ljava/util/Date;	FIELD	field not declared on the owner
 put	net/minecraft/class_4871	field_22584	Ljava/util/Date;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4871			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_4871	<init>	()V	METHOD	constructors (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/UUID;Ljava/time/Instant;)V
 call	net/minecraft/class_4886	method_25084	()I	METHOD	method not declared on the owner
 extend	net/minecraft/class_4886			FINAL	class public final extends java/lang/Record
 override+super	net/minecraft/class_4886	method_25084	()I	METHOD,ORPHAN	method not declared on the owner
@@ -28,7 +30,7 @@ put	net/minecraft/class_4875	field_22595	Ljava/lang/String;	FIELD	field not decl
 get	net/minecraft/class_4875	field_22596	Ljava/lang/String;	FIELD	field not declared on the owner
 put	net/minecraft/class_4875	field_22596	Ljava/lang/String;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4875			FINAL	class public final extends java/lang/Record
-new	net/minecraft/class_4889	<init>	()V	ACCESS	constructors (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+new	net/minecraft/class_4889	<init>	()V	METHOD	constructors (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 get	net/minecraft/class_4889	field_22662	Ljava/lang/String;	FIELD	field not declared on the owner
 put	net/minecraft/class_4889	field_22662	Ljava/lang/String;	FIELD	field not declared on the owner
 get	net/minecraft/class_4889	field_22663	Ljava/lang/String;	FIELD	field not declared on the owner
@@ -36,6 +38,7 @@ put	net/minecraft/class_4889	field_22663	Ljava/lang/String;	FIELD	field not decl
 get	net/minecraft/class_4889	field_22664	Ljava/lang/String;	FIELD	field not declared on the owner
 put	net/minecraft/class_4889	field_22664	Ljava/lang/String;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4889			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_4889	<init>	()V	METHOD	constructors (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 get	net/minecraft/class_11308	field_60208	I	FIELD	field not declared on the owner
 new	net/minecraft/class_6193	<init>	()V	CLASS	class gone
 call-static	net/minecraft/class_6193	method_35687	(Ljava/lang/String;)Lnet/minecraft/class_6193;	CLASS	class gone
@@ -45,26 +48,30 @@ get	net/minecraft/class_6193	field_32115	Ljava/util/List;	CLASS	class gone
 put	net/minecraft/class_6193	field_32115	Ljava/util/List;	CLASS	class gone
 extend	net/minecraft/class_6193			CLASS	class gone
 super-ctor	net/minecraft/class_6193	<init>	()V	CLASS	class gone
-new	net/minecraft/class_4868	<init>	()V	ACCESS	constructors (Ljava/util/List;)V
+new	net/minecraft/class_4868	<init>	()V	METHOD	constructors (Ljava/util/List;)V
 get	net/minecraft/class_4868	field_22576	Ljava/util/List;	FIELD	field not declared on the owner
 put	net/minecraft/class_4868	field_22576	Ljava/util/List;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4868			FINAL	class public final extends java/lang/Record
-new	net/minecraft/class_4873	<init>	()V	ACCESS	constructors (Ljava/util/List;Ljava/util/List;)V
+super-ctor	net/minecraft/class_4868	<init>	()V	METHOD	constructors (Ljava/util/List;)V
+new	net/minecraft/class_4873	<init>	()V	METHOD	constructors (Ljava/util/List;Ljava/util/List;)V
 get	net/minecraft/class_4873	field_22588	Ljava/util/List;	FIELD	field not declared on the owner
 put	net/minecraft/class_4873	field_22588	Ljava/util/List;	FIELD	field not declared on the owner
 get	net/minecraft/class_4873	field_22589	Ljava/util/List;	FIELD	field not declared on the owner
 put	net/minecraft/class_4873	field_22589	Ljava/util/List;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4873			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_4873	<init>	()V	METHOD	constructors (Ljava/util/List;Ljava/util/List;)V
 extend	net/minecraft/class_4884			FINAL	class public final extends java/lang/Record
-new	net/minecraft/class_4870	<init>	()V	ACCESS	constructors (Ljava/util/Set;)V
+new	net/minecraft/class_4870	<init>	()V	METHOD	constructors (Ljava/util/Set;)V
 get	net/minecraft/class_4870	field_22579	Ljava/util/Set;	FIELD	field not declared on the owner
 put	net/minecraft/class_4870	field_22579	Ljava/util/Set;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4870			FINAL	class public final extends java/lang/Record
-new	net/minecraft/class_4881	<init>	()V	ACCESS	constructors (Ljava/util/Map;)V
+super-ctor	net/minecraft/class_4870	<init>	()V	METHOD	constructors (Ljava/util/Set;)V
+new	net/minecraft/class_4881	<init>	()V	METHOD	constructors (Ljava/util/Map;)V
 get	net/minecraft/class_4881	field_52121	Ljava/util/Map;	FIELD	field not declared on the owner
 put	net/minecraft/class_4881	field_52121	Ljava/util/Map;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4881			FINAL	class public final extends java/lang/Record
-new	net/minecraft/class_4891	<init>	()V	ACCESS	constructors (I)V (Ljava/util/List;III)V
+super-ctor	net/minecraft/class_4881	<init>	()V	METHOD	constructors (Ljava/util/Map;)V
+new	net/minecraft/class_4891	<init>	()V	METHOD	constructors (I)V (Ljava/util/List;III)V
 get	net/minecraft/class_4891	field_22676	Ljava/util/List;	FIELD	field not declared on the owner
 put	net/minecraft/class_4891	field_22676	Ljava/util/List;	FIELD	field not declared on the owner
 get	net/minecraft/class_4891	field_22677	I	FIELD	field not declared on the owner
@@ -74,7 +81,8 @@ put	net/minecraft/class_4891	field_22678	I	FIELD	field not declared on the owner
 get	net/minecraft/class_4891	field_22679	I	FIELD	field not declared on the owner
 put	net/minecraft/class_4891	field_22679	I	FIELD	field not declared on the owner
 extend	net/minecraft/class_4891			FINAL	class public final extends java/lang/Record
-new	net/minecraft/class_4890	<init>	()V	ACCESS	constructors (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_4890$class_4323;)V
+super-ctor	net/minecraft/class_4891	<init>	()V	METHOD	constructors (I)V (Ljava/util/List;III)V
+new	net/minecraft/class_4890	<init>	()V	METHOD	constructors (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_4890$class_4323;)V
 get	net/minecraft/class_4890	field_22666	Ljava/lang/String;	FIELD	field not declared on the owner
 put	net/minecraft/class_4890	field_22666	Ljava/lang/String;	FIELD	field not declared on the owner
 get	net/minecraft/class_4890	field_22667	Ljava/lang/String;	FIELD	field not declared on the owner
@@ -94,7 +102,8 @@ put	net/minecraft/class_4890	field_22673	Ljava/lang/String;	FIELD	field not decl
 get	net/minecraft/class_4890	field_22674	Lnet/minecraft/class_4890$class_4323;	FIELD	field not declared on the owner
 put	net/minecraft/class_4890	field_22674	Lnet/minecraft/class_4890$class_4323;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4890			FINAL	class public final extends java/lang/Record
-new	net/minecraft/class_4887	<init>	()V	ACCESS	constructors (Ljava/time/Instant;ILnet/minecraft/class_4887$class_4322;)V
+super-ctor	net/minecraft/class_4890	<init>	()V	METHOD	constructors (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_4890$class_4323;)V
+new	net/minecraft/class_4887	<init>	()V	METHOD	constructors (Ljava/time/Instant;ILnet/minecraft/class_4887$class_4322;)V
 get	net/minecraft/class_4887	field_22653	J	FIELD	field not declared on the owner
 put	net/minecraft/class_4887	field_22653	J	FIELD	field not declared on the owner
 get	net/minecraft/class_4887	field_22654	I	FIELD	field not declared on the owner
@@ -102,6 +111,7 @@ put	net/minecraft/class_4887	field_22654	I	FIELD	field not declared on the owner
 get	net/minecraft/class_4887	field_22655	Lnet/minecraft/class_4887$class_4322;	FIELD	field not declared on the owner
 put	net/minecraft/class_4887	field_22655	Lnet/minecraft/class_4887$class_4322;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4887			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_4887	<init>	()V	METHOD	constructors (Ljava/time/Instant;ILnet/minecraft/class_4887$class_4322;)V
 new	net/minecraft/class_6192	<init>	()V	CLASS	class gone
 call-static	net/minecraft/class_6192	method_35686	(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_6192;	CLASS	class gone
 get	net/minecraft/class_6192	field_32111	Ljava/lang/String;	CLASS	class gone
@@ -112,6 +122,7 @@ get	net/minecraft/class_6192	field_32113	J	CLASS	class gone
 put	net/minecraft/class_6192	field_32113	J	CLASS	class gone
 extend	net/minecraft/class_6192			CLASS	class gone
 super-ctor	net/minecraft/class_6192	<init>	()V	CLASS	class gone
+new	net/minecraft/class_4867	<init>	()V	METHOD	constructors (none reachable)
 call	net/minecraft/class_4867	method_25032	()Z	METHOD	method not declared on the owner
 call	net/minecraft/class_4867	method_25035	(Z)V	METHOD	method not declared on the owner
 put	net/minecraft/class_4867	field_22569	Ljava/lang/String;	ACCESS	field Ljava/lang/String; public final
@@ -120,8 +131,10 @@ put	net/minecraft/class_4867	field_22570	Ljava/util/Date;	FIELD	field Ljava/time
 put	net/minecraft/class_4867	field_22571	J	ACCESS	field J public final
 put	net/minecraft/class_4867	field_22572	Ljava/util/Map;	ACCESS	field Ljava/util/Map; public final
 put	net/minecraft/class_4867	field_22573	Ljava/util/Map;	ACCESS	field Ljava/util/Map; public final
+super-ctor	net/minecraft/class_4867	<init>	()V	METHOD	constructors (none reachable)
 override+super	net/minecraft/class_4867	method_25032	()Z	METHOD,ORPHAN	method not declared on the owner
 override+super	net/minecraft/class_4867	method_25035	(Z)V	METHOD,ORPHAN	method not declared on the owner
+new	net/minecraft/class_4874	<init>	()V	METHOD	constructors (Ljava/lang/String;Ljava/util/UUID;ZZZ)V
 call	net/minecraft/class_4874	method_25042	()Ljava/lang/String;	METHOD	method not declared on the owner
 call	net/minecraft/class_4874	method_25043	(Ljava/lang/String;)V	METHOD	method not declared on the owner
 call	net/minecraft/class_4874	method_25045	()Ljava/util/UUID;	METHOD	method not declared on the owner
@@ -132,6 +145,7 @@ call	net/minecraft/class_4874	method_25050	()Z	METHOD	method not declared on the
 call	net/minecraft/class_4874	method_25047	(Z)V	METHOD	method not declared on the owner
 call	net/minecraft/class_4874	method_25051	()Z	METHOD	method not declared on the owner
 call	net/minecraft/class_4874	method_25049	(Z)V	METHOD	method not declared on the owner
+super-ctor	net/minecraft/class_4874	<init>	()V	METHOD	constructors (Ljava/lang/String;Ljava/util/UUID;ZZZ)V
 override+super	net/minecraft/class_4874	method_25042	()Ljava/lang/String;	METHOD,ORPHAN	method not declared on the owner
 override+super	net/minecraft/class_4874	method_25043	(Ljava/lang/String;)V	METHOD,ORPHAN	method not declared on the owner
 override+super	net/minecraft/class_4874	method_25045	()Ljava/util/UUID;	METHOD,ORPHAN	method not declared on the owner
@@ -142,14 +156,16 @@ override+super	net/minecraft/class_4874	method_25050	()Z	METHOD,ORPHAN	method no
 override+super	net/minecraft/class_4874	method_25047	(Z)V	METHOD,ORPHAN	method not declared on the owner
 override+super	net/minecraft/class_4874	method_25051	()Z	METHOD,ORPHAN	method not declared on the owner
 override+super	net/minecraft/class_4874	method_25049	(Z)V	METHOD,ORPHAN	method not declared on the owner
-new	net/minecraft/class_4879	<init>	()V	ACCESS	constructors (Ljava/util/List;)V
+new	net/minecraft/class_4879	<init>	()V	METHOD	constructors (Ljava/util/List;)V
 get	net/minecraft/class_4879	field_22622	Ljava/util/List;	FIELD	field not declared on the owner
 put	net/minecraft/class_4879	field_22622	Ljava/util/List;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4879			FINAL	class public final extends java/lang/Record
-new	net/minecraft/class_4872	<init>	()V	ACCESS	constructors (Ljava/util/List;)V
+super-ctor	net/minecraft/class_4879	<init>	()V	METHOD	constructors (Ljava/util/List;)V
+new	net/minecraft/class_4872	<init>	()V	METHOD	constructors (Ljava/util/List;)V
 get	net/minecraft/class_4872	field_22586	Ljava/util/List;	FIELD	field not declared on the owner
 put	net/minecraft/class_4872	field_22586	Ljava/util/List;	FIELD	field not declared on the owner
 extend	net/minecraft/class_4872			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_4872	<init>	()V	METHOD	constructors (Ljava/util/List;)V
 call-static	net/minecraft/class_4448	method_25282	(Ljava/util/Date;)Lnet/minecraft/class_2561;	METHOD	method method_25282(Ljava/time/Instant;)Lnet/minecraft/class_2561; public static
 call-static	net/minecraft/class_5672	values	()[Lnet/minecraft/class_5672;	CLASS	class gone
 call-static	net/minecraft/class_5672	valueOf	(Ljava/lang/String;)Lnet/minecraft/class_5672;	CLASS	class gone
@@ -400,9 +416,11 @@ override+super	net/minecraft/class_5294$class_5297	method_62183	(F)Z	CLASS	class
 override+super	net/minecraft/class_5294$class_5297	method_62184	(F)I	CLASS	class gone
 override+super	net/minecraft/class_5294$class_5297	method_28112	(Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;	CLASS	class gone
 override+super	net/minecraft/class_5294$class_5297	method_28110	(II)Z	CLASS	class gone
+new	net/minecraft/class_9975	<init>	()V	METHOD	constructors (Lnet/minecraft/class_1060;Lnet/minecraft/class_11697;)V
 call	net/minecraft/class_9975	method_62302	(FFF)V	METHOD	method method_62302(I)V public
 call	net/minecraft/class_9975	method_74926	(Lnet/minecraft/class_638;FLnet/minecraft/class_243;Lnet/minecraft/class_12076;)V	METHOD	method method_74926(Lnet/minecraft/class_638;FLnet/minecraft/class_4184;Lnet/minecraft/class_12076;)V public
 call	net/minecraft/class_9975	method_62307	(Lnet/minecraft/class_4587;FIFF)V	METHOD	method method_62307(Lnet/minecraft/class_4587;FFFLnet/minecraft/class_12131;FF)V public
+super-ctor	net/minecraft/class_9975	<init>	()V	METHOD	constructors (Lnet/minecraft/class_1060;Lnet/minecraft/class_11697;)V
 override+super	net/minecraft/class_9975	method_74924	()V	METHOD	method not declared on the owner
 override+super	net/minecraft/class_9975	method_62302	(FFF)V	METHOD,ORPHAN	method method_62302(I)V public
 override+super	net/minecraft/class_9975	method_74926	(Lnet/minecraft/class_638;FLnet/minecraft/class_243;Lnet/minecraft/class_12076;)V	METHOD,ORPHAN	method method_74926(Lnet/minecraft/class_638;FLnet/minecraft/class_4184;Lnet/minecraft/class_12076;)V public
@@ -687,6 +705,8 @@ call	net/minecraft/class_777	comp_3721	()[I	METHOD	method not declared on the ow
 call-static	net/minecraft/class_10419	method_65544	(Lcom/google/gson/JsonObject;Lnet/minecraft/class_2960;)Lnet/minecraft/class_10419$class_10420;	METHOD	method method_65544(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_10419$class_10420; public static
 new	net/minecraft/class_776	<init>	(Lnet/minecraft/class_773;Lnet/minecraft/class_11701;Ljava/util/function/Supplier;Lnet/minecraft/class_324;)V	METHOD	constructors (Lnet/minecraft/class_773;Lnet/minecraft/class_11701;Lnet/minecraft/class_324;)V
 super-ctor	net/minecraft/class_776	<init>	(Lnet/minecraft/class_773;Lnet/minecraft/class_11701;Ljava/util/function/Supplier;Lnet/minecraft/class_324;)V	METHOD	constructors (Lnet/minecraft/class_773;Lnet/minecraft/class_11701;Lnet/minecraft/class_324;)V
+new	net/minecraft/class_775	<init>	()V	METHOD	constructors (Lnet/minecraft/class_11701;)V
+super-ctor	net/minecraft/class_775	<init>	()V	METHOD	constructors (Lnet/minecraft/class_11701;)V
 override+super	net/minecraft/class_775	method_3345	(Lnet/minecraft/class_773;Lnet/minecraft/class_11701;)V	METHOD	method not declared on the owner
 call	net/minecraft/class_757	method_35770	(Z)V	METHOD	method not declared on the owner
 override+super	net/minecraft/class_757	method_35770	(Z)V	METHOD,ORPHAN	method not declared on the owner

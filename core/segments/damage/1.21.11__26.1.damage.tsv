@@ -426,6 +426,7 @@ extend	net/minecraft/class_4280$class_4281			ABSTRACT	class public abstract exte
 call	net/minecraft/class_8816$class_8817	method_54129	(Lnet/minecraft/class_2561;)Lnet/minecraft/class_8816$class_8817;	METHOD	method not declared on the owner
 override+super	net/minecraft/class_8816$class_8817	method_54129	(Lnet/minecraft/class_2561;)Lnet/minecraft/class_8816$class_8817;	METHOD	method not declared on the owner
 extend	net/minecraft/class_7528			ABSTRACT	class public abstract extends net/minecraft/client/gui/components/AbstractWidget
+super-ctor	net/minecraft/class_7528	<init>	(IIIILnet/minecraft/class_2561;)V	METHOD	constructors (IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V
 override+super	net/minecraft/class_7528	method_44392	()Z	METHOD	method not declared on the owner
 override+super	net/minecraft/class_7528	method_44396	(Lnet/minecraft/class_332;II)V	METHOD	method not declared on the owner
 extend	net/minecraft/class_4185			ABSTRACT	class public abstract extends net/minecraft/client/gui/components/AbstractButton
@@ -438,6 +439,7 @@ lambda	net/minecraft/class_4068	method_25394	(Lnet/minecraft/class_332;IIF)V	LAM
 implement-interface	net/minecraft/class_4068			ABSTRACT	class public abstract interface extends java/lang/Object
 call	net/minecraft/class_8816	method_25420	(Lnet/minecraft/class_332;IIF)V	METHOD	method not declared on the owner
 extend	net/minecraft/class_9017			ABSTRACT	class public abstract extends net/minecraft/client/gui/components/AbstractScrollArea
+super-ctor	net/minecraft/class_9017	<init>	(IIIILnet/minecraft/class_2561;)V	METHOD	constructors (IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V
 call	net/minecraft/class_8089	method_48618	(I)V	METHOD	method not declared on the owner
 call	net/minecraft/class_8089	method_25394	(Lnet/minecraft/class_332;IIF)V	METHOD	method not declared on the owner
 call	net/minecraft/class_8019	method_48579	(Lnet/minecraft/class_332;IIF)V	METHOD	method not declared on the owner
@@ -462,6 +464,7 @@ override+super	net/minecraft/class_344	method_75752	(Lnet/minecraft/class_332;II
 call	net/minecraft/class_4717$class_464	method_2373	(Lnet/minecraft/class_332;II)V	METHOD	method not declared on the owner
 call	net/minecraft/class_10415	method_48579	(Lnet/minecraft/class_332;IIF)V	METHOD	method not declared on the owner
 extend	net/minecraft/class_10415			ABSTRACT	class public abstract extends net/minecraft/client/gui/components/AbstractScrollArea
+super-ctor	net/minecraft/class_10415	<init>	(IIIILnet/minecraft/class_2561;)V	METHOD	constructors (IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V (IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;ZZ)V
 super-ctor	net/minecraft/class_10415	<init>	(IIIILnet/minecraft/class_2561;ZZ)V	METHOD	constructors (IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;)V (IIIILnet/minecraft/network/chat/Component;Lnet/minecraft/client/gui/components/AbstractScrollArea$ScrollbarSettings;ZZ)V
 override+super	net/minecraft/class_10415	method_48579	(Lnet/minecraft/class_332;IIF)V	METHOD	method not declared on the owner
 override+super	net/minecraft/class_10415	method_44384	(Lnet/minecraft/class_332;)V	METHOD	method not declared on the owner
@@ -1313,15 +1316,17 @@ call	net/minecraft/class_557$class_11650	comp_4759	()F	METHOD	method not declare
 lambda	net/minecraft/class_3882	method_2838	()Lnet/minecraft/class_630;	LAMBDA	method getHead()Lnet/minecraft/client/model/geom/ModelPart; public abstract
 lambda	net/minecraft/class_3884	method_65191	(Lnet/minecraft/class_10017;Lnet/minecraft/class_4587;)V	LAMBDA	method translateToArms(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V public abstract
 get-static	net/minecraft/class_6227	field_52914	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
-new	net/minecraft/class_9082	<init>	(Lnet/minecraft/class_630;)V	ACCESS	constructors (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;)V
+new	net/minecraft/class_9082	<init>	(Lnet/minecraft/class_630;)V	METHOD	constructors (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;)V
 call-static	net/minecraft/class_9082	method_55818	()Lnet/minecraft/class_5607;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_9082	field_52867	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
+super-ctor	net/minecraft/class_9082	<init>	(Lnet/minecraft/class_630;)V	METHOD	constructors (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;)V
 call-static	net/minecraft/class_4041	method_31999	()Lnet/minecraft/class_5607;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_4041	field_52912	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
 call-static	net/minecraft/class_4495	method_31981	()Lnet/minecraft/class_5607;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_4495	field_52871	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
-new	net/minecraft/class_596	<init>	(Lnet/minecraft/class_630;)V	ACCESS	constructors (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;)V
+new	net/minecraft/class_596	<init>	(Lnet/minecraft/class_630;)V	METHOD	constructors (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;)V
 call-static	net/minecraft/class_596	method_32034	(Z)Lnet/minecraft/class_5607;	METHOD	method not declared on the owner
+super-ctor	net/minecraft/class_596	<init>	(Lnet/minecraft/class_630;)V	METHOD	constructors (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;)V
 call-static	net/minecraft/class_624	method_32068	(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_624	field_52948	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
 call-static	net/minecraft/class_558	method_31988	()Lnet/minecraft/class_5607;	METHOD	method not declared on the owner
@@ -1332,9 +1337,10 @@ get-static	net/minecraft/class_586	field_52924	Lnet/minecraft/class_9953;	FIELD	
 get-static	net/minecraft/class_5772	field_32449	F	ACCESS	field F private static final
 get-static	net/minecraft/class_5772	field_52869	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_601	field_52936	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
-new	net/minecraft/class_614	<init>	(Lnet/minecraft/class_630;)V	ACCESS	constructors (Lnet/minecraft/client/model/geom/ModelPart;Ljava/util/function/Function;)V
+new	net/minecraft/class_614	<init>	(Lnet/minecraft/class_630;)V	METHOD	constructors (Lnet/minecraft/client/model/geom/ModelPart;Ljava/util/function/Function;)V
 call-static	net/minecraft/class_614	method_32062	()Lnet/minecraft/class_5607;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_614	field_52940	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
+super-ctor	net/minecraft/class_614	<init>	(Lnet/minecraft/class_630;)V	METHOD	constructors (Lnet/minecraft/client/model/geom/ModelPart;Ljava/util/function/Function;)V
 get-static	net/minecraft/class_8185	field_52938	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
 new	net/minecraft/class_3680	<init>	(Lnet/minecraft/class_630;)V	CLASS	class gone (net/minecraft/client/model/animal/feline/CatModel)
 get-static	net/minecraft/class_3680	field_52884	Lnet/minecraft/class_9953;	CLASS	class gone (net/minecraft/client/model/animal/feline/CatModel)
@@ -1361,9 +1367,10 @@ call-static	net/minecraft/class_9945	method_66838	(FZ)Lnet/minecraft/class_5607;
 call-static	net/minecraft/class_10648	method_66840	(Z)Lnet/minecraft/class_5607;	METHOD	method createSaddleLayer()Lnet/minecraft/client/model/geom/builders/LayerDefinition; public static
 call-static	net/minecraft/class_10648	method_66841	(Z)Lnet/minecraft/class_5607;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_578	field_52920	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
-new	net/minecraft/class_7751	<init>	(Lnet/minecraft/class_630;)V	ACCESS	constructors (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;)V
+new	net/minecraft/class_7751	<init>	(Lnet/minecraft/class_630;)V	METHOD	constructors (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;)V
 call-static	net/minecraft/class_7751	method_45707	()Lnet/minecraft/class_5607;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_7751	field_52883	Lnet/minecraft/class_9953;	FIELD	field not declared on the owner
+super-ctor	net/minecraft/class_7751	<init>	(Lnet/minecraft/class_630;)V	METHOD	constructors (Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;Lnet/minecraft/client/animation/AnimationDefinition;)V
 call-static-protected	net/minecraft/class_7751	method_66836	()Lnet/minecraft/class_5609;	METHOD	method not declared on the owner
 call-static	net/minecraft/class_590	method_32029	(Z)Lnet/minecraft/class_5607;	METHOD	method createBodyLayer()Lnet/minecraft/client/model/geom/builders/LayerDefinition; public static
 call-static	net/minecraft/class_9939	method_62055	(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;	METHOD	method not declared on the owner
@@ -1845,6 +1852,7 @@ override+super	net/minecraft/class_5617$class_5618	method_43337	()Lnet/minecraft
 override+super	net/minecraft/class_5617$class_5618	method_72981	()Lnet/minecraft/class_11701;	METHOD	method not declared on the owner
 new	net/minecraft/class_898	<init>	(Lnet/minecraft/class_310;Lnet/minecraft/class_1060;Lnet/minecraft/class_10442;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_11697;Lnet/minecraft/class_327;Lnet/minecraft/class_315;Ljava/util/function/Supplier;Lnet/minecraft/class_10201;Lnet/minecraft/class_11786;)V	METHOD	constructors (Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/texture/TextureManager;Lnet/minecraft/client/renderer/block/BlockModelResolver;Lnet/minecraft/client/renderer/item/ItemModelResolver;Lnet/minecraft/client/renderer/MapRenderer;Lnet/minecraft/client/resources/model/sprite/AtlasManager;Lnet/minecraft/client/gui/Font;Lnet/minecraft/client/Options;Ljava/util/function/Supplier;Lnet/minecraft/client/resources/model/EquipmentAssetManager;Lnet/minecraft/client/renderer/PlayerSkinRenderCache;)V
 super-ctor	net/minecraft/class_898	<init>	(Lnet/minecraft/class_310;Lnet/minecraft/class_1060;Lnet/minecraft/class_10442;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_11697;Lnet/minecraft/class_327;Lnet/minecraft/class_315;Ljava/util/function/Supplier;Lnet/minecraft/class_10201;Lnet/minecraft/class_11786;)V	METHOD	constructors (Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/texture/TextureManager;Lnet/minecraft/client/renderer/block/BlockModelResolver;Lnet/minecraft/client/renderer/item/ItemModelResolver;Lnet/minecraft/client/renderer/MapRenderer;Lnet/minecraft/client/resources/model/sprite/AtlasManager;Lnet/minecraft/client/gui/Font;Lnet/minecraft/client/Options;Ljava/util/function/Supplier;Lnet/minecraft/client/resources/model/EquipmentAssetManager;Lnet/minecraft/client/renderer/PlayerSkinRenderCache;)V
+super-ctor	net/minecraft/class_10262	<init>	(Lnet/minecraft/class_5617$class_5618;)V	METHOD	constructors (Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;Lnet/minecraft/resources/Identifier;)V
 override+super	net/minecraft/class_12296	method_76299	(Lnet/minecraft/class_5617$class_5618;)Lnet/minecraft/class_10652;	METHOD	method not declared on the owner
 new	net/minecraft/class_996	<init>	(Lnet/minecraft/class_3883;Lnet/minecraft/class_776;)V	METHOD	constructors (Lnet/minecraft/client/renderer/entity/RenderLayerParent;)V
 super-ctor	net/minecraft/class_996	<init>	(Lnet/minecraft/class_3883;Lnet/minecraft/class_776;)V	METHOD	constructors (Lnet/minecraft/client/renderer/entity/RenderLayerParent;)V
@@ -4468,6 +4476,7 @@ call	net/minecraft/class_5863	method_33921	()F	METHOD	method not declared on the
 call	net/minecraft/class_5863	method_33923	()Lnet/minecraft/class_5864;	METHOD	method not declared on the owner
 get-static	net/minecraft/class_5863	field_29007	Lcom/mojang/serialization/Codec;	FIELD	field not declared on the owner
 extend	net/minecraft/class_5863			ABSTRACT	class public abstract interface extends java/lang/Object
+super-ctor	net/minecraft/class_5863	<init>	()V	METHOD	constructors (none reachable)
 call	net/minecraft/class_5864	codec	()Lcom/mojang/serialization/MapCodec;	CLASS	class gone (net/minecraft/util/valueproviders/FloatProviderType)
 call-static	net/minecraft/class_5864	method_33925	(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_5864;	CLASS	class gone (net/minecraft/util/valueproviders/FloatProviderType)
 get-static	net/minecraft/class_5864	field_29008	Lnet/minecraft/class_5864;	CLASS	class gone (net/minecraft/util/valueproviders/FloatProviderType)
@@ -4485,6 +4494,7 @@ get-static	net/minecraft/class_6017	field_29946	Lcom/mojang/serialization/Codec;
 get-static	net/minecraft/class_6017	field_33450	Lcom/mojang/serialization/Codec;	FIELD	field not declared on the owner
 get-static	net/minecraft/class_6017	field_33451	Lcom/mojang/serialization/Codec;	FIELD	field not declared on the owner
 extend	net/minecraft/class_6017			ABSTRACT	class public abstract interface extends java/lang/Object
+super-ctor	net/minecraft/class_6017	<init>	()V	METHOD	constructors (none reachable)
 call	net/minecraft/class_6018	codec	()Lcom/mojang/serialization/MapCodec;	CLASS	class gone (net/minecraft/util/valueproviders/IntProviderType)
 call-static	net/minecraft/class_6018	method_35014	(Ljava/lang/String;Lcom/mojang/serialization/MapCodec;)Lnet/minecraft/class_6018;	CLASS	class gone (net/minecraft/util/valueproviders/IntProviderType)
 get-static	net/minecraft/class_6018	field_29947	Lnet/minecraft/class_6018;	CLASS	class gone (net/minecraft/util/valueproviders/IntProviderType)
