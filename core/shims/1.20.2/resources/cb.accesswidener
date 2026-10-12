@@ -62,3 +62,18 @@ mutable field net/minecraft/class_4341$class_4343 field_19589 Ljava/lang/String;
 mutable field net/minecraft/class_4341$class_4343 field_19590 Ljava/lang/String;
 mutable field net/minecraft/class_4410 field_19998 I
 # ---- END GENERATED ----
+# ---- loot (s1loot): 1.20.1 loot classes 1.20.2 turned into final records -- the six loot types a
+# mod may subclass (its super(serializer) is reshaped onto the record's canonical constructor with
+# the serializer as a codec) and MatchTool (its super(predicate) onto the Optional one). The
+# subclass is then a real instance of the record; Class.isRecord() reports false for it (see
+# above: nothing in the game, Fabric API or the loader asks for these types).
+extendable class net/minecraft/class_5338
+extendable class net/minecraft/class_5339
+extendable class net/minecraft/class_5342
+extendable class net/minecraft/class_5650
+extendable class net/minecraft/class_5657
+extendable class net/minecraft/class_5669
+extendable class net/minecraft/class_223
+# ---- data (s1loot): SingleItemRecipeBuilder.Result, a 1.20.2 record a 1.20.1 datagen mod may extend
+# (its super(..., advancement builder, id) reshaped onto the record's constructor with the built entry)
+extendable class net/minecraft/class_3981$class_3982

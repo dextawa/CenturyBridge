@@ -39,7 +39,7 @@ public abstract class class_85$class_90<T extends net.minecraft.class_85> extend
         return method_443(json, context, weight, quality, conditions, functions);
     }
 
-    /** fromJson(json, ctx, weight, quality, conditions, functions) */
+    /** fromJson(json, ctx, weight, quality, conditions, functions) -- protected in 1.20.1; public here, as every facade member */
     public abstract T method_443(JsonObject json, JsonDeserializationContext context, int weight, int quality,
             net.minecraft.class_5341[] conditions, net.minecraft.class_117[] functions);
 
