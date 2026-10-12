@@ -389,7 +389,10 @@ public final class JarProcessor {
                 }
                 org.objectweb.asm.tree.MethodInsnNode mi = (org.objectweb.asm.tree.MethodInsnNode) in;
                 Chain.OverrideHook h = byOld.get(mi.name + mi.desc);
+                // the super call's owner is the direct superclass: a mod class in between inherits the
+                // vanilla method (this layer's hierarchy says from where) unless it declares it itself
                 if (h == null || mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
+                        && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null
                         || h.onlyUnder != null && !isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain)
                         || h.notUnder != null && isUnder(cn.superName, ifaces, h.notUnder, layer, chain)) {
                     continue;
@@ -674,7 +677,14 @@ public final class JarProcessor {
                     continue;
                 }
                 String nameDesc = mi.name + mi.desc;
-                String home = chain.instanceRedirectHome(chain.callReshapeIndex, mi.owner, nameDesc);
+                // javac qualifies a call to an inherited member by the class it is made in (JLS 13.1):
+                // this.m(..) inside a mod subclass names the mod class. The reshape is found through the
+                // vanilla class the member is inherited from; the call keeps its owner and the JVM
+                // resolves the new descriptor up the hierarchy just as it did the old one
+                String vanillaOwner = mi.owner.startsWith("net/minecraft/") ? mi.owner
+                    : inheritedVanillaOwner(mi.owner, nameDesc, layer);
+                String home = vanillaOwner == null ? null
+                    : chain.instanceRedirectHome(chain.callReshapeIndex, vanillaOwner, nameDesc);
                 if (home == null) {
                     continue;
                 }
@@ -2540,10 +2550,20 @@ public final class JarProcessor {
 
             @Override
             public void visitEnd() {
+                // one new shape reconnected by two hooks (a covariant override declares the
+                // old shape twice, once per vanilla supertype that had it -- KilledTrigger's
+                // createInstance and SimpleCriterionTrigger's both): the first hook in wiring
+                // order synthesizes it, a second copy would be a duplicate method
+                Set<String> synthesized = new HashSet<>();
                 for (Chain.AdapterHook h : adapterApply) {
                     for (String[] sy : h.synth) {
                         if (declaredShapes.contains(sy[0] + sy[1])) {
                             continue; // the mod already speaks the new shape
+                        }
+                        if (!synthesized.add(sy[0] + sy[1])) {
+                            rpt.notes.add(tag + "adapter-synth skipped (already synthesized by another hook): "
+                                + clsName[0] + "." + sy[0] + sy[1] + " via " + h.adapter);
+                            continue;
                         }
                         if (h.guard != null) {
                             // guarded: the bridge runs on first entry; calling the method again

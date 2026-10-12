@@ -344,7 +344,9 @@ public final class Chain {
      * the mod's own methods implement it -- added to its interfaces, and each
      * {@code synth} method (the new shape vanilla calls) synthesized to call a
      * static bridge with (this, args...). The bridge reaches the old methods
-     * through the adapter, typed.
+     * through the adapter, typed. A new shape two hooks would both synthesize in one class
+     * (a covariant override declares the old shape once per vanilla supertype that had it)
+     * is synthesized once, by the first of them in wiring order.
      */
     public static final class AdapterHook {
         public String under, adapter;
@@ -807,23 +809,51 @@ public final class Chain {
      * authored in the runtime namespace -- intermediary for pre-wall targets, official
      * (mojang) for 26.x -- so past the wall each name is translated back to intermediary
      * via {@code back} (mojang -&gt; intermediary) to match how hierarchyBreak sees it.
+     *
+     * A climb step's layer ships its own access widener: when the step's wiring is named
+     * (-Dcb.wiring=&lt;root&gt;/core/segments/steps/&lt;V&gt;__&lt;to&gt;.json), the layer next to
+     * it (&lt;root&gt;/core/shims/steps/&lt;to&gt;/resources/*.accesswidener) is read too. An
+     * `extendable method` entry counts for its class as well: the loader makes the class of
+     * an extendable method extendable (AwRules).
      */
     private void loadAwExtendable(java.util.Map<String, String> back) throws IOException {
-        Path aw = Path.of("core/shims/" + to + "/resources/cb.accesswidener");
-        if (!java.nio.file.Files.exists(aw)) {
-            return;
+        java.util.List<Path> files = new java.util.ArrayList<>();
+        String stepWiring = System.getProperty("cb.wiring");
+        if (stepWiring != null) {
+            // the checkout the step's wiring belongs to: <root>/core/segments/steps/<V>__<to>.json for a
+            // climb step's layer, <root>/core/segments/shims-<to>.json for step 1's (the 1.20.2 tree)
+            Path w = Path.of(stepWiring).toAbsolutePath();
+            Path segs = w.getParent();
+            boolean step = segs != null && segs.getFileName() != null && segs.getFileName().toString().equals("steps");
+            Path core = step ? segs.getParent().getParent() : segs == null ? null : segs.getParent();
+            Path root = core == null ? null : core.getParent();
+            Path res = root == null ? null
+                : root.resolve(step ? "core/shims/steps/" + to + "/resources" : "core/shims/" + to + "/resources");
+            if (res != null && java.nio.file.Files.isDirectory(res)) {
+                try (var s = java.nio.file.Files.list(res)) {
+                    s.filter(p -> p.getFileName().toString().endsWith(".accesswidener")).sorted().forEach(files::add);
+                }
+            }
         }
-        for (String ln : java.nio.file.Files.readAllLines(aw)) {
-            String s = ln.trim();
-            if (s.startsWith("#") || s.isEmpty()) {
+        if (files.isEmpty()) {
+            files.add(Path.of("core/shims/" + to + "/resources/cb.accesswidener"));
+        }
+        for (Path aw : files) {
+            if (!java.nio.file.Files.exists(aw)) {
                 continue;
             }
-            // "extendable class net/minecraft/<name>" (also accept the historical
-            // "extend-able"/"transitive-extendable" spellings fabric tolerates)
-            String[] p = s.split("\\s+");
-            if (p.length >= 3 && p[1].equals("class") && p[0].endsWith("extendable")) {
-                String name = p[2];
-                awExtendable.add(back.getOrDefault(name, name));
+            for (String ln : java.nio.file.Files.readAllLines(aw)) {
+                String s = ln.trim();
+                if (s.startsWith("#") || s.isEmpty()) {
+                    continue;
+                }
+                // "extendable class net/minecraft/<name>" (also accept the historical
+                // "extend-able"/"transitive-extendable" spellings fabric tolerates)
+                String[] p = s.split("\\s+");
+                if (p.length >= 3 && (p[1].equals("class") || p[1].equals("method")) && p[0].endsWith("extendable")) {
+                    String name = p[2];
+                    awExtendable.add(back.getOrDefault(name, name));
+                }
             }
         }
     }
