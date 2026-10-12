@@ -16,6 +16,11 @@ public final class CbRestDefaults {
         return true;
     }
 
+    /** 1: a scale 1.20.5 added where 1.20.4 used the value as it was (EntityType's spawn dimensions scale) */
+    public static float unitScale() {
+        return 1.0F;
+    }
+
     /**
      * GameType.SURVIVAL: 1.20.4 GameTestHelper.makeMockPlayer() made a player that is neither creative
      * nor spectator (its anonymous Player answered false to both); 1.20.5 builds that player for the

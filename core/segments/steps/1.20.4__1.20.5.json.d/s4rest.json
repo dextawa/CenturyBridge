@@ -447,6 +447,31 @@
     "drop"
    ],
    "basis": "1.20.4's Gui kept the item renderer in a private field it never read; 1.20.5's takes none"
+  },
+  "net/minecraft/class_2989.<init>(Lnet/minecraft/class_60;)V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestLoot#advancementRegistries(Lnet/minecraft/class_60;)Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "1.20.4 validated advancements' loot references against the manager it was given; 1.20.5 takes one registry lookup for parsing and validation: the world's, with the manager answering the loot registries (CbRestLoot)"
+  },
+  "net/minecraft/class_1299.<init>(Lnet/minecraft/class_1299$class_4049;Lnet/minecraft/class_1311;ZZZZLcom/google/common/collect/ImmutableSet;Lnet/minecraft/class_4048;IILnet/minecraft/class_7699;)V": {
+   "desc": "(Lnet/minecraft/class_1299$class_4049;Lnet/minecraft/class_1311;ZZZZLcom/google/common/collect/ImmutableSet;Lnet/minecraft/class_4048;FIILnet/minecraft/class_7699;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#unitScale()F",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.20.5's EntityType takes a spawn dimensions scale; 1.20.4 spawned in the type's dimensions as they are (1)"
   }
  },
  "convertHooks": [
@@ -572,7 +597,16 @@
   "net/minecraft/class_8.method_43568(Lnet/minecraft/class_9;)Lnet/minecraft/class_4459;",
   "net/minecraft/class_12.method_38488(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z",
   "net/minecraft/class_1321.method_6175()V",
-  "net/minecraft/class_1665.method_55052()V"
+  "net/minecraft/class_1665.method_55052()V",
+  "net/minecraft/server/MinecraftServer.method_3857()Lnet/minecraft/class_60;",
+  "net/minecraft/class_5350.method_29469()Lnet/minecraft/class_60;",
+  "net/minecraft/class_1309.method_26825(Lnet/minecraft/class_1320;)D",
+  "net/minecraft/class_1309.method_26826(Lnet/minecraft/class_1320;)D",
+  "net/minecraft/class_1309.method_20236(Lnet/minecraft/class_1268;)V",
+  "net/minecraft/class_1657.method_7284(Z)V",
+  "net/minecraft/class_1299.method_17683(DDD)Lnet/minecraft/class_238;",
+  "net/minecraft/server/MinecraftServer.method_53620(J)V",
+  "net/minecraft/class_5350.method_40421(Lnet/minecraft/class_5455;)V"
  ],
  "overrideHooks": [
   {
@@ -760,6 +794,28 @@
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
    "basis": "1.20.5's layers call renderDemoOverlay(graphics, partialTick) (a method reference, virtual once the AW opens it): the old override gets the graphics, its super call the partial tick vanilla passed"
+  },
+  {
+   "old": "method_26825(Lnet/minecraft/class_1320;)D",
+   "new": "method_45325(Lnet/minecraft/class_6880;)D",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestAttributes.value(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1320;",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1309",
+   "basis": "1.20.5 asks LivingEntity by holder; 1.20.4's holder member delegated to the attribute one a mod overrides: the override answers 1.20.5's (guarded: its super call is the cover, which goes on to 1.20.5's)"
+  },
+  {
+   "old": "method_26826(Lnet/minecraft/class_1320;)D",
+   "new": "method_45326(Lnet/minecraft/class_6880;)D",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestAttributes.value(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1320;",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1309",
+   "basis": "as getAttributeValue: 1.20.4's holder member delegated to the attribute one"
+  },
+  {
+   "old": "method_17683(DDD)Lnet/minecraft/class_238;",
+   "new": "method_58629(DDD)Lnet/minecraft/class_238;",
+   "onlyUnder": "net/minecraft/class_1299",
+   "basis": "1.20.4's spawn checks asked getAABB(x, y, z), 1.20.5's ask getSpawnAABB: the override answers them (its super call is the cover, 1.20.4's box)"
   }
  ],
  "methodRenames": {
@@ -812,7 +868,17 @@
   "net/minecraft/class_7691.method_45368()Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestValues",
   "net/minecraft/class_7107.method_41366()Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestValues",
   "net/minecraft/class_6054.method_35181()Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestValues",
-  "net/minecraft/class_8155.method_51159()Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestValues"
+  "net/minecraft/class_8155.method_51159()Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestValues",
+  "net/minecraft/class_2223.method_9418(Lcom/mojang/brigadier/StringReader;Lnet/minecraft/class_7225;)Lnet/minecraft/class_2394;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestParticles",
+  "net/minecraft/class_156.method_47526(Lcom/mojang/serialization/DataResult;Ljava/util/function/Function;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestUtil",
+  "net/minecraft/class_156.method_55334(Lcom/mojang/serialization/DataResult;Ljava/util/function/Function;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestUtil",
+  "net/minecraft/class_156.method_51893(I)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestUtil",
+  "net/minecraft/class_156.method_51894(Ljava/lang/String;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestUtil",
+  "net/minecraft/class_1657.method_53968(Ljava/lang/String;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs",
+  "net/minecraft/class_1657.method_54292(Z)F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs",
+  "net/minecraft/class_1299.method_5881(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs",
+  "net/minecraft/server/MinecraftServer.method_29736(Lnet/minecraft/class_3283;Lnet/minecraft/class_5359;ZLnet/minecraft/class_7699;)Lnet/minecraft/class_7712;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestServer",
+  "net/minecraft/class_5350.method_29466(Lnet/minecraft/class_3300;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Lnet/minecraft/class_2170$class_5364;ILjava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestServer"
  },
  "instanceRedirects": {
   "net/minecraft/class_20.method_92()B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
@@ -909,6 +975,16 @@
    "under": "net/minecraft/class_7265",
    "method": "method_5829()Lnet/minecraft/class_238;",
    "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs.boundingBox(Lnet/minecraft/class_7265;)Lnet/minecraft/class_238;"
+  },
+  {
+   "under": "net/minecraft/server/MinecraftServer",
+   "method": "method_56626()Z",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestServer.tickTimeLogging(Lnet/minecraft/server/MinecraftServer;)Z"
+  },
+  {
+   "under": "net/minecraft/server/MinecraftServer",
+   "method": "method_56593()Lnet/minecraft/class_8743;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestServer.tickTimeLogger(Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/class_8743;"
   }
  ],
  "instanceFieldSetters": {
@@ -1059,6 +1135,47 @@
     "method_55052()V"
    ],
    "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs$LegacyBreakEvent",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_20236(Lnet/minecraft/class_1268;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_20235(Lnet/minecraft/class_1304;)V",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs.breakEvent(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestMobs$LegacyBreakEvent;Lnet/minecraft/class_1304;)V"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_1657",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs$LegacyShield",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_7284(Z)V"
+   ],
+   "synth": [
+    {
+     "new": "method_7284()V",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs.disableShield(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestMobs$LegacyShield;)V"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5350",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestServer$LegacyRegistryTags",
+   "requires": [
+    "method_40421(Lnet/minecraft/class_5455;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_40421()V",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestServer.updateRegistryTags(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestServer$LegacyRegistryTags;)V"
+    }
+   ]
   }
  ],
  "ctorRedirects": {
