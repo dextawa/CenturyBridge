@@ -6,21 +6,21 @@
   "mixins": [
     "CbEnchHelperMixin",
     "CbEnchItemStackMixin",
-    "CbEnchLoaderMixin",
     "CbEnchPlayerMixin",
     "CbEnchRecordMixin",
     "CbEnchRegistriesMixin",
-    "CbEnchServerMixin",
-    "CbEnchTagsMixin",
     "CbItemRecipeCrafterBlockMixin",
     "CbItemRecipeCrafterMenuMixin",
     "CbItemRecipeCraftingMenuMixin",
     "CbItemRecipeInventoryMenuMixin",
     "CbItemRecipeResultSlotMixin",
-    "CbItemShapedPatternAccessor"
+    "CbItemShapedPatternAccessor",
+    "CbLegacyRegistryLoaderMixin",
+    "CbLegacyRegistryServerMixin",
+    "CbLegacyRegistryTagsMixin"
   ],
   "client": [
-    "CbEnchClientMixin"
+    "CbLegacyRegistryClientMixin"
   ],
   "server": [],
   "injectors": {

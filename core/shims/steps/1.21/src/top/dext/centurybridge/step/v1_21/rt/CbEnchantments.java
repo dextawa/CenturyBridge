@@ -32,23 +32,11 @@ import top.dext.centurybridge.step.v1_21.facade.class_1887;
  *     bound to its record.</li>
  * </ul>
  *
- * <p><b>The worlds.</b> A 1.21 holder belongs to one world's registry: the server's (a dedicated
- * server's, or the integrated server's), or the client's, built from what the server sent. The
- * converters answer with the registry of the side they run on: the client's on the client's main
- * thread, the server's anywhere else (its own thread, the world generation workers), the client's
- * when there is no server here. Both are recorded when their enchantment registry loads
- * (CbEnchLoaderMixin) and dropped when that world goes (the integrated server stops, the client
- * disconnects). With no world registries at all there is no 1.21 holder to give, and the converters
- * throw rather than answer one that would fail later.
- *
- * <p><b>Registration window.</b> 1.20.6 froze BuiltInRegistries.ENCHANTMENT after start-up; an
- * enchantment registered later was refused. The stand-in registry refuses a mod's registration once a
- * world has read it (the records are made then and never again for that world), with 1.20.6's
- * message, so a late registration fails as it did instead of silently never existing.
- *
- * <p><b>Raw ids.</b> 1.20.6 synchronised BuiltInRegistries.ENCHANTMENT's ids from server to client.
- * The stand-in registry answers getId / byId with the world registry's ids, which 1.21 synchronises
- * the same way.
+ * <p><b>The stand-in and the worlds.</b> BuiltInRegistries.ENCHANTMENT reads as a stand-in registry
+ * ({@link Legacy}, a {@link CbLegacyRegistries.Legacy}): its registration window, raw ids, tags and the
+ * worlds' registries -- the server's and the client's, which the converters answer with by the thread
+ * they run on -- are CbLegacyRegistries'. With no world registries at all there is no 1.21 holder to
+ * give, and the converters throw rather than answer one that would fail later.
  */
 public final class CbEnchantments {
 
@@ -61,61 +49,35 @@ public final class CbEnchantments {
         return (net.minecraft.class_5321) net.minecraft.class_7924.field_41265;
     }
 
-    /** CenturyBridge's stand-in for 1.20.6's BuiltInRegistries.ENCHANTMENT */
-    public static final class Legacy extends net.minecraft.class_2370<class_1887> {
-        /** set once a world has read the registry: later registrations by a mod are refused */
-        volatile boolean closed;
-        /** CenturyBridge's own registrations (a datapack enchantment's facade) bypass the window */
-        final ThreadLocal<Boolean> cbAdding = ThreadLocal.withInitial(() -> Boolean.FALSE);
-
+    /** CenturyBridge's stand-in for 1.20.6's BuiltInRegistries.ENCHANTMENT (CbLegacyRegistries: window, ids, worlds, tags) */
+    public static final class Legacy extends CbLegacyRegistries.Legacy<class_1887, net.minecraft.class_1887> {
         Legacy() {
-            super(legacyRegistryKey(), com.mojang.serialization.Lifecycle.stable(), true);
+            super(legacyRegistryKey(), true);
         }
 
-        /** register: refused once closed, as 1.20.6's frozen registry refused it */
+        /** a mod's enchantment gets its 1.21 record; vanilla's objects stand for the world's own entries */
+        @SuppressWarnings({"unchecked", "rawtypes"})
         @Override
-        public net.minecraft.class_6880.class_6883<class_1887> method_10272(net.minecraft.class_5321<class_1887> key, class_1887 value,
-                net.minecraft.class_9248 info) {
-            if (closed && !cbAdding.get()) {
-                throw new IllegalStateException("Registry is already frozen (trying to add key " + key + ")");
-            }
-            return super.method_10272(key, value, info);
-        }
-
-        /** getId: the world registry's id of the same key, as 1.20.6's synchronised registry answered */
-        @Override
-        public int method_10206(class_1887 value) {
-            net.minecraft.class_2378<net.minecraft.class_1887> w = current();
-            if (w == null) {
-                return super.method_10206(value);
-            }
-            Optional<net.minecraft.class_5321<class_1887>> key = this.method_29113(value);
-            if (key.isEmpty()) {
-                return -1;
-            }
-            net.minecraft.class_1887 record = w.method_29107(wKey(key.get()));
-            return record == null ? -1 : w.method_10206(record);
-        }
-
-        /** byId: the facade of the world registry's entry with that id */
-        @Override
-        public class_1887 method_10200(int id) {
-            net.minecraft.class_2378<net.minecraft.class_1887> w = current();
-            if (w == null) {
-                return super.method_10200(id);
-            }
-            net.minecraft.class_1887 record = w.method_10200(id);
-            if (record == null) {
+        protected net.minecraft.class_1887 recordFor(class_1887 e, net.minecraft.class_5321<class_1887> key, net.minecraft.class_6903.class_7863 lookup) {
+            if (e.cb$kind != class_1887.CB_MOD) {
                 return null;
             }
-            return w.method_29113(record).map(CbEnchantments::facadeFor).orElse(null);
+            net.minecraft.class_7871<net.minecraft.class_1792> items = (net.minecraft.class_7871) lookup.method_46623(net.minecraft.class_7924.field_41197)
+                .orElseThrow(() -> new IllegalStateException("the enchantment registry loads without the item registry in reach")).comp_1131();
+            return CbEnchantments.recordFor(e, items);
         }
 
-        /** getHolder(int): byId's holder */
+        /** a datapack enchantment's facade */
         @Override
-        public Optional<net.minecraft.class_6880.class_6883<class_1887>> method_40265(int id) {
-            class_1887 e = method_10200(id);
-            return e == null ? Optional.empty() : Optional.of(e.field_45769);
+        protected class_1887 newFacade(net.minecraft.class_5321<net.minecraft.class_1887> key) {
+            return new class_1887(DATA_ONLY);
+        }
+
+        /** the records of mods' enchantments join the tags their objects' flags put them in */
+        @SuppressWarnings("rawtypes")
+        @Override
+        protected Map augmentTags(net.minecraft.class_2378<net.minecraft.class_1887> world, Map tags) {
+            return withLegacyTags(world, tags);
         }
     }
 
@@ -139,11 +101,10 @@ public final class CbEnchantments {
         return Instance.REGISTRY.method_40269(enchantment);
     }
 
-    /** CbEnchVanilla's registration of one of 1.20.6's vanilla enchantments under its 1.20.6 name */
+    /** CbEnchVanilla's registration of one of 1.20.6's vanilla enchantments under its 1.20.6 name (whenever the stand-in is first read) */
     static class_1887 registerVanilla(String name, class_1887 enchantment) {
         enchantment.cb$kind = class_1887.CB_VANILLA;
-        Instance.REGISTRY.method_10272(net.minecraft.class_5321.method_29179(legacyRegistryKey(), net.minecraft.class_2960.method_60656(name)),
-            enchantment, net.minecraft.class_9248.field_49136);
+        Instance.REGISTRY.cbRegister(net.minecraft.class_5321.method_29179(legacyRegistryKey(), net.minecraft.class_2960.method_60656(name)), enchantment);
         return enchantment;
     }
 
@@ -159,64 +120,20 @@ public final class CbEnchantments {
      * The facade of a world enchantment's key: the registered 1.20.6 object (vanilla, a mod's), else a
      * facade made for it now and registered under the key -- the facade of a datapack enchantment.
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public static class_1887 facadeFor(net.minecraft.class_5321<net.minecraft.class_1887> key) {
-        Legacy legacy = legacy();
-        net.minecraft.class_5321<class_1887> lk = (net.minecraft.class_5321) key;
-        class_1887 e = legacy.method_29107(lk);
-        if (e != null) {
-            return e;
-        }
-        synchronized (legacy) {
-            e = legacy.method_29107(lk);
-            if (e != null) {
-                return e;
-            }
-            e = new class_1887(DATA_ONLY);
-            legacy.cbAdding.set(Boolean.TRUE);
-            try {
-                legacy.method_10272(lk, e, net.minecraft.class_9248.field_49136);
-            } finally {
-                legacy.cbAdding.set(Boolean.FALSE);
-            }
-            return e;
-        }
+        return legacy().facadeFor(key);
     }
 
     // ---- the worlds' registries ----
 
-    private static volatile net.minecraft.class_2378<net.minecraft.class_1887> serverEnchantments;
-    private static volatile net.minecraft.class_2378<net.minecraft.class_1887> clientEnchantments;
-    private static volatile Thread clientThread;
-
-    /** the enchantment registry of the world this thread works for (see the class comment), or null */
+    /** the enchantment registry of the world this thread works for (CbLegacyRegistries.current), or null */
     public static net.minecraft.class_2378<net.minecraft.class_1887> current() {
-        net.minecraft.class_2378<net.minecraft.class_1887> c = clientEnchantments;
-        if (c != null && Thread.currentThread() == clientThread) {
-            return c;
-        }
-        net.minecraft.class_2378<net.minecraft.class_1887> s = serverEnchantments;
-        return s != null ? s : c;
-    }
-
-    private static net.minecraft.class_2378<net.minecraft.class_1887> requireWorld() {
-        net.minecraft.class_2378<net.minecraft.class_1887> w = current();
-        if (w == null) {
-            throw new IllegalStateException("no world's enchantments are loaded: a 1.21 enchantment holder exists only in a world's"
-                + " registries, and a 1.20.6 enchantment stands for one only once a world (or a server's registry data) has loaded");
-        }
-        return w;
-    }
-
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    private static net.minecraft.class_5321<net.minecraft.class_1887> wKey(net.minecraft.class_5321<class_1887> key) {
-        return (net.minecraft.class_5321) key;
+        return CbLegacyRegistries.current(net.minecraft.class_7924.field_41265);
     }
 
     /** the registry key of a 1.20.6 enchantment, as a 1.21 enchantment key; IllegalStateException when it was never registered */
     public static net.minecraft.class_5321<net.minecraft.class_1887> wKeyOf(class_1887 enchantment) {
-        return wKey(legacy().method_29113(enchantment).orElseThrow(() -> new IllegalStateException(
-            "a 1.20.6 enchantment that was never registered (" + enchantment.getClass().getName() + ") stands for no 1.21 enchantment")));
+        return legacy().worldKeyOf(enchantment);
     }
 
     /** the registry name of an enchantment, for messages ("unregistered" when it has none) */
@@ -227,12 +144,7 @@ public final class CbEnchantments {
 
     /** the world's record of a bound enchantment's key, or null when no world registry holds it */
     public static net.minecraft.class_1887 boundRecord(class_1887 enchantment) {
-        net.minecraft.class_2378<net.minecraft.class_1887> w = current();
-        if (w == null) {
-            return null;
-        }
-        Optional<net.minecraft.class_5321<class_1887>> key = legacy().method_29113(enchantment);
-        return key.isEmpty() ? null : w.method_29107(wKey(key.get()));
+        return legacy().worldValue(enchantment);
     }
 
     /** whether a bound enchantment's world holder is in a 1.21 enchantment tag (its 1.21 data for a 1.20.6 flag) */
@@ -256,10 +168,7 @@ public final class CbEnchantments {
         if (enchantment == null) {
             return null;
         }
-        net.minecraft.class_2378<net.minecraft.class_1887> w = requireWorld();
-        net.minecraft.class_5321<net.minecraft.class_1887> key = wKeyOf(enchantment);
-        return w.method_40264(key).orElseThrow(() -> new IllegalStateException(
-            "enchantment " + key.method_29177() + " is not in the world's enchantment registry"));
+        return legacy().worldHolder(enchantment);
     }
 
     /** W Holder&lt;Enchantment&gt; -> V Enchantment: the object of the holder's key (null -> null) */
@@ -303,7 +212,7 @@ public final class CbEnchantments {
     /** effect component marking a 1.21 record as standing for the 1.20.6 enchantment of that registry name */
     public static net.minecraft.class_9331<net.minecraft.class_2960> LEGACY;
 
-    /** registers {@link #LEGACY} with 1.21's enchantment effect components (CbEnchEffectComponentsMixin) */
+    /** registers {@link #LEGACY} with 1.21's enchantment effect components (CbEnchRegistriesMixin) */
     public static void registerComponents(net.minecraft.class_2378<net.minecraft.class_9331<?>> registry) {
         if (LEGACY == null) {
             LEGACY = net.minecraft.class_2378.method_10230(registry, net.minecraft.class_2960.method_60655("centurybridge", "legacy_enchantment"),
@@ -321,7 +230,7 @@ public final class CbEnchantments {
     }
 
     /** a mod enchantment's 1.21 record: its definition, its description, compatibility asked of the objects, the marker */
-    private static net.minecraft.class_1887 recordFor(class_1887 e, net.minecraft.class_7871<net.minecraft.class_1792> items) {
+    static net.minecraft.class_1887 recordFor(class_1887 e, net.minecraft.class_7871<net.minecraft.class_1792> items) {
         top.dext.centurybridge.step.v1_21.facade.class_1887$class_9427 d = e.field_50013;
         net.minecraft.class_6885<net.minecraft.class_1792> supported = items.method_46735(d.comp_2506);
         Optional<net.minecraft.class_6885<net.minecraft.class_1792>> primary =
@@ -340,63 +249,6 @@ public final class CbEnchantments {
         // Enchantment.areCompatible, asks them too for a record of CenturyBridge's (CbEnchRecordMixin)
         return new net.minecraft.class_1887(net.minecraft.class_2561.method_43471(e.method_8184()), definition,
             net.minecraft.class_6885.method_40246(), effects);
-    }
-
-    /**
-     * A server world's enchantment registry has loaded its datapacks (CbEnchLoaderMixin, before it
-     * freezes): every mod enchantment the datapacks do not define gets its record; every enchantment of
-     * the world gets its facade; the registry becomes the server's.
-     */
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public static void onServerLoaded(net.minecraft.class_2385<net.minecraft.class_1887> registry, net.minecraft.class_6903.class_7863 lookup) {
-        Legacy legacy = legacy();
-        legacy.closed = true;
-        net.minecraft.class_7871<net.minecraft.class_1792> items = (net.minecraft.class_7871) lookup.method_46623(net.minecraft.class_7924.field_41197)
-            .orElseThrow(() -> new IllegalStateException("the enchantment registry loads without the item registry in reach")).comp_1131();
-        List<class_1887> mods = new ArrayList<>();
-        synchronized (legacy) {
-            for (class_1887 e : legacy) {
-                if (e.cb$kind == class_1887.CB_MOD) {
-                    mods.add(e);
-                }
-            }
-        }
-        for (class_1887 e : mods) {
-            net.minecraft.class_5321<net.minecraft.class_1887> key = wKeyOf(e);
-            if (registry.method_35842(key)) {
-                org.slf4j.LoggerFactory.getLogger("CenturyBridge").warn("[centurybridge] a datapack defines enchantment {}: its 1.21 data"
-                    + " stands, and the 1.20.6 object registered under that name answers only 1.20.6 callers", key.method_29177());
-                continue;
-            }
-            registry.method_10272(key, recordFor(e, items), net.minecraft.class_9248.field_49136);
-        }
-        serverEnchantments = (net.minecraft.class_2378) registry;
-        for (net.minecraft.class_5321<net.minecraft.class_1887> key : ((net.minecraft.class_2378<net.minecraft.class_1887>) registry).method_42021()) {
-            facadeFor(key);
-        }
-    }
-
-    /** the client's enchantment registry has been built from the server's data (CbEnchLoaderMixin) */
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public static void onClientLoaded(net.minecraft.class_2385<net.minecraft.class_1887> registry) {
-        legacy().closed = true;
-        clientThread = Thread.currentThread();
-        clientEnchantments = (net.minecraft.class_2378) registry;
-        for (net.minecraft.class_5321<net.minecraft.class_1887> key : ((net.minecraft.class_2378<net.minecraft.class_1887>) registry).method_42021()) {
-            facadeFor(key);
-        }
-    }
-
-    /** the integrated server stopped (CbEnchServerMixin): its registry is no world's any more */
-    public static void onServerStopped(net.minecraft.class_2378<?> enchantments) {
-        if (enchantments == null || serverEnchantments == enchantments) {
-            serverEnchantments = null;
-        }
-    }
-
-    /** the client left its world (CbEnchClientMixin) */
-    public static void onClientDisconnected() {
-        clientEnchantments = null;
     }
 
     // ---- 1.20.6's flags as 1.21's tags ----
@@ -442,7 +294,7 @@ public final class CbEnchantments {
 
     /**
      * The tags an enchantment registry binds, with CenturyBridge's records of mod enchantments added to
-     * the tags their objects' flags put them in (CbEnchTagsMixin on MappedRegistry.bindTags). Idempotent:
+     * the tags their objects' flags put them in (CbLegacyRegistries.onBindTags, from MappedRegistry.bindTags). Idempotent:
      * a client binding the server's tags, which already list them, adds nothing twice.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -474,27 +326,5 @@ public final class CbEnchantments {
             }
         }
         return out == null ? tags : out;
-    }
-
-    /**
-     * 1.20.6's BuiltInRegistries.ENCHANTMENT had the datapacks' enchantment tags bound like every
-     * registry, so a 1.20.6 mod's holder.is(tag) answered them. The stand-in registry binds the same
-     * tags (the world's, as the world binds them: CbEnchTagsMixin) over the objects' holders.
-     */
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public static void bindLegacyTags(Map tags) {
-        Map<net.minecraft.class_6862<class_1887>, List<net.minecraft.class_6880<class_1887>>> mapped = new LinkedHashMap<>();
-        for (Object o : tags.entrySet()) {
-            Map.Entry e = (Map.Entry) o;
-            List<net.minecraft.class_6880<class_1887>> list = new ArrayList<>();
-            for (Object h : (List) e.getValue()) {
-                Optional<net.minecraft.class_5321<net.minecraft.class_1887>> key = ((net.minecraft.class_6880) h).method_40230();
-                if (key.isPresent()) {
-                    list.add(facadeFor(key.get()).field_45769);
-                }
-            }
-            mapped.put((net.minecraft.class_6862) e.getKey(), list);
-        }
-        legacy().method_40257(mapped);
     }
 }
