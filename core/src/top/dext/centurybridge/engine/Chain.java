@@ -308,6 +308,22 @@ public final class Chain {
         public String frames;
         /** "superCalls": "rewrite": a mod's super.old(..) in a class under the hook becomes super.new(..) */
         public boolean superCalls;
+        /**
+         * Narrowing forward ("narrow": true), for a parameter the release widened (1.20.2: a
+         * packet's handle(ClientGamePacketListener) became handle(ClientCommonPacketListener),
+         * because the packet now also arrives in the configuration phase). The old override was
+         * only ever handed the old type, so the synthesized new shape passes vanilla's value on
+         * -- cast to the old type -- only when it is one, and otherwise falls through to super's
+         * new shape (or answers the type's zero value when nothing above declares it) exactly
+         * as if the mod had not overridden anything:
+         * <pre>
+         *   new(a):  if (!(a instanceof Old)) return super.new(a);  return this.old((Old) a);
+         * </pre>
+         * Every argument whose old type differs from its new one is narrowed this way, so the
+         * old type must be a subtype of the new one (wiring-check holds the target to it). No
+         * wrap / bridge / frames; a guard may be combined (it is checked after the type test).
+         */
+        public boolean narrow;
     }
 
     public final java.util.List<OverrideHook> overrideHooks = new java.util.ArrayList<>();
@@ -321,7 +337,9 @@ public final class Chain {
      * the mod's own methods implement it -- added to its interfaces, and each
      * {@code synth} method (the new shape vanilla calls) synthesized to call a
      * static bridge with (this, args...). The bridge reaches the old methods
-     * through the adapter, typed.
+     * through the adapter, typed. A new shape two hooks would both synthesize in one class
+     * (a covariant override declares the old shape once per vanilla supertype that had it)
+     * is synthesized once, by the first of them in wiring order.
      */
     public static final class AdapterHook {
         public String under, adapter;
@@ -337,6 +355,55 @@ public final class Chain {
     }
 
     public final java.util.List<AdapterHook> adapterHooks = new java.util.ArrayList<>();
+
+    /**
+     * Lambdas whose functional interface's abstract method changed shape ("lambdaAdapters"): 1.20.2's
+     * ChatDecorator.decorate answers a Text where 1.20.1's answered a CompletableFuture. A lambda or
+     * method reference compiled against the old shape is an invokedynamic of
+     * LambdaMetafactory.metafactory with the old SAM; the class it spins implements the interface
+     * with the old method only, and the new abstract method is an AbstractMethodError when vanilla
+     * calls it. Key: "iface.sam(oldErasedSamDesc)" (analysis names); value:
+     * <pre>
+     *   {"iface": "CB functional interface declaring exactly the old SAM",
+     *    "adapt": "Owner#name(LCbIface;)Liface;"}
+     * </pre>
+     * The converter builds the lambda as the CB interface instead -- same SAM name, sam and
+     * instantiated method types, implementation handle, captured arguments: everything the old
+     * bootstrap described stays true -- and passes it through the adapt static, which answers the
+     * vanilla interface (implementing the new shape on top of the old one). A lambda bootstrapped by
+     * altMetafactory (serializable, marker interfaces, bridges) records its interface for
+     * deserialization and extra types; it is left alone and noted, never adapted silently.
+     */
+    public static final class LambdaAdapter {
+        public String iface, sam, samDesc, legacy, adaptOwner, adaptName, adaptDesc;
+    }
+
+    /** "iface.sam(samDesc)" -> adapter, see {@link LambdaAdapter} */
+    public final java.util.Map<String, LambdaAdapter> lambdaAdapters = new java.util.HashMap<>();
+
+    public static LambdaAdapter parseLambdaAdapter(String key, String legacy, String adapt) {
+        String where = "lambdaAdapters " + key;
+        int paren = key.indexOf('(');
+        int dot = paren < 0 ? -1 : key.lastIndexOf('.', paren);
+        int hash = adapt.indexOf('#');
+        int aparen = adapt.indexOf('(');
+        if (dot <= 0 || hash <= 0 || aparen <= hash) {
+            throw new IllegalArgumentException(where + ": key needs iface.sam(desc), adapt needs Owner#name(desc)");
+        }
+        LambdaAdapter la = new LambdaAdapter();
+        la.iface = key.substring(0, dot);
+        la.sam = key.substring(dot + 1, paren);
+        la.samDesc = key.substring(paren);
+        la.legacy = legacy;
+        la.adaptOwner = adapt.substring(0, hash);
+        la.adaptName = adapt.substring(hash + 1, aparen);
+        la.adaptDesc = adapt.substring(aparen);
+        String want = "(L" + legacy + ";)L" + la.iface + ";";
+        if (!la.adaptDesc.equals(want)) {
+            throw new IllegalArgumentException(where + ": adapt must take the CB interface and answer the vanilla one: " + want);
+        }
+        return la;
+    }
 
     /**
      * Members of a dead class its facade does not provide ("facadeGaps" in
@@ -711,23 +778,44 @@ public final class Chain {
      * authored in the runtime namespace -- intermediary for pre-wall targets, official
      * (mojang) for 26.x -- so past the wall each name is translated back to intermediary
      * via {@code back} (mojang -&gt; intermediary) to match how hierarchyBreak sees it.
+     *
+     * A climb step's layer ships its own access widener: when the step's wiring is named
+     * (-Dcb.wiring=&lt;root&gt;/core/segments/steps/&lt;V&gt;__&lt;to&gt;.json), the layer next to
+     * it (&lt;root&gt;/core/shims/steps/&lt;to&gt;/resources/*.accesswidener) is read too. An
+     * `extendable method` entry counts for its class as well: the loader makes the class of
+     * an extendable method extendable (AwRules).
      */
     private void loadAwExtendable(java.util.Map<String, String> back) throws IOException {
-        Path aw = Path.of("core/shims/" + to + "/resources/cb.accesswidener");
-        if (!java.nio.file.Files.exists(aw)) {
-            return;
+        java.util.List<Path> files = new java.util.ArrayList<>();
+        files.add(Path.of("core/shims/" + to + "/resources/cb.accesswidener"));
+        String stepWiring = System.getProperty("cb.wiring");
+        if (stepWiring != null) {
+            Path steps = Path.of(stepWiring).toAbsolutePath().getParent();
+            Path root = steps == null || steps.getParent() == null || steps.getParent().getParent() == null
+                ? null : steps.getParent().getParent().getParent();
+            Path res = root == null ? null : root.resolve("core/shims/steps/" + to + "/resources");
+            if (res != null && java.nio.file.Files.isDirectory(res)) {
+                try (var s = java.nio.file.Files.list(res)) {
+                    s.filter(p -> p.getFileName().toString().endsWith(".accesswidener")).sorted().forEach(files::add);
+                }
+            }
         }
-        for (String ln : java.nio.file.Files.readAllLines(aw)) {
-            String s = ln.trim();
-            if (s.startsWith("#") || s.isEmpty()) {
+        for (Path aw : files) {
+            if (!java.nio.file.Files.exists(aw)) {
                 continue;
             }
-            // "extendable class net/minecraft/<name>" (also accept the historical
-            // "extend-able"/"transitive-extendable" spellings fabric tolerates)
-            String[] p = s.split("\\s+");
-            if (p.length >= 3 && p[1].equals("class") && p[0].endsWith("extendable")) {
-                String name = p[2];
-                awExtendable.add(back.getOrDefault(name, name));
+            for (String ln : java.nio.file.Files.readAllLines(aw)) {
+                String s = ln.trim();
+                if (s.startsWith("#") || s.isEmpty()) {
+                    continue;
+                }
+                // "extendable class net/minecraft/<name>" (also accept the historical
+                // "extend-able"/"transitive-extendable" spellings fabric tolerates)
+                String[] p = s.split("\\s+");
+                if (p.length >= 3 && (p[1].equals("class") || p[1].equals("method")) && p[0].endsWith("extendable")) {
+                    String name = p[2];
+                    awExtendable.add(back.getOrDefault(name, name));
+                }
             }
         }
     }
@@ -855,32 +943,6 @@ public final class Chain {
     public final java.util.Map<String, CallReshape> callReshapes = new java.util.HashMap<>();
     /** key -> key, for {@link #instanceRedirectHome}'s JVM-order lookup */
     public final java.util.Map<String, String> callReshapeIndex = new java.util.HashMap<>();
-
-    /**
-     * Lambdas whose functional interface changed its single abstract method at the boundary
-     * ("lambdaAdapters" in a step's wiring): "iface.sam(oldDesc)" -> {"adapter": "cls",
-     * "wrap": "OWNER#name(Lcls;)Liface;"}. A lambda or method reference (an invokedynamic
-     * through LambdaMetafactory) still built for the old method -- 1.20.2's
-     * SpecialRecipeSerializer.Factory went from create(id, category) to create(category) --
-     * implements nothing the new interface declares and fails with AbstractMethodError when
-     * called. The rewrite has the invokedynamic build the adapter instead (a CB interface
-     * declaring the old method under the same name, so the lambda body and bootstrap
-     * arguments stay exactly as compiled) and passes it through {@code wrap}, a static that
-     * returns an implementation of the real interface answering in the old method's terms.
-     * Matched on the invokedynamic's interface, name and erased method type.
-     */
-    public static final class LambdaAdapter {
-        public final String adapter, wrapOwner, wrapName, wrapDesc;
-
-        LambdaAdapter(String adapter, String wrapOwner, String wrapName, String wrapDesc) {
-            this.adapter = adapter;
-            this.wrapOwner = wrapOwner;
-            this.wrapName = wrapName;
-            this.wrapDesc = wrapDesc;
-        }
-    }
-
-    public final java.util.Map<String, LambdaAdapter> lambdaAdapters = new java.util.HashMap<>();
     /** member names with a reshape: a class whose bytes mention none of them is skipped */
     public final java.util.Set<String> callReshapeNames = new java.util.HashSet<>();
     /** name + new descriptor of every reshape: what the rewritten call sites now reference */
@@ -1398,6 +1460,11 @@ public final class Chain {
                             != org.objectweb.asm.Type.getArgumentTypes(h.newDesc).length) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": superCalls needs args");
                     }
+                    h.narrow = o.has("narrow") && o.get("narrow").getAsBoolean();
+                    if (h.narrow && (h.frames != null || h.wrapName != null || o.has("bridge"))) {
+                        throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
+                            + ": narrow forwards the new argument itself (no wrap / bridge / frames)");
+                    }
                     if (o.has("bridge")) {
                         String br = o.get("bridge").getAsString();
                         int dot = br.lastIndexOf('.', br.indexOf('('));
@@ -1442,6 +1509,13 @@ public final class Chain {
                 var dr = root.getAsJsonObject("depRenames");
                 for (String k : dr.keySet()) {
                     c.depRenames.put(k, dr.get(k).getAsString());
+                }
+            }
+            if (root.has("lambdaAdapters")) {
+                for (var e : root.getAsJsonObject("lambdaAdapters").entrySet()) {
+                    var o = e.getValue().getAsJsonObject();
+                    c.lambdaAdapters.put(e.getKey(), parseLambdaAdapter(e.getKey(),
+                        o.get("iface").getAsString(), o.get("adapt").getAsString()));
                 }
             }
             if (root.has("instanceFieldGetters")) {
@@ -1505,24 +1579,6 @@ public final class Chain {
                 for (String k : cr.keySet()) {
                     c.ctorRedirects.put(k, cr.get(k).getAsString());
                     c.ctorRedirectOwners.add(k.substring(0, k.indexOf(".<init>")));
-                }
-            }
-            if (root.has("lambdaAdapters")) {
-                var la = root.getAsJsonObject("lambdaAdapters");
-                for (String k : la.keySet()) {
-                    var o = la.getAsJsonObject(k);
-                    String w = o.get("wrap").getAsString();
-                    int hash = w.indexOf('#');
-                    int paren = w.indexOf('(');
-                    String adapter = o.get("adapter").getAsString();
-                    String iface = k.substring(0, k.lastIndexOf('.', k.indexOf('(')));
-                    if (hash <= 0 || paren <= hash
-                            || !w.substring(paren).equals("(L" + adapter + ";)L" + iface + ";")) {
-                        throw new IllegalArgumentException("lambdaAdapters " + k + ": wrap must be OWNER#name(L"
-                            + adapter + ";)L" + iface + ";");
-                    }
-                    c.lambdaAdapters.put(k, new LambdaAdapter(adapter, w.substring(0, hash),
-                        w.substring(hash + 1, paren), w.substring(paren)));
                 }
             }
             if (root.has("lookupDesc")) {

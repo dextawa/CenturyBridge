@@ -123,7 +123,7 @@ public final class Main {
         Chain chain = Chain.load(Path.of(args[1]), args[2], args[3]);
         // hierarchy of the SOURCE version: mods were compiled against it, so a call
         // site's owner and the class actually declaring the member are related there
-        Path srcStub = Path.of("data/jars/client-" + args[2] + "-intermediary.jar");
+        Path srcStub = stubOf(args[2]);
         if (Files.exists(srcStub)) {
             chain.loadHierarchy(srcStub);
             System.out.println("hierarchy: " + chain.superOf.size() + " classes from " + srcStub.getFileName());
@@ -155,8 +155,7 @@ public final class Main {
         if (crossesWall && !Files.exists(renameTable)) {
             throw new IllegalStateException("chain crosses the namespace wall but " + renameTable + " is missing");
         }
-        Path targetStub = crossesWall ? Path.of("data/jars/client-" + args[3] + ".jar")
-                                      : Path.of("data/jars/client-" + args[3] + "-intermediary.jar");
+        Path targetStub = stubOf(args[3]);
         if (Files.exists(targetStub)) {
             chain.loadTargetCtors(targetStub, crossesWall ? renameTable : null);
             System.out.println("target constructors: " + chain.targetCtors.size() + " owners from " + targetStub.getFileName());
@@ -166,8 +165,8 @@ public final class Main {
         if (!crossesWall) {
             String tc = System.getProperty("cb.targetCode", System.getenv("CB_TARGET_CODE"));
             Path codeJar = tc != null ? Path.of(tc) : null;
-            if (codeJar == null && Files.exists(Path.of("data/jars/client-" + args[3] + "-intermediary-code.jar"))) {
-                codeJar = Path.of("data/jars/client-" + args[3] + "-intermediary-code.jar");
+            if (codeJar == null && Files.exists(codeOf(args[3]))) {
+                codeJar = codeOf(args[3]);
             }
             if (codeJar == null) {
                 Path rj = Path.of("data/runtime/client-" + args[3] + "/.fabric/remappedJars");
@@ -344,6 +343,25 @@ public final class Main {
                 java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         }
         System.out.println("climb " + from + " -> " + to + ": " + inputs.size() + " jar(s) -> " + outDir);
+    }
+
+    private static boolean postWall(String version) {
+        return Chain.RELEASES.indexOf(version) > Chain.RELEASES.indexOf("1.21.11");
+    }
+
+    /**
+     * A release's compile stub under data/jars: the intermediary stub through 1.21.11; past the
+     * namespace wall the plain jar itself (mojang names, nothing to remap).
+     */
+    private static Path stubOf(String version) {
+        return Path.of(postWall(version) ? "data/jars/client-" + version + ".jar"
+                                          : "data/jars/client-" + version + "-intermediary.jar");
+    }
+
+    /** a release's jar with real method bodies, for mixin anchors: past the wall the plain jar carries them */
+    private static Path codeOf(String version) {
+        return Path.of(postWall(version) ? "data/jars/client-" + version + ".jar"
+                                          : "data/jars/client-" + version + "-intermediary-code.jar");
     }
 
     /** a release's client jar under data/jars: obfuscated before 26.1, plain after */

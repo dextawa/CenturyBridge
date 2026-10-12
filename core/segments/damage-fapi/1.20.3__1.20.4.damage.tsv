@@ -1,0 +1,3 @@
+usage	owner	name	desc	kinds	w
+implement-interface	net/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandlerRegistry			ABSTRACT	class public abstract interface extends java/lang/Object
+implement-interface	net/fabricmc/fabric/api/resource/ModResourcePack			ABSTRACT	class public abstract interface extends java/lang/Object

@@ -15,6 +15,20 @@ extendable class net/minecraft/class_630
 # SmithingTrimRecipe's constructor went package-private in 1.20.2 (public in 1.20.1, with the
 # recipe id): a converted subclass's super(id, ...) is reshaped onto it (s1misc recipe wiring)
 accessible method net/minecraft/class_8062 <init> (Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;)V
+# ---- s1net: packet classes 1.20.1 mods could extend that 1.20.2 turned into final records
+# (CustomPayload S2C/C2S, ForgetLevelChunk, Respawn, ClientIntention, CustomQuery, CustomQueryAnswer).
+# A converted subclass extends the record again -- its super(..) reshaped onto the canonical
+# constructor -- so its objects are real packets of that type. Both versions encode a packet by the id
+# registered for its exact class (ConnectionProtocol.PacketSet.getId(packet.getClass())), so a
+# subclass instance could not be sent in 1.20.1 either. Same isRecord() note as above (re-checked
+# for 1.20.2's game jar and Fabric API 0.91.6: no isRecord/getRecordComponents references).
+extendable class net/minecraft/class_2658
+extendable class net/minecraft/class_2817
+extendable class net/minecraft/class_2666
+extendable class net/minecraft/class_2724
+extendable class net/minecraft/class_2889
+extendable class net/minecraft/class_2899
+extendable class net/minecraft/class_2913
 # ---- BEGIN GENERATED: access narrowed since 1.20.1 (Main access-diff) ----
 # public/protected in 1.20.1, narrowed, made final or sealed in this release: the same
 # members, so a converted mod calling, overriding, extending or writing them gets the

@@ -77,6 +77,9 @@ import org.objectweb.asm.tree.analysis.SimpleVerifier;
  *              does not permit it
  *   AWFILE     an access widener the loader rejects     the game does not boot
  *              (format, namespace, missing file)
+ *   TOMBSTONE  a call into the converter's lazy-fail    UnsupportedOperationException
+ *              stubs (centurybridge/gen/Tombstones*):   when reached (always KNOWN:
+ *              the dead reference it replaced           it links, and it is open)
  *
  * Access is judged through the access wideners the game would load with the mod: every
  * classpath mod's (Fabric API's modules, CenturyBridge's) plus the subject's own (and its
@@ -1032,6 +1035,12 @@ public final class LinkCheck {
     private void checkMethodRef(String owner, String name, String desc, int op, boolean itf, String where) {
         if (owner.startsWith("[")) return; // array clone() etc.
         if ((owner.equals("java/lang/invoke/MethodHandle") || owner.equals("java/lang/invoke/VarHandle"))) return;
+        if (owner.startsWith("centurybridge/gen/Tombstones")) {
+            // a dead reference the converter swapped for a lazy-fail stub: it links, and it throws
+            // the moment it is reached -- open, not bridged
+            report("TOMBSTONE", where, owner + "." + name + desc, "throws when reached");
+            return;
+        }
         if (!needClass(owner, where, "owner")) return;
         Object res = findMethod(owner, name + desc);
         if (res == UNKNOWN) return;
@@ -1279,6 +1288,10 @@ public final class LinkCheck {
         int dot = ref.indexOf('.');
         if (dot > 0) owner = ref.substring(0, dot);
         String bucket;
+        if (kind.equals("TOMBSTONE")) {
+            findings.add(new Finding("KNOWN", kind, curJar, where, ref, note));
+            return;
+        }
         String fate = auditFate.get(auditKey(kind, ref));
         if (delegationSite) {
             // a delegation site is judged by what the converter said about delegation

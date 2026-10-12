@@ -16,8 +16,13 @@ public abstract class FriendlyByteBufBridge {
         return ((class_2540) (Object) this).method_10794((class_2520) nbt);
     }
 
-    /** removed unlimited-size NBT read; delegates to the standard read (size-cap approximation) */
+    /**
+     * readUnlimitedNbt(): 1.20.1 read with NbtTagSizeTracker.EMPTY (no size limit); 1.20.2's
+     * unlimited accounting is NbtTagSizeTracker.ofUnlimitedBytes(), and its read answers any root tag,
+     * held here to 1.20.1's compound-or-null.
+     */
     public class_2487 method_30617() {
-        return ((class_2540) (Object) this).method_10798();
+        return top.dext.centurybridge.rt.v1_20_2.CbNet.cbNbtCompound(
+            ((class_2540) (Object) this).method_30616(net.minecraft.class_2505.method_53898()));
     }
 }

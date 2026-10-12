@@ -1,9 +1,9 @@
 usage	owner	name	desc	kinds	w
 call	net/minecraft/class_2186	method_9318	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2300;	METHOD	method method_9318(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/class_2300; private
-override+super	net/minecraft/class_2186	method_9318	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2300;	ORPHAN	method method_9318(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/class_2300; private
+override+super	net/minecraft/class_2186	method_9318	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2300;	METHOD,ORPHAN	method method_9318(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/class_2300; private
 call	net/minecraft/class_2191	method_9331	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2191$class_2192;	METHOD	method method_9331(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/class_2191$class_2192; private static
-override+super	net/minecraft/class_2191	method_9331	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2191$class_2192;	ORPHAN	method method_9331(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/class_2191$class_2192; private static
+override+super	net/minecraft/class_2191	method_9331	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2191$class_2192;	METHOD,ORPHAN	method method_9331(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/class_2191$class_2192; private static
 call	net/minecraft/class_2233	method_9453	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2233$class_2234;	METHOD	method method_9453(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/class_2233$class_2234; private
-override+super	net/minecraft/class_2233	method_9453	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2233$class_2234;	ORPHAN	method method_9453(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/class_2233$class_2234; private
+override+super	net/minecraft/class_2233	method_9453	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2233$class_2234;	METHOD,ORPHAN	method method_9453(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/class_2233$class_2234; private
 new	net/minecraft/class_2303	<init>	(Lcom/mojang/brigadier/StringReader;)V	METHOD	constructors (Lcom/mojang/brigadier/StringReader;Z)V
 super-ctor	net/minecraft/class_2303	<init>	(Lcom/mojang/brigadier/StringReader;)V	METHOD	constructors (Lcom/mojang/brigadier/StringReader;Z)V

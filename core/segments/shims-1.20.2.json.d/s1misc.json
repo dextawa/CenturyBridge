@@ -1079,8 +1079,8 @@
  },
  "lambdaAdapters": {
   "net/minecraft/class_1866$class_7711.create(Lnet/minecraft/class_2960;Lnet/minecraft/class_7710;)Lnet/minecraft/class_3955;": {
-   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacySpecialRecipeFactory",
-   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializerSupport#specialFactory(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySpecialRecipeFactory;)Lnet/minecraft/class_1866$class_7711;"
+   "iface": "top/dext/centurybridge/rt/v1_20_2/CbLegacySpecialRecipeFactory",
+   "adapt": "top/dext/centurybridge/rt/v1_20_2/CbRecipeSerializerSupport#specialFactory(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacySpecialRecipeFactory;)Lnet/minecraft/class_1866$class_7711;"
   }
  },
  "fieldGetters": {

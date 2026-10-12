@@ -9,9 +9,11 @@ its place -- so the engine can work from the whole diff rather than from name li
   usage  owner  name  desc  kinds  w (what W has: other descriptors of the name on the owner,
                                       the owner's constructors, the class's new shape, ...)
 
-  python segment_damage.py <probe report.tsv> <W jar> <out.tsv> [<inter-to-mojang.tsv>]
-(the tsv translates V's intermediary owner and member names on the 1.21.11 -> 26.1 wall)
+  python segment_damage.py <probe report.tsv> <W jar> <out.tsv> [<inter-to-mojang.tsv>] [--w-extra <jar|dir>...]
+(the tsv translates V's intermediary owner and member names on the 1.21.11 -> 26.1 wall; --w-extra adds
+W classes from other jars -- Fabric API's modules, for the Fabric API probe)
 """
+import os
 import struct
 import sys
 import zipfile
@@ -102,10 +104,16 @@ def flags(a):
 
 
 def main():
-    report, wjar, out = sys.argv[1:4]
+    args = sys.argv[1:]
+    extra = []
+    if "--w-extra" in args:
+        k = args.index("--w-extra")
+        extra = args[k + 1:]
+        args = args[:k]
+    report, wjar, out = args[0:3]
     cmap, mmap = {}, {}
-    if len(sys.argv) > 4:
-        for line in open(sys.argv[4], encoding="utf-8"):
+    if len(args) > 3:
+        for line in open(args[3], encoding="utf-8"):
             f = line.rstrip("\n").split("\t")
             if len(f) < 3:
                 continue
@@ -123,12 +131,16 @@ def main():
         return tcls(c[:d]) + c[d:] if d > 0 else c
 
     W = {}
-    with zipfile.ZipFile(wjar) as z:
-        for n in z.namelist():
-            if n.endswith(".class") and (n.startswith("net/minecraft/") or n.startswith("com/mojang/")):
-                p = parse(z.read(n))
-                if p:
-                    W[p[0]] = p
+    jars = [wjar]
+    for e in extra:
+        jars += sorted(os.path.join(e, f) for f in os.listdir(e) if f.endswith(".jar")) if os.path.isdir(e) else [e]
+    for i, jar in enumerate(jars):
+        with zipfile.ZipFile(jar) as z:
+            for n in z.namelist():
+                if n.endswith(".class") and (i > 0 or n.startswith("net/minecraft/") or n.startswith("com/mojang/")):
+                    p = parse(z.read(n))
+                    if p and p[0] not in W:
+                        W[p[0]] = p
     rows = 0
     with open(report, encoding="utf-8") as f, open(out, "w", encoding="utf-8", newline="\n") as o:
         next(f)
