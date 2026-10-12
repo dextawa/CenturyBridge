@@ -72,7 +72,9 @@
   "net/minecraft/class_310.method_44649()Z",
   "net/minecraft/class_310.method_1539()Lcom/mojang/authlib/properties/PropertyMap;",
   "net/minecraft/class_310.method_1589()Z",
-  "net/minecraft/class_310.method_1537(Z)V"
+  "net/minecraft/class_310.method_1537(Z)V",
+  "net/minecraft/class_310.method_1570()Lnet/minecraft/class_3517;",
+  "net/minecraft/class_310.field_1688:Lnet/minecraft/class_3517;"
  ],
  "classRenames": {
   "net/minecraft/class_8084": "top/dext/centurybridge/facade/v1_20_2/class_8084",

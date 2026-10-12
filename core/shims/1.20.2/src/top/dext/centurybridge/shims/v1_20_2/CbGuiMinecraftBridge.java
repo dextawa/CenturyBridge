@@ -2,6 +2,8 @@ package top.dext.centurybridge.shims.v1_20_2;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 /**
  * Minecraft's 1.20.1 members 1.20.2 removed, on 1.20.2's client:
@@ -15,13 +17,32 @@ import org.spongepowered.asm.mixin.Unique;
  * connected to a Realm and cleared on the title and Realms screens; 1.20.2 marks the current server
  * entry as a Realm instead. The flag is the answer once something sets it, as in 1.20.1, and the current
  * entry's mark otherwise; the screens that cleared it in 1.20.1 clear it again (CbGuiRealmsFlagResetBridge).</li>
+ * <li>frameTimer / getFrameTimer(): 1.20.1's ring buffer of the last 240 frame times (FrameTimer, the
+ * facade standing in for it). 1.20.1's runTick pushed each frame's duration into it; 1.20.2's runTick hands
+ * the same value, at the same point, to the debug overlay's logFrameDuration, which is where it is pushed
+ * here.</li>
  * </ul>
  */
 @Mixin(net.minecraft.class_310.class)
 public abstract class CbGuiMinecraftBridge implements top.dext.centurybridge.rt.v1_20_2.CbRealmsFlag {
 
+    /** frameTimer */
+    public final top.dext.centurybridge.facade.v1_20_2.class_3517 field_1688 = new top.dext.centurybridge.facade.v1_20_2.class_3517();
+
     @Unique
     private Boolean cb$connectedToRealms;
+
+    /** 1.20.1 getFrameTimer() */
+    public top.dext.centurybridge.facade.v1_20_2.class_3517 method_1570() {
+        return this.field_1688;
+    }
+
+    /** the frame duration 1.20.1 pushed into frameTimer, as 1.20.2 logs it */
+    @ModifyArg(method = "method_1523", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_340;method_53534(J)V"))
+    private long cb$logFrame(long nanos) {
+        this.field_1688.method_15247(nanos);
+        return nanos;
+    }
 
     /** 1.20.1 clearResourcePacksOnError(error, message) */
     public void method_31186(Throwable error, net.minecraft.class_2561 message) {
