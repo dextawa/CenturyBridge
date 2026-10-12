@@ -87,8 +87,11 @@ public final class CbItemLegacy {
     static final List<String> DYES = List.of("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink",
         "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black");
 
-    /** banner pattern ids by their 1.20.4 code, as BannerPatternFormatFix reads them */
-    static final Map<String, String> PATTERN_CODES = Map.ofEntries(
+    /**
+     * 1.20.4's banner pattern codes ("b", "bl", ...) by the pattern id 1.20.5 keys the registry on, as
+     * the game's BannerPatternFormatFix maps them (shared: s4block's banner bridge reads it too).
+     */
+    public static final Map<String, String> PATTERN_CODES = Map.ofEntries(
         Map.entry("minecraft:base", "b"), Map.entry("minecraft:square_bottom_left", "bl"),
         Map.entry("minecraft:square_bottom_right", "br"), Map.entry("minecraft:square_top_left", "tl"),
         Map.entry("minecraft:square_top_right", "tr"), Map.entry("minecraft:stripe_bottom", "bs"),
