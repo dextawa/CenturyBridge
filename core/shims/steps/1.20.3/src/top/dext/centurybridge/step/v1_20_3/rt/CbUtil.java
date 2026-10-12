@@ -351,6 +351,24 @@ public final class CbUtil {
         return map;
     }
 
+    // ------------------------------------------------------------------ StringRepresentable.EnumCodec (class_3542$class_7292)
+
+    /**
+     * was StringRepresentable.EnumCodec.encode(E, ops, prefix) (method_42631): 1.20.3's EnumCodec inherits
+     * StringRepresentableCodec's encode -- the value's serialized name, or its index when the ops compress
+     * maps, as 1.20.2's did -- reached through Codec.encode
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static <T> com.mojang.serialization.DataResult<T> method_42631(net.minecraft.class_3542.class_7292 codec, Enum value,
+                                                                         com.mojang.serialization.DynamicOps<T> ops, T prefix) {
+        return ((com.mojang.serialization.Codec) codec).encode(value, ops, prefix);
+    }
+
+    /** a 1.20.2 EnumCodec subclass's encode(E, ..) takes the enum the 1.20.3 encode(S, ..) is handed */
+    public static Enum<?> cbAsEnum(net.minecraft.class_3542 value) {
+        return (Enum<?>) value;
+    }
+
     private CbUtil() {
     }
 }

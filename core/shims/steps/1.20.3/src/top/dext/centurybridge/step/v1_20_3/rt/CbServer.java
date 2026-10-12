@@ -50,6 +50,24 @@ public final class CbServer {
         return level.method_55117(source, damage, calculator, x, y, z, radius, fire, interaction);
     }
 
+    // ------------------------------------------------------------------ ServerLoginPacketListenerImpl (class_3248)
+
+    /**
+     * was ServerLoginPacketListenerImpl.isValidUsername(name) (method_40085), 1.20.2's body: no character at or
+     * below the space, none at or above DEL
+     */
+    public static boolean method_40085(String name) {
+        return name.chars().filter(c -> c <= 32 || c >= 127).findAny().isEmpty();
+    }
+
+    /**
+     * was ServerLoginPacketListenerImpl.createOfflineProfile(name) (method_52418, protected): the offline profile
+     * for the name -- 1.20.3's UUIDUtil.createOfflineProfile, the same body
+     */
+    public static com.mojang.authlib.GameProfile method_52418(String name) {
+        return net.minecraft.class_4844.method_54140(name);
+    }
+
     private CbServer() {
     }
 }

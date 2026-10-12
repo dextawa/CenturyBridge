@@ -12,3 +12,16 @@ extendable	class	net/minecraft/class_4413
 extendable	method	net/minecraft/class_4413	toString	()Ljava/lang/String;
 extendable	method	net/minecraft/class_4413	hashCode	()I
 extendable	method	net/minecraft/class_4413	equals	(Ljava/lang/Object;)Z
+# s2rest: 1.20.2 packet classes that 1.20.3 made final records: subclassable again, their members overridable
+extendable	class	net/minecraft/class_2720
+extendable	method	net/minecraft/class_2720	toString	()Ljava/lang/String;
+extendable	method	net/minecraft/class_2720	hashCode	()I
+extendable	method	net/minecraft/class_2720	equals	(Ljava/lang/Object;)Z
+extendable	class	net/minecraft/class_2856
+extendable	method	net/minecraft/class_2856	toString	()Ljava/lang/String;
+extendable	method	net/minecraft/class_2856	hashCode	()I
+extendable	method	net/minecraft/class_2856	equals	(Ljava/lang/Object;)Z
+extendable	class	net/minecraft/class_2757
+extendable	method	net/minecraft/class_2757	toString	()Ljava/lang/String;
+extendable	method	net/minecraft/class_2757	hashCode	()I
+extendable	method	net/minecraft/class_2757	equals	(Ljava/lang/Object;)Z

@@ -1898,6 +1898,15 @@ public final class JarProcessor {
                         // consulted on the VANILLA owner, which differs when the site
                         // names a mod class an inherited vanilla member is reached through
                         final String site = owner + "." + name + desc;
+                        // a super call (super(..) included) into the type this class extends through
+                        // superRenames goes to the facade -- the superRename layer retargets it, and the
+                        // facade serves the member itself. Wired here as damage it would be redirected
+                        // to a static (a virtual call again: back into the class's own override) or
+                        // reported dead, though the facade answers it
+                        if (op == Opcodes.INVOKESPECIAL && needSuperRename[0] && chain.superRenames.containsKey(owner)) {
+                            top.dext.centurybridge.data.FullAudit.record(site, "super-renamed");
+                            return;
+                        }
                         if (!Chain.minecraftOwned(owner)) {
                             String inh = name.equals("<init>") ? null
                                 : inheritedVanillaOwner(owner, name + desc, layer);

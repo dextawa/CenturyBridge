@@ -390,6 +390,31 @@ public final class CbText {
         return json;
     }
 
+    // ------------------------------------------------------------------ DataSource (class_7419) lambdas
+
+    /** a 1.20.2 DataSource lambda: getData(source) only (1.20.3 added type(), so a lambda no longer fits) */
+    @FunctionalInterface
+    public interface CbLegacyDataSource {
+        java.util.stream.Stream<net.minecraft.class_2487> method_10916(net.minecraft.class_2168 source)
+            throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+    }
+
+    /** the lambda as a 1.20.3 DataSource of the legacy type, as a 1.20.2 data source class gets it (adapterHooks) */
+    public static net.minecraft.class_7419 cbDataSource(CbLegacyDataSource data) {
+        return new net.minecraft.class_7419() {
+            @Override
+            public java.util.stream.Stream<net.minecraft.class_2487> method_10916(net.minecraft.class_2168 source)
+                    throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+                return data.method_10916(source);
+            }
+
+            @Override
+            public net.minecraft.class_7419.class_8827<?> method_54225() {
+                return LEGACY_DATA_SOURCE;
+            }
+        };
+    }
+
     private CbText() {
     }
 }

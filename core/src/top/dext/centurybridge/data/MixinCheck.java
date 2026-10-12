@@ -48,6 +48,8 @@ public final class MixinCheck {
     private static final String INJECT_PKG = "Lorg/spongepowered/asm/mixin/injection/";
 
     private final Map<String, ClassNode> jar = new HashMap<>();
+    /** the packages the game jar has classes in: an owner elsewhere is a library's (brigadier, DFU, ...) */
+    private final java.util.Set<String> jarPackages = new java.util.HashSet<>();
     private final List<String> problems = new ArrayList<>();
 
     /** mixin class -> its target internal names, for the covers check */
@@ -124,6 +126,8 @@ public final class MixinCheck {
                 ClassNode cn = new ClassNode();
                 new ClassReader(zin.readAllBytes()).accept(cn, ClassReader.SKIP_CODE);
                 jar.put(cn.name, cn);
+                int slash = cn.name.lastIndexOf('/');
+                jarPackages.add(slash < 0 ? "" : cn.name.substring(0, slash));
             }
         }
     }
@@ -442,7 +446,11 @@ public final class MixinCheck {
             }
             ClassNode oc = jar.get(owner);
             if (oc == null) {
-                if (owner.startsWith("net/minecraft/") || owner.startsWith("com/mojang/")) {
+                // an owner in a package of the game is a game class the jar must have; one in another
+                // package (com/mojang/brigadier, com/mojang/serialization) is a library's, which Mixin
+                // matches by name in the target method's code without loading it
+                int slash = owner.lastIndexOf('/');
+                if (jarPackages.contains(slash < 0 ? "" : owner.substring(0, slash))) {
                     problems.add(me + ": @At owner " + owner + " not in jar (" + m.name + ")");
                 }
                 continue;
