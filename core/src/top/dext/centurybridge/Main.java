@@ -335,6 +335,22 @@ public final class Main {
             }
             inputs = next;
             baseOf = nextBase;
+            // -Dcb.climb.keep=false: a corpus-sized climb keeps only each step's report (report.md,
+            // full-audit.tsv); the converted jars of a step go once the next step has read them --
+            // 270 mods are a gigabyte per step, twenty-one steps more than a shared disk has room for
+            if (!Boolean.parseBoolean(System.getProperty("cb.climb.keep", "true"))) {
+                try (var s = Files.list(stepOut)) {
+                    for (Path f : (Iterable<Path>) s::iterator) {
+                        if (f.getFileName().toString().endsWith(".jar")) {
+                            Files.delete(f);
+                        }
+                    }
+                }
+                if (i > a) {
+                    Path prevNext = outDir.resolve("steps").resolve(Chain.RELEASES.get(i - 1) + "__" + v).resolve("next");
+                    deleteTree(prevNext);
+                }
+            }
         }
         System.clearProperty("cb.wiring");
         Files.createDirectories(outDir);
@@ -347,6 +363,18 @@ public final class Main {
 
     private static boolean postWall(String version) {
         return Chain.RELEASES.indexOf(version) > Chain.RELEASES.indexOf("1.21.11");
+    }
+
+    /** removes a directory the climb itself wrote (a step's staged jars), failing loudly on any error */
+    private static void deleteTree(Path dir) throws java.io.IOException {
+        if (!Files.exists(dir)) {
+            return;
+        }
+        try (var s = Files.walk(dir)) {
+            for (Path p : (Iterable<Path>) s.sorted(java.util.Comparator.reverseOrder())::iterator) {
+                Files.delete(p);
+            }
+        }
     }
 
     /**
