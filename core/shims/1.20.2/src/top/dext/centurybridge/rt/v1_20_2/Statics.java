@@ -555,12 +555,6 @@ public final class Statics {
 
     // ---- Entity.getMountedHeightOffset removed (1.20.2 moved to passenger attachment points);
     // the 1.20.1 default was height * 0.75 (horses used the same formula).
-    /** was net/minecraft/class_1297.method_5621()D */
-    public static double method_5621(net.minecraft.class_1297 self) { return self.method_17682() * 0.75; }
-    /** was net/minecraft/class_1496.method_5621()D */
-    public static double method_5621(net.minecraft.class_1496 self) { return self.method_17682() * 0.75; }
-    /** was net/minecraft/class_1498.method_5621()D */
-    public static double method_5621(net.minecraft.class_1498 self) { return self.method_17682() * 0.75; }
 
     // ---- Predicates / criteria: builders became Optional-typed, factories return AdvancementCriterion.
     /** was net/minecraft/class_2090.method_9017(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090; LocationPredicate.feature(structure) */

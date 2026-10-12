@@ -374,7 +374,10 @@
   "net/minecraft/class_3324.method_14570(Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)V": "top/dext/centurybridge/rt/v1_20_2/CbServer",
   "net/minecraft/class_3324.method_14613(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_3222;": "top/dext/centurybridge/rt/v1_20_2/CbServer",
   "net/minecraft/class_3312.method_37156(Ljava/lang/String;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/rt/v1_20_2/CbServer",
-  "net/minecraft/server/MinecraftServer.method_15876()Lnet/minecraft/class_3517;": "top/dext/centurybridge/rt/v1_20_2/CbServerMetrics"
+  "net/minecraft/server/MinecraftServer.method_15876()Lnet/minecraft/class_3517;": "top/dext/centurybridge/rt/v1_20_2/CbServerMetrics",
+  "net/minecraft/class_7298.method_45342()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs",
+  "net/minecraft/class_7689.method_45348()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs",
+  "net/minecraft/class_8153.method_49147()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs"
  },
  "superRedirects": {
   "net/minecraft/class_1852.method_8114()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#storedId",
@@ -402,7 +405,10 @@
   "net/minecraft/class_269.method_1181(Ljava/lang/String;)Z": "top/dext/centurybridge/rt/v1_20_2/CbScoreboard#super_method_1181",
   "net/minecraft/class_2168.method_44908(Lnet/minecraft/class_7620;)Lnet/minecraft/class_2168;": "top/dext/centurybridge/rt/v1_20_2/CbServer#super_method_44908",
   "net/minecraft/class_3312.method_37156(Ljava/lang/String;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/rt/v1_20_2/CbServer#super_method_37156",
-  "net/minecraft/server/MinecraftServer.method_15876()Lnet/minecraft/class_3517;": "top/dext/centurybridge/rt/v1_20_2/CbServerMetrics#super_method_15876"
+  "net/minecraft/server/MinecraftServer.method_15876()Lnet/minecraft/class_3517;": "top/dext/centurybridge/rt/v1_20_2/CbServerMetrics#super_method_15876",
+  "net/minecraft/class_7298.method_45342()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs#super_method_45342",
+  "net/minecraft/class_7689.method_45348()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs#super_method_45348",
+  "net/minecraft/class_8153.method_49147()Z": "top/dext/centurybridge/rt/v1_20_2/CbMobs#super_method_49147"
  },
  "callReshapes": {
   "net/minecraft/class_2232.method_9439(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_161;": {
@@ -902,6 +908,22 @@
     "method_15876()Lnet/minecraft/class_3517;"
    ],
    "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyMeleeReference",
+   "requires": [
+    "method_47921()Lnet/minecraft/class_243;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_8113",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyDisplayOrientation",
+   "requires": [
+    "method_48863()Lorg/joml/Quaternionf;"
+   ],
+   "synth": []
   }
  ],
  "overrideHooks": [
@@ -1068,6 +1090,104 @@
    "onlyUnder": "net/minecraft/class_6611",
    "wrap": "top/dext/centurybridge/rt/v1_20_2/CbJfr.protocolId(Lnet/minecraft/class_2539;)I",
    "basis": "1.20.2 hands the profiler the NetworkState; a 1.20.1 profiler gets its id"
+  },
+  {
+   "old": "method_5621()D",
+   "new": "method_52533(Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lorg/joml/Vector3f;",
+   "onlyUnder": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyRidingVehicle",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbRiding.vehicleAttachment(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyRidingVehicle;Lnet/minecraft/class_1297;Lnet/minecraft/class_4048;F)Lorg/joml/Vector3f;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "1.20.2 seats passengers at getPassengerAttachmentPoint and calls getPassengersRidingOffset no more; a vehicle overriding the 1.20.1 offset answers the attachment point with 1.20.1's height for that passenger (CbRiding), vanilla's horizontal seat via the guarded re-entry"
+  },
+  {
+   "old": "method_5678()D",
+   "new": "method_52536(Lnet/minecraft/class_1297;)F",
+   "onlyUnder": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyRidingPassenger",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbRiding.passengerOffset(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyRidingPassenger;Lnet/minecraft/class_1297;)F",
+   "basis": "1.20.2 adds getMyRidingOffset(vehicle) to the seat; a passenger overriding the 1.20.1 getMyRidingOffset() answers it so that it sits where 1.20.1 put it (CbRiding)"
+  },
+  {
+   "old": "method_33191(Lnet/minecraft/class_1309;)D",
+   "new": "method_42150(Lnet/minecraft/class_1309;)Z",
+   "onlyUnder": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyMeleeRangeOverride",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbMelee.isWithinMeleeAttackRange(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyMeleeRangeOverride;Lnet/minecraft/class_1309;)Z",
+   "basis": "1.20.1 Mob.isWithinMeleeAttackRange compared the perceived distance with getMeleeAttackRangeSqr; 1.20.2 intersects attack boxes. A mob overriding either answers with 1.20.1's body"
+  },
+  {
+   "old": "method_47922(Lnet/minecraft/class_1309;)D",
+   "new": "method_42150(Lnet/minecraft/class_1309;)Z",
+   "onlyUnder": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyMeleeRangeOverride",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbMelee.isWithinMeleeAttackRange(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyMeleeRangeOverride;Lnet/minecraft/class_1309;)Z",
+   "basis": "see method_33191: the other half of 1.20.1's melee range test"
+  },
+  {
+   "old": "method_6288(Lnet/minecraft/class_1309;D)V",
+   "new": "method_6288(Lnet/minecraft/class_1309;)V",
+   "onlyUnder": "net/minecraft/class_1366",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyMeleeGoal",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbMelee.goalAttack(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyMeleeGoal;Lnet/minecraft/class_1309;)V",
+   "basis": "1.20.1 MeleeAttackGoal.tick called checkAndPerformAttack(target, perceived distance); 1.20.2 calls checkAndPerformAttack(target). A goal overriding the 1.20.1 one gets 1.20.1's tick step"
+  },
+  {
+   "old": "method_6289(Lnet/minecraft/class_1309;)D",
+   "new": "method_6288(Lnet/minecraft/class_1309;)V",
+   "onlyUnder": "net/minecraft/class_1366",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyMeleeGoal",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbMelee.goalAttack(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyMeleeGoal;Lnet/minecraft/class_1309;)V",
+   "basis": "1.20.1 checkAndPerformAttack asked getAttackReachSqr; 1.20.2 asks the attack boxes. A goal overriding the reach gets 1.20.1's tick step, which asks it"
+  },
+  {
+   "old": "method_20233(Lnet/minecraft/class_4050;)Z",
+   "new": "method_52558(Lnet/minecraft/class_4050;)Z",
+   "onlyUnder": "net/minecraft/class_1657",
+   "basis": "1.20.1 Player asked canEnterPose(pose); 1.20.2 asks canPlayerFitWithinBlocksAndEntitiesWhen(pose), same test. A player overriding the old one answers the new; its super call is the restored 1.20.1 body"
+  },
+  {
+   "old": "method_20343(Lnet/minecraft/class_4050;)Lnet/minecraft/class_238;",
+   "new": "method_52558(Lnet/minecraft/class_4050;)Z",
+   "onlyUnder": "net/minecraft/class_1657",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyPose",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbEntityPose.canEnterPose(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyPose;Lnet/minecraft/class_4050;)Z",
+   "basis": "1.20.1 canEnterPose tested getBoundingBoxForPose(pose); 1.20.2's player builds the box inline. A player overriding the box gets the pose test that uses it"
+  },
+  {
+   "old": "method_6351()Z",
+   "new": "method_6358()Z",
+   "onlyUnder": "net/minecraft/class_1408",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyNavigation",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNavigation.canUpdatePath(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyNavigation;)Z",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "1.20.1 ground / flying / water-bound navigations asked their own isInLiquid() in canUpdatePath; 1.20.2 asks the mob. A navigation overriding isInLiquid gets 1.20.1's canUpdatePath of the class it extends"
+  },
+  {
+   "old": "method_6351()Z",
+   "new": "method_6341(Lnet/minecraft/class_243;Lnet/minecraft/class_243;)Z",
+   "onlyUnder": "net/minecraft/class_5766",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyNavigation",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNavigation.amphibiousCanMoveDirectly(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyNavigation;Lnet/minecraft/class_243;Lnet/minecraft/class_243;)Z",
+   "basis": "1.20.1 AmphibiousPathNavigation.canMoveDirectly asked its own isInLiquid(); 1.20.2 asks the mob"
+  },
+  {
+   "old": "method_45342()Z",
+   "new": "method_52546()Z",
+   "onlyUnder": "net/minecraft/class_7298",
+   "basis": "1.20.1 Allay.isPanicking became PathfinderMob.isPanicking in 1.20.2 (same brain memory); an override answers the new one"
+  },
+  {
+   "old": "method_45348()Z",
+   "new": "method_52546()Z",
+   "onlyUnder": "net/minecraft/class_7689",
+   "basis": "1.20.1 Camel.isPanicking became PathfinderMob.isPanicking in 1.20.2 (same brain memory); an override answers the new one"
+  },
+  {
+   "old": "method_49147()Z",
+   "new": "method_52546()Z",
+   "onlyUnder": "net/minecraft/class_8153",
+   "basis": "1.20.1 Sniffer.isPanicking became PathfinderMob.isPanicking in 1.20.2 (same brain memory); an override answers the new one"
   }
  ],
  "instanceFieldGetters": {
@@ -1106,11 +1226,30 @@
  },
  "classRenames": {
   "net/minecraft/class_3517": "top/dext/centurybridge/facade/v1_20_2/class_3517",
-  "net/minecraft/class_2376": "top/dext/centurybridge/facade/v1_20_2/class_2376"
+  "net/minecraft/class_2376": "top/dext/centurybridge/facade/v1_20_2/class_2376",
+  "net/minecraft/class_7997": "top/dext/centurybridge/facade/v1_20_2/class_7997"
  },
  "covers": [
   "net/minecraft/class_2342.method_10216()D",
   "net/minecraft/class_2342.method_10214()D",
-  "net/minecraft/class_2342.method_10215()D"
- ]
+  "net/minecraft/class_2342.method_10215()D",
+  "net/minecraft/class_1297.method_5621()D",
+  "net/minecraft/class_1308.method_33191(Lnet/minecraft/class_1309;)D",
+  "net/minecraft/class_1308.method_47922(Lnet/minecraft/class_1309;)D",
+  "net/minecraft/class_5762.method_33191(Lnet/minecraft/class_1309;)D",
+  "net/minecraft/class_1309.method_47921()Lnet/minecraft/class_243;",
+  "net/minecraft/class_1366.method_6288(Lnet/minecraft/class_1309;D)V",
+  "net/minecraft/class_1366.method_6289(Lnet/minecraft/class_1309;)D",
+  "net/minecraft/class_7689.method_47923()D",
+  "net/minecraft/class_1297.method_20233(Lnet/minecraft/class_4050;)Z",
+  "net/minecraft/class_1297.method_20343(Lnet/minecraft/class_4050;)Lnet/minecraft/class_238;",
+  "net/minecraft/class_1408.method_6351()Z",
+  "net/minecraft/class_8113.method_48863()Lorg/joml/Quaternionf;"
+ ],
+ "fieldRenames": {
+  "net/minecraft/class_1309.field_6242:D": "field_45123",
+  "net/minecraft/class_5754.field_30116:D": "field_45125",
+  "net/minecraft/class_8113.field_42385:Ljava/lang/String;": "field_45110",
+  "net/minecraft/class_8113.field_43149:Ljava/lang/String;": "field_45111"
+ }
 }

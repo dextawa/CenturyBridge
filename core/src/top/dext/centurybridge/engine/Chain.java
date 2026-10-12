@@ -115,6 +115,30 @@ public final class Chain {
     }
 
     /**
+     * Home for a super call ({@link #superRedirects}): the class the JVM resolved
+     * {@code invokespecial owner.name(desc)} to in the source version -- the first class up the
+     * chain declaring the member there -- when a super redirect is keyed on it; null otherwise.
+     * A super call names the class the mod extends, which need not be the declaring one: a mod
+     * extending ServerScoreboard calls super.getObjective on ServerScoreboard, declared by
+     * Scoreboard. Keyed only on Scoreboard, such a call used to miss its super redirect and take
+     * the instance redirect, whose virtual dispatch lands back in the mod's own override. A vanilla
+     * class in between that declares the member itself (its own source body) stops the walk:
+     * only a super redirect keyed on that class serves it. Without a source stub the first keyed
+     * ancestor is taken.
+     */
+    public String superRedirectHome(String owner, String nameDesc) {
+        for (String o : selfAndSupers(owner)) {
+            if (superRedirects.containsKey(o + "." + nameDesc)) {
+                return o;
+            }
+            if (sourceDecls.getOrDefault(o, java.util.Set.of()).contains(nameDesc)) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Home for an instance call, in the JVM's method-resolution order: the class and
      * its superclasses, then their superinterfaces. A member keyed on an interface
      * serves a call made through an implementing class (ResultContainer implements
