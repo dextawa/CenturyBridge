@@ -93,6 +93,16 @@ public final class JarProcessor {
     }
 
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName) {
+        synthesizeOverride(cv, h, cls, superName, null);
+    }
+
+    /**
+     * The new shape in a mod class; {@code superIface} names the class's direct vanilla superinterface
+     * whose default method a guarded or narrowing fall-through reaches (INVOKESPECIAL on the interface)
+     * when the superclass chain does not have the new shape (see {@link #defaultHome}); null for super's.
+     */
+    private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName,
+                                           String superIface) {
         if (h.frames != null) {
             synthesizeFramedOverride(cv, h, cls);
             return;
@@ -186,6 +196,13 @@ public final class JarProcessor {
             // what vanilla expects from the new shape (facade -> real type)
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.unwrapOwner, h.unwrapName, h.unwrapDesc, false);
         }
+        // a new shape that returns nothing where the forwarded call answers a value (1.20.2
+        // RealmsServerList.updateServersList: the 1.20.1 override returned the list) drops it
+        org.objectweb.asm.Type produced = org.objectweb.asm.Type.getReturnType(h.bridgeName != null ? h.bridgeDesc
+            : h.unwrapName != null ? h.unwrapDesc : h.oldDesc);
+        if (nr.getSort() == org.objectweb.asm.Type.VOID && produced.getSort() != org.objectweb.asm.Type.VOID) {
+            mv.visitInsn(produced.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP);
+        }
         if (guarded) {
             mv.visitLabel(tryEnd);
             mv.visitVarInsn(Opcodes.ALOAD, 0);
@@ -198,12 +215,12 @@ public final class JarProcessor {
             mv.visitInsn(Opcodes.ATHROW);
             mv.visitLabel(fallthrough);
             mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 0, new Object[0]);
-            emitFallthrough(mv, h, superName, na, nr);
+            emitFallthrough(mv, h, superName, superIface, na, nr);
         } else if (narrowed) {
             mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
             mv.visitLabel(fallthrough);
             mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 0, new Object[0]);
-            emitFallthrough(mv, h, superName, na, nr);
+            emitFallthrough(mv, h, superName, superIface, na, nr);
         } else {
             mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
         }
@@ -216,8 +233,19 @@ public final class JarProcessor {
      * argument of another type): super's new shape, or -- nothing above declares it -- the return
      * type's zero value.
      */
-    private static void emitFallthrough(MethodVisitor mv, Chain.OverrideHook h, String superName,
+    private static void emitFallthrough(MethodVisitor mv, Chain.OverrideHook h, String superName, String superIface,
                                         org.objectweb.asm.Type[] na, org.objectweb.asm.Type nr) {
+        if (superIface != null) {
+            mv.visitVarInsn(Opcodes.ALOAD, 0);
+            int slot = 1;
+            for (org.objectweb.asm.Type t : na) {
+                mv.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
+                slot += t.getSize();
+            }
+            mv.visitMethodInsn(Opcodes.INVOKESPECIAL, superIface, h.newName, h.newDesc, true);
+            mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+            return;
+        }
         if (superName == null || superName.equals("java/lang/Object")) {
             switch (nr.getSort()) {
                 case org.objectweb.asm.Type.VOID -> { }
@@ -512,7 +540,31 @@ public final class JarProcessor {
                         // site no factory claims: a factory cannot replace the call,
                         // but the arguments can be reshaped / adapted in place
                         if (reshape != null) {
-                            reshapeArgs(m, mi, reshape);
+                            org.objectweb.asm.Type[] oldArgs = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
+                            int[] slots = reshapeArgs(m, mi, reshape);
+                            if (reshape.postName != null) {
+                                // hand the constructed object and the old arguments the new
+                                // constructor has no place for to the post static: the NEW site's
+                                // object is on the stack after the call, a super(...) has `this`
+                                boolean superCall = newInsn == null && m.name.equals("<init>") && mi.owner.equals(cn.superName);
+                                boolean newDup = newInsn != null && newInsn.getNext() != null
+                                    && newInsn.getNext().getOpcode() == Opcodes.DUP;
+                                if (!superCall && !newDup) {
+                                    // the call is reshaped but the value the post static carries is lost: an issue, not a note
+                                    rpt.issues.add(tag + "ctor reshape post skipped (neither a NEW DUP site nor this class's super(...)): "
+                                        + key + " in " + cn.name + "." + m.name);
+                                } else {
+                                    org.objectweb.asm.tree.InsnList post = new org.objectweb.asm.tree.InsnList();
+                                    post.add(superCall ? new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0)
+                                        : new org.objectweb.asm.tree.InsnNode(Opcodes.DUP));
+                                    for (int idx : reshape.postArgs) {
+                                        post.add(new org.objectweb.asm.tree.VarInsnNode(oldArgs[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
+                                    }
+                                    post.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC,
+                                        reshape.postOwner, reshape.postName, reshape.postDesc, false));
+                                    m.instructions.insert(mi, post);
+                                }
+                            }
                             rewrites++;
                             rpt.notes.add(tag + (newInsn == null ? "super-ctor-reshaped: " : "ctor-reshaped: ")
                                 + key + " -> " + reshape.newDesc + " in " + cn.name);
@@ -704,6 +756,102 @@ public final class JarProcessor {
     }
 
     /**
+     * Same-shape override bridges ({@link Chain#convertHooks}): a method of the mod's own class that
+     * overrides a member whose type arguments changed at this step -- name and erased descriptor as
+     * before -- is renamed, and a bridge with the member's name and descriptor takes its place,
+     * turning what vanilla passes into what the old body was written for and its answer back:
+     * <pre>
+     *   m(a0..an):  return ret(this.m$cbW(arg0(a0) .. argn(an)));
+     * </pre>
+     * An abstract redeclaration is renamed too and gets the same bridge, which dispatches to the
+     * subclass's renamed body; a javac bridge with the member's descriptor (a covariant override's)
+     * is what gets renamed, and still forwards to the mod's own method. Calls are converted on the
+     * other side ({@link #rewriteCalls}: a same-shape reshape climbs past the mod's declaration), so
+     * every value reaching the renamed body is V's. Straight-line code: no frames to write.
+     */
+    private static byte[] rewriteConvertHooks(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
+        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+        boolean any = false;
+        for (List<Chain.ConvertHook> hs : chain.convertHooks.values()) {
+            if (raw.contains(hs.get(0).name)) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return bytes;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new ClassReader(bytes).accept(cn, 0);
+        boolean itf = (cn.access & Opcodes.ACC_INTERFACE) != 0;
+        String[] ifaces = cn.interfaces.toArray(new String[0]);
+        Set<String> declared = new HashSet<>();
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            declared.add(m.name + m.desc);
+        }
+        List<org.objectweb.asm.tree.MethodNode> bridges = new ArrayList<>();
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if ((m.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) != 0 || m.name.startsWith("<")) {
+                continue;
+            }
+            List<Chain.ConvertHook> hs = chain.convertHooks.get(m.name + m.desc);
+            if (hs == null) {
+                continue;
+            }
+            Chain.ConvertHook h = null;
+            for (Chain.ConvertHook x : hs) {
+                if (isUnder(cn.superName, ifaces, x.under, layer, chain)) {
+                    h = x;
+                    break;
+                }
+            }
+            if (h == null || declared.contains(h.renamed + h.desc)) {
+                continue; // not an override of the hooked member, or already bridged at this step
+            }
+            m.name = h.renamed;
+            bridges.add(convertBridge(cn.name, itf, m, h));
+            rpt.notes.add(tag + "convert-hooked: " + cn.name + "." + h.name + h.desc + " (old body now " + h.renamed + ")");
+            top.dext.centurybridge.data.FullAudit.record(h.under + "." + h.name + h.desc, "convert-hooked");
+        }
+        if (bridges.isEmpty()) {
+            return bytes;
+        }
+        cn.methods.addAll(bridges);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
+    }
+
+    /** the bridge {@link #rewriteConvertHooks} puts where the mod's method was */
+    private static org.objectweb.asm.tree.MethodNode convertBridge(String cls, boolean itf,
+                                                                   org.objectweb.asm.tree.MethodNode body,
+                                                                   Chain.ConvertHook h) {
+        int acc = body.access & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED | Opcodes.ACC_FINAL);
+        String[] ex = body.exceptions == null ? null : body.exceptions.toArray(new String[0]);
+        org.objectweb.asm.tree.MethodNode b = new org.objectweb.asm.tree.MethodNode(acc, h.name, h.desc, body.signature, ex);
+        org.objectweb.asm.Type[] params = org.objectweb.asm.Type.getArgumentTypes(h.desc);
+        org.objectweb.asm.tree.InsnList in = b.instructions;
+        in.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+        int slot = 1;
+        for (int i = 0; i < params.length; i++) {
+            in.add(new org.objectweb.asm.tree.VarInsnNode(params[i].getOpcode(Opcodes.ILOAD), slot));
+            slot += params[i].getSize();
+            if (h.args[i] != null) {
+                in.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.args[i][0], h.args[i][1], h.args[i][2], false));
+            }
+        }
+        in.add(new org.objectweb.asm.tree.MethodInsnNode(itf ? Opcodes.INVOKEINTERFACE : Opcodes.INVOKEVIRTUAL,
+            cls, h.renamed, h.desc, itf));
+        if (h.ret != null) {
+            in.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.ret[0], h.ret[1], h.ret[2], false));
+        }
+        in.add(new org.objectweb.asm.tree.InsnNode(org.objectweb.asm.Type.getReturnType(h.desc).getOpcode(Opcodes.IRETURN)));
+        b.maxLocals = slot;
+        b.maxStack = slot + 1;
+        return b;
+    }
+
+    /**
      * If {@code h} is a {@code owner::new} constructor method handle
      * (REF_newInvokeSpecial) whose owner has a ctorRedirect factory, return an
      * equivalent REF_invokeStatic handle to that factory (same arg types, with
@@ -760,9 +908,9 @@ public final class JarProcessor {
      * sits below the arguments (uninitializedThis, or NEW DUP's two refs) is
      * untouched, so existing frames stay exact.
      */
-    private static void reshapeArgs(org.objectweb.asm.tree.MethodNode m,
-                                    org.objectweb.asm.tree.MethodInsnNode mi,
-                                    Chain.CtorReshape r) {
+    private static int[] reshapeArgs(org.objectweb.asm.tree.MethodNode m,
+                                     org.objectweb.asm.tree.MethodInsnNode mi,
+                                     Chain.CtorReshape r) {
         org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
         int[] slots = spillArgs(m, mi, old);
         org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
@@ -800,6 +948,7 @@ public final class JarProcessor {
         }
         m.instructions.insertBefore(mi, seq);
         mi.desc = r.newDesc;
+        return slots;
     }
 
     /** Redirect values are a class name, optionally "class#member" past the
@@ -961,9 +1110,73 @@ public final class JarProcessor {
      * way declares the member (an inherited vanilla member, to be resolved --
      * cover / redirect / ledger / tombstone -- as if referenced on that
      * class); null when the mod declares it itself or the chain leaves into a
-     * library. Interfaces are not walked: a default method inherited from a
-     * vanilla interface through a mod-owned owner stays outside the audit.
+     * library.
+     *
+     * A method that class's source hierarchy does not have may be a default
+     * method of a vanilla interface the jar's classes implement, which is
+     * where the JVM finds it (1.20.2's ChangeOverTimeBlock.onRandomTick
+     * reached as this.onRandomTick in a mod's copper block): with the chain
+     * given, that interface answers instead, so the wiring keyed on it --
+     * rename, redirect, reshape -- applies to the call as well. Fields are
+     * resolved through the superclass chain only.
      */
+    private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer, Chain chain) {
+        String inh = inheritedVanillaOwner(owner, member, layer);
+        int paren = member.indexOf('(');
+        if (inh == null || chain == null || paren < 0) {
+            return inh;
+        }
+        String name = member.substring(0, paren);
+        String desc = member.substring(paren);
+        if (chain.sourceDeclarer(name, desc, List.of(inh)) != null) {
+            return inh;
+        }
+        // the vanilla interfaces the jar's classes on the way implement (through the jar's own interfaces too)
+        List<String> vanillaIfaces = new ArrayList<>();
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        for (String cur = owner; cur != null && !cur.startsWith("net/minecraft/") && layer.superOf.containsKey(cur);
+                cur = layer.superOf.get(cur)) {
+            todo.addAll(layer.interfacesOf.getOrDefault(cur, List.of()));
+        }
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String i = todo.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            if (i.startsWith("net/minecraft/")) {
+                vanillaIfaces.add(i);
+            } else if (layer.superOf.containsKey(i)) {
+                todo.addAll(layer.interfacesOf.getOrDefault(i, List.of()));
+            }
+        }
+        String declarer = vanillaIfaces.isEmpty() ? null : chain.sourceDeclarer(name, desc, vanillaIfaces);
+        return declarer != null ? declarer : inh;
+    }
+
+    /**
+     * The direct vanilla superinterface of a class whose default method answers name+desc on the target,
+     * when the class's vanilla superclass chain has no such method (1.20.3's ChangeOverTimeBlock.getNextState
+     * in a mod's copper block that extends Block): the one INVOKESPECIAL can reach a default through. Null
+     * when the superclass has it, the superclass is one of the jar's own, or no direct interface answers.
+     */
+    private static String defaultHome(Chain chain, String superName, String[] ifaces, String name, String desc) {
+        if (superName == null || !superName.startsWith("net/minecraft/") || ifaces == null
+                || chain.targetDeclares(name, desc, List.of(superName))) {
+            return null;
+        }
+        for (String i : ifaces) {
+            if (i.startsWith("net/minecraft/") && chain.targetDeclares(name, desc, List.of(i))) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    private static String clsName0(byte[] bytes) {
+        return new ClassReader(bytes).getClassName();
+    }
+
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
@@ -1009,8 +1222,8 @@ public final class JarProcessor {
                 // a library or another jar: only a reshape keyed on that class itself applies
                 return chain.callReshapeIndex.containsKey(cur + "." + member) ? cur : null;
             }
-            if (d.contains(member)) {
-                return null; // the mod's own member
+            if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
+                return null; // the mod's own member (a same-shape one sits behind a convertHooks bridge)
             }
             layerClasses.add(cur);
             cur = layer.superOf.get(cur);
@@ -1041,7 +1254,7 @@ public final class JarProcessor {
             if (d == null) {
                 continue;
             }
-            if (d.contains(member)) {
+            if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
                 return null; // a default method of the mod's own interface
             }
             todo.addAll(layer.interfacesOf.getOrDefault(t, List.of()));
@@ -1644,6 +1857,12 @@ public final class JarProcessor {
             ctorChanged |= b3 != bytes;
             bytes = b3;
         }
+        if (!chain.convertHooks.isEmpty()) {
+            // after the call pass: the bridges' own calls of the renamed bodies are not call sites to convert
+            byte[] b5 = rewriteConvertHooks(bytes, chain, layer, rpt, tag);
+            ctorChanged |= b5 != bytes;
+            bytes = b5;
+        }
         if (!chain.overrideHooks.isEmpty()) {
             byte[] b4 = rewriteHookSuperCalls(bytes, chain, layer, rpt, tag);
             ctorChanged |= b4 != bytes;
@@ -1655,6 +1874,7 @@ public final class JarProcessor {
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
+        Map<String, String> instFldSetters = new HashMap<>(); // PUTFIELD -> INVOKESTATIC setter(receiver, value) on runtime class
         Map<String, String> instOfSites = new HashMap<>();   // INSTANCEOF type -> INVOKESTATIC predicate(Object)Z
         Map<String, String> fldRenames = new HashMap<>();    // instance fields renamed in place
         Map<String, String> mthRenames = new HashMap<>();    // methods renamed in place (relocated to super)
@@ -1690,6 +1910,7 @@ public final class JarProcessor {
         final Set<Chain.OverrideHook> declaredNewOverrides = new HashSet<>();
         final int[] classAccess = {0};
         final String[] superOf = {null};
+        final String[][] ifacesOf = {null};
         // call sites hitting a lookup-hook's old descriptor; a class whose ONLY
         // damage is such a call must still go through the rewrite pass -- the
         // fix used to ride along on other damage and silently skip these
@@ -1804,6 +2025,7 @@ public final class JarProcessor {
                 int brokenBefore = brokenSink.size();
                 classAccess[0] = acc;
                 superOf[0] = superName;
+                ifacesOf[0] = ifaces;
                 checkClass(superName);
                 if (!chain.superRenames.isEmpty()) {
                     if (superName != null && chain.superRenames.containsKey(superName)) {
@@ -1931,7 +2153,7 @@ public final class JarProcessor {
                         final String site = owner + "." + name + desc;
                         if (!Chain.minecraftOwned(owner)) {
                             String inh = name.equals("<init>") ? null
-                                : inheritedVanillaOwner(owner, name + desc, layer);
+                                : inheritedVanillaOwner(owner, name + desc, layer, chain);
                             if (inh == null) {
                                 // library owners are outside the stub diffs, but a
                                 // redirect wired explicitly (DFU's Codec.dispatch
@@ -2210,6 +2432,12 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-getter");
                             return;
                         }
+                        String ifst = chain.instanceFieldSetters.get(fkey);
+                        if (ifst != null && op == Opcodes.PUTFIELD) {
+                            instFldSetters.put(fsite, ifst);
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-setter");
+                            return;
+                        }
                         String rename = chain.fieldRenames.get(fkey);
                         if (rename != null) {
                             fldRenames.put(fsite, rename);
@@ -2307,7 +2535,7 @@ public final class JarProcessor {
                             String hOwner = h.getOwner();
                             if (!hOwner.startsWith("net/minecraft/")) {
                                 String inh = h.getName().equals("<init>") ? null
-                                    : inheritedVanillaOwner(hOwner, h.getName() + h.getDesc(), layer);
+                                    : inheritedVanillaOwner(hOwner, h.getName() + h.getDesc(), layer, chain);
                                 if (inh == null) {
                                     // library-owner method references carry the same
                                     // explicitly-wired redirects as direct calls
@@ -2417,11 +2645,37 @@ public final class JarProcessor {
         };
         new ClassReader(bytes).accept(analysis, ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
 
+        // abstract fills: implementations the target newly demands of a concrete class (Chain.abstractFills)
+        final List<Chain.AbstractFill> fillApply = new ArrayList<>();
+        if ((classAccess[0] & (Opcodes.ACC_INTERFACE | Opcodes.ACC_ABSTRACT)) == 0 && !chain.abstractFills.isEmpty()) {
+            List<String> fillRoots = null;
+            for (Chain.AbstractFill f : chain.abstractFills) {
+                String shape = f.name + f.desc;
+                if (declaredShapes.contains(shape) || !isUnder(superOf[0], ifacesOf[0], f.under, layer, chain)
+                        || inheritedVanillaOwner(superOf[0], shape, layer) == null && layer.superOf.containsKey(superOf[0])) {
+                    continue; // declared here, not under the type, or a jar superclass declares it
+                }
+                boolean synthesized = declaredOldOverrides.stream().anyMatch(h -> (h.newName + h.newDesc).equals(shape))
+                    || adapterApply.stream().anyMatch(h -> h.synth.stream().anyMatch(sy -> (sy[0] + sy[1]).equals(shape)));
+                if (synthesized) {
+                    continue; // a hook gives the class the method
+                }
+                if (fillRoots == null) {
+                    fillRoots = vanillaAncestors(superOf[0], ifacesOf[0], layer);
+                }
+                if (chain.concreteOnTarget(f.name, f.desc, fillRoots)) {
+                    continue; // inherits a concrete one
+                }
+                fillApply.add(f);
+                rpt.notes.add(tag + "abstract-filled: " + clsName0(bytes) + "." + shape);
+                top.dext.centurybridge.data.FullAudit.record(f.under + "." + shape, "abstract-fill");
+            }
+        }
         if (redirects.isEmpty() && instRedirects.isEmpty() && ifaceCallRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldGetters.isEmpty() && instFldGetters.isEmpty() && instOfSites.isEmpty()
+                && fldGetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
-                && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty()
+                && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty() && fillApply.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
                 && declaredOldOverrides.stream().allMatch(declaredNewOverrides::contains)) {
@@ -2474,6 +2728,9 @@ public final class JarProcessor {
         }
         for (String k : instFldGetters.keySet()) {
             rpt.notes.add(tag + "instance-field-gettered: " + k + " -> " + instFldGetters.get(k));
+        }
+        for (String k : instFldSetters.keySet()) {
+            rpt.notes.add(tag + "instance-field-settered: " + k + " -> " + instFldSetters.get(k));
         }
         for (String k : instOfSites.keySet()) {
             rpt.notes.add(tag + "instanceof-redirected: " + k + " -> " + instOfSites.get(k));
@@ -2642,7 +2899,23 @@ public final class JarProcessor {
                     }
                 }
                 for (Chain.OverrideHook h : reconnectOverrides) {
-                    synthesizeOverride(this, h, clsName[0], superOf[0]);
+                    synthesizeOverride(this, h, clsName[0], superOf[0],
+                        defaultHome(chain, superOf[0], ifacesOf[0], h.newName, h.newDesc));
+                }
+                for (Chain.AbstractFill f : fillApply) {
+                    // public R m(args) { return call(this, args...); }
+                    MethodVisitor fv = super.visitMethod(Opcodes.ACC_PUBLIC, f.name, f.desc, null, null);
+                    fv.visitCode();
+                    fv.visitVarInsn(Opcodes.ALOAD, 0);
+                    int fslot = 1;
+                    for (org.objectweb.asm.Type t : org.objectweb.asm.Type.getArgumentTypes(f.desc)) {
+                        fv.visitVarInsn(t.getOpcode(Opcodes.ILOAD), fslot);
+                        fslot += t.getSize();
+                    }
+                    fv.visitMethodInsn(Opcodes.INVOKESTATIC, f.callOwner, f.callName, f.callDesc, false);
+                    fv.visitInsn(org.objectweb.asm.Type.getReturnType(f.desc).getOpcode(Opcodes.IRETURN));
+                    fv.visitMaxs(0, 0);
+                    fv.visitEnd();
                 }
                 for (String hook : reconnectHooks) {
                     String[] hk = chain.lookupHooks.get(hook);
@@ -2778,6 +3051,12 @@ public final class JarProcessor {
                     @Override
                     public void visitFieldInsn(int op, String owner, String name, String desc) {
                         String fkey = owner + "." + name + ":" + desc;
+                        if (op == Opcodes.PUTFIELD && instFldSetters.containsKey(fkey)) {
+                            String fv = instFldSetters.get(fkey);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv), redirName(fv, name),
+                                "(L" + emitOwner.getOrDefault(fkey, owner) + ";" + desc + ")V", false);
+                            return;
+                        }
                         if (op == Opcodes.GETFIELD && instFldGetters.containsKey(fkey)) {
                             String fv = instFldGetters.get(fkey);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),

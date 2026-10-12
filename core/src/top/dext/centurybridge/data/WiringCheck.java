@@ -32,11 +32,12 @@ import org.objectweb.asm.tree.MethodNode;
  * that table, so they compare verbatim.
  *
  * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects, interfaceCallRedirects,
- * fieldRedirects, fieldGetters, instanceFieldGetters, instanceOfRedirects,
- * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push
+ * fieldRedirects, fieldGetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
+ * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
- * interface declares exactly the old SAM; the adapter's exact descriptor), classRenames
+ * interface declares exactly the old SAM; the adapter's exact descriptor), abstractFills (the
+ * static a synthesized implementation calls), classRenames
  * onto shipped facades. Covers are checked by MixinCheck against the mixin
  * classes (they are overloads added to vanilla classes, not statics).
  *
@@ -385,6 +386,11 @@ public final class WiringCheck {
             Sym s = Sym.field(k);
             wantMethod("instanceFieldGetters " + k, v, s.name, methodDesc("(L" + s.owner + ";)" + s.desc));
         });
+        // "owner.name:desc" -> static setter(owner, desc)V: the PUTFIELD's receiver and value
+        obj(root, "instanceFieldSetters", (k, v) -> {
+            Sym s = Sym.field(k);
+            wantMethod("instanceFieldSetters " + k, v, s.name, methodDesc("(L" + s.owner + ";" + s.desc + ")V"));
+        });
         obj(root, "instanceOfRedirects", (k, v) ->
             wantMethod("instanceOfRedirects " + k, v, "cbInstanceOf", "(Ljava/lang/Object;)Z"));
         // "owner.<init>(args)V" -> factory (args)Lowner;
@@ -409,6 +415,17 @@ public final class WiringCheck {
                 var o = e.getValue().getAsJsonObject();
                 if (!stub.isEmpty()) checkReshapeTarget(e.getKey(), o.get("desc").getAsString(), superRen);
                 checkReshapeOps("superCtorReshapes " + e.getKey(), e.getKey(), o.getAsJsonArray("ops"));
+                if (o.has("post")) {
+                    // the descriptor itself is held to the key when the wiring loads (Chain.CtorReshape)
+                    String post = o.get("post").getAsString().trim();
+                    int paren = post.indexOf('(');
+                    if (paren < 0) {
+                        problems.add("superCtorReshapes " + e.getKey() + ": malformed post '" + post + "'");
+                    } else {
+                        wantMethod("superCtorReshapes " + e.getKey() + " post", post.substring(0, paren), null,
+                            methodDesc(post.substring(paren)));
+                    }
+                }
             }
         }
         // callReshapes: the reshaped call must resolve on the target (the owner or a supertype
@@ -458,9 +475,91 @@ public final class WiringCheck {
                                                   : "()Lnet/minecraft/class_7225$class_7874;";
             wantMethod("lookupRt", root.get("lookupRt").getAsString(), "cbLookup", methodDesc(desc));
         }
+        // convertHooks (the override side of a same-shape reshape): the member is one the target's
+        // `under` has with that very descriptor, and every converter exists with its exact descriptor
+        java.util.Set<String> convertHooked = new java.util.HashSet<>();
+        if (root.has("convertHooks")) {
+            for (var el : root.getAsJsonArray("convertHooks")) {
+                var o = el.getAsJsonObject();
+                String under = o.get("under").getAsString();
+                String member = o.get("member").getAsString();
+                String where = "convertHooks " + under + "." + member;
+                checked++;
+                convertHooked.add(member);
+                int paren = member.indexOf('(');
+                if (paren <= 0) {
+                    problems.add(where + ": member must be name(desc)");
+                    continue;
+                }
+                if (!stub.isEmpty()) {
+                    String owner = targetName(facade.mapType(under));
+                    String name = postWallName(under, member.substring(0, paren), member.substring(paren));
+                    if (!resolves(owner, name, methodDesc(member.substring(paren)))) {
+                        problems.add(where + ": " + owner + "." + name + " is not a member of the target with that descriptor");
+                    }
+                }
+                if (o.has("args")) {
+                    for (var a : o.getAsJsonArray("args")) {
+                        if (!a.isJsonNull()) {
+                            String r = a.getAsString().trim();
+                            int p = r.indexOf('(');
+                            wantMethod(where + " arg", r.substring(0, p), null, methodDesc(r.substring(p)));
+                        }
+                    }
+                }
+                if (o.has("ret") && !o.get("ret").isJsonNull()) {
+                    String r = o.get("ret").getAsString().trim();
+                    int p = r.indexOf('(');
+                    wantMethod(where + " ret", r.substring(0, p), null, methodDesc(r.substring(p)));
+                }
+            }
+        }
+        // a same-shape call reshape converts calls naming a mod class that overrides the member too
+        // (the engine's call side climbs past the mod's declaration): without the override side
+        // that mod's own call would hand its body converted values. So a reshape keeping the
+        // descriptor of a member a mod can override needs its convertHooks entry
+        if (root.has("callReshapes") && !stub.isEmpty()) {
+            for (var e : root.getAsJsonObject("callReshapes").entrySet()) {
+                String k = e.getKey();
+                String od = k.substring(k.indexOf('('));
+                var ro = e.getValue().getAsJsonObject();
+                java.util.List<String> ops = new java.util.ArrayList<>();
+                ro.getAsJsonArray("ops").forEach(x -> ops.add(x.getAsString()));
+                top.dext.centurybridge.engine.Chain.CallReshape parsed = top.dext.centurybridge.engine.Chain.parseCallReshape(
+                    k, ro.get("desc").getAsString(), ops, ro.has("ret") ? ro.get("ret").getAsString() : null);
+                if (!parsed.newDesc.equals(od) || !parsed.converts()) {
+                    continue; // a shape change, or the same values passed on unchanged
+                }
+                Sym s = Sym.method(k);
+                ClassNode owner = stub.get(targetName(facade.mapType(s.owner)));
+                if (owner == null || (owner.access & Opcodes.ACC_FINAL) != 0) {
+                    continue;
+                }
+                String name = postWallName(s.owner, s.name, od);
+                String desc = methodDesc(od);
+                MethodNode m = owner.methods.stream().filter(x -> x.name.equals(name) && x.desc.equals(desc)).findFirst().orElse(null);
+                if (m != null && (m.access & (Opcodes.ACC_STATIC | Opcodes.ACC_FINAL | Opcodes.ACC_PRIVATE)) == 0
+                        && !convertHooked.contains(s.name + od)
+                        && !(root.has("ledger") && root.getAsJsonObject("ledger").has(k))) {
+                    problems.add("callReshapes " + k + ": keeps the descriptor of an overridable member but has no convertHooks"
+                        + " entry for its overrides (or a ledger reason)");
+                }
+            }
+        }
         // adapterHooks: the bridge interface must declare every required old shape
         // exactly (the mod's own methods implement it by name+descriptor), and every
         // synthesized new shape calls a static that exists with the exact descriptor
+        // abstractFills: the static a synthesized implementation calls, with the exact descriptor
+        if (root.has("abstractFills")) {
+            for (var el : root.getAsJsonArray("abstractFills")) {
+                var o = el.getAsJsonObject();
+                String call = o.get("call").getAsString();
+                int paren = call.indexOf('(');
+                int dot = call.lastIndexOf('.', paren);
+                wantMethod("abstractFills " + o.get("under").getAsString() + "." + o.get("method").getAsString(),
+                    call.substring(0, dot) + "#" + call.substring(dot + 1, paren), null, methodDesc(call.substring(paren)));
+            }
+        }
         if (root.has("adapterHooks")) {
             for (var el : root.getAsJsonArray("adapterHooks")) {
                 var o = el.getAsJsonObject();

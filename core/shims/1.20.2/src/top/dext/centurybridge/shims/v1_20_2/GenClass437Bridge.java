@@ -15,14 +15,11 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.class_437.class)
 public abstract class GenClass437Bridge {
 
-    /** was net/minecraft/class_437.method_25401(DDD)Z */
+    /** was net/minecraft/class_437.method_25401(DDD)Z -- 1.20.1 Screen inherited ContainerEventHandler's
+     *  mouseScrolled (scroll the hovered child); 1.20.2's four-argument one does the same with no
+     *  horizontal amount */
     public boolean method_25401(double a0, double a1, double a2) {
-        return ((net.minecraft.class_437) (Object) this).method_25405(a0, a1);
-    }
-
-    /** was net/minecraft/class_437.method_25420(Lnet/minecraft/class_332;)V */
-    public void method_25420(net.minecraft.class_332 a0) {
-        ((net.minecraft.class_437) (Object) this).method_25420(a0, 0, 0, 0.0F);
+        return ((net.minecraft.class_437) (Object) this).method_25401(a0, a1, 0.0, a2);
     }
 
 }
