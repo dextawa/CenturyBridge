@@ -12,7 +12,10 @@ set -uo pipefail
 cd ~/cbwork
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
-CP="core/build/classes:$LIBS"
+# CB_ENGINE: the compiled engine to measure with; arguments: only the segments starting at these
+# releases (all when none); CB_REPROBE=1 rebuilds their probes (when api-probe itself changed)
+CP="${CB_ENGINE:-core/build/classes}:$LIBS"
+ONLY=" $* "
 OUT=probe/fapi
 mkdir -p "$OUT" probe/fapi-damage
 RELEASES=(1.20.1 1.20.2 1.20.3 1.20.4 1.20.5 1.20.6 1.21 1.21.1 1.21.2 1.21.3 1.21.4 1.21.5 1.21.6 1.21.7 1.21.8 1.21.9 1.21.10 1.21.11 26.1 26.1.1 26.1.2 26.2)
@@ -22,6 +25,8 @@ mods_of() { echo "data/runtime/client-$1/.fabric/processedMods"; }
 for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
   V=${RELEASES[$i]}; W=${RELEASES[$((i + 1))]}
   SEG="${V}__${W}"
+  [ "$ONLY" = "  " ] || [[ "$ONLY" == *" $V "* ]] || continue
+  [ "${CB_REPROBE:-}" = 1 ] && rm -f "$OUT/$SEG/probe-$V.jar" "$OUT/$SEG/probe-$V.jar.index.tsv"
   mkdir -p "$OUT/$SEG/probe"
   # V's Fabric API surface: the api packages of every module, one jar
   if [ ! -f "$OUT/$SEG/fapi-api-$V.jar" ]; then
