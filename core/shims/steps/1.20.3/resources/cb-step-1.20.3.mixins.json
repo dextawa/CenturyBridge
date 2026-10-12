@@ -10,7 +10,27 @@
     "CbStyleAccess",
     "CbTypedHoverEventAccess"
   ],
-  "client": [],
+  "client": [
+    "CbAbstractSelectionListMixin",
+    "CbAbstractWidgetMixin",
+    "CbAudioListenerMixin",
+    "CbBelowOrAbovePositionerMixin",
+    "CbCheckboxMixin",
+    "CbClientPacketListenerMixin",
+    "CbConfirmLinkScreenAccess",
+    "CbMenuPositionerMixin",
+    "CbOptionsSubScreenMixin",
+    "CbReceivingLevelScreenMixin",
+    "CbSectionRenderDispatcherAccess",
+    "CbSelectWorldScreenMixin",
+    "CbStatsScreenMixin",
+    "CbTooltipMixin",
+    "CbWorldListEntryBaseMixin",
+    "CbWorldListEntryMixin",
+    "CbWorldListLoadingHeaderMixin",
+    "CbWorldOpenFlowsMixin",
+    "CbWorldSelectionListMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

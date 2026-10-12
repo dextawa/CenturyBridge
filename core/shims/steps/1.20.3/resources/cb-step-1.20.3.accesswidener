@@ -1,1 +1,9 @@
 accessWidener	v2	intermediary
+
+# s2rest: 1.20.3 Checkbox constructor, the target of the 1.20.2 constructors' reshape (s2rest.json)
+accessible	method	net/minecraft/class_4286	<init>	(IILnet/minecraft/class_2561;Lnet/minecraft/class_327;ZLnet/minecraft/class_4286$class_8930;)V
+# s2rest: 1.20.3 EditWorldScreen constructor, the target of the 1.20.2 constructor's reshape
+accessible	method	net/minecraft/class_524	<init>	(Lnet/minecraft/class_310;Lnet/minecraft/class_32$class_5143;Ljava/lang/String;Lit/unimi/dsi/fastutil/booleans/BooleanConsumer;)V
+# s2rest: Minecraft.emergencySave() was public (and overridable) in 1.20.2
+accessible	method	net/minecraft/class_310	method_1519	()V
+extendable	method	net/minecraft/class_310	method_1519	()V

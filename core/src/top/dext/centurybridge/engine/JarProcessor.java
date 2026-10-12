@@ -716,21 +716,23 @@ public final class JarProcessor {
     }
 
     /**
-     * Whether a super call is one {@link #rewriteHookSuperCalls} rewrites: the same test it applies
-     * (a hook with frames and superCalls for the call's old shape, the class under the hook, the
-     * call into a vanilla supertype).
+     * Whether a super call is one {@link #rewriteHookSuperCalls} rewrites with a carrying hook: the
+     * same choice it makes (the first superCalls hook for the call's old shape, in wiring order) and
+     * the same test (the call into a vanilla supertype, directly or through a mod class that
+     * inherits it; the class under the hook), for a hook with frames.
      */
     private static boolean framedSuperCall(Chain chain, LayerIndex layer, org.objectweb.asm.tree.ClassNode cn,
                                            org.objectweb.asm.tree.MethodInsnNode mi) {
-        if (mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")) {
+        if (mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
+                && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null) {
             return false;
         }
         String[] ifaces = cn.interfaces.toArray(new String[0]);
         for (Chain.OverrideHook h : chain.overrideHooks) {
-            if (h.superCalls && h.frames != null && h.oldName.equals(mi.name) && h.oldDesc.equals(mi.desc)
+            if (h.superCalls && h.oldName.equals(mi.name) && h.oldDesc.equals(mi.desc)) {
+                return h.frames != null
                     && (h.onlyUnder == null || isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain))
-                    && (h.notUnder == null || !isUnder(cn.superName, ifaces, h.notUnder, layer, chain))) {
-                return true;
+                    && (h.notUnder == null || !isUnder(cn.superName, ifaces, h.notUnder, layer, chain));
             }
         }
         return false;
@@ -2155,16 +2157,26 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(fkey, "field-getter");
                             return;
                         }
-                        String ifst = chain.instanceFieldSetters.get(fkey);
-                        if (ifst != null && op == Opcodes.PUTFIELD) {
-                            instFldSetters.put(fsite, ifst);
-                            top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-setter");
+                        // an instance field is keyed on the class that declares it, but javac names
+                        // the receiver's static type (JLS 13.1): this.width in an ObjectSelectionList
+                        // subclass is ObjectSelectionList.width, declared by AbstractSelectionList. The
+                        // getter / setter is found up the hierarchy and takes the receiver as that class
+                        String ifstHome = op == Opcodes.PUTFIELD
+                            ? chain.redirectHome(chain.instanceFieldSetters, owner, name + ":" + desc) : null;
+                        if (ifstHome != null) {
+                            String hk = ifstHome + "." + name + ":" + desc;
+                            instFldSetters.put(fsite, chain.instanceFieldSetters.get(hk));
+                            emitOwner.put(fsite, ifstHome);
+                            top.dext.centurybridge.data.FullAudit.record(hk, "instance-field-setter");
                             return;
                         }
-                        String ifgt = chain.instanceFieldGetters.get(fkey);
-                        if (ifgt != null && op == Opcodes.GETFIELD) {
-                            instFldGetters.put(fsite, ifgt);
-                            top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-getter");
+                        String ifgtHome = op == Opcodes.GETFIELD
+                            ? chain.redirectHome(chain.instanceFieldGetters, owner, name + ":" + desc) : null;
+                        if (ifgtHome != null) {
+                            String hk = ifgtHome + "." + name + ":" + desc;
+                            instFldGetters.put(fsite, chain.instanceFieldGetters.get(hk));
+                            emitOwner.put(fsite, ifgtHome);
+                            top.dext.centurybridge.data.FullAudit.record(hk, "instance-field-getter");
                             return;
                         }
                         String rename = chain.fieldRenames.get(fkey);
@@ -2675,9 +2687,32 @@ public final class JarProcessor {
                     }
                 }
                 MethodVisitor mv = super.visitMethod(acc, mName, mDesc, sig, ex);
+                // javac's bridge for a covariant override (SystemToast subclass: Object getToken() ->
+                // SystemToastIds getToken()) forwards the erased shape to the old override. When an
+                // override hook gives the class the new shape (same arguments, another return type), the
+                // erased shape must reach the new one as vanilla's own bridge does, or vanilla calling
+                // through the erased shape gets the old type's value
+                Chain.OverrideHook bridgeHook = null;
+                if ((acc & Opcodes.ACC_BRIDGE) != 0 && mDesc.endsWith(")Ljava/lang/Object;")) {
+                    String args = mDesc.substring(0, mDesc.indexOf(')') + 1);
+                    for (Chain.OverrideHook h : reconnectOverrides) {
+                        if (h.oldName.equals(mName) && h.newName.equals(mName) && !mDesc.equals(h.oldDesc)
+                                && !mDesc.equals(h.newDesc) && h.oldDesc.startsWith(args) && h.newDesc.startsWith(args)
+                                && h.newDesc.charAt(args.length()) == 'L') {
+                            bridgeHook = h;
+                            rpt.notes.add(tag + "bridge-retargeted: " + clsName[0] + "." + mName + mDesc + " -> " + h.newDesc);
+                            break;
+                        }
+                    }
+                }
+                final Chain.OverrideHook covariantBridge = bridgeHook;
                 return new MethodVisitor(Opcodes.ASM9, mv) {
                     @Override
                     public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
+                        if (covariantBridge != null && op == Opcodes.INVOKEVIRTUAL && owner.equals(clsName[0])
+                                && name.equals(covariantBridge.oldName) && desc.equals(covariantBridge.oldDesc)) {
+                            desc = covariantBridge.newDesc;
+                        }
                         if (op == Opcodes.INVOKESPECIAL && !owner.equals(clsName[0]) && owner.startsWith("net/minecraft/")) {
                             for (Chain.OverrideRename r : declaredRenames) {
                                 if (r.superCalls && r.oldName.equals(name) && r.oldDesc.equals(desc)) {
