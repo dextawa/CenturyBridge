@@ -9,7 +9,23 @@
   "net/minecraft/class_1802.field_8706:Lnet/minecraft/class_1792;": "field_46249",
   "net/minecraft/class_1802.field_8188:Lnet/minecraft/class_1792;": "field_46250",
   "net/minecraft/class_2527.field_11618:Lnet/minecraft/class_265;": "field_46271",
-  "net/minecraft/class_2527.field_31265:I": "field_46270"
+  "net/minecraft/class_2527.field_31265:I": "field_46270",
+  "net/minecraft/class_2621.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2621.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2595.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2595.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2601.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2601.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2608.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2608.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2614.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2614.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2627.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2627.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2646.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2646.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_3719.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_3719.field_31352:Ljava/lang/String;": "field_47155"
  },
  "methodRenames": {
   "net/minecraft/class_1690.method_7542(F)V": "method_54297",
@@ -96,7 +112,41 @@
   "net/minecraft/class_5812.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764",
   "net/minecraft/class_5813.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764",
   "net/minecraft/class_5814.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764",
-  "net/minecraft/class_5955.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764"
+  "net/minecraft/class_5955.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764",
+  "net/minecraft/class_2621.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2621.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2621.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2621.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2595.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2595.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2595.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2595.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2601.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2601.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2601.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2601.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2608.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2608.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2608.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2608.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2614.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2614.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2614.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2614.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2627.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2627.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2627.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2627.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2646.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2646.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2646.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2646.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_3719.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_3719.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_3719.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_3719.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_34.method_260()Z": "method_54550",
+  "net/minecraft/class_34$class_8578.method_260()Z": "method_54550"
  },
  "classRenames": {
   "net/minecraft/class_2440$class_2441": "net/minecraft/class_8177$class_2441",
@@ -208,6 +258,74 @@
     "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#noPoolAliasLookup()Lnet/minecraft/class_8891;"
    ],
    "basis": "1.20.2 jigsaw structures had no pool aliases: the empty lookup"
+  },
+  "net/minecraft/class_269.method_1168(Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;)Lnet/minecraft/class_266;": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;ZLnet/minecraft/class_9022;)Lnet/minecraft/class_266;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#noDisplayAutoUpdate()Z",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#defaultNumberFormat()Lnet/minecraft/class_9022;"
+   ],
+   "basis": "1.20.2 objectives had no display auto-update and the default number format"
+  },
+  "net/minecraft/class_269.method_1152(Ljava/lang/String;)V": {
+   "desc": "(Lnet/minecraft/class_9015;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#nameHolder(Ljava/lang/String;)Lnet/minecraft/class_9015;"
+   ],
+   "basis": "the owner name, as the holder 1.20.3 keys scores by"
+  },
+  "net/minecraft/class_269.method_1190(Ljava/lang/String;Lnet/minecraft/class_266;)V": {
+   "desc": "(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#nameHolder(Ljava/lang/String;)Lnet/minecraft/class_9015;",
+    "keep:1"
+   ],
+   "basis": "the owner name, as the holder 1.20.3 keys scores by"
+  },
+  "net/minecraft/class_269.method_1176(Lnet/minecraft/class_267;)V": {
+   "desc": "(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#holderOf(Lnet/minecraft/class_267;)Lnet/minecraft/class_9015;",
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#objectiveOf(Lnet/minecraft/class_267;)Lnet/minecraft/class_266;",
+    "keep:0"
+   ],
+   "basis": "the holder and objective the score is stored under (opened by the layer's access widener)"
+  },
+  "net/minecraft/class_2995.method_1152(Ljava/lang/String;)V": {
+   "desc": "(Lnet/minecraft/class_9015;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#nameHolder(Ljava/lang/String;)Lnet/minecraft/class_9015;"
+   ],
+   "basis": "the owner name, as the holder 1.20.3 keys scores by"
+  },
+  "net/minecraft/class_2995.method_1190(Ljava/lang/String;Lnet/minecraft/class_266;)V": {
+   "desc": "(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#nameHolder(Ljava/lang/String;)Lnet/minecraft/class_9015;",
+    "keep:1"
+   ],
+   "basis": "the owner name, as the holder 1.20.3 keys scores by"
+  },
+  "net/minecraft/class_2995.method_1176(Lnet/minecraft/class_267;)V": {
+   "desc": "(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#holderOf(Lnet/minecraft/class_267;)Lnet/minecraft/class_9015;",
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#objectiveOf(Lnet/minecraft/class_267;)Lnet/minecraft/class_266;",
+    "keep:0"
+   ],
+   "basis": "the holder and objective the score is stored under (opened by the layer's access widener)"
+  },
+  "net/minecraft/class_2218$class_2219.apply(Lnet/minecraft/class_267;Lnet/minecraft/class_267;)V": {
+   "desc": "(Lnet/minecraft/class_9014;Lnet/minecraft/class_9014;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#access(Lnet/minecraft/class_267;)Lnet/minecraft/class_9014;",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#access(Lnet/minecraft/class_267;)Lnet/minecraft/class_9014;"
+   ],
+   "basis": "each 1.20.2 score as a ScoreAccess over it (CbWorldScoreAccessView)"
   }
  },
  "superCtorReshapes": {
@@ -426,11 +544,133 @@
     "keep:6"
    ],
    "basis": "width, height and ingredients become a ShapedRecipePattern (CbWorldItems.shapedPattern)"
+  },
+  "net/minecraft/class_1665.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#noPickupItem()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "a 1.20.2 subclass had no pickup stack: it answered getPickupItem itself (abstract in 1.20.2)"
+  },
+  "net/minecraft/class_1665.<init>(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#noPickupItem()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "a 1.20.2 subclass had no pickup stack: it answered getPickupItem itself (abstract in 1.20.2)"
+  },
+  "net/minecraft/class_1665.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#noPickupItem()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "a 1.20.2 subclass had no pickup stack: it answered getPickupItem itself (abstract in 1.20.2)"
+  },
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#arrowStack()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "the plain arrow 1.20.3's own Arrow(EntityType, Level) passes; a 1.20.2 subclass is picked up the 1.20.2 way (CbWorldLegacyArrow, CbWorldArrowMixin)"
+  },
+  "net/minecraft/class_1679.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#spectralArrowStack()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.2's SpectralArrow was always picked up as one spectral arrow: the stack it now copies"
+  },
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#arrowStack()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "the plain arrow 1.20.3's own Arrow(EntityType, Level) passes; a 1.20.2 subclass is picked up the 1.20.2 way (CbWorldLegacyArrow, CbWorldArrowMixin)"
+  },
+  "net/minecraft/class_1679.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#spectralArrowStack()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.2's SpectralArrow was always picked up as one spectral arrow: the stack it now copies"
+  },
+  "net/minecraft/class_1322.<init>(Ljava/util/UUID;Ljava/util/function/Supplier;DLnet/minecraft/class_1322$class_1323;)V": {
+   "desc": "(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldAttributes#legacyName(Ljava/util/function/Supplier;)Ljava/lang/String;",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "the name supplier goes to the modifier, asked whenever 1.20.2 asked it (CbWorldAttributeModifierMixin)"
+  },
+  "net/minecraft/class_58.<init>(Lnet/minecraft/class_176;Lnet/minecraft/class_8489;)V": {
+   "desc": "(Lnet/minecraft/class_8942;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLoot#newCollector()Lnet/minecraft/class_8942;",
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "1.20.2's context started an empty problem collection of its own: 1.20.3's Collector"
+  },
+  "net/minecraft/class_58.<init>(Lcom/google/common/collect/Multimap;Ljava/util/function/Supplier;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;Ljava/util/Set;)V": {
+   "desc": "(Lnet/minecraft/class_8942;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;Ljava/util/Set;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldLoot#problems(Lcom/google/common/collect/Multimap;Ljava/util/function/Supplier;)Lnet/minecraft/class_8942;",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "the problems multimap and context path become a reporter into them (CbWorldLoot); the constructor is opened by the layer's access widener"
+  },
+  "net/minecraft/class_266.<init>(Lnet/minecraft/class_269;Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;)V": {
+   "desc": "(Lnet/minecraft/class_269;Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;ZLnet/minecraft/class_9022;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#noDisplayAutoUpdate()Z",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#defaultNumberFormat()Lnet/minecraft/class_9022;"
+   ],
+   "basis": "1.20.2 objectives had no display auto-update and the default number format"
+  },
+  "net/minecraft/class_267.<init>(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V": {
+   "desc": "()V",
+   "ops": [
+    "tap:0,1,2 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#pendingScore(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V"
+   ],
+   "basis": "the scoreboard, objective and owner go to the score under construction (CbWorldScoreMixin)"
   }
  },
  "staticRedirects": {
   "net/minecraft/class_1688.method_7523(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1688$class_1689;)Lnet/minecraft/class_1688;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#createMinecart",
-  "net/minecraft/class_2246.method_52571(Lnet/minecraft/class_2960;Lnet/minecraft/class_2248;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#register"
+  "net/minecraft/class_2246.method_52571(Lnet/minecraft/class_2960;Lnet/minecraft/class_2248;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#register",
+  "net/minecraft/class_2621.method_11287(Lnet/minecraft/class_1922;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#setLootTable",
+  "net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lcom/mojang/datafixers/DataFixer;ILnet/minecraft/class_2487;Lnet/minecraft/class_1940;Lnet/minecraft/class_5315;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStorage#parsePrimaryLevelData"
  },
  "instanceRedirects": {
   "net/minecraft/class_2537.method_10776(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;ZZILnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#calculateState",
@@ -441,13 +681,20 @@
   "net/minecraft/class_8181.method_49275(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#setFirstItem",
   "net/minecraft/class_8181.method_49276()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#removeFirstItem",
   "net/minecraft/class_5670.method_32476(Lnet/minecraft/class_47;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#getScoreboardName",
-  "net/minecraft/class_1856.method_8089(Z)Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#ingredientToJson"
+  "net/minecraft/class_1856.method_8089(Z)Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#ingredientToJson",
+  "net/minecraft/class_2633.method_11376(Lnet/minecraft/class_3218;)Z": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#loadStructure",
+  "net/minecraft/class_32$class_5143.method_27013(Lcom/mojang/serialization/DynamicOps;Lnet/minecraft/class_7712;Lnet/minecraft/class_2378;Lcom/mojang/serialization/Lifecycle;)Lcom/mojang/datafixers/util/Pair;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStorage#getDataTag",
+  "net/minecraft/class_32$class_5143.method_29584()Lnet/minecraft/class_34;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStorage#getSummary",
+  "net/minecraft/class_32$class_5143.method_29585()Lnet/minecraft/class_7712;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStorage#getDataConfiguration",
+  "net/minecraft/class_269.method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#getPlayerScoresByObjective",
+  "net/minecraft/class_269.method_1178()Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#getTrackedPlayers"
  },
  "fieldRedirects": {
   "net/minecraft/class_5556.field_27880:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#LAYERED_RAIN",
   "net/minecraft/class_5556.field_27881:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#LAYERED_SNOW",
   "net/minecraft/class_1420.field_30268:F": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#FLAP_DEGREES_PER_TICK",
-  "net/minecraft/class_1420.field_28637:I": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#TICKS_PER_FLAP"
+  "net/minecraft/class_1420.field_28637:I": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#TICKS_PER_FLAP",
+  "net/minecraft/class_267.field_1413:Ljava/util/Comparator;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#SCORE_COMPARATOR"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_2527.field_22155:Lnet/minecraft/class_2394;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#flameParticle"
@@ -467,7 +714,27 @@
   "net/minecraft/class_2513.method_10694()Lnet/minecraft/class_2511;",
   "net/minecraft/class_2283.method_9759(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
   "net/minecraft/class_1927.method_8349()Lnet/minecraft/class_1282;",
-  "net/minecraft/class_1657.method_7282(DDD)V"
+  "net/minecraft/class_1657.method_7282(DDD)V",
+  "net/minecraft/class_1322.method_6185()Ljava/lang/String;",
+  "net/minecraft/class_2625.method_49844(Lnet/minecraft/class_1657;)Lnet/minecraft/class_8242;",
+  "net/minecraft/class_2633.method_11368(Lnet/minecraft/class_3218;Z)Z",
+  "net/minecraft/class_2633.method_21864(Lnet/minecraft/class_3218;ZLnet/minecraft/class_3499;)Z",
+  "net/minecraft/class_2633.method_21865()Ljava/lang/String;",
+  "net/minecraft/class_34.method_256()Z",
+  "net/minecraft/class_58.method_361()Lcom/google/common/collect/Multimap;",
+  "net/minecraft/class_267.method_1122()Lnet/minecraft/class_269;",
+  "net/minecraft/class_267.method_1124(I)V",
+  "net/minecraft/class_267.method_1126()I",
+  "net/minecraft/class_267.method_1127()Lnet/minecraft/class_266;",
+  "net/minecraft/class_267.method_1128(I)V",
+  "net/minecraft/class_267.method_1129()Ljava/lang/String;",
+  "net/minecraft/class_267.method_1130()V",
+  "net/minecraft/class_267.method_1132()V",
+  "net/minecraft/class_269.method_1180(Ljava/lang/String;Lnet/minecraft/class_266;)Lnet/minecraft/class_267;",
+  "net/minecraft/class_269.method_1166(Ljava/lang/String;)Ljava/util/Map;",
+  "net/minecraft/class_269.method_1183(Ljava/lang/String;Lnet/minecraft/class_266;)Z",
+  "net/minecraft/class_269.method_1155(Ljava/lang/String;Lnet/minecraft/class_266;)V",
+  "net/minecraft/class_269.method_1162(Lnet/minecraft/class_274;Ljava/lang/String;Ljava/util/function/Consumer;)V"
  ],
  "overrideHooks": [
   {
@@ -647,6 +914,71 @@
    "onlyUnder": "net/minecraft/class_3222",
    "basis": "ServerPlayer.travel calls 1.20.3's checkMovementStatistics; the override's super call reaches it directly",
    "superCalls": "rewrite"
+  },
+  {
+   "old": "method_11283(Lnet/minecraft/class_2487;)Z",
+   "new": "method_54871(Lnet/minecraft/class_2487;)Z",
+   "onlyUnder": "net/minecraft/class_2621",
+   "basis": "tryLoadLootTable is RandomizableContainer's default of that name in 1.20.3: same body over the same fields"
+  },
+  {
+   "old": "method_11286(Lnet/minecraft/class_2487;)Z",
+   "new": "method_54872(Lnet/minecraft/class_2487;)Z",
+   "onlyUnder": "net/minecraft/class_2621",
+   "basis": "trySaveLootTable is RandomizableContainer's default of that name in 1.20.3: same body over the same fields"
+  },
+  {
+   "old": "method_11289(Lnet/minecraft/class_1657;)V",
+   "new": "method_54873(Lnet/minecraft/class_1657;)V",
+   "onlyUnder": "net/minecraft/class_2621",
+   "basis": "unpackLootTable is RandomizableContainer's default of that name in 1.20.3: same body over the same fields"
+  },
+  {
+   "old": "method_11285(Lnet/minecraft/class_2960;J)V",
+   "new": "method_54867(Lnet/minecraft/class_2960;J)V",
+   "onlyUnder": "net/minecraft/class_2621",
+   "basis": "setLootTable(table, seed) is RandomizableContainer's default of that name in 1.20.3: same body over the same fields"
+  },
+  {
+   "old": "method_260()Z",
+   "new": "method_54550()Z",
+   "onlyUnder": "net/minecraft/class_34",
+   "basis": "askToOpenWorld (the world is from a newer version) is 1.20.3's isDowngrade, asked where 1.20.2 asked it"
+  },
+  {
+   "old": "method_256()Z",
+   "new": "method_54549()Z",
+   "onlyUnder": "net/minecraft/class_34",
+   "basis": "1.20.3's world list asks shouldBackup() where 1.20.2's asked markVersionInList()"
+  },
+  {
+   "old": "method_1152(Ljava/lang/String;)V",
+   "new": "method_1152(Lnet/minecraft/class_9015;)V",
+   "onlyUnder": "net/minecraft/class_269",
+   "basis": "the removed holder's name, as 1.20.2 named it",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores.holderName(Lnet/minecraft/class_9015;)Ljava/lang/String;"
+  },
+  {
+   "old": "method_1190(Ljava/lang/String;Lnet/minecraft/class_266;)V",
+   "new": "method_1190(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;)V",
+   "onlyUnder": "net/minecraft/class_269",
+   "basis": "the holder's name, as 1.20.2 named it",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores.holderName(Lnet/minecraft/class_9015;)Ljava/lang/String;"
+  },
+  {
+   "old": "method_1176(Lnet/minecraft/class_267;)V",
+   "new": "method_1176(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+   "onlyUnder": "net/minecraft/class_269",
+   "basis": "the changed score, which learns the holder and objective it is stored under first",
+   "bridge": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores.scoreChangedBridge(Ltop/dext/centurybridge/step/v1_20_3/rt/CbWorldScoreChangeListener;Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScoreChangeListener"
+  },
+  {
+   "old": "apply(Lnet/minecraft/class_267;Lnet/minecraft/class_267;)V",
+   "new": "apply(Lnet/minecraft/class_9014;Lnet/minecraft/class_9014;)V",
+   "onlyUnder": "net/minecraft/class_2218$class_2219",
+   "basis": "each ScoreAccess as a 1.20.2 Score over it (CbWorldAccessScore)",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores.scoreOf(Lnet/minecraft/class_9014;)Lnet/minecraft/class_267;"
   }
  ],
  "adapterHooks": [
@@ -665,6 +997,20 @@
    "requires": [],
    "synth": [],
    "basis": "marks the entity classes converted from 1.20.2 (CbWorldLivingEntityMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1667",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLegacyArrow",
+   "requires": [],
+   "synth": [],
+   "basis": "marks the Arrow classes converted from 1.20.2 (CbWorldArrowMixin)"
+  },
+  {
+   "under": "net/minecraft/class_2633",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLegacyStructureBlock",
+   "requires": [],
+   "synth": [],
+   "basis": "marks the StructureBlockEntity classes converted from 1.20.2 (CbWorldStructureBlockMixin, CbWorldStructurePacketMixin)"
   }
  ],
  "abstractFills": [
@@ -710,5 +1056,18 @@
    "call": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks.skullTypeName(Lnet/minecraft/class_2484$class_2485;)Ljava/lang/String;",
    "basis": "a 1.20.2 skull type has no serialized name (CbWorldBlocks.skullTypeName)"
   }
- ]
+ ],
+ "ledger": {
+  "net/minecraft/class_7264.method_7549()V": "stub artifact, not 1.20.2 API: CB's remap-jar (JarRemapper.remapToIntermediary) named ChestBoat's own K()V -- ContainerEntity.clearItemStacks, method_42273 in Fabric's intermediary -- after Boat's private K()V (controlBoat, method_7549), climbing to a private superclass method before the interface. A 1.20.2 mod calls clearItemStacks as method_42273, which 1.20.3 has, and Boat.controlBoat only through its own access widener, which still applies (Boat.method_7549()V is unchanged). The 1.20.3 stub has the same artifact (ChestBoat G()V named method_7534)."
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;DDD)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#newArrow",
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#newArrow"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_2218$class_2219.apply(Lnet/minecraft/class_267;Lnet/minecraft/class_267;)V": {
+   "iface": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScoreOperation",
+   "adapt": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#operation(Ltop/dext/centurybridge/step/v1_20_3/rt/CbWorldScoreOperation;)Lnet/minecraft/class_2218$class_2219;"
+  }
+ }
 }

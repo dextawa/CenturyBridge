@@ -369,6 +369,166 @@ def main():
          RT + "/CbWorldBlocks.skullTypeName(Lnet/minecraft/class_2484$class_2485;)Ljava/lang/String;",
          "a 1.20.2 skull type has no serialized name (CbWorldBlocks.skullTypeName)")
 
+    # ---------------------------------------------------------------- batch 3
+    w.setdefault("ctorRedirects", {})
+    w.setdefault("lambdaAdapters", {})
+    ITEM, ET, LE = "Lnet/minecraft/class_1799;", "Lnet/minecraft/class_1299;", "Lnet/minecraft/class_1309;"
+
+    # arrows: 1.20.3's constructors take the stack the arrow is picked up as
+    AA, AR, SA = MC + "class_1665", MC + "class_1667", MC + "class_1679"
+    nop = "push " + RT + "/CbWorldArrows#noPickupItem()" + ITEM
+    for args in (ET + LV, ET + "DDD" + LV, ET + LE + LV):
+        n = len(classfile.split_args("(" + args + ")V")[0])
+        ctor(AA + ".<init>(" + args + ")V", "(" + args + ITEM + ")V", ["keep"] * n + [nop],
+             "a 1.20.2 subclass had no pickup stack: it answered getPickupItem itself (abstract in 1.20.2)")
+    for args in (LV + "DDD", LV + LE):
+        n = len(classfile.split_args("(" + args + ")V")[0])
+        ctor(AR + ".<init>(" + args + ")V", "(" + args + ITEM + ")V",
+             ["keep"] * n + ["push " + RT + "/CbWorldArrows#arrowStack()" + ITEM],
+             "the plain arrow 1.20.3's own Arrow(EntityType, Level) passes; a 1.20.2 subclass is picked up the 1.20.2 way "
+             "(CbWorldLegacyArrow, CbWorldArrowMixin)")
+        w["ctorRedirects"][AR + ".<init>(" + args + ")V"] = RT + "/CbWorldArrows#newArrow"
+        ctor(SA + ".<init>(" + args + ")V", "(" + args + ITEM + ")V",
+             ["keep"] * n + ["push " + RT + "/CbWorldArrows#spectralArrowStack()" + ITEM],
+             "1.20.2's SpectralArrow was always picked up as one spectral arrow: the stack it now copies")
+    w["adapterHooks"].append({"under": AR, "adapter": RT + "/CbWorldLegacyArrow", "requires": [], "synth": [],
+                              "basis": "marks the Arrow classes converted from 1.20.2 (CbWorldArrowMixin)"})
+
+    # AttributeModifier: the name supplier and getName()
+    ctor(MC + "class_1322.<init>(Ljava/util/UUID;Ljava/util/function/Supplier;DLnet/minecraft/class_1322$class_1323;)V",
+         "(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V",
+         ["keep:0", "conv:1 " + RT + "/CbWorldAttributes#legacyName(Ljava/util/function/Supplier;)Ljava/lang/String;", "keep:2", "keep:3"],
+         "the name supplier goes to the modifier, asked whenever 1.20.2 asked it (CbWorldAttributeModifierMixin)")
+    w["covers"].append(MC + "class_1322.method_6185()Ljava/lang/String;")
+
+    # RandomizableContainerBlockEntity: the loot table methods are 1.20.3's RandomizableContainer defaults
+    RCBE = MC + "class_2621"
+    w["staticRedirects"][RCBE + ".method_11287(Lnet/minecraft/class_1922;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2960;)V"] = RT + "/CbWorldContainers#setLootTable"
+    loot = [("method_11283", "(Lnet/minecraft/class_2487;)Z", "method_54871", "tryLoadLootTable"),
+            ("method_11286", "(Lnet/minecraft/class_2487;)Z", "method_54872", "trySaveLootTable"),
+            ("method_11289", "(Lnet/minecraft/class_1657;)V", "method_54873", "unpackLootTable"),
+            ("method_11285", "(Lnet/minecraft/class_2960;J)V", "method_54867", "setLootTable(table, seed)")]
+    for owner in with_subclasses(sup, RCBE):
+        for old, desc, new, _ in loot:
+            w["methodRenames"][owner + "." + old + desc] = new
+        w["fieldRenames"][owner + ".field_31353:Ljava/lang/String;"] = "field_47154"
+        w["fieldRenames"][owner + ".field_31352:Ljava/lang/String;"] = "field_47155"
+    for old, desc, new, what in loot:
+        hook(old + desc, new + desc, "class_2621",
+             what + " is RandomizableContainer's default of that name in 1.20.3: same body over the same fields")
+
+    # SignBlockEntity.getTextFacingPlayer
+    w["covers"].append(MC + "class_2625.method_49844(Lnet/minecraft/class_1657;)Lnet/minecraft/class_8242;")
+
+    # StructureBlockEntity: 1.20.2's loading methods back (covers); 1.20.2 subclasses asked the 1.20.2 way
+    SBE = MC + "class_2633"
+    w["covers"] += [SBE + ".method_11368(Lnet/minecraft/class_3218;Z)Z",
+                    SBE + ".method_21864(Lnet/minecraft/class_3218;ZLnet/minecraft/class_3499;)Z",
+                    SBE + ".method_21865()Ljava/lang/String;"]
+    w["instanceRedirects"][SBE + ".method_11376(Lnet/minecraft/class_3218;)Z"] = RT + "/CbWorldBlocks#loadStructure"
+    w["adapterHooks"].append({"under": SBE, "adapter": RT + "/CbWorldLegacyStructureBlock", "requires": [], "synth": [],
+                              "basis": "marks the StructureBlockEntity classes converted from 1.20.2 (CbWorldStructureBlockMixin, "
+                                       "CbWorldStructurePacketMixin)"})
+
+    # world storage
+    LSA = MC + "class_32$class_5143"
+    w["instanceRedirects"][LSA + ".method_27013(Lcom/mojang/serialization/DynamicOps;Lnet/minecraft/class_7712;Lnet/minecraft/class_2378;Lcom/mojang/serialization/Lifecycle;)Lcom/mojang/datafixers/util/Pair;"] = RT + "/CbWorldStorage#getDataTag"
+    w["instanceRedirects"][LSA + ".method_29584()Lnet/minecraft/class_34;"] = RT + "/CbWorldStorage#getSummary"
+    w["instanceRedirects"][LSA + ".method_29585()Lnet/minecraft/class_7712;"] = RT + "/CbWorldStorage#getDataConfiguration"
+    w["staticRedirects"][MC + "class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lcom/mojang/datafixers/DataFixer;ILnet/minecraft/class_2487;Lnet/minecraft/class_1940;Lnet/minecraft/class_5315;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31;"] = RT + "/CbWorldStorage#parsePrimaryLevelData"
+
+    # LevelSummary: askToOpenWorld is isDowngrade; markVersionInList comes back (a cover)
+    for owner in with_subclasses(sup, MC + "class_34"):
+        w["methodRenames"][owner + ".method_260()Z"] = "method_54550"
+    hook("method_260()Z", "method_54550()Z", "class_34",
+         "askToOpenWorld (the world is from a newer version) is 1.20.3's isDowngrade, asked where 1.20.2 asked it")
+    hook("method_256()Z", "method_54549()Z", "class_34",
+         "1.20.3's world list asks shouldBackup() where 1.20.2's asked markVersionInList()")
+    w["covers"].append(MC + "class_34.method_256()Z")
+
+    # ValidationContext: problems go to a ProblemReporter
+    VC = MC + "class_58"
+    ctor(VC + ".<init>(Lnet/minecraft/class_176;Lnet/minecraft/class_8489;)V",
+         "(Lnet/minecraft/class_8942;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;)V",
+         ["push " + RT + "/CbWorldLoot#newCollector()Lnet/minecraft/class_8942;", "keep:0", "keep:1"],
+         "1.20.2's context started an empty problem collection of its own: 1.20.3's Collector")
+    ctor(VC + ".<init>(Lcom/google/common/collect/Multimap;Ljava/util/function/Supplier;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;Ljava/util/Set;)V",
+         "(Lnet/minecraft/class_8942;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;Ljava/util/Set;)V",
+         ["conv:0,1 " + RT + "/CbWorldLoot#problems(Lcom/google/common/collect/Multimap;Ljava/util/function/Supplier;)Lnet/minecraft/class_8942;",
+          "keep:2", "keep:3", "keep:4"],
+         "the problems multimap and context path become a reporter into them (CbWorldLoot); the constructor is opened by "
+         "the layer's access widener")
+    w["covers"].append(VC + ".method_361()Lcom/google/common/collect/Multimap;")
+
+    # objectives: no display auto-update, default number format
+    SB, OBJ, SC, HOLD = MC + "class_269", MC + "class_266", MC + "class_267", "Lnet/minecraft/class_9015;"
+    obj_defaults = ["push " + RT + "/CbWorldScores#noDisplayAutoUpdate()Z",
+                    "push " + RT + "/CbWorldScores#defaultNumberFormat()Lnet/minecraft/class_9022;"]
+    OBJ_ARGS = "Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;"
+    ctor(OBJ + ".<init>(Lnet/minecraft/class_269;" + OBJ_ARGS + ")V", "(Lnet/minecraft/class_269;" + OBJ_ARGS + "ZLnet/minecraft/class_9022;)V",
+         ["keep"] * 5 + obj_defaults, "1.20.2 objectives had no display auto-update and the default number format")
+    reshape(SB + ".method_1168(" + OBJ_ARGS + ")Lnet/minecraft/class_266;",
+            "(" + OBJ_ARGS + "ZLnet/minecraft/class_9022;)Lnet/minecraft/class_266;", ["keep"] * 4 + obj_defaults,
+            "1.20.2 objectives had no display auto-update and the default number format")
+
+    # Score: the stored 1.20.3 score is the 1.20.2 Score (CbWorldScoreMixin)
+    w["covers"] += [SC + "." + m for m in ("method_1122()Lnet/minecraft/class_269;", "method_1124(I)V", "method_1126()I",
+                                          "method_1127()Lnet/minecraft/class_266;", "method_1128(I)V",
+                                          "method_1129()Ljava/lang/String;", "method_1130()V", "method_1132()V")]
+    ctor(SC + ".<init>(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V", "()V",
+         ["tap:0,1,2 " + RT + "/CbWorldScores#pendingScore(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V"],
+         "the scoreboard, objective and owner go to the score under construction (CbWorldScoreMixin)")
+    w["fieldRedirects"][SC + ".field_1413:Ljava/util/Comparator;"] = RT + "/CbWorldScores#SCORE_COMPARATOR"
+
+    # Scoreboard: the owner-name methods come back (covers); the notifications take holders
+    w["covers"] += [SB + "." + m for m in ("method_1180(Ljava/lang/String;Lnet/minecraft/class_266;)Lnet/minecraft/class_267;",
+                                          "method_1166(Ljava/lang/String;)Ljava/util/Map;",
+                                          "method_1183(Ljava/lang/String;Lnet/minecraft/class_266;)Z",
+                                          "method_1155(Ljava/lang/String;Lnet/minecraft/class_266;)V",
+                                          "method_1162(Lnet/minecraft/class_274;Ljava/lang/String;Ljava/util/function/Consumer;)V")]
+    name_holder = "conv:0 " + RT + "/CbWorldScores#nameHolder(Ljava/lang/String;)" + HOLD
+    for owner in (SB, MC + "class_2995"):
+        reshape(owner + ".method_1152(Ljava/lang/String;)V", "(" + HOLD + ")V", [name_holder],
+                "the owner name, as the holder 1.20.3 keys scores by")
+        reshape(owner + ".method_1190(Ljava/lang/String;Lnet/minecraft/class_266;)V", "(" + HOLD + "Lnet/minecraft/class_266;)V",
+                [name_holder, "keep:1"], "the owner name, as the holder 1.20.3 keys scores by")
+        reshape(owner + ".method_1176(Lnet/minecraft/class_267;)V", "(" + HOLD + "Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+                ["conv:0 " + RT + "/CbWorldScores#holderOf(Lnet/minecraft/class_267;)" + HOLD,
+                 "conv:0 " + RT + "/CbWorldScores#objectiveOf(Lnet/minecraft/class_267;)Lnet/minecraft/class_266;", "keep:0"],
+                "the holder and objective the score is stored under (opened by the layer's access widener)")
+    hook("method_1152(Ljava/lang/String;)V", "method_1152(" + HOLD + ")V", "class_269",
+         "the removed holder's name, as 1.20.2 named it", wrap=RT + "/CbWorldScores.holderName(" + HOLD + ")Ljava/lang/String;")
+    hook("method_1190(Ljava/lang/String;Lnet/minecraft/class_266;)V", "method_1190(" + HOLD + "Lnet/minecraft/class_266;)V", "class_269",
+         "the holder's name, as 1.20.2 named it", wrap=RT + "/CbWorldScores.holderName(" + HOLD + ")Ljava/lang/String;")
+    hook("method_1176(Lnet/minecraft/class_267;)V", "method_1176(" + HOLD + "Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+         "class_269", "the changed score, which learns the holder and objective it is stored under first",
+         bridge=RT + "/CbWorldScores.scoreChangedBridge(L" + RT + "/CbWorldScoreChangeListener;" + HOLD
+                + "Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+         adapter=RT + "/CbWorldScoreChangeListener")
+    # same name and erased type, other element types: a 1.20.2 call gets 1.20.2's elements
+    w["instanceRedirects"][SB + ".method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;"] = RT + "/CbWorldScores#getPlayerScoresByObjective"
+    w["instanceRedirects"][SB + ".method_1178()Ljava/util/Collection;"] = RT + "/CbWorldScores#getTrackedPlayers"
+
+    # OperationArgument.Operation: apply(Score, Score) -> apply(ScoreAccess, ScoreAccess)
+    OP = MC + "class_2218$class_2219"
+    OLD_APPLY, NEW_APPLY = "apply(Lnet/minecraft/class_267;Lnet/minecraft/class_267;)V", "apply(Lnet/minecraft/class_9014;Lnet/minecraft/class_9014;)V"
+    acc = RT + "/CbWorldScores#access(Lnet/minecraft/class_267;)Lnet/minecraft/class_9014;"
+    reshape(OP + "." + OLD_APPLY, NEW_APPLY[len("apply"):], ["conv:0 " + acc, "conv:1 " + acc],
+            "each 1.20.2 score as a ScoreAccess over it (CbWorldScoreAccessView)")
+    hook(OLD_APPLY, NEW_APPLY, "class_2218$class_2219", "each ScoreAccess as a 1.20.2 Score over it (CbWorldAccessScore)",
+         wrap=RT + "/CbWorldScores.scoreOf(Lnet/minecraft/class_9014;)Lnet/minecraft/class_267;")
+    w["lambdaAdapters"][OP + "." + OLD_APPLY] = {
+        "iface": RT + "/CbWorldScoreOperation",
+        "adapt": RT + "/CbWorldScores#operation(L" + RT + "/CbWorldScoreOperation;)L" + OP + ";"}
+
+    # ChestBoat.method_7549: not a member any 1.20.2 mod can reference (see the ledger text)
+    w["ledger"][MC + "class_7264.method_7549()V"] = (
+        "stub artifact, not 1.20.2 API: CB's remap-jar (JarRemapper.remapToIntermediary) named ChestBoat's own K()V -- "
+        "ContainerEntity.clearItemStacks, method_42273 in Fabric's intermediary -- after Boat's private K()V (controlBoat, "
+        "method_7549), climbing to a private superclass method before the interface. A 1.20.2 mod calls clearItemStacks "
+        "as method_42273, which 1.20.3 has, and Boat.controlBoat only through its own access widener, which still applies "
+        "(Boat.method_7549()V is unchanged). The 1.20.3 stub has the same artifact (ChestBoat G()V named method_7534).")
+
     with open(out, "w", encoding="utf-8", newline="\n") as o:
         json.dump({k: v for k, v in w.items() if v}, o, indent=1)
         o.write("\n")

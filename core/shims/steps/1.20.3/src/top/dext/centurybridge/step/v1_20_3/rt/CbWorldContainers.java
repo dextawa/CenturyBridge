@@ -1,14 +1,21 @@
 package top.dext.centurybridge.step.v1_20_3.rt;
 
 import net.minecraft.class_1799;
+import net.minecraft.class_1922;
+import net.minecraft.class_2338;
 import net.minecraft.class_2586;
+import net.minecraft.class_2621;
+import net.minecraft.class_2960;
+import net.minecraft.class_5819;
 import net.minecraft.class_8181;
 
 /**
- * ContainerSingleItem: 1.20.2's had getFirstItem / setFirstItem / removeFirstItem default methods over the
+ * Containers. ContainerSingleItem: 1.20.2's had getFirstItem / setFirstItem / removeFirstItem default methods over the
  * container's slot 0, its implementations supplying the Container methods; 1.20.3's asks for getTheItem /
  * setTheItem / splitTheItem / getContainerBlockEntity and builds the Container methods on them. Calls, super
- * calls and the implementations 1.20.3 now demands of a 1.20.2 class, each the 1.20.2 way.
+ * calls and the implementations 1.20.3 now demands of a 1.20.2 class, each the 1.20.2 way. And the static loot
+ * table setter 1.20.2's RandomizableContainerBlockEntity had (its other loot table methods are 1.20.3's
+ * RandomizableContainer defaults under new names: renames and override hooks in s2world.json).
  */
 public final class CbWorldContainers {
 
@@ -63,6 +70,21 @@ public final class CbWorldContainers {
         }
         throw new UnsupportedOperationException("ContainerSingleItem.getContainerBlockEntity(): " + c.getClass().getName()
             + " is a 1.20.2 single-item container that is not a block entity");
+    }
+
+    // ------------------------------------------------------------------ RandomizableContainerBlockEntity
+
+    /**
+     * 1.20.2's static RandomizableContainerBlockEntity.setLootTable(level, random, pos, table): a randomizable
+     * container block entity at pos gets the table and a seed drawn from random, through its setLootTable(table,
+     * seed) -- 1.20.3's RandomizableContainer default of that shape, which a 1.20.2 override answers (override
+     * hook). 1.20.3's own static also takes any other RandomizableContainer there; 1.20.2's took only these.
+     */
+    public static void setLootTable(class_1922 level, class_5819 random, class_2338 pos, class_2960 table) {
+        class_2586 be = level.method_8321(pos);
+        if (be instanceof class_2621 container) {
+            container.method_54867(table, random.method_43055());
+        }
     }
 
     private CbWorldContainers() {

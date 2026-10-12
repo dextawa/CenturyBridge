@@ -962,6 +962,12 @@ public final class Chain {
      *     the next one in sequence: reordering, duplicating, or folding
      *     several old arguments into one converter. When any op is explicit
      *     the sequential coverage check is waived.</li>
+     * <li>{@code tap:I,J,... OWNER#name(desc)V} -- run a void static on those
+     *     old arguments and push nothing: the old values reach the bridge layer
+     *     (which keeps them for the object under construction) when the new
+     *     shape has no argument to carry them (1.20.2's Score(Scoreboard,
+     *     Objective, String) is 1.20.3's Score()). Explicit indices only; runs
+     *     where it stands in the op order, before the constructor is invoked.</li>
      * </ul>
      * Longs and doubles are handled (two-slot locals, typed load/store). The
      * argument types the ops produce must equal {@code desc}'s parameter list
@@ -1127,6 +1133,9 @@ public final class Chain {
                 idxs = head.substring(colon + 1);
             }
             int[] from;
+            if (kind.equals("tap") && (idxs == null || idxs.isEmpty())) {
+                throw new IllegalArgumentException(where + ": op '" + t + "' needs explicit indices (tap:I,J,...)");
+            }
             if (kind.equals("push") || kind.equals("param")) {
                 from = new int[0];
             } else if (idxs != null) {
@@ -1163,7 +1172,7 @@ public final class Chain {
                     }
                     ops.add(new ReshapeOp(from, null, null, null, true));
                 }
-                case "conv", "push" -> {
+                case "conv", "push", "tap" -> {
                     int hash = rest.indexOf('#');
                     int paren = rest.indexOf('(');
                     if (hash <= 0 || paren <= hash) {
@@ -1184,6 +1193,14 @@ public final class Chain {
                         }
                     }
                     org.objectweb.asm.Type r = org.objectweb.asm.Type.getReturnType(cDesc);
+                    if (kind.equals("tap")) {
+                        // a tap leaves nothing on the stack: void, and no new argument produced
+                        if (r.getSort() != org.objectweb.asm.Type.VOID) {
+                            throw new IllegalArgumentException(where + ": op '" + t + "' must return void");
+                        }
+                        ops.add(new ReshapeOp(from, cOwner, cName, cDesc, false));
+                        break;
+                    }
                     if (r.getSort() == org.objectweb.asm.Type.VOID) {
                         throw new IllegalArgumentException(where + ": op '" + t + "' returns void");
                     }

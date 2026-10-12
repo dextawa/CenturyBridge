@@ -24,6 +24,7 @@ import net.minecraft.class_2398;
 import net.minecraft.class_2400;
 import net.minecraft.class_2527;
 import net.minecraft.class_2537;
+import net.minecraft.class_2633;
 import net.minecraft.class_2680;
 import net.minecraft.class_2960;
 import net.minecraft.class_4538;
@@ -331,6 +332,18 @@ public final class CbWorldBlocks {
         class_5620.class_8821 im = new class_5620.class_8821(name, map);
         class_5620.field_46589.put(name, im);
         return im;
+    }
+
+    // ------------------------------------------------------------------ StructureBlockEntity
+
+    /**
+     * 1.20.2's StructureBlockEntity.loadStructure(level) was loadStructure(level, true): load the structure's
+     * author and size, and place it when the size is unchanged. 1.20.3 kept the name and descriptor for
+     * loadStructureInfo(level), which places nothing; a 1.20.2 call means the 1.20.2 method
+     * (CbWorldStructureBlockEntityMixin's cover).
+     */
+    public static boolean loadStructure(class_2633 be, class_3218 level) {
+        return ((CbWorldStructureBlockV) be).method_11368(level, true);
     }
 
     private CbWorldBlocks() {

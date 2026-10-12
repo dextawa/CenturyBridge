@@ -5,3 +5,8 @@ extendable	method	net/minecraft/class_5556	method_36994	(Lnet/minecraft/class_26
 accessible	method	net/minecraft/class_8836	method_7516	(Lnet/minecraft/class_1282;)V
 # s2world: LivingEntity.canBreatheUnderwater() is final since 1.20.3; 1.20.2 entities override it
 extendable	method	net/minecraft/class_1309	method_6094	()Z
+# s2world: ValidationContext(reporter, params, resolver, visited) is private since 1.20.3; 1.20.2's public full constructor is reshaped onto it
+accessible	method	net/minecraft/class_58	<init>	(Lnet/minecraft/class_8942;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;Ljava/util/Set;)V
+# s2world: Scoreboard / ServerScoreboard.onScoreChanged(Score) was public in 1.20.2; its 1.20.3 shape (holder, objective, score) is protected
+accessible	method	net/minecraft/class_269	method_1176	(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V
+accessible	method	net/minecraft/class_2995	method_1176	(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V
