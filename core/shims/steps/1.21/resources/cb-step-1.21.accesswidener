@@ -2,3 +2,4 @@ accessWidener	v2	intermediary
 accessible class net/minecraft/class_359$class_360
 accessible class net/minecraft/class_359$class_9772
 accessible method net/minecraft/class_359$class_9772 <init> (Lnet/minecraft/class_243;J)V
+accessible method net/minecraft/class_293 <init> (Ljava/util/List;Ljava/util/List;Lit/unimi/dsi/fastutil/ints/IntList;I)V

@@ -48,6 +48,7 @@
     "CbRenderRegionCacheMixin",
     "CbRenderSectionDispatcherAccess",
     "CbRenderSpriteAccess",
+    "CbRenderSystemAccess",
     "CbRenderTesselatorMixin",
     "CbRenderUploaderAccess",
     "CbRenderVertexBufferAccess"

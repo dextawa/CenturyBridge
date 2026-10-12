@@ -237,6 +237,18 @@
       ],
       "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbBuilderOf(Lnet/minecraft/class_9799;)Lnet/minecraft/class_287;",
       "basis": "SectionBufferBuilderPack.builder(layer) answered the layer's BufferBuilder in 1.20.6 and answers its ByteBufferBuilder since 1.21: the 1.20.6 builder over that memory (the same one every time, idle until begun)"
+    },
+    "net/minecraft/class_293.method_1357()Lcom/google/common/collect/ImmutableList;": {
+      "desc": "()Ljava/util/List;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbImmutableElements(Ljava/util/List;)Lcom/google/common/collect/ImmutableList;",
+      "basis": "VertexFormat.getElements() answered an ImmutableList in 1.20.6 and a List since 1.21 (immutable all the same): copied when it is not one"
+    },
+    "net/minecraft/class_293.method_34445()Lcom/google/common/collect/ImmutableList;": {
+      "desc": "()Ljava/util/List;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbImmutableNames(Ljava/util/List;)Lcom/google/common/collect/ImmutableList;",
+      "basis": "VertexFormat.getElementAttributeNames() answered an ImmutableList in 1.20.6 and a List since 1.21"
     }
   },
   "overrideHooks": [
@@ -501,6 +513,18 @@
       "adapter": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel$CbLegacyStreamingMusic",
       "onlyUnder": "net/minecraft/class_761",
       "basis": "1.21 stops a jukebox song where 1.20.6 called playStreamingMusic(null, pos): a 1.20.6 subclass's own, with no sound"
+    },
+    {
+      "old": "method_1357()Lcom/google/common/collect/ImmutableList;",
+      "new": "method_1357()Ljava/util/List;",
+      "onlyUnder": "net/minecraft/class_293",
+      "basis": "a 1.20.6 format subclass's getElements() (an ImmutableList, a List) answers 1.21's"
+    },
+    {
+      "old": "method_34445()Lcom/google/common/collect/ImmutableList;",
+      "new": "method_34445()Ljava/util/List;",
+      "onlyUnder": "net/minecraft/class_293",
+      "basis": "a 1.20.6 format subclass's getElementAttributeNames() (an ImmutableList, a List) answers 1.21's"
     }
   ],
   "superRedirects": {
@@ -516,7 +540,8 @@
     "net/minecraft/class_1921.method_24296()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbRenderTypes#cbAsOptionalBody",
     "net/minecraft/class_846.method_3635(Lnet/minecraft/class_287$class_7433;Lnet/minecraft/class_291;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbUploadSectionLayerBody",
     "net/minecraft/class_6850.method_39969(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;I)Lnet/minecraft/class_853;": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbCreateRegionBody",
-    "net/minecraft/class_761.method_8562(Lnet/minecraft/class_3414;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbPlayStreamingMusicBody"
+    "net/minecraft/class_761.method_8562(Lnet/minecraft/class_3414;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbPlayStreamingMusicBody",
+    "net/minecraft/class_293.method_1359()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIntegerSizeBody"
   },
   "instanceRedirects": {
     "net/minecraft/class_2535.method_10748()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbDisconnectedReason",
@@ -564,7 +589,18 @@
     "net/minecraft/class_1921.method_24296()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbRenderTypes#cbAsOptional",
     "net/minecraft/class_846.method_3635(Lnet/minecraft/class_287$class_7433;Lnet/minecraft/class_291;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbUploadSectionLayer",
     "net/minecraft/class_6850.method_39969(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;I)Lnet/minecraft/class_853;": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbCreateRegion",
-    "net/minecraft/class_761.method_8562(Lnet/minecraft/class_3414;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbPlayStreamingMusic"
+    "net/minecraft/class_761.method_8562(Lnet/minecraft/class_3414;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbPlayStreamingMusic",
+    "net/minecraft/class_296.method_1386()Lnet/minecraft/class_296$class_297;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbType",
+    "net/minecraft/class_296.method_1382()Lnet/minecraft/class_296$class_298;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbUsage",
+    "net/minecraft/class_296.method_34451()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbCount",
+    "net/minecraft/class_296.method_1385()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIndex",
+    "net/minecraft/class_296.method_1387()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbByteSize",
+    "net/minecraft/class_296.method_35667()Z": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIsPosition",
+    "net/minecraft/class_296.method_22653(I)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbClearBufferState",
+    "net/minecraft/class_296$class_298.method_22654(II)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbUsageClearBufferState",
+    "net/minecraft/class_296$class_298.method_1392()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbUsageName",
+    "net/minecraft/class_296$class_297.method_1389()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbTypeName",
+    "net/minecraft/class_293.method_1359()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIntegerSize"
   },
   "staticRedirects": {
     "net/minecraft/class_9147.method_56457(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;": "top/dext/centurybridge/step/v1_21/rt/CbNet",
@@ -584,7 +620,17 @@
     "net/minecraft/class_5944.method_34581(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_277;": "top/dext/centurybridge/step/v1_21/rt/CbRenderShaders",
     "net/minecraft/class_4597.method_22991(Lnet/minecraft/class_287;)Lnet/minecraft/class_4597$class_4598;": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbImmediate",
     "net/minecraft/class_4597.method_22992(Ljava/util/Map;Lnet/minecraft/class_287;)Lnet/minecraft/class_4597$class_4598;": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbImmediateWithBuffers",
-    "net/minecraft/class_822.method_3545(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2960;FFJII[FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel"
+    "net/minecraft/class_822.method_3545(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_2960;FFJII[FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel",
+    "com/mojang/blaze3d/systems/RenderSystem.initGameThread(Z)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.isOnGameThread()Z": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.assertInInitPhase()V": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.assertOnGameThreadOrInit()V": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.assertOnGameThread()V": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.isInInitPhase()Z": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem._setShaderLights(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.glBindBuffer(ILjava/util/function/IntSupplier;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.glBindVertexArray(Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem",
+    "com/mojang/blaze3d/systems/RenderSystem.setupOverlayColor(Ljava/util/function/IntSupplier;I)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderSystem"
   },
   "frameDefaults": {
     "method_55597(Lnet/minecraft/class_129;)V": {
@@ -848,6 +894,16 @@
         "push top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbBlockEntityRenderDispatcher()Lnet/minecraft/class_824;"
       ],
       "basis": "SectionRenderDispatcher takes the block and block entity renderers since 1.21; 1.20.6's compile tasks read them from Minecraft.getInstance()"
+    },
+    "net/minecraft/class_293.<init>(Lcom/google/common/collect/ImmutableMap;)V": {
+      "desc": "(Ljava/util/List;Ljava/util/List;Lit/unimi/dsi/fastutil/ints/IntList;I)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbFormatElements(Lcom/google/common/collect/ImmutableMap;)Ljava/util/List;",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbFormatNames(Lcom/google/common/collect/ImmutableMap;)Ljava/util/List;",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbFormatOffsets(Lcom/google/common/collect/ImmutableMap;)Lit/unimi/dsi/fastutil/ints/IntList;",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbFormatSize(Lcom/google/common/collect/ImmutableMap;)I"
+      ],
+      "basis": "VertexFormat(namedElements) is VertexFormat(elements, names, offsets, vertexSize) since 1.21 (package-private: the layer's access widener opens it for a 1.20.6 subclass): the map's elements, names and running offsets in order, 1.20.6's padding elements counted in the offsets and the size"
     }
   },
   "adapterHooks": [
@@ -953,6 +1009,15 @@
       ],
       "synth": [],
       "basis": "LevelRenderer.playStreamingMusic is gone since 1.21 (playJukeboxSong / stopJukeboxSongAndNotifyNearby): a 1.20.6 subclass's own is what 1.20.6-style calls reach, its super call 1.20.6's body"
+    },
+    {
+      "under": "net/minecraft/class_293",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats$CbLegacyIntegerSize",
+      "requires": [
+        "method_1359()I"
+      ],
+      "synth": [],
+      "basis": "VertexFormat.getIntegerSize() is gone since 1.21: a 1.20.6 format subclass's own is what 1.20.6-style calls reach, its super call 1.20.6's body"
     }
   ],
   "classRenames": {
@@ -962,7 +1027,8 @@
     "net/minecraft/class_4585": "top/dext/centurybridge/step/v1_21/facade/DefaultedVertexConsumer",
     "net/minecraft/class_287$class_4574": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderDrawState",
     "net/minecraft/class_287$class_7433": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderRenderedBuffer",
-    "net/minecraft/class_287$class_5594": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderSortState"
+    "net/minecraft/class_287$class_5594": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderSortState",
+    "net/minecraft/class_311": "top/dext/centurybridge/step/v1_21/facade/MemoryTracker"
   },
   "facadeGaps": {
     "net/minecraft/class_317.<init>(FJ)V": "Timer(ticksPerSecond, now) is 1.20.2's constructor; 1.20.3 replaced it with (ticksPerSecond, now, targetMsptProvider) and the 1.20.2 -> 1.20.3 step reshapes every call into that one (CbClient.cbFixedTickRate), so no class climbing into 1.20.6 names it"
@@ -973,7 +1039,15 @@
     "net/minecraft/class_4668.field_29419:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21/rt/CbRenderTypes",
     "net/minecraft/class_4668.field_29423:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21/rt/CbRenderTypes",
     "net/minecraft/class_4668.field_29439:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_21/rt/CbRenderTypes",
-    "net/minecraft/class_290.field_20887:Lnet/minecraft/class_293;": "top/dext/centurybridge/step/v1_21/rt/CbRenderShaders"
+    "net/minecraft/class_290.field_20887:Lnet/minecraft/class_293;": "top/dext/centurybridge/step/v1_21/rt/CbRenderShaders",
+    "net/minecraft/class_290.field_1587:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
+    "net/minecraft/class_290.field_1581:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
+    "net/minecraft/class_290.field_1591:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
+    "net/minecraft/class_290.field_1583:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
+    "net/minecraft/class_290.field_20886:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
+    "net/minecraft/class_290.field_1579:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
+    "net/minecraft/class_290.field_1578:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
+    "net/minecraft/class_290.field_29335:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats"
   },
   "convertHooks": [
     {
@@ -1021,7 +1095,9 @@
     "net/minecraft/class_3999": "top/dext/centurybridge/step/v1_21/rt/CbRenderParticles$CbRenderLegacyParticleType"
   },
   "ctorRedirects": {
-    "net/minecraft/class_287.<init>(I)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbNewBuilder"
+    "net/minecraft/class_287.<init>(I)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbNewBuilder",
+    "net/minecraft/class_296.<init>(ILnet/minecraft/class_296$class_297;Lnet/minecraft/class_296$class_298;I)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbElement",
+    "net/minecraft/class_293.<init>(Lcom/google/common/collect/ImmutableMap;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbNewFormat"
   },
   "instanceFieldGetters": {
     "net/minecraft/class_4597$class_4598.field_20952:Lnet/minecraft/class_287;": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbSharedBuilder",
@@ -1031,5 +1107,12 @@
   },
   "instanceFieldSetters": {
     "net/minecraft/class_4597$class_4598.field_20954:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbRenderBuffers#cbSetLastState"
+  },
+  "ledger": {
+    "net/minecraft/class_296": "VertexFormatElement is a final record since 1.21, registered by id (at most 32) with VertexFormat masking and offsetting by that id: a 1.20.6 subclass can neither be made nor stand in a 1.21 format (its setup / clear / equals overrides have nothing to override); a 1.20.6-made element is the registered record of the same shape (CbRenderFormats.cbElement)",
+    "net/minecraft/class_296.<init>(ILnet/minecraft/class_296$class_297;Lnet/minecraft/class_296$class_298;I)V": "super(index, type, usage, count) of a 1.20.6 VertexFormatElement subclass: VertexFormatElement is a final record since 1.21, registered by id (at most 32) with VertexFormat masking and offsetting by that id: a 1.20.6 subclass can neither be made nor stand in a 1.21 format (its setup / clear / equals overrides have nothing to override); a 1.20.6-made element is the registered record of the same shape (CbRenderFormats.cbElement)",
+    "net/minecraft/class_296.equals(Ljava/lang/Object;)Z": "a 1.20.6 VertexFormatElement subclass's equals: VertexFormatElement is a final record since 1.21, registered by id (at most 32) with VertexFormat masking and offsetting by that id: a 1.20.6 subclass can neither be made nor stand in a 1.21 format (its setup / clear / equals overrides have nothing to override); a 1.20.6-made element is the registered record of the same shape (CbRenderFormats.cbElement)",
+    "net/minecraft/class_296.hashCode()I": "a 1.20.6 VertexFormatElement subclass's hashCode: VertexFormatElement is a final record since 1.21, registered by id (at most 32) with VertexFormat masking and offsetting by that id: a 1.20.6 subclass can neither be made nor stand in a 1.21 format (its setup / clear / equals overrides have nothing to override); a 1.20.6-made element is the registered record of the same shape (CbRenderFormats.cbElement)",
+    "net/minecraft/class_296$class_298.field_1629:Lnet/minecraft/class_296$class_298;": "VertexFormatElement.Usage.PADDING: 1.21 pads with VertexFormat.Builder.padding(bytes) and its Usage has no PADDING. An enum constant cannot be added; an instance outside values() would break the switch tables javac compiles into 1.20.6 classes (its ordinal outside the table throws in their static init, where a missing constant is skipped). DefaultVertexFormat.ELEMENT_PADDING still builds 1.20.6 formats (CbRenderFormats.field_1578)"
   }
 }
