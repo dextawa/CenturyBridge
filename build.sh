@@ -23,7 +23,9 @@ WIRING="${CB_WIRING:-core/segments/shims-$VERSION.json}"
 # turns removing the worktree into deleting the data).
 DATA="${CB_DATA:-data}"
 
-STUB="${CB_STUB:-$DATA/jars/client-$VERSION-intermediary.jar}"
+# the compile stub: the intermediary stub through 1.21.11; past the namespace wall the plain jar
+case "$VERSION" in 26.*) DEFAULT_STUB="$DATA/jars/client-$VERSION.jar" ;; *) DEFAULT_STUB="$DATA/jars/client-$VERSION-intermediary.jar" ;; esac
+STUB="${CB_STUB:-$DEFAULT_STUB}"
 [ -f "$STUB" ] || { echo "stub not found: $STUB (set CB_STUB)"; exit 1; }
 
 # Loader-side deps the shims compile against: mixin, and whatever the game

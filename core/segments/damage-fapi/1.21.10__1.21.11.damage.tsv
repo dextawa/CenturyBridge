@@ -1,0 +1,91 @@
+usage	owner	name	desc	kinds	w
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setParticleConfig	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setParticleConfig	(Lnet/minecraft/class_4761;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearParticleConfig	()V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAmbientSound	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAmbientSound	(Lnet/minecraft/class_6880;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearAmbientSound	()V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMoodSound	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMoodSound	(Lnet/minecraft/class_4968;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearMoodSound	()V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAdditionsSound	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAdditionsSound	(Lnet/minecraft/class_4967;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearAdditionsSound	()V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_6012;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_5195;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearMusic	()V	METHOD	method not declared on the owner
+implement-interface	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext			ABSTRACT	class public abstract interface extends java/lang/Object
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setParticleConfig	(Lnet/minecraft/class_4761;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearParticleConfig	()V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAmbientSound	(Lnet/minecraft/class_6880;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearAmbientSound	()V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMoodSound	(Lnet/minecraft/class_4968;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearMoodSound	()V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAdditionsSound	(Lnet/minecraft/class_4967;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearAdditionsSound	()V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_6012;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_5195;)V	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearMusic	()V	METHOD	method not declared on the owner
+implement-interface	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext			ABSTRACT	class public abstract interface extends java/lang/Object
+implement-interface	net/fabricmc/fabric/api/client/command/v2/FabricClientCommandSource			ABSTRACT	class public abstract interface extends java/lang/Object
+implement-interface	net/fabricmc/fabric/api/client/datagen/v1/builder/SoundTypeBuilder			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/rendering/v1/TransformCopyingModel	setAngles	(Lcom/mojang/datafixers/util/Pair;)V	METHOD	method not declared on the owner
+get-static	net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents	ALLOW_SLEEP_TIME	Lnet/fabricmc/fabric/api/event/Event;	FIELD	field not declared on the owner
+call-static	net/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory	getCategory	(Lnet/minecraft/class_1928$class_4313;)Ljava/util/Optional;	METHOD	method getCategory(Lnet/minecraft/class_12279;)Ljava/util/Optional; public static
+call	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitDouble	(Lnet/minecraft/class_1928$class_4313;Lnet/minecraft/class_1928$class_4314;)V	METHOD	method visitDouble(Lnet/minecraft/class_12279;)V public
+call	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitEnum	(Lnet/minecraft/class_1928$class_4313;Lnet/minecraft/class_1928$class_4314;)V	METHOD	method visitEnum(Lnet/minecraft/class_12279;)V public
+override+super	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitDouble	(Lnet/minecraft/class_1928$class_4313;Lnet/minecraft/class_1928$class_4314;)V	METHOD	method visitDouble(Lnet/minecraft/class_12279;)V public
+override+super	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitEnum	(Lnet/minecraft/class_1928$class_4313;Lnet/minecraft/class_1928$class_4314;)V	METHOD	method visitEnum(Lnet/minecraft/class_12279;)V public
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createBooleanRule	(Z)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createBooleanRule	(ZLjava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createIntRule	(I)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createIntRule	(II)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createIntRule	(IILjava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createIntRule	(III)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createIntRule	(ILjava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createIntRule	(IIILjava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createDoubleRule	(D)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createDoubleRule	(DD)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createDoubleRule	(DDLjava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createDoubleRule	(DDD)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createDoubleRule	(DLjava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createDoubleRule	(DDDLjava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createEnumRule	(Ljava/lang/Enum;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createEnumRule	(Ljava/lang/Enum;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createEnumRule	(Ljava/lang/Enum;[Ljava/lang/Enum;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createEnumRule	(Ljava/lang/Enum;[Ljava/lang/Enum;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleRegistry	register	(Ljava/lang/String;Lnet/minecraft/class_1928$class_5198;Lnet/minecraft/class_1928$class_4314;)Lnet/minecraft/class_1928$class_4313;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleRegistry	register	(Ljava/lang/String;Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;Lnet/minecraft/class_1928$class_4314;)Lnet/minecraft/class_1928$class_4313;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleRegistry	hasRegistration	(Ljava/lang/String;)Z	CLASS	class gone
+new	net/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule	<init>	(Lnet/minecraft/class_1928$class_4314;DDD)V	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule	method_20779	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule	method_20781	()I	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule	setValue	(Lnet/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule;Lnet/minecraft/server/MinecraftServer;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule	validate	(Ljava/lang/String;)Z	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule	get	()D	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/DoubleRule	set	(DLnet/minecraft/server/MinecraftServer;)V	CLASS	class gone
+new	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	<init>	(Lnet/minecraft/class_1928$class_4314;Ljava/lang/Enum;[Ljava/lang/Enum;)V	CLASS	class gone
+new	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	<init>	(Lnet/minecraft/class_1928$class_4314;Ljava/lang/Enum;Ljava/util/Collection;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	method_20779	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	method_20781	()I	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	getEnumClass	()Ljava/lang/Class;	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	toString	()Ljava/lang/String;	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	setValue	(Lnet/fabricmc/fabric/api/gamerule/v1/rule/EnumRule;Lnet/minecraft/server/MinecraftServer;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	get	()Ljava/lang/Enum;	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	cycle	()V	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	supports	(Ljava/lang/Enum;)Z	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	set	(Ljava/lang/Enum;Lnet/minecraft/server/MinecraftServer;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/EnumRule	set	(Ljava/lang/String;Lnet/minecraft/server/MinecraftServer;)V	CLASS	class gone
+call	net/fabricmc/fabric/api/gamerule/v1/rule/ValidateableRule	validate	(Ljava/lang/String;)Z	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/gamerule/v1/rule/ValidateableRule			CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/renderer/v1/Renderer			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	fromVanilla	([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method not declared on the owner
+implement-interface	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	fromVanilla	([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
+implement-interface	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	toVanilla	([II)V	METHOD	method not declared on the owner
+get-static	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	VANILLA_VERTEX_STRIDE	I	FIELD	field not declared on the owner
+get-static	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	VANILLA_QUAD_STRIDE	I	FIELD	field not declared on the owner
+implement-interface	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView			ABSTRACT	class public abstract interface extends java/lang/Object
+call-static	net/fabricmc/fabric/api/renderer/v1/model/ModelBakeSettingsHelper	asQuadTransform	(Lnet/minecraft/class_3665;Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadTransform;	METHOD	method asQuadTransform(Lnet/minecraft/class_3665;Lnet/fabricmc/fabric/api/renderer/v1/sprite/SpriteFinderGetter;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadTransform; public static

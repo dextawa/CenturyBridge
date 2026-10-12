@@ -31,6 +31,7 @@ handles are skipped ("wired"). The output is a wiring fragment for the step
 (<step wiring>.d/mechanical.json, see engine/Wiring.java) and a report of every row.
 
   python gen_step_reshapes.py <damage.tsv> <V code jar> <W stub jar> <step wiring.json> <guard class> <out report.tsv>
+         [--wall <inter-to-mojang-1.21.11.tsv>]   (the 1.21.11 -> 26.1 step: V intermediary, W mojang)
 """
 import collections
 import json
@@ -155,14 +156,98 @@ def wired_keys(wiring):
     return calls, ctors, shapes
 
 
+class Wall:
+    """V's intermediary names onto W's mojang ones across the 1.21.11 -> 26.1 wall (identity without
+    a table), and W's class names back: the engine rewrites the wall step's call sites in V's names and
+    renames the whole jar afterwards, so emitted descriptors name a class by its intermediary name when
+    1.21.11 had it and by its mojang name only when it is new in W."""
+
+    def __init__(self, tsv=None):
+        self.cmap, self.mmap, self.back = {}, {}, {}
+        if tsv:
+            for line in open(tsv, encoding="utf-8"):
+                f = line.rstrip("\n").split("\t")
+                if len(f) < 3:
+                    continue
+                if f[0] == "C":
+                    self.cmap[f[1]] = f[2]
+                    self.back[f[2]] = f[1]
+                elif f[0] == "M":
+                    self.mmap[f[1]] = f[2].rsplit(".", 1)[1]
+
+    def _map(self, c, table):
+        if c in table:
+            return table[c]
+        d = c.rfind("$")
+        return self._map(c[:d], table) + c[d:] if d > 0 else c
+
+    def _desc(self, d, table):
+        out, i = [], 0
+        while i < len(d):
+            ch = d[i]
+            out.append(ch)
+            if ch == "L":
+                j = d.index(";", i)
+                out.append(self._map(d[i + 1:j], table) + ";")
+                i = j
+            i += 1
+        return "".join(out)
+
+    def cls(self, c):
+        return self._map(c, self.cmap) if self.cmap else c
+
+    def desc(self, d):
+        return self._desc(d, self.cmap) if self.cmap else d
+
+    def member(self, owner, name, hv):
+        """the W name of V's member, looked up on the owner and then on its supertypes in V"""
+        if not self.mmap or name.startswith("<"):
+            return name
+        for c in hv.supers(owner):
+            m = self.mmap.get(f"{c}.{name}")
+            if m:
+                return m
+        return name
+
+    def back_desc(self, d):
+        return self._desc(d, self.back) if self.back else d
+
+
 def main():
-    damage, vjar, wjar, wiring_path, guard, out_report = sys.argv[1:7]
+    args = sys.argv[1:]
+    wall = Wall()
+    if "--wall" in args:
+        k = args.index("--wall")
+        wall = Wall(args[k + 1])
+        args = args[:k] + args[k + 2:]
+    damage, vjar, wjar, wiring_path, guard, out_report = args[0:6]
     V = load(vjar, True)
     W = load(wjar, False)
     hv, hw = Hierarchy(V), Hierarchy(W)
     base = json.load(open(wiring_path, encoding="utf-8")) if os.path.exists(wiring_path) else {}
-    wired_calls, wired_ctors, wired_shapes = wired_keys(base)
+    # what the step's hand-written wiring serves: the base table and every area fragment (not the
+    # generated one), so an area that bridged a member -- or renamed its class -- keeps it
+    merged = json.loads(json.dumps(base))
+    frag_dir = wiring_path + ".d"
+    for f in sorted(os.listdir(frag_dir)) if os.path.isdir(frag_dir) else []:
+        if f.endswith(".json") and f != "mechanical.json":
+            for k, v in json.load(open(os.path.join(frag_dir, f), encoding="utf-8")).items():
+                if isinstance(v, dict):
+                    merged.setdefault(k, {}).update(v)
+                elif isinstance(v, list):
+                    merged.setdefault(k, []).extend(v)
+    wired_calls, wired_ctors, wired_shapes = wired_keys(merged)
+    renamed = set(merged.get("classRenames", {})) | set(merged.get("superRenames", {}))
     ledgered = set(base.get("ledger", {}).keys())
+    # rows an area has shown the generator cannot judge (owner<TAB>name+desc<TAB>reason): an
+    # intermediary name Fabric's matcher moved to another class (1.20.2 class_7566 is not 1.20.1's)
+    excluded = {}
+    excl = os.path.join(frag_dir, "mechanical-exclude.tsv")
+    if os.path.exists(excl):
+        for line in open(excl, encoding="utf-8"):
+            f = line.rstrip("\n").split("\t")
+            if len(f) >= 3 and not line.startswith("#"):
+                excluded[(f[0], f[1])] = f[2]
     calls, ctors, hooks, report = {}, {}, [], []
     hook_seen = set()
 
@@ -173,7 +258,8 @@ def main():
     for r in rows:
         usage, owner, name, desc, kinds, _ = r
         # fields, and the class-level rows (extend / implement-interface: closed by their members' bridges)
-        if usage.startswith(("get", "put")) or usage in ("extend", "implement-interface", "lambda") or not name                 or not ({"METHOD", "ORPHAN", "ABSTRACT"} & set(kinds.split(","))):
+        if usage.startswith(("get", "put")) or usage in ("extend", "implement-interface", "lambda") or not name \
+                or not ({"METHOD", "ORPHAN", "ABSTRACT"} & set(kinds.split(","))):
             continue
         key = f"{owner}.{name}{desc}"
         override = usage in OVERRIDES
@@ -186,17 +272,23 @@ def main():
         if wired:
             note(r, "wired", "the step's wiring already serves it")
             continue
-        oa, orr = split_args(desc)
+        if owner in renamed or (owner, name + desc) in excluded:
+            note(r, "excluded", excluded.get((owner, name + desc), "the owner class is renamed by the step's wiring"))
+            continue
+        # W is looked at in its own names (across the wall: V's intermediary names translated)
+        wowner, wname = wall.cls(owner), wall.member(owner, name, hv)
+        oa, orr = split_args(wall.desc(desc))
         # the member's shapes in W: the owner's constructors, or the name on the owner and its supertypes
         if name == "<init>":
-            k = W.get(owner)
-            shapes_w = [(owner, m) for m in (k.methods if k else []) if m.name == "<init>" and not m.access & ACC_PRIVATE]
+            k = W.get(wowner)
+            shapes_w = [(wowner, m) for m in (k.methods if k else []) if m.name == "<init>" and not m.access & ACC_PRIVATE]
         else:
             shapes_w = []
-            for c in hw.supers(owner):
+            for c in hw.supers(wowner):
                 k = W.get(c)
                 for m in (k.methods if k else []):
-                    if m.name == name and not m.access & (ACC_BRIDGE | ACC_SYNTHETIC | ACC_PRIVATE)                             and all(m.desc != y.desc for _, y in shapes_w):
+                    if m.name == wname and not m.access & (ACC_BRIDGE | ACC_SYNTHETIC | ACC_PRIVATE) \
+                            and all(m.desc != y.desc for _, y in shapes_w):
                         shapes_w.append((c, m))
         if not shapes_w:
             note(r, "design", "W has no member of this name on the owner or its supertypes")
@@ -225,18 +317,19 @@ def main():
                      else f"{len(good)} new shapes fit")
                 continue
             c, m, amap, _ = good[0]
-            hk = (name, desc, m.desc, owner)
+            nd = wall.back_desc(m.desc)
+            hk = (name, desc, nd, owner)
             if hk in hook_seen:
-                note(r, "hook", f"-> {m.desc} (same hook)")
+                note(r, "hook", f"-> {nd} (same hook)")
                 continue
             hook_seen.add(hk)
             na, _ = split_args(m.desc)
             unpassed = [na[j] for j in range(len(na)) if j not in amap]
-            hooks.append({"old": name + desc, "new": name + m.desc, "args": amap, "onlyUnder": owner, "frames": guard, "superCalls": "rewrite",
+            hooks.append({"old": name + desc, "new": name + nd, "args": amap, "onlyUnder": owner, "frames": guard, "superCalls": "rewrite",
                           "basis": "mechanical: the old method gets every parameter it had"
                                    + ("" if amap == sorted(amap) else ", reordered by type")
                                    + (f"; new {','.join(unpassed)} not passed" if unpassed else "")})
-            note(r, "hook", f"-> {m.desc} args {amap}")
+            note(r, "hook", f"-> {nd} args {amap}")
             continue
         # a call: the new shape's arguments from the old call's
         fits = []
@@ -273,15 +366,16 @@ def main():
             if readers:
                 note(r, "design", f"drops {[oa[i] for i in dropped]}, which V reads in {readers[:3]}")
                 continue
-        ops = [f"keep:{i}" + ("" if oa[i] == na[j] else f" {na[j]}") for j, i in enumerate(amap)]
+        ops = [f"keep:{i}" + ("" if oa[i] == na[j] else f" {wall.back_desc(na[j])}") for j, i in enumerate(amap)]
         ops += [f"drop:{i}" for i in dropped]
-        entry = {"desc": m.desc, "ops": ops}
+        nd = wall.back_desc(m.desc)
+        entry = {"desc": nd, "ops": ops}
         if nr != orr:
             entry["ret"] = "pop" if orr == "V" else "keep"
         entry["basis"] = "mechanical: same values" + ("" if amap == sorted(amap) else ", reordered by type") + (f"; dropped {','.join(oa[i] for i in dropped)}, never read in V" if dropped else "") \
             + {"pop": "; return value popped", "keep": "; returns a subtype of the old type"}.get(entry.get("ret"), "")
         (ctors if name == "<init>" else calls)[key] = entry
-        note(r, "ctor-reshape" if name == "<init>" else "reshape", f"-> {m.desc} {ops}"
+        note(r, "ctor-reshape" if name == "<init>" else "reshape", f"-> {nd} {ops}"
              + ("; the base ledger entry for it should go" if key in ledgered else ""))
     # one hook per shape change, on the topmost owner: a mod class under two owners of one group
     # (Block and CropBlock both declared getPickStack) would otherwise get the new shape twice
@@ -289,7 +383,7 @@ def main():
     for hk in hooks:
         groups[(hk["old"], hk["new"])].append(hk)
     hooks = [hk for g in groups.values() for hk in g
-             if not any(o is not hk and o["onlyUnder"] != hk["onlyUnder"] and o["onlyUnder"] in hw.supers(hk["onlyUnder"]) for o in g)]
+             if not any(o is not hk and o["onlyUnder"] != hk["onlyUnder"] and o["onlyUnder"] in hv.supers(hk["onlyUnder"]) for o in g)]
     frag = {}
     if calls:
         frag["callReshapes"] = calls
