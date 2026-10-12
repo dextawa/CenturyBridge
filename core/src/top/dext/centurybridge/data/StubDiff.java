@@ -57,6 +57,8 @@ public final class StubDiff {
         /** "owner.name(desc)" / "owner.name:desc" of static members: a static
          *  original is called with invokestatic, so its bridge shape differs */
         public final Set<String> statics = new HashSet<>();
+        /** "owner.name(desc)" of abstract methods: what a concrete subclass must implement (Chain.abstractFills) */
+        public final Set<String> abstracts = new HashSet<>();
         /** class -> superclass / implemented interfaces */
         public final Map<String, String> superOf = new HashMap<>();
         public final Map<String, List<String>> interfacesOf = new HashMap<>();
@@ -192,6 +194,9 @@ public final class StubDiff {
                             }
                             if ((acc & Opcodes.ACC_STATIC) != 0) {
                                 idx.statics.add(owner + "." + name + desc);
+                            }
+                            if ((acc & Opcodes.ACC_ABSTRACT) != 0) {
+                                idx.abstracts.add(owner + "." + name + desc);
                             }
                         }
                         return null;

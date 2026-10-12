@@ -36,7 +36,8 @@ import org.objectweb.asm.tree.MethodNode;
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
- * interface declares exactly the old SAM; the adapter's exact descriptor), classRenames
+ * interface declares exactly the old SAM; the adapter's exact descriptor), abstractFills (the
+ * static a synthesized implementation calls), classRenames
  * onto shipped facades. Covers are checked by MixinCheck against the mixin
  * classes (they are overloads added to vanilla classes, not statics).
  *
@@ -477,6 +478,17 @@ public final class WiringCheck {
         // adapterHooks: the bridge interface must declare every required old shape
         // exactly (the mod's own methods implement it by name+descriptor), and every
         // synthesized new shape calls a static that exists with the exact descriptor
+        // abstractFills: the static a synthesized implementation calls, with the exact descriptor
+        if (root.has("abstractFills")) {
+            for (var el : root.getAsJsonArray("abstractFills")) {
+                var o = el.getAsJsonObject();
+                String call = o.get("call").getAsString();
+                int paren = call.indexOf('(');
+                int dot = call.lastIndexOf('.', paren);
+                wantMethod("abstractFills " + o.get("under").getAsString() + "." + o.get("method").getAsString(),
+                    call.substring(0, dot) + "#" + call.substring(dot + 1, paren), null, methodDesc(call.substring(paren)));
+            }
+        }
         if (root.has("adapterHooks")) {
             for (var el : root.getAsJsonArray("adapterHooks")) {
                 var o = el.getAsJsonObject();
