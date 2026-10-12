@@ -12,6 +12,23 @@
     "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbNoItems(Lnet/minecraft/class_1297;)[Lnet/minecraft/class_2945$class_2946;"
    ],
    "basis": "s4net: 1.20.4 made an empty data object for the entity; 1.20.5 takes the (empty) item array, sized as the builder sizes it"
+  },
+  "net/minecraft/class_2945$class_7834.<init>(ILnet/minecraft/class_2941;Ljava/lang/Object;)V": {
+   "desc": "(ILnet/minecraft/class_2941;Ljava/lang/Object;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1,2 top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbNewValueOf(Lnet/minecraft/class_2941;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "s4net generic drift: CAT_VARIANT / FROG_VARIANT carry the variant's holder in 1.20.5; the value converts where 1.20.4 code hands it in or takes it out (CbNetEntityData)"
+  },
+  "net/minecraft/class_2866.<init>(Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbEffectHolder(Ljava/util/Optional;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbEffectHolder(Ljava/util/Optional;)Ljava/util/Optional;"
+   ],
+   "basis": "s4net generic drift: SetBeaconPacket's effects are Optional<MobEffect> in 1.20.4, Optional<Holder<MobEffect>> in 1.20.5"
   }
  },
  "callReshapes": {
@@ -29,6 +46,103 @@
     "keep"
    ],
    "basis": "s4net: DataValue.read reads through a RegistryFriendlyByteBuf in 1.20.5 (the serializer's stream codec)"
+  },
+  "net/minecraft/class_2945.method_12789(Lnet/minecraft/class_2940;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/class_2940;)Ljava/lang/Object;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbOldValue(Ljava/lang/Object;)Ljava/lang/Object;",
+   "basis": "s4net generic drift: CAT_VARIANT / FROG_VARIANT carry the variant's holder in 1.20.5; the value converts where 1.20.4 code hands it in or takes it out (CbNetEntityData)"
+  },
+  "net/minecraft/class_2945.method_12778(Lnet/minecraft/class_2940;Ljava/lang/Object;)V": {
+   "desc": "(Lnet/minecraft/class_2940;Ljava/lang/Object;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbNewValue(Lnet/minecraft/class_2940;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "s4net generic drift: CAT_VARIANT / FROG_VARIANT carry the variant's holder in 1.20.5; the value converts where 1.20.4 code hands it in or takes it out (CbNetEntityData)"
+  },
+  "net/minecraft/class_2945.method_49743(Lnet/minecraft/class_2940;Ljava/lang/Object;Z)V": {
+   "desc": "(Lnet/minecraft/class_2940;Ljava/lang/Object;Z)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbNewValue(Lnet/minecraft/class_2940;Ljava/lang/Object;)Ljava/lang/Object;",
+    "keep:2"
+   ],
+   "basis": "s4net generic drift: CAT_VARIANT / FROG_VARIANT carry the variant's holder in 1.20.5; the value converts where 1.20.4 code hands it in or takes it out (CbNetEntityData)"
+  },
+  "net/minecraft/class_2945$class_7834.comp_1117()Ljava/lang/Object;": {
+   "desc": "()Ljava/lang/Object;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbOldValue(Ljava/lang/Object;)Ljava/lang/Object;",
+   "basis": "s4net generic drift: CAT_VARIANT / FROG_VARIANT carry the variant's holder in 1.20.5; the value converts where 1.20.4 code hands it in or takes it out (CbNetEntityData)"
+  },
+  "net/minecraft/class_2945$class_7834.method_46360(Lnet/minecraft/class_2940;Ljava/lang/Object;)Lnet/minecraft/class_2945$class_7834;": {
+   "desc": "(Lnet/minecraft/class_2940;Ljava/lang/Object;)Lnet/minecraft/class_2945$class_7834;",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbNewValue(Lnet/minecraft/class_2940;Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "s4net generic drift: CAT_VARIANT / FROG_VARIANT carry the variant's holder in 1.20.5; the value converts where 1.20.4 code hands it in or takes it out (CbNetEntityData)"
+  },
+  "net/minecraft/class_638.method_35754()Ljava/util/Map;": {
+   "desc": "()Ljava/util/Map;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbMapsByName(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "s4net generic drift: ClientLevel's map data is keyed by \"map_\" + id in 1.20.4 and by MapId (whose key() is that name) in 1.20.5"
+  },
+  "net/minecraft/class_638.method_35753(Ljava/util/Map;)V": {
+   "desc": "(Ljava/util/Map;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbMapsById(Ljava/util/Map;)Ljava/util/Map;"
+   ],
+   "basis": "s4net generic drift: ClientLevel's map data is keyed by \"map_\" + id in 1.20.4 and by MapId (whose key() is that name) in 1.20.5"
   }
- }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_2945",
+   "member": "method_12789(Lnet/minecraft/class_2940;)Ljava/lang/Object;",
+   "args": [
+    null
+   ],
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbNewValueAnswered(Ljava/lang/Object;)Ljava/lang/Object;",
+   "basis": "s4net generic drift: CAT_VARIANT / FROG_VARIANT carry the variant's holder in 1.20.5; the value converts where 1.20.4 code hands it in or takes it out (CbNetEntityData)"
+  },
+  {
+   "under": "net/minecraft/class_2945",
+   "member": "method_12778(Lnet/minecraft/class_2940;Ljava/lang/Object;)V",
+   "args": [
+    null,
+    "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbOldValue(Ljava/lang/Object;)Ljava/lang/Object;"
+   ],
+   "basis": "s4net generic drift: CAT_VARIANT / FROG_VARIANT carry the variant's holder in 1.20.5; the value converts where 1.20.4 code hands it in or takes it out (CbNetEntityData)"
+  },
+  {
+   "under": "net/minecraft/class_2945",
+   "member": "method_49743(Lnet/minecraft/class_2940;Ljava/lang/Object;Z)V",
+   "args": [
+    null,
+    "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData#cbOldValue(Ljava/lang/Object;)Ljava/lang/Object;",
+    null
+   ],
+   "basis": "s4net generic drift: CAT_VARIANT / FROG_VARIANT carry the variant's holder in 1.20.5; the value converts where 1.20.4 code hands it in or takes it out (CbNetEntityData)"
+  },
+  {
+   "under": "net/minecraft/class_638",
+   "member": "method_35754()Ljava/util/Map;",
+   "args": [],
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbMapsById(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "s4net generic drift: ClientLevel's map data is keyed by \"map_\" + id in 1.20.4 and by MapId (whose key() is that name) in 1.20.5"
+  },
+  {
+   "under": "net/minecraft/class_638",
+   "member": "method_35753(Ljava/util/Map;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbMapsByName(Ljava/util/Map;)Ljava/util/Map;"
+   ],
+   "basis": "s4net generic drift: ClientLevel's map data is keyed by \"map_\" + id in 1.20.4 and by MapId (whose key() is that name) in 1.20.5"
+  }
+ ]
 }

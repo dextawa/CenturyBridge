@@ -67,6 +67,58 @@ public final class CbNetEntityData {
         }
     }
 
+    // ---------------------------------------------------------------- variant serializers (generic drift)
+    //
+    // 1.20.4's EntityDataSerializers.CAT_VARIANT / FROG_VARIANT carried the variant itself; 1.20.5's
+    // carry a Holder of it (the field keeps its erased type, EntityDataSerializer). A 1.20.4 mod that
+    // tracks a variant -- on its own entity, with the vanilla serializer -- or reads a vanilla cat's
+    // or frog's, holds the variant. The serializer a 1.20.4 mod's accessor holds is vanilla's own, so
+    // the data item, the wire format and the serializer ids stay exactly vanilla's: the value is
+    // converted where 1.20.4 code hands it in (define / set, DataValue.create) and takes it out (get,
+    // DataValue.value). No other 1.20.4 serializer carried a holder of either variant, which is what
+    // makes taking one out unambiguous.
+
+    /** a value as 1.20.4 code holds it: a cat or frog variant's holder is the variant (anything else as it is) */
+    public static Object cbOldValue(Object value) {
+        if (value instanceof net.minecraft.class_6880<?> holder) {
+            Object v = holder.comp_349();
+            if (v instanceof net.minecraft.class_7375 || v instanceof net.minecraft.class_7106) {
+                return v;
+            }
+        }
+        return value;
+    }
+
+    /** a value 1.20.4 code hands in for an item of this serializer, as 1.20.5 holds it */
+    public static Object cbNewValueOf(net.minecraft.class_2941<?> serializer, Object value) {
+        if (serializer == class_2943.field_38826 && value instanceof net.minecraft.class_7375 cat) {
+            return net.minecraft.class_7923.field_41163.method_47983(cat);
+        }
+        if (serializer == class_2943.field_38827 && value instanceof net.minecraft.class_7106 frog) {
+            return net.minecraft.class_7923.field_41164.method_47983(frog);
+        }
+        return value;
+    }
+
+    /** {@link #cbNewValueOf} for the item an accessor names */
+    public static Object cbNewValue(class_2940<?> accessor, Object value) {
+        return accessor == null ? value : cbNewValueOf(accessor.comp_2328(), value);
+    }
+
+    /**
+     * A 1.20.4 override's answer, where vanilla wants 1.20.5's value and the item is not known: a
+     * variant goes back into its holder (no other value 1.20.4 code holds is a variant of either).
+     */
+    public static Object cbNewValueAnswered(Object value) {
+        if (value instanceof net.minecraft.class_7375 cat) {
+            return net.minecraft.class_7923.field_41163.method_47983(cat);
+        }
+        if (value instanceof net.minecraft.class_7106 frog) {
+            return net.minecraft.class_7923.field_41164.method_47983(frog);
+        }
+        return value;
+    }
+
     private CbNetEntityData() {
     }
 }

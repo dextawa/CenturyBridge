@@ -14,6 +14,7 @@ import net.minecraft.class_2540;
 import net.minecraft.class_2945;
 import net.minecraft.class_2960;
 import net.minecraft.class_3218;
+import net.minecraft.class_7375;
 import net.minecraft.class_7923;
 import net.minecraft.server.MinecraftServer;
 
@@ -70,15 +71,27 @@ public class DataTestMod implements ModInitializer {
             check("probe LATE (constructor body)", d.method_12789(Probe.LATE), 7);
             check("probe hasItem(LATE)", d.method_51696(Probe.LATE), true);
             check("probe isEmpty", d.method_12790(), false);
+            Object variant = d.method_12789(Probe.VARIANT);
+            check("probe VARIANT is a CatVariant", variant instanceof class_7375, true);
+            check("probe VARIANT", variant, class_7923.field_41163.method_31140(class_7375.field_38709));
             d.method_12778(Probe.COUNTER, 42);
             d.method_12778(Probe.LATE, 8);
+            d.method_12778(Probe.VARIANT, class_7923.field_41163.method_31140(class_7375.field_38710));
             check("probe dirty after set", d.method_12786(), true);
             List<class_2945.class_7834<?>> dirty = d.method_12781();
-            check("probe packDirty size", dirty == null ? 0 : dirty.size(), 2);
+            check("probe packDirty size", dirty == null ? 0 : dirty.size(), 3);
             Probe b = new Probe(PROBE, level);
             b.method_5841().method_12779(roundTrip(d.method_46357()));
             check("synced COUNTER", b.method_5841().method_12789(Probe.COUNTER), 42);
             check("synced LATE", b.method_5841().method_12789(Probe.LATE), 8);
+            check("synced VARIANT", b.method_5841().method_12789(Probe.VARIANT), class_7923.field_41163.method_31140(class_7375.field_38710));
+            int variants = 0;
+            for (class_2945.class_7834<?> v : d.method_46357()) {
+                if (v.comp_1117() instanceof class_7375) {
+                    variants++;
+                }
+            }
+            check("DataValue.value() answers the variant itself", variants, 1);
             check("probe flags (vanilla data)", b.method_5841().method_12789(Probe.SHARED_FLAGS_FOR_TEST), (byte) 0);
             boolean dup = false;
             try {

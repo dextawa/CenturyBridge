@@ -47,7 +47,8 @@ public abstract class CbNetEntityDataBridge implements CbNetEntityDataAccess {
 
     /**
      * was define(accessor, value): 1.20.4's checks, then the item -- not dirty, nobody told, as 1.20.4
-     * put it in its map. An id past the slots allocated for the entity's class grows the array
+     * put it in its map. 1.20.4 code hands in its own values, so a mod's override of this method sees
+     * them as they were; the conversion to what 1.20.5 holds is made here. An id past the slots allocated for the entity's class grows the array
      * (1.20.4's map took any id up to 254); during construction the builder goes on with the grown one.
      */
     public <T> void method_12784(class_2940<T> accessor, T value) {
@@ -59,7 +60,10 @@ public abstract class CbNetEntityDataBridge implements CbNetEntityDataAccess {
                 ((CbNetEntityDataBuilderAccess) this.cb$builder).cb$replaceItems(this.field_13331);
             }
         }
-        this.field_13331[id] = new class_2945.class_2946<>(accessor, value);
+        // the value as 1.20.5 holds it (a cat or frog variant goes into its holder, see CbNetEntityData)
+        @SuppressWarnings("unchecked")
+        T held = (T) CbNetEntityData.cbNewValue(accessor, value);
+        this.field_13331[id] = new class_2945.class_2946<>(accessor, held);
     }
 
     /** was hasItem(accessor): whether the id is defined */
