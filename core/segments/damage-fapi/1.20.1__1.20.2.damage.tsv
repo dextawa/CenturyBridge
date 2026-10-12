@@ -58,6 +58,8 @@ call	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_104
 extend	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider			ABSTRACT	class public abstract extends net/minecraft/class_2446
 implement	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_10419	(Ljava/util/function/Consumer;)V	ORPHAN	method method_10419(Lnet/minecraft/class_8790;)V public abstract
 override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	withConditions	(Ljava/util/function/Consumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Ljava/util/function/Consumer;	METHOD	method withConditions(Lnet/minecraft/class_8790;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Lnet/minecraft/class_8790; protected
+call-inherited	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_10419	(Ljava/util/function/Consumer;)V	METHOD	method method_10419(Lnet/minecraft/class_8790;)V public abstract
+call-protected	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	withConditions	(Ljava/util/function/Consumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Ljava/util/function/Consumer;	METHOD	method withConditions(Lnet/minecraft/class_8790;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Lnet/minecraft/class_8790; protected
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	([Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
@@ -67,6 +69,7 @@ call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuil
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	removeTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/entity/FakePlayer	method_14213	(Lnet/minecraft/class_2803;)V	METHOD	method method_14213(Lnet/minecraft/class_8791;)V public
 override+super	net/fabricmc/fabric/api/entity/FakePlayer	method_14213	(Lnet/minecraft/class_2803;)V	METHOD,ORPHAN	method method_14213(Lnet/minecraft/class_8791;)V public
+call-inherited	net/fabricmc/fabric/api/entity/FakePlayer	method_14213	(Lnet/minecraft/class_2803;)V	METHOD	method method_14213(Lnet/minecraft/class_8791;)V public
 call	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion	onConversion	(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion			CLASS	class gone
 get-static	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents	MOB_CONVERSION	Lnet/fabricmc/fabric/api/event/Event;	FIELD	field not declared on the owner
@@ -175,6 +178,8 @@ call-static	net/fabricmc/fabric/api/object/builder/v1/advancement/CriterionRegis
 call	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer	read	(Lcom/google/gson/JsonObject;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;	METHOD	method read(Lnet/minecraft/class_2540;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient; public abstract
 call	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer	write	(Lcom/google/gson/JsonObject;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V	METHOD	method write(Lnet/minecraft/class_2540;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V public abstract
 implement-interface	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer	read	(Lcom/google/gson/JsonObject;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;	METHOD	method read(Lnet/minecraft/class_2540;)Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient; public abstract
+call-inherited	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer	write	(Lcom/google/gson/JsonObject;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V	METHOD	method write(Lnet/minecraft/class_2540;Lnet/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient;)V public abstract
 call	net/fabricmc/fabric/api/registry/LootEntryTypeRegistry	register	(Lnet/minecraft/class_79$class_5337;)V	CLASS	class gone
 get-static	net/fabricmc/fabric/api/registry/LootEntryTypeRegistry	INSTANCE	Lnet/fabricmc/fabric/api/registry/LootEntryTypeRegistry;	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/registry/LootEntryTypeRegistry			CLASS	class gone
@@ -189,3 +194,56 @@ call-static	net/fabricmc/fabric/api/server/PlayerStream	around	(Lnet/minecraft/c
 call	net/fabricmc/fabric/api/tag/v1/FabricTagFile	remove	()Ljava/util/List;	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/tag/v1/FabricTagFile			CLASS	class gone
 override+super	net/fabricmc/fabric/api/tag/v1/FabricTagFile	remove	()Ljava/util/List;	CLASS	class gone
+call-injected	net/minecraft/class_1297	getAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	getAttachedOrThrow	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	getAttachedOrSet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	getAttachedOrElse	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	getAttachedOrGet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	setAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	hasAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Z	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	removeAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1297	modifyAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	getAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	getAttachedOrThrow	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	getAttachedOrSet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	getAttachedOrElse	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	getAttachedOrGet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	setAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	hasAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Z	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	removeAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2586	modifyAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	getAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	getAttachedOrThrow	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	getAttachedOrSet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	getAttachedOrElse	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	getAttachedOrGet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	setAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	hasAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Z	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	removeAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2791	modifyAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	getAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	getAttachedOrThrow	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	getAttachedOrSet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	getAttachedOrCreate	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	getAttachedOrElse	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	getAttachedOrGet	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	setAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	hasAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Z	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	removeAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_3218	modifyAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	setReplace	(Z)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	forceAddTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	remove	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	remove	([Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	removeAll	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	removeAll	(Ljava/util/stream/Stream;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2474$class_5124	removeTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2378	addAlias	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_7475	remove	()Ljava/util/List;	METHOD	method not declared on the owner

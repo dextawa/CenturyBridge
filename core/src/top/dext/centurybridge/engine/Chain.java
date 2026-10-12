@@ -42,12 +42,33 @@ public final class Chain {
     public final java.util.Map<String, String> staticRedirects = new java.util.HashMap<>();
     /** instance calls redirected to a static (receiver becomes arg 0) -- for interface targets Mixin cannot touch */
     public final java.util.Map<String, String> instanceRedirects = new java.util.HashMap<>();
+    /**
+     * Interface calls redirected to a static, receiver as arg 0 ("interfaceCallRedirects"): like
+     * {@link #instanceRedirects}, but only the INVOKEINTERFACE sites (and interface method handles)
+     * of the key are rewritten. For an interface this layer provides under its own name (a
+     * classRenamed library interface) that a library class surviving on the target implemented on
+     * the source and no longer does (1.20.1's Fabric API FabricTagBuilder implemented
+     * FabricProvidedTagBuilder; 1.20.2's cannot implement the bridge's interface): the static serves
+     * such receivers and calls the interface method on any other. A super call to the interface's
+     * default method (INVOKESPECIAL, from a mod's own implementation) stays what it is -- redirecting
+     * it to a static that calls the method on the receiver would re-enter the implementation's own
+     * override.
+     */
+    public final java.util.Map<String, String> interfaceCallRedirects = new java.util.HashMap<>();
     /** GETSTATIC field reads redirected to a same-name field on a runtime class */
     public final java.util.Map<String, String> fieldRedirects = new java.util.HashMap<>();
     /** GETSTATIC field reads redirected to a zero-arg getter method (name = field name)
      *  on a runtime class -- for holderified fields whose value must be unwrapped lazily
      *  (a static-field target would evaluate at Statics class-init, before the registry binds) */
     public final java.util.Map<String, String> fieldGetters = new java.util.HashMap<>();
+    /**
+     * PUTSTATIC "owner.name:desc" -> "runtimeClass[#member]": a static field write rewritten to a
+     * static setter(value)V, the write side of {@link #fieldGetters} -- for a public static field V
+     * left writable whose type changed or that became final (1.20.5 TrialSpawnerConfig.MAP_CODEC, a
+     * mutable MapCodec in 1.20.4, is the final Codec CODEC): the setter takes what the mod stores and
+     * gives it the effect the write had in V.
+     */
+    public final java.util.Map<String, String> staticFieldSetters = new java.util.HashMap<>();
     /**
      * the data-driven types the target's CenturyBridge runtime registers (item model types,
      * tint sources...): converted resources may name them only where the runtime has them
@@ -78,11 +99,12 @@ public final class Chain {
      */
     public final java.util.Map<String, String> instanceFieldGetters = new java.util.HashMap<>();
     /**
-     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": the write side of
-     * {@link #instanceFieldGetters}, for a public field whose type changed (1.20.2
-     * PendingInvite.worldOwnerUuid: String -> UUID). The receiver and the value the mod
-     * stores are exactly what a static setter(owner, desc)V takes, so the PUTFIELD becomes
-     * INVOKESTATIC setter(receiver, value) and the setter converts.
+     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field write rewritten to a
+     * static setter(receiver, value)V, the write side of {@link #instanceFieldGetters} -- for a
+     * public field whose type changed (1.20.2 PendingInvite.worldOwnerUuid: String -> UUID, the
+     * setter converts) or one that is gone and lives on as other state (1.20.2 AbstractSelectionList's
+     * x0/x1/y0/y1/width/height, which 1.20.3 keeps as the widget's geometry: a write moves the widget,
+     * as the field write moved the list). Found up the hierarchy from the site's owner, as a getter.
      */
     public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
     /**
@@ -93,6 +115,35 @@ public final class Chain {
     public final java.util.Map<String, String> instanceOfRedirects = new java.util.HashMap<>();
     /** examined-and-classified damage (quirk tier / structural / etc): "owner" or "owner.name" -> reason */
     public final java.util.Map<String, String> ledger = new java.util.HashMap<>();
+
+    /**
+     * Classes of CenturyBridge's own bridge layers that retire at this step ("retiredClasses" in a step's
+     * wiring: an internal class name, or a package prefix ending in '/', -> reason). A layer climbs on like
+     * any mod, and an API one step gave back under CenturyBridge's own names (step 1's 1.20.1 attachment
+     * API, absent from 1.20.2's Fabric API) can come back natively in a later release (1.20.4's Fabric
+     * API). From that step on, converted mods' references move to the native classes (classRenames), and
+     * the layer's own copy -- its classes and the mixins that implement them -- must stop acting, or two
+     * implementations would serve one API at once (both writing the same save key, an event fired twice).
+     * Every class of a converted jar an entry names leaves the jar, and the jar's mixin configs stop
+     * listing it. Only CenturyBridge classes can retire (the wiring gate holds entries to that).
+     */
+    public final java.util.Map<String, String> retiredClasses = new java.util.HashMap<>();
+
+    /** why a class retires at this step ({@link #retiredClasses}: its own entry, else the longest package prefix), or null */
+    public String retiredReason(String internalName) {
+        String r = retiredClasses.get(internalName);
+        if (r != null) {
+            return r;
+        }
+        String best = null;
+        for (var e : retiredClasses.entrySet()) {
+            String k = e.getKey();
+            if (k.endsWith("/") && internalName.startsWith(k) && (best == null || k.length() > best.length())) {
+                best = k;
+            }
+        }
+        return best == null ? null : retiredClasses.get(best);
+    }
 
 
     /** A cover/redirect recorded on any ancestor applies to this call site too. */
@@ -343,6 +394,13 @@ public final class Chain {
          * fall-through that skips the mod's method.
          */
         public String frames;
+        /**
+         * "frameDefaults" (a section of its own, keyed by the old shape): per new-argument index, the
+         * static {owner, name, desc} whose value the rewritten super call passes when no frame holds the
+         * object -- the old override entered directly rather than through the synthesized new shape.
+         * Without one the argument is its type's zero value.
+         */
+        public final java.util.Map<Integer, String[]> frameDefaults = new java.util.HashMap<>();
         /** "superCalls": "rewrite": a mod's super.old(..) in a class under the hook becomes super.new(..) */
         public boolean superCalls;
         /**
@@ -361,7 +419,34 @@ public final class Chain {
          * wrap / bridge / frames; a guard may be combined (it is checked after the type test).
          */
         public boolean narrow;
+        /**
+         * Super calls through a bridge ("superBridge": "Owner.name(desc)", "superAccess",
+         * "superAccessors"), for an old contract the new shapes only meet together: 1.20.4's
+         * Block.use was, in 1.20.5 terms, useItemOn and then -- when the item interaction passes
+         * to the default one on the main hand -- useWithoutItem. A mod's super.old(..) (an
+         * INVOKESPECIAL of the old shape on a vanilla class, in a class under the hook) becomes
+         * INVOKESTATIC of this static, the receiver first -- typed as {@link #superAccess} -- then
+         * the old arguments; it answers the old return type. A static cannot make a super call, so
+         * the class gets the {@link #superAccess} interface and, for each shape of
+         * {@link #superAccessors}, a public {@code cb$super$<name><desc>} doing
+         * {@code super.<name><desc>} (INVOKESPECIAL on its superclass): the bridge reaches super's
+         * implementations through them.
+         * <p>
+         * One accessor name serves the whole hierarchy because every copy resolves to the same
+         * implementation: a class gets accessors only for a super call the rewrite takes, that is
+         * one no class between it and the vanilla class redeclares the old shape for; the hooks
+         * synthesize the new shapes only in classes declaring the old one, so no class in between
+         * declares them either, and whichever copy a virtual call picks, its INVOKESPECIAL
+         * resolves up to the vanilla implementation.
+         */
+        public String superBridgeOwner, superBridgeName, superBridgeDesc;
+        public String superAccess;
+        /** "name(desc)" of each new shape {@link #superAccess} reaches super's implementation of */
+        public final java.util.List<String> superAccessors = new java.util.ArrayList<>();
     }
+
+    /** the accessor a {@link OverrideHook#superAccess} interface declares for one super shape */
+    public static final String SUPER_ACCESSOR_PREFIX = "cb$super$";
 
     public final java.util.List<OverrideHook> overrideHooks = new java.util.ArrayList<>();
 
@@ -394,6 +479,30 @@ public final class Chain {
     public final java.util.List<AdapterHook> adapterHooks = new java.util.ArrayList<>();
 
     /**
+     * Mod overrides of a vanilla method the target made final, or replaced by one of another name
+     * that vanilla calls instead ("overrideRenames"). Overriding a final method is a class load
+     * failure, so no hook that leaves the old declaration in place can help: in a mod class under
+     * {@code onlyUnder} (source hierarchy) a declared, non-static old shape is renamed to
+     * {@code newName}, same descriptor.
+     * <ul>
+     * <li>with {@code superCalls} ("rename"), the class's super.old(..) calls follow it -- for a
+     *     vanilla method that lives on under the new name (1.20.3: AbstractSelectionList.render is
+     *     AbstractWidget.renderWidget, its updateNarration is updateWidgetNarration);</li>
+     * <li>with an {@code adapter} interface (declaring the new name), the class gets the interface
+     *     and the renamed method is made public, so a mixin on the final method can hand the call to
+     *     the mod's method when the object implements the adapter (1.20.3's final AbstractWidget.render
+     *     calling a 1.20.2 widget's own render); the mod's super.old(..) then reaches the final
+     *     vanilla method again, where the mixin's guard lets it run.</li>
+     * </ul>
+     */
+    public static final class OverrideRename {
+        public String oldName, oldDesc, newName, onlyUnder, adapter;
+        public boolean superCalls;
+    }
+
+    public final java.util.List<OverrideRename> overrideRenames = new java.util.ArrayList<>();
+
+    /**
      * Implementations a vanilla type newly demands ("abstractFills" in a step's wiring): a method the
      * target declares abstract that a mod class written against the source cannot implement, because
      * the source had no such method (1.20.3's BlockBehaviour.codec(), Level.tickRateManager(),
@@ -410,6 +519,12 @@ public final class Chain {
      *                      "call": "Owner.name(Lnet/minecraft/class_4970;)Lcom/mojang/serialization/MapCodec;"}]
      * </pre>
      * The call's first parameter is {@code under} (the receiver), the rest the method's own.
+     *
+     * {@code under} is matched through the converted jar's own hierarchy and the source release's
+     * Minecraft stub, which knows no library type: a fill on a member of a Fabric API interface names
+     * every interface a mod class may implement directly (FluidVariant, ItemVariant and TransferVariant
+     * for TransferVariant.getComponentMap). When two entries give one class the same method -- it is
+     * under both types -- the first in wiring order fills it.
      */
     public static final class AbstractFill {
         public String under, name, desc, callOwner, callName, callDesc;
@@ -1088,6 +1203,12 @@ public final class Chain {
     /** name + new descriptor of every reshape: what the rewritten call sites now reference */
     public final java.util.Set<String> callReshapeTargets = new java.util.HashSet<>();
     /**
+     * name + descriptor of every super-bridge accessor shape ({@link OverrideHook#superAccessors}): the
+     * target-release member a class's cb$super$ accessor calls super's implementation of -- a call the
+     * engine itself writes in the target's shape, not a reference of the mod's to judge
+     */
+    public final java.util.Set<String> superAccessorTargets = new java.util.HashSet<>();
+    /**
      * name + descriptor of the reshapes that keep the descriptor -- conversions of values whose
      * erased type stayed while their type arguments changed (generic drift). Such a member keeps
      * its shape on a mod class that overrides it too ({@link #convertHooks} puts a converting
@@ -1500,6 +1621,12 @@ public final class Chain {
      * super-call contract differs (1.20.1 Screen.render drew the widgets and
      * nothing else; since 1.20.2 it draws the background first, over whatever
      * the mod drew). Only a mod's own super.render(..) is rerouted.
+     *
+     * A key may name a library type the converted jar extends or implements (a Fabric API
+     * interface whose default the mod's super call reaches): it is matched on the type the super
+     * call names, exactly, the receiver passed as that type. A super call reshaped earlier in the
+     * step (callReshapes rewrite super calls too) is matched in its new shape: 26.1.1's
+     * FabricOrderedSubmitNodeCollector.submitBlockModel, whose 26.1 default the mod's super call meant.
      */
     public final java.util.Map<String, String> superRedirects = new java.util.HashMap<>();
 
@@ -1615,6 +1742,103 @@ public final class Chain {
         return chainUp;
     }
 
+    /**
+     * The interfaces a release's Fabric API injects into vanilla classes: class -> interfaces, read from
+     * every module jar in {@code processedMods} (data/runtime/client-&lt;ver&gt;/.fabric/processedMods) --
+     * the "loom:injected_interfaces" of its fabric.mod.json (through 1.21.11) and the inject-interface /
+     * transitive-inject-interface lines of the access widener or class tweaker it names (26.x). A mod
+     * compiled against Fabric API calls an injected member through the vanilla class it holds
+     * (OrderedSubmitNodeCollector.submitBlockModel is FabricOrderedSubmitNodeCollector's), and a mod class
+     * extending or implementing the vanilla type overrides it there; at runtime Fabric's mixins and class
+     * tweakers make the vanilla class implement the interface. So the hierarchy walks see these interfaces
+     * too: a reshape, redirect or hook keyed on the Fabric API interface serves the call through the vanilla
+     * class and the mod class under it. Generic arguments of an injected interface are dropped. A release
+     * whose Fabric API modules are not there fails loudly rather than converting blind.
+     */
+    public static java.util.Map<String, java.util.List<String>> readInjectedInterfaces(Path processedMods) throws IOException {
+        if (!Files.isDirectory(processedMods)) {
+            throw new IllegalStateException(processedMods.toAbsolutePath() + " is missing: the interfaces that release's Fabric API"
+                + " injects into vanilla classes come from its modules there (or set -Dcb.allowMissingStubs=true to convert without"
+                + " them, knowingly)");
+        }
+        java.util.Map<String, java.util.LinkedHashSet<String>> found = new java.util.TreeMap<>();
+        java.util.List<Path> jars;
+        try (var s = Files.list(processedMods)) {
+            jars = s.filter(p -> p.toString().endsWith(".jar")).sorted().toList();
+        }
+        for (Path jar : jars) {
+            try (var z = new java.util.zip.ZipFile(jar.toFile())) {
+                var fmjEntry = z.getEntry("fabric.mod.json");
+                if (fmjEntry == null) {
+                    continue;
+                }
+                var reader = new com.google.gson.stream.JsonReader(new java.io.InputStreamReader(
+                    z.getInputStream(fmjEntry), java.nio.charset.StandardCharsets.UTF_8));
+                reader.setLenient(true);
+                var fmj = com.google.gson.JsonParser.parseReader(reader).getAsJsonObject();
+                if (fmj.has("custom") && fmj.getAsJsonObject("custom").has("loom:injected_interfaces")) {
+                    for (var e : fmj.getAsJsonObject("custom").getAsJsonObject("loom:injected_interfaces").entrySet()) {
+                        for (var itf : e.getValue().getAsJsonArray()) {
+                            found.computeIfAbsent(e.getKey(), k -> new java.util.LinkedHashSet<>()).add(rawType(itf.getAsString()));
+                        }
+                    }
+                }
+                if (fmj.has("accessWidener") && fmj.get("accessWidener").isJsonPrimitive()) {
+                    String aw = fmj.get("accessWidener").getAsString();
+                    var awEntry = z.getEntry(aw.startsWith("/") ? aw.substring(1) : aw);
+                    if (awEntry != null) {
+                        String text = new String(z.getInputStream(awEntry).readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+                        for (String ln : text.split("\r?\n")) {
+                            int hash = ln.indexOf('#');
+                            String[] tok = (hash >= 0 ? ln.substring(0, hash) : ln).trim().split("\\s+");
+                            if (tok.length >= 3 && (tok[0].equals("inject-interface") || tok[0].equals("transitive-inject-interface"))) {
+                                found.computeIfAbsent(tok[1], k -> new java.util.LinkedHashSet<>()).add(rawType(tok[2]));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        java.util.Map<String, java.util.List<String>> out = new java.util.TreeMap<>();
+        found.forEach((k, v) -> out.put(k, java.util.List.copyOf(v)));
+        return out;
+    }
+
+    /** an injected interface without its generic arguments: Foo<TT;> is Foo */
+    private static String rawType(String itf) {
+        int lt = itf.indexOf('<');
+        return lt < 0 ? itf : itf.substring(0, lt);
+    }
+
+    /** the injections (source release's Fabric API) into the source hierarchy ({@link #interfacesOf}) */
+    public void addSourceInjections(java.util.Map<String, java.util.List<String>> injected) {
+        injected.forEach((cls, itfs) -> interfacesOf.merge(cls, itfs, Chain::union));
+    }
+
+    /**
+     * The injections (target release's Fabric API) into the target hierarchy ({@link #targetInterfacesOf}),
+     * in the analysis namespace: across the namespace wall the target's mojang class names are translated
+     * back through the inter-&gt;mojang table ({@code wallTable}; null otherwise).
+     */
+    public void addTargetInjections(java.util.Map<String, java.util.List<String>> injected, Path wallTable) throws IOException {
+        java.util.Map<String, String> back = new java.util.HashMap<>();
+        if (wallTable != null && Files.exists(wallTable)) {
+            for (String ln : Files.readAllLines(wallTable)) {
+                String[] p = ln.split("\t");
+                if (p.length >= 3 && p[0].equals("C")) {
+                    back.put(p[2], p[1]);
+                }
+            }
+        }
+        injected.forEach((cls, itfs) -> targetInterfacesOf.merge(back.getOrDefault(cls, cls), itfs, Chain::union));
+    }
+
+    private static java.util.List<String> union(java.util.List<String> a, java.util.List<String> b) {
+        java.util.LinkedHashSet<String> s = new java.util.LinkedHashSet<>(a);
+        s.addAll(b);
+        return java.util.List.copyOf(s);
+    }
+
     /** Load the class hierarchy of a stub jar so member lookups can walk it. */
     public void loadHierarchy(Path stubJar) throws IOException {
         try (java.util.zip.ZipInputStream zin =
@@ -1704,6 +1928,12 @@ public final class Chain {
                     c.instanceRedirects.put(k, ir.get(k).getAsString());
                 }
             }
+            if (root.has("interfaceCallRedirects")) {
+                var icr = root.getAsJsonObject("interfaceCallRedirects");
+                for (String k : icr.keySet()) {
+                    c.interfaceCallRedirects.put(k, icr.get(k).getAsString());
+                }
+            }
             if (root.has("fieldRedirects")) {
                 var fr = root.getAsJsonObject("fieldRedirects");
                 for (String k : fr.keySet()) {
@@ -1719,6 +1949,12 @@ public final class Chain {
                 var fg = root.getAsJsonObject("fieldGetters");
                 for (String k : fg.keySet()) {
                     c.fieldGetters.put(k, fg.get(k).getAsString());
+                }
+            }
+            if (root.has("staticFieldSetters")) {
+                var fs = root.getAsJsonObject("staticFieldSetters");
+                for (String k : fs.keySet()) {
+                    c.staticFieldSetters.put(k, fs.get(k).getAsString());
                 }
             }
             if (root.has("interfaceized")) {
@@ -1794,7 +2030,73 @@ public final class Chain {
                         h.bridgeDesc = bsig[1];
                         h.adapter = o.get("adapter").getAsString();
                     }
+                    if (o.has("superBridge")) {
+                        String sb = o.get("superBridge").getAsString();
+                        int dot = sb.lastIndexOf('.', sb.indexOf('('));
+                        h.superBridgeOwner = sb.substring(0, dot);
+                        String[] ssig = splitSig(sb.substring(dot + 1));
+                        h.superBridgeName = ssig[0];
+                        h.superBridgeDesc = ssig[1];
+                        h.superAccess = o.has("superAccess") ? o.get("superAccess").getAsString() : null;
+                        if (o.has("superAccessors")) {
+                            for (var acc : o.getAsJsonArray("superAccessors")) {
+                                h.superAccessors.add(acc.getAsString());
+                                c.superAccessorTargets.add(acc.getAsString());
+                            }
+                        }
+                        String want = h.superAccess == null ? null : "(L" + h.superAccess + ";" + h.oldDesc.substring(1);
+                        if (want == null || !h.superBridgeDesc.equals(want) || h.superCalls) {
+                            throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
+                                + ": superBridge needs superAccess and takes (superAccess, old arguments) to the old return"
+                                + " (" + want + "), and replaces superCalls rewrite");
+                        }
+                    }
                     c.overrideHooks.add(h);
+                }
+            }
+            if (root.has("frameDefaults")) {
+                // what a rewritten super call passes for an argument the old shape has no place for when
+                // there is no frame to read it from: the mod's old override entered directly (the mod's
+                // own call, not vanilla's through the synthesized new shape) -- a null NbtAccounter there
+                // is an NPE in vanilla's body. Keyed by the hook's old shape; per new argument index a
+                // static OWNER#name()T, OWNER#name(LX;)T taking the receiver, or OWNER#name(LX;<old args>)T
+                // taking the receiver and the old call's arguments, computing what V used
+                for (var e : root.getAsJsonObject("frameDefaults").entrySet()) {
+                    String[] osig = splitSig(e.getKey());
+                    boolean found = false;
+                    for (OverrideHook h : c.overrideHooks) {
+                        if (!h.oldName.equals(osig[0]) || !h.oldDesc.equals(osig[1])) {
+                            continue;
+                        }
+                        if (h.frames == null) {
+                            throw new IllegalArgumentException("frameDefaults " + e.getKey() + ": the hook carries no frames");
+                        }
+                        org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
+                        for (var d : e.getValue().getAsJsonObject().entrySet()) {
+                            int j = Integer.parseInt(d.getKey());
+                            if (d.getValue().getAsString().startsWith("zero:")) {
+                                continue; // judged: the type's zero value is what V meant ("zero: <why>")
+                            }
+                            String[] ref = parseStaticRef("frameDefaults " + e.getKey(), d.getValue().getAsString());
+                            org.objectweb.asm.Type[] dp = org.objectweb.asm.Type.getArgumentTypes(ref[2]);
+                            org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
+                            // ()T, (receiver)T, or (receiver, every old argument)T -- DispenserBlock.dispense's
+                            // new BlockState is the state at the old position: level.getBlockState(pos)
+                            boolean shape = dp.length == 0 || dp[0].getSort() == org.objectweb.asm.Type.OBJECT
+                                && (dp.length == 1 || dp.length == oa.length + 1
+                                    && java.util.Arrays.equals(java.util.Arrays.copyOfRange(dp, 1, dp.length), oa));
+                            if (j < 0 || j >= na.length || !org.objectweb.asm.Type.getReturnType(ref[2]).equals(na[j]) || !shape) {
+                                throw new IllegalArgumentException("frameDefaults " + e.getKey() + ": " + d.getKey()
+                                    + " must name a new argument and a static ()T, (receiver)T or (receiver, old arguments)T"
+                                    + " returning that argument's type");
+                            }
+                            h.frameDefaults.put(j, ref);
+                        }
+                        found = true;
+                    }
+                    if (!found) {
+                        throw new IllegalArgumentException("frameDefaults " + e.getKey() + ": no override hook has that old shape");
+                    }
                 }
             }
             if (root.has("facadeGaps")) {
@@ -1870,6 +2172,24 @@ public final class Chain {
                 var ifs = root.getAsJsonObject("instanceFieldSetters");
                 for (String k : ifs.keySet()) {
                     c.instanceFieldSetters.put(k, ifs.get(k).getAsString());
+                }
+            }
+            if (root.has("overrideRenames")) {
+                for (var el : root.getAsJsonArray("overrideRenames")) {
+                    var o = el.getAsJsonObject();
+                    OverrideRename r = new OverrideRename();
+                    String[] osig = splitSig(o.get("old").getAsString());
+                    r.oldName = osig[0];
+                    r.oldDesc = osig[1];
+                    r.newName = o.get("new").getAsString();
+                    r.onlyUnder = o.get("onlyUnder").getAsString();
+                    r.adapter = o.has("adapter") ? o.get("adapter").getAsString() : null;
+                    r.superCalls = o.has("superCalls") && o.get("superCalls").getAsString().equals("rename");
+                    if (r.newName.contains("(")) {
+                        throw new IllegalArgumentException("overrideRenames " + r.oldName + r.oldDesc
+                            + ": new is a method name; the descriptor stays");
+                    }
+                    c.overrideRenames.add(r);
                 }
             }
             if (root.has("instanceOfRedirects")) {
@@ -1985,6 +2305,12 @@ public final class Chain {
                 var lg = root.getAsJsonObject("ledger");
                 for (String k : lg.keySet()) {
                     c.ledger.put(k, lg.get(k).getAsString());
+                }
+            }
+            if (root.has("retiredClasses")) {
+                var rc = root.getAsJsonObject("retiredClasses");
+                for (String k : rc.keySet()) {
+                    c.retiredClasses.put(k, rc.get(k).getAsString());
                 }
             }
             if (root.has("covers")) {

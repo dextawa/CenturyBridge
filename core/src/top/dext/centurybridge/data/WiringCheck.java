@@ -31,8 +31,8 @@ import org.objectweb.asm.tree.MethodNode;
  * rename applies. Member names on our runtime classes are never renamed by
  * that table, so they compare verbatim.
  *
- * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects,
- * fieldRedirects, fieldGetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
+ * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects, interfaceCallRedirects,
+ * fieldRedirects, fieldGetters, staticFieldSetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
@@ -48,6 +48,12 @@ public final class WiringCheck {
     private final Map<String, ClassNode> classes = new HashMap<>();
     /** target stub classes (members only): what superRenames and reshapes must agree with */
     private final Map<String, ClassNode> stub = new HashMap<>();
+    /**
+     * the interfaces the target's Fabric API injects into vanilla classes (Chain.readInjectedInterfaces), and
+     * its modules' classes: a member a vanilla class has only through an injected interface resolves there
+     */
+    private Map<String, List<String>> injected = Map.of();
+    private final Map<String, ClassNode> lib = new HashMap<>();
     private final List<String> problems = new ArrayList<>();
     private Remapper facade = new SimpleRemapper(Map.of());
     private Remapper wall;
@@ -105,6 +111,25 @@ public final class WiringCheck {
         WiringCheck w = new WiringCheck();
         if (stubDir != null && version != null) {
             w.sources = SourceStubs.before(stubDir, version);
+        }
+        // the target release's Fabric API (-Dcb.fapi=<its processedMods>): the interfaces it injects into vanilla
+        // classes, and its modules' classes, so a target reached through an injected interface is judged there
+        String fapi = System.getProperty("cb.fapi");
+        if (fapi != null && !fapi.isEmpty()) {
+            Path mods = Path.of(fapi);
+            w.injected = top.dext.centurybridge.engine.Chain.readInjectedInterfaces(mods);
+            try (var s = Files.list(mods)) {
+                for (Path jar : (Iterable<Path>) s.filter(f -> f.toString().endsWith(".jar")).sorted()::iterator) {
+                    try (var z = new java.util.zip.ZipFile(jar.toFile())) {
+                        for (var en : java.util.Collections.list(z.entries())) {
+                            if (!en.getName().endsWith(".class") || !en.getName().startsWith("net/fabricmc/")) continue;
+                            ClassNode cn = new ClassNode();
+                            new ClassReader(z.getInputStream(en).readAllBytes()).accept(cn, ClassReader.SKIP_CODE);
+                            w.lib.putIfAbsent(cn.name, cn);
+                        }
+                    }
+                }
+            }
         }
         if (stubJar != null && Files.exists(stubJar)) {
             try (var z = new java.util.zip.ZipFile(stubJar.toFile())) {
@@ -376,6 +401,19 @@ public final class WiringCheck {
     }
 
     private void check(com.google.gson.JsonObject root) {
+        // retiredClasses (Chain.retiredClasses) take classes out of every jar the step converts: only a
+        // CenturyBridge layer's own may go, with a reason
+        if (root.has("retiredClasses")) {
+            for (var e : root.getAsJsonObject("retiredClasses").entrySet()) {
+                checked++;
+                if (!e.getKey().startsWith("top/dext/centurybridge/")) {
+                    problems.add("retiredClasses " + e.getKey() + ": only CenturyBridge's own classes retire");
+                }
+                if (!e.getValue().isJsonPrimitive() || e.getValue().getAsString().isBlank()) {
+                    problems.add("retiredClasses " + e.getKey() + ": needs the reason it retires at this step");
+                }
+            }
+        }
         if (root.has("classRenames")) {
             Map<String, String> ren = new HashMap<>();
             for (var e : root.getAsJsonObject("classRenames").entrySet()) {
@@ -408,7 +446,7 @@ public final class WiringCheck {
             wantMethod("staticRedirects " + k, v, s.name, methodDesc(s.desc));
         });
         // instance-shaped: receiver becomes argument 0
-        for (String map : new String[] {"instanceRedirects", "superRedirects"}) {
+        for (String map : new String[] {"instanceRedirects", "superRedirects", "interfaceCallRedirects"}) {
             obj(root, map, (k, v) -> {
                 Sym s = Sym.method(k);
                 wantMethod(map + " " + k, v, s.name, methodDesc("(L" + s.owner + ";" + s.desc.substring(1)));
@@ -422,6 +460,10 @@ public final class WiringCheck {
         obj(root, "fieldGetters", (k, v) -> {
             Sym s = Sym.field(k);
             wantMethod("fieldGetters " + k, v, s.name, methodDesc("()" + s.desc));
+        });
+        obj(root, "staticFieldSetters", (k, v) -> {
+            Sym s = Sym.field(k);
+            wantMethod("staticFieldSetters " + k, v, s.name, methodDesc("(" + s.desc + ")V"));
         });
         obj(root, "instanceFieldGetters", (k, v) -> {
             Sym s = Sym.field(k);
@@ -466,6 +508,27 @@ public final class WiringCheck {
                         wantMethod("superCtorReshapes " + e.getKey() + " post", post.substring(0, paren), null,
                             methodDesc(post.substring(paren)));
                     }
+                }
+            }
+        }
+        // overrideRenames: an adapter interface must declare the new name with the old descriptor
+        // (the mod's renamed method implements it; the mixin on the final method calls it)
+        if (root.has("overrideRenames")) {
+            for (var el : root.getAsJsonArray("overrideRenames")) {
+                var o = el.getAsJsonObject();
+                checked++;
+                if (!o.has("adapter")) {
+                    continue;
+                }
+                String old = o.get("old").getAsString();
+                String desc = methodDesc(old.substring(old.indexOf('(')));
+                String name = o.get("new").getAsString();
+                String adapter = o.get("adapter").getAsString();
+                ClassNode an = classes.get(adapter);
+                if (an == null || (an.access & Opcodes.ACC_INTERFACE) == 0) {
+                    problems.add("overrideRenames " + old + " (no such adapter interface " + adapter + ")");
+                } else if (an.methods.stream().noneMatch(m -> m.name.equals(name) && m.desc.equals(desc))) {
+                    problems.add("overrideRenames " + old + ": adapter " + adapter + " does not declare " + name + desc);
                 }
             }
         }
@@ -718,6 +781,23 @@ public final class WiringCheck {
                         wantMethod(where + " frames", f + "#cbArg" + t, null, "(Ljava/lang/Object;I)" + t);
                     }
                     wantMethod(where + " frames", f + "#cbArgL", null, "(Ljava/lang/Object;I)Ljava/lang/Object;");
+                    if (root.has("frameDefaults") && root.getAsJsonObject("frameDefaults").has(o.get("old").getAsString())) {
+                        // a default answered when no frame holds the object: the frames class reads it
+                        // through cbArgOr*, and the static it names must exist exactly
+                        for (String t : new String[] {"Z", "B", "C", "S", "I", "J", "F", "D"}) {
+                            wantMethod(where + " frames", f + "#cbArgOr" + t, null, "(Ljava/lang/Object;I" + t + ")" + t);
+                        }
+                        wantMethod(where + " frames", f + "#cbArgOrL", null,
+                            "(Ljava/lang/Object;ILjava/lang/Object;)Ljava/lang/Object;");
+                        for (var d : root.getAsJsonObject("frameDefaults").getAsJsonObject(o.get("old").getAsString()).entrySet()) {
+                            String r = d.getValue().getAsString().trim();
+                            if (r.startsWith("zero:")) {
+                                continue;
+                            }
+                            int p = r.indexOf('(');
+                            wantMethod(where + " frameDefaults " + d.getKey(), r.substring(0, p), null, methodDesc(r.substring(p)));
+                        }
+                    }
                 }
                 if (o.has("narrow") && o.get("narrow").getAsBoolean()) {
                     // a narrowing forward casts vanilla's value to the old type after an instanceof
@@ -768,6 +848,40 @@ public final class WiringCheck {
                         problems.add(where + " bridge without an adapter interface");
                     } else if (an.methods.stream().noneMatch(m -> m.name.equals(oname) && m.desc.equals(odesc))) {
                         problems.add(where + " adapter " + adapter + " does not declare the old shape " + oname + odesc);
+                    }
+                }
+                if (o.has("superBridge")) {
+                    // super calls through a bridge: the static, and the interface the class gets with its
+                    // accessors -- it must declare cb$super$<shape> for every accessor shape, nothing else
+                    String b = o.get("superBridge").getAsString();
+                    int paren = b.indexOf('(');
+                    int dot = b.lastIndexOf('.', paren);
+                    wantMethod(where + " superBridge", b.substring(0, dot) + "#" + b.substring(dot + 1, paren),
+                        null, methodDesc(b.substring(paren)));
+                    String access = o.has("superAccess") ? o.get("superAccess").getAsString() : null;
+                    ClassNode sn = access == null ? null : classes.get(access);
+                    if (sn == null || (sn.access & Opcodes.ACC_INTERFACE) == 0) {
+                        problems.add(where + " superBridge without a superAccess interface");
+                    } else {
+                        java.util.Set<String> want = new java.util.HashSet<>();
+                        if (o.has("superAccessors")) {
+                            for (var a : o.getAsJsonArray("superAccessors")) {
+                                String s = a.getAsString();
+                                int p = s.indexOf('(');
+                                want.add(top.dext.centurybridge.engine.Chain.SUPER_ACCESSOR_PREFIX + s.substring(0, p)
+                                    + methodDesc(s.substring(p)));
+                            }
+                        }
+                        java.util.Set<String> have = new java.util.HashSet<>();
+                        for (var m : sn.methods) {
+                            if ((m.access & Opcodes.ACC_ABSTRACT) != 0) {
+                                have.add(m.name + m.desc);
+                            }
+                        }
+                        if (!have.equals(want)) {
+                            problems.add(where + " superAccess " + access + " declares " + have + ", the accessors are " + want);
+                        }
+                        checked++;
                     }
                 }
             }
@@ -873,10 +987,25 @@ public final class WiringCheck {
     private boolean resolves(String owner, String name, String desc) {
         java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
         java.util.Set<String> seen = new java.util.HashSet<>();
+        // library types reached through an interface the target's Fabric API injects into a vanilla class: judged
+        // by their own members (a library owner named directly stays outside this gate, as before)
+        java.util.Set<String> viaInjection = new java.util.HashSet<>();
         while (!todo.isEmpty()) {
             String c = todo.pop();
             if (!seen.add(c)) continue;
             ClassNode n = classes.containsKey(c) ? classes.get(c) : stub.get(c);
+            if (n == null && viaInjection.contains(c)) {
+                n = lib.get(c);
+                if (n == null) {
+                    return true; // an injected interface whose module is not here: not this gate's to judge
+                }
+                for (MethodNode m : n.methods) {
+                    if (m.name.equals(name) && m.desc.equals(desc)) return true;
+                }
+                viaInjection.addAll(n.interfaces);
+                todo.addAll(n.interfaces);
+                continue;
+            }
             if (n == null) {
                 if (!c.startsWith("net/minecraft/") && !c.startsWith("com/mojang/blaze3d/")) {
                     return true; // a library owner the stub does not carry: not this gate's to judge
@@ -888,6 +1017,10 @@ public final class WiringCheck {
             }
             if (n.superName != null) todo.push(n.superName);
             todo.addAll(n.interfaces);
+            for (String i : injected.getOrDefault(c, List.of())) {
+                viaInjection.add(i);
+                todo.add(i);
+            }
         }
         return false;
     }
@@ -922,6 +1055,7 @@ public final class WiringCheck {
             }
             if (n.superName != null) todo.push(n.superName);
             todo.addAll(n.interfaces);
+            todo.addAll(injected.getOrDefault(c, List.of())); // a vanilla class is its injected interfaces' subtype
         }
         return false;
     }

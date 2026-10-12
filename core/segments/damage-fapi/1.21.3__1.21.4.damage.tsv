@@ -4,22 +4,32 @@ call	net/fabricmc/fabric/api/block/BlockPickInteractionAware	getPickedStack	(Lne
 implement-interface	net/fabricmc/fabric/api/block/BlockPickInteractionAware			CLASS	class gone
 call	net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context	setModel	(Lnet/minecraft/class_2680;Lnet/minecraft/class_1100;)V	METHOD	method setModel(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V public abstract
 implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context	setModel	(Lnet/minecraft/class_2680;Lnet/minecraft/class_1100;)V	METHOD	method setModel(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V public abstract
 new	net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel	<init>	(Lnet/minecraft/class_2960;)V	CLASS	class gone
 call	net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel	method_62326	(Lnet/minecraft/class_1100$class_10103;)V	CLASS	class gone
 call	net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel	method_4753	(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;	CLASS	class gone
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context	resolveModel	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context	resolveModel	()Lnet/fabricmc/fabric/api/event/Event;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	resourceId	()Lnet/minecraft/class_2960;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	topLevelId	()Lnet/minecraft/class_1091;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	textureGetter	()Ljava/util/function/Function;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	resourceId	()Lnet/minecraft/class_2960;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	topLevelId	()Lnet/minecraft/class_1091;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	textureGetter	()Ljava/util/function/Function;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	resourceId	()Lnet/minecraft/class_2960;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	topLevelId	()Lnet/minecraft/class_1091;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	textureGetter	()Ljava/util/function/Function;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	resourceId	()Lnet/minecraft/class_2960;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	topLevelId	()Lnet/minecraft/class_1091;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	textureGetter	()Ljava/util/function/Function;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context	resourceId	()Lnet/minecraft/class_2960;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context	topLevelId	()Lnet/minecraft/class_1091;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context	resourceId	()Lnet/minecraft/class_2960;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context	topLevelId	()Lnet/minecraft/class_1091;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context	id	()Lnet/minecraft/class_2960;	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context			CLASS	class gone
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver	resolveModel	(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context;)Lnet/minecraft/class_1100;	CLASS	class gone
@@ -45,6 +55,7 @@ implement-interface	net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRende
 get-static	net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry	ITEM	Lnet/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry;	FIELD	field not declared on the owner
 call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	lightmapTextureManager	()Lnet/minecraft/class_765;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	lightmapTextureManager	()Lnet/minecraft/class_765;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider	generateBlockStateModels	(Lnet/minecraft/class_4910;)V	CLASS	class gone
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider	generateItemModels	(Lnet/minecraft/class_4915;)V	CLASS	class gone
 extend	net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider			CLASS	class gone
@@ -68,8 +79,10 @@ call-static	net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPr
 call-static	net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry	register	(Lnet/minecraft/class_1792;Lnet/minecraft/class_2960;Lnet/minecraft/class_6395;)V	CLASS	class gone
 call	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient	getMatchingItems	()Ljava/util/List;	METHOD	method getMatchingItems()Ljava/util/stream/Stream; public abstract
 implement-interface	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient	getMatchingItems	()Ljava/util/List;	METHOD	method getMatchingItems()Ljava/util/stream/Stream; public abstract
 call	net/fabricmc/fabric/api/renderer/v1/Renderer	meshBuilder	()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/renderer/v1/Renderer			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/renderer/v1/Renderer	meshBuilder	()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/RendererAccess	registerRenderer	(Lnet/fabricmc/fabric/api/renderer/v1/Renderer;)V	CLASS	class gone
 call	net/fabricmc/fabric/api/renderer/v1/RendererAccess	getRenderer	()Lnet/fabricmc/fabric/api/renderer/v1/Renderer;	CLASS	class gone
 call	net/fabricmc/fabric/api/renderer/v1/RendererAccess	hasRenderer	()Z	CLASS	class gone
@@ -92,13 +105,25 @@ override+super	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	emiss
 override+super	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	disableDiffuse	(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method disableDiffuse(Z)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder; public abstract
 override+super	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	disableAo	(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	spriteDepth	(I)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	disableColorIndex	(Z)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	glint	(Lnet/fabricmc/fabric/api/util/TriState;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	blendMode	(ILnet/minecraft/class_1921;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method blendMode(Lnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder; public abstract
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	blendMode	(ILnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method blendMode(Lnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder; public abstract
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	disableColorIndex	(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	emissive	(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method emissive(Z)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder; public abstract
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	disableDiffuse	(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method disableDiffuse(Z)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder; public abstract
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	disableAo	(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder	spriteDepth	(I)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/material/MaterialView	disableColorIndex	()Z	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/material/MaterialView	glint	()Lnet/fabricmc/fabric/api/util/TriState;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/renderer/v1/material/MaterialView			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialView	disableColorIndex	()Z	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/MaterialView	glint	()Lnet/fabricmc/fabric/api/util/TriState;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial	spriteDepth	()I	METHOD	method not declared on the owner
 get-static	net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial	MATERIAL_STANDARD	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
 implement-interface	net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial			ABSTRACT	class public abstract interface extends java/lang/Object
 override+super	net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial	spriteDepth	()I	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial	spriteDepth	()I	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/renderer/v1/mesh/Mesh			ABSTRACT	class public abstract interface extends java/lang/Object
 call	net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder	getEmitter	()Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	CLASS	class gone
 call	net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder	build	()Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;	CLASS	class gone
@@ -117,6 +142,13 @@ override+super	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	sprite	(
 override+super	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	sprite	(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	spriteBake	(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public abstract
 override+super	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	fromVanilla	([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method fromVanilla([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public abstract ; fromVanilla(Lnet/minecraft/class_777;Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;Lnet/minecraft/class_2350;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public abstract
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	colorIndex	(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	spriteColor	(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	spriteColor	(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	sprite	(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	sprite	(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	spriteBake	(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public abstract
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	fromVanilla	([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method fromVanilla([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public abstract ; fromVanilla(Lnet/minecraft/class_777;Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;Lnet/minecraft/class_2350;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public abstract
 call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	colorIndex	(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	spriteColor	(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	spriteColor	(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
@@ -133,6 +165,14 @@ override+super	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	sprite	(IILn
 override+super	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	spriteBake	(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter; public abstract ; spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public
 override+super	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	spriteUnitSquare	(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	fromVanilla	([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method fromVanilla([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter; public abstract ; fromVanilla(Lnet/minecraft/class_777;Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;Lnet/minecraft/class_2350;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter; public abstract ; fromVanilla(Lnet/minecraft/class_777;Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;Lnet/minecraft/class_2350;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public ; fromVanilla([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	colorIndex	(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	spriteColor	(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	spriteColor	(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	sprite	(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	sprite	(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	spriteBake	(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter; public abstract ; spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	spriteUnitSquare	(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	fromVanilla	([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method fromVanilla([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter; public abstract ; fromVanilla(Lnet/minecraft/class_777;Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;Lnet/minecraft/class_2350;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter; public abstract ; fromVanilla(Lnet/minecraft/class_777;Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;Lnet/minecraft/class_2350;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public ; fromVanilla([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView; public
 call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	faceNormal	()Lorg/joml/Vector3f;	METHOD	method faceNormal()Lorg/joml/Vector3fc; public abstract
 call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	colorIndex	()I	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	spriteColor	(II)I	METHOD	method not declared on the owner
@@ -148,10 +188,20 @@ override+super	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	spriteV	(II)F	M
 override+super	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	copyTo	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)V	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	toVanilla	(I[IIZ)V	METHOD	method toVanilla([II)V public abstract
 override+super	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	toBakedQuad	(ILnet/minecraft/class_1058;Z)Lnet/minecraft/class_777;	METHOD	method toBakedQuad(Lnet/minecraft/class_1058;)Lnet/minecraft/class_777; public
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	faceNormal	()Lorg/joml/Vector3f;	METHOD	method faceNormal()Lorg/joml/Vector3fc; public abstract
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	colorIndex	()I	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	spriteColor	(II)I	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	spriteU	(II)F	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	spriteV	(II)F	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	copyTo	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	toVanilla	(I[IIZ)V	METHOD	method toVanilla([II)V public abstract
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	toBakedQuad	(ILnet/minecraft/class_1058;Z)Lnet/minecraft/class_777;	METHOD	method toBakedQuad(Lnet/minecraft/class_1058;)Lnet/minecraft/class_777; public
 call	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitBlockQuads	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method emitBlockQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V public
 call	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitItemQuads	(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method emitItemQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V public
 override+super	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitBlockQuads	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method emitBlockQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V public
 override+super	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitItemQuads	(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method emitItemQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V public
+call-inherited	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitBlockQuads	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method emitBlockQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V public
+call-inherited	net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel	emitItemQuads	(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method emitItemQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V public
 call	net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel	isVanillaAdapter	()Z	CLASS	class gone
 call	net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel	emitBlockQuads	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	CLASS	class gone
 call	net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel	emitItemQuads	(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	CLASS	class gone
@@ -194,3 +244,5 @@ implement-interface	net/fabricmc/fabric/api/renderer/v1/render/RenderContext			C
 override+super	net/fabricmc/fabric/api/renderer/v1/render/RenderContext	meshConsumer	()Ljava/util/function/Consumer;	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/resource/ModResourcePack			ABSTRACT	class public abstract interface extends java/lang/Object
 implement-inherited	net/minecraft/class_3262	method_14407	(Lnet/minecraft/class_3270;)Ljava/lang/Object;	ORPHAN	method method_14407(Lnet/minecraft/class_7677;)Ljava/lang/Object; public abstract
+call-injected	net/minecraft/class_1087	emitBlockQuads	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1087	emitItemQuads	(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V	METHOD	method not declared on the owner

@@ -1,0 +1,37 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_4970.method_9548(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;)V": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;Z)V",
+   "ops": ["keep", "keep", "keep", "keep", "keep", "push top/dext/centurybridge/step/v1_21_10/rt/CbEntityInside#inside()Z"],
+   "basis": "1.21.9 had no intersection flag, every entityInside applied the block's effect; 1.21.10's only reader, BubbleColumnBlock, applies it when the flag is true (CbEntityInside)"
+  },
+  "net/minecraft/class_4970$class_4971.method_26178(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;Z)V",
+   "ops": ["keep", "keep", "keep", "keep", "push top/dext/centurybridge/step/v1_21_10/rt/CbEntityInside#inside()Z"],
+   "basis": "BlockStateBase.entityInside hands the flag to its block's entityInside; a 1.21.9 call stands for true (CbEntityInside)"
+  }
+ },
+ "frameDefaults": {
+  "method_9548(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;)V": {
+   "5": "top/dext/centurybridge/step/v1_21_10/rt/CbEntityInside#inside()Z"
+  },
+  "method_26178(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;Lnet/minecraft/class_10774;)V": {
+   "4": "top/dext/centurybridge/step/v1_21_10/rt/CbEntityInside#inside()Z"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry",
+   "method": "registerLarge(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;I)Lnet/minecraft/class_8710$class_9155;",
+   "call": "top/dext/centurybridge/step/v1_21_10/rt/CbPayloadTypeRegistries.registerLarge(Lnet/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry;Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;I)Lnet/minecraft/class_8710$class_9155;",
+   "basis": "1.21.9's behaviour (abstract, no default): 1.21.9's Fabric API had no payload splitting, so a 1.21.9 registry registers the type with vanilla's size limit; the size is validated as Fabric's registerLarge does"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry.register(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;)Lnet/minecraft/class_8710$class_9155;": {
+   "iface": "top/dext/centurybridge/step/v1_21_10/rt/CbLegacyPayloadTypeRegistry",
+   "adapt": "top/dext/centurybridge/step/v1_21_10/rt/CbPayloadTypeRegistries#adapt(Ltop/dext/centurybridge/step/v1_21_10/rt/CbLegacyPayloadTypeRegistry;)Lnet/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry;",
+   "basis": "1.21.9's PayloadTypeRegistry had register alone (a functional interface); 1.21.10 has an abstract registerLarge, which the adapted registry answers as above"
+  }
+ }
+}

@@ -1,1 +1,2 @@
 usage	owner	name	desc	kinds	w
+call-injected	net/minecraft/class_8790	getRecipeIdentifier	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;	METHOD	method not declared on the owner

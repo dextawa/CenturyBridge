@@ -186,6 +186,11 @@ def generic_change(v_sig, w_sig, pairs, compare_return, wall):
         # a raw type on one side (a class generified in W) carries no element type to disagree with
         if ta and tb and ta != tb:
             return f"generic type {a} -> {b}"
+        # a bare type variable on exactly one side: the erasure (Object, or the bound) makes the other
+        # side "assignable", but the value is another thing altogether -- 1.21's PlaceRecipe.addItemToSlot
+        # takes the element T where 1.20.6's took the Iterator<T> it came from
+        if (a.lstrip("[").startswith("T")) != (b.lstrip("[").startswith("T")):
+            return f"generic type {a} -> {b}"
     return None
 
 
@@ -389,7 +394,7 @@ def main():
         # a call: the new shape's arguments from the old call's
         fits = []
         for c, m in shapes_w:
-            if name != "<init>" and bool(m.access & ACC_STATIC) != (usage in ("call-static", "call-static-protected")):
+            if name != "<init>" and bool(m.access & ACC_STATIC) != (usage in ("call-static", "call-static-protected", "call-static-inherited")):
                 fits.append((c, m, None, "static-ness changed"))
                 continue
             na, nr = split_args(m.desc)
@@ -413,6 +418,7 @@ def main():
         c, m, amap, _ = good[0]
         na, nr = split_args(m.desc)
         dropped = [i for i in range(len(oa)) if i not in amap]
+        abstract = None
         if dropped:
             bodies = implementations(V, hv, owner, name, desc)
             readers = []
@@ -423,6 +429,12 @@ def main():
             if not bodies:
                 note(r, "design", f"drops {[oa[i] for i in dropped]}; V has no body to tell whether it mattered")
                 continue
+            # an abstract declaration (an interface method, an abstract class's) is implemented outside
+            # V too: V's own bodies say the call may drop the argument for vanilla's implementations, but
+            # a mod's implementation is reached through its override hook, which has no value for it (a
+            # mod's SimpleCraftingRecipeSerializer.Factory stored the recipe id it was handed). The
+            # basis says so, so whoever owns the area can judge whether the value must travel
+            abstract = next((bc for bc, bm in bodies if bm.code is None), None)
             if readers:
                 note(r, "design", f"drops {[oa[i] for i in dropped]}, which V reads in {readers[:3]}")
                 continue
@@ -432,7 +444,9 @@ def main():
         entry = {"desc": nd, "ops": ops}
         if nr != orr:
             entry["ret"] = "pop" if orr == "V" else "keep"
-        entry["basis"] = "mechanical: same values" + ("" if amap == sorted(amap) else ", reordered by type") + (f"; dropped {','.join(oa[i] for i in dropped)}, never read in V" if dropped else "") \
+        entry["basis"] = "mechanical: same values" + ("" if amap == sorted(amap) else ", reordered by type")             + (f"; dropped {','.join(oa[i] for i in dropped)}, never read in V" if dropped and not abstract else "")             + (f"; dropped {','.join(oa[i] for i in dropped)}: no body of V reads it, but {abstract} declares the method"
+               " abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
+               if dropped and abstract else "") \
             + {"pop": "; return value popped", "keep": "; returns a subtype of the old type"}.get(entry.get("ret"), "")
         (ctors if name == "<init>" else calls)[key] = entry
         note(r, "ctor-reshape" if name == "<init>" else "reshape", f"-> {nd} {ops}"
