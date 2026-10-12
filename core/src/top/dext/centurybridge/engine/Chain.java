@@ -341,6 +341,18 @@ public final class Chain {
         /** "superCalls": "rewrite": a mod's super.old(..) in a class under the hook becomes super.new(..) */
         public boolean superCalls;
         /**
+         * Frame fills ("fills": {"newArgIndex": "Owner.name(Ljava/lang/Object;LReceiver;)T"}), with
+         * {@link #frames}: what a rewritten super call passes for a new argument the old shape has no
+         * place for when no frame exists for the object -- the mod calling its own old method
+         * directly (this.load(tag) on its own block entity), not through the synthesized new shape.
+         * Without a fill that argument is its type's zero value, which is wrong for an argument
+         * vanilla dereferences (1.20.5's BlockEntity.loadAdditional(tag, registries) parses the
+         * items through the registries). The static gets the frame's value (null without a frame)
+         * and the receiver, and answers the argument: the frame's value when there is one, else
+         * what the receiver itself provides (its level's registries).
+         */
+        public final java.util.Map<Integer, String[]> fills = new java.util.HashMap<>();
+        /**
          * Narrowing forward ("narrow": true), for a parameter the release widened (1.20.2: a
          * packet's handle(ClientGamePacketListener) became handle(ClientCommonPacketListener),
          * because the packet now also arrives in the configuration phase). The old override was
@@ -1561,6 +1573,25 @@ public final class Chain {
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
                     h.frames = o.has("frames") ? o.get("frames").getAsString() : null;
                     h.superCalls = o.has("superCalls") && o.get("superCalls").getAsString().equals("rewrite");
+                    if (o.has("fills")) {
+                        org.objectweb.asm.Type[] nat = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
+                        for (var fe : o.getAsJsonObject("fills").entrySet()) {
+                            int j = Integer.parseInt(fe.getKey());
+                            String f = fe.getValue().getAsString();
+                            int dot = f.lastIndexOf('.', f.indexOf('('));
+                            String[] fsig = splitSig(f.substring(dot + 1));
+                            org.objectweb.asm.Type[] fp = org.objectweb.asm.Type.getArgumentTypes(fsig[1]);
+                            if (h.frames == null || j < 0 || j >= nat.length || nat[j].getSort() < org.objectweb.asm.Type.ARRAY
+                                    || fp.length != 2 || !fp[0].getDescriptor().equals("Ljava/lang/Object;")
+                                    || fp[1].getSort() != org.objectweb.asm.Type.OBJECT
+                                    || !org.objectweb.asm.Type.getReturnType(fsig[1]).equals(nat[j])) {
+                                throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": fill " + j
+                                    + " needs frames and a static (Ljava/lang/Object;LReceiver;)" + (j >= 0 && j < nat.length
+                                    ? nat[j].getDescriptor() : "<new argument type>") + " for an object argument");
+                            }
+                            h.fills.put(j, new String[] {f.substring(0, dot), fsig[0], fsig[1]});
+                        }
+                    }
                     if (h.frames != null && (h.guard != null || h.wrapName != null || h.unwrapName != null || o.has("bridge"))) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
                             + ": frames go with plain argument forwarding only (no guard / wrap / unwrap / bridge)");

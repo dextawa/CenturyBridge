@@ -441,7 +441,14 @@ public final class JarProcessor {
                         seq.add(new org.objectweb.asm.tree.LdcInsnNode(j));
                         seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.frames, acc[0],
                             "(Ljava/lang/Object;I)" + acc[1], false));
-                        if (na[j].getSort() >= org.objectweb.asm.Type.ARRAY && !na[j].getInternalName().equals("java/lang/Object")) {
+                        String[] fill = h.fills.get(j);
+                        if (fill != null) {
+                            // no frame for this object: the fill answers from the receiver what the
+                            // frame would have carried (Chain.OverrideHook#fills); it returns the type
+                            seq.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+                            seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, fill[0], fill[1],
+                                fill[2], false));
+                        } else if (na[j].getSort() >= org.objectweb.asm.Type.ARRAY && !na[j].getInternalName().equals("java/lang/Object")) {
                             seq.add(new org.objectweb.asm.tree.TypeInsnNode(Opcodes.CHECKCAST, na[j].getInternalName()));
                         }
                     }

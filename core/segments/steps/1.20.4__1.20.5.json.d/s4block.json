@@ -19,7 +19,18 @@
   "net/minecraft/class_4970.method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse",
   "net/minecraft/class_4970$class_4971.method_26174(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse",
   "net/minecraft/class_4970.method_9516(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_10;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath",
-  "net/minecraft/class_4970$class_4971.method_26171(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_10;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath"
+  "net/minecraft/class_4970$class_4971.method_26171(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_10;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath",
+  "net/minecraft/class_2586.method_11014(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_2586.method_16887()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_2586.method_38244()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_2586.method_38243()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_2586.method_38242()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_2586.method_38240(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_2627.method_11319(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_1918.method_8305(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_1918.method_8297(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_1932.method_75(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_2791.method_20598(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt"
  },
  "overrideHooks": [
   {
@@ -115,6 +126,165 @@
     "method_28442()Lcom/mojang/serialization/MapCodec;"
    ],
    "basis": "the mod's codec as the map codec 1.20.5 dispatches with, one object per codec (CbCodecs); super.codec() is super's map codec as the 1.20.4 codec"
+  },
+  {
+   "old": "method_11014(Lnet/minecraft/class_2487;)V",
+   "new": "method_11014(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2586",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "fills": {
+    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+   },
+   "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
+  },
+  {
+   "old": "method_11007(Lnet/minecraft/class_2487;)V",
+   "new": "method_11007(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2586",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "fills": {
+    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+   },
+   "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
+  },
+  {
+   "old": "method_16887()Lnet/minecraft/class_2487;",
+   "new": "method_16887(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2586",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "fills": {
+    "0": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+   },
+   "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
+  },
+  {
+   "old": "method_38240(Lnet/minecraft/class_1799;)V",
+   "new": "method_38240(Lnet/minecraft/class_1799;Lnet/minecraft/class_7225$class_7874;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2586",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "fills": {
+    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+   },
+   "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
+  },
+  {
+   "old": "method_11319(Lnet/minecraft/class_2487;)V",
+   "new": "method_11319(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2627",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "fills": {
+    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2586;)Lnet/minecraft/class_7225$class_7874;"
+   },
+   "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
+  },
+  {
+   "old": "method_20598(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;",
+   "new": "method_20598(Lnet/minecraft/class_2338;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2791",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "fills": {
+    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orOf(Ljava/lang/Object;Lnet/minecraft/class_2791;)Lnet/minecraft/class_7225$class_7874;"
+   },
+   "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
+  },
+  {
+   "old": "method_8305(Lnet/minecraft/class_2487;)V",
+   "new": "method_8305(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_1918",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "fills": {
+    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orCurrent(Ljava/lang/Object;Lnet/minecraft/class_1918;)Lnet/minecraft/class_7225$class_7874;"
+   },
+   "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
+  },
+  {
+   "old": "method_8297(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;",
+   "new": "method_8297(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_1918",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "fills": {
+    "1": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockRegistries.orCurrent(Ljava/lang/Object;Lnet/minecraft/class_1918;)Lnet/minecraft/class_7225$class_7874;"
+   },
+   "basis": "the old method gets every parameter it had; its super call gets the registries vanilla passed, or -- called by the mod itself, outside a hooked call -- the block entity's (chunk's, world's) own (CbBlockRegistries)"
+  },
+  {
+   "old": "method_55114()Lnet/minecraft/class_3414;",
+   "new": "method_55114()Lnet/minecraft/class_6880;",
+   "onlyUnder": "net/minecraft/class_1927",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;",
+   "basis": "the override's sound as the holder 1.20.5 asks for; its super call is reshaped back (callReshapes)"
+  },
+  {
+   "old": "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1927;",
+   "new": "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.soundEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
+   "basis": "the old override gets the holder's sound; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1927;",
+   "new": "method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.soundEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
+   "basis": "the old override gets the holder's sound; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_32888(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;)V",
+   "new": "method_32888(Lnet/minecraft/class_6880;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;)V",
+   "onlyUnder": "net/minecraft/class_1936",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.gameEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5712;",
+   "basis": "the old override gets the holder's game event; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_43275(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_243;)V",
+   "new": "method_43275(Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_243;)V",
+   "onlyUnder": "net/minecraft/class_1936",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.gameEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5712;",
+   "basis": "the old override gets the holder's game event; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_33596(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;)V",
+   "new": "method_33596(Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_2338;)V",
+   "onlyUnder": "net/minecraft/class_1936",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.gameEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5712;",
+   "basis": "the old override gets the holder's game event; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_43276(Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712$class_7397;)V",
+   "new": "method_43276(Lnet/minecraft/class_6880;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712$class_7397;)V",
+   "onlyUnder": "net/minecraft/class_1936",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.gameEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5712;",
+   "basis": "the old override gets the holder's game event; its super call is reshaped (callReshapes)"
   }
  ],
  "fieldGetters": {
@@ -139,6 +309,137 @@
    ],
    "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
    "basis": "the registered vanilla map codec as the codec 1.20.4 answered (CbCodecs)"
+  },
+  "net/minecraft/class_1927.method_55114()Lnet/minecraft/class_3414;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
+   "basis": "the holder's sound (CbHolders.soundEventValue)"
+  },
+  "net/minecraft/class_1937.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1927;": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "the explosion's sound as the holder 1.20.5 takes (CbHolders.soundEvent)"
+  },
+  "net/minecraft/class_1937.method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1927;": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "the explosion's sound as the holder 1.20.5 takes (CbHolders.soundEvent)"
+  },
+  "net/minecraft/class_1936.method_32888(Lnet/minecraft/class_5712;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_243;Lnet/minecraft/class_5712$class_7397;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#gameEvent(Lnet/minecraft/class_5712;)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the game event as the holder 1.20.5 takes (CbHolders.gameEvent)"
+  },
+  "net/minecraft/class_1936.method_43275(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_243;)V": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_243;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#gameEvent(Lnet/minecraft/class_5712;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "the game event as the holder 1.20.5 takes (CbHolders.gameEvent)"
+  },
+  "net/minecraft/class_1936.method_33596(Lnet/minecraft/class_1297;Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;)V": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_6880;Lnet/minecraft/class_2338;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#gameEvent(Lnet/minecraft/class_5712;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "the game event as the holder 1.20.5 takes (CbHolders.gameEvent)"
+  },
+  "net/minecraft/class_1936.method_43276(Lnet/minecraft/class_5712;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712$class_7397;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2338;Lnet/minecraft/class_5712$class_7397;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#gameEvent(Lnet/minecraft/class_5712;)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the game event as the holder 1.20.5 takes (CbHolders.gameEvent)"
+  },
+  "net/minecraft/class_7132$class_8510.method_32947(Lnet/minecraft/class_3218;Lnet/minecraft/class_5712;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_243;)Z": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_6880;Lnet/minecraft/class_5712$class_7397;Lnet/minecraft/class_243;)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#gameEvent(Lnet/minecraft/class_5712;)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the game event as the holder 1.20.5 takes (CbHolders.gameEvent); the override hook is GameEventListener's (s4rest)"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2586.method_11005(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2586;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_1932.method_32350(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1932;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "the explosion's sound as the holder 1.20.5 takes (CbHolders.soundEvent)"
+  },
+  "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "the explosion's sound as the holder 1.20.5 takes (CbHolders.soundEvent)"
   }
  }
 }

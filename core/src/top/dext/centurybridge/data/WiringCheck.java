@@ -579,6 +579,16 @@ public final class WiringCheck {
                         wantMethod(where + " frames", f + "#cbArg" + t, null, "(Ljava/lang/Object;I)" + t);
                     }
                     wantMethod(where + " frames", f + "#cbArgL", null, "(Ljava/lang/Object;I)Ljava/lang/Object;");
+                    if (o.has("fills")) {
+                        // a fill answers a carried argument when no frame exists for the object
+                        for (var fe : o.getAsJsonObject("fills").entrySet()) {
+                            String fl = fe.getValue().getAsString();
+                            int fparen = fl.indexOf('(');
+                            int fdot = fl.lastIndexOf('.', fparen);
+                            wantMethod(where + " fill " + fe.getKey(), fl.substring(0, fdot) + "#" + fl.substring(fdot + 1, fparen),
+                                null, methodDesc(fl.substring(fparen)));
+                        }
+                    }
                 }
                 if (o.has("narrow") && o.get("narrow").getAsBoolean()) {
                     // a narrowing forward casts vanilla's value to the old type after an instanceof
