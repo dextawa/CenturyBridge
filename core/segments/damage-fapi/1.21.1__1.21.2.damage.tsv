@@ -1,38 +1,54 @@
 usage	owner	name	desc	kinds	w
 call	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder	syncWith	(Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder	syncWith	(Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;	METHOD	method not declared on the owner
 call-static	net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry	create	(Lnet/minecraft/class_2960;Ljava/util/function/Consumer;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;	METHOD	method create(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType; public static
 call-static	net/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate	all	()Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;	CLASS	class gone
 call-static	net/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate	targetOnly	()Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;	CLASS	class gone
 call-static	net/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate	allButTarget	()Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate			CLASS	class gone
 call	net/fabricmc/fabric/api/attachment/v1/AttachmentType	isSynced	()Z	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/attachment/v1/AttachmentType	isSynced	()Z	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext	addCarver	(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)V	METHOD	method addCarver(Lnet/minecraft/class_5321;)V public abstract
 call	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext	removeCarver	(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)Z	METHOD	method removeCarver(Lnet/minecraft/class_5321;)Z public abstract
 implement-interface	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext	addCarver	(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)V	METHOD	method addCarver(Lnet/minecraft/class_5321;)V public abstract
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$GenerationSettingsContext	removeCarver	(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)Z	METHOD	method removeCarver(Lnet/minecraft/class_5321;)Z public abstract
 call-static	net/fabricmc/fabric/api/biome/v1/BiomeModifications	addCarver	(Ljava/util/function/Predicate;Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)V	METHOD	method addCarver(Ljava/util/function/Predicate;Lnet/minecraft/class_5321;)V public static
 get-static	net/fabricmc/fabric/api/block/v1/BlockFunctionalityTags	CAN_CLIMB_TRAPDOOR_ABOVE	Lnet/minecraft/class_6862;	CLASS	class gone
 call	net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap	putItem	(Lnet/minecraft/class_1792;Lnet/minecraft/class_1921;)V	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap	putItems	(Lnet/minecraft/class_1921;[Lnet/minecraft/class_1792;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap	putItem	(Lnet/minecraft/class_1792;Lnet/minecraft/class_1921;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/blockrenderlayer/v1/BlockRenderLayerMap	putItems	(Lnet/minecraft/class_1921;[Lnet/minecraft/class_1792;)V	METHOD	method not declared on the owner
 implement-inherited	net/minecraft/class_2172	method_9273	()Ljava/util/stream/Stream;	ORPHAN	method not declared on the owner
 call	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange	afterWorldChange	(Lnet/minecraft/class_310;Lnet/minecraft/class_638;)V	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange			CLASS	class gone
 get-static	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents	AFTER_CLIENT_WORLD_CHANGE	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
 call	net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context	getOrLoadModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context	getOrLoadModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel	method_4755	()Ljava/util/Collection;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel	method_45785	(Ljava/util/function/Function;)V	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin	onInitializeModelLoader	(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context;)V	METHOD	method not declared on the owner
 lambda	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin	onInitializeModelLoader	(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context;)V	LAMBDA	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin	onInitializeModelLoader	(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context;)V	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context	getOrLoadModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context	getOrLoadModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context	getOrLoadModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context	getOrLoadModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context	loader	()Lnet/minecraft/class_1088;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin	onInitializeModelLoader	(Ljava/lang/Object;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context;)V	METHOD	method not declared on the owner
 lambda	net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin	onInitializeModelLoader	(Ljava/lang/Object;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context;)V	LAMBDA	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin	onInitializeModelLoader	(Ljava/lang/Object;Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context;)V	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/rendereregistry/v1/BlockEntityRendererRegistry	register	(Lnet/minecraft/class_2591;Lnet/minecraft/class_5614;)V	CLASS	class gone
 get-static	net/fabricmc/fabric/api/client/rendereregistry/v1/BlockEntityRendererRegistry	INSTANCE	Lnet/fabricmc/fabric/api/client/rendereregistry/v1/BlockEntityRendererRegistry;	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/client/rendereregistry/v1/BlockEntityRendererRegistry			CLASS	class gone
@@ -52,6 +68,8 @@ call	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer	shouldRenderDefau
 lambda	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer	render	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V	LAMBDA	method render(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V public abstract
 implement-interface	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer			ABSTRACT	class public abstract interface extends java/lang/Object
 override+super	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer	shouldRenderDefaultHeadItem	(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Z	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer	render	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V	METHOD	method render(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V public abstract
+call-inherited	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer	shouldRenderDefaultHeadItem	(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Z	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/client/rendering/v1/CoreShaderRegistrationCallback$RegistrationContext	register	(Lnet/minecraft/class_2960;Lnet/minecraft/class_293;Ljava/util/function/Consumer;)V	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/client/rendering/v1/CoreShaderRegistrationCallback$RegistrationContext			CLASS	class gone
 call	net/fabricmc/fabric/api/client/rendering/v1/CoreShaderRegistrationCallback	registerShaders	(Lnet/fabricmc/fabric/api/client/rendering/v1/CoreShaderRegistrationCallback$RegistrationContext;)V	CLASS	class gone
@@ -60,7 +78,9 @@ implement-interface	net/fabricmc/fabric/api/client/rendering/v1/CoreShaderRegist
 call	net/fabricmc/fabric/api/client/rendering/v1/LivingEntityFeatureRenderEvents$AllowCapeRender	allowCapeRender	(Lnet/minecraft/class_742;)Z	METHOD	method allowCapeRender(Lnet/minecraft/class_10055;)Z public abstract
 lambda	net/fabricmc/fabric/api/client/rendering/v1/LivingEntityFeatureRenderEvents$AllowCapeRender	allowCapeRender	(Lnet/minecraft/class_742;)Z	LAMBDA	method allowCapeRender(Lnet/minecraft/class_10055;)Z public abstract
 implement-interface	net/fabricmc/fabric/api/client/rendering/v1/LivingEntityFeatureRenderEvents$AllowCapeRender			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/client/rendering/v1/LivingEntityFeatureRenderEvents$AllowCapeRender	allowCapeRender	(Lnet/minecraft/class_742;)Z	METHOD	method allowCapeRender(Lnet/minecraft/class_10055;)Z public abstract
 call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	profiler	()Lnet/minecraft/class_3695;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	profiler	()Lnet/minecraft/class_3695;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	setReplace	(Z)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	forceAddTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	remove	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	CLASS	class gone
@@ -81,6 +101,8 @@ call	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_568
 extend	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider			ABSTRACT	class public abstract extends net/minecraft/class_2446$class_10114
 implement	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_10419	(Lnet/minecraft/class_8790;)V	ORPHAN	method not declared on the owner
 override+super	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_56888	(Lnet/minecraft/class_7403;Lnet/minecraft/class_7225$class_7874;)Ljava/util/concurrent/CompletableFuture;	METHOD,ORPHAN	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_10419	(Lnet/minecraft/class_8790;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider	method_56888	(Lnet/minecraft/class_7403;Lnet/minecraft/class_7225$class_7874;)Ljava/util/concurrent/CompletableFuture;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	([Ljava/lang/Object;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder	remove	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricTagBuilder;	METHOD	method not declared on the owner
@@ -94,6 +116,7 @@ implement-interface	net/fabricmc/fabric/api/datagen/v1/recipe/FabricRecipeExport
 override+super	net/fabricmc/fabric/api/datagen/v1/recipe/FabricRecipeExporter	getRecipeIdentifier	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;	CLASS	class gone
 call	net/fabricmc/fabric/api/entity/FakePlayer	method_5679	(Lnet/minecraft/class_1282;)Z	METHOD	method method_5679(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)Z public
 override+super	net/fabricmc/fabric/api/entity/FakePlayer	method_5679	(Lnet/minecraft/class_1282;)Z	METHOD,ORPHAN	method method_5679(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)Z public
+call-inherited	net/fabricmc/fabric/api/entity/FakePlayer	method_5679	(Lnet/minecraft/class_1282;)Z	METHOD	method method_5679(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)Z public
 call	net/fabricmc/fabric/api/entity/event/v1/FabricElytraItem	useCustomElytra	(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Z)Z	CLASS	class gone
 call	net/fabricmc/fabric/api/entity/event/v1/FabricElytraItem	doVanillaElytraTick	(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/entity/event/v1/FabricElytraItem			CLASS	class gone
@@ -102,6 +125,7 @@ override+super	net/fabricmc/fabric/api/entity/event/v1/FabricElytraItem	doVanill
 call	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion	onConversion	(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V	METHOD	method onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Lnet/minecraft/class_10179;)V public abstract
 lambda	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion	onConversion	(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V	LAMBDA	method onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Lnet/minecraft/class_10179;)V public abstract
 implement-interface	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion	onConversion	(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V	METHOD	method onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Lnet/minecraft/class_10179;)V public abstract
 call	net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents$Join	onJoin	(Lnet/minecraft/class_3222;)V	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents$Join			CLASS	class gone
 call	net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents$Leave	onLeave	(Lnet/minecraft/class_3222;)V	CLASS	class gone
@@ -117,14 +141,17 @@ get-static	net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents	CHUNK_LE
 call	net/fabricmc/fabric/api/event/player/UseItemCallback	interact	(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;	METHOD	method interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; public abstract
 lambda	net/fabricmc/fabric/api/event/player/UseItemCallback	interact	(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;	LAMBDA	method interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; public abstract
 implement-interface	net/fabricmc/fabric/api/event/player/UseItemCallback			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/event/player/UseItemCallback	interact	(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;	METHOD	method interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269; public abstract
 call	net/fabricmc/fabric/api/event/registry/FabricRegistry	addAlias	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/event/registry/FabricRegistry			CLASS	class gone
 override+super	net/fabricmc/fabric/api/event/registry/FabricRegistry	addAlias	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V	CLASS	class gone
 call-static	net/fabricmc/fabric/api/event/registry/RegistryEntryAddedCallback	allEntries	(Lnet/minecraft/class_2378;Ljava/util/function/Consumer;)V	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/item/v1/FabricItem	getCreatorNamespace	(Lnet/minecraft/class_1799;)Ljava/lang/String;	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/item/v1/FabricItem	getCreatorNamespace	(Lnet/minecraft/class_1799;)Ljava/lang/String;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/item/v1/FabricItem	getCreatorNamespace	(Lnet/minecraft/class_1799;)Ljava/lang/String;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/item/v1/FabricItemStack	getCreatorNamespace	()Ljava/lang/String;	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/item/v1/FabricItemStack	getCreatorNamespace	()Ljava/lang/String;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/item/v1/FabricItemStack	getCreatorNamespace	()Ljava/lang/String;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/item/v1/FabricTooltipType	shouldDisplayAllInformation	()Z	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/item/v1/FabricTooltipType			CLASS	class gone
 override+super	net/fabricmc/fabric/api/item/v1/FabricTooltipType	shouldDisplayAllInformation	()Z	CLASS	class gone
@@ -228,16 +255,22 @@ implement-interface	net/fabricmc/fabric/api/object/builder/v1/block/entity/Fabri
 override+super	net/fabricmc/fabric/api/object/builder/v1/block/entity/FabricBlockEntityType$Builder	build	()Lnet/minecraft/class_2591;	CLASS	class gone
 call	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder	build	()Lnet/minecraft/class_1299;	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder	build	()Lnet/minecraft/class_1299;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder	build	()Lnet/minecraft/class_1299;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living	build	()Lnet/minecraft/class_1299;	METHOD	method build(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1299; public
 override+super	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living	build	()Lnet/minecraft/class_1299;	METHOD	method build(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1299; public
+call-inherited	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living	build	()Lnet/minecraft/class_1299;	METHOD	method build(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1299; public
 call	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob	build	()Lnet/minecraft/class_1299;	METHOD	method build(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1299; public
 override+super	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob	build	()Lnet/minecraft/class_1299;	METHOD	method build(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1299; public
+call-inherited	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob	build	()Lnet/minecraft/class_1299;	METHOD	method build(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1299; public
 call	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder	build	()Lnet/minecraft/class_1299;	METHOD	method build(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1299; public
 override+super	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder	build	()Lnet/minecraft/class_1299;	METHOD	method build(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1299; public
+call-inherited	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder	build	()Lnet/minecraft/class_1299;	METHOD	method build(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1299; public
 call	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient	getMatchingStacks	()Ljava/util/List;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer	getCodec	(Z)Lcom/mojang/serialization/MapCodec;	METHOD	method getCodec()Lcom/mojang/serialization/MapCodec; public abstract
 implement-interface	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer	getCodec	(Z)Lcom/mojang/serialization/MapCodec;	METHOD	method getCodec()Lcom/mojang/serialization/MapCodec; public abstract
 get-static	net/fabricmc/fabric/api/registry/FuelRegistry	INSTANCE	Lnet/fabricmc/fabric/api/registry/FuelRegistry;	CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/registry/FuelRegistry			CLASS	class gone
 implement-interface	net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder			ABSTRACT	class public abstract interface extends java/lang/Object
@@ -250,6 +283,8 @@ implement-interface	net/fabricmc/fabric/api/renderer/v1/render/RenderContext$Bak
 call	net/fabricmc/fabric/api/renderer/v1/render/RenderContext	bakedModelConsumer	()Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$BakedModelConsumer;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/render/RenderContext	fallbackConsumer	()Ljava/util/function/Consumer;	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/renderer/v1/render/RenderContext	fallbackConsumer	()Ljava/util/function/Consumer;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/render/RenderContext	bakedModelConsumer	()Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$BakedModelConsumer;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/renderer/v1/render/RenderContext	fallbackConsumer	()Ljava/util/function/Consumer;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/resource/IdentifiableResourceReloadListener			ABSTRACT	class public abstract interface extends java/lang/Object
 implement-inherited	net/minecraft/class_3302	method_25931	(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	ORPHAN	method method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public abstract
 get-static	net/fabricmc/fabric/api/resource/ResourceReloadListenerKeys	TAGS	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
@@ -258,8 +293,12 @@ call	net/fabricmc/fabric/api/resource/SimpleResourceReloadListener	load	(Lnet/mi
 call	net/fabricmc/fabric/api/resource/SimpleResourceReloadListener	apply	(Ljava/lang/Object;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD	method apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public abstract
 implement-interface	net/fabricmc/fabric/api/resource/SimpleResourceReloadListener			ABSTRACT	class public abstract interface extends java/lang/Object
 override+super	net/fabricmc/fabric/api/resource/SimpleResourceReloadListener	method_25931	(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD,ORPHAN	method method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public
+call-inherited	net/fabricmc/fabric/api/resource/SimpleResourceReloadListener	method_25931	(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD	method method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public
+call-inherited	net/fabricmc/fabric/api/resource/SimpleResourceReloadListener	load	(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD	method load(Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public abstract
+call-inherited	net/fabricmc/fabric/api/resource/SimpleResourceReloadListener	apply	(Ljava/lang/Object;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD	method apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public abstract
 call	net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public abstract
 implement-interface	net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition	test	(Lnet/minecraft/class_7225$class_7874;)Z	METHOD	method test(Lnet/minecraft/class_6903$class_7863;)Z public abstract
 get-static	net/fabricmc/fabric/api/tag/convention/v2/ConventionalBiomeTags	IS_HOT_END	Lnet/minecraft/class_6862;	FIELD	field not declared on the owner
 get-static	net/fabricmc/fabric/api/tag/convention/v2/ConventionalBiomeTags	IS_TEMPERATE_NETHER	Lnet/minecraft/class_6862;	FIELD	field not declared on the owner
 get-static	net/fabricmc/fabric/api/tag/convention/v2/ConventionalBiomeTags	IS_TEMPERATE_END	Lnet/minecraft/class_6862;	FIELD	field not declared on the owner
