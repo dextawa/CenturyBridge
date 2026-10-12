@@ -3,7 +3,8 @@
   "net/minecraft/class_3193$class_3724": "top/dext/centurybridge/step/v1_20_5/facade/class_3193$class_3724",
   "net/minecraft/class_1310": "top/dext/centurybridge/step/v1_20_5/facade/class_1310",
   "net/minecraft/class_20$class_21": "top/dext/centurybridge/step/v1_20_5/facade/class_20$class_21",
-  "net/minecraft/class_8806": "top/dext/centurybridge/step/v1_20_5/facade/class_8806"
+  "net/minecraft/class_8806": "top/dext/centurybridge/step/v1_20_5/facade/class_8806",
+  "net/minecraft/class_1317$class_1319": "top/dext/centurybridge/step/v1_20_5/facade/class_1317$class_1319"
  },
  "fieldGetters": {
   "net/minecraft/class_3193.field_16426:Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
@@ -164,6 +165,14 @@
     "keep:6"
    ],
    "basis": "EntityType.create lost its tag in 1.20.5; 1.20.4 only handed it to the new mob's finalizeSpawn, which this create pairs it with"
+  },
+  "net/minecraft/class_1317.method_6159(Lnet/minecraft/class_1299;)Lnet/minecraft/class_1317$class_1319;": {
+   "desc": "(Lnet/minecraft/class_1299;)Lnet/minecraft/class_9168;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/facade/class_1317$class_1319#of(Lnet/minecraft/class_9168;)Lnet/minecraft/class_1317$class_1319;",
+   "basis": "SpawnPlacements.getPlacementType answers 1.20.5's SpawnPlacementType; the 1.20.4 enum constant of the same name (facade)"
   }
  },
  "superCtorReshapes": {
