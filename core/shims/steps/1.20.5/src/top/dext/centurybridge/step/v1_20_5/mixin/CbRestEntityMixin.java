@@ -33,6 +33,14 @@ public abstract class CbRestEntityMixin implements CbRestEntityApi {
     public abstract net.minecraft.class_4050 method_18376();
 
     @Shadow
+    protected abstract void method_5693(net.minecraft.class_2945.class_9222 builder);
+
+    @Override
+    public void cbRest$defineSynchedData(net.minecraft.class_2945.class_9222 builder) {
+        this.method_5693(builder);
+    }
+
+    @Shadow
     public abstract float method_36454();
 
     @Shadow

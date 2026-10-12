@@ -11,6 +11,11 @@ public final class CbRestDefaults {
         return false;
     }
 
+    /** true: what a 1.20.4 call meant where 1.20.5 added a boolean choice 1.20.4 always made the other way */
+    public static boolean yes() {
+        return true;
+    }
+
     /**
      * GameType.SURVIVAL: 1.20.4 GameTestHelper.makeMockPlayer() made a player that is neither creative
      * nor spectator (its anonymous Player answered false to both); 1.20.5 builds that player for the

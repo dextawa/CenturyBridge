@@ -86,6 +86,15 @@ public final class CbRestValues {
         return net.minecraft.class_3417.field_49044.comp_349();
     }
 
+    /**
+     * the count a LoggerChunkProgressListener's 1.20.5 constructor takes for 1.20.4's spawn radius: the
+     * chunks of the (2r+1)-wide square, what 1.20.4's constructor computed from the radius
+     */
+    public static int chunkCount(int radius) {
+        int diameter = radius * 2 + 1;
+        return diameter * diameter;
+    }
+
     private CbRestValues() {
     }
 }

@@ -321,6 +321,30 @@
     "keep:1"
    ],
    "basis": "WalkNodeEvaluator.getBlockPathTypeStatic takes a context: the getter's, with no mob (1.20.4's static query had none)"
+  },
+  "net/minecraft/class_1321.method_6173(Z)V": {
+   "desc": "(ZZ)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#yes()Z"
+   ],
+   "basis": "1.20.4's setTame(tame) always ran the taming hook after the flag; 1.20.5's setTame(tame, true) does (applyTamingSideEffects, and reassessTameGoals: CbRestTamableAnimalMixin)"
+  },
+  "net/minecraft/class_329.method_1765(Lnet/minecraft/class_332;)V": {
+   "desc": "(Lnet/minecraft/class_332;F)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
+   ],
+   "basis": "renderEffects gained the partial tick (its body does not read it); the frame's, what Gui.render hands its layers"
+  },
+  "net/minecraft/class_329.method_1766(Lnet/minecraft/class_332;)V": {
+   "desc": "(Lnet/minecraft/class_332;F)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
+   ],
+   "basis": "renderDemoOverlay gained the partial tick (its body does not read it); the frame's, what Gui.render hands its layers"
   }
  },
  "superCtorReshapes": {
@@ -408,6 +432,21 @@
     "keep:1"
    ],
    "basis": "PathPackResources takes a location: the 1.20.4 id, builtin as its source"
+  },
+  "net/minecraft/class_3951.<init>(I)V": {
+   "desc": "(I)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestValues#chunkCount(I)I"
+   ],
+   "basis": "LoggerChunkProgressListener's 1.20.5 constructor takes the chunk count, 1.20.4's the spawn radius it computed the count from (a NEW site takes create(radius))"
+  },
+  "net/minecraft/class_329.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_310;)V",
+   "ops": [
+    "keep",
+    "drop"
+   ],
+   "basis": "1.20.4's Gui kept the item renderer in a private field it never read; 1.20.5's takes none"
   }
  },
  "convertHooks": [
@@ -531,7 +570,9 @@
   "net/minecraft/class_14.method_29303(Lnet/minecraft/class_1308;III)Lnet/minecraft/class_7;",
   "net/minecraft/class_14.method_29579(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z",
   "net/minecraft/class_8.method_43568(Lnet/minecraft/class_9;)Lnet/minecraft/class_4459;",
-  "net/minecraft/class_12.method_38488(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z"
+  "net/minecraft/class_12.method_38488(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z",
+  "net/minecraft/class_1321.method_6175()V",
+  "net/minecraft/class_1665.method_55052()V"
  ],
  "overrideHooks": [
   {
@@ -686,6 +727,39 @@
    "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyCached",
    "onlyUnder": "net/minecraft/class_14",
    "basis": "1.20.5 asks getCachedPathType(x, y, z) where 1.20.4 asked getCachedBlockType(mob, x, y, z) (and getBlockPathType(mob, pos), which called it): a mod's override answers, with the evaluator's mob"
+  },
+  {
+   "old": "method_6173(Z)V",
+   "new": "method_6173(ZZ)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_1321",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.20.5 calls setTame(tame, sideEffects): the mod's setTame(tame) override gets the flag, its super call vanilla's side-effects choice (or true, entered directly: 1.20.4's setTame always reassessed)"
+  },
+  {
+   "old": "method_1765(Lnet/minecraft/class_332;)V",
+   "new": "method_1765(Lnet/minecraft/class_332;F)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_329",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.20.5's layers call renderEffects(graphics, partialTick) (a method reference, virtual once the AW opens it): the old override gets the graphics, its super call the partial tick vanilla passed"
+  },
+  {
+   "old": "method_1766(Lnet/minecraft/class_332;)V",
+   "new": "method_1766(Lnet/minecraft/class_332;F)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_329",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.20.5's layers call renderDemoOverlay(graphics, partialTick) (a method reference, virtual once the AW opens it): the old override gets the graphics, its super call the partial tick vanilla passed"
   }
  ],
  "methodRenames": {
@@ -754,7 +828,8 @@
   "net/minecraft/class_5709$class_5710.method_32934(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5709;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
   "net/minecraft/class_5709$class_5710.method_32935(Lnet/minecraft/class_2540;Lnet/minecraft/class_5709;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
   "net/minecraft/class_5712.method_40156(Lnet/minecraft/class_6862;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
-  "net/minecraft/class_5712.method_40157()Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents"
+  "net/minecraft/class_5712.method_40157()Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_1297.method_5693()V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntityData"
  },
  "facadeGaps": {
   "net/minecraft/class_20$class_21.<init>(Ljava/lang/String;IZZ)V": "1.20.1's private enum constructor (before 1.20.2 gave the constants a serialized name): only the enum's own static initializer calls it -- from any other class it is an IllegalAccessError, and reflection refuses to construct an enum",
@@ -790,6 +865,18 @@
   },
   "method_45210()Lnet/minecraft/class_3268;": {
    "0": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#vanillaLocation()Lnet/minecraft/class_9224;"
+  },
+  "method_5693()V": {
+   "0": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntityData#redefining(Lnet/minecraft/class_1297;)Lnet/minecraft/class_2945$class_9222;"
+  },
+  "method_6173(Z)V": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#yes()Z"
+  },
+  "method_1765(Lnet/minecraft/class_332;)V": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
+  },
+  "method_1766(Lnet/minecraft/class_332;)V": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
   }
  },
  "superRedirects": {
@@ -807,6 +894,21 @@
    "under": "net/minecraft/class_3262",
    "method": "method_56926()Lnet/minecraft/class_9224;",
    "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks.location(Lnet/minecraft/class_3262;)Lnet/minecraft/class_9224;"
+  },
+  {
+   "under": "net/minecraft/class_1429",
+   "method": "method_6481(Lnet/minecraft/class_1799;)Z",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs.isFood(Lnet/minecraft/class_1429;Lnet/minecraft/class_1799;)Z"
+  },
+  {
+   "under": "net/minecraft/class_1665",
+   "method": "method_57314()Lnet/minecraft/class_1799;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs.defaultPickupItem(Lnet/minecraft/class_1665;)Lnet/minecraft/class_1799;"
+  },
+  {
+   "under": "net/minecraft/class_7265",
+   "method": "method_5829()Lnet/minecraft/class_238;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs.boundingBox(Lnet/minecraft/class_7265;)Lnet/minecraft/class_238;"
   }
  ],
  "instanceFieldSetters": {
@@ -949,6 +1051,14 @@
      "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents.entityCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyEntityWrite;)Lnet/minecraft/class_9139;"
     }
    ]
+  },
+  {
+   "under": "net/minecraft/class_1665",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMobs$LegacyDeflect",
+   "requires": [
+    "method_55052()V"
+   ],
+   "synth": []
   }
  ],
  "ctorRedirects": {

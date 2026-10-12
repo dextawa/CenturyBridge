@@ -1014,9 +1014,16 @@ extendable method net/minecraft/class_1493 method_6708 (Lnet/minecraft/class_176
 accessible method net/minecraft/class_329 method_1749 (Lnet/minecraft/class_332;)V
 accessible method net/minecraft/class_329 method_1752 (Lnet/minecraft/class_1316;Lnet/minecraft/class_332;I)V
 accessible method net/minecraft/class_329 method_1754 (Lnet/minecraft/class_332;I)V
+extendable method net/minecraft/class_329 method_1749 (Lnet/minecraft/class_332;)V
+extendable method net/minecraft/class_329 method_1752 (Lnet/minecraft/class_1316;Lnet/minecraft/class_332;I)V
+extendable method net/minecraft/class_329 method_1754 (Lnet/minecraft/class_332;I)V
+extendable method net/minecraft/class_329 method_1765 (Lnet/minecraft/class_332;F)V
+accessible method net/minecraft/class_329 method_1766 (Lnet/minecraft/class_332;F)V
+extendable method net/minecraft/class_329 method_1766 (Lnet/minecraft/class_332;F)V
 accessible method net/minecraft/class_4521 <init> ()V
 accessible method net/minecraft/class_5350 <init> (Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Lnet/minecraft/class_2170$class_5364;I)V
 accessible field net/minecraft/class_442 field_32271 Lnet/minecraft/class_2561;
 accessible method net/minecraft/class_6864 method_40106 (Lnet/minecraft/class_5321;Lnet/minecraft/class_2378;Lnet/minecraft/class_6864$class_5748;Lnet/minecraft/class_6864$class_6865;)V
 accessible method net/minecraft/class_7196 method_55510 (Lnet/minecraft/class_1066;Lnet/minecraft/class_32$class_5143;)Ljava/util/concurrent/CompletableFuture;
 accessible field net/minecraft/class_8956 field_47579 Lnet/minecraft/class_8956$class_9036;
+accessible method net/minecraft/class_3951 <init> (I)V
