@@ -30,7 +30,8 @@
   "net/minecraft/class_1918.method_8305(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
   "net/minecraft/class_1918.method_8297(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
   "net/minecraft/class_1932.method_75(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
-  "net/minecraft/class_2791.method_20598(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt"
+  "net/minecraft/class_2791.method_20598(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_2615.method_11262()Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper"
  },
  "overrideHooks": [
   {
@@ -285,13 +286,78 @@
    "onlyUnder": "net/minecraft/class_1936",
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.gameEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5712;",
    "basis": "the old override gets the holder's game event; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_11262()Lnet/minecraft/class_265;",
+   "new": "method_11262()Lnet/minecraft/class_238;",
+   "onlyUnder": "net/minecraft/class_2615",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper.getSuckAabb(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper$Legacy;)Lnet/minecraft/class_238;",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper.superSuckShape(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper$Super;)Lnet/minecraft/class_265;",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper$Super",
+   "superAccessors": [
+    "method_11262()Lnet/minecraft/class_238;"
+   ],
+   "basis": "the shape's bounds as the one box 1.20.5 asks for; vanilla's users take the shape (CbBlockHopperMixin)"
+  },
+  {
+   "old": "method_54869()Lnet/minecraft/class_2960;",
+   "new": "method_54869()Lnet/minecraft/class_5321;",
+   "onlyUnder": "net/minecraft/class_2621",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot.key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+   "basis": "the override's location as the loot table key; its super call is reshaped back"
+  },
+  {
+   "old": "method_11285(Lnet/minecraft/class_2960;)V",
+   "new": "method_11285(Lnet/minecraft/class_5321;)V",
+   "onlyUnder": "net/minecraft/class_2621",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot.location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "the old override gets the key's location; its super call is reshaped back"
+  },
+  {
+   "old": "method_54869()Lnet/minecraft/class_2960;",
+   "new": "method_54869()Lnet/minecraft/class_5321;",
+   "onlyUnder": "net/minecraft/class_8172",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot.key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+   "basis": "the override's location as the loot table key; its super call is reshaped back"
+  },
+  {
+   "old": "method_11285(Lnet/minecraft/class_2960;)V",
+   "new": "method_11285(Lnet/minecraft/class_5321;)V",
+   "onlyUnder": "net/minecraft/class_8172",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot.location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "the old override gets the key's location; its super call is reshaped back"
+  },
+  {
+   "old": "method_49216(Lnet/minecraft/class_2960;J)V",
+   "new": "method_49216(Lnet/minecraft/class_5321;J)V",
+   "onlyUnder": "net/minecraft/class_8174",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot.location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "the old override gets the key's location; its super call is reshaped back"
+  },
+  {
+   "old": "create(Ljava/lang/Object;Lcom/google/common/collect/ImmutableMap;Lcom/mojang/serialization/MapCodec;)Ljava/lang/Object;",
+   "new": "create(Ljava/lang/Object;Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;Lcom/mojang/serialization/MapCodec;)Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_2689$class_2691",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates.fromState(Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;)Lcom/google/common/collect/ImmutableMap;",
+   "basis": "a mod Factory gets the values as 1.20.4's ImmutableMap"
+  },
+  {
+   "old": "method_11656()Lcom/google/common/collect/ImmutableMap;",
+   "new": "method_11656()Ljava/util/Map;",
+   "onlyUnder": "net/minecraft/class_2688",
+   "basis": "an ImmutableMap is the Map 1.20.5 asks for; the override's super call is reshaped back"
   }
  ],
  "fieldGetters": {
   "net/minecraft/class_1973.field_24715:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
   "net/minecraft/class_1992.field_24717:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
   "net/minecraft/class_4766.field_24719:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
-  "net/minecraft/class_2169.field_24730:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs"
+  "net/minecraft/class_2169.field_24730:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
+  "net/minecraft/class_2615.field_12025:Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper",
+  "net/minecraft/class_2615.field_12026:Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper",
+  "net/minecraft/class_2615.field_12027:Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper",
+  "net/minecraft/class_2580.field_11801:[[Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockMisc"
  },
  "callReshapes": {
   "net/minecraft/class_7509.method_44207(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec;": {
@@ -398,6 +464,77 @@
     "keep"
    ],
    "basis": "the game event as the holder 1.20.5 takes (CbHolders.gameEvent); the override hook is GameEventListener's (s4rest)"
+  },
+  "net/minecraft/class_5545.method_31632(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2680;": {
+   "desc": "(Lnet/minecraft/class_5544;)Lnet/minecraft/class_2680;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockMisc#candle(Lnet/minecraft/class_2248;)Lnet/minecraft/class_5544;"
+   ],
+   "basis": "a candle passes as one; any other block has no cake in BY_CANDLE in either release (CbBlockMisc.candle)"
+  },
+  "net/minecraft/class_4970.method_26162()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_5321;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot#location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "the block's loot table key's location (CbBlockLoot)"
+  },
+  "net/minecraft/class_2621.method_54869()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_5321;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot#location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "the loot table key's location (CbBlockLoot)"
+  },
+  "net/minecraft/class_2621.method_11285(Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "the loot table location as its key (CbBlockLoot)"
+  },
+  "net/minecraft/class_8172.method_54869()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_5321;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot#location(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "the loot table key's location (CbBlockLoot)"
+  },
+  "net/minecraft/class_8172.method_11285(Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "the loot table location as its key (CbBlockLoot)"
+  },
+  "net/minecraft/class_8174.method_49216(Lnet/minecraft/class_2960;J)V": {
+   "desc": "(Lnet/minecraft/class_5321;J)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep"
+   ],
+   "basis": "the loot table location as its key (CbBlockLoot)"
+  },
+  "net/minecraft/class_2689$class_2691.create(Ljava/lang/Object;Lcom/google/common/collect/ImmutableMap;Lcom/mojang/serialization/MapCodec;)Ljava/lang/Object;": {
+   "desc": "(Ljava/lang/Object;Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;Lcom/mojang/serialization/MapCodec;)Ljava/lang/Object;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates#values(Lcom/google/common/collect/ImmutableMap;)Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;",
+    "keep"
+   ],
+   "basis": "the same values in the map type 1.20.5 builds states from (CbBlockStates)"
+  },
+  "net/minecraft/class_2688.method_11656()Lcom/google/common/collect/ImmutableMap;": {
+   "desc": "()Ljava/util/Map;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates#immutable(Ljava/util/Map;)Lcom/google/common/collect/ImmutableMap;",
+   "basis": "the state's values as 1.20.4's ImmutableMap (CbBlockStates)"
+  },
+  "net/minecraft/class_8886.method_54475(Lnet/minecraft/class_1937;Lnet/minecraft/class_8566;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_8566;)Ljava/util/Optional;",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockGeneric#recipeValues(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "generic drift: the holder's recipe where 1.20.4 answered the recipe (CbBlockGeneric)"
   }
  },
  "staticRedirects": {
@@ -440,6 +577,69 @@
     "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;"
    ],
    "basis": "the explosion's sound as the holder 1.20.5 takes (CbHolders.soundEvent)"
+  },
+  "net/minecraft/class_2688.<init>(Ljava/lang/Object;Lcom/google/common/collect/ImmutableMap;Lcom/mojang/serialization/MapCodec;)V": {
+   "desc": "(Ljava/lang/Object;Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates#values(Lcom/google/common/collect/ImmutableMap;)Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;",
+    "keep"
+   ],
+   "basis": "the same values in the map type 1.20.5 builds states from (CbBlockStates)"
+  },
+  "net/minecraft/class_4970$class_4971.<init>(Lnet/minecraft/class_2248;Lcom/google/common/collect/ImmutableMap;Lcom/mojang/serialization/MapCodec;)V": {
+   "desc": "(Lnet/minecraft/class_2248;Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates#values(Lcom/google/common/collect/ImmutableMap;)Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;",
+    "keep"
+   ],
+   "basis": "the same values in the map type 1.20.5 builds states from (CbBlockStates)"
+  },
+  "net/minecraft/class_2680.<init>(Lnet/minecraft/class_2248;Lcom/google/common/collect/ImmutableMap;Lcom/mojang/serialization/MapCodec;)V": {
+   "desc": "(Lnet/minecraft/class_2248;Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates#values(Lcom/google/common/collect/ImmutableMap;)Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;",
+    "keep"
+   ],
+   "basis": "the same values in the map type 1.20.5 builds states from (CbBlockStates)"
+  },
+  "net/minecraft/class_3610.<init>(Lnet/minecraft/class_3611;Lcom/google/common/collect/ImmutableMap;Lcom/mojang/serialization/MapCodec;)V": {
+   "desc": "(Lnet/minecraft/class_3611;Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;Lcom/mojang/serialization/MapCodec;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates#values(Lcom/google/common/collect/ImmutableMap;)Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;",
+    "keep"
+   ],
+   "basis": "the same values in the map type 1.20.5 builds states from (CbBlockStates)"
   }
- }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
+  "net/minecraft/class_2621.field_12037:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
+  "net/minecraft/class_8172.field_47156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
+  "net/minecraft/class_2621.field_12037:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
+  "net/minecraft/class_8172.field_47156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot"
+ },
+ "methodRenames": {
+  "net/minecraft/class_2315.method_10010(Lnet/minecraft/class_2342;)Lnet/minecraft/class_2374;": "method_58682"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_2689$class_2691.create(Ljava/lang/Object;Lcom/google/common/collect/ImmutableMap;Lcom/mojang/serialization/MapCodec;)Ljava/lang/Object;": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates$LegacyFactory",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates#factory(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockStates$LegacyFactory;)Lnet/minecraft/class_2689$class_2691;"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_2615",
+   "method": "method_57081()Z",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper.isGridAligned(Lnet/minecraft/class_2615;)Z",
+   "basis": "1.20.4's suckInItems made no full-block test: a 1.20.4 hopper is not grid-aligned (CbBlockHopper)"
+  }
+ ]
 }

@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v1_20_5.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 import top.dext.centurybridge.step.v1_20_5.rt.CbBlockAccess;
 
@@ -22,4 +23,12 @@ public interface CbBlockBehaviourInvoker extends CbBlockAccess {
     @Override
     @Invoker("method_9516")
     boolean cb$isPathfindable(net.minecraft.class_2680 state, net.minecraft.class_10 type);
+
+    @Override
+    @Accessor("field_23156")
+    net.minecraft.class_5321<net.minecraft.class_52> cb$drops();
+
+    @Override
+    @Accessor("field_23156")
+    void cb$setDrops(net.minecraft.class_5321<net.minecraft.class_52> drops);
 }

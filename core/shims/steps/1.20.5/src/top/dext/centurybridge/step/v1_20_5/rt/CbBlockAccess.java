@@ -19,4 +19,9 @@ public interface CbBlockAccess {
 
     /** BlockBehaviour.isPathfindable(state, type) */
     boolean cb$isPathfindable(net.minecraft.class_2680 state, net.minecraft.class_10 type);
+
+    /** BlockBehaviour.drops (protected): the block's loot table, set lazily by getLootTable() */
+    net.minecraft.class_5321<net.minecraft.class_52> cb$drops();
+
+    void cb$setDrops(net.minecraft.class_5321<net.minecraft.class_52> drops);
 }
