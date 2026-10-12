@@ -25,56 +25,6 @@
    ],
    "basis": "mechanical: same values"
   },
-  "net/minecraft/class_4926$class_4928.method_25798(Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/util/List;)Lnet/minecraft/class_4926$class_4928;": {
-   "desc": "(Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Object;)Lnet/minecraft/class_4926$class_4928;",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:2 Ljava/lang/Object;"
-   ],
-   "basis": "mechanical: same values"
-  },
-  "net/minecraft/class_4926$class_4931.method_25814(Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/util/List;)Lnet/minecraft/class_4926$class_4931;": {
-   "desc": "(Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Object;)Lnet/minecraft/class_4926$class_4931;",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:2",
-    "keep:3",
-    "keep:4",
-    "keep:5 Ljava/lang/Object;"
-   ],
-   "basis": "mechanical: same values"
-  },
-  "net/minecraft/class_4926$class_4929.method_25807(Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/util/List;)Lnet/minecraft/class_4926$class_4929;": {
-   "desc": "(Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Object;)Lnet/minecraft/class_4926$class_4929;",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:2",
-    "keep:3 Ljava/lang/Object;"
-   ],
-   "basis": "mechanical: same values"
-  },
-  "net/minecraft/class_4926$class_4930.method_25812(Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/util/List;)Lnet/minecraft/class_4926$class_4930;": {
-   "desc": "(Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Comparable;Ljava/lang/Object;)Lnet/minecraft/class_4926$class_4930;",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:2",
-    "keep:3",
-    "keep:4 Ljava/lang/Object;"
-   ],
-   "basis": "mechanical: same values"
-  },
-  "net/minecraft/class_4926$class_4927.method_25794(Ljava/lang/Comparable;Ljava/util/List;)Lnet/minecraft/class_4926$class_4927;": {
-   "desc": "(Ljava/lang/Comparable;Ljava/lang/Object;)Lnet/minecraft/class_4926$class_4927;",
-   "ops": [
-    "keep:0",
-    "keep:1 Ljava/lang/Object;"
-   ],
-   "basis": "mechanical: same values"
-  },
   "net/minecraft/class_884.method_62399()Lnet/minecraft/class_10042;": {
    "desc": "()Lnet/minecraft/class_10750;",
    "ops": [],
@@ -1171,19 +1121,6 @@
    "new": "method_36014(Lnet/minecraft/class_2338;Ljava/lang/Class;)Lnet/minecraft/class_2586;",
    "args": [
     0
-   ],
-   "onlyUnder": "net/minecraft/class_4516",
-   "frames": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Ljava/lang/Class; not passed"
-  },
-  {
-   "old": "method_60651(Lnet/minecraft/class_2338;Ljava/util/function/Predicate;Ljava/util/function/Supplier;)V",
-   "new": "method_60651(Lnet/minecraft/class_2338;Ljava/lang/Class;Ljava/util/function/Predicate;Ljava/util/function/Supplier;)V",
-   "args": [
-    0,
-    2,
-    3
    ],
    "onlyUnder": "net/minecraft/class_4516",
    "frames": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
