@@ -35,6 +35,18 @@
     "StatusEffectBridge"
   ],
   "client": [
+    "CbGuiAbstractWidgetBridge",
+    "CbGuiEditBoxBridge",
+    "CbGuiGraphicsBridge",
+    "CbGuiHeaderFooterBridge",
+    "CbGuiImageWidgetBridge",
+    "CbGuiImageWidgetTextureBridge",
+    "CbGuiMultiLineEditBoxBridge",
+    "CbGuiSelectionListBridge",
+    "CbGuiStateSwitchingButtonBridge",
+    "CbGuiTabBridge",
+    "CbGuiTabButtonBridge",
+    "CbGuiTabManagerBridge",
     "CbGuiTextureManagerBridge",
     "EditBoxBridge",
     "GameOptionsBridge",

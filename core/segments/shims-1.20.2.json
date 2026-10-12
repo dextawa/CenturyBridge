@@ -78,11 +78,7 @@
   "net/minecraft/class_5712.method_32938()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_2724.method_11779()Lnet/minecraft/class_5321;": "top/dext/centurybridge/rt/v1_20_2/Statics",
   "net/minecraft/class_1867$class_1868.method_8142(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_1867;": "top/dext/centurybridge/rt/v1_20_2/Statics",
-  "net/minecraft/class_505.method_2565(Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_332.method_48586(Lnet/minecraft/class_2960;IIIIIIIII)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_332.method_49697(Lnet/minecraft/class_2960;IIIIIIIIII)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_332.method_48587(Lnet/minecraft/class_2960;IIIIIIIIIIII)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics",
-  "net/minecraft/class_332.method_48585(Lnet/minecraft/class_2960;IIIIIIII)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics"
+  "net/minecraft/class_505.method_2565(Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics"
  },
  "fieldRedirects": {
   "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/Statics",
@@ -190,7 +186,6 @@
   "net/minecraft/class_1071.method_4652": "PlayerSkinProvider.loadSkin(profile, callback, secure) replaced by fetchSkinTextures futures; the per-texture callback type is gone",
   "net/minecraft/class_1071.method_4656": "PlayerSkinProvider.loadSkin(texture, type) removed; textures are registered internally while loading SkinTextures",
   "net/minecraft/class_3222.method_14246": "ServerPlayerEntity.sendUnloadChunkPacket removed (chunk tracking moved to ChunkTrackingView in 1.20.2)",
-  "net/minecraft/class_344.<init>": "bridge attempted, no faithful equivalent: the new class_8666 sprite-based constructor cannot represent the old texture atlas UV coordinates and dimensions",
   "net/minecraft/class_2724.<init>": "bridge attempted, no faithful equivalent: the old constructor arguments cannot be converted to the required class_8589 payload using the provided API surface",
   "net/minecraft/class_3258.<init>": "bridge attempted, no faithful equivalent: the surviving constructor requires the inaccessible private class_3258.class_8616 wrapper, and no public factory accepts the old File argument",
   "net/minecraft/class_3244.<init>": "bridge attempted, no faithful equivalent: the surviving constructor requires a class_8792 argument that cannot be derived faithfully from the old constructor arguments",
@@ -215,7 +210,6 @@
   "net/minecraft/class_3975.<init>": "recipe ctor dropped its leading Identifier in 1.20.2 (id moved to RecipeEntry); a super() site needs a leading-arg drop, which superCtorAdapts (tail converter) cannot express -- pending engine superCtorDropArgs",
   "net/minecraft/class_1874.<init>": "recipe ctor dropped its leading Identifier in 1.20.2 (id moved to RecipeEntry); a super() site needs a leading-arg drop, which superCtorAdapts (tail converter) cannot express -- pending engine superCtorDropArgs",
   "net/minecraft/class_8060.<init>": "recipe ctor dropped its leading Identifier in 1.20.2 (id moved to RecipeEntry); a super() site needs a leading-arg drop, which superCtorAdapts (tail converter) cannot express -- pending engine superCtorDropArgs",
-  "net/minecraft/class_8208.<init>": "ImageWidget ctors became package-private (int,int,int,int) with Sprite/Texture subclasses in 1.20.2; a mod subclass cannot super() into them",
   "net/minecraft/class_489.<init>": "AbstractFurnaceScreen ctor gained two sprite Identifiers (lit/burn progress) in 1.20.2; two pushed args exceed what one tail adapter supplies",
   "net/minecraft/class_2505.<init>": "NbtLong ctor is no longer public in 1.20.2 (NbtLong.of)",
   "net/minecraft/class_2030$class_2032.<init>": "EnchantedItemCriterion.Conditions ctor wrapped two non-tail args in Optional; not expressible as a tail adapter",
@@ -225,13 +219,9 @@
   "net/minecraft/class_2135$class_2137.method_49195()Lnet/minecraft/class_2135$class_2137;": "forge model found no faithful equivalent (unreviewed): the new API has only the same zero-argument method returning net.minecraft.class_175, so the old fluent return contract cannot be preserved",
   "net/minecraft/class_2073.field_9644:Ljava/util/Set;": "forge model found no faithful equivalent (unreviewed): field_9644 was instance-specific item predicate state, but this static shim has no receiver from which to read comp_1784",
   "net/minecraft/class_223.field_1298:Lnet/minecraft/class_2073;": "forge model found no faithful equivalent (unreviewed): the old field was instance-specific, but the zero-argument static shim has no receiver from which to obtain the new Optional-backed predicate",
-  "net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;IILnet/minecraft/class_4185$class_4241;)V": "forge model found no faithful equivalent (unreviewed): the new class_8666 sprite-based constructor cannot represent the old texture atlas UV coordinates and dimensions",
-  "net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V": "forge model found no faithful equivalent (unreviewed): the old texture-atlas UV and hover-offset contract cannot be represented by the new class_8666 sprite-based constructor",
   "net/minecraft/class_2724.<init>(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;JLnet/minecraft/class_1934;Lnet/minecraft/class_1934;ZZBLjava/util/Optional;I)V": "forge model found no faithful equivalent (unreviewed): the old constructor arguments cannot be converted to the required class_8589 payload using the provided API surface",
   "net/minecraft/class_3258.<init>(Ljava/lang/String;Ljava/io/File;Z)V": "forge model found no faithful equivalent (unreviewed): the surviving constructor requires the inaccessible private class_3258.class_8616 wrapper, and no public factory accepts the old File argument",
-  "net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;IILnet/minecraft/class_4185$class_4241;Lnet/minecraft/class_2561;)V": "forge model found no faithful equivalent (unreviewed): the new class_8666 sprite API cannot represent the old texture atlas UV coordinates and dimensions",
   "net/minecraft/class_3258.<init>(Ljava/io/File;)V": "forge model found no faithful equivalent (unreviewed): the surviving constructor requires an inaccessible class_3258.class_8616 wrapper, and no equivalent static factory exists",
-  "net/minecraft/class_344.<init>(IIIIIILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V": "forge model found no faithful equivalent (unreviewed): the old texture coordinates and identifier cannot be converted to the required class_8666 without its construction API",
   "net/minecraft/class_3244.<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_2535;Lnet/minecraft/class_3222;)V": "forge model found no faithful equivalent (unreviewed): the surviving constructor requires a class_8792 argument that cannot be derived faithfully from the old constructor arguments",
   "net/minecraft/class_3255.<init>(Ljava/io/File;)V": "forge model found no faithful equivalent (unreviewed): the abstract class has no instantiable factory, and the File argument cannot supply the required alwaysStable constructor value",
   "net/minecraft/class_175.<init>(Lnet/minecraft/class_184;)V": "forge model found no faithful equivalent (unreviewed): the new constructor requires a net.minecraft.class_179 value that the old constructor argument cannot provide",
@@ -312,17 +302,7 @@
  "superRedirects": {
   "net/minecraft/class_437.method_25394(Lnet/minecraft/class_332;IIF)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics#cbRenderWidgets"
  },
- "overrideHooks": [
-  {
-   "old": "method_25401(DDD)Z",
-   "new": "method_25401(DDDD)Z",
-   "args": [
-    0,
-    1,
-    3
-   ]
-  }
- ],
+ "overrideHooks": [],
  "ctorRedirects": {
   "net/minecraft/class_642.<init>(Ljava/lang/String;Ljava/lang/String;Z)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics#cbNewServerInfo",
   "net/minecraft/class_1867.<init>(Lnet/minecraft/class_2960;Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Lnet/minecraft/class_2371;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_1867",
@@ -375,8 +355,6 @@
   "net/minecraft/class_6405$class_6406.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_6405class_6406",
   "net/minecraft/class_8060.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_8060",
   "net/minecraft/class_6409$class_6410.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_6409class_6410",
-  "net/minecraft/class_8208.<init>(IILnet/minecraft/class_2960;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics#cbNewclass_8208",
-  "net/minecraft/class_8208.<init>(IIIILnet/minecraft/class_2960;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics#cbNewclass_8208",
   "net/minecraft/class_5342.<init>(Lnet/minecraft/class_5335;)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_5342",
   "net/minecraft/class_4185.<init>(IIIILnet/minecraft/class_2561;Lnet/minecraft/class_4185$class_4241;)V": "top/dext/centurybridge/rt/v1_20_2/ClientStatics#cbNewclass_4185",
   "net/minecraft/class_5712.<init>(Ljava/lang/String;I)V": "top/dext/centurybridge/rt/v1_20_2/Statics#cbNewclass_5712",

@@ -20,19 +20,6 @@ public final class ClientStatics {
         return new net.minecraft.class_332(mc, mc.method_22940().method_23000());
     }
 
-    /** was net/minecraft/class_8208.<init>(IILnet/minecraft/class_2960;)V */
-    public static net.minecraft.class_8208 cbNewclass_8208(int a0, int a1, net.minecraft.class_2960 a2) {
-        return net.minecraft.class_8208.method_52720(a0, a1, a2);
-    }
-
-    /** was net/minecraft/class_8208.<init>(IIIILnet/minecraft/class_2960;)V */
-    public static net.minecraft.class_8208 cbNewclass_8208(int a0, int a1, int a2, int a3, net.minecraft.class_2960 a4) {
-        net.minecraft.class_8208 widget = net.minecraft.class_8208.method_52720(a2, a3, a4);
-        widget.method_46421(a0);
-        widget.method_46419(a1);
-        return widget;
-    }
-
     /**
      * superRedirects: a 1.20.1 override's super.render(context, mx, my, delta).
      * 1.20.1 Screen.render drew the widget list and nothing else; since 1.20.2
@@ -158,62 +145,6 @@ public final class ClientStatics {
         }
     }
 
-    /** was net/minecraft/class_332.method_48586(Lnet/minecraft/class_2960;IIIIIIIII)V drawNineSlicedTexture(outer) */
-    public static void method_48586(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int outer, int cw, int ch, int u, int v) {
-        method_48587(self, tex, x, y, w, h, outer, outer, outer, outer, cw, ch, u, v);
-    }
-
-    /** was net/minecraft/class_332.method_49697(Lnet/minecraft/class_2960;IIIIIIIIII)V drawNineSlicedTexture(sideW, sideH) */
-    public static void method_49697(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int sw, int sh, int cw, int ch, int u, int v) {
-        method_48587(self, tex, x, y, w, h, sw, sh, sw, sh, cw, ch, u, v);
-    }
-
-    /** was net/minecraft/class_332.method_48587(Lnet/minecraft/class_2960;IIIIIIIIIIII)V drawNineSlicedTexture(left, top, right, bottom) */
-    public static void method_48587(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h,
-                                    int left, int top, int right, int bottom, int cw, int ch, int u, int v) {
-        left = Math.min(left, w / 2);
-        right = Math.min(right, w / 2);
-        top = Math.min(top, h / 2);
-        bottom = Math.min(bottom, h / 2);
-        if (w == cw && h == ch) { self.method_25302(tex, x, y, u, v, w, h); return; }
-        if (h == ch) {
-            self.method_25302(tex, x, y, u, v, left, h);
-            method_48585(self, tex, x + left, y, w - right - left, h, u + left, v, cw - right - left, ch);
-            self.method_25302(tex, x + w - right, y, u + cw - right, v, right, h);
-            return;
-        }
-        if (w == cw) {
-            self.method_25302(tex, x, y, u, v, w, top);
-            method_48585(self, tex, x, y + top, w, h - bottom - top, u, v + top, cw, ch - bottom - top);
-            self.method_25302(tex, x, y + h - bottom, u, v + ch - bottom, w, bottom);
-            return;
-        }
-        self.method_25302(tex, x, y, u, v, left, top);
-        method_48585(self, tex, x + left, y, w - right - left, top, u + left, v, cw - right - left, top);
-        self.method_25302(tex, x + w - right, y, u + cw - right, v, right, top);
-        self.method_25302(tex, x, y + h - bottom, u, v + ch - bottom, left, bottom);
-        method_48585(self, tex, x + left, y + h - bottom, w - right - left, bottom, u + left, v + ch - bottom, cw - right - left, bottom);
-        self.method_25302(tex, x + w - right, y + h - bottom, u + cw - right, v + ch - bottom, right, bottom);
-        method_48585(self, tex, x, y + top, left, h - bottom - top, u, v + top, left, ch - bottom - top);
-        method_48585(self, tex, x + left, y + top, w - right - left, h - bottom - top, u + left, v + top, cw - right - left, ch - bottom - top);
-        method_48585(self, tex, x + w - right, y + top, right, h - bottom - top, u + cw - right, v + top, right, ch - bottom - top);
-    }
-
-    /** was net/minecraft/class_332.method_48585(Lnet/minecraft/class_2960;IIIIIIII)V drawRepeatingTexture */
-    public static void method_48585(net.minecraft.class_332 self, net.minecraft.class_2960 tex, int x, int y, int w, int h, int u, int v, int tw, int th) {
-        int i = x;
-        for (int j : cbDivide(w, tw)) {
-            int k = (tw - j) / 2;
-            int l = y;
-            for (int m : cbDivide(h, th)) {
-                int n = (th - m) / 2;
-                self.method_25302(tex, i, l, u + k, v + n, j, m);
-                l += m;
-            }
-            i += j;
-        }
-    }
-
     /** ButtonWidget(x, y, w, h, text, action) gained a NarrationSupplier; the vanilla default narrates the supplied message */
     public static net.minecraft.class_4185.class_7841 cbDefaultNarration() { return s -> s.get(); }
 
@@ -271,24 +202,6 @@ public final class ClientStatics {
     /** was net/minecraft/class_490.method_48472(Lnet/minecraft/class_332;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/class_1309;)V */
     public static void method_48472(net.minecraft.class_332 a0, int a1, int a2, int a3, org.joml.Quaternionf a4, org.joml.Quaternionf a5, net.minecraft.class_1309 a6) {
         net.minecraft.class_490.method_48472(a0, (float) a1, (float) a2, a3, new org.joml.Vector3f(), a4, a5, a6);
-    }
-
-    // ---- DrawContext nine-slice / repeating textures. 1.20.2 replaced them with sprite-atlas gui
-    // textures (drawGuiTexture + Scaling metadata) that take a sprite id, not a texture path, so the
-    // faithful bridge is the 1.20.1 algorithm on top of the surviving 7-arg drawTexture (method_25302).
-    /** 1.20.1 Divider(total, ceilDiv(total, piece)): even split, remainder spread one pixel at a time. */
-    private static int[] cbDivide(int total, int piece) {
-        if (total <= 0 || piece <= 0) return new int[0];
-        int count = net.minecraft.class_3532.method_38788(total, piece);
-        int q = total / count, mod = total % count, rem = 0;
-        int[] out = new int[count];
-        for (int idx = 0; idx < count; idx++) {
-            int p = q;
-            rem += mod;
-            if (rem >= count) { rem -= count; p++; }
-            out[idx] = p;
-        }
-        return out;
     }
 
     private ClientStatics() {

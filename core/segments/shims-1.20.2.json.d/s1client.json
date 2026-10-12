@@ -26,5 +26,122 @@
   "net/minecraft/class_4264.field_43100:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
   "net/minecraft/class_4264.field_43101:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants",
   "net/minecraft/class_5619.field_32922:Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbGuiConstants"
+ },
+ "covers": [
+  "net/minecraft/class_339.method_48588(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;IIIIIIIII)V",
+  "net/minecraft/class_332.method_48586(Lnet/minecraft/class_2960;IIIIIIIII)V",
+  "net/minecraft/class_332.method_49697(Lnet/minecraft/class_2960;IIIIIIIIII)V",
+  "net/minecraft/class_332.method_48587(Lnet/minecraft/class_2960;IIIIIIIIIIII)V",
+  "net/minecraft/class_332.method_48585(Lnet/minecraft/class_2960;IIIIIIII)V",
+  "net/minecraft/class_361.method_1962(IIIILnet/minecraft/class_2960;)V",
+  "net/minecraft/class_361.field_2193:Lnet/minecraft/class_2960;",
+  "net/minecraft/class_361.field_2192:I",
+  "net/minecraft/class_361.field_2191:I",
+  "net/minecraft/class_361.field_2190:I",
+  "net/minecraft/class_361.field_2189:I",
+  "net/minecraft/class_350.method_29344(Z)V",
+  "net/minecraft/class_350.method_31323(Z)V",
+  "net/minecraft/class_350.method_25325(Lnet/minecraft/class_332;)V",
+  "net/minecraft/class_8087.method_48613()V",
+  "net/minecraft/class_8088.method_48617()V",
+  "net/minecraft/class_7529.method_44406()V",
+  "net/minecraft/class_8209.method_49607()I",
+  "net/minecraft/class_8132.method_48993(Lnet/minecraft/class_8021;Lnet/minecraft/class_7847;)Lnet/minecraft/class_8021;",
+  "net/minecraft/class_8132.method_48997(Lnet/minecraft/class_8021;Lnet/minecraft/class_7847;)Lnet/minecraft/class_8021;",
+  "net/minecraft/class_8132.method_49000(Lnet/minecraft/class_8021;Lnet/minecraft/class_7847;)Lnet/minecraft/class_8021;",
+  "net/minecraft/class_8132.method_49001()Lnet/minecraft/class_7847;",
+  "net/minecraft/class_8132.method_49002()Lnet/minecraft/class_7847;",
+  "net/minecraft/class_8132.method_49003()Lnet/minecraft/class_7847;",
+  "net/minecraft/class_342.method_1855(I)V"
+ ],
+ "classRenames": {
+  "net/minecraft/class_8084": "top/dext/centurybridge/facade/v1_20_2/class_8084",
+  "net/minecraft/class_8084$class_8085": "top/dext/centurybridge/facade/v1_20_2/class_8084$class_8085"
+ },
+ "superRenames": {
+  "net/minecraft/class_344": "top/dext/centurybridge/facade/v1_20_2/class_344"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_344.<init>(IIIIIILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiButtons#cbNewclass_344",
+  "net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiButtons#cbNewclass_344",
+  "net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;IILnet/minecraft/class_4185$class_4241;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiButtons#cbNewclass_344",
+  "net/minecraft/class_344.<init>(IIIIIIILnet/minecraft/class_2960;IILnet/minecraft/class_4185$class_4241;Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiButtons#cbNewclass_344",
+  "net/minecraft/class_8208.<init>(IILnet/minecraft/class_2960;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiImageWidgets#cbNewclass_8208",
+  "net/minecraft/class_8208.<init>(IIIILnet/minecraft/class_2960;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiImageWidgets#cbNewclass_8208"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_8082.method_48592(Lnet/minecraft/class_4185$class_4241;)Lnet/minecraft/class_8084;": "top/dext/centurybridge/rt/v1_20_2/CbGuiButtons",
+  "net/minecraft/class_8082.method_48594(Lnet/minecraft/class_4185$class_4241;)Lnet/minecraft/class_8084;": "top/dext/centurybridge/rt/v1_20_2/CbGuiButtons"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_8208.<init>(IILnet/minecraft/class_2960;)V": {
+   "desc": "(IIII)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbGuiImageWidgets#cbZero()I",
+    "push top/dext/centurybridge/rt/v1_20_2/CbGuiImageWidgets#cbZero()I",
+    "keep:0",
+    "conv:1,2 top/dext/centurybridge/rt/v1_20_2/CbGuiImageWidgets#cbHeightWithTexture(ILnet/minecraft/class_2960;)I"
+   ],
+   "basis": "1.20.1 ImageWidget(width, height, texture) = this(0, 0, width, height, texture); the texture rides to the 1.20.2 (x, y, width, height) constructor, CbGuiImageWidgetBridge takes it there"
+  },
+  "net/minecraft/class_8208.<init>(IIIILnet/minecraft/class_2960;)V": {
+   "desc": "(IIII)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3,4 top/dext/centurybridge/rt/v1_20_2/CbGuiImageWidgets#cbHeightWithTexture(ILnet/minecraft/class_2960;)I"
+   ],
+   "basis": "the texture rides to the 1.20.2 (x, y, width, height) constructor, CbGuiImageWidgetBridge takes it there"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_339.method_49605(Lnet/minecraft/class_332;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIII)V": {
+   "desc": "(Lnet/minecraft/class_332;Lnet/minecraft/class_327;Lnet/minecraft/class_2561;IIIIII)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3,5 top/dext/centurybridge/rt/v1_20_2/CbGuiWidgets#cbCentre(II)I",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "1.20.1 centred an unscrolled label at (minX + maxX) / 2; 1.20.2 takes that centre as an argument"
+  },
+  "net/minecraft/class_338.method_1809()Ljava/util/List;": {
+   "desc": "()Lnet/minecraft/class_8623;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbGuiWidgets#cbHistoryList(Lnet/minecraft/class_8623;)Ljava/util/List;",
+   "basis": "the same history, oldest first; ArrayListDeque is a List"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_25401(DDD)Z",
+   "new": "method_25401(DDDD)Z",
+   "args": [
+    0,
+    1,
+    3
+   ],
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.20.2 added the horizontal amount; a 1.20.1 override is reached from the new shape, and its super.mouseScrolled(x, y, amount) takes the horizontal amount vanilla passed (moved here from the base table, which had no guard: a super call came back into the override)"
+  },
+  {
+   "old": "method_1809()Ljava/util/List;",
+   "new": "method_1809()Lnet/minecraft/class_8623;",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbGuiWidgets.cbChatHistory(Ljava/util/List;)Lnet/minecraft/class_8623;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "onlyUnder": "net/minecraft/class_338",
+   "basis": "1.20.1's ChatScreen read getRecentChat(); 1.20.2's reads the deque shape -- a subclass's override is what it reads again"
+  }
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_7591$class_7592.field_39764:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiWidgets",
+  "net/minecraft/class_7591$class_7592.field_39765:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiWidgets"
  }
 }
