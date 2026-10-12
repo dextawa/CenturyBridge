@@ -87,8 +87,6 @@ public final class CbItemLegacy {
     static final List<String> DYES = List.of("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink",
         "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black");
 
-    /** 1.20.4's banner pattern codes by pattern id (shared: rt/CbBannerPatterns) */
-    static final Map<String, String> PATTERN_CODES = CbBannerPatterns.CODES;
 
     // NBT type ids
     private static final int NUMERIC = 99;
@@ -642,9 +640,9 @@ public final class CbItemLegacy {
             for (net.minecraft.class_2520 e : patterns) {
                 net.minecraft.class_2487 layer = (net.minecraft.class_2487) e;
                 String pattern = layer.method_10558("pattern");
-                String code = PATTERN_CODES.get(pattern.contains(":") ? pattern : "minecraft:" + pattern);
+                // the pattern's 1.20.4 hash name: vanilla's code, a mod pattern's own (CbBlockBanner), else the id
                 net.minecraft.class_2487 o = new net.minecraft.class_2487();
-                o.method_10582("Pattern", code != null ? code : pattern);
+                o.method_10582("Pattern", CbBlockBanner.hashOf(pattern.contains(":") ? pattern : "minecraft:" + pattern));
                 o.method_10569("Color", Math.max(DYES.indexOf(layer.method_10558("color")), 0));
                 out.add(o);
             }
@@ -679,6 +677,7 @@ public final class CbItemLegacy {
         in.method_10582("id", net.minecraft.class_7923.field_41178.method_10221(item).toString());
         in.method_10567("Count", (byte) 1);
         in.method_10566("tag", tag.method_10553());
+        patternIds(in.method_10562("tag"));
         int now = net.minecraft.class_155.method_16673().method_37912().method_38494();
         Dynamic<net.minecraft.class_2520> out = net.minecraft.class_3551.method_15450().update(
             net.minecraft.class_1208.field_5712, new Dynamic<>(net.minecraft.class_2509.field_11560, in),
@@ -701,6 +700,28 @@ public final class CbItemLegacy {
                 .ifPresent(v -> result.put(type, v));
         }
         return result;
+    }
+
+    /**
+     * 1.20.4 banner NBT names each pattern by its hash name; the game's fixer knows vanilla's codes only, so
+     * each one is first turned into the id it names -- a mod pattern's own hash name included (CbBlockBanner)
+     * -- which the fixer then passes on as it is. A name no pattern has is left for the fixer.
+     */
+    private static void patternIds(net.minecraft.class_2487 tag) {
+        net.minecraft.class_2487 be = tag.method_10562("BlockEntityTag");
+        if (!be.method_10573("Patterns", LIST)) {
+            return;
+        }
+        net.minecraft.class_2499 list = be.method_10554("Patterns", COMPOUND);
+        for (int i = 0; i < list.size(); i++) {
+            net.minecraft.class_2487 p = list.method_10602(i);
+            if (p.method_10573("Pattern", STRING)) {
+                String id = CbBlockBanner.idOfHash(p.method_10558("Pattern"));
+                if (id != null) {
+                    p.method_10582("Pattern", id);
+                }
+            }
+        }
     }
 
     private CbItemLegacy() {
