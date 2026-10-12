@@ -1989,6 +1989,7 @@ public final class JarProcessor {
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
+        Map<String, String> fldSetters = new HashMap<>();    // PUTSTATIC -> INVOKESTATIC setter(value)V on runtime class
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
         Map<String, String> instFldSetters = new HashMap<>(); // PUTFIELD -> INVOKESTATIC setter(receiver, value) on runtime class
         Map<String, String> instOfSites = new HashMap<>();   // INSTANCEOF type -> INVOKESTATIC predicate(Object)Z
@@ -2521,6 +2522,12 @@ public final class JarProcessor {
                                     top.dext.centurybridge.data.FullAudit.record(fsite, "field-getter");
                                     return;
                                 }
+                                String ffst = chain.staticFieldSetters.get(fsite);
+                                if (ffst != null && op == Opcodes.PUTSTATIC) {
+                                    fldSetters.put(fsite, ffst);
+                                    top.dext.centurybridge.data.FullAudit.record(fsite, "field-setter");
+                                    return;
+                                }
                                 return;
                             }
                             // this.field_22789 inside a Screen subclass: an inherited
@@ -2544,6 +2551,12 @@ public final class JarProcessor {
                             if (rfgt != null && op == Opcodes.GETSTATIC) {
                                 fldGetters.put(fsite, rfgt);
                                 top.dext.centurybridge.data.FullAudit.record(rkey, "field-getter");
+                                return;
+                            }
+                            String rfst = chain.staticFieldSetters.get(rkey);
+                            if (rfst != null && op == Opcodes.PUTSTATIC) {
+                                fldSetters.put(fsite, rfst);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "field-setter");
                                 return;
                             }
                             String gap = chain.facadeGaps.get(owner + "." + name + ":" + desc);
@@ -2572,6 +2585,12 @@ public final class JarProcessor {
                         if (fgt != null && op == Opcodes.GETSTATIC) {
                             fldGetters.put(fsite, fgt);
                             top.dext.centurybridge.data.FullAudit.record(fkey, "field-getter");
+                            return;
+                        }
+                        String fst = chain.staticFieldSetters.get(fkey);
+                        if (fst != null && op == Opcodes.PUTSTATIC) {
+                            fldSetters.put(fsite, fst);
+                            top.dext.centurybridge.data.FullAudit.record(fkey, "field-setter");
                             return;
                         }
                         // an instance field is keyed on the class that declares it, but javac names
@@ -2825,7 +2844,7 @@ public final class JarProcessor {
             }
         }
         if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldGetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
+                && fldGetters.isEmpty() && fldSetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty() && declaredRenames.isEmpty()
@@ -2876,6 +2895,9 @@ public final class JarProcessor {
         }
         for (String k : fldGetters.keySet()) {
             rpt.notes.add(tag + "field-gettered: " + k + " -> " + fldGetters.get(k));
+        }
+        for (String k : fldSetters.keySet()) {
+            rpt.notes.add(tag + "field-settered: " + k + " -> " + fldSetters.get(k));
         }
         for (String k : instFldGetters.keySet()) {
             rpt.notes.add(tag + "instance-field-gettered: " + k + " -> " + instFldGetters.get(k));
@@ -3263,6 +3285,12 @@ public final class JarProcessor {
                             String fv = fldGetters.get(fkey);
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),
                                 redirName(fv, name), "()" + desc, false);
+                            return;
+                        }
+                        if (op == Opcodes.PUTSTATIC && fldSetters.containsKey(fkey)) {
+                            String fv = fldSetters.get(fkey);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(fv),
+                                redirName(fv, name), "(" + desc + ")V", false);
                             return;
                         }
                         if (op == Opcodes.GETSTATIC && fldRedirects.containsKey(fkey)) {

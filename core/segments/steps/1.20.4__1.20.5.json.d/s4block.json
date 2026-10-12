@@ -44,7 +44,17 @@
   "net/minecraft/class_2624.method_17488(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers",
   "net/minecraft/class_2573.method_16842(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers",
   "net/minecraft/class_2806.method_12154(Ljava/util/concurrent/Executor;Lnet/minecraft/class_3218;Lnet/minecraft/class_2794;Lnet/minecraft/class_3485;Lnet/minecraft/class_3227;Ljava/util/function/Function;Ljava/util/List;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks",
-  "net/minecraft/class_2806.method_20612(Lnet/minecraft/class_3218;Lnet/minecraft/class_3485;Lnet/minecraft/class_3227;Ljava/util/function/Function;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks"
+  "net/minecraft/class_2806.method_20612(Lnet/minecraft/class_3218;Lnet/minecraft/class_3485;Lnet/minecraft/class_3227;Ljava/util/function/Function;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks",
+  "net/minecraft/class_8962.detect(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;I)Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8965.comp_2102()I": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8965.comp_2109()I": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8966.method_55191(Lnet/minecraft/class_8965;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8966.method_55197()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8966.method_55186(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_8962;I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8966.method_55184(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8966.method_55198(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_2315.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense",
+  "net/minecraft/class_2325.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense"
  },
  "overrideHooks": [
   {
@@ -468,6 +478,54 @@
    "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks$LegacyWrite",
    "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks.write(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks$LegacyWrite;Lnet/minecraft/class_1923;Lnet/minecraft/class_2487;)Ljava/util/concurrent/CompletableFuture;",
    "basis": "1.20.4's write answered nothing to wait on: the new shape runs the override and answers a completed future; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "detect(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;I)Ljava/util/List;",
+   "new": "detect(Lnet/minecraft/class_3218;Lnet/minecraft/class_8962$class_9198;Lnet/minecraft/class_2338;DZ)Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_8962",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyDetector",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial.detect(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyDetector;Lnet/minecraft/class_3218;Lnet/minecraft/class_8962$class_9198;Lnet/minecraft/class_2338;DZ)Ljava/util/List;",
+   "basis": "a 1.20.4 detector asked 1.20.5's question: its entities, then the caller's selector and line of sight (CbBlockTrial)"
+  },
+  {
+   "old": "method_55197()Z",
+   "new": "method_55197(Lnet/minecraft/class_8963;Lnet/minecraft/class_5819;)Z",
+   "onlyUnder": "net/minecraft/class_8966",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyHasMob",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial.hasMobToSpawn(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyHasMob;Lnet/minecraft/class_8963;Lnet/minecraft/class_5819;)Z",
+   "basis": "1.20.5 asking a data class overriding 1.20.4's shape: the override, with what 1.20.4's spawner passed; its super call keeps 1.20.4's body (CbBlockTrial)"
+  },
+  {
+   "old": "method_55186(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_8962;I)V",
+   "new": "method_55186(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_8963;)V",
+   "onlyUnder": "net/minecraft/class_8966",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyDetect",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial.tryDetectPlayers(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyDetect;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_8963;)V",
+   "basis": "1.20.5 asking a data class overriding 1.20.4's shape: the override, with what 1.20.4's spawner passed; its super call keeps 1.20.4's body (CbBlockTrial)"
+  },
+  {
+   "old": "method_55184(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z",
+   "new": "method_55184(Lnet/minecraft/class_3218;FI)Z",
+   "onlyUnder": "net/minecraft/class_8966",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyShutter",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial.isReadyToOpenShutter(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyShutter;Lnet/minecraft/class_3218;FI)Z",
+   "basis": "1.20.5 asking a data class overriding 1.20.4's shape: the override, with what 1.20.4's spawner passed; its super call keeps 1.20.4's body (CbBlockTrial)"
+  },
+  {
+   "old": "method_55198(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z",
+   "new": "method_55198(Lnet/minecraft/class_3218;FI)Z",
+   "onlyUnder": "net/minecraft/class_8966",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyEject",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial.isReadyToEjectItems(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyEject;Lnet/minecraft/class_3218;FI)Z",
+   "basis": "1.20.5 asking a data class overriding 1.20.4's shape: the override, with what 1.20.4's spawner passed; its super call keeps 1.20.4's body (CbBlockTrial)"
+  },
+  {
+   "old": "method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;",
+   "new": "method_10011(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;",
+   "onlyUnder": "net/minecraft/class_2315",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense.getDispenseMethod(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense$Legacy;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;",
+   "basis": "1.20.5 asking a dispenser overriding 1.20.4's getDispenseMethod(stack): the override; its super call keeps 1.20.4's body (CbBlockDispense)"
   }
  ],
  "fieldGetters": {
@@ -480,7 +538,9 @@
   "net/minecraft/class_2615.field_12027:Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper",
   "net/minecraft/class_2580.field_11801:[[Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockMisc",
   "net/minecraft/class_7917$class_8751.field_45783:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious",
-  "net/minecraft/class_2356.field_46354:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious"
+  "net/minecraft/class_2356.field_46354:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious",
+  "net/minecraft/class_8962.field_47356:Lnet/minecraft/class_8962;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8965.field_47368:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial"
  },
  "callReshapes": {
   "net/minecraft/class_7509.method_44207(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec;": {
@@ -742,6 +802,69 @@
     "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull#profile(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_9296;"
    ],
    "basis": "the owner profile as the ResolvableProfile 1.20.5 keeps (CbBlockSkull)"
+  },
+  "net/minecraft/class_8963.method_55159(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "the loot table id as the key 1.20.5 takes (CbBlockLoot)"
+  },
+  "net/minecraft/class_8963.method_55165(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#ominousAt(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Z"
+   ],
+   "basis": "isOminous as 1.20.5's own ticker passes it: the block's OMINOUS, false where it has none (CbBlockTrial)"
+  },
+  "net/minecraft/class_8963.method_55171(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#ominousAt(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)Z"
+   ],
+   "basis": "isOminous as 1.20.5's own ticker passes it: the block's OMINOUS, false where it has none (CbBlockTrial)"
+  },
+  "net/minecraft/class_8967.method_55210(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#ominousAt(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Z"
+   ],
+   "basis": "isOminous as 1.20.5's own ticker passes it: the block's OMINOUS, false where it has none (CbBlockTrial)"
+  },
+  "net/minecraft/class_8963.method_55166(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;Lnet/minecraft/class_2400;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#flame()Lnet/minecraft/class_2400;"
+   ],
+   "basis": "1.20.4's flame (1.20.5 passes soul fire when ominous)"
+  },
+  "net/minecraft/class_8963.method_55167(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;I)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;ILnet/minecraft/class_2394;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#detectedPlayer()Lnet/minecraft/class_2394;"
+   ],
+   "basis": "1.20.4's detection particle (1.20.5 passes the ominous one when ominous)"
+  },
+  "net/minecraft/class_8965.comp_2111()Lnet/minecraft/class_6005;": {
+   "desc": "()Lnet/minecraft/class_6005;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#lootLocations(Lnet/minecraft/class_6005;)Lnet/minecraft/class_6005;",
+   "basis": "generic drift: the eject table keys as 1.20.4's ids (CbBlockTrial)"
   }
  },
  "staticRedirects": {
@@ -932,18 +1055,88 @@
     "keep:4"
    ],
    "basis": "the level's \"entities\" region storage 1.20.4's constructor built, upgrading as ENTITY_CHUNK (CbBlockChunks)"
+  },
+  "net/minecraft/class_8963.<init>(Lnet/minecraft/class_8963$class_8964;Lnet/minecraft/class_8962;)V": {
+   "desc": "(Lnet/minecraft/class_8965;Lnet/minecraft/class_8965;Lnet/minecraft/class_8966;IILnet/minecraft/class_8963$class_8964;Lnet/minecraft/class_8962;Lnet/minecraft/class_8962$class_9198;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#defaultConfig()Lnet/minecraft/class_8965;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#defaultConfig()Lnet/minecraft/class_8965;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#newData()Lnet/minecraft/class_8966;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#defaultCooldown()I",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#defaultRange()I",
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#selectFromLevel()Lnet/minecraft/class_8962$class_9198;"
+   ],
+   "basis": "1.20.4's this(DEFAULT, new TrialSpawnerData(), ..): DEFAULT's range and cooldown, DEFAULT as the ominous config, the level as the selector (CbBlockTrial)"
+  },
+  "net/minecraft/class_8963.<init>(Lnet/minecraft/class_8965;Lnet/minecraft/class_8966;Lnet/minecraft/class_8963$class_8964;Lnet/minecraft/class_8962;)V": {
+   "desc": "(Lnet/minecraft/class_8965;Lnet/minecraft/class_8965;Lnet/minecraft/class_8966;IILnet/minecraft/class_8963$class_8964;Lnet/minecraft/class_8962;Lnet/minecraft/class_8962$class_9198;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#defaultConfig()Lnet/minecraft/class_8965;",
+    "keep:1",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#comp_2109(Lnet/minecraft/class_8965;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#comp_2102(Lnet/minecraft/class_8965;)I",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#selectFromLevel()Lnet/minecraft/class_8962$class_9198;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#legacySpawner(Lnet/minecraft/class_8963;Lnet/minecraft/class_8965;Lnet/minecraft/class_8966;)V",
+   "postArgs": [
+    0,
+    1
+   ],
+   "basis": "the config's 1.20.4 range and cooldown on the spawner, 1.20.5's default ominous config, the level as the selector; then setSpawnPotentialsFromConfig as 1.20.4's constructor called it (CbBlockTrial)"
+  },
+  "net/minecraft/class_8965.<init>(IIFFFFIILnet/minecraft/class_6005;Lnet/minecraft/class_6005;)V": {
+   "desc": "(IFFFFILnet/minecraft/class_6005;Lnet/minecraft/class_6005;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:8",
+    "conv:9 top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#lootKeys(Lnet/minecraft/class_6005;)Lnet/minecraft/class_6005;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#ominousLoot()Lnet/minecraft/class_5321;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#remember(Lnet/minecraft/class_8965;II)V",
+   "postArgs": [
+    0,
+    7
+   ],
+   "basis": "1.20.5's fields; the eject tables as keys; 1.20.5's default ominous loot; the range and cooldown kept for the config (CbBlockTrial)"
+  },
+  "net/minecraft/class_8966.<init>(Ljava/util/Set;Ljava/util/Set;JJILjava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Set;Ljava/util/Set;JJILjava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#lootKeyOf(Ljava/util/Optional;)Ljava/util/Optional;"
+   ],
+   "basis": "generic drift: the ejecting loot table id as the key 1.20.5 holds (CbBlockTrial)"
   }
  },
  "instanceFieldGetters": {
   "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
   "net/minecraft/class_2621.field_12037:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
   "net/minecraft/class_8172.field_47156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
-  "net/minecraft/class_5565.field_27231:Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks"
+  "net/minecraft/class_5565.field_27231:Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks",
+  "net/minecraft/class_8966.field_47378:Lnet/minecraft/class_6005;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8966.field_47377:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
   "net/minecraft/class_2621.field_12037:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
-  "net/minecraft/class_8172.field_47156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot"
+  "net/minecraft/class_8172.field_47156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
+  "net/minecraft/class_8966.field_47378:Lnet/minecraft/class_6005;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_8966.field_47377:Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial"
  },
  "methodRenames": {
   "net/minecraft/class_2315.method_10010(Lnet/minecraft/class_2342;)Lnet/minecraft/class_2374;": "method_58682",
@@ -957,6 +1150,10 @@
   "net/minecraft/class_7917.method_53233()Ljava/util/List;": {
    "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious$LegacyHolder",
    "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious#holder(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious$LegacyHolder;)Lnet/minecraft/class_7917;"
+  },
+  "net/minecraft/class_8962.detect(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;I)Ljava/util/List;": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyDetector",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#detector(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacyDetector;)Lnet/minecraft/class_8962;"
   }
  },
  "abstractFills": [
@@ -991,7 +1188,14 @@
   "net/minecraft/class_4482.method_21848(Lnet/minecraft/class_1297;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive#superAddOccupant",
   "net/minecraft/class_4482.method_21849(Lnet/minecraft/class_1297;ZI)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive#superAddWithTicks",
   "net/minecraft/class_2624.method_17488(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers#superSetCustomName",
-  "net/minecraft/class_2573.method_16842(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers#superSetBannerName"
+  "net/minecraft/class_2573.method_16842(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers#superSetBannerName",
+  "net/minecraft/class_8966.method_55191(Lnet/minecraft/class_8965;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#superSetSpawnPotentials",
+  "net/minecraft/class_8966.method_55197()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#superHasMobToSpawn",
+  "net/minecraft/class_8966.method_55186(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_8962;I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#superTryDetectPlayers",
+  "net/minecraft/class_8966.method_55184(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#superIsReadyToOpenShutter",
+  "net/minecraft/class_8966.method_55198(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#superIsReadyToEjectItems",
+  "net/minecraft/class_2315.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense#superDispenseMethod",
+  "net/minecraft/class_2325.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense#superDropperDispenseMethod"
  },
  "adapterHooks": [
   {
@@ -1038,6 +1242,15 @@
    ],
    "synth": [],
    "basis": "as for containers (CbBlockBannerNameMixin)"
+  },
+  {
+   "under": "net/minecraft/class_8966",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial$LegacySetPotentials",
+   "requires": [
+    "method_55191(Lnet/minecraft/class_8965;)V"
+   ],
+   "synth": [],
+   "basis": "1.20.5 dropped setSpawnPotentialsFromConfig; a data class overriding it is still asked (calls, the 1.20.4 spawner constructor)"
   }
  ],
  "genericWitnesses": {
@@ -1093,5 +1306,8 @@
   "method_39783(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833;": {
    "2": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStructures#noRestriction()Lnet/minecraft/class_6874;"
   }
+ },
+ "staticFieldSetters": {
+  "net/minecraft/class_8965.field_47368:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial"
  }
 }

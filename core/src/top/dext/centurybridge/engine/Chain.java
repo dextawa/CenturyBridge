@@ -49,6 +49,14 @@ public final class Chain {
      *  (a static-field target would evaluate at Statics class-init, before the registry binds) */
     public final java.util.Map<String, String> fieldGetters = new java.util.HashMap<>();
     /**
+     * PUTSTATIC "owner.name:desc" -> "runtimeClass[#member]": a static field write rewritten to a
+     * static setter(value)V, the write side of {@link #fieldGetters} -- for a public static field V
+     * left writable whose type changed or that became final (1.20.5 TrialSpawnerConfig.MAP_CODEC, a
+     * mutable MapCodec in 1.20.4, is the final Codec CODEC): the setter takes what the mod stores and
+     * gives it the effect the write had in V.
+     */
+    public final java.util.Map<String, String> staticFieldSetters = new java.util.HashMap<>();
+    /**
      * the data-driven types the target's CenturyBridge runtime registers (item model types,
      * tint sources...): converted resources may name them only where the runtime has them
      */
@@ -1778,6 +1786,12 @@ public final class Chain {
                 var fg = root.getAsJsonObject("fieldGetters");
                 for (String k : fg.keySet()) {
                     c.fieldGetters.put(k, fg.get(k).getAsString());
+                }
+            }
+            if (root.has("staticFieldSetters")) {
+                var fs = root.getAsJsonObject("staticFieldSetters");
+                for (String k : fs.keySet()) {
+                    c.staticFieldSetters.put(k, fs.get(k).getAsString());
                 }
             }
             if (root.has("interfaceized")) {

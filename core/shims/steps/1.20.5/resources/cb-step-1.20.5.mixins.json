@@ -27,7 +27,10 @@
     "CbRestThrownTridentMixin",
     "CbBlockServerStorageAccessor",
     "CbBlockEntityStorageAccessor",
-    "CbBlockRegionStorageAccessor"
+    "CbBlockRegionStorageAccessor",
+    "CbBlockTrialDataMixin",
+    "CbBlockTrialSpawnerMixin",
+    "CbBlockDropperAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin",
