@@ -3,7 +3,13 @@
   "minVersion": "0.8",
   "package": "top.dext.centurybridge.step.v1_20_3.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [],
+  "mixins": [
+    "CbEntityTooltipInfoMixin",
+    "CbHoverEventActionMixin",
+    "CbHoverEventMixin",
+    "CbStyleAccess",
+    "CbTypedHoverEventAccess"
+  ],
   "client": [],
   "server": [],
   "injectors": {
