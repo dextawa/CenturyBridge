@@ -78,6 +78,13 @@ public final class Chain {
      */
     public final java.util.Map<String, String> instanceFieldGetters = new java.util.HashMap<>();
     /**
+     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field write rewritten to a
+     * static setter taking the receiver and the value, the write side of {@link #instanceFieldGetters}
+     * (1.20.2 AbstractSelectionList's x0/x1/y0/y1/width/height, which 1.20.3 keeps as the widget's
+     * geometry: a write moves the widget, as the field write moved the list).
+     */
+    public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
+    /**
      * INSTANCEOF "type" -> "runtimeClass#predicate": a type test against a class
      * that no longer describes the runtime object (EnchantedBookItem is a plain
      * Item since 1.21.2) becomes INVOKESTATIC predicate(Object)Z.
@@ -353,6 +360,30 @@ public final class Chain {
     }
 
     public final java.util.List<AdapterHook> adapterHooks = new java.util.ArrayList<>();
+
+    /**
+     * Mod overrides of a vanilla method the target made final, or replaced by one of another name
+     * that vanilla calls instead ("overrideRenames"). Overriding a final method is a class load
+     * failure, so no hook that leaves the old declaration in place can help: in a mod class under
+     * {@code onlyUnder} (source hierarchy) a declared, non-static old shape is renamed to
+     * {@code newName}, same descriptor.
+     * <ul>
+     * <li>with {@code superCalls} ("rename"), the class's super.old(..) calls follow it -- for a
+     *     vanilla method that lives on under the new name (1.20.3: AbstractSelectionList.render is
+     *     AbstractWidget.renderWidget, its updateNarration is updateWidgetNarration);</li>
+     * <li>with an {@code adapter} interface (declaring the new name), the class gets the interface
+     *     and the renamed method is made public, so a mixin on the final method can hand the call to
+     *     the mod's method when the object implements the adapter (1.20.3's final AbstractWidget.render
+     *     calling a 1.20.2 widget's own render); the mod's super.old(..) then reaches the final
+     *     vanilla method again, where the mixin's guard lets it run.</li>
+     * </ul>
+     */
+    public static final class OverrideRename {
+        public String oldName, oldDesc, newName, onlyUnder, adapter;
+        public boolean superCalls;
+    }
+
+    public final java.util.List<OverrideRename> overrideRenames = new java.util.ArrayList<>();
 
     /**
      * Lambdas whose functional interface's abstract method changed shape ("lambdaAdapters"): 1.20.2's
@@ -975,11 +1006,40 @@ public final class Chain {
     public static final class CtorReshape {
         public final String newDesc;
         public final java.util.List<ReshapeOp> ops;
+        /**
+         * "after": "OWNER#name(Lowner;oldArgs...)V" -- a static run right after the constructor
+         * returns, with the object it built (the NEW site's instance, or {@code this} after a
+         * super(...) / this(...) call) and the OLD arguments exactly as the call site passed them.
+         * For what the old constructor did with an argument the new one has no place for: state the
+         * new constructor cannot take (1.20.2 Checkbox's width, height and showLabel, a list's 1.20.2
+         * height) is set on the finished object. Null when the entry has none.
+         */
+        public String afterOwner, afterName, afterDesc;
 
         CtorReshape(String newDesc, java.util.List<ReshapeOp> ops) {
             this.newDesc = newDesc;
             this.ops = ops;
         }
+    }
+
+    /** "after" of a superCtorReshapes entry: the static must take (owner, every old argument) and return void */
+    static void parseAfter(String key, CtorReshape r, String after) {
+        String where = "superCtorReshapes " + key;
+        int hash = after.indexOf('#');
+        int paren = after.indexOf('(');
+        if (hash <= 0 || paren <= hash) {
+            throw new IllegalArgumentException(where + ": after needs OWNER#name(desc)V");
+        }
+        String owner = key.substring(0, key.indexOf(".<init>"));
+        String oldDesc = key.substring(key.indexOf('('));
+        String want = "(L" + owner + ";" + oldDesc.substring(1, oldDesc.lastIndexOf(')')) + ")V";
+        String desc = after.substring(paren);
+        if (!desc.equals(want)) {
+            throw new IllegalArgumentException(where + ": after must take the built object and the old arguments: " + want);
+        }
+        r.afterOwner = after.substring(0, hash);
+        r.afterName = after.substring(hash + 1, paren);
+        r.afterDesc = desc;
     }
 
     /** one reshape op: which old arguments to re-push, and the static to run on them (null = plain keep/drop) */
@@ -1479,6 +1539,30 @@ public final class Chain {
                     c.instanceFieldGetters.put(k, ifg.get(k).getAsString());
                 }
             }
+            if (root.has("instanceFieldSetters")) {
+                var ifs = root.getAsJsonObject("instanceFieldSetters");
+                for (String k : ifs.keySet()) {
+                    c.instanceFieldSetters.put(k, ifs.get(k).getAsString());
+                }
+            }
+            if (root.has("overrideRenames")) {
+                for (var el : root.getAsJsonArray("overrideRenames")) {
+                    var o = el.getAsJsonObject();
+                    OverrideRename r = new OverrideRename();
+                    String[] osig = splitSig(o.get("old").getAsString());
+                    r.oldName = osig[0];
+                    r.oldDesc = osig[1];
+                    r.newName = o.get("new").getAsString();
+                    r.onlyUnder = o.get("onlyUnder").getAsString();
+                    r.adapter = o.has("adapter") ? o.get("adapter").getAsString() : null;
+                    r.superCalls = o.has("superCalls") && o.get("superCalls").getAsString().equals("rename");
+                    if (r.newName.contains("(")) {
+                        throw new IllegalArgumentException("overrideRenames " + r.oldName + r.oldDesc
+                            + ": new is a method name; the descriptor stays");
+                    }
+                    c.overrideRenames.add(r);
+                }
+            }
             if (root.has("instanceOfRedirects")) {
                 var ior = root.getAsJsonObject("instanceOfRedirects");
                 for (String k : ior.keySet()) {
@@ -1509,7 +1593,11 @@ public final class Chain {
                     for (var el : o.getAsJsonArray("ops")) {
                         ops.add(el.getAsString());
                     }
-                    c.superCtorReshapes.put(k, parseReshape(k, o.get("desc").getAsString(), ops));
+                    CtorReshape reshape = parseReshape(k, o.get("desc").getAsString(), ops);
+                    if (o.has("after")) {
+                        parseAfter(k, reshape, o.get("after").getAsString());
+                    }
+                    c.superCtorReshapes.put(k, reshape);
                     c.ctorRedirectOwners.add(k.substring(0, k.indexOf(".<init>")));
                 }
             }

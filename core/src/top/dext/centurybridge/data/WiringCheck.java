@@ -32,7 +32,7 @@ import org.objectweb.asm.tree.MethodNode;
  * that table, so they compare verbatim.
  *
  * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects,
- * fieldRedirects, fieldGetters, instanceFieldGetters, instanceOfRedirects,
+ * fieldRedirects, fieldGetters, instanceFieldGetters / instanceFieldSetters, instanceOfRedirects,
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
@@ -385,6 +385,10 @@ public final class WiringCheck {
             Sym s = Sym.field(k);
             wantMethod("instanceFieldGetters " + k, v, s.name, methodDesc("(L" + s.owner + ";)" + s.desc));
         });
+        obj(root, "instanceFieldSetters", (k, v) -> {
+            Sym s = Sym.field(k);
+            wantMethod("instanceFieldSetters " + k, v, s.name, methodDesc("(L" + s.owner + ";" + s.desc + ")V"));
+        });
         obj(root, "instanceOfRedirects", (k, v) ->
             wantMethod("instanceOfRedirects " + k, v, "cbInstanceOf", "(Ljava/lang/Object;)Z"));
         // "owner.<init>(args)V" -> factory (args)Lowner;
@@ -409,6 +413,33 @@ public final class WiringCheck {
                 var o = e.getValue().getAsJsonObject();
                 if (!stub.isEmpty()) checkReshapeTarget(e.getKey(), o.get("desc").getAsString(), superRen);
                 checkReshapeOps("superCtorReshapes " + e.getKey(), e.getKey(), o.getAsJsonArray("ops"));
+                if (o.has("after")) {
+                    // the static run on the built object with the old arguments (Chain.CtorReshape.after)
+                    String a = o.get("after").getAsString();
+                    int ap = a.indexOf('(');
+                    wantMethod("superCtorReshapes " + e.getKey() + " after", a.substring(0, ap), null, methodDesc(a.substring(ap)));
+                }
+            }
+        }
+        // overrideRenames: an adapter interface must declare the new name with the old descriptor
+        // (the mod's renamed method implements it; the mixin on the final method calls it)
+        if (root.has("overrideRenames")) {
+            for (var el : root.getAsJsonArray("overrideRenames")) {
+                var o = el.getAsJsonObject();
+                checked++;
+                if (!o.has("adapter")) {
+                    continue;
+                }
+                String old = o.get("old").getAsString();
+                String desc = methodDesc(old.substring(old.indexOf('(')));
+                String name = o.get("new").getAsString();
+                String adapter = o.get("adapter").getAsString();
+                ClassNode an = classes.get(adapter);
+                if (an == null || (an.access & Opcodes.ACC_INTERFACE) == 0) {
+                    problems.add("overrideRenames " + old + " (no such adapter interface " + adapter + ")");
+                } else if (an.methods.stream().noneMatch(m -> m.name.equals(name) && m.desc.equals(desc))) {
+                    problems.add("overrideRenames " + old + ": adapter " + adapter + " does not declare " + name + desc);
+                }
             }
         }
         // callReshapes: the reshaped call must resolve on the target (the owner or a supertype
