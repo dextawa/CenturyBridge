@@ -117,6 +117,20 @@ REGISTRY_TYPES = {
 MAP_BUILDERS = ('com/mojang/serialization/codecs/RecordCodecBuilder.create:',
                 'com/mojang/serialization/Codec.unit:', 'com/mojang/serialization/MapCodec.codec:')
 
+# Parameters 1.20.5 appended to a method mods call and override, each with the value 1.20.5's own caller
+# passes, computed from the 1.20.4 arguments (judged by hand from 1.20.5's bytecode). A family: every
+# 1.20.4 method under `root` whose arguments match `old` and whose 1.20.5 shape of the same name is the
+# 1.20.4 one with `tail` appended. `value` is (static name, the old argument it reads, Java expression of
+# that argument `a`): a generated static of the client-side shapes class per argument type, used by the
+# call reshape and (with the receiver and every old argument) as the frames hook's default.
+APPENDED = [
+    {'root': 'net/minecraft/class_922', 'old': re.compile(r'^\(L[^;]+;Lnet/minecraft/class_4587;FFF\)V$'),
+     'tail': ['F'], 'value': ('scale', 0, 'a.method_55693()'),
+     'basis': "LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() "
+              'passes as entity.getScale() (the pose is scaled by it first)'},
+]
+SHAPES_CLIENT = PKG + '/CbRestShapesClient'
+
 
 def class_names(path):
     cm = {}
@@ -243,6 +257,21 @@ def simple(t):
 
 
 SIMPLE = {}  # intermediary class -> Mojang simple name, filled by main()
+
+
+def appended_family(V, W, owner, name, desc):
+    """(family, 1.20.4 declaring class, 1.20.5 descriptor) when owner.name(desc) is one of APPENDED's"""
+    decl = next((c for c, m in find_methods(V, owner, name) if m.desc == desc and not (m.access & ACC_STATIC)), None)
+    if decl is None or decl not in W:
+        return None
+    oa, orr = split_args(desc)
+    for fam in APPENDED:
+        if not fam['old'].match(desc) or fam['root'] not in supers(V, decl):
+            continue
+        want = '(' + ''.join(oa + fam['tail']) + ')' + orr
+        if any(m.name == name and m.desc == want for m in W[decl].methods):
+            return fam, decl, want
+    return None
 
 
 def to_new(sw, new_desc):
@@ -564,6 +593,9 @@ def main():
     super_keys = {}        # callReshapes key -> entry, for hooks' super calls
     report = []
     covers = set()         # generated covers (the getter rule)
+    frame_defaults = {}    # old shape -> {new argument index: static} (the appended rule)
+    shapes_client = {}     # (static name, argument type) -> (family, Java expression)
+    shapes_client_defaults = {}  # (static name, old desc) -> (family, argument type, argument index)
     rec_mixins = {}        # class -> {old shape: (name, desc, 1.20.5 field, Mojang field name)}
 
     for r in rows:
@@ -644,6 +676,30 @@ def main():
                     'basis': f'generated: getter; 1.20.5 reads {vf} through {acc[0].name}(), a mod\'s 1.20.4 '
                              f'{name}() override answers it (its super call is the cover)'}
                 fate, detail = 'getter-cover', f'{vf} -> {acc[0].name}()'
+        elif usage in ('call', 'call-protected', 'call-inherited', 'override+super') and 'METHOD' in kinds \
+                and appended_family(V, W, owner, name, desc):
+            fam, decl, wdesc = appended_family(V, W, owner, name, desc)
+            oa = split_args(desc)[0]
+            vname, vi, expr = fam['value']
+            if side(decl) != 'client':
+                raise SystemExit(f'appended family on a common class {decl}: give it a common shapes class first')
+            if not mine(decl):
+                fate, detail = 'other-area', mojang(decl, cm)
+            else:
+                ops = [f'keep:{i}' for i in range(len(oa))]
+                ops.append(f'conv:{vi} {SHAPES_CLIENT}#{vname}({oa[vi]}){fam["tail"][0]}')
+                frag['callReshapes'][f'{decl}.{name}{desc}'] = {'desc': wdesc, 'ops': ops,
+                                                                'basis': 'generated: appended; ' + fam['basis']}
+                hooks[(name + desc, decl)] = {
+                    'old': name + desc, 'new': name + wdesc, 'args': list(range(len(oa))), 'onlyUnder': decl,
+                    'frames': PKG + '/Guard', 'superCalls': 'rewrite',
+                    'basis': 'generated: appended; the old override gets its arguments, its super call the '
+                             'frame\'s ' + vname + ' (' + fam['basis'] + ')'}
+                frame_defaults[name + desc] = {str(len(oa)): f'{SHAPES_CLIENT}#{vname}(Ljava/lang/Object;'
+                                                             f'{"".join(oa)}){fam["tail"][0]}'}
+                shapes_client[(vname, oa[vi])] = (fam, expr)
+                shapes_client_defaults[(vname, desc)] = (fam, oa[vi], vi)
+                fate, detail = 'appended', vname
         elif usage.startswith('call') and kinds == 'METHOD':
             hits = {m.desc: (c, m, match(desc, m.desc, m.signature)) for c, m in find_methods(W, owner, name)
                     if m.desc != desc}
@@ -734,6 +790,7 @@ def main():
     for k, e in super_keys.items():
         frag['callReshapes'].setdefault(k, e)
     frag['covers'] = sorted(covers)
+    frag['frameDefaults'] = dict(sorted(frame_defaults.items()))
     frag['overrideHooks'] = sorted(hooks.values(), key=lambda h: (h['onlyUnder'], h['old']))
     frag = {k: v for k, v in frag.items() if v}
 
@@ -818,6 +875,32 @@ def main():
     out += ['    private CbRestLegacy() {', '    }', '}', '']
     path = os.path.join(src, LEGACY + '.java')
     if legacy:
+        open(path, 'w', encoding='utf-8', newline='\n').write('\n'.join(out))
+    elif os.path.exists(path):
+        os.remove(path)
+
+    # ---- Java: the appended rule's values (client side), one overload per argument type
+    path = os.path.join(src, SHAPES_CLIENT + '.java')
+    if shapes_client:
+        out = ['package ' + PKG.replace('/', '.') + ';', '', 'import net.fabricmc.api.EnvType;',
+               'import net.fabricmc.api.Environment;', '',
+               '/**',
+               ' * Generated by core/tools/gen_s4rest.py (appended rule): the value of a parameter 1.20.5 appended',
+               ' * to a client method mods call and override, as 1.20.5\'s own caller computes it, from the 1.20.4',
+               ' * arguments -- for a 1.20.4 call (callReshapes), and as the frames default when a mod\'s 1.20.4',
+               ' * override is entered directly (frameDefaults: the receiver and every old argument).',
+               ' */', '@Environment(EnvType.CLIENT)', 'public final class CbRestShapesClient {', '']
+        for (vname, at), (fam, expr) in sorted(shapes_client.items()):
+            rt = jt(fam['tail'][0])
+            out += [f'    /** {fam["basis"]} */', f'    public static {rt} {vname}({jt(at)} a) {{',
+                    f'        return {expr};', '    }', '']
+        for (vname, odesc), (fam, at, vi) in sorted(shapes_client_defaults.items()):
+            oa = split_args(odesc)[0]
+            params = ', '.join(['Object self'] + [f'{jt(t)} a{i}' for i, t in enumerate(oa)])
+            out += [f'    /** the frames default of {vname} for the 1.20.4 shape {odesc} */',
+                    f'    public static {jt(fam["tail"][0])} {vname}({params}) {{',
+                    f'        return {vname}(a{vi});', '    }', '']
+        out += ['    private CbRestShapesClient() {', '    }', '}', '']
         open(path, 'w', encoding='utf-8', newline='\n').write('\n'.join(out))
     elif os.path.exists(path):
         os.remove(path)

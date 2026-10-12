@@ -173,6 +173,133 @@
    ],
    "ret": "conv top/dext/centurybridge/step/v1_20_5/facade/class_1317$class_1319#of(Lnet/minecraft/class_9168;)Lnet/minecraft/class_1317$class_1319;",
    "basis": "SpawnPlacements.getPlacementType answers 1.20.5's SpawnPlacementType; the 1.20.4 enum constant of the same name (facade)"
+  },
+  "net/minecraft/class_897.method_3926(Lnet/minecraft/class_1297;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
+   ],
+   "basis": "renderNameTag gained the partial tick; 1.20.5's EntityRenderer.render hands its own, the frame's (Minecraft.getFrameTime())"
+  },
+  "net/minecraft/class_915.method_23175(Lnet/minecraft/class_1533;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "desc": "(Lnet/minecraft/class_1533;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
+   ],
+   "basis": "renderNameTag gained the partial tick; 1.20.5's EntityRenderer.render hands its own, the frame's (Minecraft.getFrameTime())"
+  },
+  "net/minecraft/class_1007.method_4213(Lnet/minecraft/class_742;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "desc": "(Lnet/minecraft/class_742;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
+   ],
+   "basis": "renderNameTag gained the partial tick; 1.20.5's EntityRenderer.render hands its own, the frame's (Minecraft.getFrameTime())"
+  },
+  "net/minecraft/class_310.method_1481(Lnet/minecraft/class_638;)V": {
+   "desc": "(Lnet/minecraft/class_638;Lnet/minecraft/class_434$class_9678;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#otherReason()Lnet/minecraft/class_434$class_9678;"
+   ],
+   "basis": "Minecraft.setLevel gained the receiving screen's reason; 1.20.4 had the plain loading-terrain screen: OTHER"
+  },
+  "net/minecraft/class_310.method_18096(Lnet/minecraft/class_437;)V": {
+   "desc": "(Lnet/minecraft/class_437;Z)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#no()Z"
+   ],
+   "basis": "Minecraft.disconnect(screen) gained keepResourcePacks; 1.20.4's always cleared the downloaded server packs: false"
+  },
+  "net/minecraft/class_279.method_1262(Ljava/lang/String;Lnet/minecraft/class_276;Lnet/minecraft/class_276;)Lnet/minecraft/class_283;": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_276;Lnet/minecraft/class_276;Z)Lnet/minecraft/class_283;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#no()Z"
+   ],
+   "basis": "PostChain.addPass gained useLinearFilter; 1.20.4's passes sampled their input at the target's own GL_NEAREST: false"
+  },
+  "net/minecraft/class_4516.method_36021()Lnet/minecraft/class_1657;": {
+   "desc": "(Lnet/minecraft/class_1934;)Lnet/minecraft/class_1657;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#survival()Lnet/minecraft/class_1934;"
+   ],
+   "basis": "GameTestHelper.makeMockPlayer gained the game type; 1.20.4's mock player was neither creative nor spectator: SURVIVAL"
+  },
+  "net/minecraft/class_3767.method_16540(Lnet/minecraft/class_3222;)Lnet/minecraft/class_3765;": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_2338;)Lnet/minecraft/class_3765;",
+   "ops": [
+    "keep:0",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#raidPos(Lnet/minecraft/class_3222;)Lnet/minecraft/class_2338;"
+   ],
+   "basis": "Raids.createOrExtendRaid gained the raid position; 1.20.4's raided the player's block position"
+  },
+  "net/minecraft/class_3288$class_7680.method_52424(Ljava/lang/String;)Lnet/minecraft/class_3262;": {
+   "desc": "(Lnet/minecraft/class_9224;)Lnet/minecraft/class_3262;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#locationOf(Ljava/lang/String;)Lnet/minecraft/class_9224;"
+   ],
+   "basis": "a pack supplier opens by 1.20.5's location: the 1.20.4 id, not builtin unless the supplier was built so (it applies its own flag)"
+  },
+  "net/minecraft/class_3288$class_7680.method_52425(Ljava/lang/String;Lnet/minecraft/class_3288$class_7679;)Lnet/minecraft/class_3262;": {
+   "desc": "(Lnet/minecraft/class_9224;Lnet/minecraft/class_3288$class_7679;)Lnet/minecraft/class_3262;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#locationOf(Ljava/lang/String;)Lnet/minecraft/class_9224;",
+    "keep:1"
+   ],
+   "basis": "a pack supplier opens by 1.20.5's location: the 1.20.4 id, not builtin unless the supplier was built so (it applies its own flag)"
+  },
+  "net/minecraft/class_7665.method_45210()Lnet/minecraft/class_3268;": {
+   "desc": "(Lnet/minecraft/class_9224;)Lnet/minecraft/class_3268;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#vanillaLocation()Lnet/minecraft/class_9224;"
+   ],
+   "basis": "VanillaPackResourcesBuilder.build takes a location; 1.20.4's pack was the builtin one named vanilla"
+  },
+  "net/minecraft/class_3279.method_45271(Ljava/nio/file/Path;Lnet/minecraft/class_8580;ZLjava/util/function/BiConsumer;)V": {
+   "desc": "(Ljava/nio/file/Path;Lnet/minecraft/class_8580;Ljava/util/function/BiConsumer;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3 top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#flagSuppliers(ZLjava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "FolderRepositorySource.discoverPacks dropped the builtin flag; each supplier handed to the output is recorded with it"
+  },
+  "net/minecraft/class_3288.method_45275(Ljava/lang/String;Lnet/minecraft/class_2561;ZLnet/minecraft/class_3288$class_7680;Lnet/minecraft/class_3264;Lnet/minecraft/class_3288$class_3289;Lnet/minecraft/class_5352;)Lnet/minecraft/class_3288;": {
+   "desc": "(Lnet/minecraft/class_9224;Lnet/minecraft/class_3288$class_7680;Lnet/minecraft/class_3264;Lnet/minecraft/class_9225;)Lnet/minecraft/class_3288;",
+   "ops": [
+    "conv:0,1,6 top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#location(Ljava/lang/String;Lnet/minecraft/class_2561;Lnet/minecraft/class_5352;)Lnet/minecraft/class_9224;",
+    "keep:3",
+    "keep:4",
+    "conv:2,5 top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#selection(ZLnet/minecraft/class_3288$class_3289;)Lnet/minecraft/class_9225;"
+   ],
+   "basis": "Pack.readMetaAndCreate takes a location and a selection config: 1.20.4's id, title and source; required and position, not fixed"
+  },
+  "net/minecraft/class_3288.method_45274(Ljava/lang/String;Lnet/minecraft/class_3288$class_7680;I)Lnet/minecraft/class_3288$class_7679;": {
+   "desc": "(Lnet/minecraft/class_9224;Lnet/minecraft/class_3288$class_7680;I)Lnet/minecraft/class_3288$class_7679;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#locationOf(Ljava/lang/String;)Lnet/minecraft/class_9224;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "Pack.readPackInfo (readPackMetadata) opens the supplier by location: the 1.20.4 id"
   }
  },
  "superCtorReshapes": {
@@ -190,6 +317,76 @@
     "push top/dext/centurybridge/step/v1_20_5/rt/CbRestMapsClient#decorationTextures()Lnet/minecraft/class_9443;"
    ],
    "basis": "1.20.5's MapRenderer draws decorations from the decoration sprite manager; 1.20.4's drew them from the fixed icon texture: the game's own manager (rt/CbRestMapsClient)"
+  },
+  "net/minecraft/class_434.<init>(Ljava/util/function/BooleanSupplier;)V": {
+   "desc": "(Ljava/util/function/BooleanSupplier;Lnet/minecraft/class_434$class_9678;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#otherReason()Lnet/minecraft/class_434$class_9678;"
+   ],
+   "basis": "ReceivingLevelScreen gained a reason; 1.20.4's screen was the plain loading-terrain one: OTHER"
+  },
+  "net/minecraft/class_283.<init>(Lnet/minecraft/class_3300;Ljava/lang/String;Lnet/minecraft/class_276;Lnet/minecraft/class_276;)V": {
+   "desc": "(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_276;Lnet/minecraft/class_276;Z)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_5912;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#no()Z"
+   ],
+   "basis": "PostPass takes a ResourceProvider (a ResourceManager is one) and useLinearFilter; 1.20.4's sampled at GL_NEAREST: false"
+  },
+  "net/minecraft/class_3258$class_8615.<init>(Ljava/nio/file/Path;Z)V": {
+   "desc": "(Ljava/nio/file/Path;)V",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#supplierBuiltin(Lnet/minecraft/class_3258$class_8615;Z)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "1.20.5's pack suppliers take no builtin flag; it is recorded for the supplier, whose opens apply it (CbRestPackSuppliersMixin)"
+  },
+  "net/minecraft/class_3258$class_8615.<init>(Ljava/io/File;Z)V": {
+   "desc": "(Ljava/io/File;)V",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#supplierBuiltin(Lnet/minecraft/class_3258$class_8615;Z)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "1.20.5's pack suppliers take no builtin flag; it is recorded for the supplier, whose opens apply it (CbRestPackSuppliersMixin)"
+  },
+  "net/minecraft/class_3259$class_8619.<init>(Ljava/nio/file/Path;Z)V": {
+   "desc": "(Ljava/nio/file/Path;)V",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#supplierBuiltin(Lnet/minecraft/class_3259$class_8619;Z)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "1.20.5's pack suppliers take no builtin flag; it is recorded for the supplier, whose opens apply it (CbRestPackSuppliersMixin)"
+  },
+  "net/minecraft/class_3255.<init>(Ljava/lang/String;Z)V": {
+   "desc": "(Lnet/minecraft/class_9224;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#locationOf(Ljava/lang/String;Z)Lnet/minecraft/class_9224;"
+   ],
+   "basis": "AbstractPackResources takes a location: the 1.20.4 id, builtin as its source"
+  },
+  "net/minecraft/class_3259.<init>(Ljava/lang/String;Ljava/nio/file/Path;Z)V": {
+   "desc": "(Lnet/minecraft/class_9224;Ljava/nio/file/Path;)V",
+   "ops": [
+    "conv:0,2 top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#locationOf(Ljava/lang/String;Z)Lnet/minecraft/class_9224;",
+    "keep:1"
+   ],
+   "basis": "PathPackResources takes a location: the 1.20.4 id, builtin as its source"
   }
  },
  "convertHooks": [
@@ -298,7 +495,13 @@
   "net/minecraft/class_1657.method_18394(Lnet/minecraft/class_4050;Lnet/minecraft/class_4048;)F",
   "net/minecraft/class_1309.method_6046()Lnet/minecraft/class_1310;",
   "net/minecraft/class_17.method_68()Lnet/minecraft/class_2561;",
-  "net/minecraft/class_17.method_74()Lnet/minecraft/class_2487;"
+  "net/minecraft/class_17.method_74()Lnet/minecraft/class_2487;",
+  "net/minecraft/class_5131.method_26842(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;",
+  "net/minecraft/class_5131.method_27306(Lnet/minecraft/class_1320;)Z",
+  "net/minecraft/class_5131.method_27305(Lnet/minecraft/class_1320;Ljava/util/UUID;)Z",
+  "net/minecraft/class_5131.method_27307(Lnet/minecraft/class_1320;Ljava/util/UUID;)D",
+  "net/minecraft/class_5131.method_26847(Lcom/google/common/collect/Multimap;)V",
+  "net/minecraft/class_5131.method_26854(Lcom/google/common/collect/Multimap;)V"
  ],
  "overrideHooks": [
   {
@@ -367,6 +570,60 @@
    "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders.cbOptionalComponent(Lnet/minecraft/class_2561;)Ljava/util/Optional;",
    "onlyUnder": "net/minecraft/class_17",
    "basis": "1.20.5 reads a banner's name through the record accessor name() (Optional); a mod's 1.20.4 getName() override answers it, null as empty"
+  },
+  {
+   "old": "method_52424(Ljava/lang/String;)Lnet/minecraft/class_3262;",
+   "new": "method_52424(Lnet/minecraft/class_9224;)Lnet/minecraft/class_3262;",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks.id(Lnet/minecraft/class_9224;)Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_3288$class_7680",
+   "basis": "1.20.5 opens a supplier with a location; a mod's 1.20.4 supplier gets its id (its super call is reshaped)"
+  },
+  {
+   "old": "method_52425(Ljava/lang/String;Lnet/minecraft/class_3288$class_7679;)Lnet/minecraft/class_3262;",
+   "new": "method_52425(Lnet/minecraft/class_9224;Lnet/minecraft/class_3288$class_7679;)Lnet/minecraft/class_3262;",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks.id(Lnet/minecraft/class_9224;)Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_3288$class_7680",
+   "basis": "1.20.5 opens a supplier with a location; a mod's 1.20.4 supplier gets its id (its super call is reshaped)"
+  },
+  {
+   "old": "method_26842(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;",
+   "new": "method_45329(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1324;",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestAttributes.value(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1320;",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_5131",
+   "basis": "1.20.5 asks AttributeMap by holder; 1.20.4's holder member delegated to the attribute one a mod overrides: the override answers 1.20.5's (guarded: its super call is the cover, which goes on to 1.20.5's)"
+  },
+  {
+   "old": "method_27306(Lnet/minecraft/class_1320;)Z",
+   "new": "method_45331(Lnet/minecraft/class_6880;)Z",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestAttributes.value(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1320;",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_5131",
+   "basis": "1.20.5 asks AttributeMap by holder; 1.20.4's holder member delegated to the attribute one a mod overrides: the override answers 1.20.5's (guarded: its super call is the cover, which goes on to 1.20.5's)"
+  },
+  {
+   "old": "method_27305(Lnet/minecraft/class_1320;Ljava/util/UUID;)Z",
+   "new": "method_45330(Lnet/minecraft/class_6880;Ljava/util/UUID;)Z",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestAttributes.value(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1320;",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_5131",
+   "basis": "1.20.5 asks AttributeMap by holder; 1.20.4's holder member delegated to the attribute one a mod overrides: the override answers 1.20.5's (guarded: its super call is the cover, which goes on to 1.20.5's)"
+  },
+  {
+   "old": "method_27307(Lnet/minecraft/class_1320;Ljava/util/UUID;)D",
+   "new": "method_45332(Lnet/minecraft/class_6880;Ljava/util/UUID;)D",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestAttributes.value(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1320;",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_5131",
+   "basis": "1.20.5 asks AttributeMap by holder; 1.20.4's holder member delegated to the attribute one a mod overrides: the override answers 1.20.5's (guarded: its super call is the cover, which goes on to 1.20.5's)"
+  },
+  {
+   "old": "method_45178()Z",
+   "new": "method_56926()Lnet/minecraft/class_9224;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks.locationOfOwnBuiltin(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestPacks$LegacyBuiltin;)Lnet/minecraft/class_9224;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks$LegacyBuiltin",
+   "onlyUnder": "net/minecraft/class_3262",
+   "basis": "1.20.5 reads whether a pack is built in from its location; a mod pack class's 1.20.4 isBuiltin() override sets the location's source (CbRestPacks)"
   }
  ],
  "methodRenames": {
@@ -387,14 +644,66 @@
   "net/minecraft/class_2512.method_10684(Lnet/minecraft/class_2487;Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbProfiles#writeGameProfile",
   "net/minecraft/class_2512.method_10691(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestNbt",
   "net/minecraft/class_2512.method_10692(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestNbt",
-  "net/minecraft/class_17.method_67(Lnet/minecraft/class_2487;)Lnet/minecraft/class_17;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps"
+  "net/minecraft/class_17.method_67(Lnet/minecraft/class_2487;)Lnet/minecraft/class_17;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
+  "net/minecraft/class_3288.method_14456(Ljava/lang/String;Lnet/minecraft/class_2561;ZLnet/minecraft/class_3288$class_7680;Lnet/minecraft/class_3288$class_7679;Lnet/minecraft/class_3288$class_3289;ZLnet/minecraft/class_5352;)Lnet/minecraft/class_3288;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks",
+  "net/minecraft/class_155.method_643(C)Z": "net/minecraft/class_3544#method_57175",
+  "net/minecraft/class_155.method_644(Ljava/lang/String;)Ljava/lang/String;": "net/minecraft/class_3544#method_57180",
+  "net/minecraft/class_155.method_44355(Ljava/lang/String;Z)Ljava/lang/String;": "net/minecraft/class_3544#method_57177",
+  "net/minecraft/class_14.method_27138(Lnet/minecraft/class_2680;)Z": "net/minecraft/class_8#method_57082"
  },
  "instanceRedirects": {
   "net/minecraft/class_20.method_92()B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
-  "net/minecraft/class_22.method_32364(I)Lnet/minecraft/class_22;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps"
+  "net/minecraft/class_22.method_32364(I)Lnet/minecraft/class_22;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
+  "net/minecraft/class_338.method_1805(Lnet/minecraft/class_332;III)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient",
+  "net/minecraft/class_3262.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks",
+  "net/minecraft/class_3298.method_45305()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks"
  },
  "facadeGaps": {
   "net/minecraft/class_20$class_21.<init>(Ljava/lang/String;IZZ)V": "1.20.1's private enum constructor (before 1.20.2 gave the constants a serialized name): only the enum's own static initializer calls it -- from any other class it is an IllegalAccessError, and reflection refuses to construct an enum",
   "net/minecraft/class_20$class_21.<init>(Ljava/lang/String;IZIZ)V": "1.20.1's private enum constructor (before 1.20.2 gave the constants a serialized name): only the enum's own static initializer calls it -- from any other class it is an IllegalAccessError, and reflection refuses to construct an enum"
- }
+ },
+ "frameDefaults": {
+  "method_3926(Lnet/minecraft/class_1297;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
+  },
+  "method_23175(Lnet/minecraft/class_1533;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
+  },
+  "method_4213(Lnet/minecraft/class_742;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"
+  },
+  "method_1805(Lnet/minecraft/class_332;III)V": {
+   "4": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#chatFocused(Lnet/minecraft/class_338;)Z"
+  },
+  "method_1481(Lnet/minecraft/class_638;)V": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#otherReason()Lnet/minecraft/class_434$class_9678;"
+  },
+  "method_18096(Lnet/minecraft/class_437;)V": {
+   "1": "zero: 1.20.4's disconnect(Screen) always cleared the downloaded server packs, keepResourcePacks false"
+  },
+  "method_1262(Ljava/lang/String;Lnet/minecraft/class_276;Lnet/minecraft/class_276;)Lnet/minecraft/class_283;": {
+   "3": "zero: 1.20.4's post passes sampled their input at the render target's GL_NEAREST, useLinearFilter false"
+  },
+  "method_36021()Lnet/minecraft/class_1657;": {
+   "0": "top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#survival()Lnet/minecraft/class_1934;"
+  },
+  "method_16540(Lnet/minecraft/class_3222;)Lnet/minecraft/class_3765;": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbRestDefaults#raidPos(Ljava/lang/Object;Lnet/minecraft/class_3222;)Lnet/minecraft/class_2338;"
+  },
+  "method_45210()Lnet/minecraft/class_3268;": {
+   "0": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#vanillaLocation()Lnet/minecraft/class_9224;"
+  }
+ },
+ "superRedirects": {
+  "net/minecraft/class_3262.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#isBuiltinDefault",
+  "net/minecraft/class_3255.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#superIsBuiltin",
+  "net/minecraft/class_8614.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#superIsBuiltin"
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_3262",
+   "method": "method_56926()Lnet/minecraft/class_9224;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks.location(Lnet/minecraft/class_3262;)Lnet/minecraft/class_9224;"
+  }
+ ]
 }
