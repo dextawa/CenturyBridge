@@ -143,6 +143,10 @@ public final class Main {
         java.util.Map<String, List<String>> srcInjected = injectedInterfacesOf(args[2]);
         chain.addSourceInjections(srcInjected);
         System.out.println("injected interfaces: " + srcInjected.size() + " vanilla classes in " + args[2] + "'s Fabric API");
+        // and its own class hierarchy: wiring keyed on a Fabric API type serves a call through a subtype of it
+        // (Chain.libSuperOf); the same modules, so a missing directory has already been refused above
+        chain.loadLibraryHierarchy(Path.of("data/runtime/client-" + args[2] + "/.fabric/processedMods"));
+        System.out.println("library hierarchy: " + chain.libSuperOf.size() + " classes in " + args[2] + "'s Fabric API");
         Path outDir = Path.of(args[4]);
         top.dext.centurybridge.data.FullAudit.enabled = true;
         top.dext.centurybridge.data.FullAudit.reset();

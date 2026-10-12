@@ -10,7 +10,29 @@
   "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking$PlayChannelHandler",
   "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayPacketHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking$PlayPacketHandler",
   "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler",
-  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler"
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler",
+  "net/fabricmc/fabric/api/event/server/ServerStartCallback": "top/dext/centurybridge/step/v1_20_5/compat/fapi/event/server/ServerStartCallback",
+  "net/fabricmc/fabric/api/event/server/ServerStopCallback": "top/dext/centurybridge/step/v1_20_5/compat/fapi/event/server/ServerStopCallback",
+  "net/fabricmc/fabric/api/event/server/ServerTickCallback": "top/dext/centurybridge/step/v1_20_5/compat/fapi/event/server/ServerTickCallback",
+  "net/fabricmc/fabric/api/event/world/WorldTickCallback": "top/dext/centurybridge/step/v1_20_5/compat/fapi/event/world/WorldTickCallback",
+  "net/fabricmc/fabric/api/event/client/ClientTickCallback": "top/dext/centurybridge/step/v1_20_5/compat/fapi/event/client/ClientTickCallback",
+  "net/fabricmc/fabric/api/event/client/ItemTooltipCallback": "top/dext/centurybridge/step/v1_20_5/compat/fapi/event/client/ItemTooltipCallback",
+  "net/fabricmc/fabric/api/container/ContainerFactory": "top/dext/centurybridge/step/v1_20_5/compat/fapi/container/ContainerFactory",
+  "net/fabricmc/fabric/api/container/ContainerProviderRegistry": "top/dext/centurybridge/step/v1_20_5/compat/fapi/container/ContainerProviderRegistry",
+  "net/fabricmc/fabric/api/client/screen/ContainerScreenFactory": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/screen/ContainerScreenFactory",
+  "net/fabricmc/fabric/api/client/screen/ScreenProviderRegistry": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/screen/ScreenProviderRegistry",
+  "net/fabricmc/fabric/api/registry/FabricBrewingRecipeRegistry": "top/dext/centurybridge/step/v1_20_5/compat/fapi/registry/FabricBrewingRecipeRegistry",
+  "net/fabricmc/fabric/api/event/registry/RegistryEntryRemovedCallback": "top/dext/centurybridge/step/v1_20_5/compat/fapi/event/registry/RegistryEntryRemovedCallback",
+  "net/fabricmc/fabric/api/mininglevel/v1/MiningLevelManager": "top/dext/centurybridge/step/v1_20_5/compat/fapi/mininglevel/v1/MiningLevelManager",
+  "net/fabricmc/fabric/api/mininglevel/v1/FabricMineableTags": "top/dext/centurybridge/step/v1_20_5/compat/fapi/mininglevel/v1/FabricMineableTags",
+  "net/fabricmc/fabric/api/event/client/player/ClientPlayerBlockBreakEvents": "top/dext/centurybridge/step/v1_20_5/compat/fapi/event/client/player/ClientPlayerBlockBreakEvents",
+  "net/fabricmc/fabric/api/screenhandler/v1/ScreenHandlerRegistry": "top/dext/centurybridge/step/v1_20_5/compat/fapi/screenhandler/v1/ScreenHandlerRegistry",
+  "net/fabricmc/fabric/api/screenhandler/v1/ScreenHandlerRegistry$SimpleClientHandlerFactory": "top/dext/centurybridge/step/v1_20_5/compat/fapi/screenhandler/v1/ScreenHandlerRegistry$SimpleClientHandlerFactory",
+  "net/fabricmc/fabric/api/screenhandler/v1/ScreenHandlerRegistry$ExtendedClientHandlerFactory": "top/dext/centurybridge/step/v1_20_5/compat/fapi/screenhandler/v1/ScreenHandlerRegistry$ExtendedClientHandlerFactory",
+  "net/fabricmc/fabric/api/client/screenhandler/v1/ScreenRegistry": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/screenhandler/v1/ScreenRegistry",
+  "net/fabricmc/fabric/api/client/screenhandler/v1/ScreenRegistry$Factory": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/screenhandler/v1/ScreenRegistry$Factory",
+  "net/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider": "top/dext/centurybridge/step/v1_20_5/compat/fapi/resource/conditions/v1/ConditionJsonProvider",
+  "net/fabricmc/fabric/api/resource/conditions/v1/DefaultResourceConditions": "top/dext/centurybridge/step/v1_20_5/compat/fapi/resource/conditions/v1/DefaultResourceConditions"
  },
  "staticRedirects": {
   "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.registerGlobalReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
@@ -65,7 +87,18 @@
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.createS2CPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.send(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
   "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.send(Lnet/minecraft/class_3222;Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
-  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.getServer(Lnet/minecraft/class_3244;)Lnet/minecraft/server/MinecraftServer;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking"
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.getServer(Lnet/minecraft/class_3244;)Lnet/minecraft/server/MinecraftServer;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/transfer/v1/item/ItemVariant.of(Lnet/minecraft/class_1935;Lnet/minecraft/class_2487;)Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#itemOf",
+  "net/fabricmc/fabric/api/transfer/v1/item/ItemVariant.fromNbt(Lnet/minecraft/class_2487;)Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#itemFromNbt",
+  "net/fabricmc/fabric/api/transfer/v1/item/ItemVariant.fromPacket(Lnet/minecraft/class_2540;)Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#itemFromPacket",
+  "net/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant.of(Lnet/minecraft/class_3611;Lnet/minecraft/class_2487;)Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#fluidOf",
+  "net/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant.fromNbt(Lnet/minecraft/class_2487;)Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#fluidFromNbt",
+  "net/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant.fromPacket(Lnet/minecraft/class_2540;)Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#fluidFromPacket",
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.register(Lnet/minecraft/class_2960;Ljava/util/function/Predicate;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions",
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.get(Lnet/minecraft/class_2960;)Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions",
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.objectMatchesConditions(Lcom/google/gson/JsonObject;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions",
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.conditionsMatch(Lcom/google/gson/JsonArray;Z)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions",
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.conditionMatches(Lcom/google/gson/JsonObject;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions"
  },
  "instanceRedirects": {
   "net/fabricmc/fabric/api/networking/v1/PacketSender.createPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
@@ -77,7 +110,19 @@
   "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
   "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
   "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
-  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders"
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/event/registry/DynamicRegistryView.registerEntryRemoved(Lnet/minecraft/class_5321;Lnet/fabricmc/fabric/api/event/registry/RegistryEntryRemovedCallback;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/registry/CbFapiRegistries",
+  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerFactory.writeScreenOpeningData(Lnet/minecraft/class_3222;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.getNbt()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.toNbt()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.toPacket(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.hasNbt()Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.nbtMatches(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.copyNbt()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.copyOrCreateNbt()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants",
+  "net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage.writeNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages",
+  "net/fabricmc/fabric/api/transfer/v1/item/base/SingleItemStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages",
+  "net/fabricmc/fabric/api/transfer/v1/fluid/base/SingleFluidStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages"
  },
  "superRedirects": {
   "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
@@ -86,7 +131,14 @@
   "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
   "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
   "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
-  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_8710;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket"
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_8710;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.hasNbt()Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#superHasNbt",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.nbtMatches(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#superNbtMatches",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.copyNbt()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#superCopyNbt",
+  "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.copyOrCreateNbt()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#superCopyOrCreateNbt",
+  "net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage.writeNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages#superWriteNbt",
+  "net/fabricmc/fabric/api/transfer/v1/item/base/SingleItemStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages#superReadNbt",
+  "net/fabricmc/fabric/api/transfer/v1/fluid/base/SingleFluidStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages#superReadNbt"
  },
  "overrideHooks": [
   {
@@ -100,6 +152,25 @@
    "old": "onLoginStart(Lnet/minecraft/class_3248;Lnet/minecraft/server/MinecraftServer;Lnet/fabricmc/fabric/api/networking/v1/PacketSender;Lnet/fabricmc/fabric/api/networking/v1/ServerLoginNetworking$LoginSynchronizer;)V",
    "new": "onLoginStart(Lnet/minecraft/class_3248;Lnet/minecraft/server/MinecraftServer;Lnet/fabricmc/fabric/api/networking/v1/LoginPacketSender;Lnet/fabricmc/fabric/api/networking/v1/ServerLoginNetworking$LoginSynchronizer;)V",
    "onlyUnder": "net/fabricmc/fabric/api/networking/v1/ServerLoginConnectionEvents$QueryStart"
+  },
+  {
+   "old": "create(ILnet/minecraft/class_1661;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1703;",
+   "new": "create(ILnet/minecraft/class_1661;Ljava/lang/Object;)Lnet/minecraft/class_1703;",
+   "narrow": true,
+   "onlyUnder": "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType"
+  },
+  {
+   "old": "create(ILnet/minecraft/class_1661;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1703;",
+   "new": "create(ILnet/minecraft/class_1661;Ljava/lang/Object;)Lnet/minecraft/class_1703;",
+   "narrow": true,
+   "onlyUnder": "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType$ExtendedFactory"
+  },
+  {
+   "old": "writeScreenOpeningData(Lnet/minecraft/class_3222;Lnet/minecraft/class_2540;)V",
+   "new": "getScreenOpeningData(Lnet/minecraft/class_3222;)Ljava/lang/Object;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers.getScreenOpeningData(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers$LegacyFactory;Lnet/minecraft/class_3222;)Ljava/lang/Object;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers$LegacyFactory",
+   "onlyUnder": "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerFactory"
   }
  ],
  "abstractFills": [
@@ -107,12 +178,21 @@
    "under": "net/fabricmc/fabric/api/networking/v1/PacketSender",
    "method": "disconnect(Lnet/minecraft/class_2561;)V",
    "call": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders.disconnect(Lnet/fabricmc/fabric/api/networking/v1/PacketSender;Lnet/minecraft/class_2561;)V"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext",
+   "method": "positionMatrix()Lorg/joml/Matrix4f;",
+   "call": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/client/rendering/CbFapiRendering.positionMatrix(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)Lorg/joml/Matrix4f;"
   }
  ],
  "lambdaAdapters": {
   "net/fabricmc/fabric/api/networking/v1/ServerLoginConnectionEvents$QueryStart.onLoginStart(Lnet/minecraft/class_3248;Lnet/minecraft/server/MinecraftServer;Lnet/fabricmc/fabric/api/networking/v1/PacketSender;Lnet/fabricmc/fabric/api/networking/v1/ServerLoginNetworking$LoginSynchronizer;)V": {
    "iface": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLoginQueryStart$Legacy",
    "adapt": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLoginQueryStart#adapt(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLoginQueryStart$Legacy;)Lnet/fabricmc/fabric/api/networking/v1/ServerLoginConnectionEvents$QueryStart;"
+  },
+  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType$ExtendedFactory.create(ILnet/minecraft/class_1661;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1703;": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers$LegacyExtendedFactory",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers#adapt(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers$LegacyExtendedFactory;)Lnet/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType$ExtendedFactory;"
   }
  },
  "callReshapes": {
@@ -124,7 +204,87 @@
     "conv top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLoginQueryStart#loginSender(Lnet/fabricmc/fabric/api/networking/v1/PacketSender;)Lnet/fabricmc/fabric/api/networking/v1/LoginPacketSender;",
     "keep"
    ]
+  },
+  "net/fabricmc/fabric/api/registry/SculkSensorFrequencyRegistry.register(Lnet/minecraft/class_5712;I)V": {
+   "desc": "(Lnet/minecraft/class_5321;I)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/registry/CbFapiRegistries#gameEventKey(Lnet/minecraft/class_5712;)Lnet/minecraft/class_5321;",
+    "keep"
+   ]
+  },
+  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType.create(ILnet/minecraft/class_1661;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1703;": {
+   "desc": "(ILnet/minecraft/class_1661;Ljava/lang/Object;)Lnet/minecraft/class_1703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2 Ljava/lang/Object;"
+   ]
+  },
+  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType$ExtendedFactory.create(ILnet/minecraft/class_1661;Lnet/minecraft/class_2540;)Lnet/minecraft/class_1703;": {
+   "desc": "(ILnet/minecraft/class_1661;Ljava/lang/Object;)Lnet/minecraft/class_1703;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2 Ljava/lang/Object;"
+   ]
   }
  },
- "_networking_basis": "Fabric API 1.20.5 replaced 1.20.4's channel networking (an Identifier plus a raw PacketByteBuf, and FabricPacket/PacketType on top of it) with CustomPayload types registered per phase and direction in PayloadTypeRegistry. compat/fapi gives 1.20.4's API back: a channel is a CbChannelPayload type of its id (impl/networking/CbChannels; registered for the receiving side when a 1.20.4 receiver is registered, the send side written through CbPayloads' fallback where nothing registered it), 1.20.4 handlers are wrapped as 1.20.5 handlers, PacketSender's dropped members dispatch to a mod's own 1.20.4 implementation (CbLegacyPacketSender) or build channel payloads for 1.20.5's senders, and a GenericFutureListener reaches its write's channel future again (CbFapiFutureListenerMixin)."
+ "_s4fapi_networking_basis": "Fabric API 1.20.5 replaced 1.20.4's channel networking (an Identifier plus a raw PacketByteBuf, and FabricPacket/PacketType on top of it) with CustomPayload types registered per phase and direction in PayloadTypeRegistry. compat/fapi gives 1.20.4's API back: a channel is a CbChannelPayload type of its id (impl/networking/CbChannels; registered for the receiving side when a 1.20.4 receiver is registered, the send side written through CbPayloads' fallback where nothing registered it), 1.20.4 handlers are wrapped as 1.20.5 handlers, PacketSender's dropped members dispatch to a mod's own 1.20.4 implementation (CbLegacyPacketSender) or build channel payloads for 1.20.5's senders, and a GenericFutureListener reaches its write's channel future again (CbFapiFutureListenerMixin).",
+ "fieldGetters": {
+  "net/fabricmc/fabric/api/resource/ResourceReloadListenerKeys.LOOT_TABLES:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/CbFapiReloadKeys",
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.CONDITION_ID_KEY:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions"
+ },
+ "depRenames": {
+  "fabric-events-lifecycle-v0": "centurybridge_step_1_20_5@*",
+  "fabric-containers-v0": "centurybridge_step_1_20_5@*"
+ },
+ "_s4fapi_depRenames_basis": "1.20.5's Fabric API (0.97.8) no longer ships fabric-containers-v0 and fabric-events-lifecycle-v0, which 1.20.4's (0.97.3) did (META-INF/jars of both fabric-api jars, core/tools/fapi_modules.py); this step's layer gives their APIs back (compat/fapi container + client/screen, event/{client,server,world}, with their entrypoints' work in CbFapiInit / CbFapiClientInit), so a mod's dependency on them is met by the layer",
+ "superCtorReshapes": {
+  "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType.<init>(Lnet/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType$ExtendedFactory;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType$ExtendedFactory;Lnet/minecraft/class_9139;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers#rawCodec()Lnet/minecraft/class_9139;"
+   ]
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants$Legacy",
+   "requires": [
+    "getNbt()Lnet/minecraft/class_2487;"
+   ],
+   "synth": [
+    {
+     "new": "getComponents()Lnet/minecraft/class_9326;",
+     "call": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants.getComponents(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants$Legacy;)Lnet/minecraft/class_9326;"
+    }
+   ]
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages$LegacyWrite",
+   "requires": [
+    "writeNbt(Lnet/minecraft/class_2487;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/item/base/SingleItemStorage",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages$LegacyRead",
+   "requires": [
+    "readNbt(Lnet/minecraft/class_2487;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/fluid/base/SingleFluidStorage",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages$LegacyRead",
+   "requires": [
+    "readNbt(Lnet/minecraft/class_2487;)V"
+   ],
+   "synth": []
+  }
+ ]
 }

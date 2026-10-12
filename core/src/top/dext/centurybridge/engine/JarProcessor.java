@@ -807,6 +807,9 @@ public final class JarProcessor {
                 String home = chain.instanceRedirectHome(chain.callReshapeIndex, h.getOwner(), nameDesc);
                 if (home == null && layer.decls.containsKey(h.getOwner())) {
                     home = inheritedReshapeHome(h.getOwner(), nameDesc, layer, chain);
+                } else if (home == null && !Chain.minecraftOwned(h.getOwner()) && !h.getOwner().startsWith("java/")) {
+                    home = libraryHome(h.getOwner(), nameDesc, h.getTag() == Opcodes.H_INVOKESTATIC, layer, chain,
+                        chain.callReshapeIndex::containsKey);
                 }
                 if (home == null) {
                     continue;
@@ -931,6 +934,10 @@ public final class JarProcessor {
                 String home = chain.instanceRedirectHome(chain.callReshapeIndex, mi.owner, nameDesc);
                 if (home == null && layer.decls.containsKey(mi.owner)) {
                     home = inheritedReshapeHome(mi.owner, nameDesc, layer, chain);
+                } else if (home == null && !Chain.minecraftOwned(mi.owner) && !mi.owner.startsWith("java/")) {
+                    // a library type (ItemVariant) whose library supertype (TransferVariant) the reshape is keyed on
+                    home = libraryHome(mi.owner, nameDesc, mi.getOpcode() == Opcodes.INVOKESTATIC, layer, chain,
+                        chain.callReshapeIndex::containsKey);
                 }
                 if (home == null) {
                     continue;
@@ -1491,12 +1498,17 @@ public final class JarProcessor {
             if (cur.equals(target)) {
                 return true;
             }
-            String sup = layer.superOf.containsKey(cur) ? layer.superOf.get(cur) : chain.superOf.get(cur);
+            // the jar's own classes, then Minecraft's (source stub, with Fabric API's injected interfaces), then
+            // a library type's (the source release's Fabric API: a mod class under FabricBlockLootTableProvider
+            // is under the LootTableSubProvider it implements)
+            String sup = layer.superOf.containsKey(cur) ? layer.superOf.get(cur)
+                : chain.superOf.containsKey(cur) ? chain.superOf.get(cur) : chain.libSuperOf.get(cur);
             if (sup != null) {
                 todo.add(sup);
             }
             todo.addAll(layer.superOf.containsKey(cur) ? layer.interfacesOf.getOrDefault(cur, List.of())
-                : chain.interfacesOf.getOrDefault(cur, List.of()));
+                : chain.interfacesOf.containsKey(cur) ? chain.interfacesOf.get(cur)
+                : chain.libInterfacesOf.getOrDefault(cur, List.of()));
         }
         return false;
     }
@@ -1681,20 +1693,22 @@ public final class JarProcessor {
     }
 
     /**
-     * For a call naming a class of this jar layer whose member it inherits from a library type (Fabric API's
-     * PacketSender implemented by a mod's sender, FabricBlockLootTableProvider extended by a mod's provider): that
-     * library type, when wiring is keyed on it for the member -- found as the JVM resolves the call. First the
-     * superclass chain to the first class outside the layer (a library class: static and instance members alike);
-     * then, for an instance member whose superclass chain is not a library class declaring the key, the library
-     * interfaces the layer's classes on the way implement, the layer's own interfaces' superinterfaces included (a
-     * default method). The library's own hierarchy is not known here, so only a key on the type the layer reaches
-     * first applies. Null when a class or interface of the layer declares the member (the mod's own), the chain
-     * reaches Minecraft (vanilla wiring answers there), or no such key exists ({@link #inheritedVanillaOwner}
-     * leaves library classes alone because their own members may answer: a key on the member says it changed there).
+     * The library type whose wiring serves a call, found as the JVM resolves it, for a call naming a library
+     * type (Fabric API's ItemVariant.getNbt(), declared by its TransferVariant) or a class of this jar layer
+     * that inherits the member from one (a mod's PacketSender calling this.sendPacket(channel, buf), a mod's
+     * provider subclass calling an inherited FabricLootTableProvider member). First the superclass chain: the
+     * layer's own classes to the first class outside the layer, then that library class and its library
+     * superclasses ({@link Chain#libSuperOf}, the source release's Fabric API); then, for an instance member,
+     * the library interfaces of those classes and of the layer's, and their superinterfaces (a default
+     * method). The first type the wiring keys the member on answers. Null when a class or interface of the
+     * layer declares the member (the mod's own), the chain reaches Minecraft (vanilla wiring answers there),
+     * or no library type on the way is keyed ({@link #inheritedVanillaOwner} leaves library classes alone
+     * because their own members may answer: a key on the member says it changed there).
      */
-    private static String libraryHome(String owner, String member, boolean isStatic, LayerIndex layer,
+    private static String libraryHome(String owner, String member, boolean isStatic, LayerIndex layer, Chain chain,
                                       java.util.function.Predicate<String> keyed) {
         List<String> layerClasses = new ArrayList<>();
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
             if (Chain.minecraftOwned(cur)) {
@@ -1702,8 +1716,13 @@ public final class JarProcessor {
             }
             Set<String> d = layer.decls.get(cur);
             if (d == null) {
-                if (!cur.startsWith("java/") && keyed.test(cur + "." + member)) {
-                    return cur;
+                // the first class outside the layer: a library class and its library superclasses
+                for (String c = cur; c != null && !c.startsWith("java/") && !Chain.minecraftOwned(c) && hops < 64;
+                        c = chain.libSuperOf.get(c), hops++) {
+                    if (keyed.test(c + "." + member)) {
+                        return c;
+                    }
+                    todo.addAll(chain.libInterfacesOf.getOrDefault(c, List.of()));
                 }
                 break;
             }
@@ -1713,10 +1732,9 @@ public final class JarProcessor {
             layerClasses.add(cur);
             cur = layer.superOf.get(cur);
         }
-        if (isStatic || layerClasses.isEmpty()) {
-            return null; // a static interface method is not inherited; a library owner names its member itself
+        if (isStatic) {
+            return null; // a static interface method is not inherited
         }
-        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
         for (String c : layerClasses) {
             todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
         }
@@ -1731,6 +1749,7 @@ public final class JarProcessor {
                 if (keyed.test(t + "." + member)) {
                     return t;
                 }
+                todo.addAll(chain.libInterfacesOf.getOrDefault(t, List.of()));
                 continue;
             }
             if (d.contains(member)) {
@@ -1783,8 +1802,9 @@ public final class JarProcessor {
                     cur = null; // the JDK ends the chain (it declares no game member): on to the interfaces
                     break;
                 }
-                // a library or another jar: only a reshape keyed on that class itself applies
-                return chain.callReshapeIndex.containsKey(cur + "." + member) ? cur : null;
+                // a library or another jar: a reshape keyed on that library type, found through its own
+                // hierarchy (Chain.libSuperOf), applies
+                return libraryHome(cur, member, false, layer, chain, chain.callReshapeIndex::containsKey);
             }
             if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
                 return null; // the mod's own member (a same-shape one sits behind a convertHooks bridge)
@@ -1821,6 +1841,7 @@ public final class JarProcessor {
                 if (!t.startsWith("java/") && chain.callReshapeIndex.containsKey(t + "." + member)) {
                     return t;
                 }
+                todo.addAll(chain.libInterfacesOf.getOrDefault(t, List.of())); // and its library superinterfaces
                 continue;
             }
             if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
@@ -2635,7 +2656,9 @@ public final class JarProcessor {
                         vanillaRoots = vanillaAncestors(superOf[0], itfs, layer);
                     }
                     for (Chain.AdapterHook h : chain.adapterHooks) {
-                        if (declaredShapes.containsAll(h.requires) && chain.sourceSubtype(vanillaRoots, h.under)) {
+                        // under a Minecraft type or a library (Fabric API) one: isUnder walks the jar, the
+                        // source stub with its injected interfaces, and the source Fabric API's hierarchy
+                        if (declaredShapes.containsAll(h.requires) && isUnder(superOf[0], itfs, h.under, layer, chain)) {
                             adapterApply.add(h);
                             for (String r : h.requires) {
                                 top.dext.centurybridge.data.FullAudit.record(cls + "." + r, "adapter-hooked");
@@ -2859,7 +2882,7 @@ public final class JarProcessor {
                                 // type (libraryHome: a mod's PacketSender calling
                                 // this.sendPacket(channel, buf))
                                 String lib = name.equals("<init>") ? null
-                                    : libraryHome(owner, name + desc, op == Opcodes.INVOKESTATIC, layer, libraryKeyed);
+                                    : libraryHome(owner, name + desc, op == Opcodes.INVOKESTATIC, layer, chain, libraryKeyed);
                                 final String lsite = lib != null ? lib + "." + name + desc : site;
                                 // a super call into a library type's default (a mod's PacketSender implementation
                                 // calling PacketSender.super.sendPacket(..)) takes the super redirect: the default
@@ -3316,7 +3339,7 @@ public final class JarProcessor {
                                     // through this jar's classes too (libraryHome)
                                     boolean hStatic = h.getTag() == Opcodes.H_INVOKESTATIC;
                                     String lib = h.getName().equals("<init>") ? null
-                                        : libraryHome(hOwner, h.getName() + h.getDesc(), hStatic, layer, libraryKeyed);
+                                        : libraryHome(hOwner, h.getName() + h.getDesc(), hStatic, layer, chain, libraryKeyed);
                                     final String lsite = lib != null ? lib + "." + h.getName() + h.getDesc() : site;
                                     String lrt = chain.instanceRedirects.get(lsite);
                                     if (lrt != null && !hStatic && !h.getName().equals("<init>")) {

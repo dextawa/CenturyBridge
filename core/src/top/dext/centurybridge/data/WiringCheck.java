@@ -1030,6 +1030,11 @@ public final class WiringCheck {
     }
 
     private boolean isSubtype(String sub, String sup) {
+        if (sup.equals("java/lang/Object")) {
+            // every class is; the walk below could not prove it for a class whose supertypes leave the
+            // stub (PacketByteBuf extends netty's ByteBuf)
+            return true;
+        }
         java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(sub));
         java.util.Set<String> seen = new java.util.HashSet<>();
         while (!todo.isEmpty()) {

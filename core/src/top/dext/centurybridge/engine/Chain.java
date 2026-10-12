@@ -1661,6 +1661,50 @@ public final class Chain {
     public final java.util.Map<String, String> targetSuperOf = new java.util.HashMap<>();
     public final java.util.Map<String, java.util.List<String>> targetInterfacesOf = new java.util.HashMap<>();
 
+    /**
+     * The source release's library hierarchy outside Minecraft: every class of its Fabric API modules
+     * ({@link #loadLibraryHierarchy}), class -> superclass and class -> direct interfaces. A mod calls a
+     * library member through whatever library type it holds (ItemVariant.getNbt() for TransferVariant's,
+     * SingleItemStorage.writeNbt for SingleVariantStorage's): wiring keyed on the declaring library type
+     * serves such a call where the JVM resolves it, through this hierarchy (JarProcessor's library homes).
+     */
+    public final java.util.Map<String, String> libSuperOf = new java.util.HashMap<>();
+    public final java.util.Map<String, java.util.List<String>> libInterfacesOf = new java.util.HashMap<>();
+
+    /**
+     * Read the class headers of a release's Fabric API modules (its processedMods: the jars the loader
+     * extracts) into {@link #libSuperOf} / {@link #libInterfacesOf}; Minecraft's own classes in them are
+     * skipped (the stub has those). Missing directory: nothing is read.
+     */
+    public void loadLibraryHierarchy(Path processedMods) throws IOException {
+        if (!Files.isDirectory(processedMods)) {
+            return;
+        }
+        java.util.List<Path> jars;
+        try (var s = Files.list(processedMods)) {
+            jars = s.filter(p -> p.toString().endsWith(".jar")).sorted().toList();
+        }
+        for (Path jar : jars) {
+            try (var z = new java.util.zip.ZipFile(jar.toFile())) {
+                for (var en : java.util.Collections.list(z.entries())) {
+                    String n = en.getName();
+                    if (!n.endsWith(".class") || n.startsWith("net/minecraft/") || n.startsWith("META-INF/")) {
+                        continue;
+                    }
+                    var cr = new org.objectweb.asm.ClassReader(z.getInputStream(en).readAllBytes());
+                    String name = cr.getClassName();
+                    if (cr.getSuperName() != null) {
+                        libSuperOf.putIfAbsent(name, cr.getSuperName());
+                    }
+                    String[] itfs = cr.getInterfaces();
+                    if (itfs.length > 0) {
+                        libInterfacesOf.putIfAbsent(name, java.util.List.of(itfs));
+                    }
+                }
+            }
+        }
+    }
+
     public static boolean intermediaryMethod(String name) {
         return METHOD_PAT.matcher(name).matches();
     }

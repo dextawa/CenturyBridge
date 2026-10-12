@@ -69,7 +69,11 @@
     "CbBlockBannerTagsMixin",
     "CbBlockLoomAccessor",
     "CbPayloadCodecMixin",
-    "CbFapiFutureListenerMixin"
+    "CbFapiFutureListenerMixin",
+    "CbFapiContainerPlayerMixin",
+    "CbFapiRegistryRemovalMixin",
+    "CbFapiConditionTagsMixin",
+    "CbFapiConditionReloadMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",
