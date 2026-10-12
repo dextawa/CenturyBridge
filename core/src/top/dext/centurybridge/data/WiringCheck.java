@@ -32,7 +32,7 @@ import org.objectweb.asm.tree.MethodNode;
  * that table, so they compare verbatim.
  *
  * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects, interfaceCallRedirects,
- * fieldRedirects, fieldGetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
+ * fieldRedirects, fieldGetters, staticFieldSetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
@@ -423,6 +423,10 @@ public final class WiringCheck {
             Sym s = Sym.field(k);
             wantMethod("fieldGetters " + k, v, s.name, methodDesc("()" + s.desc));
         });
+        obj(root, "staticFieldSetters", (k, v) -> {
+            Sym s = Sym.field(k);
+            wantMethod("staticFieldSetters " + k, v, s.name, methodDesc("(" + s.desc + ")V"));
+        });
         obj(root, "instanceFieldGetters", (k, v) -> {
             Sym s = Sym.field(k);
             wantMethod("instanceFieldGetters " + k, v, s.name, methodDesc("(L" + s.owner + ";)" + s.desc));
@@ -806,6 +810,40 @@ public final class WiringCheck {
                         problems.add(where + " bridge without an adapter interface");
                     } else if (an.methods.stream().noneMatch(m -> m.name.equals(oname) && m.desc.equals(odesc))) {
                         problems.add(where + " adapter " + adapter + " does not declare the old shape " + oname + odesc);
+                    }
+                }
+                if (o.has("superBridge")) {
+                    // super calls through a bridge: the static, and the interface the class gets with its
+                    // accessors -- it must declare cb$super$<shape> for every accessor shape, nothing else
+                    String b = o.get("superBridge").getAsString();
+                    int paren = b.indexOf('(');
+                    int dot = b.lastIndexOf('.', paren);
+                    wantMethod(where + " superBridge", b.substring(0, dot) + "#" + b.substring(dot + 1, paren),
+                        null, methodDesc(b.substring(paren)));
+                    String access = o.has("superAccess") ? o.get("superAccess").getAsString() : null;
+                    ClassNode sn = access == null ? null : classes.get(access);
+                    if (sn == null || (sn.access & Opcodes.ACC_INTERFACE) == 0) {
+                        problems.add(where + " superBridge without a superAccess interface");
+                    } else {
+                        java.util.Set<String> want = new java.util.HashSet<>();
+                        if (o.has("superAccessors")) {
+                            for (var a : o.getAsJsonArray("superAccessors")) {
+                                String s = a.getAsString();
+                                int p = s.indexOf('(');
+                                want.add(top.dext.centurybridge.engine.Chain.SUPER_ACCESSOR_PREFIX + s.substring(0, p)
+                                    + methodDesc(s.substring(p)));
+                            }
+                        }
+                        java.util.Set<String> have = new java.util.HashSet<>();
+                        for (var m : sn.methods) {
+                            if ((m.access & Opcodes.ACC_ABSTRACT) != 0) {
+                                have.add(m.name + m.desc);
+                            }
+                        }
+                        if (!have.equals(want)) {
+                            problems.add(where + " superAccess " + access + " declares " + have + ", the accessors are " + want);
+                        }
+                        checked++;
                     }
                 }
             }

@@ -62,6 +62,14 @@ public final class Chain {
      *  (a static-field target would evaluate at Statics class-init, before the registry binds) */
     public final java.util.Map<String, String> fieldGetters = new java.util.HashMap<>();
     /**
+     * PUTSTATIC "owner.name:desc" -> "runtimeClass[#member]": a static field write rewritten to a
+     * static setter(value)V, the write side of {@link #fieldGetters} -- for a public static field V
+     * left writable whose type changed or that became final (1.20.5 TrialSpawnerConfig.MAP_CODEC, a
+     * mutable MapCodec in 1.20.4, is the final Codec CODEC): the setter takes what the mod stores and
+     * gives it the effect the write had in V.
+     */
+    public final java.util.Map<String, String> staticFieldSetters = new java.util.HashMap<>();
+    /**
      * the data-driven types the target's CenturyBridge runtime registers (item model types,
      * tint sources...): converted resources may name them only where the runtime has them
      */
@@ -382,7 +390,34 @@ public final class Chain {
          * wrap / bridge / frames; a guard may be combined (it is checked after the type test).
          */
         public boolean narrow;
+        /**
+         * Super calls through a bridge ("superBridge": "Owner.name(desc)", "superAccess",
+         * "superAccessors"), for an old contract the new shapes only meet together: 1.20.4's
+         * Block.use was, in 1.20.5 terms, useItemOn and then -- when the item interaction passes
+         * to the default one on the main hand -- useWithoutItem. A mod's super.old(..) (an
+         * INVOKESPECIAL of the old shape on a vanilla class, in a class under the hook) becomes
+         * INVOKESTATIC of this static, the receiver first -- typed as {@link #superAccess} -- then
+         * the old arguments; it answers the old return type. A static cannot make a super call, so
+         * the class gets the {@link #superAccess} interface and, for each shape of
+         * {@link #superAccessors}, a public {@code cb$super$<name><desc>} doing
+         * {@code super.<name><desc>} (INVOKESPECIAL on its superclass): the bridge reaches super's
+         * implementations through them.
+         * <p>
+         * One accessor name serves the whole hierarchy because every copy resolves to the same
+         * implementation: a class gets accessors only for a super call the rewrite takes, that is
+         * one no class between it and the vanilla class redeclares the old shape for; the hooks
+         * synthesize the new shapes only in classes declaring the old one, so no class in between
+         * declares them either, and whichever copy a virtual call picks, its INVOKESPECIAL
+         * resolves up to the vanilla implementation.
+         */
+        public String superBridgeOwner, superBridgeName, superBridgeDesc;
+        public String superAccess;
+        /** "name(desc)" of each new shape {@link #superAccess} reaches super's implementation of */
+        public final java.util.List<String> superAccessors = new java.util.ArrayList<>();
     }
+
+    /** the accessor a {@link OverrideHook#superAccess} interface declares for one super shape */
+    public static final String SUPER_ACCESSOR_PREFIX = "cb$super$";
 
     public final java.util.List<OverrideHook> overrideHooks = new java.util.ArrayList<>();
 
@@ -1772,6 +1807,12 @@ public final class Chain {
                     c.fieldGetters.put(k, fg.get(k).getAsString());
                 }
             }
+            if (root.has("staticFieldSetters")) {
+                var fs = root.getAsJsonObject("staticFieldSetters");
+                for (String k : fs.keySet()) {
+                    c.staticFieldSetters.put(k, fs.get(k).getAsString());
+                }
+            }
             if (root.has("interfaceized")) {
                 for (var el : root.getAsJsonArray("interfaceized")) {
                     c.interfaceized.add(el.getAsString());
@@ -1844,6 +1885,26 @@ public final class Chain {
                         h.bridgeName = bsig[0];
                         h.bridgeDesc = bsig[1];
                         h.adapter = o.get("adapter").getAsString();
+                    }
+                    if (o.has("superBridge")) {
+                        String sb = o.get("superBridge").getAsString();
+                        int dot = sb.lastIndexOf('.', sb.indexOf('('));
+                        h.superBridgeOwner = sb.substring(0, dot);
+                        String[] ssig = splitSig(sb.substring(dot + 1));
+                        h.superBridgeName = ssig[0];
+                        h.superBridgeDesc = ssig[1];
+                        h.superAccess = o.has("superAccess") ? o.get("superAccess").getAsString() : null;
+                        if (o.has("superAccessors")) {
+                            for (var acc : o.getAsJsonArray("superAccessors")) {
+                                h.superAccessors.add(acc.getAsString());
+                            }
+                        }
+                        String want = h.superAccess == null ? null : "(L" + h.superAccess + ";" + h.oldDesc.substring(1);
+                        if (want == null || !h.superBridgeDesc.equals(want) || h.superCalls) {
+                            throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
+                                + ": superBridge needs superAccess and takes (superAccess, old arguments) to the old return"
+                                + " (" + want + "), and replaces superCalls rewrite");
+                        }
                     }
                     c.overrideHooks.add(h);
                 }
