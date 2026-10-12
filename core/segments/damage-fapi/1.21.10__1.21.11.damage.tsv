@@ -27,6 +27,22 @@ override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$Effects
 override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_6012;)V	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_5195;)V	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearMusic	()V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setParticleConfig	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setParticleConfig	(Lnet/minecraft/class_4761;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearParticleConfig	()V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAmbientSound	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAmbientSound	(Lnet/minecraft/class_6880;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearAmbientSound	()V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMoodSound	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMoodSound	(Lnet/minecraft/class_4968;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearMoodSound	()V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAdditionsSound	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setAdditionsSound	(Lnet/minecraft/class_4967;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearAdditionsSound	()V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Ljava/util/Optional;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_6012;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setMusic	(Lnet/minecraft/class_5195;)V	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearMusic	()V	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext			ABSTRACT	class public abstract interface extends java/lang/Object
 implement-interface	net/fabricmc/fabric/api/client/command/v2/FabricClientCommandSource			ABSTRACT	class public abstract interface extends java/lang/Object
 implement-interface	net/fabricmc/fabric/api/client/datagen/v1/builder/SoundTypeBuilder			ABSTRACT	class public abstract interface extends java/lang/Object
@@ -37,6 +53,8 @@ call	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitDouble	(Lnet
 call	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitEnum	(Lnet/minecraft/class_1928$class_4313;Lnet/minecraft/class_1928$class_4314;)V	METHOD	method visitEnum(Lnet/minecraft/class_12279;)V public
 override+super	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitDouble	(Lnet/minecraft/class_1928$class_4313;Lnet/minecraft/class_1928$class_4314;)V	METHOD	method visitDouble(Lnet/minecraft/class_12279;)V public
 override+super	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitEnum	(Lnet/minecraft/class_1928$class_4313;Lnet/minecraft/class_1928$class_4314;)V	METHOD	method visitEnum(Lnet/minecraft/class_12279;)V public
+call-inherited	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitDouble	(Lnet/minecraft/class_1928$class_4313;Lnet/minecraft/class_1928$class_4314;)V	METHOD	method visitDouble(Lnet/minecraft/class_12279;)V public
+call-inherited	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	visitEnum	(Lnet/minecraft/class_1928$class_4313;Lnet/minecraft/class_1928$class_4314;)V	METHOD	method visitEnum(Lnet/minecraft/class_12279;)V public
 call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createBooleanRule	(Z)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
 call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createBooleanRule	(ZLjava/util/function/BiConsumer;)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
 call-static	net/fabricmc/fabric/api/gamerule/v1/GameRuleFactory	createIntRule	(I)Lnet/minecraft/class_1928$class_4314;	CLASS	class gone
@@ -82,10 +100,13 @@ implement-interface	net/fabricmc/fabric/api/gamerule/v1/rule/ValidateableRule			
 implement-interface	net/fabricmc/fabric/api/renderer/v1/Renderer			ABSTRACT	class public abstract interface extends java/lang/Object
 call	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	fromVanilla	([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	fromVanilla	([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	fromVanilla	([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
 implement-interface	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	fromVanilla	([II)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	toVanilla	([II)V	METHOD	method not declared on the owner
 get-static	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	VANILLA_VERTEX_STRIDE	I	FIELD	field not declared on the owner
 get-static	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	VANILLA_QUAD_STRIDE	I	FIELD	field not declared on the owner
 implement-interface	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView			ABSTRACT	class public abstract interface extends java/lang/Object
+call-inherited	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	toVanilla	([II)V	METHOD	method not declared on the owner
 call-static	net/fabricmc/fabric/api/renderer/v1/model/ModelBakeSettingsHelper	asQuadTransform	(Lnet/minecraft/class_3665;Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadTransform;	METHOD	method asQuadTransform(Lnet/minecraft/class_3665;Lnet/fabricmc/fabric/api/renderer/v1/sprite/SpriteFinderGetter;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadTransform; public static
