@@ -15,10 +15,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * (1.20.1 also cleared it around its own deletions; those go through 1.20.2's code, which passes false.)
  */
 @Mixin(net.minecraft.class_342.class)
-public abstract class CbGuiEditBoxBridge {
+public abstract class CbGuiEditBoxBridge implements top.dext.centurybridge.rt.v1_20_2.CbLegacyEditBoxShift {
 
     @Unique
     private boolean cb$shiftPressed;
+
+    /** the state, for the cursor hooks' frameDefaults (a 1.20.1 override's super call with no frame) */
+    @Override
+    public boolean cb$legacyShiftPressed() {
+        return this.cb$shiftPressed;
+    }
 
     @Inject(method = "method_25404", at = @At("HEAD"))
     private void cb$keyShift(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {

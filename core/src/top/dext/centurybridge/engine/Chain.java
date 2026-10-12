@@ -1119,7 +1119,9 @@ public final class Chain {
      *     type. The call is made at the op's place in the sequence, before the invoke.</li>
      * <li>{@code conv OWNER#name(desc)R} -- push the next old argument and run
      *     the static converter on it; its return type is the new argument.
-     *     The converter's parameter type must equal the old argument type.</li>
+     *     The converter's parameter type must equal the old argument type -- or be Object / Object[]
+     *     where the old type is a reference / reference array the shim cannot name (a package-private
+     *     class, {@link #nameableSupertype}).</li>
      * <li>{@code push OWNER#name()R} -- call a zero-argument static supplier;
      *     consumes no old argument (a new parameter with a default).</li>
      * <li>{@code keep:N} / {@code conv:I,J,... OWNER#name(desc)R} -- the
@@ -1568,7 +1570,7 @@ public final class Chain {
                             + " parameter(s) but consumes " + from.length + " old argument(s)");
                     }
                     for (int i = 0; i < p.length; i++) {
-                        if (!p[i].equals(old[from[i]])) {
+                        if (!p[i].equals(old[from[i]]) && !nameableSupertype(p[i], old[from[i]])) {
                             throw new IllegalArgumentException(where + ": op '" + t + "' parameter " + i + " is "
                                 + p[i].getDescriptor() + " but old argument " + from[i] + " is " + old[from[i]].getDescriptor());
                         }
@@ -1617,6 +1619,20 @@ public final class Chain {
                 + java.util.Arrays.asList(want));
         }
         return new CtorReshape(newDesc, ops);
+    }
+
+    /**
+     * Whether a converter may take {@code param} for an old argument of type {@code arg} that it cannot
+     * name: Object for any reference, Object[] for an array of references (a package-private element type
+     * such as 1.20.1 CompositeEntryBase.compose's ComposableEntryContainer[], which the shim cannot write
+     * in Java -- the verifier passes the argument by assignment, as it passes the old call's).
+     */
+    static boolean nameableSupertype(org.objectweb.asm.Type param, org.objectweb.asm.Type arg) {
+        if (param.getDescriptor().equals("Ljava/lang/Object;")) {
+            return arg.getSort() == org.objectweb.asm.Type.OBJECT || arg.getSort() == org.objectweb.asm.Type.ARRAY;
+        }
+        return param.getDescriptor().equals("[Ljava/lang/Object;") && arg.getSort() == org.objectweb.asm.Type.ARRAY
+            && arg.getDimensions() == 1 && arg.getElementType().getSort() == org.objectweb.asm.Type.OBJECT;
     }
 
     /**

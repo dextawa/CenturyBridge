@@ -66,7 +66,10 @@ def main():
     climb, segments = sys.argv[1], sys.argv[2]
     out = sys.argv[3] if len(sys.argv) > 3 else None
     steps_dir = os.path.join(climb, "steps")
-    order = sorted(os.listdir(steps_dir), key=lambda s: [int(x) if x.isdigit() else x for x in re.split(r"[._]", s)])
+    releases = ["1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6", "1.21", "1.21.1", "1.21.2", "1.21.3",
+                "1.21.4", "1.21.5", "1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.10", "1.21.11", "26.1", "26.1.1",
+                "26.1.2", "26.2"]
+    order = sorted(os.listdir(steps_dir), key=lambda s: releases.index(s.split("__")[0]) if s.split("__")[0] in releases else 99)
     rows = []
     for step in order:
         rep = os.path.join(steps_dir, step, "report.md")
