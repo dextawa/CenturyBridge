@@ -87,7 +87,7 @@ def resolve(classes, owner, name, desc):
                 return None
             seen.add(c)
             k = classes[c]
-            for n, d, a in k.fields:
+            for n, d, a, *_ in k.fields:
                 if n == name and d == desc:
                     return c, a
             for i in k.interfaces:
