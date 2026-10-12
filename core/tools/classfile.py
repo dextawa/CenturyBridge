@@ -31,6 +31,7 @@ class ClassInfo:
     interfaces: list
     fields: list = field(default_factory=list)   # (name, desc, access, generic signature or None)
     methods: list = field(default_factory=list)  # Method
+    signature: str = None  # the class's generic signature (type parameters, generic supertypes)
 
 
 def read(b, code=False):
@@ -98,6 +99,12 @@ def read(b, code=False):
                 info.fields.append((nm, ds, a, sig))
             else:
                 info.methods.append(Method(nm, ds, a, body, sig))
+    for _ in range(u2(i)):
+        an = utf8.get(u2(i + 2))
+        ln = struct.unpack(">I", b[i + 4:i + 8])[0]
+        if an == "Signature" and ln == 2:
+            info.signature = utf8.get(u2(i + 8))
+        i += 6 + ln
     return info
 
 
