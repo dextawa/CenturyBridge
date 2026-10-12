@@ -42,7 +42,9 @@
   "net/minecraft/class_4482.method_35292(Lnet/minecraft/class_2487;IZ)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive",
   "net/minecraft/class_4482.method_21859()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive",
   "net/minecraft/class_2624.method_17488(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers",
-  "net/minecraft/class_2573.method_16842(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers"
+  "net/minecraft/class_2573.method_16842(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockContainers",
+  "net/minecraft/class_2806.method_12154(Ljava/util/concurrent/Executor;Lnet/minecraft/class_3218;Lnet/minecraft/class_2794;Lnet/minecraft/class_3485;Lnet/minecraft/class_3227;Ljava/util/function/Function;Ljava/util/List;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks",
+  "net/minecraft/class_2806.method_20612(Lnet/minecraft/class_3218;Lnet/minecraft/class_3485;Lnet/minecraft/class_3227;Ljava/util/function/Function;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks"
  },
  "overrideHooks": [
   {
@@ -485,6 +487,14 @@
    "onlyUnder": "net/minecraft/class_2631",
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull.gameProfile(Lnet/minecraft/class_9296;)Lcom/mojang/authlib/GameProfile;",
    "basis": "the old override gets the wrapped profile; its super call is reshaped (CbBlockSkull)"
+  },
+  {
+   "old": "method_17910(Lnet/minecraft/class_1923;Lnet/minecraft/class_2487;)V",
+   "new": "method_17910(Lnet/minecraft/class_1923;Lnet/minecraft/class_2487;)Ljava/util/concurrent/CompletableFuture;",
+   "onlyUnder": "net/minecraft/class_3977",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks$LegacyWrite",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks.write(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks$LegacyWrite;Lnet/minecraft/class_1923;Lnet/minecraft/class_2487;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "1.20.4's write answered nothing to wait on: the new shape runs the override and answers a completed future; its super call is reshaped (callReshapes)"
   }
  ],
  "fieldGetters": {
@@ -889,12 +899,73 @@
     "keep"
    ],
    "basis": "the entry list wrapped as SuspiciousStewEffects (CbBlockSuspicious)"
+  },
+  "net/minecraft/class_3977.<init>(Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;Z)V": {
+   "desc": "(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;Z)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks#chunkStorageInfo()Lnet/minecraft/class_9240;",
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "the storage described as 1.20.4's worker was named, \"chunk\"; no level was named (CbBlockChunks)"
+  },
+  "net/minecraft/class_4698.<init>(Ljava/nio/file/Path;ZLjava/lang/String;)V": {
+   "desc": "(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Z)V",
+   "ops": [
+    "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks#ioWorkerInfo(Ljava/lang/String;)Lnet/minecraft/class_9240;",
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "the worker's name as the storage type its mailbox is named after, as 1.20.4 named it (CbBlockChunks)"
+  },
+  "net/minecraft/class_2861.<init>(Ljava/nio/file/Path;Ljava/nio/file/Path;Z)V": {
+   "desc": "(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Ljava/nio/file/Path;Z)V",
+   "ops": [
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks#regionFileInfo(Ljava/nio/file/Path;)Lnet/minecraft/class_9240;",
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "a region file opened on its own, labelled with its folder's name; the info only labels JFR events (CbBlockChunks)"
+  },
+  "net/minecraft/class_2861.<init>(Ljava/nio/file/Path;Ljava/nio/file/Path;Lnet/minecraft/class_4486;Z)V": {
+   "desc": "(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Ljava/nio/file/Path;Lnet/minecraft/class_4486;Z)V",
+   "ops": [
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks#regionFileInfo(Ljava/nio/file/Path;)Lnet/minecraft/class_9240;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "as RegionFile(path, externalDir, sync) (CbBlockChunks)"
+  },
+  "net/minecraft/class_4180.<init>(Ljava/nio/file/Path;Ljava/util/function/Function;Ljava/util/function/Function;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_4284;ZLnet/minecraft/class_5455;Lnet/minecraft/class_5539;)V": {
+   "desc": "(Lnet/minecraft/class_9172;Ljava/util/function/Function;Ljava/util/function/Function;Lnet/minecraft/class_5455;Lnet/minecraft/class_5539;)V",
+   "ops": [
+    "conv:0,3,4,5 top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks#sectionStorage(Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_4284;Z)Lnet/minecraft/class_9172;",
+    "keep:1",
+    "keep:2",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "the region storage 1.20.4's constructor built from the path, fixer, fix type and sync flag, its worker named after the folder (CbBlockChunks)"
+  },
+  "net/minecraft/class_5565.<init>(Lnet/minecraft/class_3218;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLjava/util/concurrent/Executor;)V": {
+   "desc": "(Lnet/minecraft/class_9172;Lnet/minecraft/class_3218;Ljava/util/concurrent/Executor;)V",
+   "ops": [
+    "conv:0,1,2,3 top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks#entityStorage(Lnet/minecraft/class_3218;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;Z)Lnet/minecraft/class_9172;",
+    "keep:0",
+    "keep:4"
+   ],
+   "basis": "the level's \"entities\" region storage 1.20.4's constructor built, upgrading as ENTITY_CHUNK (CbBlockChunks)"
   }
  },
  "instanceFieldGetters": {
   "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
   "net/minecraft/class_2621.field_12037:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
-  "net/minecraft/class_8172.field_47156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot"
+  "net/minecraft/class_8172.field_47156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
+  "net/minecraft/class_5565.field_27231:Lcom/mojang/datafixers/DataFixer;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockChunks"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLoot",
@@ -1018,6 +1089,7 @@
  },
  "classRenames": {
   "net/minecraft/class_7917$class_8751": "net/minecraft/class_9298$class_8751",
-  "net/minecraft/class_8172$class_8526": "net/minecraft/class_8526"
+  "net/minecraft/class_8172$class_8526": "net/minecraft/class_8526",
+  "net/minecraft/class_2806$class_2808": "net/minecraft/class_2808"
  }
 }

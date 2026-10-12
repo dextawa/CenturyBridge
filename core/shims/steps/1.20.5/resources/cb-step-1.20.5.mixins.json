@@ -24,7 +24,10 @@
     "CbRestWitherBossMixin",
     "CbRestArmadilloMixin",
     "CbRestMobMixin",
-    "CbRestThrownTridentMixin"
+    "CbRestThrownTridentMixin",
+    "CbBlockServerStorageAccessor",
+    "CbBlockEntityStorageAccessor",
+    "CbBlockRegionStorageAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin",
