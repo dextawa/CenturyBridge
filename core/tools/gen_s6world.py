@@ -683,6 +683,71 @@ def enchanting(f, vc):
                  "a 1.20.6 override through this interface"})
 
 
+# ------------------------------------------------------------------------------------------------ projectiles
+def projectiles(f, vc):
+    P, AR = RT + "/CbEntityProjectiles", RT + "/CbEntityArrows"
+    ET, LV, LE, ST, V3 = L("class_1299"), L("class_1937"), L("class_1309"), L("class_1799"), L("class_243")
+    # hurting projectiles: 1.20.6's (dx, dy, dz) is 1.21's direction, then 1.20.6's power vector and rest
+    post = P + "#legacyPower(" + L("class_1668") + "DDD)V"
+    direction = "conv:%d,%d,%d " + P + "#direction(DDD)" + V3
+    hurting = (("class_1668", ET + "DDDDDD" + LV, ET + "DDD" + V3 + LV, ["keep:0", "keep:1", "keep:2", "keep:3", direction % (4, 5, 6), "keep:7"], [4, 5, 6]),
+               ("class_1668", ET + LE + "DDD" + LV, ET + LE + V3 + LV, ["keep:0", "keep:1", direction % (2, 3, 4), "keep:5"], [2, 3, 4]),
+               ("class_3855", ET + "DDDDDD" + LV, ET + "DDD" + V3 + LV, ["keep:0", "keep:1", "keep:2", "keep:3", direction % (4, 5, 6), "keep:7"], [4, 5, 6]),
+               ("class_3855", ET + LE + "DDD" + LV, ET + LE + V3 + LV, ["keep:0", "keep:1", direction % (2, 3, 4), "keep:5"], [2, 3, 4]),
+               ("class_1670", LV + LE + "DDD", LV + LE + V3, ["keep:0", "keep:1", direction % (2, 3, 4)], [2, 3, 4]),
+               ("class_1674", LV + LE + "DDDI", LV + LE + V3 + "I", ["keep:0", "keep:1", direction % (2, 3, 4), "keep:5"], [2, 3, 4]),
+               ("class_1677", LV + LE + "DDD", LV + LE + V3, ["keep:0", "keep:1", direction % (2, 3, 4)], [2, 3, 4]),
+               ("class_1677", LV + "DDDDDD", LV + "DDD" + V3, ["keep:0", "keep:1", "keep:2", "keep:3", direction % (4, 5, 6)], [4, 5, 6]),
+               ("class_1687", LV + LE + "DDD", LV + LE + V3, ["keep:0", "keep:1", direction % (2, 3, 4)], [2, 3, 4]),
+               ("class_8956", LV + "DDDDDD", LV + "DDD" + V3, ["keep:0", "keep:1", "keep:2", "keep:3", direction % (4, 5, 6)], [4, 5, 6]))
+    for owner, old, new, ops, dirs in hurting:
+        f.ctor(MC + owner + ".<init>(" + old + ")V", "(" + new + ")V", ops,
+               "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and "
+               "rest (CbEntityProjectiles.legacyPower)", post=post, post_args=dirs)
+    for axis, field in (("X", "field_7601"), ("Y", "field_7600"), ("Z", "field_7599")):
+        f.put("instanceFieldGetters", MC + "class_1668." + field + ":D", P + "#" + axis.lower() + "Power")
+        f.put("instanceFieldSetters", MC + "class_1668." + field + ":D", P + "#set" + axis + "Power")
+    # wind charges: 1.20.6's damage calculators as facades; explode() at the charge's position
+    f.put("classRenames", MC + "class_9236$class_9237", FAC + "/class_9236$class_9237")
+    f.put("classRenames", MC + "class_8956$class_9036", FAC + "/class_8956$class_9036")
+    f.put("fieldGetters", MC + "class_9236.field_50137:" + L("class_9236$class_9237"), P)
+    f.put("instanceRedirects", MC + "class_9236.method_55055()V", P + "#explode")
+    f.put("frameDefaults", "method_55055()V", {"0": P + "#position(" + L("class_1297") + ")" + V3})
+    # arrows: 1.20.6's constructors took no weapon
+    no_weapon = "push " + AR + "#noWeapon()" + ST
+    origin = "push " + AR + "#origin()D"
+    arrows = (("class_1665", ET + "DDD" + LV + ST, ET + "DDD" + LV + ST + ST, ["keep", "keep", "keep", "keep", "keep", "keep", no_weapon]),
+              ("class_1665", ET + LE + LV + ST, ET + LE + LV + ST + ST, ["keep", "keep", "keep", "keep", no_weapon]),
+              ("class_1665", ET + LV + ST, ET + "DDD" + LV + ST + ST, ["keep:0", origin, origin, origin, "keep:1", "keep:2", no_weapon]),
+              ("class_1667", LV + "DDD" + ST, LV + "DDD" + ST + ST, ["keep", "keep", "keep", "keep", "keep", no_weapon]),
+              ("class_1667", LV + LE + ST, LV + LE + ST + ST, ["keep", "keep", "keep", no_weapon]),
+              ("class_1679", LV + "DDD" + ST, LV + "DDD" + ST + ST, ["keep", "keep", "keep", "keep", "keep", no_weapon]),
+              ("class_1679", LV + LE + ST, LV + LE + ST + ST, ["keep", "keep", "keep", no_weapon]))
+    for owner, old, new, ops in arrows:
+        f.ctor(MC + owner + ".<init>(" + old + ")V", "(" + new + ")V", ops,
+               "1.20.6's arrow constructors took no weapon: 1.21's with none, which is the same arrow (the shooter set the "
+               "rest afterwards)" + ("; 1.20.6's (type, level, stack) left the arrow at the origin" if origin in ops else ""))
+    A = MC + "class_1665"
+    for shape, name, adapter in (("method_35207()I", "getKnockback", "LegacyGetKnockback"),
+                                 ("method_7449(I)V", "setKnockback", "LegacySetKnockback"),
+                                 ("method_7442(Z)V", "setShotFromCrossbow", "LegacyCrossbow"),
+                                 ("method_7435(" + LE + "F)V", "setEnchantmentEffectsFromEntity", "LegacyEnchantmentEffects")):
+        assert declarers(vc, shape) == [A], (shape, declarers(vc, shape))
+        f.put("instanceRedirects", A + "." + shape, AR + "#" + name)
+        f.put("superRedirects", A + "." + shape, AR + "#super" + name[0].upper() + name[1:])
+        f.w["adapterHooks"].append({
+            "under": A, "adapter": AR + "$" + adapter, "requires": [shape], "synth": [],
+            "basis": "a 1.20.6 caller's " + name + " answers through a 1.20.6 arrow class's own override (CbEntityArrows)"})
+    f.put("staticRedirects", MC + "class_1675.method_18813(" + LE + ST + "F)" + L("class_1665"), AR + "#getMobArrow")
+    # AbstractSkeleton.getArrow(ammo, power) -> getArrow(ammo, power, weapon)
+    ga = "method_6996(" + ST + "F)" + L("class_1665")
+    f.put("instanceRedirects", MC + "class_1547." + ga, AR + "#getArrow")
+    f.hook(ga, "method_6996(" + ST + "F" + ST + ")" + L("class_1665"), "class_1547",
+           "1.21 asks getArrow(ammo, power, weapon): the 1.20.6 override gets the ammo and power, its super call the weapon "
+           "vanilla passed", args=[0, 1], frames=G, superCalls="rewrite")
+    f.put("frameDefaults", ga, {"2": AR + "#weaponOf(" + L("class_1297") + ")" + ST})
+
+
 def main():
     v, w = load(sys.argv[1]), load(sys.argv[2])
     vc = load(sys.argv[3], code=True)
@@ -697,6 +762,7 @@ def main():
     leash(f, v, vc)
     horses(f, vc)
     enchanting(f, vc)
+    projectiles(f, vc)
     f.write()
 
 

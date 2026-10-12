@@ -1052,6 +1052,250 @@
     "conv:3 top/dext/centurybridge/step/v1_21/rt/CbEntityAnimals#chestColumns(Lnet/minecraft/class_1496;)I"
    ],
    "basis": "1.20.6's menu laid out the horse's getInventoryColumns() columns of chest slots when it had a chest; 1.21 takes that count, 0 without a chest"
+  },
+  "net/minecraft/class_1668.<init>(Lnet/minecraft/class_1299;DDDDDDLnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_243;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4,5,6 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;",
+    "keep:7"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    4,
+    5,
+    6
+   ]
+  },
+  "net/minecraft/class_1668.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;DDDLnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_243;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3,4 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;",
+    "keep:5"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    2,
+    3,
+    4
+   ]
+  },
+  "net/minecraft/class_3855.<init>(Lnet/minecraft/class_1299;DDDDDDLnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_243;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4,5,6 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;",
+    "keep:7"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    4,
+    5,
+    6
+   ]
+  },
+  "net/minecraft/class_3855.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;DDDLnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_243;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3,4 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;",
+    "keep:5"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    2,
+    3,
+    4
+   ]
+  },
+  "net/minecraft/class_1670.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_243;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3,4 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    2,
+    3,
+    4
+   ]
+  },
+  "net/minecraft/class_1674.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;DDDI)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_243;I)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3,4 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;",
+    "keep:5"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    2,
+    3,
+    4
+   ]
+  },
+  "net/minecraft/class_1677.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_243;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3,4 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    2,
+    3,
+    4
+   ]
+  },
+  "net/minecraft/class_1677.<init>(Lnet/minecraft/class_1937;DDDDDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_243;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4,5,6 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    4,
+    5,
+    6
+   ]
+  },
+  "net/minecraft/class_1687.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_243;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3,4 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    2,
+    3,
+    4
+   ]
+  },
+  "net/minecraft/class_8956.<init>(Lnet/minecraft/class_1937;DDDDDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_243;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4,5,6 top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#direction(DDD)Lnet/minecraft/class_243;"
+   ],
+   "basis": "1.20.6's direction (dx, dy, dz) is 1.21's Vec3; afterwards the projectile takes 1.20.6's power vector and rest (CbEntityProjectiles.legacyPower)",
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#legacyPower(Lnet/minecraft/class_1668;DDD)V",
+   "postArgs": [
+    4,
+    5,
+    6
+   ]
+  },
+  "net/minecraft/class_1665.<init>(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#noWeapon()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.6's arrow constructors took no weapon: 1.21's with none, which is the same arrow (the shooter set the rest afterwards)"
+  },
+  "net/minecraft/class_1665.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#noWeapon()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.6's arrow constructors took no weapon: 1.21's with none, which is the same arrow (the shooter set the rest afterwards)"
+  },
+  "net/minecraft/class_1665.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#origin()D",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#origin()D",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#origin()D",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#noWeapon()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.6's arrow constructors took no weapon: 1.21's with none, which is the same arrow (the shooter set the rest afterwards); 1.20.6's (type, level, stack) left the arrow at the origin"
+  },
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#noWeapon()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.6's arrow constructors took no weapon: 1.21's with none, which is the same arrow (the shooter set the rest afterwards)"
+  },
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#noWeapon()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.6's arrow constructors took no weapon: 1.21's with none, which is the same arrow (the shooter set the rest afterwards)"
+  },
+  "net/minecraft/class_1679.<init>(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#noWeapon()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.6's arrow constructors took no weapon: 1.21's with none, which is the same arrow (the shooter set the rest afterwards)"
+  },
+  "net/minecraft/class_1679.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#noWeapon()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.6's arrow constructors took no weapon: 1.21's with none, which is the same arrow (the shooter set the rest afterwards)"
   }
  },
  "ctorRedirects": {
@@ -1070,7 +1314,8 @@
   "net/minecraft/class_2643.method_11409(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1297;Lnet/minecraft/class_2643;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#teleportEntity",
   "net/minecraft/class_2643.method_30276(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#canEntityTeleport",
   "net/minecraft/class_1657.method_26091(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;FZZ)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#findRespawnPositionAndUseSpawnBlock",
-  "net/minecraft/class_1309.method_32326(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21/rt/CbEntityLiving#getEquipmentSlotForItem"
+  "net/minecraft/class_1309.method_32326(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21/rt/CbEntityLiving#getEquipmentSlotForItem",
+  "net/minecraft/class_1675.method_18813(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#getMobArrow"
  },
  "instanceRedirects": {
   "net/minecraft/class_1322.comp_2448()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#name",
@@ -1111,7 +1356,13 @@
   "net/minecraft/class_1308.method_30758(Lnet/minecraft/class_5819;FLnet/minecraft/class_1304;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#enchantSpawnedArmor",
   "net/minecraft/class_1308.method_5984(Lnet/minecraft/class_5819;Lnet/minecraft/class_1266;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#populateDefaultEquipmentEnchantments",
   "net/minecraft/class_1297.method_5723(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#doEnchantDamageEffects",
-  "net/minecraft/class_1685.method_31551()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#isChanneling"
+  "net/minecraft/class_1685.method_31551()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#isChanneling",
+  "net/minecraft/class_9236.method_55055()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#explode",
+  "net/minecraft/class_1665.method_35207()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#getKnockback",
+  "net/minecraft/class_1665.method_7449(I)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#setKnockback",
+  "net/minecraft/class_1665.method_7442(Z)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#setShotFromCrossbow",
+  "net/minecraft/class_1665.method_7435(Lnet/minecraft/class_1309;F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#setEnchantmentEffectsFromEntity",
+  "net/minecraft/class_1547.method_6996(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#getArrow"
  },
  "fieldRedirects": {
   "net/minecraft/class_1320.field_30097:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#MAX_NAME_LENGTH",
@@ -1179,7 +1430,8 @@
   "net/minecraft/class_8216.field_46769:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
   "net/minecraft/class_7110.field_39302:F": "top/dext/centurybridge/step/v1_21/rt/CbEntityAnimals#tadpoleHitboxWidth",
   "net/minecraft/class_7110.field_39303:F": "top/dext/centurybridge/step/v1_21/rt/CbEntityAnimals#tadpoleHitboxHeight",
-  "net/minecraft/class_7701.field_46779:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants"
+  "net/minecraft/class_7701.field_46779:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants",
+  "net/minecraft/class_9236.field_50137:Lnet/minecraft/class_9236$class_9237;": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles"
  },
  "staticFieldSetters": {
   "net/minecraft/class_155.field_43095:Ljava/util/Set;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#setDataFixTypesToOptimize",
@@ -1193,12 +1445,18 @@
   "net/minecraft/class_5454.field_25882:F": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalXRot",
   "net/minecraft/class_1297.field_5963:Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#isInsidePortal",
   "net/minecraft/class_1297.field_5972:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalTime",
-  "net/minecraft/class_1297.field_5991:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalEntrancePos"
+  "net/minecraft/class_1297.field_5991:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalEntrancePos",
+  "net/minecraft/class_1668.field_7601:D": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#xPower",
+  "net/minecraft/class_1668.field_7600:D": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#yPower",
+  "net/minecraft/class_1668.field_7599:D": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#zPower"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_1297.field_5963:Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#setInsidePortal",
   "net/minecraft/class_1297.field_5972:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#setPortalTime",
-  "net/minecraft/class_1297.field_5991:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#setPortalEntrancePos"
+  "net/minecraft/class_1297.field_5991:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#setPortalEntrancePos",
+  "net/minecraft/class_1668.field_7601:D": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#setXPower",
+  "net/minecraft/class_1668.field_7600:D": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#setYPower",
+  "net/minecraft/class_1668.field_7599:D": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#setZPower"
  },
  "superRedirects": {
   "net/minecraft/server/MinecraftServer.method_3839()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#superIsNetherEnabled",
@@ -1262,7 +1520,11 @@
   "net/minecraft/class_1604.method_30759(Lnet/minecraft/class_5819;F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superEnchantSpawnedWeapon",
   "net/minecraft/class_1308.method_30758(Lnet/minecraft/class_5819;FLnet/minecraft/class_1304;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superEnchantSpawnedArmor",
   "net/minecraft/class_1297.method_5723(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDoEnchantDamageEffects",
-  "net/minecraft/class_1685.method_31551()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superIsChanneling"
+  "net/minecraft/class_1685.method_31551()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superIsChanneling",
+  "net/minecraft/class_1665.method_35207()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#superGetKnockback",
+  "net/minecraft/class_1665.method_7449(I)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#superSetKnockback",
+  "net/minecraft/class_1665.method_7442(Z)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#superSetShotFromCrossbow",
+  "net/minecraft/class_1665.method_7435(Lnet/minecraft/class_1309;F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#superSetEnchantmentEffectsFromEntity"
  },
  "covers": [
   "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z",
@@ -1446,6 +1708,18 @@
    "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting.enchantSpawnedArmor(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacySpawnArmor;Lnet/minecraft/class_5425;Lnet/minecraft/class_5819;Lnet/minecraft/class_1304;Lnet/minecraft/class_1266;)V",
    "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacySpawnArmor",
    "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
+  },
+  {
+   "old": "method_6996(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;",
+   "new": "method_6996(Lnet/minecraft/class_1799;FLnet/minecraft/class_1799;)Lnet/minecraft/class_1665;",
+   "onlyUnder": "net/minecraft/class_1547",
+   "basis": "1.21 asks getArrow(ammo, power, weapon): the 1.20.6 override gets the ammo and power, its super call the weapon vanilla passed",
+   "args": [
+    0,
+    1
+   ],
+   "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
+   "superCalls": "rewrite"
   }
  ],
  "overrideRenames": [
@@ -1562,6 +1836,12 @@
   },
   "method_5984(Lnet/minecraft/class_5819;Lnet/minecraft/class_1266;)V": {
    "0": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#serverLevelAccessor(Lnet/minecraft/class_1297;)Lnet/minecraft/class_5425;"
+  },
+  "method_55055()V": {
+   "0": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles#position(Lnet/minecraft/class_1297;)Lnet/minecraft/class_243;"
+  },
+  "method_6996(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;": {
+   "2": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#weaponOf(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1799;"
   }
  },
  "convertHooks": [
@@ -1729,6 +2009,46 @@
    ],
    "synth": [],
    "basis": "1.20.6 struck channeling's lightning when the trident's isChanneling() said so: CbEntityTridentMixin asks a 1.20.6 override through this interface"
+  },
+  {
+   "under": "net/minecraft/class_1665",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows$LegacyGetKnockback",
+   "requires": [
+    "method_35207()I"
+   ],
+   "synth": [],
+   "basis": "a 1.20.6 caller's getKnockback answers through a 1.20.6 arrow class's own override (CbEntityArrows)"
+  },
+  {
+   "under": "net/minecraft/class_1665",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows$LegacySetKnockback",
+   "requires": [
+    "method_7449(I)V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.6 caller's setKnockback answers through a 1.20.6 arrow class's own override (CbEntityArrows)"
+  },
+  {
+   "under": "net/minecraft/class_1665",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows$LegacyCrossbow",
+   "requires": [
+    "method_7442(Z)V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.6 caller's setShotFromCrossbow answers through a 1.20.6 arrow class's own override (CbEntityArrows)"
+  },
+  {
+   "under": "net/minecraft/class_1665",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows$LegacyEnchantmentEffects",
+   "requires": [
+    "method_7435(Lnet/minecraft/class_1309;F)V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.6 caller's setEnchantmentEffectsFromEntity answers through a 1.20.6 arrow class's own override (CbEntityArrows)"
   }
- ]
+ ],
+ "classRenames": {
+  "net/minecraft/class_9236$class_9237": "top/dext/centurybridge/step/v1_21/facade/class_9236$class_9237",
+  "net/minecraft/class_8956$class_9036": "top/dext/centurybridge/step/v1_21/facade/class_8956$class_9036"
+ }
 }
