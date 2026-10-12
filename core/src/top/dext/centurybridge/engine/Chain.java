@@ -484,6 +484,12 @@ public final class Chain {
      *                      "call": "Owner.name(Lnet/minecraft/class_4970;)Lcom/mojang/serialization/MapCodec;"}]
      * </pre>
      * The call's first parameter is {@code under} (the receiver), the rest the method's own.
+     *
+     * {@code under} is matched through the converted jar's own hierarchy and the source release's
+     * Minecraft stub, which knows no library type: a fill on a member of a Fabric API interface names
+     * every interface a mod class may implement directly (FluidVariant, ItemVariant and TransferVariant
+     * for TransferVariant.getComponentMap). When two entries give one class the same method -- it is
+     * under both types -- the first in wiring order fills it.
      */
     public static final class AbstractFill {
         public String under, name, desc, callOwner, callName, callDesc;

@@ -2846,6 +2846,9 @@ public final class JarProcessor {
                         || inheritedVanillaOwner(superOf[0], shape, layer) == null && layer.superOf.containsKey(superOf[0])) {
                     continue; // declared here, not under the type, or a jar superclass declares it
                 }
+                if (fillApply.stream().anyMatch(x -> (x.name + x.desc).equals(shape))) {
+                    continue; // two entries give the class the same method (it is under both types): the first fills it
+                }
                 boolean synthesized = declaredOldOverrides.stream().anyMatch(h -> (h.newName + h.newDesc).equals(shape))
                     || adapterApply.stream().anyMatch(h -> h.synth.stream().anyMatch(sy -> (sy[0] + sy[1]).equals(shape)));
                 if (synthesized) {
