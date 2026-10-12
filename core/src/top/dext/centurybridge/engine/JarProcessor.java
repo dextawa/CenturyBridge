@@ -1702,6 +1702,11 @@ public final class JarProcessor {
             }
             Set<String> d = layer.decls.get(t);
             if (d == null) {
+                // a library interface (a Fabric API one the mod class implements): only a reshape keyed on
+                // that interface itself applies, as for a library superclass above
+                if (chain.callReshapeIndex.containsKey(t + "." + member)) {
+                    return t;
+                }
                 continue;
             }
             if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
@@ -2731,6 +2736,15 @@ public final class JarProcessor {
                                 // redirect wired explicitly (DFU's Codec.dispatch
                                 // contract change hides behind generic erasure)
                                 // still applies
+                                // a super call to a library supertype's member -- a Fabric API interface's
+                                // default -- is rerouted like a vanilla one (Chain.superRedirects), keyed on
+                                // the library type the call names
+                                String lsr = op == Opcodes.INVOKESPECIAL && !name.equals("<init>") ? chain.superRedirects.get(site) : null;
+                                if (lsr != null) {
+                                    superRedirectSites.put(site, lsr);
+                                    top.dext.centurybridge.data.FullAudit.record(site, "super-redirect");
+                                    return;
+                                }
                                 String lrt = chain.instanceRedirects.get(site);
                                 if (lrt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
                                     instRedirects.put(site, lrt);

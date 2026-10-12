@@ -1580,6 +1580,12 @@ public final class Chain {
      * super-call contract differs (1.20.1 Screen.render drew the widgets and
      * nothing else; since 1.20.2 it draws the background first, over whatever
      * the mod drew). Only a mod's own super.render(..) is rerouted.
+     *
+     * A key may name a library type the converted jar extends or implements (a Fabric API
+     * interface whose default the mod's super call reaches): it is matched on the type the super
+     * call names, exactly, the receiver passed as that type. A super call reshaped earlier in the
+     * step (callReshapes rewrite super calls too) is matched in its new shape: 26.1.1's
+     * FabricOrderedSubmitNodeCollector.submitBlockModel, whose 26.1 default the mod's super call meant.
      */
     public final java.util.Map<String, String> superRedirects = new java.util.HashMap<>();
 
