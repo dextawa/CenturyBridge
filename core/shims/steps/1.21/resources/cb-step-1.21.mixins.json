@@ -3,8 +3,16 @@
   "minVersion": "0.8",
   "package": "top.dext.centurybridge.step.v1_21.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [],
-  "client": [],
+  "mixins": [
+    "CbNetAddExperienceOrbPacketAccess",
+    "CbNetConnectionAccess",
+    "CbNetServerUseItemMixin"
+  ],
+  "client": [
+    "CbClientDeltaTimerAccess",
+    "CbClientMinecraftFrameMixin",
+    "CbClientMinecraftTimerAccess"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

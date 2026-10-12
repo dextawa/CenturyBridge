@@ -1,0 +1,405 @@
+{
+  "callReshapes": {
+    "net/minecraft/class_2547.method_10839(Lnet/minecraft/class_2561;)V": {
+      "desc": "(Lnet/minecraft/class_9812;)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbDetailsOf(Lnet/minecraft/class_2561;)Lnet/minecraft/class_9812;"
+      ],
+      "basis": "PacketListener.onDisconnect(Component) is onDisconnect(DisconnectionDetails) since 1.21: the reason a 1.20.6 caller passes, with the details it came out of when it is one vanilla handed out (CbNet.cbDetailsOf), else 1.21's reason-only details"
+    },
+    "net/minecraft/class_8673.method_52786(Lnet/minecraft/class_2561;)Lnet/minecraft/class_437;": {
+      "desc": "(Lnet/minecraft/class_9812;)Lnet/minecraft/class_437;",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbDetailsOf(Lnet/minecraft/class_2561;)Lnet/minecraft/class_9812;"
+      ],
+      "basis": "ClientCommonPacketListenerImpl.createDisconnectScreen(Component) takes the disconnect details since 1.21 (the screen offers the report the details point at): the reason's details, as for onDisconnect"
+    },
+    "net/minecraft/class_9147.method_56451(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127;": {
+      "desc": "(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;",
+      "ops": [
+        "keep:0",
+        "keep:1"
+      ],
+      "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbNet#cbBindPlain(Lnet/minecraft/class_9127$class_9128;)Lnet/minecraft/class_9127;",
+      "basis": "ProtocolInfoBuilder.serverboundProtocol answered the protocol bound over plain FriendlyByteBufs in 1.20.6 (build(FriendlyByteBuf::new)); 1.21's answers it unbound: bound the same way"
+    },
+    "net/minecraft/class_9147.method_56455(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127;": {
+      "desc": "(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;",
+      "ops": [
+        "keep:0",
+        "keep:1"
+      ],
+      "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbNet#cbBindPlain(Lnet/minecraft/class_9127$class_9128;)Lnet/minecraft/class_9127;",
+      "basis": "ProtocolInfoBuilder.clientboundProtocol, as serverboundProtocol"
+    },
+    "net/minecraft/class_2743.method_11815()I": {
+      "desc": "()D",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbNet#cbMotionUnits(D)I",
+      "basis": "ClientboundSetEntityMotionPacket.getXa answered the stored int (1/8000 block per tick) in 1.20.6; 1.21 stores the same int and answers it over 8000"
+    },
+    "net/minecraft/class_2743.method_11816()I": {
+      "desc": "()D",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbNet#cbMotionUnits(D)I",
+      "basis": "getYa, as getXa"
+    },
+    "net/minecraft/class_2743.method_11819()I": {
+      "desc": "()D",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbNet#cbMotionUnits(D)I",
+      "basis": "getZa, as getXa"
+    },
+    "net/minecraft/class_2547.method_55597(Lnet/minecraft/class_129;)V": {
+      "desc": "(Lnet/minecraft/class_128;Lnet/minecraft/class_129;)V",
+      "ops": [
+        "push top/dext/centurybridge/step/v1_21/rt/CbNet#cbDetachedCrashReport()Lnet/minecraft/class_128;",
+        "keep:0"
+      ],
+      "basis": "PacketListener.fillListenerSpecificCrashDetails(category) takes the report too since 1.21; a 1.20.6 caller has none, and 1.20.6 wrote no section beyond the category: a report of its own that nothing reads (the frameDefaults value for the same argument)"
+    },
+    "net/minecraft/class_329.method_1753(Lnet/minecraft/class_332;F)V": {
+      "desc": "(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+      "ops": [
+        "keep:0",
+        "conv:1 top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbTracker(F)Lnet/minecraft/class_9779;"
+      ],
+      "basis": "Gui.render(GuiGraphics, partialTick) takes the frame's DeltaTracker since 1.21: the game's own when the float is its partial tick, else one answering that partial tick (CbClientTime.cbTracker)"
+    },
+    "net/minecraft/class_329.method_39192(Lnet/minecraft/class_332;F)V": {
+      "desc": "(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+      "ops": [
+        "keep:0",
+        "conv:1 top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbTracker(F)Lnet/minecraft/class_9779;"
+      ],
+      "basis": "Gui.renderSavingIndicator(GuiGraphics, partialTick) takes the frame's DeltaTracker since 1.21: the game's own when the float is its partial tick, else one answering that partial tick (CbClientTime.cbTracker)"
+    },
+    "net/minecraft/class_9080.method_55809(Lnet/minecraft/class_332;F)V": {
+      "desc": "(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+      "ops": [
+        "keep:0",
+        "conv:1 top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbTracker(F)Lnet/minecraft/class_9779;"
+      ],
+      "basis": "LayeredDraw.render(GuiGraphics, partialTick) takes the frame's DeltaTracker since 1.21: the game's own when the float is its partial tick, else one answering that partial tick (CbClientTime.cbTracker)"
+    },
+    "net/minecraft/class_9080$class_9081.render(Lnet/minecraft/class_332;F)V": {
+      "desc": "(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+      "ops": [
+        "keep:0",
+        "conv:1 top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbTracker(F)Lnet/minecraft/class_9779;"
+      ],
+      "basis": "LayeredDraw.Layer.render(GuiGraphics, partialTick) takes the frame's DeltaTracker since 1.21: the game's own when the float is its partial tick, else one answering that partial tick (CbClientTime.cbTracker)"
+    },
+    "net/minecraft/class_757.method_3192(FJZ)V": {
+      "desc": "(Lnet/minecraft/class_9779;Z)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbTracker(F)Lnet/minecraft/class_9779;",
+        "drop:1",
+        "keep:2"
+      ],
+      "basis": "GameRenderer.render(partialTick, nanoTime, renderLevel) is render(DeltaTracker, renderLevel) since 1.21; 1.20.6's body only handed nanoTime on to renderLevel and LevelRenderer.renderLevel, whose body never read it"
+    },
+    "net/minecraft/class_757.method_3188(FJ)V": {
+      "desc": "(Lnet/minecraft/class_9779;)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbTracker(F)Lnet/minecraft/class_9779;",
+        "drop:1"
+      ],
+      "basis": "GameRenderer.renderLevel(partialTick, nanoTime) is renderLevel(DeltaTracker) since 1.21; nanoTime only went on to LevelRenderer.renderLevel, which never read it"
+    },
+    "net/minecraft/class_761.method_22710(FJZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V": {
+      "desc": "(Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbTracker(F)Lnet/minecraft/class_9779;",
+        "drop:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "keep:7"
+      ],
+      "basis": "LevelRenderer.renderLevel(partialTick, nanoTime, ...) is renderLevel(DeltaTracker, ...) since 1.21; 1.20.6's body never read nanoTime"
+    }
+  },
+  "overrideHooks": [
+    {
+      "old": "method_10839(Lnet/minecraft/class_2561;)V",
+      "new": "method_10839(Lnet/minecraft/class_9812;)V",
+      "wrap": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbReasonOf(Lnet/minecraft/class_9812;)Lnet/minecraft/class_2561;",
+      "onlyUnder": "net/minecraft/class_2547",
+      "basis": "a 1.20.6 listener's onDisconnect(Component) is handed the reason of the details 1.21 passes; its super.onDisconnect(reason) goes back with those details (callReshapes)"
+    },
+    {
+      "old": "method_10748()Lnet/minecraft/class_2561;",
+      "new": "method_60926()Lnet/minecraft/class_9812;",
+      "args": [],
+      "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbDetailsOf(Lnet/minecraft/class_2561;)Lnet/minecraft/class_9812;",
+      "onlyUnder": "net/minecraft/class_2535",
+      "basis": "Connection.handleDisconnection asked getDisconnectedReason() in 1.20.6 and asks getDisconnectionDetails() since 1.21: a 1.20.6 Connection subclass's reason is what 1.21 asks for, with the details it came out of"
+    },
+    {
+      "old": "method_52786(Lnet/minecraft/class_2561;)Lnet/minecraft/class_437;",
+      "new": "method_52786(Lnet/minecraft/class_9812;)Lnet/minecraft/class_437;",
+      "wrap": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbReasonOf(Lnet/minecraft/class_9812;)Lnet/minecraft/class_2561;",
+      "onlyUnder": "net/minecraft/class_8673",
+      "basis": "a 1.20.6 listener's createDisconnectScreen(Component) gets the reason of the details 1.21 passes"
+    },
+    {
+      "old": "method_11815()I",
+      "new": "method_11815()D",
+      "args": [],
+      "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbMotionValue(I)D",
+      "onlyUnder": "net/minecraft/class_2743",
+      "basis": "1.21's handleSetEntityMotion reads getXa() as a double where 1.20.6's divided the int by 8000: a 1.20.6 packet subclass's int, divided the same way"
+    },
+    {
+      "old": "method_11816()I",
+      "new": "method_11816()D",
+      "args": [],
+      "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbMotionValue(I)D",
+      "onlyUnder": "net/minecraft/class_2743",
+      "basis": "getYa, as getXa"
+    },
+    {
+      "old": "method_11819()I",
+      "new": "method_11819()D",
+      "args": [],
+      "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbMotionValue(I)D",
+      "onlyUnder": "net/minecraft/class_2743",
+      "basis": "getZa, as getXa"
+    },
+    {
+      "old": "method_1753(Lnet/minecraft/class_332;F)V",
+      "new": "method_1753(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+      "wrap": "top/dext/centurybridge/step/v1_21/rt/CbClientTime.cbPartialTick(Lnet/minecraft/class_9779;)F",
+      "onlyUnder": "net/minecraft/class_329",
+      "basis": "a 1.20.6 Gui.render override gets the partial tick 1.20.6 passed down the frame (getGameTimeDeltaPartialTick(true): pause ? pausePartialTick : partialTick)"
+    },
+    {
+      "old": "method_39192(Lnet/minecraft/class_332;F)V",
+      "new": "method_39192(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+      "wrap": "top/dext/centurybridge/step/v1_21/rt/CbClientTime.cbPartialTick(Lnet/minecraft/class_9779;)F",
+      "onlyUnder": "net/minecraft/class_329",
+      "basis": "a 1.20.6 Gui.renderSavingIndicator override gets the partial tick 1.20.6 passed down the frame (getGameTimeDeltaPartialTick(true): pause ? pausePartialTick : partialTick)"
+    },
+    {
+      "old": "method_55809(Lnet/minecraft/class_332;F)V",
+      "new": "method_55809(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+      "wrap": "top/dext/centurybridge/step/v1_21/rt/CbClientTime.cbPartialTick(Lnet/minecraft/class_9779;)F",
+      "onlyUnder": "net/minecraft/class_9080",
+      "basis": "a 1.20.6 LayeredDraw.render override gets the partial tick 1.20.6 passed down the frame (getGameTimeDeltaPartialTick(true): pause ? pausePartialTick : partialTick)"
+    },
+    {
+      "old": "render(Lnet/minecraft/class_332;F)V",
+      "new": "render(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+      "wrap": "top/dext/centurybridge/step/v1_21/rt/CbClientTime.cbPartialTick(Lnet/minecraft/class_9779;)F",
+      "onlyUnder": "net/minecraft/class_9080$class_9081",
+      "basis": "a 1.20.6 LayeredDraw.Layer.render override gets the partial tick 1.20.6 passed down the frame (getGameTimeDeltaPartialTick(true): pause ? pausePartialTick : partialTick)"
+    },
+    {
+      "old": "method_3192(FJZ)V",
+      "new": "method_3192(Lnet/minecraft/class_9779;Z)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientTime.cbGameRender(Ltop/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyGameRender;Lnet/minecraft/class_9779;Z)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyGameRender",
+      "onlyUnder": "net/minecraft/class_757",
+      "basis": "a 1.20.6 GameRenderer subclass's render gets the frame's partial tick and the frame's start nanoTime, which 1.20.6's runTick passed"
+    },
+    {
+      "old": "method_3188(FJ)V",
+      "new": "method_3188(Lnet/minecraft/class_9779;)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientTime.cbGameRenderLevel(Ltop/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyGameRenderLevel;Lnet/minecraft/class_9779;)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyGameRenderLevel",
+      "onlyUnder": "net/minecraft/class_757",
+      "basis": "a 1.20.6 GameRenderer subclass's renderLevel, as render"
+    },
+    {
+      "old": "method_22710(FJZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+      "new": "method_22710(Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientTime.cbLevelRender(Ltop/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyLevelRender;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyLevelRender",
+      "onlyUnder": "net/minecraft/class_761",
+      "basis": "a 1.20.6 LevelRenderer subclass's renderLevel, as GameRenderer.render"
+    }
+  ],
+  "superRedirects": {
+    "net/minecraft/class_2535.method_10748()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbSuperDisconnectedReason"
+  },
+  "instanceRedirects": {
+    "net/minecraft/class_2535.method_10748()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbDisconnectedReason",
+    "net/minecraft/class_9632.method_59508()D": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbXPower",
+    "net/minecraft/class_9632.method_59509()D": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbYPower",
+    "net/minecraft/class_9632.method_59510()D": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbZPower",
+    "net/minecraft/class_310.method_1488()F": "top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbFrameTime",
+    "net/minecraft/class_310.method_1534()F": "top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbDeltaFrameTime"
+  },
+  "staticRedirects": {
+    "net/minecraft/class_9147.method_56457(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;": "top/dext/centurybridge/step/v1_21/rt/CbNet",
+    "net/minecraft/class_9147.method_56458(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;": "top/dext/centurybridge/step/v1_21/rt/CbNet"
+  },
+  "frameDefaults": {
+    "method_55597(Lnet/minecraft/class_129;)V": {
+      "0": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbDetachedCrashReport()Lnet/minecraft/class_128;"
+    }
+  },
+  "abstractFills": [
+    {
+      "under": "net/minecraft/class_8705",
+      "method": "method_60883(Lnet/minecraft/class_9814;)V",
+      "call": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbLegacyCustomReportDetails(Lnet/minecraft/class_8705;Lnet/minecraft/class_9814;)V",
+      "basis": "ClientCommonPacketListener.handleCustomReportDetails is abstract since 1.21; 1.20.6 had no such packet, so a 1.20.6 listener keeps nothing of it (CbNet)"
+    },
+    {
+      "under": "net/minecraft/class_8705",
+      "method": "method_60884(Lnet/minecraft/class_9815;)V",
+      "call": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbLegacyServerLinks(Lnet/minecraft/class_8705;Lnet/minecraft/class_9815;)V",
+      "basis": "ClientCommonPacketListener.handleServerLinks, as handleCustomReportDetails"
+    },
+    {
+      "under": "net/minecraft/class_9127$class_9128",
+      "method": "method_61106()Lnet/minecraft/class_2539;",
+      "call": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbUnboundId(Lnet/minecraft/class_9127$class_9128;)Lnet/minecraft/class_2539;",
+      "basis": "ProtocolInfo.Unbound.id() is abstract since 1.21: a 1.20.6 Unbound answers the protocol of the info it binds to"
+    },
+    {
+      "under": "net/minecraft/class_9127$class_9128",
+      "method": "method_61109()Lnet/minecraft/class_2598;",
+      "call": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbUnboundFlow(Lnet/minecraft/class_9127$class_9128;)Lnet/minecraft/class_2598;",
+      "basis": "ProtocolInfo.Unbound.flow(), as id()"
+    },
+    {
+      "under": "net/minecraft/class_9127$class_9128",
+      "method": "method_61108(Lnet/minecraft/class_9127$class_9128$class_9828;)V",
+      "call": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbUnboundPackets(Lnet/minecraft/class_9127$class_9128;Lnet/minecraft/class_9127$class_9128$class_9828;)V",
+      "basis": "ProtocolInfo.Unbound.listPackets is abstract since 1.21; a 1.20.6 Unbound only binds and has no packet list (CbNet.cbUnboundPackets says so instead of pretending an empty one); 1.21 asks only its own protocols (the packet report)"
+    }
+  ],
+  "methodRenames": {
+    "net/minecraft/class_9127$class_9128.bind(Ljava/util/function/Function;)Lnet/minecraft/class_9127;": "method_61107"
+  },
+  "overrideRenames": [
+    {
+      "old": "bind(Ljava/util/function/Function;)Lnet/minecraft/class_9127;",
+      "new": "method_61107",
+      "onlyUnder": "net/minecraft/class_9127$class_9128",
+      "basis": "ProtocolInfo.Unbound.bind is intermediary method_61107 since 1.21 (1.20.6's kept the source name): same method"
+    }
+  ],
+  "lambdaAdapters": {
+    "net/minecraft/class_9127$class_9128.bind(Ljava/util/function/Function;)Lnet/minecraft/class_9127;": {
+      "iface": "top/dext/centurybridge/step/v1_21/rt/CbNet$CbLegacyUnbound",
+      "adapt": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbUnbound(Ltop/dext/centurybridge/step/v1_21/rt/CbNet$CbLegacyUnbound;)Lnet/minecraft/class_9127$class_9128;"
+    },
+    "net/minecraft/class_9080$class_9081.render(Lnet/minecraft/class_332;F)V": {
+      "iface": "top/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyLayer",
+      "adapt": "top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbLayer(Ltop/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyLayer;)Lnet/minecraft/class_9080$class_9081;"
+    }
+  },
+  "superCtorReshapes": {
+    "net/minecraft/class_2604.<init>(Lnet/minecraft/class_1297;)V": {
+      "desc": "(ILjava/util/UUID;DDDFFLnet/minecraft/class_1299;ILnet/minecraft/class_243;D)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbId(Lnet/minecraft/class_1297;)I",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbUuid(Lnet/minecraft/class_1297;)Ljava/util/UUID;",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbX(Lnet/minecraft/class_1297;)D",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbY(Lnet/minecraft/class_1297;)D",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbZ(Lnet/minecraft/class_1297;)D",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbXRot(Lnet/minecraft/class_1297;)F",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbYRot(Lnet/minecraft/class_1297;)F",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbType(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1299;",
+        "push top/dext/centurybridge/step/v1_21/rt/CbNet#cbNoData()I",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbMotion(Lnet/minecraft/class_1297;)Lnet/minecraft/class_243;",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbYHeadRot(Lnet/minecraft/class_1297;)D"
+      ],
+      "basis": "ClientboundAddEntityPacket(entity) was (entity, 0) in 1.20.6, which read every value off the entity; 1.21's (entity, serverEntity) reads position and rotations from the server entity's packed last-sent state. The constructor both share, fed what 1.20.6 read"
+    },
+    "net/minecraft/class_2604.<init>(Lnet/minecraft/class_1297;I)V": {
+      "desc": "(ILjava/util/UUID;DDDFFLnet/minecraft/class_1299;ILnet/minecraft/class_243;D)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbId(Lnet/minecraft/class_1297;)I",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbUuid(Lnet/minecraft/class_1297;)Ljava/util/UUID;",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbX(Lnet/minecraft/class_1297;)D",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbY(Lnet/minecraft/class_1297;)D",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbZ(Lnet/minecraft/class_1297;)D",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbXRot(Lnet/minecraft/class_1297;)F",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbYRot(Lnet/minecraft/class_1297;)F",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbType(Lnet/minecraft/class_1297;)Lnet/minecraft/class_1299;",
+        "keep:1",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbMotion(Lnet/minecraft/class_1297;)Lnet/minecraft/class_243;",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbYHeadRot(Lnet/minecraft/class_1297;)D"
+      ],
+      "basis": "ClientboundAddEntityPacket(entity, data): 1.20.6's own body, this(id, uuid, x, y, z, xRot, yRot, type, data, motion, headYaw) of the entity"
+    },
+    "net/minecraft/class_2606.<init>(Lnet/minecraft/class_1303;)V": {
+      "desc": "(Lnet/minecraft/class_1303;Lnet/minecraft/class_3231;)V",
+      "ops": [
+        "keep:0",
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbNet#cbOrbServerEntity(Lnet/minecraft/class_1303;)Lnet/minecraft/class_3231;"
+      ],
+      "post": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbOrbPacketBuilt(Lnet/minecraft/class_2606;Lnet/minecraft/class_1303;)V",
+      "postArgs": [
+        0
+      ],
+      "basis": "ClientboundAddExperienceOrbPacket(orb) is (orb, serverEntity) since 1.21: a server entity made of the orb gives the id and value, and the position is set to the orb's own coordinates, which 1.20.6 read"
+    },
+    "net/minecraft/class_2886.<init>(Lnet/minecraft/class_1268;I)V": {
+      "desc": "(Lnet/minecraft/class_1268;IFF)V",
+      "ops": [
+        "keep",
+        "keep",
+        "push top/dext/centurybridge/step/v1_21/rt/CbNet#cbUseYRot()F",
+        "push top/dext/centurybridge/step/v1_21/rt/CbNet#cbUseXRot()F"
+      ],
+      "post": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbUseItemBuilt(Lnet/minecraft/class_2886;)V",
+      "postArgs": [],
+      "basis": "ServerboundUseItemPacket(hand, sequence) carries the player's rotation since 1.21 and the server turns the player to it; a 1.20.6-built packet keeps the server's rotation (CbNetServerUseItemMixin) and, built on the client, carries the local player's own rotation for a server across the network"
+    },
+    "net/minecraft/class_9632.<init>(IDDD)V": {
+      "desc": "(ID)V",
+      "ops": [
+        "keep:0",
+        "conv:1,2,3 top/dext/centurybridge/step/v1_21/rt/CbNet#cbPowerMagnitude(DDD)D"
+      ],
+      "post": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbPowerPacketBuilt(Lnet/minecraft/class_9632;IDDD)V",
+      "postArgs": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "basis": "ClientboundProjectilePowerPacket(id, xPower, yPower, zPower) carries accelerationPower since 1.21, the magnitude applied along the motion: the 1.20.6 vector's length (what the projectile bridge keeps as accelerationPower for a 1.20.6 vector), the vector itself kept for the packet's 1.20.6 getters"
+    }
+  },
+  "adapterHooks": [
+    {
+      "under": "net/minecraft/class_9632",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbNet$CbLegacyPowerPacket",
+      "requires": [],
+      "synth": [
+        {
+          "new": "method_60423()D",
+          "call": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbAccelerationPower(Ltop/dext/centurybridge/step/v1_21/rt/CbNet$CbLegacyPowerPacket;)D"
+        }
+      ],
+      "basis": "1.21's client applies getAccelerationPower() where 1.20.6's applied getXPower/getYPower/getZPower: a 1.20.6 packet subclass answers the length of what its getters answer (its own overrides where it has them)"
+    },
+    {
+      "under": "net/minecraft/class_310",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyFrameTime",
+      "requires": [],
+      "synth": [
+        {
+          "new": "method_60646()Lnet/minecraft/class_9779;",
+          "call": "top/dext/centurybridge/step/v1_21/rt/CbClientTime.cbLegacyTimer(Ltop/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyFrameTime;)Lnet/minecraft/class_9779;"
+        }
+      ],
+      "basis": "1.20.6's renderers read Minecraft.getFrameTime()/getDeltaFrameTime(), 1.21's read getTimer(): a 1.20.6 Minecraft subclass's timer answers its own two values"
+    }
+  ],
+  "classRenames": {
+    "net/minecraft/class_317": "top/dext/centurybridge/step/v1_21/facade/Timer"
+  },
+  "facadeGaps": {
+    "net/minecraft/class_317.<init>(FJ)V": "Timer(ticksPerSecond, now) is 1.20.2's constructor; 1.20.3 replaced it with (ticksPerSecond, now, targetMsptProvider) and the 1.20.2 -> 1.20.3 step reshapes every call into that one (CbClient.cbFixedTickRate), so no class climbing into 1.20.6 names it"
+  }
+}
