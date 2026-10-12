@@ -1,0 +1,362 @@
+package top.dext.centurybridge.step.v1_20_3.rt;
+
+import java.util.Locale;
+import java.util.Optional;
+import com.mojang.serialization.MapCodec;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
+import net.minecraft.class_1657;
+import net.minecraft.class_1792;
+import net.minecraft.class_1922;
+import net.minecraft.class_1937;
+import net.minecraft.class_1959;
+import net.minecraft.class_2248;
+import net.minecraft.class_5819;
+import net.minecraft.class_5547;
+import net.minecraft.class_4970;
+import net.minecraft.class_3218;
+import net.minecraft.class_2484;
+import net.minecraft.class_2338;
+import net.minecraft.class_2378;
+import net.minecraft.class_2394;
+import net.minecraft.class_2398;
+import net.minecraft.class_2400;
+import net.minecraft.class_2527;
+import net.minecraft.class_2537;
+import net.minecraft.class_2555;
+import net.minecraft.class_5556;
+import net.minecraft.class_2633;
+import net.minecraft.class_2680;
+import net.minecraft.class_2960;
+import net.minecraft.class_4538;
+import net.minecraft.class_5620;
+import net.minecraft.class_6016;
+import net.minecraft.class_6017;
+import net.minecraft.class_7923;
+import net.minecraft.class_8177;
+import net.minecraft.class_8813;
+
+/**
+ * Blocks: the 1.20.2 block API on 1.20.3.
+ *
+ * Every member here is wired from core/segments/steps/1.20.2__1.20.3.json.d/s2world.json: converters
+ * and suppliers the engine's constructor/call reshapes run at a converted mod's call site, and the
+ * statics its redirects call instead of a member 1.20.3 removed. Each says which 1.20.2 behaviour it
+ * keeps and how, read off the 1.20.2 and 1.20.3 bytecode.
+ */
+public final class CbWorldBlocks {
+
+    // ------------------------------------------------------------------ getCloneItemStack
+
+    /**
+     * Block.getCloneItemStack(BlockGetter, pos, state) narrowed its world to a LevelReader in 1.20.3.
+     * Every world vanilla 1.20.2 handed it is a Level (a LevelReader) and passes unchanged; any other
+     * BlockGetter is viewed as a LevelReader that answers the BlockGetter surface from the getter
+     * itself and registry access from the built-in registries -- exactly what the 1.20.3
+     * implementations read from it (the stems resolve their seed item by key, the others read block
+     * entities) -- and refuses, by name, the world queries a plain BlockGetter has no answer for.
+     */
+    public static class_4538 levelReader(class_1922 getter) {
+        if (getter == null || getter instanceof class_4538) {
+            return (class_4538) getter;
+        }
+        return new CbWorldGetterReader(getter);
+    }
+
+    // ------------------------------------------------------------------ playerWillDestroy
+
+    /**
+     * Block.playerWillDestroy returns, since 1.20.3, the state the break goes on with (ServerPlayerGameMode
+     * judges the tool and calls destroy / mineBlock / playerDestroy with it); 1.20.2's returned nothing and
+     * its caller went on with the state it had passed. The 1.20.3 shape synthesized in a 1.20.2 block runs the block's override and answers
+     * that state. The override's own super call reaches the vanilla 1.20.3 method (its returned state is
+     * dropped there, as the 1.20.2 call had none): of the 1.20.3 implementations only DecoratedPotBlock
+     * returns another state than its argument (the cracked pot), so a 1.20.2 subclass of it breaks with the
+     * state it was broken in, as in 1.20.2.
+     */
+    public static class_2680 playerWillDestroy(CbWorldPlayerWillDestroy block, class_1937 level, class_2338 pos,
+                                               class_2680 state, class_1657 player) {
+        block.method_9576(level, pos, state, player);
+        return state;
+    }
+
+    // ------------------------------------------------------------------ AmethystClusterBlock
+
+    /** AmethystClusterBlock(int height, int aabbOffset, ..) became (float, float, ..): the same values. */
+    public static float intToFloat(int v) {
+        return v;
+    }
+
+    // ------------------------------------------------------------------ buttons, pressure plates, block set types
+
+    private record ButtonKey(class_8177 type, boolean arrows) {
+    }
+
+    private record PlateKey(class_8177 type, class_8177.class_2441 sensitivity) {
+    }
+
+    private static final Map<ButtonKey, class_8177> BUTTON_TYPES = new ConcurrentHashMap<>();
+    private static final Map<PlateKey, class_8177> PLATE_TYPES = new ConcurrentHashMap<>();
+
+    /**
+     * ButtonBlock(props, type, ticks, arrowsCanPress) lost its arrow flag in 1.20.3: the button asks
+     * its BlockSetType. A button whose flag agrees with its type keeps the type; otherwise it gets a
+     * copy of the type that differs only in that flag, so the button behaves as 1.20.2 built it.
+     */
+    public static class_8177 buttonType(class_8177 type, boolean arrowsCanPress) {
+        if (type.comp_1972() == arrowsCanPress) {
+            return type;
+        }
+        return BUTTON_TYPES.computeIfAbsent(new ButtonKey(type, arrowsCanPress), k -> new class_8177(
+            type.comp_1289(), type.comp_1471(), type.comp_2112(), arrowsCanPress, type.comp_1973(),
+            type.comp_1290(), type.comp_1291(), type.comp_1292(), type.comp_1293(), type.comp_1294(),
+            type.comp_1295(), type.comp_1296(), type.comp_1297(), type.comp_1298()));
+    }
+
+    /**
+     * PressurePlateBlock(sensitivity, props, type): 1.20.3 reads the sensitivity off the BlockSetType.
+     * Same treatment as {@link #buttonType}: the type itself when it agrees, else a copy with the
+     * sensitivity the 1.20.2 constructor was given.
+     */
+    public static class_8177 plateType(class_8177.class_2441 sensitivity, class_8177 type) {
+        if (type.comp_1973() == sensitivity) {
+            return type;
+        }
+        return PLATE_TYPES.computeIfAbsent(new PlateKey(type, sensitivity), k -> new class_8177(
+            type.comp_1289(), type.comp_1471(), type.comp_2112(), type.comp_1972(), sensitivity,
+            type.comp_1290(), type.comp_1291(), type.comp_1292(), type.comp_1293(), type.comp_1294(),
+            type.comp_1295(), type.comp_1296(), type.comp_1297(), type.comp_1298()));
+    }
+
+    /**
+     * The full 1.20.2 BlockSetType constructor knew nothing of pressure plate sensitivity (the plate
+     * carried it, see {@link #plateType}); 1.20.3's record needs one. 1.20.2's vanilla blocks paired
+     * hand-openable sets with plates any entity triggers (the wooden ones) and the others with
+     * mob-only plates (stone), which is the default a 1.20.2 set gets here.
+     */
+    public static class_8177.class_2441 plateSensitivityFor(boolean canOpenByHand) {
+        return canOpenByHand ? class_8177.class_2441.field_11361 : class_8177.class_2441.field_11362;
+    }
+
+    // ------------------------------------------------------------------ torches
+
+    /**
+     * TorchBlock / WallTorchBlock(props, ParticleOptions flame) became (SimpleParticleType, props).
+     * A simple particle type passes as itself. Any other ParticleOptions (a dust colour, a mod's
+     * own options) has no place in the 1.20.3 field: the torch is built with FLAME there, and the
+     * constructor reshape's post step hands it the real particle ({@link #legacyTorchFlame}), which
+     * it then emits where 1.20.2 emitted its flame (CbWorldTorchMixin).
+     */
+    public static class_2400 torchFlame(class_2394 flame) {
+        return flame instanceof class_2400 simple ? simple : class_2398.field_11240;
+    }
+
+    /** post step of TorchBlock(props, flame): a flame the 1.20.3 field could not hold stays with the torch */
+    public static void legacyTorchFlame(class_2527 torch, class_2394 flame) {
+        if (!(flame instanceof class_2400)) {
+            ((CbWorldTorchAccess) torch).cb$setLegacyFlame(flame);
+        }
+    }
+
+    /** post step of WallTorchBlock(props, flame), as {@link #legacyTorchFlame} */
+    public static void legacyWallTorchFlame(class_2555 torch, class_2394 flame) {
+        legacyTorchFlame(torch, flame);
+    }
+
+    /** a 1.20.2 read of the protected TorchBlock.flameParticle (typed ParticleOptions then) */
+    public static class_2394 flameParticle(class_2527 torch) {
+        return ((CbWorldTorchAccess) torch).cb$flame();
+    }
+
+    // ------------------------------------------------------------------ simple constructor defaults
+
+    /** WitherRoseBlock(effect, props) passed an effect duration of 8 seconds to FlowerBlock in 1.20.2. */
+    public static int witherRoseEffectSeconds() {
+        return 8;
+    }
+
+    /** DropExperienceBlock(props) was this(props, ConstantInt.of(0)) in 1.20.2. */
+    public static class_6017 noExperience() {
+        return class_6016.method_34998(0);
+    }
+
+    /**
+     * MangrovePropaguleBlock(props) grew a MangroveTreeGrower(0.85F) in 1.20.2; 1.20.3's
+     * TreeGrower.MANGROVE is the same choice (the tall mangrove with probability 0.85).
+     */
+    public static class_8813 mangroveGrower() {
+        return class_8813.field_46513;
+    }
+
+    // ------------------------------------------------------------------ Blocks.register(ResourceLocation, Block)
+
+    /** 1.20.2's body: register the block under the id (1.20.3 takes a ResourceKey instead). */
+    public static class_2248 register(class_2960 id, class_2248 block) {
+        return (class_2248) class_2378.method_10230(class_7923.field_41175, id, block);
+    }
+
+    // ------------------------------------------------------------------ TripWireHookBlock
+
+    /**
+     * TripWireHookBlock.calculateState became static in 1.20.3 and reads the hook block from the state
+     * it is given instead of from `this`; vanilla 1.20.2 always passed a state of the hook itself. A 1.20.2
+     * call reaches the hook's own override when its class has one (CbWorldTripWireHook), as 1.20.2's virtual
+     * call did, and 1.20.3's static otherwise.
+     */
+    public static void calculateState(class_2537 self, class_1937 level, class_2338 pos, class_2680 state,
+                                      boolean attaching, boolean shouldNotifyNeighbours, int searchRange,
+                                      class_2680 tripwire) {
+        if (self instanceof CbWorldTripWireHook hook) {
+            hook.method_10776(level, pos, state, attaching, shouldNotifyNeighbours, searchRange, tripwire);
+        } else {
+            class_2537.method_10776(level, pos, state, attaching, shouldNotifyNeighbours, searchRange, tripwire);
+        }
+    }
+
+    /** an override's super.calculateState(..): 1.20.2's TripWireHookBlock body, which is 1.20.3's static */
+    public static void superCalculateState(class_2537 self, class_1937 level, class_2338 pos, class_2680 state,
+                                           boolean attaching, boolean shouldNotifyNeighbours, int searchRange,
+                                           class_2680 tripwire) {
+        class_2537.method_10776(level, pos, state, attaching, shouldNotifyNeighbours, searchRange, tripwire);
+    }
+
+    // ------------------------------------------------------------------ ChangeOverTimeBlock
+
+    /**
+     * 1.20.2's ChangeOverTimeBlock.applyChangeOverTime(state, level, pos, random) worked out the next stage and
+     * set it; 1.20.3 splits it: getNextState works it out, changeOverTime sets it. Same computation, same
+     * random draws.
+     */
+    public static void applyChangeOverTime(class_5547<?> block, class_2680 state, class_3218 level, class_2338 pos,
+                                           class_5819 random) {
+        block.method_54765(state, level, pos, random).ifPresent(next -> level.method_8501(pos, next));
+    }
+
+    /**
+     * The 1.20.3 getNextState of a 1.20.2 block that overrides applyChangeOverTime: the override changes the
+     * block itself (as 1.20.2's onRandomTick had it do), so there is no next state left for changeOverTime to
+     * set. A super call in the override comes back here through the guard and reaches the interface's own
+     * getNextState (see Chain.OverrideHook#guard).
+     */
+    public static Optional<class_2680> legacyNextState(CbWorldChangeOverTime block, class_2680 state, class_3218 level,
+                                                       class_2338 pos, class_5819 random) {
+        block.method_33623(state, level, pos, random);
+        return Optional.empty();
+    }
+
+    // ------------------------------------------------------------------ BlockBehaviour.codec
+
+    /**
+     * 1.20.3 blocks answer codec(), the MapCodec their type is (de)serialized with; 1.20.2 had none, and a
+     * 1.20.2 block cannot be rebuilt from data. The codec of such a block stores nothing and decodes to the
+     * block itself. (Only the block-list data report reads it through 1.21.11.)
+     */
+    public static MapCodec<?> codec(class_4970 block) {
+        return MapCodec.unit(block);
+    }
+
+    // ------------------------------------------------------------------ SkullBlock.Type
+
+    /**
+     * 1.20.3's SkullBlock.Type is StringRepresentable; a 1.20.2 type has no name. An enum constant answers the
+     * name 1.20.3's own SkullBlock.Types use for theirs (the lower-cased constant name); any other type its
+     * toString(). Only the skull blocks' codecs read it.
+     */
+    public static String skullTypeName(class_2484.class_2485 type) {
+        if (type instanceof Enum<?> e) {
+            return e.name().toLowerCase(Locale.ROOT);
+        }
+        return type.toString();
+    }
+
+    // ------------------------------------------------------------------ cauldrons
+
+    /** LayeredCauldronBlock.RAIN / SNOW: the fill predicates 1.20.2 shipped (gone in 1.20.3) */
+    public static final Predicate<class_1959.class_1963> LAYERED_RAIN = p -> p == class_1959.class_1963.field_9382;
+    public static final Predicate<class_1959.class_1963> LAYERED_SNOW = p -> p == class_1959.class_1963.field_9383;
+
+    /** what a cauldron built through a 1.20.2 constructor fills on, and whether it is a powder snow one */
+    public record LegacyCauldron(Predicate<class_1959.class_1963> fill, boolean powderSnow) {
+    }
+
+    /**
+     * LayeredCauldronBlock(props, Predicate fill, interactions) became (Precipitation, InteractionMap,
+     * props): 1.20.3 fills on exactly one precipitation and lets that one decide the fire behaviour
+     * too (SNOW melts into a water cauldron, which only PowderSnowCauldronBlock did in 1.20.2). The
+     * 1.20.3 field gets the precipitation the predicate accepts alone (NONE when it accepts neither),
+     * for the code that only reads the field; the constructor reshape's post step hands the predicate
+     * itself to the cauldron ({@link #legacyLayeredCauldron}), which answers precipitation, stalactite
+     * drips and fire the 1.20.2 way (CbWorldLayeredCauldronMixin).
+     */
+    public static class_1959.class_1963 fillPrecipitation(Predicate<class_1959.class_1963> fill) {
+        boolean rain = fill.test(class_1959.class_1963.field_9382);
+        boolean snow = fill.test(class_1959.class_1963.field_9383);
+        if (rain && !snow) {
+            return class_1959.class_1963.field_9382;
+        }
+        if (snow && !rain) {
+            return class_1959.class_1963.field_9383;
+        }
+        return rain ? class_1959.class_1963.field_9382 : class_1959.class_1963.field_9384;
+    }
+
+    /** post step of LayeredCauldronBlock(props, fill, interactions): the cauldron keeps the 1.20.2 predicate */
+    public static void legacyLayeredCauldron(class_5556 cauldron, Predicate<class_1959.class_1963> fill) {
+        ((CbWorldLayeredCauldronAccess) cauldron).cb$setLegacy(new LegacyCauldron(fill, false));
+    }
+
+    /** the 1.20.2 PowderSnowCauldronBlock (the facade's constructor): its predicate, and its fire behaviour */
+    public static void legacyPowderSnowCauldron(class_5556 cauldron, Predicate<class_1959.class_1963> fill) {
+        ((CbWorldLayeredCauldronAccess) cauldron).cb$setLegacy(new LegacyCauldron(fill, true));
+    }
+
+    private static int legacyMaps;
+
+    /**
+     * 1.20.2 cauldrons took their interactions as a bare Map; 1.20.3 wants a named InteractionMap.
+     * A map that is the content of a 1.20.3 InteractionMap (CauldronInteraction.WATER and friends,
+     * as a 1.20.2 mod reads them) is that InteractionMap; a mod's own map gets one of its own,
+     * registered in CauldronInteraction.INTERACTIONS so the cauldron codec can name it.
+     */
+    public static synchronized class_5620.class_8821 interactionMap(Map<class_1792, class_5620> map) {
+        if (map == null) {
+            return null;
+        }
+        for (class_5620.class_8821 im : class_5620.field_46589.values()) {
+            if (im.comp_1982() == map) {
+                return im;
+            }
+        }
+        String name;
+        do {
+            name = "centurybridge_legacy_" + (legacyMaps++);
+        } while (class_5620.field_46589.containsKey(name));
+        class_5620.class_8821 im = new class_5620.class_8821(name, map);
+        class_5620.field_46589.put(name, im);
+        return im;
+    }
+
+    // ------------------------------------------------------------------ StructureBlockEntity
+
+    /**
+     * 1.20.2's StructureBlockEntity.loadStructure(level) was loadStructure(level, true): load the structure's
+     * author and size, and place it when the size is unchanged. 1.20.3 kept the name and descriptor for
+     * loadStructureInfo(level), which places nothing; a 1.20.2 call means the 1.20.2 method
+     * (CbWorldStructureBlockEntityMixin's cover).
+     */
+    public static boolean loadStructure(class_2633 be, class_3218 level) {
+        if (be instanceof CbWorldStructureLoadV own) {
+            return own.method_11376(level); // a 1.20.2 class's own override of loadStructure(level)
+        }
+        return ((CbWorldStructureBlockV) be).method_11368(level, true);
+    }
+
+    /** an override's super.loadStructure(level): 1.20.2's StructureBlockEntity body, loadStructure(level, true) */
+    public static boolean superLoadStructure(class_2633 be, class_3218 level) {
+        return ((CbWorldStructureBlockV) be).method_11368(level, true);
+    }
+
+    private CbWorldBlocks() {
+    }
+}
