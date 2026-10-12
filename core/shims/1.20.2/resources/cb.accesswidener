@@ -26,6 +26,13 @@ extendable class net/minecraft/class_2724
 extendable class net/minecraft/class_2889
 extendable class net/minecraft/class_2899
 extendable class net/minecraft/class_2913
+# ---- s1net: Realms. 1.20.1 kept the Realms environment in a mutable static (RealmsClient
+# currentEnvironment, switched by switchToStage/Prod/Local); 1.20.2's is ENVIRONMENT, final -- writable
+# again so mods' writes (renamed to it) and the switches act on what every request URL is built from.
+# 1.20.1's RealmsResetWorldScreen constructors were public; 1.20.2 builds the screen through static
+# factories over a private constructor, onto which those constructors are reshaped.
+mutable field net/minecraft/class_4341 field_45232 Lnet/minecraft/class_4341$class_4343;
+accessible method net/minecraft/class_4410 <init> (Lnet/minecraft/class_437;Lnet/minecraft/class_4877;ILnet/minecraft/class_2561;Lnet/minecraft/class_2561;ILnet/minecraft/class_2561;Ljava/lang/Runnable;)V
 # ---- BEGIN GENERATED: access narrowed since 1.20.1 (Main access-diff) ----
 # public/protected in 1.20.1, narrowed, made final or sealed in this release: the same
 # members, so a converted mod calling, overriding, extending or writing them gets the
