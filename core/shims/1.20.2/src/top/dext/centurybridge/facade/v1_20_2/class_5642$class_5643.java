@@ -24,7 +24,7 @@ public class class_5642$class_5643 extends top.dext.centurybridge.facade.v1_20_2
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_5642 method_32415(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_5642.field_45843, json, conditions, "loot function minecraft:set_enchantments");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_5642.field_45843, json, conditions, "minecraft:set_enchantments", "loot function minecraft:set_enchantments");
     }
 
     @Override

@@ -24,7 +24,7 @@ public class class_149$class_150 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_149 method_635(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_149.field_45846, json, conditions, "loot function minecraft:set_damage");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_149.field_45846, json, conditions, "minecraft:set_damage", "loot function minecraft:set_damage");
     }
 
     @Override

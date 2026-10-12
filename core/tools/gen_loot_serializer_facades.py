@@ -325,8 +325,11 @@ def main():
         what = ids.get(name, (None, None))
         is_condition = outer in v2 and CONDITION in v2[outer].interfaces
         label = (what[0] + " " + what[1]) if what[0] else simple(outer)
+        fn_id = what[1] if what[0] == "loot function" else None
+        if kind == "fn" and fn_id is None:
+            raise SystemExit(f"{name}: a function serializer 1.20.1 did not register (no loot function id)")
         src = emit(c, kind, outer, codec, label, what[1] if what[0] == "loot condition" or is_condition else None,
-                   simple(name), simple(outer))
+                   fn_id, simple(name), simple(outer))
         if src is None:
             raise SystemExit(f"{name}: unrecognised method shape for kind {kind}")
         fname = name.split("/")[-1]
@@ -348,7 +351,7 @@ def main():
     print(f"{len(written)} facades", file=sys.stderr)
 
 
-def emit(c, kind, outer, codec, label, cond_id, simple_name, simple_outer):
+def emit(c, kind, outer, codec, label, cond_id, fn_id, simple_name, simple_outer):
     O = java_type("L" + outer + ";")
     fname = c.name.split("/")[-1]
     CODEC = f"{O}.{codec}"
@@ -382,7 +385,7 @@ def emit(c, kind, outer, codec, label, cond_id, simple_name, simple_outer):
             lines.append("")
         lines.append(f"    /** fromJson(json, context, conditions) */")
         lines.append(f"    {acc(read)} {O} {read.name}(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {{")
-        lines.append(f"        return {RT}.readFunction({CODEC}, json, conditions, \"{label}\");")
+        lines.append(f"        return {RT}.readFunction({CODEC}, json, conditions, \"{fn_id}\", \"{label}\");")
         lines.append(f"    }}")
         for m in methods:
             if m is write or m is read:

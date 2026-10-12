@@ -24,7 +24,7 @@ public class class_111$class_113 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_111 method_504(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_111.field_45826, json, conditions, "loot function minecraft:exploration_map");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_111.field_45826, json, conditions, "minecraft:exploration_map", "loot function minecraft:exploration_map");
     }
 
     @Override

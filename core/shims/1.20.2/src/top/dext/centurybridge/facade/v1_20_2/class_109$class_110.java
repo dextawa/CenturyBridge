@@ -24,7 +24,7 @@ public class class_109$class_110 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_109 method_490(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_109.field_45823, json, conditions, "loot function minecraft:enchant_randomly");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_109.field_45823, json, conditions, "minecraft:enchant_randomly", "loot function minecraft:enchant_randomly");
     }
 
     @Override

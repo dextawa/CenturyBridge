@@ -24,7 +24,7 @@ public class class_106$class_108 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_106 method_486(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_106.field_45825, json, conditions, "loot function minecraft:enchant_with_levels");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_106.field_45825, json, conditions, "minecraft:enchant_with_levels", "loot function minecraft:enchant_with_levels");
     }
 
     @Override

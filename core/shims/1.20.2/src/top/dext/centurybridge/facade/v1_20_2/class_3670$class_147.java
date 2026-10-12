@@ -24,7 +24,7 @@ public class class_3670$class_147 extends top.dext.centurybridge.facade.v1_20_2.
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_3670 method_629(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_3670.field_45848, json, conditions, "loot function minecraft:set_name");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_3670.field_45848, json, conditions, "minecraft:set_name", "loot function minecraft:set_name");
     }
 
     @Override

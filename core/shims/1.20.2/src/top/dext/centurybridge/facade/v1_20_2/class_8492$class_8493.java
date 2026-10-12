@@ -24,7 +24,7 @@ public class class_8492$class_8493 extends top.dext.centurybridge.facade.v1_20_2
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_8492 method_51228(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_8492.field_45828, json, conditions, "loot function minecraft:reference");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_8492.field_45828, json, conditions, "minecraft:reference", "loot function minecraft:reference");
     }
 
     @Override

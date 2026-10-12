@@ -24,7 +24,7 @@ public class class_94$class_99 extends top.dext.centurybridge.facade.v1_20_2.cla
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_94 method_470(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_94.field_45806, json, conditions, "loot function minecraft:apply_bonus");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_94.field_45806, json, conditions, "minecraft:apply_bonus", "loot function minecraft:apply_bonus");
     }
 
     @Override

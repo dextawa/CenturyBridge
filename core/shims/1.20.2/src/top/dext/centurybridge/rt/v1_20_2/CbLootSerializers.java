@@ -143,11 +143,18 @@ public final class CbLootSerializers {
 
     /**
      * ConditionalLootFunction.Serializer subclasses: fromJson(json, ctx, conditions). The
-     * function's own fields come from the JSON; its conditions are the ones handed in.
+     * function's own fields come from the JSON; its conditions are the ones handed in. The
+     * data-format rules key on the "function" field, which the 1.20.1 dispatcher left in and a
+     * direct caller need not have: the function's own type is supplied for the upgrade.
      */
     public static <T extends net.minecraft.class_120> T readFunction(Codec<T> codec, JsonObject json,
-            net.minecraft.class_5341[] conditions, String what) {
-        T fn = decode(codec, without(legacyFunction(json), "conditions"), what);
+            net.minecraft.class_5341[] conditions, String functionId, String what) {
+        JsonObject j = json;
+        if (!json.has("function")) {
+            j = json.deepCopy();
+            j.addProperty("function", functionId);
+        }
+        T fn = decode(codec, without(legacyFunction(j), "conditions"), what);
         setConditions(fn, conditions);
         return fn;
     }

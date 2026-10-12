@@ -24,7 +24,7 @@ public class class_125$class_127 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_125 method_554(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_125.field_45833, json, conditions, "loot function minecraft:looting_enchant");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_125.field_45833, json, conditions, "minecraft:looting_enchant", "loot function minecraft:looting_enchant");
     }
 
     @Override

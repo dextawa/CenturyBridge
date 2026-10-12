@@ -24,7 +24,7 @@ public class class_114$class_115 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_114 method_509(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_114.field_45829, json, conditions, "loot function minecraft:limit_count");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_114.field_45829, json, conditions, "minecraft:limit_count", "loot function minecraft:limit_count");
     }
 
     @Override

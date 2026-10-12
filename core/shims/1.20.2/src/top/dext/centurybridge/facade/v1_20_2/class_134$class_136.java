@@ -24,7 +24,7 @@ public class class_134$class_136 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_134 method_605(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_134.field_45841, json, conditions, "loot function minecraft:set_contents");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_134.field_45841, json, conditions, "minecraft:set_contents", "loot function minecraft:set_contents");
     }
 
     @Override

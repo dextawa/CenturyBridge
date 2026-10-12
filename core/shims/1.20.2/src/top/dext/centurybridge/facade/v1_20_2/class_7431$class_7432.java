@@ -24,7 +24,7 @@ public class class_7431$class_7432 extends top.dext.centurybridge.facade.v1_20_2
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_7431 method_43572(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_7431.field_45844, json, conditions, "loot function minecraft:set_instrument");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_7431.field_45844, json, conditions, "minecraft:set_instrument", "loot function minecraft:set_instrument");
     }
 
     @Override

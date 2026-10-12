@@ -24,7 +24,7 @@ public class class_101$class_103 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_101 method_477(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_101.field_45817, json, conditions, "loot function minecraft:copy_name");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_101.field_45817, json, conditions, "minecraft:copy_name", "loot function minecraft:copy_name");
     }
 
     @Override

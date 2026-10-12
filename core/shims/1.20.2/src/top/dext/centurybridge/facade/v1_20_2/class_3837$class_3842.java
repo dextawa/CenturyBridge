@@ -24,7 +24,7 @@ public class class_3837$class_3842 extends top.dext.centurybridge.facade.v1_20_2
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_3837 method_16871(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_3837.field_45819, json, conditions, "loot function minecraft:copy_nbt");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_3837.field_45819, json, conditions, "minecraft:copy_nbt", "loot function minecraft:copy_nbt");
     }
 
     @Override

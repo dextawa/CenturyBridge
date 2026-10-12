@@ -24,7 +24,7 @@ public class class_152$class_154 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_152 method_641(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_152.field_45851, json, conditions, "loot function minecraft:set_stew_effect");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_152.field_45851, json, conditions, "minecraft:set_stew_effect", "loot function minecraft:set_stew_effect");
     }
 
     @Override

@@ -17,7 +17,7 @@ public class class_165$class_5340 extends top.dext.centurybridge.facade.v1_20_2.
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_165 method_29324(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_165.field_45855, json, conditions, "loot function minecraft:furnace_smelt");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_165.field_45855, json, conditions, "minecraft:furnace_smelt", "loot function minecraft:furnace_smelt");
     }
 
     @Override

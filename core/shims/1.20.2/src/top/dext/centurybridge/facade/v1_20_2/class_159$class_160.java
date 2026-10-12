@@ -24,7 +24,7 @@ public class class_159$class_160 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_159 method_679(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_159.field_45849, json, conditions, "loot function minecraft:set_nbt");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_159.field_45849, json, conditions, "minecraft:set_nbt", "loot function minecraft:set_nbt");
     }
 
     @Override

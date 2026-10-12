@@ -17,7 +17,7 @@ public class class_104$class_105 extends top.dext.centurybridge.facade.v1_20_2.c
 
     /** fromJson(json, context, conditions) */
     public net.minecraft.class_104 method_479(JsonObject json, JsonDeserializationContext context, net.minecraft.class_5341[] conditions) {
-        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_104.field_45815, json, conditions, "loot function minecraft:explosion_decay");
+        return top.dext.centurybridge.rt.v1_20_2.CbLootSerializers.readFunction(net.minecraft.class_104.field_45815, json, conditions, "minecraft:explosion_decay", "loot function minecraft:explosion_decay");
     }
 
     @Override
