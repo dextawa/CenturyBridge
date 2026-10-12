@@ -1340,3 +1340,37 @@ call-static	net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorag
 call-static	net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage	writeData	(Lnet/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_11372;)V	METHOD	method not declared on the owner
 call-static-inherited	net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage	readData	(Lnet/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage;Lcom/mojang/serialization/Codec;Ljava/util/function/Supplier;Lnet/minecraft/class_11368;)V	METHOD	method not declared on the owner
 call-static-inherited	net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage	writeData	(Lnet/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_11372;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2248	getAppearance	(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2680	getAppearance	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_481	getItemGroupsOnPage	(I)Ljava/util/List;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_481	getSelectedItemGroup	()Lnet/minecraft/class_1761;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_481	setSelectedItemGroup	(Lnet/minecraft/class_1761;)Z	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_11389	remove	(Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_11389	remove	([Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_11389	removeAll	(Ljava/util/Collection;)Lnet/minecraft/class_11389;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_11389	removeAll	(Ljava/util/stream/Stream;)Lnet/minecraft/class_11389;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_11389	removeTag	(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1792	getRecipeRemainder	(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1799	getRecipeRemainder	()Lnet/minecraft/class_1799;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1836	shouldDisplayAllInformation	()Z	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_55$class_56	with	(Lnet/minecraft/class_79;)Lnet/minecraft/class_55$class_56;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_55$class_56	with	(Ljava/util/Collection;)Lnet/minecraft/class_55$class_56;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_55$class_56	conditionally	(Lnet/minecraft/class_5341;)Lnet/minecraft/class_55$class_56;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_55$class_56	conditionally	(Ljava/util/Collection;)Lnet/minecraft/class_55$class_56;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_2591	addSupportedBlock	(Lnet/minecraft/class_2248;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_10889	emitQuads	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Predicate;)V	CLASS	class gone (net/minecraft/client/renderer/block/model/BlockModelPart)
+call-injected	net/minecraft/class_773	getModelParticleSprite	(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1058;	CLASS	class gone (net/minecraft/client/renderer/block/BlockModelShaper)
+call-injected	net/minecraft/class_1087	emitQuads	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;Ljava/util/function/Predicate;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1087	particleSprite	(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1058;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_778	render	(Lnet/minecraft/class_1920;Lnet/minecraft/class_1087;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_4587;Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;ZJI)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_776	renderBlockAsEntity	(Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1920;Lnet/minecraft/class_2338;)V	CLASS	class gone (net/minecraft/client/renderer/block/BlockRenderDispatcher)
+call-injected	net/minecraft/class_10444$class_10446	emitter	()Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_10444$class_10446	setRenderTypeGetter	(Lnet/fabricmc/fabric/api/renderer/v1/render/ItemRenderTypeGetter;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_11785	submitBlock	(Lnet/minecraft/class_4587;Lnet/minecraft/class_2680;IIILnet/minecraft/class_1920;Lnet/minecraft/class_2338;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_11785	submitBlockStateModel	(Lnet/minecraft/class_4587;Ljava/util/function/Function;Lnet/minecraft/class_1087;FFFIIILnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_9826	spriteFinder	(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;	CLASS	class gone (net/minecraft/client/resources/model/SpriteGetter)
+call-injected	net/minecraft/class_9826	spriteFinder	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadAtlas;)Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;	CLASS	class gone (net/minecraft/client/resources/model/SpriteGetter)
+call-injected	net/minecraft/class_1059	spriteFinder	()Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_7766$class_7767	spriteFinder	()Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_11368	keys	()Ljava/util/Collection;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_7475	remove	()Ljava/util/List;	METHOD	method not declared on the owner

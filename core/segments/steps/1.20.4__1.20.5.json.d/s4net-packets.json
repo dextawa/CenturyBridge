@@ -1,0 +1,1038 @@
+{
+ "covers": [
+  "net/minecraft/class_2604.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2606.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2616.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2617.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2620.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2622.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2623.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2626.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2629.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2632.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2637.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2639.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2641.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2645.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2648.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2649.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2651.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2653.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2656.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2658.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2661.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2663.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2664.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2666.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2668.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2670.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2672.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2673.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2675.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2676.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2678.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2683.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2684$class_2685.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2684$class_2686.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2684$class_2687.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2692.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2693.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2695.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2696.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2703.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2707.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2708.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2713.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2716.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2718.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2720.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2724.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2726.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2729.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2734.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2735.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2736.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2739.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2740.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2743.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2744.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2748.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2749.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2751.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2752.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2757.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2759.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2761.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2765.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2767.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2770.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2772.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2774.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2775.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2777.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2779.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2781.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2783.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2788.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2790.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2793.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2795.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2797.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2799.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2803.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2805.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2811.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2813.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2815.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2817.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2820.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2822.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2824.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2827.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2828$class_2829.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2828$class_2830.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2828$class_2831.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2828$class_5911.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2833.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2836.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2838.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2840.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2842.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2846.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2848.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2851.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2853.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2855.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2856.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2859.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2863.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2866.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2868.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2870.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2871.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2873.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2875.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2877.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2879.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2884.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2885.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2886.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2889.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2899.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2901.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2905.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2907.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2909.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2915.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2917.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2923.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2924.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2935.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_2937.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_3753.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_3895.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_3943.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_3944.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_4210.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_4211.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_4273.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_4282.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_4463.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5194.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5427.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5888.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5889.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5890.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5891.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5892.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5894.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5895.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5896.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5897.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5898.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5899.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5900.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5903.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5904.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_5905.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_6373.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_6374.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_6682.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7438.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7439.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7472.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7495.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7597.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7617.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7640.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7827.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7828.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7832.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_7861.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8037.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8038.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8043.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8143.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8212.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8588.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8590.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8591.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8593.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8707.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8708.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8708.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8709.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8709.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8711.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8712.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8712.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8713.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8713.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8714.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8714.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8715.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8715.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8716.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8716.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8718.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8718.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8720.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8720.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8721.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8721.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8722.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8722.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8723.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8723.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8724.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8724.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8725.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8725.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8726.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8726.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8728.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8728.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8729.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8729.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8733.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8734.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8736.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8738.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8739.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8875.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8913.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_8914.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_9004.comp_1678()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_9004.method_53028(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_9006.method_11052(Lnet/minecraft/class_2540;)V",
+  "net/minecraft/class_9053.method_11052(Lnet/minecraft/class_2540;)V"
+ ],
+ "ctorRedirects": {
+  "net/minecraft/class_2617.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundAwardStatsPacket",
+  "net/minecraft/class_2622.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundBlockEntityDataPacket",
+  "net/minecraft/class_2626.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundBlockUpdatePacket",
+  "net/minecraft/class_2639.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundCommandSuggestionsPacket",
+  "net/minecraft/class_2656.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundCooldownPacket",
+  "net/minecraft/class_2658.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundCustomPayloadPacket",
+  "net/minecraft/class_2661.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundDisconnectPacket",
+  "net/minecraft/class_2683.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundMapItemDataPacket",
+  "net/minecraft/class_2718.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundRemoveMobEffectPacket",
+  "net/minecraft/class_2720.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundResourcePackPushPacket",
+  "net/minecraft/class_2757.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundSetScorePacket",
+  "net/minecraft/class_2772.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundTabListPacket",
+  "net/minecraft/class_2781.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundUpdateAttributesPacket",
+  "net/minecraft/class_2788.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundUpdateRecipesPacket",
+  "net/minecraft/class_2811.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadServerboundContainerButtonClickPacket",
+  "net/minecraft/class_2817.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadServerboundCustomPayloadPacket",
+  "net/minecraft/class_2820.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadServerboundEditBookPacket",
+  "net/minecraft/class_2866.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadServerboundSetBeaconPacket",
+  "net/minecraft/class_2873.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadServerboundSetCreativeModeSlotPacket",
+  "net/minecraft/class_2901.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundLoginFinishedPacket",
+  "net/minecraft/class_2937.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbNewServerboundStatusRequestPacket",
+  "net/minecraft/class_2937.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadServerboundStatusRequestPacket",
+  "net/minecraft/class_3944.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundOpenScreenPacket",
+  "net/minecraft/class_5891.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbNewClientboundPlayerCombatEnterPacket",
+  "net/minecraft/class_5891.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundPlayerCombatEnterPacket",
+  "net/minecraft/class_5892.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundPlayerCombatKillPacket",
+  "net/minecraft/class_5894.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundSetActionBarTextPacket",
+  "net/minecraft/class_5903.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundSetSubtitleTextPacket",
+  "net/minecraft/class_5904.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundSetTitleTextPacket",
+  "net/minecraft/class_7439.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundSystemChatPacket",
+  "net/minecraft/class_7495.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundServerDataPacket",
+  "net/minecraft/class_7827.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundDisguisedChatPacket",
+  "net/minecraft/class_8588.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbNewClientboundStartConfigurationPacket",
+  "net/minecraft/class_8588.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundStartConfigurationPacket",
+  "net/minecraft/class_8591.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbNewServerboundConfigurationAcknowledgedPacket",
+  "net/minecraft/class_8591.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadServerboundConfigurationAcknowledgedPacket",
+  "net/minecraft/class_8593.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbNewServerboundLoginAcknowledgedPacket",
+  "net/minecraft/class_8593.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadServerboundLoginAcknowledgedPacket",
+  "net/minecraft/class_8713.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadGameEventListenerDebugPayload",
+  "net/minecraft/class_8733.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbNewClientboundFinishConfigurationPacket",
+  "net/minecraft/class_8733.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundFinishConfigurationPacket",
+  "net/minecraft/class_8734.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundRegistryDataPacket",
+  "net/minecraft/class_8736.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbNewServerboundFinishConfigurationPacket",
+  "net/minecraft/class_8736.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadServerboundFinishConfigurationPacket",
+  "net/minecraft/class_8739.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbNewClientboundChunkBatchStartPacket",
+  "net/minecraft/class_8739.<init>(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbReadClientboundChunkBatchStartPacket"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_2604.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2617.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lit/unimi/dsi/fastutil/objects/Object2IntMap;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundAwardStatsPacket_0(Lnet/minecraft/class_2540;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2622.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_2338;Lnet/minecraft/class_2591;Lnet/minecraft/class_2487;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundBlockEntityDataPacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2338;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundBlockEntityDataPacket_1(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2591;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundBlockEntityDataPacket_2(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2487;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2623.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2626.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundBlockUpdatePacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2338;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundBlockUpdatePacket_1(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2680;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2629.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2639.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(IIILjava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundCommandSuggestionsPacket_0(Lnet/minecraft/class_2540;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundCommandSuggestionsPacket_1(Lnet/minecraft/class_2540;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundCommandSuggestionsPacket_2(Lnet/minecraft/class_2540;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundCommandSuggestionsPacket_3(Lnet/minecraft/class_2540;)Ljava/util/List;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2649.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2653.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2656.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_1792;I)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundCooldownPacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1792;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundCooldownPacket_1(Lnet/minecraft/class_2540;)I"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2661.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundDisconnectPacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2561;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2664.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2672.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2675.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2678.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2683.<init>(IBZLjava/util/Collection;Lnet/minecraft/class_22$class_5637;)V": {
+   "desc": "(Lnet/minecraft/class_9209;BZLjava/util/Collection;Lnet/minecraft/class_22$class_5637;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbMapId(I)Lnet/minecraft/class_9209;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4net records: the map is a MapId in 1.20.5 (of the same id)"
+  },
+  "net/minecraft/class_2683.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9209;BZLjava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundMapItemDataPacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9209;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundMapItemDataPacket_1(Lnet/minecraft/class_2540;)B",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundMapItemDataPacket_2(Lnet/minecraft/class_2540;)Z",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundMapItemDataPacket_3(Lnet/minecraft/class_2540;)Ljava/util/Optional;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundMapItemDataPacket_4(Lnet/minecraft/class_2540;)Ljava/util/Optional;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2703.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2718.<init>(ILnet/minecraft/class_1291;)V": {
+   "desc": "(ILnet/minecraft/class_6880;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "s4net records: the effect is a Holder in 1.20.5"
+  },
+  "net/minecraft/class_2718.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(ILnet/minecraft/class_6880;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundRemoveMobEffectPacket_0(Lnet/minecraft/class_2540;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundRemoveMobEffectPacket_1(Lnet/minecraft/class_2540;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2724.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2739.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2744.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2751.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2765.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2767.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2772.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundTabListPacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2561;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundTabListPacket_1(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2561;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2779.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2781$class_2782.<init>(Lnet/minecraft/class_1320;DLjava/util/Collection;)V": {
+   "desc": "(Lnet/minecraft/class_6880;DLjava/util/Collection;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbAttribute(Lnet/minecraft/class_1320;)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4net records: the attribute is a Holder in 1.20.5"
+  },
+  "net/minecraft/class_2781.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(ILjava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundUpdateAttributesPacket_0(Lnet/minecraft/class_2540;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundUpdateAttributesPacket_1(Lnet/minecraft/class_2540;)Ljava/util/List;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2783.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2788.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Ljava/util/Collection;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundUpdateRecipesPacket_0(Lnet/minecraft/class_2540;)Ljava/util/Collection;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2811.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(II)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundContainerButtonClickPacket_0(Lnet/minecraft/class_2540;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundContainerButtonClickPacket_1(Lnet/minecraft/class_2540;)I"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2813.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2820.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(ILjava/util/List;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundEditBookPacket_0(Lnet/minecraft/class_2540;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundEditBookPacket_1(Lnet/minecraft/class_2540;)Ljava/util/List;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundEditBookPacket_2(Lnet/minecraft/class_2540;)Ljava/util/Optional;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2866.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundSetBeaconPacket_0(Lnet/minecraft/class_2540;)Ljava/util/Optional;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundSetBeaconPacket_1(Lnet/minecraft/class_2540;)Ljava/util/Optional;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2873.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(SLnet/minecraft/class_1799;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundSetCreativeModeSlotPacket_0(Lnet/minecraft/class_2540;)S",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadServerboundSetCreativeModeSlotPacket_1(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1799;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2901.<init>(Lcom/mojang/authlib/GameProfile;)V": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;Z)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbStrictErrorHandling()Z"
+   ],
+   "basis": "s4net records: 1.20.5 adds strictErrorHandling, which its own server always sends as true"
+  },
+  "net/minecraft/class_2901.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;Z)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundLoginFinishedPacket_0(Lnet/minecraft/class_2540;)Lcom/mojang/authlib/GameProfile;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundLoginFinishedPacket_1(Lnet/minecraft/class_2540;)Z"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_2937.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "basis": "s4net packets: 1.20.4's read constructor never read the buffer"
+  },
+  "net/minecraft/class_3943.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_3944.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(ILnet/minecraft/class_3917;Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundOpenScreenPacket_0(Lnet/minecraft/class_2540;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundOpenScreenPacket_1(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3917;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundOpenScreenPacket_2(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2561;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_5891.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "basis": "s4net packets: 1.20.4's read constructor never read the buffer"
+  },
+  "net/minecraft/class_5892.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(ILnet/minecraft/class_2561;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundPlayerCombatKillPacket_0(Lnet/minecraft/class_2540;)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundPlayerCombatKillPacket_1(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2561;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_5894.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundSetActionBarTextPacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2561;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_5900$class_5902.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_5900.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_5903.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundSetSubtitleTextPacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2561;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_5904.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundSetTitleTextPacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2561;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_7438.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_7495.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_2561;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundServerDataPacket_0(Lnet/minecraft/class_2540;)Lnet/minecraft/class_2561;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketReaders#cbSpreadClientboundServerDataPacket_1(Lnet/minecraft/class_2540;)Ljava/util/Optional;"
+   ],
+   "basis": "s4net packets: no read constructor in 1.20.5; the constructor over the fields, each the field of one packet decoded from the buffer"
+  },
+  "net/minecraft/class_7495.<init>(Lnet/minecraft/class_2561;Ljava/util/Optional;Z)V": {
+   "desc": "(Lnet/minecraft/class_2561;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets#cbSecureChat(Lnet/minecraft/class_7495;Z)V",
+   "postArgs": [
+    2
+   ],
+   "basis": "s4net records: 1.20.5 sends enforcesSecureChat in the login packet instead; the value stays with the packet for 1.20.4 readers (CbNetServerDataBridge)"
+  },
+  "net/minecraft/class_8143.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_8589.<init>(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4net packets: the read constructor takes a RegistryFriendlyByteBuf in 1.20.5"
+  }
+ },
+ "methodRenames": {
+  "net/minecraft/class_2639.method_11399()I": "comp_2262",
+  "net/minecraft/class_2656.method_11453()Lnet/minecraft/class_1792;": "comp_2198",
+  "net/minecraft/class_2656.method_11454()I": "comp_2199",
+  "net/minecraft/class_2661.method_11468()Lnet/minecraft/class_2561;": "comp_2325",
+  "net/minecraft/class_2683.method_32701()B": "comp_2271",
+  "net/minecraft/class_2683.method_32702()Z": "comp_2272",
+  "net/minecraft/class_2772.method_11906()Lnet/minecraft/class_2561;": "comp_2283",
+  "net/minecraft/class_2772.method_11908()Lnet/minecraft/class_2561;": "comp_2282",
+  "net/minecraft/class_2781$class_2782.method_11939()Ljava/util/Collection;": "comp_2179",
+  "net/minecraft/class_2781$class_2782.method_11941()D": "comp_2178",
+  "net/minecraft/class_2811.method_12186()I": "comp_2650",
+  "net/minecraft/class_2811.method_12187()I": "comp_2649",
+  "net/minecraft/class_2820.method_12235()I": "comp_2285",
+  "net/minecraft/class_2820.method_37442()Ljava/util/List;": "comp_2286",
+  "net/minecraft/class_2820.method_37445()Ljava/util/Optional;": "comp_2287",
+  "net/minecraft/class_2873.method_12479()Lnet/minecraft/class_1799;": "comp_2610",
+  "net/minecraft/class_2901.method_12593()Lcom/mojang/authlib/GameProfile;": "comp_2363",
+  "net/minecraft/class_2923.method_36180()J": "comp_2201",
+  "net/minecraft/class_2940.method_12712()Lnet/minecraft/class_2941;": "comp_2328",
+  "net/minecraft/class_2940.method_12713()I": "comp_2327",
+  "net/minecraft/class_5892.method_34144()I": "comp_2275",
+  "net/minecraft/class_5892.method_34145()Lnet/minecraft/class_2561;": "comp_2276",
+  "net/minecraft/class_5894.method_34155()Lnet/minecraft/class_2561;": "comp_2279",
+  "net/minecraft/class_5903.method_34190()Lnet/minecraft/class_2561;": "comp_2280",
+  "net/minecraft/class_5904.method_34192()Lnet/minecraft/class_2561;": "comp_2281",
+  "net/minecraft/class_7495.method_44132()Lnet/minecraft/class_2561;": "comp_2277",
+  "net/minecraft/class_7495.method_49398()Ljava/util/Optional;": "comp_2278"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2617.method_11273()Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2683.method_11644()I": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2718.method_11768()Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2781$class_2782.method_11940()Lnet/minecraft/class_1320;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2866.method_12435()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2866.method_12436()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets",
+  "net/minecraft/class_2873.method_12481()I": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2617.method_11273()Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_11273",
+  "net/minecraft/class_2683.method_11644()I": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_11644",
+  "net/minecraft/class_2718.method_11768()Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_11768",
+  "net/minecraft/class_2781$class_2782.method_11940()Lnet/minecraft/class_1320;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_11940",
+  "net/minecraft/class_2866.method_12435()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_12435",
+  "net/minecraft/class_2866.method_12436()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_12436",
+  "net/minecraft/class_2873.method_12481()I": "top/dext/centurybridge/step/v1_20_5/rt/CbNetRecordPackets#cbSupermethod_12481"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_11273()Ljava/util/Map;",
+   "new": "comp_2197()Lit/unimi/dsi/fastutil/objects/Object2IntMap;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2617",
+   "basis": "s4net records: ClientboundAwardStatsPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbStatsMap(Ljava/util/Map;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;"
+  },
+  {
+   "old": "method_11399()I",
+   "new": "comp_2262()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2639",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundCommandSuggestionsPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11453()Lnet/minecraft/class_1792;",
+   "new": "comp_2198()Lnet/minecraft/class_1792;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2656",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundCooldownPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11454()I",
+   "new": "comp_2199()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2656",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundCooldownPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11468()Lnet/minecraft/class_2561;",
+   "new": "comp_2325()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2661",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundDisconnectPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11644()I",
+   "new": "comp_2270()Lnet/minecraft/class_9209;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2683",
+   "basis": "s4net records: ClientboundMapItemDataPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbMapId(I)Lnet/minecraft/class_9209;"
+  },
+  {
+   "old": "method_32701()B",
+   "new": "comp_2271()B",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2683",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundMapItemDataPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_32702()Z",
+   "new": "comp_2272()Z",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2683",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundMapItemDataPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11768()Lnet/minecraft/class_1291;",
+   "new": "comp_2176()Lnet/minecraft/class_6880;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2718",
+   "basis": "s4net records: ClientboundRemoveMobEffectPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
+  },
+  {
+   "old": "method_11906()Lnet/minecraft/class_2561;",
+   "new": "comp_2283()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2772",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundTabListPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11908()Lnet/minecraft/class_2561;",
+   "new": "comp_2282()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2772",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundTabListPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11939()Ljava/util/Collection;",
+   "new": "comp_2179()Ljava/util/Collection;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2781$class_2782",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundUpdateAttributesPacketAttributeSnapshot's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_11940()Lnet/minecraft/class_1320;",
+   "new": "comp_2177()Lnet/minecraft/class_6880;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2781$class_2782",
+   "basis": "s4net records: ClientboundUpdateAttributesPacketAttributeSnapshot's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbAttribute(Lnet/minecraft/class_1320;)Lnet/minecraft/class_6880;"
+  },
+  {
+   "old": "method_11941()D",
+   "new": "comp_2178()D",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2781$class_2782",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundUpdateAttributesPacketAttributeSnapshot's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12186()I",
+   "new": "comp_2650()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2811",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundContainerButtonClickPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12187()I",
+   "new": "comp_2649()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2811",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundContainerButtonClickPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12235()I",
+   "new": "comp_2285()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2820",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundEditBookPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_37442()Ljava/util/List;",
+   "new": "comp_2286()Ljava/util/List;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2820",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundEditBookPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_37445()Ljava/util/Optional;",
+   "new": "comp_2287()Ljava/util/Optional;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2820",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundEditBookPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12435()Ljava/util/Optional;",
+   "new": "comp_2181()Ljava/util/Optional;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2866",
+   "basis": "s4net records: ServerboundSetBeaconPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbEffectHolder(Ljava/util/Optional;)Ljava/util/Optional;"
+  },
+  {
+   "old": "method_12436()Ljava/util/Optional;",
+   "new": "comp_2180()Ljava/util/Optional;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2866",
+   "basis": "s4net records: ServerboundSetBeaconPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbEffectHolder(Ljava/util/Optional;)Ljava/util/Optional;"
+  },
+  {
+   "old": "method_12479()Lnet/minecraft/class_1799;",
+   "new": "comp_2610()Lnet/minecraft/class_1799;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2873",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ServerboundSetCreativeModeSlotPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12481()I",
+   "new": "comp_2609()S",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2873",
+   "basis": "s4net records: ServerboundSetCreativeModeSlotPacket's getter is the record accessor in 1.20.5, of another type",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPackets.cbShortOfInt(I)S"
+  },
+  {
+   "old": "method_12593()Lcom/mojang/authlib/GameProfile;",
+   "new": "comp_2363()Lcom/mojang/authlib/GameProfile;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2901",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundLoginFinishedPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_36180()J",
+   "new": "comp_2201()J",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2923",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundPongResponsePacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12712()Lnet/minecraft/class_2941;",
+   "new": "comp_2328()Lnet/minecraft/class_2941;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2940",
+   "superCalls": "rewrite",
+   "basis": "s4net records: EntityDataAccessor's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_12713()I",
+   "new": "comp_2327()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2940",
+   "superCalls": "rewrite",
+   "basis": "s4net records: EntityDataAccessor's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34144()I",
+   "new": "comp_2275()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5892",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundPlayerCombatKillPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34145()Lnet/minecraft/class_2561;",
+   "new": "comp_2276()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5892",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundPlayerCombatKillPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34155()Lnet/minecraft/class_2561;",
+   "new": "comp_2279()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5894",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundSetActionBarTextPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34190()Lnet/minecraft/class_2561;",
+   "new": "comp_2280()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5903",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundSetSubtitleTextPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_34192()Lnet/minecraft/class_2561;",
+   "new": "comp_2281()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_5904",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundSetTitleTextPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_44132()Lnet/minecraft/class_2561;",
+   "new": "comp_2277()Lnet/minecraft/class_2561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7495",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundServerDataPacket's getter is the record accessor in 1.20.5"
+  },
+  {
+   "old": "method_49398()Ljava/util/Optional;",
+   "new": "comp_2278()Ljava/util/Optional;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7495",
+   "superCalls": "rewrite",
+   "basis": "s4net records: ClientboundServerDataPacket's getter is the record accessor in 1.20.5"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_8707.field_45695:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8708.field_45696:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8709.field_45697:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8712.field_45698:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8713.field_45699:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8714.field_45700:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8715.field_45701:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8716.field_45702:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8718.field_45703:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8720.field_45704:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8721.field_45705:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8722.field_45706:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8723.field_45707:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8724.field_45708:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8725.field_45709:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8726.field_45710:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8728.field_45711:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_8729.field_45712:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds",
+  "net/minecraft/class_9004.field_47514:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloadIds"
+ }
+}

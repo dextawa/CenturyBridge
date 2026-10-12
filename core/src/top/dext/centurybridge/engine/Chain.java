@@ -1207,6 +1207,12 @@ public final class Chain {
     /** name + new descriptor of every reshape: what the rewritten call sites now reference */
     public final java.util.Set<String> callReshapeTargets = new java.util.HashSet<>();
     /**
+     * name + descriptor of every super-bridge accessor shape ({@link OverrideHook#superAccessors}): the
+     * target-release member a class's cb$super$ accessor calls super's implementation of -- a call the
+     * engine itself writes in the target's shape, not a reference of the mod's to judge
+     */
+    public final java.util.Set<String> superAccessorTargets = new java.util.HashSet<>();
+    /**
      * name + descriptor of the reshapes that keep the descriptor -- conversions of values whose
      * erased type stayed while their type arguments changed (generic drift). Such a member keeps
      * its shape on a mod class that overrides it too ({@link #convertHooks} puts a converting
@@ -2039,6 +2045,7 @@ public final class Chain {
                         if (o.has("superAccessors")) {
                             for (var acc : o.getAsJsonArray("superAccessors")) {
                                 h.superAccessors.add(acc.getAsString());
+                                c.superAccessorTargets.add(acc.getAsString());
                             }
                         }
                         String want = h.superAccess == null ? null : "(L" + h.superAccess + ";" + h.oldDesc.substring(1);
