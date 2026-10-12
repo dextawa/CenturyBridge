@@ -36,6 +36,11 @@ public final class CbBlockMisc {
         return beaconEffects;
     }
 
+    /** SpawnData(entity, customSpawnRules): 1.20.5 added the equipment, which no 1.20.4 spawn data had */
+    public static java.util.Optional<?> noEquipment() {
+        return java.util.Optional.empty();
+    }
+
     private CbBlockMisc() {
     }
 }
