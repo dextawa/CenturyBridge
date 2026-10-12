@@ -756,6 +756,102 @@ public final class JarProcessor {
     }
 
     /**
+     * Same-shape override bridges ({@link Chain#convertHooks}): a method of the mod's own class that
+     * overrides a member whose type arguments changed at this step -- name and erased descriptor as
+     * before -- is renamed, and a bridge with the member's name and descriptor takes its place,
+     * turning what vanilla passes into what the old body was written for and its answer back:
+     * <pre>
+     *   m(a0..an):  return ret(this.m$cbW(arg0(a0) .. argn(an)));
+     * </pre>
+     * An abstract redeclaration is renamed too and gets the same bridge, which dispatches to the
+     * subclass's renamed body; a javac bridge with the member's descriptor (a covariant override's)
+     * is what gets renamed, and still forwards to the mod's own method. Calls are converted on the
+     * other side ({@link #rewriteCalls}: a same-shape reshape climbs past the mod's declaration), so
+     * every value reaching the renamed body is V's. Straight-line code: no frames to write.
+     */
+    private static byte[] rewriteConvertHooks(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
+        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+        boolean any = false;
+        for (List<Chain.ConvertHook> hs : chain.convertHooks.values()) {
+            if (raw.contains(hs.get(0).name)) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return bytes;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new ClassReader(bytes).accept(cn, 0);
+        boolean itf = (cn.access & Opcodes.ACC_INTERFACE) != 0;
+        String[] ifaces = cn.interfaces.toArray(new String[0]);
+        Set<String> declared = new HashSet<>();
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            declared.add(m.name + m.desc);
+        }
+        List<org.objectweb.asm.tree.MethodNode> bridges = new ArrayList<>();
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if ((m.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) != 0 || m.name.startsWith("<")) {
+                continue;
+            }
+            List<Chain.ConvertHook> hs = chain.convertHooks.get(m.name + m.desc);
+            if (hs == null) {
+                continue;
+            }
+            Chain.ConvertHook h = null;
+            for (Chain.ConvertHook x : hs) {
+                if (isUnder(cn.superName, ifaces, x.under, layer, chain)) {
+                    h = x;
+                    break;
+                }
+            }
+            if (h == null || declared.contains(h.renamed + h.desc)) {
+                continue; // not an override of the hooked member, or already bridged at this step
+            }
+            m.name = h.renamed;
+            bridges.add(convertBridge(cn.name, itf, m, h));
+            rpt.notes.add(tag + "convert-hooked: " + cn.name + "." + h.name + h.desc + " (old body now " + h.renamed + ")");
+            top.dext.centurybridge.data.FullAudit.record(h.under + "." + h.name + h.desc, "convert-hooked");
+        }
+        if (bridges.isEmpty()) {
+            return bytes;
+        }
+        cn.methods.addAll(bridges);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
+    }
+
+    /** the bridge {@link #rewriteConvertHooks} puts where the mod's method was */
+    private static org.objectweb.asm.tree.MethodNode convertBridge(String cls, boolean itf,
+                                                                   org.objectweb.asm.tree.MethodNode body,
+                                                                   Chain.ConvertHook h) {
+        int acc = body.access & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED | Opcodes.ACC_FINAL);
+        String[] ex = body.exceptions == null ? null : body.exceptions.toArray(new String[0]);
+        org.objectweb.asm.tree.MethodNode b = new org.objectweb.asm.tree.MethodNode(acc, h.name, h.desc, body.signature, ex);
+        org.objectweb.asm.Type[] params = org.objectweb.asm.Type.getArgumentTypes(h.desc);
+        org.objectweb.asm.tree.InsnList in = b.instructions;
+        in.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+        int slot = 1;
+        for (int i = 0; i < params.length; i++) {
+            in.add(new org.objectweb.asm.tree.VarInsnNode(params[i].getOpcode(Opcodes.ILOAD), slot));
+            slot += params[i].getSize();
+            if (h.args[i] != null) {
+                in.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.args[i][0], h.args[i][1], h.args[i][2], false));
+            }
+        }
+        in.add(new org.objectweb.asm.tree.MethodInsnNode(itf ? Opcodes.INVOKEINTERFACE : Opcodes.INVOKEVIRTUAL,
+            cls, h.renamed, h.desc, itf));
+        if (h.ret != null) {
+            in.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.ret[0], h.ret[1], h.ret[2], false));
+        }
+        in.add(new org.objectweb.asm.tree.InsnNode(org.objectweb.asm.Type.getReturnType(h.desc).getOpcode(Opcodes.IRETURN)));
+        b.maxLocals = slot;
+        b.maxStack = slot + 1;
+        return b;
+    }
+
+    /**
      * If {@code h} is a {@code owner::new} constructor method handle
      * (REF_newInvokeSpecial) whose owner has a ctorRedirect factory, return an
      * equivalent REF_invokeStatic handle to that factory (same arg types, with
@@ -1121,8 +1217,8 @@ public final class JarProcessor {
                 }
                 return null; // a library or another jar: not this layer's to judge
             }
-            if (d.contains(member)) {
-                return null; // the mod's own member
+            if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
+                return null; // the mod's own member (a same-shape one sits behind a convertHooks bridge)
             }
             layerClasses.add(cur);
             cur = layer.superOf.get(cur);
@@ -1153,7 +1249,7 @@ public final class JarProcessor {
             if (d == null) {
                 continue;
             }
-            if (d.contains(member)) {
+            if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
                 return null; // a default method of the mod's own interface
             }
             todo.addAll(layer.interfacesOf.getOrDefault(t, List.of()));
@@ -1755,6 +1851,12 @@ public final class JarProcessor {
             byte[] b3 = rewriteCalls(bytes, chain, layer, rpt, tag);
             ctorChanged |= b3 != bytes;
             bytes = b3;
+        }
+        if (!chain.convertHooks.isEmpty()) {
+            // after the call pass: the bridges' own calls of the renamed bodies are not call sites to convert
+            byte[] b5 = rewriteConvertHooks(bytes, chain, layer, rpt, tag);
+            ctorChanged |= b5 != bytes;
+            bytes = b5;
         }
         if (!chain.overrideHooks.isEmpty()) {
             byte[] b4 = rewriteHookSuperCalls(bytes, chain, layer, rpt, tag);
