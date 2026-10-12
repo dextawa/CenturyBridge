@@ -9,7 +9,9 @@ cd ~/cbwork
 WD="$1"; T="$2"; TAG="$3"; shift 3
 JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
 LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
-SRV=~/cbtest/server-$T
+# CB_SERVER_DIR: an agent's own copy (cp -r ~/cbtest/server-T ~/cbwork/agents/<name>/), so two boots
+# never share a mods directory
+SRV="${CB_SERVER_DIR:-$HOME/cbtest/server-$T}"
 [ -f "$SRV/fabric-server.jar" ] || { echo "no Fabric server at $SRV"; exit 1; }
 [ -d "$WD/runtime-$T" ] || { echo "no $WD/runtime-$T (climb_runtime.sh $WD $T)"; exit 1; }
 CONV="$WD/boot/$TAG"
