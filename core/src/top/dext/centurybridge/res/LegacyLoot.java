@@ -14,7 +14,8 @@ import java.util.Set;
  *
  * <ul>
  * <li>1.20.2: predicates became codecs; a block state property value must be a string
- * (1.20.1 read any primitive as one: "age": 7, "lit": true).</li>
+ * (1.20.1 read any primitive as one: "age": 7, "lit": true); an exploration map's decoration
+ * is matched by its lower-case id (1.20.1: any case, unknown names meaning mansion).</li>
  * <li>1.20.5: item stacks lost their NBT -- set_nbt / copy_nbt / set_contents became
  * component functions; a loot_table entry names its table under "value"; predicate sets
  * (biome, structure, block, fluid, entity type) became holder sets.</li>
@@ -34,22 +35,42 @@ public final class LegacyLoot {
         }
         if (t.has("pools") && t.get("pools").isJsonArray()) {
             for (JsonElement p : t.getAsJsonArray("pools")) {
-                if (!p.isJsonObject()) {
-                    continue;
-                }
-                JsonObject pool = p.getAsJsonObject();
-                if (pool.has("conditions")) {
-                    pool.add("conditions", conditions(pool.getAsJsonArray("conditions"), from, to, losses));
-                }
-                if (pool.has("functions")) {
-                    pool.add("functions", functions(pool.getAsJsonArray("functions"), from, to, losses));
-                }
-                if (pool.has("entries")) {
-                    entries(pool.getAsJsonArray("entries"), from, to, losses);
+                if (p.isJsonObject()) {
+                    poolInPlace(p.getAsJsonObject(), from, to, losses);
                 }
             }
         }
         return t;
+    }
+
+    /**
+     * One loot pool on its own (a runtime bridge handed a pool's JSON, outside any table):
+     * the same rules {@link #table} applies to each of its pools, on a copy.
+     */
+    public static JsonObject pool(JsonObject in, String from, String to, LegacyItems.Losses losses) {
+        JsonObject pool = in.deepCopy();
+        poolInPlace(pool, from, to, losses);
+        return pool;
+    }
+
+    /** One pool entry on its own (children included), on a copy -- see {@link #pool}. */
+    public static JsonObject entry(JsonObject in, String from, String to, LegacyItems.Losses losses) {
+        JsonArray one = new JsonArray();
+        one.add(in.deepCopy());
+        entries(one, from, to, losses);
+        return one.get(0).getAsJsonObject();
+    }
+
+    private static void poolInPlace(JsonObject pool, String from, String to, LegacyItems.Losses losses) {
+        if (pool.has("conditions")) {
+            pool.add("conditions", conditions(pool.getAsJsonArray("conditions"), from, to, losses));
+        }
+        if (pool.has("functions")) {
+            pool.add("functions", functions(pool.getAsJsonArray("functions"), from, to, losses));
+        }
+        if (pool.has("entries")) {
+            entries(pool.getAsJsonArray("entries"), from, to, losses);
+        }
     }
 
     private static void entries(JsonArray entries, String from, String to, LegacyItems.Losses losses) {
@@ -98,6 +119,16 @@ public final class LegacyLoot {
         String fn = id(f, "function");
         if (fn == null) {
             return java.util.List.of(f);
+        }
+        if (crosses(from, to, "1.20.2") && "minecraft:exploration_map".equals(fn)
+                && f.has("decoration") && f.get("decoration").isJsonPrimitive()) {
+            // 1.20.1 read the decoration as MapIcon.Type.valueOf(name.toUpperCase(ROOT)) -- any case --
+            // and fell back to mansion (logging an error) for any other name; 1.20.2's codec matches
+            // only the lower-case id (and its lenient optional field falls back to mansion). Every
+            // 1.20.1 type's id is its lower-cased name, so the name is written lower-case; a name
+            // 1.20.1 did not know -- 1.20.2's new village / temple / hut ids included -- is mansion
+            String d = f.get("decoration").getAsString().toLowerCase(java.util.Locale.ROOT);
+            f.addProperty("decoration", MAP_DECORATIONS_1_20_1.contains(d) ? d : "mansion");
         }
         if (crosses(from, to, "1.20.5")) {
             switch (fn) {
@@ -187,6 +218,14 @@ public final class LegacyLoot {
             to.add("conditions", from.get("conditions").deepCopy());
         }
     }
+
+    /** 1.20.1's MapIcon.Type names, lower-cased (each type's id in 1.20.2) */
+    private static final Set<String> MAP_DECORATIONS_1_20_1 = Set.of(
+        "player", "frame", "red_marker", "blue_marker", "target_x", "target_point", "player_off_map",
+        "player_off_limits", "mansion", "monument", "banner_white", "banner_orange", "banner_magenta",
+        "banner_light_blue", "banner_yellow", "banner_lime", "banner_pink", "banner_gray", "banner_light_gray",
+        "banner_cyan", "banner_purple", "banner_blue", "banner_brown", "banner_green", "banner_red",
+        "banner_black", "red_x");
 
     // ------------------------------------------------------------------ conditions
 

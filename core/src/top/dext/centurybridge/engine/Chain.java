@@ -123,6 +123,30 @@ public final class Chain {
     }
 
     /**
+     * Home for a super call ({@link #superRedirects}): the class the JVM resolved
+     * {@code invokespecial owner.name(desc)} to in the source version -- the first class up the
+     * chain declaring the member there -- when a super redirect is keyed on it; null otherwise.
+     * A super call names the class the mod extends, which need not be the declaring one: a mod
+     * extending ServerScoreboard calls super.getObjective on ServerScoreboard, declared by
+     * Scoreboard. Keyed only on Scoreboard, such a call used to miss its super redirect and take
+     * the instance redirect, whose virtual dispatch lands back in the mod's own override. A vanilla
+     * class in between that declares the member itself (its own source body) stops the walk:
+     * only a super redirect keyed on that class serves it. Without a source stub the first keyed
+     * ancestor is taken.
+     */
+    public String superRedirectHome(String owner, String nameDesc) {
+        for (String o : selfAndSupers(owner)) {
+            if (superRedirects.containsKey(o + "." + nameDesc)) {
+                return o;
+            }
+            if (sourceDecls.getOrDefault(o, java.util.Set.of()).contains(nameDesc)) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Home for an instance call, in the JVM's method-resolution order: the class and
      * its superclasses, then their superinterfaces. A member keyed on an interface
      * serves a call made through an implementing class (ResultContainer implements
@@ -893,6 +917,11 @@ public final class Chain {
      * <ul>
      * <li>{@code keep} -- re-push the next old argument unchanged.</li>
      * <li>{@code drop} -- consume the next old argument, push nothing.</li>
+     * <li>{@code drop OWNER#name(T)V} -- consume the next old argument and hand it to a void
+     *     static instead of pushing it: a value the new shape has no parameter for but the
+     *     bridge still needs (1.20.2 recipes lost their id argument; the id goes to the bridge
+     *     that records it for the recipe being built). {@code T} must equal the old argument
+     *     type. The call is made at the op's place in the sequence, before the invoke.</li>
      * <li>{@code conv OWNER#name(desc)R} -- push the next old argument and run
      *     the static converter on it; its return type is the new argument.
      *     The converter's parameter type must equal the old argument type.</li>
@@ -1142,10 +1171,27 @@ public final class Chain {
                     produced.add(rest.isEmpty() ? old[from[0]] : org.objectweb.asm.Type.getType(rest));
                 }
                 case "drop" -> {
-                    if (!rest.isEmpty() || from.length != 1) {
+                    if (from.length != 1) {
                         throw new IllegalArgumentException(where + ": malformed op '" + t + "'");
                     }
-                    ops.add(new ReshapeOp(from, null, null, null, true));
+                    if (rest.isEmpty()) {
+                        ops.add(new ReshapeOp(from, null, null, null, true));
+                    } else {
+                        // "drop OWNER#name(T)V": the dropped old argument goes to a void static
+                        int hash = rest.indexOf('#');
+                        int paren = rest.indexOf('(');
+                        if (hash <= 0 || paren <= hash) {
+                            throw new IllegalArgumentException(where + ": op '" + t + "' needs OWNER#name(desc)V");
+                        }
+                        String sDesc = rest.substring(paren);
+                        org.objectweb.asm.Type[] sp2 = org.objectweb.asm.Type.getArgumentTypes(sDesc);
+                        if (sp2.length != 1 || !sp2[0].equals(old[from[0]])
+                                || org.objectweb.asm.Type.getReturnType(sDesc).getSort() != org.objectweb.asm.Type.VOID) {
+                            throw new IllegalArgumentException(where + ": op '" + t + "' must take exactly old argument "
+                                + from[0] + " (" + old[from[0]].getDescriptor() + ") and return void");
+                        }
+                        ops.add(new ReshapeOp(from, rest.substring(0, hash), rest.substring(hash + 1, paren), sDesc, true));
+                    }
                 }
                 case "conv", "push" -> {
                     int hash = rest.indexOf('#');

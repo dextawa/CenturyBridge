@@ -20,6 +20,7 @@ class Method:
     desc: str
     access: int
     code: bytes = None
+    signature: str = None  # the generic signature attribute, when the compiler wrote one
 
 
 @dataclass
@@ -83,18 +84,73 @@ def read(b, code=False):
             na = u2(i)
             i += 2
             body = None
+            sig = None
             for _ in range(na):
                 an = utf8.get(u2(i))
                 ln = struct.unpack(">I", b[i + 2:i + 6])[0]
                 if code and kind == "methods" and an == "Code":
                     clen = struct.unpack(">I", b[i + 10:i + 14])[0]
                     body = b[i + 14:i + 14 + clen]
+                elif an == "Signature" and ln == 2:
+                    sig = utf8.get(u2(i + 6))
                 i += 6 + ln
             if kind == "fields":
                 info.fields.append((nm, ds, a))
             else:
-                info.methods.append(Method(nm, ds, a, body))
+                info.methods.append(Method(nm, ds, a, body, sig))
     return info
+
+
+def split_signature(sig):
+    """parameter type signatures and the return type signature of a generic method signature
+    (type parameters <...> skipped); None for a malformed one"""
+    i = 0
+    if sig.startswith("<"):
+        depth = 0
+        while i < len(sig):
+            if sig[i] == "<":
+                depth += 1
+            elif sig[i] == ">":
+                depth -= 1
+                if depth == 0:
+                    i += 1
+                    break
+            i += 1
+    if i >= len(sig) or sig[i] != "(":
+        return None
+    i += 1
+
+    def one(j):
+        """end index (exclusive) of the type signature starting at j"""
+        while sig[j] == "[":
+            j += 1
+        if sig[j] in "ZBCSIJFDV":
+            return j + 1
+        if sig[j] == "T":
+            return sig.index(";", j) + 1
+        if sig[j] == "L":
+            depth = 0
+            while True:
+                ch = sig[j]
+                if ch == "<":
+                    depth += 1
+                elif ch == ">":
+                    depth -= 1
+                elif ch == ";" and depth == 0:
+                    return j + 1
+                j += 1
+        raise ValueError(sig)
+
+    params = []
+    try:
+        while sig[i] != ")":
+            k = one(i)
+            params.append(sig[i:k])
+            i = k
+        ret_end = one(i + 1)
+        return params, sig[i + 1:ret_end]
+    except (ValueError, IndexError):
+        return None
 
 
 def split_args(desc):

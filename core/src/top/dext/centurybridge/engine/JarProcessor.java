@@ -662,6 +662,16 @@ public final class JarProcessor {
      * super.m(..) included, so the call keeps its dispatch -- has its arguments re-pushed per the
      * ops and takes the new descriptor; the return value is dropped, converted or supplied right
      * after. Straight-line code at the call, so existing frames stay exact.
+     *
+     * A call may name a class of the mod's own jar while the member is a vanilla one it inherits:
+     * javac's qualifying type for an unqualified call to an inherited member is the subclass
+     * itself (a mod's RecipeProvider calling offerSmelting(..), a loot function builder calling
+     * this.getConditions()). The JVM resolves such a call on the first vanilla class up the mod's
+     * own hierarchy when no mod class on the way declares the member, so the key is looked up from
+     * there ({@link #inheritedReshapeHome}: the superclass chain first, then the vanilla interfaces
+     * the mod's types implement -- a default method such as RecipeBuilder.save(consumer) reached
+     * through a mod builder); a mod class that does declare the old shape keeps the call (its own
+     * method, reconnected to the new shape by an override hook if there is one).
      */
     private static byte[] rewriteCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
         String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
@@ -689,14 +699,14 @@ public final class JarProcessor {
                     continue;
                 }
                 String nameDesc = mi.name + mi.desc;
-                // javac qualifies a call to an inherited member by the class it is made in (JLS 13.1):
-                // this.m(..) inside a mod subclass names the mod class. The reshape is found through the
-                // vanilla class the member is inherited from; the call keeps its owner and the JVM
-                // resolves the new descriptor up the hierarchy just as it did the old one
-                String vanillaOwner = mi.owner.startsWith("net/minecraft/") ? mi.owner
-                    : inheritedVanillaOwner(mi.owner, nameDesc, layer);
-                String home = vanillaOwner == null ? null
-                    : chain.instanceRedirectHome(chain.callReshapeIndex, vanillaOwner, nameDesc);
+                // a key's own owner (vanilla, com/mojang/blaze3d, a library such as DFU) directly; a
+                // class of the mod's jar through the vanilla class or interface it inherits the member
+                // from (javac qualifies such a call by the class it is made in, JLS 13.1). The call keeps
+                // its owner: the JVM resolves the new descriptor up the hierarchy as it did the old one
+                String home = chain.instanceRedirectHome(chain.callReshapeIndex, mi.owner, nameDesc);
+                if (home == null && layer.decls.containsKey(mi.owner)) {
+                    home = inheritedReshapeHome(mi.owner, nameDesc, layer, chain);
+                }
                 if (home == null) {
                     continue;
                 }
@@ -789,6 +799,12 @@ public final class JarProcessor {
         org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
         for (Chain.ReshapeOp op : r.ops) {
             if (op.drop) {
+                if (op.owner != null) {
+                    // "drop OWNER#name(T)V": the dropped value goes to the sink, nothing is pushed
+                    int idx = op.from[0];
+                    seq.add(new org.objectweb.asm.tree.VarInsnNode(old[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
+                    seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, op.owner, op.name, op.desc, false));
+                }
                 continue;
             }
             if (op.param != null) {
@@ -994,6 +1010,74 @@ public final class JarProcessor {
                 return null; // the mod's own member
             }
             cur = layer.superOf.get(cur);
+        }
+        return null;
+    }
+
+    /**
+     * For a call naming a class of this jar layer: the reshape key's home when the member is a
+     * vanilla one the class inherits -- no class or interface of the layer on the way declares it --
+     * found in JVM resolution order: the superclass chain to the first vanilla class (the walk of
+     * {@link #inheritedVanillaOwner}), then, when that has no key or the chain ends in the JDK, the
+     * vanilla interfaces the layer's types implement (a default method, RecipeBuilder.save(consumer)
+     * called on a mod builder). Null when the mod declares the member, the chain leaves into a
+     * library (its classes are not this layer's to judge), or no key applies.
+     */
+    private static String inheritedReshapeHome(String owner, String member, LayerIndex layer, Chain chain) {
+        // the superclass chain first, as the JVM resolves: the layer's own classes, then the first vanilla one
+        List<String> layerClasses = new ArrayList<>();
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64 && !Chain.minecraftOwned(cur); hops++) {
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                if (cur.startsWith("java/")) {
+                    cur = null; // the JDK ends the chain (it declares no game member): on to the interfaces
+                    break;
+                }
+                return null; // a library or another jar: not this layer's to judge
+            }
+            if (d.contains(member)) {
+                return null; // the mod's own member
+            }
+            layerClasses.add(cur);
+            cur = layer.superOf.get(cur);
+        }
+        if (cur != null && Chain.minecraftOwned(cur)) {
+            String home = chain.instanceRedirectHome(chain.callReshapeIndex, cur, member);
+            if (home != null) {
+                return home;
+            }
+        }
+        // then the interfaces the layer's classes implement (a default method), the layer's own first
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        for (String c : layerClasses) {
+            todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
+        }
+        Set<String> seen = new HashSet<>();
+        List<String> vanilla = new ArrayList<>();
+        while (!todo.isEmpty()) {
+            String t = todo.poll();
+            if (!seen.add(t)) {
+                continue;
+            }
+            if (Chain.minecraftOwned(t)) {
+                vanilla.add(t);
+                continue;
+            }
+            Set<String> d = layer.decls.get(t);
+            if (d == null) {
+                continue;
+            }
+            if (d.contains(member)) {
+                return null; // a default method of the mod's own interface
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(t, List.of()));
+        }
+        for (String v : vanilla) {
+            String home = chain.instanceRedirectHome(chain.callReshapeIndex, v, member);
+            if (home != null) {
+                return home;
+            }
         }
         return null;
     }
@@ -1979,10 +2063,20 @@ public final class JarProcessor {
                             }
                             return; // live constructor (a dead owner is reported by checkClass)
                         }
-                        if (op == Opcodes.INVOKESPECIAL && chain.superRedirects.containsKey(key)) {
-                            superRedirectSites.put(site, chain.superRedirects.get(key));
-                            top.dext.centurybridge.data.FullAudit.record(key, "super-redirect");
-                            return;
+                        if (op == Opcodes.INVOKESPECIAL) {
+                            // a super call resolves where the source version declared the member
+                            // (Chain.superRedirectHome): a vanilla subclass in between that does not
+                            // redeclare it takes the declaring class's super redirect, and the
+                            // emitted static names that class as the receiver type
+                            String srHome = chain.superRedirectHome(owner, name + desc);
+                            if (srHome != null) {
+                                superRedirectSites.put(site, chain.superRedirects.get(srHome + "." + name + desc));
+                                if (!srHome.equals(owner)) {
+                                    emitOwner.put(site, srHome);
+                                }
+                                top.dext.centurybridge.data.FullAudit.record(srHome + "." + name + desc, "super-redirect");
+                                return;
+                            }
                         }
                         // a shim on any ancestor satisfies this call site: the mod
                         // holds a subclass reference, but the member is declared
