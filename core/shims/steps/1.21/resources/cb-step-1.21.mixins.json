@@ -46,7 +46,9 @@
     "CbLegacyRegistryLoaderMixin",
     "CbLegacyRegistryServerMixin",
     "CbLegacyRegistryTagsMixin",
+    "CbWorldButtonAccessor",
     "CbWorldDataFixersMixin",
+    "CbWorldLeverInvoker",
     "CbWorldServerMixin"
   ],
   "client": [

@@ -806,6 +806,68 @@ def decorations(f, v, vc):
           "bridged as records (CbEntityPaintings)")
 
 
+# ------------------------------------------------------------------------------------------------ blocks and block entities
+def blocks(f, vc):
+    B = RT + "/CbWorldBlocks"
+    ST, LV, BP, ENT, LE, PLY, BS = L("class_2680"), L("class_1937"), L("class_2338"), L("class_1297"), L("class_1309"), L("class_1657"), L("class_1799")
+    f.put("fieldRedirects", MC + "class_1937$class_7867.field_47332:" + L("class_1937$class_7867"), MC + "class_1937$class_7867#field_51779")
+    # button press / lever pull: 1.21 also clicks and emits the event 1.20.6's use did after them
+    for owner, shape, new, name, adapter, ret in (
+            ("class_2269", "method_21845(" + ST + LV + BP + ")V", "method_21845(" + ST + LV + BP + PLY + ")V", "press", "LegacyPress", "V"),
+            ("class_2401", "method_21846(" + ST + LV + BP + ")" + ST, "method_21846(" + ST + LV + BP + PLY + ")V", "pull", "LegacyPull", "V")):
+        assert declarers(vc, shape) == [MC + owner], (shape, declarers(vc, shape))
+        f.put("instanceRedirects", MC + owner + "." + shape, B + "#" + name)
+        f.put("superRedirects", MC + owner + "." + shape, B + "#super" + name[0].upper() + name[1:])
+        f.hook(shape, new, owner,
+               "1.21 asks " + name + "(state, level, pos, player) where a player used the block: the 1.20.6 override "
+               + name + "es; its super call is 1.21's with that player (click and event, which 1.20.6's use added "
+               "afterwards), 1.20.6's body outside such a call",
+               bridge=B + "." + name + "(L" + B + "$" + adapter + ";" + ST + LV + BP + PLY + ")" + ret, adapter=B + "$" + adapter, guard=G)
+    f.put("staticRedirects", MC + "class_3715.method_17472(" + ENT + LV + BP + ST + BS + ")Z", B + "#tryPlaceBook")
+    f.put("staticRedirects", MC + "class_8886.method_54475(" + LV + L("class_8566") + ")Ljava/util/Optional;", B + "#getPotentialResults")
+    f.put("instanceRedirects", MC + "class_3924.method_17503(" + ENT + BS + "I)Z", B + "#placeFood")
+    # beacon beam colour: float[] rgb in 1.20.6, an ARGB int in 1.21
+    SEC = MC + "class_2580$class_2581"
+    f.put("ctorRedirects", SEC + ".<init>([F)V", B + "#newBeamSection")
+    f.ctor(SEC + ".<init>([F)V", "(I)V", ["conv:0 " + B + "#beamColor([F)I"],
+           "1.20.6's beam colour, float red, green, blue from 0 to 1, as 1.21's opaque ARGB int")
+    f.reshape(SEC + ".method_10944()[F", "()I", [], "the beam colour as 1.20.6's float[] {r, g, b}", ret="conv " + B + "#beamColor(I)[F")
+    f.hook("method_10944()[F", "method_10944()I", "class_2580$class_2581",
+           "1.21 asks getColor() for an ARGB int: a 1.20.6 override's float[] as one", unwrap=B + ".beamColor([F)I")
+    # dispenser: addItem(stack) took the whole stack into the first empty slot; 1.21's insertItem merges
+    ai = "method_11075(" + BS + ")I"
+    assert declarers(vc, ai) == [MC + "class_2601"]
+    f.put("instanceRedirects", MC + "class_2601." + ai, B + "#addItem")
+    f.put("superRedirects", MC + "class_2601." + ai, B + "#superAddItem")
+    f.hook(ai, "method_11075(" + BS + ")" + BS, "class_2601",
+           "1.21 asks insertItem(stack) for what is left: a 1.20.6 addItem override's slot means the whole stack went in",
+           bridge=B + ".insertItem(L" + B + "$LegacyAddItem;" + BS + ")" + BS, adapter=B + "$LegacyAddItem", guard=G)
+    # jukebox: 1.21 plays through its song player
+    JB = MC + "class_2619"
+    f.put("instanceRedirects", JB + ".method_44373()Z", B + "#isRecordPlaying")
+    f.put("superRedirects", JB + ".method_44373()Z", B + "#superIsRecordPlaying")
+    f.w["adapterHooks"].append({
+        "under": JB, "adapter": B + "$LegacyRecordPlaying", "requires": ["method_44373()Z"], "synth": [],
+        "basis": "a 1.20.6 caller's isRecordPlaying() answers through a 1.20.6 jukebox subclass's own override"})
+    f.put("methodRenames", JB + ".method_49212()V", "method_60786")
+    f.w["overrideRenames"].append({
+        "old": "method_49212()V", "new": "method_60786", "onlyUnder": JB, "superCalls": "rename",
+        "basis": "JukeboxBlockEntity.startPlaying() is 1.21's tryForcePlaySong(): play the disc in the jukebox (1.21's song player)"})
+    # decorated pot patterns: keys of a registry of names in 1.20.6, of pattern records in 1.21
+    DP = MC + "class_8173"
+    f.put("fieldGetters", DP + ".field_42787:" + L("class_5321"), B)
+    f.put("staticRedirects", DP + ".method_49205(" + L("class_5321") + ")" + L("class_2960"), B + "#location")
+    f.put("staticRedirects", DP + ".method_49207(" + L("class_2378") + ")Ljava/lang/String;", B + "#bootstrap")
+    f.put("genericWitnesses", DP + ".method_49206(" + L("class_1792") + ")" + L("class_5321"), {
+        "by": [DP + ".method_49205(" + L("class_5321") + ")" + L("class_2960"),
+               MC + "class_4722.method_49341(" + L("class_5321") + ")" + L("class_4730")],
+        "basis": "phantom key: the key passes unchanged; 1.20.6 code takes the pattern out only through "
+                 "DecoratedPotPatterns.location(key), which CbWorldBlocks answers for 1.21's keys by their pattern's asset, "
+                 "and Sheets.getDecoratedPotMaterial(key) (s6client)"})
+    # 1.20.6's UpdateOneTwentyOneBannerPatterns: flow and guster, vanilla in 1.21
+    f.put("classRenames", MC + "class_9367", FAC + "/class_9367")
+
+
 def main():
     v, w = load(sys.argv[1]), load(sys.argv[2])
     vc = load(sys.argv[3], code=True)
@@ -822,6 +884,7 @@ def main():
     enchanting(f, vc)
     projectiles(f, vc)
     decorations(f, v, vc)
+    blocks(f, vc)
     f.write()
 
 

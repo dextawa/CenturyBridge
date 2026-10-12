@@ -811,7 +811,8 @@
   "net/minecraft/class_1532.method_6896()Lnet/minecraft/class_2338;": "method_59940",
   "net/minecraft/class_1533.method_6896()Lnet/minecraft/class_2338;": "method_59940",
   "net/minecraft/class_1534.method_6896()Lnet/minecraft/class_2338;": "method_59940",
-  "net/minecraft/class_5915.method_6896()Lnet/minecraft/class_2338;": "method_59940"
+  "net/minecraft/class_5915.method_6896()Lnet/minecraft/class_2338;": "method_59940",
+  "net/minecraft/class_2619.method_49212()V": "method_60786"
  },
  "callReshapes": {
   "net/minecraft/class_1322.comp_2447()Ljava/util/UUID;": {
@@ -950,6 +951,12 @@
     "keep:0"
    ],
    "basis": "1.20.6's AbstractHorse.equipSaddle put new ItemStack(SADDLE) in the saddle slot, which 1.21 takes as the argument; Pig and Strider ignore it in both"
+  },
+  "net/minecraft/class_2580$class_2581.method_10944()[F": {
+   "desc": "()I",
+   "ops": [],
+   "basis": "the beam colour as 1.20.6's float[] {r, g, b}",
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#beamColor(I)[F"
   }
  },
  "superCtorReshapes": {
@@ -1301,6 +1308,13 @@
     "push top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#noWeapon()Lnet/minecraft/class_1799;"
    ],
    "basis": "1.20.6's arrow constructors took no weapon: 1.21's with none, which is the same arrow (the shooter set the rest afterwards)"
+  },
+  "net/minecraft/class_2580$class_2581.<init>([F)V": {
+   "desc": "(I)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#beamColor([F)I"
+   ],
+   "basis": "1.20.6's beam colour, float red, green, blue from 0 to 1, as 1.21's opaque ARGB int"
   }
  },
  "ctorRedirects": {
@@ -1309,7 +1323,8 @@
   "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#newResourceLocation",
   "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#newResourceLocation",
   "net/minecraft/class_5454.<init>(Lnet/minecraft/class_243;Lnet/minecraft/class_243;FF)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalInfo",
-  "net/minecraft/class_1535.<init>(II)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#newVariant"
+  "net/minecraft/class_1535.<init>(II)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#newVariant",
+  "net/minecraft/class_2580$class_2581.<init>([F)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#newBeamSection"
  },
  "staticRedirects": {
   "net/minecraft/class_155.method_43250()V": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#enableDataFixerOptimizations",
@@ -1323,7 +1338,11 @@
   "net/minecraft/class_1309.method_32326(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21/rt/CbEntityLiving#getEquipmentSlotForItem",
   "net/minecraft/class_1675.method_18813(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1665;": "top/dext/centurybridge/step/v1_21/rt/CbEntityArrows#getMobArrow",
   "net/minecraft/class_1534.method_48928(Lnet/minecraft/class_2487;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#storeVariant",
-  "net/minecraft/class_7408.method_43406(Lnet/minecraft/class_2378;)Lnet/minecraft/class_1535;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#bootstrap"
+  "net/minecraft/class_7408.method_43406(Lnet/minecraft/class_2378;)Lnet/minecraft/class_1535;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#bootstrap",
+  "net/minecraft/class_3715.method_17472(Lnet/minecraft/class_1297;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#tryPlaceBook",
+  "net/minecraft/class_8886.method_54475(Lnet/minecraft/class_1937;Lnet/minecraft/class_8566;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#getPotentialResults",
+  "net/minecraft/class_8173.method_49205(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#location",
+  "net/minecraft/class_8173.method_49207(Lnet/minecraft/class_2378;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#bootstrap"
  },
  "instanceRedirects": {
   "net/minecraft/class_1322.comp_2448()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#name",
@@ -1379,7 +1398,12 @@
   "net/minecraft/class_1532.method_6894()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#playPlacementSound",
   "net/minecraft/class_1533.method_43272()Lnet/minecraft/class_9209;": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#getFramedMapId",
   "net/minecraft/class_1535.method_6945()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#getWidth",
-  "net/minecraft/class_1535.method_6943()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#getHeight"
+  "net/minecraft/class_1535.method_6943()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings#getHeight",
+  "net/minecraft/class_2269.method_21845(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#press",
+  "net/minecraft/class_2401.method_21846(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#pull",
+  "net/minecraft/class_3924.method_17503(Lnet/minecraft/class_1297;Lnet/minecraft/class_1799;I)Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#placeFood",
+  "net/minecraft/class_2601.method_11075(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#addItem",
+  "net/minecraft/class_2619.method_44373()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#isRecordPlaying"
  },
  "fieldRedirects": {
   "net/minecraft/class_1320.field_30097:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#MAX_NAME_LENGTH",
@@ -1394,7 +1418,8 @@
   "net/minecraft/class_1350.field_30205:I": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#TELEPORT_WHEN_DISTANCE_IS",
   "net/minecraft/class_1308.field_30086:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#LEASH_TAG",
   "net/minecraft/class_1668.field_51507:D": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#ATTACK_DEFLECTION_SCALE",
-  "net/minecraft/class_1668.field_51508:D": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#BOUNCE_DEFLECTION_SCALE"
+  "net/minecraft/class_1668.field_51508:D": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#BOUNCE_DEFLECTION_SCALE",
+  "net/minecraft/class_1937$class_7867.field_47332:Lnet/minecraft/class_1937$class_7867;": "net/minecraft/class_1937$class_7867#field_51779"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_14578:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
@@ -1449,7 +1474,8 @@
   "net/minecraft/class_7110.field_39303:F": "top/dext/centurybridge/step/v1_21/rt/CbEntityAnimals#tadpoleHitboxHeight",
   "net/minecraft/class_7701.field_46779:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants",
   "net/minecraft/class_9236.field_50137:Lnet/minecraft/class_9236$class_9237;": "top/dext/centurybridge/step/v1_21/rt/CbEntityProjectiles",
-  "net/minecraft/class_7923.field_41182:Lnet/minecraft/class_7922;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings"
+  "net/minecraft/class_7923.field_41182:Lnet/minecraft/class_7922;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPaintings",
+  "net/minecraft/class_8173.field_42787:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks"
  },
  "staticFieldSetters": {
   "net/minecraft/class_155.field_43095:Ljava/util/Set;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#setDataFixTypesToOptimize",
@@ -1550,7 +1576,11 @@
   "net/minecraft/class_1533.method_6891()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superGetHeight",
   "net/minecraft/class_1534.method_6891()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superGetHeight",
   "net/minecraft/class_1532.method_6892(Lnet/minecraft/class_2350;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superSetDirection",
-  "net/minecraft/class_1532.method_6894()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superPlayPlacementSound"
+  "net/minecraft/class_1532.method_6894()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityDecorations#superPlayPlacementSound",
+  "net/minecraft/class_2269.method_21845(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#superPress",
+  "net/minecraft/class_2401.method_21846(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#superPull",
+  "net/minecraft/class_2601.method_11075(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#superAddItem",
+  "net/minecraft/class_2619.method_44373()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks#superIsRecordPlaying"
  },
  "covers": [
   "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z",
@@ -1746,6 +1776,40 @@
    ],
    "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
    "superCalls": "rewrite"
+  },
+  {
+   "old": "method_21845(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V",
+   "new": "method_21845(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)V",
+   "onlyUnder": "net/minecraft/class_2269",
+   "basis": "1.21 asks press(state, level, pos, player) where a player used the block: the 1.20.6 override presses; its super call is 1.21's with that player (click and event, which 1.20.6's use added afterwards), 1.20.6's body outside such a call",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks.press(Ltop/dext/centurybridge/step/v1_21/rt/CbWorldBlocks$LegacyPress;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks$LegacyPress",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
+  },
+  {
+   "old": "method_21846(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
+   "new": "method_21846(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)V",
+   "onlyUnder": "net/minecraft/class_2401",
+   "basis": "1.21 asks pull(state, level, pos, player) where a player used the block: the 1.20.6 override pulles; its super call is 1.21's with that player (click and event, which 1.20.6's use added afterwards), 1.20.6's body outside such a call",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks.pull(Ltop/dext/centurybridge/step/v1_21/rt/CbWorldBlocks$LegacyPull;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks$LegacyPull",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
+  },
+  {
+   "old": "method_10944()[F",
+   "new": "method_10944()I",
+   "onlyUnder": "net/minecraft/class_2580$class_2581",
+   "basis": "1.21 asks getColor() for an ARGB int: a 1.20.6 override's float[] as one",
+   "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks.beamColor([F)I"
+  },
+  {
+   "old": "method_11075(Lnet/minecraft/class_1799;)I",
+   "new": "method_11075(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_2601",
+   "basis": "1.21 asks insertItem(stack) for what is left: a 1.20.6 addItem override's slot means the whole stack went in",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks.insertItem(Ltop/dext/centurybridge/step/v1_21/rt/CbWorldBlocks$LegacyAddItem;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks$LegacyAddItem",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
   }
  ],
  "overrideRenames": [
@@ -1825,6 +1889,13 @@
    "onlyUnder": "net/minecraft/class_1530",
    "superCalls": "rename",
    "basis": "HangingEntity.getPos() is 1.21's BlockAttachedEntity.getPos(): the same position field"
+  },
+  {
+   "old": "method_49212()V",
+   "new": "method_60786",
+   "onlyUnder": "net/minecraft/class_2619",
+   "superCalls": "rename",
+   "basis": "JukeboxBlockEntity.startPlaying() is 1.21's tryForcePlaySong(): play the disc in the jukebox (1.21's song player)"
   }
  ],
  "frameDefaults": {
@@ -2124,6 +2195,15 @@
    ],
    "synth": [],
    "basis": "1.20.6's LeashFenceKnotEntity.playPlacementSound (a hanging entity's then) answers through a 1.20.6 subclass's own"
+  },
+  {
+   "under": "net/minecraft/class_2619",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks$LegacyRecordPlaying",
+   "requires": [
+    "method_44373()Z"
+   ],
+   "synth": [],
+   "basis": "a 1.20.6 caller's isRecordPlaying() answers through a 1.20.6 jukebox subclass's own override"
   }
  ],
  "abstractFills": [
@@ -2136,7 +2216,8 @@
  ],
  "classRenames": {
   "net/minecraft/class_9236$class_9237": "top/dext/centurybridge/step/v1_21/facade/class_9236$class_9237",
-  "net/minecraft/class_8956$class_9036": "top/dext/centurybridge/step/v1_21/facade/class_8956$class_9036"
+  "net/minecraft/class_8956$class_9036": "top/dext/centurybridge/step/v1_21/facade/class_8956$class_9036",
+  "net/minecraft/class_9367": "top/dext/centurybridge/step/v1_21/facade/class_9367"
  },
  "fieldRenames": {
   "net/minecraft/class_1530.field_7100:Lnet/minecraft/class_2338;": "field_51589",
@@ -2144,6 +2225,15 @@
   "net/minecraft/class_1533.field_7100:Lnet/minecraft/class_2338;": "field_51589",
   "net/minecraft/class_1534.field_7100:Lnet/minecraft/class_2338;": "field_51589",
   "net/minecraft/class_5915.field_7100:Lnet/minecraft/class_2338;": "field_51589"
+ },
+ "genericWitnesses": {
+  "net/minecraft/class_8173.method_49206(Lnet/minecraft/class_1792;)Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_8173.method_49205(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+    "net/minecraft/class_4722.method_49341(Lnet/minecraft/class_5321;)Lnet/minecraft/class_4730;"
+   ],
+   "basis": "phantom key: the key passes unchanged; 1.20.6 code takes the pattern out only through DecoratedPotPatterns.location(key), which CbWorldBlocks answers for 1.21's keys by their pattern's asset, and Sheets.getDecoratedPotMaterial(key) (s6client)"
+  }
  },
  "ledger": {
   "net/minecraft/class_1535": "not bridgeable: a 1.20.6 subclass of PaintingVariant. 1.21's PaintingVariant is a final record (width, height, assetId) that no class can extend, and a stand-in superclass would split the type: the mod's own code hands its instance on where a PaintingVariant is expected, which the verifier rejects, and 1.21's registry and painting take only the record. 1.20.6's variant objects themselves, new PaintingVariant(width, height), are bridged as records (CbEntityPaintings)"
