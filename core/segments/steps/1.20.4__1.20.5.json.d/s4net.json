@@ -144,5 +144,72 @@
    ],
    "basis": "s4net generic drift: ClientLevel's map data is keyed by \"map_\" + id in 1.20.4 and by MapId (whose key() is that name) in 1.20.5"
   }
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_2943.field_38826:Lnet/minecraft/class_2941;": {
+   "by": [
+    "net/minecraft/class_2945.method_12789(Lnet/minecraft/class_2940;)Ljava/lang/Object;",
+    "net/minecraft/class_2945.method_12778(Lnet/minecraft/class_2940;Ljava/lang/Object;)V",
+    "net/minecraft/class_2945.method_49743(Lnet/minecraft/class_2940;Ljava/lang/Object;Z)V",
+    "net/minecraft/class_2945$class_7834.comp_1117()Ljava/lang/Object;",
+    "net/minecraft/class_2945$class_7834.method_46360(Lnet/minecraft/class_2940;Ljava/lang/Object;)Lnet/minecraft/class_2945$class_7834;",
+    "net/minecraft/class_2945$class_7834.<init>(ILnet/minecraft/class_2941;Ljava/lang/Object;)V"
+   ],
+   "basis": "s4net CAT_VARIANT: vanilla's serializer object stays (the data item, the wire format and the serializer ids are vanilla's; nothing is registered, no ids shift); values convert where 1.20.4 code hands them in (set / setForce / DataValue.create / new DataValue, and inside the layer's restored define, CbNetEntityDataBridge) and takes them out (get / DataValue.value), with convertHooks for overrides (verified 19/19 on a real 1.20.5 server, core/testmods/cb-datatest)"
+  },
+  "net/minecraft/class_2943.field_38827:Lnet/minecraft/class_2941;": {
+   "by": [
+    "net/minecraft/class_2945.method_12789(Lnet/minecraft/class_2940;)Ljava/lang/Object;",
+    "net/minecraft/class_2945.method_12778(Lnet/minecraft/class_2940;Ljava/lang/Object;)V",
+    "net/minecraft/class_2945.method_49743(Lnet/minecraft/class_2940;Ljava/lang/Object;Z)V",
+    "net/minecraft/class_2945$class_7834.comp_1117()Ljava/lang/Object;",
+    "net/minecraft/class_2945$class_7834.method_46360(Lnet/minecraft/class_2940;Ljava/lang/Object;)Lnet/minecraft/class_2945$class_7834;",
+    "net/minecraft/class_2945$class_7834.<init>(ILnet/minecraft/class_2941;Ljava/lang/Object;)V"
+   ],
+   "basis": "s4net FROG_VARIANT: vanilla's serializer object stays (the data item, the wire format and the serializer ids are vanilla's; nothing is registered, no ids shift); values convert where 1.20.4 code hands them in (set / setForce / DataValue.create / new DataValue, and inside the layer's restored define, CbNetEntityDataBridge) and takes them out (get / DataValue.value), with convertHooks for overrides (verified 19/19 on a real 1.20.5 server, core/testmods/cb-datatest)"
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2596.method_11052(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites",
+  "net/minecraft/class_2596.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites",
+  "net/minecraft/class_8592.method_52285()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2596.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol",
+  "net/minecraft/class_2889.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol",
+  "net/minecraft/class_2901.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol",
+  "net/minecraft/class_8593.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol",
+  "net/minecraft/class_8733.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol",
+  "net/minecraft/class_8736.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol",
+  "net/minecraft/class_8588.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol",
+  "net/minecraft/class_8591.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2596",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbNetLegacyPacket",
+   "requires": [
+    "method_11052(Lnet/minecraft/class_2540;)V"
+   ],
+   "synth": [],
+   "basis": "s4net: a 1.20.4 mod's packet keeps its write(FriendlyByteBuf); Packet.write through the interface reaches it (CbNetPacketWrites)"
+  },
+  {
+   "under": "net/minecraft/class_2596",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbNetLegacyNextProtocol",
+   "requires": [
+    "method_52273()Lnet/minecraft/class_2539;"
+   ],
+   "synth": [],
+   "basis": "s4net: a 1.20.4 mod's packet that answers nextProtocol() answers 1.20.4 callers asking any packet (CbNetPacketWrites)"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_2596",
+   "method": "method_55846()Lnet/minecraft/class_9145;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites.cbLegacyPacketType(Lnet/minecraft/class_2596;)Lnet/minecraft/class_9145;",
+   "basis": "s4net: Packet.type() of a 1.20.4 mod's packet class (no type of its own or from a concrete vanilla parent): one type per class, so sending an unregistered one fails as in 1.20.4"
+  }
  ]
 }
