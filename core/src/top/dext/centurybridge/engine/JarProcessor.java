@@ -1270,8 +1270,12 @@ public final class JarProcessor {
      * found in JVM resolution order: the superclass chain to the first vanilla class (the walk of
      * {@link #inheritedVanillaOwner}), then, when that has no key or the chain ends in the JDK, the
      * vanilla interfaces the layer's types implement (a default method, RecipeBuilder.save(consumer)
-     * called on a mod builder). Null when the mod declares the member, the chain leaves into a
-     * library (its classes are not this layer's to judge), or no key applies.
+     * called on a mod builder). A chain that leaves into a library class (Fabric API's
+     * FabricRecipeProvider, FakePlayer) takes a reshape keyed on that library class itself: its
+     * members are not this layer's to judge, but the key says the member changed there, and the
+     * JVM resolves the call through the mod's subclass up to it exactly as for a vanilla class.
+     * Null when the mod declares the member, the chain leaves into a library class no reshape is
+     * keyed on, or no key applies.
      */
     private static String inheritedReshapeHome(String owner, String member, LayerIndex layer, Chain chain) {
         // the superclass chain first, as the JVM resolves: the layer's own classes, then the first vanilla one
@@ -1284,7 +1288,8 @@ public final class JarProcessor {
                     cur = null; // the JDK ends the chain (it declares no game member): on to the interfaces
                     break;
                 }
-                return null; // a library or another jar: not this layer's to judge
+                // a library or another jar: only a reshape keyed on that class itself applies
+                return chain.callReshapeIndex.containsKey(cur + "." + member) ? cur : null;
             }
             if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
                 return null; // the mod's own member (a same-shape one sits behind a convertHooks bridge)
@@ -1934,6 +1939,7 @@ public final class JarProcessor {
         }
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
+        Map<String, String> ifaceCallRedirects = new HashMap<>(); // INVOKEINTERFACE only: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
@@ -2252,6 +2258,12 @@ public final class JarProcessor {
                                 if (lsrt != null && op == Opcodes.INVOKESTATIC) {
                                     redirects.put(site, lsrt);
                                     top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
+                                }
+                                // interface calls only: a super call to the interface's default stays (Chain.interfaceCallRedirects)
+                                String licr = chain.interfaceCallRedirects.get(site);
+                                if (licr != null && op == Opcodes.INVOKEINTERFACE) {
+                                    ifaceCallRedirects.put(site, licr);
+                                    top.dext.centurybridge.data.FullAudit.record(site, "interface-call-redirect");
                                 }
                                 return; // mod-owned members (incl. overrides of dead interface methods) still exist
                             }
@@ -2639,6 +2651,11 @@ public final class JarProcessor {
                                         redirects.put(site, lsrt);
                                         top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
                                     }
+                                    String licr = chain.interfaceCallRedirects.get(site);
+                                    if (licr != null && h.getTag() == Opcodes.H_INVOKEINTERFACE) {
+                                        ifaceCallRedirects.put(site, licr);
+                                        top.dext.centurybridge.data.FullAudit.record(site, "interface-call-redirect");
+                                    }
                                     continue;
                                 }
                                 hOwner = inh;
@@ -2754,7 +2771,7 @@ public final class JarProcessor {
                 top.dext.centurybridge.data.FullAudit.record(f.under + "." + shape, "abstract-fill");
             }
         }
-        if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
+        if (redirects.isEmpty() && instRedirects.isEmpty() && ifaceCallRedirects.isEmpty() && fldRedirects.isEmpty()
                 && fldGetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
@@ -2800,6 +2817,9 @@ public final class JarProcessor {
         }
         for (String k : instRedirects.keySet()) {
             rpt.notes.add(tag + "instance-redirected: " + k + " -> " + instRedirects.get(k));
+        }
+        for (String k : ifaceCallRedirects.keySet()) {
+            rpt.notes.add(tag + "interface-call-redirected: " + k + " -> " + ifaceCallRedirects.get(k));
         }
         for (String k : fldRedirects.keySet()) {
             rpt.notes.add(tag + "field-redirected: " + k + " -> " + fldRedirects.get(k));
@@ -3149,6 +3169,13 @@ public final class JarProcessor {
                                 "(L" + recv + ";" + desc.substring(1), false);
                             return;
                         }
+                        String icrt = ifaceCallRedirects.get(key);
+                        if (icrt != null && op == Opcodes.INVOKEINTERFACE) {
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(icrt),
+                                redirName(icrt, name),
+                                "(L" + recv + ";" + desc.substring(1), false);
+                            return;
+                        }
                         String mrn = mthRenames.get(key);
                         if (mrn != null) {
                             super.visitMethodInsn(op, owner, mrn, desc, itf);
@@ -3231,6 +3258,12 @@ public final class JarProcessor {
                                     || h.getTag() == Opcodes.H_INVOKEINTERFACE)) {
                                 rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, redirCls(irt),
                                     redirName(irt, h.getName()), "(L" + recv + ";" + h.getDesc().substring(1), false);
+                                continue;
+                            }
+                            String icrt = ifaceCallRedirects.get(key);
+                            if (icrt != null && h.getTag() == Opcodes.H_INVOKEINTERFACE) {
+                                rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, redirCls(icrt),
+                                    redirName(icrt, h.getName()), "(L" + recv + ";" + h.getDesc().substring(1), false);
                                 continue;
                             }
                             String boundary = tombstone.get(key);
@@ -3352,11 +3385,20 @@ public final class JarProcessor {
                 for (Map.Entry<String, String> e : set.entrySet()) {
                     if (dep.has(e.getKey())) {
                         JsonElement v = dep.remove(e.getKey());
-                        // several old ids may collapse onto one provider: keep the wider range
-                        if (!dep.has(e.getValue())) {
-                            dep.add(e.getValue(), v);
+                        // "newId@range": the new provider's own versions are not the old module's (a
+                        // Fabric API module CenturyBridge gives back after the release removed it), so
+                        // the range the mod asked of the old id would not fit -- the wiring names one
+                        String target = e.getValue();
+                        int at = target.indexOf('@');
+                        if (at > 0) {
+                            v = new JsonPrimitive(target.substring(at + 1));
+                            target = target.substring(0, at);
                         }
-                        rpt.notes.add("dep " + e.getKey() + " -> " + e.getValue());
+                        // several old ids may collapse onto one provider: keep the wider range
+                        if (!dep.has(target)) {
+                            dep.add(target, v);
+                        }
+                        rpt.notes.add("dep " + e.getKey() + " -> " + target);
                     }
                 }
             }
