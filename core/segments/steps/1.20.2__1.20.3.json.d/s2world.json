@@ -1,0 +1,1274 @@
+{
+ "fieldRenames": {
+  "net/minecraft/class_2246.field_10261:Lnet/minecraft/class_2248;": "field_46282",
+  "net/minecraft/class_2246.field_10545:Lnet/minecraft/class_2248;": "field_46283",
+  "net/minecraft/class_2246.field_10331:Lnet/minecraft/class_2248;": "field_46284",
+  "net/minecraft/class_2246.field_10150:Lnet/minecraft/class_2248;": "field_46285",
+  "net/minecraft/class_2246.field_9984:Lnet/minecraft/class_2248;": "field_46286",
+  "net/minecraft/class_2246.field_10168:Lnet/minecraft/class_2248;": "field_46287",
+  "net/minecraft/class_1802.field_8706:Lnet/minecraft/class_1792;": "field_46249",
+  "net/minecraft/class_1802.field_8188:Lnet/minecraft/class_1792;": "field_46250",
+  "net/minecraft/class_2527.field_11618:Lnet/minecraft/class_265;": "field_46271",
+  "net/minecraft/class_2527.field_31265:I": "field_46270",
+  "net/minecraft/class_2621.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2621.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2595.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2595.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2601.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2601.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2608.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2608.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2614.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2614.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2627.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2627.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_2646.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_2646.field_31352:Ljava/lang/String;": "field_47155",
+  "net/minecraft/class_3719.field_31353:Ljava/lang/String;": "field_47154",
+  "net/minecraft/class_3719.field_31352:Ljava/lang/String;": "field_47155"
+ },
+ "methodRenames": {
+  "net/minecraft/class_1690.method_7542(F)V": "method_54297",
+  "net/minecraft/class_1690.method_7554()F": "method_54294",
+  "net/minecraft/class_1690.method_7553(I)V": "method_54299",
+  "net/minecraft/class_1690.method_7533()I": "method_54295",
+  "net/minecraft/class_1690.method_7540(I)V": "method_54300",
+  "net/minecraft/class_1690.method_7543()I": "method_54296",
+  "net/minecraft/class_1690.method_42279(Lnet/minecraft/class_1282;)V": "method_7516",
+  "net/minecraft/class_7264.method_7542(F)V": "method_54297",
+  "net/minecraft/class_7264.method_7554()F": "method_54294",
+  "net/minecraft/class_7264.method_7553(I)V": "method_54299",
+  "net/minecraft/class_7264.method_7533()I": "method_54295",
+  "net/minecraft/class_7264.method_7540(I)V": "method_54300",
+  "net/minecraft/class_7264.method_7543()I": "method_54296",
+  "net/minecraft/class_7264.method_42279(Lnet/minecraft/class_1282;)V": "method_7516",
+  "net/minecraft/class_1688.method_7520(F)V": "method_54297",
+  "net/minecraft/class_1688.method_7521()F": "method_54294",
+  "net/minecraft/class_1688.method_7509(I)V": "method_54299",
+  "net/minecraft/class_1688.method_7507()I": "method_54295",
+  "net/minecraft/class_1688.method_7524(I)V": "method_54300",
+  "net/minecraft/class_1688.method_7522()I": "method_54296",
+  "net/minecraft/class_1688.method_42670()Lnet/minecraft/class_1792;": "method_7557",
+  "net/minecraft/class_1693.method_7520(F)V": "method_54297",
+  "net/minecraft/class_1693.method_7521()F": "method_54294",
+  "net/minecraft/class_1693.method_7509(I)V": "method_54299",
+  "net/minecraft/class_1693.method_7507()I": "method_54295",
+  "net/minecraft/class_1693.method_7524(I)V": "method_54300",
+  "net/minecraft/class_1693.method_7522()I": "method_54296",
+  "net/minecraft/class_1693.method_42670()Lnet/minecraft/class_1792;": "method_7557",
+  "net/minecraft/class_1694.method_7520(F)V": "method_54297",
+  "net/minecraft/class_1694.method_7521()F": "method_54294",
+  "net/minecraft/class_1694.method_7509(I)V": "method_54299",
+  "net/minecraft/class_1694.method_7507()I": "method_54295",
+  "net/minecraft/class_1694.method_7524(I)V": "method_54300",
+  "net/minecraft/class_1694.method_7522()I": "method_54296",
+  "net/minecraft/class_1694.method_42670()Lnet/minecraft/class_1792;": "method_7557",
+  "net/minecraft/class_1695.method_7520(F)V": "method_54297",
+  "net/minecraft/class_1695.method_7521()F": "method_54294",
+  "net/minecraft/class_1695.method_7509(I)V": "method_54299",
+  "net/minecraft/class_1695.method_7507()I": "method_54295",
+  "net/minecraft/class_1695.method_7524(I)V": "method_54300",
+  "net/minecraft/class_1695.method_7522()I": "method_54296",
+  "net/minecraft/class_1695.method_42670()Lnet/minecraft/class_1792;": "method_7557",
+  "net/minecraft/class_1696.method_7520(F)V": "method_54297",
+  "net/minecraft/class_1696.method_7521()F": "method_54294",
+  "net/minecraft/class_1696.method_7509(I)V": "method_54299",
+  "net/minecraft/class_1696.method_7507()I": "method_54295",
+  "net/minecraft/class_1696.method_7524(I)V": "method_54300",
+  "net/minecraft/class_1696.method_7522()I": "method_54296",
+  "net/minecraft/class_1696.method_42670()Lnet/minecraft/class_1792;": "method_7557",
+  "net/minecraft/class_1697.method_7520(F)V": "method_54297",
+  "net/minecraft/class_1697.method_7521()F": "method_54294",
+  "net/minecraft/class_1697.method_7509(I)V": "method_54299",
+  "net/minecraft/class_1697.method_7507()I": "method_54295",
+  "net/minecraft/class_1697.method_7524(I)V": "method_54300",
+  "net/minecraft/class_1697.method_7522()I": "method_54296",
+  "net/minecraft/class_1697.method_42670()Lnet/minecraft/class_1792;": "method_7557",
+  "net/minecraft/class_1699.method_7520(F)V": "method_54297",
+  "net/minecraft/class_1699.method_7521()F": "method_54294",
+  "net/minecraft/class_1699.method_7509(I)V": "method_54299",
+  "net/minecraft/class_1699.method_7507()I": "method_54295",
+  "net/minecraft/class_1699.method_7524(I)V": "method_54300",
+  "net/minecraft/class_1699.method_7522()I": "method_54296",
+  "net/minecraft/class_1699.method_42670()Lnet/minecraft/class_1792;": "method_7557",
+  "net/minecraft/class_1700.method_7520(F)V": "method_54297",
+  "net/minecraft/class_1700.method_7521()F": "method_54294",
+  "net/minecraft/class_1700.method_7509(I)V": "method_54299",
+  "net/minecraft/class_1700.method_7507()I": "method_54295",
+  "net/minecraft/class_1700.method_7524(I)V": "method_54300",
+  "net/minecraft/class_1700.method_7522()I": "method_54296",
+  "net/minecraft/class_1700.method_42670()Lnet/minecraft/class_1792;": "method_7557",
+  "net/minecraft/class_1701.method_7520(F)V": "method_54297",
+  "net/minecraft/class_1701.method_7521()F": "method_54294",
+  "net/minecraft/class_1701.method_7509(I)V": "method_54299",
+  "net/minecraft/class_1701.method_7507()I": "method_54295",
+  "net/minecraft/class_1701.method_7524(I)V": "method_54300",
+  "net/minecraft/class_1701.method_7522()I": "method_54296",
+  "net/minecraft/class_1701.method_42670()Lnet/minecraft/class_1792;": "method_7557",
+  "net/minecraft/class_5547.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764",
+  "net/minecraft/class_5812.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764",
+  "net/minecraft/class_5813.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764",
+  "net/minecraft/class_5814.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764",
+  "net/minecraft/class_5955.method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "method_54764",
+  "net/minecraft/class_1792.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1738.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1739.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1742.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1743.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1744.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1745.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1746.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1747.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1748.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1749.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1751.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1752.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1753.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1754.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1755.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1756.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1757.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1758.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1759.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1762.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1763.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1764.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1765.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1766.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1769.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1770.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1771.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1772.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1773.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1774.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1775.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1776.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1777.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1778.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1779.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1780.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1781.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1785.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1786.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1787.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1788.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1790.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1794.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1795.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1798.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1801.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1803.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1804.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1805.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1806.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1807.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1808.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1809.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1810.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1811.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1812.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1813.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1816.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1819.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1820.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1821.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1822.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1823.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1824.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1825.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1826.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1827.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1828.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1829.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1830.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1831.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1833.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1835.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1840.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1841.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_1843.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_3734.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_4057.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_4058.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_4059.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_4480.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_4537.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_5537.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_5538.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_5634.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_5953.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_7409.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_7430.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_7707.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_8052.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_8162.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_8232.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_8233.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": "method_54465",
+  "net/minecraft/class_2621.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2621.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2621.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2621.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2595.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2595.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2595.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2595.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2601.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2601.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2601.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2601.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2608.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2608.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2608.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2608.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2614.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2614.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2614.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2614.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2627.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2627.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2627.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2627.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_2646.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_2646.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_2646.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_2646.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_3719.method_11283(Lnet/minecraft/class_2487;)Z": "method_54871",
+  "net/minecraft/class_3719.method_11286(Lnet/minecraft/class_2487;)Z": "method_54872",
+  "net/minecraft/class_3719.method_11289(Lnet/minecraft/class_1657;)V": "method_54873",
+  "net/minecraft/class_3719.method_11285(Lnet/minecraft/class_2960;J)V": "method_54867",
+  "net/minecraft/class_34.method_260()Z": "method_54550",
+  "net/minecraft/class_34$class_8578.method_260()Z": "method_54550"
+ },
+ "classRenames": {
+  "net/minecraft/class_2440$class_2441": "net/minecraft/class_8177$class_2441",
+  "net/minecraft/class_4262": "top/dext/centurybridge/step/v1_20_3/facade/AbstractGlassBlock",
+  "net/minecraft/class_2368": "top/dext/centurybridge/step/v1_20_3/facade/GlassBlock",
+  "net/minecraft/class_2375": "top/dext/centurybridge/step/v1_20_3/facade/GravelBlock",
+  "net/minecraft/class_2468": "top/dext/centurybridge/step/v1_20_3/facade/SandBlock",
+  "net/minecraft/class_2511": "top/dext/centurybridge/step/v1_20_3/facade/StemGrownBlock",
+  "net/minecraft/class_2411": "top/dext/centurybridge/step/v1_20_3/facade/MelonBlock",
+  "net/minecraft/class_6377": "top/dext/centurybridge/step/v1_20_3/facade/PowderSnowCauldronBlock",
+  "net/minecraft/class_2647": "top/dext/centurybridge/step/v1_20_3/facade/AbstractTreeGrower",
+  "net/minecraft/class_2650": "top/dext/centurybridge/step/v1_20_3/facade/AbstractMegaTreeGrower",
+  "net/minecraft/class_2662": "top/dext/centurybridge/step/v1_20_3/facade/OakTreeGrower",
+  "net/minecraft/class_2652": "top/dext/centurybridge/step/v1_20_3/facade/BirchTreeGrower",
+  "net/minecraft/class_2659": "top/dext/centurybridge/step/v1_20_3/facade/SpruceTreeGrower",
+  "net/minecraft/class_2655": "top/dext/centurybridge/step/v1_20_3/facade/JungleTreeGrower",
+  "net/minecraft/class_2654": "top/dext/centurybridge/step/v1_20_3/facade/AcaciaTreeGrower",
+  "net/minecraft/class_2657": "top/dext/centurybridge/step/v1_20_3/facade/DarkOakTreeGrower",
+  "net/minecraft/class_8175": "top/dext/centurybridge/step/v1_20_3/facade/CherryTreeGrower",
+  "net/minecraft/class_6349": "top/dext/centurybridge/step/v1_20_3/facade/AzaleaTreeGrower",
+  "net/minecraft/class_7382": "top/dext/centurybridge/step/v1_20_3/facade/MangroveTreeGrower",
+  "net/minecraft/class_8785": "top/dext/centurybridge/step/v1_20_3/facade/CraftingRecipeCodecs",
+  "net/minecraft/class_3957$class_3958": "net/minecraft/class_1874$class_3958",
+  "net/minecraft/class_3972$class_3973$class_3974": "net/minecraft/class_3972$class_3974"
+ },
+ "callReshapes": {
+  "net/minecraft/class_2248.method_9574(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#levelReader(Lnet/minecraft/class_1922;)Lnet/minecraft/class_4538;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "the world narrowed to a LevelReader: Levels pass as they are, other BlockGetters as a LevelReader view (CbWorldBlocks.levelReader)"
+  },
+  "net/minecraft/class_1292.method_5577(Lnet/minecraft/class_1293;F)Lnet/minecraft/class_2561;": {
+   "desc": "(Lnet/minecraft/class_1293;FF)Lnet/minecraft/class_2561;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#legacyTickRate()F"
+   ],
+   "basis": "new tick-rate argument: 1.20.2 counted 20 ticks to the second"
+  },
+  "net/minecraft/class_1844.method_47372(Lnet/minecraft/class_1799;Ljava/util/List;F)V": {
+   "desc": "(Lnet/minecraft/class_1799;Ljava/util/List;FF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#legacyTickRate()F"
+   ],
+   "basis": "new tick-rate argument: 1.20.2 counted 20 ticks to the second"
+  },
+  "net/minecraft/class_1844.method_8065(Ljava/util/List;Ljava/util/List;F)V": {
+   "desc": "(Ljava/util/List;Ljava/util/List;FF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#legacyTickRate()F"
+   ],
+   "basis": "new tick-rate argument: 1.20.2 counted 20 ticks to the second"
+  },
+  "net/minecraft/class_1937.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1927;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSmallParticles()Lnet/minecraft/class_2394;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionLargeParticles()Lnet/minecraft/class_2394;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSound()Lnet/minecraft/class_3414;"
+   ],
+   "basis": "particles and sound became arguments: 1.20.2 always used EXPLOSION / EXPLOSION_EMITTER / GENERIC_EXPLODE"
+  },
+  "net/minecraft/class_1937.method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Z)Lnet/minecraft/class_1927;": {
+   "desc": "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1927;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSmallParticles()Lnet/minecraft/class_2394;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionLargeParticles()Lnet/minecraft/class_2394;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSound()Lnet/minecraft/class_3414;"
+   ],
+   "basis": "particles and sound became arguments: 1.20.2 always used EXPLOSION / EXPLOSION_EMITTER / GENERIC_EXPLODE"
+  },
+  "net/minecraft/class_1657.method_7335([Lnet/minecraft/class_2960;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#recipeList([Lnet/minecraft/class_2960;)Ljava/util/List;"
+   ],
+   "basis": "the recipe ids come as a List: the same ids, in order"
+  },
+  "net/minecraft/class_1297.method_5659()Z": {
+   "desc": "(Lnet/minecraft/class_1927;)Z",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#noExplosion()Lnet/minecraft/class_1927;"
+   ],
+   "basis": "a 1.20.2 caller asks without an explosion; every 1.20.3 implementation ignores the argument"
+  },
+  "net/minecraft/class_3778.method_30419(Lnet/minecraft/class_3195$class_7149;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_2338;ZLjava/util/Optional;I)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_3195$class_7149;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_2338;ZLjava/util/Optional;ILnet/minecraft/class_8891;)Ljava/util/Optional;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#noPoolAliasLookup()Lnet/minecraft/class_8891;"
+   ],
+   "basis": "1.20.2 jigsaw structures had no pool aliases: the empty lookup"
+  },
+  "net/minecraft/class_269.method_1168(Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;)Lnet/minecraft/class_266;": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;ZLnet/minecraft/class_9022;)Lnet/minecraft/class_266;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#noDisplayAutoUpdate()Z",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#defaultNumberFormat()Lnet/minecraft/class_9022;"
+   ],
+   "basis": "1.20.2 objectives had no display auto-update and the default number format"
+  },
+  "net/minecraft/class_269.method_1152(Ljava/lang/String;)V": {
+   "desc": "(Lnet/minecraft/class_9015;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#nameHolder(Ljava/lang/String;)Lnet/minecraft/class_9015;"
+   ],
+   "basis": "the owner name, as the holder 1.20.3 keys scores by"
+  },
+  "net/minecraft/class_269.method_1190(Ljava/lang/String;Lnet/minecraft/class_266;)V": {
+   "desc": "(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#nameHolder(Ljava/lang/String;)Lnet/minecraft/class_9015;",
+    "keep:1"
+   ],
+   "basis": "the owner name, as the holder 1.20.3 keys scores by"
+  },
+  "net/minecraft/class_269.method_1176(Lnet/minecraft/class_267;)V": {
+   "desc": "(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#holderOf(Lnet/minecraft/class_267;)Lnet/minecraft/class_9015;",
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#objectiveOf(Lnet/minecraft/class_267;)Lnet/minecraft/class_266;",
+    "keep:0"
+   ],
+   "basis": "the holder and objective the score is stored under (opened by the layer's access widener)"
+  },
+  "net/minecraft/class_2995.method_1152(Ljava/lang/String;)V": {
+   "desc": "(Lnet/minecraft/class_9015;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#nameHolder(Ljava/lang/String;)Lnet/minecraft/class_9015;"
+   ],
+   "basis": "the owner name, as the holder 1.20.3 keys scores by"
+  },
+  "net/minecraft/class_2995.method_1190(Ljava/lang/String;Lnet/minecraft/class_266;)V": {
+   "desc": "(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#nameHolder(Ljava/lang/String;)Lnet/minecraft/class_9015;",
+    "keep:1"
+   ],
+   "basis": "the owner name, as the holder 1.20.3 keys scores by"
+  },
+  "net/minecraft/class_2995.method_1176(Lnet/minecraft/class_267;)V": {
+   "desc": "(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#holderOf(Lnet/minecraft/class_267;)Lnet/minecraft/class_9015;",
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#objectiveOf(Lnet/minecraft/class_267;)Lnet/minecraft/class_266;",
+    "keep:0"
+   ],
+   "basis": "the holder and objective the score is stored under (opened by the layer's access widener)"
+  },
+  "net/minecraft/class_2218$class_2219.apply(Lnet/minecraft/class_267;Lnet/minecraft/class_267;)V": {
+   "desc": "(Lnet/minecraft/class_9014;Lnet/minecraft/class_9014;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#access(Lnet/minecraft/class_267;)Lnet/minecraft/class_9014;",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#access(Lnet/minecraft/class_267;)Lnet/minecraft/class_9014;"
+   ],
+   "basis": "each 1.20.2 score as a ScoreAccess over it (CbWorldScoreAccessView)"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_2275.<init>(Lnet/minecraft/class_4970$class_2251;Ljava/util/Map;)V": {
+   "desc": "(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_5620$class_8821;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#interactionMap(Ljava/util/Map;)Lnet/minecraft/class_5620$class_8821;"
+   ],
+   "basis": "interactions as a named InteractionMap (CbWorldBlocks.interactionMap)"
+  },
+  "net/minecraft/class_5556.<init>(Lnet/minecraft/class_4970$class_2251;Ljava/util/function/Predicate;Ljava/util/Map;)V": {
+   "desc": "(Lnet/minecraft/class_1959$class_1963;Lnet/minecraft/class_5620$class_8821;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#fillPrecipitation(Ljava/util/function/Predicate;)Lnet/minecraft/class_1959$class_1963;",
+    "conv:2 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#interactionMap(Ljava/util/Map;)Lnet/minecraft/class_5620$class_8821;",
+    "keep:0"
+   ],
+   "basis": "the fill predicate goes to the constructed cauldron (CbWorldLayeredCauldronMixin); interactions as an InteractionMap",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#legacyLayeredCauldron(Lnet/minecraft/class_5556;Ljava/util/function/Predicate;)V",
+   "postArgs": [
+    1
+   ]
+  },
+  "net/minecraft/class_5542.<init>(IILnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(FFLnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#intToFloat(I)F",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#intToFloat(I)F",
+    "keep:2"
+   ],
+   "basis": "the same height and offset, as floats"
+  },
+  "net/minecraft/class_2269.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_8177;IZ)V": {
+   "desc": "(Lnet/minecraft/class_8177;ILnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:1,3 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#buttonType(Lnet/minecraft/class_8177;Z)Lnet/minecraft/class_8177;",
+    "keep:2",
+    "keep:0"
+   ],
+   "basis": "the arrow flag moved into the BlockSetType (CbWorldBlocks.buttonType)"
+  },
+  "net/minecraft/class_2440.<init>(Lnet/minecraft/class_2440$class_2441;Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_8177;)V": {
+   "desc": "(Lnet/minecraft/class_8177;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:0,2 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#plateType(Lnet/minecraft/class_2440$class_2441;Lnet/minecraft/class_8177;)Lnet/minecraft/class_8177;",
+    "keep:1"
+   ],
+   "basis": "the sensitivity moved into the BlockSetType (CbWorldBlocks.plateType)"
+  },
+  "net/minecraft/class_2527.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_2394;)V": {
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#torchFlame(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2400;",
+    "keep:0"
+   ],
+   "basis": "the flame narrowed to SimpleParticleType; any other particle is kept by the constructed torch (CbWorldTorchMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#legacyTorchFlame(Lnet/minecraft/class_2527;Lnet/minecraft/class_2394;)V",
+   "postArgs": [
+    1
+   ]
+  },
+  "net/minecraft/class_2555.<init>(Lnet/minecraft/class_4970$class_2251;Lnet/minecraft/class_2394;)V": {
+   "desc": "(Lnet/minecraft/class_2400;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#torchFlame(Lnet/minecraft/class_2394;)Lnet/minecraft/class_2400;",
+    "keep:0"
+   ],
+   "basis": "the flame narrowed to SimpleParticleType; any other particle is kept by the constructed torch (CbWorldTorchMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#legacyWallTorchFlame(Lnet/minecraft/class_2555;Lnet/minecraft/class_2394;)V",
+   "postArgs": [
+    1
+   ]
+  },
+  "net/minecraft/class_2563.<init>(Lnet/minecraft/class_1291;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_1291;ILnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#witherRoseEffectSeconds()I",
+    "keep:1"
+   ],
+   "basis": "1.20.2 passed an 8 second effect to FlowerBlock"
+  },
+  "net/minecraft/class_2473.<init>(Lnet/minecraft/class_2647;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_8813;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldTrees#legacyGrower(Lnet/minecraft/class_2647;)Lnet/minecraft/class_8813;",
+    "keep:1"
+   ],
+   "basis": "the sapling keeps its 1.20.2 grower and grows through it (CbWorldTrees, CbWorldSaplingMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldTrees#attachGrower(Lnet/minecraft/class_2473;Lnet/minecraft/class_2647;)V",
+   "postArgs": [
+    0
+   ]
+  },
+  "net/minecraft/class_7115.<init>(Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_8813;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#mangroveGrower()Lnet/minecraft/class_8813;",
+    "keep:0"
+   ],
+   "basis": "1.20.2 grew a MangroveTreeGrower(0.85F): TreeGrower.MANGROVE is the same choice"
+  },
+  "net/minecraft/class_2431.<init>(Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_6017;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#noExperience()Lnet/minecraft/class_6017;",
+    "keep:0"
+   ],
+   "basis": "1.20.2's one-argument constructor dropped ConstantInt.of(0) experience"
+  },
+  "net/minecraft/class_8177.<init>(Ljava/lang/String;ZLnet/minecraft/class_2498;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;)V": {
+   "desc": "(Ljava/lang/String;ZZZLnet/minecraft/class_8177$class_2441;Lnet/minecraft/class_2498;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:1",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#plateSensitivityFor(Z)Lnet/minecraft/class_8177$class_2441;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9",
+    "keep:10"
+   ],
+   "basis": "1.20.2's set carried no wind-charge, arrow or plate setting (buttons and plates carried their own): a hand-openable set gets 1.20.2's wooden pairing (all on, any-entity plates), the others its stone one"
+  },
+  "net/minecraft/class_2513.<init>(Lnet/minecraft/class_2511;Ljava/util/function/Supplier;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noItem()Lnet/minecraft/class_5321;",
+    "keep:2"
+   ],
+   "basis": "the constructed stem keeps its 1.20.2 fruit and seed and works through them (CbWorldStems)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#attachStem(Lnet/minecraft/class_2513;Lnet/minecraft/class_2511;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    0,
+    1
+   ]
+  },
+  "net/minecraft/class_2195.<init>(Lnet/minecraft/class_2511;Ljava/util/function/Supplier;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noBlock()Lnet/minecraft/class_5321;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#noItem()Lnet/minecraft/class_5321;",
+    "keep:2"
+   ],
+   "basis": "the constructed stem keeps its 1.20.2 fruit and seed and works through them (CbWorldStems)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStems#attachAttachedStem(Lnet/minecraft/class_2195;Lnet/minecraft/class_2511;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    0,
+    1
+   ]
+  },
+  "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#destroyWithDecay()Lnet/minecraft/class_1927$class_4179;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSmallParticles()Lnet/minecraft/class_2394;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionLargeParticles()Lnet/minecraft/class_2394;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSound()Lnet/minecraft/class_3414;"
+   ],
+   "basis": "1.20.2: DESTROY_WITH_DECAY, no fire, and the explosion particles and sound 1.20.2 always used"
+  },
+  "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1927$class_4179;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSmallParticles()Lnet/minecraft/class_2394;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionLargeParticles()Lnet/minecraft/class_2394;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSound()Lnet/minecraft/class_3414;"
+   ],
+   "basis": "the explosion particles and sound 1.20.2 always used"
+  },
+  "net/minecraft/class_238.<init>(Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)V": {
+   "desc": "(DDDDDD)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldPhys#x(Lnet/minecraft/class_2338;)D",
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldPhys#y(Lnet/minecraft/class_2338;)D",
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbWorldPhys#z(Lnet/minecraft/class_2338;)D",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldPhys#x(Lnet/minecraft/class_2338;)D",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldPhys#y(Lnet/minecraft/class_2338;)D",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldPhys#z(Lnet/minecraft/class_2338;)D"
+   ],
+   "basis": "1.20.2 boxed the two corners as given (CbWorldPhys)"
+  },
+  "net/minecraft/class_5434.<init>(Lnet/minecraft/class_3195$class_7302;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_6122;ZLjava/util/Optional;I)V": {
+   "desc": "(Lnet/minecraft/class_3195$class_7302;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_6122;ZLjava/util/Optional;ILjava/util/List;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#noPoolAliases()Ljava/util/List;"
+   ],
+   "basis": "1.20.2 jigsaw structures had no pool aliases"
+  },
+  "net/minecraft/class_1869.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;IILnet/minecraft/class_2371;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_8957;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3,4 top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#shapedPattern(IILnet/minecraft/class_2371;)Lnet/minecraft/class_8957;",
+    "keep:5"
+   ],
+   "basis": "width, height and ingredients become a ShapedRecipePattern (CbWorldItems.shapedPattern)"
+  },
+  "net/minecraft/class_1869.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;IILnet/minecraft/class_2371;Lnet/minecraft/class_1799;Z)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_8957;Lnet/minecraft/class_1799;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2,3,4 top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#shapedPattern(IILnet/minecraft/class_2371;)Lnet/minecraft/class_8957;",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "width, height and ingredients become a ShapedRecipePattern (CbWorldItems.shapedPattern)"
+  },
+  "net/minecraft/class_1665.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#noPickupItem()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "a 1.20.2 subclass had no pickup stack: it answered getPickupItem itself (abstract in 1.20.2)"
+  },
+  "net/minecraft/class_1665.<init>(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#noPickupItem()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "a 1.20.2 subclass had no pickup stack: it answered getPickupItem itself (abstract in 1.20.2)"
+  },
+  "net/minecraft/class_1665.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#noPickupItem()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "a 1.20.2 subclass had no pickup stack: it answered getPickupItem itself (abstract in 1.20.2)"
+  },
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#arrowStack()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "the plain arrow 1.20.3's own Arrow(EntityType, Level) passes; a 1.20.2 subclass is picked up the 1.20.2 way (CbWorldLegacyArrow, CbWorldArrowMixin)"
+  },
+  "net/minecraft/class_1679.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#spectralArrowStack()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.2's SpectralArrow was always picked up as one spectral arrow: the stack it now copies"
+  },
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#arrowStack()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "the plain arrow 1.20.3's own Arrow(EntityType, Level) passes; a 1.20.2 subclass is picked up the 1.20.2 way (CbWorldLegacyArrow, CbWorldArrowMixin)"
+  },
+  "net/minecraft/class_1679.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#spectralArrowStack()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.20.2's SpectralArrow was always picked up as one spectral arrow: the stack it now copies"
+  },
+  "net/minecraft/class_1322.<init>(Ljava/util/UUID;Ljava/util/function/Supplier;DLnet/minecraft/class_1322$class_1323;)V": {
+   "desc": "(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldAttributes#placeholderName()Ljava/lang/String;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the name supplier goes to the constructed modifier, asked whenever 1.20.2 asked it (CbWorldAttributeModifierMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldAttributes#attachName(Lnet/minecraft/class_1322;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    1
+   ]
+  },
+  "net/minecraft/class_58.<init>(Lnet/minecraft/class_176;Lnet/minecraft/class_8489;)V": {
+   "desc": "(Lnet/minecraft/class_8942;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldLoot#newCollector()Lnet/minecraft/class_8942;",
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "1.20.2's context started an empty problem collection of its own: 1.20.3's Collector"
+  },
+  "net/minecraft/class_58.<init>(Lcom/google/common/collect/Multimap;Ljava/util/function/Supplier;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;Ljava/util/Set;)V": {
+   "desc": "(Lnet/minecraft/class_8942;Lnet/minecraft/class_176;Lnet/minecraft/class_8489;Ljava/util/Set;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_3/rt/CbWorldLoot#problems(Lcom/google/common/collect/Multimap;Ljava/util/function/Supplier;)Lnet/minecraft/class_8942;",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "the problems multimap and context path become a reporter into them (CbWorldLoot); the constructor is opened by the layer's access widener"
+  },
+  "net/minecraft/class_266.<init>(Lnet/minecraft/class_269;Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;)V": {
+   "desc": "(Lnet/minecraft/class_269;Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;ZLnet/minecraft/class_9022;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#noDisplayAutoUpdate()Z",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#defaultNumberFormat()Lnet/minecraft/class_9022;"
+   ],
+   "basis": "1.20.2 objectives had no display auto-update and the default number format"
+  },
+  "net/minecraft/class_267.<init>(Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop",
+    "drop",
+    "drop"
+   ],
+   "basis": "the scoreboard, objective and owner go to the constructed score (CbWorldScoreMixin)",
+   "post": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#attachNew(Lnet/minecraft/class_267;Lnet/minecraft/class_269;Lnet/minecraft/class_266;Ljava/lang/String;)V",
+   "postArgs": [
+    0,
+    1,
+    2
+   ]
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1688.method_7523(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1688$class_1689;)Lnet/minecraft/class_1688;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#createMinecart",
+  "net/minecraft/class_2246.method_52571(Lnet/minecraft/class_2960;Lnet/minecraft/class_2248;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#register",
+  "net/minecraft/class_2621.method_11287(Lnet/minecraft/class_1922;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#setLootTable",
+  "net/minecraft/class_31.method_29029(Lcom/mojang/serialization/Dynamic;Lcom/mojang/datafixers/DataFixer;ILnet/minecraft/class_2487;Lnet/minecraft/class_1940;Lnet/minecraft/class_5315;Lnet/minecraft/class_31$class_7729;Lnet/minecraft/class_5285;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_31;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStorage#parsePrimaryLevelData"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2537.method_10776(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;ZZILnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#calculateState",
+  "net/minecraft/class_1542.method_6981(Ljava/util/UUID;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#setThrower",
+  "net/minecraft/class_1917.method_8283(Lnet/minecraft/class_1937;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#getOrCreateDisplayEntity",
+  "net/minecraft/class_5547.method_33623(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#applyChangeOverTime",
+  "net/minecraft/class_8181.method_49274()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#getFirstItem",
+  "net/minecraft/class_8181.method_49275(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#setFirstItem",
+  "net/minecraft/class_8181.method_49276()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#removeFirstItem",
+  "net/minecraft/class_5670.method_32476(Lnet/minecraft/class_47;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#getScoreboardName",
+  "net/minecraft/class_1856.method_8089(Z)Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#ingredientToJson",
+  "net/minecraft/class_2633.method_11376(Lnet/minecraft/class_3218;)Z": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#loadStructure",
+  "net/minecraft/class_32$class_5143.method_27013(Lcom/mojang/serialization/DynamicOps;Lnet/minecraft/class_7712;Lnet/minecraft/class_2378;Lcom/mojang/serialization/Lifecycle;)Lcom/mojang/datafixers/util/Pair;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStorage#getDataTag",
+  "net/minecraft/class_32$class_5143.method_29584()Lnet/minecraft/class_34;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStorage#getSummary",
+  "net/minecraft/class_32$class_5143.method_29585()Lnet/minecraft/class_7712;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStorage#getDataConfiguration",
+  "net/minecraft/class_269.method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#getPlayerScoresByObjective",
+  "net/minecraft/class_269.method_1178()Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#getTrackedPlayers"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_5556.field_27880:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#LAYERED_RAIN",
+  "net/minecraft/class_5556.field_27881:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#LAYERED_SNOW",
+  "net/minecraft/class_1420.field_30268:F": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#FLAP_DEGREES_PER_TICK",
+  "net/minecraft/class_1420.field_28637:I": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#TICKS_PER_FLAP",
+  "net/minecraft/class_267.field_1413:Ljava/util/Comparator;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#SCORE_COMPARATOR"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_2527.field_22155:Lnet/minecraft/class_2394;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#flameParticle"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_7710.field_40252:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#craftingBookCategoryCodec",
+  "net/minecraft/class_1740.field_41941:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldItems#armorMaterialsCodec"
+ },
+ "superRedirects": {
+  "net/minecraft/class_8181.method_49274()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#superGetFirstItem",
+  "net/minecraft/class_8181.method_49275(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#superSetFirstItem",
+  "net/minecraft/class_8181.method_49276()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#superRemoveFirstItem",
+  "net/minecraft/class_2537.method_10776(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;ZZILnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#superCalculateState",
+  "net/minecraft/class_1542.method_6981(Ljava/util/UUID;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#superSetThrower",
+  "net/minecraft/class_1917.method_8283(Lnet/minecraft/class_1937;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#superGetOrCreateDisplayEntity",
+  "net/minecraft/class_2633.method_11376(Lnet/minecraft/class_3218;)Z": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#superLoadStructure",
+  "net/minecraft/class_269.method_1178()Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#superGetTrackedPlayers",
+  "net/minecraft/class_269.method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#superGetPlayerScoresByObjective",
+  "net/minecraft/class_2995.method_1178()Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#superGetTrackedPlayers",
+  "net/minecraft/class_2995.method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#superGetPlayerScoresByObjective"
+ },
+ "covers": [
+  "net/minecraft/class_2445.method_10679()Lnet/minecraft/class_2513;",
+  "net/minecraft/class_2445.method_10680()Lnet/minecraft/class_2195;",
+  "net/minecraft/class_2513.method_10694()Lnet/minecraft/class_2511;",
+  "net/minecraft/class_2283.method_9759(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
+  "net/minecraft/class_1927.method_8349()Lnet/minecraft/class_1282;",
+  "net/minecraft/class_1657.method_7282(DDD)V",
+  "net/minecraft/class_1322.method_6185()Ljava/lang/String;",
+  "net/minecraft/class_2625.method_49844(Lnet/minecraft/class_1657;)Lnet/minecraft/class_8242;",
+  "net/minecraft/class_2633.method_11368(Lnet/minecraft/class_3218;Z)Z",
+  "net/minecraft/class_2633.method_21864(Lnet/minecraft/class_3218;ZLnet/minecraft/class_3499;)Z",
+  "net/minecraft/class_2633.method_21865()Ljava/lang/String;",
+  "net/minecraft/class_34.method_256()Z",
+  "net/minecraft/class_58.method_361()Lcom/google/common/collect/Multimap;",
+  "net/minecraft/class_267.method_1122()Lnet/minecraft/class_269;",
+  "net/minecraft/class_267.method_1124(I)V",
+  "net/minecraft/class_267.method_1126()I",
+  "net/minecraft/class_267.method_1127()Lnet/minecraft/class_266;",
+  "net/minecraft/class_267.method_1128(I)V",
+  "net/minecraft/class_267.method_1129()Ljava/lang/String;",
+  "net/minecraft/class_267.method_1130()V",
+  "net/minecraft/class_267.method_1132()V",
+  "net/minecraft/class_269.method_1180(Ljava/lang/String;Lnet/minecraft/class_266;)Lnet/minecraft/class_267;",
+  "net/minecraft/class_269.method_1166(Ljava/lang/String;)Ljava/util/Map;",
+  "net/minecraft/class_269.method_1183(Ljava/lang/String;Lnet/minecraft/class_266;)Z",
+  "net/minecraft/class_269.method_1155(Ljava/lang/String;Lnet/minecraft/class_266;)V",
+  "net/minecraft/class_269.method_1162(Lnet/minecraft/class_274;Ljava/lang/String;Ljava/util/function/Consumer;)V"
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_7542(F)V",
+   "new": "method_54297(F)V",
+   "onlyUnder": "net/minecraft/class_1690",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7554()F",
+   "new": "method_54294()F",
+   "onlyUnder": "net/minecraft/class_1690",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7553(I)V",
+   "new": "method_54299(I)V",
+   "onlyUnder": "net/minecraft/class_1690",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7533()I",
+   "new": "method_54295()I",
+   "onlyUnder": "net/minecraft/class_1690",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7540(I)V",
+   "new": "method_54300(I)V",
+   "onlyUnder": "net/minecraft/class_1690",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7543()I",
+   "new": "method_54296()I",
+   "onlyUnder": "net/minecraft/class_1690",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_42279(Lnet/minecraft/class_1282;)V",
+   "new": "method_7516(Lnet/minecraft/class_1282;)V",
+   "onlyUnder": "net/minecraft/class_1690",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7520(F)V",
+   "new": "method_54297(F)V",
+   "onlyUnder": "net/minecraft/class_1688",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7521()F",
+   "new": "method_54294()F",
+   "onlyUnder": "net/minecraft/class_1688",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7509(I)V",
+   "new": "method_54299(I)V",
+   "onlyUnder": "net/minecraft/class_1688",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7507()I",
+   "new": "method_54295()I",
+   "onlyUnder": "net/minecraft/class_1688",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7524(I)V",
+   "new": "method_54300(I)V",
+   "onlyUnder": "net/minecraft/class_1688",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_7522()I",
+   "new": "method_54296()I",
+   "onlyUnder": "net/minecraft/class_1688",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_42670()Lnet/minecraft/class_1792;",
+   "new": "method_7557()Lnet/minecraft/class_1792;",
+   "onlyUnder": "net/minecraft/class_1688",
+   "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"
+  },
+  {
+   "old": "method_9576(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)V",
+   "new": "method_9576(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2680;",
+   "onlyUnder": "net/minecraft/class_2248",
+   "bridge": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks.playerWillDestroy(Ltop/dext/centurybridge/step/v1_20_3/rt/CbWorldPlayerWillDestroy;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2680;",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldPlayerWillDestroy",
+   "basis": "playerWillDestroy now returns the state the break goes on with; a 1.20.2 override returned nothing and 1.20.2's caller went on with the state it passed, which the bridge answers"
+  },
+  {
+   "old": "method_5781()Lnet/minecraft/class_270;",
+   "new": "method_5781()Lnet/minecraft/class_268;",
+   "unwrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities.playerTeam(Lnet/minecraft/class_270;)Lnet/minecraft/class_268;",
+   "onlyUnder": "net/minecraft/class_1297",
+   "basis": "getTeam answers a PlayerTeam since 1.20.3; the override's Team is one (CbWorldEntities.playerTeam)"
+  },
+  {
+   "old": "method_33621(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V",
+   "new": "method_54764(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V",
+   "onlyUnder": "net/minecraft/class_5547",
+   "basis": "onRandomTick is 1.20.3's changeOverTime: same random draw, same work"
+  },
+  {
+   "old": "method_33623(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V",
+   "new": "method_54765(Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_5547",
+   "basis": "a 1.20.2 applyChangeOverTime sets the block itself; its getNextState answers nothing left to set",
+   "bridge": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks.legacyNextState(Ltop/dext/centurybridge/step/v1_20_3/rt/CbWorldChangeOverTime;Lnet/minecraft/class_2680;Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)Ljava/util/Optional;",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldChangeOverTime",
+   "guard": "top/dext/centurybridge/step/v1_20_3/rt/Guard"
+  },
+  {
+   "old": "method_49274()Lnet/minecraft/class_1799;",
+   "new": "method_54079()Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_8181",
+   "basis": "the 1.20.3 method of the same meaning"
+  },
+  {
+   "old": "method_49275(Lnet/minecraft/class_1799;)V",
+   "new": "method_54077(Lnet/minecraft/class_1799;)V",
+   "onlyUnder": "net/minecraft/class_8181",
+   "basis": "the 1.20.3 method of the same meaning"
+  },
+  {
+   "old": "method_49276()Lnet/minecraft/class_1799;",
+   "new": "method_54099()Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_8181",
+   "basis": "the 1.20.3 method of the same meaning"
+  },
+  {
+   "old": "method_32476(Lnet/minecraft/class_47;)Ljava/lang/String;",
+   "new": "method_55379(Lnet/minecraft/class_47;)Lnet/minecraft/class_9015;",
+   "onlyUnder": "net/minecraft/class_5670",
+   "basis": "the provider's name, as a holder known by name only",
+   "unwrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores.nameHolder(Ljava/lang/String;)Lnet/minecraft/class_9015;"
+  },
+  {
+   "old": "method_8283(Lnet/minecraft/class_1937;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1297;",
+   "new": "method_8283(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1297;",
+   "onlyUnder": "net/minecraft/class_1917",
+   "basis": "the random 1.20.3 no longer passes is the level's, which 1.20.3 itself uses there",
+   "args": [
+    0,
+    0,
+    1
+   ],
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities.levelRandom(Lnet/minecraft/class_1937;)Lnet/minecraft/class_5819;"
+  },
+  {
+   "old": "method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V",
+   "new": "method_54465(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V",
+   "onlyUnder": "net/minecraft/class_1792",
+   "basis": "onCraftedBy(stack, level, player) is 1.20.3's onCraftedBy under a new name"
+  },
+  {
+   "old": "method_6981(Ljava/util/UUID;)V",
+   "new": "method_6981(Lnet/minecraft/class_1297;)V",
+   "onlyUnder": "net/minecraft/class_1542",
+   "basis": "1.20.3 hands the thrower entity; the 1.20.2 override gets its id",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities.throwerId(Lnet/minecraft/class_1297;)Ljava/util/UUID;"
+  },
+  {
+   "old": "method_7335([Lnet/minecraft/class_2960;)V",
+   "new": "method_7335(Ljava/util/List;)V",
+   "onlyUnder": "net/minecraft/class_1657",
+   "basis": "the same recipe ids, as an array",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities.recipeArray(Ljava/util/List;)[Lnet/minecraft/class_2960;"
+  },
+  {
+   "old": "method_7282(DDD)V",
+   "new": "method_54720(DDD)V",
+   "onlyUnder": "net/minecraft/class_3222",
+   "basis": "ServerPlayer.travel calls 1.20.3's checkMovementStatistics; the override's super call reaches it directly",
+   "superCalls": "rewrite"
+  },
+  {
+   "old": "method_11283(Lnet/minecraft/class_2487;)Z",
+   "new": "method_54871(Lnet/minecraft/class_2487;)Z",
+   "onlyUnder": "net/minecraft/class_2621",
+   "basis": "tryLoadLootTable is RandomizableContainer's default of that name in 1.20.3: same body over the same fields"
+  },
+  {
+   "old": "method_11286(Lnet/minecraft/class_2487;)Z",
+   "new": "method_54872(Lnet/minecraft/class_2487;)Z",
+   "onlyUnder": "net/minecraft/class_2621",
+   "basis": "trySaveLootTable is RandomizableContainer's default of that name in 1.20.3: same body over the same fields"
+  },
+  {
+   "old": "method_11289(Lnet/minecraft/class_1657;)V",
+   "new": "method_54873(Lnet/minecraft/class_1657;)V",
+   "onlyUnder": "net/minecraft/class_2621",
+   "basis": "unpackLootTable is RandomizableContainer's default of that name in 1.20.3: same body over the same fields"
+  },
+  {
+   "old": "method_11285(Lnet/minecraft/class_2960;J)V",
+   "new": "method_54867(Lnet/minecraft/class_2960;J)V",
+   "onlyUnder": "net/minecraft/class_2621",
+   "basis": "setLootTable(table, seed) is RandomizableContainer's default of that name in 1.20.3: same body over the same fields"
+  },
+  {
+   "old": "method_260()Z",
+   "new": "method_54550()Z",
+   "onlyUnder": "net/minecraft/class_34",
+   "basis": "askToOpenWorld (the world is from a newer version) is 1.20.3's isDowngrade, asked where 1.20.2 asked it"
+  },
+  {
+   "old": "method_256()Z",
+   "new": "method_54549()Z",
+   "onlyUnder": "net/minecraft/class_34",
+   "basis": "1.20.3's world list asks shouldBackup() where 1.20.2's asked markVersionInList()"
+  },
+  {
+   "old": "method_1152(Ljava/lang/String;)V",
+   "new": "method_1152(Lnet/minecraft/class_9015;)V",
+   "onlyUnder": "net/minecraft/class_269",
+   "basis": "the removed holder's name, as 1.20.2 named it",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores.holderName(Lnet/minecraft/class_9015;)Ljava/lang/String;"
+  },
+  {
+   "old": "method_1190(Ljava/lang/String;Lnet/minecraft/class_266;)V",
+   "new": "method_1190(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;)V",
+   "onlyUnder": "net/minecraft/class_269",
+   "basis": "the holder's name, as 1.20.2 named it",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores.holderName(Lnet/minecraft/class_9015;)Ljava/lang/String;"
+  },
+  {
+   "old": "method_1176(Lnet/minecraft/class_267;)V",
+   "new": "method_1176(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+   "onlyUnder": "net/minecraft/class_269",
+   "basis": "the changed score, which learns the holder and objective it is stored under first",
+   "bridge": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores.scoreChangedBridge(Ltop/dext/centurybridge/step/v1_20_3/rt/CbWorldScoreChangeListener;Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScoreChangeListener"
+  },
+  {
+   "old": "apply(Lnet/minecraft/class_267;Lnet/minecraft/class_267;)V",
+   "new": "apply(Lnet/minecraft/class_9014;Lnet/minecraft/class_9014;)V",
+   "onlyUnder": "net/minecraft/class_2218$class_2219",
+   "basis": "each ScoreAccess as a 1.20.2 Score over it (CbWorldAccessScore)",
+   "wrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores.scoreOf(Lnet/minecraft/class_9014;)Lnet/minecraft/class_267;"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2537",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldTripWireHook",
+   "requires": [
+    "method_10776(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;ZZILnet/minecraft/class_2680;)V"
+   ],
+   "synth": [],
+   "basis": "1.20.3 calls the static; the mixins call a 1.20.2 hook's override through this"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLegacyEntity",
+   "requires": [],
+   "synth": [],
+   "basis": "marks the entity classes converted from 1.20.2 (CbWorldLivingEntityMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1667",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLegacyArrow",
+   "requires": [],
+   "synth": [],
+   "basis": "marks the Arrow classes converted from 1.20.2 (CbWorldArrowMixin)"
+  },
+  {
+   "under": "net/minecraft/class_2633",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLegacyStructureBlock",
+   "requires": [],
+   "synth": [],
+   "basis": "marks the StructureBlockEntity classes converted from 1.20.2 (CbWorldStructureBlockMixin, CbWorldStructurePacketMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1542",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldThrowerV",
+   "requires": [
+    "method_6981(Ljava/util/UUID;)V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 call of setThrower(UUID) reaches the class's own override (CbWorldEntities.setThrower)"
+  },
+  {
+   "under": "net/minecraft/class_1917",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldSpawnerDisplayV",
+   "requires": [
+    "method_8283(Lnet/minecraft/class_1937;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1297;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 call of getOrCreateDisplayEntity(level, random, pos) reaches the class's own override"
+  },
+  {
+   "under": "net/minecraft/class_2633",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStructureLoadV",
+   "requires": [
+    "method_11376(Lnet/minecraft/class_3218;)Z"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 call of loadStructure(level) reaches the class's own override (CbWorldBlocks.loadStructure)"
+  },
+  {
+   "under": "net/minecraft/class_269",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldTrackedPlayersV",
+   "requires": [
+    "method_1178()Ljava/util/Collection;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 getTrackedPlayers() override answers names: 1.20.2 calls take them, 1.20.3's get holders"
+  },
+  {
+   "under": "net/minecraft/class_269",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldPlayerScoresV",
+   "requires": [
+    "method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 getPlayerScores(objective) override answers Scores: 1.20.2 calls take them, 1.20.3's get entries"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_8181",
+   "method": "method_54079()Lnet/minecraft/class_1799;",
+   "call": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers.getTheItem(Lnet/minecraft/class_8181;)Lnet/minecraft/class_1799;",
+   "basis": "1.20.3 demands it; a 1.20.2 single-item container answers through slot 0 (CbWorldContainers)"
+  },
+  {
+   "under": "net/minecraft/class_8181",
+   "method": "method_54077(Lnet/minecraft/class_1799;)V",
+   "call": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers.setTheItem(Lnet/minecraft/class_8181;Lnet/minecraft/class_1799;)V",
+   "basis": "1.20.3 demands it; a 1.20.2 single-item container answers through slot 0 (CbWorldContainers)"
+  },
+  {
+   "under": "net/minecraft/class_8181",
+   "method": "method_54078(I)Lnet/minecraft/class_1799;",
+   "call": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers.splitTheItem(Lnet/minecraft/class_8181;I)Lnet/minecraft/class_1799;",
+   "basis": "1.20.3 demands it; a 1.20.2 single-item container answers through slot 0 (CbWorldContainers)"
+  },
+  {
+   "under": "net/minecraft/class_8181",
+   "method": "method_54080()Lnet/minecraft/class_2586;",
+   "call": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers.getContainerBlockEntity(Lnet/minecraft/class_8181;)Lnet/minecraft/class_2586;",
+   "basis": "1.20.3 demands it; a 1.20.2 single-item container answers through slot 0 (CbWorldContainers)"
+  },
+  {
+   "under": "net/minecraft/class_4970",
+   "method": "method_53969()Lcom/mojang/serialization/MapCodec;",
+   "call": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks.codec(Lnet/minecraft/class_4970;)Lcom/mojang/serialization/MapCodec;",
+   "basis": "a 1.20.2 block has no codec: one that decodes to the block itself (CbWorldBlocks.codec)"
+  },
+  {
+   "under": "net/minecraft/class_1937",
+   "method": "method_54719()Lnet/minecraft/class_8921;",
+   "call": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels.tickRateManager(Lnet/minecraft/class_1937;)Lnet/minecraft/class_8921;",
+   "basis": "a 1.20.2 level ran at 20 ticks a second (CbWorldLevels.tickRateManager)"
+  },
+  {
+   "under": "net/minecraft/class_2484$class_2485",
+   "method": "method_15434()Ljava/lang/String;",
+   "call": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks.skullTypeName(Lnet/minecraft/class_2484$class_2485;)Ljava/lang/String;",
+   "basis": "a 1.20.2 skull type has no serialized name (CbWorldBlocks.skullTypeName)"
+  }
+ ],
+ "ledger": {
+  "net/minecraft/class_7264.method_7549()V": "stub artifact, not 1.20.2 API: CB's remap-jar (JarRemapper.remapToIntermediary) named ChestBoat's own K()V -- ContainerEntity.clearItemStacks, method_42273 in Fabric's intermediary -- after Boat's private K()V (controlBoat, method_7549), climbing to a private superclass method before the interface. A 1.20.2 mod calls clearItemStacks as method_42273, which 1.20.3 has, and Boat.controlBoat only through its own access widener, which still applies (Boat.method_7549()V is unchanged). The 1.20.3 stub has the same artifact (ChestBoat G()V named method_7534)."
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;DDD)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#newArrow",
+  "net/minecraft/class_1667.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldArrows#newArrow"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_2218$class_2219.apply(Lnet/minecraft/class_267;Lnet/minecraft/class_267;)V": {
+   "iface": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScoreOperation",
+   "adapt": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#operation(Ltop/dext/centurybridge/step/v1_20_3/rt/CbWorldScoreOperation;)Lnet/minecraft/class_2218$class_2219;"
+  }
+ }
+}
