@@ -628,63 +628,6 @@ public final class JarProcessor {
     }
 
     /**
-     * Lambdas and method references built for a functional interface's old single method
-     * ({@link Chain#lambdaAdapters}): the invokedynamic builds the adapter interface instead --
-     * the same method name and bootstrap arguments, so the lambda body and its erased shape are
-     * exactly as compiled -- and the wrap static right after it turns the adapter into the real
-     * interface. Straight-line code at the site, so existing frames stay exact.
-     */
-    private static byte[] rewriteLambdas(byte[] bytes, Chain chain, Report rpt, String tag) {
-        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
-        boolean any = false;
-        for (String k : chain.lambdaAdapters.keySet()) {
-            if (raw.contains(k.substring(0, k.lastIndexOf('.', k.indexOf('('))))) {
-                any = true;
-                break;
-            }
-        }
-        if (!any) {
-            return bytes;
-        }
-        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
-        new ClassReader(bytes).accept(cn, 0);
-        int rewrites = 0;
-        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
-            if (m.instructions == null) {
-                continue;
-            }
-            for (org.objectweb.asm.tree.AbstractInsnNode in = m.instructions.getFirst(); in != null; in = in.getNext()) {
-                if (!(in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode indy)
-                        || !indy.bsm.getOwner().equals("java/lang/invoke/LambdaMetafactory")
-                        || indy.bsmArgs.length < 1 || !(indy.bsmArgs[0] instanceof org.objectweb.asm.Type sam)) {
-                    continue;
-                }
-                org.objectweb.asm.Type made = org.objectweb.asm.Type.getReturnType(indy.desc);
-                if (made.getSort() != org.objectweb.asm.Type.OBJECT) {
-                    continue;
-                }
-                String key = made.getInternalName() + "." + indy.name + sam.getDescriptor();
-                Chain.LambdaAdapter a = chain.lambdaAdapters.get(key);
-                if (a == null) {
-                    continue;
-                }
-                indy.desc = indy.desc.substring(0, indy.desc.lastIndexOf(')') + 1) + "L" + a.adapter + ";";
-                m.instructions.insert(indy, new org.objectweb.asm.tree.MethodInsnNode(
-                    Opcodes.INVOKESTATIC, a.wrapOwner, a.wrapName, a.wrapDesc, false));
-                rewrites++;
-                top.dext.centurybridge.data.FullAudit.record(key, "lambda-adapted");
-            }
-        }
-        if (rewrites == 0) {
-            return bytes;
-        }
-        rpt.notes.add(tag + "lambda-adapted: " + rewrites + " lambda(s) in " + cn.name);
-        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
-        cn.accept(cw);
-        return cw.toByteArray();
-    }
-
-    /**
      * If {@code h} is a {@code owner::new} constructor method handle
      * (REF_newInvokeSpecial) whose owner has a ctorRedirect factory, return an
      * equivalent REF_invokeStatic handle to that factory (same arg types, with
@@ -749,12 +692,6 @@ public final class JarProcessor {
         org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
         for (Chain.ReshapeOp op : r.ops) {
             if (op.drop) {
-                if (op.owner != null) {
-                    // "drop OWNER#name(T)V": the dropped value goes to the sink, nothing is pushed
-                    int idx = op.from[0];
-                    seq.add(new org.objectweb.asm.tree.VarInsnNode(old[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
-                    seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, op.owner, op.name, op.desc, false));
-                }
                 continue;
             }
             if (op.param != null) {
@@ -1554,11 +1491,6 @@ public final class JarProcessor {
             byte[] b4 = rewriteHookSuperCalls(bytes, chain, layer, rpt, tag);
             ctorChanged |= b4 != bytes;
             bytes = b4;
-        }
-        if (!chain.lambdaAdapters.isEmpty()) {
-            byte[] b5 = rewriteLambdas(bytes, chain, rpt, tag);
-            ctorChanged |= b5 != bytes;
-            bytes = b5;
         }
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0

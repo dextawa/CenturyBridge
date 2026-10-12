@@ -387,12 +387,8 @@ public final class MixinCheck {
                     if (name == null) {
                         name = derive(m.name, "call", "invoke", "new", "create");
                     }
-                    // a constructor invoker (@Invoker("<init>"), static, returning the target type)
-                    // binds the constructor taking the invoker's arguments
-                    String want = "<init>".equals(name)
-                        ? m.desc.substring(0, m.desc.lastIndexOf(')') + 1) + "V" : m.desc;
-                    if (name == null || !hasMethod(target, name, want)) {
-                        problems.add(me + ": @Invoker " + m.name + " -> " + target.name + "." + name + want + " missing");
+                    if (name == null || !hasMethod(target, name, m.desc)) {
+                        problems.add(me + ": @Invoker " + m.name + " -> " + target.name + "." + name + m.desc + " missing");
                     }
                 }
                 default -> {

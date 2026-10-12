@@ -790,11 +790,6 @@ public final class Chain {
      * <ul>
      * <li>{@code keep} -- re-push the next old argument unchanged.</li>
      * <li>{@code drop} -- consume the next old argument, push nothing.</li>
-     * <li>{@code drop OWNER#name(T)V} -- consume the next old argument and hand it to a void
-     *     static instead of pushing it: a value the new shape has no parameter for but the
-     *     bridge still needs (1.20.2 recipes lost their id argument; the id goes to the bridge
-     *     that records it for the recipe being built). {@code T} must equal the old argument
-     *     type. The call is made at the op's place in the sequence, before the invoke.</li>
      * <li>{@code conv OWNER#name(desc)R} -- push the next old argument and run
      *     the static converter on it; its return type is the new argument.
      *     The converter's parameter type must equal the old argument type.</li>
@@ -855,32 +850,6 @@ public final class Chain {
     public final java.util.Map<String, CallReshape> callReshapes = new java.util.HashMap<>();
     /** key -> key, for {@link #instanceRedirectHome}'s JVM-order lookup */
     public final java.util.Map<String, String> callReshapeIndex = new java.util.HashMap<>();
-
-    /**
-     * Lambdas whose functional interface changed its single abstract method at the boundary
-     * ("lambdaAdapters" in a step's wiring): "iface.sam(oldDesc)" -> {"adapter": "cls",
-     * "wrap": "OWNER#name(Lcls;)Liface;"}. A lambda or method reference (an invokedynamic
-     * through LambdaMetafactory) still built for the old method -- 1.20.2's
-     * SpecialRecipeSerializer.Factory went from create(id, category) to create(category) --
-     * implements nothing the new interface declares and fails with AbstractMethodError when
-     * called. The rewrite has the invokedynamic build the adapter instead (a CB interface
-     * declaring the old method under the same name, so the lambda body and bootstrap
-     * arguments stay exactly as compiled) and passes it through {@code wrap}, a static that
-     * returns an implementation of the real interface answering in the old method's terms.
-     * Matched on the invokedynamic's interface, name and erased method type.
-     */
-    public static final class LambdaAdapter {
-        public final String adapter, wrapOwner, wrapName, wrapDesc;
-
-        LambdaAdapter(String adapter, String wrapOwner, String wrapName, String wrapDesc) {
-            this.adapter = adapter;
-            this.wrapOwner = wrapOwner;
-            this.wrapName = wrapName;
-            this.wrapDesc = wrapDesc;
-        }
-    }
-
-    public final java.util.Map<String, LambdaAdapter> lambdaAdapters = new java.util.HashMap<>();
     /** member names with a reshape: a class whose bytes mention none of them is skipped */
     public final java.util.Set<String> callReshapeNames = new java.util.HashSet<>();
     /** name + new descriptor of every reshape: what the rewritten call sites now reference */
@@ -1027,27 +996,10 @@ public final class Chain {
                     produced.add(rest.isEmpty() ? old[from[0]] : org.objectweb.asm.Type.getType(rest));
                 }
                 case "drop" -> {
-                    if (from.length != 1) {
+                    if (!rest.isEmpty() || from.length != 1) {
                         throw new IllegalArgumentException(where + ": malformed op '" + t + "'");
                     }
-                    if (rest.isEmpty()) {
-                        ops.add(new ReshapeOp(from, null, null, null, true));
-                    } else {
-                        // "drop OWNER#name(T)V": the dropped old argument goes to a void static
-                        int hash = rest.indexOf('#');
-                        int paren = rest.indexOf('(');
-                        if (hash <= 0 || paren <= hash) {
-                            throw new IllegalArgumentException(where + ": op '" + t + "' needs OWNER#name(desc)V");
-                        }
-                        String sDesc = rest.substring(paren);
-                        org.objectweb.asm.Type[] sp2 = org.objectweb.asm.Type.getArgumentTypes(sDesc);
-                        if (sp2.length != 1 || !sp2[0].equals(old[from[0]])
-                                || org.objectweb.asm.Type.getReturnType(sDesc).getSort() != org.objectweb.asm.Type.VOID) {
-                            throw new IllegalArgumentException(where + ": op '" + t + "' must take exactly old argument "
-                                + from[0] + " (" + old[from[0]].getDescriptor() + ") and return void");
-                        }
-                        ops.add(new ReshapeOp(from, rest.substring(0, hash), rest.substring(hash + 1, paren), sDesc, true));
-                    }
+                    ops.add(new ReshapeOp(from, null, null, null, true));
                 }
                 case "conv", "push" -> {
                     int hash = rest.indexOf('#');
@@ -1505,24 +1457,6 @@ public final class Chain {
                 for (String k : cr.keySet()) {
                     c.ctorRedirects.put(k, cr.get(k).getAsString());
                     c.ctorRedirectOwners.add(k.substring(0, k.indexOf(".<init>")));
-                }
-            }
-            if (root.has("lambdaAdapters")) {
-                var la = root.getAsJsonObject("lambdaAdapters");
-                for (String k : la.keySet()) {
-                    var o = la.getAsJsonObject(k);
-                    String w = o.get("wrap").getAsString();
-                    int hash = w.indexOf('#');
-                    int paren = w.indexOf('(');
-                    String adapter = o.get("adapter").getAsString();
-                    String iface = k.substring(0, k.lastIndexOf('.', k.indexOf('(')));
-                    if (hash <= 0 || paren <= hash
-                            || !w.substring(paren).equals("(L" + adapter + ";)L" + iface + ";")) {
-                        throw new IllegalArgumentException("lambdaAdapters " + k + ": wrap must be OWNER#name(L"
-                            + adapter + ";)L" + iface + ";");
-                    }
-                    c.lambdaAdapters.put(k, new LambdaAdapter(adapter, w.substring(0, hash),
-                        w.substring(hash + 1, paren), w.substring(paren)));
                 }
             }
             if (root.has("lookupDesc")) {
