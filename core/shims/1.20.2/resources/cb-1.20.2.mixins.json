@@ -21,6 +21,8 @@
     "CbEnderDragonBodyAccess",
     "CbEntityPoseLegacy",
     "CbEntityRiding",
+    "CbFapiLootPoolV1",
+    "CbFapiLootTableV1",
     "CbFlowerBlockLegacy",
     "CbHorseRidingAccess",
     "CbLivingEffectAttributes",

@@ -2,11 +2,20 @@
  "classRenames": {
   "net/fabricmc/fabric/api/event/network/C2SPacketTypeCallback": "top/dext/centurybridge/compat/fapi/event/network/C2SPacketTypeCallback",
   "net/fabricmc/fabric/api/event/network/S2CPacketTypeCallback": "top/dext/centurybridge/compat/fapi/event/network/S2CPacketTypeCallback",
+  "net/fabricmc/fabric/api/loot/v1/FabricLootPool": "top/dext/centurybridge/compat/fapi/loot/v1/FabricLootPool",
+  "net/fabricmc/fabric/api/loot/v1/FabricLootPoolBuilder": "top/dext/centurybridge/compat/fapi/loot/v1/FabricLootPoolBuilder",
+  "net/fabricmc/fabric/api/loot/v1/FabricLootSupplier": "top/dext/centurybridge/compat/fapi/loot/v1/FabricLootSupplier",
+  "net/fabricmc/fabric/api/loot/v1/FabricLootSupplierBuilder": "top/dext/centurybridge/compat/fapi/loot/v1/FabricLootSupplierBuilder",
+  "net/fabricmc/fabric/api/loot/v1/LootEntryTypeRegistry": "top/dext/centurybridge/compat/fapi/loot/v1/LootEntryTypeRegistry",
+  "net/fabricmc/fabric/api/loot/v1/LootJsonParser": "top/dext/centurybridge/compat/fapi/loot/v1/LootJsonParser",
+  "net/fabricmc/fabric/api/loot/v1/event/LootTableLoadingCallback": "top/dext/centurybridge/compat/fapi/loot/v1/event/LootTableLoadingCallback",
+  "net/fabricmc/fabric/api/loot/v1/event/LootTableLoadingCallback$LootTableSetter": "top/dext/centurybridge/compat/fapi/loot/v1/event/LootTableLoadingCallback$LootTableSetter",
   "net/fabricmc/fabric/api/network/ClientSidePacketRegistry": "top/dext/centurybridge/compat/fapi/network/ClientSidePacketRegistry",
   "net/fabricmc/fabric/api/network/PacketConsumer": "top/dext/centurybridge/compat/fapi/network/PacketConsumer",
   "net/fabricmc/fabric/api/network/PacketContext": "top/dext/centurybridge/compat/fapi/network/PacketContext",
   "net/fabricmc/fabric/api/network/PacketRegistry": "top/dext/centurybridge/compat/fapi/network/PacketRegistry",
   "net/fabricmc/fabric/api/network/ServerSidePacketRegistry": "top/dext/centurybridge/compat/fapi/network/ServerSidePacketRegistry",
+  "net/fabricmc/fabric/api/registry/LootEntryTypeRegistry": "top/dext/centurybridge/compat/fapi/registry/LootEntryTypeRegistry",
   "net/fabricmc/fabric/api/server/PlayerStream": "top/dext/centurybridge/compat/fapi/server/PlayerStream"
  }
 }
