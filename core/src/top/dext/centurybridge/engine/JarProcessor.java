@@ -1614,7 +1614,7 @@ public final class JarProcessor {
         // the vanilla interfaces the jar's classes on the way implement (through the jar's own interfaces too)
         List<String> vanillaIfaces = new ArrayList<>();
         java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
-        for (String cur = owner; cur != null && !cur.startsWith("net/minecraft/") && layer.superOf.containsKey(cur);
+        for (String cur = owner; cur != null && !Chain.minecraftOwned(cur) && layer.superOf.containsKey(cur);
                 cur = layer.superOf.get(cur)) {
             todo.addAll(layer.interfacesOf.getOrDefault(cur, List.of()));
         }
@@ -1624,7 +1624,7 @@ public final class JarProcessor {
             if (!seen.add(i)) {
                 continue;
             }
-            if (i.startsWith("net/minecraft/")) {
+            if (Chain.minecraftOwned(i)) {
                 vanillaIfaces.add(i);
             } else if (layer.superOf.containsKey(i)) {
                 todo.addAll(layer.interfacesOf.getOrDefault(i, List.of()));
@@ -1646,7 +1646,7 @@ public final class JarProcessor {
             return null;
         }
         for (String i : ifaces) {
-            if (i.startsWith("net/minecraft/") && chain.targetDeclares(name, desc, List.of(i))) {
+            if (Chain.minecraftOwned(i) && chain.targetDeclares(name, desc, List.of(i))) {
                 return i;
             }
         }
@@ -1665,7 +1665,7 @@ public final class JarProcessor {
     private static boolean leavesIntoJdk(String owner, String member, LayerIndex layer) {
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
-            if (cur.startsWith("net/minecraft/")) {
+            if (Chain.minecraftOwned(cur)) {
                 return false;
             }
             Set<String> d = layer.decls.get(cur);
@@ -1680,10 +1680,16 @@ public final class JarProcessor {
         return false;
     }
 
+    /*
+     * "Vanilla" here is every class the game owns (Chain.minecraftOwned): net/minecraft/, and the unobfuscated
+     * com/mojang/blaze3d/ and com/mojang/realmsclient/ classes. Walking only to net/minecraft/ left a call through
+     * a mod subclass of, say, RenderSystem (RenderSystem.initGameThread called as MyRenderSystem.initGameThread)
+     * filed as a library member, so the vanilla class's redirects never applied to it.
+     */
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
-            if (cur.startsWith("net/minecraft/")) {
+            if (Chain.minecraftOwned(cur)) {
                 return cur;
             }
             Set<String> d = layer.decls.get(cur);

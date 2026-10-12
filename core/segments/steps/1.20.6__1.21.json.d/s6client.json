@@ -541,7 +541,10 @@
     "net/minecraft/class_846.method_3635(Lnet/minecraft/class_287$class_7433;Lnet/minecraft/class_291;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbUploadSectionLayerBody",
     "net/minecraft/class_6850.method_39969(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;I)Lnet/minecraft/class_853;": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbCreateRegionBody",
     "net/minecraft/class_761.method_8562(Lnet/minecraft/class_3414;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderLevel#cbPlayStreamingMusicBody",
-    "net/minecraft/class_293.method_1359()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIntegerSizeBody"
+    "net/minecraft/class_293.method_1359()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIntegerSizeBody",
+    "net/minecraft/class_310.method_1484(Lnet/minecraft/class_1124$class_1125;)Lnet/minecraft/class_1129;": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch#cbGetSearchTreeBody",
+    "net/minecraft/class_310.method_43759(Lnet/minecraft/class_1124$class_1125;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch#cbPopulateSearchTreeBody",
+    "net/minecraft/class_310.method_22107()Z": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch#cbRenderOnThreadBody"
   },
   "instanceRedirects": {
     "net/minecraft/class_2535.method_10748()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbDisconnectedReason",
@@ -600,7 +603,10 @@
     "net/minecraft/class_296$class_298.method_22654(II)V": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbUsageClearBufferState",
     "net/minecraft/class_296$class_298.method_1392()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbUsageName",
     "net/minecraft/class_296$class_297.method_1389()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbTypeName",
-    "net/minecraft/class_293.method_1359()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIntegerSize"
+    "net/minecraft/class_293.method_1359()I": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats#cbIntegerSize",
+    "net/minecraft/class_310.method_1484(Lnet/minecraft/class_1124$class_1125;)Lnet/minecraft/class_1129;": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch#cbGetSearchTree",
+    "net/minecraft/class_310.method_43759(Lnet/minecraft/class_1124$class_1125;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch#cbPopulateSearchTree",
+    "net/minecraft/class_310.method_22107()Z": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch#cbRenderOnThread"
   },
   "staticRedirects": {
     "net/minecraft/class_9147.method_56457(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;": "top/dext/centurybridge/step/v1_21/rt/CbNet",
@@ -1018,6 +1024,33 @@
       ],
       "synth": [],
       "basis": "VertexFormat.getIntegerSize() is gone since 1.21: a 1.20.6 format subclass's own is what 1.20.6-style calls reach, its super call 1.20.6's body"
+    },
+    {
+      "under": "net/minecraft/class_310",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch$CbLegacyGetSearchTree",
+      "requires": [
+        "method_1484(Lnet/minecraft/class_1124$class_1125;)Lnet/minecraft/class_1129;"
+      ],
+      "synth": [],
+      "basis": "Minecraft.getSearchTree is gone since 1.21 (search trees are the connection's): a 1.20.6 subclass's own is what 1.20.6-style calls reach, its super call 1.20.6's body (the game's registry)"
+    },
+    {
+      "under": "net/minecraft/class_310",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch$CbLegacyPopulateSearchTree",
+      "requires": [
+        "method_43759(Lnet/minecraft/class_1124$class_1125;Ljava/util/List;)V"
+      ],
+      "synth": [],
+      "basis": "Minecraft.populateSearchTree is gone since 1.21: a 1.20.6 subclass's own is what 1.20.6-style calls reach, its super call 1.20.6's body"
+    },
+    {
+      "under": "net/minecraft/class_310",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch$CbLegacyRenderOnThread",
+      "requires": [
+        "method_22107()Z"
+      ],
+      "synth": [],
+      "basis": "Minecraft.renderOnThread is gone since 1.21: a 1.20.6 subclass's own is what 1.20.6-style calls reach, its super call 1.20.6's body (false)"
     }
   ],
   "classRenames": {
@@ -1028,7 +1061,11 @@
     "net/minecraft/class_287$class_4574": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderDrawState",
     "net/minecraft/class_287$class_7433": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderRenderedBuffer",
     "net/minecraft/class_287$class_5594": "top/dext/centurybridge/step/v1_21/facade/BufferBuilderSortState",
-    "net/minecraft/class_311": "top/dext/centurybridge/step/v1_21/facade/MemoryTracker"
+    "net/minecraft/class_311": "top/dext/centurybridge/step/v1_21/facade/MemoryTracker",
+    "net/minecraft/class_1124$class_1125": "top/dext/centurybridge/step/v1_21/facade/SearchRegistryKey",
+    "net/minecraft/class_1124$class_7456": "top/dext/centurybridge/step/v1_21/facade/SearchRegistryTreeBuilderSupplier",
+    "net/minecraft/class_1123": "top/dext/centurybridge/step/v1_21/facade/RefreshableSearchTree",
+    "net/minecraft/class_7454": "top/dext/centurybridge/step/v1_21/facade/PlainTextSearchTree"
   },
   "facadeGaps": {
     "net/minecraft/class_317.<init>(FJ)V": "Timer(ticksPerSecond, now) is 1.20.2's constructor; 1.20.3 replaced it with (ticksPerSecond, now, targetMsptProvider) and the 1.20.2 -> 1.20.3 step reshapes every call into that one (CbClient.cbFixedTickRate), so no class climbing into 1.20.6 names it"
@@ -1047,7 +1084,10 @@
     "net/minecraft/class_290.field_20886:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
     "net/minecraft/class_290.field_1579:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
     "net/minecraft/class_290.field_1578:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
-    "net/minecraft/class_290.field_29335:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats"
+    "net/minecraft/class_290.field_29335:Lnet/minecraft/class_296;": "top/dext/centurybridge/step/v1_21/rt/CbRenderFormats",
+    "net/minecraft/class_1124.field_5495:Lnet/minecraft/class_1124$class_1125;": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch",
+    "net/minecraft/class_1124.field_5494:Lnet/minecraft/class_1124$class_1125;": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch",
+    "net/minecraft/class_1124.field_46200:Lnet/minecraft/class_1124$class_1125;": "top/dext/centurybridge/step/v1_21/rt/CbClientSearch"
   },
   "convertHooks": [
     {
@@ -1086,7 +1126,12 @@
     "net/minecraft/class_287.method_22901(IIII)V",
     "net/minecraft/class_287.method_35666()V",
     "net/minecraft/class_289.method_1349()Lnet/minecraft/class_287;",
-    "net/minecraft/class_289.method_1350()V"
+    "net/minecraft/class_289.method_1350()V",
+    "net/minecraft/class_1124.method_4801(Lnet/minecraft/class_1124$class_1125;Lnet/minecraft/class_1124$class_7456;)V",
+    "net/minecraft/class_1124.method_4800(Lnet/minecraft/class_1124$class_1125;)Lnet/minecraft/class_1129;",
+    "net/minecraft/class_1124.method_43804(Lnet/minecraft/class_1124$class_1125;Ljava/util/List;)V",
+    "net/minecraft/class_1124.method_14491(Lnet/minecraft/class_3300;)V",
+    "net/minecraft/class_1126.method_4799()V"
   ],
   "superRenames": {
     "net/minecraft/class_4588": "top/dext/centurybridge/step/v1_21/rt/CbRenderLegacyConsumer",
