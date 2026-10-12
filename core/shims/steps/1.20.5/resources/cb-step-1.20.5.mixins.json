@@ -42,7 +42,10 @@
     "CbRestRecGameTestBatchMixin",
     "CbRestRecTestFunctionMixin",
     "CbRestRecGameEventMixin",
-    "CbRestRecWeightedEntryWrapperMixin"
+    "CbRestRecWeightedEntryWrapperMixin",
+    "CbBlockEntityInvoker",
+    "CbBlockBiomeSourceInvoker",
+    "CbBlockChunkGeneratorInvoker"
   ],
   "client": [
     "CbRegistriesClientMixin",

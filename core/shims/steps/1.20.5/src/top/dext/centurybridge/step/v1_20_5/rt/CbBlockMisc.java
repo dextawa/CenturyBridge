@@ -41,6 +41,17 @@ public final class CbBlockMisc {
         return java.util.Optional.empty();
     }
 
+    /**
+     * NaturalSpawner.isSpawnPositionOk(type, level, pos, entityType), gone in 1.20.5: the placement type's
+     * own isSpawnPositionOk, whose four 1.20.5 bodies (SpawnPlacementTypes) are 1.20.4's four cases
+     * (no restrictions; in water with no conductor above; in lava; on a valid spawn block with empty
+     * spawn blocks at and above the position), world border and null entity type included.
+     */
+    public static boolean method_8660(top.dext.centurybridge.step.v1_20_5.facade.class_1317$class_1319 type,
+            net.minecraft.class_4538 level, net.minecraft.class_2338 pos, net.minecraft.class_1299<?> entityType) {
+        return type.toPlacementType().isSpawnPositionOk(level, pos, entityType);
+    }
+
     private CbBlockMisc() {
     }
 }

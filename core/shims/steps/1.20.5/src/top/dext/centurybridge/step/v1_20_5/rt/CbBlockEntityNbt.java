@@ -16,6 +16,21 @@ package top.dext.centurybridge.step.v1_20_5.rt;
  */
 public final class CbBlockEntityNbt {
 
+    /** BlockEntity's protected saveAdditional (CbBlockEntityInvoker) */
+    public interface Saver {
+        void cb$saveAdditional(net.minecraft.class_2487 tag, net.minecraft.class_7225.class_7874 registries);
+    }
+
+    /**
+     * this.saveAdditional(tag) in a block entity class that inherits it (protected: a subclass's own
+     * call): the registries a hooked call on the block entity carries, else its own -- what the
+     * rewritten super call of the saveAdditional hook passes (frameDefaults).
+     */
+    public static void method_11007(net.minecraft.class_2586 self, net.minecraft.class_2487 tag) {
+        ((Saver) self).cb$saveAdditional(tag,
+            (net.minecraft.class_7225.class_7874) Guard.cbArgOrL(self, 1, CbBlockRegistries.of(self)));
+    }
+
     /** BlockEntity.load(tag) */
     public static void method_11014(net.minecraft.class_2586 self, net.minecraft.class_2487 tag) {
         net.minecraft.class_7225.class_7874 registries = CbBlockRegistries.of(self);

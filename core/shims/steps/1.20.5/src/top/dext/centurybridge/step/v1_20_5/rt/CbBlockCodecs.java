@@ -42,6 +42,26 @@ public final class CbBlockCodecs {
         return CbCodecs.fromMapCodec(net.minecraft.class_2169.field_24730);
     }
 
+    /** ChunkGenerator's protected codec() (CbBlockChunkGeneratorInvoker) */
+    public interface ChunkGeneratorCodec {
+        MapCodec<? extends net.minecraft.class_2794> cb$chunkGeneratorCodec();
+    }
+
+    /** BiomeSource's protected codec() (CbBlockBiomeSourceInvoker) */
+    public interface BiomeSourceCodec {
+        MapCodec<? extends net.minecraft.class_1966> cb$biomeSourceCodec();
+    }
+
+    /** this.codec() in a chunk generator class that inherits it: 1.20.5's map codec as 1.20.4's codec, one object per codec (CbCodecs) */
+    public static Codec<?> method_28506(net.minecraft.class_2794 self) {
+        return CbCodecs.fromMapCodec(((ChunkGeneratorCodec) self).cb$chunkGeneratorCodec());
+    }
+
+    /** this.codec() in a biome source class that inherits it, likewise */
+    public static Codec<?> method_28442(net.minecraft.class_1966 self) {
+        return CbCodecs.fromMapCodec(((BiomeSourceCodec) self).cb$biomeSourceCodec());
+    }
+
     /** a mod ChunkGenerator's super.codec() */
     public static Codec<?> superChunkGeneratorCodec(ChunkGeneratorSuper self) {
         return CbCodecs.fromMapCodec(self.cb$super$method_28506());

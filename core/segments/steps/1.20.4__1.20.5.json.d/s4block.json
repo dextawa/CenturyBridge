@@ -54,7 +54,10 @@
   "net/minecraft/class_8966.method_55184(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
   "net/minecraft/class_8966.method_55198(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
   "net/minecraft/class_2315.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense",
-  "net/minecraft/class_2325.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense"
+  "net/minecraft/class_2325.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense",
+  "net/minecraft/class_2586.method_11007(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_1966.method_28442()Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
+  "net/minecraft/class_2794.method_28506()Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs"
  },
  "overrideHooks": [
   {
@@ -872,7 +875,8 @@
   "net/minecraft/class_1932.method_32350(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1932;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
   "net/minecraft/class_2356.method_54015(Lnet/minecraft/class_1291;I)Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious",
   "net/minecraft/class_2631.method_52589(Lnet/minecraft/class_2487;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull",
-  "net/minecraft/class_2631.method_52590(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull"
+  "net/minecraft/class_2631.method_52590(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull",
+  "net/minecraft/class_1948.method_8660(Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockMisc"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V": {
