@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_fapiitem",
+ "version": "1.0.0",
+ "name": "CB Fabric API Item Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.fapiitem.FapiItemTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.6" }
+}
