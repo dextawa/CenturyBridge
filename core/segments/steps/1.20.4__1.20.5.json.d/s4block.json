@@ -36,7 +36,11 @@
   "net/minecraft/class_1937.method_17890(Ljava/lang/String;Lnet/minecraft/class_22;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel",
   "net/minecraft/class_1937.method_44013()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel",
   "net/minecraft/class_5138.method_39783(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStructures",
-  "net/minecraft/class_5138.method_41034(Lnet/minecraft/class_2338;Lnet/minecraft/class_5321;)Lnet/minecraft/class_3449;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStructures"
+  "net/minecraft/class_5138.method_41034(Lnet/minecraft/class_2338;Lnet/minecraft/class_5321;)Lnet/minecraft/class_3449;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStructures",
+  "net/minecraft/class_4482.method_21848(Lnet/minecraft/class_1297;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive",
+  "net/minecraft/class_4482.method_21849(Lnet/minecraft/class_1297;ZI)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive",
+  "net/minecraft/class_4482.method_35292(Lnet/minecraft/class_2487;IZ)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive",
+  "net/minecraft/class_4482.method_21859()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive"
  },
  "overrideHooks": [
   {
@@ -436,6 +440,35 @@
    "onlyUnder": "net/minecraft/class_7917",
    "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious.stew(Ljava/util/List;)Lnet/minecraft/class_9298;",
    "basis": "the override's entry list wrapped as SuspiciousStewEffects; its super call is reshaped back (CbBlockSuspicious)"
+  },
+  {
+   "old": "method_21848(Lnet/minecraft/class_1297;Z)V",
+   "new": "method_21848(Lnet/minecraft/class_1297;)V",
+   "onlyUnder": "net/minecraft/class_4482",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$LegacyAddOccupant",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive.addOccupant(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$LegacyAddOccupant;Lnet/minecraft/class_1297;)V",
+   "basis": "1.20.5's addOccupant(entity) reaches the old override with the nectar 1.20.4's caller passed, a bee's own (CbBlockBeehive)"
+  },
+  {
+   "old": "method_21849(Lnet/minecraft/class_1297;ZI)V",
+   "new": "method_21848(Lnet/minecraft/class_1297;)V",
+   "onlyUnder": "net/minecraft/class_4482",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$LegacyAddWithTicks",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive.addOccupantWithTicks(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$LegacyAddWithTicks;Lnet/minecraft/class_1297;)V",
+   "basis": "1.20.4's addOccupant reached addOccupantWithPresetTicks with 0 ticks; after the addOccupant hook, which wins where a class declares both (CbBlockBeehive)"
+  },
+  {
+   "old": "method_35292(Lnet/minecraft/class_2487;IZ)V",
+   "new": "method_35292(Lnet/minecraft/class_4482$class_9309;)V",
+   "onlyUnder": "net/minecraft/class_4482",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$LegacyStoreBee",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive.storeBee(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$LegacyStoreBee;Lnet/minecraft/class_4482$class_9309;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive.superStoreBee(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$SuperStoreBee;Lnet/minecraft/class_2487;IZ)V",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$SuperStoreBee",
+   "superAccessors": [
+    "method_35292(Lnet/minecraft/class_4482$class_9309;)V"
+   ],
+   "basis": "the occupant as 1.20.4's tag, ticks and nectar (minimum ticks 2400); super stores 1.20.4's BeeData (CbBlockBeehive)"
   }
  ],
  "fieldGetters": {
@@ -867,7 +900,9 @@
  ],
  "superRedirects": {
   "net/minecraft/class_1937.method_44013()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel#superDimensionTypeId",
-  "net/minecraft/class_5138.method_41034(Lnet/minecraft/class_2338;Lnet/minecraft/class_5321;)Lnet/minecraft/class_3449;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStructures#superWithPieceAt"
+  "net/minecraft/class_5138.method_41034(Lnet/minecraft/class_2338;Lnet/minecraft/class_5321;)Lnet/minecraft/class_3449;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStructures#superWithPieceAt",
+  "net/minecraft/class_4482.method_21848(Lnet/minecraft/class_1297;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive#superAddOccupant",
+  "net/minecraft/class_4482.method_21849(Lnet/minecraft/class_1297;ZI)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive#superAddWithTicks"
  },
  "adapterHooks": [
   {
@@ -878,6 +913,24 @@
    ],
    "synth": [],
    "basis": "1.20.5 dropped dimensionTypeId(); a mod level overriding it is still asked (calls, CbBlockServerPlayerMixin)"
+  },
+  {
+   "under": "net/minecraft/class_4482",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$LegacyAddWithTicks",
+   "requires": [
+    "method_21849(Lnet/minecraft/class_1297;ZI)V"
+   ],
+   "synth": [],
+   "basis": "a hive class overriding addOccupantWithPresetTicks stays reachable where its addOccupant hook is the other one (CbBlockBeehive)"
+  },
+  {
+   "under": "net/minecraft/class_4482",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBeehive$LegacyWriteBees",
+   "requires": [
+    "method_21859()Lnet/minecraft/class_2499;"
+   ],
+   "synth": [],
+   "basis": "1.20.5 dropped writeBees(); a hive class overriding it has its list saved and put on the item (CbBlockBeehiveMixin)"
   }
  ],
  "genericWitnesses": {
