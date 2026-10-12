@@ -29,7 +29,7 @@ class ClassInfo:
     access: int
     super: str
     interfaces: list
-    fields: list = field(default_factory=list)   # (name, desc, access)
+    fields: list = field(default_factory=list)   # (name, desc, access, generic signature or None)
     methods: list = field(default_factory=list)  # Method
 
 
@@ -95,7 +95,7 @@ def read(b, code=False):
                     sig = utf8.get(u2(i + 6))
                 i += 6 + ln
             if kind == "fields":
-                info.fields.append((nm, ds, a))
+                info.fields.append((nm, ds, a, sig))
             else:
                 info.methods.append(Method(nm, ds, a, body, sig))
     return info
