@@ -1310,6 +1310,8 @@ accessible method net/minecraft/class_8212 <init> (Lnet/minecraft/class_2540;)V
 accessible method net/minecraft/class_8590 <init> (Lnet/minecraft/class_2540;)V
 # BeeDebugPayload: the read constructor, private in 1.20.5
 accessible method net/minecraft/class_8707 <init> (Lnet/minecraft/class_2540;)V
+# BeeDebugPayload: 1.20.5 keeps write under its name, private
+accessible method net/minecraft/class_8707 method_53028 (Lnet/minecraft/class_2540;)V
 # BrainDebugPayload: the read constructor, private in 1.20.5
 accessible method net/minecraft/class_8708 <init> (Lnet/minecraft/class_2540;)V
 # BrandPayload: the read constructor, private in 1.20.5

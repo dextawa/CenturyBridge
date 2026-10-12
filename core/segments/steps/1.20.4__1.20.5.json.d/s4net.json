@@ -173,7 +173,9 @@
  "instanceRedirects": {
   "net/minecraft/class_2596.method_11052(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites",
   "net/minecraft/class_2596.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites",
-  "net/minecraft/class_8592.method_52285()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites"
+  "net/minecraft/class_8592.method_52285()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites",
+  "net/minecraft/class_8710.method_53028(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloads",
+  "net/minecraft/class_8710.comp_1678()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloads"
  },
  "superRedirects": {
   "net/minecraft/class_2596.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol",
@@ -203,6 +205,24 @@
    ],
    "synth": [],
    "basis": "s4net: a 1.20.4 mod's packet that answers nextProtocol() answers 1.20.4 callers asking any packet (CbNetPacketWrites)"
+  },
+  {
+   "under": "net/minecraft/class_8710",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbNetLegacyPayload",
+   "requires": [
+    "method_53028(Lnet/minecraft/class_2540;)V"
+   ],
+   "synth": [],
+   "basis": "s4net: a 1.20.4 mod's payload keeps its write(FriendlyByteBuf); it is sent id + write(buf) as in 1.20.4 (CbNetPayloadCodecBridge)"
+  },
+  {
+   "under": "net/minecraft/class_8710",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbNetLegacyPayloadId",
+   "requires": [
+    "comp_1678()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "s4net: a 1.20.4 mod's payload keeps its id(); its 1.20.5 type is made from it (CbNetPayloads.cbLegacyPayloadType)"
   }
  ],
  "abstractFills": [
@@ -211,6 +231,12 @@
    "method": "method_55846()Lnet/minecraft/class_9145;",
    "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites.cbLegacyPacketType(Lnet/minecraft/class_2596;)Lnet/minecraft/class_9145;",
    "basis": "s4net: Packet.type() of a 1.20.4 mod's packet class (no type of its own or from a concrete vanilla parent): one type per class, so sending an unregistered one fails as in 1.20.4"
+  },
+  {
+   "under": "net/minecraft/class_8710",
+   "method": "method_56479()Lnet/minecraft/class_8710$class_9154;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloads.cbLegacyPayloadType(Lnet/minecraft/class_8710;)Lnet/minecraft/class_8710$class_9154;",
+   "basis": "s4net: CustomPacketPayload.type() of a 1.20.4 mod's payload class: the type of its id()"
   }
  ]
 }

@@ -9,6 +9,11 @@ import net.minecraft.class_2540;
  */
 public final class CbNetPacketReaders {
 
+    /** new ClientboundCustomPayloadPacket(FriendlyByteBuf): decoded with its STREAM_CODEC, as 1.20.5 reads it */
+    public static net.minecraft.class_2658 cbReadClientboundCustomPayloadPacket(class_2540 buf) {
+        return net.minecraft.class_2658.field_48620.decode(CbNetBufs.cbRegistryBuf(buf));
+    }
+
     /** new ClientboundDisconnectPacket(FriendlyByteBuf): decoded with its STREAM_CODEC, as 1.20.5 reads it */
     public static net.minecraft.class_2661 cbReadClientboundDisconnectPacket(class_2540 buf) {
         return net.minecraft.class_2661.field_48622.decode(buf);
@@ -22,6 +27,11 @@ public final class CbNetPacketReaders {
     /** new ClientboundResourcePackPushPacket(FriendlyByteBuf): decoded with its STREAM_CODEC, as 1.20.5 reads it */
     public static net.minecraft.class_2720 cbReadClientboundResourcePackPushPacket(class_2540 buf) {
         return net.minecraft.class_2720.field_48626.decode(buf);
+    }
+
+    /** new ServerboundCustomPayloadPacket(FriendlyByteBuf): decoded with its STREAM_CODEC, as 1.20.5 reads it */
+    public static net.minecraft.class_2817 cbReadServerboundCustomPayloadPacket(class_2540 buf) {
+        return net.minecraft.class_2817.field_48646.decode(buf);
     }
 
     /** new GameEventListenerDebugPayload(FriendlyByteBuf): decoded with its STREAM_CODEC, as 1.20.5 reads it */

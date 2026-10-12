@@ -112,6 +112,7 @@ public class DataTestMod implements ModInitializer {
             a.method_5814(0.5, 100, 0.5);
             check("probe spawned", level.method_8649(a), true);
             NetTest.run();
+            PayloadTest.run();
             System.out.println("CBDATATEST DONE");
         } catch (Throwable t) {
             System.out.println("CBDATATEST FAIL exception " + t);
