@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_recipetest",
+ "version": "1.0.0",
+ "name": "CB Recipe Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.recipetest.RecipeTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.1" }
+}
