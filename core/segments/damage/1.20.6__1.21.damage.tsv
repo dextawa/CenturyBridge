@@ -402,6 +402,8 @@ call	net/minecraft/class_895$class_625	method_2828	(Lnet/minecraft/class_4587;Ln
 override+super	net/minecraft/class_895$class_625	method_2828	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V	METHOD,ORPHAN	method method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V public
 call-static-protected	net/minecraft/class_3887	method_23196	(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFFFF)V	METHOD	method method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFI)V protected static
 call-static-protected	net/minecraft/class_3887	method_23199	(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFF)V	METHOD	method method_23199(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;I)V protected static
+new	net/minecraft/class_8989	<init>	(Lnet/minecraft/class_3883;)V	METHOD	constructors (Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_3883;)V
+super-ctor	net/minecraft/class_8989	<init>	(Lnet/minecraft/class_3883;)V	METHOD	constructors (Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_3883;)V
 call	net/minecraft/class_927	method_4068	(Lnet/minecraft/class_1308;Lnet/minecraft/class_4604;DDD)Z	METHOD	method not declared on the owner
 call	net/minecraft/class_927	method_4072	(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V	METHOD	method not declared on the owner
 get-static	net/minecraft/class_927	field_32940	I	FIELD	field not declared on the owner
@@ -565,13 +567,14 @@ call	net/minecraft/class_7791	method_10399	(Lnet/minecraft/class_7225$class_7874
 lambda	net/minecraft/class_7791	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	LAMBDA	method method_10399(Ljava/util/function/BiConsumer;)V public abstract
 implement-interface	net/minecraft/class_7791			ABSTRACT	class public abstract interface extends java/lang/Object
 implement	net/minecraft/class_7791	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	ORPHAN	method method_10399(Ljava/util/function/BiConsumer;)V public abstract
-new	net/minecraft/class_8794	<init>	()V	ACCESS	constructors (Lnet/minecraft/class_7225$class_7874;)V
+new	net/minecraft/class_8794	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call	net/minecraft/class_8794	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD	method method_10399(Ljava/util/function/BiConsumer;)V public
 call-static	net/minecraft/class_8794	method_53849	()Lnet/minecraft/class_52$class_53;	ICCE	method method_53849()Lnet/minecraft/class_52$class_53; public
 call-static	net/minecraft/class_8794	method_53850	()Lnet/minecraft/class_52$class_53;	ICCE	method method_53850()Lnet/minecraft/class_52$class_53; public
 call-static	net/minecraft/class_8794	method_53851	()Lnet/minecraft/class_52$class_53;	ICCE	method method_53851()Lnet/minecraft/class_52$class_53; public
 call-static	net/minecraft/class_8794	method_53852	()Lnet/minecraft/class_52$class_53;	ICCE	method method_53852()Lnet/minecraft/class_52$class_53; public
 extend	net/minecraft/class_8794			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_8794	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 override+super	net/minecraft/class_8794	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD,ORPHAN	method method_10399(Ljava/util/function/BiConsumer;)V public
 extend	net/minecraft/class_8902			CLASS	class gone
 super-ctor	net/minecraft/class_8902	<init>	()V	CLASS	class gone
@@ -600,11 +603,14 @@ call	net/minecraft/class_9339	method_10399	(Lnet/minecraft/class_7225$class_7874
 extend	net/minecraft/class_9339			CLASS	class gone
 super-ctor	net/minecraft/class_9339	<init>	()V	CLASS	class gone
 override+super	net/minecraft/class_9339	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	CLASS	class gone
-new	net/minecraft/class_8255	<init>	()V	ACCESS	constructors (Lnet/minecraft/class_7225$class_7874;)V
+new	net/minecraft/class_8255	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call	net/minecraft/class_8255	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD	method method_10399(Ljava/util/function/BiConsumer;)V public
 extend	net/minecraft/class_8255			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_8255	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 override+super	net/minecraft/class_8255	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD,ORPHAN	method method_10399(Ljava/util/function/BiConsumer;)V public
-new	net/minecraft/class_2432	<init>	()V	ACCESS	constructors (Lnet/minecraft/class_7225$class_7874;)V
+new	net/minecraft/class_2430	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
+super-ctor	net/minecraft/class_2430	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
+new	net/minecraft/class_2432	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call	net/minecraft/class_2432	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD	method method_10399(Ljava/util/function/BiConsumer;)V public
 call-static	net/minecraft/class_2432	method_55304	(Ljava/util/function/BiConsumer;)V	ICCE	method method_55304(Ljava/util/function/BiConsumer;)V public
 call-static	net/minecraft/class_2432	method_48499	()Lnet/minecraft/class_52$class_53;	ICCE	method method_48499()Lnet/minecraft/class_52$class_53; public
@@ -624,27 +630,35 @@ call-static	net/minecraft/class_2432	method_48512	()Lnet/minecraft/class_52$clas
 call-static	net/minecraft/class_2432	method_48513	()Lnet/minecraft/class_52$class_53;	ICCE	method method_48513()Lnet/minecraft/class_52$class_53; public
 call-static	net/minecraft/class_2432	method_48514	()Lnet/minecraft/class_52$class_53;	ICCE	method method_48514()Lnet/minecraft/class_52$class_53; public
 extend	net/minecraft/class_2432			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_2432	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 override+super	net/minecraft/class_2432	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD,ORPHAN	method method_10399(Ljava/util/function/BiConsumer;)V public
+new	net/minecraft/class_2434	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call-static	net/minecraft/class_2434	method_48515	()Lnet/minecraft/class_52$class_53;	ICCE	method method_48515()Lnet/minecraft/class_52$class_53; public
-new	net/minecraft/class_9486	<init>	()V	ACCESS	constructors (Lnet/minecraft/class_7225$class_7874;)V
+super-ctor	net/minecraft/class_2434	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
+new	net/minecraft/class_9486	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call	net/minecraft/class_9486	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD	method method_10399(Ljava/util/function/BiConsumer;)V public
 extend	net/minecraft/class_9486			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_9486	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 override+super	net/minecraft/class_9486	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD,ORPHAN	method method_10399(Ljava/util/function/BiConsumer;)V public
-new	net/minecraft/class_2437	<init>	()V	ACCESS	constructors (Lnet/minecraft/class_7225$class_7874;)V
+new	net/minecraft/class_2437	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call	net/minecraft/class_2437	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD	method method_10399(Ljava/util/function/BiConsumer;)V public
 extend	net/minecraft/class_2437			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_2437	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 override+super	net/minecraft/class_2437	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD,ORPHAN	method method_10399(Ljava/util/function/BiConsumer;)V public
-new	net/minecraft/class_3714	<init>	()V	ACCESS	constructors (Lnet/minecraft/class_7225$class_7874;)V
+new	net/minecraft/class_3714	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call	net/minecraft/class_3714	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD	method method_10399(Ljava/util/function/BiConsumer;)V public
 extend	net/minecraft/class_3714			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_3714	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 override+super	net/minecraft/class_3714	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD,ORPHAN	method method_10399(Ljava/util/function/BiConsumer;)V public
-new	net/minecraft/class_4845	<init>	()V	ACCESS	constructors (Lnet/minecraft/class_7225$class_7874;)V
+new	net/minecraft/class_4845	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call	net/minecraft/class_4845	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD	method method_10399(Ljava/util/function/BiConsumer;)V public
 extend	net/minecraft/class_4845			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_4845	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 override+super	net/minecraft/class_4845	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD,ORPHAN	method method_10399(Ljava/util/function/BiConsumer;)V public
-new	net/minecraft/class_9340	<init>	()V	ACCESS	constructors (Lnet/minecraft/class_7225$class_7874;)V
+new	net/minecraft/class_9340	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 call	net/minecraft/class_9340	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD	method method_10399(Ljava/util/function/BiConsumer;)V public
 extend	net/minecraft/class_9340			FINAL	class public final extends java/lang/Record
+super-ctor	net/minecraft/class_9340	<init>	()V	METHOD	constructors (Lnet/minecraft/class_7225$class_7874;)V
 override+super	net/minecraft/class_9340	method_10399	(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V	METHOD,ORPHAN	method method_10399(Ljava/util/function/BiConsumer;)V public
 new	net/minecraft/class_8904	<init>	(Lnet/minecraft/class_7784;Ljava/util/concurrent/CompletableFuture;)V	CLASS	class gone
 call-static	net/minecraft/class_8904	method_58269	()Ljava/util/stream/Stream;	CLASS	class gone

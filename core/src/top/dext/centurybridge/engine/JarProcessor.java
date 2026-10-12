@@ -389,7 +389,10 @@ public final class JarProcessor {
                 }
                 org.objectweb.asm.tree.MethodInsnNode mi = (org.objectweb.asm.tree.MethodInsnNode) in;
                 Chain.OverrideHook h = byOld.get(mi.name + mi.desc);
+                // the super call's owner is the direct superclass: a mod class in between inherits the
+                // vanilla method (this layer's hierarchy says from where) unless it declares it itself
                 if (h == null || mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
+                        && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null
                         || h.onlyUnder != null && !isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain)
                         || h.notUnder != null && isUnder(cn.superName, ifaces, h.notUnder, layer, chain)) {
                     continue;
@@ -628,8 +631,18 @@ public final class JarProcessor {
      * super.m(..) included, so the call keeps its dispatch -- has its arguments re-pushed per the
      * ops and takes the new descriptor; the return value is dropped, converted or supplied right
      * after. Straight-line code at the call, so existing frames stay exact.
+     *
+     * A call may name a class of the mod's own jar while the member is a vanilla one it inherits:
+     * javac's qualifying type for an unqualified call to an inherited member is the subclass
+     * itself (a mod's RecipeProvider calling offerSmelting(..), a loot function builder calling
+     * this.getConditions()). The JVM resolves such a call on the first vanilla class up the mod's
+     * own hierarchy when no mod class on the way declares the member, so the key is looked up from
+     * there ({@link #inheritedReshapeHome}: the superclass chain first, then the vanilla interfaces
+     * the mod's types implement -- a default method such as RecipeBuilder.save(consumer) reached
+     * through a mod builder); a mod class that does declare the old shape keeps the call (its own
+     * method, reconnected to the new shape by an override hook if there is one).
      */
-    private static byte[] rewriteCalls(byte[] bytes, Chain chain, Report rpt, String tag) {
+    private static byte[] rewriteCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
         String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
         boolean any = false;
         for (String n : chain.callReshapeNames) {
@@ -655,7 +668,14 @@ public final class JarProcessor {
                     continue;
                 }
                 String nameDesc = mi.name + mi.desc;
+                // a key's own owner (vanilla, com/mojang/blaze3d, a library such as DFU) directly; a
+                // class of the mod's jar through the vanilla class or interface it inherits the member
+                // from (javac qualifies such a call by the class it is made in, JLS 13.1). The call keeps
+                // its owner: the JVM resolves the new descriptor up the hierarchy as it did the old one
                 String home = chain.instanceRedirectHome(chain.callReshapeIndex, mi.owner, nameDesc);
+                if (home == null && layer.decls.containsKey(mi.owner)) {
+                    home = inheritedReshapeHome(mi.owner, nameDesc, layer, chain);
+                }
                 if (home == null) {
                     continue;
                 }
@@ -952,6 +972,74 @@ public final class JarProcessor {
                 return null; // the mod's own member
             }
             cur = layer.superOf.get(cur);
+        }
+        return null;
+    }
+
+    /**
+     * For a call naming a class of this jar layer: the reshape key's home when the member is a
+     * vanilla one the class inherits -- no class or interface of the layer on the way declares it --
+     * found in JVM resolution order: the superclass chain to the first vanilla class (the walk of
+     * {@link #inheritedVanillaOwner}), then, when that has no key or the chain ends in the JDK, the
+     * vanilla interfaces the layer's types implement (a default method, RecipeBuilder.save(consumer)
+     * called on a mod builder). Null when the mod declares the member, the chain leaves into a
+     * library (its classes are not this layer's to judge), or no key applies.
+     */
+    private static String inheritedReshapeHome(String owner, String member, LayerIndex layer, Chain chain) {
+        // the superclass chain first, as the JVM resolves: the layer's own classes, then the first vanilla one
+        List<String> layerClasses = new ArrayList<>();
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64 && !Chain.minecraftOwned(cur); hops++) {
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                if (cur.startsWith("java/")) {
+                    cur = null; // the JDK ends the chain (it declares no game member): on to the interfaces
+                    break;
+                }
+                return null; // a library or another jar: not this layer's to judge
+            }
+            if (d.contains(member)) {
+                return null; // the mod's own member
+            }
+            layerClasses.add(cur);
+            cur = layer.superOf.get(cur);
+        }
+        if (cur != null && Chain.minecraftOwned(cur)) {
+            String home = chain.instanceRedirectHome(chain.callReshapeIndex, cur, member);
+            if (home != null) {
+                return home;
+            }
+        }
+        // then the interfaces the layer's classes implement (a default method), the layer's own first
+        java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
+        for (String c : layerClasses) {
+            todo.addAll(layer.interfacesOf.getOrDefault(c, List.of()));
+        }
+        Set<String> seen = new HashSet<>();
+        List<String> vanilla = new ArrayList<>();
+        while (!todo.isEmpty()) {
+            String t = todo.poll();
+            if (!seen.add(t)) {
+                continue;
+            }
+            if (Chain.minecraftOwned(t)) {
+                vanilla.add(t);
+                continue;
+            }
+            Set<String> d = layer.decls.get(t);
+            if (d == null) {
+                continue;
+            }
+            if (d.contains(member)) {
+                return null; // a default method of the mod's own interface
+            }
+            todo.addAll(layer.interfacesOf.getOrDefault(t, List.of()));
+        }
+        for (String v : vanilla) {
+            String home = chain.instanceRedirectHome(chain.callReshapeIndex, v, member);
+            if (home != null) {
+                return home;
+            }
         }
         return null;
     }
@@ -1541,7 +1629,7 @@ public final class JarProcessor {
             bytes = b2;
         }
         if (!chain.callReshapes.isEmpty()) {
-            byte[] b3 = rewriteCalls(bytes, chain, rpt, tag);
+            byte[] b3 = rewriteCalls(bytes, chain, layer, rpt, tag);
             ctorChanged |= b3 != bytes;
             bytes = b3;
         }
