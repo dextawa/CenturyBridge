@@ -2867,6 +2867,9 @@ public final class JarProcessor {
                         if (chain.callReshapeTargets.contains(name + desc)) {
                             return; // the call pre-pass (rewriteCalls) already gave it the step's new shape
                         }
+                        if (op == Opcodes.INVOKESPECIAL && chain.superAccessorTargets.contains(name + desc)) {
+                            return; // a super-bridge accessor (rewriteHookSuperCalls) calling super's new shape
+                        }
                         Chain.Issue r = chain.resolveMember('m', name);
                         if (r.level() == Chain.Level.OK && !name.startsWith("<") && !Chain.intermediaryClass(owner)
                                 && Boolean.FALSE.equals(chain.resolvesOnTarget(owner, name + desc))) {
