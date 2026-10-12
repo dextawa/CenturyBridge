@@ -764,6 +764,10 @@ public final class JarProcessor {
      *   m(a0..an):  return ret(this.m$cbW(arg0(a0) .. argn(an)));
      * </pre>
      * (a converter that takes the mod object is called as conv(this, value)).
+     * The bridge calls its own class's renamed body non-virtually (invokespecial): each overriding
+     * class gets its own bridge, and a subclass's super.m(..) -- which lands on the parent's bridge --
+     * must reach the parent's body, not dispatch back into the subclass's (a StackOverflowError for
+     * every 1.20.1 override that calls super above another converted override).
      * An abstract redeclaration is renamed too and gets the same bridge, which dispatches to the
      * subclass's renamed body; a javac bridge with the member's descriptor (a covariant override's)
      * is what gets renamed, and still forwards to the mod's own method. Calls are converted on the
@@ -844,7 +848,11 @@ public final class JarProcessor {
                 in.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.args[i][0], h.args[i][1], h.args[i][2], false));
             }
         }
-        in.add(new org.objectweb.asm.tree.MethodInsnNode(itf ? Opcodes.INVOKEINTERFACE : Opcodes.INVOKEVIRTUAL,
+        // a body of this class's own: invokespecial, so a subclass's super.m(..) arriving here reaches
+        // this class's body; an abstract one: dispatched to whichever subclass implements it
+        boolean dispatch = (body.access & Opcodes.ACC_ABSTRACT) != 0;
+        in.add(new org.objectweb.asm.tree.MethodInsnNode(
+            dispatch ? (itf ? Opcodes.INVOKEINTERFACE : Opcodes.INVOKEVIRTUAL) : Opcodes.INVOKESPECIAL,
             cls, h.renamed, h.desc, itf));
         if (h.ret != null) {
             if (Chain.takesReceiver(h.ret)) {
