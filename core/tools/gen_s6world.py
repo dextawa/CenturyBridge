@@ -329,6 +329,119 @@ def resources_and_commands(f):
            "1.20.6's StructureGridSpawner left earlier batches standing (1.21's clearOnBatch false)")
 
 
+# ------------------------------------------------------------------------------------------------ portals, dimension changes
+def portals(f, v):
+    P, PK = RT + "/CbEntityPortals", RT + "/CbEntityPackets"
+    E, SL, SP, BP, WB, V3 = MC + "class_1297", L("class_3218"), L("class_3222"), L("class_2338"), L("class_2784"), L("class_243")
+    PI, OPT, PORTAL = L("class_5454"), "Ljava/util/Optional;", L("class_9797")
+    # PortalInfo: 1.21 gave its intermediary name to DimensionTransition; a 1.20.6 PortalInfo is one without a level
+    f.put("ctorRedirects", MC + "class_5454.<init>(" + V3 + V3 + "FF)V", P + "#portalInfo")
+    f.ctor(MC + "class_5454.<init>(" + V3 + V3 + "FF)V", "(" + SL + V3 + V3 + "FF" + L("class_5454$class_9823") + ")V",
+           ["push " + P + "#noLevel()" + SL, "keep:0", "keep:1", "keep:2", "keep:3",
+            "push " + P + "#nothingAfter()" + L("class_5454$class_9823")],
+           "a 1.20.6 PortalInfo subclass's super(pos, speed, yRot, xRot): the record's constructor with no level and nothing "
+           "after the move (the layer's access widener makes the record extendable)")
+    for field, desc, getter in (("field_25879", V3, "portalPos"), ("field_25880", V3, "portalSpeed"),
+                                ("field_25881", "F", "portalYRot"), ("field_25882", "F", "portalXRot")):
+        f.put("instanceFieldGetters", MC + "class_5454." + field + ":" + desc, P + "#" + getter)
+    # the entity's portal state: 1.21's PortalProcessor for the nether portal, the entrance kept by the Entity mixin
+    for field, desc, getter, setter in (("field_5963", "Z", "isInsidePortal", "setInsidePortal"),
+                                        ("field_5972", "I", "portalTime", "setPortalTime"),
+                                        ("field_5991", BP, "portalEntrancePos", "setPortalEntrancePos")):
+        f.put("instanceFieldGetters", E + "." + field + ":" + desc, P + "#" + getter)
+        f.put("instanceFieldSetters", E + "." + field + ":" + desc, P + "#" + setter)
+    # changeDimension(ServerLevel)
+    cd = "method_5731(" + SL + ")" + L("class_1297")
+    f.put("instanceRedirects", E + "." + cd, P + "#changeDimension")
+    for owner in (E, MC + "class_3222", MC + "class_1542", MC + "class_3988", MC + "class_1684"):
+        f.put("superRedirects", owner + "." + cd, P + "#superChangeDimension")
+    f.hook(cd, "method_5731(" + PI + ")" + L("class_1297"), E,
+           "1.21 moves an entity with changeDimension(transition): a 1.20.6 class's changeDimension(dest) override runs for "
+           "the transition's level, its super call moves by that transition (CbEntityPortals.changeDimension)",
+           bridge=P + ".changeDimension(L" + P + "$LegacyChangeDimension;" + PI + ")" + L("class_1297"),
+           adapter=P + "$LegacyChangeDimension", guard=G)
+    # findDimensionEntryPoint / getExitPortal: asked by the layer's 1.20.6 rules and by the portal-block mixins
+    fe = "method_30329(" + SL + ")" + PI
+    f.put("instanceRedirects", E + "." + fe, P + "#findDimensionEntryPoint")
+    for owner in (E, MC + "class_3222"):
+        f.put("superRedirects", owner + "." + fe, P + "#superFindDimensionEntryPoint")
+    ge = "method_30330(" + SL + BP + "Z" + WB + ")" + OPT
+    f.put("instanceRedirects", E + "." + ge, P + "#getExitPortal")
+    for owner in (E, MC + "class_3222"):
+        f.put("superRedirects", owner + "." + ge, P + "#superGetExitPortal")
+    for shape, adapter, why in ((fe, "LegacyEntryPoint", "findDimensionEntryPoint"), (ge, "LegacyExitPortal", "getExitPortal"),
+                                ("method_5741()I", "LegacyPortalWaitTime", "getPortalWaitTime")):
+        f.w["adapterHooks"].append({
+            "under": E, "adapter": P + "$" + adapter, "requires": [shape], "synth": [],
+            "basis": "1.20.6 asked the entity's own " + why + " where 1.21 asks the portal block: the layer asks it "
+                     "again through this interface (CbEntityPortals, the portal-block mixins)"})
+    # handleInsidePortal(pos) / handleNetherPortal(): 1.21's setAsInsidePortal(portal, pos) / handlePortal()
+    hi = "method_5717(" + BP + ")V"
+    f.put("instanceRedirects", E + "." + hi, P + "#handleInsidePortal")
+    f.put("superRedirects", E + "." + hi, P + "#superHandleInsidePortal")
+    f.hook(hi, "method_60697(" + PORTAL + BP + ")V", E,
+           "1.21 marks an entity in any portal with setAsInsidePortal(portal, pos); 1.20.6's handleInsidePortal(pos) was the "
+           "nether portal's: the override gets the nether portal, 1.21 the others (CbEntityPortals.setAsInsidePortal)",
+           bridge=P + ".setAsInsidePortal(L" + P + "$LegacyInsidePortal;" + PORTAL + BP + ")V",
+           adapter=P + "$LegacyInsidePortal", guard=G)
+    hn = "method_18379()V"
+    f.put("instanceRedirects", E + "." + hn, P + "#handleNetherPortal")
+    f.put("superRedirects", E + "." + hn, P + "#superHandleNetherPortal")
+    f.hook(hn, "method_60698()V", E,
+           "1.21's baseTick calls handlePortal() where 1.20.6's called handleNetherPortal(): the override runs unless the "
+           "entity is in an end portal or gateway, which 1.20.6 never ticked this way (CbEntityPortals.handlePortal)",
+           bridge=P + ".handlePortal(L" + P + "$LegacyNetherPortalTick;)V", adapter=P + "$LegacyNetherPortalTick", guard=G)
+    f.put("instanceRedirects", E + ".method_5741()I", P + "#getPortalWaitTime")
+    f.put("superRedirects", E + ".method_5741()I", P + "#superGetPortalWaitTime")
+    f.put("superRedirects", MC + "class_1657.method_5741()I", P + "#superGetPortalWaitTime")
+    f.put("instanceRedirects", E + ".method_20620(DDD)V", P + "#teleportToWithTicket")
+    f.w["covers"].append(E + ".method_59657(" + V3 + ")" + OPT)
+    # setOnGroundWithKnownMovement is 1.21's setOnGroundWithMovement (same body)
+    for owner in with_subclasses(v, E):
+        f.put("methodRenames", owner + ".method_52208(Z" + V3 + ")V", "method_60607")
+    f.w["overrideRenames"].append({
+        "old": "method_52208(Z" + V3 + ")V", "new": "method_60607", "onlyUnder": E, "superCalls": "rename",
+        "basis": "setOnGroundWithKnownMovement is 1.21's setOnGroundWithMovement: same arguments, same body"})
+    # canChangeDimensions() is canUsePortal(allowPassengers) -- the same overrides in both releases; 1.20.6 refused a passenger
+    f.reshape(E + ".method_5822()Z", "(Z)Z", ["push " + P + "#refusePassengers()Z"],
+              "canChangeDimensions() is 1.21's canUsePortal(allowPassengers): 1.20.6 refused a passenger, so false")
+    f.put("frameDefaults", "method_5822()Z", {
+        "0": "zero: canChangeDimensions refused a passenger in 1.20.6, which is canUsePortal(false)"})
+    # spawn packets
+    f.put("instanceRedirects", E + ".method_18002()" + L("class_2596"), PK + "#getAddEntityPacket")
+    f.put("frameDefaults", "method_18002()" + L("class_2596"), {
+        "0": PK + "#serverEntityFor(" + L("class_1297") + ")" + L("class_3231")})
+    # ServerLevel arrivals
+    for name, adapter, static in (("method_18207", "LegacyCommandArrival", "addDuringCommandTeleport"),
+                                  ("method_18211", "LegacyPortalArrival", "addDuringPortalTeleport")):
+        f.put("instanceRedirects", MC + "class_3218." + name + "(" + SP + ")V", P + "#" + static)
+        f.put("superRedirects", MC + "class_3218." + name + "(" + SP + ")V", P + "#superAddDuring")
+        f.w["adapterHooks"].append({
+            "under": MC + "class_3218", "adapter": P + "$" + adapter, "requires": [name + "(" + SP + ")V"], "synth": [],
+            "basis": "marks a 1.20.6 ServerLevel subclass's own " + static + " for 1.21's addDuringTeleport (CbEntityPortals)"})
+    f.w["adapterHooks"].append({
+        "under": MC + "class_3218", "adapter": P + "$LegacyLevel", "requires": [], "guard": G,
+        "synth": [{"new": "method_18769(" + L("class_1297") + ")V",
+                   "call": P + ".addDuringTeleport(L" + P + "$LegacyLevel;" + L("class_1297") + ")V"}],
+        "basis": "1.21 adds every arriving entity with addDuringTeleport; a 1.20.6 subclass's addDuringCommandTeleport / "
+                 "addDuringPortalTeleport answers the players 1.20.6 sent there (CbEntityPortals.addDuringTeleport)"})
+    f.put("staticRedirects", MC + "class_3218.method_29200(" + SL + ")V", P + "#makeObsidianPlatform")
+    f.put("staticRedirects", MC + "class_2424.method_30484(" + SL + L("class_5459$class_5460") + L("class_2350$class_2351")
+          + V3 + L("class_1297") + V3 + "FF)" + PI, P + "#createPortalInfo")
+    # PortalForcer.findPortalAround: Optional<FoundRectangle> in 1.20.6, Optional<BlockPos> in 1.21 (generic drift)
+    fpa = "method_30483(" + BP + "Z" + WB + ")" + OPT
+    f.put("instanceRedirects", MC + "class_1946." + fpa, P + "#findPortalAround")
+    f.put("superRedirects", MC + "class_1946." + fpa, P + "#superFindPortalAround")
+    f.w["convertHooks"].append({
+        "under": MC + "class_1946", "member": fpa, "ret": P + "#portalPositions(" + OPT + ")" + OPT,
+        "basis": "1.21 asks findClosestPortalPosition for the portal block; a 1.20.6 override's rectangles answer with their corner"})
+    # end gateway and respawn statics
+    f.put("staticRedirects", MC + "class_2643.method_11409(" + L("class_1937") + BP + L("class_2680") + L("class_1297")
+          + L("class_2643") + ")V", P + "#teleportEntity")
+    f.put("staticRedirects", MC + "class_2643.method_30276(" + L("class_1297") + ")Z", P + "#canEntityTeleport")
+    f.put("staticRedirects", MC + "class_1657.method_26091(" + SL + BP + "FZZ)" + OPT, P + "#findRespawnPositionAndUseSpawnBlock")
+
+
 def main():
     v, w = load(sys.argv[1]), load(sys.argv[2])
     f = Fragment()
@@ -337,6 +450,7 @@ def main():
     server(f, v)
     constants(f)
     resources_and_commands(f)
+    portals(f, v)
     f.write()
 
 

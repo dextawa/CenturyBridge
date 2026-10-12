@@ -30,7 +30,6 @@ import net.minecraft.class_7477;
 import net.minecraft.class_9787;
 import net.minecraft.class_9797;
 import org.slf4j.Logger;
-import top.dext.centurybridge.step.v1_21.facade.PortalInfo;
 
 /**
  * Dimension changes and portals. 1.20.6 moved an entity with changeDimension(ServerLevel), which asked the
@@ -42,15 +41,61 @@ import top.dext.centurybridge.step.v1_21.facade.PortalInfo;
  * PortalProcessor. Here 1.20.6's rules are rebuilt on 1.21's API for a 1.20.6 caller, and a 1.20.6 subclass's
  * overrides are asked where 1.20.6 asked them (the override hooks, superRedirects and portal-block mixins of
  * s6world.json). Each static says which 1.20.6 body it is.
+ *
+ * <p>1.20.6's PortalInfo (pos, speed, yRot, xRot) and 1.21's DimensionTransition share the intermediary name
+ * class_5454, so a 1.20.6 PortalInfo is a DimensionTransition here: one built from 1.20.6's four values has no
+ * level and does nothing after the move (see {@link #portalInfo}); the layer adds the destination wherever it
+ * hands one to 1.21, and a 1.20.6 read of its fields reads the record's components.
  */
 public final class CbEntityPortals {
+
+    /** 1.20.6 new PortalInfo(pos, speed, yRot, xRot): the four values, no level, nothing after the move */
+    public static class_5454 portalInfo(class_243 pos, class_243 speed, float yRot, float xRot) {
+        return new class_5454(null, pos, speed, yRot, xRot, class_5454.field_52245);
+    }
+
+    /** the level of a 1.20.6 PortalInfo a 1.20.6 subclass's super(pos, speed, yRot, xRot) builds: none */
+    public static class_3218 noLevel() {
+        return null;
+    }
+
+    /**
+     * 1.20.6's canChangeDimensions() is 1.21's canUsePortal(allowPassengers) -- the same overrides in both releases
+     * (LivingEntity not while sleeping, the dragon, the wither and a fishing hook never). 1.20.6's own answer
+     * refused a passenger, which is allowPassengers false.
+     */
+    public static boolean refusePassengers() {
+        return false;
+    }
+
+    /** what follows the move for a 1.20.6 PortalInfo: nothing */
+    public static class_5454.class_9823 nothingAfter() {
+        return class_5454.field_52245;
+    }
+
+    /** 1.20.6 PortalInfo.pos / speed / yRot / xRot */
+    public static class_243 portalPos(class_5454 info) {
+        return info.comp_2821();
+    }
+
+    public static class_243 portalSpeed(class_5454 info) {
+        return info.comp_2822();
+    }
+
+    public static float portalYRot(class_5454 info) {
+        return info.comp_2823();
+    }
+
+    public static float portalXRot(class_5454 info) {
+        return info.comp_2824();
+    }
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
     // ------------------------------------------------------------------------------------------------ adapters
     /** a 1.20.6 entity class's own findDimensionEntryPoint(dest) */
     public interface LegacyEntryPoint {
-        PortalInfo method_30329(class_3218 dest);
+        class_5454 method_30329(class_3218 dest);
     }
 
     /** a 1.20.6 entity class's own getExitPortal(dest, pos, toNether, border) */
@@ -101,7 +146,7 @@ public final class CbEntityPortals {
      * the entity -- ServerPlayer's (Entity's, moved one block down onto the platform, motionless and turned to
      * 90 degrees when going from the overworld to the end) or Entity's.
      */
-    public static PortalInfo findDimensionEntryPoint(class_1297 entity, class_3218 dest) {
+    public static class_5454 findDimensionEntryPoint(class_1297 entity, class_3218 dest) {
         if (entity instanceof LegacyEntryPoint legacy) {
             return legacy.method_30329(dest);
         }
@@ -109,25 +154,25 @@ public final class CbEntityPortals {
     }
 
     /** a 1.20.6 subclass's super.findDimensionEntryPoint(dest): the 1.20.6 body of the class it extends */
-    public static PortalInfo superFindDimensionEntryPoint(class_1297 entity, class_3218 dest) {
+    public static class_5454 superFindDimensionEntryPoint(class_1297 entity, class_3218 dest) {
         return vanillaEntryPoint(entity, dest);
     }
 
-    public static PortalInfo superFindDimensionEntryPoint(class_3222 player, class_3218 dest) {
+    public static class_5454 superFindDimensionEntryPoint(class_3222 player, class_3218 dest) {
         return vanillaEntryPoint(player, dest);
     }
 
-    private static PortalInfo vanillaEntryPoint(class_1297 entity, class_3218 dest) {
-        PortalInfo info = entityEntryPoint(entity, dest);
+    private static class_5454 vanillaEntryPoint(class_1297 entity, class_3218 dest) {
+        class_5454 info = entityEntryPoint(entity, dest);
         if (entity instanceof class_3222 && info != null && entity.method_37908().method_27983() == class_1937.field_25179
                 && dest.method_27983() == class_1937.field_25181) {
-            return new PortalInfo(info.field_25879.method_1031(0.0, -1.0, 0.0), class_243.field_1353, 90.0F, 0.0F);
+            return portalInfo(info.comp_2821().method_1031(0.0, -1.0, 0.0), class_243.field_1353, 90.0F, 0.0F);
         }
         return info;
     }
 
     /** 1.20.6 Entity.findDimensionEntryPoint(dest) */
-    private static PortalInfo entityEntryPoint(class_1297 entity, class_3218 dest) {
+    private static class_5454 entityEntryPoint(class_1297 entity, class_3218 dest) {
         class_1937 here = entity.method_37908();
         boolean endToOverworld = here.method_27983() == class_1937.field_25181 && dest.method_27983() == class_1937.field_25179;
         boolean toEnd = dest.method_27983() == class_1937.field_25181;
@@ -147,12 +192,12 @@ public final class CbEntityPortals {
         dest.method_14178().method_17297(class_3230.field_19280, new class_1923(spawn), 3, spawn);
         int y = toEnd ? spawn.method_10264()
             : dest.method_8500(spawn).method_12005(class_2902.class_2903.field_13203, spawn.method_10263(), spawn.method_10260()) + 1;
-        return new PortalInfo(new class_243(spawn.method_10263() + 0.5, y, spawn.method_10260() + 0.5),
+        return portalInfo(new class_243(spawn.method_10263() + 0.5, y, spawn.method_10260() + 0.5),
             entity.method_18798(), entity.method_36454(), entity.method_36455());
     }
 
     /** the lambda of 1.20.6's findDimensionEntryPoint: where in the exit portal, from where in the entrance */
-    private static PortalInfo arrival(class_1297 entity, class_3218 dest, class_5459.class_5460 exit) {
+    private static class_5454 arrival(class_1297 entity, class_3218 dest, class_5459.class_5460 exit) {
         class_1937 here = entity.method_37908();
         class_2338 entrance = portalEntrancePos(entity);
         class_2680 state = entrance == null ? null : here.method_8320(entrance);
@@ -175,7 +220,7 @@ public final class CbEntityPortals {
      * the exit rectangle -- turned by 90 degrees and the motion with it when the portals' axes differ -- moved to
      * the nearest spot the entity fits (PortalShape.findCollisionFreePosition, unchanged in 1.21).
      */
-    public static PortalInfo createPortalInfo(class_3218 level, class_5459.class_5460 exit, class_2350.class_2351 axis,
+    public static class_5454 createPortalInfo(class_3218 level, class_5459.class_5460 exit, class_2350.class_2351 axis,
                                               class_243 offset, class_1297 entity, class_243 speed, float yRot, float xRot) {
         class_2338 corner = exit.field_25936;
         class_2680 state = level.method_8320(corner);
@@ -192,7 +237,7 @@ public final class CbEntityPortals {
         class_243 at = new class_243(corner.method_10263() + (xAxis ? across : along), corner.method_10264() + up,
             corner.method_10260() + (xAxis ? along : across));
         class_243 free = net.minecraft.class_2424.method_47382(at, level, entity, dims);
-        return new PortalInfo(free, motion, yRot + (float) turn, xRot);
+        return portalInfo(free, motion, yRot + (float) turn, xRot);
     }
 
     /**
@@ -256,11 +301,6 @@ public final class CbEntityPortals {
                 return class_5459.method_30574(at, state.method_11654(class_2741.field_12529), 21, class_2350.class_2351.field_11052, 21,
                     q -> level.method_8320(q) == state);
             });
-    }
-
-    /** PortalForcer.findPortalAround as a 1.20.6 call names it: the forcer's own level */
-    public static Optional<class_5459.class_5460> findPortalAround(class_1946 forcer, class_2338 pos, boolean toNether, class_2784 border) {
-        return findPortalAround(((PortalForcerLevel) forcer).cb$level(), pos, toNether, border);
     }
 
     /** what the layer's PortalForcer accessor exposes */
@@ -372,7 +412,7 @@ public final class CbEntityPortals {
             player.method_60594();
             return player;
         }
-        PortalInfo info = findDimensionEntryPoint(entity, dest);
+        class_5454 info = findDimensionEntryPoint(entity, dest);
         if (info == null) {
             return null;
         }
@@ -381,13 +421,13 @@ public final class CbEntityPortals {
         class_5454.class_9823 after;
         if (entity instanceof class_3222) {
             if (toEnd) {
-                createEndPlatform(dest, class_2338.method_49638(info.field_25879));
+                createEndPlatform(dest, class_2338.method_49638(info.comp_2821()));
             }
             after = class_5454.field_52246;
         } else {
             after = toEnd ? moved -> makeObsidianPlatform(dest) : class_5454.field_52245;
         }
-        class_5454 transition = new class_5454(dest, info.field_25879, info.field_25880, info.field_25881, info.field_25882, after);
+        class_5454 transition = new class_5454(dest, info.comp_2821(), info.comp_2822(), info.comp_2823(), info.comp_2824(), after);
         return guard ? guarded(entity, transition) : entity.method_5731(transition);
     }
 
@@ -434,7 +474,7 @@ public final class CbEntityPortals {
         if (dest == null) {
             return null;
         }
-        PortalInfo info = findDimensionEntryPoint(entity, dest);
+        class_5454 info = findDimensionEntryPoint(entity, dest);
         if (info == null) {
             return null;
         }
@@ -442,13 +482,13 @@ public final class CbEntityPortals {
         class_5454.class_9823 after;
         if (entity instanceof class_3222) {
             if (toEnd) {
-                createEndPlatform(dest, class_2338.method_49638(info.field_25879));
+                createEndPlatform(dest, class_2338.method_49638(info.comp_2821()));
             }
             after = class_5454.field_52246;
         } else {
             after = toEnd ? moved -> makeObsidianPlatform(dest) : class_5454.field_52245;
         }
-        return new class_5454(dest, info.field_25879, info.field_25880, info.field_25881, info.field_25882, after);
+        return new class_5454(dest, info.comp_2821(), info.comp_2822(), info.comp_2823(), info.comp_2824(), after);
     }
 
     public static boolean asksLegacyDestination(class_1297 entity, boolean nether) {

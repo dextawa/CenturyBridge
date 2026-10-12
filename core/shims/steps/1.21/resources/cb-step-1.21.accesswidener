@@ -3,3 +3,4 @@ extendable	class	net/minecraft/class_2960
 accessible	method	net/minecraft/class_2960	<init>	(Ljava/lang/String;Ljava/lang/String;)V
 accessible	method	net/minecraft/class_7655$class_7657	<init>	(Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;)V
 accessible	method	net/minecraft/class_7655	method_45121	(Lnet/minecraft/class_7655$class_7656;Lnet/minecraft/class_5455;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;
+extendable	class	net/minecraft/class_5454

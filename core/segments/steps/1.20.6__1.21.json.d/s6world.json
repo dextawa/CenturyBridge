@@ -1,6 +1,179 @@
 {
  "methodRenames": {
-  "net/minecraft/class_5131.method_26841()Ljava/util/Set;": "method_60497"
+  "net/minecraft/class_5131.method_26841()Ljava/util/Set;": "method_60497",
+  "net/minecraft/class_1297.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1295.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1296.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1303.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1307.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1308.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1309.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1314.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1321.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1420.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1421.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1422.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1425.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1427.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1428.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1429.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1430.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1431.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1433.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1438.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1439.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1440.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1451.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1452.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1453.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1454.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1456.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1462.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1463.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1471.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1472.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1473.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1474.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1477.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1480.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1481.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1492.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1493.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1495.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1496.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1498.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1500.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1501.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1506.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1507.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1508.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1510.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1511.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1528.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1530.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1531.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1532.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1533.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1534.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1536.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1538.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1540.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1541.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1542.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1543.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1545.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1547.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1548.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1549.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1550.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1551.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1559.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1560.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1564.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1570.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1571.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1576.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1577.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1581.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1584.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1588.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1589.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1590.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1593.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1604.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1606.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1613.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1614.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1617.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1621.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1627.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1628.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1632.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1634.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1639.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1640.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1641.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1642.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1646.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1657.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1665.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1667.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1668.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1669.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1670.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1671.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1672.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1673.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1674.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1676.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1677.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1678.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1679.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1680.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1681.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1682.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1683.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1684.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1685.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1686.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1687.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1688.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1690.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1693.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1694.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1695.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1696.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1697.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1699.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1700.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_1701.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_3222.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_3701.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_3732.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_3763.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_3855.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_3857.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_3986.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_3988.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_3989.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_4019.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_4466.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_4516$1.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_4516$2.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_4760.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_4836.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_4985.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_5136.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_5418.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_5419.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_5762.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_5776.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_5915.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_6053.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_6335.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_7102.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_7110.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_7260.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_7264.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_7298.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_742.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_745.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_746.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_7689.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_8113.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_8113$class_8115.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_8113$class_8122.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_8113$class_8123.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_8150.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_8153.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_8836.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_8949.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_8956.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_9069.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_9236.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_9238.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_9254.method_52208(ZLnet/minecraft/class_243;)V": "method_60607",
+  "net/minecraft/class_9461.method_52208(ZLnet/minecraft/class_243;)V": "method_60607"
  },
  "callReshapes": {
   "net/minecraft/class_1322.comp_2447()Ljava/util/UUID;": {
@@ -104,14 +277,6 @@
    ],
    "basis": "1.20.6's respawn removed the old player with RemovalReason.DISCARDED; 1.21 takes the reason"
   },
-  "net/minecraft/class_128.method_568()Ljava/lang/String;": {
-   "desc": "(Lnet/minecraft/class_9813;Ljava/util/List;)Ljava/lang/String;",
-   "ops": [
-    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#crashReportType()Lnet/minecraft/class_9813;",
-    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noExtraLines()Ljava/util/List;"
-   ],
-   "basis": "getFriendlyReport() of 1.20.6 is 1.21's crash report (ReportType.CRASH header, no extra lines)"
-  },
   "net/minecraft/class_128.method_572()Ljava/io/File;": {
    "desc": "()Ljava/nio/file/Path;",
    "ops": [],
@@ -132,6 +297,13 @@
    "ops": [],
    "basis": "ItemResult.components() as 1.20.6's map: the components the patch sets (CbWorldCommands.mapOf)",
    "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbWorldCommands#mapOf(Lnet/minecraft/class_9326;)Lnet/minecraft/class_9323;"
+  },
+  "net/minecraft/class_1297.method_5822()Z": {
+   "desc": "(Z)Z",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#refusePassengers()Z"
+   ],
+   "basis": "canChangeDimensions() is 1.21's canUsePortal(allowPassengers): 1.20.6 refused a passenger, so false"
   }
  },
  "superCtorReshapes": {
@@ -216,23 +388,53 @@
     "push top/dext/centurybridge/step/v1_21/rt/CbWorldGameTests#noClearOnBatch()Z"
    ],
    "basis": "1.20.6's StructureGridSpawner left earlier batches standing (1.21's clearOnBatch false)"
+  },
+  "net/minecraft/class_5454.<init>(Lnet/minecraft/class_243;Lnet/minecraft/class_243;FF)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_243;Lnet/minecraft/class_243;FFLnet/minecraft/class_5454$class_9823;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#noLevel()Lnet/minecraft/class_3218;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#nothingAfter()Lnet/minecraft/class_5454$class_9823;"
+   ],
+   "basis": "a 1.20.6 PortalInfo subclass's super(pos, speed, yRot, xRot): the record's constructor with no level and nothing after the move (the layer's access widener makes the record extendable)"
   }
  },
  "ctorRedirects": {
   "net/minecraft/class_1322.<init>(Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#newModifier",
   "net/minecraft/class_1322.<init>(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#newModifier",
   "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#newResourceLocation",
-  "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#newResourceLocation"
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#newResourceLocation",
+  "net/minecraft/class_5454.<init>(Lnet/minecraft/class_243;Lnet/minecraft/class_243;FF)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalInfo"
  },
  "staticRedirects": {
   "net/minecraft/class_155.method_43250()V": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#enableDataFixerOptimizations",
   "net/minecraft/class_2960.method_12830(Ljava/lang/String;C)[Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#decompose",
-  "net/minecraft/class_2960.method_20207(Ljava/lang/String;)Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#isValidResourceLocation"
+  "net/minecraft/class_2960.method_20207(Ljava/lang/String;)Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#isValidResourceLocation",
+  "net/minecraft/class_3218.method_29200(Lnet/minecraft/class_3218;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#makeObsidianPlatform",
+  "net/minecraft/class_2424.method_30484(Lnet/minecraft/class_3218;Lnet/minecraft/class_5459$class_5460;Lnet/minecraft/class_2350$class_2351;Lnet/minecraft/class_243;Lnet/minecraft/class_1297;Lnet/minecraft/class_243;FF)Lnet/minecraft/class_5454;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#createPortalInfo",
+  "net/minecraft/class_2643.method_11409(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1297;Lnet/minecraft/class_2643;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#teleportEntity",
+  "net/minecraft/class_2643.method_30276(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#canEntityTeleport",
+  "net/minecraft/class_1657.method_26091(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;FZZ)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#findRespawnPositionAndUseSpawnBlock"
  },
  "instanceRedirects": {
   "net/minecraft/class_1322.comp_2448()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#name",
   "net/minecraft/server/MinecraftServer.method_3839()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#isNetherEnabled",
-  "net/minecraft/class_156$class_158.method_669(Ljava/net/URL;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldUtil#openUrl"
+  "net/minecraft/class_128.method_568()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#getFriendlyReport",
+  "net/minecraft/class_156$class_158.method_669(Ljava/net/URL;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldUtil#openUrl",
+  "net/minecraft/class_1297.method_5731(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#changeDimension",
+  "net/minecraft/class_1297.method_30329(Lnet/minecraft/class_3218;)Lnet/minecraft/class_5454;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#findDimensionEntryPoint",
+  "net/minecraft/class_1297.method_30330(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;ZLnet/minecraft/class_2784;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#getExitPortal",
+  "net/minecraft/class_1297.method_5717(Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#handleInsidePortal",
+  "net/minecraft/class_1297.method_18379()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#handleNetherPortal",
+  "net/minecraft/class_1297.method_5741()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#getPortalWaitTime",
+  "net/minecraft/class_1297.method_20620(DDD)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#teleportToWithTicket",
+  "net/minecraft/class_1297.method_18002()Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPackets#getAddEntityPacket",
+  "net/minecraft/class_3218.method_18207(Lnet/minecraft/class_3222;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#addDuringCommandTeleport",
+  "net/minecraft/class_3218.method_18211(Lnet/minecraft/class_3222;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#addDuringPortalTeleport",
+  "net/minecraft/class_1946.method_30483(Lnet/minecraft/class_2338;ZLnet/minecraft/class_2784;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#findPortalAround"
  },
  "fieldRedirects": {
   "net/minecraft/class_1320.field_30097:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#MAX_NAME_LENGTH",
@@ -300,12 +502,43 @@
   "net/minecraft/class_8216.field_46769:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
   "net/minecraft/class_7701.field_46779:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants"
  },
+ "instanceFieldGetters": {
+  "net/minecraft/class_5454.field_25879:Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalPos",
+  "net/minecraft/class_5454.field_25880:Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalSpeed",
+  "net/minecraft/class_5454.field_25881:F": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalYRot",
+  "net/minecraft/class_5454.field_25882:F": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalXRot",
+  "net/minecraft/class_1297.field_5963:Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#isInsidePortal",
+  "net/minecraft/class_1297.field_5972:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalTime",
+  "net/minecraft/class_1297.field_5991:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalEntrancePos"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_1297.field_5963:Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#setInsidePortal",
+  "net/minecraft/class_1297.field_5972:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#setPortalTime",
+  "net/minecraft/class_1297.field_5991:Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#setPortalEntrancePos"
+ },
  "superRedirects": {
   "net/minecraft/server/MinecraftServer.method_3839()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#superIsNetherEnabled",
-  "net/minecraft/class_3176.method_3839()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#superIsNetherEnabled"
+  "net/minecraft/class_3176.method_3839()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#superIsNetherEnabled",
+  "net/minecraft/class_1297.method_5731(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superChangeDimension",
+  "net/minecraft/class_3222.method_5731(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superChangeDimension",
+  "net/minecraft/class_1542.method_5731(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superChangeDimension",
+  "net/minecraft/class_3988.method_5731(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superChangeDimension",
+  "net/minecraft/class_1684.method_5731(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superChangeDimension",
+  "net/minecraft/class_1297.method_30329(Lnet/minecraft/class_3218;)Lnet/minecraft/class_5454;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superFindDimensionEntryPoint",
+  "net/minecraft/class_3222.method_30329(Lnet/minecraft/class_3218;)Lnet/minecraft/class_5454;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superFindDimensionEntryPoint",
+  "net/minecraft/class_1297.method_30330(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;ZLnet/minecraft/class_2784;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superGetExitPortal",
+  "net/minecraft/class_3222.method_30330(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;ZLnet/minecraft/class_2784;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superGetExitPortal",
+  "net/minecraft/class_1297.method_5717(Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superHandleInsidePortal",
+  "net/minecraft/class_1297.method_18379()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superHandleNetherPortal",
+  "net/minecraft/class_1297.method_5741()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superGetPortalWaitTime",
+  "net/minecraft/class_1657.method_5741()I": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superGetPortalWaitTime",
+  "net/minecraft/class_3218.method_18207(Lnet/minecraft/class_3222;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superAddDuring",
+  "net/minecraft/class_3218.method_18211(Lnet/minecraft/class_3222;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superAddDuring",
+  "net/minecraft/class_1946.method_30483(Lnet/minecraft/class_2338;ZLnet/minecraft/class_2784;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#superFindPortalAround"
  },
  "covers": [
-  "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z"
+  "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z",
+  "net/minecraft/class_1297.method_59657(Lnet/minecraft/class_243;)Ljava/util/Optional;"
  ],
  "overrideHooks": [
   {
@@ -393,6 +626,33 @@
     0
    ],
    "wrap": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer.file(Ljava/nio/file/Path;)Ljava/io/File;"
+  },
+  {
+   "old": "method_5731(Lnet/minecraft/class_3218;)Lnet/minecraft/class_1297;",
+   "new": "method_5731(Lnet/minecraft/class_5454;)Lnet/minecraft/class_1297;",
+   "onlyUnder": "net/minecraft/class_1297",
+   "basis": "1.21 moves an entity with changeDimension(transition): a 1.20.6 class's changeDimension(dest) override runs for the transition's level, its super call moves by that transition (CbEntityPortals.changeDimension)",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals.changeDimension(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyChangeDimension;Lnet/minecraft/class_5454;)Lnet/minecraft/class_1297;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyChangeDimension",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
+  },
+  {
+   "old": "method_5717(Lnet/minecraft/class_2338;)V",
+   "new": "method_60697(Lnet/minecraft/class_9797;Lnet/minecraft/class_2338;)V",
+   "onlyUnder": "net/minecraft/class_1297",
+   "basis": "1.21 marks an entity in any portal with setAsInsidePortal(portal, pos); 1.20.6's handleInsidePortal(pos) was the nether portal's: the override gets the nether portal, 1.21 the others (CbEntityPortals.setAsInsidePortal)",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals.setAsInsidePortal(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyInsidePortal;Lnet/minecraft/class_9797;Lnet/minecraft/class_2338;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyInsidePortal",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
+  },
+  {
+   "old": "method_18379()V",
+   "new": "method_60698()V",
+   "onlyUnder": "net/minecraft/class_1297",
+   "basis": "1.21's baseTick calls handlePortal() where 1.20.6's called handleNetherPortal(): the override runs unless the entity is in an end portal or gateway, which 1.20.6 never ticked this way (CbEntityPortals.handlePortal)",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals.handlePortal(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyNetherPortalTick;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyNetherPortalTick",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
   }
  ],
  "overrideRenames": [
@@ -402,6 +662,13 @@
    "onlyUnder": "net/minecraft/class_5131",
    "superCalls": "rename",
    "basis": "getDirtyAttributes is 1.21's getAttributesToSync: the same set (the client-syncable instances that changed), filled and cleared where 1.20.6 filled and cleared it"
+  },
+  {
+   "old": "method_52208(ZLnet/minecraft/class_243;)V",
+   "new": "method_60607",
+   "onlyUnder": "net/minecraft/class_1297",
+   "superCalls": "rename",
+   "basis": "setOnGroundWithKnownMovement is 1.21's setOnGroundWithMovement: same arguments, same body"
   }
  ],
  "frameDefaults": {
@@ -419,6 +686,80 @@
   "method_568()Ljava/lang/String;": {
    "0": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#crashReportType()Lnet/minecraft/class_9813;",
    "1": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noExtraLines()Ljava/util/List;"
+  },
+  "method_5822()Z": {
+   "0": "zero: canChangeDimensions refused a passenger in 1.20.6, which is canUsePortal(false)"
+  },
+  "method_18002()Lnet/minecraft/class_2596;": {
+   "0": "top/dext/centurybridge/step/v1_21/rt/CbEntityPackets#serverEntityFor(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3231;"
   }
- }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_1946",
+   "member": "method_30483(Lnet/minecraft/class_2338;ZLnet/minecraft/class_2784;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#portalPositions(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "1.21 asks findClosestPortalPosition for the portal block; a 1.20.6 override's rectangles answer with their corner"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyEntryPoint",
+   "requires": [
+    "method_30329(Lnet/minecraft/class_3218;)Lnet/minecraft/class_5454;"
+   ],
+   "synth": [],
+   "basis": "1.20.6 asked the entity's own findDimensionEntryPoint where 1.21 asks the portal block: the layer asks it again through this interface (CbEntityPortals, the portal-block mixins)"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyExitPortal",
+   "requires": [
+    "method_30330(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;ZLnet/minecraft/class_2784;)Ljava/util/Optional;"
+   ],
+   "synth": [],
+   "basis": "1.20.6 asked the entity's own getExitPortal where 1.21 asks the portal block: the layer asks it again through this interface (CbEntityPortals, the portal-block mixins)"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyPortalWaitTime",
+   "requires": [
+    "method_5741()I"
+   ],
+   "synth": [],
+   "basis": "1.20.6 asked the entity's own getPortalWaitTime where 1.21 asks the portal block: the layer asks it again through this interface (CbEntityPortals, the portal-block mixins)"
+  },
+  {
+   "under": "net/minecraft/class_3218",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyCommandArrival",
+   "requires": [
+    "method_18207(Lnet/minecraft/class_3222;)V"
+   ],
+   "synth": [],
+   "basis": "marks a 1.20.6 ServerLevel subclass's own addDuringCommandTeleport for 1.21's addDuringTeleport (CbEntityPortals)"
+  },
+  {
+   "under": "net/minecraft/class_3218",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyPortalArrival",
+   "requires": [
+    "method_18211(Lnet/minecraft/class_3222;)V"
+   ],
+   "synth": [],
+   "basis": "marks a 1.20.6 ServerLevel subclass's own addDuringPortalTeleport for 1.21's addDuringTeleport (CbEntityPortals)"
+  },
+  {
+   "under": "net/minecraft/class_3218",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyLevel",
+   "requires": [],
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard",
+   "synth": [
+    {
+     "new": "method_18769(Lnet/minecraft/class_1297;)V",
+     "call": "top/dext/centurybridge/step/v1_21/rt/CbEntityPortals.addDuringTeleport(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityPortals$LegacyLevel;Lnet/minecraft/class_1297;)V"
+    }
+   ],
+   "basis": "1.21 adds every arriving entity with addDuringTeleport; a 1.20.6 subclass's addDuringCommandTeleport / addDuringPortalTeleport answers the players 1.20.6 sent there (CbEntityPortals.addDuringTeleport)"
+  }
+ ]
 }
