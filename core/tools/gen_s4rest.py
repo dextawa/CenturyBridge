@@ -20,6 +20,15 @@ anything; the 1.20.5 generic signature has to say the holder / key holds the 1.2
               key.location()
     provider  a HolderLookup.Provider parameter 1.20.4 did not have: CbRegistries.current(), the
               registries of the running world (the step's one lookup) / dropped
+    mapid     int map id -> MapId: new MapId(id) / id.id()  (rt/CbRestMaps)
+    mapid-optional
+              OptionalInt map id -> nullable MapId (ItemFrame.getFramedMapId): empty as null / null as
+              empty  (rt/CbRestMaps)
+    decoration-type
+              MapDecoration.Type (the step's enum facade) -> Holder<MapDecorationType>: the type
+              1.20.5 registers under the constant's name / the constant of the holder's name, null for
+              a type 1.20.4 had no constant for  (rt/CbRestMaps)
+    optional  a nullable T -> Optional<T>: Optional.ofNullable / orElse(null)
 
   rows
     get-static        the field holds the changed type: a getter answers the converted value. A codec
@@ -65,6 +74,7 @@ FIELDS = PKG + '/CbRestFields'
 CLIENT_FIELDS = PKG + '/CbRestClientFields'
 HOLDERS = PKG + '/CbRestHolders'
 LEGACY = PKG + '/CbRestLegacy'
+MAPS = PKG + '/CbRestMaps'
 SHARED = PKG + '/CbHolders'
 CODECS = PKG + '/CbCodecs'
 REGISTRIES = PKG + '/CbRegistries'
@@ -77,6 +87,11 @@ RESOURCE_LOCATION = 'net/minecraft/class_2960'
 RESOURCE_KEY = 'net/minecraft/class_5321'
 LOOT_TABLE = 'net/minecraft/class_52'
 PROVIDER = 'net/minecraft/class_7225$class_7874'
+MAP_ID = 'net/minecraft/class_9209'
+DECORATION_TYPE_V = 'net/minecraft/class_20$class_21'  # renamed to the facade after every rewrite
+DECORATION_TYPE_W = 'net/minecraft/class_9428'
+OPTIONAL = 'java/util/Optional'
+OPTIONAL_INT = 'java/util/OptionalInt'
 
 # registry value type -> (BuiltInRegistries field in 1.20.5, short name, CbHolders pair or None)
 REGISTRY_TYPES = {
@@ -190,6 +205,14 @@ def swap_of(old, new, new_sig):
         return ('codec', None)
     if old == 'L' + RESOURCE_LOCATION + ';' and new == 'L' + RESOURCE_KEY + ';':
         return ('loot', None) if type_arg(new_sig, RESOURCE_KEY) == LOOT_TABLE else False
+    if old == 'I' and new == 'L' + MAP_ID + ';':
+        return ('mapid', None)
+    if old == 'L' + OPTIONAL_INT + ';' and new == 'L' + MAP_ID + ';':
+        return ('mapid-optional', None)
+    if old == 'L' + DECORATION_TYPE_V + ';' and new == 'L' + HOLDER + ';':
+        return ('decoration-type', None) if type_arg(new_sig, HOLDER) == DECORATION_TYPE_W else False
+    if old.startswith('L') and new == 'L' + OPTIONAL + ';':
+        return ('optional', old[1:-1]) if type_arg(new_sig, OPTIONAL) == old[1:-1] else False
     return False
 
 
@@ -200,6 +223,14 @@ def _mine(name, desc, doc, ret, param, body):
     CONVERTERS[(name, desc)] = [f'    /** {doc} */', f'    public static {ret} {name}({param}) {{',
                                 f'        {body}', '    }', '']
     return (HOLDERS, name, desc)
+
+
+def simple(t):
+    """a short name for a class in converter names: the Mojang simple name where known"""
+    return SIMPLE.get(t) or t.rsplit('/', 1)[-1].replace('$', '_')
+
+
+SIMPLE = {}  # intermediary class -> Mojang simple name, filled by main()
 
 
 def to_new(sw, new_desc):
@@ -218,6 +249,18 @@ def to_new(sw, new_desc):
                      f'return value == null ? null : net.minecraft.class_7923.{reg}.method_47983(value);')
     if kind == 'codec':
         return (CODECS, 'toMapCodec', f'(L{CODEC};)L{MAP_CODEC};')
+    if kind == 'mapid':
+        return (MAPS, 'mapId', f'(I)L{MAP_ID};')
+    if kind == 'mapid-optional':
+        return (MAPS, 'mapIdOf', f'(L{OPTIONAL_INT};)L{MAP_ID};')
+    if kind == 'decoration-type':
+        return (MAPS, 'typeHolder', f'(L{DECORATION_TYPE_V};)L{HOLDER};')
+    if kind == 'optional':
+        n = simple(t)
+        return _mine(f'cbOptional{n}', f'(L{t};)L{OPTIONAL};',
+                     f'a nullable 1.20.4 {n} as the Optional 1.20.5 takes: empty for null',
+                     'java.util.Optional<' + jt('L' + t + ';') + '>', jt('L' + t + ';') + ' value',
+                     'return java.util.Optional.ofNullable(value);')
     if kind == 'loot':
         return _mine('cbLootTableKey', f'(L{RESOURCE_LOCATION};)L{RESOURCE_KEY};',
                      'a 1.20.4 loot table id as the key 1.20.5 names the same loot table by; null for null',
@@ -244,6 +287,18 @@ def to_old(sw, new_desc):
                      f'return key == null ? null : ({jt("L" + t + ";")}) net.minecraft.class_7923.{reg}.method_29107(key);')
     if kind == 'codec':
         return (CODECS, 'fromMapCodec', f'(L{MAP_CODEC};)L{CODEC};')
+    if kind == 'mapid':
+        return (MAPS, 'mapIdNumber', f'(L{MAP_ID};)I')
+    if kind == 'mapid-optional':
+        return (MAPS, 'mapIdOptional', f'(L{MAP_ID};)L{OPTIONAL_INT};')
+    if kind == 'decoration-type':
+        return (MAPS, 'typeOf', f'(L{HOLDER};)L{DECORATION_TYPE_V};')
+    if kind == 'optional':
+        n = simple(t)
+        return _mine(f'cbOrNull{n}', f'(L{OPTIONAL};)L{t};',
+                     f'the 1.20.4 {n} a 1.20.5 Optional holds: null for empty',
+                     jt('L' + t + ';'), 'java.util.Optional<' + jt('L' + t + ';') + '> value',
+                     'return value.orElse(null);')
     return _mine('cbLootTableId', f'(L{RESOURCE_KEY};)L{RESOURCE_LOCATION};',
                  'the 1.20.4 loot table id a 1.20.5 loot table key names; null for null',
                  'net.minecraft.class_2960', 'net.minecraft.class_5321 key',
@@ -388,6 +443,7 @@ def initializer_kind(jar, owner, field, V):
 def main():
     damage, vjar, wjar, vserver, names, src, out_json, out_report = sys.argv[1:9]
     cm = class_names(names)
+    SIMPLE.update({c: m.rsplit('/', 1)[-1].replace('$', '') for c, m in cm.items()})
     V = load(vjar)
     W = load(wjar)
     with zipfile.ZipFile(vserver) as z:

@@ -17,7 +17,9 @@
     "CbRestMobMixin",
     "CbRestThrownTridentMixin",
     "CbRestEntityTypeMixin",
-    "CbRestStructureTemplateMixin"
+    "CbRestStructureTemplateMixin",
+    "CbRestMapBannerMixin",
+    "CbRestMapItemSavedDataMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",

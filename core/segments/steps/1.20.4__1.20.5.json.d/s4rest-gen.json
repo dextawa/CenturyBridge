@@ -217,6 +217,26 @@
   "net/minecraft/class_1628$class_1630.field_7404:Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields"
  },
  "callReshapes": {
+  "net/minecraft/class_330.method_1769(ILnet/minecraft/class_22;)V": {
+   "desc": "(Lnet/minecraft/class_9209;Lnet/minecraft/class_22;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#mapId(I)Lnet/minecraft/class_9209;",
+    "keep:1"
+   ],
+   "basis": "generated: mapid"
+  },
+  "net/minecraft/class_330.method_1773(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_22;ZI)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_9209;Lnet/minecraft/class_22;ZI)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#mapId(I)Lnet/minecraft/class_9209;",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "generated: mapid"
+  },
   "net/minecraft/class_7951.comp_1162()Lcom/mojang/serialization/Codec;": {
    "desc": "()Lcom/mojang/serialization/MapCodec;",
    "ops": [],
@@ -282,6 +302,16 @@
    ],
    "basis": "generated: holder"
   },
+  "net/minecraft/class_4525.method_22255(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Lnet/minecraft/class_2338;": {
+   "desc": "(Lnet/minecraft/class_2338;ILnet/minecraft/class_3218;)Ljava/util/Optional;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbOrNullBlockPos(Ljava/util/Optional;)Lnet/minecraft/class_2338;",
+   "basis": "generated: optional"
+  },
   "net/minecraft/class_3002.method_12963()Lnet/minecraft/class_2487;": {
    "desc": "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;",
    "ops": [
@@ -312,6 +342,14 @@
     "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
    ],
    "basis": "generated: provider"
+  },
+  "net/minecraft/class_3324.method_14600(Lnet/minecraft/class_3222;)Lnet/minecraft/class_2487;": {
+   "desc": "(Lnet/minecraft/class_3222;)Ljava/util/Optional;",
+   "ops": [
+    "keep:0"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbOrNullCompoundTag(Ljava/util/Optional;)Lnet/minecraft/class_2487;",
+   "basis": "generated: optional"
   },
   "net/minecraft/class_7243.comp_640()Lcom/mojang/serialization/Codec;": {
    "desc": "()Lcom/mojang/serialization/MapCodec;",
@@ -595,6 +633,12 @@
     "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbFrogVariantHolder(Lnet/minecraft/class_7106;)Lnet/minecraft/class_6880;"
    ],
    "basis": "generated: holder"
+  },
+  "net/minecraft/class_1533.method_43272()Ljava/util/OptionalInt;": {
+   "desc": "()Lnet/minecraft/class_9209;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#mapIdOptional(Lnet/minecraft/class_9209;)Ljava/util/OptionalInt;",
+   "basis": "generated: mapid-optional"
   },
   "net/minecraft/class_6067.method_46400(Lnet/minecraft/class_2487;)V": {
    "desc": "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)V",
@@ -973,6 +1017,24 @@
    ],
    "basis": "generated: provider"
   },
+  "net/minecraft/class_17.method_72()Lnet/minecraft/class_20$class_21;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#typeOf(Lnet/minecraft/class_6880;)Lnet/minecraft/class_20$class_21;",
+   "basis": "generated: decoration-type"
+  },
+  "net/minecraft/class_20.comp_1842()Lnet/minecraft/class_20$class_21;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#typeOf(Lnet/minecraft/class_6880;)Lnet/minecraft/class_20$class_21;",
+   "basis": "generated: decoration-type"
+  },
+  "net/minecraft/class_20.comp_1846()Lnet/minecraft/class_2561;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbOrNullComponent(Ljava/util/Optional;)Lnet/minecraft/class_2561;",
+   "basis": "generated: optional"
+  },
   "net/minecraft/class_3978.method_32360(Lnet/minecraft/class_2487;)Lnet/minecraft/class_3978;": {
    "desc": "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_3978;",
    "ops": [
@@ -981,6 +1043,12 @@
    ],
    "basis": "generated: provider"
   },
+  "net/minecraft/class_3978.method_17920()I": {
+   "desc": "()Lnet/minecraft/class_9209;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#mapIdNumber(Lnet/minecraft/class_9209;)I",
+   "basis": "generated: mapid"
+  },
   "net/minecraft/class_22.method_32371(Lnet/minecraft/class_2487;)Lnet/minecraft/class_22;": {
    "desc": "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_22;",
    "ops": [
@@ -988,6 +1056,24 @@
     "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
    ],
    "basis": "generated: provider"
+  },
+  "net/minecraft/class_22.method_110(Lnet/minecraft/class_1799;Lnet/minecraft/class_2338;Ljava/lang/String;Lnet/minecraft/class_20$class_21;)V": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_2338;Ljava/lang/String;Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#typeHolder(Lnet/minecraft/class_20$class_21;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "generated: decoration-type"
+  },
+  "net/minecraft/class_22.method_100(ILnet/minecraft/class_1657;)Lnet/minecraft/class_2596;": {
+   "desc": "(Lnet/minecraft/class_9209;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2596;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#mapId(I)Lnet/minecraft/class_9209;",
+    "keep:1"
+   ],
+   "basis": "generated: mapid"
   },
   "net/minecraft/class_267.method_55408()Lnet/minecraft/class_2487;": {
    "desc": "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2487;",
@@ -1140,6 +1226,26 @@
     "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbLootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
    ],
    "basis": "generated: loot"
+  },
+  "net/minecraft/class_17.<init>(Lnet/minecraft/class_2338;Lnet/minecraft/class_1767;Lnet/minecraft/class_2561;)V": {
+   "desc": "(Lnet/minecraft/class_2338;Lnet/minecraft/class_1767;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbOptionalComponent(Lnet/minecraft/class_2561;)Ljava/util/Optional;"
+   ],
+   "basis": "generated: optional"
+  },
+  "net/minecraft/class_20.<init>(Lnet/minecraft/class_20$class_21;BBBLnet/minecraft/class_2561;)V": {
+   "desc": "(Lnet/minecraft/class_6880;BBBLjava/util/Optional;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#typeHolder(Lnet/minecraft/class_20$class_21;)Lnet/minecraft/class_6880;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbOptionalComponent(Lnet/minecraft/class_2561;)Ljava/util/Optional;"
+   ],
+   "basis": "generated: decoration-type, optional"
   }
  },
  "overrideHooks": [
@@ -1251,11 +1357,25 @@
    "basis": "generated: holder; the mod's super call is reshaped (callReshapes)"
   },
   {
+   "old": "method_43272()Ljava/util/OptionalInt;",
+   "new": "method_43272()Lnet/minecraft/class_9209;",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps.mapIdOf(Ljava/util/OptionalInt;)Lnet/minecraft/class_9209;",
+   "onlyUnder": "net/minecraft/class_1533",
+   "basis": "generated: mapid-optional; the mod's super call is reshaped (callReshapes)"
+  },
+  {
    "old": "method_7562(Lnet/minecraft/class_2960;J)V",
    "new": "method_7562(Lnet/minecraft/class_5321;J)V",
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders.cbLootTableId(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
    "onlyUnder": "net/minecraft/class_1693",
    "basis": "generated: loot; the mod's super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_72()Lnet/minecraft/class_20$class_21;",
+   "new": "method_72()Lnet/minecraft/class_6880;",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps.typeHolder(Lnet/minecraft/class_20$class_21;)Lnet/minecraft/class_6880;",
+   "onlyUnder": "net/minecraft/class_17",
+   "basis": "generated: decoration-type; the mod's super call is reshaped (callReshapes)"
   },
   {
    "old": "method_17374()Lnet/minecraft/class_1291;",
@@ -1366,6 +1486,27 @@
    "basis": "generated: codec; the mod's super call is reshaped (callReshapes)"
   },
   {
+   "old": "method_1769(ILnet/minecraft/class_22;)V",
+   "new": "method_1769(Lnet/minecraft/class_9209;Lnet/minecraft/class_22;)V",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps.mapIdNumber(Lnet/minecraft/class_9209;)I",
+   "onlyUnder": "net/minecraft/class_330",
+   "basis": "generated: mapid; the mod's super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_1773(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_22;ZI)V",
+   "new": "method_1773(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_9209;Lnet/minecraft/class_22;ZI)V",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps.mapIdNumber(Lnet/minecraft/class_9209;)I",
+   "onlyUnder": "net/minecraft/class_330",
+   "basis": "generated: mapid; the mod's super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_14600(Lnet/minecraft/class_3222;)Lnet/minecraft/class_2487;",
+   "new": "method_14600(Lnet/minecraft/class_3222;)Ljava/util/Optional;",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders.cbOptionalCompoundTag(Lnet/minecraft/class_2487;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_3324",
+   "basis": "generated: optional; the mod's super call is reshaped (callReshapes)"
+  },
+  {
    "old": "method_14915(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_2960;)Z",
    "new": "method_14915(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_5321;)Z",
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders.cbLootTableId(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
@@ -1406,6 +1547,13 @@
    "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecs.toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;",
    "onlyUnder": "net/minecraft/class_3828",
    "basis": "generated: codec (a named class implementing the interface)"
+  },
+  {
+   "old": "method_17920()I",
+   "new": "method_17920()Lnet/minecraft/class_9209;",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps.mapId(I)Lnet/minecraft/class_9209;",
+   "onlyUnder": "net/minecraft/class_3978",
+   "basis": "generated: mapid; the mod's super call is reshaped (callReshapes)"
   },
   {
    "old": "method_18663(Lnet/minecraft/class_1291;)Lnet/minecraft/class_1058;",

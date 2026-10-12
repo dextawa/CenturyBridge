@@ -1,7 +1,8 @@
 {
  "classRenames": {
   "net/minecraft/class_3193$class_3724": "top/dext/centurybridge/step/v1_20_5/facade/class_3193$class_3724",
-  "net/minecraft/class_1310": "top/dext/centurybridge/step/v1_20_5/facade/class_1310"
+  "net/minecraft/class_1310": "top/dext/centurybridge/step/v1_20_5/facade/class_1310",
+  "net/minecraft/class_20$class_21": "top/dext/centurybridge/step/v1_20_5/facade/class_20$class_21"
  },
  "fieldGetters": {
   "net/minecraft/class_3193.field_16426:Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks",
@@ -171,6 +172,14 @@
     "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric#cbAttributesByHolder(Ljava/util/Map;)Ljava/util/Map;"
    ],
    "basis": "generic drift: AttributeSupplier is keyed by Holder<Attribute> since 1.20.5; 1.20.4's constructor kept an immutable copy, so does the converter (the 1.20.5 one keeps the map it is handed); the constructor is package-private since 1.20.5 and widened again by the layer's access widener"
+  },
+  "net/minecraft/class_330.<init>(Lnet/minecraft/class_1060;)V": {
+   "desc": "(Lnet/minecraft/class_1060;Lnet/minecraft/class_9443;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRestMapsClient#decorationTextures()Lnet/minecraft/class_9443;"
+   ],
+   "basis": "1.20.5's MapRenderer draws decorations from the decoration sprite manager; 1.20.4's drew them from the fixed icon texture: the game's own manager (rt/CbRestMapsClient)"
   }
  },
  "convertHooks": [
@@ -277,7 +286,11 @@
   "net/minecraft/class_1297.method_49477(F)V",
   "net/minecraft/class_1496.method_52550(Lnet/minecraft/class_4048;F)F",
   "net/minecraft/class_1657.method_18394(Lnet/minecraft/class_4050;Lnet/minecraft/class_4048;)F",
-  "net/minecraft/class_1309.method_6046()Lnet/minecraft/class_1310;"
+  "net/minecraft/class_1309.method_6046()Lnet/minecraft/class_1310;",
+  "net/minecraft/class_17.method_70()Lnet/minecraft/class_2338;",
+  "net/minecraft/class_17.method_35502()Lnet/minecraft/class_1767;",
+  "net/minecraft/class_17.method_68()Lnet/minecraft/class_2561;",
+  "net/minecraft/class_17.method_74()Lnet/minecraft/class_2487;"
  ],
  "overrideHooks": [
   {
@@ -339,6 +352,25 @@
    "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn$CbLegacyEntityTypeSpawn",
    "onlyUnder": "net/minecraft/class_1299",
    "basis": "a mod EntityType's 1.20.4 create override gets the tag a 1.20.4 caller handed over"
+  },
+  {
+   "old": "method_70()Lnet/minecraft/class_2338;",
+   "new": "comp_2312()Lnet/minecraft/class_2338;",
+   "onlyUnder": "net/minecraft/class_17",
+   "basis": "1.20.5 reads a banner's position through the record accessor pos(); a mod's 1.20.4 getPos() override answers it (its super call is the cover, the field)"
+  },
+  {
+   "old": "method_35502()Lnet/minecraft/class_1767;",
+   "new": "comp_2313()Lnet/minecraft/class_1767;",
+   "onlyUnder": "net/minecraft/class_17",
+   "basis": "1.20.5 reads a banner's color through the record accessor color(); a mod's 1.20.4 getColor() override answers it"
+  },
+  {
+   "old": "method_68()Lnet/minecraft/class_2561;",
+   "new": "comp_2314()Ljava/util/Optional;",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders.cbOptionalComponent(Lnet/minecraft/class_2561;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_17",
+   "basis": "1.20.5 reads a banner's name through the record accessor name() (Optional); a mod's 1.20.4 getName() override answers it, null as empty"
   }
  ],
  "methodRenames": {
@@ -347,12 +379,26 @@
  "instanceFieldGetters": {
   "net/minecraft/class_4048.field_18067:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntity",
   "net/minecraft/class_4048.field_18068:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntity",
-  "net/minecraft/class_4048.field_18069:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntity"
+  "net/minecraft/class_4048.field_18069:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntity",
+  "net/minecraft/class_22$class_5637.field_27892:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
+  "net/minecraft/class_22$class_5637.field_27893:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
+  "net/minecraft/class_22$class_5637.field_27894:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
+  "net/minecraft/class_22$class_5637.field_27895:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
+  "net/minecraft/class_22$class_5637.field_27896:[B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps"
  },
  "staticRedirects": {
   "net/minecraft/class_2512.method_10683(Lnet/minecraft/class_2487;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/step/v1_20_5/rt/CbProfiles#readGameProfile",
   "net/minecraft/class_2512.method_10684(Lnet/minecraft/class_2487;Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbProfiles#writeGameProfile",
   "net/minecraft/class_2512.method_10691(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2338;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestNbt",
-  "net/minecraft/class_2512.method_10692(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestNbt"
+  "net/minecraft/class_2512.method_10692(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestNbt",
+  "net/minecraft/class_17.method_67(Lnet/minecraft/class_2487;)Lnet/minecraft/class_17;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_20.method_92()B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
+  "net/minecraft/class_22.method_32364(I)Lnet/minecraft/class_22;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_20$class_21.<init>(Ljava/lang/String;IZZ)V": "1.20.1's private enum constructor (before 1.20.2 gave the constants a serialized name): only the enum's own static initializer calls it -- from any other class it is an IllegalAccessError, and reflection refuses to construct an enum",
+  "net/minecraft/class_20$class_21.<init>(Ljava/lang/String;IZIZ)V": "1.20.1's private enum constructor (before 1.20.2 gave the constants a serialized name): only the enum's own static initializer calls it -- from any other class it is an IllegalAccessError, and reflection refuses to construct an enum"
  }
 }
