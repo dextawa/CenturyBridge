@@ -195,7 +195,8 @@
     "CbNetWriteServerboundSwingPacket",
     "CbNetWriteServerboundTeleportToEntityPacket",
     "CbNetWriteServerboundUseItemOnPacket",
-    "CbNetWriteServerboundUseItemPacket"
+    "CbNetWriteServerboundUseItemPacket",
+    "CbTooltipLevelAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin"

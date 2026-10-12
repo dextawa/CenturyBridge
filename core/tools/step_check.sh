@@ -75,7 +75,8 @@ if [ "${CB_PROBE:-}" != fapi ]; then
     case "$V" in 26.*) VJAR="data/jars/client-$V.jar" ;; *) VJAR="data/jars/client-$V-intermediary.jar" ;; esac
     WALL=""
     [ "$SEG" = "1.21.11__26.1" ] && WALL="--wall data/mappings/inter-to-mojang-1.21.11.tsv"
-    python3 "$WD/core/tools/generic_drift.py" "$VJAR" "$GAME" "$OUT/generic.tsv" $WALL --wiring "$WIRING" > /dev/null \
+    CB_CTSYM="${CB_CTSYM:-$HOME/cbtest/jdk-25.0.4.1+1/lib/ct.sym}" \
+        python3 "$WD/core/tools/generic_drift.py" "$VJAR" "$GAME" "$OUT/generic.tsv" $WALL --wiring "$WIRING" > /dev/null \
         || { echo "generic drift failed"; exit 1; }
     python3 - "$OUT/generic.tsv" "$AREA" <<'EOF'
 import os, re, sys

@@ -60,6 +60,15 @@ public final class CbRegistries {
         client = c;
     }
 
+    /**
+     * The server running in this process (a dedicated server, or a singleplayer world's integrated
+     * server), or null when there is none -- for a bridge that needs the server itself (its recipe
+     * manager, its levels), not only its registries.
+     */
+    public static net.minecraft.server.MinecraftServer server() {
+        return server;
+    }
+
     /** the running world's registries as a lookup provider (see the class comment); never null */
     public static net.minecraft.class_7225.class_7874 current() {
         return currentAccess();
