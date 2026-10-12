@@ -541,6 +541,32 @@ def main():
         "iface": RT + "/CbWorldScoreOperation",
         "adapt": RT + "/CbWorldScores#operation(L" + RT + "/CbWorldScoreOperation;)L" + OP + ";"}
 
+    # A 1.20.2 call of a method whose 1.20.2 meaning a static now carries still reaches the mod class's own
+    # override (the adapter marks the classes that declare one), and an override's super call gets the 1.20.2 base
+    # body without coming back to the override.
+    def own_override(under, adapter, shape, basis):
+        w["adapterHooks"].append({"under": MC + under, "adapter": RT + "/" + adapter, "requires": [shape], "synth": [],
+                                  "basis": basis})
+
+    # (TripWireHookBlock's override is marked by the CbWorldTripWireHook adapter wired above)
+    w["superRedirects"][MC + "class_2537.method_10776(" + LV + BP + BS + "ZZI" + BS + ")V"] = RT + "/CbWorldBlocks#superCalculateState"
+    own_override("class_1542", "CbWorldThrowerV", "method_6981(Ljava/util/UUID;)V",
+                 "a 1.20.2 call of setThrower(UUID) reaches the class's own override (CbWorldEntities.setThrower)")
+    w["superRedirects"][MC + "class_1542.method_6981(Ljava/util/UUID;)V"] = RT + "/CbWorldEntities#superSetThrower"
+    own_override("class_1917", "CbWorldSpawnerDisplayV", "method_8283(" + LV + RS + BP + ")Lnet/minecraft/class_1297;",
+                 "a 1.20.2 call of getOrCreateDisplayEntity(level, random, pos) reaches the class's own override")
+    w["superRedirects"][MC + "class_1917.method_8283(" + LV + RS + BP + ")Lnet/minecraft/class_1297;"] = RT + "/CbWorldEntities#superGetOrCreateDisplayEntity"
+    own_override("class_2633", "CbWorldStructureLoadV", "method_11376(Lnet/minecraft/class_3218;)Z",
+                 "a 1.20.2 call of loadStructure(level) reaches the class's own override (CbWorldBlocks.loadStructure)")
+    w["superRedirects"][SBE + ".method_11376(Lnet/minecraft/class_3218;)Z"] = RT + "/CbWorldBlocks#superLoadStructure"
+    own_override("class_269", "CbWorldTrackedPlayersV", "method_1178()Ljava/util/Collection;",
+                 "a 1.20.2 getTrackedPlayers() override answers names: 1.20.2 calls take them, 1.20.3's get holders")
+    own_override("class_269", "CbWorldPlayerScoresV", "method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;",
+                 "a 1.20.2 getPlayerScores(objective) override answers Scores: 1.20.2 calls take them, 1.20.3's get entries")
+    for owner in (SB, MC + "class_2995"):
+        w["superRedirects"][owner + ".method_1178()Ljava/util/Collection;"] = RT + "/CbWorldScores#superGetTrackedPlayers"
+        w["superRedirects"][owner + ".method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;"] = RT + "/CbWorldScores#superGetPlayerScoresByObjective"
+
     # ChestBoat.method_7549: not a member any 1.20.2 mod can reference (see the ledger text)
     w["ledger"][MC + "class_7264.method_7549()V"] = (
         "stub artifact, not 1.20.2 API: CB's remap-jar (JarRemapper.remapToIntermediary) named ChestBoat's own K()V -- "

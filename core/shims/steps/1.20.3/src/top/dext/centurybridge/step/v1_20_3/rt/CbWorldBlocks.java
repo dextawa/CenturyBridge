@@ -200,11 +200,24 @@ public final class CbWorldBlocks {
 
     /**
      * TripWireHookBlock.calculateState became static in 1.20.3 and reads the hook block from the state
-     * it is given instead of from `this`; vanilla 1.20.2 always passed a state of the hook itself.
+     * it is given instead of from `this`; vanilla 1.20.2 always passed a state of the hook itself. A 1.20.2
+     * call reaches the hook's own override when its class has one (CbWorldTripWireHook), as 1.20.2's virtual
+     * call did, and 1.20.3's static otherwise.
      */
     public static void calculateState(class_2537 self, class_1937 level, class_2338 pos, class_2680 state,
                                       boolean attaching, boolean shouldNotifyNeighbours, int searchRange,
                                       class_2680 tripwire) {
+        if (self instanceof CbWorldTripWireHook hook) {
+            hook.method_10776(level, pos, state, attaching, shouldNotifyNeighbours, searchRange, tripwire);
+        } else {
+            class_2537.method_10776(level, pos, state, attaching, shouldNotifyNeighbours, searchRange, tripwire);
+        }
+    }
+
+    /** an override's super.calculateState(..): 1.20.2's TripWireHookBlock body, which is 1.20.3's static */
+    public static void superCalculateState(class_2537 self, class_1937 level, class_2338 pos, class_2680 state,
+                                           boolean attaching, boolean shouldNotifyNeighbours, int searchRange,
+                                           class_2680 tripwire) {
         class_2537.method_10776(level, pos, state, attaching, shouldNotifyNeighbours, searchRange, tripwire);
     }
 
@@ -333,6 +346,14 @@ public final class CbWorldBlocks {
      * (CbWorldStructureBlockEntityMixin's cover).
      */
     public static boolean loadStructure(class_2633 be, class_3218 level) {
+        if (be instanceof CbWorldStructureLoadV own) {
+            return own.method_11376(level); // a 1.20.2 class's own override of loadStructure(level)
+        }
+        return ((CbWorldStructureBlockV) be).method_11368(level, true);
+    }
+
+    /** an override's super.loadStructure(level): 1.20.2's StructureBlockEntity body, loadStructure(level, true) */
+    public static boolean superLoadStructure(class_2633 be, class_3218 level) {
         return ((CbWorldStructureBlockV) be).method_11368(level, true);
     }
 

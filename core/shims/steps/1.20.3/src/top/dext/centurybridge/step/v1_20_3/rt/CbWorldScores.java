@@ -10,8 +10,10 @@ import net.minecraft.class_2218;
 import net.minecraft.class_266;
 import net.minecraft.class_267;
 import net.minecraft.class_269;
+import net.minecraft.class_2995;
 import net.minecraft.class_47;
 import net.minecraft.class_5670;
+import net.minecraft.class_9011;
 import net.minecraft.class_9013;
 import net.minecraft.class_9014;
 import net.minecraft.class_9015;
@@ -122,13 +124,36 @@ public final class CbWorldScores {
     }
 
     /**
-     * 1.20.2's getPlayerScores(objective): every owner's score in it, sorted by SCORE_COMPARATOR. 1.20.3 kept the
-     * method's name and erased type but answers PlayerScoreEntry records, which 1.20.2 code would cast to Score.
+     * 1.20.2's getPlayerScores(objective) of a call: every owner's score in it, sorted by SCORE_COMPARATOR. 1.20.3
+     * kept the method's name and erased type but answers PlayerScoreEntry records, which 1.20.2 code would cast to
+     * Score. A scoreboard class converted from 1.20.2 that overrides the method answers its own; any other scoreboard
+     * is asked the 1.20.3 way and each entry is its stored score.
      */
     public static Collection<class_267> getPlayerScoresByObjective(class_269 scoreboard, class_266 objective) {
+        if (scoreboard instanceof CbWorldPlayerScoresV own) {
+            return own.method_1184(objective);
+        }
         List<class_267> out = new ArrayList<>();
-        for (class_9015 holder : scoreboard.method_1178()) {
-            class_267 score = stored(scoreboard, holder, objective, false);
+        for (class_9011 entry : scoreboard.method_1184(objective)) {
+            class_267 score = stored(scoreboard, class_9015.method_55422(entry.comp_2127()), objective, false);
+            if (score != null) {
+                out.add(score);
+            }
+        }
+        out.sort(SCORE_COMPARATOR);
+        return out;
+    }
+
+    /** the same super call in a subclass of ServerScoreboard (which inherits the method from Scoreboard) */
+    public static Collection<class_267> superGetPlayerScoresByObjective(class_2995 scoreboard, class_266 objective) {
+        return superGetPlayerScoresByObjective((class_269) scoreboard, objective);
+    }
+
+    /** an override's super.getPlayerScores(objective): 1.20.2's Scoreboard body, over the stored scores */
+    public static Collection<class_267> superGetPlayerScoresByObjective(class_269 scoreboard, class_266 objective) {
+        List<class_267> out = new ArrayList<>();
+        for (String owner : ((CbWorldScoreboardV) scoreboard).cb$playerNames()) {
+            class_267 score = stored(scoreboard, class_9015.method_55422(owner), objective, false);
             if (score != null) {
                 out.add(score);
             }
@@ -138,15 +163,60 @@ public final class CbWorldScores {
     }
 
     /**
-     * 1.20.2's getTrackedPlayers(): the owners' names. 1.20.3 kept the method's name and erased type but answers
-     * ScoreHolders, which 1.20.2 code would cast to String.
+     * 1.20.2's getTrackedPlayers() of a call: the owners' names. 1.20.3 kept the method's name and erased type but
+     * answers ScoreHolders, which 1.20.2 code would cast to String. A scoreboard class converted from 1.20.2 that
+     * overrides the method answers its own names; any other scoreboard is asked the 1.20.3 way.
      */
     public static Collection<String> getTrackedPlayers(class_269 scoreboard) {
+        if (scoreboard instanceof CbWorldTrackedPlayersV own) {
+            return own.method_1178();
+        }
         List<String> out = new ArrayList<>();
         for (class_9015 holder : scoreboard.method_1178()) {
             out.add(holder.method_5820());
         }
         return out;
+    }
+
+    /** an override's super.getTrackedPlayers(): 1.20.2's Scoreboard body, the names scores are stored under */
+    public static Collection<String> superGetTrackedPlayers(class_269 scoreboard) {
+        return ((CbWorldScoreboardV) scoreboard).cb$playerNames();
+    }
+
+    /** the same super call in a subclass of ServerScoreboard (which inherits the method from Scoreboard) */
+    public static Collection<String> superGetTrackedPlayers(class_2995 scoreboard) {
+        return superGetTrackedPlayers((class_269) scoreboard);
+    }
+
+    /**
+     * 1.20.3's own call of getTrackedPlayers() (the scoreboard players list command): a scoreboard class converted
+     * from 1.20.2 that overrides it answers names, handed on as the holders 1.20.3 expects.
+     */
+    public static Collection<class_9015> trackedHolders(class_269 scoreboard) {
+        if (scoreboard instanceof CbWorldTrackedPlayersV own) {
+            List<class_9015> out = new ArrayList<>();
+            for (String owner : own.method_1178()) {
+                out.add(class_9015.method_55422(owner));
+            }
+            return out;
+        }
+        return scoreboard.method_1178();
+    }
+
+    /**
+     * 1.20.3's own call of getPlayerScores(objective) (the sidebar, the scores sent to a joining player): a scoreboard
+     * class converted from 1.20.2 that overrides it answers Scores, handed on as the entries 1.20.3 expects.
+     */
+    public static Collection<class_9011> scoreEntries(class_269 scoreboard, class_266 objective) {
+        if (scoreboard instanceof CbWorldPlayerScoresV own) {
+            List<class_9011> out = new ArrayList<>();
+            for (class_267 score : own.method_1184(objective)) {
+                CbWorldScoreV v = (CbWorldScoreV) score;
+                out.add(new class_9011(v.method_1129(), v.method_1126(), score.method_55407(), score.method_55400()));
+            }
+            return out;
+        }
+        return scoreboard.method_1184(objective);
     }
 
     /** 1.20.2's resetPlayerScore(owner, objective): one score, or with a null objective every score of the owner */

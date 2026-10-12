@@ -29,6 +29,9 @@ public interface CbWorldScoreboardV {
     /** 1.20.2 forAllObjectives(criteria, owner, action) */
     void method_1162(class_274 criteria, String owner, Consumer<class_267> action);
 
+    /** the names scores are stored under, as 1.20.2's getTrackedPlayers() listed them (a new list) */
+    java.util.List<String> cb$playerNames();
+
     /** the scoreboard's 1.20.3 onScoreChanged(holder, objective, score) (protected there) */
     void cb$announce(class_9015 holder, class_266 objective, class_267 score);
 }

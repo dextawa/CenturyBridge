@@ -34,7 +34,9 @@
     "CbWorldPumpkinMixin",
     "CbWorldSaplingMixin",
     "CbWorldScoreMixin",
+    "CbWorldScoreboardCommandMixin",
     "CbWorldScoreboardMixin",
+    "CbWorldServerScoreboardMixin",
     "CbWorldSignBlockEntityMixin",
     "CbWorldStemMixin",
     "CbWorldStructureBlockEntityMixin",
@@ -46,7 +48,9 @@
     "CbWorldValidationContextMixin",
     "CbWorldWallTorchMixin"
   ],
-  "client": [],
+  "client": [
+    "CbWorldGuiScoresMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

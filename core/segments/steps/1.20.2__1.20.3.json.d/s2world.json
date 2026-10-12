@@ -854,7 +854,15 @@
  "superRedirects": {
   "net/minecraft/class_8181.method_49274()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#superGetFirstItem",
   "net/minecraft/class_8181.method_49275(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#superSetFirstItem",
-  "net/minecraft/class_8181.method_49276()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#superRemoveFirstItem"
+  "net/minecraft/class_8181.method_49276()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldContainers#superRemoveFirstItem",
+  "net/minecraft/class_2537.method_10776(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;ZZILnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#superCalculateState",
+  "net/minecraft/class_1542.method_6981(Ljava/util/UUID;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#superSetThrower",
+  "net/minecraft/class_1917.method_8283(Lnet/minecraft/class_1937;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1297;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#superGetOrCreateDisplayEntity",
+  "net/minecraft/class_2633.method_11376(Lnet/minecraft/class_3218;)Z": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldBlocks#superLoadStructure",
+  "net/minecraft/class_269.method_1178()Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#superGetTrackedPlayers",
+  "net/minecraft/class_269.method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#superGetPlayerScoresByObjective",
+  "net/minecraft/class_2995.method_1178()Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#superGetTrackedPlayers",
+  "net/minecraft/class_2995.method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#superGetPlayerScoresByObjective"
  },
  "covers": [
   "net/minecraft/class_2445.method_10679()Lnet/minecraft/class_2513;",
@@ -1159,6 +1167,51 @@
    "requires": [],
    "synth": [],
    "basis": "marks the StructureBlockEntity classes converted from 1.20.2 (CbWorldStructureBlockMixin, CbWorldStructurePacketMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1542",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldThrowerV",
+   "requires": [
+    "method_6981(Ljava/util/UUID;)V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 call of setThrower(UUID) reaches the class's own override (CbWorldEntities.setThrower)"
+  },
+  {
+   "under": "net/minecraft/class_1917",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldSpawnerDisplayV",
+   "requires": [
+    "method_8283(Lnet/minecraft/class_1937;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1297;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 call of getOrCreateDisplayEntity(level, random, pos) reaches the class's own override"
+  },
+  {
+   "under": "net/minecraft/class_2633",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldStructureLoadV",
+   "requires": [
+    "method_11376(Lnet/minecraft/class_3218;)Z"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 call of loadStructure(level) reaches the class's own override (CbWorldBlocks.loadStructure)"
+  },
+  {
+   "under": "net/minecraft/class_269",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldTrackedPlayersV",
+   "requires": [
+    "method_1178()Ljava/util/Collection;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 getTrackedPlayers() override answers names: 1.20.2 calls take them, 1.20.3's get holders"
+  },
+  {
+   "under": "net/minecraft/class_269",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldPlayerScoresV",
+   "requires": [
+    "method_1184(Lnet/minecraft/class_266;)Ljava/util/Collection;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 getPlayerScores(objective) override answers Scores: 1.20.2 calls take them, 1.20.3's get entries"
   }
  ],
  "abstractFills": [

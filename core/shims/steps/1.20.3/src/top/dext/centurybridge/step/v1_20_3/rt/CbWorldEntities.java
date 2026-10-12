@@ -125,6 +125,15 @@ public final class CbWorldEntities {
      * what 1.20.3 itself does when it reads the id back from saved data (getOwner then looks it up).
      */
     public static void setThrower(class_1542 item, UUID thrower) {
+        if (item instanceof CbWorldThrowerV own) {
+            own.method_6981(thrower); // a 1.20.2 class's own override of setThrower(UUID)
+            return;
+        }
+        superSetThrower(item, thrower);
+    }
+
+    /** an override's super.setThrower(UUID), and the call on any other item entity: 1.20.2's ItemEntity body */
+    public static void superSetThrower(class_1542 item, UUID thrower) {
         CbWorldItemEntityAccess access = (CbWorldItemEntityAccess) item;
         access.cb$setThrowerId(thrower);
         access.cb$setCachedThrower(null);
@@ -142,6 +151,14 @@ public final class CbWorldEntities {
      * random and draws the spawn data from level.getRandom() instead.
      */
     public static class_1297 getOrCreateDisplayEntity(class_1917 spawner, class_1937 level, class_5819 random, class_2338 pos) {
+        if (spawner instanceof CbWorldSpawnerDisplayV own) {
+            return own.method_8283(level, random, pos); // a 1.20.2 class's own override
+        }
+        return superGetOrCreateDisplayEntity(spawner, level, random, pos);
+    }
+
+    /** an override's super.getOrCreateDisplayEntity(level, random, pos), and the call on any other spawner */
+    public static class_1297 superGetOrCreateDisplayEntity(class_1917 spawner, class_1937 level, class_5819 random, class_2338 pos) {
         CbWorldBaseSpawnerAccess access = (CbWorldBaseSpawnerAccess) spawner;
         if (access.cb$displayEntity() == null) {
             class_2487 tag = access.cb$getOrCreateNextSpawnData(level, random, pos).method_38093();

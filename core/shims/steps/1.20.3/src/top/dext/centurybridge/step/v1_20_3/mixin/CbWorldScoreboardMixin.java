@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v1_20_3.mixin;
 
 import it.unimi.dsi.fastutil.objects.Reference2ObjectMap;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,16 @@ public abstract class CbWorldScoreboardMixin implements CbWorldScoreboardV {
     private Reference2ObjectMap<class_274, List<class_266>> field_1429;
 
     @Shadow
+    @Final
+    private Map<String, ?> field_1431;
+
+    @Shadow
     public abstract void method_1176(class_9015 holder, class_266 objective, class_267 score);
+
+    @Override
+    public List<String> cb$playerNames() {
+        return new ArrayList<>(this.field_1431.keySet());
+    }
 
     @Override
     public class_267 method_1180(String owner, class_266 objective) {
