@@ -16,7 +16,7 @@
     "drop:2",
     "drop:3"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_3695;,Lnet/minecraft/class_3695;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_3695;,Lnet/minecraft/class_3695;: no body of V reads it, but net/minecraft/class_3302 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_2348.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": {
    "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
@@ -60,7 +60,7 @@
     "drop:2",
     "drop:3"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_3695;,Lnet/minecraft/class_3695;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_3695;,Lnet/minecraft/class_3695;: no body of V reads it, but net/minecraft/class_3302 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_3806.method_45157(Lnet/minecraft/class_5455;)Lnet/minecraft/class_7723;": {
    "desc": "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_7723;",
@@ -287,7 +287,7 @@
     "keep:2",
     "drop:1"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1922;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1922;: no body of V reads it, but net/minecraft/class_4970$class_8176 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_2891.method_12108(Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;Lnet/minecraft/class_2893$class_2894;)V": {
    "desc": "(Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)V",
@@ -300,7 +300,7 @@
     "keep:5",
     "drop:6"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2893$class_2894;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2893$class_2894;: no body of V reads it, but net/minecraft/class_2794 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_2897.method_12108(Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;Lnet/minecraft/class_2893$class_2894;)V": {
    "desc": "(Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)V",
@@ -313,7 +313,7 @@
     "keep:5",
     "drop:6"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2893$class_2894;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2893$class_2894;: no body of V reads it, but net/minecraft/class_2794 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_7723.method_45522(Lnet/minecraft/class_5455;Lnet/minecraft/class_2794;)Lnet/minecraft/class_7723;": {
    "desc": "(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_2794;)Lnet/minecraft/class_7723;",

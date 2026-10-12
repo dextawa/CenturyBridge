@@ -484,8 +484,6 @@ put-protected	net/minecraft/class_1044	field_5204	I	FIELD	field not declared on 
 call	net/minecraft/class_1058$class_7770	method_45853	()V	METHOD	method method_45853(Lcom/mojang/blaze3d/textures/GpuTexture;)V public abstract
 implement-interface	net/minecraft/class_1058$class_7770			ABSTRACT	class public abstract interface extends java/lang/Object
 implement	net/minecraft/class_1058$class_7770	method_45853	()V	ORPHAN	method method_45853(Lcom/mojang/blaze3d/textures/GpuTexture;)V public abstract
-call	net/minecraft/class_1059	method_22604	()V	METHOD	method not declared on the owner
-override+super	net/minecraft/class_1059	method_22604	()V	METHOD,ORPHAN	method not declared on the owner
 new	net/minecraft/class_1043	<init>	(Lnet/minecraft/class_1011;)V	METHOD	constructors (Ljava/util/function/Supplier;Lnet/minecraft/class_1011;)V (Ljava/lang/String;IIZ)V (Ljava/util/function/Supplier;IIZ)V
 new	net/minecraft/class_1043	<init>	(IIZ)V	METHOD	constructors (Ljava/util/function/Supplier;Lnet/minecraft/class_1011;)V (Ljava/lang/String;IIZ)V (Ljava/util/function/Supplier;IIZ)V
 super-ctor	net/minecraft/class_1043	<init>	(Lnet/minecraft/class_1011;)V	METHOD	constructors (Ljava/util/function/Supplier;Lnet/minecraft/class_1011;)V (Ljava/lang/String;IIZ)V (Ljava/util/function/Supplier;IIZ)V

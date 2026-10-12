@@ -443,10 +443,28 @@ public final class JarProcessor {
                         }
                     } else {
                         String[] acc = frameArg(na[j]);
+                        String[] dflt = h.frameDefaults.get(j);
                         seq.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
                         seq.add(new org.objectweb.asm.tree.LdcInsnNode(j));
-                        seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.frames, acc[0],
-                            "(Ljava/lang/Object;I)" + acc[1], false));
+                        if (dflt == null) {
+                            seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.frames, acc[0],
+                                "(Ljava/lang/Object;I)" + acc[1], false));
+                        } else {
+                            // no frame for this object (the old override entered directly): what V used,
+                            // computed from nothing, the receiver, or the receiver and the old arguments
+                            int dn = org.objectweb.asm.Type.getArgumentTypes(dflt[2]).length;
+                            if (dn >= 1) {
+                                seq.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+                            }
+                            if (dn > 1) {
+                                for (int i = 0; i < oa.length; i++) {
+                                    seq.add(new org.objectweb.asm.tree.VarInsnNode(oa[i].getOpcode(Opcodes.ILOAD), slots[i]));
+                                }
+                            }
+                            seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, dflt[0], dflt[1], dflt[2], false));
+                            seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.frames,
+                                "cbArgOr" + acc[0].substring("cbArg".length()), "(Ljava/lang/Object;I" + acc[1] + ")" + acc[1], false));
+                        }
                         if (na[j].getSort() >= org.objectweb.asm.Type.ARRAY && !na[j].getInternalName().equals("java/lang/Object")) {
                             seq.add(new org.objectweb.asm.tree.TypeInsnNode(Opcodes.CHECKCAST, na[j].getInternalName()));
                         }
@@ -684,6 +702,10 @@ public final class JarProcessor {
      * ops and takes the new descriptor; the return value is dropped, converted or supplied right
      * after. Straight-line code at the call, so existing frames stay exact.
      *
+     * One exception: a mod's super.old(..) in a class under an override hook that carries its
+     * arguments ("frames" + "superCalls": "rewrite") belongs to that hook. Its rewrite hands the
+     * super call what vanilla passed to the synthesized new shape; a reshape's ops could only
+     * supply a fixed value there, so such a call is left for {@link #rewriteHookSuperCalls}.
      * A call may name a class of the mod's own jar while the member is a vanilla one it inherits:
      * javac's qualifying type for an unqualified call to an inherited member is the subclass
      * itself (a mod's RecipeProvider calling offerSmelting(..), a loot function builder calling
@@ -731,6 +753,9 @@ public final class JarProcessor {
                 if (home == null) {
                     continue;
                 }
+                if (mi.getOpcode() == Opcodes.INVOKESPECIAL && framedSuperCall(chain, layer, cn, mi)) {
+                    continue; // the carrying hook's super-call rewrite takes it
+                }
                 String key = home + "." + nameDesc;
                 Chain.CallReshape r = chain.callReshapes.get(key);
                 reshapeArgs(m, mi, r.args);
@@ -753,6 +778,29 @@ public final class JarProcessor {
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
         cn.accept(cw);
         return cw.toByteArray();
+    }
+
+    /**
+     * Whether a super call is one {@link #rewriteHookSuperCalls} rewrites with a carrying hook: the
+     * same choice it makes (the first superCalls hook for the call's old shape, in wiring order) and
+     * the same test (the call into a vanilla supertype, directly or through a mod class that
+     * inherits it; the class under the hook), for a hook with frames.
+     */
+    private static boolean framedSuperCall(Chain chain, LayerIndex layer, org.objectweb.asm.tree.ClassNode cn,
+                                           org.objectweb.asm.tree.MethodInsnNode mi) {
+        if (mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
+                && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null) {
+            return false;
+        }
+        String[] ifaces = cn.interfaces.toArray(new String[0]);
+        for (Chain.OverrideHook h : chain.overrideHooks) {
+            if (h.superCalls && h.oldName.equals(mi.name) && h.oldDesc.equals(mi.desc)) {
+                return h.frames != null
+                    && (h.onlyUnder == null || isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain))
+                    && (h.notUnder == null || !isUnder(cn.superName, ifaces, h.notUnder, layer, chain));
+            }
+        }
+        return false;
     }
 
     /**
@@ -1222,8 +1270,12 @@ public final class JarProcessor {
      * found in JVM resolution order: the superclass chain to the first vanilla class (the walk of
      * {@link #inheritedVanillaOwner}), then, when that has no key or the chain ends in the JDK, the
      * vanilla interfaces the layer's types implement (a default method, RecipeBuilder.save(consumer)
-     * called on a mod builder). Null when the mod declares the member, the chain leaves into a
-     * library (its classes are not this layer's to judge), or no key applies.
+     * called on a mod builder). A chain that leaves into a library class (Fabric API's
+     * FabricRecipeProvider, FakePlayer) takes a reshape keyed on that library class itself: its
+     * members are not this layer's to judge, but the key says the member changed there, and the
+     * JVM resolves the call through the mod's subclass up to it exactly as for a vanilla class.
+     * Null when the mod declares the member, the chain leaves into a library class no reshape is
+     * keyed on, or no key applies.
      */
     private static String inheritedReshapeHome(String owner, String member, LayerIndex layer, Chain chain) {
         // the superclass chain first, as the JVM resolves: the layer's own classes, then the first vanilla one
@@ -1236,7 +1288,8 @@ public final class JarProcessor {
                     cur = null; // the JDK ends the chain (it declares no game member): on to the interfaces
                     break;
                 }
-                return null; // a library or another jar: not this layer's to judge
+                // a library or another jar: only a reshape keyed on that class itself applies
+                return chain.callReshapeIndex.containsKey(cur + "." + member) ? cur : null;
             }
             if (d.contains(member) && !chain.sameShapeCalls.contains(member)) {
                 return null; // the mod's own member (a same-shape one sits behind a convertHooks bridge)
@@ -1886,6 +1939,7 @@ public final class JarProcessor {
         }
         Map<String, String> redirects = new HashMap<>();     // static: owner.name+desc -> runtime class
         Map<String, String> instRedirects = new HashMap<>(); // instance: receiver becomes arg 0
+        Map<String, String> ifaceCallRedirects = new HashMap<>(); // INVOKEINTERFACE only: receiver becomes arg 0
         Map<String, String> fldRedirects = new HashMap<>();  // GETSTATIC: owner.name:desc -> runtime class
         Map<String, String> fldGetters = new HashMap<>();    // GETSTATIC -> INVOKESTATIC zero-arg getter on runtime class
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
@@ -1922,6 +1976,8 @@ public final class JarProcessor {
         final Set<String> declaredNewHooks = new HashSet<>();
         // generic orphaned overrides (overrideHooks): old shape declared here
         final java.util.List<Chain.OverrideHook> declaredOldOverrides = new ArrayList<>();
+        // overrides of a method the target made final / renamed, declared here (Chain.overrideRenames)
+        final java.util.List<Chain.OverrideRename> declaredRenames = new ArrayList<>();
         final Set<Chain.OverrideHook> declaredNewOverrides = new HashSet<>();
         final int[] classAccess = {0};
         final String[] superOf = {null};
@@ -2120,6 +2176,16 @@ public final class JarProcessor {
                         hooked = true;
                     }
                 }
+                if ((acc & Opcodes.ACC_STATIC) == 0) {
+                    for (Chain.OverrideRename r : chain.overrideRenames) {
+                        if (r.oldName.equals(mName) && r.oldDesc.equals(mDesc)
+                                && isUnder(superOf[0], itfs, r.onlyUnder, layer, chain)) {
+                            declaredRenames.add(r);
+                            hooked = true;
+                            top.dext.centurybridge.data.FullAudit.record(mName + mDesc, "override-renamed");
+                        }
+                    }
+                }
                 // lookup hooks and the block-use split reconnect their old shapes themselves
                 boolean reconnected = (hk != null && mDesc.equals(hk[0]))
                     || (chain.blockUseSplit && mName.equals("method_9534"));
@@ -2166,6 +2232,15 @@ public final class JarProcessor {
                         // consulted on the VANILLA owner, which differs when the site
                         // names a mod class an inherited vanilla member is reached through
                         final String site = owner + "." + name + desc;
+                        // a super call (super(..) included) into the type this class extends through
+                        // superRenames goes to the facade -- the superRename layer retargets it, and the
+                        // facade serves the member itself. Wired here as damage it would be redirected
+                        // to a static (a virtual call again: back into the class's own override) or
+                        // reported dead, though the facade answers it
+                        if (op == Opcodes.INVOKESPECIAL && needSuperRename[0] && chain.superRenames.containsKey(owner)) {
+                            top.dext.centurybridge.data.FullAudit.record(site, "super-renamed");
+                            return;
+                        }
                         if (!Chain.minecraftOwned(owner)) {
                             String inh = name.equals("<init>") ? null
                                 : inheritedVanillaOwner(owner, name + desc, layer, chain);
@@ -2183,6 +2258,12 @@ public final class JarProcessor {
                                 if (lsrt != null && op == Opcodes.INVOKESTATIC) {
                                     redirects.put(site, lsrt);
                                     top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
+                                }
+                                // interface calls only: a super call to the interface's default stays (Chain.interfaceCallRedirects)
+                                String licr = chain.interfaceCallRedirects.get(site);
+                                if (licr != null && op == Opcodes.INVOKEINTERFACE) {
+                                    ifaceCallRedirects.put(site, licr);
+                                    top.dext.centurybridge.data.FullAudit.record(site, "interface-call-redirect");
                                 }
                                 return; // mod-owned members (incl. overrides of dead interface methods) still exist
                             }
@@ -2435,16 +2516,26 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(fkey, "field-getter");
                             return;
                         }
-                        String ifgt = chain.instanceFieldGetters.get(fkey);
-                        if (ifgt != null && op == Opcodes.GETFIELD) {
-                            instFldGetters.put(fsite, ifgt);
-                            top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-getter");
+                        // an instance field is keyed on the class that declares it, but javac names
+                        // the receiver's static type (JLS 13.1): this.width in an ObjectSelectionList
+                        // subclass is ObjectSelectionList.width, declared by AbstractSelectionList. The
+                        // getter / setter is found up the hierarchy and takes the receiver as that class
+                        String ifstHome = op == Opcodes.PUTFIELD
+                            ? chain.redirectHome(chain.instanceFieldSetters, owner, name + ":" + desc) : null;
+                        if (ifstHome != null) {
+                            String hk = ifstHome + "." + name + ":" + desc;
+                            instFldSetters.put(fsite, chain.instanceFieldSetters.get(hk));
+                            emitOwner.put(fsite, ifstHome);
+                            top.dext.centurybridge.data.FullAudit.record(hk, "instance-field-setter");
                             return;
                         }
-                        String ifst = chain.instanceFieldSetters.get(fkey);
-                        if (ifst != null && op == Opcodes.PUTFIELD) {
-                            instFldSetters.put(fsite, ifst);
-                            top.dext.centurybridge.data.FullAudit.record(fkey, "instance-field-setter");
+                        String ifgtHome = op == Opcodes.GETFIELD
+                            ? chain.redirectHome(chain.instanceFieldGetters, owner, name + ":" + desc) : null;
+                        if (ifgtHome != null) {
+                            String hk = ifgtHome + "." + name + ":" + desc;
+                            instFldGetters.put(fsite, chain.instanceFieldGetters.get(hk));
+                            emitOwner.put(fsite, ifgtHome);
+                            top.dext.centurybridge.data.FullAudit.record(hk, "instance-field-getter");
                             return;
                         }
                         String rename = chain.fieldRenames.get(fkey);
@@ -2559,6 +2650,11 @@ public final class JarProcessor {
                                     if (lsrt != null && hStatic) {
                                         redirects.put(site, lsrt);
                                         top.dext.centurybridge.data.FullAudit.record(site, "static-redirect");
+                                    }
+                                    String licr = chain.interfaceCallRedirects.get(site);
+                                    if (licr != null && h.getTag() == Opcodes.H_INVOKEINTERFACE) {
+                                        ifaceCallRedirects.put(site, licr);
+                                        top.dext.centurybridge.data.FullAudit.record(site, "interface-call-redirect");
                                     }
                                     continue;
                                 }
@@ -2675,11 +2771,12 @@ public final class JarProcessor {
                 top.dext.centurybridge.data.FullAudit.record(f.under + "." + shape, "abstract-fill");
             }
         }
-        if (redirects.isEmpty() && instRedirects.isEmpty() && fldRedirects.isEmpty()
+        if (redirects.isEmpty() && instRedirects.isEmpty() && ifaceCallRedirects.isEmpty() && fldRedirects.isEmpty()
                 && fldGetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
-                && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty() && fillApply.isEmpty()
+                && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty() && declaredRenames.isEmpty()
+                && fillApply.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
                 && declaredOldOverrides.stream().allMatch(declaredNewOverrides::contains)) {
@@ -2720,6 +2817,9 @@ public final class JarProcessor {
         }
         for (String k : instRedirects.keySet()) {
             rpt.notes.add(tag + "instance-redirected: " + k + " -> " + instRedirects.get(k));
+        }
+        for (String k : ifaceCallRedirects.keySet()) {
+            rpt.notes.add(tag + "interface-call-redirected: " + k + " -> " + ifaceCallRedirects.get(k));
         }
         for (String k : fldRedirects.keySet()) {
             rpt.notes.add(tag + "field-redirected: " + k + " -> " + fldRedirects.get(k));
@@ -2820,7 +2920,8 @@ public final class JarProcessor {
         cr.accept(new ClassVisitor(Opcodes.ASM9, sink) {
             @Override
             public void visit(int ver, int acc, String name, String sig, String superName, String[] ifaces) {
-                boolean bridged = reconnectOverrides.stream().anyMatch(h -> h.adapter != null);
+                boolean bridged = reconnectOverrides.stream().anyMatch(h -> h.adapter != null)
+                    || declaredRenames.stream().anyMatch(r -> r.adapter != null);
                 if (!adapterApply.isEmpty() || bridged) {
                     java.util.LinkedHashSet<String> all = new java.util.LinkedHashSet<>();
                     if (ifaces != null) {
@@ -2836,6 +2937,12 @@ public final class JarProcessor {
                     for (Chain.OverrideHook h : reconnectOverrides) {
                         if (h.adapter != null && all.add(h.adapter)) {
                             extra.append('L').append(h.adapter).append(';');
+                        }
+                    }
+                    // a renamed override is reached through its adapter by the mixin on the final method
+                    for (Chain.OverrideRename r : declaredRenames) {
+                        if (r.adapter != null && all.add(r.adapter)) {
+                            extra.append('L').append(r.adapter).append(';');
                         }
                     }
                     ifaces = all.toArray(new String[0]);
@@ -2976,10 +3083,55 @@ public final class JarProcessor {
                         acc = (acc & ~(Opcodes.ACC_PROTECTED | Opcodes.ACC_PRIVATE)) | Opcodes.ACC_PUBLIC;
                     }
                 }
+                if ((acc & Opcodes.ACC_STATIC) == 0) {
+                    for (Chain.OverrideRename r : declaredRenames) {
+                        if (r.oldName.equals(mName) && r.oldDesc.equals(mDesc)) {
+                            rpt.notes.add(tag + "override-renamed: " + clsName[0] + "." + mName + mDesc + " -> " + r.newName);
+                            mName = r.newName;
+                            if (r.adapter != null) {
+                                // the adapter's (public) interface method is what the mixin calls
+                                acc = (acc & ~(Opcodes.ACC_PROTECTED | Opcodes.ACC_PRIVATE)) | Opcodes.ACC_PUBLIC;
+                            }
+                            break;
+                        }
+                    }
+                }
                 MethodVisitor mv = super.visitMethod(acc, mName, mDesc, sig, ex);
+                // javac's bridge for a covariant override (SystemToast subclass: Object getToken() ->
+                // SystemToastIds getToken()) forwards the erased shape to the old override. When an
+                // override hook gives the class the new shape (same arguments, another return type), the
+                // erased shape must reach the new one as vanilla's own bridge does, or vanilla calling
+                // through the erased shape gets the old type's value
+                Chain.OverrideHook bridgeHook = null;
+                if ((acc & Opcodes.ACC_BRIDGE) != 0 && mDesc.endsWith(")Ljava/lang/Object;")) {
+                    String args = mDesc.substring(0, mDesc.indexOf(')') + 1);
+                    for (Chain.OverrideHook h : reconnectOverrides) {
+                        if (h.oldName.equals(mName) && h.newName.equals(mName) && !mDesc.equals(h.oldDesc)
+                                && !mDesc.equals(h.newDesc) && h.oldDesc.startsWith(args) && h.newDesc.startsWith(args)
+                                && h.newDesc.charAt(args.length()) == 'L') {
+                            bridgeHook = h;
+                            rpt.notes.add(tag + "bridge-retargeted: " + clsName[0] + "." + mName + mDesc + " -> " + h.newDesc);
+                            break;
+                        }
+                    }
+                }
+                final Chain.OverrideHook covariantBridge = bridgeHook;
                 return new MethodVisitor(Opcodes.ASM9, mv) {
                     @Override
                     public void visitMethodInsn(int op, String owner, String name, String desc, boolean itf) {
+                        if (covariantBridge != null && op == Opcodes.INVOKEVIRTUAL && owner.equals(clsName[0])
+                                && name.equals(covariantBridge.oldName) && desc.equals(covariantBridge.oldDesc)) {
+                            desc = covariantBridge.newDesc;
+                        }
+                        if (op == Opcodes.INVOKESPECIAL && !owner.equals(clsName[0]) && owner.startsWith("net/minecraft/")) {
+                            for (Chain.OverrideRename r : declaredRenames) {
+                                if (r.superCalls && r.oldName.equals(name) && r.oldDesc.equals(desc)) {
+                                    // super.old(..): the vanilla method lives on under the new name
+                                    name = r.newName;
+                                    break;
+                                }
+                            }
+                        }
                         String[] hk = chain.lookupHooks.get(name);
                         if (hk != null && desc.equals(hk[0])) {
                             // append the builtin lookup and call the new shape;
@@ -3014,6 +3166,13 @@ public final class JarProcessor {
                         if (irt != null && (op == Opcodes.INVOKEVIRTUAL || op == Opcodes.INVOKEINTERFACE || op == Opcodes.INVOKESPECIAL) && !name.equals("<init>")) {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(irt),
                                 redirName(irt, name),
+                                "(L" + recv + ";" + desc.substring(1), false);
+                            return;
+                        }
+                        String icrt = ifaceCallRedirects.get(key);
+                        if (icrt != null && op == Opcodes.INVOKEINTERFACE) {
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(icrt),
+                                redirName(icrt, name),
                                 "(L" + recv + ";" + desc.substring(1), false);
                             return;
                         }
@@ -3099,6 +3258,12 @@ public final class JarProcessor {
                                     || h.getTag() == Opcodes.H_INVOKEINTERFACE)) {
                                 rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, redirCls(irt),
                                     redirName(irt, h.getName()), "(L" + recv + ";" + h.getDesc().substring(1), false);
+                                continue;
+                            }
+                            String icrt = ifaceCallRedirects.get(key);
+                            if (icrt != null && h.getTag() == Opcodes.H_INVOKEINTERFACE) {
+                                rewritten[i] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, redirCls(icrt),
+                                    redirName(icrt, h.getName()), "(L" + recv + ";" + h.getDesc().substring(1), false);
                                 continue;
                             }
                             String boundary = tombstone.get(key);
@@ -3220,11 +3385,20 @@ public final class JarProcessor {
                 for (Map.Entry<String, String> e : set.entrySet()) {
                     if (dep.has(e.getKey())) {
                         JsonElement v = dep.remove(e.getKey());
-                        // several old ids may collapse onto one provider: keep the wider range
-                        if (!dep.has(e.getValue())) {
-                            dep.add(e.getValue(), v);
+                        // "newId@range": the new provider's own versions are not the old module's (a
+                        // Fabric API module CenturyBridge gives back after the release removed it), so
+                        // the range the mod asked of the old id would not fit -- the wiring names one
+                        String target = e.getValue();
+                        int at = target.indexOf('@');
+                        if (at > 0) {
+                            v = new JsonPrimitive(target.substring(at + 1));
+                            target = target.substring(0, at);
                         }
-                        rpt.notes.add("dep " + e.getKey() + " -> " + e.getValue());
+                        // several old ids may collapse onto one provider: keep the wider range
+                        if (!dep.has(target)) {
+                            dep.add(target, v);
+                        }
+                        rpt.notes.add("dep " + e.getKey() + " -> " + target);
                     }
                 }
             }

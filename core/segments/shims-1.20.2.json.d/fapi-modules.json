@@ -1,0 +1,9 @@
+{
+  "depRenames": {
+    "fabric-networking-v0": "centurybridge@*",
+    "fabric-loot-tables-v1": "centurybridge@*",
+    "fabric-data-attachment-api-v1": "centurybridge@*",
+    "fabric-tag-api-v1": "centurybridge@*"
+  },
+  "_depRenames_basis": "1.20.2's Fabric API (0.91.6) no longer ships these four modules that 1.20.1's (0.92.12) did (META-INF/jars of both fabric-api jars); this step's layer gives their APIs back (s1fapi: compat/fapi networking v0, loot v1, attachment API v1, tag removal), so a mod's dependency on them is met by CenturyBridge itself, at any of its versions"
+}
