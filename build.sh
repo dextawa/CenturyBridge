@@ -149,7 +149,8 @@ find core/src/top/dext/centurybridge/res -name '*.java' >> "$OUT/sources-$VERSIO
 # Pin the class-file level to what the target's loader stack accepts: a shim
 # compiled by a newer ambient JDK dies at Mixin PREPARE with "Unsupported
 # class file major version" on servers bundling an older sponge-mixin.
-case "$VERSION" in 1.20.*) RELEASE=17;; *) RELEASE=21;; esac
+# (1.20.5 moved the game itself to Java 21: its class files cannot be read under --release 17)
+case "$VERSION" in 1.20|1.20.[1-4]) RELEASE=17;; *) RELEASE=21;; esac
 javac -nowarn -proc:none --release "$RELEASE" -cp "$CP" -d "$CLASSES" "@$OUT/sources-$VERSION.txt"
 
 # What may load on a dedicated server is derived, not hand-placed. A bridge class
