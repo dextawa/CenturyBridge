@@ -27,6 +27,15 @@ public final class CbRestCodecs {
         return new com.mojang.serialization.codecs.EitherCodec<>(first, second);
     }
 
+    /**
+     * 1.20.4 EitherCodec.encode(either, ops, prefix), the specialised method intermediary named
+     * method_37945 on Mojang's class; DataFixerUpper 7's EitherCodec (the renamed class) calls it encode
+     */
+    public static <F, S, T> DataResult<T> method_37945(com.mojang.serialization.codecs.EitherCodec<F, S> codec,
+                                                       Either<F, S> input, com.mojang.serialization.DynamicOps<T> ops, T prefix) {
+        return codec.encode(input, ops, prefix);
+    }
+
     /** ExtraCodecs.stringResolverCodec(toString, fromString), 1.20.4's messages */
     public static <E> Codec<E> method_39508(Function<E, String> toString, Function<String, E> fromString) {
         return Codec.STRING.flatXmap(

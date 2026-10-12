@@ -75,7 +75,8 @@
   "client": [
     "CbRegistriesClientMixin",
     "CbRestEntityRendererMixin",
-    "CbLevelDataClientMixin"
+    "CbLevelDataClientMixin",
+    "CbRestSheetsMixin"
   ],
   "server": [],
   "injectors": {
