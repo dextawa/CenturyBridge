@@ -24,7 +24,9 @@ import net.minecraft.client.renderer.rendertype.RenderType;
  * <li>a 26.1 call and a 26.1 record ({@link #renderTypeFunction}, {@link #translucent}) pass that function --
  *     a {@link FixedRenderType}, which keeps the render type -- and that flag; a call through an interface
  *     reaches a collector that has no 26.1.1 submitBlockModel of its own with 26.1's default
- *     ({@link #callSubmitBlockModel}): Fabric's 26.1.1 default flattens to one block sheet type;</li>
+ *     ({@link #callSubmitBlockModel}): Fabric's 26.1.1 default flattens to one block sheet type. A call
+ *     naming a class of the 26.1 jar itself (invokevirtual on its own collector) is only reshaped: if that
+ *     class inherits Fabric's default, 26.1.1's default answers it;</li>
  * <li>what 26.1 code reads back as one render type ({@link #renderType}): the type a FixedRenderType keeps;
  *     for a submit 26.1.1 made with a function of its own, the type Fabric's 26.1.1 default
  *     submitBlockModel itself flattens the function to for a collector that takes one render type
