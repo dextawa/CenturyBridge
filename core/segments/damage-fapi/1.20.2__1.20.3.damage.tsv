@@ -1,6 +1,7 @@
 usage	owner	name	desc	kinds	w
 call	net/fabricmc/fabric/api/entity/FakePlayer	method_5781	()Lnet/minecraft/class_270;	METHOD	method method_5781()Lnet/minecraft/class_268; public
 override+super	net/fabricmc/fabric/api/entity/FakePlayer	method_5781	()Lnet/minecraft/class_270;	METHOD,ORPHAN	method method_5781()Lnet/minecraft/class_268; public
+call-inherited	net/fabricmc/fabric/api/entity/FakePlayer	method_5781	()Lnet/minecraft/class_270;	METHOD	method method_5781()Lnet/minecraft/class_268; public
 call-static	net/fabricmc/fabric/api/object/builder/v1/block/type/BlockSetTypeRegistry	registerWood	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_8177;	CLASS	class gone
 call-static	net/fabricmc/fabric/api/object/builder/v1/block/type/BlockSetTypeRegistry	register	(Lnet/minecraft/class_2960;ZLnet/minecraft/class_2498;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;Lnet/minecraft/class_3414;)Lnet/minecraft/class_8177;	CLASS	class gone
 call-static	net/fabricmc/fabric/api/object/builder/v1/block/type/WoodTypeRegistry	register	(Lnet/minecraft/class_2960;Lnet/minecraft/class_8177;)Lnet/minecraft/class_4719;	CLASS	class gone
@@ -13,5 +14,9 @@ call	net/fabricmc/fabric/api/transfer/v1/storage/Storage	exactView	(Ljava/lang/O
 override+super	net/fabricmc/fabric/api/transfer/v1/storage/Storage	simulateInsert	(Ljava/lang/Object;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/transfer/v1/storage/Storage	simulateExtract	(Ljava/lang/Object;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/transfer/v1/storage/Storage	exactView	(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/transfer/v1/storage/StorageView;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/transfer/v1/storage/Storage	simulateInsert	(Ljava/lang/Object;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/transfer/v1/storage/Storage	simulateExtract	(Ljava/lang/Object;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/transfer/v1/storage/Storage	exactView	(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/transfer/v1/storage/StorageView;	METHOD	method not declared on the owner
 call	net/fabricmc/fabric/api/transfer/v1/storage/base/FilteringStorage	exactView	(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/transfer/v1/storage/StorageView;	METHOD	method not declared on the owner
 override+super	net/fabricmc/fabric/api/transfer/v1/storage/base/FilteringStorage	exactView	(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/transfer/v1/storage/StorageView;	METHOD	method not declared on the owner
+call-inherited	net/fabricmc/fabric/api/transfer/v1/storage/base/FilteringStorage	exactView	(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/transfer/v1/storage/StorageView;	METHOD	method not declared on the owner
