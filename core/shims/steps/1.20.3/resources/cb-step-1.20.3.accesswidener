@@ -3,3 +3,5 @@ accessWidener	v2	intermediary
 extendable	method	net/minecraft/class_5556	method_36994	(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V
 # s2world: AbstractMinecart.destroy(DamageSource) was public in 1.20.2; 1.20.3 inherits it, protected, from VehicleEntity
 accessible	method	net/minecraft/class_8836	method_7516	(Lnet/minecraft/class_1282;)V
+# s2world: LivingEntity.canBreatheUnderwater() is final since 1.20.3; 1.20.2 entities override it
+extendable	method	net/minecraft/class_1309	method_6094	()Z

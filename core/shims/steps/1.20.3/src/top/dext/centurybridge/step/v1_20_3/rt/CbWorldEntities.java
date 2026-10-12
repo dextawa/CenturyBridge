@@ -4,6 +4,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import net.minecraft.class_1297;
+import net.minecraft.class_7102;
+import net.minecraft.class_5762;
+import net.minecraft.class_3486;
+import net.minecraft.class_3468;
+import net.minecraft.class_1657;
+import net.minecraft.class_1577;
+import net.minecraft.class_1481;
+import net.minecraft.class_1480;
+import net.minecraft.class_1433;
+import net.minecraft.class_1310;
+import net.minecraft.class_1309;
 import net.minecraft.class_1542;
 import net.minecraft.class_1688;
 import net.minecraft.class_1694;
@@ -145,6 +156,89 @@ public final class CbWorldEntities {
     /** the random a 1.20.2 override of getOrCreateDisplayEntity(level, random, pos) gets when 1.20.3 calls (level, pos) */
     public static class_5819 levelRandom(class_1937 level) {
         return level.method_8409();
+    }
+
+    // ------------------------------------------------------------------ Player.checkMovementStatistics
+
+    /**
+     * 1.20.2's Player.checkMovementStatistics, line for line: the movement statistics and food exhaustion of
+     * a move. 1.20.3 moved it to ServerPlayer (where it runs the same code); a 1.20.2 call on a player that
+     * is not a ServerPlayer does what 1.20.2 did there (CbWorldPlayerMixin calls it as 1.20.2's travel did).
+     */
+    public static void legacyMovementStatistics(class_1657 p, double dx, double dy, double dz) {
+        if (p.method_5765()) {
+            return;
+        }
+        if (p.method_5681()) {
+            int i = Math.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F);
+            if (i > 0) {
+                p.method_7339(class_3468.field_15423, i);
+                p.method_7322(0.01F * (float) i * 0.01F);
+            }
+        } else if (p.method_5777(class_3486.field_15517)) {
+            int i = Math.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F);
+            if (i > 0) {
+                p.method_7339(class_3468.field_15401, i);
+                p.method_7322(0.01F * (float) i * 0.01F);
+            }
+        } else if (p.method_5799()) {
+            int i = Math.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F);
+            if (i > 0) {
+                p.method_7339(class_3468.field_15394, i);
+                p.method_7322(0.01F * (float) i * 0.01F);
+            }
+        } else if (p.method_6101()) {
+            if (dy > 0.0) {
+                p.method_7339(class_3468.field_15413, (int) Math.round(dy * 100.0));
+            }
+        } else if (p.method_24828()) {
+            int i = Math.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F);
+            if (i > 0) {
+                if (p.method_5624()) {
+                    p.method_7339(class_3468.field_15364, i);
+                    p.method_7322(0.1F * (float) i * 0.01F);
+                } else if (p.method_18276()) {
+                    p.method_7339(class_3468.field_15376, i);
+                    p.method_7322(0.0F * (float) i * 0.01F);
+                } else {
+                    p.method_7339(class_3468.field_15377, i);
+                    p.method_7322(0.0F * (float) i * 0.01F);
+                }
+            }
+        } else if (p.method_6128()) {
+            int i = Math.round((float) Math.sqrt(dx * dx + dy * dy + dz * dz) * 100.0F);
+            p.method_7339(class_3468.field_15374, i);
+        } else {
+            int i = Math.round((float) Math.sqrt(dx * dx + dz * dz) * 100.0F);
+            if (i > 25) {
+                p.method_7339(class_3468.field_15426, i);
+            }
+        }
+    }
+
+    // ------------------------------------------------------------------ LivingEntity.canBreatheUnderwater
+
+    /**
+     * 1.20.3 made LivingEntity.canBreatheUnderwater() final and answers it from the entity type tag
+     * can_breathe_under_water, which lists vanilla types only. In 1.20.2 it was a method: undead mobs could
+     * (LivingEntity), and WaterAnimal, Turtle, Guardian, Axolotl and Frog overrode it to true, Dolphin back to
+     * false. A 1.20.2 entity class (the converter marks it CbWorldLegacyEntity) that does not answer itself
+     * gets what the nearest of those 1.20.2 classes above it answered (CbWorldLivingEntityMixin).
+     */
+    public static boolean legacyBreathesUnderwater(class_1309 e) {
+        for (Class<?> c = e.getClass(); c != null; c = c.getSuperclass()) {
+            if (c == class_1433.class) {
+                return false;
+            }
+            if (c == class_1480.class || c == class_1481.class || c == class_1577.class || c == class_5762.class
+                    || c == class_7102.class) {
+                return true;
+            }
+            if (c == class_1309.class) {
+                return e.method_6046() == class_1310.field_6289;
+            }
+        }
+        return false;
     }
 
     private CbWorldEntities() {

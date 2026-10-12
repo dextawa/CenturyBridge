@@ -1,5 +1,8 @@
 package top.dext.centurybridge.step.v1_20_3.rt;
 
+import java.util.Locale;
+import java.util.Optional;
+import com.mojang.serialization.MapCodec;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
@@ -9,7 +12,11 @@ import net.minecraft.class_1922;
 import net.minecraft.class_1937;
 import net.minecraft.class_1959;
 import net.minecraft.class_2248;
-import net.minecraft.class_2283;
+import net.minecraft.class_5819;
+import net.minecraft.class_5547;
+import net.minecraft.class_4970;
+import net.minecraft.class_3218;
+import net.minecraft.class_2484;
 import net.minecraft.class_2338;
 import net.minecraft.class_2378;
 import net.minecraft.class_2394;
@@ -188,16 +195,6 @@ public final class CbWorldBlocks {
         return (class_2248) class_2378.method_10230(class_7923.field_41175, id, block);
     }
 
-    // ------------------------------------------------------------------ ChorusPlantBlock
-
-    /**
-     * ChorusPlantBlock.getStateForPlacement(BlockGetter, pos) was an instance method building on the
-     * block's own default state; 1.20.3 made it static, taking that state as a third argument.
-     */
-    public static class_2680 getStateForPlacement(class_2283 self, class_1922 level, class_2338 pos) {
-        return class_2283.method_9759(level, pos, self.method_9564());
-    }
-
     // ------------------------------------------------------------------ TripWireHookBlock
 
     /**
@@ -208,6 +205,55 @@ public final class CbWorldBlocks {
                                       boolean attaching, boolean shouldNotifyNeighbours, int searchRange,
                                       class_2680 tripwire) {
         class_2537.method_10776(level, pos, state, attaching, shouldNotifyNeighbours, searchRange, tripwire);
+    }
+
+    // ------------------------------------------------------------------ ChangeOverTimeBlock
+
+    /**
+     * 1.20.2's ChangeOverTimeBlock.applyChangeOverTime(state, level, pos, random) worked out the next stage and
+     * set it; 1.20.3 splits it: getNextState works it out, changeOverTime sets it. Same computation, same
+     * random draws.
+     */
+    public static void applyChangeOverTime(class_5547<?> block, class_2680 state, class_3218 level, class_2338 pos,
+                                           class_5819 random) {
+        block.method_54765(state, level, pos, random).ifPresent(next -> level.method_8501(pos, next));
+    }
+
+    /**
+     * The 1.20.3 getNextState of a 1.20.2 block that overrides applyChangeOverTime: the override changes the
+     * block itself (as 1.20.2's onRandomTick had it do), so there is no next state left for changeOverTime to
+     * set. A super call in the override comes back here through the guard and reaches the interface's own
+     * getNextState (see Chain.OverrideHook#guard).
+     */
+    public static Optional<class_2680> legacyNextState(CbWorldChangeOverTime block, class_2680 state, class_3218 level,
+                                                       class_2338 pos, class_5819 random) {
+        block.method_33623(state, level, pos, random);
+        return Optional.empty();
+    }
+
+    // ------------------------------------------------------------------ BlockBehaviour.codec
+
+    /**
+     * 1.20.3 blocks answer codec(), the MapCodec their type is (de)serialized with; 1.20.2 had none, and a
+     * 1.20.2 block cannot be rebuilt from data. The codec of such a block stores nothing and decodes to the
+     * block itself. (Only the block-list data report reads it through 1.21.11.)
+     */
+    public static MapCodec<?> codec(class_4970 block) {
+        return MapCodec.unit(block);
+    }
+
+    // ------------------------------------------------------------------ SkullBlock.Type
+
+    /**
+     * 1.20.3's SkullBlock.Type is StringRepresentable; a 1.20.2 type has no name. An enum constant answers the
+     * name 1.20.3's own SkullBlock.Types use for theirs (the lower-cased constant name); any other type its
+     * toString(). Only the skull blocks' codecs read it.
+     */
+    public static String skullTypeName(class_2484.class_2485 type) {
+        if (type instanceof Enum<?> e) {
+            return e.name().toLowerCase(Locale.ROOT);
+        }
+        return type.toString();
     }
 
     // ------------------------------------------------------------------ cauldrons

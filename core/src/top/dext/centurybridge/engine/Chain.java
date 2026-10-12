@@ -274,7 +274,12 @@ public final class Chain {
          * InteractionResult). Null when the return type did not change.
          */
         public String unwrapOwner, unwrapName, unwrapDesc;
-        /** internal class name providing cbEnter(Object)Z and cbExit(Object)V */
+        /**
+         * internal class name providing cbEnter(Object)Z and cbExit(Object)V. A guarded (or narrowing)
+         * fall-through calls super's new shape; when the class's vanilla superclass chain has none but a
+         * direct vanilla superinterface has it as a default method (1.20.3's ChangeOverTimeBlock.getNextState
+         * under a copper block extending Block), it calls that interface's default instead.
+         */
         public String guard;
         /** hierarchy filters: apply only to classes under / not under this vanilla class */
         public String onlyUnder, notUnder;
@@ -355,6 +360,72 @@ public final class Chain {
     }
 
     public final java.util.List<AdapterHook> adapterHooks = new java.util.ArrayList<>();
+
+    /**
+     * Implementations a vanilla type newly demands ("abstractFills" in a step's wiring): a method the
+     * target declares abstract that a mod class written against the source cannot implement, because
+     * the source had no such method (1.20.3's BlockBehaviour.codec(), Level.tickRateManager(),
+     * ContainerSingleItem.getTheItem()). Left alone, the class loads and the first call is an
+     * AbstractMethodError. A concrete class of the converted jar under {@code under} that would
+     * inherit the method only as abstract on the target -- no class of the jar on its way declares
+     * it, no override or adapter hook synthesizes it, and the nearest declaration up its target
+     * ancestry ({@link #concreteOnTarget}) is abstract or missing -- gets it synthesized as
+     * {@code public R m(args) { return call(this, args...); }}: the static answers what the source
+     * API made of the situation. A class that inherits a concrete implementation keeps it, so the
+     * fill never replaces vanilla behaviour.
+     * <pre>
+     *   "abstractFills": [{"under": "net/minecraft/class_4970", "method": "method_53969()Lcom/mojang/serialization/MapCodec;",
+     *                      "call": "Owner.name(Lnet/minecraft/class_4970;)Lcom/mojang/serialization/MapCodec;"}]
+     * </pre>
+     * The call's first parameter is {@code under} (the receiver), the rest the method's own.
+     */
+    public static final class AbstractFill {
+        public String under, name, desc, callOwner, callName, callDesc;
+    }
+
+    public final java.util.List<AbstractFill> abstractFills = new java.util.ArrayList<>();
+
+    /** target-stub methods declared abstract, "owner.name(desc)" in the analysis namespace */
+    public final java.util.Set<String> targetAbstracts = new java.util.HashSet<>();
+
+    /**
+     * Whether the target gives a class with these vanilla ancestors a concrete name+desc, the way the
+     * JVM selects one: the nearest declaration up the superclass chain decides (an abstract
+     * redeclaration -- 1.20.3's HorizontalDirectionalBlock.codec() under Block's concrete one --
+     * counts as abstract); without one, a default method of an implemented interface. True when the
+     * target is unknown.
+     */
+    public boolean concreteOnTarget(String name, String desc, java.util.List<String> roots) {
+        if (targetDecls.isEmpty()) {
+            return true;
+        }
+        String shape = name + desc;
+        java.util.ArrayDeque<String> ifaces = new java.util.ArrayDeque<>();
+        for (String r : roots) {
+            if (targetInterfaces.contains(r)) {
+                ifaces.add(r);
+                continue;
+            }
+            for (String c = r; c != null; c = targetSuperOf.get(c)) {
+                if (targetDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
+                    return !targetAbstracts.contains(c + "." + shape);
+                }
+                ifaces.addAll(targetInterfacesOf.getOrDefault(c, java.util.List.of()));
+            }
+        }
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!ifaces.isEmpty()) {
+            String i = ifaces.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            if (targetDecls.getOrDefault(i, java.util.Set.of()).contains(shape) && !targetAbstracts.contains(i + "." + shape)) {
+                return true;
+            }
+            ifaces.addAll(targetInterfacesOf.getOrDefault(i, java.util.List.of()));
+        }
+        return false;
+    }
 
     /**
      * Lambdas whose functional interface's abstract method changed shape ("lambdaAdapters"): 1.20.2's
@@ -727,6 +798,9 @@ public final class Chain {
                         : cls.matcher(d).replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
                             back.getOrDefault(mr.group(1), mr.group(1))) + ";");
                     decls.add(name + bd);
+                    if (idx.abstracts.contains(e.getKey() + "." + me.getKey() + d)) {
+                        targetAbstracts.add(owner + "." + name + bd);
+                    }
                     if (!name.equals(me.getKey())) {
                         // past the wall the runtime name IS the mojang one: a mixin
                         // spelling it that way (mojang-mapped bundled jar, whose
@@ -1458,6 +1532,28 @@ public final class Chain {
             if (root.has("facadeGaps")) {
                 for (var e : root.getAsJsonObject("facadeGaps").entrySet()) {
                     c.facadeGaps.put(e.getKey(), e.getValue().getAsString());
+                }
+            }
+            if (root.has("abstractFills")) {
+                for (var el : root.getAsJsonArray("abstractFills")) {
+                    var o = el.getAsJsonObject();
+                    AbstractFill f = new AbstractFill();
+                    f.under = o.get("under").getAsString();
+                    String[] msig = splitSig(o.get("method").getAsString());
+                    f.name = msig[0];
+                    f.desc = msig[1];
+                    String call = o.get("call").getAsString();
+                    int dot = call.lastIndexOf('.', call.indexOf('('));
+                    f.callOwner = call.substring(0, dot);
+                    String[] csig = splitSig(call.substring(dot + 1));
+                    f.callName = csig[0];
+                    f.callDesc = csig[1];
+                    String want = "(L" + f.under + ";" + f.desc.substring(1);
+                    if (!f.callDesc.equals(want)) {
+                        throw new IllegalArgumentException("abstractFills " + f.under + "." + f.name + f.desc
+                            + ": call must take the receiver and the method's arguments and return its type: " + want);
+                    }
+                    c.abstractFills.add(f);
                 }
             }
             if (root.has("adapterHooks")) {
