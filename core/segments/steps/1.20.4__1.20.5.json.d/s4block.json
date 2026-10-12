@@ -31,7 +31,10 @@
   "net/minecraft/class_1918.method_8297(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
   "net/minecraft/class_1932.method_75(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
   "net/minecraft/class_2791.method_20598(Lnet/minecraft/class_2338;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
-  "net/minecraft/class_2615.method_11262()Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper"
+  "net/minecraft/class_2615.method_11262()Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper",
+  "net/minecraft/class_1937.method_17891(Ljava/lang/String;)Lnet/minecraft/class_22;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel",
+  "net/minecraft/class_1937.method_17890(Ljava/lang/String;Lnet/minecraft/class_22;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel",
+  "net/minecraft/class_1937.method_44013()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel"
  },
  "overrideHooks": [
   {
@@ -347,6 +350,46 @@
    "new": "method_11656()Ljava/util/Map;",
    "onlyUnder": "net/minecraft/class_2688",
    "basis": "an ImmutableMap is the Map 1.20.5 asks for; the override's super call is reshaped back"
+  },
+  {
+   "old": "method_17891(Ljava/lang/String;)Lnet/minecraft/class_22;",
+   "new": "method_17891(Lnet/minecraft/class_9209;)Lnet/minecraft/class_22;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel$LegacyGetMap",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel.getMapData(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel$LegacyGetMap;Lnet/minecraft/class_9209;)Lnet/minecraft/class_22;",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel.superGetMapData(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel$SuperGetMap;Ljava/lang/String;)Lnet/minecraft/class_22;",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel$SuperGetMap",
+   "superAccessors": [
+    "method_17891(Lnet/minecraft/class_9209;)Lnet/minecraft/class_22;"
+   ],
+   "basis": "1.20.5 asks by MapId, whose key() is 1.20.4's name; super's map for a map name, a server level's storage for another (CbBlockLevel)"
+  },
+  {
+   "old": "method_17890(Ljava/lang/String;Lnet/minecraft/class_22;)V",
+   "new": "method_17890(Lnet/minecraft/class_9209;Lnet/minecraft/class_22;)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel$LegacySetMap",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel.setMapData(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel$LegacySetMap;Lnet/minecraft/class_9209;Lnet/minecraft/class_22;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel.superSetMapData(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel$SuperSetMap;Ljava/lang/String;Lnet/minecraft/class_22;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel$SuperSetMap",
+   "superAccessors": [
+    "method_17890(Lnet/minecraft/class_9209;Lnet/minecraft/class_22;)V"
+   ],
+   "basis": "as getMapData (CbBlockLevel)"
+  },
+  {
+   "old": "method_17889()I",
+   "new": "method_17889()Lnet/minecraft/class_9209;",
+   "onlyUnder": "net/minecraft/class_1937",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel.mapIdOf(I)Lnet/minecraft/class_9209;",
+   "basis": "the override's free id as a MapId; its super call is reshaped back"
+  },
+  {
+   "old": "method_8547(DDDDDDLnet/minecraft/class_2487;)V",
+   "new": "method_8547(DDDDDDLjava/util/List;)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel.fireworksTag(Ljava/util/List;)Lnet/minecraft/class_2487;",
+   "basis": "the old override gets 1.20.4's {Explosions: [...]} tag; its super call is reshaped"
   }
  ],
  "fieldGetters": {
@@ -535,6 +578,25 @@
    ],
    "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockGeneric#recipeValues(Ljava/util/Optional;)Ljava/util/Optional;",
    "basis": "generic drift: the holder's recipe where 1.20.4 answered the recipe (CbBlockGeneric)"
+  },
+  "net/minecraft/class_1937.method_17889()I": {
+   "desc": "()Lnet/minecraft/class_9209;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel#mapIdNumber(Lnet/minecraft/class_9209;)I",
+   "basis": "the free MapId's number (CbBlockLevel)"
+  },
+  "net/minecraft/class_1937.method_8547(DDDDDDLnet/minecraft/class_2487;)V": {
+   "desc": "(DDDDDDLjava/util/List;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel#fireworkExplosions(Lnet/minecraft/class_2487;)Ljava/util/List;"
+   ],
+   "basis": "the Explosions of 1.20.4's fireworks tag as FireworkExplosions, read as 1.20.4's FireworkParticles.Starter read them (CbBlockLevel)"
   }
  },
  "staticRedirects": {
@@ -640,6 +702,26 @@
    "method": "method_57081()Z",
    "call": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper.isGridAligned(Lnet/minecraft/class_2615;)Z",
    "basis": "1.20.4's suckInItems made no full-block test: a 1.20.4 hopper is not grid-aligned (CbBlockHopper)"
+  },
+  {
+   "under": "net/minecraft/class_1937",
+   "method": "method_59547()Lnet/minecraft/class_1845;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel.potionBrewing(Lnet/minecraft/class_1937;)Lnet/minecraft/class_1845;",
+   "basis": "1.20.4 brewing was static; a 1.20.4 level gets its server's, else the one built for its features (CbBlockLevel)"
+  }
+ ],
+ "superRedirects": {
+  "net/minecraft/class_1937.method_44013()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel#superDimensionTypeId"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockLevel$LegacyDimensionType",
+   "requires": [
+    "method_44013()Lnet/minecraft/class_5321;"
+   ],
+   "synth": [],
+   "basis": "1.20.5 dropped dimensionTypeId(); a mod level overriding it is still asked (calls, CbBlockServerPlayerMixin)"
   }
  ]
 }

@@ -8,6 +8,7 @@
     "CbBlockDecoratedPotLootAccessor",
     "CbBlockHopperMixin",
     "CbBlockRandomizableLootAccessor",
+    "CbBlockServerPlayerMixin",
     "CbRegistriesServerMixin"
   ],
   "client": [
