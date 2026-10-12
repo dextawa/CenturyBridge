@@ -9,7 +9,8 @@
     "CbBlockHopperMixin",
     "CbBlockRandomizableLootAccessor",
     "CbBlockServerPlayerMixin",
-    "CbRegistriesServerMixin"
+    "CbRegistriesServerMixin",
+    "CbTooltipLevelAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin"
