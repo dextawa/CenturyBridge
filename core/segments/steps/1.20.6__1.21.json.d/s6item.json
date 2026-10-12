@@ -22,11 +22,15 @@
   "net/minecraft/class_1909": "top/dext/centurybridge/step/v1_21/facade/class_1909",
   "net/minecraft/class_1911": "top/dext/centurybridge/step/v1_21/facade/class_1911",
   "net/minecraft/class_1913": "top/dext/centurybridge/step/v1_21/facade/class_1913",
-  "net/minecraft/class_9469": "top/dext/centurybridge/step/v1_21/facade/class_9469"
+  "net/minecraft/class_9469": "top/dext/centurybridge/step/v1_21/facade/class_9469",
+  "net/minecraft/class_1813": "top/dext/centurybridge/step/v1_21/facade/class_1813",
+  "net/minecraft/class_1756": "top/dext/centurybridge/step/v1_21/facade/class_1756"
  },
  "fieldGetters": {
   "net/minecraft/class_7923.field_41176:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments",
-  "net/minecraft/class_9304.field_50014:I": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments"
+  "net/minecraft/class_9304.field_50014:I": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments",
+  "net/minecraft/class_1792.field_8006:Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc",
+  "net/minecraft/class_1792.field_8001:Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc"
  },
  "methodRenames": {
   "net/minecraft/class_1887$class_9426.comp_2505()I": "comp_2690"
@@ -66,7 +70,10 @@
   "net/minecraft/class_1890.method_8230(Lnet/minecraft/class_7699;Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Ljava/util/List;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper",
   "net/minecraft/class_1890.method_8201(Ljava/util/Collection;Lnet/minecraft/class_1887;)Z": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper",
   "net/minecraft/class_1890.method_8229(Lnet/minecraft/class_7699;ILnet/minecraft/class_1799;Z)Ljava/util/List;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper",
-  "net/minecraft/class_1863.method_42302(Lnet/minecraft/class_3956;)Lnet/minecraft/class_1863$class_7266;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes"
+  "net/minecraft/class_1863.method_42302(Lnet/minecraft/class_3956;)Lnet/minecraft/class_1863$class_7266;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1811.method_57392(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Z)Z": "top/dext/centurybridge/step/v1_21/rt/CbItemUse",
+  "net/minecraft/class_3505.method_40099(Lnet/minecraft/class_5321;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc",
+  "net/minecraft/class_4609.method_23221(Lnet/minecraft/class_4590;Lnet/minecraft/class_2350;Ljava/util/function/Supplier;)Lnet/minecraft/class_4590;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc"
  },
  "facadeGaps": {
   "net/minecraft/class_1880.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides",
@@ -105,7 +112,8 @@
   "net/minecraft/class_1900$class_1901.method_8240()I": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides",
   "net/minecraft/class_1900$class_1901.method_8239()I": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides",
   "net/minecraft/class_1900$class_1901.field_9135:I": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides",
-  "net/minecraft/class_1900$class_1901.field_9134:I": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides"
+  "net/minecraft/class_1900$class_1901.field_9134:I": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides",
+  "net/minecraft/class_1813.method_7851(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Ljava/util/List;Lnet/minecraft/class_1836;)V": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5's appendHoverText takes an Item.TooltipContext where 1.20.4's took the Level, for every item): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides"
  },
  "callReshapes": {
   "net/minecraft/class_9304.method_57536(Lnet/minecraft/class_1887;)I": {
@@ -217,6 +225,198 @@
    ],
    "ret": "pop",
    "basis": "ServerPlaceRecipe.moveItemToGrid: 1.20.6 moved one item, 1.21 moves up to the amount given"
+  },
+  "net/minecraft/class_1792.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_1753.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_8162.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_1764.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_1777.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_4480.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_7430.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_1805.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_9462.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_1812.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_1819.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_5538.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_1835.method_7881(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "getUseDuration(stack): 1.21 asks with the entity using it; 1.20.6's answer read the stack alone, a 1.20.6 call names none (the crossbow, the one implementation that reads it, then charges with a random of its own: CbItemUse)"
+  },
+  "net/minecraft/class_1799.method_7935()I": {
+   "desc": "(Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "ItemStack.getUseDuration(): as Item.getUseDuration (CbItemUse)"
+  },
+  "net/minecraft/class_1764.method_7775(Lnet/minecraft/class_1799;)I": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoEntity()Lnet/minecraft/class_1309;"
+   ],
+   "basis": "CrossbowItem.getChargeDuration(stack): as getUseDuration (CbItemUse)"
+  },
+  "net/minecraft/class_1744.method_7702(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)Lnet/minecraft/class_1665;": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1665;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoWeapon()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "ArrowItem.createArrow: 1.21 also names the weapon it is fired from; a 1.20.6 call fires from none (null: 1.21's arrow then has no weapon's enchantments, as 1.20.6's had none)"
+  },
+  "net/minecraft/class_1825.method_7702(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)Lnet/minecraft/class_1665;": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1665;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbNoWeapon()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "ArrowItem.createArrow: 1.21 also names the weapon it is fired from; a 1.20.6 call fires from none (null: 1.21's arrow then has no weapon's enchantments, as 1.20.6's had none)"
+  },
+  "net/minecraft/class_1811.method_57393(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Ljava/util/List;FFZLnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Ljava/util/List;FFZLnet/minecraft/class_1309;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemUse#cbServerLevel(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "ProjectileWeaponItem.shoot: 1.21 shoots on the server level only"
+  },
+  "net/minecraft/class_1291.method_5566(Lnet/minecraft/class_6880;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)Lnet/minecraft/class_1291;": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;DLnet/minecraft/class_1322$class_1323;)Lnet/minecraft/class_1291;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemMisc#idOfUuid(Ljava/lang/String;)Lnet/minecraft/class_2960;",
+    "keep",
+    "keep"
+   ],
+   "basis": "MobEffect.addAttributeModifier: the 1.20.6 modifier uuid (a string) as 1.21's id (CbEntityAttributes' mapping)"
+  },
+  "net/minecraft/class_9279.method_57447(Lcom/mojang/serialization/MapEncoder;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;": {
+   "desc": "(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/MapEncoder;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemMisc#nbtOps()Lcom/mojang/serialization/DynamicOps;",
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "CustomData.read(encoder, value): 1.20.6 encoded through NbtOps.INSTANCE, 1.21 takes the ops"
+  },
+  "net/minecraft/class_1767.method_7787()[F": {
+   "desc": "()I",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbItemMisc#rgbComponents(I)[F",
+   "basis": "DyeColor.getTextureDiffuseColors: 1.21's ARGB int as 1.20.6's three components"
+  },
+  "net/minecraft/class_1761.method_7742()Ljava/lang/String;": {
+   "desc": "()Lnet/minecraft/class_2960;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbItemTabs#suffixOf(Lnet/minecraft/class_2960;)Ljava/lang/String;",
+   "basis": "CreativeModeTab.getBackgroundSuffix: 1.21's texture location as 1.20.6's suffix"
+  },
+  "net/minecraft/class_1761$class_7913.method_47319(Ljava/lang/String;)Lnet/minecraft/class_1761$class_7913;": {
+   "desc": "(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1761$class_7913;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemTabs#textureOf(Ljava/lang/String;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "CreativeModeTab.Builder.backgroundSuffix: 1.20.6's suffix as 1.21's texture location"
   }
  },
  "overrideHooks": [
@@ -386,6 +586,59 @@
     "method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/List;"
    ],
    "basis": "a mod's RecipeManager subclass: leftovers per input slot"
+  },
+  {
+   "old": "method_7702(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)Lnet/minecraft/class_1665;",
+   "new": "method_7702(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1665;",
+   "onlyUnder": "net/minecraft/class_1744",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "ArrowItem.createArrow overridden by a mod: 1.21 also passes the weapon, which the mod's super call hands on"
+  },
+  {
+   "old": "method_58403(Lnet/minecraft/class_1657;F)F",
+   "new": "method_58403(Lnet/minecraft/class_1297;FLnet/minecraft/class_1282;)F",
+   "onlyUnder": "net/minecraft/class_1792",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbItemUse.attackDamageBonus(Ltop/dext/centurybridge/step/v1_21/rt/CbItemUse$LegacyAttackDamageBonus;Lnet/minecraft/class_1297;FLnet/minecraft/class_1282;)F",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbItemUse$LegacyAttackDamageBonus",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemUse.superAttackDamageBonus(Ltop/dext/centurybridge/step/v1_21/rt/CbItemUse$AttackDamageBonusSuper;Lnet/minecraft/class_1657;F)F",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemUse$AttackDamageBonusSuper",
+   "superAccessors": [
+    "method_58403(Lnet/minecraft/class_1297;FLnet/minecraft/class_1282;)F"
+   ],
+   "basis": "Item.getAttackDamageBonus(player, damage) overridden by a mod: 1.21 asks (target, damage, source) from Player.attack (CbItemUse)"
+  },
+  {
+   "old": "method_7579(Lnet/minecraft/class_1799;)V",
+   "new": "method_7579(Lnet/minecraft/class_4174;)V",
+   "onlyUnder": "net/minecraft/class_1702",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbItemFood.eat(Ltop/dext/centurybridge/step/v1_21/rt/CbItemFood$LegacyEat;Lnet/minecraft/class_4174;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbItemFood$LegacyEat",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemFood.superEat(Ltop/dext/centurybridge/step/v1_21/rt/CbItemFood$EatSuper;Lnet/minecraft/class_1799;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemFood$EatSuper",
+   "superAccessors": [
+    "method_7579(Lnet/minecraft/class_4174;)V"
+   ],
+   "basis": "FoodData.eat(stack) overridden by a mod: 1.21 eats the food, the stack being eaten is handed on (CbItemFood)"
+  },
+  {
+   "old": "method_5566(Lnet/minecraft/class_6880;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)Lnet/minecraft/class_1291;",
+   "new": "method_5566(Lnet/minecraft/class_6880;Lnet/minecraft/class_2960;DLnet/minecraft/class_1322$class_1323;)Lnet/minecraft/class_1291;",
+   "onlyUnder": "net/minecraft/class_1291",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc.uuidStringOf(Lnet/minecraft/class_2960;)Ljava/lang/String;",
+   "basis": "MobEffect.addAttributeModifier overridden by a mod: 1.21's id as the uuid string it takes"
+  },
+  {
+   "old": "method_47319(Ljava/lang/String;)Lnet/minecraft/class_1761$class_7913;",
+   "new": "method_47319(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1761$class_7913;",
+   "onlyUnder": "net/minecraft/class_1761$class_7913",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemTabs.suffixOf(Lnet/minecraft/class_2960;)Ljava/lang/String;",
+   "basis": "CreativeModeTab.Builder.backgroundSuffix overridden by a mod: 1.21's texture location as the suffix"
   }
  ],
  "convertHooks": [
@@ -423,6 +676,18 @@
     "conv top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#predicateEnchantments(Ljava/util/Optional;)Ljava/util/Optional;",
     "keep"
    ]
+  },
+  "net/minecraft/class_4174.<init>(IFZFLjava/util/List;)V": {
+   "desc": "(IFZFLjava/util/Optional;Ljava/util/List;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemFood#noConversion()Ljava/util/Optional;",
+    "keep:4"
+   ],
+   "basis": "FoodProperties gained usingConvertsTo; 1.20.6's food left nothing"
   }
  },
  "instanceFieldGetters": {
@@ -443,7 +708,13 @@
   "net/minecraft/class_8957.comp_2081()I": "top/dext/centurybridge/step/v1_21/rt/CbItemShapedPatterns",
   "net/minecraft/class_8957.comp_2082()I": "top/dext/centurybridge/step/v1_21/rt/CbItemShapedPatterns",
   "net/minecraft/class_8957.comp_2083()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21/rt/CbItemShapedPatterns",
-  "net/minecraft/class_8957.comp_2084()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemShapedPatterns"
+  "net/minecraft/class_8957.comp_2084()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemShapedPatterns",
+  "net/minecraft/class_1792.method_58403(Lnet/minecraft/class_1657;F)F": "top/dext/centurybridge/step/v1_21/rt/CbItemUse",
+  "net/minecraft/class_9362.method_58403(Lnet/minecraft/class_1657;F)F": "top/dext/centurybridge/step/v1_21/rt/CbItemUse",
+  "net/minecraft/class_1799.method_7956(ILnet/minecraft/class_5819;Lnet/minecraft/class_3222;Ljava/lang/Runnable;)V": "top/dext/centurybridge/step/v1_21/rt/CbItemUse",
+  "net/minecraft/class_1702.method_7579(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_21/rt/CbItemFood",
+  "net/minecraft/class_1761.method_47308(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbItemTabs",
+  "net/minecraft/class_1761.method_47314()V": "top/dext/centurybridge/step/v1_21/rt/CbItemTabs"
  },
  "lambdaAdapters": {
   "net/minecraft/class_2952.method_12815(Ljava/util/Iterator;IIII)V": {
@@ -453,6 +724,14 @@
   "net/minecraft/class_1863$class_7266.method_42303(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;": {
    "iface": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyCachedCheck",
    "adapt": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCachedCheck(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyCachedCheck;)Lnet/minecraft/class_1863$class_7266;"
+  }
+ },
+ "frameDefaults": {
+  "method_7881(Lnet/minecraft/class_1799;)I": {
+   "1": "zero: null -- no entity, what a 1.20.6 getUseDuration had; of 1.21's implementations only the crossbow reads it, for the random of its charge-time effects, which then gets one of its own (CbItemCrossbowChargeMixin)"
+  },
+  "method_7702(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;)Lnet/minecraft/class_1665;": {
+   "3": "zero: null -- no weapon, what a 1.20.6 createArrow had; 1.21's arrow takes null as fired from no weapon"
   }
  }
 }
