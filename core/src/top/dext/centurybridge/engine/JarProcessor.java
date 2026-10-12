@@ -1540,18 +1540,22 @@ public final class JarProcessor {
      * where the JVM finds it (1.20.2's ChangeOverTimeBlock.onRandomTick
      * reached as this.onRandomTick in a mod's copper block): with the chain
      * given, that interface answers instead, so the wiring keyed on it --
-     * rename, redirect, reshape -- applies to the call as well. Fields are
-     * resolved through the superclass chain only.
+     * rename, redirect, reshape -- applies to the call as well. So it does when
+     * the superclass chain leaves the jar into the JDK (a mod class extending
+     * Object, Record or Enum that implements a vanilla interface: this.detect(..)
+     * in a mod's PlayerDetector), as a JDK class declares no vanilla member; a
+     * chain leaving into a library keeps null, as the library's own members may
+     * answer. Fields are resolved through the superclass chain only.
      */
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer, Chain chain) {
         String inh = inheritedVanillaOwner(owner, member, layer);
         int paren = member.indexOf('(');
-        if (inh == null || chain == null || paren < 0) {
+        if (chain == null || paren < 0 || inh == null && !leavesIntoJdk(owner, member, layer)) {
             return inh;
         }
         String name = member.substring(0, paren);
         String desc = member.substring(paren);
-        if (chain.sourceDeclarer(name, desc, List.of(inh)) != null) {
+        if (inh != null && chain.sourceDeclarer(name, desc, List.of(inh)) != null) {
             return inh;
         }
         // the vanilla interfaces the jar's classes on the way implement (through the jar's own interfaces too)
@@ -1598,6 +1602,29 @@ public final class JarProcessor {
 
     private static String clsName0(byte[] bytes) {
         return new ClassReader(bytes).getClassName();
+    }
+
+    /**
+     * Whether the superclass chain from a class of this jar layer reaches a JDK class with no class of
+     * the layer on the way declaring the member (the walk of {@link #inheritedVanillaOwner(String, String,
+     * LayerIndex)} ending outside the layer in java/).
+     */
+    private static boolean leavesIntoJdk(String owner, String member, LayerIndex layer) {
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64; hops++) {
+            if (cur.startsWith("net/minecraft/")) {
+                return false;
+            }
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                return cur.startsWith("java/");
+            }
+            if (d.contains(member)) {
+                return false;
+            }
+            cur = layer.superOf.get(cur);
+        }
+        return false;
     }
 
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
