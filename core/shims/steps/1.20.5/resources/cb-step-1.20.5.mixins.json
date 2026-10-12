@@ -35,7 +35,14 @@
     "CbRestRecGameTestBatchMixin",
     "CbRestRecTestFunctionMixin",
     "CbRestRecGameEventMixin",
-    "CbRestRecWeightedEntryWrapperMixin"
+    "CbRestRecWeightedEntryWrapperMixin",
+    "CbItemMixin",
+    "CbItemStackPropsMixin",
+    "CbFoodBuilderMixin",
+    "CbItemPropertiesAccessor",
+    "CbComponentBuilderAccessor",
+    "CbArmorItemAccessor",
+    "CbSpawnEggAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin",

@@ -14,7 +14,9 @@
  "instanceFieldGetters": {
   "net/minecraft/class_7788.field_40610:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#blockLootMap",
   "net/minecraft/class_1887.field_9083:Lnet/minecraft/class_1886;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#category",
-  "net/minecraft/class_1882.field_9067:I": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#damageType"
+  "net/minecraft/class_1882.field_9067:I": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#damageType",
+  "net/minecraft/class_1766.field_7940:F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#diggerSpeed",
+  "net/minecraft/class_1814.field_8908:Lnet/minecraft/class_124;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#rarityColor"
  },
  "superCtorReshapes": {
   "net/minecraft/class_170.<init>(ILjava/util/List;Ljava/util/List;Ljava/util/Optional;)V": {
@@ -186,6 +188,69 @@
     "keep:1"
    ],
    "basis": "s4item: ProtectionEnchantment(rarity, type, slots): its definition, the type kept"
+  },
+  "net/minecraft/class_1829.<init>(Lnet/minecraft/class_1832;IFLnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1,2,3 top/dext/centurybridge/step/v1_20_5/rt/CbTools#sword(Lnet/minecraft/class_1832;IFLnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "basis": "s4item: SwordItem(tier, damage, speed, properties): the sword keeps 1.20.4's modifiers as its own (CbTools)"
+  },
+  "net/minecraft/class_1766.<init>(FFLnet/minecraft/class_1832;Lnet/minecraft/class_6862;Lnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1832;Lnet/minecraft/class_6862;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "keep:2",
+    "keep:3",
+    "conv:0,1,2,4 top/dext/centurybridge/step/v1_20_5/rt/CbTools#digger(FFLnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "basis": "s4item: DiggerItem(damage, speed, tier, blocks, properties): 1.20.4's modifiers as the tool's own"
+  },
+  "net/minecraft/class_1810.<init>(Lnet/minecraft/class_1832;IFLnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1,2,3 top/dext/centurybridge/step/v1_20_5/rt/CbTools#diggerInt(Lnet/minecraft/class_1832;IFLnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "basis": "s4item: PickaxeItem(tier, damage, speed, properties): 1.20.4's modifiers as the tool's own"
+  },
+  "net/minecraft/class_1794.<init>(Lnet/minecraft/class_1832;IFLnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1,2,3 top/dext/centurybridge/step/v1_20_5/rt/CbTools#diggerInt(Lnet/minecraft/class_1832;IFLnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "basis": "s4item: HoeItem(tier, damage, speed, properties): 1.20.4's modifiers as the tool's own"
+  },
+  "net/minecraft/class_1743.<init>(Lnet/minecraft/class_1832;FFLnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1,2,3 top/dext/centurybridge/step/v1_20_5/rt/CbTools#diggerFloat(Lnet/minecraft/class_1832;FFLnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "basis": "s4item: AxeItem(tier, damage, speed, properties): 1.20.4's modifiers as the tool's own"
+  },
+  "net/minecraft/class_1821.<init>(Lnet/minecraft/class_1832;FFLnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1832;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1,2,3 top/dext/centurybridge/step/v1_20_5/rt/CbTools#diggerFloat(Lnet/minecraft/class_1832;FFLnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "basis": "s4item: ShovelItem(tier, damage, speed, properties): 1.20.4's modifiers as the tool's own"
+  },
+  "net/minecraft/class_1835.<init>(Lnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbTools#trident(Lnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "basis": "s4item: a converted TridentItem gets what 1.20.4's class gave itself (its modifiers and mining), as 1.20.5's registration gives its own"
+  },
+  "net/minecraft/class_1820.<init>(Lnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbTools#shears(Lnet/minecraft/class_1792$class_1793;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "basis": "s4item: a converted ShearsItem gets 1.20.4's shears mining (1.20.5's shears tool, given at its registration)"
   }
  },
  "callReshapes": {
@@ -335,7 +400,33 @@
   "net/minecraft/class_1887.method_8186()Lnet/minecraft/class_1887$class_1888;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#getRarity",
   "net/minecraft/class_1887.method_8196(ILnet/minecraft/class_1310;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#getDamageBonus",
   "net/minecraft/class_1900$class_1901.method_8240()I": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#protectionMinCost",
-  "net/minecraft/class_1900$class_1901.method_8239()I": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#protectionLevelCost"
+  "net/minecraft/class_1900$class_1901.method_8239()I": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#protectionLevelCost",
+  "net/minecraft/class_1792.method_19263()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#isEdible",
+  "net/minecraft/class_1792.method_19264()Lnet/minecraft/class_4174;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#getFoodProperties",
+  "net/minecraft/class_1792.method_24358()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#isFireResistant",
+  "net/minecraft/class_1792.method_24357(Lnet/minecraft/class_1282;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#canBeHurtBy",
+  "net/minecraft/class_1792.method_7846()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#canBeDepleted",
+  "net/minecraft/class_1792.method_7841()I": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#maxDamage",
+  "net/minecraft/class_1792.method_7862(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1814;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#getRarity",
+  "net/minecraft/class_1792.method_7887()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#shouldOverrideMultiplayerNbt",
+  "net/minecraft/class_1792$class_1793.method_7898(I)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#defaultDurability",
+  "net/minecraft/class_1792.method_7844(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#getDefaultAttributeModifiers",
+  "net/minecraft/class_1792.method_7865(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#getDestroySpeed",
+  "net/minecraft/class_1792.method_7856(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#isCorrectToolForDrops",
+  "net/minecraft/class_1792.method_7860(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#verifyTagAfterLoad",
+  "net/minecraft/class_1829.method_8020()F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#swordDamage",
+  "net/minecraft/class_1766.method_26366()F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#diggerDamage",
+  "net/minecraft/class_1832.method_8024()I": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#tierLevel",
+  "net/minecraft/class_1826.method_8015(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#eggType",
+  "net/minecraft/class_1826.method_8018(Lnet/minecraft/class_2487;Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#eggSpawns",
+  "net/minecraft/class_4174.method_19230()I": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#nutrition",
+  "net/minecraft/class_4174.method_19231()F": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#saturationModifier",
+  "net/minecraft/class_4174.method_19232()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#isMeat",
+  "net/minecraft/class_4174.method_19233()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#canAlwaysEat",
+  "net/minecraft/class_4174.method_19234()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#isFastFood",
+  "net/minecraft/class_4174.method_19235()Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#effects",
+  "net/minecraft/class_4174$class_4175.method_19236()Lnet/minecraft/class_4174$class_4175;": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#meat",
+  "net/minecraft/class_1702.method_7579(Lnet/minecraft/class_1792;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#eat"
  },
  "staticRedirects": {
   "net/minecraft/class_1799.method_7915(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#of",
@@ -397,6 +488,64 @@
    "onlyUnder": "net/minecraft/class_1887",
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant.mobType(Lnet/minecraft/class_1299;)Lnet/minecraft/class_1310;",
    "basis": "s4item: 1.20.5 asks the bonus against an entity type; a 1.20.4 override gets the entity's MobType (its class's declaration when it is the one attacked, else the type's tags)"
+  },
+  {
+   "old": "method_7844(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;",
+   "new": "method_7844()Lnet/minecraft/class_9285;",
+   "onlyUnder": "net/minecraft/class_1792",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbTools.modifiers(Ltop/dext/centurybridge/step/v1_20_5/rt/CbTools$Modifiers;)Lnet/minecraft/class_9285;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbTools$Modifiers",
+   "basis": "s4item: 1.20.5 asks an item's modifiers at once; a 1.20.4 per-slot override answers each slot 1.20.4 asked"
+  },
+  {
+   "old": "method_7865(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F",
+   "new": "method_58404(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F",
+   "onlyUnder": "net/minecraft/class_1792",
+   "basis": "s4item: getDestroySpeed(stack, state) has a new name in 1.20.5, the same arguments"
+  },
+  {
+   "old": "method_7856(Lnet/minecraft/class_2680;)Z",
+   "new": "method_58405(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)Z",
+   "onlyUnder": "net/minecraft/class_1792",
+   "args": [
+    1
+   ],
+   "basis": "s4item: 1.20.5's isCorrectToolForDrops also takes the stack, which the 1.20.4 override never had"
+  },
+  {
+   "old": "method_7860(Lnet/minecraft/class_2487;)V",
+   "new": "method_7860(Lnet/minecraft/class_1799;)V",
+   "onlyUnder": "net/minecraft/class_1792",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks.verifyAfterLoad(Ltop/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks$VerifyTag;Lnet/minecraft/class_1799;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks$VerifyTag",
+   "basis": "s4item: verifyComponentsAfterLoad(stack) runs a 1.20.4 verifyTagAfterLoad on the stack's tag, when it has one"
+  },
+  {
+   "old": "method_8015(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1299;",
+   "new": "method_8015(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1299;",
+   "onlyUnder": "net/minecraft/class_1826",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks.eggTypeOf(Ltop/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks$EggType;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1299;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks$EggType",
+   "basis": "s4item: SpawnEggItem.getType(stack) asks a 1.20.4 getType with the stack's tag, as 1.20.4 passed it"
+  },
+  {
+   "old": "method_8018(Lnet/minecraft/class_2487;Lnet/minecraft/class_1299;)Z",
+   "new": "method_8018(Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)Z",
+   "onlyUnder": "net/minecraft/class_1826",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks.eggSpawnsOf(Ltop/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks$EggSpawns;Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)Z",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks$EggSpawns",
+   "basis": "s4item: SpawnEggItem.spawnsEntity(stack, type) asks a 1.20.4 spawnsEntity with the stack's tag"
+  },
+  {
+   "old": "method_7579(Lnet/minecraft/class_1792;Lnet/minecraft/class_1799;)V",
+   "new": "method_7579(Lnet/minecraft/class_1799;)V",
+   "onlyUnder": "net/minecraft/class_1702",
+   "args": [
+    0,
+    0
+   ],
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbFood.itemOf(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1792;",
+   "basis": "s4item: FoodData.eat(stack) asks a 1.20.4 eat(item, stack) with the stack's item"
   }
  ],
  "superRedirects": {
@@ -426,7 +575,36 @@
   "net/minecraft/class_29.method_263()[Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#superSeenPlayers",
   "net/minecraft/class_1887.method_8186()Lnet/minecraft/class_1887$class_1888;": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#superGetRarity",
   "net/minecraft/class_1887.method_8196(ILnet/minecraft/class_1310;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#superDamageBonus",
-  "net/minecraft/class_1882.method_8196(ILnet/minecraft/class_1310;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#superDamageBonusDamage"
+  "net/minecraft/class_1882.method_8196(ILnet/minecraft/class_1310;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbEnchant#superDamageBonusDamage",
+  "net/minecraft/class_1792.method_19263()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#superIsEdible",
+  "net/minecraft/class_1792.method_19264()Lnet/minecraft/class_4174;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#superGetFoodProperties",
+  "net/minecraft/class_1792.method_24358()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#superIsFireResistant",
+  "net/minecraft/class_1792.method_24357(Lnet/minecraft/class_1282;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#superCanBeHurtBy",
+  "net/minecraft/class_1792.method_7846()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#superCanBeDepleted",
+  "net/minecraft/class_1792.method_7862(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1814;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#superGetRarity",
+  "net/minecraft/class_1792.method_7887()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#superShouldOverrideMultiplayerNbt",
+  "net/minecraft/class_1792$class_1793.method_7898(I)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps#superDefaultDurability",
+  "net/minecraft/class_1829.method_8020()F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superSwordDamage",
+  "net/minecraft/class_1766.method_26366()F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superDiggerDamage",
+  "net/minecraft/class_1826.method_8015(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#superEggType",
+  "net/minecraft/class_1826.method_8018(Lnet/minecraft/class_2487;Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#superEggSpawns",
+  "net/minecraft/class_4174$class_4175.method_19236()Lnet/minecraft/class_4174$class_4175;": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#superMeat",
+  "net/minecraft/class_1702.method_7579(Lnet/minecraft/class_1792;Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFood#superEat",
+  "net/minecraft/class_1792.method_7844(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superModifiers",
+  "net/minecraft/class_1829.method_7844(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superModifiers",
+  "net/minecraft/class_1766.method_7844(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superModifiers",
+  "net/minecraft/class_1738.method_7844(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superModifiers",
+  "net/minecraft/class_1835.method_7844(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superModifiers",
+  "net/minecraft/class_1792.method_7865(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superGetDestroySpeed",
+  "net/minecraft/class_1792.method_7856(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superIsCorrectToolForDrops",
+  "net/minecraft/class_1766.method_7865(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superGetDestroySpeed",
+  "net/minecraft/class_1766.method_7856(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superIsCorrectToolForDrops",
+  "net/minecraft/class_1829.method_7865(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superGetDestroySpeed",
+  "net/minecraft/class_1829.method_7856(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superIsCorrectToolForDrops",
+  "net/minecraft/class_1820.method_7865(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superGetDestroySpeed",
+  "net/minecraft/class_1820.method_7856(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbTools#superIsCorrectToolForDrops",
+  "net/minecraft/class_1792.method_7860(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#superVerifyTagAfterLoad",
+  "net/minecraft/class_1809.method_7860(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTagHooks#superVerifyTagAfterLoad"
  },
  "adapterHooks": [
   {
@@ -557,6 +735,142 @@
    ],
    "synth": [],
    "basis": "s4item: marks a 1.20.4 getDamageBonus(level, MobType) override, which calls reach directly"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps$Edible",
+   "requires": [
+    "method_19263()Z"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of isEdible, which 1.20.5's food component answers from"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps$Food",
+   "requires": [
+    "method_19264()Lnet/minecraft/class_4174;"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of getFoodProperties, which 1.20.5's food component answers from"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps$FireResistant",
+   "requires": [
+    "method_24358()Z"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of isFireResistant, which 1.20.5's fire resistance component answers from"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps$HurtBy",
+   "requires": [
+    "method_24357(Lnet/minecraft/class_1282;)Z"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of canBeHurtBy, which ItemStack.canBeHurtBy asks"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps$CanBeDepleted",
+   "requires": [
+    "method_7846()Z"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of canBeDepleted, which isEnchantable and the BREAKABLE category ask"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps$Rarity",
+   "requires": [
+    "method_7862(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1814;"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of getRarity(stack), which ItemStack.getRarity asks"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps$MultiplayerNbt",
+   "requires": [
+    "method_7887()Z"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of shouldOverrideMultiplayerNbt, which the stack's network codec asks"
+  },
+  {
+   "under": "net/minecraft/class_1792$class_1793",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbItemProps$DefaultDurability",
+   "requires": [
+    "method_7898(I)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of defaultDurability, which calls reach"
+  },
+  {
+   "under": "net/minecraft/class_1832",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbTools$Level",
+   "requires": [
+    "method_8024()I"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of getLevel, which getIncorrectBlocksForDrops and calls answer from"
+  },
+  {
+   "under": "net/minecraft/class_1829",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbTools$SwordDamage",
+   "requires": [
+    "method_8020()F"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of getDamage, which calls reach"
+  },
+  {
+   "under": "net/minecraft/class_1766",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbTools$DiggerDamage",
+   "requires": [
+    "method_26366()F"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of getAttackDamage, which calls reach"
+  },
+  {
+   "under": "net/minecraft/class_4174$class_4175",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFood$MeatOverride",
+   "requires": [
+    "method_19236()Lnet/minecraft/class_4174$class_4175;"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of meat(), which calls reach"
+  },
+  {
+   "under": "net/minecraft/class_1702",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFood$EatOverride",
+   "requires": [
+    "method_7579(Lnet/minecraft/class_1792;Lnet/minecraft/class_1799;)V"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 override of eat(item, stack), which calls reach"
+  }
+ ],
+ "frameDefaults": {
+  "method_46206(Lnet/minecraft/class_7403;Lnet/minecraft/class_8779;)Ljava/util/concurrent/CompletableFuture;": {
+   "1": "top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_1832",
+   "method": "method_58419()Lnet/minecraft/class_6862;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbTools.incorrectBlocks(Lnet/minecraft/class_1832;)Lnet/minecraft/class_6862;",
+   "basis": "s4item: a 1.20.4 tier's blocks it cannot mine, from its mining level"
+  },
+  {
+   "under": "net/minecraft/class_1811",
+   "method": "method_7763(Lnet/minecraft/class_1309;Lnet/minecraft/class_1676;IFFFLnet/minecraft/class_1309;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbTools.shootProjectile(Lnet/minecraft/class_1811;Lnet/minecraft/class_1309;Lnet/minecraft/class_1676;IFFFLnet/minecraft/class_1309;)V",
+   "basis": "s4item: 1.20.5's new abstract shot of a projectile weapon, for a 1.20.4 subclass: a bow's"
   }
  ]
 }
