@@ -204,7 +204,34 @@ def main():
     header = ["usage", "owner", "name", "desc", "changed", "V signature", "W signature", "V classes W lacks"]
     if wiring is not None:
         ledger = wiring.get("ledger", {})
-        hooks = {(h.get("under"), h.get("old")) for h in wiring.get("overrideHooks", []) if isinstance(h, dict)}
+
+        def supers(c):
+            """c and every V supertype of it"""
+            out, todo = set(), [c]
+            while todo:
+                x = todo.pop()
+                if x in out:
+                    continue
+                out.add(x)
+                k = V.get(x)
+                if k:
+                    todo += ([k.super] if k.super else []) + list(k.interfaces)
+            return out
+
+        def override_closed(owner, member):
+            """the wiring kind whose override side covers every mod override of owner's member: a hook
+            keyed on the owner or one of its supertypes (or on no class at all)"""
+            up = supers(owner)
+            for h in wiring.get("convertHooks", []):
+                if h.get("member") == member and h.get("under") in up:
+                    return "convertHooks"
+            for h in wiring.get("overrideHooks", []):
+                if isinstance(h, dict) and h.get("old") == member and (h.get("onlyUnder") in up or not h.get("onlyUnder")):
+                    return "overrideHooks"
+            for h in wiring.get("adapterHooks", []):
+                if member in h.get("requires", []) and h.get("under") in up:
+                    return "adapterHooks"
+            return None
 
         def closed(r):
             u, owner, nm, ds = r[0], r[1], r[2], r[3]
@@ -212,8 +239,9 @@ def main():
                 return "rename"
             key = owner + "." + nm + (":" if u in ("get", "put") else "") + ds
             if u == "override":
-                if (owner, nm + ds) in hooks:
-                    return "overrideHooks"
+                c = override_closed(owner, nm + ds)
+                if c:
+                    return c
             else:
                 for mp in USAGE_MAPS[u]:
                     if key in wiring.get(mp, {}):

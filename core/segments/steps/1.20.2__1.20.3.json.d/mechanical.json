@@ -23,24 +23,6 @@
    "ret": "keep",
    "basis": "mechanical: same values; returns a subtype of the old type"
   },
-  "net/minecraft/class_1792.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": {
-   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;)V",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "drop:2"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_1806.method_7843(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;)V": {
-   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;)V",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "drop:2"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
   "net/minecraft/class_4770.method_9576(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)V": {
    "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)Lnet/minecraft/class_2680;",
    "ops": [
@@ -331,17 +313,6 @@
    "frames": "top/dext/centurybridge/step/v1_20_3/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_437; not passed"
-  },
-  {
-   "old": "method_1176(Lnet/minecraft/class_267;)V",
-   "new": "method_1176(Lnet/minecraft/class_9015;Lnet/minecraft/class_266;Lnet/minecraft/class_267;)V",
-   "args": [
-    2
-   ],
-   "onlyUnder": "net/minecraft/class_269",
-   "frames": "top/dext/centurybridge/step/v1_20_3/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_9015;,Lnet/minecraft/class_266; not passed"
   },
   {
    "old": "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",

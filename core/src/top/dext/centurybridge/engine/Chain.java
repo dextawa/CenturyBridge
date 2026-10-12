@@ -306,7 +306,12 @@ public final class Chain {
          * InteractionResult). Null when the return type did not change.
          */
         public String unwrapOwner, unwrapName, unwrapDesc;
-        /** internal class name providing cbEnter(Object)Z and cbExit(Object)V */
+        /**
+         * internal class name providing cbEnter(Object)Z and cbExit(Object)V. A guarded (or narrowing)
+         * fall-through calls super's new shape; when the class's vanilla superclass chain has none but a
+         * direct vanilla superinterface has it as a default method (1.20.3's ChangeOverTimeBlock.getNextState
+         * under a copper block extending Block), it calls that interface's default instead.
+         */
         public String guard;
         /** hierarchy filters: apply only to classes under / not under this vanilla class */
         public String onlyUnder, notUnder;
@@ -387,6 +392,72 @@ public final class Chain {
     }
 
     public final java.util.List<AdapterHook> adapterHooks = new java.util.ArrayList<>();
+
+    /**
+     * Implementations a vanilla type newly demands ("abstractFills" in a step's wiring): a method the
+     * target declares abstract that a mod class written against the source cannot implement, because
+     * the source had no such method (1.20.3's BlockBehaviour.codec(), Level.tickRateManager(),
+     * ContainerSingleItem.getTheItem()). Left alone, the class loads and the first call is an
+     * AbstractMethodError. A concrete class of the converted jar under {@code under} that would
+     * inherit the method only as abstract on the target -- no class of the jar on its way declares
+     * it, no override or adapter hook synthesizes it, and the nearest declaration up its target
+     * ancestry ({@link #concreteOnTarget}) is abstract or missing -- gets it synthesized as
+     * {@code public R m(args) { return call(this, args...); }}: the static answers what the source
+     * API made of the situation. A class that inherits a concrete implementation keeps it, so the
+     * fill never replaces vanilla behaviour.
+     * <pre>
+     *   "abstractFills": [{"under": "net/minecraft/class_4970", "method": "method_53969()Lcom/mojang/serialization/MapCodec;",
+     *                      "call": "Owner.name(Lnet/minecraft/class_4970;)Lcom/mojang/serialization/MapCodec;"}]
+     * </pre>
+     * The call's first parameter is {@code under} (the receiver), the rest the method's own.
+     */
+    public static final class AbstractFill {
+        public String under, name, desc, callOwner, callName, callDesc;
+    }
+
+    public final java.util.List<AbstractFill> abstractFills = new java.util.ArrayList<>();
+
+    /** target-stub methods declared abstract, "owner.name(desc)" in the analysis namespace */
+    public final java.util.Set<String> targetAbstracts = new java.util.HashSet<>();
+
+    /**
+     * Whether the target gives a class with these vanilla ancestors a concrete name+desc, the way the
+     * JVM selects one: the nearest declaration up the superclass chain decides (an abstract
+     * redeclaration -- 1.20.3's HorizontalDirectionalBlock.codec() under Block's concrete one --
+     * counts as abstract); without one, a default method of an implemented interface. True when the
+     * target is unknown.
+     */
+    public boolean concreteOnTarget(String name, String desc, java.util.List<String> roots) {
+        if (targetDecls.isEmpty()) {
+            return true;
+        }
+        String shape = name + desc;
+        java.util.ArrayDeque<String> ifaces = new java.util.ArrayDeque<>();
+        for (String r : roots) {
+            if (targetInterfaces.contains(r)) {
+                ifaces.add(r);
+                continue;
+            }
+            for (String c = r; c != null; c = targetSuperOf.get(c)) {
+                if (targetDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
+                    return !targetAbstracts.contains(c + "." + shape);
+                }
+                ifaces.addAll(targetInterfacesOf.getOrDefault(c, java.util.List.of()));
+            }
+        }
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!ifaces.isEmpty()) {
+            String i = ifaces.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            if (targetDecls.getOrDefault(i, java.util.Set.of()).contains(shape) && !targetAbstracts.contains(i + "." + shape)) {
+                return true;
+            }
+            ifaces.addAll(targetInterfacesOf.getOrDefault(i, java.util.List.of()));
+        }
+        return false;
+    }
 
     /**
      * Lambdas whose functional interface's abstract method changed shape ("lambdaAdapters"): 1.20.2's
@@ -759,6 +830,9 @@ public final class Chain {
                         : cls.matcher(d).replaceAll(mr -> "L" + java.util.regex.Matcher.quoteReplacement(
                             back.getOrDefault(mr.group(1), mr.group(1))) + ";");
                     decls.add(name + bd);
+                    if (idx.abstracts.contains(e.getKey() + "." + me.getKey() + d)) {
+                        targetAbstracts.add(owner + "." + name + bd);
+                    }
                     if (!name.equals(me.getKey())) {
                         // past the wall the runtime name IS the mojang one: a mixin
                         // spelling it that way (mojang-mapped bundled jar, whose
@@ -982,6 +1056,19 @@ public final class Chain {
         public final String retKind;
         public final String retOwner, retName, retDesc;
 
+        /** whether the call's values change at all (a converter on an argument or the return), not just its shape */
+        public boolean converts() {
+            if ("conv".equals(retKind)) {
+                return true;
+            }
+            for (ReshapeOp op : args.ops) {
+                if (op.owner != null && !op.drop && op.from.length > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         CallReshape(CtorReshape args, String oldDesc, String newDesc, String retKind, String retOwner, String retName, String retDesc) {
             this.args = args;
             this.oldDesc = oldDesc;
@@ -1000,6 +1087,112 @@ public final class Chain {
     public final java.util.Set<String> callReshapeNames = new java.util.HashSet<>();
     /** name + new descriptor of every reshape: what the rewritten call sites now reference */
     public final java.util.Set<String> callReshapeTargets = new java.util.HashSet<>();
+    /**
+     * name + descriptor of the reshapes that keep the descriptor -- conversions of values whose
+     * erased type stayed while their type arguments changed (generic drift). Such a member keeps
+     * its shape on a mod class that overrides it too ({@link #convertHooks} puts a converting
+     * bridge in front of the mod's own method), so a call naming that mod class is converted as
+     * well: the bridge expects what vanilla passes.
+     */
+    public final java.util.Set<String> sameShapeCalls = new java.util.HashSet<>();
+
+    /**
+     * An override of a member whose descriptor stayed while the type arguments of its parameters or
+     * return changed ("convertHooks", the override side of a same-shape callReshape). Vanilla calls
+     * the mod's method with W's values and reads W's from what it answers; the mod's body was written
+     * for V's. The engine renames the mod's method ({@link #renamed}) and puts a bridge with the
+     * original name and descriptor in its place:
+     * <pre>
+     *   m(a0..an):  return ret(this.m$cbW(arg0(a0) .. argn(an)));
+     * </pre>
+     * each converter optional. A mod's own call of m -- this.m(..), super.m(..) from a subclass --
+     * goes through the call side's conversion and then the bridge, so the renamed body always sees
+     * V's values. Converters should be adaptive (a value already of the wanted kind passes through)
+     * and undo each other, because erasure cannot tell where a value came from.
+     */
+    public static final class ConvertHook {
+        public final String under, name, desc;
+        /** per parameter: {owner, name, desc} of the static turning W's value into V's, or null */
+        public final String[][] args;
+        /** {owner, name, desc} of the static turning the old body's V value into W's, or null */
+        public final String[] ret;
+        public final String renamed;
+
+        ConvertHook(String under, String name, String desc, String[][] args, String[] ret, String renamed) {
+            this.under = under;
+            this.name = name;
+            this.desc = desc;
+            this.args = args;
+            this.ret = ret;
+            this.renamed = renamed;
+        }
+    }
+
+    /** convertHooks by name + descriptor */
+    public final java.util.Map<String, java.util.List<ConvertHook>> convertHooks = new java.util.HashMap<>();
+
+    static String[] parseStaticRef(String where, String s) {
+        String t = s.trim();
+        int hash = t.indexOf('#');
+        int paren = t.indexOf('(');
+        if (hash <= 0 || paren <= hash) {
+            throw new IllegalArgumentException(where + ": '" + s + "' is not OWNER#name(desc)R");
+        }
+        return new String[] {t.substring(0, hash), t.substring(hash + 1, paren), t.substring(paren)};
+    }
+
+    /** one "convertHooks" entry: {"under", "member": "name(desc)", "args": [ref|null..], "ret": ref} */
+    public static ConvertHook parseConvertHook(com.google.gson.JsonObject o, String step) {
+        String under = o.get("under").getAsString();
+        String member = o.get("member").getAsString();
+        String where = "convertHooks " + under + "." + member;
+        int paren = member.indexOf('(');
+        if (paren <= 0) {
+            throw new IllegalArgumentException(where + ": member must be name(desc)");
+        }
+        String name = member.substring(0, paren);
+        String desc = member.substring(paren);
+        if (name.startsWith("<")) {
+            throw new IllegalArgumentException(where + ": constructors are not overridden (superCtorReshapes)");
+        }
+        org.objectweb.asm.Type[] params = org.objectweb.asm.Type.getArgumentTypes(desc);
+        org.objectweb.asm.Type rt = org.objectweb.asm.Type.getReturnType(desc);
+        String[][] args = new String[params.length][];
+        boolean any = false;
+        if (o.has("args")) {
+            var a = o.getAsJsonArray("args");
+            if (a.size() != params.length) {
+                throw new IllegalArgumentException(where + ": args lists " + a.size() + " converters for " + params.length + " parameters");
+            }
+            for (int i = 0; i < params.length; i++) {
+                if (a.get(i).isJsonNull()) {
+                    continue;
+                }
+                String[] ref = parseStaticRef(where, a.get(i).getAsString());
+                org.objectweb.asm.Type[] cp = org.objectweb.asm.Type.getArgumentTypes(ref[2]);
+                if (cp.length != 1 || !cp[0].equals(params[i]) || !org.objectweb.asm.Type.getReturnType(ref[2]).equals(params[i])) {
+                    throw new IllegalArgumentException(where + ": converter " + i + " must be (" + params[i].getDescriptor()
+                        + ")" + params[i].getDescriptor());
+                }
+                args[i] = ref;
+                any = true;
+            }
+        }
+        String[] ret = null;
+        if (o.has("ret") && !o.get("ret").isJsonNull()) {
+            ret = parseStaticRef(where, o.get("ret").getAsString());
+            org.objectweb.asm.Type[] cp = org.objectweb.asm.Type.getArgumentTypes(ret[2]);
+            if (rt.getSort() == org.objectweb.asm.Type.VOID || cp.length != 1 || !cp[0].equals(rt)
+                    || !org.objectweb.asm.Type.getReturnType(ret[2]).equals(rt)) {
+                throw new IllegalArgumentException(where + ": ret must be (" + rt.getDescriptor() + ")" + rt.getDescriptor());
+            }
+            any = true;
+        }
+        if (!any) {
+            throw new IllegalArgumentException(where + ": converts nothing");
+        }
+        return new ConvertHook(under, name, desc, args, ret, name + "$cb" + step.replace('.', '_'));
+    }
 
     public static CallReshape parseCallReshape(String key, String newDesc, java.util.List<String> ops, String ret) {
         String where = "callReshapes " + key;
@@ -1008,10 +1201,15 @@ public final class Chain {
         org.objectweb.asm.Type oldRet = org.objectweb.asm.Type.getReturnType(oldDesc);
         org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(newDesc);
         if (oldRet.equals(newRet)) {
-            if (ret != null) {
-                throw new IllegalArgumentException(where + ": return type unchanged, 'ret' must be absent");
+            if (ret == null) {
+                return new CallReshape(args, oldDesc, newDesc, null, null, null, null);
             }
-            return new CallReshape(args, oldDesc, newDesc, null, null, null, null);
+            // the erased return type stayed while its type arguments changed (generic drift:
+            // RecipeManager.getFirstMatch answers Optional<RecipeHolder<T>> where it answered
+            // Optional<T>): only a conversion of the value makes sense
+            if (!ret.trim().startsWith("conv ")) {
+                throw new IllegalArgumentException(where + ": return type unchanged, 'ret' can only be a same-type conv");
+            }
         }
         if (oldRet.getSort() == org.objectweb.asm.Type.VOID) {
             if (ret != null && !ret.equals("pop")) {
@@ -1586,6 +1784,28 @@ public final class Chain {
                     c.facadeGaps.put(e.getKey(), e.getValue().getAsString());
                 }
             }
+            if (root.has("abstractFills")) {
+                for (var el : root.getAsJsonArray("abstractFills")) {
+                    var o = el.getAsJsonObject();
+                    AbstractFill f = new AbstractFill();
+                    f.under = o.get("under").getAsString();
+                    String[] msig = splitSig(o.get("method").getAsString());
+                    f.name = msig[0];
+                    f.desc = msig[1];
+                    String call = o.get("call").getAsString();
+                    int dot = call.lastIndexOf('.', call.indexOf('('));
+                    f.callOwner = call.substring(0, dot);
+                    String[] csig = splitSig(call.substring(dot + 1));
+                    f.callName = csig[0];
+                    f.callDesc = csig[1];
+                    String want = "(L" + f.under + ";" + f.desc.substring(1);
+                    if (!f.callDesc.equals(want)) {
+                        throw new IllegalArgumentException("abstractFills " + f.under + "." + f.name + f.desc
+                            + ": call must take the receiver and the method's arguments and return its type: " + want);
+                    }
+                    c.abstractFills.add(f);
+                }
+            }
             if (root.has("adapterHooks")) {
                 for (var el : root.getAsJsonArray("adapterHooks")) {
                     var o = el.getAsJsonObject();
@@ -1686,11 +1906,21 @@ public final class Chain {
                         ops.add(el.getAsString());
                     }
                     String ret = o.has("ret") ? o.get("ret").getAsString() : null;
-                    c.callReshapes.put(k, parseCallReshape(k, o.get("desc").getAsString(), ops, ret));
+                    CallReshape parsed = parseCallReshape(k, o.get("desc").getAsString(), ops, ret);
+                    c.callReshapes.put(k, parsed);
                     c.callReshapeIndex.put(k, k);
                     String nm = k.substring(k.lastIndexOf('.', k.indexOf('(')) + 1, k.indexOf('('));
                     c.callReshapeNames.add(nm);
                     c.callReshapeTargets.add(nm + o.get("desc").getAsString());
+                    if (parsed.converts() && parsed.newDesc.equals(parsed.oldDesc)) {
+                        c.sameShapeCalls.add(nm + parsed.newDesc);
+                    }
+                }
+            }
+            if (root.has("convertHooks")) {
+                for (var e : root.getAsJsonArray("convertHooks")) {
+                    ConvertHook h = parseConvertHook(e.getAsJsonObject(), c.to);
+                    c.convertHooks.computeIfAbsent(h.name + h.desc, x -> new java.util.ArrayList<>()).add(h);
                 }
             }
             if (root.has("ctorRedirects")) {
