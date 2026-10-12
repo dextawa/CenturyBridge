@@ -25,11 +25,14 @@ public final class Driver {
         net.minecraft.class_3218 world = server.method_30002();
 
         // ---- Scoreboard: invokers / accessor of members 1.20.2 removed (instance + static redirect, field getter)
-        net.minecraft.class_266 auto = null;
+        // Scoreboard.getObjective(name) (method_1165) answers the named objective, or null
+        net.minecraft.class_266 auto = sb.method_1168("cbt_auto", net.minecraft.class_274.field_1468,
+            net.minecraft.class_2561.method_43470("CB auto"), net.minecraft.class_274.class_275.field_1472);
         try {
-            auto = ((ScoreboardAccess) sb).cbtest$getOrCreate("cbt_auto");
-            T.check("invoker-instance-redirect", auto != null && "cbt_auto".equals(auto.method_1113()),
-                "getOrCreateObjective -> " + (auto == null ? null : auto.method_1113()));
+            net.minecraft.class_266 got = ((ScoreboardAccess) sb).cbtest$getOrCreate("cbt_auto");
+            net.minecraft.class_266 none = ((ScoreboardAccess) sb).cbtest$getOrCreate("cbt_missing");
+            T.check("invoker-instance-redirect", got == auto && none == null,
+                "getObjective(cbt_auto) -> " + (got == null ? null : got.method_1113()) + ", getObjective(cbt_missing) -> " + none);
         } catch (Throwable t) {
             T.fail("invoker-instance-redirect", t);
         }
@@ -47,9 +50,10 @@ public final class Driver {
         }
         // ---- the same members through the mixin's own @Shadow method and @Shadow field
         try {
-            net.minecraft.class_266 p = ((Probes.ScoreboardProbe) sb).cbtest$probeOrCreate("cbt_probe");
-            T.check("shadow-instance-redirect", p != null && "cbt_probe".equals(p.method_1113()),
-                "this.getOrCreateObjective -> " + (p == null ? null : p.method_1113()));
+            net.minecraft.class_266 p = ((Probes.ScoreboardProbe) sb).cbtest$probeOrCreate("cbt_auto");
+            net.minecraft.class_266 none = ((Probes.ScoreboardProbe) sb).cbtest$probeOrCreate("cbt_missing");
+            T.check("shadow-instance-redirect", p == auto && none == null,
+                "this.getObjective(cbt_auto) -> " + (p == null ? null : p.method_1113()) + ", (cbt_missing) -> " + none);
         } catch (Throwable t) {
             T.fail("shadow-instance-redirect", t);
         }
@@ -96,8 +100,8 @@ public final class Driver {
             pig2 = net.minecraft.class_1299.field_6093.method_5883(world);
             ((LivingEntityAccess) pig).cbtest$setLyHeadRot(12.5);
             double a = ((LivingEntityAccess) pig).cbtest$getLyHeadRot();
-            double b = ((Probes.LivingProbe) pig).cbtest$lyHeadRot();
-            ((Probes.LivingProbe) pig).cbtest$setLyHeadRot(7.25);
+            double b = ((Probes.LivingProbe) pig).cbtest$shadowLyHeadRot();
+            ((Probes.LivingProbe) pig).cbtest$shadowSetLyHeadRot(7.25);
             double c = ((LivingEntityAccess) pig).cbtest$getLyHeadRot();
             T.check("accessor-rename", a == 12.5 && c == 7.25, "set 12.5 get " + a + "; shadow set 7.25, accessor get " + c);
             T.check("shadow-field-rename", b == 12.5, "accessor set 12.5, shadow get " + b);
@@ -171,6 +175,32 @@ public final class Driver {
             T.check("inject-ci-to-cir", ("latest=" + latest.getFileName()).equals(s), "handler saw " + s);
         } catch (Throwable t) {
             T.fail("invoker-static-reshape", t);
+        }
+        // ---- constructor invokers of constructors 1.20.3 reshaped / redirected to a factory
+        try {
+            net.minecraft.class_238 box = cb.mixintest.mixin.BoxAccess.cbtest$newBox(new net.minecraft.class_2338(1, 2, 3),
+                new net.minecraft.class_2338(4, 5, 6));
+            T.check("invoker-ctor-reshape", box.field_1323 == 1.0 && box.field_1322 == 2.0 && box.field_1321 == 3.0
+                && box.field_1320 == 4.0 && box.field_1325 == 5.0 && box.field_1324 == 6.0, "new AABB(pos, pos) -> " + box);
+        } catch (Throwable t) {
+            T.fail("invoker-ctor-reshape", t);
+        }
+        try {
+            net.minecraft.class_1667 arrow = cb.mixintest.mixin.ArrowAccess.cbtest$newArrow(world, 1.5, 100.0, 2.5);
+            T.check("invoker-ctor-factory", arrow.method_23317() == 1.5 && arrow.method_23321() == 2.5,
+                "new Arrow(level, 1.5, 100, 2.5) -> " + arrow.method_23317() + "," + arrow.method_23318() + "," + arrow.method_23321());
+        } catch (Throwable t) {
+            T.fail("invoker-ctor-factory", t);
+        }
+        try {
+            java.util.UUID id = java.util.UUID.fromString("0c0b0a09-0807-0605-0403-020100000000");
+            net.minecraft.class_1322 mod = cb.mixintest.mixin.ModifierAccess.cbtest$newModifier(id, () -> "cbt_modifier", 2.5,
+                net.minecraft.class_1322.class_1323.field_6328);
+            T.check("invoker-ctor-reshape-post", "cbt_modifier".equals(mod.method_6185()) && mod.method_6186() == 2.5
+                && id.equals(mod.method_6189()), "new AttributeModifier(id, () -> name, 2.5, ADDITION) -> name="
+                + mod.method_6185() + " amount=" + mod.method_6186());
+        } catch (Throwable t) {
+            T.fail("invoker-ctor-reshape-post", t);
         }
         T.summary();
     }

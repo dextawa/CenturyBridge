@@ -5,7 +5,7 @@ public final class Probes {
     private Probes() {
     }
 
-    /** ScoreboardMixin: a call through @Shadow getOrCreateObjective, a read of @Shadow DISPLAY_SLOT_LIST */
+    /** ScoreboardMixin: a call through @Shadow getObjective (method_1165), a read of @Shadow DISPLAY_SLOT_LIST */
     public interface ScoreboardProbe {
         net.minecraft.class_266 cbtest$probeOrCreate(String name);
 
@@ -21,9 +21,9 @@ public final class Probes {
 
     /** LivingEntityMixin: reads and writes of @Shadow lyHeadRot */
     public interface LivingProbe {
-        double cbtest$lyHeadRot();
+        double cbtest$shadowLyHeadRot();
 
-        void cbtest$setLyHeadRot(double v);
+        void cbtest$shadowSetLyHeadRot(double v);
     }
 
     /** BoatMixin: calls through @Shadow setHurtTime / getHurtTime */

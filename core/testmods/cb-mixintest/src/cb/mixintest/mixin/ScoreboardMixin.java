@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(net.minecraft.class_269.class)
 public abstract class ScoreboardMixin implements Probes.ScoreboardProbe {
-    /** getOrCreateObjective: gone in 1.20.2 (step 1 instanceRedirects) */
+    /** Scoreboard.getObjective(name) (method_1165): gone in 1.20.2 (step 1 instanceRedirects) */
     @Shadow
     public abstract net.minecraft.class_266 method_1165(String name);
 

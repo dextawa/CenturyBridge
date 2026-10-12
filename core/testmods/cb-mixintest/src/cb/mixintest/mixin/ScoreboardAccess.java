@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(net.minecraft.class_269.class)
 public interface ScoreboardAccess {
-    /** getOrCreateObjective: gone in 1.20.2, instance-redirected by step 1 */
+    /** Scoreboard.getObjective(name) (method_1165, the named objective or null): gone in 1.20.2, instance-redirected by step 1 */
     @Invoker("getOrCreateObjective")
     net.minecraft.class_266 cbtest$getOrCreate(String name);
 

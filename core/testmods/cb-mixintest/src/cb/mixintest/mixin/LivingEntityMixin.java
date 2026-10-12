@@ -11,12 +11,12 @@ public abstract class LivingEntityMixin implements Probes.LivingProbe {
     protected double field_6242;
 
     @Override
-    public double cbtest$lyHeadRot() {
+    public double cbtest$shadowLyHeadRot() {
         return this.field_6242;
     }
 
     @Override
-    public void cbtest$setLyHeadRot(double v) {
+    public void cbtest$shadowSetLyHeadRot(double v) {
         this.field_6242 = v;
     }
 }

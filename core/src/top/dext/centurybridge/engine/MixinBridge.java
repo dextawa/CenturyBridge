@@ -918,7 +918,8 @@ final class MixinBridge {
             String pfx = inflectPrefix(m.name);
             if (name.equals("<init>") || name.equals(simple)
                     || implicit && ("new".equals(pfx) || "create".equals(pfx)) && simple.equals(inflectRaw(m.name))) {
-                return; // a constructor invoker: not carried here
+                factoryInvoker(m, an);
+                return;
             }
             boolean isStatic = (m.access & Opcodes.ACC_STATIC) != 0;
             Boolean live = wDeclares(target, name, m.desc);
@@ -1074,6 +1075,104 @@ final class MixinBridge {
             }
             changed = true;
             bridged.add(what + " -> calls " + shortName(target) + "." + f.name() + call.desc + " (" + f.how() + ")");
+        }
+
+        /**
+         * A constructor invoker (@Invoker("<init>") static Owner create(args)): a NEW site of the target
+         * class, carried the way the step carries a NEW site in plain code. Its constructor redirected to
+         * a factory: the method calls the factory. Reshaped (or tail-adapted): the invoker takes W's
+         * constructor shape under a new name, and the V shape comes back as a synthetic static making
+         * the reshape's conversion -- its post static on the new object included.
+         */
+        private void factoryInvoker(MethodNode m, AnnotationNode an) {
+            Type ret = Type.getReturnType(m.desc);
+            if ((m.access & Opcodes.ACC_STATIC) == 0 || ret.getSort() != Type.OBJECT) {
+                return;
+            }
+            String vDesc = m.desc;
+            String ctor = vDesc.substring(0, vDesc.indexOf(')') + 1) + "V";
+            Boolean live = wDeclares(target, "<init>", ctor);
+            if (live == null || live) {
+                return;
+            }
+            String what = "constructor invoker " + sn + "." + m.name + m.desc;
+            String key = target + ".<init>" + ctor;
+            String factory = chain.ctorRedirects.get(key);
+            if (factory != null) {
+                InsnList in = concrete(m, an);
+                loadArgs(in, vDesc, 0);
+                String owner = JarProcessor.redirCls(factory);
+                String name = JarProcessor.redirName(factory, "cbNew");
+                in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, name, ctor.substring(0, ctor.length() - 1) + "L" + target + ";", false));
+                in.add(new InsnNode(Opcodes.ARETURN));
+                changed = true;
+                bridged.add(what + " -> " + owner + "." + name + " (constructor factory)");
+                return;
+            }
+            Chain.CtorReshape cr = chain.superCtorReshapes.get(key);
+            String[] adapt = cr == null ? chain.superCtorAdapts.get(key) : null;
+            if (cr == null && adapt == null) {
+                return;
+            }
+            if (cr != null) {
+                for (Chain.ReshapeOp op : cr.ops) {
+                    if (op.param != null) {
+                        left.add(what + ": the constructor reshape takes an argument from the caller's own parameters");
+                        return;
+                    }
+                }
+            }
+            String wCtor = cr != null ? cr.newDesc : adapt[0];
+            if (!Boolean.TRUE.equals(wDeclares(target, "<init>", wCtor))) {
+                left.add(what + ": " + shortName(target) + " has no constructor " + wCtor + " in " + chain.to);
+                return;
+            }
+            String wDesc = wCtor.substring(0, wCtor.indexOf(')') + 1) + ret.getDescriptor();
+            String vName = m.name;
+            String renamed = unique(vName + "$cb" + step);
+            m.name = renamed;
+            m.desc = wDesc;
+            m.signature = null;
+            setValue(an, "value", "<init>"); // the new name no longer inflects to a constructor
+            MethodNode vm = new MethodNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, vName, vDesc, null,
+                exceptions(m));
+            // an accessor interface's own static runs in the interface: the conversion lives in the bridge class
+            MethodNode body = itf ? new MethodNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC,
+                "b" + (helperSeq++) + "$" + sn.replace('$', '_') + "$" + vName, vDesc, null, null) : vm;
+            loadArgs(body.instructions, vDesc, 0);
+            MethodInsnNode call = new MethodInsnNode(Opcodes.INVOKESTATIC, mx.name, vName, vDesc, itf);
+            body.instructions.add(call);
+            body.instructions.add(new InsnNode(Opcodes.ARETURN));
+            body.maxLocals = argSlots(vDesc, true);
+            if (cr != null) {
+                int[] slots = JarProcessor.reshapeArgs(body, call, cr);
+                if (cr.postName != null) {
+                    // the post static takes the constructed object and the old arguments the new constructor has no place for
+                    Type[] oa = Type.getArgumentTypes(vDesc);
+                    InsnList post = new InsnList();
+                    post.add(new InsnNode(Opcodes.DUP));
+                    for (int idx : cr.postArgs) {
+                        post.add(new VarInsnNode(oa[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
+                    }
+                    post.add(new MethodInsnNode(Opcodes.INVOKESTATIC, cr.postOwner, cr.postName, cr.postDesc, false));
+                    body.instructions.insert(call, post);
+                }
+            } else {
+                body.instructions.insertBefore(call, new MethodInsnNode(Opcodes.INVOKESTATIC, JarProcessor.redirCls(adapt[1]),
+                    JarProcessor.redirName(adapt[1], "cbConv"), adapt[2], false));
+            }
+            call.desc = wDesc;
+            call.name = renamed;
+            if (itf) {
+                helperMethods.add(body);
+                loadArgs(vm.instructions, vDesc, 0);
+                vm.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, helperName, body.name, vDesc, false));
+                vm.instructions.add(new InsnNode(Opcodes.ARETURN));
+            }
+            mx.methods.add(vm);
+            changed = true;
+            bridged.add(what + " -> " + renamed + wDesc + " (constructor " + (cr != null ? "reshape" : "adapter") + "; "
+                + vName + vDesc + " converts as it does)");
         }
 
         /** an accessor / invoker method turned into a plain synthetic one; returns its emptied body */
