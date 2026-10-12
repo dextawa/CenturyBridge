@@ -14,7 +14,8 @@
   "net/minecraft/class_8514.field_44639:Ljava/util/function/ToIntFunction;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGeneric",
   "net/minecraft/class_5699.field_43173:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
   "net/minecraft/class_4722.field_28252:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient",
-  "net/minecraft/class_4722.field_28253:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient"
+  "net/minecraft/class_4722.field_28253:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient",
+  "net/minecraft/class_8514.field_44638:[Lnet/minecraft/class_5712;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents"
  },
  "callReshapes": {
   "net/minecraft/class_1309.method_6088()Ljava/util/Map;": {
@@ -721,7 +722,10 @@
   "net/minecraft/class_4722.method_24066(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient",
   "net/minecraft/class_823.method_29999(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLjava/util/List;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient",
   "net/minecraft/class_823.method_23802(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLjava/util/List;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient",
-  "net/minecraft/class_14.method_59(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_7;)Lnet/minecraft/class_7;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath"
+  "net/minecraft/class_14.method_59(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_7;)Lnet/minecraft/class_7;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath",
+  "net/minecraft/class_5717.method_32963(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5716;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_5717.method_32958(Lnet/minecraft/class_5716;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_8514.method_51385(Lnet/minecraft/class_5712;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents"
  },
  "instanceRedirects": {
   "net/minecraft/class_20.method_92()B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
@@ -729,7 +733,15 @@
   "net/minecraft/class_338.method_1805(Lnet/minecraft/class_332;III)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient",
   "net/minecraft/class_3262.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks",
   "net/minecraft/class_3298.method_45305()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks",
-  "net/minecraft/class_5699$class_6495.method_37945(Lcom/mojang/datafixers/util/Either;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs"
+  "net/minecraft/class_5699$class_6495.method_37945(Lcom/mojang/datafixers/util/Either;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestCodecs",
+  "net/minecraft/class_5717.method_32962(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5716;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_5717.method_32960(Lnet/minecraft/class_2540;Lnet/minecraft/class_5716;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_5707$class_5708.method_32929(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5707;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_5707$class_5708.method_32930(Lnet/minecraft/class_2540;Lnet/minecraft/class_5707;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_5709$class_5710.method_32934(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5709;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_5709$class_5710.method_32935(Lnet/minecraft/class_2540;Lnet/minecraft/class_5709;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_5712.method_40156(Lnet/minecraft/class_6862;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
+  "net/minecraft/class_5712.method_40157()Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents"
  },
  "facadeGaps": {
   "net/minecraft/class_20$class_21.<init>(Ljava/lang/String;IZZ)V": "1.20.1's private enum constructor (before 1.20.2 gave the constants a serialized name): only the enum's own static initializer calls it -- from any other class it is an IllegalAccessError, and reflection refuses to construct an enum",
@@ -771,7 +783,11 @@
   "net/minecraft/class_3262.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#isBuiltinDefault",
   "net/minecraft/class_3255.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#superIsBuiltin",
   "net/minecraft/class_8614.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#superIsBuiltin",
-  "net/minecraft/class_8.method_43568(Lnet/minecraft/class_9;)Lnet/minecraft/class_4459;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath#superTarget"
+  "net/minecraft/class_8.method_43568(Lnet/minecraft/class_9;)Lnet/minecraft/class_4459;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath#superTarget",
+  "net/minecraft/class_5707$class_5708.method_32929(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5707;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents#superRead",
+  "net/minecraft/class_5707$class_5708.method_32930(Lnet/minecraft/class_2540;Lnet/minecraft/class_5707;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents#superWrite",
+  "net/minecraft/class_5709$class_5710.method_32934(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5709;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents#superRead",
+  "net/minecraft/class_5709$class_5710.method_32935(Lnet/minecraft/class_2540;Lnet/minecraft/class_5709;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents#superWrite"
  },
  "abstractFills": [
   {
@@ -824,6 +840,100 @@
     {
      "new": "method_57089(Lnet/minecraft/class_9;)Z",
      "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath.diagonalEnd(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyDiagonal;Lnet/minecraft/class_9;)Z"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5717",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyType",
+   "requires": [
+    "method_32962(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5716;",
+    "method_32960(Lnet/minecraft/class_2540;Lnet/minecraft/class_5716;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56123()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents.streamCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyType;)Lnet/minecraft/class_9139;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5707$class_5708",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyBlockType",
+   "requires": [
+    "method_32929(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5707;",
+    "method_32930(Lnet/minecraft/class_2540;Lnet/minecraft/class_5707;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56123()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents.blockCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyBlockType;)Lnet/minecraft/class_9139;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5707$class_5708",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyBlockRead",
+   "requires": [
+    "method_32929(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5707;"
+   ],
+   "synth": [
+    {
+     "new": "method_56123()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents.blockCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyBlockRead;)Lnet/minecraft/class_9139;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5707$class_5708",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyBlockWrite",
+   "requires": [
+    "method_32930(Lnet/minecraft/class_2540;Lnet/minecraft/class_5707;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56123()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents.blockCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyBlockWrite;)Lnet/minecraft/class_9139;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5709$class_5710",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyEntityType",
+   "requires": [
+    "method_32934(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5709;",
+    "method_32935(Lnet/minecraft/class_2540;Lnet/minecraft/class_5709;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56123()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents.entityCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyEntityType;)Lnet/minecraft/class_9139;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5709$class_5710",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyEntityRead",
+   "requires": [
+    "method_32934(Lnet/minecraft/class_2540;)Lnet/minecraft/class_5709;"
+   ],
+   "synth": [
+    {
+     "new": "method_56123()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents.entityCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyEntityRead;)Lnet/minecraft/class_9139;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_5709$class_5710",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyEntityWrite",
+   "requires": [
+    "method_32935(Lnet/minecraft/class_2540;Lnet/minecraft/class_5709;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56123()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents.entityCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents$LegacyEntityWrite;)Lnet/minecraft/class_9139;"
     }
    ]
   }
