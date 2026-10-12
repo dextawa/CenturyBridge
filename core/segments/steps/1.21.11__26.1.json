@@ -1,3 +1,8 @@
 {
- "step": "1.21.11__26.1"
+ "step": "1.21.11__26.1",
+ "depRenames": {
+  "fabric": "fabric-api",
+  "fabric-key-binding-api-v1": "fabric-key-mapping-api-v1"
+ },
+ "_depRenames_basis": "26.1's Fabric API no longer provides the 'fabric' alias (1.21.11's provides ['fabric']), and its key-binding module is fabric-key-mapping-api-v1 (1.21.11: fabric-key-binding-api-v1); read off the fabric.mod.json of both releases' Fabric API"
 }
