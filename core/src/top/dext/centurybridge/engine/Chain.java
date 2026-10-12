@@ -931,6 +931,11 @@ public final class Chain {
      *     the next one in sequence: reordering, duplicating, or folding
      *     several old arguments into one converter. When any op is explicit
      *     the sequential coverage check is waived.</li>
+     * <li>{@code conv ... as <type>} / {@code push ... as <type>} -- the static answers a
+     *     supertype (Object) of the new argument and the site casts its answer to {@code type}:
+     *     a type the shim cannot name in Java source, such as a package-private class that the
+     *     layer's access widener opens only at runtime (1.20.2 FilePackResources takes its
+     *     package-private SharedZipFileAccess).</li>
      * </ul>
      * Longs and doubles are handled (two-slot locals, typed load/store). The
      * argument types the ops produce must equal {@code desc}'s parameter list
@@ -1057,6 +1062,12 @@ public final class Chain {
         public final boolean drop;
         /** "param": the enclosing method's first parameter of this type; owner/name/desc then supply the fallback */
         public org.objectweb.asm.Type param;
+        /**
+         * "conv ... as &lt;type&gt;" / "push ... as &lt;type&gt;": the static answers a supertype (Object) of the
+         * argument the new shape takes and the rewritten site casts it -- for a type the shim cannot
+         * name in Java (a package-private class the layer's access widener opens at runtime only).
+         */
+        public org.objectweb.asm.Type cast;
 
         ReshapeOp(int[] from, String owner, String name, String desc, boolean drop) {
             this.from = from;
@@ -1150,6 +1161,12 @@ public final class Chain {
                     }
                 }
                 case "conv", "push" -> {
+                    org.objectweb.asm.Type castTo = null;
+                    int as = rest.indexOf(" as ");
+                    if (as >= 0) {
+                        castTo = org.objectweb.asm.Type.getType(rest.substring(as + 4).trim());
+                        rest = rest.substring(0, as).trim();
+                    }
                     int hash = rest.indexOf('#');
                     int paren = rest.indexOf('(');
                     if (hash <= 0 || paren <= hash) {
@@ -1173,8 +1190,13 @@ public final class Chain {
                     if (r.getSort() == org.objectweb.asm.Type.VOID) {
                         throw new IllegalArgumentException(where + ": op '" + t + "' returns void");
                     }
-                    ops.add(new ReshapeOp(from, cOwner, cName, cDesc, false));
-                    produced.add(r);
+                    if (castTo != null && (castTo.getSort() != org.objectweb.asm.Type.OBJECT || r.getSort() != org.objectweb.asm.Type.OBJECT)) {
+                        throw new IllegalArgumentException(where + ": op '" + t + "' casts between non-object types");
+                    }
+                    ReshapeOp op = new ReshapeOp(from, cOwner, cName, cDesc, false);
+                    op.cast = castTo;
+                    ops.add(op);
+                    produced.add(castTo != null ? castTo : r);
                 }
                 case "param" -> {
                     // "param:<desc> OWNER#name()R": the enclosing constructor's own first

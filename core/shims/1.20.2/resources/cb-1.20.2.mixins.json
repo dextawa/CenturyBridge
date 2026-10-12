@@ -49,6 +49,7 @@
     "CbNetQueryAnswerBridge",
     "CbNetQueryRequestBridge",
     "CbNetRespawnBridge",
+    "CbPackInfoFormat",
     "CbPathDebugSets",
     "CbPathNavigationInvoker",
     "CbPlayerChunkSenderAccess",

@@ -705,6 +705,10 @@ public final class WiringCheck {
                 }
                 continue;
             }
+            int as = rest.indexOf(" as ");   // "conv ... as <type>": the static answers a supertype
+            if (as >= 0) {
+                rest = rest.substring(0, as).trim();
+            }
             int paren = rest.indexOf('(');   // OWNER#name(desc)R
             if (paren < 0) {
                 problems.add(where + ": malformed op '" + t + "'");

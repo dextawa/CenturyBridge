@@ -796,6 +796,10 @@ public final class JarProcessor {
             }
             if (op.owner != null) {
                 seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, op.owner, op.name, op.desc, false));
+                if (op.cast != null) {
+                    // the converter answered a supertype it could name; the new shape takes this type
+                    seq.add(new org.objectweb.asm.tree.TypeInsnNode(Opcodes.CHECKCAST, op.cast.getInternalName()));
+                }
             }
         }
         m.instructions.insertBefore(mi, seq);
