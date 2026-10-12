@@ -78,6 +78,13 @@ public final class Chain {
      */
     public final java.util.Map<String, String> instanceFieldGetters = new java.util.HashMap<>();
     /**
+     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field write rewritten
+     * to a static setter taking the receiver and the value, (Lowner;desc)V -- the write half of
+     * {@link #instanceFieldGetters}, for a field whose state moved to another object (1.20.2:
+     * ServerPlayer.latency now lives on the player's connection).
+     */
+    public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
+    /**
      * INSTANCEOF "type" -> "runtimeClass#predicate": a type test against a class
      * that no longer describes the runtime object (EnchantedBookItem is a plain
      * Item since 1.21.2) becomes INVOKESTATIC predicate(Object)Z.
@@ -1553,6 +1560,12 @@ public final class Chain {
                 var ifg = root.getAsJsonObject("instanceFieldGetters");
                 for (String k : ifg.keySet()) {
                     c.instanceFieldGetters.put(k, ifg.get(k).getAsString());
+                }
+            }
+            if (root.has("instanceFieldSetters")) {
+                var ifs = root.getAsJsonObject("instanceFieldSetters");
+                for (String k : ifs.keySet()) {
+                    c.instanceFieldSetters.put(k, ifs.get(k).getAsString());
                 }
             }
             if (root.has("instanceOfRedirects")) {

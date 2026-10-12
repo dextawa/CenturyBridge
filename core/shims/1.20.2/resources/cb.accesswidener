@@ -29,6 +29,12 @@ extendable class net/minecraft/class_2724
 extendable class net/minecraft/class_2889
 extendable class net/minecraft/class_2899
 extendable class net/minecraft/class_2913
+# MapDecoration's equals / hashCode / toString are final in 1.20.2's record; 1.20.1's class declared
+# equals and hashCode itself (overridable) and inherited toString from Object, so a converted
+# subclass may override all three (s1misc; the class is made extendable above)
+extendable method net/minecraft/class_20 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_20 hashCode ()I
+extendable method net/minecraft/class_20 toString ()Ljava/lang/String;
 # ---- BEGIN GENERATED: access narrowed since 1.20.1 (Main access-diff) ----
 # public/protected in 1.20.1, narrowed, made final or sealed in this release: the same
 # members, so a converted mod calling, overriding, extending or writing them gets the

@@ -538,23 +538,10 @@ public final class Statics {
     }
 
     // ---- Registry-derived names that lost their getters.
-    /** was net/minecraft/class_3448.method_14957()Ljava/lang/String; StatType.getTranslationKey */
-    @SuppressWarnings("rawtypes")
-    public static String method_14957(net.minecraft.class_3448 self) {
-        return net.minecraft.class_156.method_646("stat_type", net.minecraft.class_7923.field_41193.method_10221(self));
-    }
-    /** was net/minecraft/class_5712.method_32938()Ljava/lang/String; GameEvent.getId (the registry path) */
-    public static String method_32938(net.minecraft.class_5712 self) {
-        net.minecraft.class_2960 id = net.minecraft.class_7923.field_41171.method_10221(self);
-        return id == null ? "unknown" : id.method_12832();
-    }
     /** was net/minecraft/class_173.method_762(Lnet/minecraft/class_176;)Lnet/minecraft/class_2960; LootContextTypes.getId (registry map via accessor) */
     public static net.minecraft.class_2960 method_762(net.minecraft.class_176 set) {
         return top.dext.centurybridge.shims.v1_20_2.CbLootContextTypesAccessor.cbRegistry().inverse().get(set);
     }
-
-    // ---- Entity.getMountedHeightOffset removed (1.20.2 moved to passenger attachment points);
-    // the 1.20.1 default was height * 0.75 (horses used the same formula).
 
     // ---- Predicates / criteria: builders became Optional-typed, factories return AdvancementCriterion.
     /** was net/minecraft/class_2090.method_9017(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090; LocationPredicate.feature(structure) */
@@ -631,12 +618,6 @@ public final class Statics {
     /** LootPoolEntryType(JsonSerializer) -> Codec */
     public static net.minecraft.class_5338 cbNewclass_5338(top.dext.centurybridge.facade.v1_20_2.class_5335 serializer) {
         return new net.minecraft.class_5338(CbLootJson.codec(serializer));
-    }
-
-    /** GameEvent(String name, int range) -> 1.20.2 takes range only (the registry
-     *  holds the name). */
-    public static net.minecraft.class_5712 cbNewclass_5712(String name, int range) {
-        return new net.minecraft.class_5712(range);
     }
 
     // ---- unbridgeable dead ctors: tombstone stubs (mod loads; lazy-fails only if
