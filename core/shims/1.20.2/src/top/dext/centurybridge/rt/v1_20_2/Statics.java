@@ -72,22 +72,12 @@ public final class Statics {
         return method_8114((net.minecraft.class_1860<?>) self);
     }
 
-    /** 1.20.1 LootContextPredicate.EMPTY field, removed 1.20.2; field access redirected here.
-     *  1.20.2 rejects a predicate with zero conditions (IllegalArgumentException in <init> -- which
-     *  killed this whole class's <clinit> and with it every bridge routed through Statics, caught by
-     *  the real-client fixture). A RandomChance(1.0) condition is the faithful match-all. */
-    public static final net.minecraft.class_5258 field_24388 =
-        net.minecraft.class_5258.method_27973(new net.minecraft.class_219(1.0f));
+    /** 1.20.1 ContextAwarePredicate.ANY: the one sentinel CbAdvAny keeps for it (fieldRedirects point there) */
+    public static final net.minecraft.class_5258 field_24388 = CbAdvAny.field_24388;
 
-    /** 1.20.1 Criteria.register(trigger) -- private in both eras (mods reached it via AW).
-     *  The new shape needs a name: the legacy trigger's own getId() gives it (adapterHooks
-     *  hand every converted trigger CbLegacyCriterion). L3 x12. */
+    /** 1.20.1 CriteriaTriggers.register(trigger) (Fabric API's CriterionRegistry compat calls it): CbAdvTriggers */
     public static net.minecraft.class_179<?> method_767(net.minecraft.class_179<?> trigger) {
-        if (!(trigger instanceof CbLegacyCriterion legacy)) {
-            throw new IllegalArgumentException("CenturyBridge: criterion trigger " + trigger.getClass().getName()
-                + " has no 1.20.1 getId(), so nothing names it");
-        }
-        return top.dext.centurybridge.shims.v1_20_2.CriteriaInvoker.cb$register(legacy.method_794().toString(), trigger);
+        return CbAdvTriggers.method_767(trigger);
     }
 
     /** 1.20.1 RecipeSerializer.read(id, json): parsing moved to codec(). A converted 1.20.1
@@ -137,9 +127,8 @@ public final class Statics {
         return method_8114((net.minecraft.class_1860<?>) self);
     }
 
-    /** 1.20.1 LocationPredicate.ANY, removed with the Optional-ization; empty builder = match-all. */
-    public static final net.minecraft.class_2090 field_9685 =
-        net.minecraft.class_2090.class_2091.method_22484().method_9023();
+    /** 1.20.1 LocationPredicate.ANY: CbAdvAny's sentinel */
+    public static final net.minecraft.class_2090 field_9685 = CbAdvAny.field_9685;
 
     /** 1.20.1 LocationPredicate.fromJson (same Optional-ization pattern as ItemPredicate). */
     public static net.minecraft.class_2090 method_9021(JsonElement json) {
@@ -173,15 +162,12 @@ public final class Statics {
             .orElse(field_24388);
     }
 
-    /** ANY-constant family, removed with the predicate rework; rebuilt as match-alls. */
-    public static final net.minecraft.class_2073 field_9640 =
-        net.minecraft.class_2073.class_2074.method_8973().method_8976();
+    /** 1.20.1's ItemPredicate / EntityPredicate / NbtPredicate ANY: CbAdvAny's sentinels */
+    public static final net.minecraft.class_2073 field_9640 = CbAdvAny.field_9640;
 
-    public static final net.minecraft.class_2048 field_9599 =
-        net.minecraft.class_2048.class_2049.method_8916().method_8920();
+    public static final net.minecraft.class_2048 field_9599 = CbAdvAny.field_9599;
 
-    public static final net.minecraft.class_2105 field_9716 =
-        new net.minecraft.class_2105((net.minecraft.class_2487) null);
+    public static final net.minecraft.class_2105 field_9716 = CbAdvAny.field_9716;
 
     public static net.minecraft.class_2960 method_8114(net.minecraft.class_1874 self) {
         return method_8114((net.minecraft.class_1860<?>) self);
@@ -217,135 +203,31 @@ public final class Statics {
 
     // ==== GENERATED BRIDGES (assemble.py) ====
 
-    /** was net/minecraft/class_196$class_198.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_196.class_198 cbNewclass_196class_198(net.minecraft.class_5258 a0, net.minecraft.class_5258 a1, net.minecraft.class_5258 a2, net.minecraft.class_5258 a3) {
-        return new net.minecraft.class_196.class_198(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2), java.util.Optional.ofNullable(a3));
-    }
 
-    /** was net/minecraft/class_1996$class_1998.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_1842;)V */
-    public static net.minecraft.class_1996.class_1998 cbNewclass_1996class_1998(net.minecraft.class_5258 a0, net.minecraft.class_1842 a1) {
-        return new net.minecraft.class_1996.class_1998(java.util.Optional.ofNullable(a0), a1);
-    }
 
-    /** was net/minecraft/class_1999$class_2001.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)V */
-    public static net.minecraft.class_1999.class_2001 cbNewclass_1999class_2001(net.minecraft.class_5258 a0, net.minecraft.class_5321 a1, net.minecraft.class_5321 a2) {
-        return new net.minecraft.class_1999.class_2001(java.util.Optional.ofNullable(a0), a1, a2);
-    }
 
-    /** was net/minecraft/class_2002$class_2004.<init>(Lnet/minecraft/class_5258;[Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_2002.class_2004 cbNewclass_2002class_2004(net.minecraft.class_5258 a0, net.minecraft.class_5258[] a1) {
-        return new net.minecraft.class_2002.class_2004(java.util.Optional.of(a0), java.util.Arrays.asList(a1));
-    }
 
-    /** was net/minecraft/class_2006$class_2008.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;)V */
-    public static net.minecraft.class_2006.class_2008 cbNewclass_2006class_2008(net.minecraft.class_5258 a0, net.minecraft.class_2096.class_2100 a1) {
-        return new net.minecraft.class_2006.class_2008(java.util.Optional.ofNullable(a0), a1);
-    }
 
-    /** was net/minecraft/class_2014$class_2016.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_2014.class_2016 cbNewclass_2014class_2016(net.minecraft.class_5258 a0, net.minecraft.class_5258 a1, net.minecraft.class_5258 a2) {
-        return new net.minecraft.class_2014.class_2016(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2));
-    }
 
-    /** was net/minecraft/class_2027$class_2029.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2102;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_2027.class_2029 cbNewclass_2027class_2029(net.minecraft.class_5258 a0, net.minecraft.class_2102 a1, net.minecraft.class_5258 a2) {
-        return new net.minecraft.class_2027.class_2029(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2));
-    }
 
-    /** was net/minecraft/class_2030$class_2032.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)V */
-    public static net.minecraft.class_2030.class_2032 cbNewclass_2030class_2032(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1, net.minecraft.class_2096.class_2100 a2) {
-        return new net.minecraft.class_2030.class_2032(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), a2);
-    }
 
-    /** was net/minecraft/class_2037$class_2039.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_4559;)V */
-    public static net.minecraft.class_2037.class_2039 cbNewclass_2037class_2039(net.minecraft.class_5258 a0, net.minecraft.class_2248 a1, net.minecraft.class_4559 a2) {
-        return new net.minecraft.class_2037.class_2039(java.util.Optional.ofNullable(a0), a1, java.util.Optional.ofNullable(a2));
-    }
 
-    /** was net/minecraft/class_2044$class_2046.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2019;)V */
-    public static net.minecraft.class_2044.class_2046 cbNewclass_2044class_2046(net.minecraft.class_5258 a0, net.minecraft.class_2019 a1) {
-        return new net.minecraft.class_2044.class_2046(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1));
-    }
 
-    /** was net/minecraft/class_2058$class_2060.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V */
-    public static net.minecraft.class_2058.class_2060 cbNewclass_2058class_2060(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1, net.minecraft.class_5258 a2, net.minecraft.class_2073 a3) {
-        return new net.minecraft.class_2058.class_2060(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2), java.util.Optional.ofNullable(a3));
-    }
 
-    /** was net/minecraft/class_2069$class_2071.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;)V */
-    public static net.minecraft.class_2069.class_2071 cbNewclass_2069class_2071(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1, net.minecraft.class_2096.class_2100 a2, net.minecraft.class_2096.class_2100 a3) {
-        return new net.minecraft.class_2069.class_2071(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), a2, a3);
-    }
 
-    /** was net/minecraft/class_2076$class_2078.<init>(Lnet/minecraft/class_5258;[Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;)V */
-    public static net.minecraft.class_2076.class_2078 cbNewclass_2076class_2078(net.minecraft.class_5258 a0, net.minecraft.class_5258[] a1, net.minecraft.class_2096.class_2100 a2) {
-        return new net.minecraft.class_2076.class_2078(java.util.Optional.ofNullable(a0), java.util.Arrays.asList(a1), a2);
-    }
 
-    /** was net/minecraft/class_2080$class_2083.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_2022;)V */
-    public static net.minecraft.class_2080.class_2083 cbNewclass_2080class_2083(net.minecraft.class_2960 a0, net.minecraft.class_5258 a1, net.minecraft.class_5258 a2, net.minecraft.class_2022 a3) {
-        return new net.minecraft.class_2080.class_2083(java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2), java.util.Optional.ofNullable(a3));
-    }
 
-    /** was net/minecraft/class_2080.<init>(Lnet/minecraft/class_2960;)V */
-    public static net.minecraft.class_2080 cbNewclass_2080(net.minecraft.class_2960 a0) {
-        return new net.minecraft.class_2080();
-    }
 
-    /** was net/minecraft/class_2085$class_2087.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2025;Lnet/minecraft/class_2096$class_2100;)V */
-    public static net.minecraft.class_2085.class_2087 cbNewclass_2085class_2087(net.minecraft.class_5258 a0, net.minecraft.class_2025 a1, net.minecraft.class_2096.class_2100 a2) {
-        return new net.minecraft.class_2085.class_2087(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), a2);
-    }
 
-    /** was net/minecraft/class_2108$class_2110.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;Lnet/minecraft/class_2090;Lnet/minecraft/class_2025;)V */
-    public static net.minecraft.class_2108.class_2110 cbNewclass_2108class_2110(net.minecraft.class_2960 a0, net.minecraft.class_5258 a1, net.minecraft.class_2090 a2, net.minecraft.class_2025 a3) {
-        return new net.minecraft.class_2108.class_2110(java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2), java.util.Optional.ofNullable(a3));
-    }
 
-    /** was net/minecraft/class_2115$class_2117.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2019;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_2115.class_2117 cbNewclass_2115class_2117(net.minecraft.class_5258 a0, net.minecraft.class_2019 a1, net.minecraft.class_5258 a2) {
-        return new net.minecraft.class_2115.class_2117(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2));
-    }
 
-    /** was net/minecraft/class_2119$class_2121.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2960;)V */
-    public static net.minecraft.class_2119.class_2121 cbNewclass_2119class_2121(net.minecraft.class_5258 a0, net.minecraft.class_2960 a1) {
-        return new net.minecraft.class_2119.class_2121(java.util.Optional.of(a0), a1);
-    }
 
-    /** was net/minecraft/class_2123$class_2125.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V */
-    public static net.minecraft.class_2123.class_2125 cbNewclass_2123class_2125(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1) {
-        return new net.minecraft.class_2123.class_2125(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1));
-    }
 
-    /** was net/minecraft/class_2128$class_2130.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_2128.class_2130 cbNewclass_2128class_2130(net.minecraft.class_5258 a0, net.minecraft.class_5258 a1) {
-        return new net.minecraft.class_2128.class_2130(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1));
-    }
 
-    /** was net/minecraft/class_2131$class_2133.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_2131.class_2133 cbNewclass_2131class_2133(net.minecraft.class_5258 a0, net.minecraft.class_5258 a1) {
-        return new net.minecraft.class_2131.class_2133(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1));
-    }
 
-    /** was net/minecraft/class_2135$class_2137.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_2135.class_2137 cbNewclass_2135class_2137(net.minecraft.class_2960 a0, net.minecraft.class_5258 a1) {
-        return new net.minecraft.class_2135.class_2137(java.util.Optional.ofNullable(a1));
-    }
 
-    /** was net/minecraft/class_2140$class_2142.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V */
-    public static net.minecraft.class_2140.class_2142 cbNewclass_2140class_2142(net.minecraft.class_5258 a0, net.minecraft.class_5258 a1, net.minecraft.class_2073 a2) {
-        return new net.minecraft.class_2140.class_2142(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2));
-    }
 
-    /** was net/minecraft/class_2143$class_2145.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2099;)V */
-    public static net.minecraft.class_2143.class_2145 cbNewclass_2143class_2145(net.minecraft.class_5258 a0, net.minecraft.class_2096.class_2099 a1) {
-        return new net.minecraft.class_2143.class_2145(java.util.Optional.ofNullable(a0), a1);
-    }
 
-    /** was net/minecraft/class_2148$class_2150.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V */
-    public static net.minecraft.class_2148.class_2150 cbNewclass_2148class_2150(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1) {
-        return new net.minecraft.class_2148.class_2150(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1));
-    }
 
     /** was net/minecraft/class_2319.<init>(Ljava/util/function/Supplier;)V */
     public static net.minecraft.class_2319 cbNewclass_2319(java.util.function.Supplier a0) {
@@ -416,50 +298,14 @@ public final class Statics {
         return new net.minecraft.class_2960("textures/gui/widgets.png");
     }
 
-    /** was net/minecraft/class_4708$class_4709.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)V */
-    public static net.minecraft.class_4708.class_4709 cbNewclass_4708class_4709(net.minecraft.class_5258 a0, net.minecraft.class_2248 a1, net.minecraft.class_2073 a2, net.minecraft.class_2096.class_2100 a3) {
-        return new net.minecraft.class_4708.class_4709(java.util.Optional.ofNullable(a0), a1, java.util.Optional.ofNullable(a2), a3);
-    }
 
-    /** was net/minecraft/class_4713$class_4714.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_4559;)V */
-    public static net.minecraft.class_4713.class_4714 cbNewclass_4713class_4714(net.minecraft.class_5258 a0, net.minecraft.class_2248 a1, net.minecraft.class_4559 a2) {
-        return new net.minecraft.class_4713.class_4714(java.util.Optional.ofNullable(a0), a1, java.util.Optional.ofNullable(a2));
-    }
 
-    /** was net/minecraft/class_4851$class_4852.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_4851.class_4852 cbNewclass_4851class_4852(net.minecraft.class_5258 a0, net.minecraft.class_2096.class_2100 a1, net.minecraft.class_5258 a2) {
-        return new net.minecraft.class_4851.class_4852(java.util.Optional.ofNullable(a0), a1, java.util.Optional.ofNullable(a2));
-    }
 
-    /** was net/minecraft/class_5279$class_5280.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_5279.class_5280 cbNewclass_5279class_5280(net.minecraft.class_2960 a0, net.minecraft.class_5258 a1, net.minecraft.class_2073 a2, net.minecraft.class_5258 a3) {
-        return new net.minecraft.class_5279.class_5280(java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2), java.util.Optional.ofNullable(a3));
-    }
 
-    /** was net/minecraft/class_5409$class_5410.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_5409.class_5410 cbNewclass_5409class_5410(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1, net.minecraft.class_5258 a2) {
-        return new net.minecraft.class_5409.class_5410(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2));
-    }
 
-    /** was net/minecraft/class_6405$class_6406.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_6405.class_6406 cbNewclass_6405class_6406(net.minecraft.class_5258 a0, net.minecraft.class_5258 a1, net.minecraft.class_5258 a2) {
-        return new net.minecraft.class_6405.class_6406(java.util.Optional.ofNullable(a0), java.util.Optional.ofNullable(a1), java.util.Optional.ofNullable(a2));
-    }
 
-    /** was net/minecraft/class_6407$class_6408.<init>(Lnet/minecraft/class_5258;)V */
-    public static net.minecraft.class_6407.class_6408 cbNewclass_6407class_6408(net.minecraft.class_5258 a0) {
-        return new net.minecraft.class_6407.class_6408(java.util.Optional.ofNullable(a0));
-    }
 
-    /** was net/minecraft/class_6409$class_6410.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V */
-    public static net.minecraft.class_6409.class_6410 cbNewclass_6409class_6410(net.minecraft.class_5258 a0, net.minecraft.class_2073 a1) {
-        return new net.minecraft.class_6409.class_6410(java.util.Optional.of(a0), java.util.Optional.of(a1));
-    }
 
-    /** was net/minecraft/class_8508$class_8509.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2960;Ljava/util/List;)V */
-    public static net.minecraft.class_8508.class_8509 cbNewclass_8508class_8509(net.minecraft.class_5258 a0, net.minecraft.class_2960 a1, java.util.List a2) {
-        return new net.minecraft.class_8508.class_8509(java.util.Optional.ofNullable(a0), a1, a2);
-    }
 
     // ==== END GENERATED ====
 
@@ -548,14 +394,6 @@ public final class Statics {
     public static net.minecraft.class_2090 method_9017(net.minecraft.class_5321<net.minecraft.class_3195> key) {
         return net.minecraft.class_2090.class_2091.method_53183(key).method_9023();
     }
-    /** was net/minecraft/class_2080$class_2083.method_35248(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2080$class_2083; */
-    public static net.minecraft.class_2080.class_2083 method_35248(net.minecraft.class_2048 p) {
-        return net.minecraft.class_2080.class_2083.method_35248(java.util.Optional.ofNullable(p)).comp_1924();
-    }
-    /** was net/minecraft/class_5409$class_5410.method_30099(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073$class_2074;Lnet/minecraft/class_5258;)Lnet/minecraft/class_5409$class_5410; */
-    public static net.minecraft.class_5409.class_5410 method_30099(net.minecraft.class_5258 a, net.minecraft.class_2073.class_2074 b, net.minecraft.class_5258 c) {
-        return net.minecraft.class_5409.class_5410.method_30099(java.util.Optional.ofNullable(a), b, java.util.Optional.ofNullable(c)).comp_1924();
-    }
     /** was net/minecraft/class_2724.method_11779()Lnet/minecraft/class_5321; PlayerRespawnS2CPacket.getDimension */
     public static net.minecraft.class_5321<net.minecraft.class_1937> method_11779(net.minecraft.class_2724 self) { return self.comp_1728().comp_1554(); }
     /** was net/minecraft/class_3898.method_39975(IIIII)Z ChunkMap.isChunkInRange (1.20.1 algorithm) */
@@ -571,8 +409,6 @@ public final class Statics {
 
     // ---- super(...) argument adapters for 1.20.2 constructor reshapes (engine superCtorAdapts:
     // a static converter runs on the stack tail right before INVOKESPECIAL <init>).
-    /** AbstractCriterionConditions(Identifier, LootContextPredicate) -> (Optional<LootContextPredicate>) */
-    public static java.util.Optional<net.minecraft.class_5258> cbCriterionPlayer(net.minecraft.class_2960 id, net.minecraft.class_5258 p) { return java.util.Optional.ofNullable(p); }
     /** ServerPlayerEntity(server, world, profile) gained SyncedClientOptions */
     public static net.minecraft.class_8791 cbDefaultClientOptions() { return net.minecraft.class_8791.method_53821(); }
 
@@ -586,13 +422,6 @@ public final class Statics {
         net.minecraft.class_8786<?> entry =
             top.dext.centurybridge.shims.v1_20_2.GenClass2788Bridge.cbReadRecipeEntry(buf);
         return entry == null ? null : entry.comp_1933();
-    }
-
-    /** 1.20.1 EntityPredicate.Builder static builder returned the Builder directly;
-     *  1.20.2 wraps it in a class_175 record. comp_1924() is the wrapped Builder. */
-    public static net.minecraft.class_2080.class_2083 method_8997(net.minecraft.class_2048.class_2049 arg) {
-        net.minecraft.class_175<net.minecraft.class_2080.class_2083> w = net.minecraft.class_2080.class_2083.method_8997(arg);
-        return w == null ? null : w.comp_1924();
     }
 
     // ---- 1.20.1 -> 1.20.2 dead constructors (wiring-check closure cycle 62) ----

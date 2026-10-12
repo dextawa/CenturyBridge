@@ -79,6 +79,7 @@
     "CbConfirmLinkScreenAccess",
     "CbDownloadedPackSourceMixin",
     "CbGameRendererMixin",
+    "CbLivingEntityRendererInvoker",
     "CbMenuPositionerMixin",
     "CbOptionsSubScreenMixin",
     "CbRealmCreationTaskMixin",

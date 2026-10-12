@@ -1,1 +1,4 @@
 accessWidener	v2	intermediary
+
+# ItemStack.transmuteCopyIgnoreEmpty(item, count): public in 1.20.6, private in 1.21 with the same body (s6item)
+accessible method net/minecraft/class_1799 method_56704 (Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1799;

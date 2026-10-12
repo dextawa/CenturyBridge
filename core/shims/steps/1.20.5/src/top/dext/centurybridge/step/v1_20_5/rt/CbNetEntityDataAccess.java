@@ -4,7 +4,8 @@ import net.minecraft.class_2945;
 
 /**
  * What CbNetEntityDataBridge adds to a SynchedEntityData made over a builder's item array (see
- * {@link CbNetEntityData}): the builder it shares the array with, until build() hands it over.
+ * {@link CbNetEntityData}): the builder it shares the array with, until build() hands it over; and
+ * 1.20.4's define, for layer code that defines on an already built object (CbRestEntityData).
  */
 public interface CbNetEntityDataAccess {
 
@@ -13,4 +14,7 @@ public interface CbNetEntityDataAccess {
 
     /** build() answered this object: from now on its item array is its own */
     void cb$detachBuilder();
+
+    /** 1.20.4's define(accessor, value), as CbNetEntityDataBridge restores it */
+    <T> void method_12784(net.minecraft.class_2940<T> accessor, T value);
 }

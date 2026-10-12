@@ -1,0 +1,67 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_879.method_3884(Lnet/minecraft/class_1420;Lnet/minecraft/class_4587;F)V": "top/dext/centurybridge/step/v1_20_3/rt/CbBatRender",
+  "net/minecraft/class_879.method_3882(Lnet/minecraft/class_1420;Lnet/minecraft/class_4587;FFF)V": "top/dext/centurybridge/step/v1_20_3/rt/CbBatRender",
+  "net/minecraft/class_4558.method_27854(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4558$class_8788;": "top/dext/centurybridge/step/v1_20_3/rt/CbAdvSimpleTriggers",
+  "net/fabricmc/fabric/api/transfer/v1/storage/Storage.simulateInsert(Ljava/lang/Object;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer",
+  "net/fabricmc/fabric/api/transfer/v1/storage/Storage.simulateExtract(Ljava/lang/Object;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer",
+  "net/fabricmc/fabric/api/transfer/v1/storage/Storage.exactView(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/transfer/v1/storage/StorageView;": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer",
+  "net/fabricmc/fabric/api/transfer/v1/storage/base/FilteringStorage.exactView(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/transfer/v1/storage/StorageView;": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer"
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/transfer/v1/storage/Storage.simulateInsert(Ljava/lang/Object;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer#superSimulateInsert",
+  "net/fabricmc/fabric/api/transfer/v1/storage/Storage.simulateExtract(Ljava/lang/Object;JLnet/fabricmc/fabric/api/transfer/v1/transaction/TransactionContext;)J": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer#superSimulateExtract",
+  "net/fabricmc/fabric/api/transfer/v1/storage/Storage.exactView(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/transfer/v1/storage/StorageView;": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer#superExactView",
+  "net/fabricmc/fabric/api/transfer/v1/storage/base/FilteringStorage.exactView(Ljava/lang/Object;)Lnet/fabricmc/fabric/api/transfer/v1/storage/StorageView;": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer#superFilteringExactView"
+ },
+ "staticRedirects": {
+  "net/fabricmc/fabric/api/transfer/v1/context/ContainerItemContext.withInitial(Lnet/minecraft/class_1799;)Lnet/fabricmc/fabric/api/transfer/v1/context/ContainerItemContext;": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer",
+  "net/fabricmc/fabric/api/transfer/v1/context/ContainerItemContext.withInitial(Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;J)Lnet/fabricmc/fabric/api/transfer/v1/context/ContainerItemContext;": "top/dext/centurybridge/step/v1_20_3/compat/fapi/transfer/CbFapiTransfer"
+ },
+ "classRenames": {
+  "net/fabricmc/fabric/api/object/builder/v1/block/type/BlockSetTypeRegistry": "top/dext/centurybridge/step/v1_20_3/compat/fapi/object/builder/v1/block/type/BlockSetTypeRegistry",
+  "net/fabricmc/fabric/api/object/builder/v1/block/type/WoodTypeRegistry": "top/dext/centurybridge/step/v1_20_3/compat/fapi/object/builder/v1/block/type/WoodTypeRegistry"
+ },
+ "callReshapes": {
+  "net/fabricmc/fabric/api/entity/FakePlayer.method_5781()Lnet/minecraft/class_270;": {
+   "desc": "()Lnet/minecraft/class_268;",
+   "ops": [],
+   "ret": "keep",
+   "basis": "Entity.getTeam answers a PlayerTeam since 1.20.3 (a Team): calls naming Fabric API's FakePlayer -- or a mod's subclass of it, and its super calls -- take 1.20.3's shape, as calls naming Entity do (mechanical)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_5781()Lnet/minecraft/class_270;",
+   "new": "method_5781()Lnet/minecraft/class_268;",
+   "unwrap": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities.playerTeam(Lnet/minecraft/class_270;)Lnet/minecraft/class_268;",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/FakePlayer",
+   "basis": "a 1.20.2 FakePlayer subclass's getTeam override, as s2world's hook does for Entity subclasses (the step cannot see that FakePlayer is one: Fabric API's hierarchy is outside the stubs)"
+  }
+ ],
+ "frameDefaults": {
+  "method_4884(Lnet/minecraft/class_1113;Lnet/minecraft/class_1146;)V": {
+   "2": "top/dext/centurybridge/step/v1_20_3/rt/CbFrameDefaultsClient#soundRange()F"
+  },
+  "method_41895(Ljava/lang/String;Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Ljava/util/function/Function;)V": {
+   "4": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbCurrentScreen()Lnet/minecraft/class_437;"
+  },
+  "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": {
+   "9": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSmallParticles()Lnet/minecraft/class_2394;",
+   "10": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionLargeParticles()Lnet/minecraft/class_2394;",
+   "11": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSound()Lnet/minecraft/class_3414;"
+  },
+  "method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Z)Lnet/minecraft/class_1927;": {
+   "10": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSmallParticles()Lnet/minecraft/class_2394;",
+   "11": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionLargeParticles()Lnet/minecraft/class_2394;",
+   "12": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldLevels#explosionSound()Lnet/minecraft/class_3414;"
+  },
+  "method_5659()Z": {
+   "0": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldEntities#noExplosion()Lnet/minecraft/class_1927;"
+  },
+  "method_1168(Ljava/lang/String;Lnet/minecraft/class_274;Lnet/minecraft/class_2561;Lnet/minecraft/class_274$class_275;)Lnet/minecraft/class_266;": {
+   "4": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#noDisplayAutoUpdate()Z",
+   "5": "top/dext/centurybridge/step/v1_20_3/rt/CbWorldScores#defaultNumberFormat()Lnet/minecraft/class_9022;"
+  }
+ }
+}

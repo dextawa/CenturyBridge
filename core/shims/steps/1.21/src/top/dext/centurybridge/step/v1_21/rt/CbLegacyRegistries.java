@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * client's main thread, the server's anywhere else (its own thread, the world generation workers), the
  * client's when there is no server here. Every world registry is recorded as it loads
  * (CbLegacyRegistryLoaderMixin on RegistryDataLoader.Loader) and dropped when its world goes (the
- * integrated server stops, the client disconnects).
+ * integrated server stops: CbServers.onStopped; the client disconnects: CbLegacyRegistryClientMixin).
  */
 public final class CbLegacyRegistries {
 
@@ -55,6 +55,11 @@ public final class CbLegacyRegistries {
 
     private static final Map<net.minecraft.class_5321<?>, Worlds> WORLDS = new ConcurrentHashMap<>();
     private static final Map<net.minecraft.class_5321<?>, Legacy<?, ?>> STANDINS = new ConcurrentHashMap<>();
+
+    static {
+        // the integrated server's registries are no world's once it stops (CbServers)
+        CbServers.onStopped(server -> onServerStopped());
+    }
 
     private static Worlds worlds(net.minecraft.class_5321<?> key) {
         return WORLDS.computeIfAbsent(key, k -> new Worlds());
@@ -335,7 +340,7 @@ public final class CbLegacyRegistries {
         return bound;
     }
 
-    /** the integrated server stopped: its registries are no world's any more */
+    /** a server stopped (CbServers.onStopped): its registries are no world's any more */
     public static void onServerStopped() {
         for (Worlds w : WORLDS.values()) {
             w.server = null;

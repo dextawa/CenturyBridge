@@ -13,7 +13,7 @@
    "ops": [
     "drop:0"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_5267;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_5267;: no body of V reads it, but net/minecraft/class_184 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_4614.method_23262(Ljava/io/DataInput;ILnet/minecraft/class_2505;)Lnet/minecraft/class_2520;": {
    "desc": "(Ljava/io/DataInput;Lnet/minecraft/class_2505;)Lnet/minecraft/class_2520;",
@@ -22,7 +22,7 @@
     "keep:2",
     "drop:1"
    ],
-   "basis": "mechanical: same values; dropped I, never read in V"
+   "basis": "mechanical: same values; dropped I: no body of V reads it, but net/minecraft/class_4614 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_2540.method_29172(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Ljava/lang/Object;)V": {
    "desc": "(Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Ljava/lang/Object;)Lnet/minecraft/class_2540;",
@@ -148,7 +148,7 @@
     "keep:1",
     "drop:0"
    ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2960;, never read in V"
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2960;: no body of V reads it, but net/minecraft/class_1866$class_7711 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   }
  },
  "superCtorReshapes": {
