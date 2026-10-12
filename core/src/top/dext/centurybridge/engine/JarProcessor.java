@@ -2416,7 +2416,7 @@ public final class JarProcessor {
         // a library type's member is keyed for the call / handle rewrite (libraryHome)
         final java.util.function.Predicate<String> libraryKeyed = k -> chain.instanceRedirects.containsKey(k)
             || chain.staticRedirects.containsKey(k) || chain.interfaceCallRedirects.containsKey(k)
-            || chain.methodRenames.containsKey(k);
+            || chain.methodRenames.containsKey(k) || chain.superRedirects.containsKey(k);
 
         // dead-class facade renames touch descriptors/signatures everywhere, so the
         // trigger is a raw byte scan rather than per-ref analysis
@@ -2716,6 +2716,18 @@ public final class JarProcessor {
                                 String lib = name.equals("<init>") ? null
                                     : libraryHome(owner, name + desc, op == Opcodes.INVOKESTATIC, layer, libraryKeyed);
                                 final String lsite = lib != null ? lib + "." + name + desc : site;
+                                // a super call into a library type's default (a mod's PacketSender implementation
+                                // calling PacketSender.super.sendPacket(..)) takes the super redirect: the default
+                                // body, not a dispatch back into the override making the call
+                                String lsr = op == Opcodes.INVOKESPECIAL && !name.equals("<init>") ? chain.superRedirects.get(lsite) : null;
+                                if (lsr != null) {
+                                    superRedirectSites.put(site, lsr);
+                                    if (lib != null) {
+                                        emitOwner.put(site, lib);
+                                    }
+                                    top.dext.centurybridge.data.FullAudit.record(lsite, "super-redirect");
+                                    return;
+                                }
                                 String lrt = chain.instanceRedirects.get(lsite);
                                 if (lrt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
                                     instRedirects.put(site, lrt);

@@ -42,12 +42,15 @@
     "CbItemPropertiesAccessor",
     "CbComponentBuilderAccessor",
     "CbArmorItemAccessor",
-    "CbSpawnEggAccessor"
+    "CbSpawnEggAccessor",
+    "CbPayloadCodecMixin",
+    "CbFapiFutureListenerMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",
     "CbRestEntityRendererMixin",
-    "CbLevelDataClientMixin"
+    "CbLevelDataClientMixin",
+    "CbFapiClientConfigurationMixin"
   ],
   "server": [],
   "injectors": {

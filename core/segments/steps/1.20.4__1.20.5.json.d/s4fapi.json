@@ -1,0 +1,130 @@
+{
+ "classRenames": {
+  "net/fabricmc/fabric/api/networking/v1/FabricPacket": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/FabricPacket",
+  "net/fabricmc/fabric/api/networking/v1/PacketType": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/PacketType",
+  "net/fabricmc/fabric/api/networking/v1/FutureListeners": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/FutureListeners",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking$PlayChannelHandler",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayPacketHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking$PlayPacketHandler",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationChannelHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking$ConfigurationChannelHandler",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationPacketHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking$ConfigurationPacketHandler",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking$PlayChannelHandler",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayPacketHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking$PlayPacketHandler",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler"
+ },
+ "staticRedirects": {
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.registerGlobalReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.registerGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.unregisterGlobalReceiver(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.unregisterGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.registerReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.registerReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.unregisterReceiver(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.unregisterReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationPacketHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.canSend(Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.createC2SPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.send(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.send(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayPacketHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.unregisterGlobalReceiver(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.unregisterGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayPacketHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayPacketHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.unregisterReceiver(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.unregisterReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayPacketHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.canSend(Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.createC2SPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.createC2SPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.send(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.send(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.registerGlobalReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.registerGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationPacketHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.unregisterGlobalReceiver(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationChannelHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.unregisterGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Lnet/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationPacketHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.registerReceiver(Lnet/minecraft/class_8610;Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.registerReceiver(Lnet/minecraft/class_8610;Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationPacketHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.unregisterReceiver(Lnet/minecraft/class_8610;Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationChannelHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.unregisterReceiver(Lnet/minecraft/class_8610;Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Lnet/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$ConfigurationPacketHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.canSend(Lnet/minecraft/class_8610;Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.createS2CPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.createS2CPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.send(Lnet/minecraft/class_8610;Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking.send(Lnet/minecraft/class_8610;Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerConfigurationNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.registerGlobalReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.registerGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayPacketHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.unregisterGlobalReceiver(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.unregisterGlobalReceiver(Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayPacketHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.registerReceiver(Lnet/minecraft/class_3244;Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.registerReceiver(Lnet/minecraft/class_3244;Lnet/fabricmc/fabric/api/networking/v1/PacketType;Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayPacketHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.unregisterReceiver(Lnet/minecraft/class_3244;Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayChannelHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.unregisterReceiver(Lnet/minecraft/class_3244;Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Lnet/fabricmc/fabric/api/networking/v1/ServerPlayNetworking$PlayPacketHandler;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.canSend(Lnet/minecraft/class_3222;Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.canSend(Lnet/minecraft/class_3244;Lnet/fabricmc/fabric/api/networking/v1/PacketType;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.createS2CPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.createS2CPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.send(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.send(Lnet/minecraft/class_3222;Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking",
+  "net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking.getServer(Lnet/minecraft/class_3244;)Lnet/minecraft/server/MinecraftServer;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/networking/v1/ServerPlayNetworking"
+ },
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.createPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.createPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2596;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_8710;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders"
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;Lnet/minecraft/class_7648;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
+  "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/minecraft/class_8710;Lio/netty/util/concurrent/GenericFutureListener;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket"
+ },
+ "overrideHooks": [
+  {
+   "old": "createPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;",
+   "new": "createPacket(Lnet/minecraft/class_8710;)Lnet/minecraft/class_2596;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders.createPacket(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLegacyPacketSender;Lnet/minecraft/class_8710;)Lnet/minecraft/class_2596;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLegacyPacketSender",
+   "onlyUnder": "net/fabricmc/fabric/api/networking/v1/PacketSender"
+  },
+  {
+   "old": "onLoginStart(Lnet/minecraft/class_3248;Lnet/minecraft/server/MinecraftServer;Lnet/fabricmc/fabric/api/networking/v1/PacketSender;Lnet/fabricmc/fabric/api/networking/v1/ServerLoginNetworking$LoginSynchronizer;)V",
+   "new": "onLoginStart(Lnet/minecraft/class_3248;Lnet/minecraft/server/MinecraftServer;Lnet/fabricmc/fabric/api/networking/v1/LoginPacketSender;Lnet/fabricmc/fabric/api/networking/v1/ServerLoginNetworking$LoginSynchronizer;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/networking/v1/ServerLoginConnectionEvents$QueryStart"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/fabricmc/fabric/api/networking/v1/PacketSender",
+   "method": "disconnect(Lnet/minecraft/class_2561;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders.disconnect(Lnet/fabricmc/fabric/api/networking/v1/PacketSender;Lnet/minecraft/class_2561;)V"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/networking/v1/ServerLoginConnectionEvents$QueryStart.onLoginStart(Lnet/minecraft/class_3248;Lnet/minecraft/server/MinecraftServer;Lnet/fabricmc/fabric/api/networking/v1/PacketSender;Lnet/fabricmc/fabric/api/networking/v1/ServerLoginNetworking$LoginSynchronizer;)V": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLoginQueryStart$Legacy",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLoginQueryStart#adapt(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLoginQueryStart$Legacy;)Lnet/fabricmc/fabric/api/networking/v1/ServerLoginConnectionEvents$QueryStart;"
+  }
+ },
+ "callReshapes": {
+  "net/fabricmc/fabric/api/networking/v1/ServerLoginConnectionEvents$QueryStart.onLoginStart(Lnet/minecraft/class_3248;Lnet/minecraft/server/MinecraftServer;Lnet/fabricmc/fabric/api/networking/v1/PacketSender;Lnet/fabricmc/fabric/api/networking/v1/ServerLoginNetworking$LoginSynchronizer;)V": {
+   "desc": "(Lnet/minecraft/class_3248;Lnet/minecraft/server/MinecraftServer;Lnet/fabricmc/fabric/api/networking/v1/LoginPacketSender;Lnet/fabricmc/fabric/api/networking/v1/ServerLoginNetworking$LoginSynchronizer;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbLoginQueryStart#loginSender(Lnet/fabricmc/fabric/api/networking/v1/PacketSender;)Lnet/fabricmc/fabric/api/networking/v1/LoginPacketSender;",
+    "keep"
+   ]
+  }
+ },
+ "_networking_basis": "Fabric API 1.20.5 replaced 1.20.4's channel networking (an Identifier plus a raw PacketByteBuf, and FabricPacket/PacketType on top of it) with CustomPayload types registered per phase and direction in PayloadTypeRegistry. compat/fapi gives 1.20.4's API back: a channel is a CbChannelPayload type of its id (impl/networking/CbChannels; registered for the receiving side when a 1.20.4 receiver is registered, the send side written through CbPayloads' fallback where nothing registered it), 1.20.4 handlers are wrapped as 1.20.5 handlers, PacketSender's dropped members dispatch to a mod's own 1.20.4 implementation (CbLegacyPacketSender) or build channel payloads for 1.20.5's senders, and a GenericFutureListener reaches its write's channel future again (CbFapiFutureListenerMixin)."
+}
