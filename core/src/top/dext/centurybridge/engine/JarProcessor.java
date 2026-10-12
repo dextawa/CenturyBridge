@@ -355,7 +355,7 @@ public final class JarProcessor {
     private static byte[] rewriteHookSuperCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
         java.util.Map<String, Chain.OverrideHook> byOld = new HashMap<>();
         for (Chain.OverrideHook h : chain.overrideHooks) {
-            if (h.superCalls) {
+            if (h.superCalls || h.superBridgeName != null) {
                 byOld.putIfAbsent(h.oldName + h.oldDesc, h);
             }
         }
@@ -377,6 +377,8 @@ public final class JarProcessor {
         new ClassReader(bytes).accept(cn, 0);
         String[] ifaces = cn.interfaces.toArray(new String[0]);
         int rewrites = 0;
+        // hooks whose super bridge this class now calls: it gets their accessors (Chain.OverrideHook#superAccess)
+        java.util.LinkedHashSet<Chain.OverrideHook> needAccess = new java.util.LinkedHashSet<>();
         for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
             if (m.instructions == null || (m.access & Opcodes.ACC_STATIC) != 0) {
                 continue;
@@ -395,6 +397,19 @@ public final class JarProcessor {
                         && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null
                         || h.onlyUnder != null && !isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain)
                         || h.notUnder != null && isUnder(cn.superName, ifaces, h.notUnder, layer, chain)) {
+                    continue;
+                }
+                if (h.superBridgeName != null) {
+                    // the old contract through a bridge: this + the old arguments are on the stack as
+                    // they are, the static takes the receiver as the hook's super-access interface
+                    mi.setOpcode(Opcodes.INVOKESTATIC);
+                    mi.owner = h.superBridgeOwner;
+                    mi.name = h.superBridgeName;
+                    mi.desc = h.superBridgeDesc;
+                    mi.itf = false;
+                    needAccess.add(h);
+                    rewrites++;
+                    top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "hook-super-bridge");
                     continue;
                 }
                 org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
@@ -442,6 +457,39 @@ public final class JarProcessor {
         }
         if (rewrites == 0) {
             return bytes;
+        }
+        for (Chain.OverrideHook h : needAccess) {
+            // the super bridge reaches super's implementations through accessors this class carries
+            if (!cn.interfaces.contains(h.superAccess)) {
+                cn.interfaces.add(h.superAccess);
+                if (cn.signature != null) {
+                    cn.signature = cn.signature + "L" + h.superAccess + ";"; // a generic signature lists them too
+                }
+            }
+            for (String shape : h.superAccessors) {
+                int p = shape.indexOf('(');
+                String name = shape.substring(0, p);
+                String desc = shape.substring(p);
+                String accName = Chain.SUPER_ACCESSOR_PREFIX + name;
+                boolean have = cn.methods.stream().anyMatch(x -> x.name.equals(accName) && x.desc.equals(desc));
+                if (have) {
+                    continue;
+                }
+                org.objectweb.asm.tree.MethodNode acc = new org.objectweb.asm.tree.MethodNode(
+                    Opcodes.ACC_PUBLIC, accName, desc, null, null);
+                acc.instructions.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+                int slot = 1;
+                for (org.objectweb.asm.Type t : org.objectweb.asm.Type.getArgumentTypes(desc)) {
+                    acc.instructions.add(new org.objectweb.asm.tree.VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+                    slot += t.getSize();
+                }
+                acc.instructions.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESPECIAL, cn.superName,
+                    name, desc, false));
+                acc.instructions.add(new org.objectweb.asm.tree.InsnNode(
+                    org.objectweb.asm.Type.getReturnType(desc).getOpcode(Opcodes.IRETURN)));
+                cn.methods.add(acc);
+            }
+            rpt.notes.add(tag + "super-accessors (" + h.superAccess + "): " + cn.name);
         }
         rpt.notes.add(tag + "hook-super-calls: " + rewrites + " in " + cn.name);
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);

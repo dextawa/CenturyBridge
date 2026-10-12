@@ -14,5 +14,83 @@
   "net/minecraft/class_4482.field_31311:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
   "net/minecraft/class_6088.field_31148:I": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants",
   "net/minecraft/class_6088.field_47339:I": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockConstants"
- }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_4970.method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse",
+  "net/minecraft/class_4970$class_4971.method_26174(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse",
+  "net/minecraft/class_4970.method_9516(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_10;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath",
+  "net/minecraft/class_4970$class_4971.method_26171(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_10;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "new": "method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+   "onlyUnder": "net/minecraft/class_4970",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse.useItemOn(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$Legacy;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse.superUse(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$Super;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$Super",
+   "superAccessors": [
+    "method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+    "method_55766(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
+   ],
+   "basis": "1.20.4 Block.use was 1.20.5's useItemOn then (PASS_TO_DEFAULT on the main hand) useWithoutItem: the old override answers useItemOn, a non-consuming result skipping the default interaction (CbBlockUse)"
+  },
+  {
+   "old": "method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "new": "method_55766(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "onlyUnder": "net/minecraft/class_4970",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse.useWithoutItem(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$Legacy;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "basis": "useWithoutItem of a block whose class overrides 1.20.4 use: its use for the main hand (CbBlockUse)"
+  },
+  {
+   "old": "method_26174(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "new": "method_55780(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$LegacyState",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse.stateUseItemOn(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$LegacyState;Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse.superStateUse(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$SuperState;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$SuperState",
+   "superAccessors": [
+    "method_55780(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+    "method_55781(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
+   ],
+   "basis": "1.20.4 BlockState.use on the 1.20.5 split, as for Block.use (CbBlockUse)"
+  },
+  {
+   "old": "method_26174(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "new": "method_55781(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$LegacyState",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockUse.stateUseWithoutItem(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockUse$LegacyState;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "basis": "useWithoutItem of a state overriding 1.20.4 use: its use for the main hand (CbBlockUse)"
+  },
+  {
+   "old": "method_9516(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_10;)Z",
+   "new": "method_9516(Lnet/minecraft/class_2680;Lnet/minecraft/class_10;)Z",
+   "onlyUnder": "net/minecraft/class_4970",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath.isPathfindable(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockPath$Legacy;Lnet/minecraft/class_2680;Lnet/minecraft/class_10;)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath.superIsPathfindable(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockPath$Super;Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_10;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath$Super",
+   "superAccessors": [
+    "method_9516(Lnet/minecraft/class_2680;Lnet/minecraft/class_10;)Z"
+   ],
+   "basis": "1.20.5 asks without level and position: the old override gets those a converted caller named, else what 1.20.5's implementations use in their place (CbBlockPath)"
+  },
+  {
+   "old": "method_26171(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_10;)Z",
+   "new": "method_26171(Lnet/minecraft/class_10;)Z",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath$LegacyState",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath.stateIsPathfindable(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockPath$LegacyState;Lnet/minecraft/class_10;)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath.superStateIsPathfindable(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockPath$SuperState;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_10;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockPath$SuperState",
+   "superAccessors": [
+    "method_26171(Lnet/minecraft/class_10;)Z"
+   ],
+   "basis": "BlockState.isPathfindable as for Block (CbBlockPath)"
+  }
+ ]
 }
