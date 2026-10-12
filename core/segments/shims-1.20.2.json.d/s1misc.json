@@ -767,6 +767,57 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbEffects#legacyModifiers(Ljava/util/Map;)Ljava/util/Map;",
    "basis": "generic drift: MobEffect.getAttributeModifiers() answers Map<Attribute, AttributeModifierTemplate> where 1.20.1 answered the effect's own Map<Attribute, AttributeModifier>; a converted call reads a live 1.20.1 view of it (templates read as the modifiers 1.20.1 stored, modifiers put in become templates of the effect computing 1.20.1's value)"
+  },
+  "net/minecraft/class_1657.method_7254(Ljava/util/Collection;)I": {
+   "desc": "(Ljava/util/Collection;)I",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "generic drift: Player.awardRecipes takes Collection<RecipeHolder<?>> where 1.20.1 took Collection<Recipe<?>>; the converted call passes the recipes as their entries (CbRecipeHolders view, ids from CbRecipeIds)"
+  },
+  "net/minecraft/class_1657.method_7333(Ljava/util/Collection;)I": {
+   "desc": "(Ljava/util/Collection;)I",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "generic drift: Player.resetRecipes takes Collection<RecipeHolder<?>> where 1.20.1 took Collection<Recipe<?>>; the converted call passes the recipes as their entries (CbRecipeHolders view)"
+  },
+  "net/minecraft/class_3222.method_7254(Ljava/util/Collection;)I": {
+   "desc": "(Ljava/util/Collection;)I",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "generic drift: ServerPlayer.awardRecipes takes Collection<RecipeHolder<?>> where 1.20.1 took Collection<Recipe<?>>; the converted call passes the recipes as their entries (CbRecipeHolders view)"
+  },
+  "net/minecraft/class_3222.method_7333(Ljava/util/Collection;)I": {
+   "desc": "(Ljava/util/Collection;)I",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "generic drift: ServerPlayer.resetRecipes takes Collection<RecipeHolder<?>> where 1.20.1 took Collection<Recipe<?>>; the converted call passes the recipes as their entries (CbRecipeHolders view)"
+  },
+  "net/minecraft/class_2609.method_27354(Lnet/minecraft/class_3218;Lnet/minecraft/class_243;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_243;)Ljava/util/List;",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;",
+   "basis": "generic drift: AbstractFurnaceBlockEntity.getRecipesToAwardAndPopExperience answers a new List<RecipeHolder<?>> where 1.20.1 answered a new List<Recipe<?>>; the converted call gets that list as recipes (a live view of the fresh list, which only the caller holds)"
+  },
+  "net/minecraft/class_3924.method_17502(Lnet/minecraft/class_1799;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_1799;)Ljava/util/Optional;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "generic drift: CampfireBlockEntity.getCookableRecipe answers Optional<RecipeHolder<CampfireCookingRecipe>> where 1.20.1 answered Optional<CampfireCookingRecipe>; the converted call gets the recipe"
+  },
+  "net/minecraft/class_3971.method_17863()Ljava/util/List;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/List;)Ljava/util/List;",
+   "basis": "generic drift: StonecutterMenu.getRecipes answers the menu's own List<RecipeHolder<StonecutterRecipe>> where 1.20.1 answered its own List<StonecutterRecipe>; the converted call gets a live view of that list as recipes"
   }
  },
  "adapterHooks": [
@@ -1616,6 +1667,47 @@
    "member": "method_5565()Ljava/util/Map;",
    "ret": "top/dext/centurybridge/rt/v1_20_2/CbEffects#templates(Lnet/minecraft/class_1291;Ljava/util/Map;)Ljava/util/Map;",
    "basis": "a 1.20.1 override of getAttributeModifiers() answers modifiers; 1.20.2's potion tooltip reads templates and creates each at the amplifier: a view of that effect's modifiers as templates creating what 1.20.1 applied (the effect's getAttributeModifierValue)"
+  },
+  {
+   "under": "net/minecraft/class_1657",
+   "member": "method_7254(Ljava/util/Collection;)I",
+   "args": [
+    "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "1.20.2 awards recipe entries (RecipeCommand, RecipeCraftingHolder.awardUsedRecipes, KnowledgeBookItem, AbstractFurnaceBlockEntity.awardUsedRecipesAndPopExperience); a 1.20.1 override of awardRecipes gets the recipes"
+  },
+  {
+   "under": "net/minecraft/class_1657",
+   "member": "method_7333(Ljava/util/Collection;)I",
+   "args": [
+    "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#recipes(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "1.20.2 takes recipe entries back (the recipe command); a 1.20.1 override of resetRecipes gets the recipes"
+  },
+  {
+   "under": "net/minecraft/class_2609",
+   "member": "method_27354(Lnet/minecraft/class_3218;Lnet/minecraft/class_243;)Ljava/util/List;",
+   "args": [
+    null,
+    null
+   ],
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;",
+   "basis": "1.20.2 hands what getRecipesToAwardAndPopExperience answers to player.awardRecipes and reads each element as a recipe entry (AbstractFurnaceBlockEntity.awardUsedRecipesAndPopExperience, from the furnace output); a 1.20.1 override answers recipes"
+  },
+  {
+   "under": "net/minecraft/class_3924",
+   "member": "method_17502(Lnet/minecraft/class_1799;)Ljava/util/Optional;",
+   "args": [
+    null
+   ],
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "1.20.2's CampfireBlock reads getCookableRecipe as an entry; a 1.20.1 override answers the recipe"
+  },
+  {
+   "under": "net/minecraft/class_3971",
+   "member": "method_17863()Ljava/util/List;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbRecipeHolders#holders(Ljava/util/List;)Ljava/util/List;",
+   "basis": "1.20.2's stonecutter screen reads getRecipes as entries; a 1.20.1 override answers recipes"
   }
  ]
 }
