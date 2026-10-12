@@ -14,7 +14,15 @@
     "CbClientDeltaTimerAccess",
     "CbClientMinecraftFrameMixin",
     "CbClientMinecraftTimerAccess",
-    "CbClientMobRendererMixin"
+    "CbClientMobRendererMixin",
+    "CbClientNoticeWithLinkScreenMixin",
+    "CbClientOptionInstanceMixin",
+    "CbClientOptionsAccess",
+    "CbClientOptionsSubScreenMixin",
+    "CbClientReportScreenMixin",
+    "CbClientScreenAccess",
+    "CbClientScreenPanoramaMixin",
+    "CbClientSubtitleMixin"
   ],
   "server": [],
   "injectors": {

@@ -197,6 +197,27 @@
         "conv:6,7,8 top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbOpaque(FFF)I"
       ],
       "basis": "RenderLayer.renderColoredCutoutModel(.., r, g, b) takes the opaque ARGB int since 1.21 (1.20.6 rendered with alpha 1)"
+    },
+    "net/minecraft/class_315.method_57703()D": {
+      "desc": "()I",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbBlurriness(I)D",
+      "basis": "Options.getMenuBackgroundBlurriness answered the 0..1 fraction in 1.20.6 and answers 0..10 steps since 1.21: a step is a tenth"
+    },
+    "net/minecraft/class_315.method_57702()Lnet/minecraft/class_7172;": {
+      "desc": "()Lnet/minecraft/class_7172;",
+      "ops": [],
+      "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbBlurrinessView(Lnet/minecraft/class_7172;)Lnet/minecraft/class_7172;",
+      "basis": "Options.menuBackgroundBlurriness() was an OptionInstance<Double> (0..1) in 1.20.6 and is an OptionInstance<Integer> (0..10) since 1.21: a 1.20.6 view of it (CbClientGui.cbBlurrinessView)"
+    },
+    "net/minecraft/class_4184.method_19324(DDD)V": {
+      "desc": "(FFF)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbNarrow(D)F",
+        "conv:1 top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbNarrow(D)F",
+        "conv:2 top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbNarrow(D)F"
+      ],
+      "basis": "Camera.move(dx, dy, dz) takes floats since 1.21; 1.20.6's body cast its doubles to float first"
     }
   },
   "overrideHooks": [
@@ -351,6 +372,53 @@
       "narrow": true,
       "onlyUnder": "net/minecraft/class_927",
       "basis": "MobRenderer.render(mob, ..) is gone since 1.21 (EntityRenderer draws the leash): a 1.20.6 override is reached from EntityRenderer.render for mobs"
+    },
+    {
+      "old": "method_30888(Lnet/minecraft/class_332;II)I",
+      "new": "method_30888(Lnet/minecraft/class_332;II)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbLabelCentered(Ltop/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyLabelCentered;Lnet/minecraft/class_332;II)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyLabelCentered",
+      "onlyUnder": "net/minecraft/class_5489",
+      "basis": "MultiLineLabel's render methods answer nothing since 1.21: a 1.20.6 label class's own int-answering method draws, its answer is what a 1.20.6 caller gets (instanceRedirects)"
+    },
+    {
+      "old": "method_30889(Lnet/minecraft/class_332;IIII)I",
+      "new": "method_30889(Lnet/minecraft/class_332;IIII)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbLabelCenteredFull(Ltop/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyLabelCenteredFull;Lnet/minecraft/class_332;IIII)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyLabelCenteredFull",
+      "onlyUnder": "net/minecraft/class_5489",
+      "basis": "MultiLineLabel's render methods answer nothing since 1.21: a 1.20.6 label class's own int-answering method draws, its answer is what a 1.20.6 caller gets (instanceRedirects)"
+    },
+    {
+      "old": "method_30893(Lnet/minecraft/class_332;IIII)I",
+      "new": "method_30893(Lnet/minecraft/class_332;IIII)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbLabelLeft(Ltop/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyLabelLeft;Lnet/minecraft/class_332;IIII)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyLabelLeft",
+      "onlyUnder": "net/minecraft/class_5489",
+      "basis": "MultiLineLabel's render methods answer nothing since 1.21: a 1.20.6 label class's own int-answering method draws, its answer is what a 1.20.6 caller gets (instanceRedirects)"
+    },
+    {
+      "old": "method_37072()V",
+      "new": "method_61040(Z)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbUpdateNarratorStatus(Ltop/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyNarration;Z)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyNarration",
+      "onlyUnder": "net/minecraft/class_437",
+      "basis": "1.20.6 called Screen.narrationEnabled() when the narrator came on; 1.21 calls updateNarratorStatus(enabled), which also shows the option on the narrator button"
+    },
+    {
+      "old": "method_57703()D",
+      "new": "method_57703()I",
+      "args": [],
+      "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbBlurrinessSteps(D)I",
+      "onlyUnder": "net/minecraft/class_315",
+      "basis": "a 1.20.6 Options subclass's fraction, as the steps 1.21's renderer reads"
+    },
+    {
+      "old": "method_19324(DDD)V",
+      "new": "method_19324(FFF)V",
+      "wrap": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbWiden(F)D",
+      "onlyUnder": "net/minecraft/class_4184",
+      "basis": "a 1.20.6 Camera subclass's move(double..) gets 1.21's floats, widened exactly"
     }
   ],
   "superRedirects": {
@@ -358,7 +426,9 @@
     "net/minecraft/class_4593.method_22955(FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperSetColor",
     "net/minecraft/class_4594.method_22956(FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperSetColor",
     "net/minecraft/class_927.method_4068(Lnet/minecraft/class_1308;Lnet/minecraft/class_4604;DDD)Z": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperShouldRender",
-    "net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperMobRender"
+    "net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperMobRender",
+    "net/minecraft/class_437.method_59870()F": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbAdvancePanoramaTime",
+    "net/minecraft/class_437.method_37072()V": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbSuperNarrationEnabled"
   },
   "instanceRedirects": {
     "net/minecraft/class_2535.method_10748()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbDisconnectedReason",
@@ -370,11 +440,22 @@
     "net/minecraft/class_4593.method_22955(FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSetColor",
     "net/minecraft/class_4594.method_22956(FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSetColor",
     "net/minecraft/class_927.method_4068(Lnet/minecraft/class_1308;Lnet/minecraft/class_4604;DDD)Z": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbShouldRender",
-    "net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbMobRender"
+    "net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbMobRender",
+    "net/minecraft/class_5489.method_30888(Lnet/minecraft/class_332;II)I": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbRenderCentered",
+    "net/minecraft/class_5489.method_30889(Lnet/minecraft/class_332;IIII)I": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbRenderCentered",
+    "net/minecraft/class_5489.method_30893(Lnet/minecraft/class_332;IIII)I": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbRenderLeftAligned",
+    "net/minecraft/class_5489.method_41154(Lnet/minecraft/class_332;IIIII)V": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbRenderBackgroundCentered",
+    "net/minecraft/class_437.method_59870()F": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbPanoramaTime",
+    "net/minecraft/class_437.method_37072()V": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbNarrationEnabled"
   },
   "staticRedirects": {
     "net/minecraft/class_9147.method_56457(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;": "top/dext/centurybridge/step/v1_21/rt/CbNet",
-    "net/minecraft/class_9147.method_56458(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;": "top/dext/centurybridge/step/v1_21/rt/CbNet"
+    "net/minecraft/class_9147.method_56458(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;": "top/dext/centurybridge/step/v1_21/rt/CbNet",
+    "net/minecraft/class_5489.method_30890(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;I)Lnet/minecraft/class_5489;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui",
+    "net/minecraft/class_5489.method_30891(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;II)Lnet/minecraft/class_5489;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui",
+    "net/minecraft/class_5489.method_35726(Lnet/minecraft/class_327;Ljava/util/List;)Lnet/minecraft/class_5489;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui",
+    "net/minecraft/class_5489.method_30895(Lnet/minecraft/class_327;Ljava/util/List;)Lnet/minecraft/class_5489;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui",
+    "net/minecraft/class_6777.method_47621(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Lnet/minecraft/class_315;)Lnet/minecraft/class_6777;": "top/dext/centurybridge/step/v1_21/rt/CbClientGui"
   },
   "frameDefaults": {
     "method_55597(Lnet/minecraft/class_129;)V": {
@@ -411,6 +492,18 @@
       "method": "method_61108(Lnet/minecraft/class_9127$class_9128$class_9828;)V",
       "call": "top/dext/centurybridge/step/v1_21/rt/CbNet.cbUnboundPackets(Lnet/minecraft/class_9127$class_9128;Lnet/minecraft/class_9127$class_9128$class_9828;)V",
       "basis": "ProtocolInfo.Unbound.listPackets is abstract since 1.21; a 1.20.6 Unbound only binds and has no packet list (CbNet.cbUnboundPackets says so instead of pretending an empty one); 1.21 asks only its own protocols (the packet report)"
+    },
+    {
+      "under": "net/minecraft/class_4667",
+      "method": "method_60325()V",
+      "call": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbLegacyAddOptions(Lnet/minecraft/class_4667;)V",
+      "basis": "OptionsSubScreen.addOptions is abstract since 1.21 and called only from 1.21's OptionsSubScreen.init, which a 1.20.6 subclass does not run (CbClientOptionsSubScreenMixin)"
+    },
+    {
+      "under": "net/minecraft/class_8768",
+      "method": "method_61135()V",
+      "call": "top/dext/centurybridge/step/v1_21/rt/CbClientGui.cbLegacyAddContent(Lnet/minecraft/class_8768;)V",
+      "basis": "AbstractReportScreen.addContent is abstract since 1.21 and called only from 1.21's AbstractReportScreen.init, which a 1.20.6 subclass does not run (CbClientReportScreenMixin)"
     }
   ],
   "methodRenames": {
@@ -515,6 +608,58 @@
         "keep:0"
       ],
       "basis": "BreezeWindLayer(parent) built its model from the code-defined breeze wind layer; 1.21's (context, parent) bakes that same layer (ModelLayers.BREEZE_WIND) from the context: one made as 1.21's EntityRenderDispatcher makes its own"
+    },
+    "net/minecraft/class_353.<init>(Lnet/minecraft/class_310;IILnet/minecraft/class_4667;)V": {
+      "desc": "(Lnet/minecraft/class_310;ILnet/minecraft/class_4667;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "drop:2",
+        "keep:3"
+      ],
+      "basis": "OptionsList(minecraft, width, height, screen): 1.20.6's body never read height (the screen's layout sizes the list); 1.21 dropped it"
+    },
+    "net/minecraft/class_446.<init>(Lnet/minecraft/class_437;Lnet/minecraft/class_315;)V": {
+      "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_310;Lnet/minecraft/class_315;)V",
+      "ops": [
+        "keep:0",
+        "push top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbMinecraft()Lnet/minecraft/class_310;",
+        "keep:1"
+      ],
+      "basis": "VideoSettingsScreen(parent, options) takes the game too since 1.21; 1.20.6's read it from Minecraft.getInstance()"
+    },
+    "net/minecraft/class_8669.<init>(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/lang/String;Ljava/lang/Runnable;)V": {
+      "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/net/URI;Ljava/lang/Runnable;)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "conv:2 top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbUri(Ljava/lang/String;)Ljava/net/URI;",
+        "keep:3"
+      ],
+      "post": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbNoticeBuilt(Lnet/minecraft/class_8669;Ljava/lang/String;)V",
+      "postArgs": [
+        2
+      ],
+      "basis": "NoticeWithLinkScreen takes a URI since 1.21; the 1.20.6 String is kept and used as 1.20.6 used it (CbClientNoticeWithLinkScreenMixin)"
+    },
+    "net/minecraft/class_481.<init>(Lnet/minecraft/class_1657;Lnet/minecraft/class_7699;Z)V": {
+      "desc": "(Lnet/minecraft/class_746;Lnet/minecraft/class_7699;Z)V",
+      "ops": [
+        "conv:0 top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbLocalPlayer(Lnet/minecraft/class_1657;)Lnet/minecraft/class_746;",
+        "keep:1",
+        "keep:2"
+      ],
+      "basis": "CreativeModeInventoryScreen takes the LocalPlayer since 1.21 (it reads the connection's search trees); the creative screen is only ever the local player's"
+    },
+    "net/minecraft/class_491.<init>(Lnet/minecraft/class_1724;Lnet/minecraft/class_1661;Lnet/minecraft/class_1496;)V": {
+      "desc": "(Lnet/minecraft/class_1724;Lnet/minecraft/class_1661;Lnet/minecraft/class_1496;I)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "conv:2 top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbHorseColumns(Lnet/minecraft/class_1496;)I"
+      ],
+      "basis": "HorseInventoryScreen takes the chest's column count since 1.21; 1.20.6 drew the chest grid for a chested horse with a chest, getInventoryColumns() wide"
     }
   },
   "adapterHooks": [
@@ -541,15 +686,54 @@
         }
       ],
       "basis": "1.20.6's renderers read Minecraft.getFrameTime()/getDeltaFrameTime(), 1.21's read getTimer(): a 1.20.6 Minecraft subclass's timer answers its own two values"
+    },
+    {
+      "under": "net/minecraft/class_5489",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyLabelBackground",
+      "requires": [
+        "method_41154(Lnet/minecraft/class_332;IIIII)V"
+      ],
+      "synth": [],
+      "basis": "MultiLineLabel.renderBackgroundCentered is gone since 1.21 (1.20.6's callers were mods only); a 1.20.6 label class keeps its own, which 1.20.6-style calls reach (CbClientGui.cbRenderBackgroundCentered)"
+    },
+    {
+      "under": "net/minecraft/class_437",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyScreen",
+      "requires": [],
+      "synth": [],
+      "basis": "every 1.20.6 screen class is marked: OptionsSubScreen, AbstractReportScreen and the panorama keep 1.20.6's behaviour for it (CbClientGui.CbLegacyScreen)"
+    },
+    {
+      "under": "net/minecraft/class_437",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientGui$CbLegacyPanorama",
+      "requires": [
+        "method_59870()F"
+      ],
+      "synth": [],
+      "basis": "Screen.advancePanoramaTime is gone since 1.21: a 1.20.6 screen's override is what its panorama spins by (CbClientScreenPanoramaMixin)"
     }
   ],
   "classRenames": {
-    "net/minecraft/class_317": "top/dext/centurybridge/step/v1_21/facade/Timer"
+    "net/minecraft/class_317": "top/dext/centurybridge/step/v1_21/facade/Timer",
+    "net/minecraft/class_5500": "top/dext/centurybridge/step/v1_21/facade/SimpleOptionsSubScreen"
   },
   "facadeGaps": {
     "net/minecraft/class_317.<init>(FJ)V": "Timer(ticksPerSecond, now) is 1.20.2's constructor; 1.20.3 replaced it with (ticksPerSecond, now, targetMsptProvider) and the 1.20.2 -> 1.20.3 step reshapes every call into that one (CbClient.cbFixedTickRate), so no class climbing into 1.20.6 names it"
   },
   "fieldRedirects": {
-    "net/minecraft/class_927.field_32940:I": "top/dext/centurybridge/step/v1_21/rt/CbClientModels"
-  }
+    "net/minecraft/class_927.field_32940:I": "top/dext/centurybridge/step/v1_21/rt/CbClientModels",
+    "net/minecraft/class_4905.field_33042:I": "top/dext/centurybridge/step/v1_21/rt/CbClientGui"
+  },
+  "convertHooks": [
+    {
+      "under": "net/minecraft/class_315",
+      "member": "method_57702()Lnet/minecraft/class_7172;",
+      "ret": "top/dext/centurybridge/step/v1_21/rt/CbClientGui#cbBlurrinessSteps(Lnet/minecraft/class_7172;)Lnet/minecraft/class_7172;",
+      "basis": "a 1.20.6 Options subclass's own menuBackgroundBlurriness() (a 1.20.6 view) answers 1.21's option it stands for"
+    }
+  ],
+  "covers": [
+    "net/minecraft/class_359$class_360.method_1959()Lnet/minecraft/class_243;",
+    "net/minecraft/class_359$class_360.method_1961()J"
+  ]
 }
