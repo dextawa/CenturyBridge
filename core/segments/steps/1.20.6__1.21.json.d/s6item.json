@@ -25,7 +25,8 @@
   "net/minecraft/class_9469": "top/dext/centurybridge/step/v1_21/facade/class_9469"
  },
  "fieldGetters": {
-  "net/minecraft/class_7923.field_41176:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments"
+  "net/minecraft/class_7923.field_41176:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments",
+  "net/minecraft/class_9304.field_50014:I": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments"
  },
  "methodRenames": {
   "net/minecraft/class_1887$class_9426.comp_2505()I": "comp_2690"
@@ -104,5 +105,136 @@
   "net/minecraft/class_1900$class_1901.method_8239()I": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides",
   "net/minecraft/class_1900$class_1901.field_9135:I": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides",
   "net/minecraft/class_1900$class_1901.field_9134:I": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides"
+ },
+ "callReshapes": {
+  "net/minecraft/class_9304.method_57536(Lnet/minecraft/class_1887;)I": {
+   "desc": "(Lnet/minecraft/class_6880;)I",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#lookupHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "ItemEnchantments.getLevel: an enchantment object -> the world's holder of its key (an absent one: a holder no item has, so 0 as 1.20.6 answered)"
+  },
+  "net/minecraft/class_9304$class_9305.method_57546(Lnet/minecraft/class_1887;)I": {
+   "desc": "(Lnet/minecraft/class_6880;)I",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#lookupHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "ItemEnchantments.Mutable.getLevel, as ItemEnchantments.getLevel"
+  },
+  "net/minecraft/class_9304$class_9305.method_57547(Lnet/minecraft/class_1887;I)V": {
+   "desc": "(Lnet/minecraft/class_6880;I)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "ItemEnchantments.Mutable.set: the object's world holder"
+  },
+  "net/minecraft/class_9304$class_9305.method_57550(Lnet/minecraft/class_1887;I)V": {
+   "desc": "(Lnet/minecraft/class_6880;I)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "ItemEnchantments.Mutable.upgrade: the object's world holder"
+  },
+  "net/minecraft/class_9304.method_57534()Ljava/util/Set;": {
+   "desc": "()Ljava/util/Set;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#vHolderSet(Ljava/util/Set;)Ljava/util/Set;",
+   "basis": "ItemEnchantments.keySet: Set<Holder<Enchantment>> -- the world holders seen as the objects' holders (holder.value() is the 1.20.6 object)"
+  },
+  "net/minecraft/class_9304.method_57539()Ljava/util/Set;": {
+   "desc": "()Ljava/util/Set;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#vEntrySet(Ljava/util/Set;)Ljava/util/Set;",
+   "basis": "ItemEnchantments.entrySet: the (holder, level) entries over the objects' holders"
+  },
+  "net/minecraft/class_9304$class_9305.method_57545()Ljava/util/Set;": {
+   "desc": "()Ljava/util/Set;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#vHolderSet(Ljava/util/Set;)Ljava/util/Set;",
+   "basis": "ItemEnchantments.Mutable.keySet, as ItemEnchantments.keySet"
+  },
+  "net/minecraft/class_9304$class_9305.method_57548(Ljava/util/function/Predicate;)V": {
+   "desc": "(Ljava/util/function/Predicate;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#wPredicate(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;"
+   ],
+   "basis": "ItemEnchantments.Mutable.removeIf: the mod's test of the objects' holders, handed each world holder's object holder"
+  },
+  "net/minecraft/class_1799.method_7978(Lnet/minecraft/class_1887;I)V": {
+   "desc": "(Lnet/minecraft/class_6880;I)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "ItemStack.enchant: the object's world holder"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_57547(Lnet/minecraft/class_1887;I)V",
+   "new": "method_57547(Lnet/minecraft/class_6880;I)V",
+   "onlyUnder": "net/minecraft/class_9304$class_9305",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments.cbEnchantment(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1887;",
+   "basis": "a mod's ItemEnchantments.Mutable subclass: 1.21 hands the world holder, the override takes the object; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_57550(Lnet/minecraft/class_1887;I)V",
+   "new": "method_57550(Lnet/minecraft/class_6880;I)V",
+   "onlyUnder": "net/minecraft/class_9304$class_9305",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments.cbEnchantment(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1887;",
+   "basis": "a mod's ItemEnchantments.Mutable subclass: 1.21 hands the world holder, the override takes the object; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_57546(Lnet/minecraft/class_1887;)I",
+   "new": "method_57546(Lnet/minecraft/class_6880;)I",
+   "onlyUnder": "net/minecraft/class_9304$class_9305",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments.cbEnchantment(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1887;",
+   "basis": "a mod's ItemEnchantments.Mutable subclass: 1.21 hands the world holder, the override takes the object; its super call is reshaped (callReshapes)"
+  }
+ ],
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_9304$class_9305",
+   "member": "method_57545()Ljava/util/Set;",
+   "ret": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#wHolderSet(Ljava/util/Set;)Ljava/util/Set;"
+  },
+  {
+   "under": "net/minecraft/class_9304$class_9305",
+   "member": "method_57548(Ljava/util/function/Predicate;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#vPredicate(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;"
+   ]
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_1889.<init>(Lnet/minecraft/class_1887;I)V": {
+   "desc": "(Lnet/minecraft/class_6880;I)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_2035.<init>(Lnet/minecraft/class_1887;Lnet/minecraft/class_2096$class_2100;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_2035.<init>(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments#predicateEnchantments(Ljava/util/Optional;)Ljava/util/Optional;",
+    "keep"
+   ]
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_1889.field_9093:Lnet/minecraft/class_1887;": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2035.comp_1748()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments"
  }
 }

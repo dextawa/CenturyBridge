@@ -475,4 +475,26 @@ public final class CbEnchantments {
         }
         return out == null ? tags : out;
     }
+
+    /**
+     * 1.20.6's BuiltInRegistries.ENCHANTMENT had the datapacks' enchantment tags bound like every
+     * registry, so a 1.20.6 mod's holder.is(tag) answered them. The stand-in registry binds the same
+     * tags (the world's, as the world binds them: CbEnchTagsMixin) over the objects' holders.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void bindLegacyTags(Map tags) {
+        Map<net.minecraft.class_6862<class_1887>, List<net.minecraft.class_6880<class_1887>>> mapped = new LinkedHashMap<>();
+        for (Object o : tags.entrySet()) {
+            Map.Entry e = (Map.Entry) o;
+            List<net.minecraft.class_6880<class_1887>> list = new ArrayList<>();
+            for (Object h : (List) e.getValue()) {
+                Optional<net.minecraft.class_5321<net.minecraft.class_1887>> key = ((net.minecraft.class_6880) h).method_40230();
+                if (key.isPresent()) {
+                    list.add(facadeFor(key.get()).field_45769);
+                }
+            }
+            mapped.put((net.minecraft.class_6862) e.getKey(), list);
+        }
+        legacy().method_40257(mapped);
+    }
 }

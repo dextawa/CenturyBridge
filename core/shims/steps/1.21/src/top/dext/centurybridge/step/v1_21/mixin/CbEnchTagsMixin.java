@@ -26,6 +26,8 @@ public abstract class CbEnchTagsMixin {
         if (!net.minecraft.class_7924.field_41265.equals(registry.method_30517())) {
             return tags;
         }
-        return CbEnchantments.withLegacyTags(registry, tags);
+        Map bound = CbEnchantments.withLegacyTags(registry, tags);
+        CbEnchantments.bindLegacyTags(bound);
+        return bound;
     }
 }
