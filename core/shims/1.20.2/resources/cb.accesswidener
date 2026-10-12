@@ -18,6 +18,9 @@ accessible method net/minecraft/class_8208 <init> (IIII)V
 # Minecraft.LoadingContext (package-private record): the clearResourcePacksOnError override hook's rewritten
 # super call casts the context it carries to it.
 accessible class net/minecraft/class_310$class_8764
+# SmithingTrimRecipe's constructor went package-private in 1.20.2 (public in 1.20.1, with the
+# recipe id): a converted subclass's super(id, ...) is reshaped onto it (s1misc recipe wiring)
+accessible method net/minecraft/class_8062 <init> (Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;)V
 # ---- s1net: packet classes 1.20.1 mods could extend that 1.20.2 turned into final records
 # (CustomPayload S2C/C2S, ForgetLevelChunk, Respawn, ClientIntention, CustomQuery, CustomQueryAnswer).
 # A converted subclass extends the record again -- its super(..) reshaped onto the canonical

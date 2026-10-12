@@ -53,7 +53,7 @@ public final class CbRecipes {
                     return DataResult.error(() -> "CenturyBridge: recipe " + id + " is not a JSON object");
                 }
                 try {
-                    return DataResult.success(s.method_8121(id, json.getAsJsonObject()));
+                    return DataResult.success(CbRecipeIds.remember(s.method_8121(id, json.getAsJsonObject()), id));
                 } catch (RuntimeException e) {
                     return DataResult.error(() -> "CenturyBridge: recipe " + id + ": " + e.getMessage());
                 }
@@ -74,7 +74,7 @@ public final class CbRecipes {
             throw new IllegalStateException("CenturyBridge: a 1.20.1 recipe serializer reads the network form only "
                 + "inside the recipe-sync packet -- its read(id, buf) needs the recipe id");
         }
-        return serializer.method_8122(id, buf);
+        return CbRecipeIds.remember(serializer.method_8122(id, buf), id);
     }
 
     private CbRecipes() {

@@ -768,6 +768,12 @@ public final class JarProcessor {
         org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
         for (Chain.ReshapeOp op : r.ops) {
             if (op.drop) {
+                if (op.owner != null) {
+                    // "drop OWNER#name(T)V": the dropped value goes to the sink, nothing is pushed
+                    int idx = op.from[0];
+                    seq.add(new org.objectweb.asm.tree.VarInsnNode(old[idx].getOpcode(Opcodes.ILOAD), slots[idx]));
+                    seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, op.owner, op.name, op.desc, false));
+                }
                 continue;
             }
             if (op.param != null) {
@@ -2024,10 +2030,20 @@ public final class JarProcessor {
                             }
                             return; // live constructor (a dead owner is reported by checkClass)
                         }
-                        if (op == Opcodes.INVOKESPECIAL && chain.superRedirects.containsKey(key)) {
-                            superRedirectSites.put(site, chain.superRedirects.get(key));
-                            top.dext.centurybridge.data.FullAudit.record(key, "super-redirect");
-                            return;
+                        if (op == Opcodes.INVOKESPECIAL) {
+                            // a super call resolves where the source version declared the member
+                            // (Chain.superRedirectHome): a vanilla subclass in between that does not
+                            // redeclare it takes the declaring class's super redirect, and the
+                            // emitted static names that class as the receiver type
+                            String srHome = chain.superRedirectHome(owner, name + desc);
+                            if (srHome != null) {
+                                superRedirectSites.put(site, chain.superRedirects.get(srHome + "." + name + desc));
+                                if (!srHome.equals(owner)) {
+                                    emitOwner.put(site, srHome);
+                                }
+                                top.dext.centurybridge.data.FullAudit.record(srHome + "." + name + desc, "super-redirect");
+                                return;
+                            }
                         }
                         // a shim on any ancestor satisfies this call site: the mod
                         // holds a subclass reference, but the member is declared
