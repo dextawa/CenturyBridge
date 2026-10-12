@@ -1,0 +1,1365 @@
+{
+ "fieldRedirects": {
+  "net/minecraft/class_2019.field_9520:Lnet/minecraft/class_2019;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2022.field_9533:Lnet/minecraft/class_2022;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2025.field_9553:Lnet/minecraft/class_2025;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2035.field_9571:Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2040.field_9581:Lnet/minecraft/class_2040;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2048.field_9599:Lnet/minecraft/class_2048;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2073.field_9640:Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2090.field_9685:Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2102.field_9709:Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2105.field_9716:Lnet/minecraft/class_2105;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_3735.field_16485:Lnet/minecraft/class_3735;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_4550.field_20692:Lnet/minecraft/class_4550;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_4551.field_20708:Lnet/minecraft/class_4551;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_4552.field_20712:Lnet/minecraft/class_4552;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_4559.field_20736:Lnet/minecraft/class_4559;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_5258.field_24388:Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_175.method_771(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria",
+  "net/minecraft/class_175.method_774()Lnet/minecraft/class_184;": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria",
+  "net/minecraft/class_179$class_180.method_797()Lnet/minecraft/class_184;": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria",
+  "net/minecraft/class_179.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers",
+  "net/minecraft/class_184.method_806()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvInstances"
+ },
+ "superRedirects": {
+  "net/minecraft/class_175.method_771(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#superSerializeToNetwork",
+  "net/minecraft/class_175.method_774()Lnet/minecraft/class_184;": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#superGetTrigger",
+  "net/minecraft/class_179$class_180.method_797()Lnet/minecraft/class_184;": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#superGetTriggerInstance",
+  "net/minecraft/class_195.method_806()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvInstances",
+  "net/minecraft/class_196.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_1996.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_1999.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2002.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2006.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2010.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2014.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2027.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2030.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2037.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2044.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2054.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2058.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2062$class_2063.method_806()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvInstances",
+  "net/minecraft/class_2062.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2066.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2069.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2076.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2080.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2085.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2108.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2115.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2119.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2123.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2128.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2131.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2135.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2140.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2143.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_2148.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_4708.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_4711.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_4713.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_4851.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_5279.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_5282.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_5409.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_6405.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_6407.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_6409.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds",
+  "net/minecraft/class_8508.method_794()Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggerIds"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_174.method_767(Lnet/minecraft/class_179;)Lnet/minecraft/class_179;": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers",
+  "net/minecraft/class_175.method_768(Lnet/minecraft/class_2540;)Ljava/util/Map;": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria",
+  "net/minecraft/class_175.method_769(Lnet/minecraft/class_2540;)Lnet/minecraft/class_175;": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria",
+  "net/minecraft/class_175.method_775(Ljava/util/Map;Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria",
+  "net/minecraft/class_196$class_198.method_29918(Lnet/minecraft/class_2048;Lnet/minecraft/class_2048;Lnet/minecraft/class_2048;)Lnet/minecraft/class_196$class_198;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_196$class_198.method_860()Lnet/minecraft/class_196$class_198;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_196$class_198.method_861(Lnet/minecraft/class_2048$class_2049;)Lnet/minecraft/class_196$class_198;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_1996$class_1998.method_8791()Lnet/minecraft/class_1996$class_1998;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_1999$class_2001.method_35068(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)Lnet/minecraft/class_1999$class_2001;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_1999$class_2001.method_35069(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1999$class_2001;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_1999$class_2001.method_35070()Lnet/minecraft/class_1999$class_2001;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_1999$class_2001.method_8799(Lnet/minecraft/class_5321;)Lnet/minecraft/class_1999$class_2001;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2002$class_2004.method_8809([Lnet/minecraft/class_2048;)Lnet/minecraft/class_2002$class_2004;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2006$class_2008.method_35110()Lnet/minecraft/class_2006$class_2008;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2006$class_2008.method_8818(Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_2006$class_2008;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2010$class_2012.method_35112(Lnet/minecraft/class_2073;)Lnet/minecraft/class_2010$class_2012;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2010$class_2012.method_8827()Lnet/minecraft/class_2010$class_2012;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2010$class_2012.method_8828(Lnet/minecraft/class_1935;)Lnet/minecraft/class_2010$class_2012;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2014$class_2016.method_8836()Lnet/minecraft/class_2014$class_2016;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2027$class_2029.method_37224(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2027$class_2029;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2027$class_2029.method_8869(Lnet/minecraft/class_2102;)Lnet/minecraft/class_2027$class_2029;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2030$class_2032.method_8877()Lnet/minecraft/class_2030$class_2032;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2037$class_2039.method_8890(Lnet/minecraft/class_2248;)Lnet/minecraft/class_2037$class_2039;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2044$class_2046.method_35209(Lnet/minecraft/class_2019;)Lnet/minecraft/class_2044$class_2046;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2044$class_2046.method_35210()Lnet/minecraft/class_2044$class_2046;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2044$class_2046.method_8908(Lnet/minecraft/class_2019$class_2020;)Lnet/minecraft/class_2044$class_2046;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2048.method_51704(Lnet/minecraft/class_2048;)Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2048.method_51707(Lcom/google/gson/JsonObject;Ljava/lang/String;Lnet/minecraft/class_5257;)[Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria",
+  "net/minecraft/class_2054$class_2056.method_8937(Lnet/minecraft/class_2073;)Lnet/minecraft/class_2054$class_2056;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2058$class_2060.method_8947(Lnet/minecraft/class_2073;Lnet/minecraft/class_2048;Lnet/minecraft/class_2073;)Lnet/minecraft/class_2058$class_2060;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2066$class_2068.method_8957([Lnet/minecraft/class_2073;)Lnet/minecraft/class_2066$class_2068;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2066$class_2068.method_8959([Lnet/minecraft/class_1935;)Lnet/minecraft/class_2066$class_2068;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2069$class_2071.method_35229(Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_2069$class_2071;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2069$class_2071.method_8967(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_2069$class_2071;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2076$class_2078.method_8986([Lnet/minecraft/class_2048$class_2049;)Lnet/minecraft/class_2076$class_2078;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2076$class_2078.method_8987(Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_2076$class_2078;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35247(Lnet/minecraft/class_2048$class_2049;Lnet/minecraft/class_2022;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35248(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35249(Lnet/minecraft/class_2048;Lnet/minecraft/class_2022$class_2023;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35250(Lnet/minecraft/class_2048;Lnet/minecraft/class_2022;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35251(Lnet/minecraft/class_2048$class_2049;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35252(Lnet/minecraft/class_2048$class_2049;Lnet/minecraft/class_2022$class_2023;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35253(Lnet/minecraft/class_2048$class_2049;Lnet/minecraft/class_2022;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35254(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35255(Lnet/minecraft/class_2048;Lnet/minecraft/class_2022$class_2023;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_35256(Lnet/minecraft/class_2048;Lnet/minecraft/class_2022;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_42671()Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_8997(Lnet/minecraft/class_2048$class_2049;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_8998()Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_8999()Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2080$class_2083.method_9001(Lnet/minecraft/class_2048$class_2049;Lnet/minecraft/class_2022$class_2023;)Lnet/minecraft/class_2080$class_2083;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2085$class_2087.method_9013(Lnet/minecraft/class_2025;)Lnet/minecraft/class_2085$class_2087;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2108$class_2110.method_38850(Lnet/minecraft/class_2048$class_2049;Lnet/minecraft/class_2025;)Lnet/minecraft/class_2108$class_2110;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2108$class_2110.method_38851(Lnet/minecraft/class_2048$class_2049;Lnet/minecraft/class_2025;Lnet/minecraft/class_2090;)Lnet/minecraft/class_2108$class_2110;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2108$class_2110.method_9085(Lnet/minecraft/class_2025;)Lnet/minecraft/class_2108$class_2110;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2115$class_2117.method_35294(Lnet/minecraft/class_2019$class_2020;Lnet/minecraft/class_2048;)Lnet/minecraft/class_2115$class_2117;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2115$class_2117.method_35295(Lnet/minecraft/class_2019;)Lnet/minecraft/class_2115$class_2117;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2115$class_2117.method_35296(Lnet/minecraft/class_2019;Lnet/minecraft/class_2048;)Lnet/minecraft/class_2115$class_2117;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2115$class_2117.method_35297(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2115$class_2117;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2115$class_2117.method_35298()Lnet/minecraft/class_2115$class_2117;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2115$class_2117.method_9103(Lnet/minecraft/class_2019$class_2020;)Lnet/minecraft/class_2115$class_2117;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2119.method_27847(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2119$class_2121;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2123$class_2125.method_35323(Lnet/minecraft/class_2073;)Lnet/minecraft/class_2123$class_2125;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2123$class_2125.method_9120(Lnet/minecraft/class_1935;)Lnet/minecraft/class_2123$class_2125;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2128$class_2130.method_9129(Lnet/minecraft/class_2048$class_2049;)Lnet/minecraft/class_2128$class_2130;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2131$class_2133.method_16114(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2131$class_2133;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2131$class_2133.method_9138()Lnet/minecraft/class_2131$class_2133;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2135$class_2137.method_43135(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2135$class_2137;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2135$class_2137.method_43136(Lnet/minecraft/class_2248;Lnet/minecraft/class_1792;)Lnet/minecraft/class_2135$class_2137;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2135$class_2137.method_43137(Lnet/minecraft/class_2090;)Lnet/minecraft/class_2135$class_2137;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2135$class_2137.method_43138()Lnet/minecraft/class_2135$class_2137;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2135$class_2137.method_43139()Lnet/minecraft/class_2135$class_2137;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2135$class_2137.method_43279()Lnet/minecraft/class_2135$class_2137;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2135$class_2137.method_49195()Lnet/minecraft/class_2135$class_2137;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2140$class_2142.method_38914(Lnet/minecraft/class_2048$class_2049;)Lnet/minecraft/class_2140$class_2142;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2140$class_2142.method_9153()Lnet/minecraft/class_2140$class_2142;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2148$class_2150.method_35399(Lnet/minecraft/class_2073;)Lnet/minecraft/class_2148$class_2150;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_2148$class_2150.method_9170(Lnet/minecraft/class_1935;)Lnet/minecraft/class_2148$class_2150;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_4708$class_4709.method_23879(Lnet/minecraft/class_2248;Lnet/minecraft/class_2073$class_2074;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_4708$class_4709;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_4711$class_4712.method_27981(Lnet/minecraft/class_2090$class_2091;Lnet/minecraft/class_2073$class_2074;)Lnet/minecraft/class_4711$class_4712;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_4711$class_4712.method_43125(Lnet/minecraft/class_2090$class_2091;Lnet/minecraft/class_2073$class_2074;)Lnet/minecraft/class_4711$class_4712;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_4711$class_4712.method_51710(Lnet/minecraft/class_2248;)Lnet/minecraft/class_4711$class_4712;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_4711$class_4712.method_51712([Lnet/minecraft/class_5341$class_210;)Lnet/minecraft/class_4711$class_4712;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_4713$class_4714.method_23912(Lnet/minecraft/class_2248;)Lnet/minecraft/class_4713$class_4714;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_4851$class_4852.method_24865(Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_5258;)Lnet/minecraft/class_4851$class_4852;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_5258.method_27807(Ljava/lang/String;Lnet/minecraft/class_5257;Lcom/google/gson/JsonElement;Lnet/minecraft/class_176;)Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria",
+  "net/minecraft/class_5258.method_27808([Lnet/minecraft/class_5258;Lnet/minecraft/class_5267;)Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria",
+  "net/minecraft/class_5258.method_27973([Lnet/minecraft/class_5341;)Lnet/minecraft/class_5258;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_5279$class_5280.method_27978(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_5258;)Lnet/minecraft/class_5279$class_5280;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_5279$class_5280.method_43277(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_5258;)Lnet/minecraft/class_5279$class_5280;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_5282$class_5283.method_27995(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5282$class_5283;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_5409$class_5410.method_30099(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073$class_2074;Lnet/minecraft/class_5258;)Lnet/minecraft/class_5409$class_5410;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_5409$class_5410.method_43278(Lnet/minecraft/class_2073$class_2074;Lnet/minecraft/class_5258;)Lnet/minecraft/class_5409$class_5410;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_6405$class_6406.method_37243(Lnet/minecraft/class_2048;Lnet/minecraft/class_2048;)Lnet/minecraft/class_6405$class_6406;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_6407$class_6408.method_37260(Lnet/minecraft/class_2048$class_2049;)Lnet/minecraft/class_6407$class_6408;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_6409$class_6410.method_37265(Lnet/minecraft/class_2048$class_2049;Lnet/minecraft/class_2073$class_2074;)Lnet/minecraft/class_6409$class_6410;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_8508$class_8509.method_51352(Lnet/minecraft/class_2960;)Lnet/minecraft/class_8508$class_8509;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories",
+  "net/minecraft/class_8508$class_8509.method_51353(Lnet/minecraft/class_2960;Ljava/util/List;)Lnet/minecraft/class_8508$class_8509;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories"
+ },
+ "callReshapes": {
+  "net/minecraft/class_184.method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;": {
+   "desc": "()Lcom/google/gson/JsonObject;",
+   "ops": [
+    "drop"
+   ],
+   "basis": "s1adv: serializeToJson lost its SerializationContext -- 1.20.1 only ever passed SerializationContext.INSTANCE, which 1.20.2's writes the same with"
+  },
+  "net/minecraft/class_195.method_27790()Lnet/minecraft/class_5258;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#contextOrAny(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "s1adv: getPlayerPredicate answers an Optional (absent is ContextAwarePredicate.ANY)"
+  },
+  "net/minecraft/class_195.method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;": {
+   "desc": "()Lcom/google/gson/JsonObject;",
+   "ops": [
+    "drop"
+   ],
+   "basis": "s1adv: AbstractCriterionTriggerInstance.serializeToJson (a subclass's super call lands on 1.20.2's, which writes the player predicate as 1.20.1's did; ANY is absent)"
+  },
+  "net/minecraft/class_196.method_854(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_196$class_198;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_196$class_198;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_1996.method_8785(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1996$class_1998;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1996$class_1998;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_1999.method_8793(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1999$class_2001;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1999$class_2001;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2002.method_8801(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2002$class_2004;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2002$class_2004;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2006.method_8811(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2006$class_2008;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2006$class_2008;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2010.method_8820(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2010$class_2012;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2010$class_2012;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2014.method_8830(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2014$class_2016;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2014$class_2016;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2027.method_8862(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2027$class_2029;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2027$class_2029;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2030.method_8872(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2030$class_2032;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2030$class_2032;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2037.method_8883(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2037$class_2039;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2037$class_2039;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2044.method_8902(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2044$class_2046;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2044$class_2046;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2054.method_8931(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2054$class_2056;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2054$class_2056;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2058.method_8941(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2058$class_2060;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2058$class_2060;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2066.method_8952(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2066$class_2068;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2066$class_2068;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2069.method_8962(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2069$class_2071;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2069$class_2071;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2076.method_8979(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2076$class_2078;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2076$class_2078;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2080.method_8989(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2080$class_2083;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2080$class_2083;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2085.method_9006(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2085$class_2087;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2085$class_2087;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2108.method_9078(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2108$class_2110;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2108$class_2110;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2115.method_9098(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2115$class_2117;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2115$class_2117;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2119$class_2121.method_9112(Lnet/minecraft/class_1860;)Z": {
+   "desc": "(Lnet/minecraft/class_8786;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "s1adv: RecipeUnlockedTrigger.TriggerInstance.matches compares the holder's id where 1.20.1 compared recipe.getId()"
+  },
+  "net/minecraft/class_2119.method_9106(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2119$class_2121;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2119$class_2121;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2119.method_9107(Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;)V": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbRecipeIds#entry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;"
+   ],
+   "basis": "s1adv: RecipeUnlockedTrigger.trigger takes the recipe's holder (its id and the recipe, CbRecipeIds)"
+  },
+  "net/minecraft/class_2123.method_9114(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2123$class_2125;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2123$class_2125;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2128.method_9123(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2128$class_2130;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2128$class_2130;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2131.method_9133(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2131$class_2133;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2131$class_2133;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2135.method_9140(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2135$class_2137;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2135$class_2137;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2140.method_9148(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2140$class_2142;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2140$class_2142;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2143.method_9156(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2143$class_2145;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2143$class_2145;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_2148.method_9163(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2148$class_2150;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2148$class_2150;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_4558.method_27854(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_195;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4558$class_8788;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbAdvInstances#asAbstract(Lnet/minecraft/class_4558$class_8788;)Lnet/minecraft/class_195;",
+   "basis": "s1adv: SimpleCriterionTrigger.createInstance takes the player predicate as an Optional; what it builds is the AbstractCriterionTriggerInstance 1.20.1 declared"
+  },
+  "net/minecraft/class_4708.method_23877(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4708$class_4709;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4708$class_4709;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_4711.method_23890(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4711$class_4712;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4711$class_4712;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_4713.method_23911(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4713$class_4714;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4713$class_4714;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_4851.method_24863(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4851$class_4852;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4851$class_4852;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_5257.method_27796(Lcom/google/gson/JsonArray;Ljava/lang/String;Lnet/minecraft/class_176;)[Lnet/minecraft/class_5341;": {
+   "desc": "(Lcom/google/gson/JsonArray;Ljava/lang/String;Lnet/minecraft/class_176;)Ljava/util/List;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#conditionArray(Ljava/util/List;)[Lnet/minecraft/class_5341;",
+   "basis": "s1adv: DeserializationContext.deserializeConditions answers a List of the conditions 1.20.1 answered as an array"
+  },
+  "net/minecraft/class_5258.method_27804(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonElement;": {
+   "desc": "()Lcom/google/gson/JsonElement;",
+   "ops": [
+    "drop"
+   ],
+   "basis": "s1adv: ContextAwarePredicate.toJson lost its SerializationContext (1.20.1 passed INSTANCE; ANY still writes JsonNull: CbAdvContextAny)"
+  },
+  "net/minecraft/class_5279.method_27974(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5279$class_5280;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5279$class_5280;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_5282.method_27991(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5282$class_5283;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5282$class_5283;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_5409.method_30096(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5409$class_5410;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5409$class_5410;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_6405.method_37241(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6405$class_6406;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6405$class_6406;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_6407.method_37258(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6407$class_6408;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6407$class_6408;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_6409.method_37264(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6409$class_6410;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6409$class_6410;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_8508.method_51351(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;": {
+   "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_27790()Lnet/minecraft/class_5258;",
+   "new": "method_27790()Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_195",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny.context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+   "basis": "s1adv: a 1.20.1 override of getPlayerPredicate is what SimpleCriterionTrigger.trigger tests the player with, as in 1.20.1 (ANY is absent)"
+  },
+  {
+   "old": "method_9107(Lnet/minecraft/class_3222;Lnet/minecraft/class_1860;)V",
+   "new": "method_9107(Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)V",
+   "onlyUnder": "net/minecraft/class_2119",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "s1adv: a 1.20.1 override of RecipeUnlockedTrigger.trigger is handed the recipe (its id kept with it)"
+  },
+  {
+   "old": "method_9112(Lnet/minecraft/class_1860;)Z",
+   "new": "method_9112(Lnet/minecraft/class_8786;)Z",
+   "onlyUnder": "net/minecraft/class_2119$class_2121",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbRecipeIds.value(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "basis": "s1adv: a 1.20.1 override of RecipeUnlockedTrigger.TriggerInstance.matches is handed the recipe"
+  },
+  {
+   "old": "method_854(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_196$class_198;",
+   "new": "method_854(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_196$class_198;",
+   "onlyUnder": "net/minecraft/class_196",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8785(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1996$class_1998;",
+   "new": "method_8785(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1996$class_1998;",
+   "onlyUnder": "net/minecraft/class_1996",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8793(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1999$class_2001;",
+   "new": "method_8793(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_1999$class_2001;",
+   "onlyUnder": "net/minecraft/class_1999",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8801(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2002$class_2004;",
+   "new": "method_8801(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2002$class_2004;",
+   "onlyUnder": "net/minecraft/class_2002",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8811(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2006$class_2008;",
+   "new": "method_8811(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2006$class_2008;",
+   "onlyUnder": "net/minecraft/class_2006",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8820(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2010$class_2012;",
+   "new": "method_8820(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2010$class_2012;",
+   "onlyUnder": "net/minecraft/class_2010",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8830(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2014$class_2016;",
+   "new": "method_8830(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2014$class_2016;",
+   "onlyUnder": "net/minecraft/class_2014",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8862(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2027$class_2029;",
+   "new": "method_8862(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2027$class_2029;",
+   "onlyUnder": "net/minecraft/class_2027",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8872(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2030$class_2032;",
+   "new": "method_8872(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2030$class_2032;",
+   "onlyUnder": "net/minecraft/class_2030",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8883(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2037$class_2039;",
+   "new": "method_8883(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2037$class_2039;",
+   "onlyUnder": "net/minecraft/class_2037",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8902(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2044$class_2046;",
+   "new": "method_8902(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2044$class_2046;",
+   "onlyUnder": "net/minecraft/class_2044",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8931(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2054$class_2056;",
+   "new": "method_8931(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2054$class_2056;",
+   "onlyUnder": "net/minecraft/class_2054",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8941(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2058$class_2060;",
+   "new": "method_8941(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2058$class_2060;",
+   "onlyUnder": "net/minecraft/class_2058",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8952(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2066$class_2068;",
+   "new": "method_8952(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2066$class_2068;",
+   "onlyUnder": "net/minecraft/class_2066",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8962(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2069$class_2071;",
+   "new": "method_8962(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2069$class_2071;",
+   "onlyUnder": "net/minecraft/class_2069",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8979(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2076$class_2078;",
+   "new": "method_8979(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2076$class_2078;",
+   "onlyUnder": "net/minecraft/class_2076",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_8989(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2080$class_2083;",
+   "new": "method_8989(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2080$class_2083;",
+   "onlyUnder": "net/minecraft/class_2080",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9006(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2085$class_2087;",
+   "new": "method_9006(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2085$class_2087;",
+   "onlyUnder": "net/minecraft/class_2085",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9078(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2108$class_2110;",
+   "new": "method_9078(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2108$class_2110;",
+   "onlyUnder": "net/minecraft/class_2108",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9098(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2115$class_2117;",
+   "new": "method_9098(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2115$class_2117;",
+   "onlyUnder": "net/minecraft/class_2115",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9106(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2119$class_2121;",
+   "new": "method_9106(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2119$class_2121;",
+   "onlyUnder": "net/minecraft/class_2119",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9114(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2123$class_2125;",
+   "new": "method_9114(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2123$class_2125;",
+   "onlyUnder": "net/minecraft/class_2123",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9123(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2128$class_2130;",
+   "new": "method_9123(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2128$class_2130;",
+   "onlyUnder": "net/minecraft/class_2128",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9133(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2131$class_2133;",
+   "new": "method_9133(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2131$class_2133;",
+   "onlyUnder": "net/minecraft/class_2131",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9140(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2135$class_2137;",
+   "new": "method_9140(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2135$class_2137;",
+   "onlyUnder": "net/minecraft/class_2135",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9148(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2140$class_2142;",
+   "new": "method_9148(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2140$class_2142;",
+   "onlyUnder": "net/minecraft/class_2140",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9156(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2143$class_2145;",
+   "new": "method_9156(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2143$class_2145;",
+   "onlyUnder": "net/minecraft/class_2143",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_9163(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2148$class_2150;",
+   "new": "method_9163(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_2148$class_2150;",
+   "onlyUnder": "net/minecraft/class_2148",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_23877(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4708$class_4709;",
+   "new": "method_23877(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4708$class_4709;",
+   "onlyUnder": "net/minecraft/class_4708",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_23890(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4711$class_4712;",
+   "new": "method_23890(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4711$class_4712;",
+   "onlyUnder": "net/minecraft/class_4711",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_23911(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4713$class_4714;",
+   "new": "method_23911(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4713$class_4714;",
+   "onlyUnder": "net/minecraft/class_4713",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_24863(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4851$class_4852;",
+   "new": "method_24863(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4851$class_4852;",
+   "onlyUnder": "net/minecraft/class_4851",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_27974(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5279$class_5280;",
+   "new": "method_27974(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5279$class_5280;",
+   "onlyUnder": "net/minecraft/class_5279",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_27991(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5282$class_5283;",
+   "new": "method_27991(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5282$class_5283;",
+   "onlyUnder": "net/minecraft/class_5282",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_30096(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5409$class_5410;",
+   "new": "method_30096(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_5409$class_5410;",
+   "onlyUnder": "net/minecraft/class_5409",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_37241(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6405$class_6406;",
+   "new": "method_37241(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6405$class_6406;",
+   "onlyUnder": "net/minecraft/class_6405",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_37258(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6407$class_6408;",
+   "new": "method_37258(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6407$class_6408;",
+   "onlyUnder": "net/minecraft/class_6407",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_37264(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6409$class_6410;",
+   "new": "method_37264(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6409$class_6410;",
+   "onlyUnder": "net/minecraft/class_6409",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "method_51351(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;",
+   "new": "method_51351(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;",
+   "onlyUnder": "net/minecraft/class_8508",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
+   "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_184",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$CriterionId",
+   "requires": [
+    "method_806()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "s1adv: a 1.20.1 instance's own getCriterion() answers CriterionTriggerInstance.getCriterion (CbAdvInstances)"
+  },
+  {
+   "under": "net/minecraft/class_184",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$InstanceJson",
+   "requires": [
+    "method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;"
+   ],
+   "synth": [
+    {
+     "new": "method_807()Lcom/google/gson/JsonObject;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvInstances.serializeToJson(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$InstanceJson;)Lcom/google/gson/JsonObject;"
+    }
+   ],
+   "basis": "s1adv: 1.20.2 writes a criterion's conditions with serializeToJson(); a 1.20.1 instance's own serializeToJson(SerializationContext) is what it writes, as in 1.20.1"
+  },
+  {
+   "under": "net/minecraft/class_175",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$CriterionInstance",
+   "requires": [
+    "method_774()Lnet/minecraft/class_184;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1924()Lnet/minecraft/class_184;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria.legacyInstance(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$CriterionInstance;)Lnet/minecraft/class_184;"
+    }
+   ],
+   "basis": "s1adv: a 1.20.1 Criterion subclass's getTrigger() override is what 1.20.2 reads as triggerInstance(), as 1.20.1 read getTrigger()"
+  },
+  {
+   "under": "net/minecraft/class_175",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$CriterionNetwork",
+   "requires": [
+    "method_771(Lnet/minecraft/class_2540;)V"
+   ],
+   "synth": [],
+   "basis": "s1adv: a 1.20.1 Criterion subclass's serializeToNetwork override is what Criterion.serializeToNetwork(criteria, buf) writes for it (CbAdvCriteria)"
+  },
+  {
+   "under": "net/minecraft/class_179$class_180",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$ListenerInstance",
+   "requires": [
+    "method_797()Lnet/minecraft/class_184;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1925()Lnet/minecraft/class_184;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria.legacyListenerInstance(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$ListenerInstance;)Lnet/minecraft/class_184;"
+    }
+   ],
+   "basis": "s1adv: a 1.20.1 Listener subclass's getTriggerInstance() override is the instance SimpleCriterionTrigger tests, as in 1.20.1"
+  }
+ ],
+ "ctorRedirects": {
+  "net/minecraft/class_175.<init>()V": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#cbNewCriterion",
+  "net/minecraft/class_175.<init>(Lnet/minecraft/class_184;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#cbNewCriterion",
+  "net/minecraft/class_179$class_180.<init>(Lnet/minecraft/class_184;Lnet/minecraft/class_161;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#cbNewListener"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_175.<init>()V": {
+   "desc": "(Lnet/minecraft/class_179;Lnet/minecraft/class_184;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#missingTrigger()Lnet/minecraft/class_179;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#noInstance()Lnet/minecraft/class_184;"
+   ],
+   "basis": "s1adv: a 1.20.1 Criterion subclass's super(): a criterion without an instance (CbAdvCriteria.MISSING)"
+  },
+  "net/minecraft/class_175.<init>(Lnet/minecraft/class_184;)V": {
+   "desc": "(Lnet/minecraft/class_179;Lnet/minecraft/class_184;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#triggerFor(Lnet/minecraft/class_184;)Lnet/minecraft/class_179;",
+    "keep:0"
+   ],
+   "basis": "s1adv: a 1.20.1 Criterion subclass's super(instance): paired with the trigger the instance names"
+  },
+  "net/minecraft/class_179$class_180.<init>(Lnet/minecraft/class_184;Lnet/minecraft/class_161;Ljava/lang/String;)V": {
+   "desc": "(Lnet/minecraft/class_184;Lnet/minecraft/class_8779;Ljava/lang/String;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvCriteria#listenerAdvancement(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;",
+    "keep"
+   ],
+   "basis": "s1adv: a 1.20.1 Listener subclass's super(instance, advancement, criterion): the advancement as its holder"
+  },
+  "net/minecraft/class_195.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;)V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvInstances#stash(Lnet/minecraft/class_2960;)V",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "s1adv: AbstractCriterionTriggerInstance(criterion id, player): the id stays with the instance (CbAdvInstanceIdClaim), ANY is absent"
+  },
+  "net/minecraft/class_196$class_198.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_1996$class_1998.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_1842;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_1842;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_1999$class_2001.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2002$class_2004.<init>(Lnet/minecraft/class_5258;[Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#contexts([Lnet/minecraft/class_5258;)Ljava/util/List;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2006$class_2008.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2010$class_2012.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2014$class_2016.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2027$class_2029.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2102;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#effects(Lnet/minecraft/class_2102;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2030$class_2032.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2037$class_2039.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_4559;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#state(Lnet/minecraft/class_4559;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2044$class_2046.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2019;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#damage(Lnet/minecraft/class_2019;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2054$class_2056.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2058$class_2060.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2066$class_2068.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;[Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#items([Lnet/minecraft/class_2073;)Ljava/util/List;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2069$class_2071.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "keep",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2076$class_2078.<init>(Lnet/minecraft/class_5258;[Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/List;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#contexts([Lnet/minecraft/class_5258;)Ljava/util/List;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2080$class_2083.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_2022;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvInstances#stash(Lnet/minecraft/class_2960;)V",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#damageSource(Lnet/minecraft/class_2022;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists; the trigger id kept with the instance"
+  },
+  "net/minecraft/class_2080.<init>(Lnet/minecraft/class_2960;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers#stash(Lnet/minecraft/class_2960;)V"
+   ],
+   "basis": "gen_s1adv: the trigger keeps the id it was built with (claimed by SimpleCriterionTrigger)"
+  },
+  "net/minecraft/class_2085$class_2087.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2025;Lnet/minecraft/class_2096$class_2100;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#distance(Lnet/minecraft/class_2025;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2108$class_2110.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;Lnet/minecraft/class_2090;Lnet/minecraft/class_2025;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvInstances#stash(Lnet/minecraft/class_2960;)V",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#location(Lnet/minecraft/class_2090;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#distance(Lnet/minecraft/class_2025;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists; the trigger id kept with the instance"
+  },
+  "net/minecraft/class_2108.<init>(Lnet/minecraft/class_2960;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers#stash(Lnet/minecraft/class_2960;)V"
+   ],
+   "basis": "gen_s1adv: the trigger keeps the id it was built with (claimed by SimpleCriterionTrigger)"
+  },
+  "net/minecraft/class_2115$class_2117.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2019;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#damage(Lnet/minecraft/class_2019;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2119$class_2121.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2960;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2123$class_2125.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2128$class_2130.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2131$class_2133.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2135$class_2137.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;)V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvInstances#stash(Lnet/minecraft/class_2960;)V",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists; the trigger id kept with the instance"
+  },
+  "net/minecraft/class_2135.<init>(Lnet/minecraft/class_2960;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers#stash(Lnet/minecraft/class_2960;)V"
+   ],
+   "basis": "gen_s1adv: the trigger keeps the id it was built with (claimed by SimpleCriterionTrigger)"
+  },
+  "net/minecraft/class_2140$class_2142.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2143$class_2145.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2099;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2099;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2148$class_2150.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_4708$class_4709.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_4711$class_4712.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvInstances#stash(Lnet/minecraft/class_2960;)V",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists; the trigger id kept with the instance"
+  },
+  "net/minecraft/class_4711.<init>(Lnet/minecraft/class_2960;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers#stash(Lnet/minecraft/class_2960;)V"
+   ],
+   "basis": "gen_s1adv: the trigger keeps the id it was built with (claimed by SimpleCriterionTrigger)"
+  },
+  "net/minecraft/class_4713$class_4714.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_4559;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#state(Lnet/minecraft/class_4559;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_4851$class_4852.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_5279$class_5280.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvInstances#stash(Lnet/minecraft/class_2960;)V",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists; the trigger id kept with the instance"
+  },
+  "net/minecraft/class_5279.<init>(Lnet/minecraft/class_2960;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers#stash(Lnet/minecraft/class_2960;)V"
+   ],
+   "basis": "gen_s1adv: the trigger keeps the id it was built with (claimed by SimpleCriterionTrigger)"
+  },
+  "net/minecraft/class_5282$class_5283.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2960;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_5409$class_5410.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_6405$class_6406.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_6407$class_6408.<init>(Lnet/minecraft/class_5258;)V": {
+   "desc": "(Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_6409$class_6410.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_8508$class_8509.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2960;Ljava/util/List;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2960;Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#context(Lnet/minecraft/class_5258;)Ljava/util/Optional;",
+    "keep",
+    "keep"
+   ],
+   "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  }
+ }
+}
