@@ -201,11 +201,142 @@ def sounds_and_links(f, v, w):
         "public final class CbWorldLinks {\n\n" + "\n".join(lines) + "\n    private CbWorldLinks() {\n    }\n}\n"))
 
 
+# ------------------------------------------------------------------------------------------------ server, reports
+def server(f, v):
+    S = RT + "/CbWorldServer"
+    MS, DS, FILE, PATH = "net/minecraft/server/MinecraftServer", MC + "class_3176", "Ljava/io/File;", "Ljava/nio/file/Path;"
+    to_file, to_path = "conv " + S + "#file(" + PATH + ")" + FILE, S + ".path(" + FILE + ")" + PATH
+    # getServerDirectory / getFile: File in 1.20.6, Path in 1.21 -- the call converts the answer back, an override's
+    # File answers 1.21 as a Path; super calls take the reshape (no carrying hook), so they reach 1.21's body
+    f.reshape(MS + ".method_3831()" + FILE, "()" + PATH, [],
+              "1.21 answers the server directory as a Path: Path.of(\"\") is 1.20.6's new File(\".\") (CbWorldServer.file)",
+              ret=to_file)
+    f.hook("method_3831()" + FILE, "method_3831()" + PATH, MS,
+           "1.21 asks getServerDirectory() for a Path: a 1.20.6 override's File, as a path", unwrap=to_path)
+    f.reshape(MS + ".method_3758(Ljava/lang/String;)" + FILE, "(Ljava/lang/String;)" + PATH, ["keep:0"],
+              "1.21 answers getFile(name) as a Path: dir.resolve(name) is 1.20.6's new File(dir, name) (CbWorldServer.file)",
+              ret=to_file)
+    f.hook("method_3758(Ljava/lang/String;)" + FILE, "method_3758(Ljava/lang/String;)" + PATH, MS,
+           "1.21 asks getFile(name) for a Path: a 1.20.6 override's File, as a path", unwrap=to_path)
+    # isNetherEnabled() -> isLevelEnabled(Level)
+    f.put("instanceRedirects", MS + ".method_3839()Z", S + "#isNetherEnabled")
+    f.put("superRedirects", MS + ".method_3839()Z", S + "#superIsNetherEnabled")
+    f.put("superRedirects", DS + ".method_3839()Z", S + "#superIsNetherEnabled")
+    f.hook("method_3839()Z", "method_60671(" + L("class_1937") + ")Z", MS,
+           "1.21 asks isLevelEnabled(level) where 1.20.6 asked isNetherEnabled() for the nether portal: the nether is the "
+           "1.20.6 override's answer, any other level the vanilla answer above it (CbWorldServer.isLevelEnabled)",
+           bridge=S + ".isLevelEnabled(L" + S + "$LegacyNether;" + L("class_1937") + ")Z", adapter=S + "$LegacyNether", guard=G)
+    # reportChunkLoadFailure / reportChunkSaveFailure(pos): 1.20.6's bodies were empty; 1.21's take the failure
+    CP, RSI = L("class_1923"), L("class_9240")
+    for name in ("method_57821", "method_57822"):
+        f.reshape(MS + "." + name + "(" + CP + ")V", "(Ljava/lang/Throwable;" + RSI + CP + ")V",
+                  ["push " + S + "#noFailure()Ljava/lang/Throwable;", "push " + S + "#noStorage()" + RSI, "keep:0"],
+                  "a 1.20.6 caller reports no failure: the sentinel makes 1.21's body 1.20.6's empty one "
+                  "(CbWorldServerMixin), a 1.20.6 subclass's override still runs through its hook")
+        f.put("frameDefaults", name + "(" + CP + ")V", {
+            "0": S + "#noFailure()Ljava/lang/Throwable;",
+            "1": "zero: the storage of a sentinel report is never read, CbWorldServerMixin returns first"})
+    # PlayerList.respawn(player, keepAll): 1.21 takes the removal reason 1.20.6 always used
+    SP, RR = L("class_3222"), L("class_1297$class_5529")
+    f.reshape(MC + "class_3324.method_14556(" + SP + "Z)" + SP, "(" + SP + "Z" + RR + ")" + SP,
+              ["keep:0", "keep:1", "push " + S + "#respawnRemovalReason()" + RR],
+              "1.20.6's respawn removed the old player with RemovalReason.DISCARDED; 1.21 takes the reason")
+    f.put("frameDefaults", "method_14556(" + SP + "Z)" + SP, {"2": S + "#respawnRemovalReason()" + RR})
+    # CrashReport: one kind of report in 1.20.6, the crash report (1.21's ReportType.CRASH)
+    CR, RT_, LIST = MC + "class_128", L("class_9813"), "Ljava/util/List;"
+    crash, lines = "push " + S + "#crashReportType()" + RT_, "push " + S + "#noExtraLines()" + LIST
+    # getFriendlyReport() is 1.21's getFriendlyReport(type, lines) under another name: a call goes through a static
+    # that makes the virtual 1.21 call (a reshape keeps the name); a subclass's super call is the hook's
+    f.put("instanceRedirects", CR + ".method_568()Ljava/lang/String;", S + "#getFriendlyReport")
+    f.hook("method_568()Ljava/lang/String;", "method_60921(" + RT_ + LIST + ")Ljava/lang/String;", "class_128",
+           "1.21 builds every report text in getFriendlyReport(type, lines) (the one-argument form and saveToFile call "
+           "it): a 1.20.6 subclass's getFriendlyReport() answers it; its super call gets the type and lines vanilla passed",
+           args=[], frames=G, superCalls="rewrite")
+    f.put("frameDefaults", "method_568()Ljava/lang/String;", {"0": S + "#crashReportType()" + RT_, "1": S + "#noExtraLines()" + LIST})
+    f.reshape(CR + ".method_572()" + FILE, "()" + PATH, [], "the saved report's file, as 1.20.6's File (null before it is saved)",
+              ret=to_file)
+    f.hook("method_572()" + FILE, "method_572()" + PATH, "class_128",
+           "1.21 asks getSaveFile() for a Path: a 1.20.6 override's File, as a path", unwrap=to_path)
+    f.reshape(CR + ".method_569(" + FILE + ")Z", "(" + PATH + RT_ + LIST + ")Z",
+              ["conv:0 " + S + "#path(" + FILE + ")" + PATH, crash, lines],
+              "1.20.6's saveToFile(file) wrote the crash report: 1.21's, to the same file, as ReportType.CRASH")
+    f.hook("method_569(" + FILE + ")Z", "method_569(" + PATH + RT_ + LIST + ")Z", "class_128",
+           "1.21 saves through saveToFile(path, type, lines): a 1.20.6 subclass's saveToFile(File) saves the report; "
+           "its super call is the reshape above (the crash report, as 1.20.6 wrote it)",
+           args=[0], wrap=S + ".file(" + PATH + ")" + FILE)
+
+
+# ------------------------------------------------------------------------------------------------ constants, util
+def constants(f):
+    K = RT + "/CbWorldConstants"
+    for field, desc, target in (("field_29743", "Z", "USE_NEW_RENDERSYSTEM"), ("field_29744", "Z", "MULTITHREADED_RENDERING"),
+                                ("field_29727", "Z", "DEBUG_STORE_CHUNK_STACKTRACES"),
+                                ("field_43095", "Ljava/util/Set;", "DATA_FIX_TYPES_TO_OPTIMIZE")):
+        f.put("fieldRedirects", MC + "class_155." + field + ":" + desc, K + "#" + target)
+    f.put("staticRedirects", MC + "class_155.method_43250()V", K + "#enableDataFixerOptimizations")
+    f.put("fieldGetters", MC + "class_7701.field_46779:" + L("class_7696"), K)
+    f.put("fieldRedirects", MC + "class_6088.field_31161:I", K + "#SOUND_ENDER_EYE_LAUNCH")
+    f.put("fieldRedirects", MC + "class_1463.field_30368:I", K + "#RABBIT_EVIL_ATTACK_POWER")
+    f.put("fieldRedirects", MC + "class_1463.field_30369:I", K + "#RABBIT_EVIL_ARMOR_VALUE")
+    f.put("fieldRedirects", MC + "class_1492.field_30412:I", K + "#INV_CHEST_COUNT")
+    f.put("fieldRedirects", MC + "class_1350.field_30205:I", K + "#TELEPORT_WHEN_DISTANCE_IS")
+    f.put("fieldRedirects", MC + "class_1308.field_30086:Ljava/lang/String;", K + "#LEASH_TAG")
+    f.put("fieldRedirects", MC + "class_1668.field_51507:D", K + "#ATTACK_DEFLECTION_SCALE")
+    f.put("fieldRedirects", MC + "class_1668.field_51508:D", K + "#BOUNCE_DEFLECTION_SCALE")
+    f.put("instanceRedirects", MC + "class_156$class_158.method_669(Ljava/net/URL;)V", RT + "/CbWorldUtil#openUrl")
+
+
+# ------------------------------------------------------------------------------------------------ resources, commands, gametest
+def resources_and_commands(f):
+    R, C = RT + "/CbWorldResources", RT + "/CbWorldCommands"
+    RL, STR = MC + "class_2960", "Ljava/lang/String;"
+    f.put("ctorRedirects", RL + ".<init>(" + STR + ")V", R + "#newResourceLocation")
+    f.put("ctorRedirects", RL + ".<init>(" + STR + STR + ")V", R + "#newResourceLocation")
+    f.ctor(RL + ".<init>(" + STR + ")V", "(" + STR + STR + ")V",
+           ["conv:0 " + R + "#parsedNamespace(" + STR + ")" + STR, "conv:0 " + R + "#parsedPath(" + STR + ")" + STR],
+           "a 1.20.6 subclass's super(location): the namespace and path 1.20.6 split and validated, onto the "
+           "(namespace, path) constructor the layer's access widener opens (the class is extendable through it too)")
+    f.ctor(RL + ".<init>(" + STR + STR + ")V", "(" + STR + STR + ")V",
+           ["conv:0,1 " + R + "#checkedNamespace(" + STR + STR + ")" + STR, "conv:0,1 " + R + "#checkedPath(" + STR + STR + ")" + STR],
+           "a 1.20.6 subclass's super(namespace, path): validated as 1.20.6's constructor validated, namespace first")
+    f.ctor(RL + ".<init>(" + STR + STR + L("class_2960$class_7658") + ")V", "(" + STR + STR + ")V", ["keep:0", "keep:1", "drop:2"],
+           "1.20.6's (namespace, path, Dummy) constructor took both unchecked: 1.21's private (namespace, path) constructor "
+           "does the same (assertions only)")
+    f.put("staticRedirects", RL + ".method_12830(" + STR + "C)[" + STR, R + "#decompose")
+    f.put("staticRedirects", RL + ".method_20207(" + STR + ")Z", R + "#isValidResourceLocation")
+    # commands
+    HOLDER, DCM, DCP = L("class_6880"), L("class_9323"), L("class_9326")
+    patch = "conv:1 " + C + "#patchOf(" + DCM + ")" + DCP
+    f.ctor(MC + "class_2290.<init>(" + HOLDER + DCM + ")V", "(" + HOLDER + DCP + ")V", ["keep:0", patch],
+           "ItemInput's components as 1.21's patch: setting each component of 1.20.6's map (CbWorldCommands.patchOf)")
+    f.ctor(MC + "class_2291$class_7215.<init>(" + HOLDER + DCM + ")V", "(" + HOLDER + DCP + ")V", ["keep:0", patch],
+           "ItemResult's components as 1.21's patch (CbWorldCommands.patchOf)")
+    f.reshape(MC + "class_2291$class_7215.comp_2439()" + DCM, "()" + DCP, [],
+              "ItemResult.components() as 1.20.6's map: the components the patch sets (CbWorldCommands.mapOf)",
+              ret="conv " + C + "#mapOf(" + DCP + ")" + DCM)
+    sel_v = "(IZZLjava/util/function/Predicate;Lnet/minecraft/class_2096$class_2099;Ljava/util/function/Function;Lnet/minecraft/class_238;Ljava/util/function/BiConsumer;ZLjava/lang/String;Ljava/util/UUID;Lnet/minecraft/class_1299;Z)V"
+    f.ctor(MC + "class_2300.<init>" + sel_v, sel_v.replace("Ljava/util/function/Predicate;", "Ljava/util/List;"),
+           ["keep:0", "keep:1", "keep:2", "conv:3 " + C + "#predicateList(Ljava/util/function/Predicate;)Ljava/util/List;"]
+           + ["keep:%d" % i for i in range(4, 13)],
+           "EntitySelector's predicate as 1.21's list, which the selector tests all of (CbWorldCommands.predicateList)")
+    # gametest
+    GT = RT + "/CbWorldGameTests"
+    gtr = "(Lnet/minecraft/class_4520$class_9116;Ljava/util/Collection;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;Lnet/minecraft/class_4520$class_9117;Lnet/minecraft/class_4520$class_9117;"
+    f.ctor(MC + "class_4520.<init>" + gtr + ")V", gtr + "Z)V", ["keep"] * 6 + ["push " + GT + "#noHaltOnError()Z"],
+           "1.20.6's runner never stopped at a failed test (1.21's haltOnError false)")
+    f.ctor(MC + "class_9120.<init>(Lnet/minecraft/class_2338;I)V", "(Lnet/minecraft/class_2338;IZ)V",
+           ["keep", "keep", "push " + GT + "#noClearOnBatch()Z"],
+           "1.20.6's StructureGridSpawner left earlier batches standing (1.21's clearOnBatch false)")
+
+
 def main():
     v, w = load(sys.argv[1]), load(sys.argv[2])
     f = Fragment()
     attributes(f)
     sounds_and_links(f, v, w)
+    server(f, v)
+    constants(f)
+    resources_and_commands(f)
     f.write()
 
 

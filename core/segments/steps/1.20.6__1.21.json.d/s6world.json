@@ -62,17 +62,192 @@
     "conv:1 top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#idOf(Ljava/util/UUID;)Lnet/minecraft/class_2960;"
    ],
    "basis": "AttributeSupplier.hasModifier by the id of the uuid"
+  },
+  "net/minecraft/server/MinecraftServer.method_3831()Ljava/io/File;": {
+   "desc": "()Ljava/nio/file/Path;",
+   "ops": [],
+   "basis": "1.21 answers the server directory as a Path: Path.of(\"\") is 1.20.6's new File(\".\") (CbWorldServer.file)",
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbWorldServer#file(Ljava/nio/file/Path;)Ljava/io/File;"
+  },
+  "net/minecraft/server/MinecraftServer.method_3758(Ljava/lang/String;)Ljava/io/File;": {
+   "desc": "(Ljava/lang/String;)Ljava/nio/file/Path;",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "1.21 answers getFile(name) as a Path: dir.resolve(name) is 1.20.6's new File(dir, name) (CbWorldServer.file)",
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbWorldServer#file(Ljava/nio/file/Path;)Ljava/io/File;"
+  },
+  "net/minecraft/server/MinecraftServer.method_57821(Lnet/minecraft/class_1923;)V": {
+   "desc": "(Ljava/lang/Throwable;Lnet/minecraft/class_9240;Lnet/minecraft/class_1923;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noFailure()Ljava/lang/Throwable;",
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noStorage()Lnet/minecraft/class_9240;",
+    "keep:0"
+   ],
+   "basis": "a 1.20.6 caller reports no failure: the sentinel makes 1.21's body 1.20.6's empty one (CbWorldServerMixin), a 1.20.6 subclass's override still runs through its hook"
+  },
+  "net/minecraft/server/MinecraftServer.method_57822(Lnet/minecraft/class_1923;)V": {
+   "desc": "(Ljava/lang/Throwable;Lnet/minecraft/class_9240;Lnet/minecraft/class_1923;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noFailure()Ljava/lang/Throwable;",
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noStorage()Lnet/minecraft/class_9240;",
+    "keep:0"
+   ],
+   "basis": "a 1.20.6 caller reports no failure: the sentinel makes 1.21's body 1.20.6's empty one (CbWorldServerMixin), a 1.20.6 subclass's override still runs through its hook"
+  },
+  "net/minecraft/class_3324.method_14556(Lnet/minecraft/class_3222;Z)Lnet/minecraft/class_3222;": {
+   "desc": "(Lnet/minecraft/class_3222;ZLnet/minecraft/class_1297$class_5529;)Lnet/minecraft/class_3222;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#respawnRemovalReason()Lnet/minecraft/class_1297$class_5529;"
+   ],
+   "basis": "1.20.6's respawn removed the old player with RemovalReason.DISCARDED; 1.21 takes the reason"
+  },
+  "net/minecraft/class_128.method_568()Ljava/lang/String;": {
+   "desc": "(Lnet/minecraft/class_9813;Ljava/util/List;)Ljava/lang/String;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#crashReportType()Lnet/minecraft/class_9813;",
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noExtraLines()Ljava/util/List;"
+   ],
+   "basis": "getFriendlyReport() of 1.20.6 is 1.21's crash report (ReportType.CRASH header, no extra lines)"
+  },
+  "net/minecraft/class_128.method_572()Ljava/io/File;": {
+   "desc": "()Ljava/nio/file/Path;",
+   "ops": [],
+   "basis": "the saved report's file, as 1.20.6's File (null before it is saved)",
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbWorldServer#file(Ljava/nio/file/Path;)Ljava/io/File;"
+  },
+  "net/minecraft/class_128.method_569(Ljava/io/File;)Z": {
+   "desc": "(Ljava/nio/file/Path;Lnet/minecraft/class_9813;Ljava/util/List;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbWorldServer#path(Ljava/io/File;)Ljava/nio/file/Path;",
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#crashReportType()Lnet/minecraft/class_9813;",
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noExtraLines()Ljava/util/List;"
+   ],
+   "basis": "1.20.6's saveToFile(file) wrote the crash report: 1.21's, to the same file, as ReportType.CRASH"
+  },
+  "net/minecraft/class_2291$class_7215.comp_2439()Lnet/minecraft/class_9323;": {
+   "desc": "()Lnet/minecraft/class_9326;",
+   "ops": [],
+   "basis": "ItemResult.components() as 1.20.6's map: the components the patch sets (CbWorldCommands.mapOf)",
+   "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbWorldCommands#mapOf(Lnet/minecraft/class_9326;)Lnet/minecraft/class_9323;"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbWorldResources#parsedNamespace(Ljava/lang/String;)Ljava/lang/String;",
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbWorldResources#parsedPath(Ljava/lang/String;)Ljava/lang/String;"
+   ],
+   "basis": "a 1.20.6 subclass's super(location): the namespace and path 1.20.6 split and validated, onto the (namespace, path) constructor the layer's access widener opens (the class is extendable through it too)"
+  },
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_21/rt/CbWorldResources#checkedNamespace(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+    "conv:0,1 top/dext/centurybridge/step/v1_21/rt/CbWorldResources#checkedPath(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"
+   ],
+   "basis": "a 1.20.6 subclass's super(namespace, path): validated as 1.20.6's constructor validated, namespace first"
+  },
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_2960$class_7658;)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "drop:2"
+   ],
+   "basis": "1.20.6's (namespace, path, Dummy) constructor took both unchecked: 1.21's private (namespace, path) constructor does the same (assertions only)"
+  },
+  "net/minecraft/class_2290.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_9323;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_9326;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbWorldCommands#patchOf(Lnet/minecraft/class_9323;)Lnet/minecraft/class_9326;"
+   ],
+   "basis": "ItemInput's components as 1.21's patch: setting each component of 1.20.6's map (CbWorldCommands.patchOf)"
+  },
+  "net/minecraft/class_2291$class_7215.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_9323;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_9326;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbWorldCommands#patchOf(Lnet/minecraft/class_9323;)Lnet/minecraft/class_9326;"
+   ],
+   "basis": "ItemResult's components as 1.21's patch (CbWorldCommands.patchOf)"
+  },
+  "net/minecraft/class_2300.<init>(IZZLjava/util/function/Predicate;Lnet/minecraft/class_2096$class_2099;Ljava/util/function/Function;Lnet/minecraft/class_238;Ljava/util/function/BiConsumer;ZLjava/lang/String;Ljava/util/UUID;Lnet/minecraft/class_1299;Z)V": {
+   "desc": "(IZZLjava/util/List;Lnet/minecraft/class_2096$class_2099;Ljava/util/function/Function;Lnet/minecraft/class_238;Ljava/util/function/BiConsumer;ZLjava/lang/String;Ljava/util/UUID;Lnet/minecraft/class_1299;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v1_21/rt/CbWorldCommands#predicateList(Ljava/util/function/Predicate;)Ljava/util/List;",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9",
+    "keep:10",
+    "keep:11",
+    "keep:12"
+   ],
+   "basis": "EntitySelector's predicate as 1.21's list, which the selector tests all of (CbWorldCommands.predicateList)"
+  },
+  "net/minecraft/class_4520.<init>(Lnet/minecraft/class_4520$class_9116;Ljava/util/Collection;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;Lnet/minecraft/class_4520$class_9117;Lnet/minecraft/class_4520$class_9117;)V": {
+   "desc": "(Lnet/minecraft/class_4520$class_9116;Ljava/util/Collection;Lnet/minecraft/class_3218;Lnet/minecraft/class_4521;Lnet/minecraft/class_4520$class_9117;Lnet/minecraft/class_4520$class_9117;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldGameTests#noHaltOnError()Z"
+   ],
+   "basis": "1.20.6's runner never stopped at a failed test (1.21's haltOnError false)"
+  },
+  "net/minecraft/class_9120.<init>(Lnet/minecraft/class_2338;I)V": {
+   "desc": "(Lnet/minecraft/class_2338;IZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbWorldGameTests#noClearOnBatch()Z"
+   ],
+   "basis": "1.20.6's StructureGridSpawner left earlier batches standing (1.21's clearOnBatch false)"
   }
  },
  "ctorRedirects": {
   "net/minecraft/class_1322.<init>(Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#newModifier",
-  "net/minecraft/class_1322.<init>(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#newModifier"
+  "net/minecraft/class_1322.<init>(Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/class_1322$class_1323;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#newModifier",
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#newResourceLocation",
+  "net/minecraft/class_2960.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#newResourceLocation"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_155.method_43250()V": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#enableDataFixerOptimizations",
+  "net/minecraft/class_2960.method_12830(Ljava/lang/String;C)[Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#decompose",
+  "net/minecraft/class_2960.method_20207(Ljava/lang/String;)Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldResources#isValidResourceLocation"
  },
  "instanceRedirects": {
-  "net/minecraft/class_1322.comp_2448()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#name"
+  "net/minecraft/class_1322.comp_2448()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#name",
+  "net/minecraft/server/MinecraftServer.method_3839()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#isNetherEnabled",
+  "net/minecraft/class_156$class_158.method_669(Ljava/net/URL;)V": "top/dext/centurybridge/step/v1_21/rt/CbWorldUtil#openUrl"
  },
  "fieldRedirects": {
-  "net/minecraft/class_1320.field_30097:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#MAX_NAME_LENGTH"
+  "net/minecraft/class_1320.field_30097:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#MAX_NAME_LENGTH",
+  "net/minecraft/class_155.field_29743:Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#USE_NEW_RENDERSYSTEM",
+  "net/minecraft/class_155.field_29744:Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#MULTITHREADED_RENDERING",
+  "net/minecraft/class_155.field_29727:Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#DEBUG_STORE_CHUNK_STACKTRACES",
+  "net/minecraft/class_155.field_43095:Ljava/util/Set;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#DATA_FIX_TYPES_TO_OPTIMIZE",
+  "net/minecraft/class_6088.field_31161:I": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#SOUND_ENDER_EYE_LAUNCH",
+  "net/minecraft/class_1463.field_30368:I": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#RABBIT_EVIL_ATTACK_POWER",
+  "net/minecraft/class_1463.field_30369:I": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#RABBIT_EVIL_ARMOR_VALUE",
+  "net/minecraft/class_1492.field_30412:I": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#INV_CHEST_COUNT",
+  "net/minecraft/class_1350.field_30205:I": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#TELEPORT_WHEN_DISTANCE_IS",
+  "net/minecraft/class_1308.field_30086:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#LEASH_TAG",
+  "net/minecraft/class_1668.field_51507:D": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#ATTACK_DEFLECTION_SCALE",
+  "net/minecraft/class_1668.field_51508:D": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants#BOUNCE_DEFLECTION_SCALE"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_14578:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21/rt/CbWorldSounds",
@@ -122,7 +297,12 @@
   "net/minecraft/class_8216.field_43133:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
   "net/minecraft/class_8216.field_44949:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
   "net/minecraft/class_8216.field_45074:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
-  "net/minecraft/class_8216.field_46769:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks"
+  "net/minecraft/class_8216.field_46769:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbWorldLinks",
+  "net/minecraft/class_7701.field_46779:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21/rt/CbWorldConstants"
+ },
+ "superRedirects": {
+  "net/minecraft/server/MinecraftServer.method_3839()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#superIsNetherEnabled",
+  "net/minecraft/class_3176.method_3839()Z": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#superIsNetherEnabled"
  },
  "covers": [
   "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z"
@@ -164,6 +344,55 @@
    "onlyUnder": "net/minecraft/class_5131",
    "basis": "1.21 asks AttributeMap.hasModifier(holder, id): a 1.20.6 subclass's override answers for the id's uuid",
    "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes.uuidOf(Lnet/minecraft/class_2960;)Ljava/util/UUID;"
+  },
+  {
+   "old": "method_3831()Ljava/io/File;",
+   "new": "method_3831()Ljava/nio/file/Path;",
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "basis": "1.21 asks getServerDirectory() for a Path: a 1.20.6 override's File, as a path",
+   "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer.path(Ljava/io/File;)Ljava/nio/file/Path;"
+  },
+  {
+   "old": "method_3758(Ljava/lang/String;)Ljava/io/File;",
+   "new": "method_3758(Ljava/lang/String;)Ljava/nio/file/Path;",
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "basis": "1.21 asks getFile(name) for a Path: a 1.20.6 override's File, as a path",
+   "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer.path(Ljava/io/File;)Ljava/nio/file/Path;"
+  },
+  {
+   "old": "method_3839()Z",
+   "new": "method_60671(Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/server/MinecraftServer",
+   "basis": "1.21 asks isLevelEnabled(level) where 1.20.6 asked isNetherEnabled() for the nether portal: the nether is the 1.20.6 override's answer, any other level the vanilla answer above it (CbWorldServer.isLevelEnabled)",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer.isLevelEnabled(Ltop/dext/centurybridge/step/v1_21/rt/CbWorldServer$LegacyNether;Lnet/minecraft/class_1937;)Z",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer$LegacyNether",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
+  },
+  {
+   "old": "method_568()Ljava/lang/String;",
+   "new": "method_60921(Lnet/minecraft/class_9813;Ljava/util/List;)Ljava/lang/String;",
+   "onlyUnder": "net/minecraft/class_128",
+   "basis": "1.21 builds every report text in getFriendlyReport(type, lines) (the one-argument form and saveToFile call it): a 1.20.6 subclass's getFriendlyReport() answers it; its super call gets the type and lines vanilla passed",
+   "args": [],
+   "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
+   "superCalls": "rewrite"
+  },
+  {
+   "old": "method_572()Ljava/io/File;",
+   "new": "method_572()Ljava/nio/file/Path;",
+   "onlyUnder": "net/minecraft/class_128",
+   "basis": "1.21 asks getSaveFile() for a Path: a 1.20.6 override's File, as a path",
+   "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer.path(Ljava/io/File;)Ljava/nio/file/Path;"
+  },
+  {
+   "old": "method_569(Ljava/io/File;)Z",
+   "new": "method_569(Ljava/nio/file/Path;Lnet/minecraft/class_9813;Ljava/util/List;)Z",
+   "onlyUnder": "net/minecraft/class_128",
+   "basis": "1.21 saves through saveToFile(path, type, lines): a 1.20.6 subclass's saveToFile(File) saves the report; its super call is the reshape above (the crash report, as 1.20.6 wrote it)",
+   "args": [
+    0
+   ],
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer.file(Ljava/nio/file/Path;)Ljava/io/File;"
   }
  ],
  "overrideRenames": [
@@ -174,5 +403,22 @@
    "superCalls": "rename",
    "basis": "getDirtyAttributes is 1.21's getAttributesToSync: the same set (the client-syncable instances that changed), filled and cleared where 1.20.6 filled and cleared it"
   }
- ]
+ ],
+ "frameDefaults": {
+  "method_57821(Lnet/minecraft/class_1923;)V": {
+   "0": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noFailure()Ljava/lang/Throwable;",
+   "1": "zero: the storage of a sentinel report is never read, CbWorldServerMixin returns first"
+  },
+  "method_57822(Lnet/minecraft/class_1923;)V": {
+   "0": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noFailure()Ljava/lang/Throwable;",
+   "1": "zero: the storage of a sentinel report is never read, CbWorldServerMixin returns first"
+  },
+  "method_14556(Lnet/minecraft/class_3222;Z)Lnet/minecraft/class_3222;": {
+   "2": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#respawnRemovalReason()Lnet/minecraft/class_1297$class_5529;"
+  },
+  "method_568()Ljava/lang/String;": {
+   "0": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#crashReportType()Lnet/minecraft/class_9813;",
+   "1": "top/dext/centurybridge/step/v1_21/rt/CbWorldServer#noExtraLines()Ljava/util/List;"
+  }
+ }
 }

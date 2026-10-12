@@ -9,14 +9,22 @@
     "CbEnchServerMixin",
     "CbEnchTagsMixin",
     "CbEntityAttributeInstanceMixin",
+    "CbEntityEndPortalMixin",
+    "CbEntityNetherPortalMixin",
+    "CbEntityPortalForcerMixin",
+    "CbEntityPortalProcessorMixin",
+    "CbEntityPortalsMixin",
     "CbItemRecipeCrafterBlockMixin",
     "CbItemRecipeCrafterMenuMixin",
     "CbItemRecipeCraftingMenuMixin",
     "CbItemRecipeInventoryMenuMixin",
-    "CbItemRecipeResultSlotMixin"
+    "CbItemRecipeResultSlotMixin",
+    "CbWorldServerMixin"
   ],
   "client": [
-    "CbEnchClientMixin"
+    "CbEnchClientMixin",
+    "CbWorldLevelEventClientMixin",
+    "CbWorldServerClientMixin"
   ],
   "server": [],
   "injectors": {
