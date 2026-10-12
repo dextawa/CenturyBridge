@@ -2446,6 +2446,23 @@ public final class JarProcessor {
                             emitOwner.put(fsite, inh);
                         }
                         if (chain.classRenames.containsKey(owner)) {
+                            // as for methods: a class merged into a surviving vanilla class keeps an old
+                            // static field the new class lacks only where a redirect or getter is wired
+                            // on the old owner (1.20.5 moved SuspiciousEffectHolder.EffectEntry into
+                            // SuspiciousStewEffects.Entry without its LIST_CODEC)
+                            String rkey = owner + "." + name + ":" + desc;
+                            String rfrt = chain.fieldRedirects.get(rkey);
+                            if (rfrt != null && op == Opcodes.GETSTATIC) {
+                                fldRedirects.put(fsite, rfrt);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "field-redirect");
+                                return;
+                            }
+                            String rfgt = chain.fieldGetters.get(rkey);
+                            if (rfgt != null && op == Opcodes.GETSTATIC) {
+                                fldGetters.put(fsite, rfgt);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "field-getter");
+                                return;
+                            }
                             String gap = chain.facadeGaps.get(owner + "." + name + ":" + desc);
                             if (gap != null) {
                                 rpt.ledgered++;

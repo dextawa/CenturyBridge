@@ -429,6 +429,13 @@
    "new": "method_57560(Lnet/minecraft/class_2338;Lnet/minecraft/class_6862;)Lnet/minecraft/class_3449;",
    "onlyUnder": "net/minecraft/class_5138",
    "basis": "1.20.5 keeps the TagKey overload under another name; its super call is renamed with it (methodRenames)"
+  },
+  {
+   "old": "method_53233()Ljava/util/List;",
+   "new": "method_53233()Lnet/minecraft/class_9298;",
+   "onlyUnder": "net/minecraft/class_7917",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious.stew(Ljava/util/List;)Lnet/minecraft/class_9298;",
+   "basis": "the override's entry list wrapped as SuspiciousStewEffects; its super call is reshaped back (CbBlockSuspicious)"
   }
  ],
  "fieldGetters": {
@@ -439,7 +446,9 @@
   "net/minecraft/class_2615.field_12025:Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper",
   "net/minecraft/class_2615.field_12026:Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper",
   "net/minecraft/class_2615.field_12027:Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockHopper",
-  "net/minecraft/class_2580.field_11801:[[Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockMisc"
+  "net/minecraft/class_2580.field_11801:[[Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockMisc",
+  "net/minecraft/class_7917$class_8751.field_45783:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious",
+  "net/minecraft/class_2356.field_46354:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious"
  },
  "callReshapes": {
   "net/minecraft/class_7509.method_44207(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec;": {
@@ -646,11 +655,24 @@
     "keep"
    ],
    "basis": "the level as the tooltip context 1.20.5 builds for it (CbTooltips)"
+  },
+  "net/minecraft/class_7917$class_8751.comp_1838()Lnet/minecraft/class_1291;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+   "basis": "the entry's effect from its holder (CbHolders)"
+  },
+  "net/minecraft/class_7917.method_53233()Ljava/util/List;": {
+   "desc": "()Lnet/minecraft/class_9298;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious#entries(Lnet/minecraft/class_9298;)Ljava/util/List;",
+   "basis": "the stew effects' entry list, 1.20.4's shape (CbBlockSuspicious)"
   }
  },
  "staticRedirects": {
   "net/minecraft/class_2586.method_11005(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2586;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
-  "net/minecraft/class_1932.method_32350(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1932;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt"
+  "net/minecraft/class_1932.method_32350(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1932;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
+  "net/minecraft/class_2356.method_54015(Lnet/minecraft/class_1291;I)Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V": {
@@ -733,6 +755,46 @@
     "push top/dext/centurybridge/step/v1_20_5/rt/CbBlockMisc#noEquipment()Ljava/util/Optional;"
    ],
    "basis": "1.20.5 added the spawn equipment; no 1.20.4 spawn data had one (CbBlockMisc)"
+  },
+  "net/minecraft/class_7917$class_8751.<init>(Lnet/minecraft/class_1291;I)V": {
+   "desc": "(Lnet/minecraft/class_6880;I)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "the entry's effect as the holder 1.20.5's entry takes (CbHolders)"
+  },
+  "net/minecraft/class_2356.<init>(Lnet/minecraft/class_1291;ILnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_9298;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious#effects(Lnet/minecraft/class_1291;I)Lnet/minecraft/class_9298;",
+    "keep:2"
+   ],
+   "basis": "1.20.4's makeEffectList durations (instantaneous: ticks, else seconds) as SuspiciousStewEffects (CbBlockSuspicious)"
+  },
+  "net/minecraft/class_2356.<init>(Ljava/util/List;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_9298;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious#stew(Ljava/util/List;)Lnet/minecraft/class_9298;",
+    "keep"
+   ],
+   "basis": "the entry list wrapped as SuspiciousStewEffects (CbBlockSuspicious)"
+  },
+  "net/minecraft/class_2563.<init>(Lnet/minecraft/class_1291;ILnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_9298;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious#effects(Lnet/minecraft/class_1291;I)Lnet/minecraft/class_9298;",
+    "keep:2"
+   ],
+   "basis": "1.20.4's makeEffectList durations (instantaneous: ticks, else seconds) as SuspiciousStewEffects (CbBlockSuspicious)"
+  },
+  "net/minecraft/class_2563.<init>(Ljava/util/List;Lnet/minecraft/class_4970$class_2251;)V": {
+   "desc": "(Lnet/minecraft/class_9298;Lnet/minecraft/class_4970$class_2251;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious#stew(Ljava/util/List;)Lnet/minecraft/class_9298;",
+    "keep"
+   ],
+   "basis": "the entry list wrapped as SuspiciousStewEffects (CbBlockSuspicious)"
   }
  },
  "instanceFieldGetters": {
@@ -753,6 +815,10 @@
   "net/minecraft/class_2689$class_2691.create(Ljava/lang/Object;Lcom/google/common/collect/ImmutableMap;Lcom/mojang/serialization/MapCodec;)Ljava/lang/Object;": {
    "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates$LegacyFactory",
    "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockStates#factory(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockStates$LegacyFactory;)Lnet/minecraft/class_2689$class_2691;"
+  },
+  "net/minecraft/class_7917.method_53233()Ljava/util/List;": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious$LegacyHolder",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious#holder(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious$LegacyHolder;)Lnet/minecraft/class_7917;"
   }
  },
  "abstractFills": [
@@ -803,5 +869,8 @@
    ],
    "basis": "phantom key: ResourceKey types no value of its own; the key passes unchanged and only BuiltInRegistries.CHUNK_GENERATOR answers the map codec it stands for (it writes the key's location into the tag)"
   }
+ },
+ "classRenames": {
+  "net/minecraft/class_7917$class_8751": "net/minecraft/class_9298$class_8751"
  }
 }
