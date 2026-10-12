@@ -9,9 +9,12 @@
     "CbNetServerUseItemMixin"
   ],
   "client": [
+    "CbClientColorableAgeableModelMixin",
+    "CbClientColorableHierarchicalModelMixin",
     "CbClientDeltaTimerAccess",
     "CbClientMinecraftFrameMixin",
-    "CbClientMinecraftTimerAccess"
+    "CbClientMinecraftTimerAccess",
+    "CbClientMobRendererMixin"
   ],
   "server": [],
   "injectors": {

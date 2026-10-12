@@ -120,6 +120,83 @@
         "keep:7"
       ],
       "basis": "LevelRenderer.renderLevel(partialTick, nanoTime, ...) is renderLevel(DeltaTracker, ...) since 1.21; 1.20.6's body never read nanoTime"
+    },
+    "net/minecraft/class_3879.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": {
+      "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "conv:4,5,6,7 top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbColor(FFFF)I"
+      ],
+      "basis": "Model.renderToBuffer(.., light, overlay, r, g, b, a) takes one ARGB int since 1.21: the bytes 1.20.6's consumer wrote for those floats (CbClientModels.cbColor)"
+    },
+    "net/minecraft/class_630.method_22699(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": {
+      "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "conv:4,5,6,7 top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbColor(FFFF)I"
+      ],
+      "basis": "ModelPart.render(.., light, overlay, r, g, b, a) takes one ARGB int since 1.21: the bytes 1.20.6's consumer wrote for those floats (CbClientModels.cbColor)"
+    },
+    "net/minecraft/class_630$class_628.method_32089(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIFFFF)V": {
+      "desc": "(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;III)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "conv:4,5,6,7 top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbColor(FFFF)I"
+      ],
+      "basis": "ModelPart.Cube.compile(.., light, overlay, r, g, b, a) takes one ARGB int since 1.21: the bytes 1.20.6's consumer wrote for those floats (CbClientModels.cbColor)"
+    },
+    "net/minecraft/class_557.method_24184(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": {
+      "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "conv:4,5,6,7 top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbColor(FFFF)I"
+      ],
+      "basis": "BookModel.render(.., light, overlay, r, g, b, a) takes one ARGB int since 1.21: the bytes 1.20.6's consumer wrote for those floats (CbClientModels.cbColor)"
+    },
+    "net/minecraft/class_3887.method_23196(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFFFF)V": {
+      "desc": "(Lnet/minecraft/class_583;Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFFFFFI)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "keep:6",
+        "keep:7",
+        "keep:8",
+        "keep:9",
+        "keep:10",
+        "keep:11",
+        "keep:12",
+        "conv:13,14,15 top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbOpaque(FFF)I"
+      ],
+      "basis": "RenderLayer.coloredCutoutModelCopyLayerRender(.., r, g, b) takes the opaque ARGB int since 1.21 (1.20.6 rendered the copy with alpha 1)"
+    },
+    "net/minecraft/class_3887.method_23199(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;FFF)V": {
+      "desc": "(Lnet/minecraft/class_583;Lnet/minecraft/class_2960;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1309;I)V",
+      "ops": [
+        "keep:0",
+        "keep:1",
+        "keep:2",
+        "keep:3",
+        "keep:4",
+        "keep:5",
+        "conv:6,7,8 top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbOpaque(FFF)I"
+      ],
+      "basis": "RenderLayer.renderColoredCutoutModel(.., r, g, b) takes the opaque ARGB int since 1.21 (1.20.6 rendered with alpha 1)"
     }
   },
   "overrideHooks": [
@@ -220,10 +297,68 @@
       "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientTime$CbLegacyLevelRender",
       "onlyUnder": "net/minecraft/class_761",
       "basis": "a 1.20.6 LevelRenderer subclass's renderLevel, as GameRenderer.render"
+    },
+    {
+      "old": "method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V",
+      "new": "method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientModels.cbRenderToBuffer(Ltop/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyModel;Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyModel",
+      "onlyUnder": "net/minecraft/class_3879",
+      "basis": "a 1.20.6 Model.renderToBuffer override gets the ARGB int 1.21 passes as four floats (channel / 255, which packs back to the same int); its super call goes back packed (callReshapes)"
+    },
+    {
+      "old": "method_32089(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIFFFF)V",
+      "new": "method_32089(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;III)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientModels.cbCompile(Ltop/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyCube;Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;III)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyCube",
+      "onlyUnder": "net/minecraft/class_630$class_628",
+      "basis": "a 1.20.6 ModelPart.Cube.compile override gets the ARGB int 1.21 passes as four floats (channel / 255, which packs back to the same int); its super call goes back packed (callReshapes)"
+    },
+    {
+      "old": "method_24184(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V",
+      "new": "method_24184(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientModels.cbBookRender(Ltop/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyBook;Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyBook",
+      "onlyUnder": "net/minecraft/class_557",
+      "basis": "a 1.20.6 BookModel.render override gets the ARGB int 1.21 passes as four floats (channel / 255, which packs back to the same int); its super call goes back packed (callReshapes)"
+    },
+    {
+      "old": "method_22955(FFF)V",
+      "new": "method_22955(I)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientModels.cbAgeableSetColor(Ltop/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyAgeableSetColor;I)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyAgeableSetColor",
+      "onlyUnder": "net/minecraft/class_4593",
+      "basis": "1.21 calls ColorableAgeableListModel.setColor(int) where 1.20.6 called setColor(r, g, b): a 1.20.6 override gets the channels as floats"
+    },
+    {
+      "old": "method_22956(FFF)V",
+      "new": "method_22956(I)V",
+      "bridge": "top/dext/centurybridge/step/v1_21/rt/CbClientModels.cbHierarchicalSetColor(Ltop/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyHierarchicalSetColor;I)V",
+      "adapter": "top/dext/centurybridge/step/v1_21/rt/CbClientModels$CbLegacyHierarchicalSetColor",
+      "onlyUnder": "net/minecraft/class_4594",
+      "basis": "1.21 calls ColorableHierarchicalModel.setColor(int) where 1.20.6 called setColor(r, g, b): a 1.20.6 override gets the channels as floats"
+    },
+    {
+      "old": "method_4068(Lnet/minecraft/class_1308;Lnet/minecraft/class_4604;DDD)Z",
+      "new": "method_3933(Lnet/minecraft/class_1297;Lnet/minecraft/class_4604;DDD)Z",
+      "narrow": true,
+      "onlyUnder": "net/minecraft/class_927",
+      "basis": "MobRenderer.shouldRender(mob, ..) is EntityRenderer.shouldRender since 1.21 (which culls the leash holder of any Leashable): a 1.20.6 override is asked for mobs, every other entity goes to super"
+    },
+    {
+      "old": "method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+      "new": "method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+      "narrow": true,
+      "onlyUnder": "net/minecraft/class_927",
+      "basis": "MobRenderer.render(mob, ..) is gone since 1.21 (EntityRenderer draws the leash): a 1.20.6 override is reached from EntityRenderer.render for mobs"
     }
   ],
   "superRedirects": {
-    "net/minecraft/class_2535.method_10748()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbSuperDisconnectedReason"
+    "net/minecraft/class_2535.method_10748()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbSuperDisconnectedReason",
+    "net/minecraft/class_4593.method_22955(FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperSetColor",
+    "net/minecraft/class_4594.method_22956(FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperSetColor",
+    "net/minecraft/class_927.method_4068(Lnet/minecraft/class_1308;Lnet/minecraft/class_4604;DDD)Z": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperShouldRender",
+    "net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSuperMobRender"
   },
   "instanceRedirects": {
     "net/minecraft/class_2535.method_10748()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbDisconnectedReason",
@@ -231,7 +366,11 @@
     "net/minecraft/class_9632.method_59509()D": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbYPower",
     "net/minecraft/class_9632.method_59510()D": "top/dext/centurybridge/step/v1_21/rt/CbNet#cbZPower",
     "net/minecraft/class_310.method_1488()F": "top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbFrameTime",
-    "net/minecraft/class_310.method_1534()F": "top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbDeltaFrameTime"
+    "net/minecraft/class_310.method_1534()F": "top/dext/centurybridge/step/v1_21/rt/CbClientTime#cbDeltaFrameTime",
+    "net/minecraft/class_4593.method_22955(FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSetColor",
+    "net/minecraft/class_4594.method_22956(FFF)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbSetColor",
+    "net/minecraft/class_927.method_4068(Lnet/minecraft/class_1308;Lnet/minecraft/class_4604;DDD)Z": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbShouldRender",
+    "net/minecraft/class_927.method_4072(Lnet/minecraft/class_1308;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbMobRender"
   },
   "staticRedirects": {
     "net/minecraft/class_9147.method_56457(Lnet/minecraft/class_2539;Ljava/util/function/Consumer;)Lnet/minecraft/class_9127$class_9128;": "top/dext/centurybridge/step/v1_21/rt/CbNet",
@@ -368,6 +507,14 @@
         3
       ],
       "basis": "ClientboundProjectilePowerPacket(id, xPower, yPower, zPower) carries accelerationPower since 1.21, the magnitude applied along the motion: the 1.20.6 vector's length (what the projectile bridge keeps as accelerationPower for a 1.20.6 vector), the vector itself kept for the packet's 1.20.6 getters"
+    },
+    "net/minecraft/class_8989.<init>(Lnet/minecraft/class_3883;)V": {
+      "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_3883;)V",
+      "ops": [
+        "push top/dext/centurybridge/step/v1_21/rt/CbClientModels#cbRendererContext()Lnet/minecraft/class_5617$class_5618;",
+        "keep:0"
+      ],
+      "basis": "BreezeWindLayer(parent) built its model from the code-defined breeze wind layer; 1.21's (context, parent) bakes that same layer (ModelLayers.BREEZE_WIND) from the context: one made as 1.21's EntityRenderDispatcher makes its own"
     }
   },
   "adapterHooks": [
@@ -401,5 +548,8 @@
   },
   "facadeGaps": {
     "net/minecraft/class_317.<init>(FJ)V": "Timer(ticksPerSecond, now) is 1.20.2's constructor; 1.20.3 replaced it with (ticksPerSecond, now, targetMsptProvider) and the 1.20.2 -> 1.20.3 step reshapes every call into that one (CbClient.cbFixedTickRate), so no class climbing into 1.20.6 names it"
+  },
+  "fieldRedirects": {
+    "net/minecraft/class_927.field_32940:I": "top/dext/centurybridge/step/v1_21/rt/CbClientModels"
   }
 }
