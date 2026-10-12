@@ -4,10 +4,16 @@
   "package": "top.dext.centurybridge.step.v1_20_5.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "CbRegistriesServerMixin"
+    "CbRegistriesServerMixin",
+    "CbRestEntityMixin",
+    "CbRestEntityInvoker",
+    "CbRestLivingEntityMixin",
+    "CbRestAbstractHorseMixin",
+    "CbRestPlayerMixin"
   ],
   "client": [
-    "CbRegistriesClientMixin"
+    "CbRegistriesClientMixin",
+    "CbRestEntityRendererMixin"
   ],
   "server": [],
   "injectors": {
