@@ -9,6 +9,8 @@
     "CbEnchPlayerMixin",
     "CbEnchRecordMixin",
     "CbEnchRegistriesMixin",
+    "CbItemCrossbowChargeMixin",
+    "CbItemFoodMixin",
     "CbItemRecipeCrafterBlockMixin",
     "CbItemRecipeCrafterMenuMixin",
     "CbItemRecipeCraftingMenuMixin",
@@ -16,8 +18,8 @@
     "CbItemRecipeResultSlotMixin",
     "CbItemShapedPatternAccessor",
     "CbLegacyRegistryLoaderMixin",
-    "CbLegacyRegistryServerMixin",
-    "CbLegacyRegistryTagsMixin"
+    "CbLegacyRegistryTagsMixin",
+    "CbServersMixin"
   ],
   "client": [
     "CbLegacyRegistryClientMixin"
