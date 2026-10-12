@@ -12,6 +12,12 @@ extendable class net/minecraft/class_3754
 extendable class net/minecraft/class_5251
 extendable class net/minecraft/class_5604
 extendable class net/minecraft/class_630
+# ImageWidget(x, y, width, height): package-private since 1.20.2. A 1.20.1 mod's ImageWidget subclass
+# keeps its super call, reshaped to this constructor (superCtorReshapes; CbGuiImageWidgets).
+accessible method net/minecraft/class_8208 <init> (IIII)V
+# Minecraft.LoadingContext (package-private record): the clearResourcePacksOnError override hook's rewritten
+# super call casts the context it carries to it.
+accessible class net/minecraft/class_310$class_8764
 # SmithingTrimRecipe's constructor went package-private in 1.20.2 (public in 1.20.1, with the
 # recipe id): a converted subclass's super(id, ...) is reshaped onto it (s1misc recipe wiring)
 accessible method net/minecraft/class_8062 <init> (Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;)V
