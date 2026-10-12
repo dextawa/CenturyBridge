@@ -304,6 +304,14 @@
     "keep:2"
    ],
    "basis": "Pack.readPackInfo (readPackMetadata) opens the supplier by location: the 1.20.4 id"
+  },
+  "net/minecraft/class_14.method_23476(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_7;": {
+   "desc": "(Lnet/minecraft/class_9316;Lnet/minecraft/class_2338$class_2339;)Lnet/minecraft/class_7;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestPath#staticContext(Lnet/minecraft/class_1922;)Lnet/minecraft/class_9316;",
+    "keep:1"
+   ],
+   "basis": "WalkNodeEvaluator.getBlockPathTypeStatic takes a context: the getter's, with no mob (1.20.4's static query had none)"
   }
  },
  "superCtorReshapes": {
@@ -505,7 +513,16 @@
   "net/minecraft/class_5131.method_27305(Lnet/minecraft/class_1320;Ljava/util/UUID;)Z",
   "net/minecraft/class_5131.method_27307(Lnet/minecraft/class_1320;Ljava/util/UUID;)D",
   "net/minecraft/class_5131.method_26847(Lcom/google/common/collect/Multimap;)V",
-  "net/minecraft/class_5131.method_26854(Lcom/google/common/collect/Multimap;)V"
+  "net/minecraft/class_5131.method_26854(Lcom/google/common/collect/Multimap;)V",
+  "net/minecraft/class_8.method_17(Lnet/minecraft/class_1922;III)Lnet/minecraft/class_7;",
+  "net/minecraft/class_8.method_25(Lnet/minecraft/class_1922;IIILnet/minecraft/class_1308;)Lnet/minecraft/class_7;",
+  "net/minecraft/class_14.method_64(Lnet/minecraft/class_1922;IIILjava/util/EnumSet;Lnet/minecraft/class_7;Lnet/minecraft/class_2338;)Lnet/minecraft/class_7;",
+  "net/minecraft/class_14.method_61(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_7;)Lnet/minecraft/class_7;",
+  "net/minecraft/class_14.method_63(Lnet/minecraft/class_1308;Lnet/minecraft/class_2338;)Lnet/minecraft/class_7;",
+  "net/minecraft/class_14.method_29303(Lnet/minecraft/class_1308;III)Lnet/minecraft/class_7;",
+  "net/minecraft/class_14.method_29579(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z",
+  "net/minecraft/class_8.method_43568(Lnet/minecraft/class_9;)Lnet/minecraft/class_4459;",
+  "net/minecraft/class_12.method_38488(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z"
  ],
  "overrideHooks": [
   {
@@ -628,6 +645,38 @@
    "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks$LegacyBuiltin",
    "onlyUnder": "net/minecraft/class_3262",
    "basis": "1.20.5 reads whether a pack is built in from its location; a mod pack class's 1.20.4 isBuiltin() override sets the location's source (CbRestPacks)"
+  },
+  {
+   "old": "method_17(Lnet/minecraft/class_1922;III)Lnet/minecraft/class_7;",
+   "new": "method_17(Lnet/minecraft/class_9316;III)Lnet/minecraft/class_7;",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath.level(Lnet/minecraft/class_9316;)Lnet/minecraft/class_1922;",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_8",
+   "basis": "1.20.5 asks path types with a PathfindingContext; a mod evaluator's 1.20.4 BlockGetter override answers with the context's getter (guarded: its super call is the cover, which goes on to 1.20.5's)"
+  },
+  {
+   "old": "method_25(Lnet/minecraft/class_1922;IIILnet/minecraft/class_1308;)Lnet/minecraft/class_7;",
+   "new": "method_25(Lnet/minecraft/class_9316;IIILnet/minecraft/class_1308;)Lnet/minecraft/class_7;",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath.level(Lnet/minecraft/class_9316;)Lnet/minecraft/class_1922;",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_8",
+   "basis": "1.20.5 asks path types with a PathfindingContext; a mod evaluator's 1.20.4 BlockGetter override answers with the context's getter (guarded: its super call is the cover, which goes on to 1.20.5's)"
+  },
+  {
+   "old": "method_43568(Lnet/minecraft/class_9;)Lnet/minecraft/class_4459;",
+   "new": "method_57083(DDD)Lnet/minecraft/class_4459;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath.targetAt(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyTarget;DDD)Lnet/minecraft/class_4459;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyTarget",
+   "onlyUnder": "net/minecraft/class_8",
+   "basis": "1.20.5's getTarget asks getTargetNodeAt(x, y, z); 1.20.4's asked getTargetFromNode(the node there), which a mod evaluator overrides"
+  },
+  {
+   "old": "method_29303(Lnet/minecraft/class_1308;III)Lnet/minecraft/class_7;",
+   "new": "method_31932(III)Lnet/minecraft/class_7;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath.cachedType(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyCached;III)Lnet/minecraft/class_7;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyCached",
+   "onlyUnder": "net/minecraft/class_14",
+   "basis": "1.20.5 asks getCachedPathType(x, y, z) where 1.20.4 asked getCachedBlockType(mob, x, y, z) (and getBlockPathType(mob, pos), which called it): a mod's override answers, with the evaluator's mob"
   }
  ],
  "methodRenames": {
@@ -641,7 +690,8 @@
   "net/minecraft/class_22$class_5637.field_27893:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
   "net/minecraft/class_22$class_5637.field_27894:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
   "net/minecraft/class_22$class_5637.field_27895:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
-  "net/minecraft/class_22$class_5637.field_27896:[B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps"
+  "net/minecraft/class_22$class_5637.field_27896:[B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
+  "net/minecraft/class_8.field_20622:Lnet/minecraft/class_1950;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath"
  },
  "staticRedirects": {
   "net/minecraft/class_2512.method_10683(Lnet/minecraft/class_2487;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/step/v1_20_5/rt/CbProfiles#readGameProfile",
@@ -670,7 +720,8 @@
   "net/minecraft/class_4722.method_33083(Lnet/minecraft/class_5321;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient",
   "net/minecraft/class_4722.method_24066(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient",
   "net/minecraft/class_823.method_29999(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLjava/util/List;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient",
-  "net/minecraft/class_823.method_23802(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLjava/util/List;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient"
+  "net/minecraft/class_823.method_23802(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_630;Lnet/minecraft/class_4730;ZLjava/util/List;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestBannerRenderClient",
+  "net/minecraft/class_14.method_59(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_7;)Lnet/minecraft/class_7;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath"
  },
  "instanceRedirects": {
   "net/minecraft/class_20.method_92()B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps",
@@ -719,13 +770,62 @@
  "superRedirects": {
   "net/minecraft/class_3262.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#isBuiltinDefault",
   "net/minecraft/class_3255.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#superIsBuiltin",
-  "net/minecraft/class_8614.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#superIsBuiltin"
+  "net/minecraft/class_8614.method_45178()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks#superIsBuiltin",
+  "net/minecraft/class_8.method_43568(Lnet/minecraft/class_9;)Lnet/minecraft/class_4459;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath#superTarget"
  },
  "abstractFills": [
   {
    "under": "net/minecraft/class_3262",
    "method": "method_56926()Lnet/minecraft/class_9224;",
    "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPacks.location(Lnet/minecraft/class_3262;)Lnet/minecraft/class_9224;"
+  }
+ ],
+ "instanceFieldSetters": {
+  "net/minecraft/class_8.field_20622:Lnet/minecraft/class_1950;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_14",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyBoxTypes",
+   "requires": [
+    "method_64(Lnet/minecraft/class_1922;IIILjava/util/EnumSet;Lnet/minecraft/class_7;Lnet/minecraft/class_2338;)Lnet/minecraft/class_7;"
+   ],
+   "synth": [
+    {
+     "new": "method_57090(Lnet/minecraft/class_9316;III)Ljava/util/Set;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath.withinMobBB(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyBoxTypes;Lnet/minecraft/class_9316;III)Ljava/util/Set;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_14",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyEvaluate",
+   "requires": [
+    "method_61(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_7;)Lnet/minecraft/class_7;"
+   ],
+   "synth": [
+    {
+     "new": "method_57090(Lnet/minecraft/class_9316;III)Ljava/util/Set;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath.withinMobBB(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyEvaluate;Lnet/minecraft/class_9316;III)Ljava/util/Set;"
+    }
+   ]
+  },
+  {
+   "under": "net/minecraft/class_14",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyDiagonal",
+   "requires": [
+    "method_29579(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z"
+   ],
+   "synth": [
+    {
+     "new": "method_29579(Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath.diagonalStart(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyDiagonal;Lnet/minecraft/class_9;Lnet/minecraft/class_9;Lnet/minecraft/class_9;)Z"
+    },
+    {
+     "new": "method_57089(Lnet/minecraft/class_9;)Z",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbRestPath.diagonalEnd(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestPath$LegacyDiagonal;Lnet/minecraft/class_9;)Z"
+    }
+   ]
   }
  ]
 }
