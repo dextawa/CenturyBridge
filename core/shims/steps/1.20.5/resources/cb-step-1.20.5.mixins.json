@@ -18,11 +18,15 @@
     "CbRestWitherBossMixin",
     "CbRestArmadilloMixin",
     "CbRestMobMixin",
-    "CbRestThrownTridentMixin"
+    "CbRestThrownTridentMixin",
+    "CbLevelDataPrimaryMixin",
+    "CbLevelDataDerivedMixin",
+    "CbLevelStoragePlayerDataAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin",
-    "CbRestEntityRendererMixin"
+    "CbRestEntityRendererMixin",
+    "CbLevelDataClientMixin"
   ],
   "server": [],
   "injectors": {

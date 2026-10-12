@@ -47,6 +47,15 @@
     "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootTableKeyMap(Ljava/util/Map;)Ljava/util/Map;"
    ],
    "basis": "s4item generic drift: BlockLootSubProvider keys its table map by loot table key where 1.20.4 keyed it by location"
+  },
+  "net/minecraft/class_26.<init>(Ljava/io/File;Lcom/mojang/datafixers/DataFixer;)V": {
+   "desc": "(Ljava/io/File;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "s4item: DimensionDataStorage takes the registries its saved data loads with; 1.20.4 had none to pass"
   }
  },
  "callReshapes": {
@@ -151,7 +160,16 @@
   "net/minecraft/class_1799.method_7940(Lnet/minecraft/class_2378;Lnet/minecraft/class_2694;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hasAdventureModeBreakTagForBlock",
   "net/minecraft/class_1799.method_19267()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#isEdible",
   "net/minecraft/class_1799.method_7970(ILnet/minecraft/class_5819;Lnet/minecraft/class_3222;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hurt",
-  "net/minecraft/class_1799.method_7956(ILnet/minecraft/class_1309;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hurtAndBreak"
+  "net/minecraft/class_1799.method_7956(ILnet/minecraft/class_1309;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks#hurtAndBreak",
+  "net/minecraft/class_5217.method_215()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#getXSpawn",
+  "net/minecraft/class_5217.method_144()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#getYSpawn",
+  "net/minecraft/class_5217.method_166()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#getZSpawn",
+  "net/minecraft/class_5269.method_27416(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#setXSpawn",
+  "net/minecraft/class_5269.method_27417(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#setYSpawn",
+  "net/minecraft/class_5269.method_27419(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#setZSpawn",
+  "net/minecraft/class_5269.method_30657(F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#setSpawnAngle",
+  "net/minecraft/class_29.method_261(Lnet/minecraft/class_1657;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#load",
+  "net/minecraft/class_29.method_263()[Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#getSeenPlayers"
  },
  "staticRedirects": {
   "net/minecraft/class_1799.method_7915(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#of",
@@ -170,6 +188,153 @@
    "onlyUnder": "net/minecraft/class_1792",
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbTooltips.level(Lnet/minecraft/class_1792$class_9635;)Lnet/minecraft/class_1937;",
    "basis": "s4item: a mod's 1.20.4 appendHoverText gets the level its tooltip context was made for (CbTooltips); its super call goes through the call reshape"
+  },
+  {
+   "old": "method_261(Lnet/minecraft/class_1657;)Lnet/minecraft/class_2487;",
+   "new": "method_55789(Lnet/minecraft/class_1657;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_29",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage.optional(Lnet/minecraft/class_2487;)Ljava/util/Optional;",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "basis": "s4item: 1.20.5's PlayerList loads a player through load(player) -> Optional; a 1.20.4 override of load(player) -> tag answers it, its super call (CbLevelStorage.superLoad) reaching vanilla's"
+  }
+ ],
+ "superRedirects": {
+  "net/minecraft/class_31.method_215()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superXSpawn",
+  "net/minecraft/class_31.method_144()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superYSpawn",
+  "net/minecraft/class_31.method_166()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superZSpawn",
+  "net/minecraft/class_31.method_27416(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetXSpawn",
+  "net/minecraft/class_31.method_27417(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetYSpawn",
+  "net/minecraft/class_31.method_27419(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetZSpawn",
+  "net/minecraft/class_31.method_30657(F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetSpawnAngle",
+  "net/minecraft/class_27.method_215()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superXSpawn",
+  "net/minecraft/class_27.method_144()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superYSpawn",
+  "net/minecraft/class_27.method_166()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superZSpawn",
+  "net/minecraft/class_27.method_27416(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetXSpawn",
+  "net/minecraft/class_27.method_27417(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetYSpawn",
+  "net/minecraft/class_27.method_27419(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetZSpawn",
+  "net/minecraft/class_27.method_30657(F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetSpawnAngle",
+  "net/minecraft/class_638$class_5271.method_215()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelDataClient#superXSpawn",
+  "net/minecraft/class_638$class_5271.method_144()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelDataClient#superYSpawn",
+  "net/minecraft/class_638$class_5271.method_166()I": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelDataClient#superZSpawn",
+  "net/minecraft/class_638$class_5271.method_27416(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelDataClient#superSetXSpawn",
+  "net/minecraft/class_638$class_5271.method_27417(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelDataClient#superSetYSpawn",
+  "net/minecraft/class_638$class_5271.method_27419(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelDataClient#superSetZSpawn",
+  "net/minecraft/class_638$class_5271.method_30657(F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelDataClient#superSetSpawnAngle",
+  "net/minecraft/class_5269.method_187(Lnet/minecraft/class_2338;F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData#superSetSpawn",
+  "net/minecraft/class_29.method_261(Lnet/minecraft/class_1657;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#superLoad",
+  "net/minecraft/class_29.method_263()[Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage#superSeenPlayers"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_5217",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData$GetX",
+   "requires": [
+    "method_215()I"
+   ],
+   "synth": [
+    {
+     "new": "method_56126()Lnet/minecraft/class_2338;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData.spawnPos(Lnet/minecraft/class_5217;)Lnet/minecraft/class_2338;"
+    }
+   ],
+   "basis": "s4item: a 1.20.4 LevelData declaring getXSpawn answers 1.20.5's getSpawnPos from its own getters"
+  },
+  {
+   "under": "net/minecraft/class_5217",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData$GetY",
+   "requires": [
+    "method_144()I"
+   ],
+   "synth": [
+    {
+     "new": "method_56126()Lnet/minecraft/class_2338;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData.spawnPos(Lnet/minecraft/class_5217;)Lnet/minecraft/class_2338;"
+    }
+   ],
+   "basis": "s4item: a 1.20.4 LevelData declaring getYSpawn answers 1.20.5's getSpawnPos from its own getters"
+  },
+  {
+   "under": "net/minecraft/class_5217",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData$GetZ",
+   "requires": [
+    "method_166()I"
+   ],
+   "synth": [
+    {
+     "new": "method_56126()Lnet/minecraft/class_2338;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData.spawnPos(Lnet/minecraft/class_5217;)Lnet/minecraft/class_2338;"
+    }
+   ],
+   "basis": "s4item: a 1.20.4 LevelData declaring getZSpawn answers 1.20.5's getSpawnPos from its own getters"
+  },
+  {
+   "under": "net/minecraft/class_5269",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData$SetX",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_27416(I)V"
+   ],
+   "synth": [
+    {
+     "new": "method_187(Lnet/minecraft/class_2338;F)V",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData.setSpawn(Lnet/minecraft/class_5269;Lnet/minecraft/class_2338;F)V"
+    }
+   ],
+   "basis": "s4item: a 1.20.4 WritableLevelData declaring setXSpawn takes 1.20.5's setSpawn as 1.20.4 ran it on that class"
+  },
+  {
+   "under": "net/minecraft/class_5269",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData$SetY",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_27417(I)V"
+   ],
+   "synth": [
+    {
+     "new": "method_187(Lnet/minecraft/class_2338;F)V",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData.setSpawn(Lnet/minecraft/class_5269;Lnet/minecraft/class_2338;F)V"
+    }
+   ],
+   "basis": "s4item: a 1.20.4 WritableLevelData declaring setYSpawn takes 1.20.5's setSpawn as 1.20.4 ran it on that class"
+  },
+  {
+   "under": "net/minecraft/class_5269",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData$SetZ",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_27419(I)V"
+   ],
+   "synth": [
+    {
+     "new": "method_187(Lnet/minecraft/class_2338;F)V",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData.setSpawn(Lnet/minecraft/class_5269;Lnet/minecraft/class_2338;F)V"
+    }
+   ],
+   "basis": "s4item: a 1.20.4 WritableLevelData declaring setZSpawn takes 1.20.5's setSpawn as 1.20.4 ran it on that class"
+  },
+  {
+   "under": "net/minecraft/class_5269",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData$SetAngle",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_30657(F)V"
+   ],
+   "synth": [
+    {
+     "new": "method_187(Lnet/minecraft/class_2338;F)V",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelData.setSpawn(Lnet/minecraft/class_5269;Lnet/minecraft/class_2338;F)V"
+    }
+   ],
+   "basis": "s4item: a 1.20.4 WritableLevelData declaring setSpawnAngle takes 1.20.5's setSpawn as 1.20.4 ran it on that class"
+  },
+  {
+   "under": "net/minecraft/class_29",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbLevelStorage$SeenPlayers",
+   "requires": [
+    "method_263()[Ljava/lang/String;"
+   ],
+   "synth": [],
+   "basis": "s4item: marks a 1.20.4 getSeenPlayers override, which calls through PlayerDataStorage reach (1.20.5 dropped the method; vanilla never called it)"
   }
  ]
 }
