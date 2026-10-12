@@ -25,6 +25,11 @@ public final class CbCodecRegistries {
     /** each mirror by its lookup (MappedRegistry keeps one lookup object) */
     private static final Map<net.minecraft.class_7225.class_7226<?>, Mirror<?>> BY_LOOKUP = new IdentityHashMap<>();
 
+    /** mixin/CbCodecRegistryMixin: whether a MappedRegistry is frozen */
+    public interface Frozen {
+        boolean cbS4$frozen();
+    }
+
     /** a registry of codecs standing for a 1.20.5 registry of map codecs */
     public static final class Mirror<T> extends net.minecraft.class_2370<Codec<? extends T>> {
 
@@ -38,6 +43,10 @@ public final class CbCodecRegistries {
                 MapCodec<? extends T> value = real.method_10200(id);
                 net.minecraft.class_5321 key = real.method_29113(value).orElseThrow();
                 mirror(key, value, (net.minecraft.class_9248) real.method_57058(key).orElse(net.minecraft.class_9248.field_49136));
+            }
+            // a registry binds its holders' values when it freezes: the mirror freezes with the real one
+            if (real instanceof Frozen f && f.cbS4$frozen()) {
+                method_40276();
             }
         }
 
@@ -87,6 +96,38 @@ public final class CbCodecRegistries {
         if (m != null) {
             m.mirror(key, value, info);
         }
+    }
+
+    /** CbCodecRegistryMixin: a registry froze; its mirror freezes too (and so binds its holders' values) */
+    public static void frozen(net.minecraft.class_2378<?> registry) {
+        Mirror<?> m;
+        synchronized (CbCodecRegistries.class) {
+            m = BY_REAL.get(registry);
+        }
+        if (m != null) {
+            m.method_40276();
+        }
+    }
+
+    /** CbCodecRegistryMixin: a registry's tags were bound; its mirror's holders get the same tags */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void tagsBound(net.minecraft.class_2378<?> registry, Map<net.minecraft.class_6862, java.util.List<net.minecraft.class_6880>> tags) {
+        Mirror m;
+        synchronized (CbCodecRegistries.class) {
+            m = BY_REAL.get(registry);
+        }
+        if (m == null) {
+            return;
+        }
+        Map<net.minecraft.class_6862, java.util.List<net.minecraft.class_6880>> mirrored = new IdentityHashMap<>();
+        for (Map.Entry<net.minecraft.class_6862, java.util.List<net.minecraft.class_6880>> e : tags.entrySet()) {
+            java.util.List<net.minecraft.class_6880> holders = new java.util.ArrayList<>();
+            for (net.minecraft.class_6880 h : e.getValue()) {
+                h.method_40230().ifPresent(k -> holders.add(m.method_40290((net.minecraft.class_5321) k)));
+            }
+            mirrored.put(e.getKey(), holders);
+        }
+        m.method_40257(mirrored);
     }
 
     private static boolean isCodecRegistry(net.minecraft.class_5321<?> key) {

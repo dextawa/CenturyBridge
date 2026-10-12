@@ -355,38 +355,6 @@
     "keep:3"
    ],
    "basis": "s4item: enchantItem takes the world's feature flags"
-  },
-  "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;": {
-   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#view(Lnet/minecraft/class_2378;)Lnet/minecraft/class_2378;",
-   "basis": "s4item generic drift: a registry of codecs 1.20.5 made one of map codecs comes out as its mirror (CbCodecRegistries); any other passes"
-  },
-  "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;": {
-   "desc": "(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#viewOptional(Ljava/util/Optional;)Ljava/util/Optional;",
-   "basis": "s4item generic drift: RegistryAccess.registry(key), as registryOrThrow"
-  },
-  "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;": {
-   "desc": "(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#viewLookupOptional(Ljava/util/Optional;)Ljava/util/Optional;",
-   "basis": "s4item generic drift: HolderLookup.Provider.lookup(key) of a codec registry gives its mirror's lookup"
-  },
-  "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;": {
-   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecRegistries#viewLookup(Lnet/minecraft/class_7225$class_7226;)Lnet/minecraft/class_7225$class_7226;",
-   "basis": "s4item generic drift: HolderLookup.Provider.lookupOrThrow(key), as lookup"
   }
  },
  "convertHooks": [
