@@ -78,11 +78,12 @@ public final class Chain {
      */
     public final java.util.Map<String, String> instanceFieldGetters = new java.util.HashMap<>();
     /**
-     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": the write side of
-     * {@link #instanceFieldGetters}, for a public field whose type changed (1.20.2
-     * PendingInvite.worldOwnerUuid: String -> UUID). The receiver and the value the mod
-     * stores are exactly what a static setter(owner, desc)V takes, so the PUTFIELD becomes
-     * INVOKESTATIC setter(receiver, value) and the setter converts.
+     * PUTFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field write rewritten to a
+     * static setter(receiver, value)V, the write side of {@link #instanceFieldGetters} -- for a
+     * public field whose type changed (1.20.2 PendingInvite.worldOwnerUuid: String -> UUID, the
+     * setter converts) or one that is gone and lives on as other state (1.20.2 AbstractSelectionList's
+     * x0/x1/y0/y1/width/height, which 1.20.3 keeps as the widget's geometry: a write moves the widget,
+     * as the field write moved the list). Found up the hierarchy from the site's owner, as a getter.
      */
     public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
     /**
@@ -399,6 +400,30 @@ public final class Chain {
     }
 
     public final java.util.List<AdapterHook> adapterHooks = new java.util.ArrayList<>();
+
+    /**
+     * Mod overrides of a vanilla method the target made final, or replaced by one of another name
+     * that vanilla calls instead ("overrideRenames"). Overriding a final method is a class load
+     * failure, so no hook that leaves the old declaration in place can help: in a mod class under
+     * {@code onlyUnder} (source hierarchy) a declared, non-static old shape is renamed to
+     * {@code newName}, same descriptor.
+     * <ul>
+     * <li>with {@code superCalls} ("rename"), the class's super.old(..) calls follow it -- for a
+     *     vanilla method that lives on under the new name (1.20.3: AbstractSelectionList.render is
+     *     AbstractWidget.renderWidget, its updateNarration is updateWidgetNarration);</li>
+     * <li>with an {@code adapter} interface (declaring the new name), the class gets the interface
+     *     and the renamed method is made public, so a mixin on the final method can hand the call to
+     *     the mod's method when the object implements the adapter (1.20.3's final AbstractWidget.render
+     *     calling a 1.20.2 widget's own render); the mod's super.old(..) then reaches the final
+     *     vanilla method again, where the mixin's guard lets it run.</li>
+     * </ul>
+     */
+    public static final class OverrideRename {
+        public String oldName, oldDesc, newName, onlyUnder, adapter;
+        public boolean superCalls;
+    }
+
+    public final java.util.List<OverrideRename> overrideRenames = new java.util.ArrayList<>();
 
     /**
      * Implementations a vanilla type newly demands ("abstractFills" in a step's wiring): a method the
@@ -1922,6 +1947,24 @@ public final class Chain {
                 var ifs = root.getAsJsonObject("instanceFieldSetters");
                 for (String k : ifs.keySet()) {
                     c.instanceFieldSetters.put(k, ifs.get(k).getAsString());
+                }
+            }
+            if (root.has("overrideRenames")) {
+                for (var el : root.getAsJsonArray("overrideRenames")) {
+                    var o = el.getAsJsonObject();
+                    OverrideRename r = new OverrideRename();
+                    String[] osig = splitSig(o.get("old").getAsString());
+                    r.oldName = osig[0];
+                    r.oldDesc = osig[1];
+                    r.newName = o.get("new").getAsString();
+                    r.onlyUnder = o.get("onlyUnder").getAsString();
+                    r.adapter = o.has("adapter") ? o.get("adapter").getAsString() : null;
+                    r.superCalls = o.has("superCalls") && o.get("superCalls").getAsString().equals("rename");
+                    if (r.newName.contains("(")) {
+                        throw new IllegalArgumentException("overrideRenames " + r.oldName + r.oldDesc
+                            + ": new is a method name; the descriptor stays");
+                    }
+                    c.overrideRenames.add(r);
                 }
             }
             if (root.has("instanceOfRedirects")) {

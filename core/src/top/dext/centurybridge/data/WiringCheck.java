@@ -469,6 +469,27 @@ public final class WiringCheck {
                 }
             }
         }
+        // overrideRenames: an adapter interface must declare the new name with the old descriptor
+        // (the mod's renamed method implements it; the mixin on the final method calls it)
+        if (root.has("overrideRenames")) {
+            for (var el : root.getAsJsonArray("overrideRenames")) {
+                var o = el.getAsJsonObject();
+                checked++;
+                if (!o.has("adapter")) {
+                    continue;
+                }
+                String old = o.get("old").getAsString();
+                String desc = methodDesc(old.substring(old.indexOf('(')));
+                String name = o.get("new").getAsString();
+                String adapter = o.get("adapter").getAsString();
+                ClassNode an = classes.get(adapter);
+                if (an == null || (an.access & Opcodes.ACC_INTERFACE) == 0) {
+                    problems.add("overrideRenames " + old + " (no such adapter interface " + adapter + ")");
+                } else if (an.methods.stream().noneMatch(m -> m.name.equals(name) && m.desc.equals(desc))) {
+                    problems.add("overrideRenames " + old + ": adapter " + adapter + " does not declare " + name + desc);
+                }
+            }
+        }
         // callReshapes: the reshaped call must resolve on the target (the owner or a supertype
         // declares the new shape), and every converter / supplier it runs must exist
         if (root.has("callReshapes")) {
