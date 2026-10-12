@@ -9,7 +9,8 @@
     "CbRestEntityInvoker",
     "CbRestLivingEntityMixin",
     "CbRestAbstractHorseMixin",
-    "CbRestPlayerMixin"
+    "CbRestPlayerMixin",
+    "CbTooltipLevelAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin",
