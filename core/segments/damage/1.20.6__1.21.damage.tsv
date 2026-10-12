@@ -1293,8 +1293,6 @@ override+super	net/minecraft/class_8956	method_55055	()V	METHOD	method method_55
 call	net/minecraft/class_3763	method_16484	(IZ)V	METHOD	method method_16484(Lnet/minecraft/class_3218;IZ)V public abstract
 extend	net/minecraft/class_3763			ABSTRACT	class public abstract extends net/minecraft/class_3732
 implement	net/minecraft/class_3763	method_16484	(IZ)V	ORPHAN	method method_16484(Lnet/minecraft/class_3218;IZ)V public abstract
-call	net/minecraft/class_7264	method_7534	()V	ACCESS	method not declared on the owner
-override+super	net/minecraft/class_7264	method_7534	()V	ACCESS,ORPHAN	method not declared on the owner
 get-static	net/minecraft/class_7701	field_46779	Lnet/minecraft/class_7696;	FIELD	field not declared on the owner
 call	net/minecraft/class_1702	method_7579	(Lnet/minecraft/class_1799;)V	METHOD	method method_7579(Lnet/minecraft/class_4174;)V public
 override+super	net/minecraft/class_1702	method_7579	(Lnet/minecraft/class_1799;)V	METHOD,ORPHAN	method method_7579(Lnet/minecraft/class_4174;)V public
