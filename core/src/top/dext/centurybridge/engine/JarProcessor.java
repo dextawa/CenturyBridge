@@ -1794,12 +1794,11 @@ public final class JarProcessor {
         // invokers, accessors, shadows, injector selectors and @At targets across it first, so
         // repair and triage judge the retargeted mixin (MixinBridge; intermediary era only --
         // past the namespace wall the refmaps take their names later, see repairPastWall)
+        MixinBridge.Result bridged = null;
         if (MixinBridge.applies(chain)) {
-            MixinBridge.Result bridged = MixinBridge.run(entries, chain,
+            bridged = MixinBridge.run(entries, chain,
                 "centurybridge/gen/MixinBridges_" + jarTag + "_" + chain.to.replace('.', '_')
                     + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count()));
-            for (String b : bridged.bridged) rpt.notes.add(tag + "mixin bridged: " + b);
-            for (String l : bridged.left) rpt.notes.add(tag + "mixin not bridged: " + l);
         }
         // anchors are checked against real target bodies BEFORE triage: a repair
         // (desc-drop / descend) rewrites the selector triage then reads
@@ -1847,6 +1846,12 @@ public final class JarProcessor {
         }
         stripConfigs(entries, triage, deadMixins);
         markConfigsOptional(entries, triage);
+        if (bridged != null) {
+            // a member MixinBridge carried counts once its mixin survived triage and repair kept its injector
+            for (String l : bridged.report(deadMixins, repaired != null ? repaired.disabled() : List.of())) {
+                rpt.notes.add(tag + l);
+            }
+        }
 
         // tombstone stub class must be unique per jar layer (all layers share the runtime classpath)
         // and per climb step: each step converts the jar again, and a later step's Tombstones class

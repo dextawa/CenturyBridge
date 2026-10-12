@@ -489,7 +489,7 @@ public final class MixinRepair {
     static final Anchor POSITIONAL = new Anchor("POS", null, null, null, null);
 
     /** null = this injector's anchor cannot be evaluated statically */
-    private List<Anchor> anchors(AnnotationNode an, Map<String, Object> v, JsonObject refmap) {
+    List<Anchor> anchors(AnnotationNode an, Map<String, Object> v, JsonObject refmap) {
         List<Anchor> out = new ArrayList<>();
         // slice boundaries are anchors too: a "from" that no longer occurs leaves an
         // empty slice and Mixin scans 0 targets (porting_lib PlayerMixin.modifyResult:
@@ -598,7 +598,7 @@ public final class MixinRepair {
         return c >= 0 ? spec.substring(c + 1) : null;
     }
 
-    private static boolean anchorsIn(MethodNode m, ClassNode owner, List<Anchor> anchors) {
+    static boolean anchorsIn(MethodNode m, ClassNode owner, List<Anchor> anchors) {
         Anchor from = null, to = null;
         for (Anchor a : anchors) {
             if (a.role.equals("from")) from = a;

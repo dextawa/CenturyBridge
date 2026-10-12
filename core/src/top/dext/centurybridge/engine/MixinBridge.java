@@ -100,8 +100,42 @@ final class MixinBridge {
 
     /** what one jar layer's pass did: bridged members, and wired members it could not carry (with why) */
     static final class Result {
-        final List<String> bridged = new ArrayList<>();
+        /** one carried member: the mixin class, the injector ("@Kind Mixin.handler", null for others), the line */
+        record Line(String mixin, String injector, String text) {}
+
+        final List<Line> bridged = new ArrayList<>();
         final List<String> left = new ArrayList<>();
+
+        /**
+         * The report lines once repair and triage have judged the jar. A member carried here counts as
+         * bridged only if its mixin still applies and, for an injector, repair did not then disable it
+         * (an anchor gone in the method it now targets): otherwise it is reported as not bridged, with
+         * what took it.
+         */
+        List<String> report(Set<String> strippedMixins, List<String> disabledInjectors) {
+            Set<String> disabled = new HashSet<>();
+            Pattern key = Pattern.compile("@(\\w+) (\\S+?) -> ");
+            for (String d : disabledInjectors) {
+                Matcher m = key.matcher(d);
+                if (m.find()) {
+                    disabled.add("@" + m.group(1) + " " + m.group(2));
+                }
+            }
+            List<String> out = new ArrayList<>();
+            for (Line l : bridged) {
+                if (strippedMixins.contains(l.mixin())) {
+                    out.add("mixin not bridged: " + l.text() + " -- carried, but the mixin is stripped for other damage");
+                } else if (l.injector() != null && disabled.contains(l.injector())) {
+                    out.add("mixin not bridged: " + l.text() + " -- carried, then disabled by repair");
+                } else {
+                    out.add("mixin bridged: " + l.text());
+                }
+            }
+            for (String l : left) {
+                out.add("mixin not bridged: " + l);
+            }
+            return out;
+        }
     }
 
     private final Chain chain;
@@ -565,10 +599,20 @@ final class MixinBridge {
         /** other classes of the jar whose references to the mixin's members were retargeted */
         final Map<String, ClassNode> others = new LinkedHashMap<>();
         final List<MethodNode> helperMethods = new ArrayList<>();
-        final List<String> bridged = new ArrayList<>();
+        final List<Result.Line> bridged = new ArrayList<>();
         final List<String> left = new ArrayList<>();
         boolean changed;
         boolean refmapDirty;
+
+        /** a carried shadow, invoker, accessor or overwrite */
+        void member(String text) {
+            bridged.add(new Result.Line(mx.name, null, text));
+        }
+
+        /** a carried injector selector or anchor ({@code key} "@Kind Mixin.handler", as repair names it) */
+        void injected(String key, String text) {
+            bridged.add(new Result.Line(mx.name, key, text));
+        }
 
         Mixin(ClassNode mx, JsonObject table) {
             this.mx = mx;
@@ -825,7 +869,7 @@ final class MixinBridge {
             retargetHandles(r, target, name, tItf);
             mx.methods.remove(m);
             changed = true;
-            bridged.add(what + " -> calls on " + shortName(target) + " (" + f.how() + ")");
+            member(what + " -> calls on " + shortName(target) + " (" + f.how() + ")");
         }
 
         /**
@@ -861,7 +905,7 @@ final class MixinBridge {
                 String old = f.name;
                 f.name = rn;
                 changed = true;
-                bridged.add(what + " -> shadow of " + rn + " (renamed " + old + " -> " + rn + ")");
+                member(what + " -> shadow of " + rn + " (renamed " + old + " -> " + rn + ")");
                 return;
             }
             List<String> why = new ArrayList<>();
@@ -889,7 +933,7 @@ final class MixinBridge {
             }
             mx.fields.remove(f);
             changed = true;
-            bridged.add(what + " -> accesses of " + shortName(target) + "." + f.name + " (" + how + ")");
+            member(what + " -> accesses of " + shortName(target) + "." + f.name + " (" + how + ")");
         }
 
         // -------------------------------------------------------------- @Invoker
@@ -957,7 +1001,7 @@ final class MixinBridge {
             }
             if (f.reshape() == null && f.at() != null && f.at().owner().equals(target)) {
                 pin(an, key, respell(mapped, f.name(), s.desc()));
-                bridged.add(what + " -> " + f.name() + " (" + f.how() + ")");
+                member(what + " -> " + f.name() + " (" + f.how() + ")");
                 return;
             }
             // the layer's own member, or one W moved up its hierarchy: no invoker can be generated for
@@ -1030,7 +1074,7 @@ final class MixinBridge {
             }
             mx.methods.add(vm);
             changed = true;
-            bridged.add(what + " -> " + renamed + f.desc() + " invoking " + f.name() + f.desc()
+            member(what + " -> " + renamed + f.desc() + " invoking " + f.name() + f.desc()
                 + " (call reshape; " + vName + vDesc + " converts as the reshape does)");
         }
 
@@ -1051,7 +1095,7 @@ final class MixinBridge {
             in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, name, cdesc, false));
             in.add(new InsnNode(Type.getReturnType(m.desc).getOpcode(Opcodes.IRETURN)));
             changed = true;
-            bridged.add(what + " -> " + owner + "." + name + " (" + f.how() + ")");
+            member(what + " -> " + owner + "." + name + " (" + f.how() + ")");
         }
 
         private void directInvoker(MethodNode m, AnnotationNode an, CallFate f, String what) {
@@ -1074,7 +1118,7 @@ final class MixinBridge {
                 JarProcessor.reshapeCall(m, call, f.reshape());
             }
             changed = true;
-            bridged.add(what + " -> calls " + shortName(target) + "." + f.name() + call.desc + " (" + f.how() + ")");
+            member(what + " -> calls " + shortName(target) + "." + f.name() + call.desc + " (" + f.how() + ")");
         }
 
         /**
@@ -1106,7 +1150,7 @@ final class MixinBridge {
                 in.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, name, ctor.substring(0, ctor.length() - 1) + "L" + target + ";", false));
                 in.add(new InsnNode(Opcodes.ARETURN));
                 changed = true;
-                bridged.add(what + " -> " + owner + "." + name + " (constructor factory)");
+                member(what + " -> " + owner + "." + name + " (constructor factory)");
                 return;
             }
             Chain.CtorReshape cr = chain.superCtorReshapes.get(key);
@@ -1171,7 +1215,7 @@ final class MixinBridge {
             }
             mx.methods.add(vm);
             changed = true;
-            bridged.add(what + " -> " + renamed + wDesc + " (constructor " + (cr != null ? "reshape" : "adapter") + "; "
+            member(what + " -> " + renamed + wDesc + " (constructor " + (cr != null ? "reshape" : "adapter") + "; "
                 + vName + vDesc + " converts as it does)");
         }
 
@@ -1227,7 +1271,7 @@ final class MixinBridge {
             String rn = chain.fieldRenames.get(fkey);
             if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, fdesc))) {
                 pin(an, key, respell(mapped, rn, spec.contains(":") ? fdesc : null));
-                bridged.add(what + " -> " + rn + " (renamed " + name + " -> " + rn + ")");
+                member(what + " -> " + rn + " (renamed " + name + " -> " + rn + ")");
                 return;
             }
             InsnList body = new InsnList();
@@ -1292,7 +1336,7 @@ final class MixinBridge {
             body.add(new InsnNode(Type.getReturnType(m.desc).getOpcode(Opcodes.IRETURN)));
             concrete(m, an).add(body);
             changed = true;
-            bridged.add(what + " -> " + how);
+            member(what + " -> " + how);
         }
 
         // -------------------------------------------------------------- @Overwrite
@@ -1317,7 +1361,7 @@ final class MixinBridge {
                 String old = m.name;
                 m.name = rn;
                 changed = true;
-                bridged.add(what + " -> " + rn + " (renamed " + old + " -> " + rn + ")");
+                member(what + " -> " + rn + " (renamed " + old + " -> " + rn + ")");
                 return;
             }
             if (!chain.overrideHooksForOld(m.name, m.desc).isEmpty()
@@ -1406,6 +1450,12 @@ final class MixinBridge {
                     left.add(where + ": static in one release and not in the other");
                     continue;
                 }
+                String gone = anchorGone(an, h, kind, vmeth, wmeth, wt);
+                if (gone != null) {
+                    left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", where its anchor " + gone
+                        + " no longer stands");
+                    continue;
+                }
                 Plan p = plan(h, an, kind, vmeth, fate, why);
                 if (p == null) {
                     left.add(where + ": " + why.get(0));
@@ -1420,7 +1470,7 @@ final class MixinBridge {
                 }
                 MethodNode handler = p.synth() ? synthesizeInject(h, fate, p) : h;
                 changed = true;
-                bridged.add(where + " => " + fate.name() + fate.desc() + " (" + fate.how()
+                injected("@" + kind + " " + sn + "." + h.name, where + " => " + fate.name() + fate.desc() + " (" + fate.how()
                     + (p.synth() ? "; a " + chain.to + "-shaped handler forwards to the mod's" : "") + ")");
                 return new Selection(handler, an, List.of(vmeth), List.of(wmeth));
             }
@@ -1647,6 +1697,42 @@ final class MixinBridge {
         }
 
         /**
+         * The first anchor of the injector that the W method does not have -- neither as written nor as
+         * what the wiring says stands there now, counted as often as in the V method (what {@link #ats}
+         * then retargets) -- or null. A selector is only carried to a method where its injection can
+         * happen: MixinRepair would otherwise disable it there, and the bridging would be claimed for
+         * nothing. Anchors that cannot be evaluated statically are not judged (null), as MixinRepair
+         * leaves them alone too.
+         */
+        private String anchorGone(AnnotationNode an, MethodNode h, String kind, MethodNode vmeth, MethodNode wmeth, ClassNode wt) {
+            List<MixinRepair.Anchor> anchors = chain.mixinRepair.anchors(an, MixinRepair.values(an), table);
+            if (anchors == null || anchors.isEmpty() || MixinRepair.anchorsIn(wmeth, wt, anchors)) {
+                return null;
+            }
+            for (MixinRepair.Anchor a : anchors) {
+                if (a.kind().equals("LOCAL")) {
+                    return a.toString(); // a slot in a body whose arguments changed
+                }
+                if (MixinRepair.anchorIn(wmeth, a)) {
+                    continue;
+                }
+                // what ats() can retarget: the wiring's new anchor, as often in W as the old in V, with the
+                // handler able to take it
+                AtFate af = a.kind().equals("INVOKE") || a.kind().equals("FIELD") ? atFate(a) : null;
+                if (af == null || !af.desc().equals(a.desc()) && !kind.equals("Inject")
+                        || kind.equals("Inject") && capturesLocals(h) || hasSugar(h, "Local;")) {
+                    return a.toString();
+                }
+                MixinRepair.Anchor na = new MixinRepair.Anchor(a.kind(), af.owner(), af.name(), af.desc(), null, a.ordinal(), a.role());
+                int vc = count(List.of(vmeth), a);
+                if (vc == 0 || count(List.of(wmeth), na) != vc) {
+                    return a.toString();
+                }
+            }
+            return null;
+        }
+
+        /**
          * @At INVOKE / FIELD anchors the step moved, in the methods the injector targets: retargeted
          * to what the wiring says stands there now, once that is counted in W's methods exactly as
          * often as the old anchor stood in V's (an ordinal keeps pointing at the same occurrence).
@@ -1703,7 +1789,7 @@ final class MixinBridge {
                     setValue(at, "target", nt);
                 }
                 changed = true;
-                bridged.add(where + " => " + af.name() + (fld ? ":" : "") + af.desc() + " (" + af.how() + ")");
+                injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + af.name() + (fld ? ":" : "") + af.desc() + " (" + af.how() + ")");
             }
         }
     }
