@@ -4,36 +4,18 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * Values 1.20.4 passed as themselves and 1.20.5 passes as registry holders, keys or other forms --
- * converted at the call sites and override hooks the step's wiring reshapes (gen_s4item.py emits most
- * of them). Each pair converts both ways: the old form to the new one where a 1.20.4 call hands a
- * value to 1.20.5, the new form to the old one where 1.20.5 hands a value to 1.20.4 code.
+ * Values of the item area that 1.20.4 passed as themselves and 1.20.5 passes in another form --
+ * attribute holders, registry keys, slot groups, map ids, registration info, lookup providers, byte
+ * buffers -- converted at the call sites and override hooks the step's wiring reshapes (gen_s4item.py
+ * emits most of them). Each pair converts both ways: the old form to the new one where a 1.20.4 call
+ * hands a value to 1.20.5, the new form to the old one where 1.20.5 hands a value to 1.20.4 code.
+ * Potions, effects, sounds, enchantments and instruments are the step's shared CbHolders.
  *
- * A registered value becomes its registry reference (Registry.wrapAsHolder answers the reference of a
- * registered value, a direct holder of an unregistered one), so the holder 1.20.5 sees is the one its
- * own code would have used; a holder becomes the value it holds, the object 1.20.4 handed out.
+ * A registered attribute becomes its registry reference (Registry.wrapAsHolder answers the reference
+ * of a registered value, a direct holder of an unregistered one), so the holder 1.20.5 sees is the one
+ * its own code would have used; a holder becomes the value it holds, the object 1.20.4 handed out.
  */
 public final class CbItemHolders {
-
-    // ---------------------------------------------------------------- potions (Potion <-> Holder<Potion>)
-
-    public static net.minecraft.class_6880<net.minecraft.class_1842> potionHolder(net.minecraft.class_1842 potion) {
-        return potion == null ? null : net.minecraft.class_7923.field_41179.method_47983(potion);
-    }
-
-    public static net.minecraft.class_1842 potion(net.minecraft.class_6880<net.minecraft.class_1842> holder) {
-        return holder == null ? null : holder.comp_349();
-    }
-
-    // ---------------------------------------------------------------- effects (MobEffect <-> Holder<MobEffect>)
-
-    public static net.minecraft.class_6880<net.minecraft.class_1291> effectHolder(net.minecraft.class_1291 effect) {
-        return effect == null ? null : net.minecraft.class_7923.field_41174.method_47983(effect);
-    }
-
-    public static net.minecraft.class_1291 effect(net.minecraft.class_6880<net.minecraft.class_1291> holder) {
-        return holder == null ? null : holder.comp_349();
-    }
 
     // ---------------------------------------------------------------- attributes (Attribute <-> Holder<Attribute>)
 
@@ -42,16 +24,6 @@ public final class CbItemHolders {
     }
 
     public static net.minecraft.class_1320 attribute(net.minecraft.class_6880<net.minecraft.class_1320> holder) {
-        return holder == null ? null : holder.comp_349();
-    }
-
-    // ---------------------------------------------------------------- sounds (SoundEvent <-> Holder<SoundEvent>)
-
-    public static net.minecraft.class_6880<net.minecraft.class_3414> soundHolder(net.minecraft.class_3414 sound) {
-        return sound == null ? null : net.minecraft.class_7923.field_41172.method_47983(sound);
-    }
-
-    public static net.minecraft.class_3414 sound(net.minecraft.class_6880<net.minecraft.class_3414> holder) {
         return holder == null ? null : holder.comp_349();
     }
 

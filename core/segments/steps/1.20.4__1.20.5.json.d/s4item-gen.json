@@ -303,7 +303,7 @@
   "net/minecraft/class_1293.method_5579()Lnet/minecraft/class_1291;": {
    "desc": "()Lnet/minecraft/class_6880;",
    "ops": [],
-   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#effect(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
    "basis": "s4item: converted arguments / return (gen_s4item.py)"
   },
   "net/minecraft/class_137$class_6156.method_35529(Lnet/minecraft/class_1304;)Lnet/minecraft/class_137$class_6156;": {
@@ -333,7 +333,7 @@
   "net/minecraft/class_152$class_153.method_640(Lnet/minecraft/class_1291;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;": {
    "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;",
    "ops": [
-    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#effectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
     "keep:1"
    ],
    "basis": "s4item: converted arguments / return (gen_s4item.py)"
@@ -355,13 +355,13 @@
   "net/minecraft/class_1738.method_31570()Lnet/minecraft/class_3414;": {
    "desc": "()Lnet/minecraft/class_6880;",
    "ops": [],
-   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#sound(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
    "basis": "s4item: converted arguments / return (gen_s4item.py)"
   },
   "net/minecraft/class_1770.method_31570()Lnet/minecraft/class_3414;": {
    "desc": "()Lnet/minecraft/class_6880;",
    "ops": [],
-   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#sound(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
    "basis": "s4item: converted arguments / return (gen_s4item.py)"
   },
   "net/minecraft/class_1806.method_7997(Ljava/lang/Integer;Lnet/minecraft/class_1937;)Lnet/minecraft/class_22;": {
@@ -407,14 +407,14 @@
   "net/minecraft/class_2102$class_8748.method_53201(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102$class_8748;": {
    "desc": "(Lnet/minecraft/class_6880;)Lnet/minecraft/class_2102$class_8748;",
    "ops": [
-    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#effectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
    ],
    "basis": "s4item: converted arguments / return (gen_s4item.py)"
   },
   "net/minecraft/class_2102$class_8748.method_53202(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102$class_8748;": {
    "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102$class_8748;",
    "ops": [
-    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#effectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
     "keep:1"
    ],
    "basis": "s4item: converted arguments / return (gen_s4item.py)"
@@ -493,7 +493,7 @@
   "net/minecraft/class_5151.method_31570()Lnet/minecraft/class_3414;": {
    "desc": "()Lnet/minecraft/class_6880;",
    "ops": [],
-   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#sound(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEventValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_3414;",
    "basis": "s4item: converted arguments / return (gen_s4item.py)"
   },
   "net/minecraft/class_5282$class_5283.comp_2074()Lnet/minecraft/class_2960;": {
@@ -571,7 +571,7 @@
   "net/minecraft/class_6662.method_38927(Lnet/minecraft/class_1842;)Lnet/minecraft/class_120$class_121;": {
    "desc": "(Lnet/minecraft/class_6880;)Lnet/minecraft/class_120$class_121;",
    "ops": [
-    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#potionHolder(Lnet/minecraft/class_1842;)Lnet/minecraft/class_6880;"
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#potion(Lnet/minecraft/class_1842;)Lnet/minecraft/class_6880;"
    ],
    "basis": "s4item: converted arguments / return (gen_s4item.py)"
   },
@@ -623,14 +623,14 @@
   "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;)V": {
    "desc": "(Lnet/minecraft/class_6880;)V",
    "ops": [
-    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#effectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;"
    ],
    "basis": "s4item: converted arguments (gen_s4item.py)"
   },
   "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;I)V": {
    "desc": "(Lnet/minecraft/class_6880;I)V",
    "ops": [
-    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#effectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
     "keep:1"
    ],
    "basis": "s4item: converted arguments (gen_s4item.py)"
@@ -638,7 +638,7 @@
   "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;II)V": {
    "desc": "(Lnet/minecraft/class_6880;II)V",
    "ops": [
-    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#effectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
     "keep:1",
     "keep:2"
    ],
@@ -647,7 +647,7 @@
   "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;IIZZ)V": {
    "desc": "(Lnet/minecraft/class_6880;IIZZ)V",
    "ops": [
-    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#effectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
     "keep:1",
     "keep:2",
     "keep:3",
@@ -658,7 +658,7 @@
   "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;IIZZZ)V": {
    "desc": "(Lnet/minecraft/class_6880;IIZZZ)V",
    "ops": [
-    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#effectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
     "keep:1",
     "keep:2",
     "keep:3",
@@ -744,14 +744,14 @@
    "old": "method_53201(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102$class_8748;",
    "new": "method_53201(Lnet/minecraft/class_6880;)Lnet/minecraft/class_2102$class_8748;",
    "onlyUnder": "net/minecraft/class_2102$class_8748",
-   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.effect(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
    "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
   },
   {
    "old": "method_53202(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102$class_8748;",
    "new": "method_53202(Lnet/minecraft/class_6880;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102$class_8748;",
    "onlyUnder": "net/minecraft/class_2102$class_8748",
-   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.effect(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
    "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
   },
   {
@@ -779,14 +779,14 @@
    "old": "method_5579()Lnet/minecraft/class_1291;",
    "new": "method_5579()Lnet/minecraft/class_6880;",
    "onlyUnder": "net/minecraft/class_1293",
-   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.effectHolder(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
    "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
   },
   {
    "old": "method_31570()Lnet/minecraft/class_3414;",
    "new": "method_31570()Lnet/minecraft/class_6880;",
    "onlyUnder": "net/minecraft/class_5151",
-   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.soundHolder(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;",
    "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
   },
   {
@@ -912,7 +912,7 @@
    "old": "method_640(Lnet/minecraft/class_1291;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;",
    "new": "method_640(Lnet/minecraft/class_6880;Lnet/minecraft/class_5658;)Lnet/minecraft/class_152$class_153;",
    "onlyUnder": "net/minecraft/class_152$class_153",
-   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.effect(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
    "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
   }
  ]

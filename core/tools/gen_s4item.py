@@ -326,6 +326,7 @@ def main():
 
 RT = "top/dext/centurybridge/step/v1_20_5/rt/"
 HOLDERS = RT + "CbItemHolders"
+SHARED = RT + "CbHolders"  # the step's shared registry value <-> holder pairs
 CODECS = RT + "CbCodecs"
 REGS = HOLDERS
 POTION, EFFECT, ATTRIBUTE, SOUND = "net/minecraft/class_1842", "net/minecraft/class_1291", "net/minecraft/class_1320", "net/minecraft/class_3414"
@@ -335,10 +336,10 @@ LOOT_TABLE, LOOT_FUNCTION, LOOT_CONDITION = "net/minecraft/class_52", "net/minec
 #                                            new->old converter or None for a plain subtype pass,
 #                                            the holder / key argument the new generic type must name)
 CONV = {
-    (POTION, HOLDER): (f"{HOLDERS}#potionHolder", f"{HOLDERS}#potion", POTION),
-    (EFFECT, HOLDER): (f"{HOLDERS}#effectHolder", f"{HOLDERS}#effect", EFFECT),
+    (POTION, HOLDER): (f"{SHARED}#potion", f"{SHARED}#potionValue", POTION),
+    (EFFECT, HOLDER): (f"{SHARED}#mobEffect", f"{SHARED}#mobEffectValue", EFFECT),
     (ATTRIBUTE, HOLDER): (f"{HOLDERS}#attributeHolder", f"{HOLDERS}#attribute", ATTRIBUTE),
-    (SOUND, HOLDER): (f"{HOLDERS}#soundHolder", f"{HOLDERS}#sound", SOUND),
+    (SOUND, HOLDER): (f"{SHARED}#soundEvent", f"{SHARED}#soundEventValue", SOUND),
     (CODEC, MAP_CODEC): (f"{CODECS}#toMapCodec", f"{CODECS}#fromMapCodec", None),
     ("net/minecraft/class_1304", "net/minecraft/class_9274"): (f"{HOLDERS}#slotGroup", "", None),
     ("java/lang/Integer", "net/minecraft/class_9209"): (f"{HOLDERS}#mapId", "", None),
@@ -351,25 +352,26 @@ CONV = {
 KEY_OF = {LOOT_TABLE: f"{HOLDERS}#lootTableKey", LOOT_FUNCTION: f"{HOLDERS}#itemModifierKey",
           LOOT_CONDITION: f"{HOLDERS}#predicateKey"}
 CONV_DESCS = {  # converter -> its (param, return) descriptors
-    "potionHolder": (POTION, HOLDER), "potion": (HOLDER, POTION), "effectHolder": (EFFECT, HOLDER),
-    "effect": (HOLDER, EFFECT), "attributeHolder": (ATTRIBUTE, HOLDER), "attribute": (HOLDER, ATTRIBUTE),
-    "soundHolder": (SOUND, HOLDER), "sound": (HOLDER, SOUND), "toMapCodec": (CODEC, MAP_CODEC),
-    "fromMapCodec": (MAP_CODEC, CODEC), "slotGroup": ("net/minecraft/class_1304", "net/minecraft/class_9274"),
-    "mapId": ("java/lang/Integer", "net/minecraft/class_9209"),
-    "registrationInfo": ("com/mojang/serialization/Lifecycle", "net/minecraft/class_9248"),
-    "lifecycle": ("net/minecraft/class_9248", "com/mojang/serialization/Lifecycle"),
-    "iterable": ("java/util/stream/Stream", "java/lang/Iterable"),
-    "registryBuf": ("net/minecraft/class_2540", "net/minecraft/class_9129"),
-    "access": ("net/minecraft/class_7225$class_7874", "net/minecraft/class_5455"),
-    "lootTableKey": (RESOURCE_LOCATION, RESOURCE_KEY), "itemModifierKey": (RESOURCE_LOCATION, RESOURCE_KEY),
-    "predicateKey": (RESOURCE_LOCATION, RESOURCE_KEY), "location": (RESOURCE_KEY, RESOURCE_LOCATION),
+    f"{SHARED}#potion": (POTION, HOLDER), f"{SHARED}#potionValue": (HOLDER, POTION),
+    f"{SHARED}#mobEffect": (EFFECT, HOLDER), f"{SHARED}#mobEffectValue": (HOLDER, EFFECT),
+    f"{SHARED}#soundEvent": (SOUND, HOLDER), f"{SHARED}#soundEventValue": (HOLDER, SOUND),
+    f"{HOLDERS}#attributeHolder": (ATTRIBUTE, HOLDER), f"{HOLDERS}#attribute": (HOLDER, ATTRIBUTE),
+    f"{CODECS}#toMapCodec": (CODEC, MAP_CODEC), f"{CODECS}#fromMapCodec": (MAP_CODEC, CODEC),
+    f"{HOLDERS}#slotGroup": ("net/minecraft/class_1304", "net/minecraft/class_9274"),
+    f"{HOLDERS}#mapId": ("java/lang/Integer", "net/minecraft/class_9209"),
+    f"{HOLDERS}#registrationInfo": ("com/mojang/serialization/Lifecycle", "net/minecraft/class_9248"),
+    f"{HOLDERS}#lifecycle": ("net/minecraft/class_9248", "com/mojang/serialization/Lifecycle"),
+    f"{HOLDERS}#iterable": ("java/util/stream/Stream", "java/lang/Iterable"),
+    f"{REGS}#registryBuf": ("net/minecraft/class_2540", "net/minecraft/class_9129"),
+    f"{REGS}#access": ("net/minecraft/class_7225$class_7874", "net/minecraft/class_5455"),
+    f"{HOLDERS}#lootTableKey": (RESOURCE_LOCATION, RESOURCE_KEY), f"{HOLDERS}#itemModifierKey": (RESOURCE_LOCATION, RESOURCE_KEY),
+    f"{HOLDERS}#predicateKey": (RESOURCE_LOCATION, RESOURCE_KEY), f"{HOLDERS}#location": (RESOURCE_KEY, RESOURCE_LOCATION),
 }
 
 
 def conv_ref(conv):
-    owner, name = conv.split("#")
-    p, r = CONV_DESCS[name]
-    return f"{owner}#{name}(L{p};)L{r};"
+    p, r = CONV_DESCS[conv]
+    return f"{conv}(L{p};)L{r};"
 
 
 def sig_args(sig):
