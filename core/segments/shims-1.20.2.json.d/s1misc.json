@@ -1122,6 +1122,14 @@
      "call": "top/dext/centurybridge/rt/v1_20_2/CbPacks.openFull(Ltop/dext/centurybridge/rt/v1_20_2/CbLegacyResourcesSupplier;Ljava/lang/String;Lnet/minecraft/class_3288$class_7679;)Lnet/minecraft/class_3262;"
     }
    ]
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbLegacyLerpTo",
+   "requires": [
+    "method_5759(DDDFFIZ)V"
+   ],
+   "synth": []
   }
  ],
  "overrideHooks": [
@@ -1449,6 +1457,33 @@
    "new": "comp_1581()I",
    "onlyUnder": "net/minecraft/class_3272",
    "basis": "PackMetadataSection became a record: getPackFormat() is the packFormat() accessor"
+  },
+  {
+   "old": "method_1158(ILnet/minecraft/class_266;)V",
+   "new": "method_1158(Lnet/minecraft/class_8646;Lnet/minecraft/class_266;)V",
+   "onlyUnder": "net/minecraft/class_269",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbScoreboard.slotId(Lnet/minecraft/class_8646;)I",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "1.20.2 sets display objectives by DisplaySlot; a scoreboard overriding the 1.20.1 slot-number version answers it (same numbering); its super call (the restored 1.20.1 shape) comes back here and falls through to 1.20.2's"
+  },
+  {
+   "old": "method_1189(I)Lnet/minecraft/class_266;",
+   "new": "method_1189(Lnet/minecraft/class_8646;)Lnet/minecraft/class_266;",
+   "onlyUnder": "net/minecraft/class_269",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbScoreboard.slotId(Lnet/minecraft/class_8646;)I",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "1.20.2 reads display objectives by DisplaySlot; a scoreboard overriding the 1.20.1 slot-number version answers it"
+  },
+  {
+   "old": "method_48931(Lnet/minecraft/class_1799;)V",
+   "new": "method_48931(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)V",
+   "onlyUnder": "net/minecraft/class_1735",
+   "args": [
+    0
+   ],
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.20.2 menus call setByPlayer(stack, previous); a slot overriding the 1.20.1 setByPlayer(stack) answers it, and its super call reaches 1.20.2's with the previous stack vanilla passed"
   }
  ],
  "instanceFieldGetters": {

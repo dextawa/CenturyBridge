@@ -88,6 +88,7 @@
   ],
   "client": [
     "CbDisplayRendererOrientation",
+    "CbLerpToLegacy",
     "CbNetClientLevelBridge",
     "CbNetClientPacketListenerBridge",
     "CbNetPlayerListEntryBridge",
