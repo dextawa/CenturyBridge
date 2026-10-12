@@ -290,7 +290,15 @@
     "CbNetPayloadOfRaidsDebugPayload",
     "CbNetPayloadOfStructuresDebugPayload",
     "CbNetPayloadOfVillageSectionsDebugPayload",
-    "CbNetPayloadOfWorldGenAttemptDebugPayload"
+    "CbNetPayloadOfWorldGenAttemptDebugPayload",
+    "CbParticleTypeMixin",
+    "CbParticleBlockAccessor",
+    "CbParticleDustAccessor",
+    "CbParticleTransitionAccessor",
+    "CbParticleItemAccessor",
+    "CbParticleShriekAccessor",
+    "CbParticleVibrationAccessor",
+    "CbParticleScaleAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin",

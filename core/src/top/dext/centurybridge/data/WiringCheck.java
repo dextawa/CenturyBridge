@@ -909,7 +909,13 @@ public final class WiringCheck {
      * wherever they meet a slot of that type -- always the case for a final class.
      */
     private void checkSuperRename(String key, String fac) {
-        String kt = targetName(key);
+        // A key classRenames also sends to a surviving class -- a dead class merged into a vanilla one
+        // (1.20.5: DustParticleOptionsBase into ScalableParticleOptionsBase), its mod subclasses keeping
+        // the old fields and constructor on a facade below that class -- survives as that class: every
+        // reference but the hierarchy names it (the converter's superRename layer runs before its
+        // classRename remapper), so it is the type the facade must be a subtype of.
+        String merged = facade.map(key);
+        String kt = targetName(merged != null && !merged.startsWith("top/dext/") ? merged : key);
         ClassNode kn = stub.get(kt);
         if (kn == null) {
             problems.add("superRename " + key + ": the class is gone on the target -- superRenames only move"

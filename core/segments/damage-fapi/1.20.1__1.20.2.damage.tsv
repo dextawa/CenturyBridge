@@ -238,12 +238,5 @@ call-injected	net/minecraft/class_3218	setAttached	(Lnet/fabricmc/fabric/api/att
 call-injected	net/minecraft/class_3218	hasAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Z	METHOD	method not declared on the owner
 call-injected	net/minecraft/class_3218	removeAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;	METHOD	method not declared on the owner
 call-injected	net/minecraft/class_3218	modifyAttached	(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;	METHOD	method not declared on the owner
-call-injected	net/minecraft/class_2474$class_5124	setReplace	(Z)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
-call-injected	net/minecraft/class_2474$class_5124	forceAddTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
-call-injected	net/minecraft/class_2474$class_5124	remove	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
-call-injected	net/minecraft/class_2474$class_5124	remove	([Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
-call-injected	net/minecraft/class_2474$class_5124	removeAll	(Ljava/util/Collection;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
-call-injected	net/minecraft/class_2474$class_5124	removeAll	(Ljava/util/stream/Stream;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
-call-injected	net/minecraft/class_2474$class_5124	removeTag	(Lnet/minecraft/class_6862;)Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder;	METHOD	method not declared on the owner
 call-injected	net/minecraft/class_2378	addAlias	(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V	METHOD	method not declared on the owner
 call-injected	net/minecraft/class_7475	remove	()Ljava/util/List;	METHOD	method not declared on the owner
