@@ -52,7 +52,11 @@ public final class Chain {
      * such receivers and calls the interface method on any other. A super call to the interface's
      * default method (INVOKESPECIAL, from a mod's own implementation) stays what it is -- redirecting
      * it to a static that calls the method on the receiver would re-enter the implementation's own
-     * override.
+     * override. A call naming a vanilla interface finds its key as an instance redirect does
+     * ({@link #instanceRedirectHome}): on that interface or a supertype of it, which may be a Fabric API
+     * interface injected into it (26.1.1's FabricOrderedSubmitNodeCollector.submitBlockModel called
+     * through OrderedSubmitNodeCollector / SubmitNodeCollector); the static then takes the receiver as
+     * the key's type.
      */
     public final java.util.Map<String, String> interfaceCallRedirects = new java.util.HashMap<>();
     /** GETSTATIC field reads redirected to a same-name field on a runtime class */

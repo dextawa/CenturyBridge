@@ -2944,6 +2944,17 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(key, "instance-redirect");
                             return;
                         }
+                        // an interface call through a vanilla interface, found as an instance redirect is (the
+                        // supertype the key names may be a Fabric API interface injected into it); only
+                        // INVOKEINTERFACE, the super call keeps reaching the default (Chain.interfaceCallRedirects)
+                        String icrHome = op == Opcodes.INVOKEINTERFACE
+                            ? chain.instanceRedirectHome(chain.interfaceCallRedirects, owner, name + desc) : null;
+                        if (icrHome != null) {
+                            ifaceCallRedirects.put(site, chain.interfaceCallRedirects.get(icrHome + "." + name + desc));
+                            emitOwner.put(site, icrHome);
+                            top.dext.centurybridge.data.FullAudit.record(key, "interface-call-redirect");
+                            return;
+                        }
                         String mrn = chain.methodRenames.get(key);
                         if (mrn != null) {
                             mthRenames.put(site, mrn);
