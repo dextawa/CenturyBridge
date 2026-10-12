@@ -44,6 +44,10 @@ public final class JarProcessor {
      * </pre>
      * Arguments whose type differs between the shapes go through the hook's
      * wrap static (new type -> old type); everything else passes through.
+     * A narrowing hook ({@link Chain.OverrideHook#narrow}) instead tests each
+     * such argument against the old type first and, on a value of another
+     * type, takes the fall-through path (super.new(..) or the zero value) as
+     * if the mod had not overridden anything.
      * Descriptors are emitted in the analysis namespace and pass through the
      * same ClassRemapper as the rest of the class, so a facade-renamed old
      * parameter type lands on the facade.
@@ -68,6 +72,24 @@ public final class JarProcessor {
                 return t.getInternalName();
             }
         }
+    }
+
+    /**
+     * The adapter (Chain.lambdaAdapters) for a LambdaMetafactory invokedynamic that builds a functional
+     * interface whose single abstract method changed shape, keyed by the interface it produces, the
+     * SAM name and the erased SAM type it implements; null for any other invokedynamic.
+     */
+    private static Chain.LambdaAdapter lambdaAdapterFor(Chain chain, String name, String desc,
+                                                        org.objectweb.asm.Handle bsm, Object[] args) {
+        if (chain.lambdaAdapters.isEmpty() || !bsm.getOwner().equals("java/lang/invoke/LambdaMetafactory")
+                || args.length < 1 || !(args[0] instanceof org.objectweb.asm.Type sam)) {
+            return null;
+        }
+        org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(desc);
+        if (ret.getSort() != org.objectweb.asm.Type.OBJECT) {
+            return null;
+        }
+        return chain.lambdaAdapters.get(ret.getInternalName() + "." + name + sam.getDescriptor());
     }
 
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName) {
@@ -113,6 +135,20 @@ public final class JarProcessor {
         org.objectweb.asm.Label tryEnd = new org.objectweb.asm.Label();
         org.objectweb.asm.Label handler = new org.objectweb.asm.Label();
         boolean guarded = h.guard != null;
+        // narrowing forward: an argument the release widened reaches the old override only when
+        // vanilla's value is of the old type; any other value goes to super's new shape
+        boolean narrowed = false;
+        if (h.narrow && h.bridgeName == null) {
+            for (int i = 0; i < oa.length; i++) {
+                int src = map[i];
+                if (!na[src].equals(oa[i]) && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
+                    mv.visitVarInsn(Opcodes.ALOAD, slotOf[src]);
+                    mv.visitTypeInsn(Opcodes.INSTANCEOF, oa[i].getInternalName());
+                    mv.visitJumpInsn(Opcodes.IFEQ, fallthrough);
+                    narrowed = true;
+                }
+            }
+        }
         if (guarded) {
             mv.visitVarInsn(Opcodes.ALOAD, 0);
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.guard, "cbEnter", "(Ljava/lang/Object;)Z", false);
@@ -131,6 +167,8 @@ public final class JarProcessor {
                 mv.visitVarInsn(na[src].getOpcode(Opcodes.ILOAD), slotOf[src]);
                 if (!na[src].equals(oa[i]) && h.wrapName != null) {
                     mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.wrapOwner, h.wrapName, h.wrapDesc, false);
+                } else if (!na[src].equals(oa[i]) && h.narrow && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
+                    mv.visitTypeInsn(Opcodes.CHECKCAST, oa[i].getInternalName());
                 }
             }
         }
@@ -160,28 +198,46 @@ public final class JarProcessor {
             mv.visitInsn(Opcodes.ATHROW);
             mv.visitLabel(fallthrough);
             mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 0, new Object[0]);
-            if (superName == null || superName.equals("java/lang/Object")) {
-                // nothing above us declares the new shape: a re-entry here is a no-op
-                if (nr.getSort() != org.objectweb.asm.Type.VOID) {
-                    mv.visitInsn(nr.getSort() == org.objectweb.asm.Type.OBJECT || nr.getSort() == org.objectweb.asm.Type.ARRAY
-                        ? Opcodes.ACONST_NULL : Opcodes.ICONST_0);
-                }
-                mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
-            } else {
-                mv.visitVarInsn(Opcodes.ALOAD, 0);
-                slot = 1;
-                for (org.objectweb.asm.Type t : na) {
-                    mv.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
-                    slot += t.getSize();
-                }
-                mv.visitMethodInsn(Opcodes.INVOKESPECIAL, superName, h.newName, h.newDesc, false);
-                mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
-            }
+            emitFallthrough(mv, h, superName, na, nr);
+        } else if (narrowed) {
+            mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+            mv.visitLabel(fallthrough);
+            mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 0, new Object[0]);
+            emitFallthrough(mv, h, superName, na, nr);
         } else {
             mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
         }
         mv.visitMaxs(slot + 3, slot + 1);
         mv.visitEnd();
+    }
+
+    /**
+     * What the synthesized new shape does when it does not forward (guard re-entry, or a narrowed
+     * argument of another type): super's new shape, or -- nothing above declares it -- the return
+     * type's zero value.
+     */
+    private static void emitFallthrough(MethodVisitor mv, Chain.OverrideHook h, String superName,
+                                        org.objectweb.asm.Type[] na, org.objectweb.asm.Type nr) {
+        if (superName == null || superName.equals("java/lang/Object")) {
+            switch (nr.getSort()) {
+                case org.objectweb.asm.Type.VOID -> { }
+                case org.objectweb.asm.Type.OBJECT, org.objectweb.asm.Type.ARRAY -> mv.visitInsn(Opcodes.ACONST_NULL);
+                case org.objectweb.asm.Type.LONG -> mv.visitInsn(Opcodes.LCONST_0);
+                case org.objectweb.asm.Type.FLOAT -> mv.visitInsn(Opcodes.FCONST_0);
+                case org.objectweb.asm.Type.DOUBLE -> mv.visitInsn(Opcodes.DCONST_0);
+                default -> mv.visitInsn(Opcodes.ICONST_0);
+            }
+            mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
+            return;
+        }
+        mv.visitVarInsn(Opcodes.ALOAD, 0);
+        int slot = 1;
+        for (org.objectweb.asm.Type t : na) {
+            mv.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
+            slot += t.getSize();
+        }
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, superName, h.newName, h.newDesc, false);
+        mv.visitInsn(nr.getOpcode(Opcodes.IRETURN));
     }
 
     /**
@@ -1552,6 +1608,8 @@ public final class JarProcessor {
         // damage is such a call must still go through the rewrite pass -- the
         // fix used to ride along on other damage and silently skip these
         final Set<String> hookCallSites = new HashSet<>();
+        // lambdas built for a functional interface whose SAM changed shape (Chain.lambdaAdapters)
+        final Set<String> lambdaSites = new HashSet<>();
         final Map<String, String> superRedirectSites = new HashMap<>(); // call-site key -> runtime target
         // a call into an owner whose kind flipped (class <-> interface) is damage
         // even when every member it names survives: the rewrite pass must run so
@@ -2120,6 +2178,21 @@ public final class JarProcessor {
                     @Override
                     public void visitInvokeDynamicInsn(String name, String desc,
                             org.objectweb.asm.Handle bsm, Object... bsmArgs) {
+                        Chain.LambdaAdapter la = lambdaAdapterFor(chain, name, desc, bsm, bsmArgs);
+                        if (la != null) {
+                            String lkey = la.iface + "." + la.sam + la.samDesc;
+                            if (bsm.getName().equals("metafactory")) {
+                                lambdaSites.add(lkey);
+                                top.dext.centurybridge.data.FullAudit.record(lkey, "lambda-adapted");
+                            } else {
+                                // altMetafactory: a serializable lambda names its interface in
+                                // $deserializeLambda$, markers and bridges add types -- not ours to swap
+                                top.dext.centurybridge.data.FullAudit.record(lkey,
+                                    "LAMBDA-NOT-ADAPTED[" + chain.sideOf(la.iface) + "] " + bsm.getName());
+                                issues.add(tag + "lambda not adapted (" + bsm.getName()
+                                    + ": serializable / marker / bridge lambda keeps its interface): " + lkey);
+                            }
+                        }
                         // method references to dead/redirected methods hide inside
                         // indy bootstrap arguments -- treat each handle like a call site
                         for (Object arg : bsmArgs) {
@@ -2241,7 +2314,7 @@ public final class JarProcessor {
                 && fldGetters.isEmpty() && instFldGetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
-                && !needSuperRename[0] && adapterApply.isEmpty()
+                && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
                 && declaredOldOverrides.stream().allMatch(declaredNewOverrides::contains)) {
@@ -2408,10 +2481,20 @@ public final class JarProcessor {
 
             @Override
             public void visitEnd() {
+                // one new shape reconnected by two hooks (a covariant override declares the
+                // old shape twice, once per vanilla supertype that had it -- KilledTrigger's
+                // createInstance and SimpleCriterionTrigger's both): the first hook in wiring
+                // order synthesizes it, a second copy would be a duplicate method
+                Set<String> synthesized = new HashSet<>();
                 for (Chain.AdapterHook h : adapterApply) {
                     for (String[] sy : h.synth) {
                         if (declaredShapes.contains(sy[0] + sy[1])) {
                             continue; // the mod already speaks the new shape
+                        }
+                        if (!synthesized.add(sy[0] + sy[1])) {
+                            rpt.notes.add(tag + "adapter-synth skipped (already synthesized by another hook): "
+                                + clsName[0] + "." + sy[0] + sy[1] + " via " + h.adapter);
+                            continue;
                         }
                         if (h.guard != null) {
                             // guarded: the bridge runs on first entry; calling the method again
@@ -2635,6 +2718,18 @@ public final class JarProcessor {
                                 rewritten[i] = new org.objectweb.asm.Handle(
                                     Opcodes.H_INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
                             }
+                        }
+                        Chain.LambdaAdapter la = lambdaAdapterFor(chain, name, desc, bsm, bsmArgs);
+                        if (la != null && bsm.getName().equals("metafactory")) {
+                            // the lambda is spun as the CB interface carrying the old SAM -- every
+                            // bootstrap argument still describes it exactly -- and the adapter turns
+                            // it into the vanilla interface the code expects on the stack
+                            org.objectweb.asm.Type factory = org.objectweb.asm.Type.getMethodType(desc);
+                            String legacyDesc = org.objectweb.asm.Type.getMethodDescriptor(
+                                org.objectweb.asm.Type.getObjectType(la.legacy), factory.getArgumentTypes());
+                            super.visitInvokeDynamicInsn(name, legacyDesc, bsm, rewritten);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, la.adaptOwner, la.adaptName, la.adaptDesc, false);
+                            return;
                         }
                         super.visitInvokeDynamicInsn(name, desc, bsm, rewritten);
                     }
