@@ -12,6 +12,7 @@ public final class CbCriterionRegistry {
         return (T) top.dext.centurybridge.rt.v1_20_2.Statics.method_767(criterion);
     }
 
-    private CbCriterionRegistry() {
+    /** 1.20.1's class had the implicit public constructor */
+    public CbCriterionRegistry() {
     }
 }
