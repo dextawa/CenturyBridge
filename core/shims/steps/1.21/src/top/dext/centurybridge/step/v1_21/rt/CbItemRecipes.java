@@ -187,6 +187,400 @@ public final class CbItemRecipes {
         return out;
     }
 
+    /**
+     * The inverse of {@link #cbRemainingForInput}: 1.21's leftovers for a trimmed crafting input as
+     * 1.20.6's list, one per slot of the grid the input was made from (the input's offset in the grid
+     * placing them; every other slot empty). An input no grid stands behind answers its own list.
+     */
+    public static class_2371<class_1799> cbRemainingForContainer(class_9694 input, class_2371<class_1799> remaining) {
+        if (input == null || remaining == null) {
+            return remaining;
+        }
+        Origin o = ORIGINS.get(input);
+        if (o == null || !(o.container instanceof class_8566 grid) || grid.method_5439() == remaining.size()) {
+            return remaining;
+        }
+        class_2371<class_1799> out = class_2371.method_10213(grid.method_5439(), class_1799.field_8037);
+        for (int y = 0; y < input.method_59992(); y++) {
+            for (int x = 0; x < input.method_59991(); x++) {
+                out.set(x + o.left + (y + o.top) * grid.method_17398(), remaining.get(x + y * input.method_59991()));
+            }
+        }
+        return out;
+    }
+
+    /** cbSingleInput typed as the RecipeInput a 1.21 bridge method takes (the bridge casts it to SingleRecipeInput) */
+    public static class_9695 cbSingleRecipeInput(class_1263 container) {
+        return cbSingleInput(container);
+    }
+
+    /** cbSmithingInput typed as the RecipeInput a 1.21 bridge method takes */
+    public static class_9695 cbSmithingRecipeInput(class_1263 container) {
+        return cbSmithingInput(container);
+    }
+
+    // ---- Recipe, RecipeManager: the input form only the receiver tells ----------------------------
+
+    /** Recipe.matches(Container, Level) (instanceRedirect): the input the recipe's type takes */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static boolean method_8115(net.minecraft.class_1860 recipe, class_1263 container, net.minecraft.class_1937 level) {
+        return recipe.method_8115(cbInputFor(recipe.method_17716(), container), level);
+    }
+
+    /** Recipe.assemble(Container, HolderLookup.Provider) (instanceRedirect) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static class_1799 method_8116(net.minecraft.class_1860 recipe, class_1263 container, net.minecraft.class_7225.class_7874 registries) {
+        return recipe.method_8116(cbInputFor(recipe.method_17716(), container), registries);
+    }
+
+    /**
+     * Recipe.getRemainingItems(Container) (instanceRedirect): one leftover per slot of the container, as
+     * 1.20.6 answered. A 1.20.6 recipe that overrides it (the bridge hook gave its class the adapter)
+     * answers itself, handed the container; any other gets the container's input -- a grid's
+     * CraftingInput, the leftovers put back at the input's offset, else a view of the whole container,
+     * which Recipe's default (the only other implementation 1.21 has) reads slot by slot as 1.20.6's did.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static class_2371<class_1799> method_8111(net.minecraft.class_1860 recipe, class_1263 container) {
+        if (recipe instanceof CbLegacyRemaining legacy) {
+            return legacy.method_8111(container);
+        }
+        if (container instanceof class_8566 grid) {
+            if (recipe instanceof CbLegacyRemaining17704 legacy) {
+                return legacy.method_17704(grid);
+            }
+            if (recipe instanceof CbLegacyRemaining17707 legacy) {
+                return legacy.method_17707(grid);
+            }
+        }
+        class_9695 input = cbRecipeInput(container);
+        class_2371<class_1799> remaining = recipe.method_8111(input);
+        return input instanceof class_9694 crafting ? cbRemainingForContainer(crafting, remaining) : remaining;
+    }
+
+    /** BannerDuplicateRecipe.getRemainingItems(CraftingContainer) (instanceRedirect) */
+    public static class_2371<class_1799> method_17704(net.minecraft.class_1848 recipe, class_8566 grid) {
+        if (recipe instanceof CbLegacyRemaining17704 legacy) {
+            return legacy.method_17704(grid);
+        }
+        class_9694 input = cbCraftingInput(grid);
+        return cbRemainingForContainer(input, recipe.method_17704(input));
+    }
+
+    /** BookCloningRecipe.getRemainingItems(CraftingContainer) (instanceRedirect) */
+    public static class_2371<class_1799> method_17707(net.minecraft.class_1850 recipe, class_8566 grid) {
+        if (recipe instanceof CbLegacyRemaining17707 legacy) {
+            return legacy.method_17707(grid);
+        }
+        class_9694 input = cbCraftingInput(grid);
+        return cbRemainingForContainer(input, recipe.method_17707(input));
+    }
+
+    /** RecipeManager.getRecipeFor(RecipeType, Container, Level) (instanceRedirect) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static java.util.Optional method_8132(net.minecraft.class_1863 manager, class_3956 type, class_1263 container, net.minecraft.class_1937 level) {
+        return manager.method_8132(type, cbInputFor(type, container), level);
+    }
+
+    /** RecipeManager.getRecipeFor(RecipeType, Container, Level, ResourceLocation) (instanceRedirect) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static java.util.Optional method_42299(net.minecraft.class_1863 manager, class_3956 type, class_1263 container, net.minecraft.class_1937 level,
+            net.minecraft.class_2960 last) {
+        return manager.method_42299(type, cbInputFor(type, container), level, last);
+    }
+
+    /** RecipeManager.getRecipesFor(RecipeType, Container, Level) (instanceRedirect) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static List method_17877(net.minecraft.class_1863 manager, class_3956 type, class_1263 container, net.minecraft.class_1937 level) {
+        return manager.method_17877(type, cbInputFor(type, container), level);
+    }
+
+    /**
+     * RecipeManager.getRemainingItemsFor(RecipeType, Container, Level) (instanceRedirect): per slot of the
+     * container. A 1.20.6 manager subclass that overrides it answers itself; any other manager answers
+     * 1.20.6's body ({@link #legacyRemainingFor}), whose lookup and leftovers are the manager's and the
+     * recipe's own (a manager class that overrides 1.21's getRemainingItemsFor without coming from 1.20.6
+     * is answered by that body too).
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static class_2371<class_1799> method_8128(net.minecraft.class_1863 manager, class_3956 type, class_1263 container, net.minecraft.class_1937 level) {
+        if (manager instanceof CbLegacyRemainingFor legacy) {
+            return legacy.method_8128(type, container, level);
+        }
+        return legacyRemainingFor(manager, type, container, level);
+    }
+
+    /**
+     * 1.20.6's RecipeManager.getRemainingItemsFor: the leftovers of the recipe getRecipeFor finds (asked
+     * through this class, so the manager's and the recipe's own implementations answer), else the
+     * container's items as they are, one per slot.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    static class_2371<class_1799> legacyRemainingFor(net.minecraft.class_1863 manager, class_3956 type, class_1263 container, net.minecraft.class_1937 level) {
+        java.util.Optional<net.minecraft.class_8786> found = method_8132(manager, type, container, level);
+        if (found.isPresent()) {
+            return method_8111(found.get().comp_1933(), container);
+        }
+        class_2371<class_1799> out = class_2371.method_10213(container.method_5439(), class_1799.field_8037);
+        for (int i = 0; i < out.size(); i++) {
+            out.set(i, container.method_5438(i));
+        }
+        return out;
+    }
+
+    /**
+     * RecipeManager.createCheck(RecipeType) (staticRedirect: 1.20.6's check took a container, 1.21's an
+     * input): 1.21's check, remembering the recipe type, so that a 1.20.6 caller's container becomes the
+     * input of that type ({@link #method_42303}); vanilla code holding it calls it with 1.21 inputs.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_1863.class_7266 method_42302(class_3956 type) {
+        return new TypedCheck(type, net.minecraft.class_1863.method_42302(type));
+    }
+
+    /** RecipeManager.CachedCheck.getRecipeFor(Container, Level) (instanceRedirect) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static java.util.Optional method_42303(net.minecraft.class_1863.class_7266 check, class_1263 container, net.minecraft.class_1937 level) {
+        if (check instanceof TypedCheck typed) {
+            return typed.check.method_42303(cbInputFor(typed.type, container), level);
+        }
+        if (check instanceof LegacyCheck legacy) {
+            return legacy.legacy.method_42303(container, level);
+        }
+        return check.method_42303(cbRecipeInput(container), level);
+    }
+
+    /** a CachedCheck that knows its recipe type */
+    @SuppressWarnings({"rawtypes"})
+    private record TypedCheck(class_3956 type, net.minecraft.class_1863.class_7266 check) implements net.minecraft.class_1863.class_7266 {
+        @SuppressWarnings("unchecked")
+        @Override
+        public java.util.Optional method_42303(class_9695 input, net.minecraft.class_1937 level) {
+            return check.method_42303(input, level);
+        }
+    }
+
+    /** a 1.20.6 mod's CachedCheck lambda: 1.20.6's single method, getRecipeFor(Container, Level) */
+    @FunctionalInterface
+    public interface CbLegacyCachedCheck {
+        @SuppressWarnings("rawtypes")
+        java.util.Optional method_42303(class_1263 container, net.minecraft.class_1937 level);
+    }
+
+    /** lambdaAdapters: a 1.20.6 CachedCheck lambda as 1.21's check, handed the container the input stands for */
+    public static net.minecraft.class_1863.class_7266 cbCachedCheck(CbLegacyCachedCheck legacy) {
+        return new LegacyCheck(legacy);
+    }
+
+    private record LegacyCheck(CbLegacyCachedCheck legacy) implements net.minecraft.class_1863.class_7266 {
+        @SuppressWarnings("rawtypes")
+        @Override
+        public java.util.Optional method_42303(class_9695 input, net.minecraft.class_1937 level) {
+            return legacy.method_42303(cbContainer(input), level);
+        }
+    }
+
+    // ---- PlaceRecipe ------------------------------------------------------------------------------
+
+    /**
+     * PlaceRecipe.addItemToSlot's first argument (callReshapes): 1.20.6 handed the implementation the
+     * ingredient iterator and the implementation took one ingredient (ServerPlaceRecipe:
+     * ingredients.next()); 1.21 takes the ingredient itself, taken by the caller.
+     */
+    public static Object cbNextIngredient(java.util.Iterator<?> ingredients) {
+        return ingredients.next();
+    }
+
+    /** the override side: the ingredient 1.21 passes as the one-element iterator a 1.20.6 implementation takes it from */
+    public static java.util.Iterator<?> cbIngredientIterator(Object ingredient) {
+        return java.util.List.of(ingredient).iterator();
+    }
+
+    /** a 1.20.6 mod's PlaceRecipe lambda: addItemToSlot(Iterator ingredients, slot, maxAmount, y, x) */
+    @FunctionalInterface
+    public interface CbLegacyPlaceRecipe {
+        @SuppressWarnings("rawtypes")
+        void method_12815(java.util.Iterator ingredients, int slot, int maxAmount, int y, int x);
+    }
+
+    /** lambdaAdapters: a 1.20.6 PlaceRecipe lambda as 1.21's, handed the ingredient in a one-element iterator and x, y in 1.20.6's order */
+    @SuppressWarnings("rawtypes")
+    public static net.minecraft.class_2952 cbPlaceRecipe(CbLegacyPlaceRecipe legacy) {
+        return (item, slot, maxAmount, x, y) -> legacy.method_12815(cbIngredientIterator(item), slot, maxAmount, y, x);
+    }
+
+    // ---- getRemainingItems overrides (bridge hooks) --------------------------------------------
+
+    /** the 1.20.6 Recipe.getRemainingItems(Container) a mod's recipe declares (adapter of the bridge hook) */
+    public interface CbLegacyRemaining {
+        class_2371<class_1799> method_8111(class_1263 container);
+    }
+
+    /** the 1.20.6 BannerDuplicateRecipe.getRemainingItems(CraftingContainer) a mod's subclass overrides */
+    public interface CbLegacyRemaining17704 {
+        class_2371<class_1799> method_17704(class_8566 grid);
+    }
+
+    /** the 1.20.6 BookCloningRecipe.getRemainingItems(CraftingContainer) a mod's subclass overrides */
+    public interface CbLegacyRemaining17707 {
+        class_2371<class_1799> method_17707(class_8566 grid);
+    }
+
+    /** 1.21 asks a 1.20.6 recipe for its leftovers: the mod's answer per slot of the container, as 1.21's list for the input */
+    public static class_2371<class_1799> remaining(CbLegacyRemaining recipe, class_9695 input) {
+        return cbRemainingForInputOf(input, recipe.method_8111(cbContainer(input)));
+    }
+
+    /**
+     * A 1.20.6 answer per slot of the container an input stands for, as 1.21's per slot of the input: a
+     * crafting input's at its offset in the grid ({@link #cbRemainingForInput}); any other input this class
+     * makes reads the container's first slots in order (a furnace's slot 0, the smithing table's 0-2; a
+     * view, all of them), so its entries are the answer's first ones.
+     */
+    static class_2371<class_1799> cbRemainingForInputOf(class_9695 input, class_2371<class_1799> remaining) {
+        if (input instanceof class_9694 crafting) {
+            return cbRemainingForInput(crafting, remaining);
+        }
+        if (input == null || remaining == null || remaining.size() <= input.method_59983()) {
+            return remaining;
+        }
+        class_2371<class_1799> out = class_2371.method_10213(input.method_59983(), class_1799.field_8037);
+        for (int i = 0; i < out.size(); i++) {
+            out.set(i, remaining.get(i));
+        }
+        return out;
+    }
+
+    /** BannerDuplicateRecipe's leftovers, as {@link #remaining} */
+    public static class_2371<class_1799> remaining17704(CbLegacyRemaining17704 recipe, class_9694 input) {
+        return cbRemainingForInput(input, recipe.method_17704(cbCraftingContainer(input)));
+    }
+
+    /** BookCloningRecipe's leftovers, as {@link #remaining} */
+    public static class_2371<class_1799> remaining17707(CbLegacyRemaining17707 recipe, class_9694 input) {
+        return cbRemainingForInput(input, recipe.method_17707(cbCraftingContainer(input)));
+    }
+
+    /** the 1.20.6 RecipeManager.getRemainingItemsFor(RecipeType, Container, Level) a mod's manager overrides */
+    public interface CbLegacyRemainingFor {
+        @SuppressWarnings("rawtypes")
+        class_2371<class_1799> method_8128(class_3956 type, class_1263 container, net.minecraft.class_1937 level);
+    }
+
+    /** 1.21 asks a 1.20.6 recipe manager for leftovers: its answer per slot of the container, as 1.21's list for the input */
+    @SuppressWarnings("rawtypes")
+    public static class_2371<class_1799> remainingFor(CbLegacyRemainingFor manager, class_3956 type, class_9695 input, net.minecraft.class_1937 level) {
+        return cbRemainingForInputOf(input, manager.method_8128(type, cbContainer(input), level));
+    }
+
+    // ---- super calls of 1.20.6 overrides ("superBridge"): super's 1.21 method, through the class's accessors ----
+
+    /** the accessor a recipe class that super-calls Recipe.getRemainingItems(Container) gets: super's getRemainingItems(RecipeInput) */
+    public interface RemainingSuper {
+        class_2371<class_1799> cb$super$method_8111(class_9695 input);
+    }
+
+    /**
+     * A mod recipe's super.getRemainingItems(container): super's 1.21 answer (Recipe's default, the only
+     * implementation of that shape 1.21 has besides the two below) for the container's input -- a grid's
+     * CraftingInput, the leftovers put back at its offset; else a view of the whole container, read slot
+     * by slot as 1.20.6's default read the container.
+     */
+    public static class_2371<class_1799> superRemaining(RemainingSuper self, class_1263 container) {
+        class_9695 input = cbRecipeInput(container);
+        class_2371<class_1799> remaining = self.cb$super$method_8111(input);
+        return input instanceof class_9694 crafting ? cbRemainingForContainer(crafting, remaining) : remaining;
+    }
+
+    /** the accessor a BannerDuplicateRecipe subclass that super-calls getRemainingItems gets */
+    public interface BannerDuplicateSuper {
+        class_2371<class_1799> cb$super$method_17704(class_9694 input);
+    }
+
+    /** a BannerDuplicateRecipe subclass's super.getRemainingItems(grid): super's for the grid's input, per grid slot */
+    public static class_2371<class_1799> superRemaining17704(BannerDuplicateSuper self, class_8566 grid) {
+        class_9694 input = cbCraftingInput(grid);
+        return cbRemainingForContainer(input, self.cb$super$method_17704(input));
+    }
+
+    /** the accessor a BookCloningRecipe subclass that super-calls getRemainingItems gets */
+    public interface BookCloningSuper {
+        class_2371<class_1799> cb$super$method_17707(class_9694 input);
+    }
+
+    /** a BookCloningRecipe subclass's super.getRemainingItems(grid): super's for the grid's input, per grid slot */
+    public static class_2371<class_1799> superRemaining17707(BookCloningSuper self, class_8566 grid) {
+        class_9694 input = cbCraftingInput(grid);
+        return cbRemainingForContainer(input, self.cb$super$method_17707(input));
+    }
+
+    /** the accessors a RecipeManager subclass that super-calls its lookups gets */
+    @SuppressWarnings("rawtypes")
+    public interface RecipeManagerSuper {
+        java.util.Optional cb$super$method_8132(class_3956 type, class_9695 input, net.minecraft.class_1937 level);
+
+        java.util.Optional cb$super$method_42299(class_3956 type, class_9695 input, net.minecraft.class_1937 level, net.minecraft.class_2960 last);
+
+        List cb$super$method_17877(class_3956 type, class_9695 input, net.minecraft.class_1937 level);
+    }
+
+    /** a RecipeManager subclass's super.getRecipeFor(type, container, level): super's for the input of that type */
+    @SuppressWarnings("rawtypes")
+    public static java.util.Optional superRecipeFor(RecipeManagerSuper self, class_3956 type, class_1263 container, net.minecraft.class_1937 level) {
+        return self.cb$super$method_8132(type, cbInputFor(type, container), level);
+    }
+
+    /** a RecipeManager subclass's super.getRecipeFor(type, container, level, last) */
+    @SuppressWarnings("rawtypes")
+    public static java.util.Optional superRecipeForLast(RecipeManagerSuper self, class_3956 type, class_1263 container, net.minecraft.class_1937 level,
+            net.minecraft.class_2960 last) {
+        return self.cb$super$method_42299(type, cbInputFor(type, container), level, last);
+    }
+
+    /** a RecipeManager subclass's super.getRecipesFor(type, container, level) */
+    @SuppressWarnings("rawtypes")
+    public static List superRecipesFor(RecipeManagerSuper self, class_3956 type, class_1263 container, net.minecraft.class_1937 level) {
+        return self.cb$super$method_17877(type, cbInputFor(type, container), level);
+    }
+
+    /**
+     * A RecipeManager subclass's super.getRemainingItemsFor(type, container, level): 1.20.6's body, which
+     * asks the manager itself for the recipe (the subclass's own getRecipeFor, if it has one) and the
+     * recipe for its leftovers ({@link #legacyRemainingFor}).
+     */
+    @SuppressWarnings("rawtypes")
+    public static class_2371<class_1799> superRemainingFor(RecipeManagerSuper self, class_3956 type, class_1263 container, net.minecraft.class_1937 level) {
+        return legacyRemainingFor((net.minecraft.class_1863) self, type, container, level);
+    }
+
+    // ---- ServerPlaceRecipe.moveItemToGrid --------------------------------------------------------
+
+    /**
+     * 1.20.6's moveItemToGrid(Slot, ItemStack) moved one item into the grid slot; 1.21's
+     * moveItemToGrid(Slot, ItemStack, int) moves up to that many and answers how many are left (-1: none
+     * to take). A 1.20.6 call moves one (callReshapes: amount 1, the answer dropped).
+     */
+    public static int cbOne() {
+        return 1;
+    }
+
+    /** the 1.20.6 ServerPlaceRecipe.moveItemToGrid(Slot, ItemStack) a mod's subclass overrides */
+    public interface CbLegacyMoveItem {
+        void method_12824(net.minecraft.class_1735 slot, class_1799 stack);
+    }
+
+    /**
+     * 1.21's addItemToSlot asks a 1.20.6 placer to move up to {@code amount}: 1.20.6's addItemToSlot called
+     * its moveItemToGrid once per item of the amount, whatever each call found, and so does this; nothing is
+     * left to move after that (0 ends 1.21's loop).
+     */
+    public static int moveItems(CbLegacyMoveItem placer, net.minecraft.class_1735 slot, class_1799 stack, int amount) {
+        for (int i = 0; i < amount; i++) {
+            placer.method_12824(slot, stack);
+        }
+        return 0;
+    }
+
     // ---- views -----------------------------------------------------------------------------------
 
     /** a container seen as a RecipeInput: slot i of the container is item i */

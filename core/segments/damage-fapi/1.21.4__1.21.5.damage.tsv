@@ -118,3 +118,8 @@ get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	TRANSFORM_BLOCK
 get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	TRANSFORM_BLOCK_1ST_PERSON_RIGHT	Lnet/minecraft/class_804;	FIELD	field not declared on the owner
 get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	TRANSFORM_BLOCK_1ST_PERSON_LEFT	Lnet/minecraft/class_804;	FIELD	field not declared on the owner
 get-static	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	MODEL_TRANSFORM_BLOCK	Lnet/minecraft/class_809;	FIELD	field not declared on the owner
+call-injected	net/minecraft/class_1092	getModel	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_10200	getWrappedModel	()Lnet/minecraft/class_1087;	CLASS	class gone
+call-injected	net/minecraft/class_1087	isVanillaAdapter	()Z	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1087	emitBlockQuads	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V	METHOD	method not declared on the owner
+call-injected	net/minecraft/class_1087	emitItemQuads	(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V	METHOD	method not declared on the owner
