@@ -15,7 +15,19 @@
     "CbRestWitherBossMixin",
     "CbRestArmadilloMixin",
     "CbRestMobMixin",
-    "CbRestThrownTridentMixin"
+    "CbRestThrownTridentMixin",
+    "CbRestEntityTypeMixin",
+    "CbRestStructureTemplateMixin",
+    "CbRestMapBannerMixin",
+    "CbRestMapItemSavedDataMixin",
+    "CbRestRecAttributeModifierMixin",
+    "CbRestRecMapBannerMixin",
+    "CbRestRecMessageArgumentMessageMixin",
+    "CbRestRecMessageArgumentPartMixin",
+    "CbRestRecGameTestBatchMixin",
+    "CbRestRecTestFunctionMixin",
+    "CbRestRecGameEventMixin",
+    "CbRestRecWeightedEntryWrapperMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",

@@ -48,6 +48,9 @@ import org.objectweb.asm.tree.MethodNode;
  *                 methods it inherits, and in-subclass uses of X's protected members
  *   cbprobe/i/X   for an interface X: an implementation of all its abstract methods and an
  *                 override (with super call) of each default method X declares
+ *   cbprobe/c/X   for an extendable class or interface X: an abstract class under X that overrides
+ *                 nothing, calling X's public and protected methods through itself (this.m(..) in a
+ *                 mod subclass that does not override m names the mod class)
  *
  * The probe is concrete only where 1.20.1 makes that possible (every inherited abstract
  * method resolvable and implementable from another package); otherwise it is declared
@@ -208,13 +211,20 @@ public final class ApiProbe {
                     put(zip, "cbprobe/u/" + mangle(cn.name), use);
                     classes++;
                 }
+                byte[] caller = null;
                 if (is(cn.access, Opcodes.ACC_INTERFACE)) {
                     if (!is(cn.access, Opcodes.ACC_ANNOTATION) && (cn.permittedSubclasses == null || cn.permittedSubclasses.isEmpty())) {
                         put(zip, "cbprobe/i/" + mangle(cn.name), implClass(cn));
                         classes++;
+                        caller = callerClass(cn, true);
                     }
                 } else if (extendable(cn)) {
                     put(zip, "cbprobe/s/" + mangle(cn.name), subClass(cn));
+                    classes++;
+                    caller = callerClass(cn, false);
+                }
+                if (caller != null) {
+                    put(zip, "cbprobe/c/" + mangle(cn.name), caller);
                     classes++;
                 }
             }
@@ -418,27 +428,26 @@ public final class ApiProbe {
             mv.visitEnd();
             record(self, m.name + m.desc, "implement-inherited", e.getKey().substring(0, e.getKey().indexOf(' ')), m.name, m.desc);
         }
-        // protected members, used the only way a mod can: from inside a subclass, on itself
+        // protected members, used the only way a mod can: from inside a subclass. A protected static
+        // here, qualified by X (X.m(..)); protected instance methods from cbprobe/c/X, which overrides
+        // nothing -- here this.m(..) would reach this class's own override. Fields on itself: this
+        // class declares none, so the reference resolves to X's
         int n = 0;
         for (MethodNode m : cn.methods) {
-            if (skipMethod(m) || !is(m.access, Opcodes.ACC_PROTECTED) || m.name.equals("<init>")) {
+            if (skipMethod(m) || !is(m.access, Opcodes.ACC_PROTECTED) || !is(m.access, Opcodes.ACC_STATIC)) {
                 continue;
             }
-            boolean st = is(m.access, Opcodes.ACC_STATIC);
             String probe = "p" + (n++);
             MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, probe, "()V", null, null);
             mv.visitCode();
             marker(mv);
-            if (!st) {
-                mv.visitVarInsn(Opcodes.ALOAD, 0);
-            }
             pushDefaults(mv, Type.getArgumentTypes(m.desc));
-            mv.visitMethodInsn(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKEVIRTUAL, st ? cn.name : self, m.name, m.desc, false);
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, cn.name, m.name, m.desc, false);
             popResult(mv, Type.getReturnType(m.desc));
             mv.visitInsn(Opcodes.RETURN);
             mv.visitMaxs(0, 0);
             mv.visitEnd();
-            record(self, probe + "()V", st ? "call-static-protected" : "call-protected", cn.name, m.name, m.desc);
+            record(self, probe + "()V", "call-static-protected", cn.name, m.name, m.desc);
         }
         for (FieldNode f : cn.fields) {
             if (!is(f.access, Opcodes.ACC_PROTECTED) || is(f.access, Opcodes.ACC_SYNTHETIC)) {
@@ -473,6 +482,57 @@ public final class ApiProbe {
                 mv.visitEnd();
                 record(self, probe + "()V", st ? "put-static-protected" : "put-protected", cn.name, f.name, f.desc);
             }
+        }
+        cw.visitEnd();
+        return cw.toByteArray();
+    }
+
+    /**
+     * cbprobe/c/X: an abstract class under X that overrides nothing, calling X's methods through itself
+     * the way a mod subclass that does not override them does -- javac names the mod class in an
+     * unqualified call (JLS 13.1), and the JVM resolves it up to X. cbprobe/s/X overrides every
+     * overridable method, so its own this.m(..) reaches its own override and could never see a method X
+     * changed: a mod dispenser's dispenseFrom calling this.getDispenseMethod(stack), which 1.20.5
+     * reshaped, was measured nowhere. For an interface X the class implements it, and calls X's
+     * instance methods (default or abstract) through itself.
+     *
+     * Usages: call-protected for a protected instance method, call-inherited for a public one,
+     * call-static-inherited for a static one (the call / call-static / call-static-protected rows of
+     * the same members name X itself).
+     */
+    private byte[] callerClass(ClassNode cn, boolean itf) {
+        String self = "cbprobe/c/" + mangle(cn.name);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        cw.visit(Opcodes.V17, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER | Opcodes.ACC_ABSTRACT, self, null,
+            itf ? "java/lang/Object" : cn.name, itf ? new String[] {cn.name} : null);
+        int n = 0;
+        for (MethodNode m : cn.methods) {
+            if (skipMethod(m) || m.name.startsWith("<") || !memberReachable(m.access)
+                    || !is(m.access, Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) {
+                continue;
+            }
+            boolean st = is(m.access, Opcodes.ACC_STATIC);
+            if (itf && (st || !is(m.access, Opcodes.ACC_PUBLIC))) {
+                continue; // an interface's static is not inherited; its methods are public
+            }
+            String probe = "c" + (n++);
+            MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, probe, "()V", null, null);
+            mv.visitCode();
+            marker(mv);
+            if (!st) {
+                mv.visitVarInsn(Opcodes.ALOAD, 0);
+            }
+            pushDefaults(mv, Type.getArgumentTypes(m.desc));
+            mv.visitMethodInsn(st ? Opcodes.INVOKESTATIC : Opcodes.INVOKEVIRTUAL, self, m.name, m.desc, false);
+            popResult(mv, Type.getReturnType(m.desc));
+            mv.visitInsn(Opcodes.RETURN);
+            mv.visitMaxs(0, 0);
+            mv.visitEnd();
+            boolean prot = is(m.access, Opcodes.ACC_PROTECTED);
+            record(self, probe + "()V", st ? "call-static-inherited" : prot ? "call-protected" : "call-inherited", cn.name, m.name, m.desc);
+        }
+        if (n == 0) {
+            return null;
         }
         cw.visitEnd();
         return cw.toByteArray();

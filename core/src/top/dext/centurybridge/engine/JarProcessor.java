@@ -696,6 +696,135 @@ public final class JarProcessor {
     }
 
     /**
+     * Method references to reshaped members ({@link Chain#callReshapes}). A LambdaMetafactory
+     * invokedynamic whose implementation handle names such a member -- {@code manager::byKey},
+     * {@code RecipeManager::getRecipes}, {@code ChatComponent::getRecentChat} -- calls the member with
+     * the old descriptor and hands its answer to the functional interface untouched, past every
+     * conversion a call site gets: a reshape that changed the descriptor fails to link at the
+     * lambda's first use (BootstrapMethodError), a same-shape one (generic drift) hands the mod the
+     * new type arguments' values (the ClassCastException comes where the mod reads them). The handle
+     * is pointed at a private static forwarder of the same class that makes that very call -- the
+     * receiver first for an instance member, then the arguments -- and returns its answer; the call
+     * pass that runs next ({@link #rewriteCalls}) reshapes and converts that call like any other,
+     * with the same resolution (an inherited member named through a mod class included). The lambda
+     * keeps its interface, its erased and instantiated types and its captured values; the forwarder
+     * is straight-line code, so no frames. A serializable lambda (altMetafactory, FLAG_SERIALIZABLE)
+     * is left alone and reported: its $deserializeLambda$ matches the implementation handle by name.
+     */
+    private static byte[] rewriteReshapedMethodRefs(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
+        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+        if (!raw.contains("java/lang/invoke/LambdaMetafactory")) {
+            return bytes;
+        }
+        boolean any = false;
+        for (String n : chain.callReshapeNames) {
+            if (raw.contains(n)) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return bytes;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new ClassReader(bytes).accept(cn, 0);
+        boolean itf = (cn.access & Opcodes.ACC_INTERFACE) != 0;
+        Set<String> names = new HashSet<>();
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            names.add(m.name);
+        }
+        Map<String, org.objectweb.asm.tree.MethodNode> forwarders = new LinkedHashMap<>();
+        int rewrites = 0;
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if (m.instructions == null) {
+                continue;
+            }
+            for (org.objectweb.asm.tree.AbstractInsnNode in = m.instructions.getFirst(); in != null; in = in.getNext()) {
+                if (!(in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode idin)
+                        || !idin.bsm.getOwner().equals("java/lang/invoke/LambdaMetafactory")
+                        || idin.bsmArgs.length < 3 || !(idin.bsmArgs[1] instanceof org.objectweb.asm.Handle h)) {
+                    continue;
+                }
+                int kind = h.getTag();
+                if ((kind != Opcodes.H_INVOKEVIRTUAL && kind != Opcodes.H_INVOKEINTERFACE && kind != Opcodes.H_INVOKESTATIC)
+                        || h.getName().startsWith("<")) {
+                    continue;
+                }
+                String nameDesc = h.getName() + h.getDesc();
+                String home = chain.instanceRedirectHome(chain.callReshapeIndex, h.getOwner(), nameDesc);
+                if (home == null && layer.decls.containsKey(h.getOwner())) {
+                    home = inheritedReshapeHome(h.getOwner(), nameDesc, layer, chain);
+                }
+                if (home == null) {
+                    continue;
+                }
+                String key = home + "." + nameDesc;
+                if (idin.bsm.getName().equals("altMetafactory") && idin.bsmArgs.length > 3
+                        && idin.bsmArgs[3] instanceof Integer flags && (flags & 1) != 0) {
+                    rpt.issues.add(tag + "method reference to a reshaped member left as it was (serializable lambda): "
+                        + key + " in " + cn.name);
+                    top.dext.centurybridge.data.FullAudit.record(key, "METHODREF-NOT-RESHAPED[" + chain.sideOf(home) + "] serializable");
+                    continue;
+                }
+                String fk = kind + " " + h.getOwner() + "." + nameDesc;
+                org.objectweb.asm.tree.MethodNode f = forwarders.get(fk);
+                if (f == null) {
+                    String name = "cb$ref$" + h.getName();
+                    for (int i = 1; names.contains(name); i++) {
+                        name = "cb$ref$" + h.getName() + "$" + i;
+                    }
+                    names.add(name);
+                    f = methodRefForwarder(h, name);
+                    forwarders.put(fk, f);
+                }
+                idin.bsmArgs[1] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, cn.name, f.name, f.desc, itf);
+                rewrites++;
+                top.dext.centurybridge.data.FullAudit.record(key, "call-reshape-methodref");
+            }
+        }
+        if (rewrites == 0) {
+            return bytes;
+        }
+        cn.methods.addAll(forwarders.values());
+        rpt.notes.add(tag + "method references to reshaped members forwarded: " + rewrites + " in " + cn.name);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
+    }
+
+    /** the forwarder {@link #rewriteReshapedMethodRefs} points a method reference at: the very call, receiver first */
+    private static org.objectweb.asm.tree.MethodNode methodRefForwarder(org.objectweb.asm.Handle h, String name) {
+        boolean statik = h.getTag() == Opcodes.H_INVOKESTATIC;
+        org.objectweb.asm.Type[] params = org.objectweb.asm.Type.getArgumentTypes(h.getDesc());
+        org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(h.getDesc());
+        StringBuilder d = new StringBuilder("(");
+        if (!statik) {
+            d.append('L').append(h.getOwner()).append(';');
+        }
+        for (org.objectweb.asm.Type p : params) {
+            d.append(p.getDescriptor());
+        }
+        d.append(')').append(ret.getDescriptor());
+        org.objectweb.asm.tree.MethodNode f = new org.objectweb.asm.tree.MethodNode(
+            Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, name, d.toString(), null, null);
+        int slot = 0;
+        if (!statik) {
+            f.instructions.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+            slot = 1;
+        }
+        for (org.objectweb.asm.Type p : params) {
+            f.instructions.add(new org.objectweb.asm.tree.VarInsnNode(p.getOpcode(Opcodes.ILOAD), slot));
+            slot += p.getSize();
+        }
+        int op = statik ? Opcodes.INVOKESTATIC : h.getTag() == Opcodes.H_INVOKEINTERFACE ? Opcodes.INVOKEINTERFACE : Opcodes.INVOKEVIRTUAL;
+        f.instructions.add(new org.objectweb.asm.tree.MethodInsnNode(op, h.getOwner(), h.getName(), h.getDesc(), h.isInterface()));
+        f.instructions.add(new org.objectweb.asm.tree.InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+        f.maxLocals = slot;
+        f.maxStack = Math.max(slot, ret.getSize());
+        return f;
+    }
+
+    /**
      * Method calls whose descriptor changed at this step ({@link Chain#callReshapes}): every call
      * site whose JVM-resolved home is a reshaped key -- whatever its opcode, a mod's own
      * super.m(..) included, so the call keeps its dispatch -- has its arguments re-pushed per the
@@ -873,6 +1002,231 @@ public final class JarProcessor {
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
         cn.accept(cw);
         return cw.toByteArray();
+    }
+
+    /**
+     * The lambda side of {@link Chain#convertHooks}: a LambdaMetafactory invokedynamic that builds a
+     * hooked functional interface (RecipeManager.CachedCheck, RecipeShownListener) from a lambda or a
+     * method reference. Vanilla calls the interface method with W's values and reads W's from its
+     * answer; the lambda was written for V's, and no class of the mod declares the method for
+     * {@link #rewriteConvertHooks} to bridge. The implementation handle is pointed at a private static
+     * forwarder of the same class that takes what LambdaMetafactory hands the implementation (the
+     * captured values, then the interface method's arguments), runs the hook's converters on the
+     * arguments, calls the implementation the way LambdaMetafactory would, and converts its answer:
+     * <pre>
+     *   f(c0..ck, a0..an):  return (R) ret(impl(c0..ck, (P0) arg0(a0) .. (Pn) argn(an)));
+     * </pre>
+     * Casts stand where LambdaMetafactory casts (reference adaptations) and where a converter's
+     * erased answer meets the implementation's own parameter type. The lambda keeps its interface,
+     * erased and instantiated types and captured values. Calls of the method made by the mod itself
+     * still convert on the call side ({@link #rewriteCalls}); the converters are adaptive and undo
+     * each other, so the forwarder sees V's values either way. Left as they were, and reported: a
+     * serializable lambda (its $deserializeLambda$ matches the implementation handle by name), a
+     * constructor reference, a hook whose converter takes the mod object (the receiver here is the
+     * lambda itself), and a primitive adaptation (LambdaMetafactory would box or unbox there). Runs
+     * before the method-reference and call passes, so a method reference to a reshaped member as the
+     * implementation is reshaped inside the forwarder like any call.
+     */
+    private static byte[] rewriteConvertHookLambdas(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
+        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+        if (!raw.contains("java/lang/invoke/LambdaMetafactory")) {
+            return bytes;
+        }
+        boolean any = false;
+        for (List<Chain.ConvertHook> hs : chain.convertHooks.values()) {
+            if (raw.contains(hs.get(0).name)) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return bytes;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new ClassReader(bytes).accept(cn, 0);
+        boolean itf = (cn.access & Opcodes.ACC_INTERFACE) != 0;
+        Set<String> names = new HashSet<>();
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            names.add(m.name);
+        }
+        Map<String, org.objectweb.asm.tree.MethodNode> forwarders = new LinkedHashMap<>();
+        int rewrites = 0;
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if (m.instructions == null) {
+                continue;
+            }
+            for (org.objectweb.asm.tree.AbstractInsnNode in = m.instructions.getFirst(); in != null; in = in.getNext()) {
+                if (!(in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode idin)
+                        || !idin.bsm.getOwner().equals("java/lang/invoke/LambdaMetafactory") || idin.bsmArgs.length < 3
+                        || !(idin.bsmArgs[0] instanceof org.objectweb.asm.Type sam)
+                        || !(idin.bsmArgs[1] instanceof org.objectweb.asm.Handle impl)
+                        || !(idin.bsmArgs[2] instanceof org.objectweb.asm.Type inst)) {
+                    continue;
+                }
+                org.objectweb.asm.Type iface = org.objectweb.asm.Type.getReturnType(idin.desc);
+                List<Chain.ConvertHook> hs = iface.getSort() == org.objectweb.asm.Type.OBJECT
+                    ? chain.convertHooks.get(idin.name + sam.getDescriptor()) : null;
+                if (hs == null) {
+                    continue;
+                }
+                Chain.ConvertHook h = null;
+                for (Chain.ConvertHook x : hs) {
+                    if (isUnder(null, new String[] {iface.getInternalName()}, x.under, layer, chain)) {
+                        h = x;
+                        break;
+                    }
+                }
+                if (h == null) {
+                    continue;
+                }
+                String key = h.under + "." + h.name + h.desc;
+                String why = hookLambdaBlocker(idin, impl, inst, h);
+                if (why != null) {
+                    rpt.issues.add(tag + "lambda of a convert-hooked interface left as it was (" + why + "): " + key + " in " + cn.name);
+                    top.dext.centurybridge.data.FullAudit.record(key, "LAMBDA-NOT-CONVERTED[" + chain.sideOf(h.under) + "] " + why);
+                    continue;
+                }
+                String fk = key + " " + impl + " " + idin.desc + " " + inst.getDescriptor();
+                org.objectweb.asm.tree.MethodNode f = forwarders.get(fk);
+                if (f == null) {
+                    String name = "cb$lambda$" + h.name;
+                    for (int i = 1; names.contains(name); i++) {
+                        name = "cb$lambda$" + h.name + "$" + i;
+                    }
+                    names.add(name);
+                    f = hookLambdaForwarder(name, idin.desc, inst, impl, h);
+                    forwarders.put(fk, f);
+                }
+                idin.bsmArgs[1] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, cn.name, f.name, f.desc, itf);
+                rewrites++;
+                top.dext.centurybridge.data.FullAudit.record(key, "convert-hooked-lambda");
+            }
+        }
+        if (rewrites == 0) {
+            return bytes;
+        }
+        cn.methods.addAll(forwarders.values());
+        rpt.notes.add(tag + "convert-hooked lambdas: " + rewrites + " in " + cn.name);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
+    }
+
+    /** the parameter types LambdaMetafactory passes the implementation, the receiver first for an instance method */
+    private static org.objectweb.asm.Type[] implInvocationTypes(org.objectweb.asm.Handle impl) {
+        org.objectweb.asm.Type[] p = org.objectweb.asm.Type.getArgumentTypes(impl.getDesc());
+        if (impl.getTag() == Opcodes.H_INVOKESTATIC) {
+            return p;
+        }
+        org.objectweb.asm.Type[] out = new org.objectweb.asm.Type[p.length + 1];
+        out[0] = org.objectweb.asm.Type.getObjectType(impl.getOwner());
+        System.arraycopy(p, 0, out, 1, p.length);
+        return out;
+    }
+
+    /** why {@link #rewriteConvertHookLambdas} cannot forward this lambda, or null */
+    private static String hookLambdaBlocker(org.objectweb.asm.tree.InvokeDynamicInsnNode idin, org.objectweb.asm.Handle impl,
+                                            org.objectweb.asm.Type inst, Chain.ConvertHook h) {
+        if (idin.bsm.getName().equals("altMetafactory") && idin.bsmArgs.length > 3
+                && idin.bsmArgs[3] instanceof Integer flags && (flags & 1) != 0) {
+            return "serializable";
+        }
+        int kind = impl.getTag();
+        if (kind != Opcodes.H_INVOKESTATIC && kind != Opcodes.H_INVOKEVIRTUAL && kind != Opcodes.H_INVOKEINTERFACE
+                && kind != Opcodes.H_INVOKESPECIAL) {
+            return "constructor reference";
+        }
+        for (String[] a : h.args) {
+            if (a != null && Chain.takesReceiver(a)) {
+                return "converter takes the mod object";
+            }
+        }
+        if (h.ret != null && Chain.takesReceiver(h.ret)) {
+            return "converter takes the mod object";
+        }
+        org.objectweb.asm.Type[] cap = org.objectweb.asm.Type.getArgumentTypes(idin.desc);
+        org.objectweb.asm.Type[] samArgs = inst.getArgumentTypes();
+        org.objectweb.asm.Type[] implTypes = implInvocationTypes(impl);
+        if (cap.length + samArgs.length != implTypes.length) {
+            return "arity";
+        }
+        for (int j = 0; j < implTypes.length; j++) {
+            org.objectweb.asm.Type from = j < cap.length ? cap[j] : samArgs[j - cap.length];
+            if (!from.equals(implTypes[j]) && (isPrimitive(from) || isPrimitive(implTypes[j]))) {
+                return "primitive adaptation";
+            }
+        }
+        org.objectweb.asm.Type ir = org.objectweb.asm.Type.getReturnType(impl.getDesc());
+        org.objectweb.asm.Type sr = inst.getReturnType();
+        if (sr.getSort() != org.objectweb.asm.Type.VOID && !sr.equals(ir) && (isPrimitive(sr) || isPrimitive(ir))) {
+            return "primitive adaptation";
+        }
+        return null;
+    }
+
+    private static boolean isPrimitive(org.objectweb.asm.Type t) {
+        return t.getSort() != org.objectweb.asm.Type.OBJECT && t.getSort() != org.objectweb.asm.Type.ARRAY;
+    }
+
+    /** a cast where a reference value of type {@code have} goes where {@code want} is taken (none to Object or to itself) */
+    private static void castTo(org.objectweb.asm.tree.InsnList in, org.objectweb.asm.Type have, org.objectweb.asm.Type want) {
+        if (!isPrimitive(want) && !want.equals(have) && !want.getDescriptor().equals("Ljava/lang/Object;")) {
+            in.add(new org.objectweb.asm.tree.TypeInsnNode(Opcodes.CHECKCAST, want.getSort() == org.objectweb.asm.Type.ARRAY
+                ? want.getDescriptor() : want.getInternalName()));
+        }
+    }
+
+    /** the forwarder {@link #rewriteConvertHookLambdas} points a hooked lambda at */
+    private static org.objectweb.asm.tree.MethodNode hookLambdaForwarder(String name, String indyDesc, org.objectweb.asm.Type inst,
+                                                                         org.objectweb.asm.Handle impl, Chain.ConvertHook h) {
+        org.objectweb.asm.Type[] cap = org.objectweb.asm.Type.getArgumentTypes(indyDesc);
+        org.objectweb.asm.Type[] samArgs = inst.getArgumentTypes();
+        org.objectweb.asm.Type samRet = inst.getReturnType();
+        org.objectweb.asm.Type[] all = new org.objectweb.asm.Type[cap.length + samArgs.length];
+        System.arraycopy(cap, 0, all, 0, cap.length);
+        System.arraycopy(samArgs, 0, all, cap.length, samArgs.length);
+        org.objectweb.asm.tree.MethodNode f = new org.objectweb.asm.tree.MethodNode(
+            Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, name,
+            org.objectweb.asm.Type.getMethodDescriptor(samRet, all), null, null);
+        org.objectweb.asm.tree.InsnList in = f.instructions;
+        org.objectweb.asm.Type[] implTypes = implInvocationTypes(impl);
+        org.objectweb.asm.Type[] hookParams = org.objectweb.asm.Type.getArgumentTypes(h.desc);
+        int slot = 0;
+        for (int j = 0; j < all.length; j++) {
+            in.add(new org.objectweb.asm.tree.VarInsnNode(all[j].getOpcode(Opcodes.ILOAD), slot));
+            slot += all[j].getSize();
+            int i = j - cap.length;
+            org.objectweb.asm.Type have = all[j];
+            if (i >= 0 && h.args[i] != null) {
+                in.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.args[i][0], h.args[i][1], h.args[i][2], false));
+                have = hookParams[i];
+            }
+            castTo(in, have, implTypes[j]);
+        }
+        int op = switch (impl.getTag()) {
+            case Opcodes.H_INVOKESTATIC -> Opcodes.INVOKESTATIC;
+            case Opcodes.H_INVOKEINTERFACE -> Opcodes.INVOKEINTERFACE;
+            case Opcodes.H_INVOKESPECIAL -> Opcodes.INVOKESPECIAL;
+            default -> Opcodes.INVOKEVIRTUAL;
+        };
+        in.add(new org.objectweb.asm.tree.MethodInsnNode(op, impl.getOwner(), impl.getName(), impl.getDesc(), impl.isInterface()));
+        org.objectweb.asm.Type implRet = org.objectweb.asm.Type.getReturnType(impl.getDesc());
+        if (samRet.getSort() == org.objectweb.asm.Type.VOID) {
+            if (implRet.getSort() != org.objectweb.asm.Type.VOID) {
+                in.add(new org.objectweb.asm.tree.InsnNode(implRet.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP));
+            }
+        } else if (h.ret != null) {
+            org.objectweb.asm.Type r = org.objectweb.asm.Type.getReturnType(h.desc);
+            castTo(in, implRet, r);
+            in.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.ret[0], h.ret[1], h.ret[2], false));
+            castTo(in, r, samRet);
+        } else {
+            castTo(in, implRet, samRet);
+        }
+        in.add(new org.objectweb.asm.tree.InsnNode(samRet.getOpcode(Opcodes.IRETURN)));
+        f.maxLocals = slot;
+        f.maxStack = slot + 2;
+        return f;
     }
 
     /** the bridge {@link #rewriteConvertHooks} puts where the mod's method was */
@@ -1186,18 +1540,22 @@ public final class JarProcessor {
      * where the JVM finds it (1.20.2's ChangeOverTimeBlock.onRandomTick
      * reached as this.onRandomTick in a mod's copper block): with the chain
      * given, that interface answers instead, so the wiring keyed on it --
-     * rename, redirect, reshape -- applies to the call as well. Fields are
-     * resolved through the superclass chain only.
+     * rename, redirect, reshape -- applies to the call as well. So it does when
+     * the superclass chain leaves the jar into the JDK (a mod class extending
+     * Object, Record or Enum that implements a vanilla interface: this.detect(..)
+     * in a mod's PlayerDetector), as a JDK class declares no vanilla member; a
+     * chain leaving into a library keeps null, as the library's own members may
+     * answer. Fields are resolved through the superclass chain only.
      */
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer, Chain chain) {
         String inh = inheritedVanillaOwner(owner, member, layer);
         int paren = member.indexOf('(');
-        if (inh == null || chain == null || paren < 0) {
+        if (chain == null || paren < 0 || inh == null && !leavesIntoJdk(owner, member, layer)) {
             return inh;
         }
         String name = member.substring(0, paren);
         String desc = member.substring(paren);
-        if (chain.sourceDeclarer(name, desc, List.of(inh)) != null) {
+        if (inh != null && chain.sourceDeclarer(name, desc, List.of(inh)) != null) {
             return inh;
         }
         // the vanilla interfaces the jar's classes on the way implement (through the jar's own interfaces too)
@@ -1244,6 +1602,29 @@ public final class JarProcessor {
 
     private static String clsName0(byte[] bytes) {
         return new ClassReader(bytes).getClassName();
+    }
+
+    /**
+     * Whether the superclass chain from a class of this jar layer reaches a JDK class with no class of
+     * the layer on the way declaring the member (the walk of {@link #inheritedVanillaOwner(String, String,
+     * LayerIndex)} ending outside the layer in java/).
+     */
+    private static boolean leavesIntoJdk(String owner, String member, LayerIndex layer) {
+        String cur = owner;
+        for (int hops = 0; cur != null && hops < 64; hops++) {
+            if (cur.startsWith("net/minecraft/")) {
+                return false;
+            }
+            Set<String> d = layer.decls.get(cur);
+            if (d == null) {
+                return cur.startsWith("java/");
+            }
+            if (d.contains(member)) {
+                return false;
+            }
+            cur = layer.superOf.get(cur);
+        }
+        return false;
     }
 
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
@@ -1921,7 +2302,17 @@ public final class JarProcessor {
             ctorChanged = b2 != bytes;
             bytes = b2;
         }
+        if (!chain.convertHooks.isEmpty()) {
+            // hooked lambdas first: their forwarders call the implementation, a call site for the passes below
+            byte[] b7 = rewriteConvertHookLambdas(bytes, chain, layer, rpt, tag);
+            ctorChanged |= b7 != bytes;
+            bytes = b7;
+        }
         if (!chain.callReshapes.isEmpty()) {
+            // method references first: their forwarders are call sites for the call pass
+            byte[] b6 = rewriteReshapedMethodRefs(bytes, chain, layer, rpt, tag);
+            ctorChanged |= b6 != bytes;
+            bytes = b6;
             byte[] b3 = rewriteCalls(bytes, chain, layer, rpt, tag);
             ctorChanged |= b3 != bytes;
             bytes = b3;

@@ -389,7 +389,7 @@ def main():
         # a call: the new shape's arguments from the old call's
         fits = []
         for c, m in shapes_w:
-            if name != "<init>" and bool(m.access & ACC_STATIC) != (usage in ("call-static", "call-static-protected")):
+            if name != "<init>" and bool(m.access & ACC_STATIC) != (usage in ("call-static", "call-static-protected", "call-static-inherited")):
                 fits.append((c, m, None, "static-ness changed"))
                 continue
             na, nr = split_args(m.desc)
