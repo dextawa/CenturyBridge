@@ -178,5 +178,4 @@ call-injected	net/minecraft/class_10090	getDataOrDefault	(Lnet/fabricmc/fabric/a
 call-injected	net/minecraft/class_10090$class_10091	getDataOrDefault	(Lnet/fabricmc/fabric/api/client/rendering/v1/RenderStateDataKey;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
 call-injected	net/minecraft/class_10444	getDataOrDefault	(Lnet/fabricmc/fabric/api/client/rendering/v1/RenderStateDataKey;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
 call-injected	net/minecraft/class_10444$class_10446	getDataOrDefault	(Lnet/fabricmc/fabric/api/client/rendering/v1/RenderStateDataKey;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
-call-injected	net/minecraft/class_8790	getRecipeIdentifier	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;	METHOD	method not declared on the owner
 call-injected	net/minecraft/class_4724$class_7774	spriteFinder	()Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;	CLASS	class gone
