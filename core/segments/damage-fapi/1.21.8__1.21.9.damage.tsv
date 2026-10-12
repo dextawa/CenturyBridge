@@ -1,0 +1,151 @@
+usage	owner	name	desc	kinds	w
+call	net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin$DataLoader	load	(Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD	method load(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public abstract
+lambda	net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin$DataLoader	load	(Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	LAMBDA	method load(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public abstract
+implement-interface	net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin$DataLoader			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBakedItemModel	method_65584	(Lnet/minecraft/class_10444;Lnet/minecraft/class_1799;Lnet/minecraft/class_10442;Lnet/minecraft/class_811;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)V	METHOD	method method_65584(Lnet/minecraft/class_10444;Lnet/minecraft/class_1799;Lnet/minecraft/class_10442;Lnet/minecraft/class_811;Lnet/minecraft/class_638;Lnet/minecraft/class_11566;I)V public
+override+super	net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBakedItemModel	method_65584	(Lnet/minecraft/class_10444;Lnet/minecraft/class_1799;Lnet/minecraft/class_10442;Lnet/minecraft/class_811;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)V	METHOD,ORPHAN	method method_65584(Lnet/minecraft/class_10444;Lnet/minecraft/class_1799;Lnet/minecraft/class_10442;Lnet/minecraft/class_811;Lnet/minecraft/class_638;Lnet/minecraft/class_11566;I)V public
+implement-interface	net/fabricmc/fabric/api/client/particle/v1/FabricSpriteProvider			ABSTRACT	class public abstract interface extends java/lang/Object
+call-static	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer	renderPart	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_3879;Lnet/minecraft/class_2960;)V	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer	render	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V	METHOD	method render(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V public abstract
+lambda	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer	render	(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V	LAMBDA	method render(Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;Lnet/minecraft/class_1799;Lnet/minecraft/class_10034;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V public abstract
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/ArmorRenderer			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$CloudRenderer	render	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$CloudRenderer			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$SkyRenderer	render	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$SkyRenderer			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$WeatherRenderer	render	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$WeatherRenderer			CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry	registerSkyRenderer	(Lnet/minecraft/class_5321;Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$SkyRenderer;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry	registerWeatherRenderer	(Lnet/minecraft/class_5321;Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$WeatherRenderer;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry	registerDimensionEffects	(Lnet/minecraft/class_2960;Lnet/minecraft/class_5294;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry	registerCloudRenderer	(Lnet/minecraft/class_5321;Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$CloudRenderer;)V	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry	getSkyRenderer	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$SkyRenderer;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry	getCloudRenderer	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$CloudRenderer;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry	getWeatherRenderer	(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry$WeatherRenderer;	CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry	getDimensionEffects	(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5294;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/DimensionRenderingRegistry			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/FabricRenderState	getDataOrDefault	(Lnet/fabricmc/fabric/api/client/rendering/v1/RenderStateDataKey;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+override+super	net/fabricmc/fabric/api/client/rendering/v1/FabricRenderState	getDataOrDefault	(Lnet/fabricmc/fabric/api/client/rendering/v1/RenderStateDataKey;Ljava/lang/Object;)Ljava/lang/Object;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/client/rendering/v1/GatherDebugTextEvents$Left	onGatherLeftDebugText	(Ljava/util/List;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/GatherDebugTextEvents$Left			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/GatherDebugTextEvents$Right	onGatherRightDebugText	(Ljava/util/List;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/GatherDebugTextEvents$Right			CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/GatherDebugTextEvents	LEFT	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/GatherDebugTextEvents	RIGHT	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/SpecialGuiElementRegistry$Context			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext	entity	()Lnet/minecraft/class_1297;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext	cameraX	()D	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext	cameraY	()D	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext	cameraZ	()D	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext	blockPos	()Lnet/minecraft/class_2338;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext	blockState	()Lnet/minecraft/class_2680;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext	vertexConsumer	()Lnet/minecraft/class_4588;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext			CLASS	class gone
+call-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	getInstance	(Lnet/minecraft/class_761;)Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	worldRenderer	()Lnet/minecraft/class_761;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	tickCounter	()Lnet/minecraft/class_9779;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	blockOutlines	()Z	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	camera	()Lnet/minecraft/class_4184;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	gameRenderer	()Lnet/minecraft/class_757;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	positionMatrix	()Lorg/joml/Matrix4f;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	projectionMatrix	()Lorg/joml/Matrix4f;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	world	()Lnet/minecraft/class_638;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	advancedTranslucency	()Z	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	consumers	()Lnet/minecraft/class_4597;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	frustum	()Lnet/minecraft/class_4604;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	matrixStack	()Lnet/minecraft/class_4587;	CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext	translucentBlockOutline	()Z	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$AfterEntities	afterEntities	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$AfterEntities			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$AfterSetup	afterSetup	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$AfterSetup			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$AfterTranslucent	afterTranslucent	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$AfterTranslucent			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$BeforeBlockOutline	beforeBlockOutline	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;Lnet/minecraft/class_239;)Z	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$BeforeBlockOutline			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$BeforeEntities	beforeEntities	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$BeforeEntities			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$BlockOutline	onBlockOutline	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext$BlockOutlineContext;)Z	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$BlockOutline			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$DebugRender	beforeDebugRender	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$DebugRender			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$End	onEnd	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$End			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$Last	onLast	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$Last			CLASS	class gone
+call	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$Start	onStart	(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)V	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents$Start			CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	START	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	AFTER_SETUP	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	BEFORE_ENTITIES	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	AFTER_ENTITIES	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	BEFORE_BLOCK_OUTLINE	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	BLOCK_OUTLINE	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	BEFORE_DEBUG_RENDER	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	AFTER_TRANSLUCENT	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	LAST	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/WorldRenderEvents	END	Lnet/fabricmc/fabric/api/event/Event;	CLASS	class gone
+get-static	net/fabricmc/fabric/api/client/rendering/v1/hud/VanillaHudElements	DEBUG	Lnet/minecraft/class_2960;	FIELD	field not declared on the owner
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyPress	afterKeyPress	(Lnet/minecraft/class_437;III)V	METHOD	method afterKeyPress(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyPress	afterKeyPress	(Lnet/minecraft/class_437;III)V	LAMBDA	method afterKeyPress(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyPress			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyRelease	afterKeyRelease	(Lnet/minecraft/class_437;III)V	METHOD	method afterKeyRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyRelease	afterKeyRelease	(Lnet/minecraft/class_437;III)V	LAMBDA	method afterKeyRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AfterKeyRelease			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyPress	allowKeyPress	(Lnet/minecraft/class_437;III)Z	METHOD	method allowKeyPress(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyPress	allowKeyPress	(Lnet/minecraft/class_437;III)Z	LAMBDA	method allowKeyPress(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyPress			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyRelease	allowKeyRelease	(Lnet/minecraft/class_437;III)Z	METHOD	method allowKeyRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyRelease	allowKeyRelease	(Lnet/minecraft/class_437;III)Z	LAMBDA	method allowKeyRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)Z public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$AllowKeyRelease			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyPress	beforeKeyPress	(Lnet/minecraft/class_437;III)V	METHOD	method beforeKeyPress(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyPress	beforeKeyPress	(Lnet/minecraft/class_437;III)V	LAMBDA	method beforeKeyPress(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyPress			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyRelease	beforeKeyRelease	(Lnet/minecraft/class_437;III)V	METHOD	method beforeKeyRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyRelease	beforeKeyRelease	(Lnet/minecraft/class_437;III)V	LAMBDA	method beforeKeyRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11908;)V public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenKeyboardEvents$BeforeKeyRelease			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseClick	afterMouseClick	(Lnet/minecraft/class_437;DDI)V	METHOD	method afterMouseClick(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseClick	afterMouseClick	(Lnet/minecraft/class_437;DDI)V	LAMBDA	method afterMouseClick(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseClick			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseDrag	afterMouseDrag	(Lnet/minecraft/class_437;DDIDD)V	METHOD	method afterMouseDrag(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DDZ)Z public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseDrag	afterMouseDrag	(Lnet/minecraft/class_437;DDIDD)V	LAMBDA	method afterMouseDrag(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DDZ)Z public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseDrag			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseRelease	afterMouseRelease	(Lnet/minecraft/class_437;DDI)V	METHOD	method afterMouseRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseRelease	afterMouseRelease	(Lnet/minecraft/class_437;DDI)V	LAMBDA	method afterMouseRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;Z)Z public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseRelease			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseScroll	afterMouseScroll	(Lnet/minecraft/class_437;DDDD)V	METHOD	method afterMouseScroll(Lnet/minecraft/class_437;DDDDZ)Z public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseScroll	afterMouseScroll	(Lnet/minecraft/class_437;DDDD)V	LAMBDA	method afterMouseScroll(Lnet/minecraft/class_437;DDDDZ)Z public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AfterMouseScroll			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseClick	allowMouseClick	(Lnet/minecraft/class_437;DDI)Z	METHOD	method allowMouseClick(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseClick	allowMouseClick	(Lnet/minecraft/class_437;DDI)Z	LAMBDA	method allowMouseClick(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseClick			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseDrag	allowMouseDrag	(Lnet/minecraft/class_437;DDIDD)Z	METHOD	method allowMouseDrag(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)Z public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseDrag	allowMouseDrag	(Lnet/minecraft/class_437;DDIDD)Z	LAMBDA	method allowMouseDrag(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)Z public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseDrag			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseRelease	allowMouseRelease	(Lnet/minecraft/class_437;DDI)Z	METHOD	method allowMouseRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseRelease	allowMouseRelease	(Lnet/minecraft/class_437;DDI)Z	LAMBDA	method allowMouseRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)Z public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$AllowMouseRelease			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseClick	beforeMouseClick	(Lnet/minecraft/class_437;DDI)V	METHOD	method beforeMouseClick(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseClick	beforeMouseClick	(Lnet/minecraft/class_437;DDI)V	LAMBDA	method beforeMouseClick(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseClick			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseDrag	beforeMouseDrag	(Lnet/minecraft/class_437;DDIDD)V	METHOD	method beforeMouseDrag(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)V public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseDrag	beforeMouseDrag	(Lnet/minecraft/class_437;DDIDD)V	LAMBDA	method beforeMouseDrag(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;DD)V public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseDrag			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseRelease	beforeMouseRelease	(Lnet/minecraft/class_437;DDI)V	METHOD	method beforeMouseRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V public abstract
+lambda	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseRelease	beforeMouseRelease	(Lnet/minecraft/class_437;DDI)V	LAMBDA	method beforeMouseRelease(Lnet/minecraft/class_437;Lnet/minecraft/class_11909;)V public abstract
+implement-interface	net/fabricmc/fabric/api/client/screen/v1/ScreenMouseEvents$BeforeMouseRelease			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/entity/FakePlayer	method_5873	(Lnet/minecraft/class_1297;Z)Z	METHOD	method method_5873(Lnet/minecraft/class_1297;ZZ)Z public
+override+super	net/fabricmc/fabric/api/entity/FakePlayer	method_5873	(Lnet/minecraft/class_1297;Z)Z	METHOD,ORPHAN	method method_5873(Lnet/minecraft/class_1297;ZZ)Z public
+call	net/fabricmc/fabric/api/entity/event/v1/ServerEntityCombatEvents$AfterKilledOtherEntity	afterKilledOtherEntity	(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;)V	METHOD	method afterKilledOtherEntity(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;)V public abstract
+lambda	net/fabricmc/fabric/api/entity/event/v1/ServerEntityCombatEvents$AfterKilledOtherEntity	afterKilledOtherEntity	(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;)V	LAMBDA	method afterKilledOtherEntity(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;Lnet/minecraft/class_1309;Lnet/minecraft/class_1282;)V public abstract
+implement-interface	net/fabricmc/fabric/api/entity/event/v1/ServerEntityCombatEvents$AfterKilledOtherEntity			ABSTRACT	class public abstract interface extends java/lang/Object
+call	net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry	registerLarge	(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;I)Lnet/minecraft/class_8710$class_9155;	METHOD	method not declared on the owner
+call	net/fabricmc/fabric/api/renderer/v1/sprite/FabricAtlasPreparation	spriteFinder	()Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/renderer/v1/sprite/FabricAtlasPreparation			CLASS	class gone
+override+super	net/fabricmc/fabric/api/renderer/v1/sprite/FabricAtlasPreparation	spriteFinder	()Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;	CLASS	class gone
+implement-interface	net/fabricmc/fabric/api/resource/IdentifiableResourceReloadListener			ABSTRACT	class public abstract interface extends java/lang/Object
+implement-inherited	net/minecraft/class_3302	method_25931	(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	ORPHAN	method method_25931(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;Lnet/minecraft/class_3302$class_4045;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public abstract
+call	net/fabricmc/fabric/api/resource/SimpleResourceReloadListener	method_25931	(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD	method method_25931(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;Lnet/minecraft/class_3302$class_4045;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public
+override+super	net/fabricmc/fabric/api/resource/SimpleResourceReloadListener	method_25931	(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;	METHOD,ORPHAN	method method_25931(Lnet/minecraft/class_3302$class_11558;Ljava/util/concurrent/Executor;Lnet/minecraft/class_3302$class_4045;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture; public
+get-static	net/fabricmc/fabric/api/util/NbtType	NUMBER	I	FIELD	field not declared on the owner
