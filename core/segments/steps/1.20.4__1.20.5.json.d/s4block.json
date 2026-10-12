@@ -57,7 +57,15 @@
   "net/minecraft/class_2325.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense",
   "net/minecraft/class_2586.method_11007(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockEntityNbt",
   "net/minecraft/class_1966.method_28442()Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
-  "net/minecraft/class_2794.method_28506()Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs"
+  "net/minecraft/class_2794.method_28506()Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
+  "net/minecraft/class_2573.method_10911()Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_2573.method_38992(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_7225$class_7874.method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_1726.method_43706()Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_5592$class_6157.method_35533(Lnet/minecraft/class_6880;Lnet/minecraft/class_1767;)Lnet/minecraft/class_5592$class_6157;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner"
  },
  "overrideHooks": [
   {
@@ -529,6 +537,14 @@
    "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense$Legacy",
    "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense.getDispenseMethod(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense$Legacy;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;",
    "basis": "1.20.5 asking a dispenser overriding 1.20.4's getDispenseMethod(stack): the override; its super call keeps 1.20.4's body (CbBlockDispense)"
+  },
+  {
+   "old": "method_10911()Ljava/util/List;",
+   "new": "method_58122()Lnet/minecraft/class_9307;",
+   "onlyUnder": "net/minecraft/class_2573",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner$LegacyPatterns",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner.getPatterns(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner$LegacyPatterns;)Lnet/minecraft/class_9307;",
+   "basis": "1.20.5 asking a banner overriding 1.20.4's getPatterns(): the override's (pattern, color) list as layers, its leading base pair left to 1.20.5's base color; its super call keeps 1.20.4's body (CbBlockBanner)"
   }
  ],
  "fieldGetters": {
@@ -543,7 +559,8 @@
   "net/minecraft/class_7917$class_8751.field_45783:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious",
   "net/minecraft/class_2356.field_46354:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious",
   "net/minecraft/class_8962.field_47356:Lnet/minecraft/class_8962;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
-  "net/minecraft/class_8965.field_47368:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial"
+  "net/minecraft/class_8965.field_47368:Lcom/mojang/serialization/MapCodec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial",
+  "net/minecraft/class_7923.field_41165:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner"
  },
  "callReshapes": {
   "net/minecraft/class_7509.method_44207(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec;": {
@@ -876,7 +893,12 @@
   "net/minecraft/class_2356.method_54015(Lnet/minecraft/class_1291;I)Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious",
   "net/minecraft/class_2631.method_52589(Lnet/minecraft/class_2487;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull",
   "net/minecraft/class_2631.method_52590(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockSkull",
-  "net/minecraft/class_1948.method_8660(Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockMisc"
+  "net/minecraft/class_1948.method_8660(Lnet/minecraft/class_1317$class_1319;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_1299;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockMisc",
+  "net/minecraft/class_2573.method_24281(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_2573.method_10910(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_2573.method_24280(Lnet/minecraft/class_1767;Lnet/minecraft/class_2499;)Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_2573.method_10905(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner",
+  "net/minecraft/class_7446.method_43721(Lnet/minecraft/class_2378;)Lnet/minecraft/class_2582;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V": {
@@ -1199,7 +1221,12 @@
   "net/minecraft/class_8966.method_55184(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#superIsReadyToOpenShutter",
   "net/minecraft/class_8966.method_55198(Lnet/minecraft/class_3218;Lnet/minecraft/class_8965;F)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockTrial#superIsReadyToEjectItems",
   "net/minecraft/class_2315.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense#superDispenseMethod",
-  "net/minecraft/class_2325.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense#superDropperDispenseMethod"
+  "net/minecraft/class_2325.method_10011(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2357;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockDispense#superDropperDispenseMethod",
+  "net/minecraft/class_2573.method_10911()Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner#superGetPatterns",
+  "net/minecraft/class_2573.method_38992(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner#superFromItem",
+  "net/minecraft/class_1726.method_43706()Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner#superSelectablePatterns",
+  "net/minecraft/class_5455.method_30530(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner#superRegistryOrThrow",
+  "net/minecraft/class_7225$class_7874.method_46762(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225$class_7226;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner#superLookupOrThrow"
  },
  "adapterHooks": [
   {
@@ -1255,6 +1282,15 @@
    ],
    "synth": [],
    "basis": "1.20.5 dropped setSpawnPotentialsFromConfig; a data class overriding it is still asked (calls, the 1.20.4 spawner constructor)"
+  },
+  {
+   "under": "net/minecraft/class_2573",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockBanner$LegacyFromItem",
+   "requires": [
+    "method_38992(Lnet/minecraft/class_1799;)V"
+   ],
+   "synth": [],
+   "basis": "1.20.5 dropped fromItem(stack); a banner class overriding it is still asked -- by fromItem(stack, color) and, on the client, after placement, where 1.20.4 asked (CbBlockBannerItemMixin, CbBlockBannerPlacedMixin)"
   }
  ],
  "genericWitnesses": {
@@ -1280,7 +1316,9 @@
  "classRenames": {
   "net/minecraft/class_7917$class_8751": "net/minecraft/class_9298$class_8751",
   "net/minecraft/class_8172$class_8526": "net/minecraft/class_8526",
-  "net/minecraft/class_2806$class_2808": "net/minecraft/class_2808"
+  "net/minecraft/class_2806$class_2808": "net/minecraft/class_2808",
+  "net/minecraft/class_2582": "top/dext/centurybridge/step/v1_20_5/facade/class_2582",
+  "net/minecraft/class_2582$class_3750": "top/dext/centurybridge/step/v1_20_5/facade/class_2582$class_3750"
  },
  "frameDefaults": {
   "method_11014(Lnet/minecraft/class_2487;)V": {

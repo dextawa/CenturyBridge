@@ -45,7 +45,13 @@
     "CbRestRecWeightedEntryWrapperMixin",
     "CbBlockEntityInvoker",
     "CbBlockBiomeSourceInvoker",
-    "CbBlockChunkGeneratorInvoker"
+    "CbBlockChunkGeneratorInvoker",
+    "CbBlockBannerAccessor",
+    "CbBlockBannerItemMixin",
+    "CbBlockBannerPlacedMixin",
+    "CbBlockBannerLoaderMixin",
+    "CbBlockBannerTagsMixin",
+    "CbBlockLoomAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin",
