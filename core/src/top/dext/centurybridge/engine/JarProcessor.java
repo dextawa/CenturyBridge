@@ -381,19 +381,14 @@ public final class JarProcessor {
      * argument is its type's zero value.
      */
     private static byte[] rewriteHookSuperCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
-        java.util.Map<String, Chain.OverrideHook> byOld = new HashMap<>();
-        for (Chain.OverrideHook h : chain.overrideHooks) {
-            if (h.superCalls || h.superBridgeName != null) {
-                byOld.putIfAbsent(h.oldName + h.oldDesc, h);
-            }
-        }
+        java.util.Map<String, java.util.List<Chain.OverrideHook>> byOld = superCallHooks(chain);
         if (byOld.isEmpty()) {
             return bytes;
         }
         String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
         boolean any = false;
-        for (Chain.OverrideHook h : byOld.values()) {
-            if (raw.contains(h.oldName)) {
+        for (java.util.List<Chain.OverrideHook> hs : byOld.values()) {
+            if (raw.contains(hs.get(0).oldName)) {
                 any = true;
                 break;
             }
@@ -420,13 +415,8 @@ public final class JarProcessor {
                     continue;
                 }
                 org.objectweb.asm.tree.MethodInsnNode mi = (org.objectweb.asm.tree.MethodInsnNode) in;
-                Chain.OverrideHook h = byOld.get(mi.name + mi.desc);
-                // the super call's owner is the direct superclass: a mod class in between inherits the
-                // vanilla method (this layer's hierarchy says from where) unless it declares it itself
-                if (h == null || mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
-                        && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null
-                        || h.onlyUnder != null && !isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain)
-                        || h.notUnder != null && isUnder(cn.superName, ifaces, h.notUnder, layer, chain)) {
+                Chain.OverrideHook h = superCallHook(byOld.get(mi.name + mi.desc), chain, layer, cn, ifaces, mi);
+                if (h == null) {
                     continue;
                 }
                 if (h.superBridgeName != null) {
@@ -887,7 +877,8 @@ public final class JarProcessor {
      * One exception: a mod's super.old(..) in a class under an override hook that carries its
      * arguments ("frames" + "superCalls": "rewrite") belongs to that hook. Its rewrite hands the
      * super call what vanilla passed to the synthesized new shape; a reshape's ops could only
-     * supply a fixed value there, so such a call is left for {@link #rewriteHookSuperCalls}.
+     * supply a fixed value there, so such a call is left for {@link #rewriteHookSuperCalls}. So is
+     * one under a hook with a super bridge ("superBridge"), which makes the super call itself.
      * A call may name a class of the mod's own jar while the member is a vanilla one it inherits:
      * javac's qualifying type for an unqualified call to an inherited member is the subclass
      * itself (a mod's RecipeProvider calling offerSmelting(..), a loot function builder calling
@@ -964,25 +955,53 @@ public final class JarProcessor {
 
     /**
      * Whether a super call is one {@link #rewriteHookSuperCalls} rewrites with a carrying hook: the
-     * same choice it makes (the first superCalls hook for the call's old shape, in wiring order) and
-     * the same test (the call into a vanilla supertype, directly or through a mod class that
-     * inherits it; the class under the hook), for a hook with frames.
+     * same choice it makes ({@link #superCallHook}), for a hook with frames or a super bridge.
+     * A super bridge reaches super's implementation of the new shape through the class's accessors;
+     * reshaped here instead, a super call whose new shape is a bridge onto a typed method of another
+     * name (1.21's AbstractCookingRecipe.matches(RecipeInput) onto matches(SingleRecipeInput)) would
+     * come back into the class's own override of the typed method.
      */
     private static boolean framedSuperCall(Chain chain, LayerIndex layer, org.objectweb.asm.tree.ClassNode cn,
                                            org.objectweb.asm.tree.MethodInsnNode mi) {
-        if (mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
-                && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null) {
-            return false;
-        }
-        String[] ifaces = cn.interfaces.toArray(new String[0]);
+        Chain.OverrideHook h = superCallHook(superCallHooks(chain).get(mi.name + mi.desc), chain, layer, cn,
+            cn.interfaces.toArray(new String[0]), mi);
+        return h != null && (h.frames != null || h.superBridgeName != null);
+    }
+
+    /** the superCalls and superBridge hooks by old shape, each list in wiring order */
+    private static java.util.Map<String, java.util.List<Chain.OverrideHook>> superCallHooks(Chain chain) {
+        java.util.Map<String, java.util.List<Chain.OverrideHook>> byOld = new HashMap<>();
         for (Chain.OverrideHook h : chain.overrideHooks) {
-            if (h.superCalls && h.oldName.equals(mi.name) && h.oldDesc.equals(mi.desc)) {
-                return h.frames != null
-                    && (h.onlyUnder == null || isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain))
-                    && (h.notUnder == null || !isUnder(cn.superName, ifaces, h.notUnder, layer, chain));
+            if (h.superCalls || h.superBridgeName != null) {
+                byOld.computeIfAbsent(h.oldName + h.oldDesc, k -> new ArrayList<>()).add(h);
             }
         }
-        return false;
+        return byOld;
+    }
+
+    /**
+     * The hook that takes a mod's super.old(..): of the superCalls / superBridge hooks for the call's old
+     * shape, the first in wiring order whose hierarchy filter the class meets -- one old shape can have a
+     * hook per vanilla class that declared it (1.21's typed matches of AbstractCookingRecipe,
+     * StonecutterRecipe and the two smithing recipes, each for the classes under its own) -- and only for
+     * a call into a vanilla supertype: the super call's owner is the direct superclass, and a mod class in
+     * between inherits the vanilla method (this layer's hierarchy says from where) unless it declares it
+     * itself. Null when none takes it.
+     */
+    private static Chain.OverrideHook superCallHook(java.util.List<Chain.OverrideHook> candidates, Chain chain, LayerIndex layer,
+                                                    org.objectweb.asm.tree.ClassNode cn, String[] ifaces,
+                                                    org.objectweb.asm.tree.MethodInsnNode mi) {
+        if (candidates == null || mi.owner.equals(cn.name) || !mi.owner.startsWith("net/minecraft/")
+                && inheritedVanillaOwner(mi.owner, mi.name + mi.desc, layer) == null) {
+            return null;
+        }
+        for (Chain.OverrideHook h : candidates) {
+            if ((h.onlyUnder == null || isUnder(cn.superName, ifaces, h.onlyUnder, layer, chain))
+                    && (h.notUnder == null || !isUnder(cn.superName, ifaces, h.notUnder, layer, chain))) {
+                return h;
+            }
+        }
+        return null;
     }
 
     /**

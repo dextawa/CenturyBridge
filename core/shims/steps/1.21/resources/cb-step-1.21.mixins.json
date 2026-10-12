@@ -16,7 +16,8 @@
     "CbItemRecipeCrafterMenuMixin",
     "CbItemRecipeCraftingMenuMixin",
     "CbItemRecipeInventoryMenuMixin",
-    "CbItemRecipeResultSlotMixin"
+    "CbItemRecipeResultSlotMixin",
+    "CbItemShapedPatternAccessor"
   ],
   "client": [
     "CbEnchClientMixin"

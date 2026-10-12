@@ -65,7 +65,8 @@
   "net/minecraft/class_1890.method_8233(Lnet/minecraft/class_7699;Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper",
   "net/minecraft/class_1890.method_8230(Lnet/minecraft/class_7699;Lnet/minecraft/class_5819;Lnet/minecraft/class_1799;IZ)Ljava/util/List;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper",
   "net/minecraft/class_1890.method_8201(Ljava/util/Collection;Lnet/minecraft/class_1887;)Z": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper",
-  "net/minecraft/class_1890.method_8229(Lnet/minecraft/class_7699;ILnet/minecraft/class_1799;Z)Ljava/util/List;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper"
+  "net/minecraft/class_1890.method_8229(Lnet/minecraft/class_7699;ILnet/minecraft/class_1799;Z)Ljava/util/List;": "top/dext/centurybridge/step/v1_21/rt/CbEnchantmentHelper",
+  "net/minecraft/class_1863.method_42302(Lnet/minecraft/class_3956;)Lnet/minecraft/class_1863$class_7266;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes"
  },
  "facadeGaps": {
   "net/minecraft/class_1880.<init>(Lnet/minecraft/class_1887$class_1888;[Lnet/minecraft/class_1304;)V": "1.20.4's shape, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv: 1.20.5 rebuilt Enchantment on EnchantmentDefinition and dropped Rarity / EnchantmentCategory / the cost-table fields): a mod's reference to it is the 1.20.4 -> 1.20.5 step's to convert, and a mod that reaches this step names 1.20.6's shape, which the facade provides",
@@ -169,6 +170,53 @@
     "keep"
    ],
    "basis": "ItemStack.enchant: the object's world holder"
+  },
+  "net/minecraft/class_8884.method_54470(Lnet/minecraft/class_1937;Lnet/minecraft/class_8566;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_9694;)Ljava/util/Optional;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;"
+   ],
+   "basis": "RecipeCache.get: the grid as the input 1.21 caches by"
+  },
+  "net/minecraft/class_8957.method_55078(Lnet/minecraft/class_8566;)Z": {
+   "desc": "(Lnet/minecraft/class_9694;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCraftingInput(Lnet/minecraft/class_8566;)Lnet/minecraft/class_9694;"
+   ],
+   "basis": "ShapedRecipePattern.matches: 1.20.6 scanned every placement in the grid, 1.21 matches the trimmed input -- the same answer"
+  },
+  "net/minecraft/class_2952.method_12815(Ljava/util/Iterator;IIII)V": {
+   "desc": "(Ljava/lang/Object;IIII)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbNextIngredient(Ljava/util/Iterator;)Ljava/lang/Object;",
+    "keep:1",
+    "keep:2",
+    "keep:4",
+    "keep:3"
+   ],
+   "basis": "PlaceRecipe.addItemToSlot: 1.20.6 (ingredients, slot, maxAmount, y, x) with the implementation taking ingredients.next(); 1.21 (item, slot, maxAmount, x, y) with the caller taking it"
+  },
+  "net/minecraft/class_2955.method_12815(Ljava/util/Iterator;IIII)V": {
+   "desc": "(Ljava/lang/Object;IIII)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbNextIngredient(Ljava/util/Iterator;)Ljava/lang/Object;",
+    "keep:1",
+    "keep:2",
+    "keep:4",
+    "keep:3"
+   ],
+   "basis": "PlaceRecipe.addItemToSlot: 1.20.6 (ingredients, slot, maxAmount, y, x) with the implementation taking ingredients.next(); 1.21 (item, slot, maxAmount, x, y) with the caller taking it"
+  },
+  "net/minecraft/class_2955.method_12824(Lnet/minecraft/class_1735;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_1735;Lnet/minecraft/class_1799;I)I",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbOne()I"
+   ],
+   "ret": "pop",
+   "basis": "ServerPlaceRecipe.moveItemToGrid: 1.20.6 moved one item, 1.21 moves up to the amount given"
   }
  },
  "overrideHooks": [
@@ -192,6 +240,152 @@
    "onlyUnder": "net/minecraft/class_9304$class_9305",
    "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments.cbEnchantment(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1887;",
    "basis": "a mod's ItemEnchantments.Mutable subclass: 1.21 hands the world holder, the override takes the object; its super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+   "new": "method_8115(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Z",
+   "onlyUnder": "net/minecraft/class_1860",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "basis": "Recipe.matches: 1.21 hands the input, a mod's recipe takes the container it was made from"
+  },
+  {
+   "old": "method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_8116(Lnet/minecraft/class_9695;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "onlyUnder": "net/minecraft/class_1860",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "basis": "Recipe.assemble, as matches"
+  },
+  {
+   "old": "method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;",
+   "new": "method_8111(Lnet/minecraft/class_9695;)Lnet/minecraft/class_2371;",
+   "onlyUnder": "net/minecraft/class_1860",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.remaining(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyRemaining;Lnet/minecraft/class_9695;)Lnet/minecraft/class_2371;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyRemaining",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.superRemaining(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RemainingSuper;Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RemainingSuper",
+   "superAccessors": [
+    "method_8111(Lnet/minecraft/class_9695;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "Recipe.getRemainingItems: the mod's per-slot answer for the container, as 1.21's list for the input"
+  },
+  {
+   "old": "method_17704(Lnet/minecraft/class_8566;)Lnet/minecraft/class_2371;",
+   "new": "method_17704(Lnet/minecraft/class_9694;)Lnet/minecraft/class_2371;",
+   "onlyUnder": "net/minecraft/class_1848",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.remaining17704(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyRemaining17704;Lnet/minecraft/class_9694;)Lnet/minecraft/class_2371;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyRemaining17704",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.superRemaining17704(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$BannerDuplicateSuper;Lnet/minecraft/class_8566;)Lnet/minecraft/class_2371;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$BannerDuplicateSuper",
+   "superAccessors": [
+    "method_17704(Lnet/minecraft/class_9694;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "BannerDuplicateRecipe.getRemainingItems, as Recipe's"
+  },
+  {
+   "old": "method_17707(Lnet/minecraft/class_8566;)Lnet/minecraft/class_2371;",
+   "new": "method_17707(Lnet/minecraft/class_9694;)Lnet/minecraft/class_2371;",
+   "onlyUnder": "net/minecraft/class_1850",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.remaining17707(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyRemaining17707;Lnet/minecraft/class_9694;)Lnet/minecraft/class_2371;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyRemaining17707",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.superRemaining17707(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$BookCloningSuper;Lnet/minecraft/class_8566;)Lnet/minecraft/class_2371;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$BookCloningSuper",
+   "superAccessors": [
+    "method_17707(Lnet/minecraft/class_9694;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "BookCloningRecipe.getRemainingItems, as Recipe's"
+  },
+  {
+   "old": "method_54470(Lnet/minecraft/class_1937;Lnet/minecraft/class_8566;)Ljava/util/Optional;",
+   "new": "method_54470(Lnet/minecraft/class_1937;Lnet/minecraft/class_9694;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_8884",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbCraftingContainer(Lnet/minecraft/class_9694;)Lnet/minecraft/class_8566;",
+   "basis": "RecipeCache.get: 1.21 hands the input, a mod's cache takes the grid"
+  },
+  {
+   "old": "method_42303(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+   "new": "method_42303(Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_1863$class_7266",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "basis": "RecipeManager.CachedCheck implemented by a mod class"
+  },
+  {
+   "old": "method_12815(Ljava/util/Iterator;IIII)V",
+   "new": "method_12815(Ljava/lang/Object;IIII)V",
+   "onlyUnder": "net/minecraft/class_2952",
+   "args": [
+    0,
+    1,
+    2,
+    4,
+    3
+   ],
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbIngredientIterator(Ljava/lang/Object;)Ljava/util/Iterator;",
+   "basis": "PlaceRecipe.addItemToSlot implemented by a mod: the ingredient as a one-element iterator, x and y back in 1.20.6's order"
+  },
+  {
+   "old": "method_12824(Lnet/minecraft/class_1735;Lnet/minecraft/class_1799;)V",
+   "new": "method_12824(Lnet/minecraft/class_1735;Lnet/minecraft/class_1799;I)I",
+   "onlyUnder": "net/minecraft/class_2955",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.moveItems(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyMoveItem;Lnet/minecraft/class_1735;Lnet/minecraft/class_1799;I)I",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyMoveItem",
+   "basis": "ServerPlaceRecipe.moveItemToGrid overridden by a mod: called once per item of the amount, as 1.20.6's addItemToSlot did"
+  },
+  {
+   "old": "method_8132(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+   "new": "method_8132(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_1863",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.superRecipeFor(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RecipeManagerSuper;Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RecipeManagerSuper",
+   "superAccessors": [
+    "method_8132(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+    "method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+    "method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/List;"
+   ],
+   "basis": "a mod's RecipeManager subclass: 1.21 hands the input"
+  },
+  {
+   "old": "method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "new": "method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_1863",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.superRecipeForLast(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RecipeManagerSuper;Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RecipeManagerSuper",
+   "superAccessors": [
+    "method_8132(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+    "method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+    "method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/List;"
+   ],
+   "basis": "a mod's RecipeManager subclass: 1.21 hands the input"
+  },
+  {
+   "old": "method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/List;",
+   "new": "method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_1863",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.cbContainer(Lnet/minecraft/class_9695;)Lnet/minecraft/class_1263;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.superRecipesFor(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RecipeManagerSuper;Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/List;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RecipeManagerSuper",
+   "superAccessors": [
+    "method_8132(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+    "method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+    "method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/List;"
+   ],
+   "basis": "a mod's RecipeManager subclass: 1.21 hands the input"
+  },
+  {
+   "old": "method_8128(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Lnet/minecraft/class_2371;",
+   "new": "method_8128(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Lnet/minecraft/class_2371;",
+   "onlyUnder": "net/minecraft/class_1863",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.remainingFor(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyRemainingFor;Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Lnet/minecraft/class_2371;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyRemainingFor",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes.superRemainingFor(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RecipeManagerSuper;Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Lnet/minecraft/class_2371;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$RecipeManagerSuper",
+   "superAccessors": [
+    "method_8132(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/Optional;",
+    "method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+    "method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_9695;Lnet/minecraft/class_1937;)Ljava/util/List;"
+   ],
+   "basis": "a mod's RecipeManager subclass: leftovers per input slot"
   }
  ],
  "convertHooks": [
@@ -235,6 +429,30 @@
   "net/minecraft/class_1889.field_9093:Lnet/minecraft/class_1887;": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments"
  },
  "instanceRedirects": {
-  "net/minecraft/class_2035.comp_1748()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments"
+  "net/minecraft/class_2035.comp_1748()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemEnchantments",
+  "net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1848.method_17704(Lnet/minecraft/class_8566;)Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1850.method_17707(Lnet/minecraft/class_8566;)Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1863.method_8132(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1863.method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1863.method_17877(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1863.method_8128(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_1863$class_7266.method_42303(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes",
+  "net/minecraft/class_8957.comp_2081()I": "top/dext/centurybridge/step/v1_21/rt/CbItemShapedPatterns",
+  "net/minecraft/class_8957.comp_2082()I": "top/dext/centurybridge/step/v1_21/rt/CbItemShapedPatterns",
+  "net/minecraft/class_8957.comp_2083()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21/rt/CbItemShapedPatterns",
+  "net/minecraft/class_8957.comp_2084()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemShapedPatterns"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_2952.method_12815(Ljava/util/Iterator;IIII)V": {
+   "iface": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyPlaceRecipe",
+   "adapt": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbPlaceRecipe(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyPlaceRecipe;)Lnet/minecraft/class_2952;"
+  },
+  "net/minecraft/class_1863$class_7266.method_42303(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;": {
+   "iface": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyCachedCheck",
+   "adapt": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCachedCheck(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyCachedCheck;)Lnet/minecraft/class_1863$class_7266;"
+  }
  }
 }
