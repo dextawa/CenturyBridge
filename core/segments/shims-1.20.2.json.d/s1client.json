@@ -96,7 +96,9 @@
   "net/minecraft/class_8082.method_48594(Lnet/minecraft/class_4185$class_4241;)Lnet/minecraft/class_8084;": "top/dext/centurybridge/rt/v1_20_2/CbGuiButtons",
   "net/minecraft/class_366.method_1985(Lnet/minecraft/class_374;Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiRecipes",
   "net/minecraft/class_742.method_3120(Lnet/minecraft/class_2960;Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbGuiSkins",
-  "net/minecraft/class_742.method_3124(Ljava/lang/String;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbGuiSkins"
+  "net/minecraft/class_742.method_3124(Ljava/lang/String;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbGuiSkins",
+  "net/minecraft/class_7766.method_47664(Ljava/util/List;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/rt/v1_20_2/CbGuiSprites",
+  "net/minecraft/class_7766.method_45829(Lnet/minecraft/class_2960;Lnet/minecraft/class_3298;)Lnet/minecraft/class_7764;": "top/dext/centurybridge/rt/v1_20_2/CbGuiSprites"
  },
  "superCtorReshapes": {
   "net/minecraft/class_8208.<init>(IILnet/minecraft/class_2960;)V": {
@@ -175,6 +177,24 @@
     "keep"
    ],
    "basis": "the UUID string parsed as 1.20.1's getProfileId parsed it; the string rides to the constructor (CbGuiUserBridge)"
+  },
+  "net/minecraft/class_7764.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_7771;Lnet/minecraft/class_1011;Lnet/minecraft/class_1079;)V": {
+   "desc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_7771;Lnet/minecraft/class_1011;Lnet/minecraft/class_7368;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbGuiSprites#cbAnimationMetadata(Lnet/minecraft/class_1079;)Lnet/minecraft/class_7368;"
+   ],
+   "basis": "1.20.2 SpriteContents reads its animation section from the sprite metadata: metadata answering that section"
+  },
+  "net/minecraft/class_1065.<init>(Ljava/nio/file/Path;)V": {
+   "desc": "(Ljava/nio/file/Path;Lnet/minecraft/class_8580;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/rt/v1_20_2/CbGuiPacks#cbDirectoryValidator()Lnet/minecraft/class_8580;"
+   ],
+   "basis": "1.20.2 ClientPackSource vets pack symlinks: the client's own directory validator, as vanilla passes"
   }
  },
  "callReshapes": {
@@ -329,5 +349,32 @@
  "instanceFieldGetters": {
   "net/minecraft/class_7591$class_7592.field_39764:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiWidgets",
   "net/minecraft/class_7591$class_7592.field_39765:I": "top/dext/centurybridge/rt/v1_20_2/CbGuiWidgets"
- }
+ },
+ "methodRenames": {
+  "net/minecraft/class_7766.method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "method_52849"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_7948$class_7950.get()Ljava/lang/Object;": "top/dext/centurybridge/rt/v1_20_2/CbGuiSprites"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_7948$class_7950.get()Ljava/lang/Object;": {
+   "iface": "top/dext/centurybridge/rt/v1_20_2/CbGuiLegacySpriteSupplier",
+   "adapt": "top/dext/centurybridge/rt/v1_20_2/CbGuiSprites#cbSpriteSupplier(Ltop/dext/centurybridge/rt/v1_20_2/CbGuiLegacySpriteSupplier;)Lnet/minecraft/class_7948$class_7950;"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_7948$class_7950",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbGuiLegacySpriteSupplier",
+   "requires": [
+    "get()Ljava/lang/Object;"
+   ],
+   "synth": [
+    {
+     "new": "apply(Ljava/lang/Object;)Ljava/lang/Object;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbGuiSprites.cbApplyLegacy(Ltop/dext/centurybridge/rt/v1_20_2/CbGuiLegacySpriteSupplier;Ljava/lang/Object;)Ljava/lang/Object;"
+    }
+   ]
+  }
+ ]
 }
