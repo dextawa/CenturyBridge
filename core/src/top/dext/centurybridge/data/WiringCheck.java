@@ -35,7 +35,8 @@ import org.objectweb.asm.tree.MethodNode;
  * fieldRedirects, fieldGetters, instanceFieldGetters, instanceOfRedirects,
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
- * and the subtype relation a narrowing hook casts along), classRenames
+ * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
+ * interface declares exactly the old SAM; the adapter's exact descriptor), classRenames
  * onto shipped facades. Covers are checked by MixinCheck against the mixin
  * classes (they are overloads added to vanilla classes, not statics).
  *
@@ -495,6 +496,41 @@ public final class WiringCheck {
                     wantMethod(where + " synth", call.substring(0, dot) + "#" + call.substring(dot + 1, paren),
                         null, methodDesc(call.substring(paren)));
                 }
+            }
+        }
+        if (root.has("lambdaAdapters")) {
+            // a lambda is spun as the CB interface: it must declare exactly the old SAM (any other
+            // abstract method would be left unimplemented), and the adapter must turn it into the
+            // vanilla interface with exactly the descriptor the converter emits
+            for (var e : root.getAsJsonObject("lambdaAdapters").entrySet()) {
+                String where = "lambdaAdapters " + e.getKey();
+                var o = e.getValue().getAsJsonObject();
+                top.dext.centurybridge.engine.Chain.LambdaAdapter la;
+                try {
+                    la = top.dext.centurybridge.engine.Chain.parseLambdaAdapter(e.getKey(),
+                        o.get("iface").getAsString(), o.get("adapt").getAsString());
+                } catch (IllegalArgumentException ex) {
+                    problems.add(ex.getMessage());
+                    continue;
+                }
+                checked++;
+                ClassNode legacy = classes.get(la.legacy);
+                String samDesc = methodDesc(la.samDesc);
+                if (legacy == null || (legacy.access & Opcodes.ACC_INTERFACE) == 0) {
+                    problems.add(where + ": " + la.legacy + " is not an interface of the bridge");
+                } else {
+                    List<String> abstracts = new ArrayList<>();
+                    for (MethodNode m : legacy.methods) {
+                        if ((m.access & Opcodes.ACC_ABSTRACT) != 0) {
+                            abstracts.add(m.name + m.desc);
+                        }
+                    }
+                    if (!abstracts.equals(List.of(la.sam + samDesc))) {
+                        problems.add(where + ": " + la.legacy + " must declare exactly the old SAM " + la.sam + samDesc
+                            + ", declares " + abstracts);
+                    }
+                }
+                wantMethod(where + " adapt", la.adaptOwner + "#" + la.adaptName, null, methodDesc(la.adaptDesc));
             }
         }
         if (root.has("overrideHooks")) {

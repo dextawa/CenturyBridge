@@ -74,6 +74,24 @@ public final class JarProcessor {
         }
     }
 
+    /**
+     * The adapter (Chain.lambdaAdapters) for a LambdaMetafactory invokedynamic that builds a functional
+     * interface whose single abstract method changed shape, keyed by the interface it produces, the
+     * SAM name and the erased SAM type it implements; null for any other invokedynamic.
+     */
+    private static Chain.LambdaAdapter lambdaAdapterFor(Chain chain, String name, String desc,
+                                                        org.objectweb.asm.Handle bsm, Object[] args) {
+        if (chain.lambdaAdapters.isEmpty() || !bsm.getOwner().equals("java/lang/invoke/LambdaMetafactory")
+                || args.length < 1 || !(args[0] instanceof org.objectweb.asm.Type sam)) {
+            return null;
+        }
+        org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(desc);
+        if (ret.getSort() != org.objectweb.asm.Type.OBJECT) {
+            return null;
+        }
+        return chain.lambdaAdapters.get(ret.getInternalName() + "." + name + sam.getDescriptor());
+    }
+
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName) {
         if (h.frames != null) {
             synthesizeFramedOverride(cv, h, cls);
@@ -1576,6 +1594,8 @@ public final class JarProcessor {
         // damage is such a call must still go through the rewrite pass -- the
         // fix used to ride along on other damage and silently skip these
         final Set<String> hookCallSites = new HashSet<>();
+        // lambdas built for a functional interface whose SAM changed shape (Chain.lambdaAdapters)
+        final Set<String> lambdaSites = new HashSet<>();
         final Map<String, String> superRedirectSites = new HashMap<>(); // call-site key -> runtime target
         // a call into an owner whose kind flipped (class <-> interface) is damage
         // even when every member it names survives: the rewrite pass must run so
@@ -2144,6 +2164,21 @@ public final class JarProcessor {
                     @Override
                     public void visitInvokeDynamicInsn(String name, String desc,
                             org.objectweb.asm.Handle bsm, Object... bsmArgs) {
+                        Chain.LambdaAdapter la = lambdaAdapterFor(chain, name, desc, bsm, bsmArgs);
+                        if (la != null) {
+                            String lkey = la.iface + "." + la.sam + la.samDesc;
+                            if (bsm.getName().equals("metafactory")) {
+                                lambdaSites.add(lkey);
+                                top.dext.centurybridge.data.FullAudit.record(lkey, "lambda-adapted");
+                            } else {
+                                // altMetafactory: a serializable lambda names its interface in
+                                // $deserializeLambda$, markers and bridges add types -- not ours to swap
+                                top.dext.centurybridge.data.FullAudit.record(lkey,
+                                    "LAMBDA-NOT-ADAPTED[" + chain.sideOf(la.iface) + "] " + bsm.getName());
+                                issues.add(tag + "lambda not adapted (" + bsm.getName()
+                                    + ": serializable / marker / bridge lambda keeps its interface): " + lkey);
+                            }
+                        }
                         // method references to dead/redirected methods hide inside
                         // indy bootstrap arguments -- treat each handle like a call site
                         for (Object arg : bsmArgs) {
@@ -2265,7 +2300,7 @@ public final class JarProcessor {
                 && fldGetters.isEmpty() && instFldGetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
-                && !needSuperRename[0] && adapterApply.isEmpty()
+                && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty()
                 && !(hasOldUse[0] && !hasNewUse[0])
                 && declaredOldHooks.stream().allMatch(declaredNewHooks::contains)
                 && declaredOldOverrides.stream().allMatch(declaredNewOverrides::contains)) {
@@ -2659,6 +2694,18 @@ public final class JarProcessor {
                                 rewritten[i] = new org.objectweb.asm.Handle(
                                     Opcodes.H_INVOKESTATIC, reg.clsName, s.name(), s.staticDesc(), false);
                             }
+                        }
+                        Chain.LambdaAdapter la = lambdaAdapterFor(chain, name, desc, bsm, bsmArgs);
+                        if (la != null && bsm.getName().equals("metafactory")) {
+                            // the lambda is spun as the CB interface carrying the old SAM -- every
+                            // bootstrap argument still describes it exactly -- and the adapter turns
+                            // it into the vanilla interface the code expects on the stack
+                            org.objectweb.asm.Type factory = org.objectweb.asm.Type.getMethodType(desc);
+                            String legacyDesc = org.objectweb.asm.Type.getMethodDescriptor(
+                                org.objectweb.asm.Type.getObjectType(la.legacy), factory.getArgumentTypes());
+                            super.visitInvokeDynamicInsn(name, legacyDesc, bsm, rewritten);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, la.adaptOwner, la.adaptName, la.adaptDesc, false);
+                            return;
                         }
                         super.visitInvokeDynamicInsn(name, desc, bsm, rewritten);
                     }

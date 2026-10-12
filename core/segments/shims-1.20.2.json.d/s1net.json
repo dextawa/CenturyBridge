@@ -20,7 +20,9 @@
   "net/minecraft/class_3244.method_36580(Lnet/minecraft/class_6374;)V": "method_52394",
   "net/minecraft/class_3244.method_14369(Lnet/minecraft/class_2596;Lnet/minecraft/class_7648;)V": "method_52391",
   "net/minecraft/class_3244.method_12082(Lnet/minecraft/class_2827;)V": "method_52393",
-  "net/minecraft/class_3244.method_12075(Lnet/minecraft/class_2817;)V": "method_52392"
+  "net/minecraft/class_3244.method_12075(Lnet/minecraft/class_2817;)V": "method_52392",
+  "net/minecraft/class_2602.method_11097(Lnet/minecraft/class_2613;)V": "method_11112",
+  "net/minecraft/class_634.method_11097(Lnet/minecraft/class_2613;)V": "method_11112"
  },
  "overrideHooks": [
   {
@@ -265,6 +267,305 @@
    "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNet.cbWriteWithCodec(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacyCodecWriter;Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Ljava/lang/Object;)Lnet/minecraft/class_2540;",
    "onlyUnder": "net/minecraft/class_2540",
    "basis": "s1net: encode(ops, codec, value) returns the buffer in 1.20.2; the 1.20.1 override runs, then the buffer is answered"
+  },
+  {
+   "old": "method_46545()Lnet/minecraft/class_7566$class_7855;",
+   "new": "method_53611()Lnet/minecraft/class_7855;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44568()Ljava/util/UUID;",
+   "new": "method_53612()Ljava/util/UUID;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44579()Lit/unimi/dsi/fastutil/ints/IntSet;",
+   "new": "method_53597()Lit/unimi/dsi/fastutil/ints/IntSet;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44582()Ljava/lang/String;",
+   "new": "method_53613()Ljava/lang/String;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44576(Ljava/lang/String;)V",
+   "new": "method_53610(Ljava/lang/String;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44583()Lnet/minecraft/class_7573;",
+   "new": "method_53614()Lnet/minecraft/class_7573;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44574(Lnet/minecraft/class_7573;)V",
+   "new": "method_53609(Lnet/minecraft/class_7573;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44569(I)V",
+   "new": "method_53598(I)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44580(I)Z",
+   "new": "method_53603(I)Z",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_46546()Z",
+   "new": "method_53602()Z",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44584()Lnet/minecraft/class_7566$class_7567;",
+   "new": "method_53605()Lnet/minecraft/class_7855$class_7567;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44575(Lnet/minecraft/class_7574;)Lcom/mojang/datafixers/util/Either;",
+   "new": "method_53600(Lnet/minecraft/class_7574;)Lcom/mojang/datafixers/util/Either;",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_44585()Lnet/minecraft/class_7566;",
+   "new": "method_53606()Lnet/minecraft/class_7566$class_8772;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_7566",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_11227()I",
+   "new": "method_11167()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2613",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_11230()Ljava/util/UUID;",
+   "new": "method_11164()Ljava/util/UUID;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2613",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_11231()D",
+   "new": "method_11175()D",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2613",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_11232()D",
+   "new": "method_11174()D",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2613",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_11233()D",
+   "new": "method_11176()D",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2613",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_11235(Lnet/minecraft/class_2602;)V",
+   "new": "method_11178(Lnet/minecraft/class_2602;)V",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_2613",
+   "frames": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "superCalls": "rewrite",
+   "basis": "s1net: the 1.20.1 member lives on under another 1.20.2 name (class moved); forwards, super call rewritten"
+  },
+  {
+   "old": "method_11234()B",
+   "new": "method_11168()F",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbNet.cbAngleOfByte(B)F",
+   "onlyUnder": "net/minecraft/class_2613",
+   "basis": "s1net: a 1.20.1 override's packed angle byte, answered in the degrees 1.20.2's getter answers; its super call reads the packet's byte (instance redirect)"
+  },
+  {
+   "old": "method_11228()B",
+   "new": "method_11171()F",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbNet.cbAngleOfByte(B)F",
+   "onlyUnder": "net/minecraft/class_2613",
+   "basis": "s1net: a 1.20.1 override's packed angle byte, answered in the degrees 1.20.2's getter answers; its super call reads the packet's byte (instance redirect)"
+  },
+  {
+   "old": "method_11097(Lnet/minecraft/class_2613;)V",
+   "new": "method_11112(Lnet/minecraft/class_2604;)V",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyPlayerSpawn",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNet.cbSpawnEntity(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacyPlayerSpawn;Lnet/minecraft/class_2604;)V",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "args": [
+    0
+   ],
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_2602",
+   "basis": "s1net: 1.20.2 spawns players through onEntitySpawn; a PLAYER spawn reaches the 1.20.1 onPlayerSpawn override"
+  },
+  {
+   "old": "method_2859(II)V",
+   "new": "method_2859(Lnet/minecraft/class_1923;)V",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyChunkDrop",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNetClient.cbDropChunk(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacyChunkDrop;Lnet/minecraft/class_1923;)V",
+   "onlyUnder": "net/minecraft/class_631",
+   "basis": "s1net: unload(x, z) became unload(ChunkPos); the override gets the position's coordinates"
+  },
+  {
+   "old": "method_18107(ILnet/minecraft/class_742;)V",
+   "new": "method_53875(Lnet/minecraft/class_1297;)V",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyEntityAdder",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNetClient.cbAddEntity(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacyEntityAdder;Lnet/minecraft/class_1297;)V",
+   "onlyUnder": "net/minecraft/class_638",
+   "basis": "s1net: addPlayer / addEntity(id, entity) folded into addEntity(entity); routed by kind, the entity's own id"
+  },
+  {
+   "old": "method_2942(ILnet/minecraft/class_1297;)V",
+   "new": "method_53875(Lnet/minecraft/class_1297;)V",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyEntityAdder",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNetClient.cbAddEntity(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacyEntityAdder;Lnet/minecraft/class_1297;)V",
+   "onlyUnder": "net/minecraft/class_638",
+   "basis": "s1net: addPlayer / addEntity(id, entity) folded into addEntity(entity); routed by kind, the entity's own id"
+  },
+  {
+   "old": "method_2912(ILnet/minecraft/class_1860;Z)V",
+   "new": "method_2912(ILnet/minecraft/class_8786;Z)V",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbNet.cbRecipeOf(Lnet/minecraft/class_8786;)Lnet/minecraft/class_1860;",
+   "onlyUnder": "net/minecraft/class_636",
+   "basis": "s1net: clickRecipe takes the RecipeEntry; the 1.20.1 override gets its recipe"
+  },
+  {
+   "old": "method_51802(Lnet/minecraft/class_1937;Lnet/minecraft/class_161;)V",
+   "new": "method_51802(Lnet/minecraft/class_1937;Lnet/minecraft/class_8779;)V",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbNet.cbAdvancementOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;",
+   "onlyUnder": "net/minecraft/class_7975",
+   "basis": "s1net: onAdvancementMade takes the AdvancementEntry; the 1.20.1 override gets its advancement"
+  },
+  {
+   "old": "method_11928()Ljava/util/Map;",
+   "new": "method_11928()Ljava/util/List;",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbNet.cbAdvancementEntries(Ljava/util/Map;)Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_2779",
+   "basis": "s1net: getAdvancementsToEarn answers entries; a 1.20.1 override's builders are built under their ids"
+  },
+  {
+   "old": "decorate(Lnet/minecraft/class_3222;Lnet/minecraft/class_2561;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "decorate(Lnet/minecraft/class_3222;Lnet/minecraft/class_2561;)Lnet/minecraft/class_2561;",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyChatDecorator",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNet.cbDecorate(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacyChatDecorator;Lnet/minecraft/class_3222;Lnet/minecraft/class_2561;)Lnet/minecraft/class_2561;",
+   "onlyUnder": "net/minecraft/class_7492",
+   "basis": "s1net: decorate answers the message in 1.20.2; a 1.20.1 decorator's future is waited for (see cbDecorate)"
+  },
+  {
+   "old": "method_2968()Lnet/minecraft/class_2960;",
+   "new": "method_52810()Lnet/minecraft/class_8685;",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacySkin",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNetClient.cbSkin(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacySkin;)Lnet/minecraft/class_8685;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "onlyUnder": "net/minecraft/class_640",
+   "basis": "s1net: 1.20.2 reads the skin as one record; it is rebuilt from the 1.20.1 getters a subclass overrides"
+  },
+  {
+   "old": "method_2979()Lnet/minecraft/class_2960;",
+   "new": "method_52810()Lnet/minecraft/class_8685;",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacySkin",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNetClient.cbSkin(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacySkin;)Lnet/minecraft/class_8685;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "onlyUnder": "net/minecraft/class_640",
+   "basis": "s1net: 1.20.2 reads the skin as one record; it is rebuilt from the 1.20.1 getters a subclass overrides"
+  },
+  {
+   "old": "method_2957()Lnet/minecraft/class_2960;",
+   "new": "method_52810()Lnet/minecraft/class_8685;",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacySkin",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNetClient.cbSkin(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacySkin;)Lnet/minecraft/class_8685;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "onlyUnder": "net/minecraft/class_640",
+   "basis": "s1net: 1.20.2 reads the skin as one record; it is rebuilt from the 1.20.1 getters a subclass overrides"
+  },
+  {
+   "old": "method_2977()Ljava/lang/String;",
+   "new": "method_52810()Lnet/minecraft/class_8685;",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacySkin",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbNetClient.cbSkin(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacySkin;)Lnet/minecraft/class_8685;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "onlyUnder": "net/minecraft/class_640",
+   "basis": "s1net: 1.20.2 reads the skin as one record; it is rebuilt from the 1.20.1 getters a subclass overrides"
   }
  ],
  "superCtorReshapes": {
@@ -401,6 +702,35 @@
    "ops": [
     "conv top/dext/centurybridge/rt/v1_20_2/CbNet#cbQueryServer(Lnet/minecraft/class_3242;)Lnet/minecraft/class_8599;"
    ]
+  },
+  "net/minecraft/class_7566$class_7568.<init>(Ljava/util/UUID;Lcom/mojang/authlib/minecraft/report/AbuseReport;)V": {
+   "desc": "(Ljava/util/UUID;Lnet/minecraft/class_8776;Lcom/mojang/authlib/minecraft/report/AbuseReport;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNetClient#cbChatReportType()Lnet/minecraft/class_8776;",
+    "keep:1"
+   ]
+  },
+  "net/minecraft/class_2613.<init>(Lnet/minecraft/class_1657;)V": {
+   "desc": "(Lnet/minecraft/class_1297;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_1297;"
+   ]
+  },
+  "net/minecraft/class_634.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_437;Lnet/minecraft/class_2535;Lnet/minecraft/class_642;Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_2535;Lnet/minecraft/class_8675;)V",
+   "ops": [
+    "keep:0",
+    "keep:2",
+    "conv:4,5,3,1 top/dext/centurybridge/rt/v1_20_2/CbNetClient#cbClientCookie(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;Lnet/minecraft/class_642;Lnet/minecraft/class_437;)Lnet/minecraft/class_8675;"
+   ]
+  },
+  "net/minecraft/class_7615$class_7616.<init>(Lnet/minecraft/class_7500;)V": {
+   "desc": "(Lnet/minecraft/class_7500;Ljava/util/function/BooleanSupplier;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNet#cbNeverExpired()Ljava/util/function/BooleanSupplier;"
+   ]
   }
  },
  "callReshapes": {
@@ -430,6 +760,54 @@
     "conv top/dext/centurybridge/rt/v1_20_2/CbNet#cbRecipeEntry(Lnet/minecraft/class_1860;)Lnet/minecraft/class_8786;",
     "keep"
    ]
+  },
+  "net/minecraft/class_7563.method_44563(Ljava/util/UUID;Lcom/mojang/authlib/minecraft/report/AbuseReport;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Ljava/util/UUID;Lnet/minecraft/class_8776;Lcom/mojang/authlib/minecraft/report/AbuseReport;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNetClient#cbChatReportType()Lnet/minecraft/class_8776;",
+    "keep:1"
+   ]
+  },
+  "net/minecraft/class_7563$class_7565.method_44563(Ljava/util/UUID;Lcom/mojang/authlib/minecraft/report/AbuseReport;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Ljava/util/UUID;Lnet/minecraft/class_8776;Lcom/mojang/authlib/minecraft/report/AbuseReport;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/rt/v1_20_2/CbNetClient#cbChatReportType()Lnet/minecraft/class_8776;",
+    "keep:1"
+   ]
+  },
+  "net/minecraft/class_7574.method_46553(Lnet/minecraft/class_7566$class_7855;)V": {
+   "desc": "(Lnet/minecraft/class_7855;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_7855;"
+   ]
+  },
+  "net/minecraft/class_631.method_2859(II)V": {
+   "desc": "(Lnet/minecraft/class_1923;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/rt/v1_20_2/CbNet#cbChunkPos(II)Lnet/minecraft/class_1923;"
+   ]
+  },
+  "net/minecraft/class_7975.method_51802(Lnet/minecraft/class_1937;Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_8779;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbNetClient#cbAdvancementEntry(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ]
+  },
+  "net/minecraft/class_2779.method_11928()Ljava/util/Map;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbNet#cbAdvancementBuilders(Ljava/util/List;)Ljava/util/Map;"
+  },
+  "net/minecraft/class_7492.decorate(Lnet/minecraft/class_3222;Lnet/minecraft/class_2561;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_2561;)Lnet/minecraft/class_2561;",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbNet#cbDecorated(Lnet/minecraft/class_2561;)Ljava/util/concurrent/CompletableFuture;"
   }
  },
  "instanceRedirects": {
@@ -447,14 +825,57 @@
   "net/minecraft/class_2803.comp_270()I": "top/dext/centurybridge/rt/v1_20_2/CbNet",
   "net/minecraft/class_2803.comp_271()Lnet/minecraft/class_1306;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
   "net/minecraft/class_2803.comp_272()Z": "top/dext/centurybridge/rt/v1_20_2/CbNet",
-  "net/minecraft/class_2803.comp_273()Z": "top/dext/centurybridge/rt/v1_20_2/CbNet"
+  "net/minecraft/class_2803.comp_273()Z": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_7566.method_46545()Lnet/minecraft/class_7566$class_7855;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44568()Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44579()Lit/unimi/dsi/fastutil/ints/IntSet;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44582()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44576(Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44583()Lnet/minecraft/class_7573;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44574(Lnet/minecraft/class_7573;)V": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44569(I)V": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44580(I)Z": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_46546()Z": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44584()Lnet/minecraft/class_7566$class_7567;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44575(Lnet/minecraft/class_7574;)Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566.method_44585()Lnet/minecraft/class_7566;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566$class_7855.method_46548(ILcom/mojang/authlib/minecraft/report/AbuseReportLimits;)V": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7566$class_7855.method_46547()Lnet/minecraft/class_7566$class_7855;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_2613.method_11227()I": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2613.method_11230()Ljava/util/UUID;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2613.method_11231()D": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2613.method_11232()D": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2613.method_11233()D": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2613.method_11234()B": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2613.method_11228()B": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2613.method_11235(Lnet/minecraft/class_2602;)V": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_90()Lnet/minecraft/class_1934;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_91()Lnet/minecraft/class_1934;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_93()Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_94()Lnet/minecraft/class_5321;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_95()Lnet/minecraft/class_5321;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_96()J": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_101()Z": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_102()Z": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_860()Ljava/util/Optional;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2678.comp_1532()I": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_7822.method_46296()Lnet/minecraft/class_7615;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_7822$class_7823.method_46300(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7500;Ljava/time/Duration;)Lnet/minecraft/class_7822;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2915.comp_907()Ljava/util/Optional;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_2602.method_45728(Lnet/minecraft/class_7832;)V": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_7832.method_46348(Lnet/minecraft/class_2602;)V": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_3248.method_14384()V": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_3248.method_14375(Lcom/mojang/authlib/GameProfile;)Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/rt/v1_20_2/CbNet"
  },
  "staticRedirects": {
   "net/minecraft/class_2539.method_10782(I)Lnet/minecraft/class_2539;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
   "net/minecraft/class_2539.method_10786(Lnet/minecraft/class_2596;)Lnet/minecraft/class_2539;": "top/dext/centurybridge/rt/v1_20_2/CbNet",
   "net/minecraft/class_2540.method_10815(I)I": "top/dext/centurybridge/rt/v1_20_2/CbNet",
   "net/minecraft/class_2540.method_36129(J)I": "top/dext/centurybridge/rt/v1_20_2/CbNet",
-  "net/minecraft/class_2788.method_17816(Lnet/minecraft/class_2540;Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/CbNet"
+  "net/minecraft/class_2788.method_17816(Lnet/minecraft/class_2540;Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/rt/v1_20_2/CbNet",
+  "net/minecraft/class_8496.method_51260(Lnet/minecraft/class_310;Lnet/minecraft/class_542$class_8495;Lnet/minecraft/class_4011;Lnet/minecraft/class_4341;)V": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_2859.method_12418(Lnet/minecraft/class_161;)Lnet/minecraft/class_2859;": "top/dext/centurybridge/rt/v1_20_2/CbNetClient",
+  "net/minecraft/class_2564.method_10882(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_2561;": "top/dext/centurybridge/rt/v1_20_2/CbNet"
  },
  "fieldRedirects": {
   "net/minecraft/class_2658.field_12158:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbNetChannels",
@@ -511,6 +932,52 @@
   "net/minecraft/class_2724.method_28121()Z",
   "net/minecraft/class_2724.method_44326()Ljava/util/Optional;",
   "net/minecraft/class_2724.method_51892()I",
-  "net/minecraft/class_2540.method_36132()[B"
- ]
+  "net/minecraft/class_2540.method_36132()[B",
+  "net/minecraft/class_638.method_18107(ILnet/minecraft/class_742;)V",
+  "net/minecraft/class_638.method_2942(ILnet/minecraft/class_1297;)V",
+  "net/minecraft/class_634.method_45728(Lnet/minecraft/class_7832;)V",
+  "net/minecraft/class_640.method_2968()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_640.method_2979()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_640.method_2957()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_640.method_2977()Ljava/lang/String;",
+  "net/minecraft/class_640.method_2967()Z",
+  "net/minecraft/class_640.method_35757()Z",
+  "net/minecraft/class_640.method_2969()V"
+ ],
+ "classRenames": {
+  "net/minecraft/class_7566": "net/minecraft/class_7566$class_8772",
+  "net/minecraft/class_7566$class_7855": "net/minecraft/class_7566",
+  "net/minecraft/class_7566$class_7567": "net/minecraft/class_7855$class_7567",
+  "net/minecraft/class_7566$class_7568": "net/minecraft/class_7855$class_7568",
+  "net/minecraft/class_2613": "net/minecraft/class_2604"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_2678.<init>(IZLnet/minecraft/class_1934;Lnet/minecraft/class_1934;Ljava/util/Set;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;JIIIZZZZLjava/util/Optional;I)V": "top/dext/centurybridge/rt/v1_20_2/CbNet#cbNewJoinPacket"
+ },
+ "fieldRenames": {
+  "net/minecraft/class_1124.field_5496:Lnet/minecraft/class_1124$class_1125;": "field_46200"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_7492.decorate(Lnet/minecraft/class_3222;Lnet/minecraft/class_2561;)Ljava/util/concurrent/CompletableFuture;": {
+   "iface": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyChatDecorator",
+   "adapt": "top/dext/centurybridge/rt/v1_20_2/CbNet#cbChatDecorator(Ltop/dext/centurybridge/rt/v1_20_2/CbNetLegacyChatDecorator;)Lnet/minecraft/class_7492;"
+  }
+ },
+ "ledger": {
+  "net/minecraft/class_2535.field_11648:Lio/netty/util/AttributeKey;": "1.20.2 keeps one protocol per direction: each direction's codec sits in its own channel attribute (Connection.ATTRIBUTE_SERVERBOUND_PROTOCOL / ATTRIBUTE_CLIENTBOUND_PROTOCOL) and switches by itself when a packet ending a phase passes the encoder or decoder; no attribute holds the one NetworkState 1.20.1's did",
+  "net/minecraft/class_8039.field_41877:Lio/netty/util/AttributeKey;": "1.20.2's bundler handlers read the protocol codec of their own direction (see Connection); the side-indexed provider attribute 1.20.1 set beside the protocol is gone and nothing in 1.20.2 reads or writes one",
+  "net/minecraft/class_8039$class_8041": "a 1.20.1 BundlerInfo.Provider answers per side; 1.20.2's providers are the per-direction codecs, asked without one (getBundlerInfo()), and no 1.20.2 code asks a mod's provider (the bundler handlers read the codec attribute): there is neither a side to pass a 1.20.1 implementation or lambda nor a caller to reach it (calls through the interface are bridged per side, instanceRedirects)",
+  "net/minecraft/class_2547": "1.20.2 asks every packet listener its flow and protocol (Connection.setListener checks both); a class implementing only this 1.20.1 base interface declares neither (the specific play/login/status... interfaces supply them), and in 1.20.1 it could not be handed a packet either (Packet.apply casts the listener to the packet's own interface)",
+  "net/minecraft/class_7633": "as PacketListener: a class implementing only TickablePacketListener declares no flow or protocol, which 1.20.2 requires of every listener it attaches",
+  "net/minecraft/class_6857": "as PacketListener: a class implementing only ServerPacketListener declares no protocol, which 1.20.2 requires of every listener it attaches",
+  "net/minecraft/class_2602": "1.20.2's play listener must also answer play packets 1.20.2 added -- chunk batch start/finish (the finish answered by a ChunkBatchReceived acknowledgement the server's chunk sender waits for), StartConfiguration (hand the connection back to configuration) and PongResponse; a 1.20.1 implementation has no code for these protocol obligations and the interface gives no connection to answer on (its renamed methods are hooked, overrideHooks)",
+  "net/minecraft/class_2602.method_11097(Lnet/minecraft/class_2613;)V": "1.20.2 spawns players with EntitySpawnS2CPacket through onEntitySpawn, which every implementation of the interface declares itself, so an implementation's onPlayerSpawn has no caller (calls are renamed to onEntitySpawn; on ClientPlayNetworkHandler subclasses player spawns are routed to it, overrideHooks)",
+  "net/minecraft/class_2602.method_45728(Lnet/minecraft/class_7832;)V": "1.20.2 delivers the enabled features to the configuration listener (ClientConfigurationPacketListener.onFeatures) before any play listener exists and hands them to ClientPlayNetworkHandler's constructor; no play listener is sent them (calls reach the listener's own 1.20.1 method, CbNetClient.method_45728)",
+  "net/minecraft/class_634.method_45728(Lnet/minecraft/class_7832;)V": "as ClientGamePacketListener.onFeatures: vanilla 1.20.2 never sends a play handler the features; the 1.20.1 body is put back for calls (CbNetClientPacketListenerBridge), an override is not called by vanilla",
+  "net/minecraft/class_2792": "1.20.2's play listener must also answer ChunkBatchReceived (the chunk sender's flow control), ConfigurationAcknowledged (the reconfiguration handshake) and QueryPing (moved in from the status listener); a 1.20.1 implementation has no code for these protocol obligations (its renamed methods are hooked, overrideHooks)",
+  "net/minecraft/class_2911": "1.20.2's login ends with the client's LoginAcknowledged, which onEnterConfiguration must answer by handing the connection to the configuration phase; a 1.20.1 login listener has no configuration phase to enter (1.20.1's server moved the connection straight to PLAY after LoginSuccess)",
+  "net/minecraft/class_3248.method_14384()V": "an override: 1.20.2 split acceptPlayer into private steps (verifyLoginAndFinishConnectionSetup, finishLoginAndWaitForClient) and places the player after LoginAcknowledged, in the configuration phase; nothing overridable is left for it to stand for (calls run the 1.20.2 acceptance step, CbNet.method_14384)",
+  "net/minecraft/class_3248.method_14375(Lcom/mojang/authlib/GameProfile;)Lcom/mojang/authlib/GameProfile;": "an override: 1.20.2 builds offline profiles only through the protected static createOfflineProfile(name), so no instance method is left to override (calls and super calls answer that static, CbNet.method_14375)",
+  "net/minecraft/class_634.method_11097(Lnet/minecraft/class_2613;)V": "a ClientPlayNetworkHandler subclass overriding both onEntitySpawn and onPlayerSpawn: 1.20.2 sends player spawns to onEntitySpawn, which the subclass declares itself, so its onPlayerSpawn is not called (a subclass overriding only onPlayerSpawn has PLAYER spawns routed to it, overrideHooks; calls are renamed to onEntitySpawn)"
+ }
 }

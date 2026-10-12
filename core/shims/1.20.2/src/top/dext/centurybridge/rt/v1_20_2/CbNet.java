@@ -443,6 +443,16 @@ public final class CbNet {
         net.minecraft.class_2788.method_17816(buf, cbRecipeEntry(recipe));
     }
 
+    /** the recipe a 1.20.2 RecipeEntry holds, for a 1.20.1 override that took the recipe itself */
+    public static net.minecraft.class_1860<?> cbRecipeOf(net.minecraft.class_8786<?> entry) {
+        return entry.comp_1933();
+    }
+
+    /** the advancement a 1.20.2 AdvancementEntry holds, for a 1.20.1 override that took the advancement itself */
+    public static net.minecraft.class_161 cbAdvancementOf(net.minecraft.class_8779 entry) {
+        return entry.comp_1920();
+    }
+
     // ---------------------------------------------------------------- server play handler
 
     /**
@@ -452,6 +462,303 @@ public final class CbNet {
      */
     public static net.minecraft.class_8792 cbCookieFor(net.minecraft.class_3222 player) {
         return net.minecraft.class_8792.method_53824(player.method_7334());
+    }
+
+    // ---------------------------------------------------------------- server login handler
+
+    /**
+     * ServerLoginNetworkHandler.acceptPlayer(): 1.20.1's last login step -- check the player may
+     * join, enable compression, send LoginSuccess, place the player (or wait for a duplicate to
+     * leave). 1.20.2 does that check-and-success step in verifyLoginAndFinishConnectionSetup for the
+     * authenticated profile (and places the player after the client's acknowledgement, in the
+     * configuration phase), which is what vanilla's tick calls where 1.20.1's called acceptPlayer.
+     */
+    public static void method_14384(net.minecraft.class_3248 handler) {
+        top.dext.centurybridge.shims.v1_20_2.CbNetLoginAccessor a = (top.dext.centurybridge.shims.v1_20_2.CbNetLoginAccessor) handler;
+        a.cb$verifyLoginAndFinishConnectionSetup(java.util.Objects.requireNonNull(a.cb$authenticatedProfile()));
+    }
+
+    /**
+     * ServerLoginNetworkHandler.toOfflineProfile(profile): the offline profile of the profile's name,
+     * which 1.20.2 makes with its protected static createOfflineProfile(name).
+     */
+    public static com.mojang.authlib.GameProfile method_14375(net.minecraft.class_3248 handler,
+            com.mojang.authlib.GameProfile profile) {
+        return top.dext.centurybridge.shims.v1_20_2.CbNetLoginAccessor.cb$createOfflineProfile(profile.getName());
+    }
+
+    // ---------------------------------------------------------------- join packet
+
+    /** the registries a join packet carried in 1.20.1, which 1.20.2 sends in the configuration phase instead */
+    private static final java.util.Map<Object, net.minecraft.class_5455.class_6890> JOIN_REGISTRIES =
+        new com.google.common.collect.MapMaker().weakKeys().makeMap();
+
+    /**
+     * GameJoinS2CPacket's 1.20.1 constructor. 1.20.2 bundles the spawn values (as for respawn), drops
+     * the registries -- remembered here for registryManager() -- and adds doLimitedCrafting, which a
+     * 1.20.1 client never knew: false, the recipe book a 1.20.1 client showed.
+     */
+    public static net.minecraft.class_2678 cbNewJoinPacket(int playerId, boolean hardcore, net.minecraft.class_1934 gameMode,
+            net.minecraft.class_1934 previousGameMode, java.util.Set<net.minecraft.class_5321<net.minecraft.class_1937>> dimensions,
+            net.minecraft.class_5455.class_6890 registries, net.minecraft.class_5321<net.minecraft.class_2874> dimensionType,
+            net.minecraft.class_5321<net.minecraft.class_1937> dimension, long seed, int maxPlayers, int viewDistance,
+            int simulationDistance, boolean reducedDebugInfo, boolean showDeathScreen, boolean debug, boolean flat,
+            java.util.Optional<net.minecraft.class_4208> lastDeath, int portalCooldown) {
+        net.minecraft.class_2678 packet = new net.minecraft.class_2678(playerId, hardcore, dimensions, maxPlayers, viewDistance,
+            simulationDistance, reducedDebugInfo, showDeathScreen, false,
+            cbSpawnInfo(dimensionType, dimension, seed, gameMode, previousGameMode, debug, flat, lastDeath, portalCooldown));
+        if (registries != null) {
+            JOIN_REGISTRIES.put(packet, registries);
+        }
+        return packet;
+    }
+
+    /** the client handled a join packet with these synced registries (CbNetClientPacketListenerBridge) */
+    public static void cbRecordJoinRegistries(net.minecraft.class_2678 packet, net.minecraft.class_5455.class_6890 registries) {
+        JOIN_REGISTRIES.put(packet, registries);
+    }
+
+    /**
+     * GameJoinS2CPacket.registryManager(): the registries the packet was built with, or -- for a
+     * received one -- those the client synced for the connection it arrived on, which 1.20.2 sends
+     * ahead of it in the configuration phase.
+     */
+    public static net.minecraft.class_5455.class_6890 comp_93(net.minecraft.class_2678 packet) {
+        net.minecraft.class_5455.class_6890 r = JOIN_REGISTRIES.get(packet);
+        if (r == null) {
+            throw new IllegalStateException("CenturyBridge: this join packet's registries are not known yet -- 1.20.2"
+                + " sends them before it, in the configuration phase, and they reach the packet when the client handles it");
+        }
+        return r;
+    }
+
+    /** GameJoinS2CPacket.gameMode() */
+    public static net.minecraft.class_1934 comp_90(net.minecraft.class_2678 p) {
+        return p.comp_1727().comp_1556();
+    }
+
+    /** .previousGameMode() */
+    public static net.minecraft.class_1934 comp_91(net.minecraft.class_2678 p) {
+        return p.comp_1727().comp_1557();
+    }
+
+    /** .dimensionType() */
+    public static net.minecraft.class_5321<net.minecraft.class_2874> comp_94(net.minecraft.class_2678 p) {
+        return p.comp_1727().comp_1553();
+    }
+
+    /** .dimensionId() */
+    public static net.minecraft.class_5321<net.minecraft.class_1937> comp_95(net.minecraft.class_2678 p) {
+        return p.comp_1727().comp_1554();
+    }
+
+    /** .sha256Seed() */
+    public static long comp_96(net.minecraft.class_2678 p) {
+        return p.comp_1727().comp_1555();
+    }
+
+    /** .debugWorld() */
+    public static boolean comp_101(net.minecraft.class_2678 p) {
+        return p.comp_1727().comp_1558();
+    }
+
+    /** .flatWorld() */
+    public static boolean comp_102(net.minecraft.class_2678 p) {
+        return p.comp_1727().comp_1559();
+    }
+
+    /** .lastDeathLocation() */
+    public static java.util.Optional<net.minecraft.class_4208> comp_860(net.minecraft.class_2678 p) {
+        return p.comp_1727().comp_1560();
+    }
+
+    /** .portalCooldown() */
+    public static int comp_1532(net.minecraft.class_2678 p) {
+        return p.comp_1727().comp_1561();
+    }
+
+    // ---------------------------------------------------------------- chat sessions
+
+    /**
+     * PublicPlayerSession.createVerifier(): 1.20.1's verifier checked signatures only; 1.20.2's also
+     * rejects messages once the key has expired, given a grace period. A verifier made the 1.20.1
+     * way never expires.
+     */
+    public static net.minecraft.class_7615 method_46296(net.minecraft.class_7822 session) {
+        return new net.minecraft.class_7615.class_7616(session.comp_1086().method_43697(), cbNeverExpired());
+    }
+
+    /** MessageVerifier.KeyBased(verifier): the 1.20.1 verifier had no expiry check */
+    public static java.util.function.BooleanSupplier cbNeverExpired() {
+        return () -> false;
+    }
+
+    /**
+     * PublicPlayerSession.Serialized.toSession(profile, verifier, gracePeriod): 1.20.1 refused a key
+     * expired beyond the grace period (EXPIRED_PUBLIC_KEY) before checking its signature; 1.20.2 left
+     * expiry to the message verifier, so the check is made here as 1.20.1 made it.
+     */
+    public static net.minecraft.class_7822 method_46300(net.minecraft.class_7822.class_7823 data, com.mojang.authlib.GameProfile profile,
+            net.minecraft.class_7500 verifier, java.time.Duration gracePeriod) throws net.minecraft.class_7428.class_7652 {
+        if (data.comp_1088().method_45103(gracePeriod)) {
+            throw new net.minecraft.class_7428.class_7652(net.minecraft.class_7428.field_39954);
+        }
+        return data.method_46300(profile, verifier);
+    }
+
+    /** LoginHelloC2SPacket.profileId(): 1.20.1 had it optional, 1.20.2's client always sends one */
+    public static java.util.Optional<java.util.UUID> comp_907(net.minecraft.class_2915 p) {
+        return java.util.Optional.ofNullable(p.comp_907());
+    }
+
+    /**
+     * Texts.toText(GameProfile), gone from 1.20.2. 1.20.1's body: the name, else the id, else
+     * "(unknown)", as a literal.
+     */
+    public static net.minecraft.class_2561 method_10882(com.mojang.authlib.GameProfile profile) {
+        if (profile.getName() != null) {
+            return net.minecraft.class_2561.method_43470(profile.getName());
+        }
+        if (profile.getId() != null) {
+            return net.minecraft.class_2561.method_43470(profile.getId().toString());
+        }
+        return net.minecraft.class_2561.method_43470("(unknown)");
+    }
+
+    // ---------------------------------------------------------------- chat decorator
+
+    /**
+     * MessageDecorator.decorate(sender, message) answered a CompletableFuture in 1.20.1; 1.20.2
+     * decorates synchronously. A 1.20.1 caller gets the decorated message as an already completed future.
+     */
+    public static java.util.concurrent.CompletableFuture<net.minecraft.class_2561> cbDecorated(net.minecraft.class_2561 message) {
+        return java.util.concurrent.CompletableFuture.completedFuture(message);
+    }
+
+    /**
+     * A 1.20.1 decorator asked the 1.20.2 way, on the server thread inside the chat handler. 1.20.1
+     * chained the handling onto the decorator's future and let the server thread run on; 1.20.2 waits
+     * for the answer here. A future the decorator completes through the server's own task queue could
+     * never finish while that thread just waited, so the queue is run until it does (as vanilla does
+     * when it blocks the server thread itself); any other future is waited for.
+     */
+    public static net.minecraft.class_2561 cbDecorate(CbNetLegacyChatDecorator self, net.minecraft.class_3222 sender,
+            net.minecraft.class_2561 message) {
+        java.util.concurrent.CompletableFuture<net.minecraft.class_2561> future = self.decorate(sender, message);
+        if (!future.isDone() && sender != null && sender.field_13995.method_18854()) {
+            sender.field_13995.method_18857(future::isDone);
+        }
+        return future.join();
+    }
+
+    /**
+     * A 1.20.1 lambda or method reference implementing MessageDecorator, built by the converter as
+     * the old shape (lambdaAdapters): the 1.20.2 decorator answers through cbDecorate.
+     */
+    public static net.minecraft.class_7492 cbChatDecorator(CbNetLegacyChatDecorator legacy) {
+        return (sender, message) -> cbDecorate(legacy, sender, message);
+    }
+
+    // ---------------------------------------------------------------- advancement update packet
+
+    /**
+     * AdvancementUpdateS2CPacket.getAdvancementsToEarn(): 1.20.1 carried a builder per advancement id;
+     * 1.20.2 carries the built entries. Each builder is made back from its entry's advancement --
+     * parent, display, rewards, criteria, requirements, telemetry flag -- as 1.20.1 read it off the wire.
+     */
+    public static java.util.Map<net.minecraft.class_2960, net.minecraft.class_161.class_162> cbAdvancementBuilders(
+            java.util.List<net.minecraft.class_8779> entries) {
+        java.util.Map<net.minecraft.class_2960, net.minecraft.class_161.class_162> out = new java.util.LinkedHashMap<>();
+        for (net.minecraft.class_8779 entry : entries) {
+            net.minecraft.class_161 a = entry.comp_1920();
+            net.minecraft.class_161.class_162 b = new net.minecraft.class_161.class_162();
+            a.comp_1912().ifPresent(b::method_708);
+            a.comp_1913().ifPresent(b::method_693);
+            b.method_706(a.comp_1914());
+            a.comp_1915().forEach(b::method_705);
+            b.method_34884(a.comp_1916());
+            if (a.comp_1917()) {
+                b.method_53634();
+            }
+            out.put(entry.comp_1919(), b);
+        }
+        return out;
+    }
+
+    /** ... and back, for vanilla 1.20.2 asking a 1.20.1 override: each builder built under its id */
+    public static java.util.List<net.minecraft.class_8779> cbAdvancementEntries(
+            java.util.Map<net.minecraft.class_2960, net.minecraft.class_161.class_162> builders) {
+        java.util.List<net.minecraft.class_8779> out = new java.util.ArrayList<>(builders.size());
+        builders.forEach((id, b) -> out.add(b.method_695(id)));
+        return out;
+    }
+
+    // ---------------------------------------------------------------- player spawn packet
+
+    // 1.20.2 removed PlayerSpawnS2CPacket: players spawn with EntitySpawnS2CPacket, and a 1.20.1
+    // reference to the old packet names that one (classRenames class_2613 -> class_2604).
+
+    /** PlayerSpawnS2CPacket.getId() */
+    public static int method_11227(net.minecraft.class_2604 p) {
+        return p.method_11167();
+    }
+
+    /** .getPlayerUuid() */
+    public static java.util.UUID method_11230(net.minecraft.class_2604 p) {
+        return p.method_11164();
+    }
+
+    /** .getX() */
+    public static double method_11231(net.minecraft.class_2604 p) {
+        return p.method_11175();
+    }
+
+    /** .getY() */
+    public static double method_11232(net.minecraft.class_2604 p) {
+        return p.method_11174();
+    }
+
+    /** .getZ() */
+    public static double method_11233(net.minecraft.class_2604 p) {
+        return p.method_11176();
+    }
+
+    /**
+     * .getYaw(): 1.20.1 answered the packed byte the packet carries; 1.20.2's packet stores the same
+     * byte and answers it in degrees. Read off the field (not the getter) so that a subclass's own
+     * super.getYaw() never comes back into its override.
+     */
+    public static byte method_11234(net.minecraft.class_2604 p) {
+        return ((top.dext.centurybridge.shims.v1_20_2.CbNetAddEntityAccessor) p).cb$yaw();
+    }
+
+    /** .getPitch(): the packed pitch byte, as getYaw */
+    public static byte method_11228(net.minecraft.class_2604 p) {
+        return ((top.dext.centurybridge.shims.v1_20_2.CbNetAddEntityAccessor) p).cb$pitch();
+    }
+
+    /** a 1.20.1 override's packed angle byte, as the degrees 1.20.2's getter answers (byte * 360 / 256, as 1.20.2 unpacks it) */
+    public static float cbAngleOfByte(byte packed) {
+        return packed * 360 / 256.0F;
+    }
+
+    /** PlayerSpawnS2CPacket.apply(listener): the player spawns through the listener's onEntitySpawn */
+    public static void method_11235(net.minecraft.class_2604 p, net.minecraft.class_2602 listener) {
+        p.method_11178(listener);
+    }
+
+    /**
+     * onEntitySpawn on a 1.20.1 ClientPlayNetworkHandler subclass that overrides onPlayerSpawn:
+     * 1.20.1 handed it the spawns of players, 1.20.2 sends those as entity spawns of type PLAYER --
+     * so those go to the override, everything else to vanilla (asking the listener again reaches
+     * super's onEntitySpawn through the hook's guard).
+     */
+    public static void cbSpawnEntity(CbNetLegacyPlayerSpawn self, net.minecraft.class_2604 packet) {
+        if (packet.method_11169() == net.minecraft.class_1299.field_6097) {
+            self.method_11097(packet);
+        } else {
+            ((net.minecraft.class_2602) self).method_11112(packet);
+        }
     }
 
     private CbNet() {
