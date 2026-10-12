@@ -1,6 +1,23 @@
 accessWidener	v2	intermediary
 extendable	class	net/minecraft/class_2960
-accessible	method	net/minecraft/class_2960	<init>	(Ljava/lang/String;Ljava/lang/String;)V
-accessible	method	net/minecraft/class_7655$class_7657	<init>	(Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;)V
-accessible	method	net/minecraft/class_7655	method_45121	(Lnet/minecraft/class_7655$class_7656;Lnet/minecraft/class_5455;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;
 extendable	class	net/minecraft/class_5454
+
+# ---- BEGIN GENERATED (s6world): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible field net/minecraft/class_1657 field_49991 Z
+accessible method net/minecraft/class_1308 method_6110 ()I
+accessible method net/minecraft/class_1309 method_6110 ()I
+accessible method net/minecraft/class_1428 method_6110 ()I
+accessible method net/minecraft/class_1429 method_6110 ()I
+accessible method net/minecraft/class_1480 method_6110 ()I
+accessible method net/minecraft/class_1642 method_6110 ()I
+accessible method net/minecraft/class_1657 method_6110 ()I
+accessible method net/minecraft/class_1665 method_7451 (B)V
+accessible method net/minecraft/class_2960 <init> (Ljava/lang/String;Ljava/lang/String;)V
+accessible method net/minecraft/class_4760 method_6110 ()I
+accessible method net/minecraft/class_4836 method_6110 ()I
+accessible method net/minecraft/class_7655 method_45121 (Lnet/minecraft/class_7655$class_7656;Lnet/minecraft/class_5455;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;
+accessible method net/minecraft/class_7655$class_7657 <init> (Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;)V
+extendable method net/minecraft/class_1665 method_7451 (B)V
+# ---- END GENERATED (s6world) ----

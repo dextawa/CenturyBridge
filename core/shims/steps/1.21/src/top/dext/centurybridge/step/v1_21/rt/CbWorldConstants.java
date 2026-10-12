@@ -21,24 +21,41 @@ public final class CbWorldConstants {
     public static final boolean DEBUG_STORE_CHUNK_STACKTRACES = false;
 
     /**
-     * SharedConstants.DATA_FIX_TYPES_TO_OPTIMIZE: the data fixer types the fixer is optimized for. 1.20.6's
-     * client Main set it to DataFixTypes.TYPES_FOR_LEVEL_LIST (enableDataFixerOptimizations) before the fixer was
-     * built, a dedicated server left it empty; 1.21 does the same thing explicitly, the client Main calling
-     * DataFixers.optimize(TYPES_FOR_LEVEL_LIST) and the server nothing. So the 1.20.6 value is that set on a
-     * client and the empty set on a dedicated server.
+     * SharedConstants.DATA_FIX_TYPES_TO_OPTIMIZE: the types the data fixer is optimized for. 1.20.6 started it
+     * empty; the client's Main set it to DataFixTypes.TYPES_FOR_LEVEL_LIST as its first act
+     * (enableDataFixerOptimizations), a dedicated server left it alone; DataFixers read it once, in its static
+     * initializer (reached from Bootstrap, through Util.fetchChoiceType, before any mod initializer runs), and
+     * built the fixer optimized for it, unoptimized when empty. 1.21 builds the fixer unoptimized and optimizes
+     * on request: the client's Main calls DataFixers.optimize(TYPES_FOR_LEVEL_LIST) where 1.20.6's Main set the
+     * field, the server nothing. Reads and writes of a 1.20.6 mod land here (fieldRedirects, staticFieldSetters);
+     * CbWorldDataFixersMixin gives the value its 1.20.6 effect when 1.21's DataFixers is initialized
+     * ({@link #dataFixerBuilt}).
      */
-    public static Set<DSL.TypeReference> DATA_FIX_TYPES_TO_OPTIMIZE =
-        FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT ? class_4284.field_42975 : Set.of();
+    public static Set<DSL.TypeReference> DATA_FIX_TYPES_TO_OPTIMIZE = Set.of();
+
+    /** a 1.20.6 mod's write of SharedConstants.DATA_FIX_TYPES_TO_OPTIMIZE */
+    public static void setDataFixTypesToOptimize(Set<DSL.TypeReference> types) {
+        DATA_FIX_TYPES_TO_OPTIMIZE = types;
+    }
+
+    /** 1.20.6 SharedConstants.enableDataFixerOptimizations(): DATA_FIX_TYPES_TO_OPTIMIZE = TYPES_FOR_LEVEL_LIST */
+    public static void enableDataFixerOptimizations() {
+        setDataFixTypesToOptimize(class_4284.field_42975);
+    }
 
     /**
-     * 1.20.6 SharedConstants.enableDataFixerOptimizations(): optimize the fixer for the level-list types. 1.21's
-     * DataFixers.optimize is the same request; it runs only when the set is not already the one requested (the
-     * client's Main made it at start-up).
+     * 1.21's DataFixers has been initialized: the moment 1.20.6's DataFixers read DATA_FIX_TYPES_TO_OPTIMIZE.
+     * On a client that is inside Main's DataFixers.optimize(TYPES_FOR_LEVEL_LIST), the call standing where
+     * 1.20.6's Main set the field to that set: the field takes it (a value written before, by a pre-launch
+     * entrypoint, was overwritten there in 1.20.6 too) and Main's own call does the optimizing. Elsewhere the
+     * fixer is optimized for what was written before it existed, as 1.20.6 built it; empty, nothing. A write
+     * after this changes only what later reads answer, as in 1.20.6.
      */
-    public static void enableDataFixerOptimizations() {
-        if (!DATA_FIX_TYPES_TO_OPTIMIZE.equals(class_4284.field_42975)) {
+    public static void dataFixerBuilt() {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             DATA_FIX_TYPES_TO_OPTIMIZE = class_4284.field_42975;
-            class_3551.method_60487(class_4284.field_42975);
+        } else if (!DATA_FIX_TYPES_TO_OPTIMIZE.isEmpty()) {
+            class_3551.method_60487(DATA_FIX_TYPES_TO_OPTIMIZE);
         }
     }
 

@@ -3,6 +3,7 @@ outside world/item, world/effect and world/food; server/ outside server/network;
 resources, sounds, SharedConstants, CrashReport).
 
   python gen_s6world.py <V stub: client-1.20.6-intermediary.jar> <W stub: client-1.21-intermediary.jar>
+                        <V code: client-1.20.6-intermediary-code.jar>
 
 Writes core/segments/steps/1.20.6__1.21.json.d/s6world.json and the generated getter classes of the layer
 (rt/CbWorldSounds.java, rt/CbWorldLinks.java). Each entry carries its basis, read off the 1.20.6 and 1.21 bytecode.
@@ -32,12 +33,12 @@ def L(c):
     return "L" + (c if "/" in c else MC + c) + ";"
 
 
-def load(jar):
+def load(jar, code=False):
     out = {}
     with zipfile.ZipFile(jar) as z:
         for n in z.namelist():
             if n.startswith("net/minecraft/") and n.endswith(".class"):
-                c = classfile.read(z.read(n))
+                c = classfile.read(z.read(n), code)
                 if c:
                     out[c.name] = c
     return out
@@ -66,7 +67,7 @@ class Fragment:
         self.w = {
             "methodRenames": {}, "callReshapes": {}, "superCtorReshapes": {}, "ctorRedirects": {},
             "staticRedirects": {}, "instanceRedirects": {}, "fieldRedirects": {}, "fieldGetters": {},
-            "instanceFieldGetters": {}, "instanceFieldSetters": {}, "superRedirects": {}, "covers": [],
+            "staticFieldSetters": {}, "instanceFieldGetters": {}, "instanceFieldSetters": {}, "superRedirects": {}, "covers": [],
             "overrideHooks": [], "overrideRenames": [], "frameDefaults": {}, "convertHooks": [], "adapterHooks": [],
             "abstractFills": [], "classRenames": {}, "superRenames": {}, "genericWitnesses": {}, "ledger": {},
         }
@@ -273,7 +274,14 @@ def constants(f):
                                 ("field_29727", "Z", "DEBUG_STORE_CHUNK_STACKTRACES"),
                                 ("field_43095", "Ljava/util/Set;", "DATA_FIX_TYPES_TO_OPTIMIZE")):
         f.put("fieldRedirects", MC + "class_155." + field + ":" + desc, K + "#" + target)
+    # 1.21 removed DATA_FIX_TYPES_TO_OPTIMIZE: writes land in CB too, with their 1.20.6 effect (CbWorldDataFixersMixin)
+    f.put("staticFieldSetters", MC + "class_155.field_43095:Ljava/util/Set;", K + "#setDataFixTypesToOptimize")
     f.put("staticRedirects", MC + "class_155.method_43250()V", K + "#enableDataFixerOptimizations")
+    # Tadpole.HITBOX_WIDTH / HEIGHT: final in 1.21; reads follow what a 1.20.6 mod wrote (CbEntityFrogspawnMixin)
+    A = RT + "/CbEntityAnimals"
+    for field, what in (("field_39302", "Width"), ("field_39303", "Height")):
+        f.put("fieldGetters", MC + "class_7110." + field + ":F", A + "#tadpoleHitbox" + what)
+        f.put("staticFieldSetters", MC + "class_7110." + field + ":F", A + "#setTadpoleHitbox" + what)
     f.put("fieldGetters", MC + "class_7701.field_46779:" + L("class_7696"), K)
     f.put("fieldRedirects", MC + "class_6088.field_31161:I", K + "#SOUND_ENDER_EYE_LAUNCH")
     f.put("fieldRedirects", MC + "class_1463.field_30368:I", K + "#RABBIT_EVIL_ATTACK_POWER")
@@ -442,8 +450,149 @@ def portals(f, v):
     f.put("staticRedirects", MC + "class_1657.method_26091(" + SL + BP + "FZZ)" + OPT, P + "#findRespawnPositionAndUseSpawnBlock")
 
 
+# ------------------------------------------------------------------------------------------------ living entities, mobs, players
+def code_of(classes, owner, shape):
+    """the body of a method the class declares (None: not declared there, or no body)"""
+    c = classes.get(owner)
+    for m in c.methods if c else ():
+        if m.name + m.desc == shape:
+            return m.code
+    return None
+
+
+def declarers(classes, shape):
+    """every class of the jar that declares the shape (non-static), sorted"""
+    return sorted(n for n, c in classes.items()
+                  if any(m.name + m.desc == shape and not m.access & classfile.ACC_STATIC for m in c.methods))
+
+
+def living(f, v, vc):
+    E, A = RT + "/CbEntityLiving", RT + "/CbEntityAnimals"
+    ENT, LIV, MOB, PLY = MC + "class_1297", MC + "class_1309", MC + "class_1308", MC + "class_1657"
+    SLOT, STACK, LEVEL, SL, DS, BP = L("class_1304"), L("class_1799"), L("class_1937"), L("class_3218"), L("class_1282"), L("class_2338")
+    server_level = E + "#serverLevel(" + L("class_1297") + ")" + SL
+    f.put("instanceRedirects", ENT + ".method_5639(I)V", E + "#igniteForSeconds")
+    f.put("staticRedirects", LIV + ".method_32326(" + STACK + ")" + SLOT, E + "#getEquipmentSlotForItem")
+    # eat(level, stack): 1.21 passes the food it read off the stack
+    f.put("instanceRedirects", LIV + ".method_18866(" + LEVEL + STACK + ")" + STACK, E + "#eat")
+    f.put("frameDefaults", "method_18866(" + LEVEL + STACK + ")" + STACK, {
+        "2": E + "#foodOf(" + L("class_1309") + LEVEL + STACK + ")" + L("class_4174")})
+    # broadcastBreakEvent(slot) -> onEquippedItemBroken(item, slot). The hook is wired here, not left to
+    # mechanical.json: the adapter below makes the generator count the old shape as served
+    f.put("instanceRedirects", LIV + ".method_20235(" + SLOT + ")V", E + "#broadcastBreakEvent")
+    f.hook("method_20235(" + SLOT + ")V", "method_20235(" + L("class_1792") + SLOT + ")V", "class_1309",
+           "1.21 calls onEquippedItemBroken(item, slot) where 1.20.6 called broadcastBreakEvent(slot): the override gets "
+           "the slot, its super call the item and slot vanilla passed",
+           args=[1], frames=G, superCalls="rewrite")
+    f.put("frameDefaults", "method_20235(" + SLOT + ")V", {
+        "0": E + "#brokenItem(" + L("class_1309") + SLOT + ")" + L("class_1792")})
+    f.w["adapterHooks"].append({
+        "under": LIV, "adapter": E + "$LegacyBreakEvent", "requires": ["method_20235(" + SLOT + ")V"], "synth": [],
+        "basis": "a 1.20.6 caller's broadcastBreakEvent(slot) answers through a 1.20.6 subclass's own override (CbEntityLiving)"})
+    # server-side methods 1.21 hands the server level (or the attacker)
+    f.put("instanceRedirects", LIV + ".method_16080(" + DS + ")V", E + "#dropAllDeathLoot")
+    f.put("frameDefaults", "method_16080(" + DS + ")V", {"0": server_level})
+    f.put("instanceRedirects", LIV + ".method_23883()V", E + "#dropExperience")
+    f.put("frameDefaults", "method_23883()V", {
+        "0": "zero: 1.20.6's dropExperience() had no attacker; with none 1.21 lets no enchantment change the experience, "
+             "and 1.20.6 had no such enchantment"})
+    f.put("instanceRedirects", LIV + ".method_6126(" + BP + ")V", E + "#onChangedBlock")
+    f.put("frameDefaults", "method_6126(" + BP + ")V", {"0": server_level})
+    f.put("instanceRedirects", MC + "class_3763.method_16484(IZ)V", E + "#applyRaidBuffs")
+    f.put("frameDefaults", "method_16484(IZ)V", {"0": server_level})
+    # equipSaddle(source) -> equipSaddle(stack, source): 1.20.6's horse took a new saddle stack
+    SS = L("class_3419")
+    f.reshape(MC + "class_5146.method_6576(" + SS + ")V", "(" + STACK + SS + ")V", ["push " + A + "#newSaddle()" + STACK, "keep:0"],
+              "1.20.6's AbstractHorse.equipSaddle put new ItemStack(SADDLE) in the saddle slot, which 1.21 takes as the "
+              "argument; Pig and Strider ignore it in both")
+    f.put("frameDefaults", "method_6576(" + SS + ")V", {"0": A + "#newSaddle()" + STACK})
+    # startAutoSpinAttack(ticks): 1.20.6's spin attacked with ATTACK_DAMAGE (CbEntitySpinAttackMixin)
+    f.put("instanceRedirects", PLY + ".method_40126(I)V", E + "#startAutoSpinAttack")
+    f.put("frameDefaults", "method_40126(I)V", {
+        "1": E + "#legacySpinDamage()F",
+        "2": "zero: no item: 1.21's getWeaponItem then answers the main hand, the stack 1.20.6's attack used"})
+    # canWearBodyArmor(): 1.21 asks canUseSlot(BODY) where 1.20.6 asked it
+    f.put("instanceRedirects", MOB + ".method_6735()Z", E + "#canWearBodyArmor")
+    assert declarers(vc, "method_6735()Z") == [MC + c for c in ("class_1308", "class_1498", "class_1501")]
+    for owner in ("class_1308", "class_1498", "class_1501"):
+        f.put("superRedirects", MC + owner + ".method_6735()Z", E + "#superCanWearBodyArmor")
+    f.hook("method_6735()Z", "method_56991(" + SLOT + ")Z", "class_1308",
+           "1.21 asks canUseSlot(BODY) where 1.20.6 asked canWearBodyArmor() (the horse inventory's armor slot, the "
+           "dispenser's horse armor, the horse screen): a 1.20.6 override answers the body slot, super the others",
+           bridge=E + ".canUseSlot(L" + E + "$LegacyBodyArmor;" + SLOT + ")Z", adapter=E + "$LegacyBodyArmor", guard=G)
+    # getRandom() moved from LivingEntity to Entity (same field)
+    RS = L("class_5819")
+    for owner in with_subclasses(v, LIV):
+        f.put("methodRenames", owner + ".method_6051()" + RS, "method_59922")
+    f.w["overrideRenames"].append({
+        "old": "method_6051()" + RS, "new": "method_59922", "onlyUnder": LIV, "superCalls": "rename",
+        "basis": "LivingEntity.getRandom() is 1.21's Entity.getRandom(): the same random field"})
+
+
+# ------------------------------------------------------------------------------------------------ leashes
+def leash(f, v, vc):
+    LE = RT + "/CbEntityLeash"
+    MOB, PFM, ENT, PLY = MC + "class_1308", MC + "class_1314", L("class_1297"), L("class_1657")
+    # the members that only moved to Leashable: same arguments, same bodies over 1.21's LeashData
+    moved = (("method_5933()" + ENT, "method_60952", "getLeashHolder"), ("method_5934()Z", "method_60953", "isLeashed"),
+             ("method_5954(" + ENT + "Z)V", "method_60964", "setLeashedTo"),
+             ("method_18810(I)V", "method_60968", "setDelayedLeashHolderId"), ("method_58151()Z", "method_60954", "mayBeLeashed"))
+    subs = with_subclasses(v, MOB)
+    for shape, new, what in moved:
+        for owner in subs:
+            f.put("methodRenames", owner + "." + shape, new)
+        f.w["overrideRenames"].append({
+            "old": shape, "new": new, "onlyUnder": MOB, "superCalls": "rename",
+            "basis": "Mob." + what + " is 1.21's Leashable." + what + " (the leash moved from Mob's fields to its LeashData)"})
+    # canBeLeashed(Player) -> canBeLeashed() / canHaveALeashAttachedToIt(): which 1.20.6 bodies tested the leash
+    shape = "method_5931(" + PLY + ")Z"
+    tests, constant = set(), {}
+    for name in sorted(vc):
+        code = code_of(vc, name, shape)
+        if code is None:
+            continue
+        if len(code) == 2 and code[1] == 0xAC and code[0] in (0x03, 0x04):
+            constant[name] = code[0] == 0x04
+        else:
+            tests.add(name)
+    assert {c for c, val in constant.items() if val} == {MC + "class_1433", MC + "class_5762"}, constant
+    assert {c for c, val in constant.items() if not val} == {
+        MC + c for c in ("class_1421", "class_1440", "class_1481", "class_1480", "class_3988")}, constant
+    leash_tests = {MC + c for c in ("class_1308", "class_1321", "class_1493", "class_1477", "class_5136", "class_4760")}
+    assert tests == leash_tests, tests
+    f.put("instanceRedirects", MOB + "." + shape, LE + "#canBeLeashed")
+    # a super call lands on the 1.20.6 body of the class that declared it (CbEntityLeash, one per class)
+    for owner in sorted(set(constant) | tests):
+        f.put("superRedirects", owner + "." + shape, LE + "#superCanBeLeashed")
+    f.hook(shape, "method_5931()Z", "class_1308",
+           "1.21 asks canBeLeashed() (in canHaveALeashAttachedToIt, from Entity.interact) where 1.20.6 asked "
+           "canBeLeashed(player) in Mob's interaction: the 1.20.6 override answers for the interacting player",
+           bridge=LE + ".canBeLeashed(L" + LE + "$LegacyCanBeLeashed;)Z", adapter=LE + "$LegacyCanBeLeashed", guard=G)
+    # tickLeash(): Entity.baseTick's Leashable.tickLeash (CbEntityLeashMixin) ticks a 1.20.6 override instead
+    f.put("instanceRedirects", MOB + ".method_5995()V", LE + "#tickLeash")
+    assert declarers(vc, "method_5995()V") == [MOB, PFM]
+    f.put("superRedirects", MOB + ".method_5995()V", LE + "#superTickLeash")
+    f.put("superRedirects", PFM + ".method_5995()V", LE + "#superTickLeash")
+    f.w["adapterHooks"].append({
+        "under": MOB, "adapter": LE + "$LegacyTickLeash", "requires": ["method_5995()V"], "synth": [],
+        "basis": "1.20.6's Mob.tick called this.tickLeash(); 1.21's Entity.baseTick calls the static Leashable.tickLeash, "
+                 "which CbEntityLeashMixin hands to a 1.20.6 override through this interface"})
+    # onLeashDistance(distance) -> handleLeashAtDistance(holder, distance)
+    od = "method_6142(F)V"
+    f.put("instanceRedirects", PFM + "." + od, LE + "#onLeashDistance")
+    assert declarers(vc, od) == [MC + c for c in ("class_1314", "class_1496", "class_7689")]
+    for owner in ("class_1314", "class_1496", "class_7689"):
+        f.put("superRedirects", MC + owner + "." + od, LE + "#superOnLeashDistance")
+    f.hook(od, "method_60956(" + ENT + "F)Z", "class_1314",
+           "1.21 asks handleLeashAtDistance(holder, distance) where 1.20.6's PathfinderMob.tickLeash restricted the mob to "
+           "the holder, stopped a sitting tamable and called onLeashDistance(distance): the same, in that order",
+           bridge=LE + ".handleLeashAtDistance(L" + LE + "$LegacyLeashDistance;" + ENT + "F)Z",
+           adapter=LE + "$LegacyLeashDistance", guard=G)
+
+
 def main():
     v, w = load(sys.argv[1]), load(sys.argv[2])
+    vc = load(sys.argv[3], code=True)
     f = Fragment()
     attributes(f)
     sounds_and_links(f, v, w)
@@ -451,6 +600,8 @@ def main():
     constants(f)
     resources_and_commands(f)
     portals(f, v)
+    living(f, v, vc)
+    leash(f, v, vc)
     f.write()
 
 
