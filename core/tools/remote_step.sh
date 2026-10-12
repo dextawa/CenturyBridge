@@ -15,7 +15,7 @@
 # server runtime; build.sh says which file it misses.
 set -euo pipefail
 NAME="$1"; V="$2"; W="$3"; AREA="${4:-}"
-SSH="ssh -o BatchMode=yes -o ConnectTimeout=30 -p 20022 dext@beta2.dext.top"
+SSH="ssh -o BatchMode=yes -o ConnectTimeout=30 -o ServerAliveInterval=30 -o ServerAliveCountMax=10 -p 20022 dext@beta2.dext.top"
 TMP="${TMPDIR:-/tmp}/cb-remote-$NAME"
 mkdir -p "$TMP"
 rm -f "$TMP/up.tar"

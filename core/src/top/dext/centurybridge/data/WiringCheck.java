@@ -31,7 +31,7 @@ import org.objectweb.asm.tree.MethodNode;
  * rename applies. Member names on our runtime classes are never renamed by
  * that table, so they compare verbatim.
  *
- * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects,
+ * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects, interfaceCallRedirects,
  * fieldRedirects, fieldGetters, staticFieldSetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
@@ -408,7 +408,7 @@ public final class WiringCheck {
             wantMethod("staticRedirects " + k, v, s.name, methodDesc(s.desc));
         });
         // instance-shaped: receiver becomes argument 0
-        for (String map : new String[] {"instanceRedirects", "superRedirects"}) {
+        for (String map : new String[] {"instanceRedirects", "superRedirects", "interfaceCallRedirects"}) {
             obj(root, map, (k, v) -> {
                 Sym s = Sym.method(k);
                 wantMethod(map + " " + k, v, s.name, methodDesc("(L" + s.owner + ";" + s.desc.substring(1)));
