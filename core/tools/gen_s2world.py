@@ -115,9 +115,6 @@ def main():
             w["overrideHooks"].append({
                 "old": old + desc, "new": new + desc, "onlyUnder": root,
                 "basis": "1.20.3 moved the method to VehicleEntity under a new name; same arguments, same body"})
-    # Level.explode(.., ExplosionInteraction) without particles: 1.20.3's method_55117 is exactly that shape
-    for owner in with_subclasses(sup, MC + "class_1937"):
-        w["methodRenames"][owner + ".method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;"] = "method_55117"
 
     # ---------------------------------------------------------------- call reshapes
     def reshape(key, desc, ops, basis, ret=None):
@@ -140,6 +137,15 @@ def main():
     reshape(MC + "class_1844.method_8065(Ljava/util/List;Ljava/util/List;F)V",
             "(Ljava/util/List;Ljava/util/List;FF)V", ["keep:0", "keep:1", "keep:2", tick],
             "new tick-rate argument: 1.20.2 counted 20 ticks to the second")
+    # Level.explode(.., ExplosionInteraction): the funnel of 1.20.2's explode overloads, 1.20.3's with the particles
+    # and sound (method_55117 is 1.20.3's wrapper passing exactly these). A call -- a mod's super call included, which
+    # so needs no record of what vanilla passed to the override -- passes the ones 1.20.2 always used.
+    reshape(MC + "class_1937.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",
+            "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1927;",
+            ["keep"] * 9 + ["push " + RT + "/CbWorldLevels#explosionSmallParticles()Lnet/minecraft/class_2394;",
+                            "push " + RT + "/CbWorldLevels#explosionLargeParticles()Lnet/minecraft/class_2394;",
+                            "push " + RT + "/CbWorldLevels#explosionSound()Lnet/minecraft/class_3414;"],
+            "particles and sound became arguments: 1.20.2 always used EXPLOSION / EXPLOSION_EMITTER / GENERIC_EXPLODE")
     reshape(MC + "class_1937.method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Z)Lnet/minecraft/class_1927;",
             "(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1927;",
             ["keep"] * 10 + ["push " + RT + "/CbWorldLevels#explosionSmallParticles()Lnet/minecraft/class_2394;",
@@ -349,6 +355,10 @@ def main():
     hook("method_7843(Lnet/minecraft/class_1799;" + LV + "Lnet/minecraft/class_1657;)V",
          "method_54465(Lnet/minecraft/class_1799;" + LV + "Lnet/minecraft/class_1657;)V", "class_1792",
          "onCraftedBy(stack, level, player) is 1.20.3's onCraftedBy under a new name")
+    # the call and the super call too: 1.20.3's method_7843(stack, level) is onCraftedPostProcess, which its
+    # onCraftedBy(stack, level, player) calls -- calling it directly would skip every override of onCraftedBy
+    for owner in with_subclasses(sup, MC + "class_1792"):
+        w["methodRenames"][owner + ".method_7843(Lnet/minecraft/class_1799;" + LV + "Lnet/minecraft/class_1657;)V"] = "method_54465"
     hook("method_6981(Ljava/util/UUID;)V", "method_6981(Lnet/minecraft/class_1297;)V", "class_1542",
          "1.20.3 hands the thrower entity; the 1.20.2 override gets its id",
          wrap=RT + "/CbWorldEntities.throwerId(Lnet/minecraft/class_1297;)Ljava/util/UUID;")
