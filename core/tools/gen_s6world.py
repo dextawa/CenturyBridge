@@ -590,6 +590,99 @@ def leash(f, v, vc):
            adapter=LE + "$LegacyLeashDistance", guard=G)
 
 
+# ------------------------------------------------------------------------------------------------ horses
+def horses(f, vc):
+    A, E = RT + "/CbEntityAnimals", RT + "/CbEntityLiving"
+    # canWearBodyArmor(): the adapter for a class that also declares canUseSlot, where the bridge hook steps aside
+    f.w["adapterHooks"].append({
+        "under": MC + "class_1308", "adapter": E + "$LegacyBodyArmor", "requires": ["method_6735()Z"], "synth": [],
+        "basis": "a 1.20.6 caller's canWearBodyArmor() answers through a 1.20.6 subclass's own override (CbEntityLiving)"})
+    # getInventorySize(): final in 1.21 (1 + 3 x getInventoryColumns()); 1.20.6's sizes are the same for every vanilla horse
+    assert declarers(vc, "method_6750()I") == [MC + c for c in ("class_1492", "class_1496", "class_1501")]
+    f.w["overrideRenames"].append({
+        "old": "method_6750()I", "new": "method_6750$cb1_21", "onlyUnder": MC + "class_1496", "adapter": A + "$LegacyInventorySize",
+        "basis": "1.21 made AbstractHorse.getInventorySize() final: a 1.20.6 override is renamed and answers through "
+                 "CbEntityHorseInventoryMixin (its super call reaches 1.21's body, the same number for vanilla horses)"})
+    # HorseInventoryMenu(id, inventory, container, horse): 1.21 takes the chest columns
+    f.ctor(MC + "class_1724.<init>(IL" + MC + "class_1661;L" + MC + "class_1263;L" + MC + "class_1496;)V",
+           "(IL" + MC + "class_1661;L" + MC + "class_1263;L" + MC + "class_1496;I)V",
+           ["keep", "keep", "keep", "keep", "conv:3 " + A + "#chestColumns(L" + MC + "class_1496;)I"],
+           "1.20.6's menu laid out the horse's getInventoryColumns() columns of chest slots when it had a chest; 1.21 "
+           "takes that count, 0 without a chest")
+
+
+# ------------------------------------------------------------------------------------------------ enchantment effects on entities
+def enchanting(f, vc):
+    S, EN = RT + "/CbEntitySoulSpeed", RT + "/CbEntityEnchanting"
+    LIV, MOB, PLY = MC + "class_1309", MC + "class_1308", MC + "class_1657"
+    # soul speed: six 1.20.6 methods, data in 1.21
+    soul = (("method_27302()Z", "canSpawnSoulSpeedParticle", "LegacyCanSpawnParticle", ["class_1309", "class_746"]),
+            ("method_25937()V", "spawnSoulSpeedParticle", "LegacySpawnParticle", ["class_1309"]),
+            ("method_27303()Z", "onSoulSpeedBlock", "LegacyOnSoulSpeedBlock", ["class_1309", "class_1657"]),
+            ("method_29500(" + L("class_2680") + ")Z", "shouldRemoveSoulSpeed", "LegacyShouldRemove", ["class_1309", "class_1657"]),
+            ("method_29501()V", "removeSoulSpeed", "LegacyRemove", ["class_1309"]),
+            ("method_29502()V", "tryAddSoulSpeed", "LegacyTryAdd", ["class_1309"]))
+    for shape, name, adapter, homes in soul:
+        assert declarers(vc, shape) == sorted(MC + h for h in homes), (shape, declarers(vc, shape))
+        f.put("instanceRedirects", LIV + "." + shape, S + "#" + name)
+        for home in homes:
+            owner = S + "Client" if home == "class_746" else S
+            f.put("superRedirects", MC + home + "." + shape, owner + "#super" + name[0].upper() + name[1:])
+        f.w["adapterHooks"].append({
+            "under": LIV, "adapter": S + "$" + adapter, "requires": [shape], "synth": [],
+            "basis": "1.20.6's " + name + " is overridable, 1.21's soul speed is data: a 1.20.6 caller and 1.20.6's drive "
+                     "(CbEntitySoulSpeedMixin) answer through the subclass's own override"})
+    # dropCustomDeathLoot(source, looting, recentlyHit) -> (level, source, recentlyHit)
+    DS, SL = L("class_1282"), L("class_3218")
+    dl = "method_6099(" + DS + "IZ)V"
+    homes = ("class_1308", "class_1309", "class_1528", "class_1548", "class_1560", "class_1613", "class_1639", "class_1642", "class_4836")
+    assert declarers(vc, dl) == sorted(MC + h for h in homes), declarers(vc, dl)
+    f.put("instanceRedirects", LIV + "." + dl, EN + "#dropCustomDeathLoot")
+    for home in homes:
+        f.put("superRedirects", MC + home + "." + dl, EN + "#superDropCustomDeathLoot")
+    f.hook(dl, "method_6099(" + SL + DS + "Z)V", "class_1309",
+           "1.21 asks dropCustomDeathLoot(level, source, recentlyHit) where 1.20.6 asked it with the looting level of a "
+           "killing player: the 1.20.6 override gets that level (CbEntityEnchanting.looting)",
+           bridge=EN + ".dropCustomDeathLoot(L" + EN + "$LegacyDeathLoot;" + SL + DS + "Z)V", adapter=EN + "$LegacyDeathLoot", guard=G)
+    # spawn equipment enchanting
+    RS, DI, SLA, SLOT = L("class_5819"), L("class_1266"), L("class_5425"), L("class_1304")
+    sw, sa = "method_30759(" + RS + "F)V", "method_30758(" + RS + "F" + SLOT + ")V"
+    assert declarers(vc, sw) == [MOB, MC + "class_1604"] and declarers(vc, sa) == [MOB]
+    f.put("instanceRedirects", MOB + "." + sw, EN + "#enchantSpawnedWeapon")
+    f.put("superRedirects", MOB + "." + sw, EN + "#superEnchantSpawnedWeapon")
+    f.put("superRedirects", MC + "class_1604." + sw, EN + "#superEnchantSpawnedWeapon")
+    f.hook(sw, "method_30759(" + SLA + RS + DI + ")V", "class_1308",
+           "1.21 asks enchantSpawnedWeapon(level, random, difficulty) where 1.20.6 passed the difficulty's special "
+           "multiplier: the 1.20.6 override gets it; its super call enchants as 1.20.6 did",
+           bridge=EN + ".enchantSpawnedWeapon(L" + EN + "$LegacySpawnWeapon;" + SLA + RS + DI + ")V", adapter=EN + "$LegacySpawnWeapon", guard=G)
+    f.put("instanceRedirects", MOB + "." + sa, EN + "#enchantSpawnedArmor")
+    f.put("superRedirects", MOB + "." + sa, EN + "#superEnchantSpawnedArmor")
+    f.hook(sa, "method_30758(" + SLA + RS + SLOT + DI + ")V", "class_1308",
+           "1.21 asks enchantSpawnedArmor(level, random, slot, difficulty) where 1.20.6 passed the special multiplier",
+           bridge=EN + ".enchantSpawnedArmor(L" + EN + "$LegacySpawnArmor;" + SLA + RS + SLOT + DI + ")V", adapter=EN + "$LegacySpawnArmor", guard=G)
+    pd = "method_5984(" + RS + DI + ")V"
+    f.put("instanceRedirects", MOB + "." + pd, EN + "#populateDefaultEquipmentEnchantments")
+    f.put("frameDefaults", pd, {"0": EN + "#serverLevelAccessor(" + L("class_1297") + ")" + SLA})
+    # doEnchantDamageEffects(attacker, target): 1.21 calls EnchantmentHelper.doPostAttackEffects (CbEntityPostAttackMixin)
+    de = "method_5723(" + L("class_1309") + L("class_1297") + ")V"
+    assert declarers(vc, de) == [MC + "class_1297"]
+    f.put("instanceRedirects", MC + "class_1297." + de, EN + "#doEnchantDamageEffects")
+    f.put("superRedirects", MC + "class_1297." + de, EN + "#superDoEnchantDamageEffects")
+    f.w["adapterHooks"].append({
+        "under": MC + "class_1297", "adapter": EN + "$LegacyEnchantDamageEffects", "requires": [de], "synth": [],
+        "basis": "1.21 calls EnchantmentHelper.doPostAttackEffects where 1.20.6 called the hitting entity's "
+                 "doEnchantDamageEffects: CbEntityPostAttackMixin hands the call to a 1.20.6 override through this interface"})
+    # ThrownTrident.isChanneling(): 1.21's channeling is the weapon's enchantment data (CbEntityTridentMixin)
+    ch = "method_31551()Z"
+    assert declarers(vc, ch) == [MC + "class_1685"]
+    f.put("instanceRedirects", MC + "class_1685." + ch, EN + "#isChanneling")
+    f.put("superRedirects", MC + "class_1685." + ch, EN + "#superIsChanneling")
+    f.w["adapterHooks"].append({
+        "under": MC + "class_1685", "adapter": EN + "$LegacyChanneling", "requires": [ch], "synth": [],
+        "basis": "1.20.6 struck channeling's lightning when the trident's isChanneling() said so: CbEntityTridentMixin asks "
+                 "a 1.20.6 override through this interface"})
+
+
 def main():
     v, w = load(sys.argv[1]), load(sys.argv[2])
     vc = load(sys.argv[3], code=True)
@@ -602,6 +695,8 @@ def main():
     portals(f, v)
     living(f, v, vc)
     leash(f, v, vc)
+    horses(f, vc)
+    enchanting(f, vc)
     f.write()
 
 

@@ -1041,6 +1041,17 @@
     "push top/dext/centurybridge/step/v1_21/rt/CbEntityPortals#nothingAfter()Lnet/minecraft/class_5454$class_9823;"
    ],
    "basis": "a 1.20.6 PortalInfo subclass's super(pos, speed, yRot, xRot): the record's constructor with no level and nothing after the move (the layer's access widener makes the record extendable)"
+  },
+  "net/minecraft/class_1724.<init>(ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_1496;)V": {
+   "desc": "(ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_1496;I)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv:3 top/dext/centurybridge/step/v1_21/rt/CbEntityAnimals#chestColumns(Lnet/minecraft/class_1496;)I"
+   ],
+   "basis": "1.20.6's menu laid out the horse's getInventoryColumns() columns of chest slots when it had a chest; 1.21 takes that count, 0 without a chest"
   }
  },
  "ctorRedirects": {
@@ -1088,7 +1099,19 @@
   "net/minecraft/class_1308.method_6735()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityLiving#canWearBodyArmor",
   "net/minecraft/class_1308.method_5931(Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash#canBeLeashed",
   "net/minecraft/class_1308.method_5995()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash#tickLeash",
-  "net/minecraft/class_1314.method_6142(F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash#onLeashDistance"
+  "net/minecraft/class_1314.method_6142(F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash#onLeashDistance",
+  "net/minecraft/class_1309.method_27302()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#canSpawnSoulSpeedParticle",
+  "net/minecraft/class_1309.method_25937()V": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#spawnSoulSpeedParticle",
+  "net/minecraft/class_1309.method_27303()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#onSoulSpeedBlock",
+  "net/minecraft/class_1309.method_29500(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#shouldRemoveSoulSpeed",
+  "net/minecraft/class_1309.method_29501()V": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#removeSoulSpeed",
+  "net/minecraft/class_1309.method_29502()V": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#tryAddSoulSpeed",
+  "net/minecraft/class_1309.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#dropCustomDeathLoot",
+  "net/minecraft/class_1308.method_30759(Lnet/minecraft/class_5819;F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#enchantSpawnedWeapon",
+  "net/minecraft/class_1308.method_30758(Lnet/minecraft/class_5819;FLnet/minecraft/class_1304;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#enchantSpawnedArmor",
+  "net/minecraft/class_1308.method_5984(Lnet/minecraft/class_5819;Lnet/minecraft/class_1266;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#populateDefaultEquipmentEnchantments",
+  "net/minecraft/class_1297.method_5723(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#doEnchantDamageEffects",
+  "net/minecraft/class_1685.method_31551()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#isChanneling"
  },
  "fieldRedirects": {
   "net/minecraft/class_1320.field_30097:I": "top/dext/centurybridge/step/v1_21/rt/CbEntityAttributes#MAX_NAME_LENGTH",
@@ -1216,7 +1239,30 @@
   "net/minecraft/class_1314.method_5995()V": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash#superTickLeash",
   "net/minecraft/class_1314.method_6142(F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash#superOnLeashDistance",
   "net/minecraft/class_1496.method_6142(F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash#superOnLeashDistance",
-  "net/minecraft/class_7689.method_6142(F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash#superOnLeashDistance"
+  "net/minecraft/class_7689.method_6142(F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash#superOnLeashDistance",
+  "net/minecraft/class_1309.method_27302()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#superCanSpawnSoulSpeedParticle",
+  "net/minecraft/class_746.method_27302()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeedClient#superCanSpawnSoulSpeedParticle",
+  "net/minecraft/class_1309.method_25937()V": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#superSpawnSoulSpeedParticle",
+  "net/minecraft/class_1309.method_27303()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#superOnSoulSpeedBlock",
+  "net/minecraft/class_1657.method_27303()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#superOnSoulSpeedBlock",
+  "net/minecraft/class_1309.method_29500(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#superShouldRemoveSoulSpeed",
+  "net/minecraft/class_1657.method_29500(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#superShouldRemoveSoulSpeed",
+  "net/minecraft/class_1309.method_29501()V": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#superRemoveSoulSpeed",
+  "net/minecraft/class_1309.method_29502()V": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed#superTryAddSoulSpeed",
+  "net/minecraft/class_1308.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDropCustomDeathLoot",
+  "net/minecraft/class_1309.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDropCustomDeathLoot",
+  "net/minecraft/class_1528.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDropCustomDeathLoot",
+  "net/minecraft/class_1548.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDropCustomDeathLoot",
+  "net/minecraft/class_1560.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDropCustomDeathLoot",
+  "net/minecraft/class_1613.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDropCustomDeathLoot",
+  "net/minecraft/class_1639.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDropCustomDeathLoot",
+  "net/minecraft/class_1642.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDropCustomDeathLoot",
+  "net/minecraft/class_4836.method_6099(Lnet/minecraft/class_1282;IZ)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDropCustomDeathLoot",
+  "net/minecraft/class_1308.method_30759(Lnet/minecraft/class_5819;F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superEnchantSpawnedWeapon",
+  "net/minecraft/class_1604.method_30759(Lnet/minecraft/class_5819;F)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superEnchantSpawnedWeapon",
+  "net/minecraft/class_1308.method_30758(Lnet/minecraft/class_5819;FLnet/minecraft/class_1304;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superEnchantSpawnedArmor",
+  "net/minecraft/class_1297.method_5723(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superDoEnchantDamageEffects",
+  "net/minecraft/class_1685.method_31551()Z": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#superIsChanneling"
  },
  "covers": [
   "net/minecraft/class_1324.method_27304(Ljava/util/UUID;)Z",
@@ -1373,6 +1419,33 @@
    "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash.handleLeashAtDistance(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityLeash$LegacyLeashDistance;Lnet/minecraft/class_1297;F)Z",
    "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityLeash$LegacyLeashDistance",
    "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
+  },
+  {
+   "old": "method_6099(Lnet/minecraft/class_1282;IZ)V",
+   "new": "method_6099(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;Z)V",
+   "onlyUnder": "net/minecraft/class_1309",
+   "basis": "1.21 asks dropCustomDeathLoot(level, source, recentlyHit) where 1.20.6 asked it with the looting level of a killing player: the 1.20.6 override gets that level (CbEntityEnchanting.looting)",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting.dropCustomDeathLoot(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacyDeathLoot;Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;Z)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacyDeathLoot",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
+  },
+  {
+   "old": "method_30759(Lnet/minecraft/class_5819;F)V",
+   "new": "method_30759(Lnet/minecraft/class_5425;Lnet/minecraft/class_5819;Lnet/minecraft/class_1266;)V",
+   "onlyUnder": "net/minecraft/class_1308",
+   "basis": "1.21 asks enchantSpawnedWeapon(level, random, difficulty) where 1.20.6 passed the difficulty's special multiplier: the 1.20.6 override gets it; its super call enchants as 1.20.6 did",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting.enchantSpawnedWeapon(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacySpawnWeapon;Lnet/minecraft/class_5425;Lnet/minecraft/class_5819;Lnet/minecraft/class_1266;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacySpawnWeapon",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
+  },
+  {
+   "old": "method_30758(Lnet/minecraft/class_5819;FLnet/minecraft/class_1304;)V",
+   "new": "method_30758(Lnet/minecraft/class_5425;Lnet/minecraft/class_5819;Lnet/minecraft/class_1304;Lnet/minecraft/class_1266;)V",
+   "onlyUnder": "net/minecraft/class_1308",
+   "basis": "1.21 asks enchantSpawnedArmor(level, random, slot, difficulty) where 1.20.6 passed the special multiplier",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting.enchantSpawnedArmor(Ltop/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacySpawnArmor;Lnet/minecraft/class_5425;Lnet/minecraft/class_5819;Lnet/minecraft/class_1304;Lnet/minecraft/class_1266;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacySpawnArmor",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard"
   }
  ],
  "overrideRenames": [
@@ -1431,6 +1504,13 @@
    "onlyUnder": "net/minecraft/class_1308",
    "superCalls": "rename",
    "basis": "Mob.mayBeLeashed is 1.21's Leashable.mayBeLeashed (the leash moved from Mob's fields to its LeashData)"
+  },
+  {
+   "old": "method_6750()I",
+   "new": "method_6750$cb1_21",
+   "onlyUnder": "net/minecraft/class_1496",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityAnimals$LegacyInventorySize",
+   "basis": "1.21 made AbstractHorse.getInventorySize() final: a 1.20.6 override is renamed and answers through CbEntityHorseInventoryMixin (its super call reaches 1.21's body, the same number for vanilla horses)"
   }
  ],
  "frameDefaults": {
@@ -1479,6 +1559,9 @@
   "method_40126(I)V": {
    "1": "top/dext/centurybridge/step/v1_21/rt/CbEntityLiving#legacySpinDamage()F",
    "2": "zero: no item: 1.21's getWeaponItem then answers the main hand, the stack 1.20.6's attack used"
+  },
+  "method_5984(Lnet/minecraft/class_5819;Lnet/minecraft/class_1266;)V": {
+   "0": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting#serverLevelAccessor(Lnet/minecraft/class_1297;)Lnet/minecraft/class_5425;"
   }
  },
  "convertHooks": [
@@ -1565,6 +1648,87 @@
    ],
    "synth": [],
    "basis": "1.20.6's Mob.tick called this.tickLeash(); 1.21's Entity.baseTick calls the static Leashable.tickLeash, which CbEntityLeashMixin hands to a 1.20.6 override through this interface"
+  },
+  {
+   "under": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityLiving$LegacyBodyArmor",
+   "requires": [
+    "method_6735()Z"
+   ],
+   "synth": [],
+   "basis": "a 1.20.6 caller's canWearBodyArmor() answers through a 1.20.6 subclass's own override (CbEntityLiving)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed$LegacyCanSpawnParticle",
+   "requires": [
+    "method_27302()Z"
+   ],
+   "synth": [],
+   "basis": "1.20.6's canSpawnSoulSpeedParticle is overridable, 1.21's soul speed is data: a 1.20.6 caller and 1.20.6's drive (CbEntitySoulSpeedMixin) answer through the subclass's own override"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed$LegacySpawnParticle",
+   "requires": [
+    "method_25937()V"
+   ],
+   "synth": [],
+   "basis": "1.20.6's spawnSoulSpeedParticle is overridable, 1.21's soul speed is data: a 1.20.6 caller and 1.20.6's drive (CbEntitySoulSpeedMixin) answer through the subclass's own override"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed$LegacyOnSoulSpeedBlock",
+   "requires": [
+    "method_27303()Z"
+   ],
+   "synth": [],
+   "basis": "1.20.6's onSoulSpeedBlock is overridable, 1.21's soul speed is data: a 1.20.6 caller and 1.20.6's drive (CbEntitySoulSpeedMixin) answer through the subclass's own override"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed$LegacyShouldRemove",
+   "requires": [
+    "method_29500(Lnet/minecraft/class_2680;)Z"
+   ],
+   "synth": [],
+   "basis": "1.20.6's shouldRemoveSoulSpeed is overridable, 1.21's soul speed is data: a 1.20.6 caller and 1.20.6's drive (CbEntitySoulSpeedMixin) answer through the subclass's own override"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed$LegacyRemove",
+   "requires": [
+    "method_29501()V"
+   ],
+   "synth": [],
+   "basis": "1.20.6's removeSoulSpeed is overridable, 1.21's soul speed is data: a 1.20.6 caller and 1.20.6's drive (CbEntitySoulSpeedMixin) answer through the subclass's own override"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntitySoulSpeed$LegacyTryAdd",
+   "requires": [
+    "method_29502()V"
+   ],
+   "synth": [],
+   "basis": "1.20.6's tryAddSoulSpeed is overridable, 1.21's soul speed is data: a 1.20.6 caller and 1.20.6's drive (CbEntitySoulSpeedMixin) answer through the subclass's own override"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacyEnchantDamageEffects",
+   "requires": [
+    "method_5723(Lnet/minecraft/class_1309;Lnet/minecraft/class_1297;)V"
+   ],
+   "synth": [],
+   "basis": "1.21 calls EnchantmentHelper.doPostAttackEffects where 1.20.6 called the hitting entity's doEnchantDamageEffects: CbEntityPostAttackMixin hands the call to a 1.20.6 override through this interface"
+  },
+  {
+   "under": "net/minecraft/class_1685",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbEntityEnchanting$LegacyChanneling",
+   "requires": [
+    "method_31551()Z"
+   ],
+   "synth": [],
+   "basis": "1.20.6 struck channeling's lightning when the trident's isChanneling() said so: CbEntityTridentMixin asks a 1.20.6 override through this interface"
   }
  ]
 }

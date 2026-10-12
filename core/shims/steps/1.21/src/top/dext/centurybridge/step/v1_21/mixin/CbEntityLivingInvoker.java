@@ -29,4 +29,7 @@ public interface CbEntityLivingInvoker {
 
     @Invoker("method_6126")
     void cb$onChangedBlock(class_3218 level, class_2338 pos);
+
+    @Invoker("method_6099")
+    void cb$dropCustomDeathLoot(class_3218 level, class_1282 source, boolean recentlyHit);
 }

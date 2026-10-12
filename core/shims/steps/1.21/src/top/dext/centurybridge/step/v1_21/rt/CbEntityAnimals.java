@@ -61,6 +61,26 @@ public final class CbEntityAnimals {
         return new class_1799(class_1802.field_8175);
     }
 
+    // ------------------------------------------------------------------------------------------------ horse inventory
+    /**
+     * A 1.20.6 horse's getInventorySize() override, renamed (1.21 made the method final) and answered through
+     * CbEntityHorseInventoryMixin. 1.20.6's and 1.21's sizes are the same for every vanilla horse (the saddle
+     * slot and three rows of the chest columns), so the override's super call, which reaches 1.21's body, answers
+     * what it answered in 1.20.6.
+     */
+    public interface LegacyInventorySize {
+        int method_6750$cb1_21();
+    }
+
+    /**
+     * The chest columns of 1.20.6's HorseInventoryMenu: the horse's getInventoryColumns() when it has a chest,
+     * none otherwise -- 1.20.6 asked hasChest itself and its getInventoryColumns() answered regardless (5, the
+     * llama's strength), 1.21's answers 0 without a chest and the menu takes the count.
+     */
+    public static int chestColumns(net.minecraft.class_1496 horse) {
+        return horse instanceof net.minecraft.class_1492 chested && chested.method_6703() ? horse.method_6702() : 0;
+    }
+
     private CbEntityAnimals() {
     }
 }
