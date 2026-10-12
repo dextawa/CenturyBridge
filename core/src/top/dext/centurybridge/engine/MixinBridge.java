@@ -529,8 +529,9 @@ final class MixinBridge {
 
     /**
      * Field form of {@link #callFate}, in JarProcessor's field order: cover, static field redirect /
-     * getter (reads only), instance field getter / setter (each kind of access it is used for),
-     * rename, a field W moved up. Returns how, or null ({@code why} says what was rejected).
+     * getter (reads) and static field setter (writes), instance field getter / setter (each kind of
+     * access it is used for), rename, a field W moved up. Returns how, or null ({@code why} says what
+     * was rejected).
      */
     private String fieldFate(String owner, String name, String desc, boolean isStatic, Refs refs, List<String> why) {
         String key = owner + "." + name + ":" + desc;
@@ -538,12 +539,15 @@ final class MixinBridge {
             return "restored by the step layer";
         }
         if (isStatic) {
-            boolean redirected = chain.fieldRedirects.containsKey(key) || chain.fieldGetters.containsKey(key);
-            if (redirected && refs.puts == 0) {
-                return chain.fieldRedirects.containsKey(key) ? "field redirect" : "field getter";
+            // reads go through a field redirect or getter (GETSTATIC), writes through a static field setter (PUTSTATIC)
+            String reads = chain.fieldRedirects.containsKey(key) ? "field redirect"
+                : chain.fieldGetters.containsKey(key) ? "field getter" : null;
+            boolean writes = chain.staticFieldSetters.containsKey(key);
+            if ((reads != null || writes) && (refs.gets == 0 || reads != null) && (refs.puts == 0 || writes)) {
+                return reads == null ? "static field setter" : writes && refs.puts > 0 ? reads + " and static field setter" : reads;
             }
-            if (redirected) {
-                why.add("written, and its redirect serves reads only");
+            if (reads != null || writes) {
+                why.add(reads != null ? "written, and the step wires only its reads" : "read, and the step wires only its writes");
                 return null;
             }
         } else {
@@ -920,7 +924,8 @@ final class MixinBridge {
                 left.add(what + ": taken as a field handle");
                 return;
             }
-            if (r.puts > 0) {
+            // a write a static field setter takes does not store into W's field: its finality does not matter
+            if (r.puts > 0 && !(isStatic && chain.staticFieldSetters.containsKey(target + "." + f.name + ":" + f.desc))) {
                 boolean mutable = has(f.visibleAnnotations, f.invisibleAnnotations, MUTABLE);
                 Found at = wResolveField(target, rn != null ? rn : f.name, f.desc);
                 if (mutable || at != null && (at.access() & Opcodes.ACC_FINAL) != 0) {
@@ -1236,8 +1241,8 @@ final class MixinBridge {
 
         /**
          * An accessor of a field the target no longer declares. Renamed on the target: retargeted.
-         * An instance field getter / setter, a static field redirect or getter: the accessor becomes
-         * a synthetic method making that call. A field W moved up the hierarchy, or the layer's own:
+         * An instance field getter / setter, a static field redirect, getter or setter: the accessor
+         * becomes a synthetic method making that call. A field W moved up the hierarchy, or the layer's own:
          * the method accesses it.
          */
         void accessor(MethodNode m, AnnotationNode an) {
@@ -1300,6 +1305,12 @@ final class MixinBridge {
                 body.add(new MethodInsnNode(Opcodes.INVOKESTATIC, JarProcessor.redirCls(v), JarProcessor.redirName(v, name),
                     "()" + fdesc, false));
                 how = "field getter " + JarProcessor.redirCls(v);
+            } else if (isStatic && !getter && chain.staticFieldSetters.containsKey(fkey)) {
+                String v = chain.staticFieldSetters.get(fkey);
+                body.add(new VarInsnNode(args[0].getOpcode(Opcodes.ILOAD), 0));
+                body.add(new MethodInsnNode(Opcodes.INVOKESTATIC, JarProcessor.redirCls(v), JarProcessor.redirName(v, name),
+                    "(" + fdesc + ")V", false));
+                how = "static field setter " + JarProcessor.redirCls(v);
             } else {
                 String fname = rn != null ? rn : name;
                 Found at = wResolveField(target, fname, fdesc);
