@@ -91,6 +91,54 @@
     "method_26171(Lnet/minecraft/class_10;)Z"
    ],
    "basis": "BlockState.isPathfindable as for Block (CbBlockPath)"
+  },
+  {
+   "old": "method_28506()Lcom/mojang/serialization/Codec;",
+   "new": "method_28506()Lcom/mojang/serialization/MapCodec;",
+   "onlyUnder": "net/minecraft/class_2794",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecs.toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs.superChunkGeneratorCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs$ChunkGeneratorSuper;)Lcom/mojang/serialization/Codec;",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs$ChunkGeneratorSuper",
+   "superAccessors": [
+    "method_28506()Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "the mod's codec as the map codec 1.20.5 dispatches with, one object per codec (CbCodecs); super.codec() is super's map codec as the 1.20.4 codec"
+  },
+  {
+   "old": "method_28442()Lcom/mojang/serialization/Codec;",
+   "new": "method_28442()Lcom/mojang/serialization/MapCodec;",
+   "onlyUnder": "net/minecraft/class_1966",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecs.toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs.superBiomeSourceCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs$BiomeSourceSuper;)Lcom/mojang/serialization/Codec;",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs$BiomeSourceSuper",
+   "superAccessors": [
+    "method_28442()Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "the mod's codec as the map codec 1.20.5 dispatches with, one object per codec (CbCodecs); super.codec() is super's map codec as the 1.20.4 codec"
   }
- ]
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_1973.field_24715:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
+  "net/minecraft/class_1992.field_24717:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
+  "net/minecraft/class_4766.field_24719:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs",
+  "net/minecraft/class_2169.field_24730:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbBlockCodecs"
+ },
+ "callReshapes": {
+  "net/minecraft/class_7509.method_44207(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec;": {
+   "desc": "(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/MapCodec;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "the registered vanilla map codec as the codec 1.20.4 answered (CbCodecs)"
+  },
+  "net/minecraft/class_7511.method_44219(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/Codec;": {
+   "desc": "(Lnet/minecraft/class_2378;)Lcom/mojang/serialization/MapCodec;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbCodecs#fromMapCodec(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+   "basis": "the registered vanilla map codec as the codec 1.20.4 answered (CbCodecs)"
+  }
+ }
 }
