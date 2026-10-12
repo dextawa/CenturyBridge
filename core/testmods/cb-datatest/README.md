@@ -18,6 +18,16 @@ class, a packet 1.20.5 made a record, one carrying an item stack through a regis
 getter override answers, `super(buf)` and super getters work), a unit packet, `nextProtocol()`, and
 a mod's own `Packet` implementation (written through the interface, given a `type()`).
 
+`PayloadTest` works custom payloads: a mod's own `CustomPacketPayload` (1.20.4 shape: `write(buf)`
+and `id()`) sent in a custom payload packet goes on the wire as its id and then its own write, and a
+vanilla payload keeps 1.20.4's `id()` / `ID` / `write(buf)`, through the interface too.
+
+`BufTest` works `FriendlyByteBuf` and `EntityDataSerializer`: the `Reader` / `Writer` helpers
+(collections, maps, optionals, nullables, either, `asOptional()`), ids and holders by id, game
+profiles, items and components on a plain buffer, a vanilla serializer's `write` / `read` through the
+interface (a cat variant among them), the `simple` / `optional` / `simpleEnum` / `simpleId`
+factories, and a mod's own serializer class, registered and carried through `DataValue`'s wire format.
+
 Every check prints a `CBDATATEST OK` / `CBDATATEST FAIL` line; `CBDATATEST DONE` ends a clean run.
 
 Build against 1.20.4 (`--release 17`), convert one step, boot a 1.20.5 Fabric server with
