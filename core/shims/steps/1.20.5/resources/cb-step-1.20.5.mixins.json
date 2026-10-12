@@ -15,7 +15,9 @@
     "CbRestWitherBossMixin",
     "CbRestArmadilloMixin",
     "CbRestMobMixin",
-    "CbRestThrownTridentMixin"
+    "CbRestThrownTridentMixin",
+    "CbRestEntityTypeMixin",
+    "CbRestStructureTemplateMixin"
   ],
   "client": [
     "CbRegistriesClientMixin",

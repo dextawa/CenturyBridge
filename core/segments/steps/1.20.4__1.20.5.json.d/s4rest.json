@@ -126,6 +126,42 @@
    ],
    "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestChunks#cbEitherFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
    "basis": "generic drift: chunk futures complete with ChunkResult since 1.20.5 (1.20.4: Either<chunk, ChunkLoadingFailure>)"
+  },
+  "net/minecraft/class_1308.method_5943(Lnet/minecraft/class_5425;Lnet/minecraft/class_1266;Lnet/minecraft/class_3730;Lnet/minecraft/class_1315;Lnet/minecraft/class_2487;)Lnet/minecraft/class_1315;": {
+   "desc": "(Lnet/minecraft/class_5425;Lnet/minecraft/class_1266;Lnet/minecraft/class_3730;Lnet/minecraft/class_1315;)Lnet/minecraft/class_1315;",
+   "ops": [
+    "keep:0",
+    "conv:1,4 top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn#cbWithTag(Lnet/minecraft/class_1266;Lnet/minecraft/class_2487;)Lnet/minecraft/class_1266;",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "Mob.finalizeSpawn lost its tag in 1.20.5; the tag rides beside the call, paired with its DifficultyInstance, for a mod's override (rt/CbRestSpawn)"
+  },
+  "net/minecraft/class_1299.method_5899(Lnet/minecraft/class_3218;Lnet/minecraft/class_2487;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;": {
+   "desc": "(Lnet/minecraft/class_3218;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;",
+   "ops": [
+    "keep:0",
+    "drop:1 top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn#cbSpawnTag(Lnet/minecraft/class_2487;)V",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "EntityType.spawn lost its tag in 1.20.5; 1.20.4 only handed it to the new mob's finalizeSpawn, which the create it leads to pairs it with"
+  },
+  "net/minecraft/class_1299.method_5888(Lnet/minecraft/class_3218;Lnet/minecraft/class_2487;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;": {
+   "desc": "(Lnet/minecraft/class_3218;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;",
+   "ops": [
+    "keep:0",
+    "drop:1 top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn#cbSpawnTag(Lnet/minecraft/class_2487;)V",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "EntityType.create lost its tag in 1.20.5; 1.20.4 only handed it to the new mob's finalizeSpawn, which this create pairs it with"
   }
  },
  "superCtorReshapes": {
@@ -279,6 +315,30 @@
    "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "superCalls": "rewrite",
    "basis": "Entity.getFeetBlockState() is getInBlockState() since 1.20.5: the same cached block state at the entity's position, read where 1.20.4 read it"
+  },
+  {
+   "old": "method_5943(Lnet/minecraft/class_5425;Lnet/minecraft/class_1266;Lnet/minecraft/class_3730;Lnet/minecraft/class_1315;Lnet/minecraft/class_2487;)Lnet/minecraft/class_1315;",
+   "new": "method_5943(Lnet/minecraft/class_5425;Lnet/minecraft/class_1266;Lnet/minecraft/class_3730;Lnet/minecraft/class_1315;)Lnet/minecraft/class_1315;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn.cbFinalizeSpawn(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn$CbLegacyFinalizeSpawn;Lnet/minecraft/class_5425;Lnet/minecraft/class_1266;Lnet/minecraft/class_3730;Lnet/minecraft/class_1315;)Lnet/minecraft/class_1315;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn$CbLegacyFinalizeSpawn",
+   "onlyUnder": "net/minecraft/class_1308",
+   "basis": "1.20.5 calls finalizeSpawn without the tag; a mod's 1.20.4 override gets the tag its caller paired with the call (rt/CbRestSpawn), the mod's super call is reshaped"
+  },
+  {
+   "old": "method_5899(Lnet/minecraft/class_3218;Lnet/minecraft/class_2487;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;",
+   "new": "method_5899(Lnet/minecraft/class_3218;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn.cbSpawn(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn$CbLegacyEntityTypeSpawn;Lnet/minecraft/class_3218;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn$CbLegacyEntityTypeSpawn",
+   "onlyUnder": "net/minecraft/class_1299",
+   "basis": "a mod EntityType's 1.20.4 spawn override gets the tag a 1.20.4 caller handed over"
+  },
+  {
+   "old": "method_5888(Lnet/minecraft/class_3218;Lnet/minecraft/class_2487;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;",
+   "new": "method_5888(Lnet/minecraft/class_3218;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn.cbCreate(Ltop/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn$CbLegacyEntityTypeSpawn;Lnet/minecraft/class_3218;Ljava/util/function/Consumer;Lnet/minecraft/class_2338;Lnet/minecraft/class_3730;ZZ)Lnet/minecraft/class_1297;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRestSpawn$CbLegacyEntityTypeSpawn",
+   "onlyUnder": "net/minecraft/class_1299",
+   "basis": "a mod EntityType's 1.20.4 create override gets the tag a 1.20.4 caller handed over"
   }
  ],
  "methodRenames": {
