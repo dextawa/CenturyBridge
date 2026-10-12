@@ -787,18 +787,25 @@ public final class Chain {
      */
     private void loadAwExtendable(java.util.Map<String, String> back) throws IOException {
         java.util.List<Path> files = new java.util.ArrayList<>();
-        files.add(Path.of("core/shims/" + to + "/resources/cb.accesswidener"));
         String stepWiring = System.getProperty("cb.wiring");
         if (stepWiring != null) {
-            Path steps = Path.of(stepWiring).toAbsolutePath().getParent();
-            Path root = steps == null || steps.getParent() == null || steps.getParent().getParent() == null
-                ? null : steps.getParent().getParent().getParent();
-            Path res = root == null ? null : root.resolve("core/shims/steps/" + to + "/resources");
+            // the checkout the step's wiring belongs to: <root>/core/segments/steps/<V>__<to>.json for a
+            // climb step's layer, <root>/core/segments/shims-<to>.json for step 1's (the 1.20.2 tree)
+            Path w = Path.of(stepWiring).toAbsolutePath();
+            Path segs = w.getParent();
+            boolean step = segs != null && segs.getFileName() != null && segs.getFileName().toString().equals("steps");
+            Path core = step ? segs.getParent().getParent() : segs == null ? null : segs.getParent();
+            Path root = core == null ? null : core.getParent();
+            Path res = root == null ? null
+                : root.resolve(step ? "core/shims/steps/" + to + "/resources" : "core/shims/" + to + "/resources");
             if (res != null && java.nio.file.Files.isDirectory(res)) {
                 try (var s = java.nio.file.Files.list(res)) {
                     s.filter(p -> p.getFileName().toString().endsWith(".accesswidener")).sorted().forEach(files::add);
                 }
             }
+        }
+        if (files.isEmpty()) {
+            files.add(Path.of("core/shims/" + to + "/resources/cb.accesswidener"));
         }
         for (Path aw : files) {
             if (!java.nio.file.Files.exists(aw)) {
