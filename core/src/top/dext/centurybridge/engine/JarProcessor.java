@@ -2467,10 +2467,20 @@ public final class JarProcessor {
 
             @Override
             public void visitEnd() {
+                // one new shape reconnected by two hooks (a covariant override declares the
+                // old shape twice, once per vanilla supertype that had it -- KilledTrigger's
+                // createInstance and SimpleCriterionTrigger's both): the first hook in wiring
+                // order synthesizes it, a second copy would be a duplicate method
+                Set<String> synthesized = new HashSet<>();
                 for (Chain.AdapterHook h : adapterApply) {
                     for (String[] sy : h.synth) {
                         if (declaredShapes.contains(sy[0] + sy[1])) {
                             continue; // the mod already speaks the new shape
+                        }
+                        if (!synthesized.add(sy[0] + sy[1])) {
+                            rpt.notes.add(tag + "adapter-synth skipped (already synthesized by another hook): "
+                                + clsName[0] + "." + sy[0] + sy[1] + " via " + h.adapter);
+                            continue;
                         }
                         if (h.guard != null) {
                             // guarded: the bridge runs on first entry; calling the method again
