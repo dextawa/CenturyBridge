@@ -569,6 +569,16 @@ public abstract class CbRenderBufferBuilderMixin implements CbRenderBufferBuilde
         this.field_52072 = -1L;
     }
 
+    @Override
+    public net.minecraft.class_293.class_5596 cb$mode() {
+        return this.field_52073;
+    }
+
+    @Override
+    public net.minecraft.class_293 cb$format() {
+        return this.field_1565;
+    }
+
     @Unique
     private void cb$fillDefaultColor() {
         this.cb$fillingDefault = true;

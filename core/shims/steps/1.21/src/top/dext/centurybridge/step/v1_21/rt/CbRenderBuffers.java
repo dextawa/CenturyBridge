@@ -171,6 +171,56 @@ public final class CbRenderBuffers {
         return net.minecraft.class_4597.method_22992(cbFixedBytes(fixed), cbBytesOf(builder));
     }
 
+    // ------------------------------------------------------------------ MultiBufferSource.BufferSource's 1.20.6 fields, for a 1.20.6 subclass
+
+    /*
+     * 1.20.6's BufferSource kept one shared builder (begun per render type), its fixed builders, the last state and
+     * the set of builders started; 1.21's keeps the memory (a shared ByteBufferBuilder and one per fixed type), the
+     * builders started per type, and the last shared type. A 1.20.6 subclass reading the old fields sees them as
+     * they stand: the builder of the batch in progress where there is one, else the 1.20.6 builder over that memory
+     * (cbBuilderOf, idle until begun).
+     */
+
+    private static top.dext.centurybridge.step.v1_21.mixin.CbRenderBufferSourceAccess cbSource(net.minecraft.class_4597.class_4598 source) {
+        return (top.dext.centurybridge.step.v1_21.mixin.CbRenderBufferSourceAccess) (Object) source;
+    }
+
+    /** builder: the shared builder -- the one of the shared batch in progress, else the one over the shared memory */
+    public static net.minecraft.class_287 cbSharedBuilder(net.minecraft.class_4597.class_4598 source) {
+        top.dext.centurybridge.step.v1_21.mixin.CbRenderBufferSourceAccess s = cbSource(source);
+        net.minecraft.class_1921 last = s.cb$lastSharedType();
+        net.minecraft.class_287 started = last != null ? s.cb$startedBuilders().get(last) : null;
+        return started != null ? started : cbBuilderOf(s.cb$sharedBuffer());
+    }
+
+    /** fixedBuffers: each fixed type's builder -- its batch in progress, else the one over its memory -- in order */
+    public static Map<net.minecraft.class_1921, net.minecraft.class_287> cbFixedBuilders(net.minecraft.class_4597.class_4598 source) {
+        top.dext.centurybridge.step.v1_21.mixin.CbRenderBufferSourceAccess s = cbSource(source);
+        java.util.LinkedHashMap<net.minecraft.class_1921, net.minecraft.class_287> builders = new java.util.LinkedHashMap<>();
+        for (Map.Entry<net.minecraft.class_1921, net.minecraft.class_9799> e : s.cb$fixedBuffers().entrySet()) {
+            net.minecraft.class_287 started = s.cb$startedBuilders().get(e.getKey());
+            builders.put(e.getKey(), started != null ? started : cbBuilderOf(e.getValue()));
+        }
+        return java.util.Collections.unmodifiableMap(builders);
+    }
+
+    /** lastState: the last shared type, as 1.20.6's Optional */
+    public static java.util.Optional<net.minecraft.class_1921> cbLastState(net.minecraft.class_4597.class_4598 source) {
+        return java.util.Optional.ofNullable(cbSource(source).cb$lastSharedType());
+    }
+
+    /** lastState = state */
+    public static void cbSetLastState(net.minecraft.class_4597.class_4598 source, java.util.Optional<net.minecraft.class_1921> state) {
+        cbSource(source).cb$setLastSharedType(state.orElse(null));
+    }
+
+    /** startedBuffers: the builders of the batches in progress */
+    public static java.util.Set<net.minecraft.class_287> cbStartedBuffers(net.minecraft.class_4597.class_4598 source) {
+        java.util.Set<net.minecraft.class_287> started = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+        started.addAll(cbSource(source).cb$startedBuilders().values());
+        return java.util.Collections.unmodifiableSet(started);
+    }
+
     /** a 1.20.6 map of fixed builders as 1.21's ordered map of their memory (iteration order kept) */
     public static java.util.SequencedMap<net.minecraft.class_1921, net.minecraft.class_9799> cbFixedBytes(
             Map<net.minecraft.class_1921, net.minecraft.class_287> fixed) {

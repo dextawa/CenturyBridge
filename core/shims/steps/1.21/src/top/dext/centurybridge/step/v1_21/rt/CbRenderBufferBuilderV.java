@@ -122,4 +122,10 @@ public interface CbRenderBufferBuilderV {
 
     /** made by CenturyBridge as 1.20.6 made a builder: idle until begun (1.21's constructor leaves it building) */
     void cb$idle();
+
+    /** the mode the builder builds in */
+    net.minecraft.class_293.class_5596 cb$mode();
+
+    /** the format the builder builds in */
+    net.minecraft.class_293 cb$format();
 }
