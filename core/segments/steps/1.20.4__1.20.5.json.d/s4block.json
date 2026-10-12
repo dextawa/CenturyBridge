@@ -667,6 +667,36 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockSuspicious#entries(Lnet/minecraft/class_9298;)Ljava/util/List;",
    "basis": "the stew effects' entry list, 1.20.4's shape (CbBlockSuspicious)"
+  },
+  "net/minecraft/class_8172$class_8526.comp_1487()Lnet/minecraft/class_1792;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockPot#side(Ljava/util/Optional;)Lnet/minecraft/class_1792;",
+   "basis": "the side's sherd, brick when plain, as 1.20.4 kept it (CbBlockPot)"
+  },
+  "net/minecraft/class_8172$class_8526.comp_1488()Lnet/minecraft/class_1792;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockPot#side(Ljava/util/Optional;)Lnet/minecraft/class_1792;",
+   "basis": "the side's sherd, brick when plain, as 1.20.4 kept it (CbBlockPot)"
+  },
+  "net/minecraft/class_8172$class_8526.comp_1489()Lnet/minecraft/class_1792;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockPot#side(Ljava/util/Optional;)Lnet/minecraft/class_1792;",
+   "basis": "the side's sherd, brick when plain, as 1.20.4 kept it (CbBlockPot)"
+  },
+  "net/minecraft/class_8172$class_8526.comp_1490()Lnet/minecraft/class_1792;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockPot#side(Ljava/util/Optional;)Lnet/minecraft/class_1792;",
+   "basis": "the side's sherd, brick when plain, as 1.20.4 kept it (CbBlockPot)"
+  },
+  "net/minecraft/class_8172$class_8526.method_51512()Ljava/util/stream/Stream;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbBlockPot#sorted(Ljava/util/List;)Ljava/util/stream/Stream;",
+   "basis": "1.20.5's ordered sides (brick when plain) as 1.20.4's stream (CbBlockPot)"
   }
  },
  "staticRedirects": {
@@ -871,6 +901,7 @@
   }
  },
  "classRenames": {
-  "net/minecraft/class_7917$class_8751": "net/minecraft/class_9298$class_8751"
+  "net/minecraft/class_7917$class_8751": "net/minecraft/class_9298$class_8751",
+  "net/minecraft/class_8172$class_8526": "net/minecraft/class_8526"
  }
 }
