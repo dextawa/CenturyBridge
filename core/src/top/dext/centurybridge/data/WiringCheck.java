@@ -718,6 +718,23 @@ public final class WiringCheck {
                         wantMethod(where + " frames", f + "#cbArg" + t, null, "(Ljava/lang/Object;I)" + t);
                     }
                     wantMethod(where + " frames", f + "#cbArgL", null, "(Ljava/lang/Object;I)Ljava/lang/Object;");
+                    if (root.has("frameDefaults") && root.getAsJsonObject("frameDefaults").has(o.get("old").getAsString())) {
+                        // a default answered when no frame holds the object: the frames class reads it
+                        // through cbArgOr*, and the static it names must exist exactly
+                        for (String t : new String[] {"Z", "B", "C", "S", "I", "J", "F", "D"}) {
+                            wantMethod(where + " frames", f + "#cbArgOr" + t, null, "(Ljava/lang/Object;I" + t + ")" + t);
+                        }
+                        wantMethod(where + " frames", f + "#cbArgOrL", null,
+                            "(Ljava/lang/Object;ILjava/lang/Object;)Ljava/lang/Object;");
+                        for (var d : root.getAsJsonObject("frameDefaults").getAsJsonObject(o.get("old").getAsString()).entrySet()) {
+                            String r = d.getValue().getAsString().trim();
+                            if (r.startsWith("zero:")) {
+                                continue;
+                            }
+                            int p = r.indexOf('(');
+                            wantMethod(where + " frameDefaults " + d.getKey(), r.substring(0, p), null, methodDesc(r.substring(p)));
+                        }
+                    }
                 }
                 if (o.has("narrow") && o.get("narrow").getAsBoolean()) {
                     // a narrowing forward casts vanilla's value to the old type after an instanceof

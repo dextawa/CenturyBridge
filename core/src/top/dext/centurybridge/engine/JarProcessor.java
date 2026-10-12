@@ -443,10 +443,28 @@ public final class JarProcessor {
                         }
                     } else {
                         String[] acc = frameArg(na[j]);
+                        String[] dflt = h.frameDefaults.get(j);
                         seq.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
                         seq.add(new org.objectweb.asm.tree.LdcInsnNode(j));
-                        seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.frames, acc[0],
-                            "(Ljava/lang/Object;I)" + acc[1], false));
+                        if (dflt == null) {
+                            seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.frames, acc[0],
+                                "(Ljava/lang/Object;I)" + acc[1], false));
+                        } else {
+                            // no frame for this object (the old override entered directly): what V used,
+                            // computed from nothing, the receiver, or the receiver and the old arguments
+                            int dn = org.objectweb.asm.Type.getArgumentTypes(dflt[2]).length;
+                            if (dn >= 1) {
+                                seq.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+                            }
+                            if (dn > 1) {
+                                for (int i = 0; i < oa.length; i++) {
+                                    seq.add(new org.objectweb.asm.tree.VarInsnNode(oa[i].getOpcode(Opcodes.ILOAD), slots[i]));
+                                }
+                            }
+                            seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, dflt[0], dflt[1], dflt[2], false));
+                            seq.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, h.frames,
+                                "cbArgOr" + acc[0].substring("cbArg".length()), "(Ljava/lang/Object;I" + acc[1] + ")" + acc[1], false));
+                        }
                         if (na[j].getSort() >= org.objectweb.asm.Type.ARRAY && !na[j].getInternalName().equals("java/lang/Object")) {
                             seq.add(new org.objectweb.asm.tree.TypeInsnNode(Opcodes.CHECKCAST, na[j].getInternalName()));
                         }

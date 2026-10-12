@@ -343,6 +343,13 @@ public final class Chain {
          * fall-through that skips the mod's method.
          */
         public String frames;
+        /**
+         * "frameDefaults" (a section of its own, keyed by the old shape): per new-argument index, the
+         * static {owner, name, desc} whose value the rewritten super call passes when no frame holds the
+         * object -- the old override entered directly rather than through the synthesized new shape.
+         * Without one the argument is its type's zero value.
+         */
+        public final java.util.Map<Integer, String[]> frameDefaults = new java.util.HashMap<>();
         /** "superCalls": "rewrite": a mod's super.old(..) in a class under the hook becomes super.new(..) */
         public boolean superCalls;
         /**
@@ -1795,6 +1802,51 @@ public final class Chain {
                         h.adapter = o.get("adapter").getAsString();
                     }
                     c.overrideHooks.add(h);
+                }
+            }
+            if (root.has("frameDefaults")) {
+                // what a rewritten super call passes for an argument the old shape has no place for when
+                // there is no frame to read it from: the mod's old override entered directly (the mod's
+                // own call, not vanilla's through the synthesized new shape) -- a null NbtAccounter there
+                // is an NPE in vanilla's body. Keyed by the hook's old shape; per new argument index a
+                // static OWNER#name()T, OWNER#name(LX;)T taking the receiver, or OWNER#name(LX;<old args>)T
+                // taking the receiver and the old call's arguments, computing what V used
+                for (var e : root.getAsJsonObject("frameDefaults").entrySet()) {
+                    String[] osig = splitSig(e.getKey());
+                    boolean found = false;
+                    for (OverrideHook h : c.overrideHooks) {
+                        if (!h.oldName.equals(osig[0]) || !h.oldDesc.equals(osig[1])) {
+                            continue;
+                        }
+                        if (h.frames == null) {
+                            throw new IllegalArgumentException("frameDefaults " + e.getKey() + ": the hook carries no frames");
+                        }
+                        org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
+                        for (var d : e.getValue().getAsJsonObject().entrySet()) {
+                            int j = Integer.parseInt(d.getKey());
+                            if (d.getValue().getAsString().startsWith("zero:")) {
+                                continue; // judged: the type's zero value is what V meant ("zero: <why>")
+                            }
+                            String[] ref = parseStaticRef("frameDefaults " + e.getKey(), d.getValue().getAsString());
+                            org.objectweb.asm.Type[] dp = org.objectweb.asm.Type.getArgumentTypes(ref[2]);
+                            org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
+                            // ()T, (receiver)T, or (receiver, every old argument)T -- DispenserBlock.dispense's
+                            // new BlockState is the state at the old position: level.getBlockState(pos)
+                            boolean shape = dp.length == 0 || dp[0].getSort() == org.objectweb.asm.Type.OBJECT
+                                && (dp.length == 1 || dp.length == oa.length + 1
+                                    && java.util.Arrays.equals(java.util.Arrays.copyOfRange(dp, 1, dp.length), oa));
+                            if (j < 0 || j >= na.length || !org.objectweb.asm.Type.getReturnType(ref[2]).equals(na[j]) || !shape) {
+                                throw new IllegalArgumentException("frameDefaults " + e.getKey() + ": " + d.getKey()
+                                    + " must name a new argument and a static ()T, (receiver)T or (receiver, old arguments)T"
+                                    + " returning that argument's type");
+                            }
+                            h.frameDefaults.put(j, ref);
+                        }
+                        found = true;
+                    }
+                    if (!found) {
+                        throw new IllegalArgumentException("frameDefaults " + e.getKey() + ": no override hook has that old shape");
+                    }
                 }
             }
             if (root.has("facadeGaps")) {
