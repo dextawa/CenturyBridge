@@ -199,6 +199,16 @@ public class RecipeTestMod implements ModInitializer {
         check(copy.size() == total && copy.get(0).method_8114().toString().compareTo(copy.get(total - 1).method_8114().toString()) < 0,
             "a copy of getRecipes() sorts by the recipes' ids");
 
+        // method references to the same members: what the lambda answers converts like a call's answer
+        java.util.function.Function<class_2960, Optional<? extends class_1860<?>>> byKeyRef = rm::method_8130;
+        Optional<? extends class_1860<?>> viaRef = byKeyRef.apply(id);
+        check(viaRef.isPresent() && viaRef.get() == smelt, "a method reference rm::byKey answers the recipe");
+        java.util.function.Function<class_1863, Collection<class_1860<?>>> unbound = class_1863::method_8126;
+        check(unbound.apply(rm).contains(smelt), "an unbound method reference RecipeManager::getRecipes answers recipes");
+        java.util.function.Function<class_3956<class_3861>, List<class_3861>> ofType = rm::method_30027;
+        class_3861 firstRef = ofType.apply(class_3956.field_17546).get(0);
+        check(firstRef.method_8167() > 0, "a method reference rm::getAllRecipesFor answers SmeltingRecipes");
+
         // the manager's own recipes handed back: the same recipes afterwards
         rm.method_20702(recipes);
         check(rm.method_8126().size() == total, "replaceRecipes(getRecipes()) keeps " + total + " recipes");

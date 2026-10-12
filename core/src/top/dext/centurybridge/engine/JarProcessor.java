@@ -678,6 +678,135 @@ public final class JarProcessor {
     }
 
     /**
+     * Method references to reshaped members ({@link Chain#callReshapes}). A LambdaMetafactory
+     * invokedynamic whose implementation handle names such a member -- {@code manager::byKey},
+     * {@code RecipeManager::getRecipes}, {@code ChatComponent::getRecentChat} -- calls the member with
+     * the old descriptor and hands its answer to the functional interface untouched, past every
+     * conversion a call site gets: a reshape that changed the descriptor fails to link at the
+     * lambda's first use (BootstrapMethodError), a same-shape one (generic drift) hands the mod the
+     * new type arguments' values (the ClassCastException comes where the mod reads them). The handle
+     * is pointed at a private static forwarder of the same class that makes that very call -- the
+     * receiver first for an instance member, then the arguments -- and returns its answer; the call
+     * pass that runs next ({@link #rewriteCalls}) reshapes and converts that call like any other,
+     * with the same resolution (an inherited member named through a mod class included). The lambda
+     * keeps its interface, its erased and instantiated types and its captured values; the forwarder
+     * is straight-line code, so no frames. A serializable lambda (altMetafactory, FLAG_SERIALIZABLE)
+     * is left alone and reported: its $deserializeLambda$ matches the implementation handle by name.
+     */
+    private static byte[] rewriteReshapedMethodRefs(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
+        String raw = new String(bytes, java.nio.charset.StandardCharsets.ISO_8859_1);
+        if (!raw.contains("java/lang/invoke/LambdaMetafactory")) {
+            return bytes;
+        }
+        boolean any = false;
+        for (String n : chain.callReshapeNames) {
+            if (raw.contains(n)) {
+                any = true;
+                break;
+            }
+        }
+        if (!any) {
+            return bytes;
+        }
+        org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+        new ClassReader(bytes).accept(cn, 0);
+        boolean itf = (cn.access & Opcodes.ACC_INTERFACE) != 0;
+        Set<String> names = new HashSet<>();
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            names.add(m.name);
+        }
+        Map<String, org.objectweb.asm.tree.MethodNode> forwarders = new LinkedHashMap<>();
+        int rewrites = 0;
+        for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+            if (m.instructions == null) {
+                continue;
+            }
+            for (org.objectweb.asm.tree.AbstractInsnNode in = m.instructions.getFirst(); in != null; in = in.getNext()) {
+                if (!(in instanceof org.objectweb.asm.tree.InvokeDynamicInsnNode idin)
+                        || !idin.bsm.getOwner().equals("java/lang/invoke/LambdaMetafactory")
+                        || idin.bsmArgs.length < 3 || !(idin.bsmArgs[1] instanceof org.objectweb.asm.Handle h)) {
+                    continue;
+                }
+                int kind = h.getTag();
+                if ((kind != Opcodes.H_INVOKEVIRTUAL && kind != Opcodes.H_INVOKEINTERFACE && kind != Opcodes.H_INVOKESTATIC)
+                        || h.getName().startsWith("<")) {
+                    continue;
+                }
+                String nameDesc = h.getName() + h.getDesc();
+                String home = chain.instanceRedirectHome(chain.callReshapeIndex, h.getOwner(), nameDesc);
+                if (home == null && layer.decls.containsKey(h.getOwner())) {
+                    home = inheritedReshapeHome(h.getOwner(), nameDesc, layer, chain);
+                }
+                if (home == null) {
+                    continue;
+                }
+                String key = home + "." + nameDesc;
+                if (idin.bsm.getName().equals("altMetafactory") && idin.bsmArgs.length > 3
+                        && idin.bsmArgs[3] instanceof Integer flags && (flags & 1) != 0) {
+                    rpt.issues.add(tag + "method reference to a reshaped member left as it was (serializable lambda): "
+                        + key + " in " + cn.name);
+                    top.dext.centurybridge.data.FullAudit.record(key, "METHODREF-NOT-RESHAPED[" + chain.sideOf(home) + "] serializable");
+                    continue;
+                }
+                String fk = kind + " " + h.getOwner() + "." + nameDesc;
+                org.objectweb.asm.tree.MethodNode f = forwarders.get(fk);
+                if (f == null) {
+                    String name = "cb$ref$" + h.getName();
+                    for (int i = 1; names.contains(name); i++) {
+                        name = "cb$ref$" + h.getName() + "$" + i;
+                    }
+                    names.add(name);
+                    f = methodRefForwarder(h, name);
+                    forwarders.put(fk, f);
+                }
+                idin.bsmArgs[1] = new org.objectweb.asm.Handle(Opcodes.H_INVOKESTATIC, cn.name, f.name, f.desc, itf);
+                rewrites++;
+                top.dext.centurybridge.data.FullAudit.record(key, "call-reshape-methodref");
+            }
+        }
+        if (rewrites == 0) {
+            return bytes;
+        }
+        cn.methods.addAll(forwarders.values());
+        rpt.notes.add(tag + "method references to reshaped members forwarded: " + rewrites + " in " + cn.name);
+        org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
+        cn.accept(cw);
+        return cw.toByteArray();
+    }
+
+    /** the forwarder {@link #rewriteReshapedMethodRefs} points a method reference at: the very call, receiver first */
+    private static org.objectweb.asm.tree.MethodNode methodRefForwarder(org.objectweb.asm.Handle h, String name) {
+        boolean statik = h.getTag() == Opcodes.H_INVOKESTATIC;
+        org.objectweb.asm.Type[] params = org.objectweb.asm.Type.getArgumentTypes(h.getDesc());
+        org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(h.getDesc());
+        StringBuilder d = new StringBuilder("(");
+        if (!statik) {
+            d.append('L').append(h.getOwner()).append(';');
+        }
+        for (org.objectweb.asm.Type p : params) {
+            d.append(p.getDescriptor());
+        }
+        d.append(')').append(ret.getDescriptor());
+        org.objectweb.asm.tree.MethodNode f = new org.objectweb.asm.tree.MethodNode(
+            Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC, name, d.toString(), null, null);
+        int slot = 0;
+        if (!statik) {
+            f.instructions.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.ALOAD, 0));
+            slot = 1;
+        }
+        for (org.objectweb.asm.Type p : params) {
+            f.instructions.add(new org.objectweb.asm.tree.VarInsnNode(p.getOpcode(Opcodes.ILOAD), slot));
+            slot += p.getSize();
+        }
+        int op = statik ? Opcodes.INVOKESTATIC : h.getTag() == Opcodes.H_INVOKEINTERFACE ? Opcodes.INVOKEINTERFACE : Opcodes.INVOKEVIRTUAL;
+        f.instructions.add(new org.objectweb.asm.tree.MethodInsnNode(op, h.getOwner(), h.getName(), h.getDesc(), h.isInterface()));
+        f.instructions.add(new org.objectweb.asm.tree.InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+        f.maxLocals = slot;
+        f.maxStack = Math.max(slot, ret.getSize());
+        return f;
+    }
+
+    /**
      * Method calls whose descriptor changed at this step ({@link Chain#callReshapes}): every call
      * site whose JVM-resolved home is a reshaped key -- whatever its opcode, a mod's own
      * super.m(..) included, so the call keeps its dispatch -- has its arguments re-pushed per the
@@ -1869,6 +1998,10 @@ public final class JarProcessor {
             bytes = b2;
         }
         if (!chain.callReshapes.isEmpty()) {
+            // method references first: their forwarders are call sites for the call pass
+            byte[] b6 = rewriteReshapedMethodRefs(bytes, chain, layer, rpt, tag);
+            ctorChanged |= b6 != bytes;
+            bytes = b6;
             byte[] b3 = rewriteCalls(bytes, chain, layer, rpt, tag);
             ctorChanged |= b3 != bytes;
             bytes = b3;
