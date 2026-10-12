@@ -1690,6 +1690,11 @@ final class MixinBridge {
                     left.add(where + ": the call's shape changed (" + af.how() + "), and @" + kind + " handles the call itself");
                     continue;
                 }
+                if (kind.equals("Inject") && capturesLocals(sel.handler()) || hasSugar(sel.handler(), "Local;")) {
+                    // the locals Mixin hands it are read at the anchor, in a body that changed around it
+                    left.add(where + ": the handler captures the target's locals at the anchor");
+                    continue;
+                }
                 String nt = "L" + af.owner() + ";" + af.name() + (fld ? ":" : "") + af.desc();
                 if (ownKey(t)) {
                     MixinRepair.refmapPut(table, t, nt);
@@ -1967,6 +1972,17 @@ final class MixinBridge {
         for (AnnotationNode a : pa[i]) {
             if (a.desc.startsWith(SUGAR) && a.desc.endsWith(suffix)) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    /** does an @Inject handler take parameters after its CallbackInfo (captured locals) */
+    private static boolean capturesLocals(MethodNode h) {
+        Type[] hp = Type.getArgumentTypes(h.desc);
+        for (int i = 0; i < hp.length; i++) {
+            if (hp[i].getDescriptor().equals(CI) || hp[i].getDescriptor().equals(CIR)) {
+                return i + 1 < hp.length;
             }
         }
         return false;
