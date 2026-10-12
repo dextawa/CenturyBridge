@@ -1,3 +1,72 @@
 {
- "lookupRt": "top/dext/centurybridge/step/v1_20_5/rt/CbRegistries"
+ "lookupRt": "top/dext/centurybridge/step/v1_20_5/rt/CbRegistries",
+ "fieldGetters": {
+  "net/minecraft/class_131.field_45832:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#itemFunctionCodec",
+  "net/minecraft/class_217.field_45869:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#conditionCodec",
+  "net/minecraft/class_52.field_45796:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootTableCodec",
+  "net/minecraft/class_7444.field_39122:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#instrumentCodec"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_7788.field_40610:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#blockLootMap"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_170.<init>(ILjava/util/List;Ljava/util/List;Ljava/util/Optional;)V": {
+   "desc": "(ILjava/util/List;Ljava/util/List;Ljava/util/Optional;)V",
+   "ops": ["keep:0", "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootTableKeys(Ljava/util/List;)Ljava/util/List;", "keep:2", "keep:3"],
+   "basis": "s4item generic drift: AdvancementRewards keeps loot table keys where 1.20.4 kept their locations"
+  },
+  "net/minecraft/class_2090.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": ["keep:0", "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#biomeSet(Ljava/util/Optional;)Ljava/util/Optional;", "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#structureSet(Ljava/util/Optional;)Ljava/util/Optional;", "keep:3", "keep:4", "keep:5", "keep:6", "keep:7"],
+   "basis": "s4item generic drift: LocationPredicate holds biome / structure sets where 1.20.4 held one key each"
+  },
+  "net/minecraft/class_7788.<init>(Ljava/util/Set;Lnet/minecraft/class_7699;Ljava/util/Map;)V": {
+   "desc": "(Ljava/util/Set;Lnet/minecraft/class_7699;Ljava/util/Map;)V",
+   "ops": ["keep:0", "keep:1", "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootTableKeyMap(Ljava/util/Map;)Ljava/util/Map;"],
+   "basis": "s4item generic drift: BlockLootSubProvider keys its table map by loot table key where 1.20.4 keyed it by location"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_170.comp_2026()Ljava/util/List;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootTableLocations(Ljava/util/List;)Ljava/util/List;",
+   "basis": "s4item generic drift: AdvancementRewards.loot() answers keys, 1.20.4 code reads locations"
+  },
+  "net/minecraft/class_1863.method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "ops": ["keep:0", "keep:1", "keep:2", "keep:3"],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#recipeWithId(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4item generic drift: getRecipeFor answers the holder, 1.20.4 answered (id, holder)"
+  },
+  "net/minecraft/class_1890.method_8201(Ljava/util/Collection;Lnet/minecraft/class_1887;)Z": {
+   "desc": "(Ljava/util/Collection;Lnet/minecraft/class_1887;)Z",
+   "ops": ["conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#enchantmentHolders(Ljava/util/Collection;)Ljava/util/Collection;", "keep:1"],
+   "basis": "s4item generic drift: isEnchantmentCompatible takes enchantment holders where 1.20.4 took enchantments"
+  },
+  "net/minecraft/class_2102.method_9063(Ljava/util/Map;)Z": {
+   "desc": "(Ljava/util/Map;)Z",
+   "ops": ["conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#effectHolderMap(Ljava/util/Map;)Ljava/util/Map;"],
+   "basis": "s4item generic drift: MobEffectsPredicate.matches looks effects up by holder where 1.20.4 keyed them by effect"
+  },
+  "net/minecraft/class_2432.method_55304(Ljava/util/function/BiConsumer;)V": {
+   "desc": "(Ljava/util/function/BiConsumer;)V",
+   "ops": ["conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootKeyConsumer(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"],
+   "basis": "s4item generic drift: spawnerLootTables hands loot table keys where 1.20.4 handed locations"
+  },
+  "net/minecraft/class_39.method_270()Ljava/util/Set;": {
+   "desc": "()Ljava/util/Set;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootTableLocationSet(Ljava/util/Set;)Ljava/util/Set;",
+   "basis": "s4item generic drift: BuiltInLootTables.all() answers keys, 1.20.4 code reads locations"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_1863",
+   "member": "method_42299(Lnet/minecraft/class_3956;Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "args": [null, null, null, null],
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#recipeOfPair(Ljava/util/Optional;)Ljava/util/Optional;"
+  }
+ ]
 }
