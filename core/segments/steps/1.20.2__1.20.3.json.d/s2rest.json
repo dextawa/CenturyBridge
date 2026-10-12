@@ -27,7 +27,9 @@
   "net/minecraft/class_407.method_49625(Ljava/lang/String;Lnet/minecraft/class_437;Z)Lnet/minecraft/class_4185$class_4241;": "top/dext/centurybridge/step/v1_20_3/rt/CbGui",
   "net/minecraft/class_8669.method_52748(Lnet/minecraft/class_437;)Lnet/minecraft/class_437;": "top/dext/centurybridge/step/v1_20_3/rt/CbGui",
   "net/minecraft/class_8669.method_52750(Lnet/minecraft/class_437;)Lnet/minecraft/class_437;": "top/dext/centurybridge/step/v1_20_3/rt/CbGui",
-  "net/minecraft/class_524.method_29784(Lnet/minecraft/class_32;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbGui"
+  "net/minecraft/class_524.method_29784(Lnet/minecraft/class_32;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_20_3/rt/CbGui",
+  "net/minecraft/class_757.method_34500()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_20_3/rt/CbRender",
+  "net/minecraft/class_1921.method_23585()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v1_20_3/rt/CbRender"
  },
  "fieldGetters": {
   "net/minecraft/class_3521.field_15664:Lcom/google/common/util/concurrent/ListeningExecutorService;": "top/dext/centurybridge/step/v1_20_3/rt/CbUtil",
@@ -47,7 +49,8 @@
   "net/minecraft/class_1921.field_32773:I": "top/dext/centurybridge/step/v1_20_3/rt/CbClient",
   "net/minecraft/class_4905.field_33036:I": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms",
   "net/minecraft/class_4905.field_33038:I": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms",
-  "net/minecraft/class_4905.field_33039:I": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms"
+  "net/minecraft/class_4905.field_33039:I": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms",
+  "net/minecraft/class_4668.field_29448:Lnet/minecraft/class_4668$class_5942;": "top/dext/centurybridge/step/v1_20_3/rt/CbNoCrumblingRenderType"
  },
  "callReshapes": {
   "net/minecraft/class_156.method_43028(Lit/unimi/dsi/fastutil/objects/ObjectArrayList;Lnet/minecraft/class_5819;)V": {
@@ -123,6 +126,16 @@
     "push top/dext/centurybridge/step/v1_20_3/rt/CbClient#cbUnlimitedRange()F"
    ],
    "basis": "SoundEventListener.onPlaySound gained the sound's range in 1.20.3; a 1.20.2 call has none"
+  },
+  "net/minecraft/class_4410.method_53802(Lnet/minecraft/class_437;Lnet/minecraft/class_4877;Ljava/lang/Runnable;)Lnet/minecraft/class_4410;": {
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_4877;Lnet/minecraft/class_4445;Ljava/lang/Runnable;)Lnet/minecraft/class_4410;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbNoCreationTask()Lnet/minecraft/class_4445;",
+    "keep:2"
+   ],
+   "basis": "forNewRealm takes the realm's creation task since 1.20.3 (none: the realm exists, as in 1.20.2)"
   }
  },
  "instanceFieldGetters": {
@@ -140,7 +153,8 @@
   "net/minecraft/class_3218.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_20_3/rt/CbServer",
   "net/minecraft/class_2558$class_2559.method_10846()Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbText",
   "net/minecraft/class_2568$class_5247.method_27674()Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_3/rt/CbText",
-  "net/minecraft/class_374.method_1997(Ljava/lang/Class;Ljava/lang/Object;)Lnet/minecraft/class_368;": "top/dext/centurybridge/step/v1_20_3/rt/CbGui"
+  "net/minecraft/class_374.method_1997(Ljava/lang/Class;Ljava/lang/Object;)Lnet/minecraft/class_368;": "top/dext/centurybridge/step/v1_20_3/rt/CbGui",
+  "net/minecraft/class_4325.method_53793()V": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms"
  },
  "overrideHooks": [
   {
@@ -250,7 +264,17 @@
   "net/minecraft/class_4667.method_45626(Lnet/minecraft/class_332;Lnet/minecraft/class_353;IIF)V",
   "net/minecraft/class_4227.method_19671(Lnet/minecraft/class_243;)V",
   "net/minecraft/class_4227.method_27268()Lnet/minecraft/class_243;",
-  "net/minecraft/class_4227.method_19672(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V"
+  "net/minecraft/class_4227.method_19672(Lorg/joml/Vector3f;Lorg/joml/Vector3f;)V",
+  "net/minecraft/class_4346.method_35685(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/class_4346;",
+  "net/minecraft/class_4367.method_37007()V",
+  "net/minecraft/class_4413.method_32508()Ljava/lang/String;",
+  "net/minecraft/class_4413.method_32509()Lnet/minecraft/class_5672;",
+  "net/minecraft/class_4413.method_32510()Z",
+  "net/minecraft/class_1066.method_14453(Ljava/util/function/Consumer;)V",
+  "net/minecraft/class_1066.method_4640(Ljava/net/URL;Ljava/lang/String;Z)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_1066.method_4642()Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_1066.method_4638(Ljava/io/File;Lnet/minecraft/class_5352;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_1066.method_43339(Lnet/minecraft/class_32$class_5143;)Ljava/util/concurrent/CompletableFuture;"
  ],
  "superCtorReshapes": {
   "net/minecraft/class_2568$class_5247.<init>(Ljava/lang/String;ZLjava/util/function/Function;Ljava/util/function/Function;Ljava/util/function/Function;)V": {
@@ -525,6 +549,86 @@
    ],
    "after": "top/dext/centurybridge/step/v1_20_3/rt/CbGui#cbReceivingLevelBuilt(Lnet/minecraft/class_434;)V",
    "basis": "1.20.3's ReceivingLevelScreen closes by a supplier; 1.20.2's by loadingPacketsReceived() and the player's section being ready"
+  },
+  "net/minecraft/class_4883.<init>(ZZZZIZIIZLjava/lang/String;)V": {
+   "desc": "(ZZZZIZIIZLjava/lang/String;Ljava/lang/String;Lnet/minecraft/class_4877$class_8842;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbNoVersion()Ljava/lang/String;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbDefaultCompatibility()Lnet/minecraft/class_4877$class_8842;"
+   ],
+   "basis": "1.20.3 world options carry a version and a compatibility; 1.20.2's had neither (1.20.3's defaults, left out of the JSON)"
+  },
+  "net/minecraft/class_4884.<init>(Ljava/lang/String;JIZ)V": {
+   "desc": "(Ljava/lang/String;JIZLjava/util/Set;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbNoExperiments()Ljava/util/Set;"
+   ],
+   "basis": "1.20.3 world resets name the experiments to enable; 1.20.2's enabled none"
+  },
+  "net/minecraft/class_4367.<init>(IIIILjava/util/function/Supplier;Ljava/util/function/Consumer;ILnet/minecraft/class_4185$class_4241;)V": {
+   "desc": "(IIIIILnet/minecraft/class_4185$class_4241;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:6",
+    "keep:7"
+   ],
+   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbSlotButtonBuilt(Lnet/minecraft/class_4367;IIIILjava/util/function/Supplier;Ljava/util/function/Consumer;ILnet/minecraft/class_4185$class_4241;)V",
+   "basis": "1.20.2's slot button pulled its server from a supplier and handed its tooltip to a setter (CbRealmsWorldSlotButtonMixin)"
+  },
+  "net/minecraft/class_4398.<init>(Lnet/minecraft/class_437;Lnet/minecraft/class_4358;)V": {
+   "desc": "(Lnet/minecraft/class_437;[Lnet/minecraft/class_4358;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbTasks(Lnet/minecraft/class_4358;)[Lnet/minecraft/class_4358;"
+   ],
+   "basis": "1.20.3 runs a sequence of long-running tasks; 1.20.2 ran the one"
+  },
+  "net/minecraft/class_4413.<init>(Ljava/lang/String;Lnet/minecraft/class_5672;Z)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_5672;ZLjava/util/Set;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbNoExperiments()Ljava/util/Set;"
+   ],
+   "basis": "1.20.3's WorldGenerationInfo record names experiments; 1.20.2's had none"
+  },
+  "net/minecraft/class_4445.<init>(JLjava/lang/String;Ljava/lang/String;Lnet/minecraft/class_437;)V": {
+   "desc": "(JLjava/lang/String;Ljava/lang/String;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms#cbCreationTaskBuilt(Lnet/minecraft/class_4445;JLjava/lang/String;Ljava/lang/String;Lnet/minecraft/class_437;)V",
+   "basis": "1.20.2's RealmCreationTask went to the screen it was given once the realm was initialized (CbRealmCreationTaskMixin)"
+  },
+  "net/minecraft/class_1066.<init>(Ljava/io/File;)V": {
+   "desc": "(Lnet/minecraft/class_310;Ljava/nio/file/Path;Lnet/minecraft/class_542$class_547;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbClient#cbMinecraft()Lnet/minecraft/class_310;",
+    "conv:0 top/dext/centurybridge/step/v1_20_3/rt/CbPacks#cbQueueDir(Ljava/io/File;)Ljava/nio/file/Path;",
+    "push top/dext/centurybridge/step/v1_20_3/rt/CbPacks#cbUserData()Lnet/minecraft/class_542$class_547;"
+   ],
+   "after": "top/dext/centurybridge/step/v1_20_3/rt/CbPacks#cbPackSourceBuilt(Lnet/minecraft/class_1066;Ljava/io/File;)V",
+   "basis": "1.20.3's DownloadedPackSource is a download queue under server control; the 1.20.2 single server-pack slot lives on it (CbPacks), in the directory the 1.20.2 constructor was given"
   }
  },
  "adapterHooks": [
@@ -571,6 +675,15 @@
    ],
    "synth": [],
    "basis": "a 1.20.2 world-list entry answering isSelectable is selected by its answer (CbWorldSelectionListMixin)"
+  },
+  {
+   "under": "net/minecraft/class_4325",
+   "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbRealms$CbLegacyRefresh",
+   "requires": [
+    "method_53793()V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.2 RealmsMainScreen subclass overriding refreshServerList is asked by RealmsConfigureWorldScreen, as in 1.20.2"
   }
  ],
  "instanceFieldSetters": {
@@ -602,6 +715,27 @@
    "onlyUnder": "net/minecraft/class_339",
    "adapter": "top/dext/centurybridge/step/v1_20_3/rt/CbGui$CbLegacyWidgetRender",
    "basis": "AbstractWidget.render is final since 1.20.3: a 1.20.2 widget's override is renamed and the final render hands the call to it (CbAbstractWidgetMixin); its super.render runs vanilla's body"
+  },
+  {
+   "old": "method_32508()Ljava/lang/String;",
+   "new": "comp_1976",
+   "onlyUnder": "net/minecraft/class_4413",
+   "superCalls": "rename",
+   "basis": "WorldGenerationInfo's 1.20.2 getter is the 1.20.3 record's accessor; the getter is kept by CbWorldGenerationInfoMixin and forwards to the accessor"
+  },
+  {
+   "old": "method_32509()Lnet/minecraft/class_5672;",
+   "new": "comp_1977",
+   "onlyUnder": "net/minecraft/class_4413",
+   "superCalls": "rename",
+   "basis": "WorldGenerationInfo's 1.20.2 getter is the 1.20.3 record's accessor; the getter is kept by CbWorldGenerationInfoMixin and forwards to the accessor"
+  },
+  {
+   "old": "method_32510()Z",
+   "new": "comp_1978",
+   "onlyUnder": "net/minecraft/class_4413",
+   "superCalls": "rename",
+   "basis": "WorldGenerationInfo's 1.20.2 getter is the 1.20.3 record's accessor; the getter is kept by CbWorldGenerationInfoMixin and forwards to the accessor"
   }
  ],
  "fieldRenames": {

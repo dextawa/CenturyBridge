@@ -7,3 +7,8 @@ accessible	method	net/minecraft/class_524	<init>	(Lnet/minecraft/class_310;Lnet/
 # s2rest: Minecraft.emergencySave() was public (and overridable) in 1.20.2
 accessible	method	net/minecraft/class_310	method_1519	()V
 extendable	method	net/minecraft/class_310	method_1519	()V
+# s2rest: Realms WorldGenerationInfo was a plain class in 1.20.2, subclassable, its members overridable
+extendable	class	net/minecraft/class_4413
+extendable	method	net/minecraft/class_4413	toString	()Ljava/lang/String;
+extendable	method	net/minecraft/class_4413	hashCode	()I
+extendable	method	net/minecraft/class_4413	equals	(Ljava/lang/Object;)Z
