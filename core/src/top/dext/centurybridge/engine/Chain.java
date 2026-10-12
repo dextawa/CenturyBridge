@@ -1701,6 +1701,103 @@ public final class Chain {
         return chainUp;
     }
 
+    /**
+     * The interfaces a release's Fabric API injects into vanilla classes: class -> interfaces, read from
+     * every module jar in {@code processedMods} (data/runtime/client-&lt;ver&gt;/.fabric/processedMods) --
+     * the "loom:injected_interfaces" of its fabric.mod.json (through 1.21.11) and the inject-interface /
+     * transitive-inject-interface lines of the access widener or class tweaker it names (26.x). A mod
+     * compiled against Fabric API calls an injected member through the vanilla class it holds
+     * (OrderedSubmitNodeCollector.submitBlockModel is FabricOrderedSubmitNodeCollector's), and a mod class
+     * extending or implementing the vanilla type overrides it there; at runtime Fabric's mixins and class
+     * tweakers make the vanilla class implement the interface. So the hierarchy walks see these interfaces
+     * too: a reshape, redirect or hook keyed on the Fabric API interface serves the call through the vanilla
+     * class and the mod class under it. Generic arguments of an injected interface are dropped. A release
+     * whose Fabric API modules are not there fails loudly rather than converting blind.
+     */
+    public static java.util.Map<String, java.util.List<String>> readInjectedInterfaces(Path processedMods) throws IOException {
+        if (!Files.isDirectory(processedMods)) {
+            throw new IllegalStateException(processedMods.toAbsolutePath() + " is missing: the interfaces that release's Fabric API"
+                + " injects into vanilla classes come from its modules there (or set -Dcb.allowMissingStubs=true to convert without"
+                + " them, knowingly)");
+        }
+        java.util.Map<String, java.util.LinkedHashSet<String>> found = new java.util.TreeMap<>();
+        java.util.List<Path> jars;
+        try (var s = Files.list(processedMods)) {
+            jars = s.filter(p -> p.toString().endsWith(".jar")).sorted().toList();
+        }
+        for (Path jar : jars) {
+            try (var z = new java.util.zip.ZipFile(jar.toFile())) {
+                var fmjEntry = z.getEntry("fabric.mod.json");
+                if (fmjEntry == null) {
+                    continue;
+                }
+                var reader = new com.google.gson.stream.JsonReader(new java.io.InputStreamReader(
+                    z.getInputStream(fmjEntry), java.nio.charset.StandardCharsets.UTF_8));
+                reader.setLenient(true);
+                var fmj = com.google.gson.JsonParser.parseReader(reader).getAsJsonObject();
+                if (fmj.has("custom") && fmj.getAsJsonObject("custom").has("loom:injected_interfaces")) {
+                    for (var e : fmj.getAsJsonObject("custom").getAsJsonObject("loom:injected_interfaces").entrySet()) {
+                        for (var itf : e.getValue().getAsJsonArray()) {
+                            found.computeIfAbsent(e.getKey(), k -> new java.util.LinkedHashSet<>()).add(rawType(itf.getAsString()));
+                        }
+                    }
+                }
+                if (fmj.has("accessWidener") && fmj.get("accessWidener").isJsonPrimitive()) {
+                    String aw = fmj.get("accessWidener").getAsString();
+                    var awEntry = z.getEntry(aw.startsWith("/") ? aw.substring(1) : aw);
+                    if (awEntry != null) {
+                        String text = new String(z.getInputStream(awEntry).readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+                        for (String ln : text.split("\r?\n")) {
+                            int hash = ln.indexOf('#');
+                            String[] tok = (hash >= 0 ? ln.substring(0, hash) : ln).trim().split("\\s+");
+                            if (tok.length >= 3 && (tok[0].equals("inject-interface") || tok[0].equals("transitive-inject-interface"))) {
+                                found.computeIfAbsent(tok[1], k -> new java.util.LinkedHashSet<>()).add(rawType(tok[2]));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        java.util.Map<String, java.util.List<String>> out = new java.util.TreeMap<>();
+        found.forEach((k, v) -> out.put(k, java.util.List.copyOf(v)));
+        return out;
+    }
+
+    /** an injected interface without its generic arguments: Foo<TT;> is Foo */
+    private static String rawType(String itf) {
+        int lt = itf.indexOf('<');
+        return lt < 0 ? itf : itf.substring(0, lt);
+    }
+
+    /** the injections (source release's Fabric API) into the source hierarchy ({@link #interfacesOf}) */
+    public void addSourceInjections(java.util.Map<String, java.util.List<String>> injected) {
+        injected.forEach((cls, itfs) -> interfacesOf.merge(cls, itfs, Chain::union));
+    }
+
+    /**
+     * The injections (target release's Fabric API) into the target hierarchy ({@link #targetInterfacesOf}),
+     * in the analysis namespace: across the namespace wall the target's mojang class names are translated
+     * back through the inter-&gt;mojang table ({@code wallTable}; null otherwise).
+     */
+    public void addTargetInjections(java.util.Map<String, java.util.List<String>> injected, Path wallTable) throws IOException {
+        java.util.Map<String, String> back = new java.util.HashMap<>();
+        if (wallTable != null && Files.exists(wallTable)) {
+            for (String ln : Files.readAllLines(wallTable)) {
+                String[] p = ln.split("\t");
+                if (p.length >= 3 && p[0].equals("C")) {
+                    back.put(p[2], p[1]);
+                }
+            }
+        }
+        injected.forEach((cls, itfs) -> targetInterfacesOf.merge(back.getOrDefault(cls, cls), itfs, Chain::union));
+    }
+
+    private static java.util.List<String> union(java.util.List<String> a, java.util.List<String> b) {
+        java.util.LinkedHashSet<String> s = new java.util.LinkedHashSet<>(a);
+        s.addAll(b);
+        return java.util.List.copyOf(s);
+    }
+
     /** Load the class hierarchy of a stub jar so member lookups can walk it. */
     public void loadHierarchy(Path stubJar) throws IOException {
         try (java.util.zip.ZipInputStream zin =
