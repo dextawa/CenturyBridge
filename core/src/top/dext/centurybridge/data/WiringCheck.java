@@ -560,12 +560,14 @@ public final class WiringCheck {
                         problems.add(where + ": " + owner + "." + name + " is not a member of the target with that descriptor");
                     }
                 }
+                java.util.List<String> convs = new java.util.ArrayList<>();
                 if (o.has("args")) {
                     for (var a : o.getAsJsonArray("args")) {
                         if (!a.isJsonNull()) {
                             String r = a.getAsString().trim();
                             int p = r.indexOf('(');
                             wantMethod(where + " arg", r.substring(0, p), null, methodDesc(r.substring(p)));
+                            convs.add(r);
                         }
                     }
                 }
@@ -573,6 +575,18 @@ public final class WiringCheck {
                     String r = o.get("ret").getAsString().trim();
                     int p = r.indexOf('(');
                     wantMethod(where + " ret", r.substring(0, p), null, methodDesc(r.substring(p)));
+                    convs.add(r);
+                }
+                // a converter taking the mod object first gets `this` of a class under `under`
+                for (String r : convs) {
+                    org.objectweb.asm.Type[] cp = org.objectweb.asm.Type.getArgumentTypes(r.substring(r.indexOf('(')));
+                    if (cp.length == 2 && !stub.isEmpty() && cp[0].getSort() == org.objectweb.asm.Type.OBJECT) {
+                        String recv = targetName(facade.mapType(cp[0].getInternalName()));
+                        String self = targetName(facade.mapType(under));
+                        if (!recv.equals("java/lang/Object") && !isSubtype(self, recv)) {
+                            problems.add(where + ": converter " + r + " takes a " + recv + ", which " + self + " is not");
+                        }
+                    }
                 }
             }
         }
@@ -862,6 +876,10 @@ public final class WiringCheck {
                     }
                 }
                 continue;
+            }
+            int as = rest.indexOf(" as ");   // "conv ... as <type>": the static answers a supertype
+            if (as >= 0) {
+                rest = rest.substring(0, as).trim();
             }
             int paren = rest.indexOf('(');   // OWNER#name(desc)R
             if (paren < 0) {

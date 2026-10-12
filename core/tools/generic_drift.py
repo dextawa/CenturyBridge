@@ -82,6 +82,79 @@ def load(jar):
     return classes
 
 
+def jdk_classes():
+    """The JDK's own class headers (super, interfaces), read from the running JDK's lib/ct.sym --
+    the per-release class signatures javac itself compiles --release against. Found through
+    CB_CTSYM, JAVA_HOME, or the java / javac on PATH; empty when none is there (a JDK type then
+    only equals itself)."""
+    import shutil
+    cands = [os.environ.get("CB_CTSYM")]
+    if os.environ.get("JAVA_HOME"):
+        cands.append(os.path.join(os.environ["JAVA_HOME"], "lib", "ct.sym"))
+    for exe in ("javac", "java"):
+        p = shutil.which(exe)
+        if p:
+            cands.append(os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(p))), "lib", "ct.sym"))
+    path = next((c for c in cands if c and os.path.isfile(c)), None)
+    out = {}
+    if not path:
+        return out
+    with zipfile.ZipFile(path) as z:
+        best = {}
+        for n in z.namelist():
+            if not n.endswith(".sig") or "/java/" not in n:
+                continue
+            group, rest = n.split("/", 1)
+            cls = rest.split("/", 1)[1][:-4]   # past the module directory
+            if cls not in best or max(group) > max(best[cls].split("/", 1)[0]):
+                best[cls] = n
+        for cls, n in best.items():
+            c = classfile.read(z.read(n))
+            if c:
+                out[cls] = c
+    return out
+
+
+def parse_type(sig, i=0):
+    """one type signature as a tree: ("L", binary name, (arguments)) | ("T", name) | ("[", element)
+    | ("P", primitive) | ("*",); a wildcard's variance is dropped (canon's rule). Returns (node, end)."""
+    c = sig[i]
+    if c in "+-":
+        return parse_type(sig, i + 1)
+    if c == "*":
+        return ("*",), i + 1
+    if c == "[":
+        n, e = parse_type(sig, i + 1)
+        return ("[", n), e
+    if c == "T":
+        e = sig.index(";", i)
+        return ("T", sig[i + 1:e]), e + 1
+    if c != "L":
+        return ("P", c), i + 1
+    j, name, args = i + 1, "", ()
+    while True:
+        k = j
+        while sig[k] not in "<;.":
+            k += 1
+        name = sig[j:k] if not name else name + "$" + sig[j:k]
+        j = k
+        args = ()
+        if sig[j] == "<":
+            j += 1
+            lst = []
+            while sig[j] != ">":
+                n, j = parse_type(sig, j)
+                lst.append(n)
+            args = tuple(lst)
+            j += 1
+        if sig[j] == ".":
+            j += 1
+            continue
+        if all(a == ("*",) for a in args):
+            args = ()   # X<?> is raw X
+        return ("L", name, args), j + 1
+
+
 def read_wiring(base):
     """the step's wiring, base file and fragments merged (objects by key, arrays concatenated)"""
     out = {}
@@ -371,6 +444,11 @@ def main():
         return t[t.rindex(".") + 1:] if t else name
 
     PV, PW = phantom_classes(V), phantom_classes(W)
+    JDK = jdk_classes()
+    # W's names of the classes V has without type parameters: a class 1.20.3 made generic
+    # (CommandFunction -> CommandFunction<T>) answered V code nothing typed by them, so W's
+    # arguments on it are no drift; V code reaches its values through its V members, diffed apart
+    NG = {tcls(n) for n, c in V.items() if not (c.signature and c.signature.startswith("<"))}
 
     def class_bounds(classes, name):
         """the type parameters in scope in a class: its own, then its outer classes' (a nested class
@@ -396,11 +474,11 @@ def main():
         if phantom:
             x, y = strip_phantom(x, PV), strip_phantom(y, PW)
         a = args_of(canon(map_type(x, cls, bx)))
-        b = args_of(canon(map_type(y, lambda c: c, by)))
+        b = args_of(canon(map_type(strip_phantom(y, NG), lambda c: c, by)))
         return bool(a and b and a != b)
 
     def wsub(a, b):
-        """a is b or a W subtype of it"""
+        """a is b or a W (or JDK) subtype of it"""
         if b == "java/lang/Object":
             return True
         todo, seen = [a], set()
@@ -408,12 +486,38 @@ def main():
             c = todo.pop()
             if c == b:
                 return True
-            if c in seen or c not in W:
+            if c in seen:
                 continue
             seen.add(c)
-            k = W[c]
+            k = W.get(c) or JDK.get(c)
+            if k is None:
+                continue
             todo += ([k.super] if k.super else []) + list(k.interfaces)
         return False
+
+    def caller_typed(x, y, cls, bx, by, mvars):
+        """V's x against W's y where W's member declares its own type variables (mvars): at a call
+        the caller chooses them, so V's concrete type at such a position is fine when it lies within
+        the variable's bound -- ReturnCommand.register(CommandDispatcher<T extends
+        ExecutionCommandSource<T>>) handed 1.20.2's CommandDispatcher<CommandSourceStack>"""
+        if not mvars:
+            return False
+        vn = parse_type(map_type(x, cls, bx))[0]
+        wn = parse_type(strip_phantom(y, NG))[0]
+
+        def eq(v, w):
+            if w[0] == "T":
+                if w[1] in mvars:
+                    return v[0] == "L" and wsub(v[1], by.get(w[1], "java/lang/Object"))
+                w = ("L", by.get(w[1], "java/lang/Object"), ())
+            if v[0] != w[0]:
+                return False
+            if v[0] == "L":
+                return v[1] == w[1] and (not v[2] and not w[2] or len(v[2]) == len(w[2]) and all(map(eq, v[2], w[2])))
+            if v[0] == "[":
+                return eq(v[1], w[1])
+            return v == w
+        return eq(vn, wn)
 
     def top_args(sig):
         """(base, [type arguments]) of a parameterized class type signature, else None"""
@@ -444,7 +548,7 @@ def main():
         only produces from (Optional, Stream, Supplier, Iterable) -- may widen and a contravariant one
         (? super, Consumer, Predicate, Comparator) narrow; outward the other way round"""
         a = top_args(map_type(x, cls, bx))
-        b = top_args(map_type(y, lambda c: c, by))
+        b = top_args(map_type(strip_phantom(y, NG), lambda c: c, by))
         if not a or not b or a[0] != b[0] or len(a[1]) != len(b[1]):
             return False
         table = JDK_VARIANCE.get(a[0][1:], "")
@@ -500,6 +604,7 @@ def main():
             # a static method sees no class type parameter: only its own
             bx = formal_bounds(m.signature, {} if m.access & ACC_STATIC else vcb)
             by = formal_bounds(o.signature, {} if o.access & ACC_STATIC else wcb)
+            mvars = set(formal_params(o.signature))
             pairs = [(f"param {i}", x, y) for i, (x, y) in enumerate(zip(a[0], b[0]))] + [("return", a[1], b[1])]
             drifted = [(w, x, y) for w, x, y in pairs if drifts(x, y, tcls, bx, by)]
             if not drifted:
@@ -514,7 +619,8 @@ def main():
                 # which way each value flows for this usage: a call hands its arguments to vanilla and
                 # takes the return back; an override is handed the arguments and answers the return
                 hit = [(w, x, y, (w == "return") == (u == "override")) for w, x, y in drifted]
-                hit = [h for h in hit if not safe(h[1], h[2], tcls, h[3], bx, by)]
+                hit = [h for h in hit if not safe(h[1], h[2], tcls, h[3], bx, by)
+                       and not (u != "override" and caller_typed(h[1], h[2], tcls, bx, by, mvars))]
                 if hit:
                     add(u, name, m.name, m.desc, hit, m.signature, o.signature, bx, by)
         wf = {(f[0], f[1]): f for f in wc.fields}

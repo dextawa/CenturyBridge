@@ -35,6 +35,22 @@ extendable class net/minecraft/class_2724
 extendable class net/minecraft/class_2889
 extendable class net/minecraft/class_2899
 extendable class net/minecraft/class_2913
+# MapDecoration's equals / hashCode / toString are final in 1.20.2's record; 1.20.1's class declared
+# equals and hashCode itself (overridable) and inherited toString from Object, so a converted
+# subclass may override all three (s1misc; the class is made extendable above)
+extendable method net/minecraft/class_20 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_20 hashCode ()I
+extendable method net/minecraft/class_20 toString ()Ljava/lang/String;
+# PackMetadataSection became a final record in 1.20.2; 1.20.1's class could be extended and its
+# inherited equals / hashCode / toString overridden (s1misc pack bridge; isRecord() note above)
+extendable class net/minecraft/class_3272
+extendable method net/minecraft/class_3272 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_3272 hashCode ()I
+extendable method net/minecraft/class_3272 toString ()Ljava/lang/String;
+# FilePackResources' constructor and its SharedZipFileAccess are package-private in 1.20.2: a
+# converted subclass's super(name, file, builtin) is reshaped onto them (s1misc pack bridge)
+accessible class net/minecraft/class_3258$class_8616
+accessible method net/minecraft/class_3258 <init> (Ljava/lang/String;Lnet/minecraft/class_3258$class_8616;ZLjava/lang/String;)V
 # ---- s1net: Realms. 1.20.1 kept the Realms environment in a mutable static (RealmsClient
 # currentEnvironment, switched by switchToStage/Prod/Local); 1.20.2's is ENVIRONMENT, final -- writable
 # again so mods' writes (renamed to it) and the switches act on what every request URL is built from.
