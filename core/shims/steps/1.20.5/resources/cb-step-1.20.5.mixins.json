@@ -67,7 +67,15 @@
     "CbBlockBannerPlacedMixin",
     "CbBlockBannerLoaderMixin",
     "CbBlockBannerTagsMixin",
-    "CbBlockLoomAccessor"
+    "CbBlockLoomAccessor",
+    "CbParticleTypeMixin",
+    "CbParticleBlockAccessor",
+    "CbParticleDustAccessor",
+    "CbParticleTransitionAccessor",
+    "CbParticleItemAccessor",
+    "CbParticleShriekAccessor",
+    "CbParticleVibrationAccessor",
+    "CbParticleScaleAccessor"
   ],
   "client": [
     "CbRegistriesClientMixin",
