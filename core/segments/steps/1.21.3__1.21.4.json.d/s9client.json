@@ -681,6 +681,24 @@
    "onlyUnder": "net/minecraft/class_751",
    "family": "render-layers",
    "basis": "CubeMap.preload is registerTextures since 1.21.4 (the title screen's panorama textures); a 1.21.3 override preloads them there"
+  },
+  {
+   "old": "emitBlockQuads(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V",
+   "new": "emitBlockQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.emitBlockQuads(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyBlockQuads;Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyBlockQuads",
+   "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel",
+   "family": "fapi-renderer",
+   "basis": "1.21.4's renderers call emitBlockQuads(emitter, .., cullTest); a 1.21.3 model gets a block context over them"
+  },
+  {
+   "old": "emitItemQuads(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V",
+   "new": "emitItemQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.emitItemQuads(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyItemQuads;Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyItemQuads",
+   "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel",
+   "family": "fapi-renderer",
+   "basis": "1.21.4's item renderer calls emitItemQuads(emitter, random); a 1.21.3 model gets the drawn item's stack and an item context in its display context (CbFapiItemStateMixin)"
   }
  ],
  "fieldGetters": {
@@ -708,7 +726,8 @@
   "net/minecraft/class_4943.field_22944:Lnet/minecraft/class_4942;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
   "net/minecraft/class_4943.field_22945:Lnet/minecraft/class_4942;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
   "net/minecraft/class_4946.field_23047:Lnet/minecraft/class_4946$class_4947;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
-  "net/minecraft/class_7766.field_45632:Ljava/util/Set;": "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient"
+  "net/minecraft/class_7766.field_45632:Ljava/util/Set;": "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient",
+  "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial.MATERIAL_STANDARD:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -756,7 +775,13 @@
   "net/fabricmc/fabric/api/event/client/player/ClientPickBlockApplyCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockApplyCallback",
   "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockCallback",
   "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback$Container": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockCallback$Container",
-  "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "net/fabricmc/fabric/api/client/datagen/v1/provider/FabricModelProvider"
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "net/fabricmc/fabric/api/client/datagen/v1/provider/FabricModelProvider",
+  "net/fabricmc/fabric/api/renderer/v1/RendererAccess": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/RendererAccess",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/MeshBuilder",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderContext": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/RenderContext",
+  "net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/ForwardingBakedModel",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderContext$QuadTransform": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadTransform",
+  "net/fabricmc/fabric/api/renderer/v1/model/WrapperBakedModel": "net/fabricmc/fabric/api/client/model/loading/v1/UnwrappableBakedModel"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -784,7 +809,13 @@
   "net/fabricmc/fabric/api/event/client/player/ClientPickBlockApplyCallback": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
   "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
   "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback$Container": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
-  "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "FabricModelProvider moved to the client data generation package in 1.21.4 (the model generators are client classes there), same members"
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "FabricModelProvider moved to the client data generation package in 1.21.4 (the model generators are client classes there), same members",
+  "net/fabricmc/fabric/api/renderer/v1/RendererAccess": "RendererAccess is gone in 1.21.4 (Renderer.register / Renderer.get); the facade is 1.21.3's, null before a renderer registered",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder": "MeshBuilder is gone in 1.21.4 (Renderer.mutableMesh); the facade is 1.21.3's, built over a MutableMesh (CbFapiRenderer)",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderContext": "RenderContext is gone in 1.21.4 (models get the emitter and a cull test); the facade is 1.21.3's, the layer's contexts over what 1.21.4 passes (CbFapiRenderer)",
+  "net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel": "ForwardingBakedModel is gone in 1.21.4; the facade is 1.21.3's, forwarding every member to the wrapped model",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderContext$QuadTransform": "RenderContext.QuadTransform is mesh.QuadTransform since 1.21.4 (same single method transform(MutableQuadView))",
+  "net/fabricmc/fabric/api/renderer/v1/model/WrapperBakedModel": "WrapperBakedModel is the model loading API's UnwrappableBakedModel since 1.21.4: getWrappedModel() (a default answering null where 1.21.3's was abstract) and unwrap(model) with 1.21.3's body"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -1484,6 +1515,32 @@
     "conv top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading#cbStateModel(Lnet/minecraft/class_1100;)Lnet/minecraft/class_9979;"
    ],
    "basis": "BlockStateResolver.Context.setModel takes a block state model since 1.21.4 (CbModelLoading's wrapper, unwrapped again)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.faceNormal()Lorg/joml/Vector3f;": {
+   "desc": "()Lorg/joml/Vector3fc;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#faceNormal(Lorg/joml/Vector3fc;)Lorg/joml/Vector3f;",
+   "basis": "QuadView.faceNormal() answers a Vector3fc since 1.21.4; 1.21.3's Vector3f was the quad's own (the same object when it is one)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel.emitBlockQuads(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V",
+   "ops": [
+    "conv:4 top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#emitter(Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#cullTest(Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)Ljava/util/function/Predicate;"
+   ],
+   "basis": "FabricBakedModel.emitBlockQuads takes the emitter and a cull test since 1.21.4: the context's, which a 1.21.3 model called this way gets back (CbFapiRenderer)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel.emitItemQuads(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V",
+   "ops": [
+    "conv:2 top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#emitter(Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;",
+    "conv:1,0,2 top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#itemRandom(Ljava/util/function/Supplier;Lnet/minecraft/class_1799;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)Ljava/util/function/Supplier;"
+   ],
+   "basis": "FabricBakedModel.emitItemQuads takes the emitter and no stack since 1.21.4: the context's emitter; a 1.21.3 model called this way gets the stack and context back (CbFapiRenderer)"
   }
  },
  "staticRedirects": {
@@ -1582,7 +1639,39 @@
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context.resourceId()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context.topLevelId()Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context.textureGetter()Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
-  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext.lightmapTextureManager()Lnet/minecraft/class_765;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/CbFapiWorldRenderContext"
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext.lightmapTextureManager()Lnet/minecraft/class_765;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/CbFapiWorldRenderContext",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.meshBuilder()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.colorIndex()I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.colorIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.colorIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteColor(II)I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteU(II)F": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteV(II)F": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.copyTo(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)V": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.toVanilla(I[IIZ)V": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.toBakedQuad(ILnet/minecraft/class_1058;Z)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteUnitSquare(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.blendMode(ILnet/minecraft/class_1921;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.blendMode(ILnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableAo(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableDiffuse(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.emissive(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.spriteDepth(I)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial.spriteDepth()I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.glint(Lnet/fabricmc/fabric/api/util/TriState;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialView.glint()Lnet/fabricmc/fabric/api/util/TriState;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
@@ -1597,7 +1686,34 @@
   "net/minecraft/class_564.method_62082(Lnet/minecraft/class_10086;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62082",
   "net/minecraft/class_591.method_62111(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62111",
   "net/minecraft/class_989.method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_4192",
-  "net/minecraft/class_5697.method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62594"
+  "net/minecraft/class_5697.method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62594",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteColor(II)I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteU(II)F": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteU",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteV(II)F": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteV",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.copyTo(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)V": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superCopyTo",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.toVanilla(I[IIZ)V": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superToVanilla",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.toBakedQuad(ILnet/minecraft/class_1058;Z)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superToBakedQuad",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superFromVanilla",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSprite",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSprite",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteBake",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superFromVanilla",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSprite",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSprite",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteBake",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteUnitSquare(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteUnitSquare",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.blendMode(ILnet/minecraft/class_1921;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superBlendMode",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.blendMode(ILnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superBlendMode",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableAo(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superDisableAo",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableDiffuse(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superDisableDiffuse",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.emissive(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superEmissive",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.spriteDepth(I)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteDepth",
+  "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial.spriteDepth()I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteDepth",
+  "net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superGetOverrides"
  },
  "methodRenames": {
   "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",
@@ -1690,6 +1806,13 @@
    "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/CbFapiWorldRenderContext.translucentBlockOutline(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)Z",
    "family": "fapi-model-loading",
    "basis": "WorldRenderContext.translucentBlockOutline is new in 1.21.4; 1.21.3 drew the outline once, not translucently"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/Mesh",
+   "method": "size()I",
+   "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.size(Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;)I",
+   "family": "fapi-renderer",
+   "basis": "Mesh.size() is new in 1.21.4; a 1.21.3 mesh's quads, counted"
   }
  ],
  "lambdaAdapters": {
@@ -1794,6 +1917,375 @@
    ],
    "family": "fapi-model-loading",
    "basis": "a 1.21.3 implementation of BlockStateResolver.Context takes the model as an UnbakedModel"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewSpriteColor",
+   "requires": [
+    "spriteColor(II)I"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewSpriteU",
+   "requires": [
+    "spriteU(II)F"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewSpriteV",
+   "requires": [
+    "spriteV(II)F"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewCopyTo",
+   "requires": [
+    "copyTo(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)V"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewToVanilla",
+   "requires": [
+    "toVanilla(I[IIZ)V"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewToBakedQuad",
+   "requires": [
+    "toBakedQuad(ILnet/minecraft/class_1058;Z)Lnet/minecraft/class_777;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableFromVanilla",
+   "requires": [
+    "fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSprite",
+   "requires": [
+    "sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSpriteVec",
+   "requires": [
+    "sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSpriteBake",
+   "requires": [
+    "spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSpriteColor",
+   "requires": [
+    "spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSpriteColors",
+   "requires": [
+    "spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterFromVanilla",
+   "requires": [
+    "fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSprite",
+   "requires": [
+    "sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteVec",
+   "requires": [
+    "sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteBake",
+   "requires": [
+    "spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteColor",
+   "requires": [
+    "spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteColors",
+   "requires": [
+    "spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteUnitSquare",
+   "requires": [
+    "spriteUnitSquare(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderBlendLayer",
+   "requires": [
+    "blendMode(ILnet/minecraft/class_1921;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderBlendMode",
+   "requires": [
+    "blendMode(ILnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderDisableAo",
+   "requires": [
+    "disableAo(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderDisableDiffuse",
+   "requires": [
+    "disableDiffuse(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderEmissive",
+   "requires": [
+    "emissive(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderSpriteDepth",
+   "requires": [
+    "spriteDepth(I)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMaterialSpriteDepth",
+   "requires": [
+    "spriteDepth()I"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterColorIndex",
+   "requires": [
+    "colorIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [
+    {
+     "new": "tintIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.tintIndex(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterColorIndex;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+    },
+    {
+     "new": "tintIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.tintIndexMutable(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterColorIndex;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableColorIndex",
+   "requires": [
+    "colorIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [
+    {
+     "new": "tintIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.tintIndex(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableColorIndex;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewColorIndex",
+   "requires": [
+    "colorIndex()I"
+   ],
+   "synth": [
+    {
+     "new": "tintIndex()I",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.tintIndex(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewColorIndex;)I"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewFaceNormal",
+   "requires": [
+    "faceNormal()Lorg/joml/Vector3f;"
+   ],
+   "synth": [
+    {
+     "new": "faceNormal()Lorg/joml/Vector3fc;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.faceNormal(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewFaceNormal;)Lorg/joml/Vector3fc;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderGlint",
+   "requires": [
+    "glint(Lnet/fabricmc/fabric/api/util/TriState;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [
+    {
+     "new": "glintMode(Lnet/fabricmc/fabric/api/renderer/v1/material/GlintMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.glintMode(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderGlint;Lnet/fabricmc/fabric/api/renderer/v1/material/GlintMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewGlint",
+   "requires": [
+    "glint()Lnet/fabricmc/fabric/api/util/TriState;"
+   ],
+   "synth": [
+    {
+     "new": "glintMode()Lnet/fabricmc/fabric/api/renderer/v1/material/GlintMode;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.glintMode(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewGlint;)Lnet/fabricmc/fabric/api/renderer/v1/material/GlintMode;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/Renderer",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyRenderer",
+   "requires": [
+    "meshBuilder()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder;"
+   ],
+   "synth": [
+    {
+     "new": "mutableMesh()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableMesh;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.mutableMesh(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyRenderer;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableMesh;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
   }
  ],
  "convertHooks": [
@@ -1910,5 +2402,11 @@
   "method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V": {
    "6": "zero: 1.21.3's GuiGraphics.drawWordWrap drew its lines without shadow (drawString(.., false)); false is that"
   }
+ },
+ "ledger": {
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableColorIndex": "not bridgeable: 1.21.4's materials have no colour-index flag -- Indigo 2.0.3's RenderMaterialImpl is one canonical instance per bit pattern of blend mode, emissive, diffuse, AO, glint and shade mode (MaterialViewImpl has no other bit), the quad encoding stores that index, and MutableQuadViewImpl.material casts to RenderMaterialImpl, so neither a native nor a stand-in material can carry 1.21.3's disableColorIndex; 1.21.4 expresses it per quad (tintIndex -1), which a material chosen before the quad's tint cannot decide. Every other MaterialFinder / MaterialView member is bridged (CbFapiRenderer)",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialView.disableColorIndex": "not bridgeable: 1.21.4's materials have no colour-index flag -- Indigo 2.0.3's RenderMaterialImpl is one canonical instance per bit pattern of blend mode, emissive, diffuse, AO, glint and shade mode (MaterialViewImpl has no other bit), the quad encoding stores that index, and MutableQuadViewImpl.material casts to RenderMaterialImpl, so neither a native nor a stand-in material can carry 1.21.3's disableColorIndex; 1.21.4 expresses it per quad (tintIndex -1), which a material chosen before the quad's tint cannot decide. Every other MaterialFinder / MaterialView member is bridged (CbFapiRenderer)",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.pushTransform": "for a mod's own implementation of 1.21.3's QuadEmitter only: 1.21.3's emitters had no transform stack (RenderContext held it), 1.21.4 applies transforms inside the emitter's own emit(), which is the implementation's code, so no fill can apply one; no 1.21.4 caller pushes onto an emitter it did not get from its renderer (Fabric API 0.119.4: only Indigo's own emitter refers to pushTransform; vanilla never), and 1.21.3 models push through RenderContext, which the layer serves (CbFapiRenderer); tintIndex is bridged from the implementation's colorIndex",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.popTransform": "for a mod's own implementation of 1.21.3's QuadEmitter only: 1.21.3's emitters had no transform stack (RenderContext held it), 1.21.4 applies transforms inside the emitter's own emit(), which is the implementation's code, so no fill can apply one; no 1.21.4 caller pushes onto an emitter it did not get from its renderer (Fabric API 0.119.4: only Indigo's own emitter refers to pushTransform; vanilla never), and 1.21.3 models push through RenderContext, which the layer serves (CbFapiRenderer); tintIndex is bridged from the implementation's colorIndex"
  }
 }

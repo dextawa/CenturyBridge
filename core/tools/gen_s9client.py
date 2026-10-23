@@ -114,6 +114,7 @@ def main():
     client_rest(frag)
     generic_client(frag)
     fapi_model_loading(frag)
+    fapi_renderer(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -1114,6 +1115,134 @@ def fapi_model_loading(frag):
     cr["net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider"] = "net/fabricmc/fabric/api/client/datagen/v1/provider/FabricModelProvider"
     notes["net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider"] = (
         "FabricModelProvider moved to the client data generation package in 1.21.4 (the model generators are client classes there), same members")
+
+
+def fapi_renderer(frag):
+    """Fabric API 1.21.3's Renderer API v1 on 1.21.4's Renderer API 5 (CbFapiRenderer and the compat/fapi/renderer facades)."""
+    A = "net/fabricmc/fabric/api/renderer/v1/"
+    C = "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/"
+    R = C + "CbFapiRenderer"
+    QV, MQV, QE = "L" + A + "mesh/QuadView;", "L" + A + "mesh/MutableQuadView;", "L" + A + "mesh/QuadEmitter;"
+    MF, RM, TRI = "L" + A + "material/MaterialFinder;", "L" + A + "material/RenderMaterial;", "Lnet/fabricmc/fabric/api/util/TriState;"
+    RC = "L" + A + "render/RenderContext;"
+    SPR, BQ, VEC2 = "Lnet/minecraft/class_1058;", "Lnet/minecraft/class_777;", "Lnet/minecraft/class_241;"
+    cr = frag.setdefault("classRenames", {})
+    notes = frag.setdefault("classRenameBasis", {})
+    for c, why in [("RendererAccess", "RendererAccess is gone in 1.21.4 (Renderer.register / Renderer.get); the facade is 1.21.3's, null before a renderer registered"),
+                   ("mesh/MeshBuilder", "MeshBuilder is gone in 1.21.4 (Renderer.mutableMesh); the facade is 1.21.3's, built over a MutableMesh (CbFapiRenderer)"),
+                   ("render/RenderContext", "RenderContext is gone in 1.21.4 (models get the emitter and a cull test); the facade is 1.21.3's, the layer's "
+                                            "contexts over what 1.21.4 passes (CbFapiRenderer)"),
+                   ("model/ForwardingBakedModel", "ForwardingBakedModel is gone in 1.21.4; the facade is 1.21.3's, forwarding every member to the wrapped model")]:
+        cr[A + c] = C + c.rsplit("/", 1)[-1]
+        notes[A + c] = why
+    cr[A + "render/RenderContext$QuadTransform"] = A + "mesh/QuadTransform"
+    notes[A + "render/RenderContext$QuadTransform"] = "RenderContext.QuadTransform is mesh.QuadTransform since 1.21.4 (same single method transform(MutableQuadView))"
+    cr[A + "model/WrapperBakedModel"] = "net/fabricmc/fabric/api/client/model/loading/v1/UnwrappableBakedModel"
+    notes[A + "model/WrapperBakedModel"] = ("WrapperBakedModel is the model loading API's UnwrappableBakedModel since 1.21.4: getWrappedModel() (a default answering "
+                                           "null where 1.21.3's was abstract) and unwrap(model) with 1.21.3's body")
+    ir = frag.setdefault("instanceRedirects", {})
+    sr = frag.setdefault("superRedirects", {})
+    ah = frag.setdefault("adapterHooks", [])
+    ah[:] = [h for h in ah if h.get("family") != "fapi-renderer"]
+    ir[A + "Renderer.meshBuilder()L" + A + "mesh/MeshBuilder;"] = R
+    ir[A + "mesh/QuadView.colorIndex()I"] = R
+    ir[A + "mesh/MutableQuadView.colorIndex(I)" + MQV] = R
+    ir[A + "mesh/QuadEmitter.colorIndex(I)" + QE] = R
+    # the default methods 1.21.4 removed: calls take 1.21.3's body unless the object overrides it (adapter), super calls the body
+    removed = [("mesh/QuadView", QV, "spriteColor(II)I", "CbLegacyViewSpriteColor"), ("mesh/QuadView", QV, "spriteU(II)F", "CbLegacyViewSpriteU"),
+               ("mesh/QuadView", QV, "spriteV(II)F", "CbLegacyViewSpriteV"), ("mesh/QuadView", QV, "copyTo(" + MQV + ")V", "CbLegacyViewCopyTo"),
+               ("mesh/QuadView", QV, "toVanilla(I[IIZ)V", "CbLegacyViewToVanilla"),
+               ("mesh/QuadView", QV, "toBakedQuad(I" + SPR + "Z)" + BQ, "CbLegacyViewToBakedQuad")]
+    for owner, t, prefix in [("mesh/MutableQuadView", MQV, "CbLegacyMutable"), ("mesh/QuadEmitter", QE, "CbLegacyEmitter")]:
+        removed += [(owner, t, "fromVanilla([IIZ)" + t, prefix + "FromVanilla"), (owner, t, "sprite(IIFF)" + t, prefix + "Sprite"),
+                    (owner, t, "sprite(II" + VEC2 + ")" + t, prefix + "SpriteVec"), (owner, t, "spriteBake(I" + SPR + "I)" + t, prefix + "SpriteBake"),
+                    (owner, t, "spriteColor(III)" + t, prefix + "SpriteColor"), (owner, t, "spriteColor(IIIII)" + t, prefix + "SpriteColors")]
+    removed.append(("mesh/QuadEmitter", QE, "spriteUnitSquare(I)" + QE, "CbLegacyEmitterSpriteUnitSquare"))
+    removed += [("material/MaterialFinder", MF, "blendMode(ILnet/minecraft/class_1921;)" + MF, "CbLegacyFinderBlendLayer"),
+                ("material/MaterialFinder", MF, "blendMode(IL" + A + "material/BlendMode;)" + MF, "CbLegacyFinderBlendMode"),
+                ("material/MaterialFinder", MF, "disableAo(IZ)" + MF, "CbLegacyFinderDisableAo"),
+                ("material/MaterialFinder", MF, "disableDiffuse(IZ)" + MF, "CbLegacyFinderDisableDiffuse"),
+                ("material/MaterialFinder", MF, "emissive(IZ)" + MF, "CbLegacyFinderEmissive"),
+                ("material/MaterialFinder", MF, "spriteDepth(I)" + MF, "CbLegacyFinderSpriteDepth"),
+                ("material/RenderMaterial", RM, "spriteDepth()I", "CbLegacyMaterialSpriteDepth")]
+    for owner, t, shape, adapter in removed:
+        name = shape[:shape.index("(")]
+        ir[A + owner + "." + shape] = R
+        sr[A + owner + "." + shape] = R + "#super" + name[0].upper() + name[1:]
+        ah.append({"under": A + owner, "adapter": R + "$" + adapter, "requires": [shape], "synth": [], "family": "fapi-renderer",
+                   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"})
+    ir[A + "material/MaterialFinder.glint(" + TRI + ")" + MF] = R
+    ir[A + "material/MaterialView.glint()" + TRI] = R
+    sr[A + "model/ForwardingBakedModel.method_4710()Lnet/minecraft/class_806;"] = R + "#superGetOverrides"
+    frag.setdefault("fieldGetters", {})[A + "material/RenderMaterial.MATERIAL_STANDARD:Lnet/minecraft/class_2960;"] = R
+    # implementations: the abstract members 1.21.4 added, answered by the implementation's 1.21.3 ones
+    GM = "L" + A + "material/GlintMode;"
+    for under, req, adapter, synth in [
+            ("mesh/QuadEmitter", "colorIndex(I)" + QE, "CbLegacyEmitterColorIndex",
+             [("tintIndex(I)" + QE, "tintIndex(L" + R + "$CbLegacyEmitterColorIndex;I)" + QE),
+              ("tintIndex(I)" + MQV, "tintIndexMutable(L" + R + "$CbLegacyEmitterColorIndex;I)" + MQV)]),
+            ("mesh/MutableQuadView", "colorIndex(I)" + MQV, "CbLegacyMutableColorIndex",
+             [("tintIndex(I)" + MQV, "tintIndex(L" + R + "$CbLegacyMutableColorIndex;I)" + MQV)]),
+            ("mesh/QuadView", "colorIndex()I", "CbLegacyViewColorIndex", [("tintIndex()I", "tintIndex(L" + R + "$CbLegacyViewColorIndex;)I")]),
+            ("mesh/QuadView", "faceNormal()Lorg/joml/Vector3f;", "CbLegacyViewFaceNormal",
+             [("faceNormal()Lorg/joml/Vector3fc;", "faceNormal(L" + R + "$CbLegacyViewFaceNormal;)Lorg/joml/Vector3fc;")]),
+            ("material/MaterialFinder", "glint(" + TRI + ")" + MF, "CbLegacyFinderGlint",
+             [("glintMode(" + GM + ")" + MF, "glintMode(L" + R + "$CbLegacyFinderGlint;" + GM + ")" + MF)]),
+            ("material/MaterialView", "glint()" + TRI, "CbLegacyViewGlint", [("glintMode()" + GM, "glintMode(L" + R + "$CbLegacyViewGlint;)" + GM)]),
+            ("Renderer", "meshBuilder()L" + A + "mesh/MeshBuilder;", "CbLegacyRenderer",
+             [("mutableMesh()L" + A + "mesh/MutableMesh;", "mutableMesh(L" + R + "$CbLegacyRenderer;)L" + A + "mesh/MutableMesh;")])]:
+        ah.append({"under": A + under, "adapter": R + "$" + adapter, "requires": [req],
+                   "synth": [{"new": new, "call": R + "." + call} for new, call in synth], "family": "fapi-renderer",
+                   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, "
+                            "meshBuilder() a mutableMesh()) answered by its 1.21.3 one"})
+    fills = frag.setdefault("abstractFills", [])
+    fills[:] = [f for f in fills if f.get("family") != "fapi-renderer"]
+    fills.append({"under": A + "mesh/Mesh", "method": "size()I", "call": R + ".size(L" + A + "mesh/Mesh;)I", "family": "fapi-renderer",
+                  "basis": "Mesh.size() is new in 1.21.4; a 1.21.3 mesh's quads, counted"})
+    rs = frag.setdefault("callReshapes", {})
+    rs[A + "mesh/QuadView.faceNormal()Lorg/joml/Vector3f;"] = {
+        "desc": "()Lorg/joml/Vector3fc;", "ops": [], "ret": "conv " + R + "#faceNormal(Lorg/joml/Vector3fc;)Lorg/joml/Vector3f;",
+        "basis": "QuadView.faceNormal() answers a Vector3fc since 1.21.4; 1.21.3's Vector3f was the quad's own (the same object when it is one)"}
+    FBM = A + "model/FabricBakedModel"
+    W = "Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;"
+    OLD_B, NEW_B = "(" + W + RC + ")V", "(" + QE + W + "Ljava/util/function/Predicate;)V"
+    OLD_I, NEW_I = "(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;" + RC + ")V", "(" + QE + "Ljava/util/function/Supplier;)V"
+    rs[FBM + ".emitBlockQuads" + OLD_B] = {
+        "desc": NEW_B, "ops": ["conv:4 " + R + "#emitter(" + RC + ")" + QE, "keep:0", "keep:1", "keep:2", "keep:3",
+                               "conv:4 " + R + "#cullTest(" + RC + ")Ljava/util/function/Predicate;"],
+        "basis": "FabricBakedModel.emitBlockQuads takes the emitter and a cull test since 1.21.4: the context's, which a 1.21.3 model called "
+                 "this way gets back (CbFapiRenderer)"}
+    rs[FBM + ".emitItemQuads" + OLD_I] = {
+        "desc": NEW_I, "ops": ["conv:2 " + R + "#emitter(" + RC + ")" + QE,
+                               "conv:1,0,2 " + R + "#itemRandom(Ljava/util/function/Supplier;Lnet/minecraft/class_1799;" + RC + ")Ljava/util/function/Supplier;"],
+        "basis": "FabricBakedModel.emitItemQuads takes the emitter and no stack since 1.21.4: the context's emitter; a 1.21.3 model called "
+                 "this way gets the stack and context back (CbFapiRenderer)"}
+    hooks = frag.setdefault("overrideHooks", [])
+    hooks[:] = [h for h in hooks if h.get("family") != "fapi-renderer"]
+    hooks.append({"old": "emitBlockQuads" + OLD_B, "new": "emitBlockQuads" + NEW_B,
+                  "bridge": R + ".emitBlockQuads(L" + R + "$CbLegacyBlockQuads;" + NEW_B[1:], "adapter": R + "$CbLegacyBlockQuads",
+                  "onlyUnder": FBM, "family": "fapi-renderer",
+                  "basis": "1.21.4's renderers call emitBlockQuads(emitter, .., cullTest); a 1.21.3 model gets a block context over them"})
+    hooks.append({"old": "emitItemQuads" + OLD_I, "new": "emitItemQuads" + NEW_I,
+                  "bridge": R + ".emitItemQuads(L" + R + "$CbLegacyItemQuads;" + NEW_I[1:], "adapter": R + "$CbLegacyItemQuads",
+                  "onlyUnder": FBM, "family": "fapi-renderer",
+                  "basis": "1.21.4's item renderer calls emitItemQuads(emitter, random); a 1.21.3 model gets the drawn item's stack and an item "
+                           "context in its display context (CbFapiItemStateMixin)"})
+    led = frag.setdefault("ledger", {})
+    why_ci = ("not bridgeable: 1.21.4's materials have no colour-index flag -- Indigo 2.0.3's RenderMaterialImpl is one canonical instance per "
+              "bit pattern of blend mode, emissive, diffuse, AO, glint and shade mode (MaterialViewImpl has no other bit), the quad encoding "
+              "stores that index, and MutableQuadViewImpl.material casts to RenderMaterialImpl, so neither a native nor a stand-in material "
+              "can carry 1.21.3's disableColorIndex; 1.21.4 expresses it per quad (tintIndex -1), which a material chosen before the quad's "
+              "tint cannot decide. Every other MaterialFinder / MaterialView member is bridged (CbFapiRenderer)")
+    led[A + "material/MaterialFinder.disableColorIndex"] = why_ci
+    led[A + "material/MaterialView.disableColorIndex"] = why_ci
+    why_tf = ("for a mod's own implementation of 1.21.3's QuadEmitter only: 1.21.3's emitters had no transform stack (RenderContext held it), "
+              "1.21.4 applies transforms inside the emitter's own emit(), which is the implementation's code, so no fill can apply one; no "
+              "1.21.4 caller pushes onto an emitter it did not get from its renderer (Fabric API 0.119.4: only Indigo's own emitter refers to "
+              "pushTransform; vanilla never), and 1.21.3 models push through RenderContext, which the layer serves (CbFapiRenderer); "
+              "tintIndex is bridged from the implementation's colorIndex")
+    led[A + "mesh/QuadEmitter.pushTransform"] = why_tf
+    led[A + "mesh/QuadEmitter.popTransform"] = why_tf
 
 
 if __name__ == "__main__":
