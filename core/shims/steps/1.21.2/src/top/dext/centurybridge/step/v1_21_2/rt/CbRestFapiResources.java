@@ -201,6 +201,6 @@ public final class CbRestFapiResources {
         if (condition instanceof LegacyCondition legacy) {
             return legacy.test(provider);
         }
-        return condition.test(provider == null ? null : CbRestHolderLookupAdapterAccessor.cb$new(provider));
+        return condition.test(provider == null ? null : ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestRegistryOpsAccessor) (Object) class_6903.method_46632(com.mojang.serialization.JsonOps.INSTANCE, provider)).cb$lookup());
     }
 }

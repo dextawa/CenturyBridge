@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s7fapi",
+ "version": "1.0.0",
+ "name": "CB s7rest Fabric API Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.s7fapi.S7FapiTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.1", "fabric-tag-api-v1": "*", "fabric-lifecycle-events-v1": "*", "fabric-registry-sync-v0": "*" }
+}

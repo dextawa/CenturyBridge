@@ -45,6 +45,7 @@
     "CbRestRecipeManagerAccessor",
     "CbRestRecipeSyncMixin",
     "CbRestRegistriesHolderAccessor",
+    "CbRestRegistryOpsAccessor",
     "CbRestSelectorContentsMixin",
     "CbRestServerChunkCacheMixin",
     "CbRestServerGamePacketListenerMixin",
