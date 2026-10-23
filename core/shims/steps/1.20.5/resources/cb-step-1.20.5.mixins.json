@@ -75,6 +75,7 @@
     "CbFinResourceMixin",
     "CbFinVariantTypeAccess",
     "CbFoodBuilderMixin",
+    "CbGameTestTickerAccessor",
     "CbItemBlockLootAccessor",
     "CbItemMixin",
     "CbItemPropertiesAccessor",
