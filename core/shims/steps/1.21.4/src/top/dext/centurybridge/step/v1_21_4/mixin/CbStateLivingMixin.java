@@ -11,7 +11,7 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbRenderStates;
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_10042.class)
-public abstract class CbStateLivingMixin implements CbRenderStates.CbLegacyLivingState {
+public abstract class CbStateLivingMixin implements CbRenderStates.CbLegacyLivingState, CbRenderStates.CbLegacyHands {
 
     /** headItemModel */
     public net.minecraft.class_1087 field_53466;
@@ -52,6 +52,26 @@ public abstract class CbStateLivingMixin implements CbRenderStates.CbLegacyLivin
         this.field_53472 = leftHandItem;
         this.field_53469 = rightHandItemModel;
         this.field_53471 = leftHandItemModel;
+    }
+
+    @Override
+    public net.minecraft.class_1087 cb$rightHandItemModel() {
+        return this.field_53469;
+    }
+
+    @Override
+    public net.minecraft.class_1087 cb$leftHandItemModel() {
+        return this.field_53471;
+    }
+
+    @Override
+    public net.minecraft.class_1799 cb$rightHandItem() {
+        return this.field_53470;
+    }
+
+    @Override
+    public net.minecraft.class_1799 cb$leftHandItem() {
+        return this.field_53472;
     }
 
     /** was getMainHandItem() */

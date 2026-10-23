@@ -110,6 +110,7 @@ def main():
     equipment(frag)
     block_entity_renders(frag)
     render_tail(frag)
+    render_layers(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -886,6 +887,90 @@ def render_tail(frag):
         "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;Ljava/util/function/Function;Z)V",
         "ops": ["keep:0", "keep:1", "keep:2", "keep:3", "keep:4", "push " + T + "#cbNotAlwaysVisible()Z"],
         "basis": "LivingEntityEmissiveLayer takes whether it shows on an invisible entity since 1.21.4; 1.21.3's never did"}
+    for owner, name, state in [("net/minecraft/class_875", "method_3874", "class_10019"), ("net/minecraft/class_963", "method_4149", "class_10080"),
+                               ("net/minecraft/class_4999", "method_56155", "class_10070")]:
+        ir[owner + "." + name + "(Lnet/minecraft/" + state + ";Lnet/minecraft/class_4587;)V"] = T
+
+
+def render_layers(frag):
+    """1.21.3 humanoid arm poses and held-item layers on 1.21.4's (CbRenderLayers)."""
+    L = RT + "/CbRenderLayers"
+    ARM = "Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;"
+    ir = frag.setdefault("instanceRedirects", {})
+    sup = frag.setdefault("superRedirects", {})
+    orr = frag.setdefault("overrideRenames", [])
+    orr[:] = [r for r in orr if r.get("family") != "render-layers"]
+    for owner, name, state, new, itf in [("net/minecraft/class_572", "method_62081", "class_10034", "cb$getArmPose", "CbLegacyArmPose"),
+                                         ("net/minecraft/class_606", "method_62117", "class_10066", "cb$getSkeletonArmPose", "CbLegacySkeletonArmPose"),
+                                         ("net/minecraft/class_564", "method_62082", "class_10086", "cb$getDrownedArmPose", "CbLegacyDrownedArmPose"),
+                                         ("net/minecraft/class_591", "method_62111", "class_10055", "cb$getPlayerArmPose", "CbLegacyPlayerArmPose")]:
+        shape = name + "(Lnet/minecraft/" + state + ";" + ARM
+        ir[owner + "." + shape] = L
+        sup[owner + "." + shape] = L + "#" + name
+        orr.append({"old": shape, "new": new, "onlyUnder": owner, "adapter": L + "$" + itf, "family": "render-layers",
+                    "basis": "HumanoidModel.getArmPose is gone in 1.21.4 (renderers compute the poses into the state); a 1.21.3 model's answer is "
+                             "asked where 1.21.3's setupAnim asked it and is the pose the model uses (CbLayerHumanoidModelMixin)"})
+    frag.setdefault("staticRedirects", {})["net/minecraft/class_1007.method_64258(Lnet/minecraft/class_10055;" + ARM] = L
+    cr = frag.setdefault("callReshapes", {})
+    P = "Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I"
+    for owner, name, conv, newst in [("net/minecraft/class_989", "method_17162", "cbArmed", "class_10426"),
+                                     ("net/minecraft/class_4004", "method_4208", "cbHolding", "class_10427"),
+                                     ("net/minecraft/class_996", "method_4201", "cbSnowGolem", "class_10429")]:
+        cr[owner + "." + name + "(" + P + "Lnet/minecraft/class_10042;FF)V"] = {
+            "desc": "(" + P + "Lnet/minecraft/" + newst + ";FF)V",
+            "ops": ["keep", "keep", "keep", "conv " + L + "#" + conv + "(Lnet/minecraft/class_10042;)Lnet/minecraft/" + newst + ";", "keep", "keep"],
+            "basis": "the layer's state type narrowed in 1.21.4; the state a 1.21.3 call hands is the one the 1.21.4 renderer made, which is one"}
+    cr["net/minecraft/class_948.method_62536(Lnet/minecraft/class_1473;Lnet/minecraft/class_10042;F)V"] = {
+        "desc": "(Lnet/minecraft/class_1473;Lnet/minecraft/class_10429;F)V",
+        "ops": ["keep", "conv " + L + "#cbSnowGolem(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10429;", "keep"],
+        "basis": "SnowGolemRenderer's state is a SnowGolemRenderState since 1.21.4 (the one its createRenderState makes)"}
+    hooks = frag.setdefault("overrideHooks", [])
+    hooks[:] = [h for h in hooks if h.get("family") != "render-layers"]
+    hooks.append({"old": "method_62537()Lnet/minecraft/class_10042;", "new": "method_62537()Lnet/minecraft/class_10429;",
+                  "unwrap": L + ".cbSnowGolemState(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10429;", "guard": GUARD,
+                  "onlyUnder": "net/minecraft/class_948", "family": "render-layers",
+                  "basis": "SnowGolemRenderer's state is a SnowGolemRenderState since 1.21.4; a 1.21.3 override's state is one, or 1.21.4 gets a fresh one"})
+    hooks.append({"old": "method_62536(Lnet/minecraft/class_1473;Lnet/minecraft/class_10042;F)V",
+                  "new": "method_62536(Lnet/minecraft/class_1473;Lnet/minecraft/class_10429;F)V",
+                  "wrap": L + ".cbLiving(Lnet/minecraft/class_10429;)Lnet/minecraft/class_10042;", "guard": GUARD,
+                  "onlyUnder": "net/minecraft/class_948", "family": "render-layers",
+                  "basis": "SnowGolemRenderer extracts into a SnowGolemRenderState since 1.21.4, a LivingEntityRenderState as 1.21.3's override took"})
+    hooks.append({"old": "method_62599(" + P + "Lnet/minecraft/class_10082;FF)V", "new": "method_4208(" + P + "Lnet/minecraft/class_10427;FF)V",
+                  "narrow": True, "frames": GUARD, "superCalls": "rewrite", "onlyUnder": "net/minecraft/class_1005", "family": "render-layers",
+                  "shadows": ["method_4208(" + P + "Lnet/minecraft/class_10042;FF)V"],
+                  "basis": "WitchItemLayer's typed render is gone in 1.21.4: CrossedArmsItemLayer.render is what vanilla calls (the witch's adjustment moved into it)"})
+    OLD_ARM = "(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;" + P + ")V"
+    NEW_ARM = "(Lnet/minecraft/class_10426;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;" + P + ")V"
+    hooks.append({"old": "method_4192" + OLD_ARM, "new": "method_4192" + NEW_ARM,
+                  "bridge": L + ".armWithItem(L" + L + "$CbLegacyArmWithItem;" + NEW_ARM[1:], "adapter": L + "$CbLegacyArmWithItem",
+                  "onlyUnder": "net/minecraft/class_989", "family": "render-layers",
+                  "basis": "ItemInHandLayer.renderArmWithItem takes the hand's item render state since 1.21.4; a 1.21.3 override gets the hand's model and "
+                           "stack, as 1.21.3's render handed them"})
+    POLD_ARM = OLD_ARM.replace("(Lnet/minecraft/class_10042;", "(Lnet/minecraft/class_10055;")
+    PNEW_ARM = NEW_ARM.replace("(Lnet/minecraft/class_10426;", "(Lnet/minecraft/class_10055;")
+    hooks.append({"old": "method_62594" + POLD_ARM, "new": "method_62594" + PNEW_ARM,
+                  "bridge": L + ".playerArmWithItem(L" + L + "$CbLegacyPlayerArmWithItem;" + PNEW_ARM[1:], "adapter": L + "$CbLegacyPlayerArmWithItem",
+                  "onlyUnder": "net/minecraft/class_5697", "family": "render-layers",
+                  "basis": "PlayerItemInHandLayer.renderArmWithItem takes the hand's item render state since 1.21.4; a 1.21.3 override gets the hand's model "
+                           "and stack, as 1.21.3's render handed them"})
+    hooks.append({"old": "method_18143(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+                  "new": "method_65815(Lnet/minecraft/class_1060;)V",
+                  "bridge": L + ".registerTextures(L" + L + "$CbLegacyCubeMapPreload;Lnet/minecraft/class_1060;)V", "adapter": L + "$CbLegacyCubeMapPreload",
+                  "onlyUnder": "net/minecraft/class_751", "family": "render-layers",
+                  "basis": "CubeMap.preload is registerTextures since 1.21.4 (the title screen's panorama textures); a 1.21.3 override preloads them there"})
+    ir["net/minecraft/class_1005.method_62599(" + P + "Lnet/minecraft/class_10082;FF)V"] = L
+    ir["net/minecraft/class_989.method_4192" + OLD_ARM] = L
+    sup["net/minecraft/class_989.method_4192" + OLD_ARM] = L + "#method_4192"
+    ir["net/minecraft/class_5697.method_62594" + POLD_ARM] = L
+    sup["net/minecraft/class_5697.method_62594" + POLD_ARM] = L + "#method_62594"
+    fills = frag.setdefault("abstractFills", [])
+    fills[:] = [f for f in fills if f.get("family") != "render-layers"]
+    fills.append({"under": "net/minecraft/class_3884", "method": "method_65191(Lnet/minecraft/class_4587;)V",
+                  "call": L + ".translateToArms(Lnet/minecraft/class_3884;Lnet/minecraft/class_4587;)V", "family": "render-layers",
+                  "basis": "VillagerLikeModel.translateToArms is new in 1.21.4; a 1.21.3 model gets 1.21.3's crossed-arms item placement"})
+    frag.setdefault("lambdaAdapters", {})["net/minecraft/class_3884.method_17150(Z)V"] = {
+        "iface": L + "$CbLegacyVillagerLikeModel", "adapt": L + "#adaptVillagerLikeModel(L" + L + "$CbLegacyVillagerLikeModel;)Lnet/minecraft/class_3884;"}
+    frag.setdefault("fieldGetters", {})["net/minecraft/class_582.field_52910:Lnet/minecraft/class_9953;"] = L
 
 
 if __name__ == "__main__":

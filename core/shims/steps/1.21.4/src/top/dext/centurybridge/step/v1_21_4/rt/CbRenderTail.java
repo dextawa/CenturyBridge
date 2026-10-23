@@ -305,6 +305,24 @@ public final class CbRenderTail {
         renderer.method_4054(state, pose, buffers, light);
     }
 
+    /** LivingEntityRenderer's protected scale(state, pose) (CbTailLivingScaleAccess) */
+    public interface CbLivingScale {
+        void cb$scale(net.minecraft.class_10042 state, net.minecraft.class_4587 pose);
+    }
+
+    /** was the renderer's typed scale(state, pose), called by a mod: LivingEntityRenderer.scale, virtually (its override, else 1.21.4's) */
+    public static void method_3874(net.minecraft.class_875<?, ?, ?> renderer, net.minecraft.class_10019 state, net.minecraft.class_4587 pose) {
+        ((CbLivingScale) renderer).cb$scale(state, pose);
+    }
+
+    public static void method_4149(net.minecraft.class_963 renderer, net.minecraft.class_10080 state, net.minecraft.class_4587 pose) {
+        ((CbLivingScale) renderer).cb$scale(state, pose);
+    }
+
+    public static void method_56155(net.minecraft.class_4999 renderer, net.minecraft.class_10070 state, net.minecraft.class_4587 pose) {
+        ((CbLivingScale) renderer).cb$scale(state, pose);
+    }
+
     /** was LivingEntityRenderer.itemRenderer (field_53193): the context's, which is the game's */
     public static net.minecraft.class_918 field_53193(net.minecraft.class_922<?, ?, ?> renderer) {
         return mc().method_1480();

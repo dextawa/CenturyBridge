@@ -283,6 +283,38 @@
    "superCalls": "rename",
    "family": "render-tail",
    "basis": "LevelRenderer.onChunkLoaded is onChunkReadyToRender since 1.21.4 (same body)"
+  },
+  {
+   "old": "method_62081(Lnet/minecraft/class_10034;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+   "new": "cb$getArmPose",
+   "onlyUnder": "net/minecraft/class_572",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyArmPose",
+   "family": "render-layers",
+   "basis": "HumanoidModel.getArmPose is gone in 1.21.4 (renderers compute the poses into the state); a 1.21.3 model's answer is asked where 1.21.3's setupAnim asked it and is the pose the model uses (CbLayerHumanoidModelMixin)"
+  },
+  {
+   "old": "method_62117(Lnet/minecraft/class_10066;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+   "new": "cb$getSkeletonArmPose",
+   "onlyUnder": "net/minecraft/class_606",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacySkeletonArmPose",
+   "family": "render-layers",
+   "basis": "HumanoidModel.getArmPose is gone in 1.21.4 (renderers compute the poses into the state); a 1.21.3 model's answer is asked where 1.21.3's setupAnim asked it and is the pose the model uses (CbLayerHumanoidModelMixin)"
+  },
+  {
+   "old": "method_62082(Lnet/minecraft/class_10086;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+   "new": "cb$getDrownedArmPose",
+   "onlyUnder": "net/minecraft/class_564",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyDrownedArmPose",
+   "family": "render-layers",
+   "basis": "HumanoidModel.getArmPose is gone in 1.21.4 (renderers compute the poses into the state); a 1.21.3 model's answer is asked where 1.21.3's setupAnim asked it and is the pose the model uses (CbLayerHumanoidModelMixin)"
+  },
+  {
+   "old": "method_62111(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+   "new": "cb$getPlayerArmPose",
+   "onlyUnder": "net/minecraft/class_591",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyPlayerArmPose",
+   "family": "render-layers",
+   "basis": "HumanoidModel.getArmPose is gone in 1.21.4 (renderers compute the poses into the state); a 1.21.3 model's answer is asked where 1.21.3's setupAnim asked it and is the pose the model uses (CbLayerHumanoidModelMixin)"
   }
  ],
  "covers": [
@@ -589,6 +621,64 @@
    "onlyUnder": "net/minecraft/class_917",
    "family": "render-tail",
    "basis": "the renderer's typed render(state, ..) is gone in 1.21.4 (its shadow is asked from the state): LivingEntityRenderer.render is what vanilla calls and what a 1.21.3 override's super call reaches"
+  },
+  {
+   "old": "method_62537()Lnet/minecraft/class_10042;",
+   "new": "method_62537()Lnet/minecraft/class_10429;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.cbSnowGolemState(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10429;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_948",
+   "family": "render-layers",
+   "basis": "SnowGolemRenderer's state is a SnowGolemRenderState since 1.21.4; a 1.21.3 override's state is one, or 1.21.4 gets a fresh one"
+  },
+  {
+   "old": "method_62536(Lnet/minecraft/class_1473;Lnet/minecraft/class_10042;F)V",
+   "new": "method_62536(Lnet/minecraft/class_1473;Lnet/minecraft/class_10429;F)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.cbLiving(Lnet/minecraft/class_10429;)Lnet/minecraft/class_10042;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_948",
+   "family": "render-layers",
+   "basis": "SnowGolemRenderer extracts into a SnowGolemRenderState since 1.21.4, a LivingEntityRenderState as 1.21.3's override took"
+  },
+  {
+   "old": "method_62599(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10082;FF)V",
+   "new": "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10427;FF)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_1005",
+   "family": "render-layers",
+   "shadows": [
+    "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V"
+   ],
+   "basis": "WitchItemLayer's typed render is gone in 1.21.4: CrossedArmsItemLayer.render is what vanilla calls (the witch's adjustment moved into it)"
+  },
+  {
+   "old": "method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4192(Lnet/minecraft/class_10426;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.armWithItem(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyArmWithItem;Lnet/minecraft/class_10426;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyArmWithItem",
+   "onlyUnder": "net/minecraft/class_989",
+   "family": "render-layers",
+   "basis": "ItemInHandLayer.renderArmWithItem takes the hand's item render state since 1.21.4; a 1.21.3 override gets the hand's model and stack, as 1.21.3's render handed them"
+  },
+  {
+   "old": "method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.playerArmWithItem(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyPlayerArmWithItem;Lnet/minecraft/class_10055;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyPlayerArmWithItem",
+   "onlyUnder": "net/minecraft/class_5697",
+   "family": "render-layers",
+   "basis": "PlayerItemInHandLayer.renderArmWithItem takes the hand's item render state since 1.21.4; a 1.21.3 override gets the hand's model and stack, as 1.21.3's render handed them"
+  },
+  {
+   "old": "method_18143(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_65815(Lnet/minecraft/class_1060;)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.registerTextures(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyCubeMapPreload;Lnet/minecraft/class_1060;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyCubeMapPreload",
+   "onlyUnder": "net/minecraft/class_751",
+   "family": "render-layers",
+   "basis": "CubeMap.preload is registerTextures since 1.21.4 (the title screen's panorama textures); a 1.21.3 override preloads them there"
   }
  ],
  "fieldGetters": {
@@ -610,7 +700,8 @@
   "net/minecraft/class_1084.field_5344:Lnet/minecraft/class_1085;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
   "net/minecraft/class_3888.field_17158:Lnet/minecraft/class_3890;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
   "net/minecraft/class_3888.field_32977:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
-  "net/minecraft/class_823.field_32816:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders"
+  "net/minecraft/class_823.field_32816:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_582.field_52910:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -1190,6 +1281,51 @@
     "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbUnitScale()F"
    ],
    "basis": "DonkeyModel's layer takes a scale since 1.21.4; 1.21.3's was unscaled (the renderer scaled), scale 1"
+  },
+  "net/minecraft/class_989.method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10426;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#cbArmed(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10426;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the layer's state type narrowed in 1.21.4; the state a 1.21.3 call hands is the one the 1.21.4 renderer made, which is one"
+  },
+  "net/minecraft/class_4004.method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10427;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#cbHolding(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10427;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the layer's state type narrowed in 1.21.4; the state a 1.21.3 call hands is the one the 1.21.4 renderer made, which is one"
+  },
+  "net/minecraft/class_996.method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10429;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#cbSnowGolem(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10429;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the layer's state type narrowed in 1.21.4; the state a 1.21.3 call hands is the one the 1.21.4 renderer made, which is one"
+  },
+  "net/minecraft/class_948.method_62536(Lnet/minecraft/class_1473;Lnet/minecraft/class_10042;F)V": {
+   "desc": "(Lnet/minecraft/class_1473;Lnet/minecraft/class_10429;F)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#cbSnowGolem(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10429;",
+    "keep"
+   ],
+   "basis": "SnowGolemRenderer's state is a SnowGolemRenderState since 1.21.4 (the one its createRenderState makes)"
   }
  },
  "staticRedirects": {
@@ -1206,7 +1342,8 @@
   "net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
   "net/minecraft/class_4603.method_23067(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
   "com/mojang/blaze3d/systems/RenderSystem.overlayBlendFunc()V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
-  "net/minecraft/class_5602.method_45719(Lnet/minecraft/class_4719;)Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail"
+  "net/minecraft/class_5602.method_45719(Lnet/minecraft/class_4719;)Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_1007.method_64258(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers"
  },
  "resourceTypes": [
   "centurybridge:legacy_builtin",
@@ -1262,7 +1399,17 @@
   "net/minecraft/class_744.method_3129(ZF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
   "net/minecraft/class_751.method_18143(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
   "net/minecraft/class_945.method_4117(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
-  "net/minecraft/class_917.method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail"
+  "net/minecraft/class_917.method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_875.method_3874(Lnet/minecraft/class_10019;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_963.method_4149(Lnet/minecraft/class_10080;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_4999.method_56155(Lnet/minecraft/class_10070;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_572.method_62081(Lnet/minecraft/class_10034;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_606.method_62117(Lnet/minecraft/class_10066;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_564.method_62082(Lnet/minecraft/class_10086;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_591.method_62111(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_1005.method_62599(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10082;FF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_989.method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_5697.method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
@@ -1271,7 +1418,13 @@
   "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#superGetItemRenderer",
   "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#superForEachFrame",
   "net/minecraft/class_1049.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures#method_18153",
-  "net/minecraft/class_744.method_3129(ZF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#superTick"
+  "net/minecraft/class_744.method_3129(ZF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#superTick",
+  "net/minecraft/class_572.method_62081(Lnet/minecraft/class_10034;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62081",
+  "net/minecraft/class_606.method_62117(Lnet/minecraft/class_10066;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62117",
+  "net/minecraft/class_564.method_62082(Lnet/minecraft/class_10086;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62082",
+  "net/minecraft/class_591.method_62111(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62111",
+  "net/minecraft/class_989.method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_4192",
+  "net/minecraft/class_5697.method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62594"
  },
  "methodRenames": {
   "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",
@@ -1329,6 +1482,13 @@
    "call": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading.missingReference(Lnet/minecraft/class_1088$class_9826;Lnet/minecraft/class_10525;Ljava/lang/String;)Lnet/minecraft/class_1058;",
    "family": "model-loading",
    "basis": "TextureGetter.reportMissingReference is new in 1.21.4; 1.21.3 answered a missing reference with the missing material"
+  },
+  {
+   "under": "net/minecraft/class_3884",
+   "method": "method_65191(Lnet/minecraft/class_4587;)V",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.translateToArms(Lnet/minecraft/class_3884;Lnet/minecraft/class_4587;)V",
+   "family": "render-layers",
+   "basis": "VillagerLikeModel.translateToArms is new in 1.21.4; a 1.21.3 model gets 1.21.3's crossed-arms item placement"
   }
  ],
  "lambdaAdapters": {
@@ -1339,6 +1499,10 @@
   "net/minecraft/class_1088$class_9826.get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;": {
    "iface": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter",
    "adapt": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#adaptTextureGetter(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter;)Lnet/minecraft/class_1088$class_9826;"
+  },
+  "net/minecraft/class_3884.method_17150(Z)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyVillagerLikeModel",
+   "adapt": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#adaptVillagerLikeModel(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyVillagerLikeModel;)Lnet/minecraft/class_3884;"
   }
  },
  "instanceFieldSetters": {
