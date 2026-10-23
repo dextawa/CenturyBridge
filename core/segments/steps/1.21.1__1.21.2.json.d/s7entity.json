@@ -114,7 +114,14 @@
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#build",
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#build",
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#build",
-  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#fabricBuild"
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#fabricBuild",
+  "net/minecraft/class_1688.method_7508(DDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getPos",
+  "net/minecraft/class_1688.method_7505(DDDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getPosOffs",
+  "net/minecraft/class_1688.method_7525()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#applyNaturalSlowdown",
+  "net/minecraft/class_1693.method_7525()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#applyNaturalSlowdown",
+  "net/minecraft/class_1696.method_7525()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#applyNaturalSlowdown",
+  "net/minecraft/class_1688.method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#moveAlongTrack",
+  "net/minecraft/class_1696.method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#moveAlongTrack"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -598,7 +605,9 @@
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
-  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#fabricBuild"
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#fabricBuild",
+  "net/minecraft/class_1688.method_7508(DDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#superGetPos",
+  "net/minecraft/class_1688.method_7505(DDDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#superGetPosOffs"
  },
  "overrideHooks": [
   {
@@ -681,6 +690,32 @@
    "onlyUnder": "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion",
    "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi.keepEquipment(Lnet/minecraft/class_10179;)Z",
    "basis": "1.21.2's MobConversion takes the ConversionParams; a 1.21.1 implementation gets its keepEquipment (CbEntityFapi)"
+  },
+  {
+   "old": "method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
+   "new": "method_7513(Lnet/minecraft/class_3218;)V",
+   "onlyUnder": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacyTrack",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics.trackBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacyTrack;Lnet/minecraft/class_3218;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics.superMoveAlongTrack(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$TrackSuper;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$TrackSuper",
+   "superAccessors": [
+    "method_7513(Lnet/minecraft/class_3218;)V"
+   ],
+   "basis": "1.21.1 AbstractMinecart.tick called the overridable moveAlongTrack(pos, state) for the rail at the minecart; 1.21.2's OldMinecartBehavior runs the same step itself (moveAlongTrack(level), NewMinecartBehavior calls the minecart's): CbEntityMinecartOldMixin asks the mod's override, whose super call runs the behavior's body on the pos and state passed (CbEntityMinecartPhysics)"
+  },
+  {
+   "old": "method_7525()V",
+   "new": "method_7525(Lnet/minecraft/class_243;)Lnet/minecraft/class_243;",
+   "onlyUnder": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacySlowdown",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics.slowdownBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacySlowdown;Lnet/minecraft/class_243;)Lnet/minecraft/class_243;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics.superApplyNaturalSlowdown(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$SlowdownSuper;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$SlowdownSuper",
+   "superAccessors": [
+    "method_7525(Lnet/minecraft/class_243;)Lnet/minecraft/class_243;"
+   ],
+   "basis": "1.21.1's applyNaturalSlowdown() slowed the delta movement in place, 1.21.2's applyNaturalSlowdown(velocity) answers the slowed vector: the old override runs on the velocity passed (CbEntityMinecartPhysics)"
   }
  ],
  "adapterHooks": [
@@ -953,6 +988,24 @@
    ],
    "synth": [],
    "basis": "a mod subclass of FabricEntityTypeBuilder's own 1.21.1 build() answers the calls CbEntityFapi serves (1.21.2's takes a key)"
+  },
+  {
+   "under": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacyPos",
+   "requires": [
+    "method_7508(DDD)Lnet/minecraft/class_243;"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getPos of a mod minecart, asked by 1.21.1's moveAlongTrack / getPosOffs / the renderer: OldMinecartBehavior's getPos (same body) asks it (CbEntityMinecartOldMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics$LegacyPosOffs",
+   "requires": [
+    "method_7505(DDDD)Lnet/minecraft/class_243;"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getPosOffs of a mod minecart, asked by the renderer: OldMinecartBehavior's getPosOffs (same body) asks it (CbEntityMinecartOldMixin)"
   }
  ],
  "classRenames": {
@@ -988,11 +1041,15 @@
  ],
  "instanceFieldGetters": {
   "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#getWasOnFire",
-  "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getInGround"
+  "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getInGround",
+  "net/minecraft/class_1696.field_7737:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getXPush",
+  "net/minecraft/class_1696.field_7736:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getZPush"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setWasOnFire",
-  "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#setInGround"
+  "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#setInGround",
+  "net/minecraft/class_1696.field_7737:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#setXPush",
+  "net/minecraft/class_1696.field_7736:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#setZPush"
  },
  "covers": [
   "net/minecraft/class_1297.method_5687(I)Z",
