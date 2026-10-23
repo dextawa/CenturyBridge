@@ -543,6 +543,17 @@ public final class CbLevelExplosions {
             spawnParticles, small, large, sound);
     }
 
+    /**
+     * explode(.., particles, sound) of a 1.21.1 Level subclass overriding no explode at all (abstractFills): 1.21.1's
+     * Level.method_8454, this.method_46668(.., true, ..) -- Level's own body
+     */
+    public static void fill8454(class_1937 self, class_1297 source, class_1282 damageSource, class_5362 calculator,
+                                double x, double y, double z, float radius, boolean fire,
+                                class_1937.class_7867 interaction, class_2394 small, class_2394 large,
+                                class_6880<class_3414> sound) {
+        local(self, source, damageSource, calculator, x, y, z, radius, fire, interaction, true, small, large, sound);
+    }
+
     private CbLevelExplosions() {
     }
 }

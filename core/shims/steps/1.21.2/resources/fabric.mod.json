@@ -4,6 +4,11 @@
  "version": "0.3.0+1.21.2",
  "name": "CenturyBridge: 1.21.1 API on 1.21.2",
  "environment": "*",
+ "entrypoints": {
+  "main": [
+   "top.dext.centurybridge.step.v1_21_2.rt.CbLevelInit"
+  ]
+ },
  "mixins": [
   "cb-step-1.21.2.mixins.json"
  ],

@@ -222,14 +222,15 @@ jar cf "$JAR" -C "$CLASSES" .
 # throws NoSuchMethodError on the real jar. Worse, when the method we overrode
 # is one vanilla itself calls, the world dies on the first tick -- that is how
 # class_1297.cw() reached a player three times.
-python3 - "$JAR" <<'PYOBF'
+python3 - "$JAR" "$STUB" <<'PYOBF'
 import os, re, subprocess, sys, zipfile
 jar = sys.argv[1]
 # The premise (a 1-3 letter member name is an unstable obfuscated leftover)
 # only holds while the game ships obfuscated and we compile against
 # intermediary stubs. In the year-versioned era names are real -- Vec3.x()
 # is API, not residue -- so the gate stands down.
-if "intermediary" not in os.path.basename(os.environ.get("CB_STUB", "intermediary")):
+# (the stub this build compiled against -- build.sh's own default included, which CB_STUB alone misses)
+if "intermediary" not in os.path.basename(sys.argv[2]):
     print("real-name era stub: obfuscated-name gate not applicable")
     sys.exit(0)
 SAFE = {"get", "put", "add", "map", "of", "abs", "min", "max", "pow", "run",

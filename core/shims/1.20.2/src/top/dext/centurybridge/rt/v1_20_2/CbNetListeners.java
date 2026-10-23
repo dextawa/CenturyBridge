@@ -12,6 +12,7 @@ import net.minecraft.class_2602;
 import net.minecraft.class_2792;
 import net.minecraft.class_2923;
 import net.minecraft.class_2935;
+import net.minecraft.class_7832;
 import net.minecraft.class_8588;
 import net.minecraft.class_8590;
 import net.minecraft.class_8591;
@@ -46,6 +47,23 @@ public final class CbNetListeners {
     /** Connection.setListener / setListenerForServerboundHandshake, before it validates the listener */
     public static void attaching(class_2547 listener, class_2535 connection) {
         CONNECTIONS.put(listener, connection);
+    }
+
+    private static final Map<class_2535, class_7832> CONFIGURED_FEATURES = Collections.synchronizedMap(new WeakHashMap<>());
+
+    /** ClientConfigurationPacketListenerImpl.handleEnabledFeatures: the features this connection was sent */
+    public static void configured(class_2535 connection, class_7832 features) {
+        CONFIGURED_FEATURES.put(connection, features);
+    }
+
+    /**
+     * The features packet the configuration phase of the listener's connection received, or null when
+     * the listener is not attached to a connection that went through one (a vanilla 1.20.2 server
+     * always sends it there: ServerConfigurationPacketListenerImpl.startConfiguration).
+     */
+    public static class_7832 configuredFeatures(class_2547 listener) {
+        class_2535 connection = CONNECTIONS.get(listener);
+        return connection == null ? null : CONFIGURED_FEATURES.get(connection);
     }
 
     private static class_2535 connection(class_2547 listener) {

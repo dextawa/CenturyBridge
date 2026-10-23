@@ -190,10 +190,21 @@ def main():
         for m in members(wk):
             wbyname[(m[0], m[1])].append(m)
         hint = nhint.get(vc, {})
+        # a W supertype's member answers too: the JVM resolves a call through the W class up its hierarchy
+        # (26.1's LevelRenderContext gets bufferSource()MultiBufferSource from an impl super-interface)
+        inherited = {}
+        for s in sup - {wc}:
+            sk = W.get(s) or WG.get(s)
+            if sk is None or s.startswith("java/"):
+                continue
+            for m in members(sk):
+                inherited.setdefault((m[0], m[1], m[2]), m)
         for kind, n, d, a in members(vk):
             nd = td(d)
             nn = hint.get(n, mn(n))
             hit = wm.get((kind, nn, nd)) or (wm.get((kind, n, nd)) if nn != n else None)
+            if hit is None:
+                hit = inherited.get((kind, nn, nd)) or (inherited.get((kind, n, nd)) if nn != n else None)
             if hit is None:
                 alts = wbyname.get((kind, nn), []) + (wbyname.get((kind, n), []) if nn != n else [])
                 drift.append((kind, n, d, nn, ("same name, other shapes: " + " | ".join(x[2] for x in alts))

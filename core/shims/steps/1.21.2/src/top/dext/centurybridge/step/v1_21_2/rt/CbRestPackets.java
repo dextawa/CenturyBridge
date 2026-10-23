@@ -52,7 +52,7 @@ public final class CbRestPackets {
     }
 
     /** a RelativeMovement set of 1.21.1 with, for each relative position axis, the matching DELTA_ constant */
-    static Set<net.minecraft.class_2709> withKeptDelta(Set<net.minecraft.class_2709> relatives) {
+    public static Set<net.minecraft.class_2709> withKeptDelta(Set<net.minecraft.class_2709> relatives) {
         EnumSet<net.minecraft.class_2709> out = EnumSet.noneOf(net.minecraft.class_2709.class);
         out.addAll(relatives);
         if (relatives.contains(net.minecraft.class_2709.field_12400)) {

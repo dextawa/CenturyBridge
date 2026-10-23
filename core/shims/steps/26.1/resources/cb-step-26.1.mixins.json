@@ -5,9 +5,27 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CbFapiGameRuleCategoryAccess",
-    "CbFapiGameRuleCategoryMixin"
+    "CbFapiGameRuleCategoryMixin",
+    "CbFapiTagAppenderAccess",
+    "CbFapiTagBuilderMixin",
+    "CbFapiTagEntryAccess",
+    "CbFapiTagFileMixin",
+    "CbFapiTagLoaderMixin",
+    "CbFapiTagsProviderMixin",
+    "CbFapiTooltipFlagMixin",
+    "CbWallServerMixin"
   ],
-  "client": [],
+  "client": [
+    "CbFapiCameraAccess",
+    "CbFapiGameRendererAccess",
+    "CbFapiHudRenderCallbackMixin",
+    "CbFapiLevelRendererMixin",
+    "CbWallBlockStateModelSetMixin",
+    "CbWallClientLevelDataMixin",
+    "CbWallClientRainMixin",
+    "CbWallGuiAccess",
+    "CbWallModelBlockRendererAccess"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

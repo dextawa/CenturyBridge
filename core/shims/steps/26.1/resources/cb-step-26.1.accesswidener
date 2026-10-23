@@ -1,1 +1,4 @@
 accessWidener	v2	official
+
+# 1.21.11 GuiGraphics.renderComponentHoverEffect, overridable there: mods' overrides are renamed onto it (swall)
+extendable	method	net/minecraft/client/gui/GuiGraphicsExtractor	componentHoverEffect	(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Style;II)V
