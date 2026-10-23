@@ -1,0 +1,12 @@
+{
+ "classRenames": {
+  "net/minecraft/class_2432": "top/dext/centurybridge/step/v1_21/facade/class_2432",
+  "net/minecraft/class_8794": "top/dext/centurybridge/step/v1_21/facade/class_8794",
+  "net/minecraft/class_2437": "top/dext/centurybridge/step/v1_21/facade/class_2437",
+  "net/minecraft/class_3714": "top/dext/centurybridge/step/v1_21/facade/class_3714",
+  "net/minecraft/class_4845": "top/dext/centurybridge/step/v1_21/facade/class_4845",
+  "net/minecraft/class_8255": "top/dext/centurybridge/step/v1_21/facade/class_8255",
+  "net/minecraft/class_9486": "top/dext/centurybridge/step/v1_21/facade/class_9486",
+  "net/minecraft/class_9340": "top/dext/centurybridge/step/v1_21/facade/class_9340"
+ }
+}

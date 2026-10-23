@@ -1,0 +1,351 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_7791.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#call",
+  "net/minecraft/class_2438$class_7790.comp_1068()Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21/rt/CbLoot#comp_1068",
+  "net/minecraft/class_106$class_107.method_484()Lnet/minecraft/class_106$class_107;": "top/dext/centurybridge/step/v1_21/rt/CbLoot#method_484",
+  "net/minecraft/class_137$class_6156.method_35530(Ljava/util/UUID;)Lnet/minecraft/class_137$class_6156;": "top/dext/centurybridge/step/v1_21/rt/CbLoot#method_35530",
+  "net/minecraft/class_225.comp_1882()F": "top/dext/centurybridge/step/v1_21/rt/CbLoot#comp_1882",
+  "net/minecraft/class_225.comp_1883()F": "top/dext/centurybridge/step/v1_21/rt/CbLoot#comp_1883",
+  "net/minecraft/class_219.comp_1881()F": "top/dext/centurybridge/step/v1_21/rt/CbLoot#comp_1881",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#call",
+  "net/minecraft/class_8490.comp_2521()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbLoot#comp_2521",
+  "net/minecraft/class_9674.method_59781(Lnet/minecraft/class_7225$class_7874;[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbData#method_59781",
+  "net/minecraft/class_5434.method_54521()Ljava/util/List;": "top/dext/centurybridge/step/v1_21/rt/CbData#method_54521"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V",
+   "new": "method_10399(Ljava/util/function/BiConsumer;)V",
+   "onlyUnder": "net/minecraft/class_7791",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbLoot.generate(Ltop/dext/centurybridge/step/v1_21/rt/CbLoot$Generate;Ljava/util/function/BiConsumer;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbLoot$Generate",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard",
+   "basis": "1.21's generate(consumer) runs a 1.20.6 generate(registries, consumer) with the provider's registries (CbLoot.registriesOf: those it was built with); its super call into a vanilla provider is reshaped onto 1.21's generate(consumer) (mechanical), which reads the provider's own"
+  },
+  {
+   "old": "method_25992(Lnet/minecraft/class_1887;)Lnet/minecraft/class_109$class_4954;",
+   "new": "method_25992(Lnet/minecraft/class_6880;)Lnet/minecraft/class_109$class_4954;",
+   "onlyUnder": "net/minecraft/class_109$class_4954",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments.cbEnchantment(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1887;",
+   "basis": "a 1.20.6 EnchantRandomlyFunction.Builder subclass's withEnchantment(enchantment): 1.21 passes the world holder, the override takes the object; its super call is reshaped"
+  },
+  {
+   "old": "method_35539(Lnet/minecraft/class_1887;Lnet/minecraft/class_5658;)Lnet/minecraft/class_5642$class_6158;",
+   "new": "method_35539(Lnet/minecraft/class_6880;Lnet/minecraft/class_5658;)Lnet/minecraft/class_5642$class_6158;",
+   "onlyUnder": "net/minecraft/class_5642$class_6158",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments.cbEnchantment(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1887;",
+   "basis": "a 1.20.6 SetEnchantmentsFunction.Builder subclass's withEnchantment(enchantment, levels): the world holder as the object; its super call is reshaped"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/minecraft/class_7791.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": {
+   "iface": "top/dext/centurybridge/step/v1_21/rt/CbLoot$Generate",
+   "adapt": "top/dext/centurybridge/step/v1_21/rt/CbLoot#adapt(Ltop/dext/centurybridge/step/v1_21/rt/CbLoot$Generate;)Lnet/minecraft/class_7791;",
+   "basis": "a 1.20.6 lambda loot table provider, adapted to 1.21's generate(consumer) on CbLoot's registries"
+  }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_2438$class_7790.<init>(Ljava/util/function/Supplier;Lnet/minecraft/class_176;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#newSubProviderEntry",
+  "net/minecraft/class_225.<init>(FF)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#newRandomChanceWithLooting",
+  "net/minecraft/class_8490.<init>(Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;Ljava/lang/String;Lnet/minecraft/class_8490$class_8491;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#newLootDataType"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_7788.<init>(Ljava/util/Set;Lnet/minecraft/class_7699;)V": {
+   "desc": "(Ljava/util/Set;Lnet/minecraft/class_7699;Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "a 1.20.6 BlockLootSubProvider subclass's super(explosionResistant, enabledFeatures): 1.21's takes the registries the provider reads its enchantments from -- those of the run building it (CbLoot.registries)"
+  },
+  "net/minecraft/class_7788.<init>(Ljava/util/Set;Lnet/minecraft/class_7699;Ljava/util/Map;)V": {
+   "desc": "(Ljava/util/Set;Lnet/minecraft/class_7699;Ljava/util/Map;Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "super(explosionResistant, enabledFeatures, map): the same, with the table map"
+  },
+  "net/minecraft/class_7789.<init>(Lnet/minecraft/class_7699;)V": {
+   "desc": "(Lnet/minecraft/class_7699;Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "a 1.20.6 EntityLootSubProvider subclass's super(enabledFeatures): 1.21's takes the run's registries (CbLoot.registries)"
+  },
+  "net/minecraft/class_7789.<init>(Lnet/minecraft/class_7699;Lnet/minecraft/class_7699;)V": {
+   "desc": "(Lnet/minecraft/class_7699;Lnet/minecraft/class_7699;Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "super(allowed, required): the same"
+  },
+  "net/minecraft/class_2430.<init>()V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "new VanillaBlockLoot() / a subclass's super(): 1.21's takes the run's registries"
+  },
+  "net/minecraft/class_2434.<init>()V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "new VanillaEntityLoot() / a subclass's super(): 1.21's takes the run's registries"
+  },
+  "net/minecraft/class_125$class_126.<init>(Lnet/minecraft/class_5658;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_5658;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#looting()Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "new LootingEnchantFunction.Builder(count): 1.20.6's function counted looting; 1.21's EnchantedCountIncreaseFunction names the enchantment -- looting"
+  },
+  "net/minecraft/class_219.<init>(F)V": {
+   "desc": "(Lnet/minecraft/class_5658;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbLoot#constant(F)Lnet/minecraft/class_5658;"
+   ],
+   "basis": "new LootItemRandomChanceCondition(probability): 1.21's takes a number provider, the constant"
+  },
+  "net/minecraft/class_137$class_6156.<init>(Ljava/lang/String;Lnet/minecraft/class_6880;Lnet/minecraft/class_1322$class_1323;Lnet/minecraft/class_5658;)V": {
+   "desc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_6880;Lnet/minecraft/class_1322$class_1323;Lnet/minecraft/class_5658;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbLoot#modifierId(Ljava/lang/String;)Lnet/minecraft/class_2960;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "new ModifierBuilder(name, attribute, operation, amount): 1.21's takes the modifier's id where 1.20.6 took its name and drew a random uuid at each roll unless withUuid fixed one; the id is that of a random uuid (CbEntityAttributes), drawn once per builder"
+  },
+  "net/minecraft/class_9674.<init>(Lnet/minecraft/class_7784;Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/class_7699;)V": {
+   "desc": "(Lnet/minecraft/class_7784;Ljava/util/concurrent/CompletableFuture;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbData#keepFlags(Lnet/minecraft/class_9674;Lnet/minecraft/class_7699;)V",
+   "postArgs": [
+    2
+   ],
+   "basis": "a 1.20.6 EnchantmentTagsProvider subclass's super(output, registries, enabledFeatures): 1.21's takes no flags; they are kept for 1.20.6's tooltipOrder check (CbData.keepFlags)"
+  },
+  "net/minecraft/class_5434.<init>(Lnet/minecraft/class_3195$class_7302;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_6122;ZLjava/util/Optional;ILjava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_3195$class_7302;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_6122;ZLjava/util/Optional;ILjava/util/List;Lnet/minecraft/class_9778;Lnet/minecraft/class_9822;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbData#defaultPadding()Lnet/minecraft/class_9778;",
+    "push top/dext/centurybridge/step/v1_21/rt/CbData#defaultLiquidSettings()Lnet/minecraft/class_9822;"
+   ],
+   "basis": "new JigsawStructure(.. 1.20.6's nine ..): 1.21's also takes dimension padding and liquid settings; its own defaults (no padding, apply waterlogging) are what 1.20.6 did"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_7788.method_45989(Lnet/minecraft/class_2248;Lnet/minecraft/class_79$class_80;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_7788.method_46001(Lnet/minecraft/class_2248;Lnet/minecraft/class_79$class_80;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_7788.method_46008(Lnet/minecraft/class_2248;Lnet/minecraft/class_79$class_80;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_7788.method_46014(Lnet/minecraft/class_2248;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_7788.method_46015(Lnet/minecraft/class_2248;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_7788.method_46016(Lnet/minecraft/class_2248;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_7788.method_46019(Lnet/minecraft/class_2248;)Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_2434.method_48515()Lnet/minecraft/class_52$class_53;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_5478.method_30708(Lnet/minecraft/class_7871;Lnet/minecraft/class_7871;Ljava/util/function/Consumer;)Lnet/minecraft/class_1959;": "top/dext/centurybridge/step/v1_21/rt/CbData",
+  "net/minecraft/class_5478.method_43232(Lnet/minecraft/class_7871;Lnet/minecraft/class_7871;Ljava/util/function/Consumer;)Lnet/minecraft/class_1959;": "top/dext/centurybridge/step/v1_21/rt/CbData",
+  "net/minecraft/class_5470.method_42759(Lnet/minecraft/class_6885;Ljava/util/Map;Lnet/minecraft/class_2893$class_2895;Lnet/minecraft/class_5847;)Lnet/minecraft/class_3195$class_7302;": "top/dext/centurybridge/step/v1_21/rt/CbData"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_7788.field_40602:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_7788.field_40603:Lnet/minecraft/class_5341$class_210;": "top/dext/centurybridge/step/v1_21/rt/CbLoot",
+  "net/minecraft/class_7789.field_40612:Lnet/minecraft/class_2048$class_2049;": "top/dext/centurybridge/step/v1_21/rt/CbLoot"
+ },
+ "fieldRenames": {
+  "net/minecraft/class_101$class_102.field_1019:Lnet/minecraft/class_101$class_102;": "field_51790",
+  "net/minecraft/class_101$class_102.field_1020:Lnet/minecraft/class_101$class_102;": "field_51791",
+  "net/minecraft/class_131.field_25219:Lnet/minecraft/class_5339;": "field_51800",
+  "net/minecraft/class_217.field_25238:Lnet/minecraft/class_5342;": "field_51811"
+ },
+ "superRedirects": {
+  "net/minecraft/class_7788.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#superGenerate",
+  "net/minecraft/class_7789.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#superGenerate",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#superGenerate",
+  "net/minecraft/class_106$class_107.method_484()Lnet/minecraft/class_106$class_107;": "top/dext/centurybridge/step/v1_21/rt/CbLoot#superAllowTreasure",
+  "net/minecraft/class_137$class_6156.method_35530(Ljava/util/UUID;)Lnet/minecraft/class_137$class_6156;": "top/dext/centurybridge/step/v1_21/rt/CbLoot#superWithUuid",
+  "net/minecraft/class_9674.method_59781(Lnet/minecraft/class_7225$class_7874;[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbData#superTooltipOrder"
+ },
+ "facadeGaps": {},
+ "callReshapes": {
+  "net/minecraft/class_94.method_455(Lnet/minecraft/class_1887;)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_6880;)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "ApplyBonusCount.addOreBonusCount(enchantment): the enchantment's world holder"
+  },
+  "net/minecraft/class_94.method_456(Lnet/minecraft/class_1887;)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_6880;)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "ApplyBonusCount.addUniformBonusCount(enchantment): the world holder"
+  },
+  "net/minecraft/class_94.method_461(Lnet/minecraft/class_1887;I)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_6880;I)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "ApplyBonusCount.addUniformBonusCount(enchantment, multiplier): the world holder"
+  },
+  "net/minecraft/class_94.method_463(Lnet/minecraft/class_1887;FI)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_6880;FI)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep"
+   ],
+   "basis": "ApplyBonusCount.addBonusBinomialDistributionCount(enchantment, p, extra): the world holder"
+  },
+  "net/minecraft/class_182.method_800(Lnet/minecraft/class_1887;[F)Lnet/minecraft/class_5341$class_210;": {
+   "desc": "(Lnet/minecraft/class_6880;[F)Lnet/minecraft/class_5341$class_210;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "BonusLevelTableCondition.bonusLevelFlatChance(enchantment, chances): the world holder"
+  },
+  "net/minecraft/class_109$class_4954.method_25992(Lnet/minecraft/class_1887;)Lnet/minecraft/class_109$class_4954;": {
+   "desc": "(Lnet/minecraft/class_6880;)Lnet/minecraft/class_109$class_4954;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "EnchantRandomlyFunction.Builder.withEnchantment(enchantment): the world holder"
+  },
+  "net/minecraft/class_5642$class_6158.method_35539(Lnet/minecraft/class_1887;Lnet/minecraft/class_5658;)Lnet/minecraft/class_5642$class_6158;": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_5658;)Lnet/minecraft/class_5642$class_6158;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "SetEnchantmentsFunction.Builder.withEnchantment(enchantment, levels): the world holder"
+  },
+  "net/minecraft/class_109.method_489()Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_109$class_4954;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "EnchantRandomlyFunction.randomApplicableEnchantment(): 1.21's takes the registries it reads the on_random_loot tag from -- the discoverable enchantments 1.20.6 drew from (books take any, as in 1.20.6); CbLoot.registries",
+   "ret": "keep"
+  },
+  "net/minecraft/class_106.method_481(Lnet/minecraft/class_5658;)Lnet/minecraft/class_106$class_107;": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_5658;)Lnet/minecraft/class_106$class_107;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;",
+    "keep"
+   ],
+   "basis": "EnchantWithLevelsFunction.enchantWithLevels(levels): 1.21's takes the registries; its default draws from in_enchanting_table, the non-treasure set 1.20.6 drew from without allowTreasure"
+  },
+  "net/minecraft/class_125.method_547(Lnet/minecraft/class_5658;)Lnet/minecraft/class_125$class_126;": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_5658;)Lnet/minecraft/class_125$class_126;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;",
+    "keep"
+   ],
+   "basis": "LootingEnchantFunction.lootingMultiplier(count): 1.21's EnchantedCountIncreaseFunction.lootingMultiplier(registries, count) counts looting"
+  },
+  "net/minecraft/class_225.method_953(FF)Lnet/minecraft/class_5341$class_210;": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;FF)Lnet/minecraft/class_5341$class_210;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbLoot#registries()Lnet/minecraft/class_7225$class_7874;",
+    "keep",
+    "keep"
+   ],
+   "basis": "randomChanceAndLootingBoost(chance, multiplier): 1.21's takes the registries; it passes with chance + looting level * multiplier, as 1.20.6's did"
+  },
+  "net/minecraft/class_137.method_35524(Ljava/lang/String;Lnet/minecraft/class_6880;Lnet/minecraft/class_1322$class_1323;Lnet/minecraft/class_5658;)Lnet/minecraft/class_137$class_6156;": {
+   "desc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_6880;Lnet/minecraft/class_1322$class_1323;Lnet/minecraft/class_5658;)Lnet/minecraft/class_137$class_6156;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbLoot#modifierId(Ljava/lang/String;)Lnet/minecraft/class_2960;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "SetAttributesFunction.modifier(name, attribute, operation, amount): as new ModifierBuilder(..), the id of a random uuid"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_106$class_107",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbLoot$LegacyAllowTreasure",
+   "requires": [
+    "method_484()Lnet/minecraft/class_106$class_107;"
+   ],
+   "synth": [],
+   "basis": "1.20.6 EnchantWithLevelsFunction.Builder.allowTreasure(): gone in 1.21 (a call is CbLoot.method_484); a 1.20.6 subclass's own override answers that call"
+  },
+  {
+   "under": "net/minecraft/class_137$class_6156",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbLoot$LegacyWithUuid",
+   "requires": [
+    "method_35530(Ljava/util/UUID;)Lnet/minecraft/class_137$class_6156;"
+   ],
+   "synth": [],
+   "basis": "1.20.6 ModifierBuilder.withUuid(uuid): gone in 1.21 (a call is CbLoot.method_35530); a 1.20.6 subclass's own override answers that call"
+  },
+  {
+   "under": "net/minecraft/class_9674",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbData$LegacyTooltipOrder",
+   "requires": [
+    "method_59781(Lnet/minecraft/class_7225$class_7874;[Lnet/minecraft/class_1887;)V"
+   ],
+   "synth": [],
+   "basis": "EnchantmentTagsProvider.tooltipOrder(registries, enchantments...): 1.21's takes keys; a 1.20.6 call reaches a subclass's own override (CbData.method_59781), else 1.20.6's body"
+  }
+ ],
+ "fieldRedirects": {
+  "net/minecraft/class_217.field_50031:Lcom/mojang/serialization/Codec;": "net/minecraft/class_5341#field_51809",
+  "net/minecraft/class_217.field_45869:Lcom/mojang/serialization/Codec;": "net/minecraft/class_5341#field_51810"
+ },
+ "classRenames": {
+  "net/minecraft/class_8902": "top/dext/centurybridge/step/v1_21/facade/class_8902",
+  "net/minecraft/class_8903": "top/dext/centurybridge/step/v1_21/facade/class_8903",
+  "net/minecraft/class_8904": "top/dext/centurybridge/step/v1_21/facade/class_8904",
+  "net/minecraft/class_8906": "top/dext/centurybridge/step/v1_21/facade/class_8906",
+  "net/minecraft/class_8907": "top/dext/centurybridge/step/v1_21/facade/class_8907",
+  "net/minecraft/class_8908": "top/dext/centurybridge/step/v1_21/facade/class_8908",
+  "net/minecraft/class_8994": "top/dext/centurybridge/step/v1_21/facade/class_8994",
+  "net/minecraft/class_8995": "top/dext/centurybridge/step/v1_21/facade/class_8995",
+  "net/minecraft/class_8996": "top/dext/centurybridge/step/v1_21/facade/class_8996",
+  "net/minecraft/class_8997": "top/dext/centurybridge/step/v1_21/facade/class_8997",
+  "net/minecraft/class_8999": "top/dext/centurybridge/step/v1_21/facade/class_8999",
+  "net/minecraft/class_9000": "top/dext/centurybridge/step/v1_21/facade/class_9000",
+  "net/minecraft/class_9001": "top/dext/centurybridge/step/v1_21/facade/class_9001",
+  "net/minecraft/class_9002": "top/dext/centurybridge/step/v1_21/facade/class_9002",
+  "net/minecraft/class_9051": "top/dext/centurybridge/step/v1_21/facade/class_9051",
+  "net/minecraft/class_9052": "top/dext/centurybridge/step/v1_21/facade/class_9052",
+  "net/minecraft/class_9086": "top/dext/centurybridge/step/v1_21/facade/class_9086",
+  "net/minecraft/class_9249": "top/dext/centurybridge/step/v1_21/facade/class_9249",
+  "net/minecraft/class_9339": "top/dext/centurybridge/step/v1_21/facade/class_9339",
+  "net/minecraft/class_9363": "top/dext/centurybridge/step/v1_21/facade/class_9363",
+  "net/minecraft/class_9382": "top/dext/centurybridge/step/v1_21/facade/class_9382",
+  "net/minecraft/class_9447": "top/dext/centurybridge/step/v1_21/facade/class_9447",
+  "net/minecraft/class_9485": "top/dext/centurybridge/step/v1_21/facade/class_9485",
+  "net/minecraft/class_9675": "top/dext/centurybridge/step/v1_21/facade/class_9675",
+  "net/minecraft/class_9686": "top/dext/centurybridge/step/v1_21/facade/class_9686"
+ }
+}
