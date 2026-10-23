@@ -28,7 +28,6 @@
     "CbBlockServerPlayerMixin",
     "CbRestEntityMixin",
     "CbRestEntityInvoker",
-    "CbRestEntityDataAccessor",
     "CbRestTamableAnimalMixin",
     "CbRestAbstractArrowMixin",
     "CbRestProjectileMixin",
