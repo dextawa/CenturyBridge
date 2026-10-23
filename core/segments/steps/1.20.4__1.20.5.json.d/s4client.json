@@ -11,7 +11,9 @@
   "net/minecraft/class_8973.method_55233()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
   "net/minecraft/class_8973.method_55234()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
   "net/minecraft/class_8973.method_55235()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
-  "net/minecraft/class_3872.method_33888(Lnet/minecraft/class_2487;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks"
+  "net/minecraft/class_3872.method_33888(Lnet/minecraft/class_2487;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks",
+  "net/minecraft/class_757.method_34549()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientShaders",
+  "net/minecraft/class_757.method_35764()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientShaders"
  },
  "instanceRedirects": {
   "net/minecraft/class_276.method_1232(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
@@ -24,7 +26,12 @@
   "net/minecraft/class_4904.method_25329()I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
   "net/minecraft/class_353.method_20406(Lnet/minecraft/class_7172;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
   "net/minecraft/class_702.method_3049(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles",
-  "net/minecraft/class_3872.method_17554(Lnet/minecraft/class_3872$class_3931;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks"
+  "net/minecraft/class_3872.method_17554(Lnet/minecraft/class_3872$class_3931;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks",
+  "net/minecraft/class_761.method_22710(Lnet/minecraft/class_4587;FJZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender",
+  "net/minecraft/class_761.method_32133(Lnet/minecraft/class_4587;Lnet/minecraft/class_243;Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender",
+  "net/minecraft/class_761.method_3257(Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;FLnet/minecraft/class_4184;ZLjava/lang/Runnable;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender",
+  "net/minecraft/class_761.method_3259(Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;FDDD)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender",
+  "net/minecraft/class_757.method_3188(FJLnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender"
  },
  "superRedirects": {
   "net/minecraft/class_276.method_1232(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#cbSuperFilterMode",
@@ -218,6 +225,81 @@
    "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui.cbOverlayLogger(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9191;",
    "onlyUnder": "net/minecraft/class_340",
    "basis": "s4client: DebugScreenOverlay.getTickTimeLogger answers a LocalSampleLogger since 1.20.5; a 1.20.4 override's sample logger is one (facade/SampleLogger)"
+  },
+  {
+   "old": "method_22710(Lnet/minecraft/class_4587;FJZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;)V",
+   "new": "method_22710(FJZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "onlyUnder": "net/minecraft/class_761",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacyRenderLevel",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.renderLevel(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacyRenderLevel;FJZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.superRenderLevel(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperRenderLevel;Lnet/minecraft/class_4587;FJZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperRenderLevel",
+   "superAccessors": [
+    "method_22710(FJZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V"
+   ],
+   "basis": "s4client: LevelRenderer.renderLevel takes the camera rotation as a frustum matrix since 1.20.5 (1.20.4: the pose stack GameRenderer had rotated, whose matrix it rendered by). A 1.20.4 override is what 1.20.5 renders through (rt/CbClientLevelRender); its super call is 1.20.4's over super's new shape"
+  },
+  {
+   "old": "method_32133(Lnet/minecraft/class_4587;Lnet/minecraft/class_243;Lorg/joml/Matrix4f;)V",
+   "new": "method_32133(Lnet/minecraft/class_243;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "onlyUnder": "net/minecraft/class_761",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacyCullFrustum",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.cullFrustum(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacyCullFrustum;Lnet/minecraft/class_243;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.superCullFrustum(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperCullFrustum;Lnet/minecraft/class_4587;Lnet/minecraft/class_243;Lorg/joml/Matrix4f;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperCullFrustum",
+   "superAccessors": [
+    "method_32133(Lnet/minecraft/class_243;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V"
+   ],
+   "basis": "s4client: LevelRenderer.prepareCullFrustum takes the frustum matrix since 1.20.5 (1.20.4 read it off the pose stack: pose().last().pose()). A 1.20.4 override is what 1.20.5 renders through (rt/CbClientLevelRender); its super call is 1.20.4's over super's new shape"
+  },
+  {
+   "old": "method_3257(Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;FLnet/minecraft/class_4184;ZLjava/lang/Runnable;)V",
+   "new": "method_3257(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/class_4184;ZLjava/lang/Runnable;)V",
+   "onlyUnder": "net/minecraft/class_761",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacySky",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.sky(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacySky;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/class_4184;ZLjava/lang/Runnable;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.superSky(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperSky;Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;FLnet/minecraft/class_4184;ZLjava/lang/Runnable;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperSky",
+   "superAccessors": [
+    "method_3257(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/class_4184;ZLjava/lang/Runnable;)V"
+   ],
+   "basis": "s4client: LevelRenderer.renderSky takes the frustum matrix since 1.20.5 and builds its stack from it (1.20.4 took the rotated pose stack). A 1.20.4 override is what 1.20.5 renders through (rt/CbClientLevelRender); its super call is 1.20.4's over super's new shape"
+  },
+  {
+   "old": "method_3259(Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;FDDD)V",
+   "new": "method_3259(Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FDDD)V",
+   "onlyUnder": "net/minecraft/class_761",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacyClouds",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.clouds(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacyClouds;Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FDDD)V",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.superClouds(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperClouds;Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;FDDD)V",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperClouds",
+   "superAccessors": [
+    "method_3259(Lnet/minecraft/class_4587;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FDDD)V"
+   ],
+   "basis": "s4client: LevelRenderer.renderClouds multiplies the frustum matrix onto its stack since 1.20.5 (1.20.4's stack already carried the rotation). A 1.20.4 override is what 1.20.5 renders through (rt/CbClientLevelRender); its super call is 1.20.4's over super's new shape"
+  },
+  {
+   "old": "method_3188(FJLnet/minecraft/class_4587;)V",
+   "new": "method_3188(FJ)V",
+   "onlyUnder": "net/minecraft/class_757",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacyGameRenderLevel",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.gameRenderLevel(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$LegacyGameRenderLevel;FJ)V",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender.superGameRenderLevel(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperGameRenderLevel;FJLnet/minecraft/class_4587;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbClientLevelRender$SuperGameRenderLevel",
+   "superAccessors": [
+    "method_3188(FJ)V"
+   ],
+   "basis": "s4client: GameRenderer.renderLevel lost its pose stack in 1.20.5 (1.20.4's render() handed it a fresh one; 1.20.5 starts from the model-view stack). A 1.20.4 override is what 1.20.5 renders through (rt/CbClientLevelRender); its super call is 1.20.4's over super's new shape"
+  },
+  {
+   "old": "method_3317(FF)V",
+   "new": "method_3317(Lnet/minecraft/class_332;IIFF)V",
+   "args": [
+    4,
+    3
+   ],
+   "onlyUnder": "net/minecraft/class_766",
+   "basis": "s4client: PanoramaRenderer.render(delta, alpha) is render(graphics, width, height, fade, partialTick) since 1.20.5: a 1.20.4 override gets the frame delta (1.20.5's partialTick, which advances the spin) and the alpha (1.20.5's fade) -- mechanical.json matched the two floats in order, swapping them. Its super call stays 1.20.4's render(delta, alpha) (mixin/CbClientPanoramaMixin: the cube map only, as 1.20.4 drew it)"
   }
  ],
  "frameDefaults": {
@@ -632,7 +714,8 @@
   "net/minecraft/class_389.field_44801:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
   "net/minecraft/class_5602.field_47444:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
   "net/minecraft/class_5602.field_47445:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
-  "net/minecraft/class_3872.field_17417:Lnet/minecraft/class_3872$class_3931;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks"
+  "net/minecraft/class_3872.field_17417:Lnet/minecraft/class_3872$class_3931;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks",
+  "net/minecraft/class_757.field_4010:I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientShaders"
  },
  "covers": [
   "net/minecraft/class_312.method_1606()V",
@@ -663,7 +746,8 @@
   "net/minecraft/class_748.method_3153()Lnet/minecraft/class_2499;",
   "net/minecraft/class_748.method_3152(Lnet/minecraft/class_2499;)V",
   "net/minecraft/class_748.isEmpty()Z",
-  "net/minecraft/class_748.delegate()Ljava/util/List;"
+  "net/minecraft/class_748.delegate()Ljava/util/List;",
+  "net/minecraft/class_757.method_35771()V"
  ],
  "classRenames": {
   "net/minecraft/class_8975": "top/dext/centurybridge/step/v1_20_5/facade/GustDustParticle",

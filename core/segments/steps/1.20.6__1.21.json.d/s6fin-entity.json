@@ -1,0 +1,92 @@
+{
+ "classRenames": {
+  "net/minecraft/class_6608": "top/dext/centurybridge/step/v1_21/facade/class_6608"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1280.method_5496(FLnet/minecraft/class_1282;FF)F": "top/dext/centurybridge/step/v1_21/rt/CbEntityRest#method_5496",
+  "net/minecraft/class_1304.method_20234(Lnet/minecraft/class_1304$class_1305;I)Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21/rt/CbEntityRest#method_20234",
+  "net/minecraft/class_1472.method_6634(Lnet/minecraft/class_1767;)[F": "top/dext/centurybridge/step/v1_21/rt/CbEntityRest#method_6634",
+  "net/minecraft/class_8950.method_55016(Lnet/minecraft/class_4095;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v1_21/rt/CbEntityRest#method_55016"
+ },
+ "covers": [
+  "net/minecraft/class_1282.method_48790()Z",
+  "net/minecraft/class_9069.method_56997()Z"
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_48790()Z",
+   "new": "method_60489()Z",
+   "onlyUnder": "net/minecraft/class_1282",
+   "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbEntityRest.not(Z)Z",
+   "basis": "1.21 asks isDirect() where 1.20.6 asked isIndirect() (the Warden's hurt; 1.21 also asks it in the explosion damage calculator): a 1.20.6 damage source class answers with its isIndirect() negated; its super call reaches 1.20.6's body, given back (CbEntityDamageSourceMixin)"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_6028.<init>(FLjava/util/function/Predicate;)V": {
+   "desc": "(FLjava/util/function/Function;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityRest#defaultPanicCauses()Ljava/util/function/Function;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityRest#setPanicPredicate(Lnet/minecraft/class_6028;Ljava/util/function/Predicate;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "1.21's AnimalPanic panics on the damage type that hurt the mob (a tag function); a 1.20.6 one on its predicate: made with 1.21's default function and handed the predicate, which then decides shouldPanic 1.20.6's way (CbEntityAnimalPanicMixin)"
+  },
+  "net/minecraft/class_1350.<init>(Lnet/minecraft/class_1321;DFFZ)V": {
+   "desc": "(Lnet/minecraft/class_1321;DFF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21/rt/CbEntityRest#setFollowCanFly(Lnet/minecraft/class_1350;Z)V",
+   "postArgs": [
+    4
+   ],
+   "basis": "1.21's FollowOwnerGoal teleports through the animal, which decides by canFlyToOwner() whether it may land on leaves; 1.20.6's goal decided by its canFly: a goal made with canFly makes its animal answer true (CbEntityTamableFlyMixin)"
+  },
+  "net/minecraft/class_4153.<init>(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_5455;Lnet/minecraft/class_5539;)V": {
+   "desc": "(Lnet/minecraft/class_9240;Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;ZLnet/minecraft/class_5455;Lnet/minecraft/class_9820;Lnet/minecraft/class_5539;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#noReports()Lnet/minecraft/class_9820;",
+    "keep"
+   ],
+   "basis": "PoiManager hands chunk I/O failures to a reporter since 1.21; 1.20.6's reported nowhere (CbLevelChunks.NO_REPORTS, as for SectionStorage)"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_1714.method_17399(Lnet/minecraft/class_1703;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_8566;Lnet/minecraft/class_1731;)V": {
+   "desc": "(Lnet/minecraft/class_1703;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_8566;Lnet/minecraft/class_1731;Lnet/minecraft/class_8786;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbEntityRest#noRecipeHint()Lnet/minecraft/class_8786;"
+   ],
+   "basis": "slotChangedCraftingGrid takes the recipe last matched as a lookup hint since 1.21; 1.20.6 looked the recipe up without one (null: 1.21's RecipeManager.getRecipeFor then searches every recipe)"
+  },
+  "net/minecraft/class_176.method_776(Lnet/minecraft/class_58;Lnet/minecraft/class_46;)V": {
+   "desc": "(Lnet/minecraft/class_8942;Lnet/minecraft/class_46;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEntityRest#reporterOf(Lnet/minecraft/class_58;)Lnet/minecraft/class_8942;",
+    "keep"
+   ],
+   "basis": "validateUser(context, user) reports to the context's problem reporter since 1.21, where 1.20.6's context.reportProblem(message) reported to that same reporter"
+  }
+ },
+ "ledger": {
+  "net/minecraft/class_6574": "PositionalRandomFactory gained the abstract fromSeed(long) in 1.21, which 1.20.6 had no counterpart of (1.21's two factories answer it unlike either of their other methods: Legacy ignores its own seed, Xoroshiro xors both halves), so a 1.20.6 implementation cannot answer it faithfully; 1.21 itself never calls it on a factory (no call site in the 1.21 jar), so the implementation loads and serves every 1.20.6 method"
+ }
+}

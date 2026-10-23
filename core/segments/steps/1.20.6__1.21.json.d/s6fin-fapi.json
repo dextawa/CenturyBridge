@@ -1,0 +1,64 @@
+{
+ "classRenames": {
+  "net/fabricmc/fabric/api/client/model/ExtraModelProvider": "top/dext/centurybridge/step/v1_21/compat/fapi/client/model/ExtraModelProvider",
+  "net/fabricmc/fabric/api/client/model/ModelAppender": "top/dext/centurybridge/step/v1_21/compat/fapi/client/model/ModelAppender",
+  "net/fabricmc/fabric/api/client/model/ModelLoadingRegistry": "top/dext/centurybridge/step/v1_21/compat/fapi/client/model/ModelLoadingRegistry",
+  "net/fabricmc/fabric/api/client/model/ModelProviderContext": "top/dext/centurybridge/step/v1_21/compat/fapi/client/model/ModelProviderContext",
+  "net/fabricmc/fabric/api/client/model/ModelProviderException": "top/dext/centurybridge/step/v1_21/compat/fapi/client/model/ModelProviderException",
+  "net/fabricmc/fabric/api/client/model/ModelResourceProvider": "top/dext/centurybridge/step/v1_21/compat/fapi/client/model/ModelResourceProvider",
+  "net/fabricmc/fabric/api/client/model/ModelVariantProvider": "top/dext/centurybridge/step/v1_21/compat/fapi/client/model/ModelVariantProvider",
+  "net/fabricmc/fabric/api/client/model/BakedModelManagerHelper": "top/dext/centurybridge/step/v1_21/compat/fapi/client/model/BakedModelManagerHelper",
+  "net/fabricmc/fabric/api/dimension/v1/FabricDimensions": "top/dext/centurybridge/step/v1_21/compat/fapi/dimension/v1/FabricDimensions"
+ },
+ "depRenames": {
+  "fabric-models-v0": "centurybridge_step_1_21@*"
+ },
+ "_s6fin_depRenames_basis": "1.21's Fabric API (0.102.0) no longer ships fabric-models-v0, which 1.20.6's (0.100.8) did (both fabric-api jars' nested modules); this step's layer gives its API back (compat/fapi/client/model, CbFapiModels), so a mod's dependency on it is met by the layer",
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context.id()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21/rt/CbFapiModels#id",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context.id()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21/rt/CbFapiModels#id",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context.id()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21/rt/CbFapiModels#id",
+  "net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_4753",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext.tickDelta()F": "top/dext/centurybridge/step/v1_21/rt/CbFapiRendering#tickDelta",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext.limitTime()J": "top/dext/centurybridge/step/v1_21/rt/CbFapiRendering#limitTime",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider$TranslationBuilder.add(Lnet/minecraft/class_1887;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbFapiData#add",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$EnchantmentTagProvider.reverseLookup(Lnet/minecraft/class_1887;)Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21/rt/CbFapiData#reverseLookup"
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider$TranslationBuilder.add(Lnet/minecraft/class_1887;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21/rt/CbFapiData#add",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$EnchantmentTagProvider.reverseLookup(Lnet/minecraft/class_1887;)Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21/rt/CbFapiData#reverseLookup"
+ },
+ "callReshapes": {
+  "net/fabricmc/fabric/api/client/rendering/v1/HudRenderCallback.onHudRender(Lnet/minecraft/class_332;F)V": {
+   "desc": "(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21/rt/CbFapiRendering#tracker(F)Lnet/minecraft/class_9779;"
+   ],
+   "basis": "onHudRender takes the DeltaTracker since Fabric API 1.21: a 1.20.6 caller's partial tick as a tracker answering it (CbClientTime.cbTracker)"
+  }
+ },
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/client/rendering/v1/HudRenderCallback.onHudRender(Lnet/minecraft/class_332;F)V": {
+   "iface": "top/dext/centurybridge/step/v1_21/rt/CbFapiRendering$LegacyHud",
+   "adapt": "top/dext/centurybridge/step/v1_21/rt/CbFapiRendering#hud(Ltop/dext/centurybridge/step/v1_21/rt/CbFapiRendering$LegacyHud;)Lnet/fabricmc/fabric/api/client/rendering/v1/HudRenderCallback;",
+   "basis": "a 1.20.6 HUD listener lambda, handed the partial tick of the tracker 1.21 renders the HUD with"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "onHudRender(Lnet/minecraft/class_332;F)V",
+   "new": "onHudRender(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/client/rendering/v1/HudRenderCallback",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbFapiRendering.partialTick(Lnet/minecraft/class_9779;)F",
+   "basis": "Fabric API 1.21 calls onHudRender(graphics, tracker): a 1.20.6 class implementing the callback runs with the tracker's partial tick, the float 1.20.6 handed it"
+  }
+ ],
+ "ledger": {
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context": "Fabric API hands this context to listeners and 1.21 replaced its id() with resourceId() / topLevelId(): calls are bridged (CbFapiModels.id); a 1.20.6 class implementing the context itself cannot answer topLevelId(), a ModelResourceLocation its id() never named",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context": "as ModelModifier.OnLoad.Context: calls bridged, a 1.20.6 implementation of the context cannot answer resourceId() / topLevelId()",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context": "as ModelModifier.OnLoad.Context: calls bridged, a 1.20.6 implementation of the context cannot answer resourceId() / topLevelId()",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext": "Fabric API hands this context to listeners and 1.21 replaced tickDelta() / limitTime() with tickCounter(): calls are bridged (CbFapiRendering); a 1.20.6 class implementing the context cannot answer tickCounter(), a DeltaTracker it never had",
+  "net/fabricmc/fabric/api/resource/ResourceManagerHelper": "Fabric API's own helper (ResourceManagerHelper.get(type)); 1.21 added the abstract registerReloadListener(id, Function<HolderLookup.Provider, IdentifiableResourceReloadListener>), so a 1.20.6 implementation (or lambda) of the helper cannot register a listener that needs the registries -- Fabric API never takes a mod's implementation of it"
+ }
+}

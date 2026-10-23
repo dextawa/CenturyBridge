@@ -28,7 +28,7 @@
     "keep:6"
    ],
    "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
+   "basis": "mechanical: same values; F x4 paired by use V#0->W#0, V#1->W#1, V#5->W#5, V#6->W#6; I x2 paired by use V#2->W#2, V#3->W#3; returns a subtype of the old type"
   },
   "net/minecraft/class_382.method_73399(FFIILnet/minecraft/class_2583;FF)Lnet/minecraft/class_11767;": {
    "desc": "(FFIILnet/minecraft/class_2583;FF)Lnet/minecraft/class_11767$class_12238;",
@@ -42,7 +42,7 @@
     "keep:6"
    ],
    "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
+   "basis": "mechanical: same values; F x4 paired by use V#0->W#0, V#1->W#1, V#5->W#5, V#6->W#6; I x2 paired by use V#2->W#2, V#3->W#3; returns a subtype of the old type"
   },
   "net/minecraft/class_9350.method_58119(Lnet/minecraft/class_1297;)Z": {
    "desc": "(Lnet/minecraft/class_12260;)Z",
@@ -66,12 +66,12 @@
    "ops": [
     "keep:1",
     "keep:2",
-    "keep:0",
     "keep:5",
+    "keep:0",
     "keep:4",
     "keep:3"
    ],
-   "basis": "mechanical: same values, reordered by type"
+   "basis": "mechanical: same values, reordered; I x2 paired by use V#0->W#3, V#5->W#2 (not their order)"
   }
  },
  "overrideHooks": [
@@ -99,7 +99,7 @@
    "onlyUnder": "net/minecraft/class_4184",
    "frames": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had"
+   "basis": "mechanical: the old method gets every parameter it had; Z x2 paired by use V#2->W#2, V#3->W#3"
   },
   {
    "old": "method_4192(Lnet/minecraft/class_10426;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_11659;I)V",
@@ -161,7 +161,7 @@
    "onlyUnder": "net/minecraft/class_11284",
    "frames": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_4184;,Z not passed"
+   "basis": "mechanical: the old method gets every parameter it had; I x3 paired by use V#0->W#0, V#1->W#1, V#5->W#5; new Lnet/minecraft/class_4184;,Z not passed"
   },
   {
    "old": "method_4568(Lnet/minecraft/class_1055$class_4726;)V",
@@ -198,7 +198,7 @@
    "onlyUnder": "net/minecraft/class_9955",
    "frames": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new J not passed"
+   "basis": "mechanical: the old method gets every parameter it had; F x2 paired by use V#2->W#2, V#4->W#5; new J not passed"
   },
   {
    "old": "method_3003(Lnet/minecraft/class_642;Ljava/lang/Runnable;Ljava/lang/Runnable;)V",
@@ -211,7 +211,7 @@
    "onlyUnder": "net/minecraft/class_644",
    "frames": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_12239; not passed"
+   "basis": "mechanical: the old method gets every parameter it had; Ljava/lang/Runnable; x2 paired by use V#1->W#1, V#2->W#2; new Lnet/minecraft/class_12239; not passed"
   },
   {
    "old": "method_72238(IIII)V",
@@ -225,7 +225,7 @@
    "onlyUnder": "net/minecraft/class_332",
    "frames": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+   "basis": "mechanical: the old method gets every parameter it had; I x4 paired by use V#0->W#0, V#1->W#1, V#2->W#2, V#3->W#3; new Z not passed"
   },
   {
    "old": "method_2385(Lnet/minecraft/class_332;Lnet/minecraft/class_1735;)V",
@@ -331,7 +331,7 @@
    "onlyUnder": "net/minecraft/class_8565",
    "frames": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new J not passed"
+   "basis": "mechanical: the old method gets every parameter it had; Z x2 paired by use V#2->W#3, V#3->W#4; new J not passed"
   },
   {
    "old": "method_53511()Lnet/minecraft/class_238;",
@@ -417,7 +417,7 @@
    "onlyUnder": "net/minecraft/class_1688",
    "frames": "top/dext/centurybridge/step/v1_21_11/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_3218; not passed"
+   "basis": "mechanical: the old method gets every parameter it had; I x3 paired by use V#0->W#1, V#1->W#2, V#2->W#3; new Lnet/minecraft/class_3218; not passed"
   },
   {
    "old": "method_8295()V",

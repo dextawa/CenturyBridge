@@ -164,6 +164,21 @@ public final class MixinTriage {
                 }
             }
         };
+        // L2 says a member of that name changed its descriptor at some boundary. When the target
+        // declares exactly the shape the mixin names (a mixin MixinBridge carried to the new shape,
+        // or another overload that stayed), Mixin finds it: nothing is broken
+        java.util.function.BiFunction<Spec, Chain.Issue, Chain.Issue> exact = (sp, issue) -> {
+            if (issue.level() != Chain.Level.L2 || sp.desc == null || chain.targetDecls.isEmpty()) {
+                return issue;
+            }
+            for (String o : sp.owner != null ? List.of(sp.owner) : targets) {
+                java.util.Set<String> d = chain.targetDecls.get(o);
+                if (d == null || !d.contains(sp.kind == 'f' ? sp.name + ":" + sp.desc : sp.name + sp.desc)) {
+                    return issue;
+                }
+            }
+            return Chain.Issue.OK;
+        };
 
         ClassVisitor cv = new ClassVisitor(Opcodes.ASM9) {
             @Override
@@ -203,8 +218,9 @@ public final class MixinTriage {
                     @Override
                     public AnnotationVisitor visitAnnotation(String desc, boolean vis) {
                         if (desc.equals(SHADOW)) {
-                            touch.accept(chain.resolveSpec('f', fName, fDesc), "shadow-field " + fName);
-                            declCheck.accept(new Spec(null, fName, fDesc, 'f'), "shadow-field " + fName);
+                            Spec sp = new Spec(null, fName, fDesc, 'f');
+                            touch.accept(exact.apply(sp, chain.resolveSpec('f', fName, fDesc)), "shadow-field " + fName);
+                            declCheck.accept(sp, "shadow-field " + fName);
                         }
                         return null;
                     }
@@ -219,14 +235,21 @@ public final class MixinTriage {
                         switch (desc) {
                             case OVERWRITE -> {
                                 loadBearing[0] = true;
-                                touch.accept(chain.resolveSpec('m', mName, mDesc), "overwrite " + mName);
-                                declCheck.accept(new Spec(null, mName, mDesc, 'm'), "overwrite " + mName);
+                                Spec sp = new Spec(null, mName, mDesc, 'm');
+                                touch.accept(exact.apply(sp, chain.resolveSpec('m', mName, mDesc)), "overwrite " + mName);
+                                declCheck.accept(sp, "overwrite " + mName);
                                 return null;
                             }
                             case SHADOW -> {
-                                touch.accept(chain.resolveSpec('m', mName, mDesc), "shadow " + mName);
-                                declCheck.accept(new Spec(null, mName, mDesc, 'm'), "shadow " + mName);
-                                return null;
+                                // @Shadow(prefix = ...) ("shadow$" by default) is not part of the target's name
+                                Map<String, Object> values = new LinkedHashMap<>();
+                                return collector(values, () -> {
+                                    String prefix = values.get("prefix") instanceof String p ? p : "shadow$";
+                                    String n = mName.startsWith(prefix) ? mName.substring(prefix.length()) : mName;
+                                    Spec sp = new Spec(null, n, mDesc, 'm');
+                                    touch.accept(exact.apply(sp, chain.resolveSpec('m', n, mDesc)), "shadow " + n);
+                                    declCheck.accept(sp, "shadow " + n);
+                                });
                             }
                             case ACCESSOR, INVOKER -> {
                                 loadBearing[0] = true;
@@ -234,28 +257,35 @@ public final class MixinTriage {
                                 boolean invoker = desc.equals(INVOKER);
                                 return collector(values, () -> {
                                     String tgt = values.get("value") instanceof String s && !s.isEmpty() ? s : null;
-                                    if (tgt == null) {
-                                        Matcher m = IMPLICIT_ACCESSOR.matcher(mName);
-                                        // Mixin keeps an all-uppercase remainder as-is
-                                        // (getCRITERIA -> CRITERIA); otherwise de-capitalises
-                                        tgt = !m.matches() ? mName
-                                            : m.group(1).equals(m.group(1).toUpperCase())
-                                                ? m.group(1)
-                                                : Character.toLowerCase(m.group(1).charAt(0)) + m.group(1).substring(1);
+                                    boolean implicit = tgt == null;
+                                    if (implicit) {
+                                        // Mixin's own inflection (AccessorInfo): get/is/set name a field,
+                                        // call/invoke a method, new/create a constructor
+                                        String inflected = MixinBridge.inflect(mName);
+                                        tgt = inflected != null ? inflected : mName;
                                     }
                                     Spec sp = parseSpec(rm(refmap, tgt));
-                                    touch.accept(chain.resolveSpec(invoker ? 'm' : 'f', sp.name, sp.desc),
-                                        "accessor " + tgt);
                                     if (invoker) {
-                                        declCheck.accept(sp, "invoker " + tgt);
+                                        // the target is matched by the invoker's own descriptor; a
+                                        // constructor invoker's with its return type made void
+                                        String simple = targets.isEmpty() ? "" : targets.get(0).substring(targets.get(0).lastIndexOf('/') + 1);
+                                        String pfx = MixinBridge.inflectPrefix(mName);
+                                        boolean factory = sp.name.equals("<init>") || sp.name.equals(simple)
+                                            || implicit && ("new".equals(pfx) || "create".equals(pfx)) && simple.equals(MixinBridge.inflectRaw(mName));
+                                        Spec ms = factory
+                                            ? new Spec(sp.owner, "<init>", mDesc.substring(0, mDesc.indexOf(')') + 1) + "V", 'm')
+                                            : new Spec(sp.owner, sp.name, mDesc, 'm');
+                                        touch.accept(exact.apply(ms, chain.resolveSpec('m', ms.name, ms.desc)), "accessor " + tgt);
+                                        declCheck.accept(ms, "invoker " + tgt);
                                     } else {
                                         // the field's descriptor is the accessor's return type
                                         // (getter) or its single parameter (setter)
                                         Type[] args = Type.getArgumentTypes(mDesc);
-                                        String fd = sp.desc != null ? sp.desc
-                                            : args.length == 1 ? args[0].getDescriptor()
+                                        String fd = args.length == 1 ? args[0].getDescriptor()
                                             : Type.getReturnType(mDesc).getDescriptor();
-                                        declCheck.accept(new Spec(sp.owner, sp.name, fd, 'f'), "accessor " + tgt);
+                                        Spec fs = new Spec(sp.owner, sp.name, fd, 'f');
+                                        touch.accept(exact.apply(fs, chain.resolveSpec('f', fs.name, fs.desc)), "accessor " + tgt);
+                                        declCheck.accept(fs, "accessor " + tgt);
                                     }
                                 });
                             }

@@ -111,3 +111,10 @@ fi
 if [ "${CB_PROBE:-}" != fapi ]; then
     python3 "$WD/core/tools/frames_review.py" "$WIRING" "$OUT/frames-open.tsv" || echo "frames review failed"
 fi
+# Mixins (mixin_step.sh): the step's mixin damage table (core/segments/damage-mixin, from the mixin probe:
+# every injector / shadow / accessor / invoker point of V's code that W's real bodies no longer take) as
+# separate probe mixins, converted with this step's wiring and judged on W with the layer: "mixin probe:
+# N of M still open" for the same area, open entries in $OUT/open-mixin.tsv.
+if [ "${CB_PROBE:-}" != fapi ] && [ -f "$WD/core/tools/mixin_step.sh" ]; then
+    bash "$WD/core/tools/mixin_step.sh" "$WD" "$V" "$W" "$AREA" || echo "mixin probe failed"
+fi
