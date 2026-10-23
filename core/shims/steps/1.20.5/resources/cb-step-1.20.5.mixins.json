@@ -65,6 +65,7 @@
     "CbFinItemArmorAccess",
     "CbFinItemDyeableArmorMixin",
     "CbFinItemDyeableTagMixin",
+    "CbFinItemInputMixin",
     "CbFinItemRecipeCookingAccess",
     "CbFinItemRecipeSimpleAccess",
     "CbFinItemRecipeSingleAccess",
