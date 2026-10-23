@@ -1,0 +1,33 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_332.method_73199()V": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#renderDeferredElements",
+  "net/minecraft/class_332.method_51441(Lnet/minecraft/class_327;Lnet/minecraft/class_2583;II)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#renderComponentHoverEffect"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_73199()V",
+   "new": "extractDeferredElements(IIF)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_332",
+   "frames": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "GuiGraphics.renderDeferredElements() became extractDeferredElements(mouseX, mouseY, partialTick) (same body; 1.21.11 read the mouse position from its fields, 26.1 keeps those fields and also draws the IME pre-edit overlay with the partial tick)"
+  }
+ ],
+ "frameDefaults": {
+  "method_73199()V": {
+   "0": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#mouseX(Lnet/minecraft/class_332;)I",
+   "1": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#mouseY(Lnet/minecraft/class_332;)I",
+   "2": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#partialTick()F"
+  }
+ },
+ "overrideRenames": [
+  {
+   "old": "method_51441(Lnet/minecraft/class_327;Lnet/minecraft/class_2583;II)V",
+   "new": "componentHoverEffect",
+   "onlyUnder": "net/minecraft/class_332",
+   "superCalls": "rename",
+   "basis": "GuiGraphics.renderComponentHoverEffect lives on as GuiGraphicsExtractor.componentHoverEffect, same descriptor and body; vanilla calls it with invokevirtual and the layer's access widener makes it extendable, so the renamed override is what 26.1 calls. Vanilla never passes a null style (both releases test first); the mod's own calls go through CbWallGui, which keeps 1.21.11's null test"
+  }
+ ]
+}
