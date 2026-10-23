@@ -94,7 +94,23 @@
   "net/minecraft/class_4146.method_43081()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#radiusXZ",
   "net/minecraft/class_4146.method_43082()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors#radiusY",
   "net/minecraft/class_1309.method_18391(Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#canAttack",
-  "net/minecraft/class_1308.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#isBodyArmorItem"
+  "net/minecraft/class_1308.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#isBodyArmorItem",
+  "net/minecraft/class_5147.method_6636(Lnet/minecraft/class_3419;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#shear",
+  "net/minecraft/class_1493.method_6711()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#isWet",
+  "net/minecraft/class_1493.method_6715(FF)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getBodyRollAngle",
+  "net/minecraft/class_1493.method_55710()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#hasArmor",
+  "net/minecraft/class_1501.method_6800()Lnet/minecraft/class_1767;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getSwag",
+  "net/minecraft/class_1451.method_16092()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getTextureId",
+  "net/minecraft/class_1531.method_6901()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#isNoBasePlate",
+  "net/minecraft/class_1477.method_6670(FFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#setMovementVector",
+  "net/minecraft/class_1646.method_35200()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#isChasing",
+  "net/minecraft/class_1646.method_35201(Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#setChasing",
+  "net/minecraft/class_1642.method_7212()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#supportsBreakDoorGoal",
+  "net/minecraft/class_1661.method_7371(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#findSlotMatchingUnusedItem",
+  "net/minecraft/class_1661.method_7373(D)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#swapPaint",
+  "net/minecraft/class_1665.method_7456()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#shotFromCrossbow",
+  "net/minecraft/class_8949.method_55009()D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getSnoutYPosition",
+  "net/minecraft/class_1304.method_5926()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getFilterFlag"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -508,7 +524,9 @@
   "net/minecraft/class_1309.field_30063:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat",
   "net/minecraft/class_8947.field_47260:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors",
   "net/minecraft/class_4148.field_30258:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors",
-  "net/minecraft/class_5760.field_30262:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors"
+  "net/minecraft/class_5760.field_30262:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors",
+  "net/minecraft/class_1661.field_33767:[I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail",
+  "net/minecraft/class_1661.field_33768:[I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail"
  },
  "superRedirects": {
   "net/minecraft/class_1299.method_16351()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superDefaultLootTable",
@@ -557,7 +575,22 @@
   "net/minecraft/class_1309.method_18391(Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superCanAttack",
   "net/minecraft/class_1308.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superIsBodyArmorItem",
   "net/minecraft/class_1501.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superIsBodyArmorItem",
-  "net/minecraft/class_1498.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superIsBodyArmorItem"
+  "net/minecraft/class_1498.method_6773(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superIsBodyArmorItem",
+  "net/minecraft/class_1493.method_6711()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superIsWet",
+  "net/minecraft/class_1493.method_6715(FF)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetBodyRollAngle",
+  "net/minecraft/class_1493.method_55710()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superHasArmor",
+  "net/minecraft/class_1501.method_6800()Lnet/minecraft/class_1767;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetSwag",
+  "net/minecraft/class_1451.method_16092()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetTextureId",
+  "net/minecraft/class_1531.method_6901()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superIsNoBasePlate",
+  "net/minecraft/class_1477.method_6670(FFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSetMovementVector",
+  "net/minecraft/class_1646.method_35200()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superIsChasing",
+  "net/minecraft/class_1646.method_35201(Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSetChasing",
+  "net/minecraft/class_1642.method_7212()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSupportsBreakDoorGoal",
+  "net/minecraft/class_1551.method_7212()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSupportsBreakDoorGoal",
+  "net/minecraft/class_1661.method_7371(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superFindSlotMatchingUnusedItem",
+  "net/minecraft/class_1661.method_7373(D)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSwapPaint",
+  "net/minecraft/class_1665.method_7456()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superShotFromCrossbow",
+  "net/minecraft/class_8949.method_55009()D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetSnoutYPosition"
  },
  "overrideHooks": [
   {
@@ -761,13 +794,149 @@
    ],
    "synth": [],
    "basis": "a mod Mob's own 1.21.1 isBodyArmorItem answers whether a stack goes in its body slot (CbEntityTakeMixin on isEquippableInSlot) and the calls CbEntityTake serves"
+  },
+  {
+   "under": "net/minecraft/class_5147",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall$LegacyShear",
+   "requires": [
+    "method_6636(Lnet/minecraft/class_3419;)V"
+   ],
+   "synth": [],
+   "basis": "a mod Shearable's own 1.21.1 shear answers a call on a client level, where 1.21.2's needs a ServerLevel (CbEntitySmall#shear)"
+  },
+  {
+   "under": "net/minecraft/class_1493",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyWet",
+   "requires": [
+    "method_6711()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1493",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyRoll",
+   "requires": [
+    "method_6715(FF)F"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1493",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyWolfArmor",
+   "requires": [
+    "method_55710()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1501",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacySwag",
+   "requires": [
+    "method_6800()Lnet/minecraft/class_1767;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1451",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyCatTexture",
+   "requires": [
+    "method_16092()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1531",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyBasePlate",
+   "requires": [
+    "method_6901()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1477",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyMovementVector",
+   "requires": [
+    "method_6670(FFF)V"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1646",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyChasing",
+   "requires": [
+    "method_35200()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1646",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacySetChasing",
+   "requires": [
+    "method_35201(Z)V"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1642",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyBreakDoor",
+   "requires": [
+    "method_7212()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1661",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyUnusedSlot",
+   "requires": [
+    "method_7371(Lnet/minecraft/class_1799;)I"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1661",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacySwapPaint",
+   "requires": [
+    "method_7373(D)V"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_1665",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacyCrossbow",
+   "requires": [
+    "method_7456()Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/minecraft/class_8949",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$LegacySnout",
+   "requires": [
+    "method_55009()D"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
   }
  ],
  "classRenames": {
   "net/minecraft/class_1688$class_1689": "top/dext/centurybridge/step/v1_21_2/facade/MinecartType",
   "net/minecraft/class_1662": "top/dext/centurybridge/step/v1_21_2/facade/StackedContents",
   "net/minecraft/class_1301$class_1302": "top/dext/centurybridge/step/v1_21_2/facade/MobCanWearArmorEntitySelector",
-  "net/minecraft/class_4582": "top/dext/centurybridge/step/v1_21_2/facade/PowerableMob"
+  "net/minecraft/class_4582": "top/dext/centurybridge/step/v1_21_2/facade/PowerableMob",
+  "net/minecraft/class_6035": "net/minecraft/class_10183"
  },
  "overrideRenames": [
   {
@@ -783,13 +952,23 @@
    "onlyUnder": "net/minecraft/class_1548",
    "superCalls": "rename",
    "basis": "1.21.1 Creeper.isPowered is 1.21.2's isPowered under a new name (same body)"
+  },
+  {
+   "old": "method_6229(FFF)F",
+   "new": "method_63642",
+   "onlyUnder": "net/minecraft/class_1333",
+   "superCalls": "rename",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail$RotateTowards",
+   "basis": "1.21.1 LookControl.rotateTowards is 1.21.2's Control.rotateTowards (a public default, same body): a mod LookControl's override is renamed and made public"
   }
  ],
  "instanceFieldGetters": {
-  "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#getWasOnFire"
+  "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#getWasOnFire",
+  "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getInGround"
  },
  "instanceFieldSetters": {
-  "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setWasOnFire"
+  "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setWasOnFire",
+  "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#setInGround"
  },
  "covers": [
   "net/minecraft/class_1297.method_5687(I)Z",
@@ -801,6 +980,7 @@
   "net/minecraft/class_1297.method_9202()Z"
  ],
  "methodRenames": {
-  "net/minecraft/class_1548.method_6872()Z": "method_61492"
+  "net/minecraft/class_1548.method_6872()Z": "method_61492",
+  "net/minecraft/class_1333.method_6229(FFF)F": "method_63642"
  }
 }
