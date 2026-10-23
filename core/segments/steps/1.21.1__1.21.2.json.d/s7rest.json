@@ -1,0 +1,7 @@
+{
+ "classRenames": {
+  "net/minecraft/class_5253": "top/dext/centurybridge/step/v1_21_2/facade/FastColor",
+  "net/minecraft/class_5253$class_5254": "top/dext/centurybridge/step/v1_21_2/facade/FastColor$ARGB32",
+  "net/minecraft/class_5253$class_8045": "top/dext/centurybridge/step/v1_21_2/facade/FastColor$ABGR32"
+ }
+}
