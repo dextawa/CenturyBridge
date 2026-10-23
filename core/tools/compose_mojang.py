@@ -47,7 +47,9 @@ def main():
             m = re.match(r"(\S+) -> (\S+):", ln.strip())
             if m:
                 moj_cls_to_obf[m.group(1)] = m.group(2)
-                cur = (m.group(1), m.group(2), [])
+                # a class proguard left unobfuscated is named in dotted form (net.minecraft.server
+                # .MinecraftServer); tiny names it with slashes: without this its row went missing
+                cur = (m.group(1), m.group(2).replace(".", "/"), [])
                 sections.append(cur)
         elif cur:
             cur[2].append(ln.strip())

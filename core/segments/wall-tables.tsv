@@ -1,0 +1,20 @@
+# The namespace wall's rename table (intermediary -> mojang names, C/M/F rows) by the release a
+# conversion TARGETS. Every reader picks its table here and nowhere else: Main.convert (the whole-jar
+# rename, the target hierarchy, the audit), build.sh's gates, step_check / probe_segments /
+# fapi_probe_segments / anchor_segments / climb_check, gen_step_reshapes --wall
+# (engine/WallTable.java, core/tools/wall_tables.py).
+#
+# A table spells every class and member the way its target release declares it, so one table per
+# naming era: Mojang moved and renamed classes between 26.1 and 26.2 (advancements/criterion ->
+# predicates + triggers, GuiGraphics stayed GuiGraphicsExtractor ...). The climb crosses the wall at
+# its 1.21.11 -> 26.1 step, so its table is 26.1's, and the 26.1.2 -> 26.2 step moves the classes
+# 26.2 moved (core/segments/steps/26.1.2__26.2.json.d/pkgmoves-gen.json). The old anchor jump
+# straight to 26.2 keeps the 26.2-named table.
+#
+# Generate a table with core/tools/wall_table.py (see its header). A table is a file name under
+# <data>/mappings, or a path (absolute, or relative to the working directory).
+# target	table
+26.1	inter-to-mojang-1.21.11-26.1.tsv
+26.1.1	inter-to-mojang-1.21.11-26.1.tsv
+26.1.2	inter-to-mojang-1.21.11-26.1.tsv
+26.2	inter-to-mojang-1.21.11.tsv
