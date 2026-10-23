@@ -141,6 +141,7 @@
   "net/fabricmc/fabric/api/screenhandler/v1/FabricScreenHandlerFactory": "net/fabricmc/fabric/api/menu/v1/FabricMenuProvider",
   "net/fabricmc/fabric/api/serialization/v1/view/FabricReadView": "net/fabricmc/fabric/api/serialization/v1/value/FabricValueInput",
   "net/fabricmc/fabric/api/serialization/v1/view/FabricWriteView": "net/fabricmc/fabric/api/serialization/v1/value/FabricValueOutput",
+  "net/fabricmc/fabric/api/tag/convention/v1/TagUtil": "net/fabricmc/fabric/api/tag/convention/v2/TagUtil",
   "net/fabricmc/fabric/api/transfer/v1/item/InventoryStorage": "net/fabricmc/fabric/api/transfer/v1/item/ContainerStorage"
  },
  "methodRenames": {
