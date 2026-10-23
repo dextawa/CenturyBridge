@@ -61,7 +61,10 @@
     "CbLevelFurnaceInvoker",
     "CbLevelCampfireAccess",
     "CbLevelBrushableMixin",
-    "CbLevelFuelServerMixin"
+    "CbLevelFuelServerMixin",
+    "CbLevelBiomeInvoker",
+    "CbLevelPortalAccess",
+    "CbLevelRegionAccess"
   ],
   "client": [
     "CbRestEnchantmentScreenMixin",

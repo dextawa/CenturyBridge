@@ -752,6 +752,98 @@ def state_props(f):
     f.put("staticRedirects", MC + "class_2688.method_28495(" + COL + "Ljava/lang/Object;)Ljava/lang/Object;", LSP)
 
 
+# ------------------------------------------------------------------------------------------- remaining level API
+LMI = RT + "/CbLevelMisc"
+
+
+def level_misc(f):
+    SL, EX, BIC = L("class_3218"), L("class_1927"), "Ljava/util/function/BiConsumer;"
+    srv = "conv:1 " + LBE + "#server(" + LVL + ")" + SL
+    why = "takes the server level since 1.21.2: 1.21.1 ran it on server levels (CbLevelBlockEntities.server)"
+    f.reshape(BB + ".method_55124(" + BS + LVL + POS + EX + BIC + ")V", "(" + BS + SL + POS + EX + BIC + ")V",
+              ["keep:0", srv, "keep:2", "keep:3", "keep:4"], "onExplosionHit " + why)
+    f.reshape(BSB + ".method_55225(" + LVL + POS + EX + BIC + ")V", "(" + SL + POS + EX + BIC + ")V",
+              ["conv:0 " + LBE + "#server(" + LVL + ")" + SL, "keep:1", "keep:2", "keep:3"], "onExplosionHit " + why)
+    f.reshape(MC + "class_2248.method_9586(" + LVL + POS + EX + ")V", "(" + SL + POS + EX + ")V",
+              ["conv:0 " + LBE + "#server(" + LVL + ")" + SL, "keep:1", "keep:2"], "wasExploded " + why)
+    f.reshape(MC + "class_8886.method_54475(" + LVL + L("class_9694") + ")Ljava/util/Optional;",
+              "(" + SL + L("class_9694") + ")Ljava/util/Optional;",
+              ["conv:0 " + LBE + "#server(" + LVL + ")" + SL, "keep:1"], "CrafterBlock.getPotentialResults " + why)
+    for m in ("method_48162(" + POS + ")" + L("class_1959$class_1963"), "method_33599(" + POS + ")Z",
+              "method_39927(" + POS + ")Z", "method_39928(" + POS + ")Z"):
+        f.put("instanceRedirects", MC + "class_1959." + m, LMI)
+    f.reshape(MC + "class_2248.method_9607(" + BS + BG + POS + DIR + POS + ")Z", "(" + BS + BS + DIR + ")Z",
+              ["keep:0", "conv:1,4 " + LMI + "#stateAt(" + BG + POS + ")" + BS, "keep:3"],
+              "Block.shouldRenderFace asks with the neighbour state since 1.21.2: the state at the neighbour position")
+    B = MC + "class_2246"
+    f.put("staticRedirects", B + ".method_9492(Ljava/lang/String;" + L("class_2248") + ")" + L("class_2248"), LMI)
+    f.put("staticRedirects", B + ".method_52571(" + L("class_5321") + L("class_2248") + ")" + L("class_2248"), LMI)
+    f.put("staticRedirects", B + ".method_26979()V", LMI)
+    PS, AX = MC + "class_2424", L("class_2350$class_2351")
+    pargs = L("class_1936") + POS + AX
+
+    def pc(n, r):
+        return "conv:0,1,2 " + LMI + "#" + n + "(" + pargs + ")" + r
+    f.put("ctorRedirects", PS + ".<init>(" + pargs + ")V", LMI)
+    f.put("superCtorReshapes", PS + ".<init>(" + pargs + ")V", {
+        "desc": "(" + AX + "I" + DIR + POS + "II)V",
+        "ops": [pc("portalAxis", AX), pc("portalBlocks", "I"), pc("portalRightDir", DIR), pc("portalBottomLeft", POS),
+                pc("portalWidth", "I"), pc("portalHeight", "I")],
+        "post": LMI + "#remember(L" + PS + ";" + L("class_1936") + ")V", "postArgs": [0],
+        "basis": "PortalShape's 1.21.2 constructor takes the computed shape (opened by the layer's access widener): "
+                 "the shape 1.21.2's findAnyShape computes from 1.21.1's level, position and axis; the level is kept "
+                 "for createPortalBlocks (CbLevelMisc)"})
+    f.put("instanceRedirects", PS + ".method_10363()V", LMI)
+    PROV = L("class_7225$class_7874")
+    f.put("instanceRedirects", MC + "class_18.method_17919(Ljava/io/File;" + PROV + ")V", LMI)
+    f.put("superCtorReshapes", MC + "class_26.<init>(Ljava/io/File;Lcom/mojang/datafixers/DataFixer;" + PROV + ")V", {
+        "desc": "(Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;" + PROV + ")V",
+        "ops": ["conv " + LMI + "#path(Ljava/io/File;)Ljava/nio/file/Path;", "keep", "keep"],
+        "basis": "DimensionDataStorage takes the directory as a Path since 1.21.2"})
+    f.put("instanceRedirects", MC + "class_1950.method_37233()" + L("class_3695"), LMI)
+    LA_ = L("class_1936")
+    f.reshape(MC + "class_4863.method_24948(" + LA_ + ")" + BS, "(" + RND + ")" + BS,
+              ["conv:0 " + LMI + "#random(" + LA_ + ")" + RND],
+              "GrowingPlantBlock.getStateForPlacement takes the level random since 1.21.2")
+    f.reshape(MC + "class_2230.method_9430(" + BS + LA_ + POS + ")V", "(" + BS + BG + STA + RND + POS + ")V",
+              ["keep:0", "keep:1 " + BG, "keep:1 " + STA, "conv:1 " + LMI + "#random(" + LA_ + ")" + RND, "keep:2"],
+              "tryScheduleDieTick takes the level as reader and tick access and its random since 1.21.2")
+    cold = "method_9430(" + BS + LA_ + POS + ")V"
+    f.hook(old=cold, new="method_9430(" + BS + BG + STA + RND + POS + ")V", args=[0, 1, 4], onlyUnder=MC + "class_2230",
+           narrow=True, frames=G, superCalls="rewrite",
+           basis="1.21.2 asks a coral tryScheduleDieTick with reader, tick access and random: every caller reader is "
+                 "a LevelAccessor (narrow); the old method super call gets back the tick access and random vanilla passed")
+    csig = "(Ljava/lang/Object;" + BS + LA_ + POS + ")"
+    f.put("frameDefaults", cold, {"2": LMI + "#coralTicks" + csig + STA, "3": LMI + "#coralRandom" + csig + RND})
+    RULE = L("class_6568$class_6569")
+    f.put("superCtorReshapes", MC + "class_6582.<init>(Ljava/util/List;)V", {
+        "desc": "([" + RULE + ")V", "ops": ["conv " + LMI + "#rules(Ljava/util/List;)[" + RULE],
+        "basis": "MaterialRuleList holds an array since 1.21.2"})
+    f.put("instanceRedirects", MC + "class_6582.comp_437()Ljava/util/List;", LMI)
+    TT = MC + "class_5454"
+    V3, POST = L("class_243"), L("class_5454$class_9823")
+    f.put("superCtorReshapes", TT + ".<init>(" + SL + V3 + V3 + "FFZ" + POST + ")V", {
+        "desc": "(" + SL + V3 + V3 + "FFZZLjava/util/Set;" + POST + ")V",
+        "ops": ["keep", "keep", "keep", "keep", "keep", "keep", "push " + LMI + "#notPassenger()Z",
+                "push " + LMI + "#noRelatives()Ljava/util/Set;", "keep"],
+        "basis": "TeleportTransition adds asPassenger and relative movement since 1.21.2: neither, as 1.21.2 own "
+                 "shorter constructors pass"})
+    f.put("classRenames", MC + "class_2248$class_2249", FAC + "/BlockStatePairKey")
+    f.put("instanceFieldSetters", BB + ".field_23156:" + RK, LT)
+    f.put("superRedirects", BB + ".method_42326(" + BS + BG + POS + ")Z", SH + "#occlusionFullBlock")
+    f.w["adapterHooks"].append({"under": BB, "adapter": SH + "$LegacyOcclusionFullBlock",
+                                "requires": ["method_42326(" + BS + BG + POS + ")Z"], "synth": [],
+                                "basis": "no vanilla code of either release asks isOcclusionShapeFullBlock: a 1.21.1 "
+                                         "override is reached by its mod calls, through this adapter"})
+    FN = "Ljava/util/function/Function;"
+    tail = BS + LA_ + POS + "Ljava/util/function/BiPredicate;)" + L("class_4732$class_4734")
+    f.reshape(MC + "class_4732.method_24173(" + L("class_2591") + FN + FN + L("class_2753") + tail,
+              "(" + L("class_2591") + FN + FN + L("class_2769") + tail,
+              ["keep:0", "keep:1", "keep:2", "keep:3 " + L("class_2769"), "keep:4", "keep:5", "keep:6", "keep:7"],
+              "DoubleBlockCombiner.combineWithNeigbour takes any Property of Direction since 1.21.2; 1.21.1 "
+              "DirectionProperty is one")
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -772,6 +864,7 @@ def main():
     loot_params_moss(f)
     block_entities(f)
     state_props(f)
+    level_misc(f)
     f.write()
 
 
