@@ -205,10 +205,20 @@ public final class CbTools {
         return item.method_58404(stack, state);
     }
 
-    /** super.getDestroySpeed(stack, state) in a mod subclass of Item: what 1.20.5's Item reads off the stack's tool */
+    /**
+     * super.getDestroySpeed(stack, state) in a mod subclass of Item: 1.20.5's Item.getDestroySpeed (what it
+     * reads off the stack's tool), reached past the class's synthesized override under the guard -- so
+     * whatever hooks Item's method (Fabric API's mining levels) applies to the super call, as in 1.20.4
+     */
     public static float superGetDestroySpeed(net.minecraft.class_1792 item, net.minecraft.class_1799 stack, net.minecraft.class_2680 state) {
-        net.minecraft.class_9424 tool = stack.method_57824(net.minecraft.class_9334.field_50077);
-        return tool != null ? tool.method_58425(state) : 1.0F;
+        boolean entered = Guard.cbEnter(item);
+        try {
+            return item.method_58404(stack, state);
+        } finally {
+            if (entered) {
+                Guard.cbExit(item);
+            }
+        }
     }
 
     /** ... of DiggerItem (1.20.5 keeps its blocks and speed in its tool) */
@@ -234,10 +244,20 @@ public final class CbTools {
         return item.method_58405(new net.minecraft.class_1799(item), state);
     }
 
-    /** super.isCorrectToolForDrops(state) in a mod subclass of Item: what 1.20.5 reads off the item's tool (none: false) */
+    /**
+     * super.isCorrectToolForDrops(state) in a mod subclass of Item: 1.20.5's Item.isCorrectToolForDrops asked
+     * about a stack of the item as it is made (1.20.4's had no stack: the item's own tool), past the class's
+     * synthesized override under the guard, so hooks on Item's method apply as they did in 1.20.4
+     */
     public static boolean superIsCorrectToolForDrops(net.minecraft.class_1792 item, net.minecraft.class_2680 state) {
-        net.minecraft.class_9424 tool = CbItemProps.built(item).method_57829(net.minecraft.class_9334.field_50077);
-        return tool != null && tool.method_58426(state);
+        boolean entered = Guard.cbEnter(item);
+        try {
+            return item.method_58405(new net.minecraft.class_1799(item), state);
+        } finally {
+            if (entered) {
+                Guard.cbExit(item);
+            }
+        }
     }
 
     /** ... of DiggerItem */

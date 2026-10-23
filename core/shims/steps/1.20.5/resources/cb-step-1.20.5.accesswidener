@@ -1422,3 +1422,7 @@ extendable class net/minecraft/class_5904
 # ClientboundServerDataPacket: a final record in 1.20.5; reopened so a 1.20.4 subclass loads
 extendable class net/minecraft/class_7495
 # --- end s4net packets ---
+
+# s4item: PotionBrewing(containers, potionMixes, containerMixes) is package-private in 1.20.5; a 1.20.4 subclass's super() (1.20.4's
+# public no-argument constructor) is reshaped onto it with empty mixes (rt/CbBrewing)
+accessible method net/minecraft/class_1845 <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
