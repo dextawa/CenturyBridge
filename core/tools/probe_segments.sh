@@ -4,7 +4,9 @@
 # protected member, every way a mod can touch it), link-checked RAW on W's real classpath --
 # no CenturyBridge, no conversion, nothing bridged. What breaks is that segment's complete
 # usage-level damage, independent of any corpus. The namespace wall (1.21.11 -> 26.1) only
-# renames: the 1.21.11 probe goes through remap-mojang first, nothing else.
+# renames: the 1.21.11 probe goes through remap-mojang first, nothing else -- with the table that
+# spells names the way 26.1 declares them (core/segments/wall-tables.tsv; probe/wall_tables.py is a
+# copy of core/tools/wall_tables.py, reading ~/cbwork/core/segments/wall-tables.tsv).
 # Findings are per site (-Dcb.linkcheck.perSite): the probe holds every usage of every member in one
 # jar, and per-jar deduplication by reference would keep only the first usage of a broken member.
 # Each segment's damage table lands in probe/damage/<V>__<W>.damage.tsv (copy it to
@@ -44,7 +46,7 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
       "$OUT/$SEG/control/link-findings.tsv" "$OUT/$SEG/control-report.tsv" > "$OUT/$SEG/control-report.txt" 2>&1
   if [ "$V" = "1.21.11" ]; then
     # the wall: the same probe under mojang names, nothing more
-    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main remap-mojang data/mappings/inter-to-mojang-1.21.11.tsv \
+    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main remap-mojang "$(python3 probe/wall_tables.py "$W")" \
         "$OUT/$SEG/probe-$V.jar" "$OUT/$SEG/probe/probe-$V-mojang.jar" >> "$OUT/$SEG/probe.log" 2>&1
   else
     cp "$OUT/$SEG/probe-$V.jar" "$OUT/$SEG/probe/"
@@ -55,7 +57,7 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
   # the segment's damage table: findings mapped back to probe sites, then to V members and usages
   python3 probe/probe_report.py "$OUT/$SEG/probe-$V.jar.index.tsv" "$(ls "$OUT/$SEG/probe"/*.jar | head -1)" \
       "$OUT/$SEG/lc/link-findings.tsv" "$OUT/$SEG/report.tsv" > "$OUT/$SEG/report.txt" 2>&1
-  WALL=""; [ "$V" = "1.21.11" ] && WALL=data/mappings/inter-to-mojang-1.21.11.tsv
+  WALL=""; [ "$V" = "1.21.11" ] && WALL="$(python3 probe/wall_tables.py "$W")"
   mkdir -p probe/damage
   python3 probe/segment_damage.py "$OUT/$SEG/report.tsv" "$(jar_of "$W")" "probe/damage/$SEG.damage.tsv" $WALL \
       --control "$OUT/$SEG/control-report.tsv" >> "$OUT/$SEG/report.txt" 2>&1
