@@ -211,6 +211,62 @@
    "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch$CbLegacyContextItemRenderer",
    "family": "render-dispatch",
    "basis": "EntityRendererProvider.Context.getItemRenderer is gone in 1.21.4; a subclass's answer is what a mod's call gets (CbRenderDispatch)"
+  },
+  {
+   "old": "method_4684()I",
+   "new": "comp_3456",
+   "onlyUnder": "net/minecraft/class_1079",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_4685()Z",
+   "new": "comp_3457",
+   "onlyUnder": "net/minecraft/class_1079",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_4690()I",
+   "new": "comp_3451",
+   "onlyUnder": "net/minecraft/class_1080",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_4696()Z",
+   "new": "comp_3459",
+   "onlyUnder": "net/minecraft/class_1084",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_4697()Z",
+   "new": "comp_3460",
+   "onlyUnder": "net/minecraft/class_1084",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_17167()Lnet/minecraft/class_3888$class_3889;",
+   "new": "comp_3458",
+   "onlyUnder": "net/minecraft/class_3888",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_33460(Lnet/minecraft/class_1079$class_5792;)V",
+   "new": "cb$forEachFrame",
+   "onlyUnder": "net/minecraft/class_1079",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata$CbLegacyForEachFrame",
+   "family": "texture-metadata",
+   "basis": "AnimationMetadataSection.forEachFrame is gone in 1.21.4; a subclass's frames are what 1.21.4 builds the animation from (CbTextureAnimationMixin), as 1.21.3's sprite loader asked it"
   }
  ],
  "covers": [
@@ -353,7 +409,16 @@
   "net/minecraft/class_793.field_54858:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_793.field_32792:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_1091.field_52277:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
-  "net/minecraft/class_10097.field_54194:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading"
+  "net/minecraft/class_10097.field_54194:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
+  "net/minecraft/class_1079.field_5337:Lnet/minecraft/class_1081;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1079.field_32974:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1079.field_32975:I": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1079.field_32976:I": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1079.field_21768:Lnet/minecraft/class_1079;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1080.field_32973:I": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1084.field_5344:Lnet/minecraft/class_1085;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_3888.field_17158:Lnet/minecraft/class_3890;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_3888.field_32977:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -384,7 +449,11 @@
   "net/minecraft/class_10101": "top/dext/centurybridge/step/v1_21_4/facade/SpecialModels",
   "net/minecraft/class_10202": "top/dext/centurybridge/step/v1_21_4/facade/ItemModel",
   "net/minecraft/class_10055$class_10056": "top/dext/centurybridge/step/v1_21_4/facade/LegacyPlayerHandState",
-  "net/minecraft/class_10048": "top/dext/centurybridge/step/v1_21_4/facade/OminousItemSpawnerRenderState"
+  "net/minecraft/class_10048": "top/dext/centurybridge/step/v1_21_4/facade/OminousItemSpawnerRenderState",
+  "net/minecraft/class_1081": "top/dext/centurybridge/step/v1_21_4/facade/AnimationMetadataSectionSerializer",
+  "net/minecraft/class_1085": "top/dext/centurybridge/step/v1_21_4/facade/TextureMetadataSectionSerializer",
+  "net/minecraft/class_3890": "top/dext/centurybridge/step/v1_21_4/facade/VillagerMetadataSectionSerializer",
+  "net/minecraft/class_1079$class_5792": "top/dext/centurybridge/step/v1_21_4/facade/AnimationFrameOutput"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -395,7 +464,11 @@
   "net/minecraft/class_10101": "SpecialModels is gone in 1.21.4: builtin/generated is the ItemModelGenerator model, builtin/entity has none (facade)",
   "net/minecraft/class_10202": "ItemModel (an item's unbaked model naming its model by id) is gone in 1.21.4; the facade is 1.21.3's class as a 1.21.4 UnbakedModel",
   "net/minecraft/class_10055$class_10056": "PlayerRenderState.HandState is gone in 1.21.4; the player renderer fills the facade per hand again",
-  "net/minecraft/class_10048": "OminousItemSpawnerRenderState is gone in 1.21.4 (the renderer draws an ItemClusterRenderState); the facade is one, with 1.21.3's fields, and the renderer makes and fills it"
+  "net/minecraft/class_10048": "OminousItemSpawnerRenderState is gone in 1.21.4 (the renderer draws an ItemClusterRenderState); the facade is one, with 1.21.3's fields, and the renderer makes and fills it",
+  "net/minecraft/class_1081": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
+  "net/minecraft/class_1085": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
+  "net/minecraft/class_3890": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
+  "net/minecraft/class_1079$class_5792": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -683,6 +756,25 @@
     "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbEmptyModels()Ljava/util/Map;"
    ],
    "basis": "EntityModelSet is made from its roots since 1.21.4; 1.21.3's started empty and took them on reload (CbRenderEntityModelSetMixin)"
+  },
+  "net/minecraft/class_1079.<init>(Ljava/util/List;IIIZ)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;IZ)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#cbFrames(Ljava/util/List;)Ljava/util/Optional;",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#cbSize(I)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#cbSize(I)Ljava/util/Optional;",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "AnimationMetadataSection is a record of Optionals since 1.21.4: 1.21.3's empty frame list / UNKNOWN_SIZE (-1) are the empty Optionals"
+  },
+  "net/minecraft/class_1080.<init>(II)V": {
+   "desc": "(ILjava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#cbTime(I)Ljava/util/Optional;"
+   ],
+   "basis": "AnimationFrame's time is an Optional since 1.21.4: 1.21.3's UNKNOWN_FRAME_TIME (-1) is the empty one"
   }
  },
  "superRenames": {
@@ -718,7 +810,8 @@
  },
  "staticRedirects": {
   "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105",
-  "net/minecraft/class_1091.method_61078(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading"
+  "net/minecraft/class_1091.method_61078(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
+  "net/minecraft/class_3888$class_3889.method_17170(Ljava/lang/String;)Lnet/minecraft/class_3888$class_3889;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata"
  },
  "resourceTypes": [
   "centurybridge:legacy_builtin",
@@ -760,17 +853,26 @@
   "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch",
   "net/minecraft/class_9483.method_62496()Lnet/minecraft/class_10048;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
   "net/minecraft/class_9483.method_62497(Lnet/minecraft/class_9461;Lnet/minecraft/class_10048;F)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
-  "net/minecraft/class_9483.method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
+  "net/minecraft/class_9483.method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
   "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#superGetGuiLight",
   "net/minecraft/class_809.method_3501(Lnet/minecraft/class_811;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#superHasTransform",
-  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#superGetItemRenderer"
+  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#superGetItemRenderer",
+  "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#superForEachFrame"
  },
  "methodRenames": {
   "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",
-  "net/minecraft/class_813.method_3511()I": "comp_3382"
+  "net/minecraft/class_813.method_3511()I": "comp_3382",
+  "net/minecraft/class_1079.method_4684()I": "comp_3456",
+  "net/minecraft/class_1079.method_4685()Z": "comp_3457",
+  "net/minecraft/class_1080.method_4690()I": "comp_3451",
+  "net/minecraft/class_1084.method_4696()Z": "comp_3459",
+  "net/minecraft/class_1084.method_4697()Z": "comp_3460",
+  "net/minecraft/class_3888.method_17167()Lnet/minecraft/class_3888$class_3889;": "comp_3458",
+  "net/minecraft/class_3888$class_3889.method_17168()Ljava/lang/String;": "method_15434"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_809.field_4305:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",

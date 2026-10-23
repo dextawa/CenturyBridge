@@ -105,6 +105,7 @@ def main():
     models(frag)
     render_dispatch(frag)
     render_states(frag)
+    texture_metadata(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -595,6 +596,52 @@ def render_states(frag):
     ir[R + ".method_62496()" + OS] = S
     ir[R + ".method_62497(Lnet/minecraft/class_9461;" + OS + "F)V"] = S
     ir[R + ".method_58753(" + OS + "Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"] = S
+
+
+
+def texture_metadata(frag):
+    """1.21.3's texture metadata sections (animation, texture, villager) on 1.21.4's records (CbTextureMetadata)."""
+    M = RT + "/CbTextureMetadata"
+    cr = frag.setdefault("classRenames", {})
+    notes = frag.setdefault("classRenameBasis", {})
+    for old, new in [("net/minecraft/class_1081", "AnimationMetadataSectionSerializer"), ("net/minecraft/class_1085", "TextureMetadataSectionSerializer"),
+                     ("net/minecraft/class_3890", "VillagerMetadataSectionSerializer"), ("net/minecraft/class_1079$class_5792", "AnimationFrameOutput")]:
+        cr[old] = FAC + new
+        notes[old] = "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body"
+    fg = frag.setdefault("fieldGetters", {})
+    for k in ["net/minecraft/class_1079.field_5337:Lnet/minecraft/class_1081;", "net/minecraft/class_1079.field_32974:Ljava/lang/String;",
+              "net/minecraft/class_1079.field_32975:I", "net/minecraft/class_1079.field_32976:I", "net/minecraft/class_1079.field_21768:Lnet/minecraft/class_1079;",
+              "net/minecraft/class_1080.field_32973:I", "net/minecraft/class_1084.field_5344:Lnet/minecraft/class_1085;",
+              "net/minecraft/class_3888.field_17158:Lnet/minecraft/class_3890;", "net/minecraft/class_3888.field_32977:Ljava/lang/String;"]:
+        fg[k] = M
+    scr = frag.setdefault("superCtorReshapes", {})
+    scr["net/minecraft/class_1079.<init>(Ljava/util/List;IIIZ)V"] = {
+        "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;IZ)V",
+        "ops": ["conv:0 " + M + "#cbFrames(Ljava/util/List;)Ljava/util/Optional;", "conv:1 " + M + "#cbSize(I)Ljava/util/Optional;",
+                "conv:2 " + M + "#cbSize(I)Ljava/util/Optional;", "keep:3", "keep:4"],
+        "basis": "AnimationMetadataSection is a record of Optionals since 1.21.4: 1.21.3's empty frame list / UNKNOWN_SIZE (-1) are the empty Optionals"}
+    scr["net/minecraft/class_1080.<init>(II)V"] = {
+        "desc": "(ILjava/util/Optional;)V", "ops": ["keep:0", "conv:1 " + M + "#cbTime(I)Ljava/util/Optional;"],
+        "basis": "AnimationFrame's time is an Optional since 1.21.4: 1.21.3's UNKNOWN_FRAME_TIME (-1) is the empty one"}
+    mr = frag.setdefault("methodRenames", {})
+    orr = frag.setdefault("overrideRenames", [])
+    orr[:] = [r for r in orr if r.get("family") != "texture-metadata"]
+    for owner, old, new in [("net/minecraft/class_1079", "method_4684()I", "comp_3456"), ("net/minecraft/class_1079", "method_4685()Z", "comp_3457"),
+                            ("net/minecraft/class_1080", "method_4690()I", "comp_3451"), ("net/minecraft/class_1084", "method_4696()Z", "comp_3459"),
+                            ("net/minecraft/class_1084", "method_4697()Z", "comp_3460"),
+                            ("net/minecraft/class_3888", "method_17167()Lnet/minecraft/class_3888$class_3889;", "comp_3458")]:
+        mr[owner + "." + old] = new
+        orr.append({"old": old, "new": new, "onlyUnder": owner, "superCalls": "rename", "family": "texture-metadata",
+                    "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"})
+    mr["net/minecraft/class_3888$class_3889.method_17168()Ljava/lang/String;"] = "method_15434"
+    A = "net/minecraft/class_1079"
+    FE = "method_33460(Lnet/minecraft/class_1079$class_5792;)V"
+    frag.setdefault("instanceRedirects", {})[A + "." + FE] = M
+    frag.setdefault("superRedirects", {})[A + "." + FE] = M + "#superForEachFrame"
+    orr.append({"old": FE, "new": "cb$forEachFrame", "onlyUnder": A, "adapter": M + "$CbLegacyForEachFrame", "family": "texture-metadata",
+                "basis": "AnimationMetadataSection.forEachFrame is gone in 1.21.4; a subclass's frames are what 1.21.4 builds the animation from "
+                         "(CbTextureAnimationMixin), as 1.21.3's sprite loader asked it"})
+    frag.setdefault("staticRedirects", {})["net/minecraft/class_3888$class_3889.method_17170(Ljava/lang/String;)Lnet/minecraft/class_3888$class_3889;"] = M
 
 
 if __name__ == "__main__":
