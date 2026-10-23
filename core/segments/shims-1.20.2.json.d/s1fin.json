@@ -411,6 +411,16 @@
     "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#effectMap(Ljava/util/Map;)Ljava/util/Map;"
    ],
    "basis": "s1fin: MobEffectsPredicate(map) took effects as keys, the record takes their holders (generic drift): the keys converted"
+  },
+  "net/minecraft/class_2779.<init>(ZLjava/util/Collection;Ljava/util/Set;Ljava/util/Map;)V": {
+   "desc": "(ZLjava/util/Collection;Ljava/util/Set;Ljava/util/Map;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#holderCollection(Ljava/util/Collection;)Ljava/util/Collection;",
+    "keep",
+    "keep"
+   ],
+   "basis": "s1fin generic: ClientboundUpdateAdvancementsPacket(reset, added, removed, progress) takes the added advancements as holders in 1.20.2"
   }
  },
  "lambdaAdapters": {
@@ -503,6 +513,91 @@
    "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$TreeAdd",
    "bridge": "top/dext/centurybridge/rt/v1_20_2/CbAdvBuilders.add(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$TreeAdd;Ljava/util/Collection;)V",
    "basis": "s1fin: a 1.20.1 override of AdvancementList.add(builders) is reached from 1.20.2's addAll(holders), each holder as its id and a builder of it"
+  }
+ ],
+ "callReshapes": {
+  "net/minecraft/class_163.method_715()Ljava/lang/Iterable;": {
+   "desc": "()Ljava/lang/Iterable;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#advancements(Ljava/lang/Iterable;)Ljava/lang/Iterable;",
+   "basis": "s1fin generic: AdvancementTree.getRoots() answers nodes in 1.20.2; 1.20.1 code reads the roots' advancements"
+  },
+  "net/minecraft/class_2412.method_10335(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#holderConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "s1fin generic: generate(lookup, consumer) hands the consumer holders in 1.20.2; a 1.20.1 caller's Consumer<Advancement> takes them as advancements"
+  },
+  "net/minecraft/class_2414.method_10335(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#holderConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "s1fin generic: generate(lookup, consumer) hands the consumer holders in 1.20.2; a 1.20.1 caller's Consumer<Advancement> takes them as advancements"
+  },
+  "net/minecraft/class_2416.method_10335(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#holderConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "s1fin generic: generate(lookup, consumer) hands the consumer holders in 1.20.2; a 1.20.1 caller's Consumer<Advancement> takes them as advancements"
+  },
+  "net/minecraft/class_2417.method_10335(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#holderConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "s1fin generic: generate(lookup, consumer) hands the consumer holders in 1.20.2; a 1.20.1 caller's Consumer<Advancement> takes them as advancements"
+  },
+  "net/minecraft/class_2419.method_10335(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#holderConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "s1fin generic: generate(lookup, consumer) hands the consumer holders in 1.20.2; a 1.20.1 caller's Consumer<Advancement> takes them as advancements"
+  },
+  "net/minecraft/class_2989.method_12893()Ljava/util/Collection;": {
+   "desc": "()Ljava/util/Collection;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#advancementCollection(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "s1fin generic: ServerAdvancementManager.getAllAdvancements() answers holders in 1.20.2; 1.20.1 code reads the advancements"
+  },
+  "net/minecraft/class_7785.method_10335(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#holderConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "s1fin generic: generate(lookup, consumer) hands the consumer holders in 1.20.2; a 1.20.1 caller's Consumer<Advancement> takes them as advancements"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_163",
+   "member": "method_715()Ljava/lang/Iterable;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#nodes(Ljava/lang/Iterable;)Ljava/lang/Iterable;",
+   "basis": "s1fin generic: a 1.20.1 override of getRoots() answers advancements; 1.20.2 reads their nodes"
+  },
+  {
+   "under": "net/minecraft/class_2989",
+   "member": "method_12893()Ljava/util/Collection;",
+   "ret": "top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#holderCollection(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "s1fin generic: a 1.20.1 override of getAllAdvancements() answers advancements; 1.20.2 reads their holders"
+  },
+  {
+   "under": "net/minecraft/class_7785",
+   "member": "method_10335(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V",
+   "args": [
+    null,
+    "top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#advancementConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
+   ],
+   "basis": "s1fin generic: a 1.20.1 generate(lookup, consumer) override hands the consumer advancements; 1.20.2's consumer takes them as their holders"
   }
  ]
 }
