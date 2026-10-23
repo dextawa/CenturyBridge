@@ -88,6 +88,14 @@ public final class CbAdvAny {
     public static final net.minecraft.class_2035 field_9571 =
         new net.minecraft.class_2035(Optional.empty(), net.minecraft.class_2096.class_2100.field_9708);
 
+    /**
+     * EntityTypePredicate.ANY: 1.20.1's was an anonymous subclass matching every type and writing
+     * JsonNull. 1.20.2's predicate is a record over a HolderSet; the sentinel holds an empty direct set
+     * and is told apart by identity: CbAdvEntityTypeAny answers matches for it (true, as ANY did) and
+     * CbAdvJson writes it as JsonNull.
+     */
+    public static final net.minecraft.class_2050 field_9609 = new net.minecraft.class_2050(net.minecraft.class_6885.method_40246());
+
     // ------------------------------------------------------------------ 1.20.1 value -> 1.20.2 Optional
 
     /** a ContextAwarePredicate where 1.20.2 takes an Optional: ANY (and null) is absent */

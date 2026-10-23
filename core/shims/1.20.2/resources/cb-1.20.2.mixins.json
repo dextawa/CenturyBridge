@@ -31,6 +31,7 @@
     "CbAdvDecodedKilled",
     "CbAdvDecodedPickedUpItem",
     "CbAdvDecodedPlayer",
+    "CbAdvEntityTypeAny",
     "CbAdvHolderTrack",
     "CbAdvInstanceIdClaim",
     "CbAdvListenerAccess",
