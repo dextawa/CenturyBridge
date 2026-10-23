@@ -6,7 +6,10 @@
   "mixins": [
     "CbItemServerThreadMixin"
   ],
-  "client": [],
+  "client": [
+    "CbRenderStateCaptureMixin",
+    "CbRenderStateMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

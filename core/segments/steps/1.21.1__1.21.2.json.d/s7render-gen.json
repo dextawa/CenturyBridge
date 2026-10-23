@@ -1,0 +1,445 @@
+{
+ "overrideHooks": [
+  {
+   "old": "method_17066(Lnet/minecraft/class_1531;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_548",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim0",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim0(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim0;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1531;FFFFF)V of net/minecraft/class_548 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17069(Lnet/minecraft/class_1420;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_553",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim1",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim1(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim1;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1420;FFFFF)V of net/minecraft/class_553 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17075(Lnet/minecraft/class_1451;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_3680",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim2",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim2(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim2;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1451;FFFFF)V of net/minecraft/class_3680 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17076(Lnet/minecraft/class_1492;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_559",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim3",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim3(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim3;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1492;FFFFF)V of net/minecraft/class_559 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17079(Lnet/minecraft/class_1309;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_563",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim4",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim4(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim4;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1309;FFFFF)V of net/minecraft/class_563 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17083(Lnet/minecraft/class_1577;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_570",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim5",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim5(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim5;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1577;FFFFF)V of net/minecraft/class_570 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17085(Lnet/minecraft/class_1496;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_549",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim6",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim6(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim6;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1496;FFFFF)V of net/minecraft/class_549 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17087(Lnet/minecraft/class_1309;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_572",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim7",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim7(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim7;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1309;FFFFF)V of net/minecraft/class_572 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17091(Lnet/minecraft/class_1584;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_571",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim8",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim8(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim8;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1584;FFFFF)V of net/minecraft/class_571 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17094(Lnet/minecraft/class_1543;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_575",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim9",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim9(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim9;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1543;FFFFF)V of net/minecraft/class_575 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17097(Lnet/minecraft/class_1439;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_574",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim10",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim10(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim10;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1439;FFFFF)V of net/minecraft/class_574 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17103(Lnet/minecraft/class_1440;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_586",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim11",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim11(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim11;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1440;FFFFF)V of net/minecraft/class_586 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17112(Lnet/minecraft/class_1453;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_584",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim12",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim12(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim12;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1453;FFFFF)V of net/minecraft/class_584 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17114(Lnet/minecraft/class_1456;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_590",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim13",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim13(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim13;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1456;FFFFF)V of net/minecraft/class_590 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17117(Lnet/minecraft/class_1463;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_596",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim14",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim14(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim14;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1463;FFFFF)V of net/minecraft/class_596 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17119(Lnet/minecraft/class_1472;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_598",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim15",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim15(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim15;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1472;FFFFF)V of net/minecraft/class_598 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17121(Lnet/minecraft/class_1472;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_601",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim16",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim16(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim16;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1472;FFFFF)V of net/minecraft/class_601 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17122(Lnet/minecraft/class_1606;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_602",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim17",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim17(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim17;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1606;FFFFF)V of net/minecraft/class_602 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17125(Lnet/minecraft/class_1481;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_614",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim18",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim18(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim18;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1481;FFFFF)V of net/minecraft/class_614 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17127(Lnet/minecraft/class_1634;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_617",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim19",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim19(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim19;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1634;FFFFF)V of net/minecraft/class_617 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17130(Lnet/minecraft/class_1528;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_621",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim20",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim20(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim20;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1528;FFFFF)V of net/minecraft/class_621 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17133(Lnet/minecraft/class_1493;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_624",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim21",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim21(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim21;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1493;FFFFF)V of net/minecraft/class_624 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17134(Lnet/minecraft/class_1642;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_564",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim22",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim22(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim22;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1642;FFFFF)V of net/minecraft/class_564 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17135(Lnet/minecraft/class_1642;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_619",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim23",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim23(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim23;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1642;FFFFF)V of net/minecraft/class_619 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_17791(Lnet/minecraft/class_1588;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_3968",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim24",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim24(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim24;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1588;FFFFF)V of net/minecraft/class_3968 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_18332(Lnet/minecraft/class_4019;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_4041",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim25",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim25(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim25;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_4019;FFFFF)V of net/minecraft/class_4041 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_19690(Lnet/minecraft/class_1308;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_606",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim26",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim26(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim26;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1308;FFFFF)V of net/minecraft/class_606 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_22112(Lnet/minecraft/class_4466;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_4495",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim27",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim27(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim27;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_4466;FFFFF)V of net/minecraft/class_4495 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_22952(Lnet/minecraft/class_1690;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_554",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim28",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim28(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim28;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1690;FFFFF)V of net/minecraft/class_554 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_22958(Lnet/minecraft/class_1621;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_576",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim29",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim29(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim29;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1621;FFFFF)V of net/minecraft/class_576 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_22962(Lnet/minecraft/class_1492;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_578",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim30",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim30(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim30;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1492;FFFFF)V of net/minecraft/class_578 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_23621(Lnet/minecraft/class_1510;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_895$class_625",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim31",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim31(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim31;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1510;FFFFF)V of net/minecraft/class_895$class_625 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_24461(Lnet/minecraft/class_1308;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_4791",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim32",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim32(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim32;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1308;FFFFF)V of net/minecraft/class_4791 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_24803(Lnet/minecraft/class_1308;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_4840",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim33",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim33(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim33;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1308;FFFFF)V of net/minecraft/class_4840 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_26414(Lnet/minecraft/class_4985;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_4997",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim34",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim34(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim34;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_4985;FFFFF)V of net/minecraft/class_4997 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_2819(Lnet/minecraft/class_1297;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_583",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim35",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim35(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim35;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1297;FFFFF)V of net/minecraft/class_583 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_33293(Lnet/minecraft/class_5762;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_5772",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim36",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim36(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim36;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_5762;FFFFF)V of net/minecraft/class_5772 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_33686(Lnet/minecraft/class_1593;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_588",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim37",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim37(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim37;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1593;FFFFF)V of net/minecraft/class_588 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_35741(Lnet/minecraft/class_6053;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_6227",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim38",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim38(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim38;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_6053;FFFFF)V of net/minecraft/class_6227 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_41907(Lnet/minecraft/class_7102;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_7198",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim39",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim39(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim39;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_7102;FFFFF)V of net/minecraft/class_7198 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_41916(Lnet/minecraft/class_7110;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_7201",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim40",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim40(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim40;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_7110;FFFFF)V of net/minecraft/class_7201 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_42580(Lnet/minecraft/class_7260;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_7280",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim41",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim41(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim41;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_7260;FFFFF)V of net/minecraft/class_7280 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_42732(Lnet/minecraft/class_7298;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_7308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim42",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim42(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim42;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_7298;FFFFF)V of net/minecraft/class_7308 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_45706(Lnet/minecraft/class_7689;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_7751",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim43",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim43(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim43;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_7689;FFFFF)V of net/minecraft/class_7751 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_45711(Lnet/minecraft/class_1690;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_7754",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim44",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim44(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim44;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_1690;FFFFF)V of net/minecraft/class_7754 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_49302(Lnet/minecraft/class_8153;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_8185",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim45",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim45(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim45;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_8153;FFFFF)V of net/minecraft/class_8185 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_55232(Lnet/minecraft/class_8949;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_8973",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim46",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim46(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim46;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_8949;FFFFF)V of net/minecraft/class_8973 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_55239(Lnet/minecraft/class_9236;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_8974",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim47",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim47(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim47;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_9236;FFFFF)V of net/minecraft/class_8974 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  },
+  {
+   "old": "method_55817(Lnet/minecraft/class_9069;FFFFF)V",
+   "new": "method_2819(Lnet/minecraft/class_10017;)V",
+   "onlyUnder": "net/minecraft/class_9082",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim48",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen.anim48(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelsGen$Anim48;Lnet/minecraft/class_10017;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 setupAnim(Lnet/minecraft/class_9069;FFFFF)V of net/minecraft/class_9082 (javac's erasure of EntityModel.setupAnim there): 1.21.2 calls EntityModel.setupAnim(state); the synthesized one hands the mod's method what 1.21.1's renderer passed, from the entity the state was extracted from (CbRenderModels.setupAnim)"
+  }
+ ]
+}
