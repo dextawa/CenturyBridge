@@ -9,10 +9,20 @@
     "CbPendingIdsBlockPropsMixin",
     "CbPendingIdsItemMixin",
     "CbPendingIdsItemPropsMixin",
-    "CbPendingIdsRegistryMixin"
+    "CbPendingIdsRegistryMixin",
+    "CbRestChunkSourceMixin",
+    "CbRestDedicatedServerMixin",
+    "CbRestLevelMixin",
+    "CbRestMinecraftServerMixin",
+    "CbRestServerChunkCacheMixin",
+    "CbRestServerLevelMixin",
+    "CbRestServerPropertiesMixin"
   ],
   "client": [
-    "CbRestGuiGraphicsMixin"
+    "CbRestEnchantmentScreenMixin",
+    "CbRestGuiGraphicsMixin",
+    "CbRestMinecraftMixin",
+    "CbRestOptionsMixin"
   ],
   "server": [],
   "injectors": {
