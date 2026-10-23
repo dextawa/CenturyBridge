@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s7entity",
+ "version": "1.0.0",
+ "name": "CB s7entity Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.s7entity.S7EntityTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.1" }
+}

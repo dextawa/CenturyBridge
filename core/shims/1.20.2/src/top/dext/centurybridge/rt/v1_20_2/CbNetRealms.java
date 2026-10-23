@@ -438,6 +438,16 @@ public final class CbNetRealms {
         ((CbNetRealmsAccess.Callback) screen).cb$setLegacyCallback(callback);
     }
 
+    /**
+     * RealmsMainScreen.updateTeaserImages(resources): 1.20.1 filled the purchase popup's carousel with the
+     * images under textures/gui/images; 1.20.2 moved the popup to AddRealmPopupScreen, whose
+     * updateCarouselImages(resources) is the same body (same directory, same filter, the list its carousel
+     * draws). Called where 1.20.1 called it, on resource reload.
+     */
+    public static void method_23765(net.minecraft.class_3300 resources) {
+        net.minecraft.class_8656.method_52685(resources);
+    }
+
     private CbNetRealms() {
     }
 }

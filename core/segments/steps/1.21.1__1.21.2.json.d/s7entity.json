@@ -34,7 +34,14 @@
   "net/minecraft/class_1308.method_5955(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#canReplaceCurrentItem",
   "net/minecraft/class_4051.method_18419(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#test",
   "net/minecraft/class_4051.method_18420(Ljava/util/function/Predicate;)Lnet/minecraft/class_4051;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#selector",
-  "net/minecraft/class_4019$class_4022.method_18303(Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#foxAlertable"
+  "net/minecraft/class_4019$class_4022.method_18303(Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#foxAlertable",
+  "net/minecraft/class_1299$class_1300.method_5905(Ljava/lang/String;)Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTypes#build",
+  "net/minecraft/class_1299.method_16351()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#defaultLootTable",
+  "net/minecraft/class_1309.method_5989()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#lootTable",
+  "net/minecraft/class_1308.method_5991()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#mobDefaultLootTable",
+  "net/minecraft/class_7094.method_43686(FF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#updateTime",
+  "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#getAccumulatedTime",
+  "net/minecraft/class_1688.method_7518()Lnet/minecraft/class_1688$class_1689;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#getMinecartType"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -74,7 +81,8 @@
   "net/minecraft/class_4824.method_47120(Ljava/util/function/Predicate;Ljava/util/function/Function;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#startAttacking",
   "net/minecraft/class_4828.method_47137(Ljava/util/function/BiConsumer;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
   "net/minecraft/class_4828.method_47138(Ljava/util/function/Predicate;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
-  "net/minecraft/class_4828.method_47139(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;Z)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking"
+  "net/minecraft/class_4828.method_47139(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;Z)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
+  "net/minecraft/class_1688.method_7523(Lnet/minecraft/class_3218;DDDLnet/minecraft/class_1688$class_1689;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1688;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#createMinecart"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1400.<init>(Lnet/minecraft/class_1308;Ljava/lang/Class;IZZLjava/util/function/Predicate;)V": {
@@ -137,10 +145,369 @@
     "drop"
    ],
    "basis": "1.21.1's GoalSelector(Supplier<ProfilerFiller>) only stored the supplier for its tick's profiler; 1.21.2's takes the profiler from Profiler.get(): the supplier has no use left"
+  },
+  "net/minecraft/class_1299.<init>(Lnet/minecraft/class_1299$class_4049;Lnet/minecraft/class_1311;ZZZZLcom/google/common/collect/ImmutableSet;Lnet/minecraft/class_4048;FIILnet/minecraft/class_7699;)V": {
+   "desc": "(Lnet/minecraft/class_1299$class_4049;Lnet/minecraft/class_1311;ZZZZLcom/google/common/collect/ImmutableSet;Lnet/minecraft/class_4048;FIILjava/lang/String;Ljava/util/Optional;Lnet/minecraft/class_7699;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityTypes#ctorDescriptionId()Ljava/lang/String;",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityTypes#ctorLootTable()Ljava/util/Optional;",
+    "keep"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTypes#constructed(Lnet/minecraft/class_1299;)V",
+   "postArgs": [],
+   "basis": "1.21.1's EntityType constructor took no descriptionId or loot table and derived both from the registry key; 1.21.2's takes them: made from a placeholder with Builder's defaults and remade from the real key when the type registers (CbEntityTypes)"
+  },
+  "net/minecraft/class_3857.<init>(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_3857;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_3857.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_3857;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1680.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_1680;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1680.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_1680;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1681.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_1681;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1681.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_1681;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1683.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_1683;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1683.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_1683;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1686.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_1686;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1686.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1937;DDDLnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_1686;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1684.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#noItem()Lnet/minecraft/class_1799;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#defaultItem(Lnet/minecraft/class_1684;)V",
+   "postArgs": [],
+   "basis": "1.21.2's constructor takes and sets the thrown stack; 1.21.1's left new ItemStack(getDefaultItem()) in place, which CbEntityProjectiles#defaultItem puts back"
+  },
+  "net/minecraft/class_1682.<init>(Lnet/minecraft/class_1299;Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#ownerX(Lnet/minecraft/class_1309;)D",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#ownerEyeY(Lnet/minecraft/class_1309;)D",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#ownerZ(Lnet/minecraft/class_1309;)D",
+    "keep:2"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#owner(Lnet/minecraft/class_1682;Lnet/minecraft/class_1309;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "1.21.1 ThrowableProjectile(type, owner, level) was this(type, owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), level); setOwner(owner)"
+  },
+  "net/minecraft/class_1536.<init>(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;II)V": {
+   "desc": "(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;IILnet/minecraft/class_1799;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#unreadRod()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.21.2's FishingHook(player, level, luck, lure, rod) never reads the rod (its body is 1.21.1's)"
+  },
+  "net/minecraft/class_1695.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#minecart()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1695;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1694.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#chest()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1694;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1696.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#furnace()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1696;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1701.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#tnt()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1701;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1699.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#spawner()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1699;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1700.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#hopper()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1700;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1697.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#commandBlock()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1697;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1693.<init>(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "keep:0",
+    "keep:4"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1693;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 AbstractMinecartContainer(type, x, y, z, level) was AbstractMinecart(type, level, x, y, z) -- this(type, level), setPos, xo/yo/zo -- and the item list, which 1.21.2's (type, level) makes too"
   }
  },
  "fieldGetters": {
   "net/minecraft/class_1493.field_18004:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#wolfPreySelector",
   "net/minecraft/class_1481.field_6921:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#turtleBabyOnLandSelector"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1299.method_16351()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superDefaultLootTable",
+  "net/minecraft/class_1309.method_5989()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superLootTable",
+  "net/minecraft/class_1308.method_5991()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superMobDefaultLootTable",
+  "net/minecraft/class_1472.method_5991()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superSheepDefaultLootTable",
+  "net/minecraft/class_7094.method_43686(FF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#superUpdateTime",
+  "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#superGetAccumulatedTime"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_16351()Lnet/minecraft/class_5321;",
+   "new": "method_16351()Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_1299",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot.wrap(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "basis": "1.21.1 EntityType.getDefaultLootTable() answered a key, 1.21.2's an Optional of it (CbEntityLoot)"
+  },
+  {
+   "old": "method_5989()Lnet/minecraft/class_5321;",
+   "new": "method_5991()Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_1309",
+   "notUnder": "net/minecraft/class_1308",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot.wrap(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "basis": "1.21.1 LivingEntity.getLootTable() is 1.21.2's Entity.getLootTable() (an Optional); Mob's was final in both"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot$LegacyMob",
+   "requires": [
+    "method_5991()Lnet/minecraft/class_5321;"
+   ],
+   "synth": [],
+   "basis": "1.21.1 Mob's final getLootTable asked the overridable getDefaultLootTable; 1.21.2's has none: CbEntityLootMobMixin asks the mod class's own"
+  },
+  {
+   "under": "net/minecraft/class_7094",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation$LegacyUpdate",
+   "requires": [
+    "method_43686(FF)V"
+   ],
+   "synth": [],
+   "basis": "1.21.1's updateTime of a mod AnimationState subclass answers the calls CbEntityAnimation serves"
+  },
+  {
+   "under": "net/minecraft/class_7094",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation$LegacyAccumulated",
+   "requires": [
+    "method_43687()J"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getAccumulatedTime of a mod AnimationState subclass answers the calls CbEntityAnimation serves"
+  },
+  {
+   "under": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts$LegacyType",
+   "requires": [
+    "method_7518()Lnet/minecraft/class_1688$class_1689;"
+   ],
+   "synth": [],
+   "basis": "a mod minecart's own 1.21.1 getMinecartType answers the calls CbEntityMinecarts serves (1.21.2 has no such method)"
+  }
+ ],
+ "classRenames": {
+  "net/minecraft/class_1688$class_1689": "top/dext/centurybridge/step/v1_21_2/facade/MinecartType"
  }
 }

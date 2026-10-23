@@ -350,6 +350,18 @@ public final class CbClientGui {
             .method_53535(nanos);
     }
 
+    /**
+     * a 1.20.4 DebugScreenOverlay subclass's getFrameTimeLogger / getTickTimeLogger answer, as the
+     * LocalSampleLogger 1.20.5 asks for: every 1.20.4 sample logger is one (1.20.5's own loggers, and a
+     * 1.20.4 subclass or new SampleLogger() is facade/SampleLogger, a LocalSampleLogger)
+     */
+    public static net.minecraft.class_9191 cbOverlayLogger(net.minecraft.class_8743 logger) {
+        if (logger == null || logger instanceof net.minecraft.class_9191) {
+            return (net.minecraft.class_9191) logger;
+        }
+        throw new IllegalStateException("a 1.20.4 sample logger is a LocalSampleLogger; got " + logger.getClass().getName());
+    }
+
     /** the layer's DebugScreenOverlay.logTickDuration (mixin/CbClientDebugOverlayMixin), for its callers in the layer */
     public interface DebugOverlayApi {
         void method_53535(long nanos);
@@ -375,6 +387,38 @@ public final class CbClientGui {
             }
         }
         set.method_2004(selected);
+    }
+
+    // ------------------------------------------------------------------ options list
+
+    /**
+     * The screen 1.20.5's OptionsList(minecraft, width, unused, screen) places its rows by (screen.width / 2 - 155)
+     * and sizes itself from: for 1.20.4's OptionsList(minecraft, width, height, y, itemHeight), which placed its
+     * rows by the list's own width, an options screen as wide as the list (the size is 1.20.4's, set after the
+     * constructor: {@link #cbOptionsListBuilt})
+     */
+    public static net.minecraft.class_4667 optionsHost(int width) {
+        net.minecraft.class_310 mc = net.minecraft.class_310.method_1551();
+        net.minecraft.class_4667 host = new net.minecraft.class_4667(null, mc.field_1690, net.minecraft.class_2561.method_43473());
+        host.field_22789 = width;
+        return host;
+    }
+
+    /** after 1.20.4's OptionsList(minecraft, width, height, y, itemHeight): the list's size, position and row height, as 1.20.4's constructor set them */
+    public static void cbOptionsListBuilt(net.minecraft.class_353 list, int width, int height, int y, int itemHeight) {
+        ((top.dext.centurybridge.step.v1_20_5.mixin.CbClientListItemHeightAccessor) list).cb$setItemHeight(itemHeight);
+        list.method_57714(width, height, y);
+    }
+
+    /**
+     * OptionsList.getMouseOver(x, y)'s answer as 1.20.4 typed it, an Optional of a widget: 1.20.5 types it as
+     * any GuiEventListener, finding it among each row's children -- the row's widgets, which 1.20.4 searched.
+     * A widget passes unchanged either way (a 1.20.4 override's answer is one 1.20.5 takes); anything else, which
+     * only a row with non-widget children could hold and 1.20.4 never answered, is no widget: empty
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static java.util.Optional cbWidgetOnly(java.util.Optional found) {
+        return found.filter(net.minecraft.class_339.class::isInstance);
     }
 
     private CbClientGui() {

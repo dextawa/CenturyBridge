@@ -57,95 +57,387 @@
   "net/minecraft/class_4148.method_36982(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_36982",
   "net/minecraft/class_4148.method_37456(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_37456"
  },
- "frameDefaults": {
-  "method_6074(Lnet/minecraft/class_1282;F)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+ "overrideHooks": [
+  {
+   "old": "method_5768()V",
+   "new": "method_5768(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1297",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_5679(Lnet/minecraft/class_1282;)Z": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_5706(Lnet/minecraft/class_1935;)Lnet/minecraft/class_1542;",
+   "new": "method_5706(Lnet/minecraft/class_3218;Lnet/minecraft/class_1935;)Lnet/minecraft/class_1542;",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1297",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_5768()V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_5870(Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1542;",
+   "new": "method_5870(Lnet/minecraft/class_3218;Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1542;",
+   "args": [
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_1297",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_5706(Lnet/minecraft/class_1935;)Lnet/minecraft/class_1542;": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542;",
+   "new": "method_5775(Lnet/minecraft/class_3218;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542;",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1297",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_5870(Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1542;": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_5699(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1542;",
+   "new": "method_5699(Lnet/minecraft/class_3218;Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1542;",
+   "args": [
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_1297",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542;": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_36971(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Z",
+   "new": "method_36971(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;)Z",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1297",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_5699(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1542;": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_6121(Lnet/minecraft/class_1297;)Z",
+   "new": "method_6121(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;)Z",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1309",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_5671()Lnet/minecraft/class_2168;": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_6110()I",
+   "new": "method_6110(Lnet/minecraft/class_3218;)I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1309",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_6110()I": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_60699(Lnet/minecraft/class_1297$class_5529;)V",
+   "new": "method_60699(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297$class_5529;)V",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1309",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_60699(Lnet/minecraft/class_1297$class_5529;)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_16078()V",
+   "new": "method_16078(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1309",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_16078()V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_23883(Lnet/minecraft/class_1297;)V",
+   "new": "method_23883(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;)V",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1309",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_23883(Lnet/minecraft/class_1297;)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_16077(Lnet/minecraft/class_1282;Z)V",
+   "new": "method_16077(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;Z)V",
+   "args": [
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_1309",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_16077(Lnet/minecraft/class_1282;Z)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_6074(Lnet/minecraft/class_1282;F)V",
+   "new": "method_6074(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;F)V",
+   "args": [
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_1309",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_6121(Lnet/minecraft/class_1297;)Z": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_24523(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "new": "method_24523(Lnet/minecraft/class_3218;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1308",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_5949(Lnet/minecraft/class_1542;)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_20820(Lnet/minecraft/class_1799;)Z",
+   "new": "method_20820(Lnet/minecraft/class_3218;Lnet/minecraft/class_1799;)Z",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1308",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_24523(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_60973()V",
+   "new": "method_60973(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1308",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_20820(Lnet/minecraft/class_1799;)Z": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_60972(Ljava/util/function/Predicate;)Ljava/util/Set;",
+   "new": "method_60972(Lnet/minecraft/class_3218;Ljava/util/function/Predicate;)Ljava/util/Set;",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1308",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_5958()V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_5949(Lnet/minecraft/class_1542;)V",
+   "new": "method_5949(Lnet/minecraft/class_3218;Lnet/minecraft/class_1542;)V",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1308",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_60973()V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_5958()V",
+   "new": "method_5958(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1308",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_60972(Ljava/util/function/Predicate;)Ljava/util/Set;": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_6746()V",
+   "new": "method_6746(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1496",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_6746()V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_7504()D",
+   "new": "method_7504(Lnet/minecraft/class_3218;)D",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1688",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_6816(Lnet/minecraft/class_1508;Lnet/minecraft/class_1282;F)Z": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_7512()V",
+   "new": "method_7512(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1688",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_6828(Lnet/minecraft/class_1511;Lnet/minecraft/class_2338;Lnet/minecraft/class_1282;)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_7516(Lnet/minecraft/class_1282;)V",
+   "new": "method_7516(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)V",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_8836",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_6889(Lnet/minecraft/class_1297;)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_54298(Lnet/minecraft/class_1792;)V",
+   "new": "method_54298(Lnet/minecraft/class_3218;Lnet/minecraft/class_1792;)V",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_8836",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_7076(Lnet/minecraft/class_1657;)Z": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_6889(Lnet/minecraft/class_1297;)V",
+   "new": "method_6889(Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;)V",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_9691",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_7504()D": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_6816(Lnet/minecraft/class_1508;Lnet/minecraft/class_1282;F)Z",
+   "new": "method_6816(Lnet/minecraft/class_3218;Lnet/minecraft/class_1508;Lnet/minecraft/class_1282;F)Z",
+   "args": [
+    1,
+    2,
+    3
+   ],
+   "onlyUnder": "net/minecraft/class_1510",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_7512()V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_6828(Lnet/minecraft/class_1511;Lnet/minecraft/class_2338;Lnet/minecraft/class_1282;)V",
+   "new": "method_6828(Lnet/minecraft/class_3218;Lnet/minecraft/class_1511;Lnet/minecraft/class_2338;Lnet/minecraft/class_1282;)V",
+   "args": [
+    1,
+    2,
+    3
+   ],
+   "onlyUnder": "net/minecraft/class_1510",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_7516(Lnet/minecraft/class_1282;)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_7076(Lnet/minecraft/class_1657;)Z",
+   "new": "method_7076(Lnet/minecraft/class_3218;Lnet/minecraft/class_1657;)Z",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1588",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   },
-  "method_54298(Lnet/minecraft/class_1792;)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  {
+   "old": "method_29515(Lnet/minecraft/class_1309;)Z",
+   "new": "method_29515(Lnet/minecraft/class_1309;Lnet/minecraft/class_3218;)Z",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_5354",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
+  },
+  {
+   "old": "method_29923(Lnet/minecraft/class_1937;)Z",
+   "new": "method_29923(Lnet/minecraft/class_3218;)Z",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_5354",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
+  },
+  {
+   "old": "method_29516(Lnet/minecraft/class_1657;)V",
+   "new": "method_29516(Lnet/minecraft/class_3218;Lnet/minecraft/class_1657;)V",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_5354",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
+  },
+  {
+   "old": "method_6855()V",
+   "new": "method_6855(Lnet/minecraft/class_3218;)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1521",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
+  },
+  {
+   "old": "method_42283(Lnet/minecraft/class_1282;Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;)V",
+   "new": "method_42283(Lnet/minecraft/class_1282;Lnet/minecraft/class_3218;Lnet/minecraft/class_1297;)V",
+   "args": [
+    0,
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_7265",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
+  },
+  {
+   "old": "method_35148(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z",
+   "new": "method_35148(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z",
+   "args": [
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_6045",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
+  },
+  {
+   "old": "method_54457(Lnet/minecraft/class_1937;)Z",
+   "new": "method_54457(Lnet/minecraft/class_3218;)Z",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_1676",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super call gets the level vanilla passed (frameDefaults: the entity's own)"
   }
- },
+ ],
  "adapterHooks": [
   {
    "under": "net/minecraft/class_1297",
@@ -462,5 +754,94 @@
    "synth": [],
    "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
   }
- ]
+ ],
+ "frameDefaults": {
+  "method_5768()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5706(Lnet/minecraft/class_1935;)Lnet/minecraft/class_1542;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5870(Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1542;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5699(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1542;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6121(Lnet/minecraft/class_1297;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6110()I": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_60699(Lnet/minecraft/class_1297$class_5529;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_16078()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_23883(Lnet/minecraft/class_1297;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_16077(Lnet/minecraft/class_1282;Z)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6074(Lnet/minecraft/class_1282;F)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_24523(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_20820(Lnet/minecraft/class_1799;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_60973()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_60972(Ljava/util/function/Predicate;)Ljava/util/Set;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5949(Lnet/minecraft/class_1542;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5958()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6746()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_7504()D": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_7512()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_7516(Lnet/minecraft/class_1282;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_54298(Lnet/minecraft/class_1792;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6889(Lnet/minecraft/class_1297;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6816(Lnet/minecraft/class_1508;Lnet/minecraft/class_1282;F)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6828(Lnet/minecraft/class_1511;Lnet/minecraft/class_2338;Lnet/minecraft/class_1282;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_7076(Lnet/minecraft/class_1657;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5679(Lnet/minecraft/class_1282;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5671()Lnet/minecraft/class_2168;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  }
+ }
 }

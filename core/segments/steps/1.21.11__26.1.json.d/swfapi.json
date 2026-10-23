@@ -1,0 +1,211 @@
+{
+ "depRenames": {
+  "fabric-block-view-api-v2": "fabric-block-getter-api-v2@*",
+  "fabric-item-group-api-v1": "fabric-creative-tab-api-v1@*",
+  "fabric-screen-handler-api-v1": "fabric-menu-api-v1@*",
+  "fabric-convention-tags-v1": "centurybridge_step_26_1@*",
+  "fabric-loot-api-v2": "centurybridge_step_26_1@*"
+ },
+ "_swfapi_depRenames_basis": "fapi_modules.py 1.21.11 -> 26.1 (0.141.6+1.21.11 vs 0.145.1+26.1): six modules gone. fabric-key-binding-api-v1 is mapped in the base table. Three were renamed with their API (Fabric API PR #5060, checked member by member by gen_swfapi_renames.py): block-view-api-v2 is block-getter-api-v2 (blockview/v2 -> blockgetter/v2), item-group-api-v1 is creative-tab-api-v1 (itemgroup/v1 -> creativetab/v1), screen-handler-api-v1 is menu-api-v1 (screenhandler/v1 -> menu/v1). Two were dropped without a successor module, and this step's layer gives their API back: convention-tags-v1 (the v1 tag holders, whose tag ids live on in convention-tags-v2's data) and loot-api-v2 (its builders and source enum are loot-api-v3's under another package, its events are the layer's on top of v3's). A converted mod's range for the old id does not describe the provider's versions, so the range is any.",
+ "classRenames": {
+  "net/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory": "top/dext/centurybridge/step/v26_1/compat/fapi/gamerule/v1/CustomGameRuleCategory",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Replace": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents$Replace",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Modify": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents$Modify",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Loaded": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents$Loaded",
+  "net/fabricmc/fabric/api/item/v1/FabricTooltipFlag": "top/dext/centurybridge/step/v26_1/compat/fapi/item/v1/FabricTooltipFlag",
+  "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v26_1/compat/fapi/tag/v1/FabricTagFile",
+  "net/fabricmc/fabric/api/client/rendering/v1/HudRenderCallback": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/HudRenderCallback",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeEntities": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$BeforeEntities",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$AfterEntities": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$AfterEntities",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$DebugRender": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$DebugRender",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeTranslucent": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$BeforeTranslucent"
+ },
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$BooleanRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$BooleanRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$IntegerRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$IntegerRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$DoubleRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$DoubleRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$EnumRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$EnumRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getRecipeRemainder(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#getRecipeRemainder",
+  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getRecipeRemainder()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#getRecipeRemainder",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove(Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#remove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#remove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/Collection;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeTag",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.frustum()Lnet/minecraft/class_4604;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#frustum",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.viewMatrix()Lorg/joml/Matrix4fc;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#viewMatrix",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.cullProjectionMatrix()Lorg/joml/Matrix4fc;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#cullProjectionMatrix",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.blockOutlines()Z": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#blockOutlines"
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#categoryBase",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getRecipeRemainder(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#superRecipeRemainder",
+  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getRecipeRemainder()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#superRecipeRemainder",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove(Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/Collection;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveTag"
+ },
+ "instanceFieldGetters": {
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.fabricCategory:Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#getFabricCategory"
+ },
+ "instanceFieldSetters": {
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.fabricCategory:Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#setFabricCategory"
+ },
+ "_swfapi_gamerule_basis": "26.1's Fabric API removed CustomGameRuleCategory, GameRuleBuilder.category(CustomGameRuleCategory) and the protected fabricCategory field (26.1 vanilla GameRuleCategory takes any id: register(Identifier), listed after the vanilla categories, headed by label()). The class is the layer's with 1.21.11's surface and bodies; category(custom) on any builder dispatches to a mod subclass's own override as 1.21.11's virtual call did, else runs 1.21.11's body with the custom category's vanilla stand-in (same id, registered once) in place of MISC; a mod's super.category(custom) runs that body; fabricCategory reads/writes the builder's custom category. The stand-in's label() is the custom name (CbFapiGameRuleCategoryMixin). Difference from 1.21.11: GameRule.category() is the stand-in rather than MISC, since 26.1's screen groups by category() alone.",
+ "overrideHooks": [
+  {
+   "old": "allowBed(Lnet/minecraft/class_1309;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1269;",
+   "new": "allowBed(Lnet/minecraft/class_1309;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/fabricmc/fabric/api/util/EventResult;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents.eventResult(Lnet/minecraft/class_1269;)Lnet/fabricmc/fabric/api/util/EventResult;",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowBed",
+   "basis": "a 1.21.11 class implementing EntitySleepEvents.AllowBed: 26.1 asks for an EventResult, the mod's method answers 1.21.11's InteractionResult (CbFapiEvents.eventResult: PASS -> PASS, consuming -> ALLOW, other -> DENY, as 1.21.11's Fabric API read it)"
+  },
+  {
+   "old": "allowSleepTime(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/minecraft/class_1269;",
+   "new": "allowSleepTime(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/fabricmc/fabric/api/util/EventResult;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents.eventResult(Lnet/minecraft/class_1269;)Lnet/fabricmc/fabric/api/util/EventResult;",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowSleepTime",
+   "basis": "a 1.21.11 class implementing EntitySleepEvents.AllowSleepTime: 26.1 asks for an EventResult, the mod's method answers 1.21.11's InteractionResult (CbFapiEvents.eventResult: PASS -> PASS, consuming -> ALLOW, other -> DENY, as 1.21.11's Fabric API read it)"
+  },
+  {
+   "old": "allowNearbyMonsters(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/minecraft/class_1269;",
+   "new": "allowNearbyMonsters(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/fabricmc/fabric/api/util/EventResult;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents.eventResult(Lnet/minecraft/class_1269;)Lnet/fabricmc/fabric/api/util/EventResult;",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowNearbyMonsters",
+   "basis": "a 1.21.11 class implementing EntitySleepEvents.AllowNearbyMonsters: 26.1 asks for an EventResult, the mod's method answers 1.21.11's InteractionResult (CbFapiEvents.eventResult: PASS -> PASS, consuming -> ALLOW, other -> DENY, as 1.21.11's Fabric API read it)"
+  },
+  {
+   "old": "onChunkLoad(Lnet/minecraft/class_3218;Lnet/minecraft/class_2818;)V",
+   "new": "onChunkLoad(Lnet/minecraft/class_3218;Lnet/minecraft/class_2818;Z)V",
+   "onlyUnder": "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$Load",
+   "args": [
+    0,
+    1
+   ],
+   "basis": "a 1.21.11 class implementing ServerChunkEvents.Load: 26.1 also passes whether the chunk was just generated, which 1.21.11's listener (told of every load alike) does not read"
+  },
+  {
+   "old": "getRecipeRemainder(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "new": "getCraftingRemainder(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems.template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "onlyUnder": "net/fabricmc/fabric/api/item/v1/FabricItem",
+   "basis": "a 1.21.11 item overriding FabricItem.getRecipeRemainder(stack): 26.1 asks getCraftingRemainder(stack) for an ItemStackTemplate (null for none), the override's ItemStack converted (EMPTY -> null)"
+  },
+  {
+   "old": "getRecipeRemainder()Lnet/minecraft/class_1799;",
+   "new": "getCraftingRemainder()Lnet/minecraft/world/item/ItemStackTemplate;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems.template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
+   "onlyUnder": "net/fabricmc/fabric/api/item/v1/FabricItemStack",
+   "basis": "a 1.21.11 class implementing FabricItemStack.getRecipeRemainder(): 26.1 asks getCraftingRemainder() for an ItemStackTemplate, the override's ItemStack converted"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowBed.allowBed(Lnet/minecraft/class_1309;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1269;": {
+   "iface": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents$LegacyAllowBed",
+   "adapt": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents#adapt(Ltop/dext/centurybridge/step/v26_1/rt/CbFapiEvents$LegacyAllowBed;)Lnet/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowBed;"
+  },
+  "net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowSleepTime.allowSleepTime(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/minecraft/class_1269;": {
+   "iface": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents$LegacyAllowSleepTime",
+   "adapt": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents#adapt(Ltop/dext/centurybridge/step/v26_1/rt/CbFapiEvents$LegacyAllowSleepTime;)Lnet/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowSleepTime;"
+  },
+  "net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowNearbyMonsters.allowNearbyMonsters(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/minecraft/class_1269;": {
+   "iface": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents$LegacyAllowNearbyMonsters",
+   "adapt": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents#adapt(Ltop/dext/centurybridge/step/v26_1/rt/CbFapiEvents$LegacyAllowNearbyMonsters;)Lnet/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowNearbyMonsters;"
+  },
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$Load.onChunkLoad(Lnet/minecraft/class_3218;Lnet/minecraft/class_2818;)V": {
+   "iface": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents$LegacyChunkLoad",
+   "adapt": "top/dext/centurybridge/step/v26_1/rt/CbFapiEvents#adapt(Ltop/dext/centurybridge/step/v26_1/rt/CbFapiEvents$LegacyChunkLoad;)Lnet/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$Load;"
+  },
+  "net/fabricmc/fabric/api/item/v1/DefaultItemComponentEvents$ModifyContext.modify(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;)V": {
+   "iface": "top/dext/centurybridge/step/v26_1/rt/CbFapiFills$LegacyModifyContext",
+   "adapt": "top/dext/centurybridge/step/v26_1/rt/CbFapiFills#adapt(Ltop/dext/centurybridge/step/v26_1/rt/CbFapiFills$LegacyModifyContext;)Lnet/fabricmc/fabric/api/item/v1/DefaultItemComponentEvents$ModifyContext;"
+  }
+ },
+ "callReshapes": {
+  "net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowBed.allowBed(Lnet/minecraft/class_1309;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1269;": {
+   "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/fabricmc/fabric/api/util/EventResult;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbFapiEvents#interactionResult(Lnet/fabricmc/fabric/api/util/EventResult;)Lnet/minecraft/class_1269;",
+   "basis": "a 1.21.11 call of AllowBed.allowBed (an invoker): 26.1's answer converted back (ALLOW -> SUCCESS, DENY -> FAIL, PASS -> PASS)"
+  },
+  "net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowSleepTime.allowSleepTime(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/minecraft/class_1269;": {
+   "desc": "(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/fabricmc/fabric/api/util/EventResult;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbFapiEvents#interactionResult(Lnet/fabricmc/fabric/api/util/EventResult;)Lnet/minecraft/class_1269;",
+   "basis": "a 1.21.11 call of AllowSleepTime.allowSleepTime (an invoker): 26.1's answer converted back (ALLOW -> SUCCESS, DENY -> FAIL, PASS -> PASS)"
+  },
+  "net/fabricmc/fabric/api/entity/event/v1/EntitySleepEvents$AllowNearbyMonsters.allowNearbyMonsters(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/minecraft/class_1269;": {
+   "desc": "(Lnet/minecraft/class_1657;Lnet/minecraft/class_2338;Z)Lnet/fabricmc/fabric/api/util/EventResult;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbFapiEvents#interactionResult(Lnet/fabricmc/fabric/api/util/EventResult;)Lnet/minecraft/class_1269;",
+   "basis": "a 1.21.11 call of AllowNearbyMonsters.allowNearbyMonsters (an invoker): 26.1's answer converted back (ALLOW -> SUCCESS, DENY -> FAIL, PASS -> PASS)"
+  },
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$Load.onChunkLoad(Lnet/minecraft/class_3218;Lnet/minecraft/class_2818;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2818;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbFapiEvents#notGenerated()Z"
+   ],
+   "basis": "a 1.21.11 mod's own call of CHUNK_LOAD's invoker announces a chunk already there: not generated (CbFapiEvents.notGenerated; 26.1 fires CHUNK_GENERATE for that)"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder",
+   "method": "syncWith(Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;I)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiFills.syncWith(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;Lnet/minecraft/class_9139;Lnet/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate;I)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentRegistry$Builder;",
+   "basis": "26.1 added syncWith(codec, predicate, maxSyncSize) abstract; its own builder calls the two-argument syncWith and stores the size, a 1.21.11 builder has only the two-argument one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry",
+   "method": "registerLarge(Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;Ljava/util/function/IntSupplier;)Lnet/minecraft/class_8710$class_9155;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiFills.registerLarge(Lnet/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry;Lnet/minecraft/class_8710$class_9154;Lnet/minecraft/class_9139;Ljava/util/function/IntSupplier;)Lnet/minecraft/class_8710$class_9155;",
+   "basis": "26.1 added registerLarge(type, codec, IntSupplier) abstract beside 1.21.11's registerLarge(type, codec, int): the supplier is read at registration"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/item/v1/DefaultItemComponentEvents$ModifyContext",
+   "method": "modify(Ljava/util/function/Predicate;Lnet/fabricmc/fabric/api/item/v1/DefaultItemComponentEvents$ModifyConsumer;)V",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiFills.modify(Lnet/fabricmc/fabric/api/item/v1/DefaultItemComponentEvents$ModifyContext;Ljava/util/function/Predicate;Lnet/fabricmc/fabric/api/item/v1/DefaultItemComponentEvents$ModifyConsumer;)V",
+   "basis": "26.1 made modify(predicate, ModifyConsumer) the abstract method (1.21.11's modify(predicate, BiConsumer) is now a default calling it): a 1.21.11 context's own modify(predicate, BiConsumer) answers, the consumer's registry lookup being the one 26.1's Fabric API binds while default item components are built"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant",
+   "method": "typeHolder()Lnet/minecraft/class_6880;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiFills.typeHolder(Lnet/fabricmc/fabric/api/transfer/v1/storage/TransferVariant;)Lnet/minecraft/class_6880;",
+   "basis": "26.1's TransferVariant extends TypedInstance: typeHolder() is getObject()'s holder in the built-in registry holding it, as 26.1's ItemVariant / FluidVariant defaults answer (they need no fill)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext",
+   "method": "bufferSource()Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts.bufferSource(Lnet/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext;)Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
+   "basis": "26.1's LevelRenderContext made bufferSource() (a BufferSource) abstract; a 1.21.11 context's consumers() is renamed bufferSource() (a MultiBufferSource) and answers it when it is a BufferSource, as 1.21.11's own context's was"
+  }
+ ],
+ "_swfapi_recipeRemainder_basis": "FabricItem / FabricItemStack.getRecipeRemainder answered an ItemStack in 1.21.11 (EMPTY for none); 26.1's getCraftingRemainder answers an ItemStackTemplate (null for none). Calls convert 26.1's answer (CbFapiItems.stack), dispatched virtually so the item's override answers; super calls run 1.21.11's default bodies; overrides are reached through 26.1's shape (overrideHooks).",
+ "_swfapi_tagRemoval_basis": "26.1's Fabric API dropped tag removal: FabricTagFile.remove() and the \"fabric:remove\" list of tag files (loaded and applied by 1.21.11's TagLoaderMixin, mixin/CbFapiTagLoaderMixin + rt/CbFapiTagRemovals, 1.21.11's TagRemovalInternals member for member), and datagen's FabricProvidedTagBuilder.remove/removeAll/removeTag (recorded on the TagBuilder, written into the TagFile: CbFapiTagBuilderMixin, CbFapiTagsProviderMixin, CbFapiTagFileMixin). As in 1.21.11 only vanilla's builder-backed appender removes; any other appender and a mod's super call get 1.21.11's AssertionError(\"Implemented via mixin\").",
+ "fieldRedirects": {
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_ENTITIES:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.AFTER_ENTITIES:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_DEBUG_RENDER:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_TRANSLUCENT:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents"
+ },
+ "_swfapi_worldRender_basis": "WorldRenderEvents' BEFORE_ENTITIES / AFTER_ENTITIES / BEFORE_DEBUG_RENDER / BEFORE_TRANSLUCENT are gone in 26.1's LevelRenderEvents: given back with 1.21.11's listener types (CbWorldRenderEvents) and fired at the matching points of 26.1's main pass (CbFapiLevelRendererMixin) with the frame's render context; WorldExtractionContext's frustum / viewMatrix / cullProjectionMatrix / blockOutlines read off the camera and GameRenderer (CbFapiWorldContexts)"
+}
