@@ -686,6 +686,7 @@ public final class MixinRepair {
             if (a == null || a == POSITIONAL || a.ordinal < 0) continue;
             changed |= remapOne(at, a, vm, wm, where, notes);
         }
+        changed |= splitSites(an, refmap, vm, wm, where, notes);
         for (Object c : list(raw(an, "constant"))) {
             if (!(c instanceof AnnotationNode cn)) continue;
             Map<String, Object> cv = values(cn);
@@ -698,6 +699,46 @@ public final class MixinRepair {
             changed |= remapOne(cn, new Anchor("CONSTANT", null, null, null, val, ord), vm, wm, where, notes);
         }
         return changed;
+    }
+
+    /**
+     * sites-split: an @Inject whose single @At names its anchor without an ordinal injects at every
+     * occurrence; where W holds the anchor more often than V and each V occurrence has its W counterpart
+     * (SiteMatch), the @At becomes one @At per counterpart, pinned by ordinal -- the injector fires
+     * where V's code did and not at the occurrences W added. With a V occurrence left without a
+     * counterpart nothing is changed (reported).
+     */
+    private static boolean splitSites(AnnotationNode an, JsonObject refmap, MethodNode vm, MethodNode wm, String where, List<String> notes) {
+        if (!an.desc.equals(INJECT) || raw(an, "slice") != null) return false;
+        List<Object> ats = list(raw(an, "at"));
+        if (ats.size() != 1 || !(ats.get(0) instanceof AnnotationNode at)) return false;
+        Anchor a = parseAt(values(at), refmap);
+        if (a == null || a == POSITIONAL || a.ordinal >= 0) return false;
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> matchesAnchor(in, a));
+        if (vo.isEmpty() || wo.size() <= vo.size()) return false;
+        int[] map = SiteMatch.match(vm, vo, wm, wo);
+        for (int j : map) {
+            if (j < 0) {
+                notes.add("sites-unmatched " + where + " " + a + ": W holds it " + wo.size() + " times, V " + vo.size()
+                    + ", not every V occurrence has a counterpart; left injecting at all");
+                return false;
+            }
+        }
+        List<Object> split = new ArrayList<>();
+        for (int j : map) {
+            AnnotationNode copy = new AnnotationNode(at.desc);
+            copy.values = new ArrayList<>(at.values == null ? List.of() : at.values);
+            copy.values.add("ordinal");
+            copy.values.add(j);
+            split.add(copy);
+        }
+        for (int i = 0; i + 1 < an.values.size(); i += 2) {
+            if ("at".equals(an.values.get(i))) an.values.set(i + 1, split);
+        }
+        notes.add("sites-split " + where + " " + a + " -> #" + java.util.Arrays.toString(map) + " of W's " + wo.size()
+            + " (V's " + vo.size() + " occurrences, by context)");
+        return true;
     }
 
     /** an annotation value as stored (nested annotations stay AnnotationNodes) */

@@ -419,6 +419,12 @@ public final class MixinJudge {
         if (anchors == null) {
             return null; // not evaluable statically: not judged (MixinRepair leaves it alone too)
         }
+        if (source != null && anchors.size() > 1 && rowOrdinal < 0) {
+            String split = sites(anchors, wm);
+            if (split != null) {
+                return split.isEmpty() ? null : split;
+            }
+        }
         for (MixinRepair.Anchor a : anchors) {
             if (a.kind().equals("LOCAL")) {
                 continue;
@@ -492,6 +498,51 @@ public final class MixinJudge {
         }
         AbstractInsnNode cp = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in));
         return cp != null && wo.indexOf(cp) == a.ordinal() ? "" : null;
+    }
+
+    /**
+     * One anchor named once per site (MixinRepair sites-split: one @At per ordinal): "" when the ordinals
+     * are exactly the W counterparts of the row's V occurrences (SiteMatch.match), a fate when they are
+     * not, null when these are not one anchor at several ordinals standing for the row's anchor.
+     */
+    private String sites(List<MixinRepair.Anchor> anchors, MethodNode wm) {
+        MixinRepair.Anchor a = anchors.get(0);
+        Set<Integer> ords = new HashSet<>();
+        for (MixinRepair.Anchor x : anchors) {
+            if (!x.role().equals("main") || x.ordinal() < 0 || !x.kind().equals(a.kind()) || !java.util.Objects.equals(x.owner(), a.owner())
+                    || !java.util.Objects.equals(x.name(), a.name()) || !java.util.Objects.equals(x.desc(), a.desc())
+                    || !java.util.Objects.equals(x.constant(), a.constant())) {
+                return null;
+            }
+            ords.add(x.ordinal());
+        }
+        MixinRepair.Anchor va = indexAnchor(rowAnchor);
+        ClassNode vc = source.target(rowOwner);
+        int p = rowTarget.indexOf('(');
+        if (va == null || vc == null || p < 0 || !va.kind().equals(a.kind()) || !java.util.Objects.equals(va.owner(), a.owner())
+                || !java.util.Objects.equals(va.name(), a.name()) || !java.util.Objects.equals(va.desc(), a.desc())
+                || !java.util.Objects.equals(va.constant(), a.constant())) {
+            return null;
+        }
+        MethodNode vm = null;
+        for (MethodNode m : vc.methods) {
+            if (m.name.equals(rowTarget.substring(0, p)) && m.desc.equals(rowTarget.substring(p))) {
+                vm = m;
+            }
+        }
+        if (vm == null) {
+            return null;
+        }
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> MixinRepair.matchesAnchor(in, va));
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, a));
+        Set<Integer> want = new HashSet<>();
+        for (int j : SiteMatch.match(vm, vo, wm, wo)) {
+            if (j < 0) {
+                return "anchor sites: a V occurrence has no counterpart in W";
+            }
+            want.add(j);
+        }
+        return want.equals(ords) ? "" : "anchor sites differ (pinned " + ords + ", V's counterparts " + want + ")";
     }
 
     /** an anchor as the probe index writes it: INVOKE Lo;n(d)r, FIELD Lo;n:d, NEW o, CONSTANT xValue=v */
