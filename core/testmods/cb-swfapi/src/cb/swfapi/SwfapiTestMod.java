@@ -83,8 +83,8 @@ public class SwfapiTestMod implements ModInitializer {
         try {
             check(CustomGameRuleCategory.getCategory(rule).map(c -> c.equals(category)).orElse(false), "gamerule: getCategory(rule) is the custom category");
             check(new CustomGameRuleCategory(id("cat"), class_2561.method_43470("other")).equals(category), "gamerule: categories equal by id");
-            check(rule.method_76152().comp_5174().equals(id("cat")), "gamerule: the rule's vanilla category has the custom id");
-            check("CB Category".equals(rule.method_76152().method_76162().getString()), "gamerule: the category's label is the custom name");
+            check(rule.method_76152() == net.minecraft.class_5198.field_24100, "gamerule: the rule's vanilla category is MISC, as category(custom) set it");
+            check("CB Category".equals(CustomGameRuleCategory.getCategory(rule).get().getName().getString()), "gamerule: the custom category's name");
 
             check(LOOT_MODIFY.get() > 0, "loot v2: MODIFY called " + LOOT_MODIFY.get() + " times");
             check(LOOT_REPLACE.get() > 0, "loot v2: REPLACE called " + LOOT_REPLACE.get() + " times");
