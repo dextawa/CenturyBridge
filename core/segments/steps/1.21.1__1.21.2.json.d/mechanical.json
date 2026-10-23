@@ -33,38 +33,6 @@
    ],
    "basis": "mechanical: same values; dropped Lnet/minecraft/class_3695;,Lnet/minecraft/class_3695;: no body of V reads it, but net/minecraft/class_3302 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
-  "net/minecraft/class_2348.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": {
-   "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_7922.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": {
-   "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_2370.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": {
-   "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_2378.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": {
-   "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
   "net/minecraft/class_5349.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
    "desc": "(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
    "ops": [
