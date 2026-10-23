@@ -41,6 +41,7 @@ STEP = "top/dext/centurybridge/step/v1_21_2"
 RT = STEP + "/rt"
 MIX = STEP + "/mixin"
 LEVELS = RT + "/CbEntityLevels"
+GUARD = RT + "/Guard"
 MC = "net/minecraft/"
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -251,11 +252,12 @@ def moj_names():
     return cm
 
 
-def frame_defaults(W, cm):
-    """frameDefaults for every mechanical hook of this area whose missing argument is a ServerLevel"""
+def frame_defaults(W, cm, own):
+    """frameDefaults for every hook of this area (this fragment's and mechanical.json's) whose missing argument
+    is a ServerLevel"""
     out = {}
     mech = json.load(open(MECHANICAL, encoding="utf-8"))
-    for h in mech.get("overrideHooks", []):
+    for h in own + mech.get("overrideHooks", []):
         under = h["onlyUnder"]
         top = under.split("$")[0]
         if not cm.get(top, "").startswith(MC + "world/entity/"):
@@ -280,7 +282,7 @@ def main():
     V = load(sys.argv[1])
     W = load(sys.argv[2])
     cm = moj_names()
-    frag = {"instanceRedirects": {}, "staticRedirects": {}, "frameDefaults": frame_defaults(W, cm)}
+    frag = {"instanceRedirects": {}, "staticRedirects": {}}
     bodies = []
     invokers = {}
     adapters = []
@@ -344,6 +346,21 @@ def main():
             # level its own override answers, as the virtual call did in 1.21.1
             legacy = f"Legacy_{name}"
             adapters.append((o, legacy, name, vdesc))
+            # the override hook (frames + superCalls rewrite): each old parameter from the new argument at its
+            # place, the old Level from the ServerLevel; owned here, since the adapter above marks the shape
+            # wired for gen_step_reshapes (which then leaves it out of mechanical.json)
+            idx = []
+            for j in range(len(vargs)):
+                if lvl.startswith("lvl:") and j == int(lvl[4:]):
+                    idx.append(k)
+                else:
+                    pos = kept.index(j)
+                    idx.append(pos if pos < k else pos + 1)
+            frag.setdefault("overrideHooks", []).append({
+                "old": name + vdesc, "new": name + wm.desc, "args": idx, "onlyUnder": o, "frames": GUARD,
+                "superCalls": "rewrite",
+                "basis": "the 1.21.2 shape with the level threaded in answers through the 1.21.1 override; its super "
+                         "call gets the level vanilla passed (frameDefaults: the entity's own)"})
             out.append(f"            if (self instanceof {legacy} legacy) {{")
             out.append(f"                {'return ' if ret != 'void' else ''}legacy.{name}({', '.join(f'a{i}' for i in range(len(vargs)))});")
             if ret == "void":
@@ -371,6 +388,7 @@ def main():
         ps = ", ".join(f"{jtype(t)} a{i}" for i, t in enumerate(args))
         bodies.append(f"    /** the 1.21.1 {name}{vdesc} a mod class of {o} declares */\n"
                       f"    public interface {legacy} {{\n        {jtype(r)} {name}({ps});\n    }}")
+    frag["frameDefaults"] = frame_defaults(W, cm, frag.get("overrideHooks", []))
     write_java(bodies)
     write_invokers(invokers)
     write_fragment(frag)

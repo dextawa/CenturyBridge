@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s7gear",
+ "version": "1.0.0",
+ "name": "CB Step-7 Gear Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.s7gear.GearTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.1" }
+}

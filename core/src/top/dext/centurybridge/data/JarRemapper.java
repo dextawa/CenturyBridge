@@ -50,6 +50,15 @@ public final class JarRemapper {
         public final java.util.Map<String, String> members = new java.util.HashMap<>();
         /** how many bare ids were ambiguous (owner-qualified lookup only) */
         public int ambiguous;
+        /**
+         * The target release's game classes and whether each is an interface (null: not known). 26.1 made
+         * some 1.21.11 interfaces classes (GpuDevice, CommandEncoder, RenderPass wrap a backend now) and
+         * could do the reverse; a call keeps the invoke kind and the interface flag of the type it was
+         * compiled against, which the JVM refuses on the other kind (IncompatibleClassChangeError at the
+         * first call). With this set the rename gives every call, method handle and invokedynamic argument
+         * the kind the target declares the owner as.
+         */
+        public java.util.Map<String, Boolean> targetKinds;
 
         public Remapper remapper() {
             return new Remapper() {
@@ -95,6 +104,23 @@ public final class JarRemapper {
                     // and takes the accessor's mojang name
                     return name.startsWith("field_") || name.startsWith("comp_") ? member(owner, name) : name;
                 }
+
+                /**
+                 * A lambda or method reference names the functional interface's method in its
+                 * invokedynamic (LambdaMetafactory: the call site's name is the SAM's, the interface is
+                 * the descriptor's return type). ASM's default keeps that name, so a 1.21.11 lambda for a
+                 * vanilla interface crossed the wall still implementing method_NNNN -- an
+                 * AbstractMethodError at the first call. Other bootstraps (string concatenation, record
+                 * object methods, pattern switches) never carry a token name and stay as they are.
+                 */
+                @Override
+                public String mapInvokeDynamicMethodName(String name, String desc) {
+                    if (!name.startsWith("method_") && !name.startsWith("comp_")) {
+                        return name;
+                    }
+                    org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(desc);
+                    return ret.getSort() == org.objectweb.asm.Type.OBJECT ? member(ret.getInternalName(), name) : name;
+                }
             };
         }
     }
@@ -129,7 +155,15 @@ public final class JarRemapper {
     }
 
     public static void remapWithTable(Path tsv, Path inJar, Path outJar) throws IOException {
+        remapWithTable(tsv, inJar, outJar, null);
+    }
+
+    /** as above; with {@code targetJar}, calls also take the invoke kind the target declares their owner as ({@link Table#targetKinds}) */
+    public static void remapWithTable(Path tsv, Path inJar, Path outJar, Path targetJar) throws IOException {
         Table table = loadTable(tsv);
+        if (targetJar != null && Files.exists(targetJar)) {
+            table.targetKinds = loadKinds(targetJar);
+        }
         int nClasses;
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
              ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(outJar))) {
@@ -235,7 +269,7 @@ public final class JarRemapper {
                 }
                 ClassReader cr = new ClassReader(data);
                 ClassWriter cw = new ClassWriter(0);
-                cr.accept(new ClassRemapper(cw, remapper), 0);
+                cr.accept(new ClassRemapper(table.targetKinds == null ? cw : new KindFix(cw, table.targetKinds), remapper), 0);
                 String outName = remapper.map(cr.getClassName()) + ".class";
                 if (!outName.equals(e.getName()) && !written.add(outName)) {
                     continue;
@@ -379,5 +413,84 @@ public final class JarRemapper {
             }
         }
         System.out.println("remapped " + classes + " classes -> " + outJar);
+    }
+
+    /** every game class of a jar and whether it is an interface */
+    private static java.util.Map<String, Boolean> loadKinds(Path jar) throws IOException {
+        java.util.Map<String, Boolean> kinds = new java.util.HashMap<>();
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(jar))) {
+            ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                String n = e.getName();
+                if (!n.endsWith(".class") || !(n.startsWith("net/minecraft/") || n.startsWith("com/mojang/"))) {
+                    continue;
+                }
+                ClassReader cr = new ClassReader(zin.readAllBytes());
+                kinds.put(cr.getClassName(), (cr.getAccess() & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0);
+            }
+        }
+        return kinds;
+    }
+
+    /** gives calls on target game classes the invoke kind the target declares the owner as (runs after the rename) */
+    private static final class KindFix extends org.objectweb.asm.ClassVisitor {
+        private final java.util.Map<String, Boolean> kinds;
+
+        KindFix(org.objectweb.asm.ClassVisitor cv, java.util.Map<String, Boolean> kinds) {
+            super(org.objectweb.asm.Opcodes.ASM9, cv);
+            this.kinds = kinds;
+        }
+
+        private org.objectweb.asm.Handle fix(org.objectweb.asm.Handle h) {
+            Boolean itf = this.kinds.get(h.getOwner());
+            if (itf == null || itf == h.isInterface()) {
+                return h;
+            }
+            int tag = h.getTag();
+            if (tag == org.objectweb.asm.Opcodes.H_INVOKEINTERFACE && !itf) {
+                tag = org.objectweb.asm.Opcodes.H_INVOKEVIRTUAL;
+            } else if (tag == org.objectweb.asm.Opcodes.H_INVOKEVIRTUAL && itf) {
+                tag = org.objectweb.asm.Opcodes.H_INVOKEINTERFACE;
+            }
+            return new org.objectweb.asm.Handle(tag, h.getOwner(), h.getName(), h.getDesc(), itf);
+        }
+
+        private Object fixValue(Object v) {
+            return v instanceof org.objectweb.asm.Handle h ? fix(h) : v;
+        }
+
+        @Override
+        public org.objectweb.asm.MethodVisitor visitMethod(int acc, String name, String desc, String sig, String[] exc) {
+            org.objectweb.asm.MethodVisitor mv = super.visitMethod(acc, name, desc, sig, exc);
+            return mv == null ? null : new org.objectweb.asm.MethodVisitor(org.objectweb.asm.Opcodes.ASM9, mv) {
+                @Override
+                public void visitMethodInsn(int op, String owner, String n, String d, boolean itf) {
+                    Boolean want = KindFix.this.kinds.get(owner);
+                    if (want != null && want != itf) {
+                        if (op == org.objectweb.asm.Opcodes.INVOKEINTERFACE && !want) {
+                            op = org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
+                        } else if (op == org.objectweb.asm.Opcodes.INVOKEVIRTUAL && want) {
+                            op = org.objectweb.asm.Opcodes.INVOKEINTERFACE;
+                        }
+                        itf = want;
+                    }
+                    super.visitMethodInsn(op, owner, n, d, itf);
+                }
+
+                @Override
+                public void visitInvokeDynamicInsn(String n, String d, org.objectweb.asm.Handle bsm, Object... args) {
+                    Object[] fixed = new Object[args.length];
+                    for (int i = 0; i < args.length; i++) {
+                        fixed[i] = fixValue(args[i]);
+                    }
+                    super.visitInvokeDynamicInsn(n, d, fix(bsm), fixed);
+                }
+
+                @Override
+                public void visitLdcInsn(Object value) {
+                    super.visitLdcInsn(fixValue(value));
+                }
+            };
+        }
     }
 }

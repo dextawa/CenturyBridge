@@ -1067,9 +1067,7 @@
     "net/minecraft/class_1123": "top/dext/centurybridge/step/v1_21/facade/RefreshableSearchTree",
     "net/minecraft/class_7454": "top/dext/centurybridge/step/v1_21/facade/PlainTextSearchTree"
   },
-  "facadeGaps": {
-    "net/minecraft/class_317.<init>(FJ)V": "Timer(ticksPerSecond, now) is 1.20.2's constructor; 1.20.3 replaced it with (ticksPerSecond, now, targetMsptProvider) and the 1.20.2 -> 1.20.3 step reshapes every call into that one (CbClient.cbFixedTickRate), so no class climbing into 1.20.6 names it"
-  },
+  "facadeGaps": {},
   "fieldRedirects": {
     "net/minecraft/class_927.field_32940:I": "top/dext/centurybridge/step/v1_21/rt/CbClientModels",
     "net/minecraft/class_4905.field_33042:I": "top/dext/centurybridge/step/v1_21/rt/CbClientGui",

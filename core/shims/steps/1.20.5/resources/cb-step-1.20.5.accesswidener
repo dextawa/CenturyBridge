@@ -1025,6 +1025,9 @@ accessible method net/minecraft/class_5350 <init> (Lnet/minecraft/class_5455$cla
 accessible field net/minecraft/class_442 field_32271 Lnet/minecraft/class_2561;
 accessible method net/minecraft/class_6864 method_40106 (Lnet/minecraft/class_5321;Lnet/minecraft/class_2378;Lnet/minecraft/class_6864$class_5748;Lnet/minecraft/class_6864$class_6865;)V
 accessible method net/minecraft/class_7196 method_55510 (Lnet/minecraft/class_1066;Lnet/minecraft/class_32$class_5143;)Ljava/util/concurrent/CompletableFuture;
+# s4client: WorldOpenFlows.loadBundledResourcePack is private in 1.20.5 (public in 1.20.4); made accessible it would be final, and a 1.20.4
+# subclass's override would not load: extendable keeps it overridable, so 1.20.5's own call reaches the override as 1.20.4's did
+extendable method net/minecraft/class_7196 method_55510 (Lnet/minecraft/class_1066;Lnet/minecraft/class_32$class_5143;)Ljava/util/concurrent/CompletableFuture;
 accessible field net/minecraft/class_8956 field_47579 Lnet/minecraft/class_8956$class_9036;
 accessible method net/minecraft/class_3951 <init> (I)V
 
@@ -1430,3 +1433,12 @@ accessible method net/minecraft/class_1845 <init> (Ljava/util/List;Ljava/util/Li
 # s4fin: MerchantOffer(MerchantOffer) is private in 1.20.5; a 1.20.4 subclass's super(tag) is reshaped onto it with the offer the
 # tag decodes to (rt/CbFinItemTrading.fromTag: 1.20.5's offer codec reads 1.20.4's keys)
 accessible method net/minecraft/class_1914 <init> (Lnet/minecraft/class_1914;)V
+
+
+# s4fin: UUIDUtil.CODEC / STRING_CODEC were writable in 1.20.4 (a mod's put-static); final in 1.20.5
+mutable field net/minecraft/class_4844 field_40825 Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/class_4844 field_46588 Lcom/mojang/serialization/Codec;
+# s4fin: StoringChunkProgressListener's constructor is private in 1.20.5; a 1.20.4 subclass's super(radius) is reshaped onto it
+accessible method net/minecraft/class_3953 <init> (Lnet/minecraft/class_3951;III)V
+# s4fin: BundleTooltip, a class 1.20.4 mods could extend, is a (final) record in 1.20.5; reopened for the 1.20.4 subclass (CbFinBundleTooltipMixin)
+extendable class net/minecraft/class_5631

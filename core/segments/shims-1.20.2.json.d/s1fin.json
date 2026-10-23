@@ -360,6 +360,33 @@
    ],
    "synth": [],
    "basis": "s1fin: a 1.20.1 CriterionProgress subclass's serializeToJson answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyListenerFeatures",
+   "requires": [
+    "method_45728(Lnet/minecraft/class_7832;)V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 ClientPlayPacketListener implementation's onFeatures: 1.20.2 sends the features to the configuration listener of the connection; the listener gets that packet after the login packet, where 1.20.1's server sent it (CbNetListenerFeaturesDelivery, CbNetListenerConfigFeatures)"
+  },
+  {
+   "under": "net/minecraft/class_3248",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyLogin$Accept",
+   "requires": [
+    "method_14384()V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 ServerLoginNetworkHandler subclass's acceptPlayer override: called in place of 1.20.2's verifyLoginAndFinishConnectionSetup, which tick() calls in the state 1.20.1 called acceptPlayer (CbNetLoginOverridesBridge)"
+  },
+  {
+   "under": "net/minecraft/class_3248",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyLogin$OfflineProfile",
+   "requires": [
+    "method_14375(Lcom/mojang/authlib/GameProfile;)Lcom/mojang/authlib/GameProfile;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 ServerLoginNetworkHandler subclass's toOfflineProfile override: answers in place of 1.20.2's createOfflineProfile(name) in handleHello (CbNetLoginOverridesBridge)"
   }
  ],
  "superRedirects": {
@@ -436,7 +463,9 @@
  },
  "covers": [
   "net/minecraft/class_4550$class_4710.method_37214(Ljava/lang/Iterable;)Lnet/minecraft/class_4550$class_4710;",
-  "net/minecraft/class_4553$class_4557.method_35311(Lnet/minecraft/class_3445;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_4553$class_4557;"
+  "net/minecraft/class_4553$class_4557.method_35311(Lnet/minecraft/class_3445;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_4553$class_4557;",
+  "net/minecraft/class_4325.method_20870()Z",
+  "net/minecraft/class_4325.method_35682(Z)V"
  ],
  "classRenames": {
   "net/minecraft/class_167$class_168": "top/dext/centurybridge/facade/v1_20_2/class_167$class_168",
@@ -599,6 +628,62 @@
     "top/dext/centurybridge/rt/v1_20_2/CbAdvGeneric#advancementConsumer(Ljava/util/function/Consumer;)Ljava/util/function/Consumer;"
    ],
    "basis": "s1fin generic: a 1.20.1 generate(lookup, consumer) override hands the consumer advancements; 1.20.2's consumer takes them as their holders"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_2547",
+   "method": "method_52895()Lnet/minecraft/class_2598;",
+   "call": "top/dext/centurybridge/rt/v1_20_2/CbNetListeners.method_52895(Lnet/minecraft/class_2547;)Lnet/minecraft/class_2598;",
+   "basis": "1.20.2 asks a listener its flow when attaching it; a 1.20.1 listener is the listener of the connection it is attached to and answers that connection's receiving side"
+  },
+  {
+   "under": "net/minecraft/class_2547",
+   "method": "method_52280()Lnet/minecraft/class_2539;",
+   "call": "top/dext/centurybridge/rt/v1_20_2/CbNetListeners.method_52280(Lnet/minecraft/class_2547;)Lnet/minecraft/class_2539;",
+   "basis": "1.20.2 asks a listener its protocol when attaching it; 1.20.1's connection took any listener for the protocol it was in, so the listener answers the connection's current inbound protocol"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_52799(Lnet/minecraft/class_8738;)V",
+   "call": "top/dext/centurybridge/rt/v1_20_2/CbNetListeners.method_52799(Lnet/minecraft/class_2602;Lnet/minecraft/class_8738;)V",
+   "basis": "chunk batch finished: acknowledged with the most chunks per tick 1.20.2's chunk sender grants (1.20.1's server sent chunks without waiting)"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_52800(Lnet/minecraft/class_8739;)V",
+   "call": "top/dext/centurybridge/rt/v1_20_2/CbNetListeners.method_52800(Lnet/minecraft/class_2602;Lnet/minecraft/class_8739;)V",
+   "basis": "chunk batch start: vanilla only times the batch for its rate estimate, which the maximal acknowledgement does not need"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_12666(Lnet/minecraft/class_2923;)V",
+   "call": "top/dext/centurybridge/rt/v1_20_2/CbNetListeners.method_12666(Lnet/minecraft/class_2602;Lnet/minecraft/class_2923;)V",
+   "basis": "pong: answers a play-phase ping request, which 1.20.1's play protocol did not have, so the listener cannot have sent one"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_52798(Lnet/minecraft/class_8588;)V",
+   "call": "top/dext/centurybridge/rt/v1_20_2/CbNetListeners.method_52798(Lnet/minecraft/class_2602;Lnet/minecraft/class_8588;)V",
+   "basis": "start configuration: a 1.20.1 play listener has no configuration phase; the connection is closed with the reason, as 1.20.1 did with a packet outside its protocol"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_12697(Lnet/minecraft/class_2935;)V",
+   "call": "top/dext/centurybridge/rt/v1_20_2/CbNetListeners.method_12697(Lnet/minecraft/class_2792;Lnet/minecraft/class_2935;)V",
+   "basis": "ping request: answered with a pong carrying its time, as 1.20.2's ServerGamePacketListenerImpl does"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_52278(Lnet/minecraft/class_8590;)V",
+   "call": "top/dext/centurybridge/rt/v1_20_2/CbNetListeners.method_52278(Lnet/minecraft/class_2792;Lnet/minecraft/class_8590;)V",
+   "basis": "chunk batch received: the acknowledgement 1.20.2's chunk sender (owned by ServerGamePacketListenerImpl) waits for; a 1.20.1 listener sends chunks itself without batches"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_52279(Lnet/minecraft/class_8591;)V",
+   "call": "top/dext/centurybridge/rt/v1_20_2/CbNetListeners.method_52279(Lnet/minecraft/class_2792;Lnet/minecraft/class_8591;)V",
+   "basis": "configuration acknowledged: a 1.20.1 listener never asks for reconfiguration; refused with vanilla 1.20.2's own exception for an unrequested acknowledgement"
   }
  ]
 }

@@ -166,6 +166,9 @@ public final class Chain {
      * setter converts) or one that is gone and lives on as other state (1.20.2 AbstractSelectionList's
      * x0/x1/y0/y1/width/height, which 1.20.3 keeps as the widget's geometry: a write moves the widget,
      * as the field write moved the list). Found up the hierarchy from the site's owner, as a getter.
+     * Both also serve a library (Fabric API) owner, found as the JVM resolves the field (a mod subclass
+     * reading its Fabric API superclass's protected field under its own name: 1.21.11's
+     * GameRuleBuilder.fabricCategory); the static takes the receiver as the keyed library class.
      */
     public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
     /**
@@ -217,12 +220,29 @@ public final class Chain {
 
     /** A cover/redirect recorded on any ancestor applies to this call site too. */
     public boolean coveredAnywhere(String owner, String nameDesc) {
+        return coverHome(owner, nameDesc) != null;
+    }
+
+    /** The class (owner or an ancestor) whose shim cover serves the member, nearest first; null when uncovered. */
+    public String coverHome(String owner, String nameDesc) {
         for (String o : selfAndSupers(owner)) {
             if (shimCovers.contains(o + "." + nameDesc)) {
-                return true;
+                return o;
             }
         }
-        return false;
+        return null;
+    }
+
+    /**
+     * Whether an instance redirect keys the member on a class strictly between the call's owner (inclusive)
+     * and the class whose cover would serve it: the nearer declaration wins, as the JVM's resolution would
+     * have found the source's own override first (1.20.4 IntegratedServer.logTickTime, public, over the
+     * protected MinecraftServer.logTickTime a mixin gives back: the cover alone left a mod's call resolving
+     * to the protected one -- an IllegalAccessError -- and skipped IntegratedServer's own redirect).
+     */
+    public boolean instanceRedirectNearerThanCover(String owner, String nameDesc, String coverHome) {
+        String home = redirectHome(instanceRedirects, owner, nameDesc);
+        return home != null && !home.equals(coverHome) && selfAndSupers(home).contains(coverHome);
     }
 
     /** Look a member up in a redirect map, walking the hierarchy. */

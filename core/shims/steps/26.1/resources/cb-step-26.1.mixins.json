@@ -3,8 +3,29 @@
   "minVersion": "0.8",
   "package": "top.dext.centurybridge.step.v26_1.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [],
-  "client": [],
+  "mixins": [
+    "CbFapiGameRuleCategoryAccess",
+    "CbFapiGameRuleCategoryMixin",
+    "CbFapiTagAppenderAccess",
+    "CbFapiTagBuilderMixin",
+    "CbFapiTagEntryAccess",
+    "CbFapiTagFileMixin",
+    "CbFapiTagLoaderMixin",
+    "CbFapiTagsProviderMixin",
+    "CbFapiTooltipFlagMixin",
+    "CbWallServerMixin"
+  ],
+  "client": [
+    "CbFapiCameraAccess",
+    "CbFapiGameRendererAccess",
+    "CbFapiHudRenderCallbackMixin",
+    "CbFapiLevelRendererMixin",
+    "CbWallBlockStateModelSetMixin",
+    "CbWallClientLevelDataMixin",
+    "CbWallClientRainMixin",
+    "CbWallGuiAccess",
+    "CbWallModelBlockRendererAccess"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

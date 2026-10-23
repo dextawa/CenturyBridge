@@ -39,8 +39,12 @@ public final class SourceStubs implements AutoCloseable {
         if (t < 0) {
             throw new IllegalArgumentException("unknown target version " + targetVersion);
         }
+        // -Dcb.sourceStubs=previous (build.sh, for a climb step's layer): only the release right before the
+        // target. A step layer serves mods entering at that release -- every older reference was converted by
+        // the steps before it -- so its facades answer for that release's classes, not every release's.
+        int last = "previous".equals(System.getProperty("cb.sourceStubs")) ? Math.max(t - 1, 0) : 0;
         SourceStubs s = new SourceStubs();
-        for (int i = t - 1; i >= 0; i--) {
+        for (int i = t - 1; i >= last; i--) {
             Path stub = stubDir.resolve("client-" + releases.get(i) + "-intermediary.jar");
             if (Files.exists(stub)) {
                 s.jars.add(new ZipFile(stub.toFile()));
