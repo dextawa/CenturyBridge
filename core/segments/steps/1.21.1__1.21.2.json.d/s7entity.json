@@ -597,7 +597,8 @@
   "net/minecraft/class_8949.method_55009()D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetSnoutYPosition",
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
-  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild"
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#fabricBuild"
  },
  "overrideHooks": [
   {
