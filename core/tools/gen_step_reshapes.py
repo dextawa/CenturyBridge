@@ -34,7 +34,8 @@ handles are skipped ("wired"). The output is a wiring fragment for the step
 (<step wiring>.d/mechanical.json, see engine/Wiring.java) and a report of every row.
 
   python gen_step_reshapes.py <damage.tsv> <V code jar> <W stub jar> <step wiring.json> <guard class> <out report.tsv>
-         [--wall <inter-to-mojang-1.21.11.tsv>]   (the 1.21.11 -> 26.1 step: V intermediary, W mojang)
+         [--wall <wall table>]   (the 1.21.11 -> 26.1 step: V intermediary, W mojang; the table the
+                                  step's target reads names with: python3 core/tools/wall_tables.py 26.1)
 """
 import collections
 import json
@@ -347,6 +348,13 @@ def main():
                         shapes_w.append((c, m))
         if not shapes_w:
             note(r, "design", "W has no member of this name on the owner or its supertypes")
+            continue
+        # across the wall: W declares the member under the translated name with the translated descriptor
+        # -- the whole-jar rename links it (a member the table renames: GuiGraphics.drawString is
+        # GuiGraphicsExtractor.text, same code); a reshape to the same shape would do nothing
+        tdesc = "(" + "".join(oa) + ")" + orr
+        if wall.cmap and any(m.desc == tdesc for _, m in shapes_w):
+            note(r, "renamed", f"the wall table's rename links it as {wowner}.{wname}{tdesc}")
             continue
         if override:
             if name == "<init>":
