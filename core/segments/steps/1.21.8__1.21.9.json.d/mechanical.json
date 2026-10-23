@@ -72,6 +72,16 @@
    ],
    "basis": "mechanical: same values"
   },
+  "net/minecraft/class_10480.method_65654(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;ILnet/minecraft/class_1297;)F": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;ILnet/minecraft/class_11566;)F",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3 Lnet/minecraft/class_11566;"
+   ],
+   "basis": "mechanical: same values"
+  },
   "net/minecraft/class_10471.method_65644(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_1309;I)F": {
    "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;Lnet/minecraft/class_11566;I)F",
    "ops": [
@@ -79,6 +89,16 @@
     "keep:1",
     "keep:2 Lnet/minecraft/class_11566;",
     "keep:3"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_10473.method_65654(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;ILnet/minecraft/class_1297;)F": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;ILnet/minecraft/class_11566;)F",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3 Lnet/minecraft/class_11566;"
    ],
    "basis": "mechanical: same values"
   },
@@ -119,6 +139,16 @@
     "keep:1",
     "keep:2 Lnet/minecraft/class_11566;",
     "keep:3"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_10483.method_65654(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;ILnet/minecraft/class_1297;)F": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_638;ILnet/minecraft/class_11566;)F",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3 Lnet/minecraft/class_11566;"
    ],
    "basis": "mechanical: same values"
   },
@@ -283,12 +313,39 @@
    "ret": "keep",
    "basis": "mechanical: same values; returns a subtype of the old type"
   },
+  "net/minecraft/class_7761.method_65823(Lnet/minecraft/class_2680;Lnet/minecraft/class_4719;)Lnet/minecraft/class_3879;": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_4719;)Lnet/minecraft/class_3879$class_9948;",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "ret": "keep",
+   "basis": "mechanical: same values; returns a subtype of the old type"
+  },
   "net/minecraft/class_837.method_32157(Lnet/minecraft/class_5599;Lnet/minecraft/class_4719;Z)Lnet/minecraft/class_3879;": {
    "desc": "(Lnet/minecraft/class_5599;Lnet/minecraft/class_4719;Z)Lnet/minecraft/class_3879$class_9948;",
    "ops": [
     "keep:0",
     "keep:1",
     "keep:2"
+   ],
+   "ret": "keep",
+   "basis": "mechanical: same values; returns a subtype of the old type"
+  },
+  "net/minecraft/class_837.method_65823(Lnet/minecraft/class_2680;Lnet/minecraft/class_4719;)Lnet/minecraft/class_3879;": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_4719;)Lnet/minecraft/class_3879$class_9948;",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "ret": "keep",
+   "basis": "mechanical: same values; returns a subtype of the old type"
+  },
+  "net/minecraft/class_10529.method_65823(Lnet/minecraft/class_2680;Lnet/minecraft/class_4719;)Lnet/minecraft/class_3879;": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_4719;)Lnet/minecraft/class_3879$class_9948;",
+   "ops": [
+    "keep:0",
+    "keep:1"
    ],
    "ret": "keep",
    "basis": "mechanical: same values; returns a subtype of the old type"

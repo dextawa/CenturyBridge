@@ -48,7 +48,7 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
       "$OUT/$SEG/control/link-findings.tsv" "$OUT/$SEG/control-report.tsv" > "$OUT/$SEG/control-report.txt" 2>&1
   rm -f "$OUT/$SEG/probe"/*.jar
   if [ "$V" = "1.21.11" ]; then
-    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main remap-mojang data/mappings/inter-to-mojang-1.21.11.tsv \
+    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main remap-mojang "$(python3 probe/wall_tables.py "$W")" \
         "$OUT/$SEG/probe-$V.jar" "$OUT/$SEG/probe/probe-$V-mojang.jar" >> "$OUT/$SEG/probe.log" 2>&1
   else
     cp "$OUT/$SEG/probe-$V.jar" "$OUT/$SEG/probe/"
@@ -58,7 +58,7 @@ for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
       "$(jar_of "$W")" "$(mods_of "$W")" "data/runtime/client-$W/libraries" > "$OUT/$SEG/linkcheck.log" 2>&1
   python3 probe/probe_report.py "$OUT/$SEG/probe-$V.jar.index.tsv" "$(ls "$OUT/$SEG/probe"/*.jar | head -1)" \
       "$OUT/$SEG/lc/link-findings.tsv" "$OUT/$SEG/report.tsv" > "$OUT/$SEG/report.txt" 2>&1
-  WALL=""; [ "$V" = "1.21.11" ] && WALL=data/mappings/inter-to-mojang-1.21.11.tsv
+  WALL=""; [ "$V" = "1.21.11" ] && WALL="$(python3 probe/wall_tables.py "$W")"
   python3 probe/segment_damage.py "$OUT/$SEG/report.tsv" "$(jar_of "$W")" "probe/fapi-damage/$SEG.damage.tsv" $WALL \
       --control "$OUT/$SEG/control-report.tsv" \
       --w-extra "$(mods_of "$W")" >> "$OUT/$SEG/report.txt" 2>&1

@@ -26,12 +26,20 @@ entry each. Every rule is read off both releases' class files:
                   hand); this emits the staticRedirects for every one the damage table lists and checks
                   CbAdvFactories declares it.
 
+  records    the predicates 1.20.2 turned into records (records()): 1.20.1 constructors reshaped onto the
+             record's, part by part (PART_CONVERSIONS / PART_DEFAULTS).
+  holders    members whose only change is Advancement -> AdvancementNode / AdvancementHolder (holders()):
+             calls converted both ways, overrides hooked, constructors reshaped (CbAdvNodes).
+  builders   the predicate builders' 1.20.1 setters, put back as covers (builders(): generated CbAdvBuilder*
+             mixins; "covers" entries of those builders are this generator's).
+
 A row no rule covers is left to the hand-written entries of the fragment. Generated entries carry
 "basis": "gen_s1adv: ..." (objects) or point at CbAdvTriggerIds / CbAdvFactories (string maps); the
 generator replaces exactly those and keeps the rest of the fragment.
 
   python core/tools/gen_s1adv.py <worktree root> <1.20.1 code jar> <1.20.2 code jar> <inter-to-mojang-classes.tsv>
 """
+import glob
 import json
 import os
 import re
@@ -271,6 +279,363 @@ def sentinels(root, vjar, wjar, V, W, table, report):
     return names, redirects
 
 
+RECORDS = RT + "/CbAdvRecords"
+
+# 1.20.1 constructor argument (its generic signature) -> 1.20.2 parameter (its signature): the converter
+# that turns the part a 1.20.1 constructor got into what the record takes for the same meaning
+PART_CONVERSIONS = {
+    ("Ljava/lang/Boolean;", "Ljava/util/Optional<Ljava/lang/Boolean;>;"): f"{RECORDS}#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_2048;", "Ljava/util/Optional<Lnet/minecraft/class_2048;>;"): f"{ANY}#entity(Lnet/minecraft/class_2048;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_2073;", "Ljava/util/Optional<Lnet/minecraft/class_2073;>;"): f"{ANY}#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_2022;", "Ljava/util/Optional<Lnet/minecraft/class_2022;>;"): f"{ANY}#damageSource(Lnet/minecraft/class_2022;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_2105;", "Ljava/util/Optional<Lnet/minecraft/class_2105;>;"): f"{ANY}#nbt(Lnet/minecraft/class_2105;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_4559;", "Ljava/util/Optional<Lnet/minecraft/class_4559;>;"): f"{ANY}#state(Lnet/minecraft/class_4559;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_4552;", "Ljava/util/Optional<Lnet/minecraft/class_4552;>;"): f"{ANY}#light(Lnet/minecraft/class_4552;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_4550;", "Ljava/util/Optional<Lnet/minecraft/class_4550;>;"): f"{ANY}#block(Lnet/minecraft/class_4550;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_4551;", "Ljava/util/Optional<Lnet/minecraft/class_4551;>;"): f"{ANY}#fluid(Lnet/minecraft/class_4551;)Ljava/util/Optional;",
+    ("Ljava/util/Set<Lnet/minecraft/class_2248;>;", "Ljava/util/Optional<Lnet/minecraft/class_6885<Lnet/minecraft/class_2248;>;>;"):
+        f"{RECORDS}#blocks(Ljava/util/Set;)Ljava/util/Optional;",
+    ("Ljava/util/Set<Lnet/minecraft/class_1792;>;", "Ljava/util/Optional<Lnet/minecraft/class_6885<Lnet/minecraft/class_1792;>;>;"):
+        f"{RECORDS}#items(Ljava/util/Set;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_3611;", "Ljava/util/Optional<Lnet/minecraft/class_6880<Lnet/minecraft/class_3611;>;>;"):
+        f"{RECORDS}#fluid(Lnet/minecraft/class_3611;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_1842;", "Ljava/util/Optional<Lnet/minecraft/class_6880<Lnet/minecraft/class_1842;>;>;"):
+        f"{RECORDS}#potion(Lnet/minecraft/class_1842;)Ljava/util/Optional;",
+    ("[Lnet/minecraft/class_2035;", "Ljava/util/List<Lnet/minecraft/class_2035;>;"):
+        f"{RECORDS}#enchantments([Lnet/minecraft/class_2035;)Ljava/util/List;",
+}
+# a tag or a resource key, any type argument: nullable in 1.20.1, an Optional of it in 1.20.2
+PART_GENERIC = {
+    "Lnet/minecraft/class_6862": f"{RECORDS}#tag(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+    "Lnet/minecraft/class_5321": f"{RECORDS}#key(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+}
+# what a 1.20.1 no-argument constructor's record holds for each part: the value 1.20.1's ()V stored
+# (null / ANY / NONE -> absent or empty; MinMaxBounds.*.ANY)
+PART_DEFAULTS = {
+    "Ljava/util/Optional;": f"{RECORDS}#absent()Ljava/util/Optional;",
+    "Ljava/util/List;": f"{RECORDS}#none()Ljava/util/List;",
+    "Lnet/minecraft/class_2096$class_2100;": f"{RECORDS}#anyInts()Lnet/minecraft/class_2096$class_2100;",
+    "Lnet/minecraft/class_2096$class_2099;": f"{RECORDS}#anyDoubles()Lnet/minecraft/class_2096$class_2099;",
+    "Lnet/minecraft/class_6885;": f"{RECORDS}#noEntityTypes()Lnet/minecraft/class_6885;",
+}
+# a no-argument constructor whose record's canonical constructor is not the one 1.20.1's fields match
+# by position: EnchantmentPredicate() stored a null enchantment and MinMaxBounds.Ints.ANY levels, the
+# record's (Optional<Holder<Enchantment>>, Ints) constructor takes the same as absent and ANY
+DEFAULT_TARGET = {
+    "net/minecraft/class_2035": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+}
+
+
+def part_conversion(a, b):
+    """the converter for a 1.20.1 constructor part of signature a where the record takes b, or None"""
+    c = PART_CONVERSIONS.get((a, b))
+    if c:
+        return c
+    for raw, conv in PART_GENERIC.items():
+        if a.startswith(raw + "<") and b.startswith("Ljava/util/Optional<" + raw + "<"):
+            return conv
+    return None
+
+
+def records(V, W, section, report, classes_table):
+    """
+    The advancement predicates 1.20.2 turned into records (final; the layer's access widener makes them
+    extendable). A 1.20.1 constructor the record does not have is reshaped -- at a mod's new X(..) and at
+    a mod subclass's super(..) -- onto the record's constructor of the same arity, positional, each part
+    converted (PART_CONVERSIONS: a nullable or ANY part to an absent Optional, a set to a HolderSet, an
+    array to a List); a no-argument constructor onto the canonical one with the values 1.20.1's stored
+    (PART_DEFAULTS). LocationPredicate's x/y/z bounds fold into its position predicate. A constructor no
+    rule maps is reported for hand wiring.
+    """
+    table = {}
+    for line in open(classes_table, encoding="utf-8"):
+        f = line.rstrip("\n").split("\t")
+        if len(f) >= 3 and f[0] == "C":
+            table[f[1]] = f[2]
+    for p in sorted(V):
+        if p not in W or not table.get(p.split("$")[0], "").startswith("net/minecraft/advancements/criterion"):
+            continue
+        if W[p].super != "java/lang/Record" or V[p].super == "java/lang/Record":
+            continue
+        if not V[p].access & classfile.ACC_PUBLIC:
+            continue  # package-private in 1.20.1: no mod could name its constructors
+        news = [m for m in W[p].methods if m.name == "<init>" and m.access & classfile.ACC_PUBLIC]
+        for om in V[p].methods:
+            if om.name != "<init>" or not om.access & classfile.ACC_PUBLIC or any(n.desc == om.desc for n in news):
+                continue
+            key = f"{p}.<init>{om.desc}"
+            oa = classfile.split_args(om.desc)[0]
+            osig = (classfile.split_signature(om.signature) or [oa])[0] if om.signature else oa
+            if not oa:
+                # 1.20.1's ()V: the canonical constructor (the one with most parameters) with 1.20.1's values
+                nm = next((n for n in news if n.desc == DEFAULT_TARGET.get(p)), None) or                     max(news, key=lambda n: len(classfile.split_args(n.desc)[0]))
+                ops = []
+                for t in classfile.split_args(nm.desc)[0]:
+                    d = PART_DEFAULTS.get(t)
+                    if not d:
+                        report.append(f"design: {key}: no default for {t}")
+                        ops = None
+                        break
+                    ops.append("push " + d)
+                if ops is not None:
+                    section("superCtorReshapes")[key] = {"desc": nm.desc, "ops": ops,
+                        "basis": f"{BASIS}: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"}
+                continue
+            if p == "net/minecraft/class_2090" and len(oa) == 10:
+                # LocationPredicate(x, y, z, biome, structure, dimension, smokey, light, block, fluid)
+                nm = news[0]
+                ops = [f"conv:0,1,2 {RECORDS}#position(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;"
+                       f"Lnet/minecraft/class_2096$class_2099;)Ljava/util/Optional;"]
+                convs = {3: PART_GENERIC["Lnet/minecraft/class_5321"], 4: PART_GENERIC["Lnet/minecraft/class_5321"],
+                         5: PART_GENERIC["Lnet/minecraft/class_5321"]}
+                for i in range(3, 10):
+                    c = convs.get(i) or part_conversion(osig[i], (classfile.split_signature(nm.signature) or [[]])[0][i - 2])
+                    if not c:
+                        report.append(f"design: {key}: part {i}")
+                        ops = None
+                        break
+                    ops.append(f"conv:{i} {c}")
+                if ops is not None:
+                    section("superCtorReshapes")[key] = {"desc": nm.desc, "ops": ops,
+                        "basis": f"{BASIS}: x/y/z bounds as the position predicate (absent when all are any), the rest positional as Optionals"}
+                continue
+            cands = [n for n in news if len(classfile.split_args(n.desc)[0]) == len(oa)]
+            if len(cands) != 1:
+                report.append(f"design: {key}: {len(cands)} record constructors of that arity")
+                continue
+            nm = cands[0]
+            na = classfile.split_args(nm.desc)[0]
+            nsig = (classfile.split_signature(nm.signature) or [na])[0] if nm.signature else na
+            ops = []
+            for i, (a, b, sa, sb) in enumerate(zip(oa, na, osig, nsig)):
+                if a == b:
+                    ops.append("keep")
+                    continue
+                c = part_conversion(sa, sb)
+                if not c:
+                    report.append(f"design: {key}: part {i} {sa} -> {sb}")
+                    ops = None
+                    break
+                ops.append("conv " + c)
+            if ops is not None:
+                section("superCtorReshapes")[key] = {"desc": nm.desc, "ops": ops,
+                    "basis": f"{BASIS}: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"}
+
+
+# a 1.20.1 builder setter's value -> the expression 1.20.2's Optional field holds for it
+SETTER_CONV = {
+    "Lnet/minecraft/class_2048;": "entity", "Lnet/minecraft/class_2090;": "location", "Lnet/minecraft/class_2102;": "effects",
+    "Lnet/minecraft/class_2040;": "flags", "Lnet/minecraft/class_4552;": "light", "Lnet/minecraft/class_4550;": "block",
+    "Lnet/minecraft/class_4551;": "fluid", "Lnet/minecraft/class_2073;": "item", "Lnet/minecraft/class_4559;": "state",
+    "Lnet/minecraft/class_2105;": "nbt", "Lnet/minecraft/class_2022;": "damageSource", "Lnet/minecraft/class_2025;": "distance",
+}
+BUILDER_PREFIX = "CbAdvBuilder"
+
+
+def builders(root, vjar, V, W, table, report):
+    """
+    1.20.1's predicate builder setters -- `this.f = value; return this` -- that 1.20.2 replaced by setters
+    taking the nested builder (or dropped), where 1.20.2 keeps the field under the same name as an Optional.
+    Each comes back as a cover: a mixin method of the exact 1.20.1 shape on the builder, storing what 1.20.1
+    stored with ANY / null as absent (CbAdvAny) -- so a call, a mod's override and its super call behave as in
+    1.20.1. Returns the mixin names and the covered keys.
+    """
+    names, covers = [], []
+    for p in sorted(V):
+        if p not in W or "$" not in p or not table.get(p.split("$")[0], "").startswith("net/minecraft/advancements/criterion"):
+            continue
+        wm = {(m.name, m.desc) for m in W[p].methods}
+        wf = {f[0]: f for f in W[p].fields}
+        listing = disassemble(vjar, p)
+        found = []
+        for m in V[p].methods:
+            if m.access & classfile.ACC_STATIC or not m.access & classfile.ACC_PUBLIC or m.name.startswith("<") \
+                    or (m.name, m.desc) in wm:
+                continue
+            code = [re.sub(r"^\s*\d+: ", "", l).strip() for l in (method_body(listing, m.name, javap_params(m.desc)) or [])]
+            if [c.split()[0] for c in code] != ["aload_0", "aload_1", "putfield", "aload_0", "areturn"]:
+                continue
+            fld = re.search(r"Field (field_\d+):(\S+)", code[2])
+            fname, vtype = fld.group(1), fld.group(2)
+            w = wf.get(fname)
+            if not w or w[1] != "Ljava/util/Optional;" or w[2] & classfile.ACC_FINAL:
+                report.append(f"design: builder {p}.{m.name}{m.desc}: 1.20.2 field {fname} is not a settable Optional")
+                continue
+            if vtype == "Ljava/lang/Boolean;":
+                expr = "java.util.Optional.ofNullable(value)"
+            elif vtype in SETTER_CONV:
+                expr = f"top.dext.centurybridge.rt.v1_20_2.CbAdvAny.{SETTER_CONV[vtype]}(value)"
+            else:
+                report.append(f"design: builder {p}.{m.name}{m.desc}: no conversion for {vtype}")
+                continue
+            if f"<{vtype[1:-1]}>" not in (w[3] or "") and f"<{vtype}>" not in (w[3] or ""):
+                report.append(f"design: builder {p}.{m.name}{m.desc}: 1.20.2 {fname} holds {w[3]}")
+                continue
+            found.append((m, fname, vtype, expr))
+        if not found:
+            continue
+        simple = mojang_simple(p, table)
+        cls_name = BUILDER_PREFIX + simple
+        names.append(cls_name)
+        jt = p.replace("/", ".").replace("$", ".")
+        lines = [
+            "package top.dext.centurybridge.shims.v1_20_2;\n",
+            "import org.spongepowered.asm.mixin.Mixin;",
+            "import org.spongepowered.asm.mixin.Shadow;\n",
+            "/**",
+            " * GENERATED by core/tools/gen_s1adv.py -- do not edit.",
+            " *",
+            f" * {simple}'s 1.20.1 setters: `this.field = value; return this`. 1.20.2 keeps each field under the",
+            " * same name as an Optional and sets it from a nested builder; the 1.20.1 shape is put back (a cover),",
+            " * storing what 1.20.1 stored -- ANY and null as absent -- so calls, overrides and super calls of a",
+            " * 1.20.1 mod behave as they did.",
+            " */",
+            f"@Mixin({jt}.class)",
+            f"public abstract class {cls_name} {{\n",
+        ]
+        for fname in sorted({f for _, f, _, _ in found}):
+            lines.append("    @Shadow")
+            lines.append(f"    @SuppressWarnings(\"rawtypes\")")
+            lines.append(f"    private java.util.Optional {fname};\n")
+        for m, fname, vtype, expr in found:
+            lines.append(f"    /** {m.name}{m.desc} (1.20.1: {fname} = value) */")
+            lines.append(f"    public {java_type(m.desc[m.desc.index(')') + 1:])} {m.name}({java_type(vtype)} value) {{")
+            lines.append(f"        this.{fname} = {expr};")
+            lines.append(f"        return ({jt}) (Object) this;")
+            lines.append("    }\n")
+            covers.append(f"{p}.{m.name}{m.desc}")
+        lines.append("}")
+        with open(os.path.join(root, "core/shims/1.20.2/src", MIXIN_PKG, cls_name + ".java"), "w",
+                  encoding="utf-8", newline="\n") as f:
+            f.write("\n".join(lines) + "\n")
+    return names, covers
+
+
+NODES = RT + "/CbAdvNodes"
+ADV, NODE, HOLDER = "Lnet/minecraft/class_161;", "Lnet/minecraft/class_8781;", "Lnet/minecraft/class_8779;"
+# 1.20.1 Advancement -> what 1.20.2 takes in its place, and back
+TO_NEW = {NODE: f"{NODES}#nodeOf({ADV})" + NODE, HOLDER: f"{NODES}#holderOf({ADV})" + HOLDER}
+TO_OLD = {NODE: f"{NODES}#valueOf({NODE})" + ADV, HOLDER: f"{NODES}#valueOf({HOLDER})" + ADV}
+
+
+# the sections that serve a member's call sites (a key here is wired on the call side already)
+CALL_SIDE = ("staticRedirects", "instanceRedirects", "interfaceCallRedirects", "callReshapes", "superRedirects",
+             "ctorRedirects", "superCtorReshapes", "methodRenames", "covers")
+
+
+def holders(root, V, W, section, report, frag):
+    """
+    Members whose 1.20.2 shape differs from 1.20.1's only in Advancement standing where 1.20.2 has an
+    AdvancementNode (tree code: listeners, tabs, positions) or an AdvancementHolder (id-keyed code:
+    progress, selection). The 1.20.1 Advancement is the record (CbAdvNodes): a call converts each such
+    argument to the node it is placed at / its holder and the answer back to the record (callReshapes);
+    a 1.20.1 override is reached from the new shape with the record (overrideHooks wrap / unwrap, one hook
+    per topmost declaring type, so a class under two declaring types gets one); a constructor's super(..)
+    and new are reshaped the same way (superCtorReshapes). Members with other type-argument drift are left
+    for hand wiring, as are members another fragment or the hand-written part already wires.
+    """
+    wired = set()
+    for f in [os.path.join(root, "core/segments/shims-1.20.2.json")] + sorted(
+            glob.glob(os.path.join(root, "core/segments/shims-1.20.2.json.d/*.json"))):
+        if f.endswith("s1adv.json"):
+            continue
+        d = json.load(open(f, encoding="utf-8"))
+        for s, v in d.items():
+            if s in CALL_SIDE:
+                wired |= set(v)
+    hooked = set()
+    for f in [os.path.join(root, "core/segments/shims-1.20.2.json")] + sorted(
+            glob.glob(os.path.join(root, "core/segments/shims-1.20.2.json.d/*.json"))):
+        if not f.endswith("s1adv.json"):
+            hooked |= {h.get("old") for h in json.load(open(f, encoding="utf-8")).get("overrideHooks", [])}
+    hooked |= {h.get("old") for h in frag.get("overrideHooks", [])}
+    for s, v in frag.items():  # the hand-written part of this fragment (generated entries are dropped by now)
+        if s in CALL_SIDE:
+            wired |= set(v)
+    found = []
+    for p in sorted(V):
+        if p not in W:
+            continue
+        wm = {}
+        for m in W[p].methods:
+            wm.setdefault(m.name, []).append(m)
+        for m in V[p].methods:
+            if ADV not in m.desc or not m.access & (classfile.ACC_PUBLIC | classfile.ACC_PROTECTED) \
+                    or m.name.startswith("lambda") or m.access & classfile.ACC_SYNTHETIC:
+                continue
+            if any(w.desc == m.desc for w in wm.get(m.name, [])):
+                continue
+            oa, orr = classfile.split_args(m.desc)
+            match = None
+            for w in wm.get(m.name, []):
+                na, nr = classfile.split_args(w.desc)
+                if len(na) == len(oa) and all(x == y or (x == ADV and y in (NODE, HOLDER)) for x, y in zip(oa + [orr], na + [nr])):
+                    match = w
+            if not match:
+                continue
+            na, nr = classfile.split_args(match.desc)
+            # other drift: a parameter that is not the advancement whose type arguments changed
+            os_ = (classfile.split_signature(m.signature) or [oa])[0] if m.signature else oa
+            ns_ = (classfile.split_signature(match.signature) or [na])[0] if match.signature else na
+            drift = [i for i, (a, b, x, y) in enumerate(zip(oa, na, os_, ns_)) if a == b and x != y and a != ADV]
+            key = f"{p}.{m.name}{m.desc}"
+            if drift:
+                report.append(f"design: {key}: parameters {drift} drift as well")
+                continue
+            found.append((p, m, match))
+    by_shape = {}
+    guarded = set()
+    for p, m, w in found:
+        key = f"{p}.{m.name}{m.desc}"
+        oa, orr = classfile.split_args(m.desc)
+        na, nr = classfile.split_args(w.desc)
+        overridable = not m.access & (classfile.ACC_STATIC | classfile.ACC_FINAL | classfile.ACC_PRIVATE)             and not V[p].access & classfile.ACC_FINAL and m.name != "<init>"
+        if key in wired:
+            # the call side is wired by hand elsewhere; a mod's override still needs its hook
+            report.append(f"wired elsewhere (calls): {key}")
+            if overridable:
+                by_shape.setdefault((m.name, m.desc, w.desc), []).append(p)
+                guarded.add((m.name, m.desc))
+            continue
+        if m.name == "<init>":
+            section("superCtorReshapes")[key] = {
+                "desc": w.desc, "ops": ["keep" if a == b else "conv " + TO_NEW[b] for a, b in zip(oa, na)],
+                "basis": f"{BASIS}: the advancement as the node / holder 1.20.2 takes (CbAdvNodes)"}
+            continue
+        entry = {"desc": w.desc, "ops": ["keep" if a == b else "conv " + TO_NEW[b] for a, b in zip(oa, na)],
+                 "basis": f"{BASIS}: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"}
+        if orr != nr:
+            entry["ret"] = "conv " + TO_OLD[nr]
+        section("callReshapes")[key] = entry
+        if overridable:
+            by_shape.setdefault((m.name, m.desc, w.desc), []).append(p)
+    for (name, od, nd), owners in sorted(by_shape.items()):
+        if name + od in hooked:
+            report.append(f"hooked elsewhere: {name}{od}")
+            continue
+        oa, orr = classfile.split_args(od)
+        na, nr = classfile.split_args(nd)
+        changed = {b for a, b in zip(oa, na) if a != b}
+        if len(changed) > 1:
+            report.append(f"design: {owners}.{name}{od}: node and holder arguments together")
+            continue
+        top = [o for o in owners if not any(o != q and is_under(V, o, q) for q in owners)]
+        for o in top:
+            h = {"old": name + od, "new": name + nd, "onlyUnder": o,
+                 "basis": f"{BASIS}: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)"}
+            if changed:
+                b = changed.pop()
+                h["wrap"] = TO_OLD[b].replace("#", ".")
+            if orr != nr:
+                h["unwrap"] = TO_NEW[nr].replace("#", ".")
+            if (name, od) in guarded:
+                # the old shape is served by a cover / redirect that calls the new shape on the object: the
+                # mod's super.old(..) comes back into the synthesized method, which then falls through to super
+                h["guard"] = RT + "/Guard"
+                h["basis"] += "; guarded: the old shape's call side reaches the new shape on the object"
+            section("overrideHooks", list).append(h)
+
+
 def java_type(t):
     dim = len(t) - len(t.lstrip("["))
     t = t.lstrip("[")
@@ -442,6 +807,12 @@ def main():
             continue
         section("staticRedirects")[f"{owner}.{name}{desc}"] = FACTORIES
 
+    # ---------------------------------------------------------------- predicate records
+    records(V, W, section, report, classes_table)
+
+    # ---------------------------------------------------------------- Advancement -> node / holder
+    holders(root, V, W, section, report, frag)
+
     # ---------------------------------------------------------------- ANY sentinels
     table = {}
     for line in open(classes_table, encoding="utf-8"):
@@ -451,11 +822,14 @@ def main():
     sentinel_mixins, sentinel_redirects = sentinels(root, vjar, wjar, V, W, table, report)
     for k, v in sentinel_redirects.items():
         section("fieldRedirects")[k] = v
+    builder_mixins, builder_covers = builders(root, vjar, V, W, table, report)
+    owners = {k.split(".")[0] for k in builder_covers}
+    frag["covers"] = sorted({c for c in frag.get("covers", []) if c.split(".")[0] not in owners} | set(builder_covers))
     cfg_path = os.path.join(root, MIXIN_CONFIG)
     cfg = json.load(open(cfg_path, encoding="utf-8"))
     mixins = set(cfg.get("mixins", []))
-    old_generated = {m for m in mixins if m.startswith("CbAdvAny")}
-    mixins = (mixins - old_generated) | set(sentinel_mixins)
+    old_generated = {m for m in mixins if m.startswith("CbAdvAny") or m.startswith(BUILDER_PREFIX)}
+    mixins = (mixins - old_generated) | set(sentinel_mixins) | set(builder_mixins)
     cfg["mixins"] = sorted(mixins)
     with open(cfg_path, "w", encoding="utf-8", newline="\n") as f:
         json.dump(cfg, f, indent=2)

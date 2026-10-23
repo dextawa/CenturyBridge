@@ -104,7 +104,7 @@ public final class JarProcessor {
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName,
                                            String superIface) {
         if (h.frames != null) {
-            synthesizeFramedOverride(cv, h, cls);
+            synthesizeFramedOverride(cv, h, cls, superName, superIface);
             return;
         }
         org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
@@ -276,9 +276,12 @@ public final class JarProcessor {
      *     try { return this.old(a[args[0]]..a[args[k]]); } finally { frames.cbPop(); }
      * </pre>
      * The old method's own super call, rewritten to the new shape, reads back the arguments the
-     * old shape has no place for ({@link #rewriteHookSuperCalls}).
+     * old shape has no place for ({@link #rewriteHookSuperCalls}). With {@link Chain.OverrideHook#narrow}
+     * an argument the release widened is tested first: a value of the old type is cast and forwarded,
+     * any other goes to super's new shape as if the mod had not overridden anything ({@link #emitFallthrough}).
      */
-    private static void synthesizeFramedOverride(ClassVisitor cv, Chain.OverrideHook h, String cls) {
+    private static void synthesizeFramedOverride(ClassVisitor cv, Chain.OverrideHook h, String cls,
+                                                 String superName, String superIface) {
         org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
         org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
         org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
@@ -306,7 +309,19 @@ public final class JarProcessor {
         org.objectweb.asm.Label tryStart = new org.objectweb.asm.Label();
         org.objectweb.asm.Label tryEnd = new org.objectweb.asm.Label();
         org.objectweb.asm.Label handler = new org.objectweb.asm.Label();
+        org.objectweb.asm.Label fallthrough = new org.objectweb.asm.Label();
         mv.visitTryCatchBlock(tryStart, tryEnd, handler, null);
+        boolean narrowed = false;
+        if (h.narrow) {
+            for (int i = 0; i < oa.length; i++) {
+                if (!na[map[i]].equals(oa[i]) && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
+                    mv.visitVarInsn(Opcodes.ALOAD, slotOf[map[i]]);
+                    mv.visitTypeInsn(Opcodes.INSTANCEOF, oa[i].getInternalName());
+                    mv.visitJumpInsn(Opcodes.IFEQ, fallthrough);
+                    narrowed = true;
+                }
+            }
+        }
         mv.visitVarInsn(Opcodes.ALOAD, 0);
         mv.visitLdcInsn(na.length);
         mv.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
@@ -322,6 +337,9 @@ public final class JarProcessor {
         mv.visitVarInsn(Opcodes.ALOAD, 0);
         for (int i = 0; i < oa.length; i++) {
             mv.visitVarInsn(na[map[i]].getOpcode(Opcodes.ILOAD), slotOf[map[i]]);
+            if (h.narrow && !na[map[i]].equals(oa[i]) && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
+                mv.visitTypeInsn(Opcodes.CHECKCAST, oa[i].getInternalName());
+            }
         }
         mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
         if (nr.getSort() == org.objectweb.asm.Type.VOID && or.getSort() != org.objectweb.asm.Type.VOID) {
@@ -334,6 +352,11 @@ public final class JarProcessor {
         mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 1, new Object[] {"java/lang/Throwable"});
         mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.frames, "cbPop", "()V", false);
         mv.visitInsn(Opcodes.ATHROW);
+        if (narrowed) {
+            mv.visitLabel(fallthrough);
+            mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 0, new Object[0]);
+            emitFallthrough(mv, h, superName, superIface, na, nr);
+        }
         mv.visitMaxs(slot + 6, slot);
         mv.visitEnd();
     }
@@ -3601,7 +3624,20 @@ public final class JarProcessor {
                     + h.oldName + h.oldDesc);
                 top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-shadowed");
             }
+            java.util.List<String> hookRoots = null;
             for (Chain.OverrideHook h : byShape.values()) {
+                if (hookRoots == null) {
+                    hookRoots = vanillaAncestors(superOf[0], ifacesOf[0], layer);
+                }
+                if (chain.finalOnTarget(h.newName, h.newDesc, hookRoots)) {
+                    // the target made the new shape final under this class (1.21.2's ItemEntity.hurtServer): a
+                    // synthesized override would keep the class from loading; a mixin on the final method
+                    // reconnects the old override there (through the hook's adapter, when the wiring has one)
+                    rpt.notes.add(tag + "override-hook not synthesized (the new shape is final on the target): "
+                        + clsName0(bytes) + "." + h.newName + h.newDesc);
+                    top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-final");
+                    continue;
+                }
                 reconnectOverrides.add(h);
                 rpt.notes.add(tag + "override-hooked: " + h.oldName + h.oldDesc + " -> " + h.newName + h.newDesc);
                 top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hooked");

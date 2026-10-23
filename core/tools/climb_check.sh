@@ -23,4 +23,6 @@ mkdir -p "$OUT/final" && cp "$OUT"/conv/*+"$T".jar "$OUT/final/"
 python3 probe/probe_report.py probe/seg/1.20.1__1.20.2/probe-1.20.1.jar.index.tsv "$(ls "$OUT"/final/*.jar | head -1)" \
     "$OUT/lc/link-findings.tsv" "$OUT/report.tsv" > "$OUT/report.txt" 2>&1
 head -2 "$OUT/report.txt"
-python3 probe/segment_closure.py "$OUT/report.tsv" probe/damage "$T" data/mappings/inter-to-mojang-1.21.11.tsv
+# the climb crosses the wall at its 1.21.11 -> 26.1 step whatever T is: the year-era damage tables spell
+# their V side the way that step's table names things (core/segments/wall-tables.tsv, target 26.1)
+python3 probe/segment_closure.py "$OUT/report.tsv" probe/damage "$T" "$(python3 "$WD/core/tools/wall_tables.py" 26.1)"

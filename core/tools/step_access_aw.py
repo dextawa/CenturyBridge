@@ -16,6 +16,10 @@ keeps W's access. The lines land in the layer's access widener between markers n
 area, replacing the previous block, so areas of one step regenerate independently.
 
   [CB_DATA=<data dir>] python step_access_aw.py <damage.tsv> <W stub jar> <step wiring.json> <layer.accesswidener> <area tag> [<area regex>]
+
+Across the namespace wall (the 1.21.11 -> 26.1 step) the rows are translated into W's names with the
+table the step's target reads names with (core/segments/wall-tables.tsv, wall_tables.py), and the lines
+name W's members, as the layer's (official-namespace) access widener does.
 """
 import json
 import os
@@ -30,7 +34,59 @@ from classfile import ACC_FINAL, ACC_INTERFACE, ACC_PRIVATE, ACC_PROTECTED, ACC_
 ACC_ENUM, ACC_RECORD = 0x4000, 0x10000
 DATA = os.environ.get("CB_DATA", "data")  # the gitignored working set (a worktree has none of its own)
 NAMES = os.path.join(DATA, "mappings/inter-to-mojang-classes.tsv")
-WALL = os.path.join(DATA, "mappings/inter-to-mojang-1.21.11.tsv")
+import wall_tables  # noqa: E402
+
+
+def step_of(wiring_path):
+    """(V, W) of the step a wiring file belongs to (core/segments/steps/<V>__<W>.json)"""
+    base = os.path.basename(wiring_path)
+    if "__" in base:
+        v, w = base[:-5].split("__") if base.endswith(".json") else base.split("__")
+        return v, w
+    return None, None
+
+
+class Wall:
+    """V's intermediary names as the wall step's target declares them (the 1.21.11 -> 26.1 step only;
+    identity elsewhere): the rows are V's, the W jar and the access widener W's"""
+
+    def __init__(self, table):
+        self.c, self.m = {}, {}
+        if table:
+            for line in open(table, encoding="utf-8"):
+                f = line.rstrip("\n").split("\t")
+                if len(f) >= 3:
+                    if f[0] == "C":
+                        self.c[f[1]] = f[2]
+                    else:
+                        self.m[f[1]] = f[2][f[2].rindex(".") + 1:]
+
+    def cls(self, c):
+        if not self.c or c in self.c:
+            return self.c.get(c, c)
+        d = c.rfind("$")
+        return self.cls(c[:d]) + c[d:] if d > 0 else c
+
+    def desc(self, d):
+        return re.sub(r"L([^;]+);", lambda x: "L" + self.cls(x.group(1)) + ";", d) if self.c else d
+
+    def member(self, classes_v, owner, name):
+        """the target name of V's member, looked up on the owner and then up V's hierarchy"""
+        if not self.m:
+            return name
+        seen, todo = set(), [owner]
+        while todo:
+            c = todo.pop(0)
+            if c is None or c in seen:
+                continue
+            seen.add(c)
+            if c + "." + name in self.m:
+                return self.m[c + "." + name]
+            k = classes_v.get(c)
+            if k:
+                todo.append(k.super)
+                todo.extend(k.interfaces)
+        return name
 
 
 def load(jar):
@@ -61,9 +117,9 @@ def wiring(path):
     return root
 
 
-def mojang_names():
+def mojang_names(wall_table=None):
     cm = {}
-    for p in (NAMES, WALL):
+    for p in (NAMES, wall_table) if wall_table else (NAMES,):
         if os.path.exists(p):
             for line in open(p, encoding="utf-8"):
                 f = line.rstrip("\n").split("\t")
@@ -153,8 +209,17 @@ def lines_for(row, classes):
 def main():
     damage, wjar, wiring_path, aw, tag = sys.argv[1:6]
     area = re.compile(sys.argv[6]) if len(sys.argv) > 6 else None
-    moj = mojang_names()
+    v, w = step_of(wiring_path)
+    # across the namespace wall the rows name V's intermediary members and W's jar its mojang ones:
+    # translated with the table the step's target reads names with (core/segments/wall-tables.tsv)
+    table = wall_tables.table_for(w, DATA) if v == "1.21.11" and w and w.startswith("26.") else None
+    wall = Wall(table)
+    moj = mojang_names(table)
     classes = load(wjar)
+    classes_v = {}
+    if table:
+        vjar = os.path.join(DATA, "jars", f"client-{v}-intermediary.jar")
+        classes_v = load(vjar)
     w = wiring(wiring_path)
     handled = set()
     for sec in ("fieldRedirects", "fieldGetters", "instanceFieldGetters", "staticRedirects", "instanceRedirects",
@@ -176,6 +241,8 @@ def main():
         if key in handled:
             skipped += 1
             continue
+        if table:
+            r = [r[0], wall.cls(r[1]), wall.member(classes_v, r[1], r[2]), wall.desc(r[3])] + r[4:]
         ls, why = lines_for(r, classes)
         if why:
             unresolved.append(f"{r[0]} {r[1]}.{r[2]}{r[3]}: {why}")
