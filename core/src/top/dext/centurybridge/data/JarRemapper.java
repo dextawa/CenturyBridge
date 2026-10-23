@@ -18,10 +18,24 @@ import org.objectweb.asm.commons.Remapper;
  */
 public final class JarRemapper {
 
+    /**
+     * An intermediary member id in a refmap: method_, field_ and comp_ (a record component's accessor; the
+     * class files' pass already maps all three, the refmap pass took only the first two, leaving every mod
+     * mixin that names a record accessor -- injector selector, @At target, @Invoker -- pointing at a name
+     * 26.x does not have). Preceded by "L<owner>;" it is looked up under that owner first, as the class
+     * files' pass does, so an id the table holds ambiguously still maps where the refmap says whose it is.
+     */
     private static final java.util.regex.Pattern MEMBER_TOKEN =
-        java.util.regex.Pattern.compile("(?:method|field)_\\d+");
-    private static final java.util.regex.Pattern CLASS_TOKEN =
-        java.util.regex.Pattern.compile("net/minecraft/class_\\d+(?:\\$[\\w$]+)?");
+        java.util.regex.Pattern.compile("(?:L([\\w/$]+);)?((?:method|field|comp)_\\d+)");
+    /**
+     * An intermediary class name: net/minecraft/class_N with its nested classes, and an intermediary-named
+     * nested class of a class whose own name is not intermediary (com/mojang/blaze3d/opengl/GlStateManager$class_1017
+     * -> GlStateManager$BlendState; net/minecraft/util/profiling/jfr/event/...$class_N). The second form is
+     * anchored at the two package roots that have such classes, so it never starts at a descriptor's "L"
+     * and never takes a match from the first. A match the table does not hold maps to itself.
+     */
+    private static final java.util.regex.Pattern CLASS_TOKEN = java.util.regex.Pattern.compile(
+        "net/minecraft/class_\\d+(?:\\$[\\w$]+)?|(?:com/mojang|net/minecraft)/(?:\\w+/)*\\w+\\$class_\\d+(?:\\$[\\w$]+)?");
 
     /**
      * Remaps a jar from the intermediary namespace into Mojang names using a
@@ -215,6 +229,84 @@ public final class JarRemapper {
     }
 
     /**
+     * Intermediary names in text renamed (a refmap; a mixin annotation's string): member ids first (under the
+     * owner a preceding "L<owner>;" names), then class names.
+     */
+    static String renameText(String text, Table table) {
+        Remapper remapper = table.remapper();
+        text = MEMBER_TOKEN.matcher(text).replaceAll(mr -> {
+            String owner = mr.group(1);
+            String id = mr.group(2);
+            String moj = owner != null ? table.byOwner.get(owner + "." + id) : null;
+            if (moj == null) {
+                moj = table.members.getOrDefault(id, id);
+            }
+            return java.util.regex.Matcher.quoteReplacement((owner != null ? "L" + owner + ";" : "") + moj);
+        });
+        return CLASS_TOKEN.matcher(text).replaceAll(
+            mr -> java.util.regex.Matcher.quoteReplacement(remapper.map(mr.group())));
+    }
+
+    /**
+     * The strings of a class's Mixin / MixinExtras annotations renamed like a refmap (upstream of the
+     * ClassRemapper, which renames Type values only): selectors, @At targets, accessor names a mixin spells
+     * in intermediary itself -- a mod built without a refmap, or what the engine's MixinBridge wrote into an
+     * annotation in the analysis namespace at the wall step. A mod's development names (a refmap's keys)
+     * hold no intermediary token and pass unchanged.
+     */
+    private static org.objectweb.asm.ClassVisitor mixinStrings(org.objectweb.asm.ClassVisitor next, Table table) {
+        java.util.function.Function<org.objectweb.asm.AnnotationVisitor, org.objectweb.asm.AnnotationVisitor>[] wrap =
+            new java.util.function.Function[1];
+        wrap[0] = av -> new org.objectweb.asm.AnnotationVisitor(org.objectweb.asm.Opcodes.ASM9, av) {
+            @Override
+            public void visit(String name, Object value) {
+                super.visit(name, value instanceof String s ? renameText(s, table) : value);
+            }
+
+            @Override
+            public org.objectweb.asm.AnnotationVisitor visitAnnotation(String name, String desc) {
+                org.objectweb.asm.AnnotationVisitor n = super.visitAnnotation(name, desc);
+                return n == null ? null : wrap[0].apply(n);
+            }
+
+            @Override
+            public org.objectweb.asm.AnnotationVisitor visitArray(String name) {
+                org.objectweb.asm.AnnotationVisitor n = super.visitArray(name);
+                return n == null ? null : wrap[0].apply(n);
+            }
+        };
+        java.util.function.BiFunction<String, org.objectweb.asm.AnnotationVisitor, org.objectweb.asm.AnnotationVisitor> top =
+            (desc, av) -> av != null && (desc.startsWith("Lorg/spongepowered/asm/mixin/")
+                || desc.startsWith("Lcom/llamalad7/mixinextras/")) ? wrap[0].apply(av) : av;
+        return new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9, next) {
+            @Override
+            public org.objectweb.asm.AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+                return top.apply(desc, super.visitAnnotation(desc, visible));
+            }
+
+            @Override
+            public org.objectweb.asm.MethodVisitor visitMethod(int acc, String name, String desc, String sig, String[] ex) {
+                return new org.objectweb.asm.MethodVisitor(org.objectweb.asm.Opcodes.ASM9, super.visitMethod(acc, name, desc, sig, ex)) {
+                    @Override
+                    public org.objectweb.asm.AnnotationVisitor visitAnnotation(String d, boolean visible) {
+                        return top.apply(d, super.visitAnnotation(d, visible));
+                    }
+                };
+            }
+
+            @Override
+            public org.objectweb.asm.FieldVisitor visitField(int acc, String name, String desc, String sig, Object value) {
+                return new org.objectweb.asm.FieldVisitor(org.objectweb.asm.Opcodes.ASM9, super.visitField(acc, name, desc, sig, value)) {
+                    @Override
+                    public org.objectweb.asm.AnnotationVisitor visitAnnotation(String d, boolean visible) {
+                        return top.apply(d, super.visitAnnotation(d, visible));
+                    }
+                };
+            }
+        };
+    }
+
+    /**
      * One jar layer. Bundled libraries under META-INF/jars/ are jars of their
      * own (the loader extracts and loads them like top-level mods) and get the
      * same rename recursively -- the converter rewrites them, BytecodeVerify
@@ -294,13 +386,7 @@ public final class JarRemapper {
                         // ("Lnet/minecraft/class_310;method_1507()V"); rewrite
                         // them textually or every mixin target goes stale
                         String text = new String(data, java.nio.charset.StandardCharsets.UTF_8);
-                        text = MEMBER_TOKEN.matcher(text).replaceAll(
-                            mr -> java.util.regex.Matcher.quoteReplacement(
-                                members.getOrDefault(mr.group(), mr.group())));
-                        text = CLASS_TOKEN.matcher(text).replaceAll(
-                            mr -> java.util.regex.Matcher.quoteReplacement(
-                                remapper.map(mr.group())));
-                        data = text.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                        data = renameText(text, table).getBytes(java.nio.charset.StandardCharsets.UTF_8);
                     }
                     zout.putNextEntry(new ZipEntry(e.getName()));
                     zout.write(data);
@@ -309,7 +395,7 @@ public final class JarRemapper {
                 }
                 ClassReader cr = new ClassReader(data);
                 ClassWriter cw = new ClassWriter(0);
-                cr.accept(new ClassRemapper(table.targetKinds == null ? cw : new KindFix(cw, table.targetKinds), remapper), 0);
+                cr.accept(mixinStrings(new ClassRemapper(table.targetKinds == null ? cw : new KindFix(cw, table.targetKinds), remapper), table), 0);
                 String outName = remapper.map(cr.getClassName()) + ".class";
                 if (!outName.equals(e.getName()) && !written.add(outName)) {
                     continue;

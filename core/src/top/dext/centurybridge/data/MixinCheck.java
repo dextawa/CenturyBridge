@@ -401,7 +401,17 @@ public final class MixinCheck {
                     // binds the constructor taking the invoker's arguments
                     String want = "<init>".equals(name)
                         ? m.desc.substring(0, m.desc.lastIndexOf(')') + 1) + "V" : m.desc;
-                    if (name == null || !hasMethod(target, name, want)) {
+                    if ("<init>".equals(name)) {
+                        // Mixin applies a constructor invoker only when it returns the target class itself
+                        // (not a supertype) and the target declares that constructor (constructors are not
+                        // inherited): otherwise the mixin is refused at apply
+                        String ret = m.desc.substring(m.desc.lastIndexOf(')') + 1);
+                        if (!ret.equals("L" + target.name + ";")) {
+                            problems.add(me + ": @Invoker(\"<init>\") " + m.name + " returns " + ret + ", not the target " + target.name);
+                        } else if (!declaresMethod(target, "<init>", want)) {
+                            problems.add(me + ": @Invoker " + m.name + " -> " + target.name + ".<init>" + want + " missing");
+                        }
+                    } else if (name == null || !hasMethod(target, name, want)) {
                         problems.add(me + ": @Invoker " + m.name + " -> " + target.name + "." + name + want + " missing");
                     }
                 }

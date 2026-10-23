@@ -32,6 +32,7 @@ class ClassInfo:
     fields: list = field(default_factory=list)   # (name, desc, access, generic signature or None)
     methods: list = field(default_factory=list)  # Method
     signature: str = None  # the class's generic signature (type parameters, generic supertypes)
+    cp: dict = None  # with code: the constant pool, index -> (tag, raw values) (bytecode_uses.py resolves it)
 
 
 def read(b, code=False):
@@ -39,7 +40,7 @@ def read(b, code=False):
         return None
     n = struct.unpack(">H", b[8:10])[0]
     i, idx = 10, 1
-    utf8, cls = {}, {}
+    utf8, cls, pool = {}, {}, {}
     while idx < n:
         tag = b[i]
         if tag == 1:
@@ -47,16 +48,24 @@ def read(b, code=False):
             utf8[idx] = b[i + 3:i + 3 + ln].decode("utf-8", "replace")
             i += 3 + ln
         elif tag in (3, 4):
+            if code:
+                pool[idx] = (tag, struct.unpack(">i" if tag == 3 else ">f", b[i + 1:i + 5])[0])
             i += 5
         elif tag in (5, 6):
+            if code:
+                pool[idx] = (tag, struct.unpack(">q" if tag == 5 else ">d", b[i + 1:i + 9])[0])
             i += 9
             idx += 1
         elif tag == 7:
             cls[idx] = struct.unpack(">H", b[i + 1:i + 3])[0]
             i += 3
         elif tag in (8, 16, 19, 20):
+            if code:
+                pool[idx] = (tag, struct.unpack(">H", b[i + 1:i + 3])[0])
             i += 3
         elif tag in (9, 10, 11, 12, 17, 18):
+            if code:
+                pool[idx] = (tag, struct.unpack(">HH", b[i + 1:i + 5]))
             i += 5
         elif tag == 15:
             i += 4
@@ -76,6 +85,9 @@ def read(b, code=False):
     itfs = [utf8.get(cls.get(u2(i + 2 + 2 * k))) for k in range(nif)]
     i += 2 + 2 * nif
     info = ClassInfo(name, acc, sup, itfs)
+    if code:
+        pool.update({k: (7, v) for k, v in cls.items()})
+        info.cp = {"pool": pool, "utf8": utf8}
     for kind in ("fields", "methods"):
         cnt = u2(i)
         i += 2

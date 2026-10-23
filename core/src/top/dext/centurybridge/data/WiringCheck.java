@@ -948,8 +948,10 @@ public final class WiringCheck {
                         if (from.equals(to)) {
                             continue;
                         }
+                        // both sides as the converted class names them: the converter applies the facade
+                        // classRenames to the whole class, the synthesized narrowing test included
                         if (from.getSort() != org.objectweb.asm.Type.OBJECT || to.getSort() != org.objectweb.asm.Type.OBJECT
-                                || !isSubtype(targetName(from.getInternalName()), targetName(to.getInternalName()))) {
+                                || !isSubtype(convertedName(from.getInternalName()), convertedName(to.getInternalName()))) {
                             problems.add(where + " narrow: " + from.getDescriptor() + " is not a subtype of "
                                 + to.getDescriptor() + " on the target");
                         }
@@ -1181,6 +1183,15 @@ public final class WiringCheck {
             todo.addAll(n.interfaces);
         }
         return false;
+    }
+
+    /** a type as the converted class names it: through the facade renames, then (a vanilla type) the wall */
+    private String convertedName(String internalName) {
+        String f = facade.map(internalName); // null when the type is not renamed
+        if (f == null) {
+            f = internalName;
+        }
+        return f.startsWith("top/dext/") ? f : targetName(f);
     }
 
     private String targetName(String internalName) {

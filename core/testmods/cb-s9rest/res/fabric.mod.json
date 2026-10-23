@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s9rest",
+ "version": "1.0.0",
+ "name": "CB s9rest Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.s9rest.S9RestTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.3" }
+}
