@@ -174,6 +174,7 @@ public class GearTestMod implements ModInitializer {
             types();
             recipes(server);
             recipeClasses(server);
+            serializers(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -436,5 +437,26 @@ public class GearTestMod implements ModInitializer {
         class_2960 id = class_2960.method_60655("cbs7gear", "holder");
         check(id.equals(new class_8786<>(id, shapeless).comp_1932()), "RecipeHolder(id, recipe).id() = id");
         check(net.minecraft.class_7709.field_40245 != null, "CookingBookCategory.CODEC");
+    }
+
+    /** 1.21.1's recipe classes and serializers 1.21.2 removed, CraftingInput.stackedContents */
+    static void serializers(MinecraftServer server) {
+        net.minecraft.class_1871 coloring = new net.minecraft.class_1871(net.minecraft.class_7710.field_40251);
+        net.minecraft.class_9694 in = net.minecraft.class_9694.method_59986(2, 1,
+            List.of(new class_1799(class_1802.field_8545), new class_1799(class_1802.field_8264)));
+        check(coloring.method_17734(in, server.method_30002()), "ShulkerBoxColoring matches box + dye");
+        check(coloring.method_17733(in, server.method_30611()).method_31574(net.minecraft.class_2246.field_10068.method_8389()),
+            "ShulkerBoxColoring assembles the red box: " + coloring.method_17733(in, server.method_30611()));
+        check(coloring.method_8119() == net.minecraft.class_1865.field_9041
+            && class_2960.method_60656("crafting_special_shulkerboxcoloring").equals(class_7923.field_41189.method_10221(net.minecraft.class_1865.field_9041)),
+            "RecipeSerializer.SHULKER_BOX_COLORING registered under 1.21.1's id");
+        net.minecraft.class_1874 smelt = ((net.minecraft.class_3957<?>) net.minecraft.class_1865.field_9042).method_55104("", net.minecraft.class_7709.field_40244,
+            class_1856.method_8091(class_1802.field_20412), new class_1799(class_1802.field_20391), 0.1F, 200);
+        check(smelt.method_17716() == net.minecraft.class_3956.field_17546, "SimpleCookingSerializer.create on SMELTING_RECIPE: a smelting recipe");
+        net.minecraft.class_3957<TestCooking> own = new net.minecraft.class_3957<>((g, c, i, r, x, t) -> new TestCooking(), 100);
+        check(own.method_55104("", net.minecraft.class_7709.field_40244, class_1856.method_8091(class_1802.field_20412),
+            new class_1799(class_1802.field_20391), 0.1F, 100) instanceof TestCooking, "own SimpleCookingSerializer.create uses its factory");
+        net.minecraft.class_1662 contents = in.method_59988();
+        check(contents == in.method_59988() && contents.field_7550.size() == 2, "CraftingInput.stackedContents: one per input, two items");
     }
 }
