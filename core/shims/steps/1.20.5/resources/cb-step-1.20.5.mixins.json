@@ -10,6 +10,7 @@
     "CbNetEntityDataInvoker",
     "CbNetDispatchAccess",
     "CbNetServerDataBridge",
+    "CbNetFriendlyByteBufBridge",
     "CbNetPayloadCodecAccess",
     "CbNetPayloadCodecBridge",
     "CbRegistriesServerMixin",
