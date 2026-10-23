@@ -6,5 +6,25 @@
   "fabric-convention-tags-v1": "centurybridge_step_26_1@*",
   "fabric-loot-api-v2": "centurybridge_step_26_1@*"
  },
- "_swfapi_depRenames_basis": "fapi_modules.py 1.21.11 -> 26.1 (0.141.6+1.21.11 vs 0.145.1+26.1): six modules gone. fabric-key-binding-api-v1 is mapped in the base table. Three were renamed with their API (Fabric API PR #5060, checked member by member by gen_swfapi_renames.py): block-view-api-v2 is block-getter-api-v2 (blockview/v2 -> blockgetter/v2), item-group-api-v1 is creative-tab-api-v1 (itemgroup/v1 -> creativetab/v1), screen-handler-api-v1 is menu-api-v1 (screenhandler/v1 -> menu/v1). Two were dropped without a successor module, and this step's layer gives their API back: convention-tags-v1 (the v1 tag holders, whose tag ids live on in convention-tags-v2's data) and loot-api-v2 (its builders and source enum are loot-api-v3's under another package, its events are the layer's on top of v3's). A converted mod's range for the old id does not describe the provider's versions, so the range is any."
+ "_swfapi_depRenames_basis": "fapi_modules.py 1.21.11 -> 26.1 (0.141.6+1.21.11 vs 0.145.1+26.1): six modules gone. fabric-key-binding-api-v1 is mapped in the base table. Three were renamed with their API (Fabric API PR #5060, checked member by member by gen_swfapi_renames.py): block-view-api-v2 is block-getter-api-v2 (blockview/v2 -> blockgetter/v2), item-group-api-v1 is creative-tab-api-v1 (itemgroup/v1 -> creativetab/v1), screen-handler-api-v1 is menu-api-v1 (screenhandler/v1 -> menu/v1). Two were dropped without a successor module, and this step's layer gives their API back: convention-tags-v1 (the v1 tag holders, whose tag ids live on in convention-tags-v2's data) and loot-api-v2 (its builders and source enum are loot-api-v3's under another package, its events are the layer's on top of v3's). A converted mod's range for the old id does not describe the provider's versions, so the range is any.",
+ "classRenames": {
+  "net/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory": "top/dext/centurybridge/step/v26_1/compat/fapi/gamerule/v1/CustomGameRuleCategory"
+ },
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$BooleanRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$BooleanRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$IntegerRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$IntegerRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$DoubleRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$DoubleRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$EnumRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$EnumRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category"
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#categoryBase"
+ },
+ "instanceFieldGetters": {
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.fabricCategory:Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#getFabricCategory"
+ },
+ "instanceFieldSetters": {
+  "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.fabricCategory:Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#setFabricCategory"
+ },
+ "_swfapi_gamerule_basis": "26.1's Fabric API removed CustomGameRuleCategory, GameRuleBuilder.category(CustomGameRuleCategory) and the protected fabricCategory field (26.1 vanilla GameRuleCategory takes any id: register(Identifier), listed after the vanilla categories, headed by label()). The class is the layer's with 1.21.11's surface and bodies; category(custom) on any builder dispatches to a mod subclass's own override as 1.21.11's virtual call did, else runs 1.21.11's body with the custom category's vanilla stand-in (same id, registered once) in place of MISC; a mod's super.category(custom) runs that body; fabricCategory reads/writes the builder's custom category. The stand-in's label() is the custom name (CbFapiGameRuleCategoryMixin). Difference from 1.21.11: GameRule.category() is the stand-in rather than MISC, since 26.1's screen groups by category() alone."
 }
