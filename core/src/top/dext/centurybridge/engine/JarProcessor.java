@@ -92,6 +92,50 @@ public final class JarProcessor {
         return chain.lambdaAdapters.get(ret.getInternalName() + "." + name + sam.getDescriptor());
     }
 
+    /**
+     * A call (or method reference) naming a class of this jar whose old method a rename-mode
+     * {@link Chain#overrideRenames} entry renames (superCalls "rename", no adapter: the member lives on
+     * under the new name): the site's class is under the entry's {@code onlyUnder}, so the method it
+     * reaches is either the jar's own declaration, renamed with it, or the library's / vanilla's, which
+     * the release renamed -- the new name, same owner and descriptor. Left on the old name, a mod's
+     * {@code this.onWorldLoad(..)} would resolve to nothing once its own declaration took the new name.
+     * Null for any other site (a static, a constructor, an owner outside the jar, adapter-mode entries).
+     */
+    private static String ownRenamed(String owner, String name, String desc, int op, LayerIndex layer, Chain chain) {
+        if (chain.overrideRenames.isEmpty() || op == Opcodes.INVOKESTATIC || name.startsWith("<")
+                || !layer.superOf.containsKey(owner)) {
+            return null;
+        }
+        for (Chain.OverrideRename r : chain.overrideRenames) {
+            if (r.superCalls && r.adapter == null && r.oldName.equals(name) && r.oldDesc.equals(desc)
+                    && (owner.equals(r.onlyUnder) || isUnder(layer.superOf.get(owner),
+                        layer.interfacesOf.getOrDefault(owner, List.of()).toArray(new String[0]), r.onlyUnder, layer, chain))) {
+                return r.newName;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * The new name of a LambdaMetafactory invokedynamic's SAM when {@link Chain#methodRenames} renames
+     * the abstract method of the interface it produces (found as for a call on that interface); null
+     * for any other invokedynamic. The lambda is then spun under the new name: same interface, erased
+     * and instantiated types, implementation and captured values -- and the bridges an altMetafactory
+     * lists, which share the name.
+     */
+    private static String lambdaRename(Chain chain, String name, String desc, org.objectweb.asm.Handle bsm, Object[] args) {
+        if (chain.methodRenames.isEmpty() || !bsm.getOwner().equals("java/lang/invoke/LambdaMetafactory")
+                || args.length < 1 || !(args[0] instanceof org.objectweb.asm.Type sam)) {
+            return null;
+        }
+        org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(desc);
+        if (ret.getSort() != org.objectweb.asm.Type.OBJECT) {
+            return null;
+        }
+        String home = chain.methodRenameHome(ret.getInternalName(), name + sam.getDescriptor(), false);
+        return home == null ? null : chain.methodRenames.get(home + "." + name + sam.getDescriptor());
+    }
+
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName) {
         synthesizeOverride(cv, h, cls, superName, null);
     }
@@ -104,7 +148,7 @@ public final class JarProcessor {
     private static void synthesizeOverride(ClassVisitor cv, Chain.OverrideHook h, String cls, String superName,
                                            String superIface) {
         if (h.frames != null) {
-            synthesizeFramedOverride(cv, h, cls);
+            synthesizeFramedOverride(cv, h, cls, superName, superIface);
             return;
         }
         org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
@@ -276,9 +320,12 @@ public final class JarProcessor {
      *     try { return this.old(a[args[0]]..a[args[k]]); } finally { frames.cbPop(); }
      * </pre>
      * The old method's own super call, rewritten to the new shape, reads back the arguments the
-     * old shape has no place for ({@link #rewriteHookSuperCalls}).
+     * old shape has no place for ({@link #rewriteHookSuperCalls}). With {@link Chain.OverrideHook#narrow}
+     * an argument the release widened is tested first: a value of the old type is cast and forwarded,
+     * any other goes to super's new shape as if the mod had not overridden anything ({@link #emitFallthrough}).
      */
-    private static void synthesizeFramedOverride(ClassVisitor cv, Chain.OverrideHook h, String cls) {
+    private static void synthesizeFramedOverride(ClassVisitor cv, Chain.OverrideHook h, String cls,
+                                                 String superName, String superIface) {
         org.objectweb.asm.Type[] na = org.objectweb.asm.Type.getArgumentTypes(h.newDesc);
         org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
         org.objectweb.asm.Type nr = org.objectweb.asm.Type.getReturnType(h.newDesc);
@@ -306,7 +353,19 @@ public final class JarProcessor {
         org.objectweb.asm.Label tryStart = new org.objectweb.asm.Label();
         org.objectweb.asm.Label tryEnd = new org.objectweb.asm.Label();
         org.objectweb.asm.Label handler = new org.objectweb.asm.Label();
+        org.objectweb.asm.Label fallthrough = new org.objectweb.asm.Label();
         mv.visitTryCatchBlock(tryStart, tryEnd, handler, null);
+        boolean narrowed = false;
+        if (h.narrow) {
+            for (int i = 0; i < oa.length; i++) {
+                if (!na[map[i]].equals(oa[i]) && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
+                    mv.visitVarInsn(Opcodes.ALOAD, slotOf[map[i]]);
+                    mv.visitTypeInsn(Opcodes.INSTANCEOF, oa[i].getInternalName());
+                    mv.visitJumpInsn(Opcodes.IFEQ, fallthrough);
+                    narrowed = true;
+                }
+            }
+        }
         mv.visitVarInsn(Opcodes.ALOAD, 0);
         mv.visitLdcInsn(na.length);
         mv.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Object");
@@ -322,6 +381,9 @@ public final class JarProcessor {
         mv.visitVarInsn(Opcodes.ALOAD, 0);
         for (int i = 0; i < oa.length; i++) {
             mv.visitVarInsn(na[map[i]].getOpcode(Opcodes.ILOAD), slotOf[map[i]]);
+            if (h.narrow && !na[map[i]].equals(oa[i]) && oa[i].getSort() >= org.objectweb.asm.Type.ARRAY) {
+                mv.visitTypeInsn(Opcodes.CHECKCAST, oa[i].getInternalName());
+            }
         }
         mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, cls, h.oldName, h.oldDesc, false);
         if (nr.getSort() == org.objectweb.asm.Type.VOID && or.getSort() != org.objectweb.asm.Type.VOID) {
@@ -334,6 +396,11 @@ public final class JarProcessor {
         mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 1, new Object[] {"java/lang/Throwable"});
         mv.visitMethodInsn(Opcodes.INVOKESTATIC, h.frames, "cbPop", "()V", false);
         mv.visitInsn(Opcodes.ATHROW);
+        if (narrowed) {
+            mv.visitLabel(fallthrough);
+            mv.visitFrame(Opcodes.F_NEW, locals.length, locals, 0, new Object[0]);
+            emitFallthrough(mv, h, superName, superIface, na, nr);
+        }
         mv.visitMaxs(slot + 6, slot);
         mv.visitEnd();
     }
@@ -2912,6 +2979,12 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(site, "super-renamed");
                             return;
                         }
+                        String own = ownRenamed(owner, name, desc, op, layer, chain);
+                        if (own != null) {
+                            mthRenames.put(site, own);
+                            top.dext.centurybridge.data.FullAudit.record(site, "override-renamed-call");
+                            return;
+                        }
                         if (!Chain.minecraftOwned(owner)) {
                             String inh = name.equals("<init>") ? null
                                 : inheritedVanillaOwner(owner, name + desc, layer, chain);
@@ -3121,10 +3194,12 @@ public final class JarProcessor {
                             top.dext.centurybridge.data.FullAudit.record(key, "interface-call-redirect");
                             return;
                         }
-                        String mrn = chain.methodRenames.get(key);
-                        if (mrn != null) {
-                            mthRenames.put(site, mrn);
-                            top.dext.centurybridge.data.FullAudit.record(key, "method-rename");
+                        // found where the JVM resolves the site: a Fabric API member injected into a vanilla
+                        // class (Item.getRecipeRemainder is FabricItem's) through the class's interfaces
+                        String mrnHome = chain.methodRenameHome(owner, name + desc, op == Opcodes.INVOKESTATIC);
+                        if (mrnHome != null) {
+                            mthRenames.put(site, chain.methodRenames.get(mrnHome + "." + name + desc));
+                            top.dext.centurybridge.data.FullAudit.record(mrnHome + "." + name + desc, "method-rename");
                             return;
                         }
                         if (chain.callReshapeTargets.contains(name + desc)) {
@@ -3192,10 +3267,15 @@ public final class JarProcessor {
                                 // fabric-API fields move too (ClientTickEvents world->level):
                                 // rename/redirect them like classRenames does for any owner.
                                 // Everything else off the vanilla surface is not our damage.
-                                String frn = chain.fieldRenames.get(fsite);
+                                // found where the JVM resolves the field: a mod provider reading a renamed
+                                // protected field of its Fabric API superclass names itself as the owner
+                                // (libraryHome; a field of an interface is inherited, so its interfaces too)
+                                String frnHome = chain.fieldRenames.containsKey(fsite) ? owner
+                                    : libraryHome(owner, name + ":" + desc, false, layer, chain, chain.fieldRenames::containsKey);
+                                String frn = frnHome == null ? null : chain.fieldRenames.get(frnHome + "." + name + ":" + desc);
                                 if (frn != null) {
                                     fldRenames.put(fsite, frn);
-                                    top.dext.centurybridge.data.FullAudit.record(fsite, "field-rename");
+                                    top.dext.centurybridge.data.FullAudit.record(frnHome + "." + name + ":" + desc, "field-rename");
                                     return;
                                 }
                                 String ffrt = chain.fieldRedirects.get(fsite);
@@ -3387,6 +3467,16 @@ public final class JarProcessor {
                                 issues.add(tag + "lambda not adapted (" + bsm.getName()
                                     + ": serializable / marker / bridge lambda keeps its interface): " + lkey);
                             }
+                        } else if (lambdaRename(chain, name, desc, bsm, bsmArgs) != null) {
+                            String lkey = org.objectweb.asm.Type.getReturnType(desc).getInternalName() + "." + name
+                                + ((org.objectweb.asm.Type) bsmArgs[0]).getDescriptor();
+                            lambdaSites.add(lkey);
+                            top.dext.centurybridge.data.FullAudit.record(lkey, "lambda-renamed");
+                            if (bsm.getName().equals("altMetafactory") && bsmArgs.length > 3 && bsmArgs[3] instanceof Integer fl
+                                    && (fl & 1) != 0) {
+                                // LambdaMetafactory.FLAG_SERIALIZABLE: $deserializeLambda$ compares the old name as a string
+                                rpt.notes.add(tag + "serializable lambda renamed, its deserialization still names the old SAM: " + lkey);
+                            }
                         }
                         // method references to dead/redirected methods hide inside
                         // indy bootstrap arguments -- treat each handle like a call site
@@ -3464,6 +3554,15 @@ public final class JarProcessor {
                                     }
                                     top.dext.centurybridge.data.FullAudit.record(key,
                                         rt != null ? "static-redirect" : "instance-redirect");
+                                    continue;
+                                }
+                                // after the redirects, as for a call: a method reference to a renamed member reached through a vanilla class (an
+                                // injected Fabric API member: Item::getRecipeRemainder), resolved as a call is
+                                String hmrnHome = h.getName().startsWith("<") ? null
+                                    : chain.methodRenameHome(hOwner, h.getName() + h.getDesc(), h.getTag() == Opcodes.H_INVOKESTATIC);
+                                if (hmrnHome != null) {
+                                    mthRenames.put(site, chain.methodRenames.get(hmrnHome + "." + h.getName() + h.getDesc()));
+                                    top.dext.centurybridge.data.FullAudit.record(hmrnHome + "." + h.getName() + h.getDesc(), "method-rename");
                                     continue;
                                 }
                                 Chain.Issue r = chain.resolveMember('m', h.getName());
@@ -3601,7 +3700,20 @@ public final class JarProcessor {
                     + h.oldName + h.oldDesc);
                 top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-shadowed");
             }
+            java.util.List<String> hookRoots = null;
             for (Chain.OverrideHook h : byShape.values()) {
+                if (hookRoots == null) {
+                    hookRoots = vanillaAncestors(superOf[0], ifacesOf[0], layer);
+                }
+                if (chain.finalOnTarget(h.newName, h.newDesc, hookRoots)) {
+                    // the target made the new shape final under this class (1.21.2's ItemEntity.hurtServer): a
+                    // synthesized override would keep the class from loading; a mixin on the final method
+                    // reconnects the old override there (through the hook's adapter, when the wiring has one)
+                    rpt.notes.add(tag + "override-hook not synthesized (the new shape is final on the target): "
+                        + clsName0(bytes) + "." + h.newName + h.newDesc);
+                    top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-final");
+                    continue;
+                }
                 reconnectOverrides.add(h);
                 rpt.notes.add(tag + "override-hooked: " + h.oldName + h.oldDesc + " -> " + h.newName + h.newDesc);
                 top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hooked");
@@ -4103,7 +4215,9 @@ public final class JarProcessor {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, la.adaptOwner, la.adaptName, la.adaptDesc, false);
                             return;
                         }
-                        super.visitInvokeDynamicInsn(name, desc, bsm, rewritten);
+                        // a lambda for a SAM the release renamed (Chain.methodRenames) is spun under the new name
+                        String lrn = la == null ? lambdaRename(chain, name, desc, bsm, bsmArgs) : null;
+                        super.visitInvokeDynamicInsn(lrn != null ? lrn : name, desc, bsm, rewritten);
                     }
                 };
             }

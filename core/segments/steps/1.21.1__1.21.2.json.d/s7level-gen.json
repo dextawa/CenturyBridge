@@ -1,0 +1,463 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_1936.method_39280(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;ILnet/minecraft/class_1953;)V": "method_64311",
+  "net/minecraft/class_1936.method_39279(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;I)V": "method_64310",
+  "net/minecraft/class_1936.method_39282(Lnet/minecraft/class_2338;Lnet/minecraft/class_3611;ILnet/minecraft/class_1953;)V": "method_64313",
+  "net/minecraft/class_1936.method_39281(Lnet/minecraft/class_2338;Lnet/minecraft/class_3611;I)V": "method_64312",
+  "net/minecraft/class_1937.method_8452(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;)V": "method_61271"
+ },
+ "callReshapes": {
+  "net/minecraft/class_4970.method_9559(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_10225;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680;",
+   "ops": [
+    "keep:0",
+    "keep:3 Lnet/minecraft/class_4538;",
+    "keep:3 Lnet/minecraft/class_10225;",
+    "keep:4",
+    "keep:1",
+    "keep:5",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#random(Lnet/minecraft/class_1936;)Lnet/minecraft/class_5819;"
+   ],
+   "basis": "1.21.2's updateShape takes the level as reader and tick access and the level's random -- what every 1.21.2 caller passes with one LevelAccessor (CbLevelShapes)"
+  },
+  "net/minecraft/class_4970$class_4971.method_26191(Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_10225;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680;",
+   "ops": [
+    "keep:2 Lnet/minecraft/class_4538;",
+    "keep:2 Lnet/minecraft/class_10225;",
+    "keep:3",
+    "keep:0",
+    "keep:4",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#random(Lnet/minecraft/class_1936;)Lnet/minecraft/class_5819;"
+   ],
+   "basis": "BlockState.updateShape: the level as reader and tick access, its random (CbLevelShapes)"
+  },
+  "net/minecraft/class_4970.method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "useItemOn answers an InteractionResult since 1.21.2: 1.21.1's ItemInteractionResult of it (ItemInteractionResult.fromResult)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult#fromResult(Lnet/minecraft/class_1269;)Lnet/minecraft/class_9062;"
+  },
+  "net/minecraft/class_4970$class_4971.method_55780(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "useItemOn answers an InteractionResult since 1.21.2: 1.21.1's ItemInteractionResult of it (ItemInteractionResult.fromResult)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult#fromResult(Lnet/minecraft/class_1269;)Lnet/minecraft/class_9062;"
+  },
+  "net/minecraft/class_1937.method_8508(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2350;)V": {
+   "desc": "(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2350;Lnet/minecraft/class_9904;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors#noOrientation()Lnet/minecraft/class_9904;"
+   ],
+   "basis": "updateNeighborsAtExceptFromFacing takes an Orientation since 1.21.2; none is what 1.21.2 passes for an update without one (MultiNeighborUpdate works it out when the experiments are on)"
+  },
+  "net/minecraft/class_7165.method_41705(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2350;)V": {
+   "desc": "(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2350;Lnet/minecraft/class_9904;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors#noOrientation()Lnet/minecraft/class_9904;"
+   ],
+   "basis": "NeighborUpdater.updateNeighborsAtExceptFromFacing, as Level's"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_7165.method_41708(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_4970.method_9571(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_4970.method_9505(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_4970.method_9579(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_4970.method_42326(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_4970$class_4971.method_26201(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_4970$class_4971.method_26173(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_4970$class_4971.method_26193(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_4970$class_4971.method_26167(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_4970$class_4971.method_26216(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_4970$class_4971.method_26226(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
+  "net/minecraft/class_2248.method_9539()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlocks",
+  "net/minecraft/class_4970.method_26162()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_4970$class_2251.method_16228(Lnet/minecraft/class_2248;)Lnet/minecraft/class_4970$class_2251;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_4970.method_9612(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
+  "net/minecraft/class_4970$class_4971.method_26181(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
+  "net/minecraft/class_1937.method_8492(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
+  "net/minecraft/class_1937.method_41410(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
+  "net/minecraft/class_7165.method_41704(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
+  "net/minecraft/class_7165.method_41703(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_869:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_814:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_224:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_461:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_385:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_702:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_629:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_878:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_806:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_365:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_285:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_394:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_489:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_607:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_716:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_39.field_778:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_9559(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
+   "new": "method_9559(Lnet/minecraft/class_2680;Lnet/minecraft/class_4538;Lnet/minecraft/class_10225;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680;",
+   "args": [
+    0,
+    4,
+    6,
+    1,
+    3,
+    5
+   ],
+   "onlyUnder": "net/minecraft/class_4970",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "vanilla asks a 1.21.1 block's updateShape in 1.21.2's shape: every caller's reader is a LevelAccessor (narrow; any other reader goes to super), and the old method's super call gets back the tick access and random vanilla passed"
+  },
+  {
+   "old": "method_26191(Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
+   "new": "method_26191(Lnet/minecraft/class_4538;Lnet/minecraft/class_10225;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680;",
+   "args": [
+    3,
+    5,
+    0,
+    2,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 BlockStateBase subclass's updateShape, asked in 1.21.2's shape (as Block.updateShape)"
+  },
+  {
+   "old": "method_9571(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;",
+   "new": "method_9571(Lnet/minecraft/class_2680;)Lnet/minecraft/class_265;",
+   "onlyUnder": "net/minecraft/class_4970",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOcclusion",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.occlusionShape(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOcclusion;Lnet/minecraft/class_2680;)Lnet/minecraft/class_265;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.superOcclusionShape(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperOcclusion;Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperOcclusion",
+   "superAccessors": [
+    "method_9571(Lnet/minecraft/class_2680;)Lnet/minecraft/class_265;"
+   ],
+   "basis": "1.21.2 asks the state-only shape; 1.21.1's BlockStateBase.Cache asked a block's three-argument one with EmptyBlockGetter.INSTANCE and BlockPos.ZERO, and so does the bridge; the old method's super call reaches super's 1.21.2 shape (CbLevelShapes)"
+  },
+  {
+   "old": "method_9505(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)I",
+   "new": "method_9505(Lnet/minecraft/class_2680;)I",
+   "onlyUnder": "net/minecraft/class_4970",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyLightBlock",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.lightBlock(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyLightBlock;Lnet/minecraft/class_2680;)I",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.superLightBlock(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperLightBlock;Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperLightBlock",
+   "superAccessors": [
+    "method_9505(Lnet/minecraft/class_2680;)I"
+   ],
+   "basis": "1.21.2 asks the state-only shape; 1.21.1's BlockStateBase.Cache asked a block's three-argument one with EmptyBlockGetter.INSTANCE and BlockPos.ZERO, and so does the bridge; the old method's super call reaches super's 1.21.2 shape (CbLevelShapes)"
+  },
+  {
+   "old": "method_9579(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z",
+   "new": "method_9579(Lnet/minecraft/class_2680;)Z",
+   "onlyUnder": "net/minecraft/class_4970",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacySkylight",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.propagatesSkylightDown(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacySkylight;Lnet/minecraft/class_2680;)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.superPropagatesSkylightDown(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperSkylight;Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperSkylight",
+   "superAccessors": [
+    "method_9579(Lnet/minecraft/class_2680;)Z"
+   ],
+   "basis": "1.21.2 asks the state-only shape; 1.21.1's BlockStateBase.Cache asked a block's three-argument one with EmptyBlockGetter.INSTANCE and BlockPos.ZERO, and so does the bridge; the old method's super call reaches super's 1.21.2 shape (CbLevelShapes)"
+  },
+  {
+   "old": "method_26201(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;",
+   "new": "method_26201()Lnet/minecraft/class_265;",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateOcclusion",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.stateOcclusionShape(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateOcclusion;)Lnet/minecraft/class_265;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.superStateOcclusionShape(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateOcclusion;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateOcclusion",
+   "superAccessors": [
+    "method_26201()Lnet/minecraft/class_265;"
+   ],
+   "basis": "a 1.21.1 BlockStateBase subclass's level-and-position shape query, asked as 1.21.1's cache asked it (EmptyBlockGetter.INSTANCE, BlockPos.ZERO; getOffset with the real position); its super call reaches 1.21.2's (CbLevelShapes)"
+  },
+  {
+   "old": "method_26173(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;",
+   "new": "method_26173(Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateFaceOcclusion",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.stateFaceOcclusionShape(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateFaceOcclusion;Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.superStateFaceOcclusionShape(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateFaceOcclusion;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateFaceOcclusion",
+   "superAccessors": [
+    "method_26173(Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;"
+   ],
+   "basis": "a 1.21.1 BlockStateBase subclass's level-and-position shape query, asked as 1.21.1's cache asked it (EmptyBlockGetter.INSTANCE, BlockPos.ZERO; getOffset with the real position); its super call reaches 1.21.2's (CbLevelShapes)"
+  },
+  {
+   "old": "method_26193(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)I",
+   "new": "method_26193()I",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateLightBlock",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.stateLightBlock(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateLightBlock;)I",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.superStateLightBlock(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateLightBlock;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateLightBlock",
+   "superAccessors": [
+    "method_26193()I"
+   ],
+   "basis": "a 1.21.1 BlockStateBase subclass's level-and-position shape query, asked as 1.21.1's cache asked it (EmptyBlockGetter.INSTANCE, BlockPos.ZERO; getOffset with the real position); its super call reaches 1.21.2's (CbLevelShapes)"
+  },
+  {
+   "old": "method_26167(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z",
+   "new": "method_26167()Z",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateSkylight",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.statePropagatesSkylightDown(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateSkylight;)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.superStatePropagatesSkylightDown(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateSkylight;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateSkylight",
+   "superAccessors": [
+    "method_26167()Z"
+   ],
+   "basis": "a 1.21.1 BlockStateBase subclass's level-and-position shape query, asked as 1.21.1's cache asked it (EmptyBlockGetter.INSTANCE, BlockPos.ZERO; getOffset with the real position); its super call reaches 1.21.2's (CbLevelShapes)"
+  },
+  {
+   "old": "method_26216(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z",
+   "new": "method_26216()Z",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateSolidRender",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.stateSolidRender(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateSolidRender;)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.superStateSolidRender(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateSolidRender;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateSolidRender",
+   "superAccessors": [
+    "method_26216()Z"
+   ],
+   "basis": "a 1.21.1 BlockStateBase subclass's level-and-position shape query, asked as 1.21.1's cache asked it (EmptyBlockGetter.INSTANCE, BlockPos.ZERO; getOffset with the real position); its super call reaches 1.21.2's (CbLevelShapes)"
+  },
+  {
+   "old": "method_26226(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;",
+   "new": "method_26226(Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateOffset",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.stateOffset(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyStateOffset;Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.superStateOffset(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateOffset;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$SuperStateOffset",
+   "superAccessors": [
+    "method_26226(Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;"
+   ],
+   "basis": "a 1.21.1 BlockStateBase subclass's level-and-position shape query, asked as 1.21.1's cache asked it (EmptyBlockGetter.INSTANCE, BlockPos.ZERO; getOffset with the real position); its super call reaches 1.21.2's (CbLevelShapes)"
+  },
+  {
+   "old": "method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+   "new": "method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "onlyUnder": "net/minecraft/class_4970",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult.toResult(Ltop/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult;)Lnet/minecraft/class_1269;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelUse.superUseItemOn(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelUse$Super;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelUse$Super",
+   "superAccessors": [
+    "method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
+   ],
+   "basis": "vanilla asks a 1.21.1 block's useItemOn for an InteractionResult: its answer converted (PASS_TO_DEFAULT is TRY_WITH_EMPTY_HAND, after which 1.21.2 goes on to useWithoutItem as 1.21.1 did); its super call reaches super's 1.21.2 useItemOn (CbLevelUse)"
+  },
+  {
+   "old": "method_55780(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+   "new": "method_55780(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult.toResult(Ltop/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult;)Lnet/minecraft/class_1269;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelUse.superStateUseItemOn(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelUse$SuperState;Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelUse$SuperState",
+   "superAccessors": [
+    "method_55780(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
+   ],
+   "basis": "vanilla asks a 1.21.1 block's useItemOn for an InteractionResult: its answer converted (PASS_TO_DEFAULT is TRY_WITH_EMPTY_HAND, after which 1.21.2 goes on to useWithoutItem as 1.21.1 did); its super call reaches super's 1.21.2 useItemOn (CbLevelUse)"
+  },
+  {
+   "old": "method_9612(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V",
+   "new": "method_9612(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V",
+   "onlyUnder": "net/minecraft/class_4970",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.neighborChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$Legacy;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.superNeighborChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$Super;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$Super",
+   "superAccessors": [
+    "method_9612(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V"
+   ],
+   "basis": "1.21.2 tells a block an Orientation where 1.21.1 told it the neighbor's position: the 1.21.1 override gets the source the update was made for (recorded where 1.21.2 starts it, CbLevelNeighbors); its super call reaches super's 1.21.2 neighborChanged with the orientation vanilla passed"
+  },
+  {
+   "old": "method_26181(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V",
+   "new": "method_26181(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V",
+   "onlyUnder": "net/minecraft/class_4970$class_4971",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyState",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.handleNeighborChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyState;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.superHandleNeighborChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperState;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperState",
+   "superAccessors": [
+    "method_26181(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V"
+   ],
+   "basis": "BlockState.handleNeighborChanged, as Block.neighborChanged (CbLevelNeighbors)"
+  },
+  {
+   "old": "method_8492(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;)V",
+   "new": "method_8492(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyLevel",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.levelNeighborChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyLevel;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.superLevelNeighborChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperLevel;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperLevel",
+   "superAccessors": [
+    "method_8492(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;)V"
+   ],
+   "basis": "a 1.21.1 Level subclass's neighborChanged override, told the source its caller named (CbLevelNeighbors)"
+  },
+  {
+   "old": "method_41410(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V",
+   "new": "method_41410(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyLevelFull",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.levelNeighborChangedFull(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyLevelFull;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.superLevelNeighborChangedFull(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperLevelFull;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperLevelFull",
+   "superAccessors": [
+    "method_41410(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V"
+   ],
+   "basis": "a 1.21.1 Level subclass's neighborChanged override, told the source its caller named (CbLevelNeighbors)"
+  },
+  {
+   "old": "method_41704(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;)V",
+   "new": "method_41704(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;)V",
+   "onlyUnder": "net/minecraft/class_7165",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyUpdater",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.updaterNeighborChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyUpdater;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.superUpdaterNeighborChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperUpdater;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperUpdater",
+   "superAccessors": [
+    "method_41704(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;)V"
+   ],
+   "basis": "a 1.21.1 NeighborUpdater implementation's neighborChanged, told the source its caller named (CbLevelNeighbors)"
+  },
+  {
+   "old": "method_41703(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V",
+   "new": "method_41703(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V",
+   "onlyUnder": "net/minecraft/class_7165",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyUpdaterFull",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.updaterNeighborChangedFull(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$LegacyUpdaterFull;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors.superUpdaterNeighborChangedFull(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperUpdaterFull;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors$SuperUpdaterFull",
+   "superAccessors": [
+    "method_41703(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V"
+   ],
+   "basis": "a 1.21.1 NeighborUpdater implementation's neighborChanged, told the source its caller named (CbLevelNeighbors)"
+  }
+ ],
+ "overrideRenames": [
+  {
+   "old": "method_9539()Ljava/lang/String;",
+   "new": "cb$getDescriptionId",
+   "onlyUnder": "net/minecraft/class_2248",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlocks$Legacy",
+   "basis": "BlockBehaviour.getDescriptionId is final since 1.21.2: a 1.21.1 block's override is renamed and the final method hands the call to it (CbLevelBlockNameMixin); its super call answers the 1.21.2 id"
+  },
+  {
+   "old": "method_39280(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;ILnet/minecraft/class_1953;)V",
+   "new": "method_64311",
+   "onlyUnder": "net/minecraft/class_1936",
+   "superCalls": "rename",
+   "basis": "scheduleTick is ScheduledTickAccess's since 1.21.2: the same default body, under its new name"
+  },
+  {
+   "old": "method_39279(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;I)V",
+   "new": "method_64310",
+   "onlyUnder": "net/minecraft/class_1936",
+   "superCalls": "rename",
+   "basis": "scheduleTick is ScheduledTickAccess's since 1.21.2: the same default body, under its new name"
+  },
+  {
+   "old": "method_39282(Lnet/minecraft/class_2338;Lnet/minecraft/class_3611;ILnet/minecraft/class_1953;)V",
+   "new": "method_64313",
+   "onlyUnder": "net/minecraft/class_1936",
+   "superCalls": "rename",
+   "basis": "scheduleTick is ScheduledTickAccess's since 1.21.2: the same default body, under its new name"
+  },
+  {
+   "old": "method_39281(Lnet/minecraft/class_2338;Lnet/minecraft/class_3611;I)V",
+   "new": "method_64312",
+   "onlyUnder": "net/minecraft/class_1936",
+   "superCalls": "rename",
+   "basis": "scheduleTick is ScheduledTickAccess's since 1.21.2: the same default body, under its new name"
+  }
+ ],
+ "frameDefaults": {
+  "method_9559(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": {
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#tickAccess(Lnet/minecraft/class_4970;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_10225;",
+   "7": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#superRandom(Lnet/minecraft/class_4970;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_5819;"
+  },
+  "method_26191(Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": {
+   "1": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#stateTickAccess(Lnet/minecraft/class_4970$class_4971;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_10225;",
+   "6": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#stateRandom(Lnet/minecraft/class_4970$class_4971;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_5819;"
+  },
+  "method_8452(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;)V": {
+   "2": "zero: no orientation -- 1.21.2's MultiNeighborUpdate computes the initial one itself when it is handed none"
+  },
+  "method_8508(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2350;)V": {
+   "3": "zero: no orientation -- 1.21.2's MultiNeighborUpdate computes the initial one itself when it is handed none"
+  },
+  "method_41705(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2350;)V": {
+   "3": "zero: no orientation -- 1.21.2's MultiNeighborUpdate computes the initial one itself when it is handed none"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_4970$class_8176",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOffsetFunction",
+   "requires": [
+    "evaluate(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;"
+   ],
+   "synth": [
+    {
+     "new": "evaluate(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;",
+     "call": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes.evaluate(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOffsetFunction;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;"
+    }
+   ],
+   "basis": "a 1.21.1 class implementing OffsetFunction is asked 1.21.2's evaluate(state, pos) (CbLevelShapes)"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/minecraft/class_4970$class_8176.evaluate(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_243;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOffsetFunction",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#offsetFunction(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOffsetFunction;)Lnet/minecraft/class_4970$class_8176;",
+   "basis": "a 1.21.1 offset function lambda, as 1.21.2's evaluate(state, pos): 1.21.2 asks without a level"
+  }
+ }
+}

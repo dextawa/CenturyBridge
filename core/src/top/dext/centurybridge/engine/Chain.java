@@ -94,8 +94,65 @@ public final class Chain {
     public final java.util.Map<String, String> superRenames = new java.util.HashMap<>();
     /** instance fields renamed in place (resolution reaches relocated/renamed fields via hierarchy) */
     public final java.util.Map<String, String> fieldRenames = new java.util.HashMap<>();
-    /** methods renamed in place (relocated-to-super methods resolve via hierarchy) */
+    /**
+     * Methods renamed in place ("owner.name(desc)" -> new name, same descriptor): a call, a super call
+     * or a method reference keeps its owner and kind and takes the new name. The key is found where the
+     * JVM resolves the site ({@link #methodRenameHome}): on a library owner through the library hierarchy
+     * (JarProcessor's library homes), on a vanilla owner through its superclasses and then its
+     * superinterfaces, Fabric API's injected interfaces included -- 26.1 renamed FabricItem's
+     * getRecipeRemainder, which a mod calls as Item.getRecipeRemainder. A member the mod class declares
+     * itself is never renamed (the site names the mod's own method), nor one a vanilla class on the way
+     * declares in the source release (vanilla's own member, not the renamed one).
+     *
+     * On a functional interface's abstract method a rename also renames the lambdas built for it: a
+     * LambdaMetafactory invokedynamic whose produced interface reaches the key (same resolution, the
+     * invokedynamic's name and erased SAM type as the member) is spun under the new name -- otherwise
+     * the class it spins implements only the old name and the first call is an AbstractMethodError.
+     * The bridges an altMetafactory lambda lists share the SAM's name and follow it; a serializable
+     * lambda is renamed too and reported, since its class's $deserializeLambda$ still matches the old
+     * name as a string.
+     */
     public final java.util.Map<String, String> methodRenames = new java.util.HashMap<>();
+
+    /**
+     * The class or interface a {@link #methodRenames} key is on for a site naming {@code owner}, in JVM
+     * resolution order: the owner and its superclasses, then (an instance member only: an interface's
+     * static is not inherited) their superinterfaces breadth first, injected ones included. A vanilla
+     * class or interface on the way that declares the member itself in the source release, with no key of
+     * its own, ends the walk: the site reaches vanilla's member there. Null when no key applies.
+     */
+    public String methodRenameHome(String owner, String nameDesc, boolean isStatic) {
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>();
+        for (String o : selfAndSupers(owner)) {
+            if (methodRenames.containsKey(o + "." + nameDesc)) {
+                return o;
+            }
+            if (sourceDecls.getOrDefault(o, java.util.Set.of()).contains(nameDesc)) {
+                return null;
+            }
+            todo.addAll(interfacesOf.getOrDefault(o, java.util.List.of()));
+            todo.addAll(libInterfacesOf.getOrDefault(o, java.util.List.of()));
+        }
+        if (isStatic) {
+            return null;
+        }
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String i = todo.poll();
+            if (!seen.add(i)) {
+                continue;
+            }
+            if (methodRenames.containsKey(i + "." + nameDesc)) {
+                return i;
+            }
+            if (sourceDecls.getOrDefault(i, java.util.Set.of()).contains(nameDesc)) {
+                continue;
+            }
+            todo.addAll(interfacesOf.getOrDefault(i, java.util.List.of()));
+            todo.addAll(libInterfacesOf.getOrDefault(i, java.util.List.of()));
+        }
+        return null;
+    }
     /**
      * GETFIELD "owner.name:desc" -> "runtimeClass[#member]": an instance field
      * read rewritten to a static getter taking the receiver (record components
@@ -420,7 +477,11 @@ public final class Chain {
          * </pre>
          * Every argument whose old type differs from its new one is narrowed this way, so the
          * old type must be a subtype of the new one (wiring-check holds the target to it). No
-         * wrap / bridge / frames; a guard may be combined (it is checked after the type test).
+         * wrap / bridge; a guard may be combined (it is checked after the type test). With
+         * {@link #frames} the type test comes before the frame is pushed, and the old method's
+         * rewritten super call passes the narrowed value on as the wider type (1.21.2's
+         * updateShape: a LevelReader where 1.21.1 took a LevelAccessor; every vanilla caller passes
+         * a LevelAccessor, so the old override still gets exactly what vanilla passed).
          */
         public boolean narrow;
         /**
@@ -550,6 +611,31 @@ public final class Chain {
 
     /** target-stub methods declared abstract, "owner.name(desc)" in the analysis namespace */
     public final java.util.Set<String> targetAbstracts = new java.util.HashSet<>();
+    /** target-stub methods declared final, "owner.name(desc)" in the analysis namespace */
+    public final java.util.Set<String> targetFinalMethods = new java.util.HashSet<>();
+
+    /**
+     * Whether the nearest declaration of name+desc up the target superclass chain of these vanilla roots is final:
+     * a class under them cannot override it (the JVM refuses to load the class). An override hook must not
+     * synthesize such a shape; whatever reconnects the old override there is a mixin on the final method.
+     */
+    public boolean finalOnTarget(String name, String desc, java.util.List<String> roots) {
+        String shape = name + desc;
+        for (String r : roots) {
+            if (targetInterfaces.contains(r)) {
+                continue;
+            }
+            for (String c = r; c != null; c = targetSuperOf.get(c)) {
+                if (targetDecls.getOrDefault(c, java.util.Set.of()).contains(shape)) {
+                    if (targetFinalMethods.contains(c + "." + shape)) {
+                        return true;
+                    }
+                    break;
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * Whether the target gives a class with these vanilla ancestors a concrete name+desc, the way the
@@ -963,6 +1049,9 @@ public final class Chain {
                     decls.add(name + bd);
                     if (idx.abstracts.contains(e.getKey() + "." + me.getKey() + d)) {
                         targetAbstracts.add(owner + "." + name + bd);
+                    }
+                    if (idx.finals.contains(e.getKey() + "." + me.getKey() + d)) {
+                        targetFinalMethods.add(owner + "." + name + bd);
                     }
                     if (!name.equals(me.getKey())) {
                         // past the wall the runtime name IS the mojang one: a mixin
@@ -2099,9 +2188,9 @@ public final class Chain {
                             h.shadows.add(ssig[0] + ssig[1]);
                         }
                     }
-                    if (h.narrow && (h.frames != null || h.wrapName != null || o.has("bridge"))) {
+                    if (h.narrow && (h.wrapName != null || o.has("bridge"))) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
-                            + ": narrow forwards the new argument itself (no wrap / bridge / frames)");
+                            + ": narrow forwards the new argument itself (no wrap / bridge)");
                     }
                     if (o.has("bridge")) {
                         String br = o.get("bridge").getAsString();

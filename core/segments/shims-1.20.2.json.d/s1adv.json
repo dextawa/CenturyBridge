@@ -6,6 +6,7 @@
   "net/minecraft/class_2035.field_9571:Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2040.field_9581:Lnet/minecraft/class_2040;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2048.field_9599:Lnet/minecraft/class_2048;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2050.field_9609:Lnet/minecraft/class_2050;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2073.field_9640:Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2090.field_9685:Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2102.field_9709:Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
@@ -172,12 +173,47 @@
   "net/minecraft/class_8508$class_8509.method_51353(Lnet/minecraft/class_2960;Ljava/util/List;)Lnet/minecraft/class_8508$class_8509;": "top/dext/centurybridge/rt/v1_20_2/CbAdvFactories"
  },
  "callReshapes": {
+  "net/minecraft/class_163$class_164.method_719(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_163$class_164.method_720(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_163$class_164.method_721(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_163$class_164.method_723(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
   "net/minecraft/class_184.method_807(Lnet/minecraft/class_5267;)Lcom/google/gson/JsonObject;": {
    "desc": "()Lcom/google/gson/JsonObject;",
    "ops": [
     "drop"
    ],
    "basis": "s1adv: serializeToJson lost its SerializationContext -- 1.20.1 only ever passed SerializationContext.INSTANCE, which 1.20.2's writes the same with"
+  },
+  "net/minecraft/class_194.method_852(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
   },
   "net/minecraft/class_195.method_27790()Lnet/minecraft/class_5258;": {
    "desc": "()Ljava/util/Optional;",
@@ -459,6 +495,96 @@
    ],
    "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
   },
+  "net/minecraft/class_2985.method_12883(Lnet/minecraft/class_161;Ljava/lang/String;)Z": {
+   "desc": "(Lnet/minecraft/class_8779;Ljava/lang/String;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_2985.method_12888(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8779;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_3008$class_3009$1.method_13000(Lnet/minecraft/class_3222;Lnet/minecraft/class_161;Ljava/lang/String;)Z": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_8779;Ljava/lang/String;)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_3008$class_3009$1.method_13002(Lnet/minecraft/class_3222;Lnet/minecraft/class_161;)Z": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_8779;)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_3008$class_3009$2.method_13000(Lnet/minecraft/class_3222;Lnet/minecraft/class_161;Ljava/lang/String;)Z": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_8779;Ljava/lang/String;)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_3008$class_3009$2.method_13002(Lnet/minecraft/class_3222;Lnet/minecraft/class_161;)Z": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_8779;)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_3008$class_3009.method_13000(Lnet/minecraft/class_3222;Lnet/minecraft/class_161;Ljava/lang/String;)Z": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_8779;Ljava/lang/String;)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_3008$class_3009.method_13002(Lnet/minecraft/class_3222;Lnet/minecraft/class_161;)Z": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_8779;)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_454.method_2308(Lnet/minecraft/class_161;)Lnet/minecraft/class_456;": {
+   "desc": "(Lnet/minecraft/class_8779;)Lnet/minecraft/class_456;",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_454.method_2317(Lnet/minecraft/class_310;Lnet/minecraft/class_457;ILnet/minecraft/class_161;)Lnet/minecraft/class_454;": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_457;ILnet/minecraft/class_8781;)Lnet/minecraft/class_454;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_454.method_2318(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
   "net/minecraft/class_4558.method_27854(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_195;": {
    "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4558$class_8788;",
    "ops": [
@@ -468,6 +594,56 @@
    ],
    "ret": "conv top/dext/centurybridge/rt/v1_20_2/CbAdvInstances#asAbstract(Lnet/minecraft/class_4558$class_8788;)Lnet/minecraft/class_195;",
    "basis": "s1adv: SimpleCriterionTrigger.createInstance takes the player predicate as an Optional; what it builds is the AbstractCriterionTriggerInstance 1.20.1 declared"
+  },
+  "net/minecraft/class_457.method_2335(Lnet/minecraft/class_161;)Lnet/minecraft/class_456;": {
+   "desc": "(Lnet/minecraft/class_8781;)Lnet/minecraft/class_456;",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_457.method_2865(Lnet/minecraft/class_161;Lnet/minecraft/class_167;)V": {
+   "desc": "(Lnet/minecraft/class_8781;Lnet/minecraft/class_167;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_457.method_2866(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8779;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_457.method_719(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_457.method_720(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_457.method_721(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_457.method_723(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8781;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
   },
   "net/minecraft/class_4708.method_23877(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4708$class_4709;": {
    "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_4708$class_4709;",
@@ -549,6 +725,21 @@
    ],
    "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
   },
+  "net/minecraft/class_632$class_633.method_2865(Lnet/minecraft/class_161;Lnet/minecraft/class_167;)V": {
+   "desc": "(Lnet/minecraft/class_8781;Lnet/minecraft/class_167;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
+  "net/minecraft/class_632$class_633.method_2866(Lnet/minecraft/class_161;)V": {
+   "desc": "(Lnet/minecraft/class_8779;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
+  },
   "net/minecraft/class_6405.method_37241(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6405$class_6406;": {
    "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_6405$class_6406;",
    "ops": [
@@ -575,6 +766,14 @@
     "keep"
    ],
    "basis": "gen_s1adv: createInstance takes the player predicate as an Optional (ANY is absent)"
+  },
+  "net/minecraft/class_8005$class_8006.accept(Lnet/minecraft/class_161;Z)V": {
+   "desc": "(Lnet/minecraft/class_8781;Z)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"
   },
   "net/minecraft/class_8508.method_51351(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5258;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;": {
    "desc": "(Lcom/google/gson/JsonObject;Ljava/util/Optional;Lnet/minecraft/class_5257;)Lnet/minecraft/class_8508$class_8509;",
@@ -880,6 +1079,160 @@
    "onlyUnder": "net/minecraft/class_8508",
    "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvTriggers.player(Ljava/util/Optional;)Lnet/minecraft/class_5258;",
    "basis": "gen_s1adv: a 1.20.1 override of createInstance is handed absent as ContextAwarePredicate.ANY"
+  },
+  {
+   "old": "accept(Lnet/minecraft/class_161;Z)V",
+   "new": "accept(Lnet/minecraft/class_8781;Z)V",
+   "onlyUnder": "net/minecraft/class_8005$class_8006",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_12878(Lnet/minecraft/class_161;Ljava/lang/String;)Z",
+   "new": "method_12878(Lnet/minecraft/class_8779;Ljava/lang/String;)Z",
+   "onlyUnder": "net/minecraft/class_2985",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes); guarded: the old shape's call side reaches the new shape on the object",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_12882(Lnet/minecraft/class_161;)Lnet/minecraft/class_167;",
+   "new": "method_12882(Lnet/minecraft/class_8779;)Lnet/minecraft/class_167;",
+   "onlyUnder": "net/minecraft/class_2985",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes); guarded: the old shape's call side reaches the new shape on the object",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_12883(Lnet/minecraft/class_161;Ljava/lang/String;)Z",
+   "new": "method_12883(Lnet/minecraft/class_8779;Ljava/lang/String;)Z",
+   "onlyUnder": "net/minecraft/class_2985",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_12888(Lnet/minecraft/class_161;)V",
+   "new": "method_12888(Lnet/minecraft/class_8779;)V",
+   "onlyUnder": "net/minecraft/class_2985",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_12896(Lnet/minecraft/class_2960;)Lnet/minecraft/class_161;",
+   "new": "method_12896(Lnet/minecraft/class_2960;)Lnet/minecraft/class_8779;",
+   "onlyUnder": "net/minecraft/class_2989",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes); guarded: the old shape's call side reaches the new shape on the object",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_13000(Lnet/minecraft/class_3222;Lnet/minecraft/class_161;Ljava/lang/String;)Z",
+   "new": "method_13000(Lnet/minecraft/class_3222;Lnet/minecraft/class_8779;Ljava/lang/String;)Z",
+   "onlyUnder": "net/minecraft/class_3008$class_3009",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_13002(Lnet/minecraft/class_3222;Lnet/minecraft/class_161;)Z",
+   "new": "method_13002(Lnet/minecraft/class_3222;Lnet/minecraft/class_8779;)Z",
+   "onlyUnder": "net/minecraft/class_3008$class_3009",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_2308(Lnet/minecraft/class_161;)Lnet/minecraft/class_456;",
+   "new": "method_2308(Lnet/minecraft/class_8779;)Lnet/minecraft/class_456;",
+   "onlyUnder": "net/minecraft/class_454",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_2318(Lnet/minecraft/class_161;)V",
+   "new": "method_2318(Lnet/minecraft/class_8781;)V",
+   "onlyUnder": "net/minecraft/class_454",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_2335(Lnet/minecraft/class_161;)Lnet/minecraft/class_456;",
+   "new": "method_2335(Lnet/minecraft/class_8781;)Lnet/minecraft/class_456;",
+   "onlyUnder": "net/minecraft/class_457",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_2864(Lnet/minecraft/class_161;Z)V",
+   "new": "method_2864(Lnet/minecraft/class_8779;Z)V",
+   "onlyUnder": "net/minecraft/class_632",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes); guarded: the old shape's call side reaches the new shape on the object",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_2865(Lnet/minecraft/class_161;Lnet/minecraft/class_167;)V",
+   "new": "method_2865(Lnet/minecraft/class_8781;Lnet/minecraft/class_167;)V",
+   "onlyUnder": "net/minecraft/class_632$class_633",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_2866(Lnet/minecraft/class_161;)V",
+   "new": "method_2866(Lnet/minecraft/class_8779;)V",
+   "onlyUnder": "net/minecraft/class_632$class_633",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_695(Lnet/minecraft/class_2960;)Lnet/minecraft/class_161;",
+   "new": "method_695(Lnet/minecraft/class_2960;)Lnet/minecraft/class_8779;",
+   "onlyUnder": "net/minecraft/class_161$class_162",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes); guarded: the old shape's call side reaches the new shape on the object",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.holderOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8779;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_701(Lnet/minecraft/class_161;)Lnet/minecraft/class_161$class_162;",
+   "new": "method_701(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161$class_162;",
+   "onlyUnder": "net/minecraft/class_161$class_162",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes); guarded: the old shape's call side reaches the new shape on the object",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8779;)Lnet/minecraft/class_161;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_716(Lnet/minecraft/class_2960;)Lnet/minecraft/class_161;",
+   "new": "method_716(Lnet/minecraft/class_2960;)Lnet/minecraft/class_8781;",
+   "onlyUnder": "net/minecraft/class_163",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes); guarded: the old shape's call side reaches the new shape on the object",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_719(Lnet/minecraft/class_161;)V",
+   "new": "method_719(Lnet/minecraft/class_8781;)V",
+   "onlyUnder": "net/minecraft/class_163$class_164",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_720(Lnet/minecraft/class_161;)V",
+   "new": "method_720(Lnet/minecraft/class_8781;)V",
+   "onlyUnder": "net/minecraft/class_163$class_164",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_721(Lnet/minecraft/class_161;)V",
+   "new": "method_721(Lnet/minecraft/class_8781;)V",
+   "onlyUnder": "net/minecraft/class_163$class_164",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
+  },
+  {
+   "old": "method_723(Lnet/minecraft/class_161;)V",
+   "new": "method_723(Lnet/minecraft/class_8781;)V",
+   "onlyUnder": "net/minecraft/class_163$class_164",
+   "basis": "gen_s1adv: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)",
+   "wrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.valueOf(Lnet/minecraft/class_8781;)Lnet/minecraft/class_161;"
   }
  ],
  "adapterHooks": [
@@ -975,6 +1328,17 @@
    ],
    "basis": "s1adv: a 1.20.1 Listener subclass's super(instance, advancement, criterion): the advancement as its holder"
   },
+  "net/minecraft/class_194.<init>(Lnet/minecraft/class_161;Lnet/minecraft/class_194;Lnet/minecraft/class_194;II)V": {
+   "desc": "(Lnet/minecraft/class_8781;Lnet/minecraft/class_194;Lnet/minecraft/class_194;II)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes (CbAdvNodes)"
+  },
   "net/minecraft/class_195.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;)V": {
    "desc": "(Ljava/util/Optional;)V",
    "ops": [
@@ -1043,6 +1407,37 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   },
+  "net/minecraft/class_2019.<init>()V": {
+   "desc": "(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyDoubles()Lnet/minecraft/class_2096$class_2099;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyDoubles()Lnet/minecraft/class_2096$class_2099;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"
+  },
+  "net/minecraft/class_2019.<init>(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2048;Ljava/lang/Boolean;Lnet/minecraft/class_2022;)V": {
+   "desc": "(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#entity(Lnet/minecraft/class_2048;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#damageSource(Lnet/minecraft/class_2022;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
+  "net/minecraft/class_2022.<init>(Ljava/util/List;Lnet/minecraft/class_2048;Lnet/minecraft/class_2048;)V": {
+   "desc": "(Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#entity(Lnet/minecraft/class_2048;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#entity(Lnet/minecraft/class_2048;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
   "net/minecraft/class_2027$class_2029.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2102;Lnet/minecraft/class_5258;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
    "ops": [
@@ -1061,6 +1456,14 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   },
+  "net/minecraft/class_2035.<init>()V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyInts()Lnet/minecraft/class_2096$class_2100;"
+   ],
+   "basis": "gen_s1adv: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"
+  },
   "net/minecraft/class_2037$class_2039.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_4559;)V": {
    "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;)V",
    "ops": [
@@ -1070,6 +1473,17 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   },
+  "net/minecraft/class_2040.<init>(Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
   "net/minecraft/class_2044$class_2046.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2019;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
    "ops": [
@@ -1077,6 +1491,13 @@
     "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#damage(Lnet/minecraft/class_2019;)Ljava/util/Optional;"
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2050.<init>()V": {
+   "desc": "(Lnet/minecraft/class_6885;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#noEntityTypes()Lnet/minecraft/class_6885;"
+   ],
+   "basis": "gen_s1adv: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"
   },
   "net/minecraft/class_2054$class_2056.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
@@ -1117,6 +1538,34 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   },
+  "net/minecraft/class_2073.<init>()V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/util/List;Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyInts()Lnet/minecraft/class_2096$class_2100;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyInts()Lnet/minecraft/class_2096$class_2100;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#none()Ljava/util/List;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#none()Ljava/util/List;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"
+  },
+  "net/minecraft/class_2073.<init>(Lnet/minecraft/class_6862;Ljava/util/Set;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;[Lnet/minecraft/class_2035;[Lnet/minecraft/class_2035;Lnet/minecraft/class_1842;Lnet/minecraft/class_2105;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/util/List;Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#tag(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#items(Ljava/util/Set;)Ljava/util/Optional;",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#enchantments([Lnet/minecraft/class_2035;)Ljava/util/List;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#enchantments([Lnet/minecraft/class_2035;)Ljava/util/List;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#potion(Lnet/minecraft/class_1842;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#nbt(Lnet/minecraft/class_2105;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
   "net/minecraft/class_2076$class_2078.<init>(Lnet/minecraft/class_5258;[Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/List;Lnet/minecraft/class_2096$class_2100;)V",
    "ops": [
@@ -1151,6 +1600,30 @@
     "keep"
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2090.<init>(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Ljava/lang/Boolean;Lnet/minecraft/class_4552;Lnet/minecraft/class_4550;Lnet/minecraft/class_4551;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#position(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;)Ljava/util/Optional;",
+    "conv:3 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#key(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "conv:4 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#key(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "conv:5 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#key(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "conv:6 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv:7 top/dext/centurybridge/rt/v1_20_2/CbAdvAny#light(Lnet/minecraft/class_4552;)Ljava/util/Optional;",
+    "conv:8 top/dext/centurybridge/rt/v1_20_2/CbAdvAny#block(Lnet/minecraft/class_4550;)Ljava/util/Optional;",
+    "conv:9 top/dext/centurybridge/rt/v1_20_2/CbAdvAny#fluid(Lnet/minecraft/class_4551;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: x/y/z bounds as the position predicate (absent when all are any), the rest positional as Optionals"
+  },
+  "net/minecraft/class_2102$class_2103.<init>(Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/lang/Boolean;Ljava/lang/Boolean;)V": {
+   "desc": "(Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
   },
   "net/minecraft/class_2108$class_2110.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;Lnet/minecraft/class_2090;Lnet/minecraft/class_2025;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
@@ -1249,6 +1722,59 @@
     "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_3735.<init>(Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
+  "net/minecraft/class_454.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_457;Lnet/minecraft/class_453;ILnet/minecraft/class_161;Lnet/minecraft/class_185;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_457;Lnet/minecraft/class_453;ILnet/minecraft/class_8781;Lnet/minecraft/class_185;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes (CbAdvNodes)"
+  },
+  "net/minecraft/class_4550.<init>(Lnet/minecraft/class_6862;Ljava/util/Set;Lnet/minecraft/class_4559;Lnet/minecraft/class_2105;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#tag(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#blocks(Ljava/util/Set;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#state(Lnet/minecraft/class_4559;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#nbt(Lnet/minecraft/class_2105;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
+  "net/minecraft/class_4551.<init>(Lnet/minecraft/class_6862;Lnet/minecraft/class_3611;Lnet/minecraft/class_4559;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#tag(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#fluid(Lnet/minecraft/class_3611;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#state(Lnet/minecraft/class_4559;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
+  "net/minecraft/class_456.<init>(Lnet/minecraft/class_454;Lnet/minecraft/class_310;Lnet/minecraft/class_161;Lnet/minecraft/class_185;)V": {
+   "desc": "(Lnet/minecraft/class_454;Lnet/minecraft/class_310;Lnet/minecraft/class_8781;Lnet/minecraft/class_185;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;",
+    "keep"
+   ],
+   "basis": "gen_s1adv: the advancement as the node / holder 1.20.2 takes (CbAdvNodes)"
   },
   "net/minecraft/class_4708$class_4709.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)V": {
    "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
@@ -1361,5 +1887,28 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   }
- }
+ },
+ "covers": [
+  "net/minecraft/class_2022$class_2023.method_35130(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2022$class_2023;",
+  "net/minecraft/class_2022$class_2023.method_35132(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2022$class_2023;",
+  "net/minecraft/class_2048$class_2049.method_27971(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_27972(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_37229(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_37230(Lnet/minecraft/class_2090;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_8918(Lnet/minecraft/class_2090;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_8919(Lnet/minecraft/class_2040;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_8923(Lnet/minecraft/class_2102;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2090$class_2091.method_27989(Lnet/minecraft/class_4550;)Lnet/minecraft/class_2090$class_2091;",
+  "net/minecraft/class_2090$class_2091.method_27990(Ljava/lang/Boolean;)Lnet/minecraft/class_2090$class_2091;",
+  "net/minecraft/class_2090$class_2091.method_35274(Lnet/minecraft/class_4551;)Lnet/minecraft/class_2090$class_2091;",
+  "net/minecraft/class_2090$class_2091.method_35275(Lnet/minecraft/class_4552;)Lnet/minecraft/class_2090$class_2091;",
+  "net/minecraft/class_3735$class_5278.method_27966(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_27968(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_27969(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_27970(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_35195(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_35196(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_4550$class_4710.method_27963(Lnet/minecraft/class_4559;)Lnet/minecraft/class_4550$class_4710;",
+  "net/minecraft/class_4553$class_4557.method_37251(Lnet/minecraft/class_2048;)Lnet/minecraft/class_4553$class_4557;"
+ ]
 }

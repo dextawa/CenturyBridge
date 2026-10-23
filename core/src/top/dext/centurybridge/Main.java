@@ -170,7 +170,9 @@ public final class Main {
         // chain crosses it, every converted jar takes a whole-jar rename pass.
         boolean crossesWall = Chain.RELEASES.indexOf(args[2]) <= Chain.RELEASES.indexOf("1.21.11")
             && Chain.RELEASES.indexOf(args[3]) > Chain.RELEASES.indexOf("1.21.11");
-        Path renameTable = Path.of("data/mappings/inter-to-mojang-1.21.11.tsv");
+        // the table spelling names the way the TARGET declares them (core/segments/wall-tables.tsv)
+        Path renameTable = crossesWall ? top.dext.centurybridge.engine.WallTable.forTarget(Path.of(args[1]), args[3])
+                                       : Path.of("data/mappings/inter-to-mojang-1.21.11.tsv");
         if (crossesWall && !Files.exists(renameTable)) {
             throw new IllegalStateException("chain crosses the namespace wall but " + renameTable + " is missing");
         }

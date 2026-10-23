@@ -143,9 +143,10 @@ PYGATE
 [ -d core/build/classes/top/dext/centurybridge ] || {
     echo "engine not compiled (core/build/classes): build it first, the wiring/mixin gates need it"; exit 1; }
 # past the namespace wall the bridge declares mojang names; wiring keys and
-# covers are in the analysis namespace and need the table to compare
+# covers are in the analysis namespace and need the table to compare -- the
+# table that spells names the way this release declares them (core/segments/wall-tables.tsv)
 NAMETABLE=""
-case "$STUB" in *intermediary*) ;; *) NAMETABLE="$DATA/mappings/inter-to-mojang-1.21.11.tsv";; esac
+case "$STUB" in *intermediary*) ;; *) NAMETABLE="$(python3 core/tools/wall_tables.py "$VERSION" "$DATA")";; esac
 
 echo "compiling $VERSION shims..."
 find "$SHIM/src" -name '*.java' > "$OUT/sources-$VERSION.txt"

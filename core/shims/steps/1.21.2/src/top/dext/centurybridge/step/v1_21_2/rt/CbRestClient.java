@@ -26,4 +26,17 @@ public final class CbRestClient {
     public static void debugFpsMeterKeyPress(net.minecraft.class_310 mc, int key) {
         mc.method_53526().method_61981().method_61987(key);
     }
+
+    /**
+     * CommonListenerCookie.strictErrorHandling(): 1.21.1's server always sent true and 1.21.2's client always
+     * disconnects on a packet error (1.21.1's behaviour for true), so the flag is true.
+     */
+    public static boolean strictErrorHandling(net.minecraft.class_8675 cookie) {
+        return true;
+    }
+
+    /** ClientCommonPacketListenerImpl.strictErrorHandling (a protected field of 1.21.1): true, as above */
+    public static boolean strictErrorHandlingField(net.minecraft.class_8673 listener) {
+        return true;
+    }
 }
