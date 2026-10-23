@@ -248,9 +248,24 @@ public final class CbLevelShapes {
         return self instanceof LegacySkylight l ? l.method_9579(state, level, pos) : ((Access) self).cb$propagatesSkylightDown(state);
     }
 
-    /** 1.21.1's isOcclusionShapeFullBlock (gone): Block.isShapeFullBlock of the occlusion shape it is asked with */
+    /**
+     * 1.21.1's isOcclusionShapeFullBlock (gone; no vanilla code of either release calls it): a 1.21.1 block's own
+     * override first, else Block.isShapeFullBlock of the occlusion shape it is asked with
+     */
     public static boolean method_42326(class_4970 self, class_2680 state, class_1922 level, class_2338 pos) {
+        if (self instanceof LegacyOcclusionFullBlock l) {
+            return l.method_42326(state, level, pos);
+        }
+        return occlusionFullBlock(self, state, level, pos);
+    }
+
+    /** super.isOcclusionShapeFullBlock(..): 1.21.1's body */
+    public static boolean occlusionFullBlock(class_4970 self, class_2680 state, class_1922 level, class_2338 pos) {
         return net.minecraft.class_2248.method_9614(method_9571(self, state, level, pos));
+    }
+
+    public interface LegacyOcclusionFullBlock {
+        boolean method_42326(class_2680 state, class_1922 level, class_2338 pos);
     }
 
     public static class_265 method_26201(class_4970.class_4971 self, class_1922 level, class_2338 pos) {

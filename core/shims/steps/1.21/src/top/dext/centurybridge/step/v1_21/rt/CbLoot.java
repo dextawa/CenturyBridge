@@ -249,8 +249,10 @@ public final class CbLoot {
             super(java.util.Set.of(), net.minecraft.class_7701.field_40183, registries);
         }
 
+        // public: Fabric API's access widener (applied to the compile stub, as at runtime) makes
+        // BlockLootSubProvider.generate public, and an override may not narrow it
         @Override
-        protected void method_10379() {
+        public void method_10379() {
         }
     }
 

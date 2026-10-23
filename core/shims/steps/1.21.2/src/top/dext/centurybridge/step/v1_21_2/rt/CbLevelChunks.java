@@ -4,10 +4,12 @@ import it.unimi.dsi.fastutil.shorts.ShortList;
 import it.unimi.dsi.fastutil.shorts.ShortLists;
 import java.util.List;
 import net.minecraft.class_1922;
+import net.minecraft.class_2248;
 import net.minecraft.class_2791;
 import net.minecraft.class_2818;
 import net.minecraft.class_2821;
 import net.minecraft.class_3218;
+import net.minecraft.class_3611;
 import net.minecraft.class_6749;
 import net.minecraft.class_6759;
 import net.minecraft.class_6761;
@@ -156,11 +158,16 @@ public final class CbLevelChunks {
 
     /** levelChunk.postProcessGeneration() */
     public static void method_12221(class_2818 self) {
+        self.method_12221(serverLevel(self));
+    }
+
+    /** the chunk's server level (also frameDefaults of a 1.21.1 postProcessGeneration override entered directly) */
+    public static class_3218 serverLevel(class_2818 self) {
         if (!(self.method_12200() instanceof class_3218 level)) {
             throw new UnsupportedOperationException("1.21.1's LevelChunk.postProcessGeneration on a client chunk: "
                 + "1.21.1 ran it on server chunks only, as 1.21.2's runPostProcessing(ServerLevel)");
         }
-        self.method_12221(level);
+        return level;
     }
 
     // ---- light ----
@@ -192,7 +199,8 @@ public final class CbLevelChunks {
         return self.method_39296(gameTime(self));
     }
 
-    private static long gameTime(class_2791 chunk) {
+    /** the game time 1.21.1's chunk serializer packed ticks with (also frameDefaults of getTicksForSerialization) */
+    public static long gameTime(class_2791 chunk) {
         class_2791 c = chunk instanceof class_2821 imposter ? imposter.method_12240() : chunk;
         return c instanceof class_2818 level ? level.method_12200().method_8510() : 0L;
     }
@@ -209,6 +217,17 @@ public final class CbLevelChunks {
 
     private static <T> class_6761<T> container(List<class_6759<T>> ticks) {
         return gameTime -> ticks;
+    }
+
+    /**
+     * new PackedTicks(blocks, fluids): 1.21.1's record held the two containers and the chunk serializer packed them
+     * with the level's game time when it wrote the chunk; 1.21.2's holds the packed lists. Packed here with the game
+     * time of the side asking (CbLevelBlockEntities.gameTime) -- the time 1.21.1's write would have used, for a record
+     * written as it is made (getTicksForSerialization's).
+     */
+    public static class_2791.class_6745 cbNew(class_6761<class_2248> blocks, class_6761<class_3611> fluids) {
+        long now = CbLevelBlockEntities.gameTime();
+        return new class_2791.class_6745(blocks.method_61898(now), fluids.method_61898(now));
     }
 
     private CbLevelChunks() {

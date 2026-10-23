@@ -241,7 +241,10 @@
   "net/minecraft/class_1661.method_7374(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPlayer#method_7374",
   "net/minecraft/class_9887.method_64676()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestRecipes#method_64676",
   "net/minecraft/class_9887.method_61681()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestRecipes#method_61681",
-  "net/minecraft/class_4482.method_21848(Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBeehive#method_21848"
+  "net/minecraft/class_4482.method_21848(Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBeehive#method_21848",
+  "net/minecraft/class_3195.method_41614(Lnet/minecraft/class_5455;Lnet/minecraft/class_2794;Lnet/minecraft/class_1966;Lnet/minecraft/class_7138;Lnet/minecraft/class_3485;JLnet/minecraft/class_1923;ILnet/minecraft/class_5539;Ljava/util/function/Predicate;)Lnet/minecraft/class_3449;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLevel#method_41614",
+  "net/minecraft/class_5778.method_41432()Lnet/minecraft/class_7118;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLevel#method_41432",
+  "net/minecraft/class_1735.method_7679()Lcom/mojang/datafixers/util/Pair;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestSlots#method_7679"
  },
  "superRedirects": {
   "net/minecraft/class_2692.method_11673()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawX",
@@ -286,7 +289,8 @@
   "net/minecraft/class_5537.method_63678()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#superOpenBackModel",
   "net/minecraft/class_1792$class_1793.method_63681(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#superOverrideModel",
   "net/minecraft/class_3222.method_14207(DDDZ)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPlayer#superDoCheckFallDamage",
-  "net/minecraft/class_1661.method_7374(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPlayer#superSetPickedItem"
+  "net/minecraft/class_1661.method_7374(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPlayer#superSetPickedItem",
+  "net/minecraft/class_1735.method_7679()Lcom/mojang/datafixers/util/Pair;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestSlots#superGetNoItemIcon"
  },
  "adapterHooks": [
   {
@@ -567,6 +571,15 @@
    ],
    "synth": [],
    "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestPlayer)"
+  },
+  {
+   "under": "net/minecraft/class_1735",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestSlots$LegacyIcon",
+   "requires": [
+    "method_7679()Lcom/mojang/datafixers/util/Pair;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.3 slot's own getNoItemIcon gets this interface so the slot renderer reads its atlas (CbRestSlotIconMixin)"
   }
  ],
  "callReshapes": {
@@ -1016,6 +1029,18 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestFapi#firstMusic(Ljava/util/Optional;)Ljava/util/Optional;",
    "basis": "generic drift: 1.21.4's biome music is a weighted list; 1.21.3 answered one music, the list's first entry (every vanilla biome's only one)"
+  },
+  "net/minecraft/class_2794.method_16129(Lnet/minecraft/class_5455;Lnet/minecraft/class_7869;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;Lnet/minecraft/class_3485;)V": {
+   "desc": "(Lnet/minecraft/class_5455;Lnet/minecraft/class_7869;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;Lnet/minecraft/class_3485;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:2 top/dext/centurybridge/step/v1_21_4/rt/CbRestLevel#dimensionOf(Lnet/minecraft/class_5138;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.4 also takes the level key, which its own caller takes from the generating level: the structure manager's level (CbRestLevel)"
   }
  },
  "overrideHooks": [
@@ -1165,6 +1190,13 @@
    "onlyUnder": "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient",
    "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestFapi.stream(Ljava/util/List;)Ljava/util/stream/Stream;",
    "basis": "Fabric API 1.21.4's CustomIngredient.getMatchingItems answers a stream: a 1.21.3 implementation's list, streamed in order"
+  },
+  {
+   "old": "method_7679()Lcom/mojang/datafixers/util/Pair;",
+   "new": "method_7679()Lnet/minecraft/class_2960;",
+   "onlyUnder": "net/minecraft/class_1735",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestSlots.sprite(Lcom/mojang/datafixers/util/Pair;)Lnet/minecraft/class_2960;",
+   "basis": "1.21.4's getNoItemIcon answers the sprite id; a 1.21.3 override's pair handed over as its sprite (the renderer draws it from the pair's atlas, CbRestSlotIconMixin)"
   }
  ],
  "frameDefaults": {
@@ -1203,7 +1235,14 @@
   "net/minecraft/class_1662$class_9873": "top/dext/centurybridge/step/v1_21_4/facade/IngredientInfo",
   "net/minecraft/class_9887$class_9888": "top/dext/centurybridge/step/v1_21_4/facade/SlotInfo",
   "net/fabricmc/fabric/api/block/BlockPickInteractionAware": "top/dext/centurybridge/step/v1_21_4/facade/fapi/BlockPickInteractionAware",
-  "net/fabricmc/fabric/api/entity/EntityPickInteractionAware": "top/dext/centurybridge/step/v1_21_4/facade/fapi/EntityPickInteractionAware"
+  "net/fabricmc/fabric/api/entity/EntityPickInteractionAware": "top/dext/centurybridge/step/v1_21_4/facade/fapi/EntityPickInteractionAware",
+  "net/minecraft/class_9681": "top/dext/centurybridge/step/v1_21_4/facade/NoOpFrameDecoder",
+  "net/minecraft/class_9682": "top/dext/centurybridge/step/v1_21_4/facade/NoOpFrameEncoder",
+  "net/minecraft/class_7407": "top/dext/centurybridge/step/v1_21_4/facade/EntityPaintingFieldsRenameFix",
+  "net/minecraft/class_10351": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropBiomes",
+  "net/minecraft/class_6554$class_10317": "top/dext/centurybridge/step/v1_21_4/facade/OverworldBiomeModifier",
+  "net/minecraft/class_10319$class_10320": "top/dext/centurybridge/step/v1_21_4/facade/CreakingHeartState",
+  "net/minecraft/class_10281": "top/dext/centurybridge/step/v1_21_4/facade/CreakingTransient"
  },
  "staticRedirects": {
   "net/minecraft/class_7662.method_45174(Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7662;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45174",
@@ -1225,7 +1264,8 @@
   "net/minecraft/class_1606.method_33347(FLnet/minecraft/class_2350;FF)Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_33347",
   "net/minecraft/class_2338.method_49925(Lnet/minecraft/class_2338;IILjava/util/function/BiConsumer;Ljava/util/function/Predicate;)I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_49925",
   "net/minecraft/class_9875.method_61539(Ljava/util/stream/Stream;)Lnet/minecraft/class_1662$class_9873;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestRecipes#method_61539",
-  "net/minecraft/class_9887.method_64674(Lnet/minecraft/class_1856;)Lnet/minecraft/class_1662$class_9873;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestRecipes#method_64674"
+  "net/minecraft/class_9887.method_64674(Lnet/minecraft/class_1856;)Lnet/minecraft/class_1662$class_9873;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestRecipes#method_64674",
+  "net/minecraft/class_8198.method_64761(Lnet/minecraft/class_7891;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestWorldgen#method_64761"
  },
  "lambdaAdapters": {
   "net/minecraft/class_7368.method_43041(Lnet/minecraft/class_3270;)Ljava/util/Optional;": {
@@ -1297,7 +1337,27 @@
   }
  ],
  "ledger": {
-  "net/minecraft/class_7677.method_45251": "not bridgeable for a mod class implementing it: 1.21.3's MetadataSectionType interface is a final record (name, codec) in 1.21.4 that no class can implement or extend, and a stand-in interface would split the type -- the mod hands its instance on where a MetadataSectionType is expected, which the verifier rejects (wiring-check refuses the superRename for exactly this). Calls of toJson/getMetadataSectionName/fromJson on a type, fromCodec, and every serializer-taking pack API are bridged (CbRestMetadata); a mod's own MetadataSectionSerializer implementation is bridged through the facade"
+  "net/minecraft/class_7677.method_45251": "not bridgeable for a mod class implementing it: 1.21.3's MetadataSectionType interface is a final record (name, codec) in 1.21.4 that no class can implement or extend, and a stand-in interface would split the type -- the mod hands its instance on where a MetadataSectionType is expected, which the verifier rejects (wiring-check refuses the superRename for exactly this). Calls of toJson/getMetadataSectionName/fromJson on a type, fromCodec, and every serializer-taking pack API are bridged (CbRestMetadata); a mod's own MetadataSectionSerializer implementation is bridged through the facade",
+  "net/minecraft/class_6554$class_10317.field_54709": "not bridgeable: 1.21.3's OverworldBiomeBuilder.Modifier.NONE built the overworld without the pale garden; 1.21.4's OverworldBiomeBuilder has no modifier and always places it (its parameter points were rewritten around it), so no 1.21.4 builder answers NONE. The constant itself links (facade OverworldBiomeModifier); new OverworldBiomeBuilder(NONE) gives 1.21.4's builder, which includes the pale garden",
+  "net/minecraft/class_10319.field_54740": "not bridgeable: 1.21.3's creaking heart state property (DISABLED / DORMANT / ACTIVE) is gone; 1.21.4's creaking heart block has ACTIVE and NATURAL booleans and decides night-time spawning in its block entity, so no 1.21.4 block state holds DORMANT vs ACTIVE and a property absent from the block's state definition throws in getValue/setValue. The state enum itself links (facade CreakingHeartState); canSummonCreaking is 1.21.4's isNaturalNight (same body)",
+  "net/minecraft/class_2741.field_54793": "not bridgeable: 1.21.3's creaking heart state property (DISABLED / DORMANT / ACTIVE) is gone; 1.21.4's creaking heart block has ACTIVE and NATURAL booleans and decides night-time spawning in its block entity, so no 1.21.4 block state holds DORMANT vs ACTIVE and a property absent from the block's state definition throws in getValue/setValue. The state enum itself links (facade CreakingHeartState); canSummonCreaking is 1.21.4's isNaturalNight (same body)",
+  "net/minecraft/class_2838": "not bridgeable: 1.21.4 removed ServerboundPickItemPacket (pick-from-inventory by slot) from the game protocol; picking is decided by the server from ServerboundPickItemFromBlockPacket / ServerboundPickItemFromEntityPacket. No 1.21.4 packet type carries 'pick slot N', a packet of an unregistered type cannot be encoded, and a 1.21.4 server never sends a handler such a packet. Emulating it with container-click SWAP packets would need client-side prediction of the menu's state id and changed slots (not done)",
+  "net/minecraft/class_9094.field_48096": "not bridgeable: 1.21.4 removed ServerboundPickItemPacket (pick-from-inventory by slot) from the game protocol; picking is decided by the server from ServerboundPickItemFromBlockPacket / ServerboundPickItemFromEntityPacket. No 1.21.4 packet type carries 'pick slot N', a packet of an unregistered type cannot be encoded, and a 1.21.4 server never sends a handler such a packet. Emulating it with container-click SWAP packets would need client-side prediction of the menu's state id and changed slots (not done)",
+  "net/minecraft/class_2792.method_12084": "not bridgeable: 1.21.4 removed ServerboundPickItemPacket (pick-from-inventory by slot) from the game protocol; picking is decided by the server from ServerboundPickItemFromBlockPacket / ServerboundPickItemFromEntityPacket. No 1.21.4 packet type carries 'pick slot N', a packet of an unregistered type cannot be encoded, and a 1.21.4 server never sends a handler such a packet. Emulating it with container-click SWAP packets would need client-side prediction of the menu's state id and changed slots (not done)",
+  "net/minecraft/class_3244.method_12084": "not bridgeable: 1.21.4 removed ServerboundPickItemPacket (pick-from-inventory by slot) from the game protocol; picking is decided by the server from ServerboundPickItemFromBlockPacket / ServerboundPickItemFromEntityPacket. No 1.21.4 packet type carries 'pick slot N', a packet of an unregistered type cannot be encoded, and a 1.21.4 server never sends a handler such a packet. Emulating it with container-click SWAP packets would need client-side prediction of the menu's state id and changed slots (not done)",
+  "net/minecraft/class_10340": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10341": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10342": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10343": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10344": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10344$class_10345": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10346": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10347": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10348": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10349": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/class_10350": "datagen only: a data provider of 1.21.3's Winter Drop experimental data pack. 1.21.4 made the Winter Drop vanilla and folded this pack's generation into vanilla's providers; the pack (data/minecraft/datapacks/winter_drop) no longer exists, so there is nothing this class's generation could be part of. It runs only in data generation, never in play",
+  "net/minecraft/data/Main.method_4968": "datagen only: 1.21.3's data generator entry createStandardGenerator(output, inputs, flags.., version, ..) built the vanilla generator with every provider; 1.21.4 restructured it to add providers to a given DataGenerator (client and server halves). Used only to run vanilla data generation",
+  "net/minecraft/class_4942$class_8073": "datagen only: ModelTemplate.JsonFactory was removed with 1.21.4's model generator rework (models are written through TextureMapping/ModelInstance); used only by data generation"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_1309.field_6232:I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore#field_6232",
@@ -1317,7 +1377,8 @@
  ],
  "ctorRedirects": {
   "net/minecraft/class_9280.<init>(I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#customModelData",
-  "net/minecraft/class_8054.<init>(Ljava/lang/String;Lnet/minecraft/class_6880;FLjava/util/Map;Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#trimMaterial"
+  "net/minecraft/class_8054.<init>(Ljava/lang/String;Lnet/minecraft/class_6880;FLjava/util/Map;Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#trimMaterial",
+  "net/minecraft/class_6554.<init>(Lnet/minecraft/class_6554$class_10317;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestWorldgen#overworldBuilder"
  },
  "fieldRedirects": {
   "net/minecraft/class_9280.field_49307:Lnet/minecraft/class_9280;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItemDefaults",
@@ -1340,7 +1401,9 @@
   "net/minecraft/class_2609.field_52634:I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
   "net/minecraft/class_3230.field_19347:Lnet/minecraft/class_3230;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
   "net/minecraft/class_7701.field_54592:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
-  "net/minecraft/class_2464.field_11456:Lnet/minecraft/class_2464;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants"
+  "net/minecraft/class_2464.field_11456:Lnet/minecraft/class_2464;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
+  "net/minecraft/class_8197$class_5305.field_54706:Lnet/minecraft/class_8197$class_5305;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestWorldgen$Presets",
+  "net/minecraft/class_1299.field_54561:Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants"
  },
  "abstractFills": [
   {
@@ -1390,5 +1453,13 @@
  },
  "superRenames": {
   "net/minecraft/class_5778": "net/minecraft/class_10376"
+ },
+ "methodRenames": {
+  "net/minecraft/class_10319.method_64782(Lnet/minecraft/class_1937;)Z": "method_65147"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_10281.method_64641()V": "1.21.3 private (setupAnimationStates): no mod could call it; 1.21.4 Creaking runs its own animation states",
+  "net/minecraft/class_10281.field_54588:I": "1.21.3 private (invulnerabilityAnimationRemainingTicks): only an access widener ever reached it; 1.21.4 Creaking keeps its own",
+  "net/minecraft/class_10281.field_54589:Lnet/minecraft/class_2338;": "1.21.3 package-private (homePos), unreachable from a mod's package; the home position is 1.21.4 Creaking's (getHomePos / setHomePos), which bindToCreakingHeart sets"
  }
 }

@@ -38,20 +38,20 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallBlockRender;
  * Each method keeps 1.21.11's body on those pieces (CbWallBlockRender gives back the 1.21.11 shapes of
  * ModelBlockRenderer and LiquidBlockRenderer it called):
  * <ul>
- * <li>renderBreakingTexture / renderBatched: the model's parts tesselated with the block's seed into the
- *     consumer, with crash reports as 1.21.11 wrote them;</li>
+ * <li>renderBatched: the parts tesselated into the consumer, with crash reports as 1.21.11 wrote them;</li>
+ * <li>renderBreakingTexture and renderSingleBlock as 1.21.11's Fabric API ran them (Indigo's
+ *     BlockRenderDispatcherMixin): the model through the renderer's terrain-like path into the one consumer, and
+ *     through its simple path, coloured with the block's tint 0 (no level, no position), into the entity sheets
+ *     (rt/CbFapiRender; meshes included); it implements 1.21.11's FabricBlockRenderManager, injected here;</li>
  * <li>renderLiquid: FluidRenderer over the model manager's current fluid models (1.21.11 rebuilt its liquid
  *     renderer from its sprites on every resource reload; 26.1's fluid models are rebuilt by the model
  *     manager, so the reload callback has nothing left to rebuild);</li>
- * <li>renderSingleBlock: renderModel coloured with the block's tint 0 (no level, no position), each quad into
- *     the buffer of its own item render type -- 26.1 has no per-block render type (1.21.11's
- *     ItemBlockRenderTypes is gone); a quad's item render type is what 26.1 itself draws a block with outside
- *     the world.</li>
  * </ul>
  * Member names are 1.21.11's intermediary names; onResourceManagerReload is 26.1's interface method.
  */
 @Environment(EnvType.CLIENT)
-public class BlockRenderDispatcher implements ResourceManagerReloadListener {
+public class BlockRenderDispatcher implements ResourceManagerReloadListener,
+        top.dext.centurybridge.step.v26_1.compat.fapi.renderer.v1.render.FabricBlockRenderManager {
 
     private final BlockModelShaper cb$blockModelShaper;
     private final SpriteGetter cb$sprites;
@@ -71,18 +71,18 @@ public class BlockRenderDispatcher implements ResourceManagerReloadListener {
         return this.cb$blockModelShaper;
     }
 
-    /** renderBreakingTexture(state, pos, level, poseStack, consumer) */
+    /**
+     * renderBreakingTexture(state, pos, level, poseStack, consumer) as 1.21.11's Fabric API ran it (Indigo's
+     * BlockRenderDispatcherMixin.afterGetModel): the model through the renderer's terrain-like path, every layer into
+     * the one consumer, culling, the block's seed, no overlay (rt/CbFapiRender)
+     */
     public void method_23071(BlockState state, BlockPos pos, BlockAndLightGetter level, PoseStack poseStack, VertexConsumer consumer) {
         if (state.getRenderShape() != RenderShape.MODEL) {
             return;
         }
         BlockStateModel model = this.cb$blockModelShaper.method_3335(state);
-        RandomSource random = RandomSource.create();
-        random.setSeed(state.getSeed(pos));
-        List<BlockStateModelPart> parts = new ObjectArrayList<>();
-        model.collectParts(random, parts);
-        CbWallBlockRender.tesselateBlock(this.cb$modelRenderer, level, parts, state, pos, poseStack, consumer, true,
-            OverlayTexture.NO_OVERLAY);
+        top.dext.centurybridge.step.v26_1.rt.CbFapiRender.renderBlockImpl(this.cb$modelRenderer, level, model, state, pos, poseStack,
+            layer -> consumer, true, state.getSeed(pos), OverlayTexture.NO_OVERLAY);
     }
 
     /** renderBatched(state, pos, level, poseStack, consumer, checkSides, parts) */
@@ -132,23 +132,11 @@ public class BlockRenderDispatcher implements ResourceManagerReloadListener {
         float r = ARGB.red(color) / 255.0F;
         float g = ARGB.green(color) / 255.0F;
         float b = ARGB.blue(color) / 255.0F;
-        PoseStack.Pose pose = poseStack.last();
-        for (BlockStateModelPart part : top.dext.centurybridge.step.v26_1.rt.CbWallModels.collectParts(model, RandomSource.create(42L))) {
-            for (Direction d : Direction.values()) {
-                single(pose, bufferSource, r, g, b, part.getQuads(d), light, overlay);
-            }
-            single(pose, bufferSource, r, g, b, part.getQuads(null), light, overlay);
-        }
-    }
-
-    private static void single(PoseStack.Pose pose, MultiBufferSource bufferSource, float r, float g, float b,
-                               List<BakedQuad> quads, int light, int overlay) {
-        for (BakedQuad quad : quads) {
-            boolean tinted = quad.materialInfo().isTinted();
-            CbWallBlockRender.putBulkData(bufferSource.getBuffer(quad.materialInfo().itemRenderType()), pose, quad,
-                tinted ? Math.clamp(r, 0.0F, 1.0F) : 1.0F, tinted ? Math.clamp(g, 0.0F, 1.0F) : 1.0F,
-                tinted ? Math.clamp(b, 0.0F, 1.0F) : 1.0F, 1.0F, light, overlay);
-        }
+        // 1.21.11's Fabric API (Indigo's BlockRenderDispatcherMixin.renderProxy): the renderer's simple path into the
+        // entity sheets, no world, the origin
+        top.dext.centurybridge.step.v26_1.rt.CbFapiRender.renderModel(poseStack.last(),
+            top.dext.centurybridge.step.v26_1.compat.fapi.renderer.v1.render.RenderLayerHelper.entityDelegate(bufferSource), model, r, g, b,
+            light, overlay, net.minecraft.client.renderer.block.BlockAndTintGetter.EMPTY, BlockPos.ZERO, state);
     }
 
     /** onResourceManagerReload(ResourceManager), 1.21.11 name */
@@ -167,5 +155,10 @@ public class BlockRenderDispatcher implements ResourceManagerReloadListener {
     /** the sprites the dispatcher was built with (1.21.11 field_61777, read by nothing but its liquid renderer) */
     public SpriteGetter cb$sprites() {
         return this.cb$sprites;
+    }
+
+    /** the block colours the dispatcher was built with (1.21.11 field blockColors, read by Fabric API's renderBlockAsEntity) */
+    public BlockColors cb$blockColors() {
+        return this.cb$blockColors;
     }
 }

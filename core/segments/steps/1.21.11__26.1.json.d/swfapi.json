@@ -19,7 +19,18 @@
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeEntities": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$BeforeEntities",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$AfterEntities": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$AfterEntities",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$DebugRender": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$DebugRender",
-  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeTranslucent": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$BeforeTranslucent"
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeTranslucent": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$BeforeTranslucent",
+  "net/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandler": "top/dext/centurybridge/step/v26_1/compat/fapi/client/render/fluid/v1/FluidRenderHandler",
+  "net/fabricmc/fabric/api/client/render/fluid/v1/FluidRenderHandlerRegistry": "top/dext/centurybridge/step/v26_1/compat/fapi/client/render/fluid/v1/FluidRenderHandlerRegistry",
+  "net/fabricmc/fabric/api/client/render/fluid/v1/FluidRendering": "top/dext/centurybridge/step/v26_1/compat/fapi/client/render/fluid/v1/FluidRendering",
+  "net/fabricmc/fabric/api/client/render/fluid/v1/FluidRendering$DefaultRenderer": "top/dext/centurybridge/step/v26_1/compat/fapi/client/render/fluid/v1/FluidRendering$DefaultRenderer",
+  "net/fabricmc/fabric/api/client/render/fluid/v1/SimpleFluidRenderHandler": "top/dext/centurybridge/step/v26_1/compat/fapi/client/render/fluid/v1/SimpleFluidRenderHandler",
+  "net/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider": "top/dext/centurybridge/step/v26_1/compat/fapi/renderer/v1/render/BlockVertexConsumerProvider",
+  "net/fabricmc/fabric/api/renderer/v1/render/FabricBlockModelRenderer": "top/dext/centurybridge/step/v26_1/compat/fapi/renderer/v1/render/FabricBlockModelRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/render/FabricBlockRenderManager": "top/dext/centurybridge/step/v26_1/compat/fapi/renderer/v1/render/FabricBlockRenderManager",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderLayerHelper": "top/dext/centurybridge/step/v26_1/compat/fapi/renderer/v1/render/RenderLayerHelper",
+  "net/fabricmc/fabric/api/renderer/v1/render/ItemRenderTypeGetter": "top/dext/centurybridge/step/v26_1/compat/fapi/renderer/v1/render/ItemRenderTypeGetter",
+  "net/fabricmc/fabric/api/client/rendering/v1/SpecialBlockRendererRegistry": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/SpecialBlockRendererRegistry"
  },
  "instanceRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
@@ -40,7 +51,20 @@
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.blockOutlines()Z": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#blockOutlines",
   "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder.find(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadView;I)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers#find",
   "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#spriteBake",
-  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#spriteBake"
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#spriteBake",
+  "net/fabricmc/fabric/api/transfer/v1/client/fluid/FluidVariantRenderHandler.getSprites(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;)[Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids#variantSprites",
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockStateModel.particleSprite(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#particleSprite",
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBlockStateModel.particleSprite(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#particleSprite",
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBlockStateModel.method_68512(Lnet/minecraft/class_5819;)Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#collectParts",
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBlockStateModel.method_68511()Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#particleIcon",
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockModels.getModelParticleSprite(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#getModelParticleSprite",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.render(Lnet/minecraft/class_778;Lnet/minecraft/class_1920;Lnet/minecraft/class_1087;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_4587;Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;ZJI)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiRender#render",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.render(Lnet/minecraft/class_4587$class_4665;Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;Lnet/minecraft/class_1087;FFFIILnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiRender#render",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.renderBlockAsEntity(Lnet/minecraft/class_776;Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1920;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiRender#renderBlockAsEntity",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.getLayerRenderStateEmitter(Lnet/minecraft/class_10444$class_10446;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRender#getLayerRenderStateEmitter",
+  "net/fabricmc/fabric/api/renderer/v1/render/FabricBlockModelRenderer.render(Lnet/minecraft/class_1920;Lnet/minecraft/class_1087;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_4587;Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;ZJI)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiRender#render",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.setLayerRenderTypeGetter(Lnet/minecraft/class_10444$class_10446;Lnet/fabricmc/fabric/api/renderer/v1/render/ItemRenderTypeGetter;)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiLayerRenderTypes#setLayerRenderTypeGetter",
+  "net/fabricmc/fabric/api/renderer/v1/render/FabricLayerRenderState.setRenderTypeGetter(Lnet/fabricmc/fabric/api/renderer/v1/render/ItemRenderTypeGetter;)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiLayerRenderTypes#setRenderTypeGetter"
  },
  "superRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#categoryBase",
@@ -53,7 +77,17 @@
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveTag",
   "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder.find(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadView;I)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers#superFind",
   "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#superSpriteBake",
-  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#superSpriteBake"
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#superSpriteBake",
+  "net/fabricmc/fabric/api/transfer/v1/client/fluid/FluidVariantRenderHandler.getSprites(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;)[Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids#variantSpritesBase",
+  "net/fabricmc/fabric/api/transfer/v1/client/fluid/FluidVariantRenderHandler.getColor(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids#variantColorBase",
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockStateModel.particleSprite(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#particleSpriteBase",
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBlockStateModel.particleSprite(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#particleSpriteBase",
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBlockStateModel.method_68512(Lnet/minecraft/class_5819;)Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#collectPartsBase",
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBlockStateModel.method_68511()Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#particleIconBase",
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockModels.getModelParticleSprite(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels#getModelParticleSpriteBase",
+  "net/fabricmc/fabric/api/renderer/v1/render/FabricBlockModelRenderer.render(Lnet/minecraft/class_1920;Lnet/minecraft/class_1087;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_4587;Lnet/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider;ZJI)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiRender#renderBase",
+  "net/fabricmc/fabric/api/renderer/v1/render/FabricBlockRenderManager.renderBlockAsEntity(Lnet/minecraft/class_2680;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1920;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiRender#renderBlockAsEntityBase",
+  "net/fabricmc/fabric/api/renderer/v1/render/FabricLayerRenderState.setRenderTypeGetter(Lnet/fabricmc/fabric/api/renderer/v1/render/ItemRenderTypeGetter;)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiLayerRenderTypes#setRenderTypeGetterBase"
  },
  "instanceFieldGetters": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.fabricCategory:Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#getFabricCategory"
@@ -61,7 +95,7 @@
  "instanceFieldSetters": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.fabricCategory:Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#setFabricCategory"
  },
- "_swfapi_gamerule_basis": "26.1's Fabric API removed CustomGameRuleCategory, GameRuleBuilder.category(CustomGameRuleCategory) and the protected fabricCategory field (26.1 vanilla GameRuleCategory takes any id: register(Identifier), listed after the vanilla categories, headed by label()). The class is the layer's with 1.21.11's surface and bodies; category(custom) on any builder dispatches to a mod subclass's own override as 1.21.11's virtual call did, else runs 1.21.11's body with the custom category's vanilla stand-in (same id, registered once) in place of MISC; a mod's super.category(custom) runs that body; fabricCategory reads/writes the builder's custom category. The stand-in's label() is the custom name (CbFapiGameRuleCategoryMixin). Difference from 1.21.11: GameRule.category() is the stand-in rather than MISC, since 26.1's screen groups by category() alone.",
+ "_swfapi_gamerule_basis": "26.1's Fabric API removed CustomGameRuleCategory, GameRuleBuilder.category(CustomGameRuleCategory) and the protected fabricCategory field (26.1 vanilla GameRuleCategory takes any id: register(Identifier), listed after the vanilla categories, headed by label()). The class is the layer's with 1.21.11's surface and bodies; category(custom) on any builder dispatches to a mod subclass's own override as 1.21.11's virtual call did, else runs 1.21.11's body with the custom category's vanilla stand-in (same id, registered once) in place of MISC; a mod's super.category(custom) runs that body; fabricCategory reads/writes the builder's custom category. The stand-in's label() is the custom name (CbFapiGameRuleCategoryMixin). The rule 26.1 constructs from that builder is tied to the stand-in and its own category() set back to MISC as in 1.21.11 (CbFapiGameRuleMixin); 26.1's edit-rules screen, which groups by category(), groups it under the stand-in (CbFapiGameRulesScreenMixin). Only where another mod already registered a category of the same id does the rule keep that shared category as category().",
  "overrideHooks": [
   {
    "old": "allowBed(Lnet/minecraft/class_1309;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1269;",
@@ -114,6 +148,43 @@
    "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads.view(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;",
    "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
    "basis": "a 1.21.11 QuadEmitter's own uvUnitSquare() answers itself as a QuadEmitter; 26.1 asks for the MutableQuadView shape"
+  },
+  {
+   "old": "getColor(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I",
+   "new": "getColor(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;)I",
+   "wrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids.lightGetter(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;)Lnet/minecraft/class_1920;",
+   "onlyUnder": "net/fabricmc/fabric/api/transfer/v1/client/fluid/FluidVariantRenderHandler",
+   "basis": "a 1.21.11 FluidVariantRenderHandler overriding getColor(variant, view, pos): 26.1 asks getColor with the client BlockAndTintGetter, which is a 1.21.11 BlockAndTintGetter (26.1 BlockAndLightGetter) as it is; the override's super call reaches 1.21.11's default body (superRedirects)"
+  },
+  {
+   "old": "emitQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;Ljava/util/function/Predicate;)V",
+   "new": "emitQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;Ljava/util/function/Predicate;)V",
+   "wrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids.lightGetter(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;)Lnet/minecraft/class_1920;",
+   "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockStateModel",
+   "basis": "a 1.21.11 block-state model overriding emitQuads: 26.1 calls it with the client BlockAndTintGetter, which is a 1.21.11 BlockAndTintGetter (26.1 BlockAndLightGetter) as it is"
+  },
+  {
+   "old": "createGeometryKey(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Ljava/lang/Object;",
+   "new": "createGeometryKey(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Ljava/lang/Object;",
+   "wrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids.lightGetter(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;)Lnet/minecraft/class_1920;",
+   "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockStateModel",
+   "basis": "a 1.21.11 block-state model overriding createGeometryKey: 26.1 calls it with the client BlockAndTintGetter, as it is"
+  },
+  {
+   "old": "particleSprite(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1058;",
+   "new": "particleMaterial(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+   "wrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids.lightGetter(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;)Lnet/minecraft/class_1920;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels.material(Lnet/minecraft/class_1058;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+   "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockStateModel",
+   "basis": "a 1.21.11 block-state model overriding particleSprite(view, pos, state): 26.1 asks particleMaterial with the client getter; the override's sprite becomes a material without forced translucency (1.21.11 had none)"
+  },
+  {
+   "old": "getModelParticleSprite(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)Lnet/minecraft/class_1058;",
+   "new": "getParticleMaterial(Lnet/minecraft/class_2680;Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+   "wrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids.lightGetter(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;)Lnet/minecraft/class_1920;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiModels.material(Lnet/minecraft/class_1058;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+   "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockModels",
+   "basis": "a 1.21.11 class overriding FabricBlockModels.getModelParticleSprite(state, view, pos): 26.1's FabricBlockStateModelSet asks getParticleMaterial with the client getter; the sprite becomes a material without forced translucency"
   }
  ],
  "lambdaAdapters": {
@@ -184,6 +255,59 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#emitter(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;",
    "basis": "26.1's QuadEmitter.uvUnitSquare() answers a MutableQuadView (the emitter itself); a 1.21.11 call, its super call included, takes it back as the QuadEmitter"
+  },
+  "net/fabricmc/fabric/api/transfer/v1/client/fluid/FluidVariantRenderHandler.getColor(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": {
+   "desc": "(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;)I",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#toTint(Lnet/minecraft/class_1920;)Lnet/minecraft/client/renderer/block/BlockAndTintGetter;",
+    "keep"
+   ],
+   "basis": "a 1.21.11 call of FluidVariantRenderHandler.getColor(variant, view, pos): 26.1 takes the client BlockAndTintGetter (CbWallTintClient.toTint: the client getter itself, a level reader seen through its 1.21.11 tint); the call stays virtual, so a 1.21.11 override answers through its hook"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockStateModel.emitQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;Ljava/util/function/Predicate;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;Ljava/util/function/Predicate;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#toTint(Lnet/minecraft/class_1920;)Lnet/minecraft/client/renderer/block/BlockAndTintGetter;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "a 1.21.11 call (or super call) of emitQuads(emitter, view, pos, state, random, cullTest): 26.1 takes the client BlockAndTintGetter (CbWallTintClient.toTint), otherwise the same member"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBlockStateModel.createGeometryKey(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Ljava/lang/Object;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#toTint(Lnet/minecraft/class_1920;)Lnet/minecraft/client/renderer/block/BlockAndTintGetter;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "a 1.21.11 call (or super call) of createGeometryKey(view, pos, state, random): 26.1 takes the client BlockAndTintGetter, otherwise the same member"
+  },
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBlockStateModel.emitQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;Ljava/util/function/Predicate;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;Ljava/util/function/Predicate;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#toTint(Lnet/minecraft/class_1920;)Lnet/minecraft/client/renderer/block/BlockAndTintGetter;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "a 1.21.11 call (or super call) of emitQuads(emitter, view, pos, state, random, cullTest): 26.1 takes the client BlockAndTintGetter (CbWallTintClient.toTint), otherwise the same member"
+  },
+  "net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperBlockStateModel.createGeometryKey(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Ljava/lang/Object;": {
+   "desc": "(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Ljava/lang/Object;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#toTint(Lnet/minecraft/class_1920;)Lnet/minecraft/client/renderer/block/BlockAndTintGetter;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "a 1.21.11 call (or super call) of createGeometryKey(view, pos, state, random): 26.1 takes the client BlockAndTintGetter, otherwise the same member"
   }
  },
  "abstractFills": [
@@ -242,6 +366,20 @@
  "_swfapi_worldRender_basis": "WorldRenderEvents' BEFORE_ENTITIES / AFTER_ENTITIES / BEFORE_DEBUG_RENDER / BEFORE_TRANSLUCENT are gone in 26.1's LevelRenderEvents: given back with 1.21.11's listener types (CbWorldRenderEvents) and fired at the matching points of 26.1's main pass (CbFapiLevelRendererMixin) with the frame's render context; WorldExtractionContext's frustum / viewMatrix / cullProjectionMatrix / blockOutlines read off the camera and GameRenderer (CbFapiWorldContexts)",
  "staticRedirects": {
   "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder.get(Lnet/minecraft/class_1059;)Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers",
-  "net/fabricmc/fabric/api/renderer/v1/model/ModelHelper.toQuadLists(Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;)[Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers"
+  "net/fabricmc/fabric/api/renderer/v1/model/ModelHelper.toQuadLists(Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;)[Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers",
+  "net/fabricmc/fabric/api/client/rendering/v1/BlockRenderLayerMap.putFluid(Lnet/minecraft/class_3611;Lnet/minecraft/class_11515;)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids",
+  "net/fabricmc/fabric/api/client/rendering/v1/BlockRenderLayerMap.putFluids(Lnet/minecraft/class_11515;[Lnet/minecraft/class_3611;)V": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids",
+  "net/fabricmc/fabric/api/transfer/v1/client/fluid/FluidVariantRendering.getSprites(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;)[Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids",
+  "net/fabricmc/fabric/api/transfer/v1/client/fluid/FluidVariantRendering.getSprite(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids",
+  "net/fabricmc/fabric/api/transfer/v1/client/fluid/FluidVariantRendering.getColor(Lnet/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbFapiFluids"
+ },
+ "_swfapi_fluidRender_basis": "1.21.11 fluid rendering API (fabric-rendering-fluids-v1, FluidVariant rendering, BlockRenderLayerMap fluid half): 26.1 Fabric API renders a fluid from a FluidModel per fluid and kept the name FluidRenderHandler for a different interface. The 1.21.11 handler, registry, FluidRendering, DefaultRenderer and SimpleFluidRenderHandler are compat classes with 1.21.11's surface and bodies; rt/CbFapiFluids puts 1.21.11 handlers into 26.1 rendering: FluidStateModelSet.get answers the handler's model (sprites, colour, 1.21.11 layer), FluidRenderer.tesselate of a handled fluid calls renderFluid with the layer's consumer, ModelManager.apply reloads handler textures from the block atlas. FluidVariantRenderHandler.getSprites (dropped) reaches the receiver's override or 1.21.11's default; getColor takes 26.1's client getter.",
+ "_swfapi_blockStateModel_basis": "1.21.11 FabricBlockStateModel / WrapperBlockStateModel / FabricBlockModels: 26.1 takes the client BlockAndTintGetter in emitQuads, createGeometryKey and the particle lookups (callReshapes, super calls included, plus override hooks), renamed particleSprite / getModelParticleSprite to particleMaterial / getParticleMaterial (Material.Baked; calls read its sprite, overrides answer a material without forced translucency), and WrapperBlockStateModel no longer forwards the vanilla collectParts(random) / particleIcon() 26.1 removed (calls take CbWallModels' 1.21.11 bodies on the receiver, super calls the wrapped model's). The facade BlockModelShaper (1.21.11 class_773, into which FabricBlockModels was injected) implements 26.1 FabricBlockStateModelSet from its own models.",
+ "_swfapi_renderer_basis": "1.21.11 Fabric renderer entry points: 26.1 removed Renderer.render x2 / renderBlockAsEntity / getLayerRenderStateEmitter, FabricBlockModelRenderer, FabricBlockRenderManager, BlockVertexConsumerProvider and RenderLayerHelper (blocks tesselate through AltModelBlockRenderer into a QuadEmitter). The interfaces and helper are compat classes with 1.21.11's surface; rt/CbFapiRender runs Indigo's terrain-like path on 26.1's AltModelBlockRenderer and its simple path on the model's emitQuads (tint, emissive / maxLight, QuadView.buffer per chunk layer). A call through ModelBlockRenderer (26.1's does not implement the interface) reaches a mod subclass's override or 1.21.11's default; the BlockRenderDispatcher facade implements FabricBlockRenderManager. As 1.21.11's Fabric API overwrote them, renderBreakingTexture / renderSingleBlock (facade) and ModelBlockRenderer.renderModel (CbWallBlockRender) go through the same paths. The item layer render type getter (Renderer.setLayerRenderTypeGetter, FabricLayerRenderState.setRenderTypeGetter; ItemRenderTypeGetter compat) is kept on the layer and applied to the layer mesh's quads at its submit (rt/CbFapiLayerRenderTypes), where 1.21.11 asked it per quad at render time.",
+ "ledger": {
+  "net/fabricmc/fabric/api/renderer/v1/Renderer": "a 1.21.11 class implementing Renderer is an alternative renderer implementation (Indigo's role). 26.1's Renderer adds the abstract quadEmitter(Consumer<? super MutableQuadView>) and altModelBlockRenderer(ambientOcclusion, cull, BlockColors) (checked against fabric-api 0.145.1+26.1), the terrain and block-entity pipelines 26.1 drives through them; a 1.21.11 renderer's mutableMesh / render / renderBlockAsEntity cannot produce an AltModelBlockRenderer or a quad sink, so no faithful fill exists: AbstractMethodError when 26.1 asks those of it",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView": "a 1.21.11 class implementing QuadView is a renderer implementation's own quad storage. 26.1 makes abstract chunkLayer(), itemRenderType(), foilType(), animated(), cullFace(), lightFace(), nominalFace(), buffer(int, VertexConsumer), buffer(int, Pose, VertexConsumer) (checked against fabric-api 0.145.1+26.1): the per-quad item render type, foil type, animation flag and vertex output 26.1's pipeline reads from the quad, which 1.21.11's quad encoding did not hold, so no faithful fill exists: AbstractMethodError when 26.1 calls one",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView": "a 1.21.11 class implementing MutableQuadView is a renderer implementation's own quad storage. 26.1 makes abstract chunkLayer(layer), itemRenderType(type), foilType(type), animated(b), cullFace(d), nominalFace(d), clear(), fromBakedQuad(quad) (checked against fabric-api 0.145.1+26.1): the per-quad item render type, foil type, animation flag and vertex output 26.1's pipeline reads from the quad, which 1.21.11's quad encoding did not hold, so no faithful fill exists: AbstractMethodError when 26.1 calls one",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter": "a 1.21.11 class implementing QuadEmitter is a renderer implementation's own quad storage. 26.1 makes abstract chunkLayer(layer), itemRenderType(type), foilType(type), animated(b), cullFace(d), nominalFace(d), clear(), fromBakedQuad(quad) (checked against fabric-api 0.145.1+26.1): the per-quad item render type, foil type, animation flag and vertex output 26.1's pipeline reads from the quad, which 1.21.11's quad encoding did not hold, so no faithful fill exists: AbstractMethodError when 26.1 calls one"
  }
 }
