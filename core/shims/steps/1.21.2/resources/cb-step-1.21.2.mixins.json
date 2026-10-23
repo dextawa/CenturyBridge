@@ -189,6 +189,8 @@
     "CbRenderModel9082Mixin",
     "CbRenderModel9321Mixin",
     "CbRenderModelBookMixin",
+    "CbRenderGameMixin",
+    "CbRenderMapMixin",
     "CbRenderModelFieldsMixin",
     "CbRenderTargetMixin",
     "CbRenderModelGiantMixin",

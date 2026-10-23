@@ -13,7 +13,13 @@
   "net/minecraft/class_281$class_282": "top/dext/centurybridge/step/v1_21_2/facade/Program$Type",
   "net/minecraft/class_285": "top/dext/centurybridge/step/v1_21_2/facade/ProgramManager",
   "net/minecraft/class_1097$class_1098": "top/dext/centurybridge/step/v1_21_2/facade/WeightedBakedModelBuilder",
-  "net/minecraft/class_1095$class_1096": "top/dext/centurybridge/step/v1_21_2/facade/MultiPartBakedModelBuilder"
+  "net/minecraft/class_1095$class_1096": "top/dext/centurybridge/step/v1_21_2/facade/MultiPartBakedModelBuilder",
+  "net/minecraft/class_5936": "top/dext/centurybridge/step/v1_21_2/facade/Effect",
+  "net/minecraft/class_5937": "top/dext/centurybridge/step/v1_21_2/facade/EffectProgram",
+  "net/minecraft/class_280": "top/dext/centurybridge/step/v1_21_2/facade/EffectInstance",
+  "net/minecraft/class_283": "top/dext/centurybridge/step/v1_21_2/facade/PostPass",
+  "net/minecraft/class_279": "top/dext/centurybridge/step/v1_21_2/facade/PostChain",
+  "net/minecraft/class_757$class_7760": "top/dext/centurybridge/step/v1_21_2/facade/GameRendererResourceCache"
  },
  "facadeGaps": {},
  "staticRedirects": {
@@ -49,7 +55,9 @@
   "net/minecraft/class_761.method_61044(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_2350;FFFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShapes",
   "net/minecraft/class_918.method_29711(Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;ZZ)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItems",
   "com/mojang/blaze3d/platform/GlStateManager._clear(IZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets",
-  "com/mojang/blaze3d/platform/GlStateManager.glShaderSource(ILjava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets"
+  "com/mojang/blaze3d/platform/GlStateManager.glShaderSource(ILjava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets",
+  "net/minecraft/class_284.method_22097(ILjava/lang/CharSequence;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost",
+  "net/minecraft/class_284.method_34419(IILjava/lang/CharSequence;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost"
  },
  "instanceRedirects": {
   "net/minecraft/class_757.method_35767(Ljava/lang/String;)Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders",
@@ -70,7 +78,9 @@
   "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create",
   "net/minecraft/class_806.<init>(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#overrides",
   "net/minecraft/class_1097.<init>(Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#weightedModel",
-  "net/minecraft/class_6367.<init>(IIZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets#textureTarget"
+  "net/minecraft/class_6367.<init>(IIZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets#textureTarget",
+  "net/minecraft/class_284.<init>(Ljava/lang/String;IILnet/minecraft/class_3679;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost#uniform",
+  "net/minecraft/class_330.<init>(Lnet/minecraft/class_1060;Lnet/minecraft/class_9443;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderPost#mapRenderer"
  },
  "fieldRedirects": {
   "net/minecraft/class_5944.field_32778:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders"
@@ -231,6 +241,15 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets.blit(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets$Blit;II)V",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 RenderTarget.method_22594(IIZ)V: 1.21.2 calls method_1233(II)V; the synthesized one calls the mod's override with blitToScreen(width, height, true): 1.21.1's blitToScreen(width, height) passed true (CbRenderTargets)"
+  },
+  {
+   "old": "method_22973(D)Lorg/joml/Matrix4f;",
+   "new": "method_22973(F)Lorg/joml/Matrix4f;",
+   "onlyUnder": "net/minecraft/class_757",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderGame$Projection",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderGame.projection(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderGame$Projection;F)Lorg/joml/Matrix4f;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 GameRenderer.getProjectionMatrix(double fov); 1.21.2 calls getProjectionMatrix(float fov) where 1.21.1 called it with the double getFov: the mod's override gets the same field of view (CbRenderGame)"
   }
  ],
  "covers": [
@@ -300,7 +319,15 @@
   "net/minecraft/class_276.method_1234(IIZ)V",
   "net/minecraft/class_276.method_1231(IIZ)V",
   "net/minecraft/class_276.method_1230(Z)V",
-  "net/minecraft/class_276.method_22594(IIZ)V"
+  "net/minecraft/class_276.method_22594(IIZ)V",
+  "net/minecraft/class_757.method_22709(Lorg/joml/Matrix4f;)V",
+  "net/minecraft/class_757.method_22973(D)Lorg/joml/Matrix4f;",
+  "net/minecraft/class_757.method_3194()Lnet/minecraft/class_330;",
+  "net/minecraft/class_757.method_57796(F)V",
+  "net/minecraft/class_330.method_1769(Lnet/minecraft/class_9209;Lnet/minecraft/class_22;)V",
+  "net/minecraft/class_330.method_1773(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_9209;Lnet/minecraft/class_22;ZI)V",
+  "net/minecraft/class_330.method_1771()V",
+  "net/minecraft/class_330.close()V"
  ],
  "ledger": {
   "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
