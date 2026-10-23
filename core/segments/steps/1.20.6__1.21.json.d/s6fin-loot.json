@@ -133,5 +133,10 @@
   "net/minecraft/class_7788.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#superGenerate",
   "net/minecraft/class_7789.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#superGenerate",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#superGenerate"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_2437.field_11346:Lnet/minecraft/class_5341$class_210;": "1.20.4's VanillaFishingLoot.IN_JUNGLE, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv): step 1.20.4 -> 1.20.5 redirects a 1.20.4 read to CbPredicates (s4item fieldRedirects), so no 1.20.6-era jar names it",
+  "net/minecraft/class_2437.field_35165:Lnet/minecraft/class_5341$class_210;": "1.20.4's VanillaFishingLoot.IN_SPARSE_JUNGLE, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv): step 1.20.4 -> 1.20.5 redirects a 1.20.4 read to CbPredicates (s4item fieldRedirects), so no 1.20.6-era jar names it",
+  "net/minecraft/class_2437.field_11349:Lnet/minecraft/class_5341$class_210;": "1.20.4's VanillaFishingLoot.IN_BAMBOO_JUNGLE, gone at 1.20.5 (a row of core/segments/damage/1.20.4__1.20.5.damage.tsv): step 1.20.4 -> 1.20.5 redirects a 1.20.4 read to CbPredicates (s4item fieldRedirects), so no 1.20.6-era jar names it"
  }
 }
