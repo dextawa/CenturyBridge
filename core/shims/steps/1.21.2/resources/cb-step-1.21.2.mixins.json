@@ -17,6 +17,7 @@
     "CbEntityMobInvoker",
     "CbEntityPiglinAiInvoker",
     "CbEntityPiglinInvoker",
+    "CbEntityTargetingAccess",
     "CbItemRegistryMixin",
     "CbItemServerThreadMixin",
     "CbLevelBlockInvoker",
