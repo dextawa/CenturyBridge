@@ -25,7 +25,30 @@
   "net/minecraft/class_4594.field_20928:F": "1.20.x private colour channel field, gone at 1.21 (the packed int the facade has replaced it): only an access widener ever reached it, and none of 1.21.1 names it"
  },
  "staticRedirects": {
-  "net/minecraft/class_7187.method_41827(Lnet/minecraft/class_5597;Lnet/minecraft/class_7184;JFLorg/joml/Vector3f;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelBase"
+  "net/minecraft/class_7187.method_41827(Lnet/minecraft/class_5597;Lnet/minecraft/class_7184;JFLorg/joml/Vector3f;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelBase",
+  "com/mojang/blaze3d/systems/RenderSystem.setShader(Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders",
+  "com/mojang/blaze3d/systems/RenderSystem._setShaderTexture(II)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem._setShaderTexture(ILnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.applyModelViewMatrix()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.clear(IZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.flipFrame(J)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.getShaderFogColor()[F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.getShaderFogEnd()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.getShaderFogShape()Lnet/minecraft/class_6854;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.getShaderFogStart()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.getVertexSorting()Lnet/minecraft/class_8251;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.glGenBuffers(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.glGenVertexArrays(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.runAsFancy(Ljava/lang/Runnable;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.setProjectionMatrix(Lorg/joml/Matrix4f;Lnet/minecraft/class_8251;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.setShaderFogColor(FFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.setShaderFogColor(FFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.setShaderFogEnd(F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.setShaderFogShape(Lnet/minecraft/class_6854;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem",
+  "com/mojang/blaze3d/systems/RenderSystem.setShaderFogStart(F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderSystem"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_757.method_35767(Ljava/lang/String;)Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders"
  },
  "superCtorReshapes": {
   "net/minecraft/class_583.<init>()V": {
