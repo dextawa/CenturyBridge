@@ -4,6 +4,14 @@
  "version": "0.3.0+1.20.5",
  "name": "CenturyBridge: 1.20.4 API on 1.20.5",
  "environment": "*",
+ "entrypoints": {
+  "main": [
+   "top.dext.centurybridge.step.v1_20_5.compat.fapi.CbFapiInit"
+  ],
+  "client": [
+   "top.dext.centurybridge.step.v1_20_5.compat.fapi.CbFapiClientInit"
+  ]
+ },
  "mixins": [
   "cb-step-1.20.5.mixins.json"
  ],
