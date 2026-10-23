@@ -1,0 +1,310 @@
+{
+ "_s4fin_misc_basis": "s4fin non-client remainder: commands, connection cookies, sounds, chunk holders, codec fields and other single members (rt/CbFinCommon); members 1.20.5 dropped come back by mixin (covers) with 1.20.4's bodies",
+ "callReshapes": {
+  "net/minecraft/class_3019.method_13053(Lcom/mojang/brigadier/CommandDispatcher;)V": {
+   "desc": "(Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_7157;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#commandContext()Lnet/minecraft/class_7157;"
+   ],
+   "basis": "s4fin: these commands' register(dispatcher) take a CommandBuildContext in 1.20.5 (their component arguments resolve registries); the running server's"
+  },
+  "net/minecraft/class_6329.method_36192(Lcom/mojang/brigadier/CommandDispatcher;)V": {
+   "desc": "(Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_7157;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#commandContext()Lnet/minecraft/class_7157;"
+   ],
+   "basis": "s4fin: these commands' register(dispatcher) take a CommandBuildContext in 1.20.5 (their component arguments resolve registries); the running server's"
+  },
+  "net/minecraft/class_3115.method_13595(Lcom/mojang/brigadier/CommandDispatcher;)V": {
+   "desc": "(Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_7157;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#commandContext()Lnet/minecraft/class_7157;"
+   ],
+   "basis": "s4fin: these commands' register(dispatcher) take a CommandBuildContext in 1.20.5 (their component arguments resolve registries); the running server's"
+  },
+  "net/minecraft/class_3142.method_13736(Lcom/mojang/brigadier/CommandDispatcher;)V": {
+   "desc": "(Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_7157;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#commandContext()Lnet/minecraft/class_7157;"
+   ],
+   "basis": "s4fin: these commands' register(dispatcher) take a CommandBuildContext in 1.20.5 (their component arguments resolve registries); the running server's"
+  },
+  "net/minecraft/class_3146.method_13776(Lcom/mojang/brigadier/CommandDispatcher;)V": {
+   "desc": "(Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_7157;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#commandContext()Lnet/minecraft/class_7157;"
+   ],
+   "basis": "s4fin: these commands' register(dispatcher) take a CommandBuildContext in 1.20.5 (their component arguments resolve registries); the running server's"
+  },
+  "net/minecraft/class_3151.method_13804(Lcom/mojang/brigadier/CommandDispatcher;)V": {
+   "desc": "(Lcom/mojang/brigadier/CommandDispatcher;Lnet/minecraft/class_7157;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#commandContext()Lnet/minecraft/class_7157;"
+   ],
+   "basis": "s4fin: these commands' register(dispatcher) take a CommandBuildContext in 1.20.5 (their component arguments resolve registries); the running server's"
+  },
+  "net/minecraft/class_2178.method_9281()Lnet/minecraft/class_2178;": {
+   "desc": "(Lnet/minecraft/class_7157;)Lnet/minecraft/class_2178;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#commandContext()Lnet/minecraft/class_7157;"
+   ],
+   "basis": "s4fin: ComponentArgument.textComponent() takes a CommandBuildContext in 1.20.5; the running server's"
+  },
+  "net/minecraft/class_9019.method_55446()Lnet/minecraft/class_9019;": {
+   "desc": "(Lnet/minecraft/class_7157;)Lnet/minecraft/class_9019;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#commandContext()Lnet/minecraft/class_7157;"
+   ],
+   "basis": "s4fin: StyleArgument.style() takes a CommandBuildContext in 1.20.5; the running server's"
+  },
+  "net/minecraft/class_8792.method_53824(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_8792;": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;Z)Lnet/minecraft/class_8792;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#notTransferred()Z"
+   ],
+   "basis": "s4fin: CommonListenerCookie.createInitial takes whether the player was transferred in 1.20.5; 1.20.4 had no transfers"
+  },
+  "net/minecraft/class_638.method_47437(Ljava/lang/String;Lnet/minecraft/class_22;)V": {
+   "desc": "(Lnet/minecraft/class_9209;Lnet/minecraft/class_22;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinClient#mapId(Ljava/lang/String;)Lnet/minecraft/class_9209;",
+    "keep"
+   ],
+   "basis": "s4fin client: ClientLevel.overrideMapData names the map by MapId in 1.20.5 (1.20.4: \"map_<id>\")"
+  },
+  "net/minecraft/class_644.method_3003(Lnet/minecraft/class_642;Ljava/lang/Runnable;)V": {
+   "desc": "(Lnet/minecraft/class_642;Ljava/lang/Runnable;Ljava/lang/Runnable;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#noCallback()Ljava/lang/Runnable;"
+   ],
+   "basis": "s4fin client: ServerStatusPinger.pingServer takes a ping-complete callback too in 1.20.5; 1.20.4's call had none"
+  },
+  "net/minecraft/class_6832.method_39831(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833;": {
+   "desc": "(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Lnet/minecraft/class_6874;Z)Lnet/minecraft/class_6833;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#unrestrictedPlacement()Lnet/minecraft/class_6874;",
+    "keep"
+   ],
+   "basis": "s4fin: StructureCheck.checkStart takes the placement in 1.20.5 to apply its frequency reduction / exclusion zone, which 1.20.4's callers applied themselves; a placement with neither keeps 1.20.4's check"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_8792.<init>(Lcom/mojang/authlib/GameProfile;ILnet/minecraft/class_8791;)V": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;ILnet/minecraft/class_8791;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#notTransferred()Z"
+   ],
+   "basis": "s4fin: CommonListenerCookie carries whether the player was transferred in 1.20.5; 1.20.4 had no transfers"
+  },
+  "net/minecraft/class_3248.<init>(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_2535;)V": {
+   "desc": "(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_2535;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#notTransferred()Z"
+   ],
+   "basis": "s4fin: ServerLoginPacketListenerImpl takes whether the connection is a transfer in 1.20.5; 1.20.4 had no transfers"
+  },
+  "net/minecraft/class_3953.<init>(I)V": {
+   "desc": "(Lnet/minecraft/class_3951;III)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#progressLogger(I)Lnet/minecraft/class_3951;",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#progressDiameter(I)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#progressMaxRadius(I)I",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#progressMaxDiameter(I)I"
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's super(radius): 1.20.5's constructor over the fields 1.20.4's computed from the radius"
+  },
+  "net/minecraft/class_635.<init>(Lnet/minecraft/class_2535;Lnet/minecraft/class_310;Lnet/minecraft/class_642;Lnet/minecraft/class_437;ZLjava/time/Duration;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_2535;Lnet/minecraft/class_310;Lnet/minecraft/class_642;Lnet/minecraft/class_437;ZLjava/time/Duration;Ljava/util/function/Consumer;Lnet/minecraft/class_9112;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinClient#noTransfer()Lnet/minecraft/class_9112;"
+   ],
+   "basis": "s4fin client: ClientHandshakePacketListenerImpl takes the transfer state in 1.20.5; 1.20.4 had no transfers"
+  },
+  "net/minecraft/class_8675.<init>(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Ljava/lang/String;Lnet/minecraft/class_642;Lnet/minecraft/class_437;)V": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Ljava/lang/String;Lnet/minecraft/class_642;Lnet/minecraft/class_437;Ljava/util/Map;Lnet/minecraft/class_338$class_9477;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinClient#noCookies()Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinClient#noChatState()Lnet/minecraft/class_338$class_9477;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinClient#lenientErrors()Z"
+   ],
+   "basis": "s4fin client: the client CommonListenerCookie carries server cookies, chat state and strict error handling in 1.20.5; 1.20.4 had none of them"
+  },
+  "net/minecraft/class_2290.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_2487;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_9323;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#components(Lnet/minecraft/class_6880;Lnet/minecraft/class_2487;)Lnet/minecraft/class_9323;"
+   ],
+   "basis": "s4fin commands: ItemInput carries components in 1.20.5; 1.20.4's NBT read into them as ItemStack.setTag does"
+  },
+  "net/minecraft/class_2291$class_7215.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_2487;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_9323;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#components(Lnet/minecraft/class_6880;Lnet/minecraft/class_2487;)Lnet/minecraft/class_9323;"
+   ],
+   "basis": "s4fin commands: ItemParser.ItemResult carries components in 1.20.5"
+  }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_3953.<init>(I)V": "net/minecraft/class_3953#method_56047"
+ },
+ "methodRenames": {
+  "net/minecraft/class_4208.method_19442()Lnet/minecraft/class_5321;": "comp_2207",
+  "net/minecraft/class_4208.method_19446()Lnet/minecraft/class_2338;": "comp_2208"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_3414.method_47958(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_2291$class_7215.comp_629()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands",
+  "net/minecraft/class_7450.method_43748(Ljava/lang/String;)Lnet/minecraft/class_7469;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#get",
+  "net/minecraft/class_2378.method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries",
+  "net/minecraft/class_2370.method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries",
+  "net/minecraft/class_2370.method_46744(ILnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#registerMapping",
+  "net/minecraft/class_2348.method_46744(ILnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#registerMapping"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_3414.method_47961(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_2291.method_41972(Lnet/minecraft/class_7225;Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2291$class_7215;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#parseForItem",
+  "net/minecraft/class_2291.method_41974(Lnet/minecraft/class_7225;Lcom/mojang/brigadier/StringReader;)Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#parseForTesting",
+  "net/minecraft/class_2291.method_9793(Lnet/minecraft/class_7225;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;Z)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#fillSuggestions",
+  "net/minecraft/class_2232.method_23727(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_5341;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#getPredicate",
+  "net/minecraft/class_2232.method_32688(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_117;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#getItemModifier"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_3244.field_37280:D": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_6333.field_33443:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_6334.field_33446:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_5861.field_28998:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_6728.field_35352:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_5862.field_29004:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_6016.field_29943:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_5865.field_29012:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_5866.field_29016:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_6019.field_29949:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_6121.field_31537:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_6378.field_33772:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_7557$class_7558.field_40809:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinClient",
+  "net/minecraft/class_7557$class_7559.field_40810:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinClient"
+ },
+ "staticFieldSetters": {
+  "net/minecraft/class_6792.field_35714:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon"
+ },
+ "covers": [
+  "net/minecraft/class_5712.method_40157()Lnet/minecraft/class_6880$class_6883;",
+  "net/minecraft/class_5712.method_40156(Lnet/minecraft/class_6862;)Z",
+  "net/minecraft/class_3298.method_45305()Z",
+  "net/minecraft/class_3193.method_41205()Lnet/minecraft/class_2818;",
+  "net/minecraft/class_638.method_2944(Lnet/minecraft/class_269;)V",
+  "net/minecraft/class_636.method_2904()F",
+  "net/minecraft/class_636.method_2926()Z",
+  "net/minecraft/class_642.method_45056()Z",
+  "net/minecraft/class_642.method_45055(Z)V",
+  "net/minecraft/class_2290.method_9783(Lnet/minecraft/class_1799;)Z"
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_642.field_3754:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinClient"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_642.field_3754:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinClient"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_47437(Ljava/lang/String;Lnet/minecraft/class_22;)V",
+   "new": "method_47437(Lnet/minecraft/class_9209;Lnet/minecraft/class_22;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_638",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbFinClient.mapName(Lnet/minecraft/class_9209;)Ljava/lang/String;",
+   "basis": "s4fin client: a 1.20.4 ClientLevel subclass's overrideMapData(name, data) gets 1.20.5's MapId as 1.20.4's map name"
+  },
+  {
+   "old": "method_3003(Lnet/minecraft/class_642;Ljava/lang/Runnable;)V",
+   "new": "method_3003(Lnet/minecraft/class_642;Ljava/lang/Runnable;Ljava/lang/Runnable;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_644",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "s4fin client: a 1.20.4 ServerStatusPinger subclass's pingServer(data, onChange); its super call passes the callback vanilla passed"
+  }
+ ],
+ "frameDefaults": {
+  "method_3003(Lnet/minecraft/class_642;Ljava/lang/Runnable;)V": {
+   "2": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#noCallback()Ljava/lang/Runnable;"
+  },
+  "method_39831(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833;": {
+   "2": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#unrestrictedPlacement()Lnet/minecraft/class_6874;"
+  }
+ },
+ "classRenames": {
+  "net/minecraft/class_2291$class_7216": "top/dext/centurybridge/step/v1_20_5/facade/ItemParserTagResult"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2370.method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#superLifecycle"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2378",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries$Lifecycles",
+   "requires": [
+    "method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;"
+   ],
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "synth": [
+    {
+     "new": "method_57058(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries.registrationInfo(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries$Lifecycles;Lnet/minecraft/class_5321;)Ljava/util/Optional;"
+    }
+   ],
+   "basis": "s4fin registries: a 1.20.4 registry's lifecycle(value) answers 1.20.5's registrationInfo(key)"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_2378",
+   "method": "method_55841(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries.getHolderById(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "basis": "s4fin registries: Registry.getHolder(id) of a 1.20.4 registry is its getHolder of that key"
+  },
+  {
+   "under": "net/minecraft/class_6880",
+   "method": "method_55838(Lnet/minecraft/class_6880;)Z",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries.holderIs(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)Z",
+   "basis": "s4fin registries: Holder.is(holder) of a 1.20.4 holder: the same holder or the same value"
+  }
+ ]
+}

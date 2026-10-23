@@ -207,8 +207,12 @@ def wired_keys(wiring):
         ctors.update(wiring.get(sec, {}).keys())
     for oh in wiring.get("overrideHooks", []):
         shapes.add(oh["old"])
+    # an adapter hook reconnects vanilla's new shape to the mod's old methods only through its synth
+    # methods; one with no synth just types the mod class with the adapter interface (calls reach the
+    # old shapes through it), so its requires are not served overrides
     for ah in wiring.get("adapterHooks", []):
-        shapes.update(ah.get("requires", []))
+        if ah.get("synth"):
+            shapes.update(ah.get("requires", []))
     return calls, ctors, shapes
 
 

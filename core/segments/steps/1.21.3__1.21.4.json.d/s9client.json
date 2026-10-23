@@ -1,0 +1,830 @@
+{
+ "overrideRenames": [
+  {
+   "old": "method_25341()D",
+   "new": "method_44387",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getScrollAmount is AbstractScrollArea.scrollAmount since 1.21.4 (the same field read)"
+  },
+  {
+   "old": "method_25307(D)V",
+   "new": "method_44382",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.setScrollAmount (clamped through setClampedScrollAmount) is AbstractScrollArea.setScrollAmount (clamped) since 1.21.4; vanilla sets the amount through it"
+  },
+  {
+   "old": "method_60322()V",
+   "new": "method_65506",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.clampScrollAmount is AbstractScrollArea.refreshScrollAmount since 1.21.4 (set the current amount again, clamped)"
+  },
+  {
+   "old": "method_25331()I",
+   "new": "method_44390",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getMaxScroll is AbstractScrollArea.maxScrollAmount: max(0, maxPosition - (height - 4)) = max(0, contentHeight - height)"
+  },
+  {
+   "old": "method_57717()Z",
+   "new": "method_44392",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.scrollbarVisible is AbstractScrollArea.scrollbarVisible (max scroll > 0)"
+  },
+  {
+   "old": "method_25329()I",
+   "new": "method_65507",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getScrollbarPosition is scrollBarX since 1.21.4 (rows' right + 8 both ways)"
+  },
+  {
+   "old": "method_44381()I",
+   "new": "method_65509",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.innerPadding is AbstractTextAreaWidget.innerPadding (4)"
+  },
+  {
+   "old": "method_44385()I",
+   "new": "method_65512",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.totalInnerPadding is AbstractTextAreaWidget.totalInnerPadding (innerPadding * 2)"
+  },
+  {
+   "old": "method_52233(Lnet/minecraft/class_332;IIII)V",
+   "new": "method_65511",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.renderBorder(GuiGraphics, x, y, w, h) is AbstractTextAreaWidget.renderBorder"
+  },
+  {
+   "old": "method_44383(II)Z",
+   "new": "method_65510",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.withinContentAreaTopBottom is AbstractTextAreaWidget.withinContentAreaTopBottom"
+  },
+  {
+   "old": "method_60321(D)V",
+   "new": "cb$setClampedScrollAmount",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClampedScroll",
+   "family": "gui-scroll",
+   "basis": "1.21.3 set every list scroll through setClampedScrollAmount (setScrollAmount called it); 1.21.4's setScrollAmount on a list hands the value to the override (CbGuiScrollListMixin)"
+  },
+  {
+   "old": "method_57718()I",
+   "new": "cb$getDefaultScrollbarPosition",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyDefaultScrollbar",
+   "family": "gui-scroll",
+   "basis": "getDefaultScrollbarPosition was getScrollbarPosition's default; 1.21.4's scrollBarX asks the override (CbGuiScrollListMixin)"
+  },
+  {
+   "old": "method_25310(II)Z",
+   "new": "cb$clickedHeader",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClickedHeader",
+   "family": "gui-scroll",
+   "basis": "1.21.3's mouseClicked offered a press hitting no entry to clickedHeader; 1.21.4 has no header clicks, the list's mouseClicked asks the override again (CbGuiScrollListMixin)"
+  },
+  {
+   "old": "method_44388(DD)Z",
+   "new": "cb$withinContentAreaPoint",
+   "onlyUnder": "net/minecraft/class_7528",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyContentAreaPoint",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.mouseClicked took a press inside withinContentAreaPoint; 1.21.4 asks isMouseOver, so a widget overriding it gets 1.21.3's mouseClicked (CbGuiScrollTextAreaMixin)"
+  },
+  {
+   "old": "method_53812(I)Z",
+   "new": "cb$isValidMouseClick",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyValidMouseClick",
+   "family": "gui-scroll",
+   "basis": "1.21.3's list mouseClicked first asked isValidMouseClick and refused the press on false; 1.21.4 has no such gate. The list's mouseClicked asks the override again (CbGuiScrollListMixin). Not renamed onto isValidClickButton: a list overriding both keeps each where 1.21.3 asked it"
+  },
+  {
+   "old": "method_25361(DD)Z",
+   "new": "cb$clicked",
+   "onlyUnder": "net/minecraft/class_339",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClicked",
+   "family": "gui-scroll",
+   "basis": "AbstractWidget.mouseClicked asked clicked(x, y); 1.21.4 asks isMouseOver, so a widget overriding clicked is asked it there again (CbGuiScrollWidgetMixin)"
+  },
+  {
+   "old": "method_4713()Z",
+   "new": "cb$isCustomRenderer",
+   "onlyUnder": "net/minecraft/class_1087",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender$CbLegacyCustomRenderer",
+   "family": "baked-model",
+   "basis": "BakedModel.isCustomRenderer is gone in 1.21.4; ItemRenderer.render(.., model) asks a 1.21.3 model again (CbItemRender)"
+  },
+  {
+   "old": "method_4710()Lnet/minecraft/class_806;",
+   "new": "cb$getOverrides",
+   "onlyUnder": "net/minecraft/class_1087",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender$CbLegacyOverrides",
+   "family": "baked-model",
+   "basis": "BakedModel.getOverrides is gone in 1.21.4; calls through BakedModel reach a 1.21.3 model's own (CbItemRender.getOverrides)"
+  },
+  {
+   "old": "method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZI)Lnet/minecraft/class_777;",
+   "new": "cb$bakeQuad",
+   "onlyUnder": "net/minecraft/class_796",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelFaceBakery$CbLegacyFaceBakery",
+   "superCalls": "rename",
+   "family": "models",
+   "basis": "FaceBakery's 1.21.3 instance method is static in 1.21.4; every FaceBakery has it again as an instance method under this name (CbModelFaceBakeryMixin), which a mod's calls reach (CbModelFaceBakery)"
+  },
+  {
+   "old": "method_3455(Lorg/joml/Vector3f;Lnet/minecraft/class_4590;)V",
+   "new": "cb$rotateVertexBy",
+   "onlyUnder": "net/minecraft/class_796",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelFaceBakery$CbLegacyFaceBakery",
+   "superCalls": "rename",
+   "family": "models",
+   "basis": "FaceBakery's 1.21.3 instance method is static in 1.21.4; every FaceBakery has it again as an instance method under this name (CbModelFaceBakeryMixin), which a mod's calls reach (CbModelFaceBakery)"
+  },
+  {
+   "old": "method_3433()Ljava/util/List;",
+   "new": "cb$getElements",
+   "onlyUnder": "net/minecraft/class_793",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel$CbLegacyBlockModel",
+   "superCalls": "rename",
+   "family": "block-model",
+   "basis": "1.21.4 declares a package-private getElements() answering the model's own elements; 1.21.3's public one fell back to the parent's and was asked by bake, which asks it again under this name (CbModelBlockModel)"
+  },
+  {
+   "old": "method_45876(Lnet/minecraft/class_1088$class_9826;)V",
+   "new": "cb$bakeModels",
+   "onlyUnder": "net/minecraft/class_1088",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyBakery",
+   "superCalls": "rename",
+   "family": "model-loading",
+   "basis": "ModelBakery.bakeModels answers a BakingResult since 1.21.4; 1.21.3's void bakeModels kept the baked top models, every bakery has it under this name (CbModelBakeryMixin), which a mod's calls reach"
+  },
+  {
+   "old": "method_3501(Lnet/minecraft/class_811;)Z",
+   "new": "cb$hasTransform",
+   "onlyUnder": "net/minecraft/class_809",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms$CbLegacyHasTransform",
+   "family": "final-records",
+   "basis": "ItemTransforms.hasTransform is gone in 1.21.4; a subclass's answer is asked where 1.21.3 asked it (BlockModel's transforms, a mod's calls: CbModelTransforms)"
+  },
+  {
+   "old": "method_3510()Lnet/minecraft/class_2960;",
+   "new": "comp_3379",
+   "onlyUnder": "net/minecraft/class_813",
+   "superCalls": "rename",
+   "family": "final-records",
+   "basis": "Variant is a record since 1.21.4: getModelLocation / getWeight are its modelLocation / weight accessors, which 1.21.4 reads where 1.21.3 asked the getters"
+  },
+  {
+   "old": "method_3511()I",
+   "new": "comp_3382",
+   "onlyUnder": "net/minecraft/class_813",
+   "superCalls": "rename",
+   "family": "final-records",
+   "basis": "Variant is a record since 1.21.4: getModelLocation / getWeight are its modelLocation / weight accessors, which 1.21.4 reads where 1.21.3 asked the getters"
+  },
+  {
+   "old": "method_32168()Lnet/minecraft/class_918;",
+   "new": "cb$getItemRenderer",
+   "onlyUnder": "net/minecraft/class_5617$class_5618",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch$CbLegacyContextItemRenderer",
+   "family": "render-dispatch",
+   "basis": "EntityRendererProvider.Context.getItemRenderer is gone in 1.21.4; a subclass's answer is what a mod's call gets (CbRenderDispatch)"
+  }
+ ],
+ "covers": [
+  "net/minecraft/class_10042.method_62614()Lnet/minecraft/class_1799;",
+  "net/minecraft/class_10042.method_62615()Lnet/minecraft/class_1087;",
+  "net/minecraft/class_10097.method_62632(Lnet/minecraft/class_9824$class_10095;)V",
+  "net/minecraft/class_10097.method_62637()Ljava/util/Map;",
+  "net/minecraft/class_1088.method_4734()Ljava/util/Map;",
+  "net/minecraft/class_339.method_25361(DD)Z",
+  "net/minecraft/class_350.method_25307(D)V",
+  "net/minecraft/class_350.method_25310(II)Z",
+  "net/minecraft/class_350.method_25315(ZI)V",
+  "net/minecraft/class_350.method_25317()I",
+  "net/minecraft/class_350.method_25318(DDI)V",
+  "net/minecraft/class_350.method_25329()I",
+  "net/minecraft/class_350.method_25331()I",
+  "net/minecraft/class_350.method_25341()D",
+  "net/minecraft/class_350.method_53812(I)Z",
+  "net/minecraft/class_350.method_57717()Z",
+  "net/minecraft/class_350.method_57718()I",
+  "net/minecraft/class_350.method_60321(D)V",
+  "net/minecraft/class_350.method_60322()V",
+  "net/minecraft/class_516.method_2656()Z",
+  "net/minecraft/class_5599.method_14491(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_7528.method_44381()I",
+  "net/minecraft/class_7528.method_44383(II)Z",
+  "net/minecraft/class_7528.method_44385()I",
+  "net/minecraft/class_7528.method_44388(DD)Z",
+  "net/minecraft/class_7528.method_52233(Lnet/minecraft/class_332;IIII)V",
+  "net/minecraft/class_7528.method_53532()I",
+  "net/minecraft/class_793$class_795.method_3452(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Ljava/util/List;",
+  "net/minecraft/class_793.method_24077(Ljava/lang/String;)Lnet/minecraft/class_4730;",
+  "net/minecraft/class_793.method_3431()Lnet/minecraft/class_793;",
+  "net/minecraft/class_793.method_3432(Ljava/lang/String;)Z",
+  "net/minecraft/class_793.method_3434()Ljava/util/List;",
+  "net/minecraft/class_793.method_3443()Lnet/minecraft/class_809;",
+  "net/minecraft/class_793.method_3444()Z",
+  "net/minecraft/class_793.method_3446(Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;",
+  "net/minecraft/class_793.method_35789()Z",
+  "net/minecraft/class_793.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;",
+  "net/minecraft/class_801.method_3479(Ljava/util/function/Function;Lnet/minecraft/class_793;)Lnet/minecraft/class_793;",
+  "net/minecraft/class_824.method_23077(Lnet/minecraft/class_2586;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)Z",
+  "net/minecraft/class_918.method_14491(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_918.method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V",
+  "net/minecraft/class_918.method_4019(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;",
+  "net/minecraft/class_918.method_62475(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_811;)Lnet/minecraft/class_1087;",
+  "net/minecraft/class_918.method_62477(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V",
+  "net/minecraft/class_9824.method_62627(Lnet/minecraft/class_2960;Lnet/minecraft/class_2689;Ljava/util/List;)Lnet/minecraft/class_9824$class_10095;"
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_25317()I",
+   "new": "method_44395()I",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll.cbContentHeight(I)I",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getMaxPosition (rows * height + header) is contentHeight less 4 since 1.21.4; vanilla sizes the scroll range by contentHeight"
+  },
+  {
+   "old": "method_25318(DDI)V",
+   "new": "method_65505(DDI)Z",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll.cbUpdateScrolling(Ltop/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyUpdateScrollingState;DDI)Z",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyUpdateScrollingState",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.updateScrollingState set the drag state; 1.21.4's updateScrolling sets it and answers it"
+  },
+  {
+   "old": "method_1544()Lnet/minecraft/class_5195;",
+   "new": "method_1544()Lnet/minecraft/class_10383;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc.cbMusicInfo(Lnet/minecraft/class_5195;)Lnet/minecraft/class_10383;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_310",
+   "family": "gui-misc",
+   "basis": "a 1.21.3 Minecraft subclass's getSituationalMusic: the music manager asks the MusicInfo shape; full volume, as 1.21.4's one-argument MusicInfo"
+  },
+  {
+   "old": "method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;",
+   "new": "method_4753(Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;Lnet/minecraft/class_3665;ZZLnet/minecraft/class_809;)Lnet/minecraft/class_1087;",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking.bake(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyUnbakedModel;Lnet/minecraft/class_10419;Lnet/minecraft/class_7775;Lnet/minecraft/class_3665;ZZLnet/minecraft/class_809;)Lnet/minecraft/class_1087;",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyUnbakedModel",
+   "onlyUnder": "net/minecraft/class_1100",
+   "family": "model-baking",
+   "basis": "UnbakedModel.bake(baker, spriteGetter, state) is bake(textureSlots, baker, state, ao, blockLight, transforms) since 1.21.4, the sprites carried by the baker; a 1.21.3 model's own bake is reached with the baker's sprites as its sprite getter (1.21.3's model bakery handed every model its texture getter for the model being baked)"
+  },
+  {
+   "old": "get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+   "new": "method_65739(Lnet/minecraft/class_10525;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading.bridgeGet(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter;Lnet/minecraft/class_10525;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter",
+   "onlyUnder": "net/minecraft/class_1088$class_9826",
+   "family": "model-loading",
+   "basis": "ModelBakery.TextureGetter.get takes a model debug name since 1.21.4 (the model location's string, read back into it)"
+  },
+  {
+   "old": "method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;",
+   "new": "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading.bakeState(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyUnbakedModel;Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyUnbakedModel",
+   "onlyUnder": "net/minecraft/class_9979",
+   "family": "model-loading",
+   "basis": "UnbakedBlockStateModel was an UnbakedModel in 1.21.3; 1.21.4 bakes it with bake(baker): its 1.21.3 bake, with the baker's sprites and rotation X0_Y0 (1.21.3's bakery baked every top model so)"
+  },
+  {
+   "old": "method_62496()Lnet/minecraft/class_10048;",
+   "new": "method_62496()Lnet/minecraft/class_10428;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates.cbOminousState(Ltop/dext/centurybridge/step/v1_21_4/facade/OminousItemSpawnerRenderState;)Lnet/minecraft/class_10428;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9483",
+   "family": "render-states",
+   "basis": "OminousItemSpawnerRenderer's state is an ItemClusterRenderState since 1.21.4; 1.21.3's state (the facade) is one"
+  },
+  {
+   "old": "method_62497(Lnet/minecraft/class_9461;Lnet/minecraft/class_10048;F)V",
+   "new": "method_62497(Lnet/minecraft/class_9461;Lnet/minecraft/class_10428;F)V",
+   "narrow": true,
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9483",
+   "family": "render-states",
+   "basis": "1.21.4 extracts into its ItemClusterRenderState, which for this renderer is 1.21.3's state (CbStateOminousRendererMixin)"
+  },
+  {
+   "old": "method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_58753(Lnet/minecraft/class_10428;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "narrow": true,
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9483",
+   "family": "render-states",
+   "basis": "1.21.4 renders its ItemClusterRenderState, which for this renderer is 1.21.3's state"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_350.field_45909:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll",
+  "net/minecraft/class_372.field_32225:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc",
+  "net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry.ITEM:Lnet/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/CbItemColorProviderRegistry#item",
+  "net/minecraft/class_918.field_40532:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender",
+  "net/minecraft/class_918.field_40533:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender",
+  "net/minecraft/class_793.field_54858:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_793.field_32792:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_1091.field_52277:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
+  "net/minecraft/class_10097.field_54194:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading"
+ },
+ "classRenames": {
+  "net/minecraft/class_7528": "net/minecraft/class_10415",
+  "net/minecraft/class_1800": "top/dext/centurybridge/step/v1_21_4/facade/ItemPropertyFunction",
+  "net/minecraft/class_6395": "top/dext/centurybridge/step/v1_21_4/facade/ClampedItemPropertyFunction",
+  "net/minecraft/class_5272": "top/dext/centurybridge/step/v1_21_4/facade/ItemProperties",
+  "net/minecraft/class_7391": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction",
+  "net/minecraft/class_7391$class_7392": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction$CompassTarget",
+  "net/minecraft/class_7391$class_5171": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction$CompassWobble",
+  "net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/FabricModelPredicateProviderRegistry",
+  "net/minecraft/class_326": "top/dext/centurybridge/step/v1_21_4/facade/ItemColor",
+  "net/minecraft/class_325": "top/dext/centurybridge/step/v1_21_4/facade/ItemColors",
+  "net/fabricmc/fabric/api/client/render/ColorProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/ColorProviderRegistry",
+  "net/fabricmc/fabric/api/client/render/InvalidateRenderStateCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/InvalidateRenderStateCallback",
+  "net/minecraft/class_763": "top/dext/centurybridge/step/v1_21_4/facade/ItemModelShaper",
+  "net/minecraft/class_756": "top/dext/centurybridge/step/v1_21_4/facade/BlockEntityWithoutLevelRenderer",
+  "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRenderer": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRenderer",
+  "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRendererRegistry",
+  "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer",
+  "net/minecraft/class_806": "top/dext/centurybridge/step/v1_21_4/facade/BakedOverrides",
+  "net/minecraft/class_806$class_5827": "top/dext/centurybridge/step/v1_21_4/facade/BakedOverrides$BakedOverride",
+  "net/minecraft/class_806$class_5828": "top/dext/centurybridge/step/v1_21_4/facade/BakedOverrides$PropertyMatcher",
+  "net/minecraft/class_799": "top/dext/centurybridge/step/v1_21_4/facade/ItemOverride",
+  "net/minecraft/class_799$class_5826": "top/dext/centurybridge/step/v1_21_4/facade/ItemOverride$Predicate",
+  "net/minecraft/class_1090": "top/dext/centurybridge/step/v1_21_4/facade/BuiltInModel",
+  "net/minecraft/class_793$class_4751": "net/minecraft/class_1100$class_4751",
+  "net/minecraft/class_1100$class_10103": "net/minecraft/class_10526$class_10103",
+  "net/minecraft/class_10101": "top/dext/centurybridge/step/v1_21_4/facade/SpecialModels",
+  "net/minecraft/class_10202": "top/dext/centurybridge/step/v1_21_4/facade/ItemModel",
+  "net/minecraft/class_10055$class_10056": "top/dext/centurybridge/step/v1_21_4/facade/LegacyPlayerHandState",
+  "net/minecraft/class_10048": "top/dext/centurybridge/step/v1_21_4/facade/OminousItemSpawnerRenderState"
+ },
+ "classRenameBasis": {
+  "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
+  "net/minecraft/class_1800": "1.21.3 ItemPropertyFunction; 1.21.4 reused class_1800 for RangeSelectItemModelProperty, so every 1.21.3 reference meant the predicate function",
+  "net/minecraft/class_5272": "ItemProperties, ClampedItemPropertyFunction, CompassItemPropertyFunction are gone in 1.21.4",
+  "net/minecraft/class_793$class_4751": "BlockModel.GuiLight moved to UnbakedModel.GuiLight in 1.21.4 (same enum: FRONT / SIDE, getByName, lightLikeBlock)",
+  "net/minecraft/class_1100$class_10103": "UnbakedModel.Resolver moved to ResolvableModel.Resolver in 1.21.4 (same resolve(ResourceLocation) -> UnbakedModel); UnbakedModel extends ResolvableModel, whose resolveDependencies is 1.21.3's",
+  "net/minecraft/class_10101": "SpecialModels is gone in 1.21.4: builtin/generated is the ItemModelGenerator model, builtin/entity has none (facade)",
+  "net/minecraft/class_10202": "ItemModel (an item's unbaked model naming its model by id) is gone in 1.21.4; the facade is 1.21.3's class as a 1.21.4 UnbakedModel",
+  "net/minecraft/class_10055$class_10056": "PlayerRenderState.HandState is gone in 1.21.4; the player renderer fills the facade per hand again",
+  "net/minecraft/class_10048": "OminousItemSpawnerRenderState is gone in 1.21.4 (the renderer draws an ItemClusterRenderState); the facade is one, with 1.21.3's fields, and the renderer makes and fills it"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop:0"
+   ],
+   "basis": "ChatSelectionScreen.ChatSelectionList.PaddingEntry is a static class since 1.21.4; 1.21.3 only handed the list on to Entry, which no longer takes it"
+  },
+  "net/minecraft/class_372.<init>(Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;ZI)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;ZI)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbFont()Lnet/minecraft/class_327;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "TutorialToast lays its message out with the game's font in the constructor since 1.21.4"
+  },
+  "net/minecraft/class_372.<init>(Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Z)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Z)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbFont()Lnet/minecraft/class_327;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "TutorialToast lays its message out with the game's font in the constructor since 1.21.4"
+  },
+  "net/minecraft/class_382$class_10364.<init>(FFILnet/minecraft/class_382;Lnet/minecraft/class_2583;F)V": {
+   "desc": "(FFIILnet/minecraft/class_382;Lnet/minecraft/class_2583;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadowColor()I",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadowOffset()F"
+   ],
+   "basis": "BakedGlyph.GlyphInstance carries its own shadow since 1.21.4 (colour 0 = none); a 1.21.3 instance had none -- its shadow was a second instance"
+  },
+  "net/minecraft/class_918.<init>(Lnet/minecraft/class_1092;Lnet/minecraft/class_325;Lnet/minecraft/class_756;)V": {
+   "desc": "(Lnet/minecraft/class_10442;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#cbResolver(Lnet/minecraft/class_1092;)Lnet/minecraft/class_10442;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#cbConstructed(Lnet/minecraft/class_918;Lnet/minecraft/class_325;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "ItemRenderer resolves items through an ItemModelResolver since 1.21.4 (built on the same model manager); the ItemColors given colours the renderer's models of a mod's own as in 1.21.3 (CbItemRender); the BlockEntityWithoutLevelRenderer has no place -- 1.21.4 draws special items through their definitions"
+  },
+  "net/minecraft/class_1005.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_4004.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_4043.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_5697.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_977.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_989.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_990.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_996.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_776;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_776;)V",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_976.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;)V",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "CustomHeadLayer draws a head item from the render state's ItemStackRenderState since 1.21.4"
+  },
+  "net/minecraft/class_976.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;Lnet/minecraft/class_976$class_9994;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;Lnet/minecraft/class_976$class_9994;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "CustomHeadLayer draws a head item from the render state's ItemStackRenderState since 1.21.4"
+  },
+  "net/minecraft/class_759.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_898;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_898;Lnet/minecraft/class_918;Lnet/minecraft/class_10442;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#cbGameResolver()Lnet/minecraft/class_10442;"
+   ],
+   "basis": "ItemInHandRenderer also takes the item model resolver since 1.21.4: the game's"
+  },
+  "net/minecraft/class_793.<init>(Lnet/minecraft/class_2960;Ljava/util/List;Ljava/util/Map;Ljava/lang/Boolean;Lnet/minecraft/class_793$class_4751;Lnet/minecraft/class_809;Ljava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_2960;Ljava/util/List;Lnet/minecraft/class_10419$class_10420;Ljava/lang/Boolean;Lnet/minecraft/class_793$class_4751;Lnet/minecraft/class_809;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#cbData(Ljava/util/Map;)Lnet/minecraft/class_10419$class_10420;",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "drop:6"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#constructed(Lnet/minecraft/class_793;Ljava/util/Map;Ljava/util/List;)V",
+   "postArgs": [
+    2,
+    6
+   ],
+   "basis": "BlockModel takes its texture slots as TextureSlots.Data and no item overrides since 1.21.4; the model keeps 1.21.3's very texture map (which then answers its texture slots) and its overrides (CbModelBlockModel)"
+  },
+  "net/minecraft/class_1093$class_1094.<init>(Lnet/minecraft/class_793;Z)V": {
+   "desc": "(ZZZLnet/minecraft/class_809;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#builderAmbientOcclusion(Lnet/minecraft/class_793;)Z",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#builderBlockLight(Lnet/minecraft/class_793;)Z",
+    "keep:1",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#builderTransforms(Lnet/minecraft/class_793;)Lnet/minecraft/class_809;"
+   ],
+   "basis": "SimpleBakedModel.Builder(model, guiLight3d) read the model's hasAmbientOcclusion, getGuiLight().lightLikeBlock and getTransforms (1.21.3 bodies); 1.21.4 takes the values"
+  },
+  "net/minecraft/class_9824.<init>(Lnet/minecraft/class_1100;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbStateLoaderConstructed(Lnet/minecraft/class_9824;Lnet/minecraft/class_1100;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "BlockStateModelLoader loads with a missing model it is handed per call since 1.21.4; the loader keeps 1.21.3's"
+  },
+  "net/minecraft/class_9824$class_9825.<init>(Lnet/minecraft/class_2680;Lnet/minecraft/class_1100;)V": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbStateModel(Lnet/minecraft/class_1100;)Lnet/minecraft/class_9979;"
+   ],
+   "basis": "BlockStateModelLoader.LoadedModel holds an UnbakedBlockStateModel since 1.21.4 (1.21.3: an UnbakedModel); the model is wrapped, unwrapped again by model() (CbModelLoading)"
+  },
+  "net/minecraft/class_1088.<init>(Ljava/util/Map;Ljava/util/Map;Lnet/minecraft/class_1100;)V": {
+   "desc": "(Lnet/minecraft/class_5599;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Lnet/minecraft/class_1100;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbEntityModels()Lnet/minecraft/class_5599;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbStateModels(Ljava/util/Map;)Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbClientItems()Ljava/util/Map;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "ModelBakery takes the entity models, block state models and client items apart since 1.21.4; 1.21.3's top models are its block state models (the game's entity models; 1.21.3's bakery baked no item definitions)"
+  },
+  "net/minecraft/class_809.<init>(Lnet/minecraft/class_809;)V": {
+   "desc": "(Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbThirdLeft(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbThirdRight(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbFirstLeft(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbFirstRight(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbHead(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbGui(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbGround(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbFixed(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;"
+   ],
+   "basis": "ItemTransforms is a record since 1.21.4: a subclass's super(other) is the canonical constructor with the other's eight transforms"
+  },
+  "net/minecraft/class_824.<init>(Lnet/minecraft/class_327;Lnet/minecraft/class_5599;Ljava/util/function/Supplier;Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V": {
+   "desc": "(Lnet/minecraft/class_327;Ljava/util/function/Supplier;Lnet/minecraft/class_776;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_898;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbModelSupplier(Lnet/minecraft/class_5599;)Ljava/util/function/Supplier;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbLaterBlockRenderer()Lnet/minecraft/class_776;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbLaterResolver()Lnet/minecraft/class_10442;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbLaterItemRenderer()Lnet/minecraft/class_918;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbLaterEntityRenderer()Lnet/minecraft/class_898;",
+    "drop:2",
+    "drop:3",
+    "drop:4"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbBlockEntityDispatcherConstructed(Lnet/minecraft/class_824;Ljava/util/function/Supplier;Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    2,
+    3,
+    4
+   ],
+   "basis": "BlockEntityRenderDispatcher takes the renderers (and the item model resolver) as values since 1.21.4; 1.21.3 took Suppliers it asked only on reload, which a 1.21.3 dispatcher does again (CbRenderDispatchMixin); the entity models become the Supplier 1.21.4 takes"
+  },
+  "net/minecraft/class_5614$class_5615.<init>(Lnet/minecraft/class_824;Lnet/minecraft/class_776;Lnet/minecraft/class_918;Lnet/minecraft/class_898;Lnet/minecraft/class_5599;Lnet/minecraft/class_327;)V": {
+   "desc": "(Lnet/minecraft/class_824;Lnet/minecraft/class_776;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_898;Lnet/minecraft/class_5599;Lnet/minecraft/class_327;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbGameResolver()Lnet/minecraft/class_10442;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "BlockEntityRendererProvider.Context also carries the item model resolver since 1.21.4: the game's"
+  },
+  "net/minecraft/class_5617$class_5618.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_918;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_3300;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;Lnet/minecraft/class_327;)V": {
+   "desc": "(Lnet/minecraft/class_898;Lnet/minecraft/class_10442;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_3300;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;Lnet/minecraft/class_327;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbResolver(Lnet/minecraft/class_918;)Lnet/minecraft/class_10442;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbEntityContextConstructed(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_918;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "EntityRendererProvider.Context carries the item model resolver where 1.21.3 carried the item renderer (the game's resolver); the context keeps the renderer for getItemRenderer()"
+  },
+  "net/minecraft/class_898.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_1060;Lnet/minecraft/class_918;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_327;Lnet/minecraft/class_315;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_1060;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_327;Lnet/minecraft/class_315;Ljava/util/function/Supplier;Lnet/minecraft/class_10201;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbGameResolver()Lnet/minecraft/class_10442;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "conv:7 top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbModelSupplier(Lnet/minecraft/class_5599;)Ljava/util/function/Supplier;",
+    "keep:8"
+   ],
+   "basis": "EntityRenderDispatcher also takes the item model resolver (the game's) and the entity models as a Supplier since 1.21.4"
+  },
+  "net/minecraft/class_5599.<init>()V": {
+   "desc": "(Ljava/util/Map;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbEmptyModels()Ljava/util/Map;"
+   ],
+   "basis": "EntityModelSet is made from its roots since 1.21.4; 1.21.3's started empty and took them on reload (CbRenderEntityModelSetMixin)"
+  }
+ },
+ "superRenames": {
+  "net/minecraft/class_9017": "top/dext/centurybridge/step/v1_21_4/facade/LegacyAbstractContainerWidget"
+ },
+ "callReshapes": {
+  "net/minecraft/class_332.method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIIIZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadow()Z"
+   ],
+   "basis": "GuiGraphics.drawWordWrap drew its lines without shadow in 1.21.3 (drawString(.., false)); 1.21.4 takes the shadow flag"
+  },
+  "net/minecraft/class_425.method_18819(Lnet/minecraft/class_310;)V": {
+   "desc": "(Lnet/minecraft/class_1060;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbTextureManager(Lnet/minecraft/class_310;)Lnet/minecraft/class_1060;"
+   ],
+   "basis": "LoadingOverlay.registerTextures takes the Minecraft's texture manager since 1.21.4 (1.21.3 read it off the Minecraft)"
+  },
+  "net/minecraft/class_310.method_1544()Lnet/minecraft/class_5195;": {
+   "desc": "()Lnet/minecraft/class_10383;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbMusic(Lnet/minecraft/class_10383;)Lnet/minecraft/class_5195;",
+   "basis": "Minecraft.getSituationalMusic answers MusicInfo(music, volume) since 1.21.4; 1.21.3 answered the music"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105",
+  "net/minecraft/class_1091.method_61078(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading"
+ },
+ "resourceTypes": [
+  "centurybridge:legacy_builtin",
+  "centurybridge:legacy_color",
+  "centurybridge:legacy_override",
+  "centurybridge:legacy_overrides"
+ ],
+ "depRenames": {
+  "fabric-rendering-v0": "centurybridge_step_1_21_4@*"
+ },
+ "_s9client_depRenames_basis": "1.21.4's Fabric API (0.119.4) no longer ships fabric-rendering-v0, which 1.21.3's (0.114.1) did (core/tools/fapi_modules.py); this layer gives its two classes back (compat/fapi/v0: ColorProviderRegistry, InvalidateRenderStateCallback with v0's forwarding from rendering-v1)",
+ "facadeGaps": {
+  "net/minecraft/class_756.field_3981:[Lnet/minecraft/class_2627;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3984:Lnet/minecraft/class_2627;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3976:Lnet/minecraft/class_2595;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3978:Lnet/minecraft/class_2595;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3977:Lnet/minecraft/class_2611;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3983:Lnet/minecraft/class_2573;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3982:Lnet/minecraft/class_2587;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3979:Lnet/minecraft/class_2597;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_42909:Lnet/minecraft/class_8172;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3980:Lnet/minecraft/class_600;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3985:Lnet/minecraft/class_613;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_27737:Ljava/util/Map;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_10101.method_62665(Ljava/lang/String;Lnet/minecraft/class_793$class_4751;)Lnet/minecraft/class_1100;": "private: SpecialModels' own factory of its two markers (an empty named BlockModel); the facade makes them in CbModelSpecial"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1087.method_4713()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#isCustomRenderer",
+  "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#getOverrides",
+  "net/minecraft/class_809.method_3501(Lnet/minecraft/class_811;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
+  "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZI)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelFaceBakery",
+  "net/minecraft/class_796.method_3455(Lorg/joml/Vector3f;Lnet/minecraft/class_4590;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelFaceBakery",
+  "net/minecraft/class_1100.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking",
+  "net/minecraft/class_793.method_3433()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_9824$class_9825.comp_2871()Lnet/minecraft/class_1100;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
+  "net/minecraft/class_1088.method_45876(Lnet/minecraft/class_1088$class_9826;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#bakeModels",
+  "net/minecraft/class_1088$class_9826.get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#get",
+  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch",
+  "net/minecraft/class_9483.method_62496()Lnet/minecraft/class_10048;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_9483.method_62497(Lnet/minecraft/class_9461;Lnet/minecraft/class_10048;F)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_9483.method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
+  "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#superGetGuiLight",
+  "net/minecraft/class_809.method_3501(Lnet/minecraft/class_811;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#superHasTransform",
+  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#superGetItemRenderer"
+ },
+ "methodRenames": {
+  "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",
+  "net/minecraft/class_813.method_3511()I": "comp_3382"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_809.field_4305:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
+  "net/minecraft/class_809.field_4307:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
+  "net/minecraft/class_809.field_4302:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
+  "net/minecraft/class_809.field_4304:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
+  "net/minecraft/class_809.field_4311:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
+  "net/minecraft/class_809.field_4300:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
+  "net/minecraft/class_809.field_4303:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
+  "net/minecraft/class_809.field_4306:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
+  "net/minecraft/class_793.field_4251:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_809.<init>(Lnet/minecraft/class_809;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#copy"
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_7775",
+   "method": "method_65732()Lnet/minecraft/class_10527;",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking.sprites(Lnet/minecraft/class_7775;)Lnet/minecraft/class_10527;",
+   "family": "model-baking",
+   "basis": "ModelBaker.sprites() is new in 1.21.4; a 1.21.3 baker resolves materials as 1.21.3 did (atlas sprite, missing texture)"
+  },
+  {
+   "under": "net/minecraft/class_7775",
+   "method": "method_65733()Lnet/minecraft/class_10525;",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking.rootName(Lnet/minecraft/class_7775;)Lnet/minecraft/class_10525;",
+   "family": "model-baking",
+   "basis": "ModelBaker.rootName() is new in 1.21.4, a debug name only log messages read"
+  },
+  {
+   "under": "net/minecraft/class_1088$class_9826",
+   "method": "method_65740(Lnet/minecraft/class_10525;Ljava/lang/String;)Lnet/minecraft/class_1058;",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading.missingReference(Lnet/minecraft/class_1088$class_9826;Lnet/minecraft/class_10525;Ljava/lang/String;)Lnet/minecraft/class_1058;",
+   "family": "model-loading",
+   "basis": "TextureGetter.reportMissingReference is new in 1.21.4; 1.21.3 answered a missing reference with the missing material"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/minecraft/class_7775.method_45873(Lnet/minecraft/class_2960;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": {
+   "iface": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyModelBaker",
+   "adapt": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking#adaptModelBaker(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyModelBaker;)Lnet/minecraft/class_7775;"
+  },
+  "net/minecraft/class_1088$class_9826.get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;": {
+   "iface": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter",
+   "adapt": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#adaptTextureGetter(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter;)Lnet/minecraft/class_1088$class_9826;"
+  }
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
+ }
+}

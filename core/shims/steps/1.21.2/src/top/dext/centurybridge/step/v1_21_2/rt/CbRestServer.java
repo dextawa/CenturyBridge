@@ -237,4 +237,123 @@ public final class CbRestServer {
     public static net.minecraft.class_5949 field_29552() {
         return net.minecraft.class_5949.field_54068;
     }
+
+    // ------------------------------------------------------------------ function tags (ServerFunctionLibrary / ServerFunctionManager)
+
+    /** ServerFunctionLibrary.getTag(id): 1.21.2 answers a List (still the tag's functions); 1.21.1 callers take a Collection */
+    public static java.util.Collection<net.minecraft.class_2158<net.minecraft.class_2168>> libraryTag(net.minecraft.class_5349 library,
+            net.minecraft.class_2960 id) {
+        return library.method_29459(id);
+    }
+
+    /** ServerFunctionManager.getTag(id), as above */
+    public static java.util.Collection<net.minecraft.class_2158<net.minecraft.class_2168>> managerTag(net.minecraft.class_2991 manager,
+            net.minecraft.class_2960 id) {
+        return manager.method_29462(id);
+    }
+
+    /**
+     * a 1.21.1 override's Collection as the List 1.21.2's getTag answers: the same list when it is one, else
+     * an unmodifiable list of its elements in iteration order (1.21.1's own answer was the tag's list)
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static java.util.List tagList(java.util.Collection tag) {
+        if (tag == null || tag instanceof java.util.List) {
+            return (java.util.List) tag;
+        }
+        return java.util.Collections.unmodifiableList(new java.util.ArrayList(tag));
+    }
+
+    /** super's 1.21.2 ServerFunctionLibrary.getTag, from a 1.21.1 subclass's super.getTag(id) */
+    public interface LibraryTagSuper {
+        java.util.List<net.minecraft.class_2158<net.minecraft.class_2168>> cb$super$method_29459(net.minecraft.class_2960 id);
+    }
+
+    /** super's 1.21.2 ServerFunctionManager.getTag, from a 1.21.1 subclass's super.getTag(id) */
+    public interface ManagerTagSuper {
+        java.util.List<net.minecraft.class_2158<net.minecraft.class_2168>> cb$super$method_29462(net.minecraft.class_2960 id);
+    }
+
+    public static java.util.Collection<net.minecraft.class_2158<net.minecraft.class_2168>> superLibraryTag(LibraryTagSuper self,
+            net.minecraft.class_2960 id) {
+        return self.cb$super$method_29459(id);
+    }
+
+    public static java.util.Collection<net.minecraft.class_2158<net.minecraft.class_2168>> superManagerTag(ManagerTagSuper self,
+            net.minecraft.class_2960 id) {
+        return self.cb$super$method_29462(id);
+    }
+
+    // ------------------------------------------------------------------ ChunkHolder change notifications
+
+    /**
+     * the answer of a 1.21.1 ChunkHolder subclass's blockChanged / sectionLightChanged (void in 1.21.1) to
+     * 1.21.2's question "should this holder be broadcast": yes. 1.21.1 broadcast every holder each tick;
+     * 1.21.2 broadcasts the holders that said yes, and a holder's broadcastChanges sends nothing when no
+     * section changed, so a yes is never wrong where a no could drop the change.
+     */
+    public static boolean broadcastAfterChange() {
+        return true;
+    }
+
+    /** super's 1.21.2 blockChanged(pos), from a 1.21.1 subclass's super.blockChanged(pos) */
+    public interface BlockChangedSuper {
+        boolean cb$super$method_14002(net.minecraft.class_2338 pos);
+    }
+
+    /** super's 1.21.2 sectionLightChanged(layer, y), from a 1.21.1 subclass's super call */
+    public interface LightChangedSuper {
+        boolean cb$super$method_14012(net.minecraft.class_1944 layer, int sectionY);
+    }
+
+    public static void superBlockChanged(BlockChangedSuper self, net.minecraft.class_2338 pos) {
+        self.cb$super$method_14002(pos);
+    }
+
+    public static void superLightChanged(LightChangedSuper self, net.minecraft.class_1944 layer, int sectionY) {
+        self.cb$super$method_14012(layer, sectionY);
+    }
+
+    /**
+     * GenerationChunkHolder.addSaveDependency(future), abstract in 1.21.2, of a 1.21.1 class extending
+     * GenerationChunkHolder directly: 1.21.1 had no save dependencies on a generation holder (only
+     * ChunkHolder, which implements it, chained its saves), so such a holder's saves wait on nothing.
+     */
+    public static void addSaveDependency(net.minecraft.class_9761 holder, java.util.concurrent.CompletableFuture<?> future) {
+    }
+
+    // ------------------------------------------------------------------ LootContextParamSet (class_176)
+
+    /** LootContextParamSet.isAllowed(param): the param among the allowed ones (1.21.2's getAllowed) */
+    public static boolean isAllowed(net.minecraft.class_176 set, net.minecraft.class_169<?> param) {
+        return set.method_777().contains(param);
+    }
+
+    /** LootContextParamSet.validateUser(context, user): reported to the context's reporter, as 1.21.1 */
+    public static void validateUser(net.minecraft.class_176 set, net.minecraft.class_58 context, net.minecraft.class_46 user) {
+        validateUser(set, context.method_60288(), user);
+    }
+
+    /**
+     * LootContextParamSet.validateUser(reporter, user): the parameters the user reads that this set does
+     * not allow, reported with 1.21.1's message (1.21.2 checks a user against its ValidationContext's own set)
+     */
+    public static void validateUser(net.minecraft.class_176 set, net.minecraft.class_8942 reporter, net.minecraft.class_46 user) {
+        java.util.Set<net.minecraft.class_169<?>> missing = com.google.common.collect.Sets.difference(user.method_293(), set.method_777());
+        if (!missing.isEmpty()) {
+            reporter.method_54947("Parameters " + missing + " are not provided in this context");
+        }
+    }
+
+    /** LootContextParamSet.builder() */
+    public static net.minecraft.class_176.class_177 method_35554() {
+        return new net.minecraft.class_176.class_177();
+    }
+
+    // ------------------------------------------------------------------ text filter
+
+    /** LegacyTextFilter.createFromConfig(config): 1.21.2's builds the same LegacyTextFilter (or null), typed wider */
+    public static net.minecraft.class_5514 method_33805(String config) {
+        return (net.minecraft.class_5514) net.minecraft.class_5514.method_33805(config);
+    }
 }

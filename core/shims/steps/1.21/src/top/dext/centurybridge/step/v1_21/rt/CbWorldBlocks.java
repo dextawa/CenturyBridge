@@ -294,6 +294,54 @@ public final class CbWorldBlocks {
             class_2960.method_60656("decorated_pot_base")), "decorated_pot_base");
     }
 
+    private static volatile PotPatternNames potPatternNames;
+
+    /**
+     * 1.20.6 BuiltInRegistries.DECORATED_POT_PATTERNS, a registry of the patterns' texture names, which 1.21 made a
+     * registry of DecoratedPotPattern records under the same key: a registry of names over 1.21's (PotPatternNames).
+     */
+    @SuppressWarnings("unchecked")
+    public static class_2378<String> field_42940() {
+        PotPatternNames names = potPatternNames;
+        if (names == null) {
+            synchronized (CbWorldBlocks.class) {
+                names = potPatternNames;
+                if (names == null) {
+                    potPatternNames = names = new PotPatternNames();
+                }
+            }
+        }
+        return names;
+    }
+
+    /**
+     * The names view: 1.21's patterns as 1.20.6 registered them -- each pattern's key with the name of its texture
+     * as the value (1.21's vanilla keys stay 1.21's; 1.20.6's own were named after the texture, and the texture is
+     * what location(key) answers either way). A 1.20.6 mod's registration goes into 1.21's registry as well, a
+     * pattern whose asset is the key's name -- the texture 1.20.6 drew it with, entity/decorated_pot/&lt;name&gt;.
+     */
+    static final class PotPatternNames extends class_2370<String> {
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        PotPatternNames() {
+            super((class_5321) class_7924.field_42941, com.mojang.serialization.Lifecycle.stable());
+            for (java.util.Map.Entry<class_5321<class_9766>, class_9766> entry : class_7923.field_42940.method_29722()) {
+                super.method_10272((class_5321) entry.getKey(), entry.getValue().comp_2801().method_12832(),
+                    net.minecraft.class_9248.field_49136);
+            }
+        }
+
+        @Override
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        public net.minecraft.class_6880.class_6883<String> method_10272(class_5321<String> key, String value, net.minecraft.class_9248 info) {
+            net.minecraft.class_6880.class_6883<String> holder = super.method_10272(key, value, info);
+            class_2378 patterns = class_7923.field_42940;
+            if (!patterns.method_35842((class_5321) key)) {
+                class_2378.method_39197(patterns, (class_5321) key, new class_9766(key.method_29177()));
+            }
+            return holder;
+        }
+    }
+
     private CbWorldBlocks() {
     }
 }
