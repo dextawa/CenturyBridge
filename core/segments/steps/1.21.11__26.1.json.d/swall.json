@@ -22,7 +22,11 @@
   "net/minecraft/class_4588.method_22920(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFFF[II)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#putBulkData",
   "net/minecraft/class_4588.method_61032(Lnet/minecraft/class_4587$class_4665;Lorg/joml/Vector3f;)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#addVertex",
   "net/minecraft/class_4588.method_61959(Lnet/minecraft/class_4587$class_4665;Lorg/joml/Vector3f;)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#setNormal",
-  "net/minecraft/class_775.method_3347(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_4588;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#tesselateLiquid"
+  "net/minecraft/class_775.method_3347(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;Lnet/minecraft/class_4588;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#tesselateLiquid",
+  "net/minecraft/class_9826.method_65739(Lnet/minecraft/class_4730;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites#get",
+  "net/minecraft/class_9826.method_65740(Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites#reportMissingReference",
+  "net/minecraft/class_9826.method_68061(Lnet/minecraft/class_10419;Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites#resolveSlot",
+  "net/minecraft/class_10419.method_65545(Ljava/lang/String;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites#getMaterial"
  },
  "overrideHooks": [
   {
@@ -112,6 +116,39 @@
     }
    ],
    "basis": "a 1.21.11 mod class implementing BlockAndTintGetter itself (getShade + getBlockTint) is a 26.1 client BlockAndTintGetter: its getBlockTint implements 26.1s, cardinalLighting() is its shaded value per face (26.1 lights unshaded quads with up(), which equals 1.21.11s unshaded shade in vanilla)"
+  },
+  {
+   "under": "net/minecraft/class_9826",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySpriteGetter",
+   "requires": [
+    "method_65739(Lnet/minecraft/class_4730;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;",
+    "method_65740(Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;"
+   ],
+   "synth": [
+    {
+     "new": "get(Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites.bakerGet(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySpriteGetter;Lnet/minecraft/client/resources/model/sprite/Material;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
+    },
+    {
+     "new": "reportMissingReference(Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites.bakerReportMissingReference(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySpriteGetter;Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
+    }
+   ],
+   "basis": "a 1.21.11 model sprite getter answers 26.1 MaterialBaker: the material id in 1.21.11 virtual model atlas BLOCK_OR_ITEM (what every 1.21.11 model texture carried), its sprite with the material forceTranslucent flag"
+  },
+  {
+   "under": "net/minecraft/class_9826",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySlotResolver",
+   "requires": [
+    "method_68061(Lnet/minecraft/class_10419;Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;"
+   ],
+   "synth": [
+    {
+     "new": "resolveSlot(Lnet/minecraft/client/resources/model/sprite/TextureSlots;Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites.bakerResolveSlot(Ltop/dext/centurybridge/step/v26_1/rt/CbWallSprites$LegacySlotResolver;Lnet/minecraft/client/resources/model/sprite/TextureSlots;Ljava/lang/String;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
+    }
+   ],
+   "basis": "a 1.21.11 getter overriding the default resolveSlot keeps answering it in 26.1"
   }
  ],
  "facadeGaps": {
@@ -162,5 +199,8 @@
    ],
    "basis": "26.1 FluidRenderer takes the baked fluid models in place of the sprites 1.21.11 looked the fluid textures up in"
   }
+ },
+ "fieldGetters": {
+  "net/minecraft/class_1092.field_64468:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites"
  }
 }
