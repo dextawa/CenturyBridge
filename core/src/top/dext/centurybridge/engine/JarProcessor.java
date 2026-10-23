@@ -2677,6 +2677,7 @@ public final class JarProcessor {
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
         Map<String, String> instFldSetters = new HashMap<>(); // PUTFIELD -> INVOKESTATIC setter(receiver, value) on runtime class
         Map<String, String> instOfSites = new HashMap<>();   // INSTANCEOF type -> INVOKESTATIC predicate(Object)Z
+        Map<String, String> castSites = new HashMap<>();     // CHECKCAST type -> INVOKESTATIC check(Object)Object first
         Map<String, String> fldRenames = new HashMap<>();    // instance fields renamed in place
         Map<String, String> mthRenames = new HashMap<>();    // methods renamed in place (relocated to super)
         Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
@@ -3444,6 +3445,10 @@ public final class JarProcessor {
                                 return; // answered by the predicate; the type itself is not loaded here
                             }
                         }
+                        if (op == Opcodes.CHECKCAST && chain.checkCastRedirects.containsKey(type)) {
+                            castSites.put(type, chain.checkCastRedirects.get(type));
+                            top.dext.centurybridge.data.FullAudit.record("checkcast " + type, "checkcast-redirect");
+                        }
                         if (op == Opcodes.NEW) {
                             pendingNew.computeIfAbsent(type, k -> new java.util.ArrayDeque<>()).push(Boolean.TRUE);
                         }
@@ -3657,7 +3662,7 @@ public final class JarProcessor {
             }
         }
         if (redirects.isEmpty() && instRedirects.isEmpty() && ifaceCallRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldGetters.isEmpty() && fldSetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
+                && fldGetters.isEmpty() && fldSetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty() && castSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty() && declaredRenames.isEmpty()
@@ -3748,6 +3753,9 @@ public final class JarProcessor {
         }
         for (String k : instOfSites.keySet()) {
             rpt.notes.add(tag + "instanceof-redirected: " + k + " -> " + instOfSites.get(k));
+        }
+        for (String k : castSites.keySet()) {
+            rpt.notes.add(tag + "checkcast-redirected: " + k + " -> " + castSites.get(k));
         }
         for (String k : hookCallSites) {
             rpt.notes.add(tag + "lookup-hooked: " + k);
@@ -4114,6 +4122,12 @@ public final class JarProcessor {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(pv),
                                 redirName(pv, "cbInstanceOf"), "(Ljava/lang/Object;)Z", false);
                             return;
+                        }
+                        if (op == Opcodes.CHECKCAST && castSites.containsKey(type)) {
+                            // the source release's cast first (throws as it would have), then the renamed type's
+                            String cv = castSites.get(type);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(cv),
+                                redirName(cv, "cbCheckCast"), "(Ljava/lang/Object;)Ljava/lang/Object;", false);
                         }
                         super.visitTypeInsn(op, type);
                     }

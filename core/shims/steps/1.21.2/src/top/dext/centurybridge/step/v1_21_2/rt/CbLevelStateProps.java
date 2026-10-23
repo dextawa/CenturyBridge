@@ -55,6 +55,23 @@ public final class CbLevelStateProps {
 
     // ---- DirectionProperty ----
 
+    /**
+     * {@code x instanceof DirectionProperty} (instanceOfRedirects): 1.21.1's DirectionProperty was the EnumProperty of
+     * Direction; with the class renamed onto EnumProperty the test must still say no to every other enum property
+     */
+    public static boolean isDirectionProperty(Object o) {
+        return o instanceof class_2754<?> e && e.method_11902() == class_2350.class;
+    }
+
+    /** {@code (DirectionProperty) x} (checkCastRedirects): the cast 1.21.1 made, before the renamed one */
+    public static Object castDirectionProperty(Object o) {
+        if (o == null || isDirectionProperty(o)) {
+            return o;
+        }
+        throw new ClassCastException("class " + o.getClass().getName()
+            + " cannot be cast to 1.21.1's DirectionProperty (an EnumProperty of Direction)");
+    }
+
     /** DirectionProperty.create(name): every direction */
     public static class_2754<class_2350> method_35305(String name) {
         return method_11844(name, d -> true);

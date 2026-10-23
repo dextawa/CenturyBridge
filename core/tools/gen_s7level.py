@@ -45,7 +45,7 @@ class Fragment:
         self.v, self.w_stub = v, w
         self.w = {k: ({} if k not in ("overrideHooks", "overrideRenames", "adapterHooks", "abstractFills",
                                       "convertHooks", "covers") else [])
-                  for k in ("classRenames", "facadeGaps", "superCtorReshapes", "superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
+                  for k in ("classRenames", "instanceOfRedirects", "checkCastRedirects", "facadeGaps", "superCtorReshapes", "superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
                             "instanceRedirects", "fieldRedirects", "fieldGetters", "instanceFieldGetters", "instanceFieldSetters",
                             "superRedirects", "covers", "overrideHooks", "overrideRenames", "frameDefaults",
                             "convertHooks", "adapterHooks", "abstractFills", "lambdaAdapters", "genericWitnesses",
@@ -731,6 +731,8 @@ def state_props(f):
                                           "the property's values"})
     DP, EP = MC + "class_2753", MC + "class_2754"
     f.put("classRenames", DP, EP)
+    f.put("instanceOfRedirects", DP, LSP + "#isDirectionProperty")
+    f.put("checkCastRedirects", DP, LSP + "#castDirectionProperty")
     for m in ("method_35305(" + STR + ")", "method_11844(" + STR + "Ljava/util/function/Predicate;)",
               "method_11845(" + STR + "[" + DIR + ")", "method_11843(" + STR + COL + ")"):
         f.put("staticRedirects", DP + "." + m + L("class_2753"), LSP)
@@ -738,6 +740,15 @@ def state_props(f):
               "(" + STR + "Ljava/lang/Class;" + LIS + ")" + L("class_2754"),
               ["keep:0", "keep:1", "conv:2 " + LSP + "#list(" + COL + ")" + LIS],
               "EnumProperty.create takes a List since 1.21.2: the values in order, each once (1.21.1's ImmutableSet)")
+    fin = ("1.21.2 made {0} final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its "
+           "place is refused by wiring-check (superRename onto a type that survives as final): the mod's {0}-typed "
+           "fields, parameters and the vanilla APIs taking {0} would hold a non-{0} instance and fail verification. "
+           "Calls, fields and factories of the class are bridged; only subclassing it is not")
+    for c, n in (("class_2746", "BooleanProperty"), ("class_2758", "IntegerProperty"), ("class_2754", "EnumProperty")):
+        f.put("ledger", MC + c, fin.format(n))
+        f.put("ledger", MC + c + ".<init>", fin.format(n))
+    f.put("ledger", DP, fin.format("EnumProperty (DirectionProperty is EnumProperty<Direction> there)"))
+    f.put("ledger", DP + ".<init>", fin.format("EnumProperty (DirectionProperty is EnumProperty<Direction> there)"))
     f.put("staticRedirects", MC + "class_2688.method_28495(" + COL + "Ljava/lang/Object;)Ljava/lang/Object;", LSP)
 
 

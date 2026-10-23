@@ -32,7 +32,7 @@ import org.objectweb.asm.tree.MethodNode;
  * that table, so they compare verbatim.
  *
  * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects, interfaceCallRedirects,
- * fieldRedirects, fieldGetters, staticFieldSetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
+ * fieldRedirects, fieldGetters, staticFieldSetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects, checkCastRedirects,
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
@@ -567,6 +567,8 @@ public final class WiringCheck {
         });
         obj(root, "instanceOfRedirects", (k, v) ->
             wantMethod("instanceOfRedirects " + k, v, "cbInstanceOf", "(Ljava/lang/Object;)Z"));
+        obj(root, "checkCastRedirects", (k, v) ->
+            wantMethod("checkCastRedirects " + k, v, "cbCheckCast", "(Ljava/lang/Object;)Ljava/lang/Object;"));
         // "owner.<init>(args)V" -> factory (args)Lowner;
         obj(root, "ctorRedirects", (k, v) -> {
             Sym s = Sym.method(k);
