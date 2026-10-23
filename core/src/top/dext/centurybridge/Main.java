@@ -234,7 +234,10 @@ public final class Main {
                 if (crossesWall && r.outputJar != null && Files.exists(r.outputJar)) {
                     Path tmp = r.outputJar.resolveSibling(r.outputJar.getFileName() + ".preNs");
                     Files.move(r.outputJar, tmp);
-                    top.dext.centurybridge.data.JarRemapper.remapWithTable(renameTable, tmp, r.outputJar);
+                    // with the target's code jar: calls also take the invoke kind the target declares their owner as
+                    top.dext.centurybridge.data.JarRemapper.remapWithTable(renameTable, tmp, r.outputJar,
+                        System.getenv("CB_TARGET_CODE") != null ? Path.of(System.getenv("CB_TARGET_CODE"))
+                                                                : Path.of("data/jars/client-" + args[3] + ".jar"));
                     Files.delete(tmp);
                     if (wallRepair != null) {
                         JarProcessor.repairPastWall(r.outputJar, wallRepair, r);

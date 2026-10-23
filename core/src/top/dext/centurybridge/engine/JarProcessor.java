@@ -3160,8 +3160,10 @@ public final class JarProcessor {
                         }
                         // a shim on any ancestor satisfies this call site: the mod
                         // holds a subclass reference, but the member is declared
-                        // (and bridged) further up
-                        if (chain.coveredAnywhere(owner, name + desc)) {
+                        // (and bridged) further up -- unless an instance redirect keys
+                        // it on a nearer class (Chain#instanceRedirectNearerThanCover)
+                        String covHome = chain.coverHome(owner, name + desc);
+                        if (covHome != null && !chain.instanceRedirectNearerThanCover(owner, name + desc, covHome)) {
                             top.dext.centurybridge.data.FullAudit.record(key, "covered");
                             return; // restored at runtime by a shim mixin
                         }

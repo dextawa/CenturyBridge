@@ -1,0 +1,26 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3417.field_14589:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14597:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14601:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14615:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14685:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14689:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14741:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14750:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14772:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14780:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14857:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14867:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14871:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14894:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14938:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_14971:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_15051:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_15110:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_15140:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_16438:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_16439:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds",
+  "net/minecraft/class_3417.field_16440:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v26_1/rt/CbWallSounds"
+ }
+}

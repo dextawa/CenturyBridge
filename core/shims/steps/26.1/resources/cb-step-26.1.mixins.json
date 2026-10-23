@@ -12,13 +12,19 @@
     "CbFapiTagFileMixin",
     "CbFapiTagLoaderMixin",
     "CbFapiTagsProviderMixin",
-    "CbFapiTooltipFlagMixin"
+    "CbFapiTooltipFlagMixin",
+    "CbWallServerMixin"
   ],
   "client": [
     "CbFapiCameraAccess",
     "CbFapiGameRendererAccess",
     "CbFapiHudRenderCallbackMixin",
-    "CbFapiLevelRendererMixin"
+    "CbFapiLevelRendererMixin",
+    "CbWallBlockStateModelSetMixin",
+    "CbWallClientLevelDataMixin",
+    "CbWallClientRainMixin",
+    "CbWallGuiAccess",
+    "CbWallModelBlockRendererAccess"
   ],
   "server": [],
   "injectors": {
