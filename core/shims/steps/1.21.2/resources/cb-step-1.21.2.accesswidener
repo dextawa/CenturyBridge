@@ -33,6 +33,9 @@ accessible method net/minecraft/class_1309 method_26318 (Lnet/minecraft/class_24
 extendable method net/minecraft/class_1309 method_26318 (Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;
 # ---- END GENERATED (s7entity) ----
 
+# s7render: ModelBakery's baker getModel(id), the 1.21.1 ModelBaker.getModel (CbRenderBakeBakerMixin)
+accessible method net/minecraft/class_1088$class_7778 method_45872 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
+
 # ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
 accessible method net/minecraft/class_1011 method_4305 (III)V
 accessible method net/minecraft/class_1011 method_4315 (II)I

@@ -1,0 +1,49 @@
+{
+ "classRenames": {
+  "net/minecraft/class_3505": "top/dext/centurybridge/step/v1_21_2/facade/TagManager",
+  "net/minecraft/class_3505$class_6863": "top/dext/centurybridge/step/v1_21_2/facade/TagManager$LoadResult",
+  "net/minecraft/class_6864$class_6865": "top/dext/centurybridge/step/v1_21_2/facade/TagOutput"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_3503.<init>(Ljava/util/function/Function;Ljava/lang/String;)V": {
+   "desc": "(Lnet/minecraft/class_3503$class_10272;Ljava/lang/String;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemTags#lookup(Ljava/util/function/Function;)Lnet/minecraft/class_3503$class_10272;",
+    "keep"
+   ]
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_3503.method_33176(Lnet/minecraft/class_3300;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags",
+  "net/minecraft/class_6864$class_5748.method_56531()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags",
+  "net/minecraft/class_6864$class_5748.method_56532(Lnet/minecraft/class_2378;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags"
+ },
+ "interfaceCallRedirects": {
+  "net/minecraft/class_3497$class_7474.method_43948(Lnet/minecraft/class_2960;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags"
+ },
+ "superRedirects": {
+  "net/minecraft/class_3503.method_33176(Lnet/minecraft/class_3300;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags#super_method_33176"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_3503",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTags$LegacyLoadAndBuild",
+   "requires": [
+    "method_33176(Lnet/minecraft/class_3300;)Ljava/util/Map;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 TagLoader subclass overriding loadAndBuild: calls of it reach the override"
+  }
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_43948(Lnet/minecraft/class_2960;)Ljava/lang/Object;",
+   "new": "method_43948(Lnet/minecraft/class_2960;Z)Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_3497$class_7474",
+   "args": [
+    0
+   ],
+   "basis": "TagEntry.Lookup.element is also told whether the entry is required since 1.21.2: a 1.21.1 lookup is asked with the id, as 1.21.1 asked it (TagEntry decided on required itself)"
+  }
+ ]
+}

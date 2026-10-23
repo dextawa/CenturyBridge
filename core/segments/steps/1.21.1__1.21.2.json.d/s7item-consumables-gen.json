@@ -1,0 +1,20 @@
+{
+ "classRenames": {
+  "net/minecraft/class_1805": "top/dext/centurybridge/step/v1_21_2/facade/MilkBucketItem",
+  "net/minecraft/class_4480": "top/dext/centurybridge/step/v1_21_2/facade/HoneyBottleItem",
+  "net/minecraft/class_9462": "top/dext/centurybridge/step/v1_21_2/facade/OminousBottleItem",
+  "net/minecraft/class_1757": "top/dext/centurybridge/step/v1_21_2/facade/ChorusFruitItem",
+  "net/minecraft/class_1830": "top/dext/centurybridge/step/v1_21_2/facade/SuspiciousStewItem",
+  "net/minecraft/class_1772": "top/dext/centurybridge/step/v1_21_2/facade/EnchantedBookItem"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_1805.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "use(level, player, hand) answered an InteractionResultHolder in 1.21.1 (startUsingInstantly); 1.21.2's Item.use has the same parameters, which Java cannot declare a second time on the facade. Calls take the Item.use instance redirect and a subclass's super.use(..) the Item.use hook's super bridge (CbItemResults); 1.21.2's Item.use starts consuming an item with CONSUMABLE, which the facade gives its items",
+  "net/minecraft/class_4480.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "use(level, player, hand) answered an InteractionResultHolder in 1.21.1 (startUsingInstantly); 1.21.2's Item.use has the same parameters, which Java cannot declare a second time on the facade. Calls take the Item.use instance redirect and a subclass's super.use(..) the Item.use hook's super bridge (CbItemResults); 1.21.2's Item.use starts consuming an item with CONSUMABLE, which the facade gives its items",
+  "net/minecraft/class_9462.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "use(level, player, hand) answered an InteractionResultHolder in 1.21.1 (startUsingInstantly); 1.21.2's Item.use has the same parameters, which Java cannot declare a second time on the facade. Calls take the Item.use instance redirect and a subclass's super.use(..) the Item.use hook's super bridge (CbItemResults); 1.21.2's Item.use starts consuming an item with CONSUMABLE, which the facade gives its items"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1805.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemConsumables",
+  "net/minecraft/class_4480.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemConsumables",
+  "net/minecraft/class_9462.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemConsumables"
+ }
+}

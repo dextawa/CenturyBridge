@@ -1043,6 +1043,11 @@ public final class WiringCheck {
         // classRename remapper), so it is the type the facade must be a subtype of.
         String merged = facade.map(key);
         String kt = targetName(merged != null && !merged.startsWith("top/dext/") ? merged : key);
+        if ("java/lang/Object".equals(kt)) {
+            // merged into Object (1.21.2: Equipable, whose 1.21.1 instances were items and blocks alike): every
+            // facade is one, and the stub (Minecraft only) does not carry it
+            return;
+        }
         ClassNode kn = stub.get(kt);
         if (kn == null) {
             problems.add("superRename " + key + ": the class is gone on the target -- superRenames only move"
