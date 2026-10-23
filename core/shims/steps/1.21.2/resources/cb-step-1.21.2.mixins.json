@@ -22,6 +22,8 @@
     "CbItemServerThreadMixin",
     "CbLevelBlockInvoker",
     "CbLevelBlockNameMixin",
+    "CbLevelExplosionServerLevelMixin",
+    "CbLevelExplosionServerMixin",
     "CbLevelNeighborCactusMixin",
     "CbLevelNeighborDetectorRailMixin",
     "CbLevelNeighborDiodeMixin",
