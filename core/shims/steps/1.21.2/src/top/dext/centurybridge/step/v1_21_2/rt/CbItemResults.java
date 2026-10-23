@@ -170,9 +170,9 @@ public final class CbItemResults {
         return o == SUCCESS || o == CONSUME;
     }
 
-    /** sidedSuccess(isClientSide): SUCCESS on the client, CONSUME on the server */
+    /** sidedSuccess(isClientSide): the SUCCESS constant when the caller says client side, else CONSUME */
     public static class_1269 method_29236(boolean clientSide) {
-        return clientSide ? (onServer() ? SUCCESS_CLIENT : of(SUCCESS)) : of(CONSUME);
+        return of(clientSide ? SUCCESS : CONSUME);
     }
 
     // ---- InteractionResultHolder and Item.use ----
