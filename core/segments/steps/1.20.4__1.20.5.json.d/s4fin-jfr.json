@@ -1,0 +1,114 @@
+{
+ "_comment": "s4fin JFR: 1.20.4 packet profiling by numeric id <-> 1.20.5 PacketType / string ids (rt/CbFinJfr, facade/JfrPacketIdentification)",
+ "instanceRedirects": {
+  "net/minecraft/class_6611.method_38656(Lnet/minecraft/class_2539;ILjava/net/SocketAddress;I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr",
+  "net/minecraft/class_6611.method_38657(Lnet/minecraft/class_2539;ILjava/net/SocketAddress;I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_38656(Lnet/minecraft/class_2539;ILjava/net/SocketAddress;I)V",
+   "new": "method_38656(Lnet/minecraft/class_2539;Lnet/minecraft/class_9145;Ljava/net/SocketAddress;I)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr.cbPacketReceived(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinJfr$CbLegacyPacketReceived;Lnet/minecraft/class_2539;Lnet/minecraft/class_9145;Ljava/net/SocketAddress;I)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr$CbLegacyPacketReceived",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_6611",
+   "basis": "JvmProfiler.onPacketReceived takes the PacketType since 1.20.5; a 1.20.4 profiler gets the packet's wire id in its protocol"
+  },
+  {
+   "old": "method_38657(Lnet/minecraft/class_2539;ILjava/net/SocketAddress;I)V",
+   "new": "method_38657(Lnet/minecraft/class_2539;Lnet/minecraft/class_9145;Ljava/net/SocketAddress;I)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr.cbPacketSent(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinJfr$CbLegacyPacketSent;Lnet/minecraft/class_2539;Lnet/minecraft/class_9145;Ljava/net/SocketAddress;I)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr$CbLegacyPacketSent",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_6611",
+   "basis": "JvmProfiler.onPacketSent takes the PacketType since 1.20.5; a 1.20.4 profiler gets the packet's wire id in its protocol"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_6509.<init>(Ljava/lang/String;ILjava/net/SocketAddress;I)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/SocketAddress;I)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbNoDirection()Ljava/lang/String;",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbPacketId(I)Ljava/lang/String;",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/util/profiling/jfr/event/PacketReceivedEvent.<init>(Ljava/lang/String;ILjava/net/SocketAddress;I)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/SocketAddress;I)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbServerbound()Ljava/lang/String;",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbReceivedPacketId(Ljava/lang/String;I)Ljava/lang/String;",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/util/profiling/jfr/event/PacketSentEvent.<init>(Ljava/lang/String;ILjava/net/SocketAddress;I)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/SocketAddress;I)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbClientbound()Ljava/lang/String;",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbSentPacketId(Ljava/lang/String;I)Ljava/lang/String;",
+    "keep:2",
+    "keep:3"
+   ]
+  },
+  "net/minecraft/class_6767.<init>(Ljava/time/Duration;Ljava/util/List;)V": {
+   "desc": "(Ljava/time/Duration;Ljava/util/List;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbNewKeys(Ljava/util/List;)Ljava/util/List;"
+   ]
+  },
+  "net/minecraft/class_6517.<init>(Ljava/time/Instant;Ljava/time/Instant;Ljava/time/Duration;Ljava/time/Duration;Ljava/util/List;Ljava/util/List;Lnet/minecraft/class_6525$class_6526;Lnet/minecraft/class_6530$class_6531;Lnet/minecraft/class_6767;Lnet/minecraft/class_6767;Lnet/minecraft/class_6523$class_6524;Lnet/minecraft/class_6523$class_6524;Ljava/util/List;)V": {
+   "desc": "(Ljava/time/Instant;Ljava/time/Instant;Ljava/time/Duration;Ljava/time/Duration;Ljava/util/List;Ljava/util/List;Lnet/minecraft/class_6525$class_6526;Lnet/minecraft/class_6530$class_6531;Lnet/minecraft/class_6767;Lnet/minecraft/class_6767;Lnet/minecraft/class_6767;Lnet/minecraft/class_6767;Lnet/minecraft/class_6523$class_6524;Lnet/minecraft/class_6523$class_6524;Ljava/util/List;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9",
+    "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbNoChunkIo(Ljava/time/Duration;)Lnet/minecraft/class_6767;",
+    "conv:2 top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbNoChunkIo(Ljava/time/Duration;)Lnet/minecraft/class_6767;",
+    "keep:10",
+    "keep:11",
+    "keep:12"
+   ]
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_6767.method_39442()Ljava/util/List;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#cbOldKeys(Ljava/util/List;)Ljava/util/List;"
+  }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_6509.packetId:I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr#packetId"
+ },
+ "classRenames": {
+  "net/minecraft/class_6767$class_6769": "top/dext/centurybridge/step/v1_20_5/facade/JfrPacketIdentification"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_6767$class_6769.field_35587:Ljava/util/Map;": "private in 1.20.4 (PacketIdentification's (direction, protocol, id) -> packet class name table); packetName() reads 1.20.5's id table instead"
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_6611",
+   "method": "method_56979(Lnet/minecraft/class_9240;Lnet/minecraft/class_1923;Lnet/minecraft/class_4486;I)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr.cbRegionFileIo(Lnet/minecraft/class_6611;Lnet/minecraft/class_9240;Lnet/minecraft/class_1923;Lnet/minecraft/class_4486;I)V"
+  },
+  {
+   "under": "net/minecraft/class_6611",
+   "method": "method_56980(Lnet/minecraft/class_9240;Lnet/minecraft/class_1923;Lnet/minecraft/class_4486;I)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr.cbRegionFileIo(Lnet/minecraft/class_6611;Lnet/minecraft/class_9240;Lnet/minecraft/class_1923;Lnet/minecraft/class_4486;I)V"
+  }
+ ]
+}
