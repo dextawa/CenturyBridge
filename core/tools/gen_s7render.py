@@ -5,7 +5,8 @@ blaze3d, the model-bake classes).
 
 Reads V's (1.21.1) and W's (1.21.2) intermediary stubs and V's code jar, and writes
 core/segments/steps/1.21.1__1.21.2.json.d/s7render-gen.json plus the generated layer sources it names
-(rt/CbRenderModelsGen.java). Nothing in either is listed by hand: every key is read off the jars.
+(rt/CbRender*Gen.java, mixin/CbRender{Tex,State,Model,Parts}<n>Mixin.java). Nothing in either is listed by hand: every
+key is read off the jars (family 8 also reads the step's damage table for the area's members).
 
 Family 1 -- entity model animation (EntityModel.setupAnim / prepareMobModel).
   1.21.1: setupAnim(T entity, limbAngle, limbDistance, ageInTicks, headYaw, headPitch), prepareMobModel(T entity,
@@ -18,9 +19,19 @@ Family 1 -- entity model animation (EntityModel.setupAnim / prepareMobModel).
   CbRenderModelsGen.Anim<n> (the erasure's own shape, the mod's method implements it). prepareMobModel is called from
   there with the same entity -- it has no 1.21.2 caller of its own, and a model that does not override it inherits
   1.21.1's empty one (the adapter's default).
+
+Families 2..8 (each documented at its own section below):
+  2/3 getTextureLocation put back per renderer class + hooks; createRenderState abstractFills (CbRenderTex*).
+  4   renderer / layer methods moved from the entity to the render state (SPECS; CbRenderState*).
+  5   setupAnim / prepareMobModel put back on the 1.21.1 vanilla models (CbRenderModel*).
+  6   AgeableListModel headParts / bodyParts put back (CbRenderParts*).
+  7   GameRenderer's core-shader getters -> ShaderManager programs of the same-named CoreShaders keys.
+  8   members 1.21.2 moved or narrowed without changing their code (CbRenderMovedGen, the access widener block).
+The mixin config's generated entries and the access widener's generated block are rewritten on every run.
 """
 import json
 import os
+import re
 import struct
 import sys
 import zipfile
@@ -1219,6 +1230,112 @@ def family_shaders():
 
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Family 8 -- members 1.21.2 moved without changing them. For each method of the area's damage table (the
+# 1.21.1__1.21.2 damage rows whose owner's Mojang name matches AREA), the 1.21.2 method with the same descriptor and
+# the same code -- every instruction, its constants, and every member it references by name; only the owner of the
+# method itself may differ -- when there is exactly one:
+#   - static, elsewhere: a staticRedirect to a generated static of the 1.21.1 name calling it (CbRenderMovedGen);
+#   - same class, same name, narrowed to private: the layer's access widener gives the access back (accessible).
+# ---------------------------------------------------------------------------------------------------------------------
+AREA = re.compile(r"^(net/minecraft/client/(renderer|model|resources/model|data/models)/|net/minecraft/client/gui/font/"
+                  r"|net/minecraft/client/gui/Font|com/mojang/blaze3d/)")
+DAMAGE = os.path.join(ROOT, "core/segments/damage/1.21.1__1.21.2.damage.tsv")
+AW_FILE = os.path.join(ROOT, "core/shims/steps/1.21.2/resources/cb-step-1.21.2.accesswidener")
+AW_BEGIN = "# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----"
+AW_END = "# ---- END GENERATED (s7render) ----"
+
+
+def family_moved():
+    sys.path.insert(0, HERE)
+    import bytecode  # noqa: E402
+    names = {}
+    for line in open(os.path.join(DATA, "mappings/inter-to-mojang-classes.tsv"), encoding="utf-8"):
+        p = line.rstrip("\n").split("\t")
+        if len(p) >= 3 and p[0] == "C":
+            names[p[1]] = p[2]
+    want = set()
+    for line in open(DAMAGE, encoding="utf-8"):
+        p = line.rstrip("\n").split("\t")
+        if len(p) < 4 or not p[2].startswith("method_"):
+            continue
+        if AREA.match(names.get(p[1], p[1])):
+            want.add((p[1], p[2], p[3]))
+
+    def norm(m):
+        out = []
+        for op, a in m.insns or []:
+            if isinstance(a, tuple) and a and a[0] == "ref":
+                out.append((op, a[1], a[3], a[4]))
+            elif isinstance(a, tuple) and a and a[0] == "indy":
+                out.append((op, "indy", a[2], str(a[4])))
+            else:
+                out.append((op, str(a)))
+        return tuple(out)
+
+    zv = zipfile.ZipFile(os.path.join(DATA, "jars/client-1.21.1-intermediary-code.jar"))
+    zw = zipfile.ZipFile(os.path.join(DATA, "jars/client-1.21.2-intermediary-code.jar"))
+    idx = {}
+    for n in zw.namelist():
+        if not (n.endswith(".class") and n.startswith(MC)):
+            continue
+        k = bytecode.read(zw.read(n))
+        if not k:
+            continue
+        for m in k.methods:
+            if m.insns and len(m.insns) > 2:
+                idx.setdefault((m.desc, norm(m)), []).append((k.name, m.name, m.access))
+    redirects, src, aw = {}, [], []
+    cache = {}
+    # members the hand-written fragment already wires (s7render.json) stay its own
+    hand = json.load(open(os.path.join(os.path.dirname(FRAGMENT), "s7render.json"), encoding="utf-8"))
+    handled = set(hand.get("staticRedirects", {})) | set(hand.get("instanceRedirects", {}))
+    for o, n, d in sorted(want):
+        if f"{o}.{n}{d}" in handled:
+            continue
+        if o not in cache:
+            try:
+                cache[o] = bytecode.read(zv.read(o + ".class"))
+            except KeyError:
+                cache[o] = None
+        k = cache[o]
+        if not k:
+            continue
+        ms = [m for m in k.methods if m.name == n and m.desc == d]
+        if not ms or not ms[0].insns:
+            continue
+        hits = idx.get((d, norm(ms[0])), [])
+        if len(hits) != 1:
+            continue
+        wo, wn, wacc = hits[0]
+        vm = ms[0]
+        if wo == o and wn == n and wacc & 0x2 and not vm.access & 0x2:
+            aw.append(f"accessible method {o} {n} {d}")
+        elif vm.access & 0x8 and wacc & 0x8 and wacc & 0x1 and (wo, wn) != (o, n):
+            redirects[f"{o}.{n}{d}"] = f"{RT}/CbRenderMovedGen"
+            args = _args(d)
+            ps = ", ".join(f"{jtype(t)} a{i}" for i, t in enumerate(args))
+            r = _ret(d)
+            src += ["", f"    /** 1.21.1 {o}.{n}{d}: moved unchanged to {wo}.{wn} (same code) */",
+                    f"    public static {jtype(r) if r != 'V' else 'void'} {n}({ps}) {{",
+                    f"        {'' if r == 'V' else 'return '}{jtype('L' + wo + ';')}.{wn}(" + ", ".join(f"a{i}" for i in range(len(args))) + ");",
+                    "    }"]
+    out = ["package top.dext.centurybridge.step.v1_21_2.rt;", "",
+           "import net.fabricmc.api.EnvType;", "import net.fabricmc.api.Environment;", "",
+           "/** Generated by core/tools/gen_s7render.py family 8: 1.21.1 statics 1.21.2 moved unchanged. */",
+           "@Environment(EnvType.CLIENT)", "public final class CbRenderMovedGen {", "", "    private CbRenderMovedGen() {", "    }"]
+    out += src + ["}"]
+    open(os.path.join(RT_SRC, "CbRenderMovedGen.java"), "w", encoding="utf-8", newline="\n").write("\n".join(out) + "\n")
+    text = open(AW_FILE, encoding="utf-8").read()
+    if AW_BEGIN in text:
+        text = text[:text.index(AW_BEGIN)].rstrip("\n") + "\n" + text[text.index(AW_END) + len(AW_END):].lstrip("\n")
+    text = text.rstrip("\n") + "\n\n" + AW_BEGIN + "\n" + "\n".join(sorted(aw)) + "\n" + AW_END + "\n"
+    open(AW_FILE, "w", encoding="utf-8", newline="\n").write(text)
+    print(f"moved unchanged: {len(redirects)} static redirects, {len(aw)} access-widened")
+    return redirects
+
+
+
 class ClassInfoStub:
     fields = []
 
@@ -1350,6 +1467,7 @@ def main():
     mixins += pt_mixins
     covers += pt_covers
     shaders = family_shaders()
+    shaders.update(family_moved())
     frag = {"overrideHooks": hooks, "abstractFills": fills, "staticRedirects": shaders, "covers": sorted(covers)}
     open(FRAGMENT, "w", encoding="utf-8", newline="\n").write(json.dumps(frag, indent=1, ensure_ascii=False) + "\n")
     write_mixin_config(mixins)

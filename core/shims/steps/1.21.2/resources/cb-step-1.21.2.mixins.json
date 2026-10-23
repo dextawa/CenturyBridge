@@ -37,6 +37,17 @@
     "CbRestServerPropertiesMixin"
   ],
   "client": [
+    "CbRenderBakeBakerMixin",
+    "CbRenderBakeBlockModelMixin",
+    "CbRenderBakeMultiPartMixin",
+    "CbRenderBakeMultiVariantMixin",
+    "CbRenderBakeUnbakedMixin",
+    "CbRenderItemRendererMixin",
+    "CbRenderItemShaperMixin",
+    "CbRenderLevelClientAccess",
+    "CbRenderLevelEventsInvoker",
+    "CbRenderLevelMixin",
+    "CbRenderLevelRendererAccess",
     "CbRenderLivingBob882Mixin",
     "CbRenderLivingBob930Mixin",
     "CbRenderLivingBob951Mixin",

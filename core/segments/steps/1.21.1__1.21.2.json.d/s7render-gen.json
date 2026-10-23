@@ -2560,7 +2560,13 @@
   "net/minecraft/class_757.method_51773()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShadersGen",
   "net/minecraft/class_757.method_51774()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShadersGen",
   "net/minecraft/class_757.method_55249()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShadersGen",
-  "net/minecraft/class_757.method_56846()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShadersGen"
+  "net/minecraft/class_757.method_56846()Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShadersGen",
+  "net/minecraft/class_3880.method_32138()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMovedGen",
+  "net/minecraft/class_7752.method_45708()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMovedGen",
+  "net/minecraft/class_7753.method_45709()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMovedGen",
+  "net/minecraft/class_826.method_32147()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMovedGen",
+  "net/minecraft/class_826.method_32148()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMovedGen",
+  "net/minecraft/class_826.method_32149()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderMovedGen"
  },
  "covers": [
   "net/minecraft/class_1001.method_4199(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1297;FFFFFF)V",
