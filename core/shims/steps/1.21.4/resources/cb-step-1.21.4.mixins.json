@@ -18,6 +18,7 @@
     "CbRestDoorGoalsMixin",
     "CbRestEntityInvoker",
     "CbRestEntityNbtMixin",
+    "CbRestFapiPickMixin",
     "CbRestItemPropertiesAccess",
     "CbRestItemStateMixin",
     "CbRestKillScoreMixin",

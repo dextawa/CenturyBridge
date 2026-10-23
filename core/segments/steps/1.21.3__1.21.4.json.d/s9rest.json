@@ -991,6 +991,31 @@
     "push top/dext/centurybridge/step/v1_21_4/rt/CbRestProfiling#success()Z"
    ],
    "basis": "a 1.21.3 finish() is a success: 1.21.4 passes false only for a structure that failed to generate, which 1.21.3 never reported"
+  },
+  "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient.getMatchingItems()Ljava/util/List;": {
+   "desc": "()Ljava/util/stream/Stream;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestRecipes#listOf(Ljava/util/stream/Stream;)Ljava/util/List;",
+   "basis": "a 1.21.3 call collects 1.21.4's stream into the list 1.21.3 answered"
+  },
+  "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext.setMusic(Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestFapi#musicList(Ljava/util/Optional;)Ljava/util/Optional;"
+   ],
+   "basis": "generic drift: 1.21.4 takes the biome music as a weighted list; 1.21.3's single music is the one-entry list (adaptive)"
+  },
+  "net/minecraft/class_4763.method_27345()Ljava/util/Optional;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestFapi#firstMusic(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "generic drift: 1.21.4's biome music is a weighted list; 1.21.3 answered one music, the list's first entry (every vanilla biome's only one)"
+  },
+  "net/minecraft/class_1959.method_27343()Ljava/util/Optional;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestFapi#firstMusic(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "generic drift: 1.21.4's biome music is a weighted list; 1.21.3 answered one music, the list's first entry (every vanilla biome's only one)"
   }
  },
  "overrideHooks": [
@@ -1133,6 +1158,13 @@
    "args": [],
    "onlyUnder": "net/minecraft/class_6613",
    "basis": "ProfiledDuration.finish() became finish(success): a 1.21.3 duration finishes regardless of the flag, which 1.21.3 had none of"
+  },
+  {
+   "old": "getMatchingItems()Ljava/util/List;",
+   "new": "getMatchingItems()Ljava/util/stream/Stream;",
+   "onlyUnder": "net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestFapi.stream(Ljava/util/List;)Ljava/util/stream/Stream;",
+   "basis": "Fabric API 1.21.4's CustomIngredient.getMatchingItems answers a stream: a 1.21.3 implementation's list, streamed in order"
   }
  ],
  "frameDefaults": {
@@ -1169,7 +1201,9 @@
  "classRenames": {
   "net/minecraft/class_3270": "top/dext/centurybridge/step/v1_21_4/facade/MetadataSectionSerializer",
   "net/minecraft/class_1662$class_9873": "top/dext/centurybridge/step/v1_21_4/facade/IngredientInfo",
-  "net/minecraft/class_9887$class_9888": "top/dext/centurybridge/step/v1_21_4/facade/SlotInfo"
+  "net/minecraft/class_9887$class_9888": "top/dext/centurybridge/step/v1_21_4/facade/SlotInfo",
+  "net/fabricmc/fabric/api/block/BlockPickInteractionAware": "top/dext/centurybridge/step/v1_21_4/facade/fapi/BlockPickInteractionAware",
+  "net/fabricmc/fabric/api/entity/EntityPickInteractionAware": "top/dext/centurybridge/step/v1_21_4/facade/fapi/EntityPickInteractionAware"
  },
  "staticRedirects": {
   "net/minecraft/class_7662.method_45174(Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7662;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45174",
@@ -1244,6 +1278,22 @@
    ],
    "ret": null,
    "basis": "a 1.21.3 override gets 1.21.4's ingredient infos (Ingredients) as 1.21.3's records of their items (CbRestRecipes.infos, adaptive)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext",
+   "member": "setMusic(Ljava/util/Optional;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_21_4/rt/CbRestFapi#firstMusic(Ljava/util/Optional;)Ljava/util/Optional;"
+   ],
+   "ret": null,
+   "basis": "a 1.21.3 implementation gets 1.21.4's weighted list as its single music (the first entry, a vanilla biome's only one)"
+  },
+  {
+   "under": "net/minecraft/class_4763",
+   "member": "method_27345()Ljava/util/Optional;",
+   "args": [],
+   "ret": "top/dext/centurybridge/step/v1_21_4/rt/CbRestFapi#musicList(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "a 1.21.3 override's single music answered to 1.21.4 as the one-entry list"
   }
  ],
  "ledger": {
@@ -1310,6 +1360,12 @@
    "method": "method_65105(Lnet/minecraft/class_1923;Lnet/minecraft/class_5321;Lnet/minecraft/class_6880;)Lnet/minecraft/class_6613;",
    "call": "top/dext/centurybridge/step/v1_21_4/rt/CbRestProfiling.onStructureGenerate(Lnet/minecraft/class_6611;Lnet/minecraft/class_1923;Lnet/minecraft/class_5321;Lnet/minecraft/class_6880;)Lnet/minecraft/class_6613;",
    "basis": "JvmProfiler.onStructureGenerate is abstract since 1.21.4; 1.21.3 reported no structure generation, so a 1.21.3 profiler records nothing for it"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext",
+   "method": "setMusicVolume(F)V",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbRestFapi.setMusicVolume(Lnet/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext;F)V",
+   "basis": "EffectsContext.setMusicVolume is new and abstract in Fabric API 1.21.4; a 1.21.3 implementation holds no music volume (1.21.3's biome effects had none)"
   }
  ],
  "genericWitnesses": {
