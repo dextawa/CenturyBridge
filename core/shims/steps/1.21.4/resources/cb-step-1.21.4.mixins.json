@@ -73,7 +73,11 @@
     "CbStateSnowGolemRendererMixin",
     "CbStateThrownItemMixin",
     "CbStateThrownItemRendererMixin",
-    "CbTextureAnimationMixin"
+    "CbTextureAbstractMixin",
+    "CbTextureAnimationMixin",
+    "CbTextureAtlasMixin",
+    "CbTextureManagerMixin",
+    "CbTextureReloadableMixin"
   ],
   "server": [],
   "injectors": {

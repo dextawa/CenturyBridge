@@ -274,6 +274,16 @@
   "net/minecraft/class_10042.method_62615()Lnet/minecraft/class_1087;",
   "net/minecraft/class_10097.method_62632(Lnet/minecraft/class_9824$class_10095;)V",
   "net/minecraft/class_10097.method_62637()Ljava/util/Map;",
+  "net/minecraft/class_1043.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_1044.method_18169(Lnet/minecraft/class_1060;Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)V",
+  "net/minecraft/class_1044.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_1044.method_62619()Z",
+  "net/minecraft/class_1049.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_1059.method_24198(Lnet/minecraft/class_7766$class_7767;)V",
+  "net/minecraft/class_1059.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_1060.method_18168(Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_1060.method_34590(Lnet/minecraft/class_2960;Lnet/minecraft/class_1044;)Lnet/minecraft/class_1044;",
+  "net/minecraft/class_1060.method_4617(Ljava/lang/String;Lnet/minecraft/class_1043;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_1088.method_4734()Ljava/util/Map;",
   "net/minecraft/class_339.method_25361(DD)Z",
   "net/minecraft/class_350.method_25307(D)V",
@@ -289,6 +299,7 @@
   "net/minecraft/class_350.method_57718()I",
   "net/minecraft/class_350.method_60321(D)V",
   "net/minecraft/class_350.method_60322()V",
+  "net/minecraft/class_380.method_4625(Lnet/minecraft/class_3300;)V",
   "net/minecraft/class_516.method_2656()Z",
   "net/minecraft/class_5599.method_14491(Lnet/minecraft/class_3300;)V",
   "net/minecraft/class_7528.method_44381()I",
@@ -398,6 +409,15 @@
    "onlyUnder": "net/minecraft/class_9483",
    "family": "render-states",
    "basis": "1.21.4 renders its ItemClusterRenderState, which for this renderer is 1.21.3's state"
+  },
+  {
+   "old": "method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;",
+   "new": "method_65809(Lnet/minecraft/class_3300;)Lnet/minecraft/class_10539;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures.contents(Ltop/dext/centurybridge/step/v1_21_4/facade/LegacyTextureImage;)Lnet/minecraft/class_10539;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1049",
+   "family": "textures",
+   "basis": "1.21.3's SimpleTexture loaded the image its getTextureImage answered; 1.21.4 loads a ReloadableTexture's contents, which for a 1.21.3 subclass are that image and its metadata"
   }
  ],
  "fieldGetters": {
@@ -453,7 +473,9 @@
   "net/minecraft/class_1081": "top/dext/centurybridge/step/v1_21_4/facade/AnimationMetadataSectionSerializer",
   "net/minecraft/class_1085": "top/dext/centurybridge/step/v1_21_4/facade/TextureMetadataSectionSerializer",
   "net/minecraft/class_3890": "top/dext/centurybridge/step/v1_21_4/facade/VillagerMetadataSectionSerializer",
-  "net/minecraft/class_1079$class_5792": "top/dext/centurybridge/step/v1_21_4/facade/AnimationFrameOutput"
+  "net/minecraft/class_1079$class_5792": "top/dext/centurybridge/step/v1_21_4/facade/AnimationFrameOutput",
+  "net/minecraft/class_4005": "top/dext/centurybridge/step/v1_21_4/facade/PreloadedTexture",
+  "net/minecraft/class_1049$class_4006": "top/dext/centurybridge/step/v1_21_4/facade/LegacyTextureImage"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -468,7 +490,9 @@
   "net/minecraft/class_1081": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
   "net/minecraft/class_1085": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
   "net/minecraft/class_3890": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
-  "net/minecraft/class_1079$class_5792": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body"
+  "net/minecraft/class_1079$class_5792": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
+  "net/minecraft/class_4005": "PreloadedTexture is gone in 1.21.4; the facade is 1.21.3's, a SimpleTexture whose contents are its getTextureImage",
+  "net/minecraft/class_1049$class_4006": "SimpleTexture.TextureImage is gone in 1.21.4 (TextureContents); the facade is 1.21.3's"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -811,7 +835,8 @@
  "staticRedirects": {
   "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105",
   "net/minecraft/class_1091.method_61078(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
-  "net/minecraft/class_3888$class_3889.method_17170(Ljava/lang/String;)Lnet/minecraft/class_3888$class_3889;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata"
+  "net/minecraft/class_3888$class_3889.method_17170(Ljava/lang/String;)Lnet/minecraft/class_3888$class_3889;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1047.method_4540()Lnet/minecraft/class_1043;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures"
  },
  "resourceTypes": [
   "centurybridge:legacy_builtin",
@@ -854,14 +879,17 @@
   "net/minecraft/class_9483.method_62496()Lnet/minecraft/class_10048;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
   "net/minecraft/class_9483.method_62497(Lnet/minecraft/class_9461;Lnet/minecraft/class_10048;F)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
   "net/minecraft/class_9483.method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
-  "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata"
+  "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1060.method_4616(Lnet/minecraft/class_2960;Lnet/minecraft/class_1044;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures#register",
+  "net/minecraft/class_1049.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
   "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#superGetGuiLight",
   "net/minecraft/class_809.method_3501(Lnet/minecraft/class_811;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#superHasTransform",
   "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#superGetItemRenderer",
-  "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#superForEachFrame"
+  "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#superForEachFrame",
+  "net/minecraft/class_1049.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures#method_18153"
  },
  "methodRenames": {
   "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",
@@ -886,7 +914,8 @@
   "net/minecraft/class_793.field_4251:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
-  "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
+  "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_1049.field_5224:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures"
  },
  "ctorRedirects": {
   "net/minecraft/class_809.<init>(Lnet/minecraft/class_809;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#copy"
@@ -928,5 +957,27 @@
   "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
   "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
- }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1044",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures$CbLegacyTexture",
+   "requires": [
+    "method_4625(Lnet/minecraft/class_3300;)V"
+   ],
+   "synth": [],
+   "family": "textures",
+   "basis": "a 1.21.3 texture class that loads or resets itself: reset on reload as 1.21.3 reset every texture (CbTextureManagerMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1044",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures$CbLegacyTexture",
+   "requires": [
+    "method_18169(Lnet/minecraft/class_1060;Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)V"
+   ],
+   "synth": [],
+   "family": "textures",
+   "basis": "a 1.21.3 texture class that loads or resets itself: reset on reload as 1.21.3 reset every texture (CbTextureManagerMixin)"
+  }
+ ]
 }

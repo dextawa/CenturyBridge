@@ -106,6 +106,7 @@ def main():
     render_dispatch(frag)
     render_states(frag)
     texture_metadata(frag)
+    textures(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -642,6 +643,49 @@ def texture_metadata(frag):
                 "basis": "AnimationMetadataSection.forEachFrame is gone in 1.21.4; a subclass's frames are what 1.21.4 builds the animation from "
                          "(CbTextureAnimationMixin), as 1.21.3's sprite loader asked it"})
     frag.setdefault("staticRedirects", {})["net/minecraft/class_3888$class_3889.method_17170(Ljava/lang/String;)Lnet/minecraft/class_3888$class_3889;"] = M
+
+
+
+def textures(frag):
+    """1.21.3's texture lifecycle (load on register, reset on reload, SimpleTexture.getTextureImage, PreloadedTexture) on 1.21.4's."""
+    X = RT + "/CbTextures"
+    TM = "net/minecraft/class_1060"
+    frag.setdefault("instanceRedirects", {})[TM + ".method_4616(Lnet/minecraft/class_2960;Lnet/minecraft/class_1044;)V"] = X + "#register"
+    frag.setdefault("staticRedirects", {})["net/minecraft/class_1047.method_4540()Lnet/minecraft/class_1043;"] = X
+    frag.setdefault("instanceFieldGetters", {})["net/minecraft/class_1049.field_5224:Lnet/minecraft/class_2960;"] = X
+    cr = frag.setdefault("classRenames", {})
+    notes = frag.setdefault("classRenameBasis", {})
+    cr["net/minecraft/class_4005"] = FAC + "PreloadedTexture"
+    notes["net/minecraft/class_4005"] = "PreloadedTexture is gone in 1.21.4; the facade is 1.21.3's, a SimpleTexture whose contents are its getTextureImage"
+    cr["net/minecraft/class_1049$class_4006"] = FAC + "LegacyTextureImage"
+    notes["net/minecraft/class_1049$class_4006"] = "SimpleTexture.TextureImage is gone in 1.21.4 (TextureContents); the facade is 1.21.3's"
+    ST = "net/minecraft/class_1049"
+    GTI = "method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;"
+    hooks = frag.setdefault("overrideHooks", [])
+    hooks[:] = [h for h in hooks if h.get("family") != "textures"]
+    hooks.append({"old": GTI, "new": "method_65809(Lnet/minecraft/class_3300;)Lnet/minecraft/class_10539;",
+                  "unwrap": X + ".contents(L" + FAC + "LegacyTextureImage;)Lnet/minecraft/class_10539;", "guard": GUARD, "onlyUnder": ST,
+                  "family": "textures",
+                  "basis": "1.21.3's SimpleTexture loaded the image its getTextureImage answered; 1.21.4 loads a ReloadableTexture's contents, which "
+                           "for a 1.21.3 subclass are that image and its metadata"})
+    frag.setdefault("instanceRedirects", {})[ST + "." + GTI] = X
+    frag.setdefault("superRedirects", {})[ST + "." + GTI] = X + "#method_18153"
+    ah = frag.setdefault("adapterHooks", [])
+    ah[:] = [h for h in ah if h.get("family") != "textures"]
+    for req in ["method_4625(Lnet/minecraft/class_3300;)V",
+                "method_18169(Lnet/minecraft/class_1060;Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)V"]:
+        ah.append({"under": "net/minecraft/class_1044", "adapter": X + "$CbLegacyTexture", "requires": [req], "synth": [], "family": "textures",
+                   "basis": "a 1.21.3 texture class that loads or resets itself: reset on reload as 1.21.3 reset every texture (CbTextureManagerMixin)"})
+    covers = set(frag.get("covers", []))
+    for o in ["net/minecraft/class_1044", "net/minecraft/class_1059", "net/minecraft/class_1043", ST, "net/minecraft/class_380"]:
+        covers.add(o + ".method_4625(Lnet/minecraft/class_3300;)V")
+    covers.add("net/minecraft/class_1044.method_18169(Lnet/minecraft/class_1060;Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)V")
+    covers.add("net/minecraft/class_1044.method_62619()Z")
+    covers.add(TM + ".method_34590(Lnet/minecraft/class_2960;Lnet/minecraft/class_1044;)Lnet/minecraft/class_1044;")
+    covers.add(TM + ".method_4617(Ljava/lang/String;Lnet/minecraft/class_1043;)Lnet/minecraft/class_2960;")
+    covers.add(TM + ".method_18168(Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;")
+    covers.add("net/minecraft/class_1059.method_24198(Lnet/minecraft/class_7766$class_7767;)V")
+    frag["covers"] = sorted(covers)
 
 
 if __name__ == "__main__":
