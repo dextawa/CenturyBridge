@@ -38,3 +38,30 @@ accessible method net/minecraft/class_1011 method_4305 (III)V
 accessible method net/minecraft/class_1011 method_4315 (II)I
 accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
 # ---- END GENERATED (s7render) ----
+accessible field net/minecraft/class_4970$class_4971 field_23166 Lnet/minecraft/class_4970$class_4971$class_3752;
+accessible method net/minecraft/class_2424 <init> (Lnet/minecraft/class_2350$class_2351;ILnet/minecraft/class_2350;Lnet/minecraft/class_2338;II)V
+extendable method net/minecraft/class_2424 <init> (Lnet/minecraft/class_2350$class_2351;ILnet/minecraft/class_2350;Lnet/minecraft/class_2338;II)V
+# 1.21.1 Fabric API (fabric-object-builder-api-v1) made Properties() extendable for FabricBlockSettings; 1.21.2 dropped both
+extendable method net/minecraft/class_4970$class_2251 <init> ()V
+# palettes' own resize handler, which 1.21.1's Palette.copy() handed on (rt/CbLevelPalette)
+accessible class net/minecraft/class_2835
+accessible field net/minecraft/class_2814 field_12825 Lnet/minecraft/class_2835;
+accessible field net/minecraft/class_2834 field_12905 Lnet/minecraft/class_2835;
+accessible field net/minecraft/class_6564 field_34575 Lnet/minecraft/class_2835;
+# BlockEntityType's constructor, public in 1.21.1 (minus the datafixer type 1.21.2 dropped), private in 1.21.2
+accessible method net/minecraft/class_2591 <init> (Lnet/minecraft/class_2591$class_5559;Ljava/util/Set;)V
+extendable method net/minecraft/class_2591 <init> (Lnet/minecraft/class_2591$class_5559;Ljava/util/Set;)V
+# PalettedContainer's strategy, to copy a mod's read-only container as 1.21.2's copy() does (rt/CbLevelPalette)
+accessible field net/minecraft/class_2841 field_34561 Lnet/minecraft/class_2841$class_6563;
+# FlowingFluid: 1.21.1's canSpreadTo body on 1.21.2's two static checks, getSlopeDistance's spread context (rt/CbLevelFlowing)
+accessible method net/minecraft/class_3609 method_15732 (Lnet/minecraft/class_2350;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Z
+accessible method net/minecraft/class_3609 method_15754 (Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3611;)Z
+accessible method net/minecraft/class_3609$class_9900 <init> (Lnet/minecraft/class_3609;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)V
+accessible field net/minecraft/class_3609$class_9900 field_52661 Lnet/minecraft/class_2338;
+# BooleanProperty, IntegerProperty, EnumProperty: final with private constructors since 1.21.2; extendable in 1.21.1
+extendable class net/minecraft/class_2746
+extendable method net/minecraft/class_2746 <init> (Ljava/lang/String;)V
+extendable class net/minecraft/class_2758
+extendable method net/minecraft/class_2758 <init> (Ljava/lang/String;II)V
+extendable class net/minecraft/class_2754
+extendable method net/minecraft/class_2754 <init> (Ljava/lang/String;Ljava/lang/Class;Ljava/util/List;)V

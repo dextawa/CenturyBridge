@@ -103,7 +103,20 @@
     "CbRestServerGamePacketListenerMixin",
     "CbRestServerLevelMixin",
     "CbRestServerPlayerMixin",
-    "CbRestServerPropertiesMixin"
+    "CbRestServerPropertiesMixin",
+    "CbLevelFurnaceInvoker",
+    "CbLevelCampfireAccess",
+    "CbLevelBrushableMixin",
+    "CbLevelFuelServerMixin",
+    "CbLevelBiomeInvoker",
+    "CbLevelPortalAccess",
+    "CbLevelRegionAccess",
+    "CbLevelPropertiesAccess",
+    "CbLevelFlowingFluidMixin",
+    "CbLevelGrowingPlantMixin",
+    "CbLevelGrowingPlantBodyMixin",
+    "CbLevelSavedDataMixin",
+    "CbLevelPathFinderMixin"
   ],
   "client": [
     "CbEntityCullingInvoker",
@@ -464,7 +477,8 @@
     "CbRestOptionsKeysMixin",
     "CbRestOptionsMixin",
     "CbRestScreenInvoker",
-    "CbRestToastInstanceMixin"
+    "CbRestToastInstanceMixin",
+    "CbLevelFuelClientMixin"
   ],
   "server": [],
   "injectors": {
