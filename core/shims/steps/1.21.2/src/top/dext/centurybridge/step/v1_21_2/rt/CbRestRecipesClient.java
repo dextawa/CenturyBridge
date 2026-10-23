@@ -165,27 +165,95 @@ public final class CbRestRecipesClient {
         return null;
     }
 
-    /** LocalPlayer.removeRecipeHighlight(recipe) of 1.21.1: each of the recipe's displays */
+    /** removeRecipeHighlight(recipe) of a 1.21.1 LocalPlayer subclass that overrides it */
+    public interface LegacyRemoveHighlight {
+        void method_3141(class_8786<?> recipe);
+    }
+
+    /** handlePlaceRecipe(containerId, recipe, useMaxItems) of a 1.21.1 MultiPlayerGameMode subclass that overrides it */
+    public interface LegacyPlaceRecipe {
+        void method_2912(int containerId, class_8786<?> recipe, boolean useMaxItems);
+    }
+
+    /** getRecipeManager() of a 1.21.1 ClientPacketListener subclass that overrides it */
+    public interface LegacyGetRecipeManager {
+        class_1863 method_2877();
+    }
+
+    /** LocalPlayer.removeRecipeHighlight(recipe) of 1.21.1, called on any player: a 1.21.1 subclass's override, else 1.21.1's */
     public static void removeRecipeHighlight(class_746 player, class_8786<?> recipe) {
-        for (int id : displayIds(recipe)) {
-            player.method_3141(new class_10298(id));
+        if (player instanceof LegacyRemoveHighlight legacy) {
+            legacy.method_3141(recipe);
+        } else {
+            method_3141(player, recipe);
         }
     }
 
     /**
-     * MultiPlayerGameMode.handlePlaceRecipe(containerId, recipe, useMaxItems) of 1.21.1: the recipe's first
-     * display, as 1.21.2's recipe book places it; a recipe without a display is placed by id when the server
-     * has the layer ({@link CbRestRecipeNet.PlaceById}), and otherwise cannot be named to the server
+     * LocalPlayer.removeRecipeHighlight(recipe) of 1.21.1 itself (also a 1.21.1 subclass's super call): each of the
+     * recipe's displays the book highlights is unhighlighted and reported seen -- 1.21.2's body for a display
      */
+    public static void method_3141(class_746 player, class_8786<?> recipe) {
+        for (int id : displayIds(recipe)) {
+            removeHighlight(player, new class_10298(id));
+        }
+    }
+
+    /** 1.21.2's LocalPlayer.removeRecipeHighlight(display) body */
+    private static void removeHighlight(class_746 player, class_10298 display) {
+        net.minecraft.class_299 book = player.method_3130();
+        if (book.method_64855(display)) {
+            book.method_64856(display);
+            player.field_3944.method_52787(new net.minecraft.class_2853(display));
+        }
+    }
+
+    /**
+     * 1.21.2's removeRecipeHighlight(display) of a 1.21.1 LocalPlayer subclass (override hook bridge): its own
+     * override with the recipe the display belongs to; a display of a recipe the client was not sent as 1.21.2 does
+     */
+    public static void removeHighlightW(LegacyRemoveHighlight player, class_10298 display) {
+        class_8786<?> recipe = byDisplay(display);
+        if (recipe != null) {
+            player.method_3141(recipe);
+        } else {
+            removeHighlight((class_746) player, display);
+        }
+    }
+
+    /** MultiPlayerGameMode.handlePlaceRecipe of 1.21.1, called on any game mode: a 1.21.1 subclass's override, else 1.21.1's */
     public static void handlePlaceRecipe(class_636 gameMode, int containerId, class_8786<?> recipe, boolean useMaxItems) {
+        if (gameMode instanceof LegacyPlaceRecipe legacy) {
+            legacy.method_2912(containerId, recipe, useMaxItems);
+        } else {
+            method_2912(gameMode, containerId, recipe, useMaxItems);
+        }
+    }
+
+    /**
+     * MultiPlayerGameMode.handlePlaceRecipe(containerId, recipe, useMaxItems) of 1.21.1 itself (also a subclass's super
+     * call): the recipe's first display, sent as 1.21.2's game mode sends it; a recipe without a display is placed by
+     * id when the server has the layer ({@link CbRestRecipeNet.PlaceById}), and otherwise cannot be named to the server
+     */
+    public static void method_2912(class_636 gameMode, int containerId, class_8786<?> recipe, boolean useMaxItems) {
         class_10298 display = firstDisplay(recipe);
         if (display != null) {
-            gameMode.method_2912(containerId, display, useMaxItems);
+            class_310.method_1551().method_1562().method_52787(new net.minecraft.class_2840(containerId, display, useMaxItems));
         } else if (ClientPlayNetworking.canSend(CbRestRecipeNet.PlaceById.TYPE)) {
             ClientPlayNetworking.send(new CbRestRecipeNet.PlaceById(containerId, recipe.comp_1932().method_29177(), useMaxItems));
         } else {
             LOGGER.warn("cannot place recipe {}: it has no recipe display in 1.21.2 and the server lacks CenturyBridge's 1.21.2 layer",
                     recipe.comp_1932().method_29177());
+        }
+    }
+
+    /** 1.21.2's handlePlaceRecipe(containerId, display, useMaxItems) of a 1.21.1 subclass (override hook bridge) */
+    public static void placeRecipeW(LegacyPlaceRecipe gameMode, int containerId, class_10298 display, boolean useMaxItems) {
+        class_8786<?> recipe = byDisplay(display);
+        if (recipe != null) {
+            gameMode.method_2912(containerId, recipe, useMaxItems);
+        } else {
+            class_310.method_1551().method_1562().method_52787(new net.minecraft.class_2840(containerId, display, useMaxItems));
         }
     }
 
@@ -206,6 +274,14 @@ public final class CbRestRecipesClient {
      * sent (empty until they arrive, and on a server without the layer)
      */
     public static class_1863 getRecipeManager(class_634 connection) {
+        if (connection instanceof LegacyGetRecipeManager legacy) {
+            return legacy.method_2877();
+        }
+        return method_2877(connection);
+    }
+
+    /** ClientPacketListener.getRecipeManager() of 1.21.1 itself (also a 1.21.1 subclass's super call) */
+    public static class_1863 method_2877(class_634 connection) {
         if (manager == null || managerConnection != connection) {
             class_1863 m = new class_1863(connection.method_29091());
             ((CbRestRecipeManagerAccessor) (Object) m).cb$setRecipes(class_10289.method_64700(new ArrayList<>(byId.values())));

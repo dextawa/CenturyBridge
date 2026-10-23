@@ -30,7 +30,7 @@ public class RecipeBookTabButton extends net.minecraft.class_361 {
     /** startAnimation(minecraft) */
     public void method_2622(net.minecraft.class_310 minecraft) {
         net.minecraft.class_299 book = minecraft.field_1724.method_3130();
-        List<RecipeCollection> collections = CbRestRecipeBookClient.method_1396(book, this.category);
+        List<RecipeCollection> collections = CbRestRecipeBookClient.getCollection(book, this.category);
         if (minecraft.field_1724.field_7512 instanceof net.minecraft.class_1729 menu) {
             for (RecipeCollection collection : collections) {
                 for (net.minecraft.class_8786<?> recipe : collection.method_2651(CbRestRecipeBooks.isFiltering(book, menu))) {
@@ -87,7 +87,7 @@ public class RecipeBookTabButton extends net.minecraft.class_361 {
 
     /** updateVisibility(book) */
     public boolean method_2624(net.minecraft.class_299 book) {
-        List<RecipeCollection> collections = CbRestRecipeBookClient.method_1396(book, this.category);
+        List<RecipeCollection> collections = CbRestRecipeBookClient.getCollection(book, this.category);
         this.field_22764 = false;
         if (collections != null) {
             for (RecipeCollection collection : collections) {

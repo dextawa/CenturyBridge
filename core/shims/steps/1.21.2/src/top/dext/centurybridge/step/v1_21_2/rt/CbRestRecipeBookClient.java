@@ -75,8 +75,8 @@ public final class CbRestRecipeBookClient {
             if (mc.field_1724 == null || connection == null) {
                 return;
             }
-            method_1401(mc.field_1724.method_3130(), CbRestRecipesClient.recipes(), connection.method_29091());
-            method_60352(connection.method_60347(), mc.field_1724.method_3130(), connection.method_29091());
+            setupCollections(mc.field_1724.method_3130(), CbRestRecipesClient.recipes(), connection.method_29091());
+            updateRecipes(connection.method_60347(), mc.field_1724.method_3130(), connection.method_29091());
         });
     }
 
@@ -99,6 +99,40 @@ public final class CbRestRecipeBookClient {
         if (component != null && mc.field_1724 != null) {
             component.method_2596(recipe, mc.field_1724.field_7512.field_7761);
         }
+    }
+
+    /**
+     * getRecipeBookComponent() of 1.21.1's InventoryScreen / CraftingScreen / AbstractFurnaceScreen, called on one:
+     * the screen's own answer (a 1.21.1 subclass's override, else its component through the 1.21.1 API)
+     */
+    public static top.dext.centurybridge.step.v1_21_2.facade.RecipeBookComponent method_2659(net.minecraft.class_490 screen) {
+        return ((top.dext.centurybridge.step.v1_21_2.facade.RecipeUpdateListener) (Object) screen).method_2659();
+    }
+
+    public static top.dext.centurybridge.step.v1_21_2.facade.RecipeBookComponent method_2659(net.minecraft.class_479 screen) {
+        return ((top.dext.centurybridge.step.v1_21_2.facade.RecipeUpdateListener) (Object) screen).method_2659();
+    }
+
+    public static top.dext.centurybridge.step.v1_21_2.facade.RecipeBookComponent method_2659(net.minecraft.class_489<?> screen) {
+        return ((top.dext.centurybridge.step.v1_21_2.facade.RecipeUpdateListener) (Object) screen).method_2659();
+    }
+
+    /** super.getRecipeBookComponent() of a 1.21.1 subclass of those screens: the screen's component, never the override itself */
+    public static top.dext.centurybridge.step.v1_21_2.facade.RecipeBookComponent superRecipeBookComponent(net.minecraft.class_10260<?> screen) {
+        return top.dext.centurybridge.step.v1_21_2.facade.RecipeBookComponent.of(
+            ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestRecipeBookScreenAccessor) screen).cb$component());
+    }
+
+    public static top.dext.centurybridge.step.v1_21_2.facade.RecipeBookComponent superRecipeBookComponent(net.minecraft.class_490 screen) {
+        return superRecipeBookComponent((net.minecraft.class_10260<?>) screen);
+    }
+
+    public static top.dext.centurybridge.step.v1_21_2.facade.RecipeBookComponent superRecipeBookComponent(net.minecraft.class_479 screen) {
+        return superRecipeBookComponent((net.minecraft.class_10260<?>) screen);
+    }
+
+    public static top.dext.centurybridge.step.v1_21_2.facade.RecipeBookComponent superRecipeBookComponent(net.minecraft.class_489<?> screen) {
+        return superRecipeBookComponent((net.minecraft.class_10260<?>) screen);
     }
 
     /** RecipeUpdateListener.getRecipeBookComponent() called on any listener: a 1.21.2 screen's through the 1.21.1 API */
@@ -145,7 +179,77 @@ public final class CbRestRecipeBookClient {
         return List.of();
     }
 
+    // ------------------------------------------------------------------ RecipeToast
+
+    /**
+     * RecipeToast.addOrUpdate(toasts, recipe) of 1.21.1: the recipe toast (an existing one, else a new one added)
+     * shows the recipe's toast symbol and result, as 1.21.1's did
+     */
+    public static void method_1985(net.minecraft.class_374 toasts, class_8786<?> recipe) {
+        net.minecraft.class_366 toast = toasts.method_1997(net.minecraft.class_366.class, net.minecraft.class_368.field_2208);
+        if (toast == null) {
+            toast = top.dext.centurybridge.step.v1_21_2.mixin.CbRestRecipeToastInvoker.cb$new();
+            toasts.method_1999(toast);
+        }
+        addRecipe(toast, recipe);
+    }
+
+    /** new RecipeToast(recipe) of 1.21.1: a recipe toast showing the recipe's toast symbol and result */
+    public static net.minecraft.class_366 newRecipeToast(class_8786<?> recipe) {
+        net.minecraft.class_366 toast = top.dext.centurybridge.step.v1_21_2.mixin.CbRestRecipeToastInvoker.cb$new();
+        addRecipe(toast, recipe);
+        return toast;
+    }
+
+    private static void addRecipe(net.minecraft.class_366 toast, class_8786<?> recipe) {
+        class_310 mc = class_310.method_1551();
+        class_5455 access = mc.field_1687 != null ? mc.field_1687.method_30349() : null;
+        ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestRecipeToastInvoker) toast).cb$addItem(
+            CbRestRecipeView.toastSymbol(recipe.comp_1933()), CbRestRecipeView.resultItem(recipe.comp_1933(), access));
+    }
+
     // ------------------------------------------------------------------ ClientRecipeBook
+
+    /** setupCollections(recipes, registryAccess) of a 1.21.1 ClientRecipeBook subclass that overrides it */
+    public interface LegacySetupCollections {
+        void method_1401(Iterable<class_8786<?>> recipes, class_5455 registryAccess);
+    }
+
+    /** getCollection(category) of a 1.21.1 ClientRecipeBook subclass that overrides it */
+    public interface LegacyGetCollection {
+        List<RecipeCollection> method_1396(RecipeBookCategories category);
+    }
+
+    /** updateRecipes(book, registryAccess) of a 1.21.1 SessionSearchTrees subclass that overrides it */
+    public interface LegacyUpdateRecipes {
+        void method_60352(class_299 book, class_5455.class_6890 registryAccess);
+    }
+
+    /** ClientRecipeBook.setupCollections, called on any book: a 1.21.1 subclass's override, else 1.21.1's body */
+    public static void setupCollections(class_299 book, Iterable<class_8786<?>> recipes, class_5455 registryAccess) {
+        if (book instanceof LegacySetupCollections legacy) {
+            legacy.method_1401(recipes, registryAccess);
+        } else {
+            method_1401(book, recipes, registryAccess);
+        }
+    }
+
+    /** ClientRecipeBook.getCollection, called on any book: a 1.21.1 subclass's override, else 1.21.1's body */
+    public static List<RecipeCollection> getCollection(class_299 book, RecipeBookCategories category) {
+        if (book instanceof LegacyGetCollection legacy) {
+            return legacy.method_1396(category);
+        }
+        return method_1396(book, category);
+    }
+
+    /** SessionSearchTrees.updateRecipes, called on any holder: a 1.21.1 subclass's override, else 1.21.1's body */
+    public static void updateRecipes(class_1124 trees, class_299 book, class_5455.class_6890 registryAccess) {
+        if (trees instanceof LegacyUpdateRecipes legacy) {
+            legacy.method_60352(book, registryAccess);
+        } else {
+            method_60352(trees, book, registryAccess);
+        }
+    }
 
     /** ClientRecipeBook.setupCollections(recipes, registryAccess) of 1.21.1 */
     public static void method_1401(class_299 book, Iterable<class_8786<?>> recipes, class_5455 registryAccess) {

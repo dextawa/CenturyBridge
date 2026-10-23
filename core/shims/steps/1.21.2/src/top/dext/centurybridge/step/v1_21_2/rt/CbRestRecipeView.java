@@ -52,6 +52,24 @@ public final class CbRestRecipeView {
         boolean method_31584();
     }
 
+    /** getToastSymbol() of a 1.21.1 recipe class */
+    public interface LegacyToastSymbol {
+        class_1799 method_17447();
+    }
+
+    /** getToastSymbol(): a 1.21.1 recipe class's own; else the station its first display shows, else 1.21.1's default (a crafting table) */
+    public static class_1799 toastSymbol(class_1860<?> recipe) {
+        if (recipe instanceof LegacyToastSymbol legacy) {
+            return legacy.method_17447();
+        }
+        List<net.minecraft.class_10295> displays = recipe.method_64664();
+        net.minecraft.class_638 level = class_310.method_1551().field_1687;
+        if (!displays.isEmpty() && level != null) {
+            return displays.get(0).comp_3259().method_64742(net.minecraft.class_10363.method_65008(level));
+        }
+        return new class_1799(net.minecraft.class_2246.field_9980);
+    }
+
     /** the items an ingredient accepts, one stack each (1.21.1's Ingredient.getItems) */
     public static class_1799[] items(class_1856 ingredient) {
         if (ingredient == null) {

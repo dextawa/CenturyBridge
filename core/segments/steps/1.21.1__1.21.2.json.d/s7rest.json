@@ -121,6 +121,9 @@
   "method_3118()F": {
    "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#firstPersonCamera()Z",
    "1": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#unscaledFovEffect()F"
+  },
+  "method_59964(Lnet/minecraft/class_8786;)V": {
+   "0": "zero: 1.21.2 calls finishPlacingRecipe only from its own placement, which passes the level; a 1.21.1 mod calling its super directly, outside a placement, has no level 1.21.1's shape could hand on"
   }
  },
  "methodRenames": {
@@ -217,10 +220,10 @@
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrSet(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
-  "net/minecraft/class_299.method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
-  "net/minecraft/class_299.method_1396(Lnet/minecraft/class_314;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_299.method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#setupCollections",
+  "net/minecraft/class_299.method_1396(Lnet/minecraft/class_314;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#getCollection",
   "net/minecraft/class_299.method_1393()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
-  "net/minecraft/class_1124.method_60352(Lnet/minecraft/class_299;Lnet/minecraft/class_5455$class_6890;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_1124.method_60352(Lnet/minecraft/class_299;Lnet/minecraft/class_5455$class_6890;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#updateRecipes",
   "net/minecraft/class_1124.method_60364()Lnet/minecraft/class_1129;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
   "net/minecraft/class_1729.method_7653()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
   "net/minecraft/class_1729.method_7656()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
@@ -229,7 +232,10 @@
   "net/minecraft/class_1729.method_7654(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
   "net/minecraft/class_1729.method_7657()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
   "net/minecraft/class_1729.method_7652(Lnet/minecraft/class_8786;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
-  "net/minecraft/class_1729.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus"
+  "net/minecraft/class_1729.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_490.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_479.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -260,7 +266,8 @@
   "net/minecraft/class_9383.method_58284(Lnet/minecraft/class_7780;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
   "net/minecraft/class_5350.method_29466(Lnet/minecraft/class_3300;Lnet/minecraft/class_7780;Lnet/minecraft/class_7699;Lnet/minecraft/class_2170$class_5364;ILjava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
   "net/fabricmc/fabric/api/event/registry/RegistryEntryAddedCallback.allEntries(Lnet/minecraft/class_2378;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
-  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry.create(Lnet/minecraft/class_2960;Ljava/util/function/Consumer;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync"
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentRegistry.create(Lnet/minecraft/class_2960;Ljava/util/function/Consumer;)Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/minecraft/class_366.method_1985(Lnet/minecraft/class_374;Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
@@ -1021,6 +1028,35 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources.test(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources$LegacyCondition;Lnet/minecraft/class_6903$class_7863;)Z",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "0.106.1's ResourceCondition.test takes the registry info lookup of the reading ops where 0.116's took a provider: a 1.21.1 condition gets the provider that lookup wraps (CbRestFapiResources.provider)"
+  },
+  {
+   "old": "method_59964(Lnet/minecraft/class_8786;)V",
+   "new": "method_59964(Lnet/minecraft/class_3218;Lnet/minecraft/class_8786;)V",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1714",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.2's CraftingMenu.finishPlacingRecipe takes the level too: a 1.21.1 subclass's finishPlacingRecipe(recipe) is asked from it, its super call passes the level 1.21.2's placement passed (the generated hook, kept here: the RecipeBookMenu adapters of this fragment made the generator count it as wired)"
+  },
+  {
+   "old": "method_3141(Lnet/minecraft/class_8786;)V",
+   "new": "method_3141(Lnet/minecraft/class_10298;)V",
+   "onlyUnder": "net/minecraft/class_746",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyRemoveHighlight",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient.removeHighlightW(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyRemoveHighlight;Lnet/minecraft/class_10298;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2 removes a recipe's highlight by display id where 1.21.1 did it by recipe: a 1.21.1 LocalPlayer subclass's override is asked with the recipe the display belongs to (a display of a recipe the client was not sent: 1.21.2's body); its super call removes each display's highlight as 1.21.2's body does (superRedirects)"
+  },
+  {
+   "old": "method_2912(ILnet/minecraft/class_8786;Z)V",
+   "new": "method_2912(ILnet/minecraft/class_10298;Z)V",
+   "onlyUnder": "net/minecraft/class_636",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyPlaceRecipe",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient.placeRecipeW(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyPlaceRecipe;ILnet/minecraft/class_10298;Z)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2 places a recipe by display id where 1.21.1 placed it by recipe: a 1.21.1 MultiPlayerGameMode subclass's override is asked with the recipe the display belongs to (otherwise 1.21.2's body: the place packet of the display); its super call sends the recipe's display, or its id to a server with the layer (superRedirects)"
   }
  ],
  "lambdaAdapters": {
@@ -1053,7 +1089,8 @@
   "net/minecraft/class_2788.<init>(Ljava/util/Collection;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeSync#newUpdateRecipesPacket",
   "net/minecraft/class_2840.<init>(ILnet/minecraft/class_8786;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newPlaceRecipe",
   "net/minecraft/class_2853.<init>(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newSeenRecipe",
-  "net/minecraft/class_2695.<init>(ILnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newGhostRecipe"
+  "net/minecraft/class_2695.<init>(ILnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newGhostRecipe",
+  "net/minecraft/class_366.<init>(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#newRecipeToast"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_8673.field_51520:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#strictErrorHandlingField",
@@ -1074,7 +1111,16 @@
   "net/minecraft/class_746.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#localPlayerSuperSystemMessage",
   "net/minecraft/class_745.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#remotePlayerSuperSystemMessage",
   "net/minecraft/class_4309.method_20731(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#superPrepare",
-  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources#superReload"
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources#superReload",
+  "net/minecraft/class_299.method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#method_1401",
+  "net/minecraft/class_299.method_1396(Lnet/minecraft/class_314;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#method_1396",
+  "net/minecraft/class_1124.method_60352(Lnet/minecraft/class_299;Lnet/minecraft/class_5455$class_6890;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#method_60352",
+  "net/minecraft/class_634.method_2877()Lnet/minecraft/class_1863;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#method_2877",
+  "net/minecraft/class_746.method_3141(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#method_3141",
+  "net/minecraft/class_636.method_2912(ILnet/minecraft/class_8786;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#method_2912",
+  "net/minecraft/class_490.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
+  "net/minecraft/class_479.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
+  "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent"
  },
  "adapterHooks": [
   {
@@ -1212,6 +1258,38 @@
     "method_32339(I)Z"
    ],
    "synth": []
+  },
+  {
+   "under": "net/minecraft/class_299",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient$LegacySetupCollections",
+   "requires": [
+    "method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_299",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient$LegacyGetCollection",
+   "requires": [
+    "method_1396(Lnet/minecraft/class_314;)Ljava/util/List;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1124",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient$LegacyUpdateRecipes",
+   "requires": [
+    "method_60352(Lnet/minecraft/class_299;Lnet/minecraft/class_5455$class_6890;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_634",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient$LegacyGetRecipeManager",
+   "requires": [
+    "method_2877()Lnet/minecraft/class_1863;"
+   ],
+   "synth": []
   }
  ],
  "abstractFills": [
@@ -1324,7 +1402,8 @@
   "net/minecraft/class_2851.method_12370()Z": "override of method_12370()Z of a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlayerInputPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
   "net/minecraft/class_2853": "the class of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
   "net/minecraft/class_2853.<init>(Lnet/minecraft/class_8786;)V": "super(..) of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
-  "net/minecraft/class_2853.method_12406()Lnet/minecraft/class_2960;": "override of method_12406()Lnet/minecraft/class_2960; of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects)."
+  "net/minecraft/class_2853.method_12406()Lnet/minecraft/class_2960;": "override of method_12406()Lnet/minecraft/class_2960; of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_366.<init>(Lnet/minecraft/class_8786;)V": "a 1.21.1 subclass of RecipeToast: 1.21.2's RecipeToast has only a private constructor (toasts are made through addOrUpdate), so no class can extend it; 1.21.1's constructor and addOrUpdate are bridged (ctorRedirects / staticRedirects)"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_744.field_3910:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputUp",

@@ -194,7 +194,7 @@ public class RecipeBookComponent extends net.minecraft.class_507<net.minecraft.c
     }
 
     private void updateCollections(boolean resetPage) {
-        List<RecipeCollection> collections = CbRestRecipeBookClient.method_1396(this.book, this.selectedTab.method_2623());
+        List<RecipeCollection> collections = CbRestRecipeBookClient.getCollection(this.book, this.selectedTab.method_2623());
         net.minecraft.class_1662<?> raw = CbRestRecipeMenus.raw(this.stackedContents);
         collections.forEach(c -> c.method_2649(raw, CbRestRecipeMenus.method_7653(this.field_3095), CbRestRecipeMenus.method_7656(this.field_3095), this.book));
         List<RecipeCollection> shown = Lists.newArrayList(collections);
