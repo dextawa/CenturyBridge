@@ -10,6 +10,7 @@
     "CbPendingIdsItemMixin",
     "CbPendingIdsItemPropsMixin",
     "CbPendingIdsRegistryMixin",
+    "CbRestBlockableEventLoopMixin",
     "CbRestChunkSourceMixin",
     "CbRestDedicatedServerMixin",
     "CbRestLevelMixin",
