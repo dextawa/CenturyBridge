@@ -6,7 +6,12 @@
   "net/minecraft/class_4592": "top/dext/centurybridge/step/v1_21_2/facade/AgeableListModel",
   "net/minecraft/class_4593": "top/dext/centurybridge/step/v1_21_2/facade/ColorableAgeableListModel",
   "net/minecraft/class_4594": "top/dext/centurybridge/step/v1_21_2/facade/ColorableHierarchicalModel",
-  "net/minecraft/class_4496": "top/dext/centurybridge/step/v1_21_2/facade/ModelUtils"
+  "net/minecraft/class_4496": "top/dext/centurybridge/step/v1_21_2/facade/ModelUtils",
+  "net/minecraft/class_277": "top/dext/centurybridge/step/v1_21_2/facade/BlendMode",
+  "net/minecraft/class_3679": "top/dext/centurybridge/step/v1_21_2/facade/Shader",
+  "net/minecraft/class_281": "top/dext/centurybridge/step/v1_21_2/facade/Program",
+  "net/minecraft/class_281$class_282": "top/dext/centurybridge/step/v1_21_2/facade/Program$Type",
+  "net/minecraft/class_285": "top/dext/centurybridge/step/v1_21_2/facade/ProgramManager"
  },
  "facadeGaps": {
   "net/minecraft/class_5597.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": "the 1.20.x renderToBuffer(pose, consumer, light, overlay, r, g, b, a); 1.21 replaced it with the packed-colour shape the facade has, and the 1.20.6 -> 1.21 step rewrote every call and override of it, so no 1.21.1 class references it",
@@ -50,6 +55,15 @@
  "instanceRedirects": {
   "net/minecraft/class_757.method_35767(Ljava/lang/String;)Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders"
  },
+ "ctorRedirects": {
+  "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_5944.field_32778:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_5944.field_29482:Lnet/minecraft/class_284;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#field_29482"
+ },
  "superCtorReshapes": {
   "net/minecraft/class_583.<init>()V": {
    "desc": "(Lnet/minecraft/class_630;)V",
@@ -84,6 +98,15 @@
   "net/minecraft/class_583.field_3448:Z",
   "net/minecraft/class_583.field_3449:Z",
   "net/minecraft/class_583.method_17081(Lnet/minecraft/class_583;)V",
+  "net/minecraft/class_5944.method_1279()V",
+  "net/minecraft/class_5944.method_34583(Ljava/lang/String;Ljava/lang/Object;)V",
+  "net/minecraft/class_5944.method_35786()Lnet/minecraft/class_293;",
+  "net/minecraft/class_5944.method_35787()Ljava/lang/String;",
   "net/minecraft/class_897.method_3931(Lnet/minecraft/class_1297;)Lnet/minecraft/class_2960;"
- ]
+ ],
+ "ledger": {
+  "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
+  "net/minecraft/class_5944.method_1278()Lnet/minecraft/class_281;": "getFragmentProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
+  "net/minecraft/class_5944.method_34418()V": "attachToProgram(): re-attached the vertex and fragment Program to the GL program; 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)"
+ }
 }

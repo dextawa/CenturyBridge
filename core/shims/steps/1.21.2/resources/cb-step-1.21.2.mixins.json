@@ -136,6 +136,8 @@
     "CbRenderParts597Mixin",
     "CbRenderParts624Mixin",
     "CbRenderParts7201Mixin",
+    "CbRenderShaderManagerMixin",
+    "CbRenderShaderMixin",
     "CbRenderState1001Mixin",
     "CbRenderState1002Mixin",
     "CbRenderState1005Mixin",
