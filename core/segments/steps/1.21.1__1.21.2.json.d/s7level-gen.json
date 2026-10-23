@@ -1,10 +1,12 @@
 {
  "classRenames": {
   "net/minecraft/class_2893$class_2894": "top/dext/centurybridge/step/v1_21_2/facade/GenerationStepCarving",
-  "net/minecraft/class_5851": "top/dext/centurybridge/step/v1_21_2/facade/CarvingMaskPlacement"
+  "net/minecraft/class_5851": "top/dext/centurybridge/step/v1_21_2/facade/CarvingMaskPlacement",
+  "net/minecraft/class_5807": "top/dext/centurybridge/step/v1_21_2/facade/MossBlock"
  },
  "facadeGaps": {
-  "net/minecraft/class_5851.field_28934:Lcom/mojang/serialization/Codec;": "a Codec until 1.20.4; 1.20.5 made it the MapCodec the facade has, and the 1.20.4 -> 1.20.5 step moves a mod's read of the Codec (s4rest-gen.json fieldGetters), so no mod reaches this step reading it"
+  "net/minecraft/class_5851.field_28934:Lcom/mojang/serialization/Codec;": "a Codec until 1.20.4; 1.20.5 made it the MapCodec the facade has, and the 1.20.4 -> 1.20.5 step moves a mod's read of the Codec (s4rest-gen.json fieldGetters), so no mod reaches this step reading it",
+  "net/minecraft/class_5807.method_9651(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Z": "1.20.1's isValidBonemealTarget(level, pos, state, isClient), gone at 1.20.2: the 1.20.1 -> 1.20.2 step rewires it (shims-1.20.2.json), so no mod reaches this step with it"
  },
  "superCtorReshapes": {
   "net/minecraft/class_4180.<init>(Lnet/minecraft/class_9172;Ljava/util/function/Function;Ljava/util/function/Function;Lnet/minecraft/class_5455;Lnet/minecraft/class_9820;Lnet/minecraft/class_5539;)V": {
@@ -66,6 +68,16 @@
     4
    ],
    "basis": "Level no longer takes a profiler supplier (1.21.2 has the thread's): the level keeps the one its 1.21.1 constructor call handed, for its getProfiler (CbLevelLevels)"
+  },
+  "net/minecraft/class_8567.<init>(Lnet/minecraft/class_3218;Ljava/util/Map;Ljava/util/Map;F)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_10352;Ljava/util/Map;F)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#contextMap(Ljava/util/Map;)Lnet/minecraft/class_10352;",
+    "keep",
+    "keep"
+   ],
+   "basis": "LootParams holds a ContextMap since 1.21.2: 1.21.1's parameter map as one (CbLevelLootParams)"
   }
  },
  "superRenames": {
@@ -76,7 +88,8 @@
   "net/minecraft/class_1936.method_39279(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;I)V": "method_64310",
   "net/minecraft/class_1936.method_39282(Lnet/minecraft/class_2338;Lnet/minecraft/class_3611;ILnet/minecraft/class_1953;)V": "method_64313",
   "net/minecraft/class_1936.method_39281(Lnet/minecraft/class_2338;Lnet/minecraft/class_3611;I)V": "method_64312",
-  "net/minecraft/class_1937.method_8452(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;)V": "method_61271"
+  "net/minecraft/class_1937.method_8452(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;)V": "method_61271",
+  "net/minecraft/class_47.method_296(Lnet/minecraft/class_169;)Ljava/lang/Object;": "method_65013"
  },
  "callReshapes": {
   "net/minecraft/class_4970.method_9559(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;": {
@@ -364,7 +377,11 @@
   "net/minecraft/class_1924.method_21726(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDDLnet/minecraft/class_238;)Lnet/minecraft/class_1309;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
   "net/minecraft/class_1924.method_18468(Ljava/util/List;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDD)Lnet/minecraft/class_1309;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
   "net/minecraft/class_1924.method_18464(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
-  "net/minecraft/class_1924.method_18466(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities"
+  "net/minecraft/class_1924.method_18466(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
+  "net/minecraft/class_8567.method_51865(Lnet/minecraft/class_169;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams",
+  "net/minecraft/class_8567.method_51867(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams",
+  "net/minecraft/class_8567.method_51868(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams",
+  "net/minecraft/class_8567.method_51869(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -406,7 +423,11 @@
   "net/minecraft/class_1924.method_21726(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDDLnet/minecraft/class_238;)Lnet/minecraft/class_1309;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearestEntityOfClass",
   "net/minecraft/class_1924.method_18468(Ljava/util/List;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDD)Lnet/minecraft/class_1309;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearestEntity",
   "net/minecraft/class_1924.method_18464(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearbyPlayers",
-  "net/minecraft/class_1924.method_18466(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearbyEntities"
+  "net/minecraft/class_1924.method_18466(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearbyEntities",
+  "net/minecraft/class_8567.method_51865(Lnet/minecraft/class_169;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#hasParam",
+  "net/minecraft/class_8567.method_51867(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#getParameter",
+  "net/minecraft/class_8567.method_51868(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#getOptionalParameter",
+  "net/minecraft/class_8567.method_51869(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#getParamOrNull"
  },
  "overrideHooks": [
   {
@@ -1151,6 +1172,42 @@
    ],
    "synth": [],
    "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's override is reached by the calls 1.21.1's defaults made, through this adapter (CbLevelEntities)"
+  },
+  {
+   "under": "net/minecraft/class_8567",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams$LegacyHasParam",
+   "requires": [
+    "method_51865(Lnet/minecraft/class_169;)Z"
+   ],
+   "synth": [],
+   "basis": "1.21.2 reads the parameters off its ContextMap: a 1.21.1 subclass's override is reached by the calls, through this adapter (CbLevelLootParams)"
+  },
+  {
+   "under": "net/minecraft/class_8567",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams$LegacyGetParameter",
+   "requires": [
+    "method_51867(Lnet/minecraft/class_169;)Ljava/lang/Object;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 reads the parameters off its ContextMap: a 1.21.1 subclass's override is reached by the calls, through this adapter (CbLevelLootParams)"
+  },
+  {
+   "under": "net/minecraft/class_8567",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams$LegacyGetOptionalParameter",
+   "requires": [
+    "method_51868(Lnet/minecraft/class_169;)Ljava/lang/Object;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 reads the parameters off its ContextMap: a 1.21.1 subclass's override is reached by the calls, through this adapter (CbLevelLootParams)"
+  },
+  {
+   "under": "net/minecraft/class_8567",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams$LegacyGetParamOrNull",
+   "requires": [
+    "method_51869(Lnet/minecraft/class_169;)Ljava/lang/Object;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 reads the parameters off its ContextMap: a 1.21.1 subclass's override is reached by the calls, through this adapter (CbLevelLootParams)"
   }
  ],
  "abstractFills": [

@@ -629,6 +629,33 @@ def entity_getter(f):
                                              "adapter (CbLevelEntities)"})
 
 
+# ------------------------------------------------------------------------------------------- loot params, moss
+LLP = RT + "/CbLevelLootParams"
+
+
+def loot_params_moss(f):
+    LP, P, O = MC + "class_8567", L("class_169"), "Ljava/lang/Object;"
+    for m, n, base in (("method_51865(" + P + ")Z", "HasParam", "hasParam"),
+                       ("method_51867(" + P + ")" + O, "GetParameter", "getParameter"),
+                       ("method_51868(" + P + ")" + O, "GetOptionalParameter", "getOptionalParameter"),
+                       ("method_51869(" + P + ")" + O, "GetParamOrNull", "getParamOrNull")):
+        f.put("instanceRedirects", LP + "." + m, LLP)
+        f.put("superRedirects", LP + "." + m, LLP + "#" + base)
+        f.w["adapterHooks"].append({"under": LP, "adapter": LLP + "$Legacy" + n, "requires": [m], "synth": [],
+                                    "basis": "1.21.2 reads the parameters off its ContextMap: a 1.21.1 subclass's "
+                                             "override is reached by the calls, through this adapter (CbLevelLootParams)"})
+    MAP = "Ljava/util/Map;"
+    f.put("superCtorReshapes", LP + ".<init>(" + L("class_3218") + MAP + MAP + "F)V", {
+        "desc": "(" + L("class_3218") + L("class_10352") + MAP + "F)V",
+        "ops": ["keep", "conv " + LLP + "#contextMap(" + MAP + ")" + L("class_10352"), "keep", "keep"],
+        "basis": "LootParams holds a ContextMap since 1.21.2: 1.21.1's parameter map as one (CbLevelLootParams)"})
+    f.put("methodRenames", MC + "class_47.method_296(" + P + ")" + O, "method_65013")
+    f.put("classRenames", MC + "class_5807", FAC + "/MossBlock")
+    f.put("facadeGaps", MC + "class_5807.method_9651(" + L("class_4538") + POS + BS + "Z)Z",
+          "1.20.1's isValidBonemealTarget(level, pos, state, isClient), gone at 1.20.2: the 1.20.1 -> 1.20.2 step "
+          "rewires it (shims-1.20.2.json), so no mod reaches this step with it")
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -646,6 +673,7 @@ def main():
     fluids_light(f)
     level_api(f)
     entity_getter(f)
+    loot_params_moss(f)
     f.write()
 
 
