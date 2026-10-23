@@ -1,0 +1,251 @@
+{
+ "superCtorReshapes": {
+  "net/minecraft/class_2692.<init>(Lnet/minecraft/class_1297;)V": {
+   "desc": "(Lnet/minecraft/class_243;FF)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#clientVehiclePos(Lnet/minecraft/class_1297;)Lnet/minecraft/class_243;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#yRot(Lnet/minecraft/class_1297;)F",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#xRot(Lnet/minecraft/class_1297;)F"
+   ],
+   "basis": "1.21.3 new ClientboundMoveVehiclePacket(entity) took the entity's position and rotation (1.21.3 bytecode: getX/getY/getZ, getYRot, getXRot); 1.21.4's record takes the same values (its fromEntity: position(), getYRot(), getXRot())"
+  },
+  "net/minecraft/class_2833.<init>(Lnet/minecraft/class_1297;)V": {
+   "desc": "(Lnet/minecraft/class_243;FFZ)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#serverVehiclePos(Lnet/minecraft/class_1297;)Lnet/minecraft/class_243;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#yRot(Lnet/minecraft/class_1297;)F",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#xRot(Lnet/minecraft/class_1297;)F",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#onGround(Lnet/minecraft/class_1297;)Z"
+   ],
+   "basis": "1.21.3 new ServerboundMoveVehiclePacket(entity) took lerpTargetX/Y/Z, getYRot, getXRot (1.21.3 bytecode); 1.21.4's record adds onGround, which its own fromEntity(entity) takes from entity.onGround()"
+  },
+  "net/minecraft/class_2675.<init>(Lnet/minecraft/class_2394;ZDDDFFFFI)V": {
+   "desc": "(Lnet/minecraft/class_2394;ZZDDDFFFFI)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#notAlwaysShown()Z",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.21.4 added alwaysShow after overrideLimiter; 1.21.3's client passed false in its place (CbRestPackets.notAlwaysShown)"
+  },
+  "net/minecraft/class_2703$class_2705.<init>(Ljava/util/UUID;Lcom/mojang/authlib/GameProfile;ZILnet/minecraft/class_1934;Lnet/minecraft/class_2561;ILnet/minecraft/class_7822$class_7823;)V": {
+   "desc": "(Ljava/util/UUID;Lcom/mojang/authlib/GameProfile;ZILnet/minecraft/class_1934;Lnet/minecraft/class_2561;ZILnet/minecraft/class_7822$class_7823;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#hatNotSaid()Z",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.21.4 added showHat before listOrder, sent only with UPDATE_HAT; a client never told keeps the hat shown (PlayerInfo's initial showHat = true), CbRestPackets.hatNotSaid"
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_2692.method_11673()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_11673",
+  "net/minecraft/class_2692.method_11674()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_11674",
+  "net/minecraft/class_2692.method_11670()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_11670",
+  "net/minecraft/class_2692.method_11675()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_11675",
+  "net/minecraft/class_2692.method_11671()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_11671",
+  "net/minecraft/class_2833.method_12279()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_12279",
+  "net/minecraft/class_2833.method_12280()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_12280",
+  "net/minecraft/class_2833.method_12276()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_12276",
+  "net/minecraft/class_2833.method_12281()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_12281",
+  "net/minecraft/class_2833.method_12277()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_12277",
+  "net/minecraft/class_2735.method_11803()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_11803"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2692.method_11673()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawX",
+  "net/minecraft/class_2692.method_11674()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawY",
+  "net/minecraft/class_2692.method_11670()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawZ",
+  "net/minecraft/class_2692.method_11675()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawYRot",
+  "net/minecraft/class_2692.method_11671()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawXRot",
+  "net/minecraft/class_2833.method_12279()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawX",
+  "net/minecraft/class_2833.method_12280()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawY",
+  "net/minecraft/class_2833.method_12276()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawZ",
+  "net/minecraft/class_2833.method_12281()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawYRot",
+  "net/minecraft/class_2833.method_12277()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawXRot",
+  "net/minecraft/class_2735.method_11803()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawSlot"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2692",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ClientVehicleX",
+   "requires": [
+    "method_11673()D"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2692",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ClientVehicleY",
+   "requires": [
+    "method_11674()D"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2692",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ClientVehicleZ",
+   "requires": [
+    "method_11670()D"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2692",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ClientVehicleYRot",
+   "requires": [
+    "method_11675()F"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2692",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ClientVehicleXRot",
+   "requires": [
+    "method_11671()F"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2833",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ServerVehicleX",
+   "requires": [
+    "method_12279()D"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2833",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ServerVehicleY",
+   "requires": [
+    "method_12280()D"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2833",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ServerVehicleZ",
+   "requires": [
+    "method_12276()D"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2833",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ServerVehicleYRot",
+   "requires": [
+    "method_12281()F"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2833",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$ServerVehicleXRot",
+   "requires": [
+    "method_12277()F"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_2735",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets$HeldSlot",
+   "requires": [
+    "method_11803()I"
+   ],
+   "synth": [],
+   "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  }
+ ],
+ "callReshapes": {
+  "net/minecraft/class_3218.method_14199(Lnet/minecraft/class_2394;DDDIDDDD)I": {
+   "desc": "(Lnet/minecraft/class_2394;ZZDDDIDDDD)I",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#noForce()Z",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#notAlwaysShown()Z",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.21.3's sendParticles(options, ..) sent with overrideLimiter false and (having no such flag) alwaysShow false: 1.21.4's no-flag overload method_65096 calls this same shape with false, false"
+  },
+  "net/minecraft/class_3218.method_14166(Lnet/minecraft/class_3222;Lnet/minecraft/class_2394;ZDDDIDDDD)Z": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_2394;ZZDDDIDDDD)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#notAlwaysShown()Z",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.21.4 added alwaysShow after force; 1.21.3's packet had none and its client passed false there (CbRestPackets.notAlwaysShown); the body is otherwise 1.21.3's (packet(options, force, ..), sendToPlayer(player, force, ..))"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_14166(Lnet/minecraft/class_3222;Lnet/minecraft/class_2394;ZDDDIDDDD)Z",
+   "new": "method_14166(Lnet/minecraft/class_3222;Lnet/minecraft/class_2394;ZZDDDIDDDD)Z",
+   "args": [
+    0,
+    1,
+    2,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "onlyUnder": "net/minecraft/class_3218",
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.4 added alwaysShow (index 3) after force; the old override gets every parameter it had, its super call passes on what vanilla passed"
+  }
+ ],
+ "frameDefaults": {
+  "method_14166(Lnet/minecraft/class_3222;Lnet/minecraft/class_2394;ZDDDIDDDD)Z": {
+   "3": "zero: 1.21.3's particle packet had no alwaysShow and its client passed false in its place (LevelRenderer.addParticle(options, force, false, ..))"
+  },
+  "method_14199(Lnet/minecraft/class_2394;DDDIDDDD)I": {
+   "1": "zero: 1.21.3's sendParticles(options, ..) sent with overrideLimiter false (1.21.3 bytecode: packet(options, false, ..), sendToPlayer(player, false, ..)); 1.21.4's no-flag overload passes false too",
+   "2": "zero: 1.21.3's particle packet had no alwaysShow and its client passed false in its place"
+  }
+ }
+}
