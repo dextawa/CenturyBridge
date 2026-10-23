@@ -118,10 +118,7 @@
   "net/minecraft/class_1688.method_7508(DDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getPos",
   "net/minecraft/class_1688.method_7505(DDDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getPosOffs",
   "net/minecraft/class_1688.method_7525()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#applyNaturalSlowdown",
-  "net/minecraft/class_1693.method_7525()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#applyNaturalSlowdown",
-  "net/minecraft/class_1696.method_7525()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#applyNaturalSlowdown",
-  "net/minecraft/class_1688.method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#moveAlongTrack",
-  "net/minecraft/class_1696.method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#moveAlongTrack"
+  "net/minecraft/class_1688.method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#moveAlongTrack"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
