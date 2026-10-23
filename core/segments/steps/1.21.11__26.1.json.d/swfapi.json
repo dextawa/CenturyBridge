@@ -216,6 +216,18 @@
    "method": "bufferSource()Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
    "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts.bufferSource(Lnet/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext;)Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
    "basis": "26.1's LevelRenderContext made bufferSource() (a BufferSource) abstract; a 1.21.11 context's consumers() is renamed bufferSource() (a MultiBufferSource) and answers it when it is a BufferSource, as 1.21.11's own context's was"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeItem$Context",
+   "method": "transformation()Lorg/joml/Matrix4fc;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers.transformation(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeItem$Context;)Lorg/joml/Matrix4fc;",
+   "basis": "26.1 made ModelModifier.BeforeBakeItem.Context.transformation() abstract (the item model's transformation); 1.21.11 baked item models with none, so a 1.21.11 context answers the identity"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBakeItem$Context",
+   "method": "transformation()Lorg/joml/Matrix4fc;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers.transformation(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBakeItem$Context;)Lorg/joml/Matrix4fc;",
+   "basis": "26.1 made ModelModifier.AfterBakeItem.Context.transformation() abstract (the item model's transformation); 1.21.11 baked item models with none, so a 1.21.11 context answers the identity"
   }
  ],
  "_swfapi_recipeRemainder_basis": "FabricItem / FabricItemStack.getRecipeRemainder answered an ItemStack in 1.21.11 (EMPTY for none); 26.1's getCraftingRemainder answers an ItemStackTemplate (null for none). Calls convert 26.1's answer (CbFapiItems.stack), dispatched virtually so the item's override answers; super calls run 1.21.11's default bodies; overrides are reached through 26.1's shape (overrideHooks).",

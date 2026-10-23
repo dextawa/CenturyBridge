@@ -59,6 +59,21 @@ public final class CbFapiRendererHelpers {
         return finder.find(quad);
     }
 
+    /**
+     * ModelModifier.BeforeBakeItem.Context / AfterBakeItem.Context.transformation(), which 26.1 made abstract:
+     * the transformation 26.1 applies to the item model being baked. 1.21.11 baked item models without one, so
+     * a 1.21.11 context -- built where no such transformation exists -- answers the identity.
+     */
+    public static org.joml.Matrix4fc transformation(net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier.BeforeBakeItem.Context context) {
+        return IDENTITY;
+    }
+
+    public static org.joml.Matrix4fc transformation(net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier.AfterBakeItem.Context context) {
+        return IDENTITY;
+    }
+
+    private static final org.joml.Matrix4fc IDENTITY = new org.joml.Matrix4f();
+
     /** ModelHelper.toQuadLists(mesh) */
     @SuppressWarnings("unchecked")
     public static List<BakedQuad>[] toQuadLists(Mesh mesh) {
