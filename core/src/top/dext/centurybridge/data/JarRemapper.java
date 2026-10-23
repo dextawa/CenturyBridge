@@ -64,6 +64,42 @@ public final class JarRemapper {
         public final java.util.Map<String, String> members = new java.util.HashMap<>();
         /** how many bare ids were ambiguous (owner-qualified lookup only) */
         public int ambiguous;
+
+        /**
+         * Tokens only the step's facade classes declare keep their names across the wall. A class the
+         * step retires into a CB facade ({@code classRenames} to a top/dext/centurybridge/ class) keeps
+         * its members' intermediary names -- the facade declares them so, and a reference naming the
+         * facade passes through untouched ({@link #remapper}) -- but a reference through a mod class
+         * under it (a call of an inherited facade method, the mod's own override of one) names the mod
+         * class, and the bare-name map gave it the vanilla member's mojang name: 1.21.11's
+         * ExpirableValue.tick() is method_24913 on the facade, and a mod subclass's this.tick() went out
+         * as tick (NoSuchMethodError), its override of it as tick (never called). A token declared by any
+         * other class as well (an override family reaching vanilla classes) keeps its mapping.
+         */
+        public Table keepFacadeTokens(java.util.Collection<String> facadeOwners) {
+            java.util.Map<String, java.util.Set<String>> owners = new java.util.HashMap<>();
+            for (String k : byOwner.keySet()) {
+                int dot = k.lastIndexOf('.');
+                owners.computeIfAbsent(k.substring(dot + 1), x -> new java.util.HashSet<>()).add(k.substring(0, dot));
+            }
+            for (var e : owners.entrySet()) {
+                if (facadeOwners.containsAll(e.getValue())) {
+                    members.remove(e.getKey());
+                }
+            }
+            return this;
+        }
+
+        /** the classes a wiring's classRenames retire into CB facades */
+        public static java.util.Set<String> facadeOwners(java.util.Map<String, String> classRenames) {
+            java.util.Set<String> out = new java.util.HashSet<>();
+            classRenames.forEach((k, v) -> {
+                if (v.startsWith("top/dext/centurybridge/")) {
+                    out.add(k);
+                }
+            });
+            return out;
+        }
         /**
          * The target release's game classes and whether each is an interface (null: not known). 26.1 made
          * some 1.21.11 interfaces classes (GpuDevice, CommandEncoder, RenderPass wrap a backend now) and
@@ -174,7 +210,11 @@ public final class JarRemapper {
 
     /** as above; with {@code targetJar}, calls also take the invoke kind the target declares their owner as ({@link Table#targetKinds}) */
     public static void remapWithTable(Path tsv, Path inJar, Path outJar, Path targetJar) throws IOException {
-        Table table = loadTable(tsv);
+        remapWithTable(loadTable(tsv), inJar, outJar, targetJar);
+    }
+
+    /** as above, with a loaded table (the conversion's, facade tokens kept: {@link Table#keepFacadeTokens}) */
+    public static void remapWithTable(Table table, Path inJar, Path outJar, Path targetJar) throws IOException {
         if (targetJar != null && Files.exists(targetJar)) {
             table.targetKinds = loadKinds(targetJar);
         }
