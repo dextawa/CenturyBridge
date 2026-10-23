@@ -1,0 +1,39 @@
+{
+ "_s4fin_item_statics_basis": "s4fin: 1.20.4's static item helpers 1.20.5 removed, with 1.20.4's bodies on the stack's 1.20.4 NBT view (CbItemTags) or 1.20.5's stream codecs for the network forms (rt/CbFinItemStatics)",
+ "staticRedirects": {
+  "net/minecraft/class_1747.method_38072(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1747.method_38073(Lnet/minecraft/class_1799;Lnet/minecraft/class_2591;Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1759.method_26365(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1759.method_43124(Lnet/minecraft/class_2487;)Lnet/minecraft/class_4208;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1764.method_7782(Lnet/minecraft/class_1799;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1764.method_7772(Lnet/minecraft/class_1799;Lnet/minecraft/class_1792;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1781.method_47368(Lnet/minecraft/class_1799;B)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1780.method_7809(Lnet/minecraft/class_2487;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1806.method_8003(Lnet/minecraft/class_1799;)Ljava/lang/Integer;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1806.method_17440(I)Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1806.method_53837(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1806.method_7999(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1819.method_8013(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1767;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1840.method_8047(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1843.method_8053(Lnet/minecraft/class_2487;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1843.method_8052(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1843.method_17443(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_8053.method_48429(Lnet/minecraft/class_5455;Lnet/minecraft/class_1799;Lnet/minecraft/class_8053;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_8053.method_48428(Lnet/minecraft/class_5455;Lnet/minecraft/class_1799;Z)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_8053.method_48425(Lnet/minecraft/class_1799;Lnet/minecraft/class_5455;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_8052.method_48418(Lnet/minecraft/class_5321;)Lnet/minecraft/class_8052;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_8052.method_48419(Lnet/minecraft/class_2960;)Lnet/minecraft/class_8052;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1856.method_8086(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_8957.method_55090(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8957;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1916.method_8265(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1916;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1856.method_8088(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_8957.method_55087(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1781$class_1782.method_7812()Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics"
+ },
+ "classRenames": {
+  "net/minecraft/class_1781$class_1782": "net/minecraft/class_9283$class_1782"
+ },
+ "_s4fin_shape_basis": "s4fin: 1.20.4 FireworkRocketItem.Shape is 1.20.5's FireworkExplosion.Shape: the same five constants in the same order with the same ids, names, byId and values; only getName() changed (a component now; the name is getSerializedName), redirected"
+}
