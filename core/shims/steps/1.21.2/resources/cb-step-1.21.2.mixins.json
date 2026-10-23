@@ -46,6 +46,7 @@
     "CbRestJsonListenerAccessor",
     "CbRestLevelMixin",
     "CbRestMinecraftServerMixin",
+    "CbRestOutgoingPacketMixin",
     "CbRestRecipeManagerAccessor",
     "CbRestRecipeSyncMixin",
     "CbRestRegistriesHolderAccessor",

@@ -50,7 +50,9 @@
   "net/minecraft/class_3877": "top/dext/centurybridge/step/v1_21_2/facade/SmokingRecipeBookComponent",
   "net/minecraft/class_515": "top/dext/centurybridge/step/v1_21_2/facade/RecipeShownListener",
   "net/minecraft/class_518": "top/dext/centurybridge/step/v1_21_2/facade/RecipeUpdateListener",
-  "net/minecraft/class_2952": "top/dext/centurybridge/step/v1_21_2/facade/PlaceRecipe"
+  "net/minecraft/class_2952": "top/dext/centurybridge/step/v1_21_2/facade/PlaceRecipe",
+  "net/minecraft/class_2713": "top/dext/centurybridge/step/v1_21_2/facade/ClientboundRecipePacket",
+  "net/minecraft/class_2713$class_2714": "top/dext/centurybridge/step/v1_21_2/facade/ClientboundRecipePacket$State"
  },
  "covers": [
   "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
@@ -235,7 +237,9 @@
   "net/minecraft/class_1729.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
   "net/minecraft/class_490.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
   "net/minecraft/class_479.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
-  "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient"
+  "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_634.method_11115(Lnet/minecraft/class_2713;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners",
+  "net/minecraft/class_2602.method_11115(Lnet/minecraft/class_2713;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -287,7 +291,8 @@
   "net/minecraft/class_514.field_32413:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
   "net/minecraft/class_7573.field_46063:Lnet/minecraft/class_7573;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
   "net/minecraft/class_3999.field_17830:Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
-  "net/minecraft/class_2321.field_10932:Lcom/mojang/brigadier/suggestion/SuggestionProvider;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands"
+  "net/minecraft/class_2321.field_10932:Lcom/mojang/brigadier/suggestion/SuggestionProvider;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands",
+  "net/minecraft/class_9094.field_48073:Lnet/minecraft/class_9145;": "top/dext/centurybridge/step/v1_21_2/facade/ClientboundRecipePacket"
  },
  "superCtorReshapes": {
   "net/minecraft/class_3227.<init>(Lnet/minecraft/class_2823;Lnet/minecraft/class_3898;ZLnet/minecraft/class_3846;Lnet/minecraft/class_3906;)V": {
@@ -760,7 +765,13 @@
   "net/minecraft/class_516.method_2653(Lnet/minecraft/class_1860;)Z": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
   "net/minecraft/class_505.method_2566()Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
   "net/minecraft/class_505.method_2565(Lnet/minecraft/class_1860;)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
-  "net/minecraft/class_505.field_3079:Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name"
+  "net/minecraft/class_505.field_3079:Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_2713.method_55905(Lnet/minecraft/class_2540;)V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.field_12408:Lnet/minecraft/class_2713$class_2714;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.field_12414:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.field_12409:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.field_25797:Lnet/minecraft/class_5411;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_2713.method_11052(Lnet/minecraft/class_2540;)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name"
  },
  "overrideHooks": [
   {
@@ -1290,6 +1301,14 @@
     "method_2877()Lnet/minecraft/class_1863;"
    ],
    "synth": []
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners$LegacyRecipeListener",
+   "requires": [
+    "method_11115(Lnet/minecraft/class_2713;)V"
+   ],
+   "synth": []
   }
  ],
  "abstractFills": [
@@ -1322,6 +1341,56 @@
    "under": "net/minecraft/class_1729",
    "method": "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
    "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus.handlePlacement(Lnet/minecraft/class_1729;ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_64555(Lnet/minecraft/class_10266;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.recipeBookAdd(Lnet/minecraft/class_2602;Lnet/minecraft/class_10266;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_11115(Lnet/minecraft/class_10268;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.recipeBookRemove(Lnet/minecraft/class_2602;Lnet/minecraft/class_10268;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_64556(Lnet/minecraft/class_10269;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.recipeBookSettings(Lnet/minecraft/class_2602;Lnet/minecraft/class_10269;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_64553(Lnet/minecraft/class_10264;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.entityPositionSync(Lnet/minecraft/class_2602;Lnet/minecraft/class_10264;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_61187(Lnet/minecraft/class_9834;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.setCursorItem(Lnet/minecraft/class_2602;Lnet/minecraft/class_9834;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_61188(Lnet/minecraft/class_9835;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.setPlayerInventory(Lnet/minecraft/class_2602;Lnet/minecraft/class_9835;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_61186(Lnet/minecraft/class_9833;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.minecartAlongTrack(Lnet/minecraft/class_2602;Lnet/minecraft/class_9833;)V"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_64554(Lnet/minecraft/class_10265;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners.rotatePlayer(Lnet/minecraft/class_2602;Lnet/minecraft/class_10265;)V"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_61219(Lnet/minecraft/class_9836;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.clientTickEnd(Lnet/minecraft/class_2792;Lnet/minecraft/class_9836;)V"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_61220(Lnet/minecraft/class_9837;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.selectBundleItem(Lnet/minecraft/class_2792;Lnet/minecraft/class_9837;)V"
   }
  ],
  "ledger": {
@@ -1537,7 +1606,8 @@
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.modifyAttached(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
-  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrSet(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync"
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrSet(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/minecraft/class_2602.method_11115(Lnet/minecraft/class_2713;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners"
  },
  "depRenames": {
   "fabric-tag-api-v1": "centurybridge_step_1_21_2@*"

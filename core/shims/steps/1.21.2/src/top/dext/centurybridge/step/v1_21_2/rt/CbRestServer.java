@@ -632,4 +632,20 @@ public final class CbRestServer {
         }
         return server.method_30611().method_57093(com.mojang.serialization.JsonOps.INSTANCE);
     }
+
+    // ------------------------------------------------------------------ ServerGamePacketListener
+
+    /**
+     * handleClientTickEnd of a 1.21.1 class implementing ServerGamePacketListener (abstractFills): 1.21.1's client
+     * sent no such message, so a 1.21.1 listener receives nothing for it, as it did
+     */
+    public static void clientTickEnd(net.minecraft.class_2792 listener, net.minecraft.class_9836 packet) {
+    }
+
+    /**
+     * handleBundleItemSelectedPacket of a 1.21.1 class implementing ServerGamePacketListener (abstractFills): 1.21.1's
+     * client sent no such message (bundle item selection is 1.21.2's), so a 1.21.1 listener receives nothing for it
+     */
+    public static void selectBundleItem(net.minecraft.class_2792 listener, net.minecraft.class_9837 packet) {
+    }
 }

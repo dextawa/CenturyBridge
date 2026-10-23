@@ -42,6 +42,16 @@ public final class CbRestRecipeNet {
     private CbRestRecipeNet() {
     }
 
+    /** a 1.21.1 packet 1.21.2 has no type for, sent as the 1.21.2 packet(s) saying the same (CbRestOutgoingPacketMixin) */
+    public interface Outgoing {
+        net.minecraft.class_2596<?> cb$toW();
+    }
+
+    /** Connection.send: a 1.21.1 packet without a 1.21.2 type goes out as its 1.21.2 packet(s), anything else as it is */
+    public static net.minecraft.class_2596<?> outgoing(net.minecraft.class_2596<?> packet) {
+        return packet instanceof Outgoing legacy ? legacy.cb$toW() : packet;
+    }
+
     /** the client's table (set by {@link CbRestRecipesClient}): a recipe's display ids, a display id's recipe */
     static volatile Function<class_8786<?>, int[]> clientDisplays;
     static volatile Function<class_10298, class_8786<?>> clientRecipe;
