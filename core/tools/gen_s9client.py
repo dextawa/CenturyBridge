@@ -113,6 +113,7 @@ def main():
     render_layers(frag)
     client_rest(frag)
     generic_client(frag)
+    fapi_model_loading(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -1056,6 +1057,55 @@ def generic_client(frag):
     # as 1.21.3's drawWordWrap drew its lines (drawString(.., false))
     frag.setdefault("frameDefaults", {})["method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V"] = {
         "6": "zero: 1.21.3's GuiGraphics.drawWordWrap drew its lines without shadow (drawString(.., false)); false is that"}
+
+
+def fapi_model_loading(frag):
+    """Fabric API 1.21.3's model loading API (resolvers, modifiers over every model, contexts) and WorldRenderContext on 1.21.4's."""
+    F = "net/fabricmc/fabric/api/client/model/loading/v1/"
+    C = "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/"
+    M = C + "CbFapiModelLoading"
+    W = "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/CbFapiWorldRenderContext"
+    EV = "Lnet/fabricmc/fabric/api/event/Event;"
+    cr = frag.setdefault("classRenames", {})
+    notes = frag.setdefault("classRenameBasis", {})
+    for c in ["ModelResolver", "ModelResolver$Context", "DelegatingUnbakedModel"]:
+        cr[F + c] = C + c
+        notes[F + c] = "gone from Fabric API's model loading API in 1.21.4; the facade is 1.21.3's (CbFapiModelLoading asks resolvers where 1.21.3 did)"
+    ir = frag.setdefault("instanceRedirects", {})
+    for m in ["resolveModel", "modifyModelOnLoad", "modifyModelBeforeBake", "modifyModelAfterBake"]:
+        ir[F + "ModelLoadingPlugin$Context." + m + "()" + EV] = M
+    for ctx in ["ModelModifier$OnLoad$Context", "ModelModifier$BeforeBake$Context", "ModelModifier$AfterBake$Context"]:
+        ir[F + ctx + ".resourceId()Lnet/minecraft/class_2960;"] = M
+        ir[F + ctx + ".topLevelId()Lnet/minecraft/class_1091;"] = M
+        if ctx != "ModelModifier$OnLoad$Context":
+            ir[F + ctx + ".textureGetter()Ljava/util/function/Function;"] = M
+    ir["net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext.lightmapTextureManager()Lnet/minecraft/class_765;"] = W
+    frag.setdefault("callReshapes", {})[F + "BlockStateResolver$Context.setModel(Lnet/minecraft/class_2680;Lnet/minecraft/class_1100;)V"] = {
+        "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V",
+        "ops": ["keep", "conv " + M + "#cbStateModel(Lnet/minecraft/class_1100;)Lnet/minecraft/class_9979;"],
+        "basis": "BlockStateResolver.Context.setModel takes a block state model since 1.21.4 (CbModelLoading's wrapper, unwrapped again)"}
+    ah = frag.setdefault("adapterHooks", [])
+    ah[:] = [h for h in ah if h.get("family") != "fapi-model-loading"]
+    for ctx in ["ModelModifier$OnLoad$Context", "ModelModifier$BeforeBake$Context", "ModelModifier$AfterBake$Context"]:
+        ah.append({"under": F + ctx, "adapter": M + "$CbLegacyIdContext",
+                   "requires": ["resourceId()Lnet/minecraft/class_2960;", "topLevelId()Lnet/minecraft/class_1091;"],
+                   "synth": [{"new": "id()Lnet/minecraft/class_2960;", "call": M + ".id(L" + M + "$CbLegacyIdContext;)Lnet/minecraft/class_2960;"}],
+                   "family": "fapi-model-loading",
+                   "basis": "a 1.21.3 implementation of the context: id() is its resource id, else its top level location's"})
+    ah.append({"under": F + "BlockStateResolver$Context", "adapter": M + "$CbLegacyBlockStateContext",
+               "requires": ["setModel(Lnet/minecraft/class_2680;Lnet/minecraft/class_1100;)V"],
+               "synth": [{"new": "setModel(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V",
+                          "call": M + ".setModel(L" + M + "$CbLegacyBlockStateContext;Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V"}],
+               "family": "fapi-model-loading", "basis": "a 1.21.3 implementation of BlockStateResolver.Context takes the model as an UnbakedModel"})
+    fills = frag.setdefault("abstractFills", [])
+    fills[:] = [f for f in fills if f.get("family") != "fapi-model-loading"]
+    PC = F + "ModelLoadingPlugin$Context"
+    for m in ["modifyBlockModelOnLoad", "modifyBlockModelBeforeBake", "modifyBlockModelAfterBake"]:
+        fills.append({"under": PC, "method": m + "()" + EV, "call": M + "." + m + "(L" + PC + ";)" + EV, "family": "fapi-model-loading",
+                      "basis": "a 1.21.3 plugin context implementation has no block model events (1.21.3's API had none)"})
+    WRC = "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext"
+    fills.append({"under": WRC, "method": "translucentBlockOutline()Z", "call": W + ".translucentBlockOutline(L" + WRC + ";)Z",
+                  "family": "fapi-model-loading", "basis": "WorldRenderContext.translucentBlockOutline is new in 1.21.4; 1.21.3 drew the outline once, not translucently"})
 
 
 if __name__ == "__main__":
