@@ -1,0 +1,130 @@
+{
+ "classRenames": {
+  "net/minecraft/class_1088$class_7777": "net/minecraft/class_9824$class_7777"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1100.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_4753",
+  "net/minecraft/class_793.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_4753",
+  "net/minecraft/class_819.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_4753",
+  "net/minecraft/class_793.method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_3446"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_796.method_3454(Lnet/minecraft/class_787;Lnet/minecraft/class_2350;Lnet/minecraft/class_4590;Lnet/minecraft/class_2960;)Lnet/minecraft/class_787;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#method_3454"
+ },
+ "covers": [
+  "net/minecraft/class_796.method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZLnet/minecraft/class_2960;)Lnet/minecraft/class_777;"
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_1088.field_5374:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake",
+  "net/minecraft/class_1088.field_40569:Lnet/minecraft/class_7654;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_783.field_4225:Lnet/minecraft/class_2350;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#field_4225",
+  "net/minecraft/class_783.field_4226:I": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#field_4226",
+  "net/minecraft/class_783.field_4224:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#field_4224",
+  "net/minecraft/class_783.field_4227:Lnet/minecraft/class_787;": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#field_4227"
+ },
+ "callReshapes": {
+  "net/minecraft/class_1088.method_45876(Ljava/util/function/BiFunction;)V": {
+   "desc": "(Lnet/minecraft/class_1088$class_9826;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#textureGetter(Ljava/util/function/BiFunction;)Lnet/minecraft/class_1088$class_9826;"
+   ],
+   "basis": "bakeModels takes a TextureGetter (model location, material) since 1.21: the 1.20.6 sprite function asked with the location's id (CbRenderModelBake.textureGetter)"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_1091.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V": {
+   "desc": "(Lnet/minecraft/class_2960;Ljava/lang/String;)V",
+   "ops": [
+    "conv:0,1 net/minecraft/class_2960#method_60655(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/class_2960;",
+    "keep:2"
+   ],
+   "basis": "new ModelResourceLocation(namespace, path, variant): 1.21's (id, variant), the id checked as 1.20.6's ResourceLocation(namespace, path) checked it, the variant lower-cased by both"
+  },
+  "net/minecraft/class_1076.<init>(Ljava/lang/String;)V": {
+   "desc": "(Ljava/lang/String;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#noLanguageCallback()Ljava/util/function/Consumer;"
+   ],
+   "basis": "1.21's LanguageManager hands each reloaded language to a callback after doing what 1.20.6's did (I18n and Language set); 1.20.6's had none: a callback doing nothing more"
+  },
+  "net/minecraft/class_1111.<init>(Ljava/lang/String;Lnet/minecraft/class_7373;Lnet/minecraft/class_7373;ILnet/minecraft/class_1111$class_1112;ZZI)V": {
+   "desc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_7373;Lnet/minecraft/class_7373;ILnet/minecraft/class_1111$class_1112;ZZI)V",
+   "ops": [
+    "conv:0 net/minecraft/class_2960#method_60654(Ljava/lang/String;)Lnet/minecraft/class_2960;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "Sound takes its location as a ResourceLocation since 1.21; 1.20.6 made one of the string with new ResourceLocation(location), which is 1.21's ResourceLocation.parse"
+  },
+  "net/minecraft/class_8675.<init>(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Ljava/lang/String;Lnet/minecraft/class_642;Lnet/minecraft/class_437;Ljava/util/Map;Lnet/minecraft/class_338$class_9477;Z)V": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Ljava/lang/String;Lnet/minecraft/class_642;Lnet/minecraft/class_437;Ljava/util/Map;Lnet/minecraft/class_338$class_9477;ZLjava/util/Map;Lnet/minecraft/class_9782;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#noReportDetails()Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake#noServerLinks()Lnet/minecraft/class_9782;"
+   ],
+   "basis": "CommonListenerCookie carries custom report details and server links since 1.21; a 1.20.6 cookie has neither: none of each, as 1.21's login handshake starts with (Map.of(), ServerLinks.EMPTY)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;",
+   "new": "method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;",
+   "onlyUnder": "net/minecraft/class_1100",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake.bake(Ltop/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$LegacyUnbaked;Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$LegacyUnbaked",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake.superBake(Ltop/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$SuperModel;Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1087;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$SuperModel",
+   "superAccessors": [
+    "method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;"
+   ],
+   "basis": "1.21 bakes with bake(baker, sprites, state), without the model id 1.20.6 passed: a 1.20.6 model's own bake gets the id of the model the baker is baking (CbRenderModelBake.idOf); its super call reaches super's 1.21 bake"
+  },
+  {
+   "old": "method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1087;",
+   "new": "method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;",
+   "onlyUnder": "net/minecraft/class_793",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake.blockBake(Ltop/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$LegacyBlockModel;Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$LegacyBlockModel",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake.superBlockBake(Ltop/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$SuperBlockModel;Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Lnet/minecraft/class_2960;Z)Lnet/minecraft/class_1087;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$SuperBlockModel",
+   "superAccessors": [
+    "method_3446(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;"
+   ],
+   "basis": "1.21 calls BlockModel.bake(baker, parent, sprites, state, gui3d) (generated item models), without the model id: a 1.20.6 subclass's own gets the id of the model being baked; its super call reaches super's 1.21 method"
+  },
+  {
+   "old": "method_45876(Ljava/util/function/BiFunction;)V",
+   "new": "method_45876(Lnet/minecraft/class_1088$class_9826;)V",
+   "onlyUnder": "net/minecraft/class_1088",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake.spriteFunction(Lnet/minecraft/class_1088$class_9826;)Ljava/util/function/BiFunction;",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake.superBakeModels(Ltop/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$SuperBakery;Ljava/util/function/BiFunction;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbRenderModelBake$SuperBakery",
+   "superAccessors": [
+    "method_45876(Lnet/minecraft/class_1088$class_9826;)V"
+   ],
+   "basis": "1.21's ModelManager calls bakeModels(textureGetter): a 1.20.6 subclass's bakeModels(sprites) gets a sprite function over the getter; its super call reaches super's 1.21 bakeModels with the matching getter"
+  }
+ ],
+ "ledger": {
+  "net/minecraft/class_1091": "not bridgeable for a 1.20.6 subclass: 1.21's ModelResourceLocation is a final record (id, variant) and no longer a ResourceLocation (itself final), so no class can extend it and no stand-in can be both; constructing one is bridged",
+  "net/minecraft/class_783": "not bridgeable for a 1.20.6 subclass: 1.21's BlockElementFace is a final record; constructing one (same constructor) and reading its fields (CbRenderModelBake) are bridged"
+ }
+}
