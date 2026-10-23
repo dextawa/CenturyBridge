@@ -65,7 +65,8 @@
  },
  "instanceRedirects": {
   "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#profiler",
-  "net/minecraft/class_3414.method_14833()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#soundLocation"
+  "net/minecraft/class_3414.method_14833()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#soundLocation",
+  "net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#reload"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -74,7 +75,8 @@
   "net/minecraft/class_3532.method_15353(FFF)I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#color",
   "net/minecraft/class_156.method_33787(Ljava/lang/String;Ljava/lang/Runnable;)Ljava/lang/Runnable;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#wrapThreadWithTaskName",
   "net/minecraft/class_156.method_37910(Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#wrapThreadWithTaskName",
-  "net/minecraft/class_3695.method_24338(Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;)Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#tee"
+  "net/minecraft/class_3695.method_24338(Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;)Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#tee",
+  "net/minecraft/class_4309.method_51148(Lnet/minecraft/class_3300;Ljava/lang/String;Lcom/google/gson/Gson;Ljava/util/Map;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#scanDirectory"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
@@ -152,5 +154,26 @@
   "net/minecraft/class_3846.field_17039:Lnet/minecraft/class_3847;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_3846.field_17042:Ljava/util/concurrent/Executor;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_3846.field_17043:Ljava/lang/String;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "onlyUnder": "net/minecraft/class_3302",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload.reload(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy;Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload.superReload(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestReload$ReloadSuper;Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload$ReloadSuper",
+   "superAccessors": [
+    "method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "PreparableReloadListener.reload lost its two ProfilerFiller arguments in 1.21.2 (listeners profile on the running thread): a 1.21.1 listener's own six-argument reload is run with the thread's profiler for both phases; its super.reload(..) reaches super's 1.21.2 reload"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#listener(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy;)Lnet/minecraft/class_3302;"
+  }
  }
 }
