@@ -37,4 +37,15 @@ $SSH "set -e; cd ~/cbwork/agents/$NAME && rm -rf core build.sh build && tar xf u
   CB_DATA=\$HOME/cbwork/data $LAYER > build.log 2>&1 || { tail -30 build.log; echo 'BUILD FAILED'; exit 1; }
   grep -E 'check:|^->' build.log
   echo '== step'
-  cd ~/cbwork && CB_PROBE='${CB_PROBE:-}' ./step_check.sh agents/$NAME $V $W '$AREA'"
+  # beta2 is shared with live game servers: at most CB_SLOTS (default 3) step checks (each a 16g convert
+  # and a 32g link-check) run at once across all agents; the rest wait for a free slot
+  cd ~/cbwork && mkdir -p .slots && SLOT=''
+  while [ -z \"\$SLOT\" ]; do
+    for i in \$(seq 1 ${CB_SLOTS:-3}); do
+      exec 9>.slots/\$i
+      if flock -n 9; then SLOT=\$i; break; fi
+      exec 9>&-
+    done
+    [ -n \"\$SLOT\" ] || { echo 'waiting for a measurement slot'; sleep 30; }
+  done
+  CB_PROBE='${CB_PROBE:-}' ./step_check.sh agents/$NAME $V $W '$AREA'"
