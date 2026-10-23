@@ -1,0 +1,72 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_1796.method_7904(Lnet/minecraft/class_1792;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7905(Lnet/minecraft/class_1792;F)F": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7906(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7900(Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7902(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7901(Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1817.method_7902(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1817.method_7901(Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1796.method_7904(Lnet/minecraft/class_1792;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7905(Lnet/minecraft/class_1792;F)F": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7906(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7900(Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7902(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1796.method_7901(Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1817.method_7902(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns",
+  "net/minecraft/class_1817.method_7901(Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_7904(Lnet/minecraft/class_1792;)Z",
+   "new": "method_7904(Lnet/minecraft/class_1799;)Z",
+   "onlyUnder": "net/minecraft/class_1796",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns.item(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1792;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "ItemCooldowns keys cooldowns by group since 1.21.2 (an item's group is its id): 1.21.2's shape forwards to the 1.21.1 override with the item (CbItemCooldowns)"
+  },
+  {
+   "old": "method_7905(Lnet/minecraft/class_1792;F)F",
+   "new": "method_7905(Lnet/minecraft/class_1799;F)F",
+   "onlyUnder": "net/minecraft/class_1796",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns.item(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1792;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "ItemCooldowns keys cooldowns by group since 1.21.2 (an item's group is its id): 1.21.2's shape forwards to the 1.21.1 override with the item (CbItemCooldowns)"
+  },
+  {
+   "old": "method_7906(Lnet/minecraft/class_1792;I)V",
+   "new": "method_7906(Lnet/minecraft/class_2960;I)V",
+   "onlyUnder": "net/minecraft/class_1796",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns.item(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1792;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "ItemCooldowns keys cooldowns by group since 1.21.2 (an item's group is its id): 1.21.2's shape forwards to the 1.21.1 override with the item (CbItemCooldowns)"
+  },
+  {
+   "old": "method_7900(Lnet/minecraft/class_1792;)V",
+   "new": "method_7900(Lnet/minecraft/class_2960;)V",
+   "onlyUnder": "net/minecraft/class_1796",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns.item(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1792;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "ItemCooldowns keys cooldowns by group since 1.21.2 (an item's group is its id): 1.21.2's shape forwards to the 1.21.1 override with the item (CbItemCooldowns)"
+  },
+  {
+   "old": "method_7902(Lnet/minecraft/class_1792;I)V",
+   "new": "method_7902(Lnet/minecraft/class_2960;I)V",
+   "onlyUnder": "net/minecraft/class_1796",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns.item(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1792;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "ItemCooldowns keys cooldowns by group since 1.21.2 (an item's group is its id): 1.21.2's shape forwards to the 1.21.1 override with the item (CbItemCooldowns)"
+  },
+  {
+   "old": "method_7901(Lnet/minecraft/class_1792;)V",
+   "new": "method_7901(Lnet/minecraft/class_2960;)V",
+   "onlyUnder": "net/minecraft/class_1796",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCooldowns.item(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1792;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "ItemCooldowns keys cooldowns by group since 1.21.2 (an item's group is its id): 1.21.2's shape forwards to the 1.21.1 override with the item (CbItemCooldowns)"
+  }
+ ]
+}
