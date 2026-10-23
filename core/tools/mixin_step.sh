@@ -102,3 +102,15 @@ with open(out, "w", encoding="utf-8") as o:
 print("open mixin entries ->", out)
 EOF
 rm -f "$OUT"/mixin/*.jar "$OUT"/mixin/conv/*.jar
+# why each open row is open (Main mixin-cause: V's and W's bytecode, the step's wiring, what the converter
+# said about each probe member, the layer's redirect bodies) -> cause-mixin.tsv, and how many of them the
+# step's mixinLedger (gen_mixin_ledger.py) writes down as having no hook point in W. Same namespace on both
+# sides only: not at the wall.
+if [ -z "$WALL" ]; then
+    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-cause "$(code_of "$V")" "$(code_of "$W")" "$WIRING" \
+        "$OUT/open-mixin.tsv" "$OUT/cause-mixin.tsv" "$OUT/mixin/mprobe-$V.jar.index.tsv" "$OUT/mixin/conv/report.md" \
+        "$WD/build/centurybridge-0.3.0+$W.jar" > "$OUT/mixin/cause.log" 2>&1 \
+        && { echo "  causes (rows / targets; all in cause-mixin.tsv):"; sed -n '2,13p' "$OUT/mixin/cause.log"; } \
+        || { echo "  mixin-cause failed"; tail -3 "$OUT/mixin/cause.log"; }
+    python3 "$WD/core/tools/gen_mixin_ledger.py" --count "$OUT/open-mixin.tsv" "$WIRING"
+fi

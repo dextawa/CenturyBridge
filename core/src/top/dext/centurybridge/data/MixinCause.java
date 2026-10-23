@@ -196,6 +196,13 @@ public final class MixinCause {
                         String why = said.get(String.join("\t", r.usage(), r.owner(), r.target(), r.anchor(), String.valueOf(r.ordinal())));
                         if (why != null) vd = new Verdict(vd.cause() + ": " + whyKind(why), why);
                     }
+                    if (vd.cause().startsWith("anchor-into-")) {
+                        // what descend-site said about it
+                        String why = said.get(String.join("\t", r.usage(), r.owner(), r.target(), r.anchor(), String.valueOf(r.ordinal())));
+                        if (why != null && why.contains("is called from")) vd = new Verdict(vd.cause() + ": several call sites", why);
+                        else if (why != null && why.contains("cancels")) vd = new Verdict(vd.cause() + ": handler cancels", why);
+                        else if (why != null && why.contains("matches in")) vd = new Verdict(vd.cause() + ": ambiguous", why);
+                    }
                     if (mc.layer != null && vd.cause().startsWith("target-wired") && !r.target().contains(":")) {
                         String[] d = mc.delegation(r.owner(), r.target());
                         if (d != null) vd = new Verdict(vd.cause() + " / " + d[0], vd.evidence() + " | " + d[1]);
@@ -245,6 +252,10 @@ public final class MixinCause {
             return "stripped";
         }
         if (l.startsWith("- disabled injector")) return l.contains("target gone") ? "disabled, target gone" : "disabled, anchor gone";
+        if (l.contains("short of evidence")) return "no W method holds its code";
+        if (l.contains("W keeps its code there") && l.contains("no longer stands")) return "follows by code, anchor gone in the new method";
+        if (l.contains("W keeps its code there")) return "follows by code, handler cannot take it";
+        if (l.contains("in its place W's body has no single")) return "anchor gone, nothing stands in its place";
         if (l.contains("through an adapter")) return "hook reaches another method through an adapter";
         if (l.contains("no longer stands")) return "follows, anchor gone in the new method";
         if (l.contains("does not declare")) return "follows, new method not declared on target";
