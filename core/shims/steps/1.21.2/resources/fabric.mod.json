@@ -6,7 +6,8 @@
  "environment": "*",
  "entrypoints": {
   "main": [
-   "top.dext.centurybridge.step.v1_21_2.rt.CbLevelInit"
+   "top.dext.centurybridge.step.v1_21_2.rt.CbLevelInit",
+   "top.dext.centurybridge.step.v1_21_2.rt.CbItemInit"
   ]
  },
  "mixins": [
