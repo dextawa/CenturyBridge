@@ -214,6 +214,8 @@
   }
  ],
  "covers": [
+  "net/minecraft/class_10042.method_62614()Lnet/minecraft/class_1799;",
+  "net/minecraft/class_10042.method_62615()Lnet/minecraft/class_1087;",
   "net/minecraft/class_10097.method_62632(Lnet/minecraft/class_9824$class_10095;)V",
   "net/minecraft/class_10097.method_62637()Ljava/util/Map;",
   "net/minecraft/class_1088.method_4734()Ljava/util/Map;",
@@ -313,6 +315,33 @@
    "onlyUnder": "net/minecraft/class_9979",
    "family": "model-loading",
    "basis": "UnbakedBlockStateModel was an UnbakedModel in 1.21.3; 1.21.4 bakes it with bake(baker): its 1.21.3 bake, with the baker's sprites and rotation X0_Y0 (1.21.3's bakery baked every top model so)"
+  },
+  {
+   "old": "method_62496()Lnet/minecraft/class_10048;",
+   "new": "method_62496()Lnet/minecraft/class_10428;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates.cbOminousState(Ltop/dext/centurybridge/step/v1_21_4/facade/OminousItemSpawnerRenderState;)Lnet/minecraft/class_10428;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9483",
+   "family": "render-states",
+   "basis": "OminousItemSpawnerRenderer's state is an ItemClusterRenderState since 1.21.4; 1.21.3's state (the facade) is one"
+  },
+  {
+   "old": "method_62497(Lnet/minecraft/class_9461;Lnet/minecraft/class_10048;F)V",
+   "new": "method_62497(Lnet/minecraft/class_9461;Lnet/minecraft/class_10428;F)V",
+   "narrow": true,
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9483",
+   "family": "render-states",
+   "basis": "1.21.4 extracts into its ItemClusterRenderState, which for this renderer is 1.21.3's state (CbStateOminousRendererMixin)"
+  },
+  {
+   "old": "method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_58753(Lnet/minecraft/class_10428;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "narrow": true,
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9483",
+   "family": "render-states",
+   "basis": "1.21.4 renders its ItemClusterRenderState, which for this renderer is 1.21.3's state"
   }
  ],
  "fieldGetters": {
@@ -353,7 +382,9 @@
   "net/minecraft/class_793$class_4751": "net/minecraft/class_1100$class_4751",
   "net/minecraft/class_1100$class_10103": "net/minecraft/class_10526$class_10103",
   "net/minecraft/class_10101": "top/dext/centurybridge/step/v1_21_4/facade/SpecialModels",
-  "net/minecraft/class_10202": "top/dext/centurybridge/step/v1_21_4/facade/ItemModel"
+  "net/minecraft/class_10202": "top/dext/centurybridge/step/v1_21_4/facade/ItemModel",
+  "net/minecraft/class_10055$class_10056": "top/dext/centurybridge/step/v1_21_4/facade/LegacyPlayerHandState",
+  "net/minecraft/class_10048": "top/dext/centurybridge/step/v1_21_4/facade/OminousItemSpawnerRenderState"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -362,7 +393,9 @@
   "net/minecraft/class_793$class_4751": "BlockModel.GuiLight moved to UnbakedModel.GuiLight in 1.21.4 (same enum: FRONT / SIDE, getByName, lightLikeBlock)",
   "net/minecraft/class_1100$class_10103": "UnbakedModel.Resolver moved to ResolvableModel.Resolver in 1.21.4 (same resolve(ResourceLocation) -> UnbakedModel); UnbakedModel extends ResolvableModel, whose resolveDependencies is 1.21.3's",
   "net/minecraft/class_10101": "SpecialModels is gone in 1.21.4: builtin/generated is the ItemModelGenerator model, builtin/entity has none (facade)",
-  "net/minecraft/class_10202": "ItemModel (an item's unbaked model naming its model by id) is gone in 1.21.4; the facade is 1.21.3's class as a 1.21.4 UnbakedModel"
+  "net/minecraft/class_10202": "ItemModel (an item's unbaked model naming its model by id) is gone in 1.21.4; the facade is 1.21.3's class as a 1.21.4 UnbakedModel",
+  "net/minecraft/class_10055$class_10056": "PlayerRenderState.HandState is gone in 1.21.4; the player renderer fills the facade per hand again",
+  "net/minecraft/class_10048": "OminousItemSpawnerRenderState is gone in 1.21.4 (the renderer draws an ItemClusterRenderState); the facade is one, with 1.21.3's fields, and the renderer makes and fills it"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -724,7 +757,10 @@
   "net/minecraft/class_9824$class_9825.comp_2871()Lnet/minecraft/class_1100;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
   "net/minecraft/class_1088.method_45876(Lnet/minecraft/class_1088$class_9826;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#bakeModels",
   "net/minecraft/class_1088$class_9826.get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#get",
-  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch"
+  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch",
+  "net/minecraft/class_9483.method_62496()Lnet/minecraft/class_10048;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_9483.method_62497(Lnet/minecraft/class_9461;Lnet/minecraft/class_10048;F)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_9483.method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
@@ -746,7 +782,9 @@
   "net/minecraft/class_809.field_4303:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
   "net/minecraft/class_809.field_4306:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
   "net/minecraft/class_793.field_4251:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
-  "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel"
+  "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
  },
  "ctorRedirects": {
   "net/minecraft/class_809.<init>(Lnet/minecraft/class_809;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#copy"
@@ -785,6 +823,8 @@
   }
  },
  "instanceFieldSetters": {
-  "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel"
+  "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
  }
 }

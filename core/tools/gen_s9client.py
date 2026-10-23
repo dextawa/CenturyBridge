@@ -104,6 +104,7 @@ def main():
     item_renderer(frag)
     models(frag)
     render_dispatch(frag)
+    render_states(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -553,6 +554,47 @@ def render_dispatch(frag):
     covers.add("net/minecraft/class_5599.method_14491(Lnet/minecraft/class_3300;)V")
     covers.add("net/minecraft/class_824.method_23077(Lnet/minecraft/class_2586;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)Z")
     frag["covers"] = sorted(covers)
+
+
+
+def render_states(frag):
+    """1.21.3's item fields of the entity render states, filled by 1.21.4's extraction as 1.21.3's did (CbRenderStates, CbState*Mixin)."""
+    S = RT + "/CbRenderStates"
+    ifg = frag.setdefault("instanceFieldGetters", {})
+    ifs = frag.setdefault("instanceFieldSetters", {})
+    for k in ["net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;", "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;"]:
+        ifg[k] = S
+        ifs[k] = S
+    cr = frag.setdefault("classRenames", {})
+    notes = frag.setdefault("classRenameBasis", {})
+    cr["net/minecraft/class_10055$class_10056"] = FAC + "LegacyPlayerHandState"
+    notes["net/minecraft/class_10055$class_10056"] = "PlayerRenderState.HandState is gone in 1.21.4; the player renderer fills the facade per hand again"
+    cr["net/minecraft/class_10048"] = FAC + "OminousItemSpawnerRenderState"
+    notes["net/minecraft/class_10048"] = ("OminousItemSpawnerRenderState is gone in 1.21.4 (the renderer draws an ItemClusterRenderState); the facade is one, "
+                                          "with 1.21.3's fields, and the renderer makes and fills it")
+    covers = set(frag.get("covers", []))
+    covers.add("net/minecraft/class_10042.method_62614()Lnet/minecraft/class_1799;")
+    covers.add("net/minecraft/class_10042.method_62615()Lnet/minecraft/class_1087;")
+    frag["covers"] = sorted(covers)
+    OS = "Lnet/minecraft/class_10048;"
+    CS = "Lnet/minecraft/class_10428;"
+    R = "net/minecraft/class_9483"
+    hooks = frag.setdefault("overrideHooks", [])
+    hooks[:] = [h for h in hooks if h.get("family") != "render-states"]
+    hooks.append({"old": "method_62496()" + OS, "new": "method_62496()" + CS,
+                  "unwrap": S + ".cbOminousState(L" + FAC + "OminousItemSpawnerRenderState;)" + CS, "guard": GUARD, "onlyUnder": R,
+                  "family": "render-states", "basis": "OminousItemSpawnerRenderer's state is an ItemClusterRenderState since 1.21.4; 1.21.3's state (the facade) is one"})
+    hooks.append({"old": "method_62497(Lnet/minecraft/class_9461;" + OS + "F)V", "new": "method_62497(Lnet/minecraft/class_9461;" + CS + "F)V",
+                  "narrow": True, "guard": GUARD, "onlyUnder": R, "family": "render-states",
+                  "basis": "1.21.4 extracts into its ItemClusterRenderState, which for this renderer is 1.21.3's state (CbStateOminousRendererMixin)"})
+    hooks.append({"old": "method_58753(" + OS + "Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+                  "new": "method_58753(" + CS + "Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+                  "narrow": True, "guard": GUARD, "onlyUnder": R, "family": "render-states",
+                  "basis": "1.21.4 renders its ItemClusterRenderState, which for this renderer is 1.21.3's state"})
+    ir = frag.setdefault("instanceRedirects", {})
+    ir[R + ".method_62496()" + OS] = S
+    ir[R + ".method_62497(Lnet/minecraft/class_9461;" + OS + "F)V"] = S
+    ir[R + ".method_58753(" + OS + "Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"] = S
 
 
 if __name__ == "__main__":
