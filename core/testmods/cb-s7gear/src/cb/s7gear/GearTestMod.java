@@ -16,11 +16,16 @@ import net.minecraft.class_1741;
 import net.minecraft.class_1792;
 import net.minecraft.class_1799;
 import net.minecraft.class_1802;
+import net.minecraft.class_1770;
 import net.minecraft.class_1810;
 import net.minecraft.class_1829;
+import net.minecraft.class_1831;
 import net.minecraft.class_1832;
 import net.minecraft.class_1834;
 import net.minecraft.class_1856;
+import net.minecraft.class_1860;
+import net.minecraft.class_1869;
+import net.minecraft.class_1874;
 import net.minecraft.class_2246;
 import net.minecraft.class_2248;
 import net.minecraft.class_2378;
@@ -35,6 +40,7 @@ import net.minecraft.class_5151;
 import net.minecraft.class_6862;
 import net.minecraft.class_6880;
 import net.minecraft.class_7923;
+import net.minecraft.class_8786;
 import net.minecraft.class_8791;
 import net.minecraft.class_9285;
 import net.minecraft.class_9334;
@@ -164,6 +170,10 @@ public class GearTestMod implements ModInitializer {
             armor(server);
             tools();
             food(server);
+            ingredients();
+            types();
+            recipes(server);
+            recipeClasses(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -230,6 +240,21 @@ public class GearTestMod implements ModInitializer {
         check(SWORD.method_7878(sword, new class_1799(class_1802.field_8687)), "sword repairs with the tier's ingredient");
     }
 
+    static void ingredients() {
+        class_1856 empty = class_1856.field_9017;
+        check(empty.method_8093(class_1799.field_8037) && !empty.method_8093(new class_1799(class_1802.field_8477)),
+            "Ingredient.EMPTY matches only the empty stack");
+        check(class_1856.method_35226().method_8103() && class_1856.method_8101(class_1799.field_8037).method_8103(),
+            "Ingredient.of() / of(empty stack) are empty");
+        class_1856 diamond = class_1856.method_8101(new class_1799(class_1802.field_8477, 3));
+        check(!diamond.method_8103() && diamond.method_8105().length == 1 && diamond.method_8100().size() == 1
+            && diamond.method_8093(new class_1799(class_1802.field_8477)), "Ingredient.of(stacks): items, stacking ids, test by item");
+        class_1856 planks = class_1856.method_8106(net.minecraft.class_3489.field_15537);
+        check(planks.method_8093(new class_1799(class_1802.field_8118)) && planks.method_8105().length > 1, "Ingredient.of(tag)");
+        check(class_1856.method_26964(java.util.stream.Stream.of(new class_1799(class_1802.field_8695))).method_8093(new class_1799(class_1802.field_8695)),
+            "Ingredient.ofStacks(stream of stacks)");
+    }
+
     static void food(MinecraftServer server) {
         check(FOOD_PROPS.comp_2494() == 0.8F && FOOD_PROPS.method_58399() == 16, "fast food: 0.8 s, 16 ticks");
         check(FOOD_PROPS.comp_2495().size() == 1 && FOOD_PROPS.comp_2495().get(0).comp_2497() == 1.0F, "food effects: one, certain");
@@ -242,5 +267,174 @@ public class GearTestMod implements ModInitializer {
         class_1799 left = eaten.method_7910(server.method_30002(), zombie);
         check(zombie.method_6059(class_1294.field_5904), "eating gives the food's effect (speed)");
         check(left.method_7947() == 1, "eating uses one: " + left.method_7947());
+    }
+
+    /**
+     * type tests and casts against 1.21.1 types 1.21.2 removed (TieredItem, ElytraItem, Equipable): 1.21.1's answer
+     * for vanilla objects, the cast and the calls on the cast reference
+     */
+    static void types() {
+        Object diamondSword = class_1802.field_8802;
+        check(diamondSword instanceof class_1831, "vanilla diamond sword instanceof TieredItem");
+        check(class_1802.field_8377 instanceof class_1831, "vanilla diamond pickaxe instanceof TieredItem");
+        check(SWORD instanceof class_1831 && PICK instanceof class_1831, "converted tools instanceof TieredItem");
+        class_1831 tiered = (class_1831) diamondSword;
+        check(tiered.method_8022() == class_1834.field_8930, "((TieredItem) diamond sword).getTier() = Tiers.DIAMOND");
+        check(((class_1831) SWORD).method_8022() == GearTier.EMERALD, "((TieredItem) converted sword).getTier() = its tier");
+        Object diamond = class_1802.field_8477;
+        check(!(diamond instanceof class_1831), "a diamond is no TieredItem");
+        boolean threw = false;
+        try {
+            class_1831 bad = (class_1831) diamond;
+            check(bad == null, "unreachable");
+        } catch (ClassCastException e) {
+            threw = true;
+        }
+        check(threw, "(TieredItem) diamond throws ClassCastException");
+        Object elytra = class_1802.field_8833;
+        check(elytra instanceof class_1770, "vanilla elytra instanceof ElytraItem");
+        check(!(class_1802.field_8523 instanceof class_1770), "iron chestplate is no ElytraItem");
+        class_1770 ely = (class_1770) elytra;
+        check(ely.method_7685() == class_1304.field_6174, "((ElytraItem) elytra).getEquipmentSlot() = chest");
+        check(class_1770.method_7804(new class_1799(class_1802.field_8833)), "ElytraItem.isFlyEnabled(new elytra)");
+        check(elytra instanceof class_5151, "vanilla elytra instanceof Equipable");
+        check(((class_5151) elytra).method_31570() == class_3417.field_14966, "((Equipable) elytra).getEquipSound() = elytra's");
+        check(class_2246.field_10147 instanceof class_5151, "carved pumpkin block instanceof Equipable");
+        check(((class_5151) (Object) class_2246.field_10147).method_7685() == class_1304.field_6169, "carved pumpkin equips to head");
+        check(class_1802.field_8523 instanceof class_5151 && CHEST instanceof class_5151, "armor instanceof Equipable");
+        check(!(diamond instanceof class_5151), "a diamond is not Equipable");
+        check(class_5151.method_48957(new class_1799(class_1802.field_8833)) == elytra, "Equipable.get(elytra stack) = the elytra item");
+    }
+
+    /** 1.21.1's Recipe members on loaded vanilla recipes */
+    static void recipes(MinecraftServer server) {
+        class_1869 shaped = null;
+        class_1874 cooking = null;
+        int n = 0;
+        for (class_8786<?> h : server.method_3772().method_8126()) {
+            class_1860<?> r = h.comp_1933();
+            n++;
+            if (shaped == null && r instanceof class_1869 s && s.method_8150() == 3 && s.method_8158() == 3) {
+                shaped = s;
+            }
+            if (cooking == null && r instanceof class_1874 c) {
+                cooking = c;
+            }
+        }
+        check(shaped != null && cooking != null, "found a 3x3 shaped and a cooking recipe among " + n);
+        if (shaped == null || cooking == null) {
+            return;
+        }
+        class_1860<?> r = shaped;
+        check(!r.method_8110(server.method_30611()).method_7960(), "shaped getResultItem non-empty: " + r.method_8110(server.method_30611()));
+        check(r.method_8117().size() == 9, "shaped getIngredients: 9 slots: " + r.method_8117().size());
+        check(r.method_8113(3, 3) && !r.method_8113(2, 2), "shaped canCraftInDimensions 3x3 yes, 2x2 no");
+        check(!r.method_31584(), "shaped isIncomplete false");
+        check(r.method_17447().method_31574(class_1802.field_8465), "shaped getToastSymbol = crafting table");
+        class_1860<?> c = cooking;
+        check(c.method_8117().size() == 1 && c.method_8113(1, 1), "cooking: one ingredient, fits 1x1");
+        check(!c.method_8110(server.method_30611()).method_7960(), "cooking getResultItem non-empty");
+        check(!c.method_17447().method_31574(class_1802.field_8465), "cooking getToastSymbol is its workstation: " + c.method_17447());
+    }
+
+    /** a 1.21.1 cooking recipe subclass of its own: type from the constructor, protected fields */
+    public static class TestCooking extends class_1874 {
+        public TestCooking() {
+            super(net.minecraft.class_3956.field_17546, "cbgroup", net.minecraft.class_7709.field_40242,
+                class_1856.method_8091(class_1802.field_20412), new class_1799(class_1802.field_20391), 0.25F, 123);
+        }
+
+        @Override
+        public net.minecraft.class_1865<?> method_8119() {
+            return net.minecraft.class_1865.field_9042;
+        }
+
+        // javac against intermediary names does not see 1.21.1's typed matches/assemble (method_59981/59982) as
+        // Recipe's: the bridges 1.21.1's AbstractCookingRecipe had, written out (a loom-built mod has neither)
+        public boolean method_8115(net.minecraft.class_9696 in, net.minecraft.class_1937 level) {
+            return method_59981(in, level);
+        }
+
+        public class_1799 method_8116(net.minecraft.class_9696 in, net.minecraft.class_7225.class_7874 p) {
+            return method_59982(in, p);
+        }
+
+        boolean fieldsAre1211() {
+            return this.field_9061.method_8093(new class_1799(class_1802.field_20412)) && this.field_9059.method_31574(class_1802.field_20391)
+                && this.field_9057 == 0.25F && this.field_9058 == 123 && "cbgroup".equals(this.field_9062)
+                && this.field_17544 == net.minecraft.class_3956.field_17546 && this.field_40241 == net.minecraft.class_7709.field_40242;
+        }
+    }
+
+    /** a 1.21.1 smithing recipe of its own: only the stack predicates */
+    public static class TestSmithing implements net.minecraft.class_8059 {
+        public boolean method_48453(class_1799 s) {
+            return s.method_31574(class_1802.field_8477);
+        }
+
+        public boolean method_48454(class_1799 s) {
+            return s.method_31574(class_1802.field_8620);
+        }
+
+        public boolean method_30029(class_1799 s) {
+            return s.method_31574(class_1802.field_8695);
+        }
+
+        public boolean method_8115(net.minecraft.class_9697 in, net.minecraft.class_1937 level) {
+            return method_48453(in.comp_2677()) && method_48454(in.comp_2678()) && method_30029(in.comp_2679());
+        }
+
+        public class_1799 method_8116(net.minecraft.class_9697 in, net.minecraft.class_7225.class_7874 p) {
+            return new class_1799(class_1802.field_8477);
+        }
+
+        public class_1799 method_8110(net.minecraft.class_7225.class_7874 p) {
+            return new class_1799(class_1802.field_8477);
+        }
+
+        public net.minecraft.class_1865<?> method_8119() {
+            return net.minecraft.class_1865.field_9042;
+        }
+    }
+
+    /** 1.21.1's recipe class constructors and members */
+    static void recipeClasses(MinecraftServer server) throws Exception {
+        TestCooking cook = new TestCooking();
+        check(cook.method_17716() == net.minecraft.class_3956.field_17546, "cooking subclass getType = the constructor's (SMELTING)");
+        check(cook.fieldsAre1211(), "cooking subclass reads 1.21.1's protected fields");
+        check(cook.method_59981(new net.minecraft.class_9696(new class_1799(class_1802.field_20412)), server.method_30002())
+            && !cook.method_59981(new net.minecraft.class_9696(new class_1799(class_1802.field_8477)), server.method_30002()),
+            "cooking matches(SingleRecipeInput, level)");
+        check(cook.method_59982(new net.minecraft.class_9696(new class_1799(class_1802.field_20412)), server.method_30611())
+            .method_31574(class_1802.field_20391), "cooking assemble = the result");
+        Object placement = cook.getClass().getMethod("method_61671").invoke(cook);
+        check(placement != null, "1.21.2 asks the cooking subclass for its placement");
+        TestSmithing smith = new TestSmithing();
+        Object template = smith.getClass().getMethod("method_64722").invoke(smith);
+        check(template instanceof java.util.Optional<?> o && o.isPresent()
+            && ((class_1856) o.get()).method_8093(new class_1799(class_1802.field_8477))
+            && !((class_1856) o.get()).method_8093(new class_1799(class_1802.field_8620)),
+            "1.21.2's templateIngredient() of a predicate-only smithing recipe: what isTemplateIngredient accepts");
+        net.minecraft.class_8059 asSmithing = smith;
+        check(asSmithing.method_48454(new class_1799(class_1802.field_8620)), "SmithingRecipe.isBaseIngredient reaches the override");
+        net.minecraft.class_8060 transform = new net.minecraft.class_8060(class_1856.field_9017,
+            class_1856.method_8091(class_1802.field_8620), class_1856.method_8091(class_1802.field_8695), new class_1799(class_1802.field_8477));
+        check(transform.method_48453(class_1799.field_8037) && !transform.method_48453(new class_1799(class_1802.field_8477)),
+            "transform with an empty template: only the empty stack is a template");
+        check(transform.method_48454(new class_1799(class_1802.field_8620)) && transform.method_30029(new class_1799(class_1802.field_8695)),
+            "transform base / addition");
+        check(transform.method_59999(new net.minecraft.class_9697(class_1799.field_8037, new class_1799(class_1802.field_8620),
+            new class_1799(class_1802.field_8695)), server.method_30002()), "transform matches(empty, iron, gold)");
+        net.minecraft.class_8957 pattern = new net.minecraft.class_8957(2, 1,
+            net.minecraft.class_2371.method_10212(class_1856.field_9017, class_1856.method_8091(class_1802.field_8600), class_1856.field_9017),
+            java.util.Optional.empty());
+        check(pattern.method_59997().size() == 2 && pattern.method_59997().get(1).method_8103()
+            && !pattern.method_59997().get(0).method_8103(), "ShapedRecipePattern keeps the empty ingredient in its gap");
+        net.minecraft.class_1867 shapeless = new net.minecraft.class_1867("", net.minecraft.class_7710.field_40251,
+            new class_1799(class_1802.field_8477), net.minecraft.class_2371.method_10212(class_1856.field_9017, class_1856.method_8091(class_1802.field_8600)));
+        check(shapeless.method_8117().size() == 1 && shapeless.method_8113(1, 1), "ShapelessRecipe from a NonNullList");
+        class_2960 id = class_2960.method_60655("cbs7gear", "holder");
+        check(id.equals(new class_8786<>(id, shapeless).comp_1932()), "RecipeHolder(id, recipe).id() = id");
+        check(net.minecraft.class_7709.field_40245 != null, "CookingBookCategory.CODEC");
     }
 }

@@ -85,6 +85,23 @@ public final class CbEntityTypes {
         CbPendingIds.pending(type, key);
     }
 
+    /**
+     * A type something built under {@code key} (a placeholder of {@link CbPendingIds}) with EntityType.Builder's default
+     * key functions -- Fabric API's FabricEntityTypeBuilder.build(key) makes a vanilla Builder of its own -- waits for its
+     * real key like one of build(String).
+     */
+    public static void pendingWithDefaults(class_1299<?> type, class_5321<class_1299<?>> key) {
+        synchronized (CbEntityTypes.class) {
+            TYPES.put(type, new Derive(DEFAULT_DESCRIPTION, DEFAULT_LOOT));
+        }
+        CbPendingIds.pending(type, key);
+    }
+
+    /** a fresh placeholder key of the entity type registry */
+    public static class_5321<class_1299<?>> placeholder() {
+        return CbPendingIds.placeholder(class_7924.field_41266);
+    }
+
     /** EntityType.Builder's defaults (its field initializers in 1.21.2) */
     private static final class_10162<class_1299<?>, String> DEFAULT_DESCRIPTION =
         k -> net.minecraft.class_156.method_646("entity", k.method_29177());

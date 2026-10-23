@@ -88,6 +88,11 @@ public final class CbLevelLevels {
         return self.method_27325(((RulesState) self).cb$features());
     }
 
+    /** frameDefaults of a 1.21.1 copy() override entered directly: the rules' own features, as copy() keeps them */
+    public static net.minecraft.class_7699 features(class_1928 self) {
+        return ((RulesState) self).cb$features();
+    }
+
     /** GameRules' feature set (CbLevelGameRulesAccess) */
     public interface RulesState {
         net.minecraft.class_7699 cb$features();

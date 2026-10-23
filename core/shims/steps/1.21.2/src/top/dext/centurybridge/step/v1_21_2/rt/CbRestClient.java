@@ -196,4 +196,12 @@ public final class CbRestClient {
             boolean hat, boolean upsideDown) {
         net.minecraft.class_7532.method_44445(graphics, skin, x, y, size, hat, upsideDown, -1);
     }
+
+    /**
+     * WorldCreationContext's initial world creation options for a 1.21.1 context: what 1.21.2's own constructor from
+     * WorldDimensions gives -- survival, no game rule overrides, no flat preset
+     */
+    public static net.minecraft.class_10220 defaultCreationOptions() {
+        return new net.minecraft.class_10220(net.minecraft.class_8100.class_4539.field_20624, java.util.Set.of(), null);
+    }
 }

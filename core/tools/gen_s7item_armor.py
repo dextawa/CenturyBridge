@@ -3,9 +3,11 @@
 
   classRenames   ArmorMaterial (1.21.2 reused the name for another record) and its Layer, ArmorMaterials
                  (an interface of 1.21.2 materials now) -> the facades; ArmorItem.Type -> 1.21.2's ArmorType
-                 (the same constants and members, hasTrims() aside)
-  superRenames   ArmorItem / AnimalArmorItem -> facades: a subclass keeps 1.21.1's constructor (material holder) and
-                 its super calls reach 1.21.1's bodies there
+                 (the same constants and members, hasTrims() aside); Equipable -> Object and ElytraItem -> Item
+                 (gone; their 1.21.1 instances include the vanilla elytra and carved pumpkin, which are no facade
+                 instances): type tests and casts ask CbItemTypes, members are statics (CbItemEquipable)
+  superRenames   ArmorItem / AnimalArmorItem / Equipable / ElytraItem -> facades: a subclass (implementor) keeps
+                 1.21.1's constructor and its super calls reach 1.21.1's bodies there
   ctorRedirects  new ArmorItem / AnimalArmorItem -> 1.21.2's built from the converted material
   members        getType/getMaterial/getDefense/getToughness/getEquipmentSlot/getEquipSound: a call reaches the
                  class's own override (adapterHooks, Legacy*), else 1.21.1's body; a super call is 1.21.1's body
@@ -21,6 +23,10 @@ FAC = "top/dext/centurybridge/step/v1_21_2/facade/"
 ARMOR = "net/minecraft/class_1738"
 TYPE = "net/minecraft/class_1738$class_8051"
 ANIMAL = "net/minecraft/class_4059"
+EQUIPABLE = "net/minecraft/class_5151"
+ELYTRA = "net/minecraft/class_1770"
+TYPES = "top/dext/centurybridge/step/v1_21_2/rt/CbItemTypes"
+EQUIP = "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable"
 
 # (member, Legacy interface, basis)
 MEMBERS = [
@@ -46,19 +52,16 @@ def main():
             "net/minecraft/class_1741$class_9196": FAC + "ArmorMaterial$Layer",
             "net/minecraft/class_1740": FAC + "ArmorMaterials",
             TYPE: "net/minecraft/class_8051",
-            # Equipable: the slot/sound/swap interface 1.21.2 replaced by the EQUIPPABLE component (CbItemEquipable)
-            "net/minecraft/class_5151": FAC + "Equipable",
-            # ElytraItem: a plain item with components since 1.21.2
-            "net/minecraft/class_1770": FAC + "ElytraItem",
+            # Equipable: the slot/sound/swap interface 1.21.2 replaced by the EQUIPPABLE component (CbItemEquipable).
+            # Its 1.21.1 instances on 1.21.2 are the facade's implementors and two vanilla objects with no class of
+            # their own any more (the elytra item, the carved pumpkin block): a reference to it is an Object, a type
+            # test and a cast ask CbItemTypes, its members are statics
+            EQUIPABLE: "java/lang/Object",
+            # ElytraItem: a plain item with components since 1.21.2: a reference to it is an Item (CbItemTypes)
+            ELYTRA: "net/minecraft/class_1792",
         },
-        "facadeGaps": {
-            "net/minecraft/class_1770.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;":
-                "use(level, player, hand) answered an InteractionResultHolder in 1.21.1; 1.21.2's Item.use has the same "
-                "parameters, which Java cannot declare a second time on the facade. Calls take the Item.use instance "
-                "redirect and a subclass's super.use(..) the Item.use override hook's super bridge (CbItemResults); "
-                "1.21.1's body was swapWithEquipmentSlot, which 1.21.2's Item.use does for the swappable EQUIPPABLE "
-                "an ElytraItem gets (CbItemEquipable)",
-        },
+        "instanceOfRedirects": {EQUIPABLE: TYPES + "#isEquipable", ELYTRA: TYPES + "#isElytraItem"},
+        "checkCastRedirects": {EQUIPABLE: TYPES + "#castEquipable", ELYTRA: TYPES + "#castElytraItem"},
         # 1.21.1's vanilla Equipables implement facade Equipable again (CbItemEquipable*Mixin): their members exist
         "covers": [
             "net/minecraft/class_1819.method_7685()Lnet/minecraft/class_1304;",
@@ -66,7 +69,8 @@ def main():
             "net/minecraft/class_5815.method_7685()Lnet/minecraft/class_1304;",
             "net/minecraft/class_5815.method_31570()Lnet/minecraft/class_6880;",
         ],
-        "superRenames": {ARMOR: FAC + "ArmorItem", ANIMAL: FAC + "AnimalArmorItem"},
+        "superRenames": {ARMOR: FAC + "ArmorItem", ANIMAL: FAC + "AnimalArmorItem",
+                         EQUIPABLE: FAC + "Equipable", ELYTRA: FAC + "ElytraItem"},
         "ctorRedirects": {
             ARMOR + ".<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_1738$class_8051;Lnet/minecraft/class_1792$class_1793;)V":
                 RT + "#newArmorItem",
@@ -91,8 +95,19 @@ def main():
         },
     }
     out["instanceRedirects"][TYPE + ".method_56691()Z"] = RT
-    out["instanceRedirects"]["net/minecraft/class_1770.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;"
-                             "Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;"] =         "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable"
+    # ElytraItem's members through an ElytraItem (an Item since the rename) reference
+    out["instanceRedirects"][ELYTRA + ".method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;"
+                             "Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;"] = EQUIP
+    out["instanceRedirects"][ELYTRA + ".method_7878(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z"] =         "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers"
+    out["staticRedirects"][ELYTRA + ".method_7804(Lnet/minecraft/class_1799;)Z"] = FAC + "ElytraItem"
+    out["ctorRedirects"][ELYTRA + ".<init>(Lnet/minecraft/class_1792$class_1793;)V"] = EQUIP + "#newElytraItem"
+    # Equipable's members (on an Equipable reference: an Object; on an ElytraItem one: an Item)
+    for owner in (EQUIPABLE, ELYTRA):
+        out["instanceRedirects"][owner + ".method_7685()Lnet/minecraft/class_1304;"] = EQUIP
+        out["instanceRedirects"][owner + ".method_31570()Lnet/minecraft/class_6880;"] = EQUIP
+    out["instanceRedirects"][EQUIPABLE + ".method_48576(Lnet/minecraft/class_1792;Lnet/minecraft/class_1937;"
+                             "Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;"] = EQUIP
+    out["staticRedirects"][EQUIPABLE + ".method_48957(Lnet/minecraft/class_1799;)Lnet/minecraft/class_5151;"] = EQUIP
     for member, legacy, why in MEMBERS:
         name = member[:member.index("(")]
         out["instanceRedirects"][ARMOR + "." + member] = RT

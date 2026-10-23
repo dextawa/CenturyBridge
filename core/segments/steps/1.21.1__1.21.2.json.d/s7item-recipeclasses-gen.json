@@ -1,0 +1,240 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_1874.method_59981(Lnet/minecraft/class_9696;Lnet/minecraft/class_1937;)Z": "method_64719",
+  "net/minecraft/class_1874.method_59982(Lnet/minecraft/class_9696;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "method_59998",
+  "net/minecraft/class_3975.method_60003(Lnet/minecraft/class_9696;Lnet/minecraft/class_1937;)Z": "method_64719",
+  "net/minecraft/class_1850.method_17707(Lnet/minecraft/class_9694;)Lnet/minecraft/class_2371;": "method_17704",
+  "net/minecraft/class_8060.method_59999(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z": "method_61702",
+  "net/minecraft/class_8062.method_60001(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z": "method_61702"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_59981(Lnet/minecraft/class_9696;Lnet/minecraft/class_1937;)Z",
+   "new": "method_64719",
+   "onlyUnder": "net/minecraft/class_1874",
+   "superCalls": "rename",
+   "basis": "AbstractCookingRecipe.matches(input, level) is SingleItemRecipe's since 1.21.2 (same body: the ingredient tests the item)"
+  },
+  {
+   "old": "method_59982(Lnet/minecraft/class_9696;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+   "new": "method_59998",
+   "onlyUnder": "net/minecraft/class_1874",
+   "superCalls": "rename",
+   "basis": "AbstractCookingRecipe.assemble(input, registries) is SingleItemRecipe's since 1.21.2 (same body: a copy of the result)"
+  },
+  {
+   "old": "method_60003(Lnet/minecraft/class_9696;Lnet/minecraft/class_1937;)Z",
+   "new": "method_64719",
+   "onlyUnder": "net/minecraft/class_3975",
+   "superCalls": "rename",
+   "basis": "StonecutterRecipe.matches(input, level) is SingleItemRecipe's since 1.21.2 (same body)"
+  },
+  {
+   "old": "method_17707(Lnet/minecraft/class_9694;)Lnet/minecraft/class_2371;",
+   "new": "method_17704",
+   "onlyUnder": "net/minecraft/class_1850",
+   "superCalls": "rename",
+   "basis": "BookCloningRecipe.getRemainingItems(input) is CraftingRecipe.getRemainingItems's override since 1.21.2 (same body)"
+  },
+  {
+   "old": "method_59999(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z",
+   "new": "method_61702",
+   "onlyUnder": "net/minecraft/class_8060",
+   "superCalls": "rename",
+   "basis": "SmithingTransformRecipe.matches(input, level) is SmithingRecipe's default since 1.21.2 (same tests)"
+  },
+  {
+   "old": "method_60001(Lnet/minecraft/class_9697;Lnet/minecraft/class_1937;)Z",
+   "new": "method_61702",
+   "onlyUnder": "net/minecraft/class_8062",
+   "superCalls": "rename",
+   "basis": "SmithingTrimRecipe.matches(input, level) is SmithingRecipe's default since 1.21.2 (same tests)"
+  }
+ ],
+ "superCtorReshapes": {
+  "net/minecraft/class_1867.<init>(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Lnet/minecraft/class_2371;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7710;Lnet/minecraft/class_1799;Ljava/util/List;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#list(Lnet/minecraft/class_2371;)Ljava/util/List;"
+   ],
+   "basis": "1.21.2's ShapelessRecipe takes the ingredients as a List"
+  },
+  "net/minecraft/class_8957.<init>(IILnet/minecraft/class_2371;Ljava/util/Optional;)V": {
+   "desc": "(IILjava/util/List;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#optionals(Lnet/minecraft/class_2371;)Ljava/util/List;",
+    "keep"
+   ],
+   "basis": "1.21.2's pattern holds Optional ingredients, empty where 1.21.1 put the empty ingredient"
+  },
+  "net/minecraft/class_8060.<init>(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#optional(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#optional(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#optional(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "1.21.2's smithing recipes take Optional ingredients (1.21.1's empty ingredient: empty)"
+  },
+  "net/minecraft/class_8062.<init>(Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;Lnet/minecraft/class_1856;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#optional(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#optional(Lnet/minecraft/class_1856;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#optional(Lnet/minecraft/class_1856;)Ljava/util/Optional;"
+   ],
+   "basis": "1.21.2's smithing recipes take Optional ingredients (1.21.1's empty ingredient: empty)"
+  },
+  "net/minecraft/class_1874.<init>(Lnet/minecraft/class_3956;Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)V",
+   "ops": [
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#cookingCreated(Lnet/minecraft/class_1874;Lnet/minecraft/class_3956;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "1.21.2's AbstractCookingRecipe takes no type (the class answers getType()); 1.21.1 answered the type passed here, kept on the instance"
+  },
+  "net/minecraft/class_3972.<init>(Lnet/minecraft/class_3956;Lnet/minecraft/class_1865;Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "drop",
+    "drop",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#singleCreated(Lnet/minecraft/class_3972;Lnet/minecraft/class_3956;Lnet/minecraft/class_1865;)V",
+   "postArgs": [
+    0,
+    1
+   ],
+   "basis": "1.21.2's SingleItemRecipe takes no type or serializer (the class answers them); 1.21.1 answered the ones passed here, kept on the instance"
+  },
+  "net/minecraft/class_8786.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1860;)V": {
+   "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_1860;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep"
+   ],
+   "basis": "1.21.2's RecipeHolder is keyed by the recipe registry key of the id"
+  }
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_1874",
+   "method": "method_17716()Lnet/minecraft/class_3956;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses.cookingType(Lnet/minecraft/class_1874;)Lnet/minecraft/class_3956;",
+   "basis": "1.21.1's AbstractCookingRecipe.getType(): the type its constructor was given"
+  },
+  {
+   "under": "net/minecraft/class_3972",
+   "method": "method_17716()Lnet/minecraft/class_3956;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses.singleType(Lnet/minecraft/class_3972;)Lnet/minecraft/class_3956;",
+   "basis": "1.21.1's SingleItemRecipe.getType(): the type its constructor was given"
+  },
+  {
+   "under": "net/minecraft/class_3972",
+   "method": "method_8119()Lnet/minecraft/class_1865;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses.singleSerializer(Lnet/minecraft/class_3972;)Lnet/minecraft/class_1865;",
+   "basis": "1.21.1's SingleItemRecipe.getSerializer(): the serializer its constructor was given"
+  },
+  {
+   "under": "net/minecraft/class_8059",
+   "method": "method_64722()Ljava/util/Optional;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses.templateIngredient(Lnet/minecraft/class_8059;)Ljava/util/Optional;",
+   "basis": "a 1.21.1 SmithingRecipe implementing isTemplateIngredient(stack): the items it accepts"
+  },
+  {
+   "under": "net/minecraft/class_8059",
+   "method": "method_64723()Ljava/util/Optional;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses.baseIngredient(Lnet/minecraft/class_8059;)Ljava/util/Optional;",
+   "basis": "a 1.21.1 SmithingRecipe implementing isBaseIngredient(stack): the items it accepts"
+  },
+  {
+   "under": "net/minecraft/class_8059",
+   "method": "method_64724()Ljava/util/Optional;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses.additionIngredient(Lnet/minecraft/class_8059;)Ljava/util/Optional;",
+   "basis": "a 1.21.1 SmithingRecipe implementing isAdditionIngredient(stack): the items it accepts"
+  }
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_8059.method_48453(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8060.method_48453(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8062.method_48453(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8059.method_48454(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8060.method_48454(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8062.method_48454(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8059.method_30029(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8060.method_30029(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8062.method_30029(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8957.method_59997()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_9694.method_59988()Lnet/minecraft/class_1662;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_8786.comp_1932()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses"
+ },
+ "superRedirects": {
+  "net/minecraft/class_8060.method_48453(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#super_method_48453",
+  "net/minecraft/class_8062.method_48453(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#super_method_48453",
+  "net/minecraft/class_8060.method_48454(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#super_method_48454",
+  "net/minecraft/class_8062.method_48454(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#super_method_48454",
+  "net/minecraft/class_8060.method_30029(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#super_method_30029",
+  "net/minecraft/class_8062.method_30029(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#super_method_30029"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_8059",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses$LegacyTemplate",
+   "requires": [
+    "method_48453(Lnet/minecraft/class_1799;)Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 smithing recipe class overriding isTemplateIngredient(stack): calls of it reach the override"
+  },
+  {
+   "under": "net/minecraft/class_8059",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses$LegacyBase",
+   "requires": [
+    "method_48454(Lnet/minecraft/class_1799;)Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 smithing recipe class overriding isBaseIngredient(stack): calls of it reach the override"
+  },
+  {
+   "under": "net/minecraft/class_8059",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses$LegacyAddition",
+   "requires": [
+    "method_30029(Lnet/minecraft/class_1799;)Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 smithing recipe class overriding isAdditionIngredient(stack): calls of it reach the override"
+  }
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_1874.field_17544:Lnet/minecraft/class_3956;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_1874.field_9062:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_1874.field_40241:Lnet/minecraft/class_7709;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_1874.field_9061:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_1874.field_9059:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_1874.field_9057:F": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_1874.field_9058:I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_3972.field_17642:Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_3972.field_17643:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_3972.field_17645:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_7709.field_40245:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses"
+ }
+}

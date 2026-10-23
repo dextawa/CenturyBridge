@@ -9,6 +9,7 @@ import net.minecraft.class_1293;
 import net.minecraft.class_1294;
 import net.minecraft.class_1792;
 import net.minecraft.class_1799;
+import net.minecraft.class_1802;
 import net.minecraft.class_1935;
 import net.minecraft.class_10124;
 import net.minecraft.class_10128;
@@ -28,7 +29,8 @@ import top.dext.centurybridge.step.v1_21_2.facade.FoodPossibleEffect;
  * components. Here a 1.21.2 FoodProperties built by 1.21.1 code (its constructor, its Builder's fast / effect /
  * usingConvertsTo) carries those three as an {@link Extra} kept by identity (a record compares by value, and two
  * foods with the same numbers may differ in effects); 1.21.1's vanilla foods carry 1.21.1's, transcribed from its
- * Foods. Item.Properties.food(food) (CbItemFoodPropertiesMixin) turns an Extra into the CONSUMABLE and
+ * Foods (a 1.21.1 mod's .food(Foods.GOLDEN_APPLE) still gives the golden apple's effects; 1.21.2's own items
+ * pass their consumable with the food, which this does not touch). Item.Properties.food(food) (CbItemFoodPropertiesMixin) turns an Extra into the CONSUMABLE and
  * USE_REMAINDER 1.21.2 eats by: what 1.21.1's eating did with them. Any other FoodProperties (decoded, or built by
  * 1.21.2 code) answers 1.21.1's defaults: 1.6 seconds, nothing, no effects.
  */
@@ -44,8 +46,21 @@ public final class CbItemFood {
 
     private static final Map<class_4174, Extra> EXTRA = new IdentityHashMap<>();
 
-    static {
-        // 1.21.1's Foods: the ones whose eat time, remainder or effects were not the defaults
+    /** 1.21.1's stews (beetroot, mushroom, rabbit, suspicious): eaten into a bowl -- the stack made when asked */
+    private static final Map<class_4174, Boolean> STEWS = new IdentityHashMap<>();
+
+    private static boolean vanillaLoaded;
+
+    /**
+     * 1.21.1's Foods whose eat time, remainder or effects were not the defaults, transcribed from its bytecode.
+     * Loaded on first use, not on class init: this class is first reached while Foods itself initializes (its
+     * builders' build()), when Foods' fields are not set yet.
+     */
+    private static void loadVanilla() {
+        if (vanillaLoaded) {
+            return;
+        }
+        vanillaLoaded = true;
         put(class_4176.field_18645, 1.6F, effect(new class_1293(class_1294.field_5903, 600, 0), 0.3F)); // chicken
         put(class_4176.field_18656, 0.8F); // dried kelp: fast
         put(class_4176.field_18657, 1.6F, // enchanted golden apple
@@ -63,6 +78,10 @@ public final class CbItemFood {
             effect(new class_1293(class_1294.field_5916, 300, 0), 1.0F));
         put(class_4176.field_18632, 1.6F, effect(new class_1293(class_1294.field_5903, 600, 0), 0.8F)); // rotten flesh
         put(class_4176.field_18634, 1.6F, effect(new class_1293(class_1294.field_5899, 100, 0), 1.0F)); // spider eye
+        for (class_4174 stew : new class_4174[] {class_4176.field_18642, class_4176.field_18661, class_4176.field_18631,
+                class_4176.field_18635}) {
+            STEWS.put(stew, Boolean.TRUE);
+        }
     }
 
     private static FoodPossibleEffect effect(class_1293 effect, float probability) {
@@ -83,7 +102,12 @@ public final class CbItemFood {
 
     /** a food's 1.21.1 extras, null when it has 1.21.1's defaults */
     public static synchronized Extra extra(class_4174 food) {
-        return EXTRA.get(food);
+        loadVanilla();
+        Extra e = EXTRA.get(food);
+        if (e == null && STEWS.containsKey(food)) {
+            e = new Extra(DEFAULT_EAT_SECONDS, Optional.of(new class_1799(class_1802.field_8428)), List.of());
+        }
+        return e;
     }
 
     private static Extra extraOrDefault(class_4174 food) {
