@@ -72,6 +72,17 @@
   },
   "method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": {
    "5": "zero: a null tooltip style is the default background, what 1.21.2's own five-argument renderTooltip passes"
+  },
+  "method_32666(Lnet/minecraft/class_327;IILnet/minecraft/class_332;)V": {
+   "3": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#tooltipWidthDefault(Lnet/minecraft/class_5684;Lnet/minecraft/class_327;IILnet/minecraft/class_332;)I",
+   "4": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#tooltipHeightDefault(Lnet/minecraft/class_5684;Lnet/minecraft/class_327;IILnet/minecraft/class_332;)I"
+  },
+  "method_32661()I": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#font()Lnet/minecraft/class_327;"
+  },
+  "method_3118()F": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#firstPersonCamera()Z",
+   "1": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#unscaledFovEffect()F"
   }
  },
  "methodRenames": {
@@ -131,7 +142,10 @@
   "net/minecraft/class_176.method_60298(Lnet/minecraft/class_58;Lnet/minecraft/class_46;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#validateUser",
   "net/minecraft/class_176.method_776(Lnet/minecraft/class_8942;Lnet/minecraft/class_46;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#validateUser",
   "net/minecraft/class_9173.method_56585(Lnet/minecraft/class_5912;Lnet/minecraft/class_5455;Z)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#collectGameRegistries",
-  "net/minecraft/class_742.method_3118()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#fieldOfViewModifier"
+  "net/minecraft/class_742.method_3118()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#fieldOfViewModifier",
+  "net/minecraft/class_5684.method_32661()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#tooltipHeight",
+  "net/minecraft/class_5684.method_32666(Lnet/minecraft/class_327;IILnet/minecraft/class_332;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#renderImage",
+  "net/minecraft/class_437.method_57734(F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#renderBlurredBackground"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -150,7 +164,9 @@
   "net/minecraft/class_176.method_35554()Lnet/minecraft/class_176$class_177;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
   "net/minecraft/class_5514.method_33805(Ljava/lang/String;)Lnet/minecraft/class_5514;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
   "net/minecraft/class_7532.method_44443(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;III)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient",
-  "net/minecraft/class_7532.method_44445(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;IIIZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient"
+  "net/minecraft/class_7532.method_44445(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;IIIZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient",
+  "net/minecraft/class_8002.method_47946(Lnet/minecraft/class_332;IIIII)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
+  "net/minecraft/class_437.method_25412(Ljava/lang/Runnable;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
@@ -340,6 +356,16 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#legacySeaLevel()I"
    ],
    "basis": "1.21.2's ClientLevel takes no profiler supplier (it profiles through Profiler.get(), the running thread's profiler 1.21.1's Minecraft supplied) and takes the sea level the server sends; a 1.21.1 level has no sent sea level and 1.21.1's client used 63 for every level"
+  },
+  "net/minecraft/class_8690$class_8691.<init>(IILnet/minecraft/class_8690$class_8691$class_8692;)V": {
+   "desc": "(IILnet/minecraft/class_8690$class_8691$class_8692;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#tiledCentre()Z"
+   ],
+   "basis": "1.21.2's nine-slice scaling may stretch its centre (stretch_inner); 1.21.1 always tiled it, which is stretchInner false"
   }
  },
  "overrideRenames": [
@@ -478,6 +504,42 @@
    "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient.rgbInt(Lnet/minecraft/class_243;)I",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.2 asks a level for its sky / cloud colour packed (the colour drawn); a 1.21.1 subclass's component vector answers it, each component to 8 bits; its super call reaches the 1.21.1 shape CbRestClientLevelMixin restores, which answers 1.21.2's colour"
+  },
+  {
+   "old": "method_2784(Lnet/minecraft/class_332;FI)V",
+   "new": "method_2784(Lnet/minecraft/class_332;FF)V",
+   "onlyUnder": "net/minecraft/class_537",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.iconAlphaInt(F)I",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2's SpectatorGui asks a 1.21.1 menu item's renderIcon with the float alpha; its override gets the int 1.21.1's SpectatorGui computed from it ((int) (alpha * 255))"
+  },
+  {
+   "old": "method_32666(Lnet/minecraft/class_327;IILnet/minecraft/class_332;)V",
+   "new": "method_32666(Lnet/minecraft/class_327;IIIILnet/minecraft/class_332;)V",
+   "args": [
+    0,
+    1,
+    2,
+    5
+   ],
+   "onlyUnder": "net/minecraft/class_5684",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.2 hands renderImage the size the component is drawn at (its own getWidth / getHeight); a 1.21.1 component never read it, and its super call passes on what vanilla passed"
+  },
+  {
+   "old": "method_57734(F)V",
+   "new": "method_57734()V",
+   "onlyUnder": "net/minecraft/class_437",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$LegacyBlur",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.blur(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$LegacyBlur;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.superBlur(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$BlurSuper;F)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$BlurSuper",
+   "superAccessors": [
+    "method_57734()V"
+   ],
+   "basis": "1.21.2's renderBackground calls renderBlurredBackground() where 1.21.1's passed its partial tick: a 1.21.1 screen's override is asked with the partial tick the screen renders with; its super call reaches 1.21.2's blur, which needs none"
   }
  ],
  "lambdaAdapters": {
@@ -560,5 +622,16 @@
   "net/minecraft/class_744.field_3906:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputRight",
   "net/minecraft/class_744.field_3904:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputJumping",
   "net/minecraft/class_744.field_3903:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputShiftKeyDown"
+ },
+ "callReshapes": {
+  "net/minecraft/class_537.method_2784(Lnet/minecraft/class_332;FI)V": {
+   "desc": "(Lnet/minecraft/class_332;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#iconAlphaFloat(I)F"
+   ],
+   "basis": "SpectatorMenuItem.renderIcon's alpha: 1.21.1 an int 0..255 (SpectatorGui passed (int) (alpha * 255)), 1.21.2 the float 0..1; super calls follow"
+  }
  }
 }

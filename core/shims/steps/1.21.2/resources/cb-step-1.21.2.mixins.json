@@ -47,7 +47,8 @@
     "CbRestGuiGraphicsMixin",
     "CbRestMinecraftMixin",
     "CbRestOptionsKeysMixin",
-    "CbRestOptionsMixin"
+    "CbRestOptionsMixin",
+    "CbRestScreenInvoker"
   ],
   "server": [],
   "injectors": {

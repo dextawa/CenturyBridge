@@ -176,6 +176,16 @@ public final class CbRestClient {
         return player.method_3118(net.minecraft.class_310.method_1551().field_1690.method_31044().method_31034(), 1.0F);
     }
 
+    /** frameDefaults of getFieldOfViewModifier(firstPerson, scale): whether the options' camera is first person */
+    public static boolean firstPersonCamera() {
+        return net.minecraft.class_310.method_1551().field_1690.method_31044().method_31034();
+    }
+
+    /** frameDefaults of getFieldOfViewModifier(firstPerson, scale): 1, no scaling inside the modifier (as 1.21.1) */
+    public static float unscaledFovEffect() {
+        return 1.0F;
+    }
+
     /** PlayerFaceRenderer.draw(graphics, skin, x, y, size): 1.21.1's body, the hat layer drawn, upright, untinted */
     public static void method_44443(net.minecraft.class_332 graphics, net.minecraft.class_2960 skin, int x, int y, int size) {
         net.minecraft.class_7532.method_44445(graphics, skin, x, y, size, true, false, -1);
