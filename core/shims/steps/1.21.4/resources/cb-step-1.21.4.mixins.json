@@ -7,6 +7,15 @@
     "CbRestServerVehicleMixin"
   ],
   "client": [
+    "CbGuiRecipeCollectionMixin",
+    "CbGuiScrollAreaAccess",
+    "CbGuiScrollListMixin",
+    "CbGuiScrollTextAreaMixin",
+    "CbGuiScrollWidgetMixin",
+    "CbItemLayerAccess",
+    "CbItemModelTypesMixin",
+    "CbItemStackRenderStateAccess",
+    "CbItemTintSourcesMixin",
     "CbRestClientPacketsMixin"
   ],
   "server": [],

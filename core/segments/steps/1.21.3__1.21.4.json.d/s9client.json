@@ -1,0 +1,297 @@
+{
+ "overrideRenames": [
+  {
+   "old": "method_25341()D",
+   "new": "method_44387",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getScrollAmount is AbstractScrollArea.scrollAmount since 1.21.4 (the same field read)"
+  },
+  {
+   "old": "method_25307(D)V",
+   "new": "method_44382",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.setScrollAmount (clamped through setClampedScrollAmount) is AbstractScrollArea.setScrollAmount (clamped) since 1.21.4; vanilla sets the amount through it"
+  },
+  {
+   "old": "method_60322()V",
+   "new": "method_65506",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.clampScrollAmount is AbstractScrollArea.refreshScrollAmount since 1.21.4 (set the current amount again, clamped)"
+  },
+  {
+   "old": "method_25331()I",
+   "new": "method_44390",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getMaxScroll is AbstractScrollArea.maxScrollAmount: max(0, maxPosition - (height - 4)) = max(0, contentHeight - height)"
+  },
+  {
+   "old": "method_57717()Z",
+   "new": "method_44392",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.scrollbarVisible is AbstractScrollArea.scrollbarVisible (max scroll > 0)"
+  },
+  {
+   "old": "method_25329()I",
+   "new": "method_65507",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getScrollbarPosition is scrollBarX since 1.21.4 (rows' right + 8 both ways)"
+  },
+  {
+   "old": "method_53812(I)Z",
+   "new": "method_25351",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.isValidMouseClick is AbstractWidget.isValidClickButton (button 0), which 1.21.4's list asks; the list's own isValidClickButton was unused in 1.21.3"
+  },
+  {
+   "old": "method_44381()I",
+   "new": "method_65509",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.innerPadding is AbstractTextAreaWidget.innerPadding (4)"
+  },
+  {
+   "old": "method_44385()I",
+   "new": "method_65512",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.totalInnerPadding is AbstractTextAreaWidget.totalInnerPadding (innerPadding * 2)"
+  },
+  {
+   "old": "method_52233(Lnet/minecraft/class_332;IIII)V",
+   "new": "method_65511",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.renderBorder(GuiGraphics, x, y, w, h) is AbstractTextAreaWidget.renderBorder"
+  },
+  {
+   "old": "method_44383(II)Z",
+   "new": "method_65510",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.withinContentAreaTopBottom is AbstractTextAreaWidget.withinContentAreaTopBottom"
+  },
+  {
+   "old": "method_60321(D)V",
+   "new": "cb$setClampedScrollAmount",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClampedScroll",
+   "family": "gui-scroll",
+   "basis": "1.21.3 set every list scroll through setClampedScrollAmount (setScrollAmount called it); 1.21.4's setScrollAmount on a list hands the value to the override (CbGuiScrollListMixin)"
+  },
+  {
+   "old": "method_57718()I",
+   "new": "cb$getDefaultScrollbarPosition",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyDefaultScrollbar",
+   "family": "gui-scroll",
+   "basis": "getDefaultScrollbarPosition was getScrollbarPosition's default; 1.21.4's scrollBarX asks the override (CbGuiScrollListMixin)"
+  },
+  {
+   "old": "method_25310(II)Z",
+   "new": "cb$clickedHeader",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClickedHeader",
+   "family": "gui-scroll",
+   "basis": "1.21.3's mouseClicked offered a press hitting no entry to clickedHeader; 1.21.4 has no header clicks, the list's mouseClicked asks the override again (CbGuiScrollListMixin)"
+  },
+  {
+   "old": "method_44388(DD)Z",
+   "new": "cb$withinContentAreaPoint",
+   "onlyUnder": "net/minecraft/class_7528",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyContentAreaPoint",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.mouseClicked took a press inside withinContentAreaPoint; 1.21.4 asks isMouseOver, so a widget overriding it gets 1.21.3's mouseClicked (CbGuiScrollTextAreaMixin)"
+  },
+  {
+   "old": "method_25361(DD)Z",
+   "new": "cb$clicked",
+   "onlyUnder": "net/minecraft/class_339",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClicked",
+   "family": "gui-scroll",
+   "basis": "AbstractWidget.mouseClicked asked clicked(x, y); 1.21.4 asks isMouseOver, so a widget overriding clicked is asked it there again (CbGuiScrollWidgetMixin)"
+  }
+ ],
+ "covers": [
+  "net/minecraft/class_339.method_25361(DD)Z",
+  "net/minecraft/class_350.method_25307(D)V",
+  "net/minecraft/class_350.method_25310(II)Z",
+  "net/minecraft/class_350.method_25315(ZI)V",
+  "net/minecraft/class_350.method_25317()I",
+  "net/minecraft/class_350.method_25318(DDI)V",
+  "net/minecraft/class_350.method_25329()I",
+  "net/minecraft/class_350.method_25331()I",
+  "net/minecraft/class_350.method_25341()D",
+  "net/minecraft/class_350.method_53812(I)Z",
+  "net/minecraft/class_350.method_57717()Z",
+  "net/minecraft/class_350.method_57718()I",
+  "net/minecraft/class_350.method_60321(D)V",
+  "net/minecraft/class_350.method_60322()V",
+  "net/minecraft/class_516.method_2656()Z",
+  "net/minecraft/class_7528.method_44381()I",
+  "net/minecraft/class_7528.method_44383(II)Z",
+  "net/minecraft/class_7528.method_44385()I",
+  "net/minecraft/class_7528.method_44388(DD)Z",
+  "net/minecraft/class_7528.method_52233(Lnet/minecraft/class_332;IIII)V",
+  "net/minecraft/class_7528.method_53532()I"
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_25317()I",
+   "new": "method_44395()I",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll.cbContentHeight(I)I",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getMaxPosition (rows * height + header) is contentHeight less 4 since 1.21.4; vanilla sizes the scroll range by contentHeight"
+  },
+  {
+   "old": "method_25318(DDI)V",
+   "new": "method_65505(DDI)Z",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll.cbUpdateScrolling(Ltop/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyUpdateScrollingState;DDI)Z",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyUpdateScrollingState",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.updateScrollingState set the drag state; 1.21.4's updateScrolling sets it and answers it"
+  },
+  {
+   "old": "method_1544()Lnet/minecraft/class_5195;",
+   "new": "method_1544()Lnet/minecraft/class_10383;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc.cbMusicInfo(Lnet/minecraft/class_5195;)Lnet/minecraft/class_10383;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_310",
+   "family": "gui-misc",
+   "basis": "a 1.21.3 Minecraft subclass's getSituationalMusic: the music manager asks the MusicInfo shape; full volume, as 1.21.4's one-argument MusicInfo"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_350.field_45909:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll",
+  "net/minecraft/class_372.field_32225:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc",
+  "net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry.ITEM:Lnet/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/CbItemColorProviderRegistry#item"
+ },
+ "classRenames": {
+  "net/minecraft/class_7528": "net/minecraft/class_10415",
+  "net/minecraft/class_1800": "top/dext/centurybridge/step/v1_21_4/facade/ItemPropertyFunction",
+  "net/minecraft/class_6395": "top/dext/centurybridge/step/v1_21_4/facade/ClampedItemPropertyFunction",
+  "net/minecraft/class_5272": "top/dext/centurybridge/step/v1_21_4/facade/ItemProperties",
+  "net/minecraft/class_7391": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction",
+  "net/minecraft/class_7391$class_7392": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction$CompassTarget",
+  "net/minecraft/class_7391$class_5171": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction$CompassWobble",
+  "net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/FabricModelPredicateProviderRegistry",
+  "net/minecraft/class_326": "top/dext/centurybridge/step/v1_21_4/facade/ItemColor",
+  "net/minecraft/class_325": "top/dext/centurybridge/step/v1_21_4/facade/ItemColors",
+  "net/fabricmc/fabric/api/client/render/ColorProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/ColorProviderRegistry",
+  "net/fabricmc/fabric/api/client/render/InvalidateRenderStateCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/InvalidateRenderStateCallback"
+ },
+ "classRenameBasis": {
+  "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
+  "net/minecraft/class_1800": "1.21.3 ItemPropertyFunction; 1.21.4 reused class_1800 for RangeSelectItemModelProperty, so every 1.21.3 reference meant the predicate function",
+  "net/minecraft/class_5272": "ItemProperties, ClampedItemPropertyFunction, CompassItemPropertyFunction are gone in 1.21.4"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop:0"
+   ],
+   "basis": "ChatSelectionScreen.ChatSelectionList.PaddingEntry is a static class since 1.21.4; 1.21.3 only handed the list on to Entry, which no longer takes it"
+  },
+  "net/minecraft/class_372.<init>(Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;ZI)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;ZI)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbFont()Lnet/minecraft/class_327;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "TutorialToast lays its message out with the game's font in the constructor since 1.21.4"
+  },
+  "net/minecraft/class_372.<init>(Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Z)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Z)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbFont()Lnet/minecraft/class_327;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "TutorialToast lays its message out with the game's font in the constructor since 1.21.4"
+  },
+  "net/minecraft/class_382$class_10364.<init>(FFILnet/minecraft/class_382;Lnet/minecraft/class_2583;F)V": {
+   "desc": "(FFIILnet/minecraft/class_382;Lnet/minecraft/class_2583;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadowColor()I",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadowOffset()F"
+   ],
+   "basis": "BakedGlyph.GlyphInstance carries its own shadow since 1.21.4 (colour 0 = none); a 1.21.3 instance had none -- its shadow was a second instance"
+  }
+ },
+ "superRenames": {
+  "net/minecraft/class_9017": "top/dext/centurybridge/step/v1_21_4/facade/LegacyAbstractContainerWidget"
+ },
+ "callReshapes": {
+  "net/minecraft/class_332.method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIIIZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadow()Z"
+   ],
+   "basis": "GuiGraphics.drawWordWrap drew its lines without shadow in 1.21.3 (drawString(.., false)); 1.21.4 takes the shadow flag"
+  },
+  "net/minecraft/class_425.method_18819(Lnet/minecraft/class_310;)V": {
+   "desc": "(Lnet/minecraft/class_1060;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbTextureManager(Lnet/minecraft/class_310;)Lnet/minecraft/class_1060;"
+   ],
+   "basis": "LoadingOverlay.registerTextures takes the Minecraft's texture manager since 1.21.4 (1.21.3 read it off the Minecraft)"
+  },
+  "net/minecraft/class_310.method_1544()Lnet/minecraft/class_5195;": {
+   "desc": "()Lnet/minecraft/class_10383;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbMusic(Lnet/minecraft/class_10383;)Lnet/minecraft/class_5195;",
+   "basis": "Minecraft.getSituationalMusic answers MusicInfo(music, volume) since 1.21.4; 1.21.3 answered the music"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105"
+ },
+ "resourceTypes": [
+  "centurybridge:legacy_color",
+  "centurybridge:legacy_overrides"
+ ],
+ "depRenames": {
+  "fabric-rendering-v0": "centurybridge_step_1_21_4@*"
+ },
+ "_s9client_depRenames_basis": "1.21.4's Fabric API (0.119.4) no longer ships fabric-rendering-v0, which 1.21.3's (0.114.1) did (core/tools/fapi_modules.py); this layer gives its two classes back (compat/fapi/v0: ColorProviderRegistry, InvalidateRenderStateCallback with v0's forwarding from rendering-v1)"
+}
