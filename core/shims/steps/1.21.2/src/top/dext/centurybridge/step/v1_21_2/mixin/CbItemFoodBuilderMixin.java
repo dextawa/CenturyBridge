@@ -19,14 +19,15 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemFood;
 @Mixin(class_4174.class_4175.class)
 public abstract class CbItemFoodBuilderMixin implements CbItemFood.BuilderExtras {
 
+    // no field initializers: unset reads as 1.21.1's defaults (1.6 s, nothing, no effects)
     @Unique
-    private float cb$eatSeconds = CbItemFood.DEFAULT_EAT_SECONDS;
+    private Float cb$eatSeconds;
 
     @Unique
-    private Optional<class_1799> cb$convertsTo = Optional.empty();
+    private Optional<class_1799> cb$convertsTo;
 
     @Unique
-    private final List<FoodPossibleEffect> cb$effects = CbItemFood.newEffects();
+    private List<FoodPossibleEffect> cb$effects;
 
     @Inject(method = "method_19242", at = @At("RETURN"), cancellable = true)
     private void cb$build(CallbackInfoReturnable<class_4174> cir) {
@@ -35,7 +36,7 @@ public abstract class CbItemFoodBuilderMixin implements CbItemFood.BuilderExtras
 
     @Override
     public float cb$eatSeconds() {
-        return cb$eatSeconds;
+        return cb$eatSeconds != null ? cb$eatSeconds : CbItemFood.DEFAULT_EAT_SECONDS;
     }
 
     @Override
@@ -45,7 +46,7 @@ public abstract class CbItemFoodBuilderMixin implements CbItemFood.BuilderExtras
 
     @Override
     public Optional<class_1799> cb$convertsTo() {
-        return cb$convertsTo;
+        return cb$convertsTo != null ? cb$convertsTo : Optional.empty();
     }
 
     @Override
@@ -55,6 +56,9 @@ public abstract class CbItemFoodBuilderMixin implements CbItemFood.BuilderExtras
 
     @Override
     public List<FoodPossibleEffect> cb$effects() {
+        if (cb$effects == null) {
+            cb$effects = CbItemFood.newEffects();
+        }
         return cb$effects;
     }
 }
