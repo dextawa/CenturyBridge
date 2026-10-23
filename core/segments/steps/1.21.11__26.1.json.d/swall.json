@@ -91,7 +91,8 @@
   "net/minecraft/class_1309.method_18867(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#entityMakeBrain",
   "net/minecraft/class_4095$class_5303.method_28335(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#providerMakeBrain",
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive",
-  "net/minecraft/class_766.method_71651(Lnet/minecraft/class_1060;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#registerTextures"
+  "net/minecraft/class_766.method_71651(Lnet/minecraft/class_1060;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#registerTextures",
+  "net/minecraft/class_5219.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getGameRules"
  },
  "overrideHooks": [
   {
@@ -678,7 +679,9 @@
   "net/minecraft/class_765.field_32767:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
   "net/minecraft/class_765.field_32768:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
   "net/minecraft/class_765.field_32769:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
-  "net/minecraft/class_757.field_32686:F": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer"
+  "net/minecraft/class_757.field_32686:F": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer",
+  "net/minecraft/class_31.field_31843:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData",
+  "net/minecraft/class_31.field_36349:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData"
  },
  "abstractFills": [
   {
