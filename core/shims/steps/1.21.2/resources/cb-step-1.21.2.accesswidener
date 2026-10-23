@@ -68,3 +68,5 @@ extendable class net/minecraft/class_2758
 extendable method net/minecraft/class_2758 <init> (Ljava/lang/String;II)V
 extendable class net/minecraft/class_2754
 extendable method net/minecraft/class_2754 <init> (Ljava/lang/String;Ljava/lang/Class;Ljava/util/List;)V
+# StackedItemContents' item-holder counts, read back into 1.21.1's StackedContents (rt/CbLevelStacked)
+accessible field net/minecraft/class_9875 field_52506 Lnet/minecraft/class_1662;

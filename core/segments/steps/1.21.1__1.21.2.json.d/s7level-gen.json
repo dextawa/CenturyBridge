@@ -695,7 +695,12 @@
   "net/minecraft/class_6564.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
   "net/minecraft/class_3609.method_15738(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;Lnet/minecraft/class_3611;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing",
   "net/minecraft/class_3609.method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing",
-  "net/minecraft/class_8490.method_51204(Lnet/minecraft/class_2960;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc"
+  "net/minecraft/class_8490.method_51204(Lnet/minecraft/class_2960;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc",
+  "net/minecraft/class_1277.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked",
+  "net/minecraft/class_1715.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked",
+  "net/minecraft/class_1737.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked",
+  "net/minecraft/class_2609.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked",
+  "net/minecraft/class_8887.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -1325,6 +1330,19 @@
     "method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_3609$class_9900;)I"
    ],
    "basis": "getSlopeDistance keeps the source position and caches in a SpreadContext since 1.21.2: a 1.21.1 override is asked with the context's origin and fresh caches, its super call with a context at its source position (CbLevelFlowing)"
+  },
+  {
+   "old": "method_7683(Lnet/minecraft/class_1662;)V",
+   "new": "method_7683(Lnet/minecraft/class_9875;)V",
+   "onlyUnder": "net/minecraft/class_1737",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$LegacyFill",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked.fillBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$LegacyFill;Lnet/minecraft/class_9875;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked.superFill(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$SuperFill;Lnet/minecraft/class_1662;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$SuperFill",
+   "superAccessors": [
+    "method_7683(Lnet/minecraft/class_9875;)V"
+   ],
+   "basis": "StackedContentsCompatible.fillStackedContents takes StackedItemContents since 1.21.2: a 1.21.1 override fills 1.21.1's StackedContents (s7entity's facade), poured into it; its super call is 1.21.2's body read back (CbLevelStacked)"
   }
  ],
  "overrideRenames": [
@@ -1718,6 +1736,11 @@
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOffsetFunction",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#offsetFunction(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOffsetFunction;)Lnet/minecraft/class_4970$class_8176;",
    "basis": "a 1.21.1 offset function lambda, as 1.21.2's evaluate(state, pos): 1.21.2 asks without a level"
+  },
+  "net/minecraft/class_1737.method_7683(Lnet/minecraft/class_1662;)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$LegacyFill",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked#lambda(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$LegacyFill;)Lnet/minecraft/class_1737;",
+   "basis": "a 1.21.1 StackedContentsCompatible lambda fills 1.21.1's StackedContents (CbLevelStacked)"
   }
  }
 }

@@ -971,6 +971,27 @@ def frame_defaults(f):
     f.put("frameDefaults", "method_10363()V", {"0": LMI + "#portalLevel(" + L("class_2424") + ")" + L("class_1936")})
 
 
+# ------------------------------------------------------------------------------------------- StackedContentsCompatible
+LSK = RT + "/CbLevelStacked"
+
+
+def stacked(f):
+    SC, SIC = L("class_1662"), L("class_9875")
+    old, new = "method_7683(" + SC + ")V", "method_7683(" + SIC + ")V"
+    for c in f.declarers("method_7683", "(" + SC + ")V"):
+        f.put("instanceRedirects", c + "." + old, LSK)
+    f.put("lambdaAdapters", MC + "class_1737." + old,
+          {"iface": LSK + "$LegacyFill", "adapt": LSK + "#lambda(L" + LSK + "$LegacyFill;)" + L("class_1737"),
+           "basis": "a 1.21.1 StackedContentsCompatible lambda fills 1.21.1's StackedContents (CbLevelStacked)"})
+    f.hook(old=old, new=new, onlyUnder=MC + "class_1737", adapter=LSK + "$LegacyFill",
+           bridge=LSK + ".fillBridge(L" + LSK + "$LegacyFill;" + SIC + ")V",
+           superBridge=LSK + ".superFill(L" + LSK + "$SuperFill;" + SC + ")V",
+           superAccess=LSK + "$SuperFill", superAccessors=[new],
+           basis="StackedContentsCompatible.fillStackedContents takes StackedItemContents since 1.21.2: a 1.21.1 "
+                 "override fills 1.21.1's StackedContents (s7entity's facade), poured into it; its super call is "
+                 "1.21.2's body read back (CbLevelStacked)")
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -998,6 +1019,7 @@ def main():
     blocks_rest(f)
     generic(f)
     frame_defaults(f)
+    stacked(f)
     f.write()
 
 

@@ -335,6 +335,18 @@ public class S7LevelTestMod implements ModInitializer {
             check(class_3748.method_16546(i1, i2), "JigsawBlock.canAttach compares 1.21.1's target and name strings");
         });
 
+        step("stacked contents", () -> {
+            net.minecraft.class_1662 sc = new net.minecraft.class_1662();
+            new net.minecraft.class_1277(new net.minecraft.class_1799(class_2246.field_10340, 5)).method_7683(sc);
+            int stone = net.minecraft.class_1792.method_7880(class_2246.field_10340.method_8389());
+            check(sc.field_7550.get(stone) == 5, "SimpleContainer.fillStackedContents(StackedContents) counts its stacks (stone x5: "
+                + sc.field_7550.get(stone) + ")");
+            net.minecraft.class_1662 sc2 = new net.minecraft.class_1662();
+            net.minecraft.class_1737 own = c -> c.field_7550.put(stone, 3);
+            own.method_7683(sc2);
+            check(sc2.field_7550.get(stone) == 3, "a 1.21.1 StackedContentsCompatible lambda fills 1.21.1's StackedContents");
+        });
+
         step("loot data", () -> {
             JsonObject cond = new JsonObject();
             cond.addProperty("condition", "minecraft:survives_explosion");
