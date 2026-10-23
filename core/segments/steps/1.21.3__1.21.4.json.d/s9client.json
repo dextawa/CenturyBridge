@@ -1,0 +1,196 @@
+{
+ "overrideRenames": [
+  {
+   "old": "method_25341()D",
+   "new": "method_44387",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getScrollAmount is AbstractScrollArea.scrollAmount since 1.21.4 (the same field read)"
+  },
+  {
+   "old": "method_25307(D)V",
+   "new": "method_44382",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.setScrollAmount (clamped through setClampedScrollAmount) is AbstractScrollArea.setScrollAmount (clamped) since 1.21.4; vanilla sets the amount through it"
+  },
+  {
+   "old": "method_60322()V",
+   "new": "method_65506",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.clampScrollAmount is AbstractScrollArea.refreshScrollAmount since 1.21.4 (set the current amount again, clamped)"
+  },
+  {
+   "old": "method_25331()I",
+   "new": "method_44390",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getMaxScroll is AbstractScrollArea.maxScrollAmount: max(0, maxPosition - (height - 4)) = max(0, contentHeight - height)"
+  },
+  {
+   "old": "method_57717()Z",
+   "new": "method_44392",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.scrollbarVisible is AbstractScrollArea.scrollbarVisible (max scroll > 0)"
+  },
+  {
+   "old": "method_25329()I",
+   "new": "method_65507",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getScrollbarPosition is scrollBarX since 1.21.4 (rows' right + 8 both ways)"
+  },
+  {
+   "old": "method_53812(I)Z",
+   "new": "method_25351",
+   "onlyUnder": "net/minecraft/class_350",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.isValidMouseClick is AbstractWidget.isValidClickButton (button 0), which 1.21.4's list asks; the list's own isValidClickButton was unused in 1.21.3"
+  },
+  {
+   "old": "method_44381()I",
+   "new": "method_65509",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.innerPadding is AbstractTextAreaWidget.innerPadding (4)"
+  },
+  {
+   "old": "method_44385()I",
+   "new": "method_65512",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.totalInnerPadding is AbstractTextAreaWidget.totalInnerPadding (innerPadding * 2)"
+  },
+  {
+   "old": "method_52233(Lnet/minecraft/class_332;IIII)V",
+   "new": "method_65511",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.renderBorder(GuiGraphics, x, y, w, h) is AbstractTextAreaWidget.renderBorder"
+  },
+  {
+   "old": "method_44383(II)Z",
+   "new": "method_65510",
+   "onlyUnder": "net/minecraft/class_7528",
+   "superCalls": "rename",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.withinContentAreaTopBottom is AbstractTextAreaWidget.withinContentAreaTopBottom"
+  },
+  {
+   "old": "method_60321(D)V",
+   "new": "cb$setClampedScrollAmount",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClampedScroll",
+   "family": "gui-scroll",
+   "basis": "1.21.3 set every list scroll through setClampedScrollAmount (setScrollAmount called it); 1.21.4's setScrollAmount on a list hands the value to the override (CbGuiScrollListMixin)"
+  },
+  {
+   "old": "method_57718()I",
+   "new": "cb$getDefaultScrollbarPosition",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyDefaultScrollbar",
+   "family": "gui-scroll",
+   "basis": "getDefaultScrollbarPosition was getScrollbarPosition's default; 1.21.4's scrollBarX asks the override (CbGuiScrollListMixin)"
+  },
+  {
+   "old": "method_25310(II)Z",
+   "new": "cb$clickedHeader",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClickedHeader",
+   "family": "gui-scroll",
+   "basis": "1.21.3's mouseClicked offered a press hitting no entry to clickedHeader; 1.21.4 has no header clicks, the list's mouseClicked asks the override again (CbGuiScrollListMixin)"
+  },
+  {
+   "old": "method_44388(DD)Z",
+   "new": "cb$withinContentAreaPoint",
+   "onlyUnder": "net/minecraft/class_7528",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyContentAreaPoint",
+   "family": "gui-scroll",
+   "basis": "AbstractScrollWidget.mouseClicked took a press inside withinContentAreaPoint; 1.21.4 asks isMouseOver, so a widget overriding it gets 1.21.3's mouseClicked (CbGuiScrollTextAreaMixin)"
+  },
+  {
+   "old": "method_25361(DD)Z",
+   "new": "cb$clicked",
+   "onlyUnder": "net/minecraft/class_339",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClicked",
+   "family": "gui-scroll",
+   "basis": "AbstractWidget.mouseClicked asked clicked(x, y); 1.21.4 asks isMouseOver, so a widget overriding clicked is asked it there again (CbGuiScrollWidgetMixin)"
+  }
+ ],
+ "covers": [
+  "net/minecraft/class_339.method_25361(DD)Z",
+  "net/minecraft/class_350.method_25307(D)V",
+  "net/minecraft/class_350.method_25310(II)Z",
+  "net/minecraft/class_350.method_25315(ZI)V",
+  "net/minecraft/class_350.method_25317()I",
+  "net/minecraft/class_350.method_25318(DDI)V",
+  "net/minecraft/class_350.method_25329()I",
+  "net/minecraft/class_350.method_25331()I",
+  "net/minecraft/class_350.method_25341()D",
+  "net/minecraft/class_350.method_53812(I)Z",
+  "net/minecraft/class_350.method_57717()Z",
+  "net/minecraft/class_350.method_57718()I",
+  "net/minecraft/class_350.method_60321(D)V",
+  "net/minecraft/class_350.method_60322()V",
+  "net/minecraft/class_7528.method_44381()I",
+  "net/minecraft/class_7528.method_44383(II)Z",
+  "net/minecraft/class_7528.method_44385()I",
+  "net/minecraft/class_7528.method_44388(DD)Z",
+  "net/minecraft/class_7528.method_52233(Lnet/minecraft/class_332;IIII)V",
+  "net/minecraft/class_7528.method_53532()I"
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_25317()I",
+   "new": "method_44395()I",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll.cbContentHeight(I)I",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.getMaxPosition (rows * height + header) is contentHeight less 4 since 1.21.4; vanilla sizes the scroll range by contentHeight"
+  },
+  {
+   "old": "method_25318(DDI)V",
+   "new": "method_65505(DDI)Z",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll.cbUpdateScrolling(Ltop/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyUpdateScrollingState;DDI)Z",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyUpdateScrollingState",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_350",
+   "family": "gui-scroll",
+   "basis": "AbstractSelectionList.updateScrollingState set the drag state; 1.21.4's updateScrolling sets it and answers it"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_350.field_45909:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll"
+ },
+ "classRenames": {
+  "net/minecraft/class_7528": "net/minecraft/class_10415"
+ },
+ "classRenameBasis": {
+  "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop:0"
+   ],
+   "basis": "ChatSelectionScreen.ChatSelectionList.PaddingEntry is a static class since 1.21.4; 1.21.3 only handed the list on to Entry, which no longer takes it"
+  }
+ },
+ "superRenames": {
+  "net/minecraft/class_9017": "top/dext/centurybridge/step/v1_21_4/facade/LegacyAbstractContainerWidget"
+ }
+}
