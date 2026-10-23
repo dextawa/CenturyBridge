@@ -18,6 +18,9 @@ OUT="${2:-build}"
 SHIM="${CB_SHIM:-core/shims/$VERSION}"
 [ -d "$SHIM" ] || { echo "no shim tree for $VERSION"; exit 1; }
 WIRING="${CB_WIRING:-core/segments/shims-$VERSION.json}"
+# a climb step's wiring (<V>__<W>.json): its layer serves mods entering at V only, so the gates look up
+# original members in V's stub alone (SourceStubs, -Dcb.sourceStubs=previous), not every older release's
+case "$(basename "$WIRING")" in *__*.json) SRC_STUBS="-Dcb.sourceStubs=previous";; *) SRC_STUBS="";; esac
 # CB_DATA: the working-set directory (game jars, runtimes, mappings). A git worktree has none of its
 # own; point CB_DATA at the main checkout's data instead of linking it in (a link inside a worktree
 # turns removing the worktree into deleting the data).
@@ -190,7 +193,7 @@ java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$
 # wrap/unwrap/guard, facade renames. A member a vanilla class has only through an
 # interface the target's Fabric API injects into it is judged on that interface
 # (-Dcb.fapi: the modules the shims compiled against).
-java -Dcb.fapi="$FAPI" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "$WIRING" "$NAMETABLE" "$STUB" \
+java $SRC_STUBS -Dcb.fapi="$FAPI" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main wiring-check "$CLASSES" "$WIRING" "$NAMETABLE" "$STUB" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: dangling redirect wiring"; exit 1; }
 
@@ -201,7 +204,7 @@ java -Dcb.fapi="$FAPI" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Ma
 # implemented interface (name AND descriptor), and the original member -- read
 # from the older stubs in data/jars -- must not be static, since a covered call
 # site keeps its invokestatic and no mixin may add a non-private static.
-java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
+java $SRC_STUBS -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 

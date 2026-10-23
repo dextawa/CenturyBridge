@@ -58,6 +58,15 @@ public final class CbItemMemberComponents implements class_9323 {
         return keys;
     }
 
+    /**
+     * replace the components an item was built with (CbPendingIds' registration backfill), keeping the view of a
+     * class whose overrides answer components -- rebuilding from the view would freeze its answers
+     */
+    public static void setBuilt(class_1792 item, class_9323 built) {
+        ((CbPendingIdsItems.ItemFields) item).cb$setComponents(
+            item.method_57347() instanceof CbItemMemberComponents ? new CbItemMemberComponents(item, built) : built);
+    }
+
     /** the components the item was built with */
     public class_9323 built() {
         return built;

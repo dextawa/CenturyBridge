@@ -202,14 +202,14 @@ public final class CbPendingIdsItems {
                 ItemFields fi = (ItemFields) item;
                 String id = b.method_63499();
                 fi.cb$setDescriptionId(id);
-                class_2561 name = item.method_57347().method_57829(class_9334.field_50239);
-                class_9323.class_9324 comps = class_9323.method_57827().method_57839(item.method_57347());
+                class_2561 name = CbItemMembers.built(item).method_57829(class_9334.field_50239);
+                class_9323.class_9324 comps = class_9323.method_57827().method_57839(CbItemMembers.built(item));
                 // the name the item's backfill gave it from the block's placeholder description id
                 if (name != null && name.method_10851() instanceof net.minecraft.class_2588 tr
                         && tr.method_11022().startsWith("block." + CbPendingIds.NS + ".")) {
                     comps.method_57840(class_9334.field_50239, class_2561.method_43471(id));
                 }
-                fi.cb$setComponents(comps.method_57838());
+                CbItemMemberComponents.setBuilt(item, comps.method_57838());
             }
         }
     }
@@ -222,7 +222,7 @@ public final class CbPendingIdsItems {
                                class_2960 model) {
         ItemFields f = (ItemFields) item;
         f.cb$setDescriptionId(descriptionId);
-        class_9323 now = item.method_57347();
+        class_9323 now = CbItemMembers.built(item);
         class_9323.class_9324 b = class_9323.method_57827().method_57839(now);
         if (java.util.Objects.equals(now.method_57829(class_9334.field_50239), placeholderName)) {
             b.method_57840(class_9334.field_50239, class_2561.method_43471(descriptionId));
@@ -230,7 +230,7 @@ public final class CbPendingIdsItems {
         if (java.util.Objects.equals(now.method_57829(class_9334.field_54199), placeholderModel)) {
             b.method_57840(class_9334.field_54199, model);
         }
-        f.cb$setComponents(b.method_57838());
+        CbItemMemberComponents.setBuilt(item, b.method_57838());
     }
 
     private CbPendingIdsItems() {
