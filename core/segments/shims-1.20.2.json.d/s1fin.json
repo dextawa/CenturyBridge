@@ -360,6 +360,33 @@
    ],
    "synth": [],
    "basis": "s1fin: a 1.20.1 CriterionProgress subclass's serializeToJson answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyListenerFeatures",
+   "requires": [
+    "method_45728(Lnet/minecraft/class_7832;)V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 ClientPlayPacketListener implementation's onFeatures: 1.20.2 sends the features to the configuration listener of the connection; the listener gets that packet after the login packet, where 1.20.1's server sent it (CbNetListenerFeaturesDelivery, CbNetListenerConfigFeatures)"
+  },
+  {
+   "under": "net/minecraft/class_3248",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyLogin$Accept",
+   "requires": [
+    "method_14384()V"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 ServerLoginNetworkHandler subclass's acceptPlayer override: called in place of 1.20.2's verifyLoginAndFinishConnectionSetup, which tick() calls in the state 1.20.1 called acceptPlayer (CbNetLoginOverridesBridge)"
+  },
+  {
+   "under": "net/minecraft/class_3248",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbNetLegacyLogin$OfflineProfile",
+   "requires": [
+    "method_14375(Lcom/mojang/authlib/GameProfile;)Lcom/mojang/authlib/GameProfile;"
+   ],
+   "synth": [],
+   "basis": "a 1.20.1 ServerLoginNetworkHandler subclass's toOfflineProfile override: answers in place of 1.20.2's createOfflineProfile(name) in handleHello (CbNetLoginOverridesBridge)"
   }
  ],
  "superRedirects": {
