@@ -118,7 +118,11 @@
   "net/minecraft/class_1688.method_7508(DDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getPos",
   "net/minecraft/class_1688.method_7505(DDDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getPosOffs",
   "net/minecraft/class_1688.method_7525()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#applyNaturalSlowdown",
-  "net/minecraft/class_1688.method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#moveAlongTrack"
+  "net/minecraft/class_1688.method_7513(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#moveAlongTrack",
+  "net/minecraft/class_1510.method_6817(IF)[D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getLatencyPos",
+  "net/minecraft/class_1510.method_6823(I[D[D)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getHeadPartYOffset",
+  "net/minecraft/class_1528.method_6879(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getHeadYRot",
+  "net/minecraft/class_1528.method_6887(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getHeadXRot"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -604,7 +608,11 @@
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
   "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#fabricBuild",
   "net/minecraft/class_1688.method_7508(DDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#superGetPos",
-  "net/minecraft/class_1688.method_7505(DDDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#superGetPosOffs"
+  "net/minecraft/class_1688.method_7505(DDDD)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#superGetPosOffs",
+  "net/minecraft/class_1510.method_6817(IF)[D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetLatencyPos",
+  "net/minecraft/class_1510.method_6823(I[D[D)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadPartYOffset",
+  "net/minecraft/class_1528.method_6879(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadYRot",
+  "net/minecraft/class_1528.method_6887(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadXRot"
  },
  "overrideHooks": [
   {
@@ -1003,6 +1011,42 @@
    ],
    "synth": [],
    "basis": "1.21.1's getPosOffs of a mod minecart, asked by the renderer: OldMinecartBehavior's getPosOffs (same body) asks it (CbEntityMinecartOldMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1510",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyLatency",
+   "requires": [
+    "method_6817(IF)[D"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getLatencyPos of a mod dragon, asked by aiStep (1.0), the renderer and the model: the dragon's flight history (and the render state's copy) answers get(i) / get(i, partialTick) with it (CbEntityDragonHistoryMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1510",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyHeadOffset",
+   "requires": [
+    "method_6823(I[D[D)F"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getHeadPartYOffset of a mod dragon, asked by the model: the render state's answers with it (CbEntityDragonStateMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1528",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyHeadYRot",
+   "requires": [
+    "method_6879(I)F"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getHeadYRot of a mod wither, asked by the model per head: getHeadYRots (the renderer's only source) answers with it (CbEntityWitherMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1528",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon$LegacyHeadXRot",
+   "requires": [
+    "method_6887(I)F"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getHeadXRot of a mod wither, asked by the model per head: getHeadXRots answers with it (CbEntityWitherMixin)"
   }
  ],
  "classRenames": {
@@ -1040,13 +1084,16 @@
   "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#getWasOnFire",
   "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getInGround",
   "net/minecraft/class_1696.field_7737:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getXPush",
-  "net/minecraft/class_1696.field_7736:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getZPush"
+  "net/minecraft/class_1696.field_7736:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#getZPush",
+  "net/minecraft/class_1510.field_7026:[[D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#positions",
+  "net/minecraft/class_1510.field_7010:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#getPosPointer"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setWasOnFire",
   "net/minecraft/class_1665.field_7588:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#setInGround",
   "net/minecraft/class_1696.field_7737:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#setXPush",
-  "net/minecraft/class_1696.field_7736:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#setZPush"
+  "net/minecraft/class_1696.field_7736:D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecartPhysics#setZPush",
+  "net/minecraft/class_1510.field_7010:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#setPosPointer"
  },
  "covers": [
   "net/minecraft/class_1297.method_5687(I)Z",
