@@ -45,7 +45,7 @@ class Fragment:
         self.v, self.w_stub = v, w
         self.w = {k: ({} if k not in ("overrideHooks", "overrideRenames", "adapterHooks", "abstractFills",
                                       "convertHooks", "covers") else [])
-                  for k in ("methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
+                  for k in ("superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
                             "instanceRedirects", "fieldRedirects", "fieldGetters", "instanceFieldGetters",
                             "superRedirects", "covers", "overrideHooks", "overrideRenames", "frameDefaults",
                             "convertHooks", "adapterHooks", "abstractFills", "lambdaAdapters", "genericWitnesses",
@@ -305,6 +305,72 @@ def neighbors(f):
     f.put("frameDefaults", "method_41705(" + POS + BLK + DIR + ")V", {"3": why})
 
 
+# ------------------------------------------------------------------------------------------- explosions
+EX = MC + "class_1927"
+LX = RT + "/CbLevelExplosions"
+
+
+def explosions(f):
+    f.put("superRenames", EX, FAC + "/Explosion")
+    ent, lst, bi, po, snd = L("class_1297"), "Ljava/util/List;", L("class_1927$class_4179"), L("class_2394"), L("class_6880")
+    for args in (LVL + ent + "DDDF" + lst + bi + po + po + snd,
+                 LVL + ent + "DDDFZ" + bi + lst,
+                 LVL + ent + "DDDFZ" + bi,
+                 LVL + ent + L("class_1282") + L("class_5362") + "DDDFZ" + bi + po + po + snd):
+        f.put("ctorRedirects", EX + ".<init>(" + args + ")V", LX)
+    f.put("staticRedirects", EX + ".method_17752(" + L("class_243") + ent + ")F", LX)
+    for m in ("method_8348()V", "method_8350(Z)V", "method_46667()Z", "method_8351()Ljava/util/Map;", "method_8352()V",
+              "method_8346()Ljava/util/List;", "method_55112()" + po, "method_55113()" + po, "method_55114()" + snd):
+        f.put("instanceRedirects", EX + "." + m, LX)
+    ds, calc, ia, v3 = L("class_1282"), L("class_5362"), L("class_1937$class_7867"), L("class_243")
+    for m in ("method_8437(" + ent + "DDDF" + ia + ")",
+              "method_8537(" + ent + "DDDFZ" + ia + ")",
+              "method_46407(" + ent + ds + calc + v3 + "FZ" + ia + ")",
+              "method_55117(" + ent + ds + calc + "DDDFZ" + ia + ")",
+              "method_8454(" + ent + ds + calc + "DDDFZ" + ia + po + po + snd + ")",
+              "method_46668(" + ent + ds + calc + "DDDFZ" + ia + "Z" + po + po + snd + ")"):
+        f.put("instanceRedirects", LEVEL + "." + m + L("class_1927"), LX)
+    # a 1.21.1 Level subclass's explode overrides: vanilla asks 1.21.2's void shapes
+    EXR = L("class_1927")
+    full = ent + ds + calc + "DDDFZ" + ia + po + po + snd
+    shapes_ = (("method_8437", ent + "DDDF" + ia, "8437"), ("method_8537", ent + "DDDFZ" + ia, "8537"),
+               ("method_46407", ent + ds + calc + v3 + "FZ" + ia, "46407"),
+               ("method_55117", ent + ds + calc + "DDDFZ" + ia, "55117"), ("method_8454", full, "8454"))
+    old46668 = "method_46668(" + ent + ds + calc + "DDDFZ" + ia + "Z" + po + po + snd + ")" + EXR
+    for name, a, n in shapes_:
+        old = name + "(" + a + ")" + EXR
+        new = name + "(" + a + ")V"
+        h = dict(old=old, new=new, onlyUnder=LEVEL, adapter=LX + "$Legacy" + n,
+                 bridge=LX + ".explode" + n + "(L" + LX + "$Legacy" + n + ";" + a + ")V",
+                 superBridge=LX + ".superExplode" + n + "(L" + LX + "$Super" + n + ";" + a + ")" + EXR,
+                 superAccess=LX + "$Super" + n, superAccessors=[new],
+                 basis="1.21.2's explode answers nothing: vanilla asking a 1.21.1 level's override runs it and drops its "
+                       "explosion; its super call answers the one 1.21.1's Level/ServerLevel dispatch made "
+                       "(CbLevelExplosions)")
+        if n == "8454":
+            h["shadows"] = [old46668]
+        f.hook(**h)
+    f.hook(old=old46668, new="method_8454(" + full + ")V", onlyUnder=LEVEL, adapter=LX + "$Legacy46668",
+           bridge=LX + ".explode46668(L" + LX + "$Legacy46668;" + full + ")V",
+           superBridge=LX + ".superExplode46668(L" + LX + "$Super8454;" + old46668[len("method_46668("):-len(EXR) - 1] + ")" + EXR,
+           superAccess=LX + "$Super8454", superAccessors=["method_8454(" + full + ")V"],
+           basis="1.21.1's Level.method_8454 called this.method_46668(.., true, ..) (ServerLevel's: false, then the "
+                 "packets): a level overriding only method_46668 is asked 1.21.2's method_8454 as 1.21.1's inherited "
+                 "one would have asked it; method_8454's own hook takes precedence in a class overriding both")
+    f.w["adapterHooks"].append({
+        "under": LEVEL, "adapter": LX + "$Legacy46668", "requires": [old46668], "synth": [],
+        "basis": "a level overriding 1.21.1's method_46668 is reached through it by the method_8454 bridges (1.21.1's "
+                 "this.method_46668 dispatch), also in a class whose own method_8454 hook takes the new shape"})
+    # ExplosionDamageCalculator.getEntityDamageAmount(explosion, entity) -> (.., seenPercent)
+    xe = L("class_1927") + ent
+    f.reshape(MC + "class_5362.method_55115(" + xe + ")F", "(" + xe + "F)F",
+              ["keep:0", "keep:1", "conv:0,1 " + LX + "#seenPercent(" + xe + ")F"],
+              "getEntityDamageAmount takes the seen percent since 1.21.2; 1.21.1's computed it as "
+              "Explosion.getSeenPercent(explosion.center(), entity)")
+    f.put("frameDefaults", "method_55115(" + xe + ")F",
+          {"2": LX + "#seenPercent(" + calc + xe + ")F"})
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -315,6 +381,7 @@ def main():
     names_and_loot(f)
     schedule_tick(f)
     neighbors(f)
+    explosions(f)
     f.write()
 
 

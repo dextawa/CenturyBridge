@@ -1,4 +1,7 @@
 {
+ "superRenames": {
+  "net/minecraft/class_1927": "top/dext/centurybridge/step/v1_21_2/facade/Explosion"
+ },
  "methodRenames": {
   "net/minecraft/class_1936.method_39280(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;ILnet/minecraft/class_1953;)V": "method_64311",
   "net/minecraft/class_1936.method_39279(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;I)V": "method_64310",
@@ -79,10 +82,26 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors#noOrientation()Lnet/minecraft/class_9904;"
    ],
    "basis": "NeighborUpdater.updateNeighborsAtExceptFromFacing, as Level's"
+  },
+  "net/minecraft/class_5362.method_55115(Lnet/minecraft/class_1927;Lnet/minecraft/class_1297;)F": {
+   "desc": "(Lnet/minecraft/class_1927;Lnet/minecraft/class_1297;F)F",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions#seenPercent(Lnet/minecraft/class_1927;Lnet/minecraft/class_1297;)F"
+   ],
+   "basis": "getEntityDamageAmount takes the seen percent since 1.21.2; 1.21.1's computed it as Explosion.getSeenPercent(explosion.center(), entity)"
   }
  },
+ "ctorRedirects": {
+  "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFLjava/util/List;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1927$class_4179;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1927$class_4179;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions"
+ },
  "staticRedirects": {
-  "net/minecraft/class_7165.method_41708(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors"
+  "net/minecraft/class_7165.method_41708(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
+  "net/minecraft/class_1927.method_17752(Lnet/minecraft/class_243;Lnet/minecraft/class_1297;)F": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions"
  },
  "instanceRedirects": {
   "net/minecraft/class_4970.method_9571(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
@@ -103,7 +122,22 @@
   "net/minecraft/class_1937.method_8492(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
   "net/minecraft/class_1937.method_41410(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
   "net/minecraft/class_7165.method_41704(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
-  "net/minecraft/class_7165.method_41703(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors"
+  "net/minecraft/class_7165.method_41703(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
+  "net/minecraft/class_1927.method_8348()V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.method_8350(Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.method_46667()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.method_8351()Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.method_8352()V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.method_8346()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.method_55112()Lnet/minecraft/class_2394;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.method_55113()Lnet/minecraft/class_2394;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1927.method_55114()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1937.method_8437(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1937.method_8537(Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1937.method_46407(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;Lnet/minecraft/class_243;FZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1937.method_55117(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1937.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_1937.method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -379,6 +413,87 @@
     "method_41703(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_9904;Z)V"
    ],
    "basis": "a 1.21.1 NeighborUpdater implementation's neighborChanged, told the source its caller named (CbLevelNeighbors)"
+  },
+  {
+   "old": "method_8437(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",
+   "new": "method_8437(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_1937$class_7867;)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy8437",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.explode8437(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy8437;Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_1937$class_7867;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.superExplode8437(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super8437;Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super8437",
+   "superAccessors": [
+    "method_8437(Lnet/minecraft/class_1297;DDDFLnet/minecraft/class_1937$class_7867;)V"
+   ],
+   "basis": "1.21.2's explode answers nothing: vanilla asking a 1.21.1 level's override runs it and drops its explosion; its super call answers the one 1.21.1's Level/ServerLevel dispatch made (CbLevelExplosions)"
+  },
+  {
+   "old": "method_8537(Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",
+   "new": "method_8537(Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1937$class_7867;)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy8537",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.explode8537(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy8537;Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1937$class_7867;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.superExplode8537(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super8537;Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super8537",
+   "superAccessors": [
+    "method_8537(Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1937$class_7867;)V"
+   ],
+   "basis": "1.21.2's explode answers nothing: vanilla asking a 1.21.1 level's override runs it and drops its explosion; its super call answers the one 1.21.1's Level/ServerLevel dispatch made (CbLevelExplosions)"
+  },
+  {
+   "old": "method_46407(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;Lnet/minecraft/class_243;FZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",
+   "new": "method_46407(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;Lnet/minecraft/class_243;FZLnet/minecraft/class_1937$class_7867;)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy46407",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.explode46407(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy46407;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;Lnet/minecraft/class_243;FZLnet/minecraft/class_1937$class_7867;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.superExplode46407(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super46407;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;Lnet/minecraft/class_243;FZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super46407",
+   "superAccessors": [
+    "method_46407(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;Lnet/minecraft/class_243;FZLnet/minecraft/class_1937$class_7867;)V"
+   ],
+   "basis": "1.21.2's explode answers nothing: vanilla asking a 1.21.1 level's override runs it and drops its explosion; its super call answers the one 1.21.1's Level/ServerLevel dispatch made (CbLevelExplosions)"
+  },
+  {
+   "old": "method_55117(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",
+   "new": "method_55117(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy55117",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.explode55117(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy55117;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.superExplode55117(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super55117;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super55117",
+   "superAccessors": [
+    "method_55117(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)V"
+   ],
+   "basis": "1.21.2's explode answers nothing: vanilla asking a 1.21.1 level's override runs it and drops its explosion; its super call answers the one 1.21.1's Level/ServerLevel dispatch made (CbLevelExplosions)"
+  },
+  {
+   "old": "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;",
+   "new": "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy8454",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.explode8454(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy8454;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.superExplode8454(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super8454;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super8454",
+   "superAccessors": [
+    "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V"
+   ],
+   "basis": "1.21.2's explode answers nothing: vanilla asking a 1.21.1 level's override runs it and drops its explosion; its super call answers the one 1.21.1's Level/ServerLevel dispatch made (CbLevelExplosions)",
+   "shadows": [
+    "method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;"
+   ]
+  },
+  {
+   "old": "method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;",
+   "new": "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V",
+   "onlyUnder": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy46668",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.explode46668(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy46668;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions.superExplode46668(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super8454;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Super8454",
+   "superAccessors": [
+    "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V"
+   ],
+   "basis": "1.21.1's Level.method_8454 called this.method_46668(.., true, ..) (ServerLevel's: false, then the packets): a level overriding only method_46668 is asked 1.21.2's method_8454 as 1.21.1's inherited one would have asked it; method_8454's own hook takes precedence in a class overriding both"
   }
  ],
  "overrideRenames": [
@@ -435,6 +550,9 @@
   },
   "method_41705(Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2350;)V": {
    "3": "zero: no orientation -- 1.21.2's MultiNeighborUpdate computes the initial one itself when it is handed none"
+  },
+  "method_55115(Lnet/minecraft/class_1927;Lnet/minecraft/class_1297;)F": {
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions#seenPercent(Lnet/minecraft/class_5362;Lnet/minecraft/class_1927;Lnet/minecraft/class_1297;)F"
   }
  },
  "adapterHooks": [
@@ -451,6 +569,15 @@
     }
    ],
    "basis": "a 1.21.1 class implementing OffsetFunction is asked 1.21.2's evaluate(state, pos) (CbLevelShapes)"
+  },
+  {
+   "under": "net/minecraft/class_1937",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions$Legacy46668",
+   "requires": [
+    "method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;"
+   ],
+   "synth": [],
+   "basis": "a level overriding 1.21.1's method_46668 is reached through it by the method_8454 bridges (1.21.1's this.method_46668 dispatch), also in a class whose own method_8454 hook takes the new shape"
   }
  ],
  "lambdaAdapters": {
