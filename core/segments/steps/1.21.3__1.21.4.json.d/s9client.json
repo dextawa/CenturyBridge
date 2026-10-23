@@ -207,7 +207,11 @@
   "net/minecraft/class_325": "top/dext/centurybridge/step/v1_21_4/facade/ItemColors",
   "net/fabricmc/fabric/api/client/render/ColorProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/ColorProviderRegistry",
   "net/fabricmc/fabric/api/client/render/InvalidateRenderStateCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/InvalidateRenderStateCallback",
-  "net/minecraft/class_763": "top/dext/centurybridge/step/v1_21_4/facade/ItemModelShaper"
+  "net/minecraft/class_763": "top/dext/centurybridge/step/v1_21_4/facade/ItemModelShaper",
+  "net/minecraft/class_756": "top/dext/centurybridge/step/v1_21_4/facade/BlockEntityWithoutLevelRenderer",
+  "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRenderer": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRenderer",
+  "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRendererRegistry",
+  "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -390,11 +394,26 @@
   "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105"
  },
  "resourceTypes": [
+  "centurybridge:legacy_builtin",
   "centurybridge:legacy_color",
   "centurybridge:legacy_overrides"
  ],
  "depRenames": {
   "fabric-rendering-v0": "centurybridge_step_1_21_4@*"
  },
- "_s9client_depRenames_basis": "1.21.4's Fabric API (0.119.4) no longer ships fabric-rendering-v0, which 1.21.3's (0.114.1) did (core/tools/fapi_modules.py); this layer gives its two classes back (compat/fapi/v0: ColorProviderRegistry, InvalidateRenderStateCallback with v0's forwarding from rendering-v1)"
+ "_s9client_depRenames_basis": "1.21.4's Fabric API (0.119.4) no longer ships fabric-rendering-v0, which 1.21.3's (0.114.1) did (core/tools/fapi_modules.py); this layer gives its two classes back (compat/fapi/v0: ColorProviderRegistry, InvalidateRenderStateCallback with v0's forwarding from rendering-v1)",
+ "facadeGaps": {
+  "net/minecraft/class_756.field_3981:[Lnet/minecraft/class_2627;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3984:Lnet/minecraft/class_2627;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3976:Lnet/minecraft/class_2595;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3978:Lnet/minecraft/class_2595;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3977:Lnet/minecraft/class_2611;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3983:Lnet/minecraft/class_2573;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3982:Lnet/minecraft/class_2587;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3979:Lnet/minecraft/class_2597;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_42909:Lnet/minecraft/class_8172;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3980:Lnet/minecraft/class_600;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_3985:Lnet/minecraft/class_613;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
+  "net/minecraft/class_756.field_27737:Ljava/util/Map;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these"
+ }
 }

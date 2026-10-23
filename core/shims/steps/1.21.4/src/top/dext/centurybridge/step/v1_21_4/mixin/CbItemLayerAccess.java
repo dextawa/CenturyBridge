@@ -15,4 +15,11 @@ public interface CbItemLayerAccess {
     /** the layer's baked model (package-private "model") */
     @Accessor("field_55346")
     net.minecraft.class_1087 cb$model();
+
+    /** the layer's special renderer and its argument (private specialRenderer / argumentForSpecialRendering) */
+    @Accessor("field_55350")
+    net.minecraft.class_10515<Object> cb$special();
+
+    @Accessor("field_55351")
+    Object cb$specialArgument();
 }

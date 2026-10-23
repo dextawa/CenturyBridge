@@ -17,7 +17,8 @@
     "CbItemRendererMixin",
     "CbItemStackRenderStateAccess",
     "CbItemTintSourcesMixin",
-    "CbRestClientPacketsMixin"
+    "CbRestClientPacketsMixin",
+    "CbSpecialModelTypesMixin"
   ],
   "server": [],
   "injectors": {

@@ -236,6 +236,23 @@ def item_renderer(frag):
         "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_898;%sLnet/minecraft/class_10442;)V" % IRD,
         "ops": ["keep:0", "keep:1", "keep:2", "push " + IR + "#cbGameResolver()Lnet/minecraft/class_10442;"],
         "basis": "ItemInHandRenderer also takes the item model resolver since 1.21.4: the game's"}
+    # BlockEntityWithoutLevelRenderer and Fabric API's builtin item renderers
+    cr = frag.setdefault("classRenames", {})
+    cr["net/minecraft/class_756"] = FAC + "BlockEntityWithoutLevelRenderer"
+    FR = "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/"
+    for c in ["BuiltinItemRenderer", "BuiltinItemRendererRegistry", "BuiltinItemRendererRegistry$DynamicItemRenderer"]:
+        cr["net/fabricmc/fabric/api/client/rendering/v1/" + c] = FR + c
+    gaps = frag.setdefault("facadeGaps", {})
+    why = ("private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; "
+           "the facade draws them through 1.21.4's special model renderers, and only an access widener reached these")
+    for f in ["field_3981:[Lnet/minecraft/class_2627;", "field_3984:Lnet/minecraft/class_2627;", "field_3976:Lnet/minecraft/class_2595;",
+              "field_3978:Lnet/minecraft/class_2595;", "field_3977:Lnet/minecraft/class_2611;", "field_3983:Lnet/minecraft/class_2573;",
+              "field_3982:Lnet/minecraft/class_2587;", "field_3979:Lnet/minecraft/class_2597;", "field_42909:Lnet/minecraft/class_8172;",
+              "field_3980:Lnet/minecraft/class_600;", "field_3985:Lnet/minecraft/class_613;", "field_27737:Ljava/util/Map;"]:
+        gaps["net/minecraft/class_756." + f] = why
+    rt = set(frag.get("resourceTypes", []))
+    rt.add("centurybridge:legacy_builtin")
+    frag["resourceTypes"] = sorted(rt)
 
 
 if __name__ == "__main__":
