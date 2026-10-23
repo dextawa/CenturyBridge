@@ -182,6 +182,34 @@ public final class CbRestPackets {
         return net.minecraft.class_3532.method_62994(packed);
     }
 
+    /** super's 1.21.2 getyRot(), from a 1.21.1 subclass's super.getyRot() */
+    public interface YRotSuper {
+        float cb$super$method_11649();
+    }
+
+    /** super's 1.21.2 getxRot() */
+    public interface XRotSuper {
+        float cb$super$method_11650();
+    }
+
+    /** super's 1.21.2 getYHeadRot() */
+    public interface HeadRotSuper {
+        float cb$super$method_11787();
+    }
+
+    /** a 1.21.1 subclass's super.getyRot(): super's degrees packed back into 1.21.1's byte */
+    public static byte superYRot(YRotSuper p) {
+        return net.minecraft.class_3532.method_62995(p.cb$super$method_11649());
+    }
+
+    public static byte superXRot(XRotSuper p) {
+        return net.minecraft.class_3532.method_62995(p.cb$super$method_11650());
+    }
+
+    public static byte superHeadRot(HeadRotSuper p) {
+        return net.minecraft.class_3532.method_62995(p.cb$super$method_11787());
+    }
+
     // ------------------------------------------------------------------ ClientboundSetTimePacket (class_2761)
 
     /** getGameTime() */

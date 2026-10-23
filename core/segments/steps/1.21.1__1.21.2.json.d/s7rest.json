@@ -19,7 +19,18 @@
   "net/minecraft/class_4904": "top/dext/centurybridge/step/v1_21_2/facade/RealmsObjectSelectionList",
   "net/minecraft/class_4409": "top/dext/centurybridge/step/v1_21_2/facade/RealmsResetNormalWorldScreen",
   "net/minecraft/class_5673": "top/dext/centurybridge/step/v1_21_2/facade/ResettingGeneratedWorldTask",
-  "net/minecraft/class_8844": "top/dext/centurybridge/step/v1_21_2/facade/CreateSnapshotRealmTask"
+  "net/minecraft/class_8844": "top/dext/centurybridge/step/v1_21_2/facade/CreateSnapshotRealmTask",
+  "net/minecraft/class_485": "top/dext/centurybridge/step/v1_21_2/facade/EffectRenderingInventoryScreen",
+  "net/minecraft/class_5829": "top/dext/centurybridge/step/v1_21_2/facade/BundleTutorial",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents$Join": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$Join",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents$Leave": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$Leave",
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$Generate": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$Generate",
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$LevelTypeChange": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LevelTypeChange",
+  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents": "top/dext/centurybridge/step/v1_21_2/facade/fapi/ClientWorldEvents",
+  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange": "top/dext/centurybridge/step/v1_21_2/facade/fapi/ClientWorldEvents$AfterClientWorldChange",
+  "net/fabricmc/fabric/api/entity/event/v1/FabricElytraItem": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricElytraItem",
+  "net/fabricmc/fabric/api/event/registry/FabricRegistry": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry",
+  "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTagFile"
  },
  "covers": [
   "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
@@ -57,7 +68,9 @@
   "net/minecraft/class_638.method_23777(Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;",
   "net/minecraft/class_638.method_23785(F)Lnet/minecraft/class_243;",
   "net/minecraft/class_315.method_1641(Lnet/minecraft/class_304;Lnet/minecraft/class_3675$class_306;)V",
-  "net/minecraft/class_315.method_1631(Lnet/minecraft/class_1664;Z)V"
+  "net/minecraft/class_315.method_1631(Lnet/minecraft/class_1664;Z)V",
+  "net/minecraft/class_1156.method_31364(Lnet/minecraft/class_372;)V",
+  "net/minecraft/class_1156.method_31365(Lnet/minecraft/class_372;I)V"
  ],
  "frameDefaults": {
   "method_52706(Lnet/minecraft/class_2960;IIII)V": {
@@ -86,7 +99,10 @@
  },
  "methodRenames": {
   "net/minecraft/class_332.method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": "method_64038",
-  "net/minecraft/class_1255.method_18858(Ljava/lang/Runnable;)V": "method_63588"
+  "net/minecraft/class_1255.method_18858(Ljava/lang/Runnable;)V": "method_63588",
+  "net/minecraft/class_2840.method_12318()I": "comp_3243",
+  "net/minecraft/class_2840.method_12319()Z": "comp_3245",
+  "net/minecraft/class_2695.method_11685()I": "comp_3226"
  },
  "instanceRedirects": {
   "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#profiler",
@@ -148,7 +164,24 @@
   "net/minecraft/class_368.method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts#callRender",
   "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#resetWorldWithSeed",
   "net/minecraft/class_4341.method_21026(JLjava/lang/String;)Lnet/minecraft/class_4888;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#requestUploadInfo",
-  "net/minecraft/class_4337.method_20973(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#upload"
+  "net/minecraft/class_4337.method_20973(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#upload",
+  "net/minecraft/class_9383$class_9385.method_58289()Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#holderRegistries",
+  "net/minecraft/class_5350.method_40421()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#updateRegistryTags",
+  "net/minecraft/class_7237$class_7660.comp_989()Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#datapackWorldgen",
+  "net/minecraft/class_634.method_2877()Lnet/minecraft/class_1863;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#getRecipeManager",
+  "net/minecraft/class_2788.method_11998()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeSync#getRecipes",
+  "net/minecraft/class_746.method_3141(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#removeRecipeHighlight",
+  "net/minecraft/class_636.method_2912(ILnet/minecraft/class_8786;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#handlePlaceRecipe",
+  "net/minecraft/class_2840.method_12320()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#placeRecipeId",
+  "net/minecraft/class_2853.method_12406()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#seenRecipeId",
+  "net/minecraft/class_2695.method_11684()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#ghostRecipeId",
+  "net/fabricmc/fabric/api/event/player/UseItemCallback.interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.load(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition.test(Lnet/minecraft/class_7225$class_7874;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/minecraft/class_2378.addAlias(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -172,7 +205,13 @@
   "net/minecraft/class_437.method_25412(Ljava/lang/Runnable;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
   "net/minecraft/class_4883.method_25078(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_4883;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms",
   "net/minecraft/class_4371.method_21113(Lnet/minecraft/class_332;Ljava/util/List;Lnet/minecraft/class_4904;IIII)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms",
-  "net/minecraft/class_4371.method_21114(Lnet/minecraft/class_4904;Lnet/minecraft/class_4280$class_4281;Ljava/util/List;IDD)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms"
+  "net/minecraft/class_4371.method_21114(Lnet/minecraft/class_4904;Lnet/minecraft/class_4280$class_4281;Ljava/util/List;IDD)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms",
+  "net/minecraft/class_465.method_33285(Lnet/minecraft/class_332;III)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
+  "net/minecraft/class_7655.method_56515(Lnet/minecraft/class_3300;Lnet/minecraft/class_5455;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_7655.method_56519(Ljava/util/Map;Lnet/minecraft/class_5912;Lnet/minecraft/class_5455;Ljava/util/List;)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_9383.method_58284(Lnet/minecraft/class_7780;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_5350.method_29466(Lnet/minecraft/class_3300;Lnet/minecraft/class_7780;Lnet/minecraft/class_7699;Lnet/minecraft/class_2170$class_5364;ILjava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/fabricmc/fabric/api/event/registry/RegistryEntryAddedCallback.allEntries(Lnet/minecraft/class_2378;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
@@ -400,6 +439,70 @@
     "keep"
    ],
    "basis": "RealmsWorldOptions: 1.21.2 dropped spawnAnimals and spawnNPCs (no longer realm settings) and added hardcore after the game mode, which a 1.21.1 options object did not carry (false)"
+  },
+  "net/minecraft/class_4309.<init>(Lcom/google/gson/Gson;Ljava/lang/String;)V": {
+   "desc": "(Lcom/mojang/serialization/Codec;Ljava/lang/String;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#jsonCodec()Lcom/mojang/serialization/Codec;",
+    "drop",
+    "keep"
+   ],
+   "basis": "SimpleJsonResourceReloadListener(gson, directory): 1.21.2's (codec, directory) parses each file as JSON and decodes it with the codec; a 1.21.1 listener read JSON elements and handed them on unchanged, which ExtraCodecs.JSON does (the Gson only parsed); its prepare/apply overrides keep their erased shapes (Map of id -> element)"
+  },
+  "net/minecraft/class_473.<init>(Lnet/minecraft/class_1657;Lnet/minecraft/class_1799;Lnet/minecraft/class_1268;)V": {
+   "desc": "(Lnet/minecraft/class_1657;Lnet/minecraft/class_1799;Lnet/minecraft/class_1268;Lnet/minecraft/class_9301;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#bookContent(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9301;"
+   ],
+   "basis": "BookEditScreen: 1.21.2 takes the book's content, which 1.21.1's constructor read from the stack (no pages when it had none)"
+  },
+  "net/minecraft/class_7551.<init>(Lnet/minecraft/class_437;Lnet/minecraft/class_7573;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_7573;Lnet/minecraft/class_8776;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#everyReason()Lnet/minecraft/class_8776;",
+    "keep"
+   ],
+   "basis": "ReportReasonSelectionScreen: 1.21.2 offers the reasons the report type allows; 1.21.1 offered every reason, as for USERNAME (which excludes none)"
+  },
+  "net/minecraft/class_7237$class_7660.<init>(Lnet/minecraft/class_3300;Lnet/minecraft/class_7712;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_5455$class_6890;)V": {
+   "desc": "(Lnet/minecraft/class_3300;Lnet/minecraft/class_7712;Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_5455$class_6890;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2 Lnet/minecraft/class_7225$class_7874;",
+    "keep:3"
+   ],
+   "basis": "DataLoadContext: the worldgen registries, a frozen registry access (a lookup provider on 1.21.2)"
+  },
+  "net/minecraft/class_7193.<init>(Lnet/minecraft/class_5285;Lnet/minecraft/class_7723;Lnet/minecraft/class_7780;Lnet/minecraft/class_5350;Lnet/minecraft/class_7712;)V": {
+   "desc": "(Lnet/minecraft/class_5285;Lnet/minecraft/class_7723;Lnet/minecraft/class_7780;Lnet/minecraft/class_5350;Lnet/minecraft/class_7712;Lnet/minecraft/class_10220;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#defaultCreationOptions()Lnet/minecraft/class_10220;"
+   ],
+   "basis": "WorldCreationContext: 1.21.2 carries the initial world creation options; a 1.21.1 context has none, which 1.21.2's own constructor from WorldDimensions makes survival, no game rule changes, no preset (CbRestClient.defaultCreationOptions)"
+  },
+  "net/minecraft/class_7193.<init>(Lnet/minecraft/class_5285;Lnet/minecraft/class_2378;Lnet/minecraft/class_7723;Lnet/minecraft/class_7780;Lnet/minecraft/class_5350;Lnet/minecraft/class_7712;)V": {
+   "desc": "(Lnet/minecraft/class_5285;Lnet/minecraft/class_2378;Lnet/minecraft/class_7723;Lnet/minecraft/class_7780;Lnet/minecraft/class_5350;Lnet/minecraft/class_7712;Lnet/minecraft/class_10220;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#defaultCreationOptions()Lnet/minecraft/class_10220;"
+   ],
+   "basis": "as the five-argument constructor"
   }
  },
  "overrideRenames": [
@@ -468,7 +571,19 @@
   "net/minecraft/class_8844.field_46710:Lorg/slf4j/Logger;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_8844.field_46711:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_8844.field_46717:Lnet/minecraft/class_4445;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
-  "net/minecraft/class_8844.field_46718:Lnet/minecraft/class_5673;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
+  "net/minecraft/class_8844.field_46718:Lnet/minecraft/class_5673;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_485.field_45462:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.field_45463:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_2477(Lnet/minecraft/class_332;II)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_18642(Lnet/minecraft/class_332;IILjava/lang/Iterable;Z)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_18643(Lnet/minecraft/class_332;IILjava/lang/Iterable;Z)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_18644(Lnet/minecraft/class_332;IILjava/lang/Iterable;)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_38933(Lnet/minecraft/class_1293;)Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_5829.field_28798:Lnet/minecraft/class_1156;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_5829.field_28799:Lnet/minecraft/class_315;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_5829.field_28800:Lnet/minecraft/class_372;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_5829.method_33701()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_5829.method_33703()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
  },
  "overrideHooks": [
   {
@@ -630,6 +745,112 @@
     "method_21026(J)Lnet/minecraft/class_4888;"
    ],
    "basis": "1.21.2's requestUploadInfo(worldId) reads the upload token from UploadTokenCache, the token 1.21.1's callers passed: a 1.21.1 subclass's override gets it; its super call caches its token and makes 1.21.2's request"
+  },
+  {
+   "old": "method_45656(Lnet/minecraft/class_332;Lnet/minecraft/class_2680;)V",
+   "new": "method_45656(Lnet/minecraft/class_332;)V",
+   "onlyUnder": "net/minecraft/class_7743",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$LegacySignBackground",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.signBackground(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$LegacySignBackground;Lnet/minecraft/class_332;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.superSignBackground(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$SignBackgroundSuper;Lnet/minecraft/class_332;Lnet/minecraft/class_2680;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$SignBackgroundSuper",
+   "superAccessors": [
+    "method_45656(Lnet/minecraft/class_332;)V"
+   ],
+   "basis": "1.21.2 asks a sign screen for renderSignBackground(graphics); a 1.21.1 screen's override is handed the edited sign's block state, which 1.21.1's renderSign passed; its super call reaches 1.21.2's"
+  },
+  {
+   "old": "method_11649()B",
+   "new": "method_11649()F",
+   "onlyUnder": "net/minecraft/class_2684",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.degrees(B)F",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.superYRot(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$YRotSuper;)B",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$YRotSuper",
+   "superAccessors": [
+    "method_11649()F"
+   ],
+   "basis": "1.21.2 unpacks a move packet's rotations to degrees; a 1.21.1 subclass's packed byte answers as those degrees; its super call gets super's degrees packed back"
+  },
+  {
+   "old": "method_11650()B",
+   "new": "method_11650()F",
+   "onlyUnder": "net/minecraft/class_2684",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.degrees(B)F",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.superXRot(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$XRotSuper;)B",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$XRotSuper",
+   "superAccessors": [
+    "method_11650()F"
+   ],
+   "basis": "1.21.2 unpacks a move packet's rotations to degrees; a 1.21.1 subclass's packed byte answers as those degrees; its super call gets super's degrees packed back"
+  },
+  {
+   "old": "method_11787()B",
+   "new": "method_11787()F",
+   "onlyUnder": "net/minecraft/class_2726",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.degrees(B)F",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.superHeadRot(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$HeadRotSuper;)B",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$HeadRotSuper",
+   "superAccessors": [
+    "method_11787()F"
+   ],
+   "basis": "as the move packet: the head rotation in degrees, a 1.21.1 subclass's byte unpacked"
+  },
+  {
+   "old": "method_45157(Lnet/minecraft/class_5455;)Lnet/minecraft/class_7723;",
+   "new": "method_45157(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_7723;",
+   "onlyUnder": "net/minecraft/class_3806",
+   "narrow": true,
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "DedicatedServerProperties.createDimensions: 1.21.2 takes a lookup provider; a 1.21.1 override is asked when it is a registry access (narrow), otherwise 1.21.2's own answers"
+  },
+  {
+   "old": "interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;",
+   "new": "interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+   "onlyUnder": "net/fabricmc/fabric/api/event/player/UseItemCallback",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyUseItem",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents.useItem(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyUseItem;Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "0.106.1's UseItemCallback answers an InteractionResult where 1.21.1's Fabric API answered an InteractionResultHolder<ItemStack>: a 1.21.1 callback class's holder is converted as Item.use's is (CbItemResults.result)"
+  },
+  {
+   "old": "onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V",
+   "new": "onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Lnet/minecraft/class_10179;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyMobConversion",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents.mobConversion(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyMobConversion;Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Lnet/minecraft/class_10179;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "0.106.1's MobConversion hands the ConversionParams where 1.21.1's Fabric API handed keepEquipment: a 1.21.1 callback class gets the params' keepEquipment"
+  },
+  {
+   "old": "load(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "load(Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "onlyUnder": "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources$LegacySimpleLoad",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources.load(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources$LegacySimpleLoad;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "0.106.1's SimpleResourceReloadListener.load takes no profiler (1.21.2 listeners profile on the running thread): a 1.21.1 listener's own load runs with the thread's profiler"
+  },
+  {
+   "old": "apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "onlyUnder": "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources$LegacySimpleApply",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources.apply(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources$LegacySimpleApply;Ljava/lang/Object;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "0.106.1's SimpleResourceReloadListener.apply takes no profiler: a 1.21.1 listener's own apply runs with the thread's profiler"
+  },
+  {
+   "old": "test(Lnet/minecraft/class_7225$class_7874;)Z",
+   "new": "test(Lnet/minecraft/class_6903$class_7863;)Z",
+   "onlyUnder": "net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources$LegacyCondition",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources.test(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources$LegacyCondition;Lnet/minecraft/class_6903$class_7863;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "0.106.1's ResourceCondition.test takes the registry info lookup of the reading ops where 0.116's took a provider: a 1.21.1 condition gets the provider that lookup wraps (CbRestFapiResources.provider)"
   }
  ],
  "lambdaAdapters": {
@@ -640,6 +861,14 @@
   "net/minecraft/class_368.method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;": {
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts#toast(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast;)Lnet/minecraft/class_368;"
+  },
+  "net/fabricmc/fabric/api/event/player/UseItemCallback.interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyUseItem",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents#useItem(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyUseItem;)Lnet/fabricmc/fabric/api/event/player/UseItemCallback;"
+  },
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyMobConversion",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents#mobConversion(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyMobConversion;)Lnet/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion;"
   }
  },
  "ctorRedirects": {
@@ -650,7 +879,11 @@
   "net/minecraft/class_2656.<init>(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#newCooldown",
   "net/minecraft/class_2579.<init>(Ljava/lang/String;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#newSelectorContents",
   "net/minecraft/class_2578.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#newScoreContents",
-  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#newCreateSnapshotRealmScreen"
+  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#newCreateSnapshotRealmScreen",
+  "net/minecraft/class_2788.<init>(Ljava/util/Collection;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeSync#newUpdateRecipesPacket",
+  "net/minecraft/class_2840.<init>(ILnet/minecraft/class_8786;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newPlaceRecipe",
+  "net/minecraft/class_2853.<init>(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newSeenRecipe",
+  "net/minecraft/class_2695.<init>(ILnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newGhostRecipe"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_8673.field_51520:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#strictErrorHandlingField",
@@ -668,7 +901,9 @@
  "superRedirects": {
   "net/minecraft/class_1297.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#entitySuperSystemMessage",
   "net/minecraft/class_746.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#localPlayerSuperSystemMessage",
-  "net/minecraft/class_745.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#remotePlayerSuperSystemMessage"
+  "net/minecraft/class_745.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#remotePlayerSuperSystemMessage",
+  "net/minecraft/class_4309.method_20731(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#superPrepare",
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources#superReload"
  },
  "adapterHooks": [
   {
@@ -711,20 +946,84 @@
   }
  ],
  "ledger": {
-  "net/minecraft/class_2579": "a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record whose type() is SelectorContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as SelectorContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
-  "net/minecraft/class_2579.<init>(Ljava/lang/String;Ljava/util/Optional;)V": "super(..) of a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record whose type() is SelectorContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as SelectorContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
-  "net/minecraft/class_2579.equals(Ljava/lang/Object;)Z": "equals override of a 1.21.1 subclass of SelectorContents (final on the record): 1.21.2 made SelectorContents a final record whose type() is SelectorContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as SelectorContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
-  "net/minecraft/class_2579.hashCode()I": "hashCode override of a 1.21.1 subclass of SelectorContents (final on the record): 1.21.2 made SelectorContents a final record whose type() is SelectorContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as SelectorContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
-  "net/minecraft/class_2579.field_33540": "the separator field, protected in 1.21.1 and so read only by subclasses of SelectorContents: 1.21.2 made SelectorContents a final record whose type() is SelectorContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as SelectorContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
-  "net/minecraft/class_2578": "a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
-  "net/minecraft/class_2578.<init>(Ljava/lang/String;Ljava/lang/String;)V": "super(..) of a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
-  "net/minecraft/class_2578.equals(Ljava/lang/Object;)Z": "equals override of a 1.21.1 subclass of ScoreContents (final on the record): 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
-  "net/minecraft/class_2578.hashCode()I": "hashCode override of a 1.21.1 subclass of ScoreContents (final on the record): 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
   "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "a 1.21.1 MinecraftServer subclass overriding getProfiler(): 1.21.2's MinecraftServer has only a private method of that name and descriptor (vanilla reads the profiler from Profiler.get()), so nothing can reach an override; 1.21.1 callers of server.getProfiler() are bridged (CbRestServer.profiler, Profiler.get() -- the same profiler 1.21.2's server ticks with)",
   "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "RealmsClient.resetWorldWithSeed: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
   "net/minecraft/class_5673.method_32517(Lnet/minecraft/class_4341;J)V": "ResettingGeneratedWorldTask.sendResetRequest: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
   "net/minecraft/class_8844.run()V": "CreateSnapshotRealmTask.run: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
-  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "RealmsCreateRealmScreen(lastScreen, parentWorldId), the snapshot-creation screen whose only action is the removed request (and whose 1.21.1 subclass super(..) has no 1.21.2 constructor to call): 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead"
+  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "RealmsCreateRealmScreen(lastScreen, parentWorldId), the snapshot-creation screen whose only action is the removed request (and whose 1.21.1 subclass super(..) has no 1.21.2 constructor to call): 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
+  "net/minecraft/class_3806.method_45157(Lnet/minecraft/class_5455;)Lnet/minecraft/class_7723;": "a 1.21.1 DedicatedServerProperties subclass overriding createDimensions(RegistryAccess): 1.21.2's dedicated server asks it with WorldLoader's datapack worldgen lookups (a HolderLookup.Provider made of registry lookups with pending tags, not a RegistryAccess), so the narrowed hook lets 1.21.2's own answer there; the override is reached only with a registry access",
+  "net/minecraft/class_7237$class_7660.comp_989()Lnet/minecraft/class_5455$class_6890;": "DataLoadContext.datapackWorldgen() as a frozen registry access: answered when the context holds one (a 1.21.1 caller's), but 1.21.2's WorldLoader makes the context of registry lookups with pending tags (HolderLookup.Provider.create), which no RegistryAccess stands for -- that case throws a specific exception",
+  "net/minecraft/class_2578": "the class of a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ScoreContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2578.<init>(Ljava/lang/String;Ljava/lang/String;)V": "super(..) of a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ScoreContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2578.method_10930()Ljava/lang/String;": "override of method_10930()Ljava/lang/String; of a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ScoreContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2578.method_36137()Lnet/minecraft/class_2300;": "override of method_36137()Lnet/minecraft/class_2300; of a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ScoreContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2578.method_10928()Ljava/lang/String;": "override of method_10928()Ljava/lang/String; of a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ScoreContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2578.equals(Ljava/lang/Object;)Z": "override of equals(Ljava/lang/Object;)Z of a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ScoreContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2578.hashCode()I": "override of hashCode()I of a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ScoreContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2579": "the class of a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a SelectorContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2579.<init>(Ljava/lang/String;Ljava/util/Optional;)V": "super(..) of a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a SelectorContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2579.method_10932()Ljava/lang/String;": "override of method_10932()Ljava/lang/String; of a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a SelectorContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2579.method_36138()Lnet/minecraft/class_2300;": "override of method_36138()Lnet/minecraft/class_2300; of a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a SelectorContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2579.method_36339()Ljava/util/Optional;": "override of method_36339()Ljava/util/Optional; of a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a SelectorContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2579.equals(Ljava/lang/Object;)Z": "override of equals(Ljava/lang/Object;)Z of a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a SelectorContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2579.hashCode()I": "override of hashCode()I of a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a SelectorContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2579.field_33540": "the protected field read of a 1.21.1 subclass of SelectorContents: 1.21.2 made SelectorContents a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a SelectorContents-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and every encoding of text contents (network, NBT, JSON) picks the codec by type() and the record's codec reads the record's components. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects).",
+  "net/minecraft/class_2664": "the class of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.<init>(DDDFLjava/util/List;Lnet/minecraft/class_243;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": "super(..) of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_11472()F": "override of method_11472()F of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_11473()F": "override of method_11473()F of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_11474()F": "override of method_11474()F of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_11475()D": "override of method_11475()D of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_11477()D": "override of method_11477()D of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_11478()D": "override of method_11478()D of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_11476()F": "override of method_11476()F of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_11479()Ljava/util/List;": "override of method_11479()Ljava/util/List; of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_55328()Lnet/minecraft/class_1927$class_4179;": "override of method_55328()Lnet/minecraft/class_1927$class_4179; of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_55329()Lnet/minecraft/class_2394;": "override of method_55329()Lnet/minecraft/class_2394; of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_55330()Lnet/minecraft/class_2394;": "override of method_55330()Lnet/minecraft/class_2394; of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2664.method_55331()Lnet/minecraft/class_6880;": "override of method_55331()Lnet/minecraft/class_6880; of a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundExplodePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2695": "the class of a 1.21.1 subclass of ClientboundPlaceGhostRecipePacket: 1.21.2 made ClientboundPlaceGhostRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlaceGhostRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2695.<init>(ILnet/minecraft/class_8786;)V": "super(..) of a 1.21.1 subclass of ClientboundPlaceGhostRecipePacket: 1.21.2 made ClientboundPlaceGhostRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlaceGhostRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2695.method_11684()Lnet/minecraft/class_2960;": "override of method_11684()Lnet/minecraft/class_2960; of a 1.21.1 subclass of ClientboundPlaceGhostRecipePacket: 1.21.2 made ClientboundPlaceGhostRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlaceGhostRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2695.method_11685()I": "override of method_11685()I of a 1.21.1 subclass of ClientboundPlaceGhostRecipePacket: 1.21.2 made ClientboundPlaceGhostRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlaceGhostRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2708": "the class of a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlayerPositionPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2708.<init>(DDDFFLjava/util/Set;I)V": "super(..) of a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlayerPositionPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2708.method_11734()D": "override of method_11734()D of a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlayerPositionPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2708.method_11735()D": "override of method_11735()D of a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlayerPositionPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2708.method_11738()D": "override of method_11738()D of a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlayerPositionPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2708.method_11736()F": "override of method_11736()F of a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlayerPositionPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2708.method_11739()F": "override of method_11739()F of a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlayerPositionPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2708.method_11737()I": "override of method_11737()I of a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlayerPositionPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2708.method_11733()Ljava/util/Set;": "override of method_11733()Ljava/util/Set; of a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundPlayerPositionPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2761": "the class of a 1.21.1 subclass of ClientboundSetTimePacket: 1.21.2 made ClientboundSetTimePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundSetTimePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2761.method_11871()J": "override of method_11871()J of a 1.21.1 subclass of ClientboundSetTimePacket: 1.21.2 made ClientboundSetTimePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundSetTimePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2761.method_11873()J": "override of method_11873()J of a 1.21.1 subclass of ClientboundSetTimePacket: 1.21.2 made ClientboundSetTimePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundSetTimePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2777": "the class of a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundTeleportEntityPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2777.<init>(Lnet/minecraft/class_1297;)V": "super(..) of a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundTeleportEntityPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2777.method_11916()I": "override of method_11916()I of a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundTeleportEntityPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2777.method_11917()D": "override of method_11917()D of a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundTeleportEntityPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2777.method_11919()D": "override of method_11919()D of a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundTeleportEntityPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2777.method_11918()D": "override of method_11918()D of a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundTeleportEntityPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2777.method_11920()B": "override of method_11920()B of a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundTeleportEntityPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2777.method_11921()B": "override of method_11921()B of a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundTeleportEntityPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2777.method_11923()Z": "override of method_11923()Z of a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundTeleportEntityPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2788": "the class of a 1.21.1 subclass of ClientboundUpdateRecipesPacket: 1.21.2 made ClientboundUpdateRecipesPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundUpdateRecipesPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2788.<init>(Ljava/util/Collection;)V": "super(..) of a 1.21.1 subclass of ClientboundUpdateRecipesPacket: 1.21.2 made ClientboundUpdateRecipesPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundUpdateRecipesPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2788.method_11998()Ljava/util/List;": "override of method_11998()Ljava/util/List; of a 1.21.1 subclass of ClientboundUpdateRecipesPacket: 1.21.2 made ClientboundUpdateRecipesPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ClientboundUpdateRecipesPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2840": "the class of a 1.21.1 subclass of ServerboundPlaceRecipePacket: 1.21.2 made ServerboundPlaceRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlaceRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2840.<init>(ILnet/minecraft/class_8786;Z)V": "super(..) of a 1.21.1 subclass of ServerboundPlaceRecipePacket: 1.21.2 made ServerboundPlaceRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlaceRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2840.method_12318()I": "override of method_12318()I of a 1.21.1 subclass of ServerboundPlaceRecipePacket: 1.21.2 made ServerboundPlaceRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlaceRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2840.method_12320()Lnet/minecraft/class_2960;": "override of method_12320()Lnet/minecraft/class_2960; of a 1.21.1 subclass of ServerboundPlaceRecipePacket: 1.21.2 made ServerboundPlaceRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlaceRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2840.method_12319()Z": "override of method_12319()Z of a 1.21.1 subclass of ServerboundPlaceRecipePacket: 1.21.2 made ServerboundPlaceRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlaceRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2851": "the class of a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlayerInputPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2851.<init>(FFZZ)V": "super(..) of a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlayerInputPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2851.method_12372()F": "override of method_12372()F of a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlayerInputPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2851.method_12373()F": "override of method_12373()F of a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlayerInputPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2851.method_12371()Z": "override of method_12371()Z of a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlayerInputPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2851.method_12370()Z": "override of method_12370()Z of a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundPlayerInputPacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2853": "the class of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2853.<init>(Lnet/minecraft/class_8786;)V": "super(..) of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects).",
+  "net/minecraft/class_2853.method_12406()Lnet/minecraft/class_2960;": "override of method_12406()Lnet/minecraft/class_2960; of a 1.21.1 subclass of ServerboundRecipeBookSeenRecipePacket: 1.21.2 made ServerboundRecipeBookSeenRecipePacket a final record, so no class can extend it; a stand-in superclass is not a subtype of the surviving record, so a mod instance reaching a ServerboundRecipeBookSeenRecipePacket-typed slot fails verification (the wiring gate refuses that superRename, verified 2026-10-23), and the protocol encodes a packet with its type's codec, which reads the record's components. Packets a 1.21.1 mod builds through the constructor are bridged (ctorRedirects) and its getters on the record (instanceRedirects)."
  },
  "instanceFieldSetters": {
   "net/minecraft/class_744.field_3910:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputUp",
@@ -743,6 +1042,109 @@
     "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#iconAlphaFloat(I)F"
    ],
    "basis": "SpectatorMenuItem.renderIcon's alpha: 1.21.1 an int 0..255 (SpectatorGui passed (int) (alpha * 255)), 1.21.2 the float 0..1; super calls follow"
+  },
+  "net/minecraft/class_7743.method_45656(Lnet/minecraft/class_332;Lnet/minecraft/class_2680;)V": {
+   "desc": "(Lnet/minecraft/class_332;)V",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "renderSignBackground: 1.21.2 reads the sign's state itself; 1.21.1's callers passed the edited sign's state"
+  },
+  "net/minecraft/class_3222.method_7335(Ljava/util/List;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#recipeKeys(Ljava/util/List;)Ljava/util/List;"
+   ]
+  },
+  "net/minecraft/class_2989.method_20724(Ljava/util/Map;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V": {
+   "desc": "(Ljava/util/Map;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#advancements(Ljava/util/Map;)Ljava/util/Map;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_7196.method_41895(Ljava/lang/String;Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Ljava/util/function/Function;Lnet/minecraft/class_437;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Ljava/util/function/Function;Lnet/minecraft/class_437;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#worldgenDimensions(Ljava/util/function/Function;)Ljava/util/function/Function;",
+    "keep"
+   ]
   }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_3222",
+   "member": "method_7335(Ljava/util/List;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#recipeIds(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "ret": null,
+   "basis": "1.21.2's ServerPlayer.awardRecipesByKey takes recipe ResourceKeys where 1.21.1's took ids: a 1.21.1 override reads each key's id, and every call (its own super call included) hands keys"
+  },
+  {
+   "under": "net/minecraft/class_2989",
+   "member": "method_20724(Ljava/util/Map;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#advancementJson(Lnet/minecraft/class_2989;Ljava/util/Map;)Ljava/util/Map;",
+    null,
+    null
+   ],
+   "ret": null,
+   "basis": "1.21.2's ServerAdvancementManager.apply takes the parsed advancements where 1.21.1's took their JSON: a 1.21.1 override reads each advancement's JSON (encoded with the manager's own JSON ops), and its super call gives 1.21.2 back the advancements the untouched entries stand for (CbRestServer.AdvancementJson)"
+  },
+  {
+   "under": "net/minecraft/class_4309",
+   "member": "method_20731(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)Ljava/util/Map;",
+   "args": [
+    null,
+    null
+   ],
+   "ret": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#preparedValues(Lnet/minecraft/class_4309;Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "1.21.1's SimpleJsonResourceReloadListener.prepare answered each file's JSON; 1.21.2's answers the values its codec parses. A 1.21.1 override's JSON is parsed with the listener's own codec and ops (identity for a 1.21.1 listener, built with the JSON codec); its super call scans the files as 1.21.2 does and answers their JSON (superRedirects), so a 1.21.1 subclass of ServerAdvancementManager reads JSON as it did"
+  },
+  {
+   "under": "net/minecraft/class_7196",
+   "member": "method_41895(Ljava/lang/String;Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Ljava/util/function/Function;Lnet/minecraft/class_437;)V",
+   "args": [
+    null,
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#legacyDimensions(Ljava/util/function/Function;)Ljava/util/function/Function;",
+    null
+   ],
+   "ret": null,
+   "basis": "1.21.2's createFreshLevel takes a dimensions function of a lookup provider where 1.21.1's took one of a registry access: a 1.21.1 override applies 1.21.2's function to registry accesses, which are lookup providers, so it is handed on as it is; a 1.21.1 function handed in is asked with the access the provider stands for (CbRestServer.worldgenDimensions)"
+  }
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_3847$class_3849.<init>(Ljava/util/Queue;)V": {
+   "by": [
+    "net/minecraft/class_3847$class_3849"
+   ],
+   "basis": "1.21.1's QueueStrictQueue is renamed to the layer's facade (StrictQueue$QueueStrictQueue, generic in T as 1.21.1's): a 1.21.1 mod's constructor call builds that facade, never 1.21.2's Runnable-only class"
+  }
+ },
+ "fieldRedirects": {
+  "net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents.JOIN:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents.LEAVE:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents.CHUNK_GENERATE:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents.CHUNK_LEVEL_TYPE_CHANGE:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/resource/ResourceReloadListenerKeys.TAGS:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources"
+ },
+ "interfaceCallRedirects": {
+  "net/fabricmc/fabric/api/event/player/UseItemCallback.interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.load(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition.test(Lnet/minecraft/class_7225$class_7874;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources"
+ },
+ "depRenames": {
+  "fabric-tag-api-v1": "centurybridge_step_1_21_2@*"
  }
 }

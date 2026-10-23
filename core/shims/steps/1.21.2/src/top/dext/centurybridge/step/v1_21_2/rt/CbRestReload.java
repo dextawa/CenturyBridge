@@ -137,4 +137,13 @@ public final class CbRestReload {
             }
         }
     }
+
+    /**
+     * SimpleJsonResourceReloadListener(gson, directory): 1.21.2's takes the codec its files are read with (it
+     * parses each file as JSON, then the codec); a 1.21.1 listener read every file as a JSON element and handed
+     * them on as they were, which ExtraCodecs.JSON (JSON as itself) does. The Gson only ever parsed the JSON.
+     */
+    public static com.mojang.serialization.Codec<com.google.gson.JsonElement> jsonCodec() {
+        return net.minecraft.class_5699.field_40721;
+    }
 }
