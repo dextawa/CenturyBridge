@@ -60,8 +60,7 @@ public final class CbWallTintClient {
             // 26.1's BlockModelLighter: byFace for a shaded quad, up() for an unshaded one -- 1.21.11's
             // ClientLevel.getShade values exactly
             CardinalLighting lighting = tint.cardinalLighting();
-            // (byFace(UP) is the up value; spelled so because build.sh's obfuscated-name gate misreads up() on a real-name stub)
-            return lighting.byFace(shade ? direction : Direction.UP);
+            return shade ? lighting.byFace(direction) : lighting.up();
         }
         return null;
     }

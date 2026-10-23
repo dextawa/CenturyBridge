@@ -6,7 +6,8 @@
   "mixins": [],
   "client": [
     "CbWallGuiAccess",
-    "CbWallBlockStateModelSetMixin"
+    "CbWallBlockStateModelSetMixin",
+    "CbWallModelBlockRendererAccess"
   ],
   "server": [],
   "injectors": {
