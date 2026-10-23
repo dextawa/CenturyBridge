@@ -47,6 +47,7 @@ public final class Main {
             // mixin-probe <V code jar> <out.jar>; mixin-judge <code jar> <probe jar> <index.tsv> <out.tsv> [--layer <jar>]... [--keys <tsv>]
             case "mixin-probe" -> top.dext.centurybridge.data.MixinProbe.run(args);
             case "mixin-judge" -> top.dext.centurybridge.engine.MixinJudge.run(args);
+            case "mixin-cause" -> top.dext.centurybridge.data.MixinCause.run(args);
             // access-diff <oldStub> <newStub> [<wall.tsv>] [<shims-ver.json>] <out.aw>
             case "access-diff" -> top.dext.centurybridge.data.AccessDiff.run(args);
             case "gen-renames" -> {
