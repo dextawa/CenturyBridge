@@ -1458,7 +1458,6 @@
   "net/minecraft/class_10319.method_64782(Lnet/minecraft/class_1937;)Z": "method_65147"
  },
  "facadeGaps": {
-  "net/minecraft/class_7407.method_43387(Lcom/mojang/serialization/Dynamic;Ljava/lang/String;Ljava/lang/String;)Lcom/mojang/serialization/Dynamic;": "1.21.3 private helper of EntityPaintingFieldsRenameFix: no mod could call it (only an access widener ever reached it); the facade's fixTag renames the same fields",
   "net/minecraft/class_10281.method_64641()V": "1.21.3 private (setupAnimationStates): no mod could call it; 1.21.4 Creaking runs its own animation states",
   "net/minecraft/class_10281.field_54588:I": "1.21.3 private (invulnerabilityAnimationRemainingTicks): only an access widener ever reached it; 1.21.4 Creaking keeps its own",
   "net/minecraft/class_10281.field_54589:Lnet/minecraft/class_2338;": "1.21.3 package-private (homePos), unreachable from a mod's package; the home position is 1.21.4 Creaking's (getHomePos / setHomePos), which bindToCreakingHeart sets"
