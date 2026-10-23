@@ -9,7 +9,8 @@
   "net/minecraft/class_219.comp_1881()F": "top/dext/centurybridge/step/v1_21/rt/CbLoot#comp_1881",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider.method_10399(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbLoot#call",
   "net/minecraft/class_8490.comp_2521()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21/rt/CbLoot#comp_2521",
-  "net/minecraft/class_9674.method_59781(Lnet/minecraft/class_7225$class_7874;[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbData#method_59781"
+  "net/minecraft/class_9674.method_59781(Lnet/minecraft/class_7225$class_7874;[Lnet/minecraft/class_1887;)V": "top/dext/centurybridge/step/v1_21/rt/CbData#method_59781",
+  "net/minecraft/class_5434.method_54521()Ljava/util/List;": "top/dext/centurybridge/step/v1_21/rt/CbData#method_54521"
  },
  "overrideHooks": [
   {
@@ -136,6 +137,23 @@
     2
    ],
    "basis": "a 1.20.6 EnchantmentTagsProvider subclass's super(output, registries, enabledFeatures): 1.21's takes no flags; they are kept for 1.20.6's tooltipOrder check (CbData.keepFlags)"
+  },
+  "net/minecraft/class_5434.<init>(Lnet/minecraft/class_3195$class_7302;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_6122;ZLjava/util/Optional;ILjava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_3195$class_7302;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_6122;ZLjava/util/Optional;ILjava/util/List;Lnet/minecraft/class_9778;Lnet/minecraft/class_9822;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbData#defaultPadding()Lnet/minecraft/class_9778;",
+    "push top/dext/centurybridge/step/v1_21/rt/CbData#defaultLiquidSettings()Lnet/minecraft/class_9822;"
+   ],
+   "basis": "new JigsawStructure(.. 1.20.6's nine ..): 1.21's also takes dimension padding and liquid settings; its own defaults (no padding, apply waterlogging) are what 1.20.6 did"
   }
  },
  "staticRedirects": {
@@ -306,5 +324,32 @@
  "fieldRedirects": {
   "net/minecraft/class_217.field_50031:Lcom/mojang/serialization/Codec;": "net/minecraft/class_5341#field_51809",
   "net/minecraft/class_217.field_45869:Lcom/mojang/serialization/Codec;": "net/minecraft/class_5341#field_51810"
+ },
+ "classRenames": {
+  "net/minecraft/class_8902": "top/dext/centurybridge/step/v1_21/facade/class_8902",
+  "net/minecraft/class_8903": "top/dext/centurybridge/step/v1_21/facade/class_8903",
+  "net/minecraft/class_8904": "top/dext/centurybridge/step/v1_21/facade/class_8904",
+  "net/minecraft/class_8906": "top/dext/centurybridge/step/v1_21/facade/class_8906",
+  "net/minecraft/class_8907": "top/dext/centurybridge/step/v1_21/facade/class_8907",
+  "net/minecraft/class_8908": "top/dext/centurybridge/step/v1_21/facade/class_8908",
+  "net/minecraft/class_8994": "top/dext/centurybridge/step/v1_21/facade/class_8994",
+  "net/minecraft/class_8995": "top/dext/centurybridge/step/v1_21/facade/class_8995",
+  "net/minecraft/class_8996": "top/dext/centurybridge/step/v1_21/facade/class_8996",
+  "net/minecraft/class_8997": "top/dext/centurybridge/step/v1_21/facade/class_8997",
+  "net/minecraft/class_8999": "top/dext/centurybridge/step/v1_21/facade/class_8999",
+  "net/minecraft/class_9000": "top/dext/centurybridge/step/v1_21/facade/class_9000",
+  "net/minecraft/class_9001": "top/dext/centurybridge/step/v1_21/facade/class_9001",
+  "net/minecraft/class_9002": "top/dext/centurybridge/step/v1_21/facade/class_9002",
+  "net/minecraft/class_9051": "top/dext/centurybridge/step/v1_21/facade/class_9051",
+  "net/minecraft/class_9052": "top/dext/centurybridge/step/v1_21/facade/class_9052",
+  "net/minecraft/class_9086": "top/dext/centurybridge/step/v1_21/facade/class_9086",
+  "net/minecraft/class_9249": "top/dext/centurybridge/step/v1_21/facade/class_9249",
+  "net/minecraft/class_9339": "top/dext/centurybridge/step/v1_21/facade/class_9339",
+  "net/minecraft/class_9363": "top/dext/centurybridge/step/v1_21/facade/class_9363",
+  "net/minecraft/class_9382": "top/dext/centurybridge/step/v1_21/facade/class_9382",
+  "net/minecraft/class_9447": "top/dext/centurybridge/step/v1_21/facade/class_9447",
+  "net/minecraft/class_9485": "top/dext/centurybridge/step/v1_21/facade/class_9485",
+  "net/minecraft/class_9675": "top/dext/centurybridge/step/v1_21/facade/class_9675",
+  "net/minecraft/class_9686": "top/dext/centurybridge/step/v1_21/facade/class_9686"
  }
 }

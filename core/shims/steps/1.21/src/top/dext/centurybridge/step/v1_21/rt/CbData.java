@@ -110,6 +110,26 @@ public final class CbData {
         return new net.minecraft.class_3195.class_7302(biomes, spawnOverrides, step, terrainAdaptation);
     }
 
+    /**
+     * new JigsawStructure(settings, startPool, startJigsawName, maxDepth, startHeight, useExpansionHack,
+     * projectStartToHeightmap, maxDistanceFromCenter, poolAliases) of 1.20.6: 1.21's also takes the dimension
+     * padding and the liquid settings, which 1.20.6 did not have. 1.21's own defaults for both
+     * (JigsawStructure.DEFAULT_DIMENSION_PADDING: none; DEFAULT_LIQUID_SETTINGS: apply waterlogging) are what
+     * 1.20.6 did -- it neither padded nor kept structure blocks dry.
+     */
+    public static net.minecraft.class_9778 defaultPadding() {
+        return net.minecraft.class_5434.field_51911;
+    }
+
+    public static net.minecraft.class_9822 defaultLiquidSettings() {
+        return net.minecraft.class_5434.field_52235;
+    }
+
+    /** 1.20.6 JigsawStructure.getPoolAliases(): the structure's pool aliases (1.21 keeps the field, drops the getter) */
+    public static java.util.List<net.minecraft.class_8889> method_54521(net.minecraft.class_5434 structure) {
+        return ((top.dext.centurybridge.step.v1_21.mixin.CbDataJigsawAccessor) (Object) structure).cb$poolAliases();
+    }
+
     // ------------------------------------------------------------------------------------------------ enchantment tags
 
     /**

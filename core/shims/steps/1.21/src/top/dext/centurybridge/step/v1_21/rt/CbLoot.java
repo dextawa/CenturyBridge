@@ -36,6 +36,7 @@ import top.dext.centurybridge.step.v1_21.mixin.CbLootModifierBuilderAccessor;
  * current and records them for the provider it built. Outside that, {@link #registries} answers the running
  * server's, else 1.21's builtin vanilla lookup -- the registries 1.20.6's own data generation ran on.
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public final class CbLoot {
 
     private CbLoot() {
@@ -43,7 +44,8 @@ public final class CbLoot {
 
     /** a 1.20.6 loot table provider: generate(registries, consumer of (key, table builder)) */
     public interface Generate {
-        void method_10399(net.minecraft.class_7225.class_7874 registries, BiConsumer consumer);
+        void method_10399(net.minecraft.class_7225.class_7874 registries,
+                          BiConsumer<net.minecraft.class_5321<net.minecraft.class_52>, net.minecraft.class_52.class_53> consumer);
     }
 
     // ---------------------------------------------------------------- the registries a provider works with
@@ -137,12 +139,12 @@ public final class CbLoot {
      * with these registries current for whatever 1.20.6 code it reaches (a 1.21 provider has its own).
      */
     public static void call(net.minecraft.class_7791 provider, net.minecraft.class_7225.class_7874 registries, BiConsumer consumer) {
-        if (provider instanceof Generate g) {
-            g.method_10399(registries, consumer);
-            return;
-        }
         withRegistries(registries, () -> {
-            provider.method_10399(consumer);
+            if (provider instanceof Generate g) {
+                g.method_10399(registries, consumer);
+            } else {
+                provider.method_10399(consumer);
+            }
             return null;
         });
     }
@@ -327,7 +329,8 @@ public final class CbLoot {
 
         /** 1.20.6's generate(registries, consumer): 1.21's record of the pack on those registries */
         @Override
-        public void method_10399(net.minecraft.class_7225.class_7874 registries, BiConsumer consumer) {
+        public void method_10399(net.minecraft.class_7225.class_7874 registries,
+                                 BiConsumer<net.minecraft.class_5321<net.minecraft.class_52>, net.minecraft.class_52.class_53> consumer) {
             net.minecraft.class_7791 pack = cb$pack(registries);
             withRegistries(registries, () -> {
                 pack.method_10399(consumer);
@@ -378,6 +381,11 @@ public final class CbLoot {
     /** 1.20.6's body of allowTreasure(), for a subclass's super.allowTreasure() */
     public static net.minecraft.class_106.class_107 superAllowTreasure(net.minecraft.class_106.class_107 builder) {
         return builder.method_60295(enchantments().method_46735(net.minecraft.class_9636.field_51550));
+    }
+
+    /** the world holder of an enchantment key in {@link #registries} (1.21's builders take holders where 1.20.6's took the object) */
+    public static net.minecraft.class_6880<net.minecraft.class_1887> enchantment(net.minecraft.class_5321<net.minecraft.class_1887> key) {
+        return enchantments().method_46747(key);
     }
 
     /** new EnchantedCountIncreaseFunction.Builder(count) of 1.20.6, which counted looting: the looting holder */
