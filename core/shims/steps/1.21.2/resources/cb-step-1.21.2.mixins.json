@@ -33,6 +33,9 @@
     "CbRestFapiChunkHolderMixin",
     "CbRestFapiChunkStatusMixin",
     "CbRestFapiPlayerListMixin",
+    "CbRestFapiRegistryAliasMixin",
+    "CbRestFapiTagFileMixin",
+    "CbRestFapiTagLoaderMixin",
     "CbRestGameTestHelperMixin",
     "CbRestGenerationChunkHolderMixin",
     "CbRestHolderLookupAdapterAccessor",
@@ -48,6 +51,7 @@
     "CbRestServerLevelMixin",
     "CbRestServerPlayerMixin",
     "CbRestServerPropertiesMixin",
+    "CbRestTagEntryAccessor",
     "CbRestWorldLoaderMixin"
   ],
   "client": [

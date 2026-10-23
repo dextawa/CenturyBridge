@@ -28,7 +28,9 @@
   "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$LevelTypeChange": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LevelTypeChange",
   "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents": "top/dext/centurybridge/step/v1_21_2/facade/fapi/ClientWorldEvents",
   "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange": "top/dext/centurybridge/step/v1_21_2/facade/fapi/ClientWorldEvents$AfterClientWorldChange",
-  "net/fabricmc/fabric/api/entity/event/v1/FabricElytraItem": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricElytraItem"
+  "net/fabricmc/fabric/api/entity/event/v1/FabricElytraItem": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricElytraItem",
+  "net/fabricmc/fabric/api/event/registry/FabricRegistry": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry",
+  "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTagFile"
  },
  "covers": [
   "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
@@ -184,7 +186,8 @@
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.load(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
-  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition.test(Lnet/minecraft/class_7225$class_7874;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources"
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition.test(Lnet/minecraft/class_7225$class_7874;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
+  "net/minecraft/class_2378.addAlias(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -1158,5 +1161,8 @@
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.apply(Ljava/lang/Object;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
   "net/fabricmc/fabric/api/resource/SimpleResourceReloadListener.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources",
   "net/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition.test(Lnet/minecraft/class_7225$class_7874;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiResources"
+ },
+ "depRenames": {
+  "fabric-tag-api-v1": "centurybridge_step_1_21_2@*"
  }
 }
