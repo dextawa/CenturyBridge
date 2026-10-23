@@ -37,7 +37,8 @@
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.frustum()Lnet/minecraft/class_4604;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#frustum",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.viewMatrix()Lorg/joml/Matrix4fc;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#viewMatrix",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.cullProjectionMatrix()Lorg/joml/Matrix4fc;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#cullProjectionMatrix",
-  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.blockOutlines()Z": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#blockOutlines"
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.blockOutlines()Z": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#blockOutlines",
+  "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder.find(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadView;I)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers#find"
  },
  "superRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#categoryBase",
@@ -47,7 +48,8 @@
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemove",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/Collection;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveAll",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveAll",
-  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveTag"
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveTag",
+  "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder.find(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadView;I)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers#superFind"
  },
  "instanceFieldGetters": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.fabricCategory:Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#getFabricCategory"
@@ -205,7 +207,12 @@
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_ENTITIES:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.AFTER_ENTITIES:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_DEBUG_RENDER:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
-  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_TRANSLUCENT:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents"
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_TRANSLUCENT:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
+  "net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client.BLOCK_RENDER_MANAGER:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbFapiReloadKeys"
  },
- "_swfapi_worldRender_basis": "WorldRenderEvents' BEFORE_ENTITIES / AFTER_ENTITIES / BEFORE_DEBUG_RENDER / BEFORE_TRANSLUCENT are gone in 26.1's LevelRenderEvents: given back with 1.21.11's listener types (CbWorldRenderEvents) and fired at the matching points of 26.1's main pass (CbFapiLevelRendererMixin) with the frame's render context; WorldExtractionContext's frustum / viewMatrix / cullProjectionMatrix / blockOutlines read off the camera and GameRenderer (CbFapiWorldContexts)"
+ "_swfapi_worldRender_basis": "WorldRenderEvents' BEFORE_ENTITIES / AFTER_ENTITIES / BEFORE_DEBUG_RENDER / BEFORE_TRANSLUCENT are gone in 26.1's LevelRenderEvents: given back with 1.21.11's listener types (CbWorldRenderEvents) and fired at the matching points of 26.1's main pass (CbFapiLevelRendererMixin) with the frame's render context; WorldExtractionContext's frustum / viewMatrix / cullProjectionMatrix / blockOutlines read off the camera and GameRenderer (CbFapiWorldContexts)",
+ "staticRedirects": {
+  "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder.get(Lnet/minecraft/class_1059;)Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers",
+  "net/fabricmc/fabric/api/renderer/v1/model/ModelHelper.toQuadLists(Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;)[Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers"
+ }
 }
