@@ -40,7 +40,8 @@
   "net/minecraft/class_1309.method_5989()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#lootTable",
   "net/minecraft/class_1308.method_5991()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#mobDefaultLootTable",
   "net/minecraft/class_7094.method_43686(FF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#updateTime",
-  "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#getAccumulatedTime"
+  "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#getAccumulatedTime",
+  "net/minecraft/class_1688.method_7518()Lnet/minecraft/class_1688$class_1689;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#getMinecartType"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -80,7 +81,8 @@
   "net/minecraft/class_4824.method_47120(Ljava/util/function/Predicate;Ljava/util/function/Function;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#startAttacking",
   "net/minecraft/class_4828.method_47137(Ljava/util/function/BiConsumer;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
   "net/minecraft/class_4828.method_47138(Ljava/util/function/Predicate;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
-  "net/minecraft/class_4828.method_47139(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;Z)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking"
+  "net/minecraft/class_4828.method_47139(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;Z)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
+  "net/minecraft/class_1688.method_7523(Lnet/minecraft/class_3218;DDDLnet/minecraft/class_1688$class_1689;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1688;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#createMinecart"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1400.<init>(Lnet/minecraft/class_1308;Ljava/lang/Class;IZZLjava/util/function/Predicate;)V": {
@@ -324,6 +326,118 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityProjectiles#unreadRod()Lnet/minecraft/class_1799;"
    ],
    "basis": "1.21.2's FishingHook(player, level, luck, lure, rod) never reads the rod (its body is 1.21.1's)"
+  },
+  "net/minecraft/class_1695.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#minecart()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1695;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1694.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#chest()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1694;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1696.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#furnace()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1696;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1701.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#tnt()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1701;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1699.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#spawner()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1699;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1700.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#hopper()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1700;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1697.<init>(Lnet/minecraft/class_1937;DDD)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#commandBlock()Lnet/minecraft/class_1299;",
+    "keep:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1697;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1's (level, x, y, z) constructor was super(EntityType.<kind>, x, y, z, level): this(type, level), then setPos and xo/yo/zo -- 1.21.2's setInitialPos (CbEntityMinecarts)"
+  },
+  "net/minecraft/class_1693.<init>(Lnet/minecraft/class_1299;DDDLnet/minecraft/class_1937;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V",
+   "ops": [
+    "keep:0",
+    "keep:4"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#at(Lnet/minecraft/class_1693;DDD)V",
+   "postArgs": [
+    1,
+    2,
+    3
+   ],
+   "basis": "1.21.1 AbstractMinecartContainer(type, x, y, z, level) was AbstractMinecart(type, level, x, y, z) -- this(type, level), setPos, xo/yo/zo -- and the item list, which 1.21.2's (type, level) makes too"
   }
  },
  "fieldGetters": {
@@ -382,6 +496,18 @@
    ],
    "synth": [],
    "basis": "1.21.1's getAccumulatedTime of a mod AnimationState subclass answers the calls CbEntityAnimation serves"
+  },
+  {
+   "under": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts$LegacyType",
+   "requires": [
+    "method_7518()Lnet/minecraft/class_1688$class_1689;"
+   ],
+   "synth": [],
+   "basis": "a mod minecart's own 1.21.1 getMinecartType answers the calls CbEntityMinecarts serves (1.21.2 has no such method)"
   }
- ]
+ ],
+ "classRenames": {
+  "net/minecraft/class_1688$class_1689": "top/dext/centurybridge/step/v1_21_2/facade/MinecartType"
+ }
 }
