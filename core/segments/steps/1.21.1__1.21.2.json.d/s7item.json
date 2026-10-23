@@ -1,0 +1,44 @@
+{
+ "classRenames": {
+  "net/minecraft/class_9062": "top/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult",
+  "net/minecraft/class_1271": "top/dext/centurybridge/step/v1_21_2/facade/InteractionResultHolder"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_1269.field_5812:Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.field_51370:Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.field_21466:Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.field_33562:Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.field_5811:Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.field_5814:Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1269.values()[Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.valueOf(Ljava/lang/String;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.method_29236(Z)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_5328.method_29282(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1269.method_23666()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.method_36360()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.ordinal()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.name()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1269.toString()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1792.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults",
+  "net/minecraft/class_1799.method_7913(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;",
+   "new": "method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+   "onlyUnder": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults$LegacyUse",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults.use(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemResults$LegacyUse;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults.superUse(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemResults$SuperUse;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbItemResults$SuperUse",
+   "superAccessors": [
+    "method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;"
+   ],
+   "basis": "Item.use answers an InteractionResult since 1.21.2 (a Success carries the stack the hand turns into) where 1.21.1's answered an InteractionResultHolder<ItemStack>: the mod's holder as that result, and the hand set as 1.21.1's game modes set it for PASS/FAIL (CbItemResults.result); its super.use(..) reaches super's 1.21.2 use, as a holder"
+  }
+ ]
+}
