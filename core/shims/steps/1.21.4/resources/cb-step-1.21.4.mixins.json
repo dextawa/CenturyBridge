@@ -16,6 +16,8 @@
     "CbRestDeathScoreMixin",
     "CbRestDoorGoalsMixin",
     "CbRestEntityNbtMixin",
+    "CbRestItemPropertiesAccess",
+    "CbRestItemStateMixin",
     "CbRestKillScoreMixin",
     "CbRestLeashDataInvoker",
     "CbRestServerVehicleMixin",

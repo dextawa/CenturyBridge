@@ -50,6 +50,31 @@
     "keep"
    ],
    "basis": "1.21.4 added showHat before listOrder, sent only with UPDATE_HAT; a client never told keeps the hat shown (PlayerInfo's initial showHat = true), CbRestPackets.hatNotSaid"
+  },
+  "net/minecraft/class_1826.<init>(Lnet/minecraft/class_1299;IILnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1299;Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "keep:0",
+    "keep:3"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#eggColors(Lnet/minecraft/class_1826;II)V",
+   "postArgs": [
+    1,
+    2
+   ],
+   "basis": "1.21.4 moved the spawn egg colors to the client item model: the constructor's colors are kept on the item for 1.21.3's getColor (CbRestItems)"
+  },
+  "net/minecraft/class_5537.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_1792$class_1793;)V": {
+   "desc": "(Lnet/minecraft/class_1792$class_1793;)V",
+   "ops": [
+    "keep:2"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#bundleModels(Lnet/minecraft/class_5537;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V",
+   "postArgs": [
+    0,
+    1
+   ],
+   "basis": "1.21.4 moved the bundle's open models to the client item model: the constructor's models are kept on the item for 1.21.3's getters (CbRestItems)"
   }
  },
  "instanceRedirects": {
@@ -106,7 +131,12 @@
   "net/minecraft/class_2573.method_10913(Lnet/minecraft/class_1799;Lnet/minecraft/class_1767;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_10913",
   "net/minecraft/class_2587.method_11019(Lnet/minecraft/class_1767;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_11019",
   "net/minecraft/class_8966.method_55189(Lnet/minecraft/class_8963;Lnet/minecraft/class_5819;Lnet/minecraft/class_1299;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_55189",
-  "net/minecraft/class_1799.method_61656()V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_61656"
+  "net/minecraft/class_1799.method_61656()V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_61656",
+  "net/minecraft/class_1826.method_8016(I)I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_8016",
+  "net/minecraft/class_5537.method_63677()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_63677",
+  "net/minecraft/class_5537.method_63678()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_63678",
+  "net/minecraft/class_1792$class_1793.method_63681(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_63681",
+  "net/minecraft/class_9280.comp_2382()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#comp_2382"
  },
  "superRedirects": {
   "net/minecraft/class_2692.method_11673()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawX",
@@ -145,7 +175,11 @@
   "net/minecraft/class_8172.method_52578()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superGetPotAsItem",
   "net/minecraft/class_2573.method_10913(Lnet/minecraft/class_1799;Lnet/minecraft/class_1767;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superFromItem",
   "net/minecraft/class_2587.method_11019(Lnet/minecraft/class_1767;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superSetColor",
-  "net/minecraft/class_8966.method_55189(Lnet/minecraft/class_8963;Lnet/minecraft/class_5819;Lnet/minecraft/class_1299;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superSetEntityId"
+  "net/minecraft/class_8966.method_55189(Lnet/minecraft/class_8963;Lnet/minecraft/class_5819;Lnet/minecraft/class_1299;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superSetEntityId",
+  "net/minecraft/class_1826.method_8016(I)I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#superGetColor",
+  "net/minecraft/class_5537.method_63677()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#superOpenFrontModel",
+  "net/minecraft/class_5537.method_63678()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#superOpenBackModel",
+  "net/minecraft/class_1792$class_1793.method_63681(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#superOverrideModel"
  },
  "adapterHooks": [
   {
@@ -372,6 +406,42 @@
    ],
    "synth": [],
    "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestBlockEntities)"
+  },
+  {
+   "under": "net/minecraft/class_1826",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems$EggColor",
+   "requires": [
+    "method_8016(I)I"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestItems)"
+  },
+  {
+   "under": "net/minecraft/class_5537",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems$BundleFront",
+   "requires": [
+    "method_63677()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestItems)"
+  },
+  {
+   "under": "net/minecraft/class_5537",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems$BundleBack",
+   "requires": [
+    "method_63678()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestItems)"
+  },
+  {
+   "under": "net/minecraft/class_1792$class_1793",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems$OverrideModel",
+   "requires": [
+    "method_63681(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1792$class_1793;"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestItems)"
   }
  ],
  "callReshapes": {
@@ -680,6 +750,23 @@
    ],
    "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
    "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_1826.method_8015(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1299;": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1299;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#builtInRegistries()Lnet/minecraft/class_7225$class_7874;",
+    "keep"
+   ],
+   "basis": "1.21.3 parsed the egg's entity id against the built-in entity type registry (CbRestItems.builtInRegistries)"
+  },
+  "net/minecraft/class_1826.method_8018(Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)Z": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)Z",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#builtInRegistries()Lnet/minecraft/class_7225$class_7874;",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.21.3 parsed the egg's entity id against the built-in entity type registry (CbRestItems.builtInRegistries)"
   }
  },
  "overrideHooks": [
@@ -809,6 +896,12 @@
   },
   "method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
    "3": "zero: 1.21.3's getCloneItemStack had no includeData and took no requested block-entity data (1.21.4's base body ignores the flag; it is read only by the pick-block handler)"
+  },
+  "method_8018(Lnet/minecraft/class_1799;Lnet/minecraft/class_1299;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#builtInRegistries()Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_8015(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1299;": {
+   "0": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#builtInRegistries()Lnet/minecraft/class_7225$class_7874;"
   }
  },
  "classRenames": {
@@ -818,7 +911,10 @@
   "net/minecraft/class_7662.method_45174(Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7662;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45174",
   "net/minecraft/class_7662.method_45175(Lnet/minecraft/class_3270;Ljava/lang/Object;Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7662;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45175",
   "net/minecraft/class_3255.method_14392(Lnet/minecraft/class_3270;Ljava/io/InputStream;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14392",
-  "net/minecraft/class_7677.method_45252(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_7677;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45252"
+  "net/minecraft/class_7677.method_45252(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_7677;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45252",
+  "net/minecraft/class_1844.method_8062(Lnet/minecraft/class_6880;)I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_8062",
+  "net/minecraft/class_1844.method_8055(Ljava/lang/Iterable;)I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_8055",
+  "net/minecraft/class_1759.method_43123(Lnet/minecraft/class_1937;)Lnet/minecraft/class_4208;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_43123"
  },
  "lambdaAdapters": {
   "net/minecraft/class_7368.method_43041(Lnet/minecraft/class_3270;)Ljava/util/Optional;": {
@@ -854,5 +950,11 @@
    "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBoundingBox$Legacy",
    "basis": "Entity.makeBoundingBox() is final since 1.21.4 (makeBoundingBox(position())): a 1.21.3 override is renamed and every 1.21.4 makeBoundingBox(pos) hands the call to it (CbRestBoundingBox*Mixin); its super call reaches the final method, whose nested call runs vanilla's body"
   }
- ]
+ ],
+ "ctorRedirects": {
+  "net/minecraft/class_9280.<init>(I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#customModelData"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_9280.field_49307:Lnet/minecraft/class_9280;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItemDefaults"
+ }
 }
