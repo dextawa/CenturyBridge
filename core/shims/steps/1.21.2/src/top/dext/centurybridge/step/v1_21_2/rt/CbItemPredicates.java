@@ -30,15 +30,15 @@ import net.minecraft.class_7924;
 public final class CbItemPredicates {
 
     public static class_7871<class_1792> items() {
-        return class_7923.method_62715(class_7923.field_41178);
+        return top.dext.centurybridge.step.v1_21_2.rt.CbItemTags.lookup(class_7923.field_41178);
     }
 
     public static class_7871<class_2248> blocks() {
-        return class_7923.method_62715(class_7923.field_41175);
+        return top.dext.centurybridge.step.v1_21_2.rt.CbItemTags.lookup(class_7923.field_41175);
     }
 
     public static class_7871<class_1299<?>> entityTypes() {
-        return class_7923.method_62715(class_7923.field_41177);
+        return top.dext.centurybridge.step.v1_21_2.rt.CbItemTags.lookup(class_7923.field_41177);
     }
 
     /** a recipe id as the recipe key */

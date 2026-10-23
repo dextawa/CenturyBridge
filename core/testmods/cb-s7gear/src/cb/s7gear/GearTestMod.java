@@ -164,6 +164,7 @@ public class GearTestMod implements ModInitializer {
             armor(server);
             tools();
             food(server);
+            ingredients();
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -228,6 +229,21 @@ public class GearTestMod implements ModInitializer {
         check(pick.method_7951(class_2246.field_10340.method_9564()) && !pick.method_7951(class_2246.field_10540.method_9564()),
             "iron pickaxe: correct for stone, not for obsidian");
         check(SWORD.method_7878(sword, new class_1799(class_1802.field_8687)), "sword repairs with the tier's ingredient");
+    }
+
+    static void ingredients() {
+        class_1856 empty = class_1856.field_9017;
+        check(empty.method_8093(class_1799.field_8037) && !empty.method_8093(new class_1799(class_1802.field_8477)),
+            "Ingredient.EMPTY matches only the empty stack");
+        check(class_1856.method_35226().method_8103() && class_1856.method_8101(class_1799.field_8037).method_8103(),
+            "Ingredient.of() / of(empty stack) are empty");
+        class_1856 diamond = class_1856.method_8101(new class_1799(class_1802.field_8477, 3));
+        check(!diamond.method_8103() && diamond.method_8105().length == 1 && diamond.method_8100().size() == 1
+            && diamond.method_8093(new class_1799(class_1802.field_8477)), "Ingredient.of(stacks): items, stacking ids, test by item");
+        class_1856 planks = class_1856.method_8106(net.minecraft.class_3489.field_15537);
+        check(planks.method_8093(new class_1799(class_1802.field_8118)) && planks.method_8105().length > 1, "Ingredient.of(tag)");
+        check(class_1856.method_26964(java.util.stream.Stream.of(new class_1799(class_1802.field_8695))).method_8093(new class_1799(class_1802.field_8695)),
+            "Ingredient.ofStacks(stream of stacks)");
     }
 
     static void food(MinecraftServer server) {

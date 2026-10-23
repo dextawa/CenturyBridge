@@ -60,6 +60,20 @@ public final class CbItemTags {
         mapped.method_62683(payload.method_61316(registry)).method_62696();
     }
 
+    /**
+     * The lookup a 1.21.1 call's tags and holders resolve through now: the registry's registration lookup while it
+     * is open (mod initialization -- tags not bound yet, the holder sets it gives bind with the registry's tags, as
+     * 1.21.2's own Items and ToolMaterials do), the registry itself once it is frozen (its bound tags). 1.21.1 made
+     * these sets from the registry either way.
+     */
+    public static <T> net.minecraft.class_7871<T> lookup(net.minecraft.class_2378<T> registry) {
+        if (registry instanceof net.minecraft.class_2370<T> mapped
+                && !((top.dext.centurybridge.step.v1_21_2.mixin.CbItemRegistryFrozenAccess) (Object) mapped).cb$frozen()) {
+            return net.minecraft.class_7923.method_62715(registry);
+        }
+        return registry;
+    }
+
     private CbItemTags() {
     }
 }
