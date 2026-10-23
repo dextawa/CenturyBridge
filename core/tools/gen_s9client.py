@@ -686,6 +686,14 @@ def textures(frag):
     covers.add(TM + ".method_18168(Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;")
     covers.add("net/minecraft/class_1059.method_24198(Lnet/minecraft/class_7766$class_7767;)V")
     frag["covers"] = sorted(covers)
+    cr["net/minecraft/class_1046"] = FAC + "HttpTexture"
+    notes["net/minecraft/class_1046"] = ("HttpTexture is gone in 1.21.4 (skins download through SkinTextureDownloader); the facade is 1.21.3's, "
+                                         "its legacy-skin processing 1.21.4's same code")
+    frag.setdefault("superCtorReshapes", {})["net/minecraft/class_1071.<init>(Lnet/minecraft/class_1060;Ljava/nio/file/Path;Lcom/mojang/authlib/minecraft/MinecraftSessionService;Ljava/util/concurrent/Executor;)V"] = {
+        "desc": "(Ljava/nio/file/Path;Lcom/mojang/authlib/minecraft/MinecraftSessionService;Ljava/util/concurrent/Executor;)V",
+        "ops": ["drop:0", "keep:1", "keep:2", "keep:3"],
+        "basis": "SkinManager registers downloaded skins with the game's texture manager since 1.21.4 (SkinTextureDownloader); 1.21.3 took it as an "
+                 "argument, the game's in every vanilla use"}
 
 
 if __name__ == "__main__":

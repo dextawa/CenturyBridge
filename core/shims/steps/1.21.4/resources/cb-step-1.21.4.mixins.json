@@ -77,7 +77,8 @@
     "CbTextureAnimationMixin",
     "CbTextureAtlasMixin",
     "CbTextureManagerMixin",
-    "CbTextureReloadableMixin"
+    "CbTextureReloadableMixin",
+    "CbTextureSkinDownloaderAccess"
   ],
   "server": [],
   "injectors": {

@@ -475,7 +475,8 @@
   "net/minecraft/class_3890": "top/dext/centurybridge/step/v1_21_4/facade/VillagerMetadataSectionSerializer",
   "net/minecraft/class_1079$class_5792": "top/dext/centurybridge/step/v1_21_4/facade/AnimationFrameOutput",
   "net/minecraft/class_4005": "top/dext/centurybridge/step/v1_21_4/facade/PreloadedTexture",
-  "net/minecraft/class_1049$class_4006": "top/dext/centurybridge/step/v1_21_4/facade/LegacyTextureImage"
+  "net/minecraft/class_1049$class_4006": "top/dext/centurybridge/step/v1_21_4/facade/LegacyTextureImage",
+  "net/minecraft/class_1046": "top/dext/centurybridge/step/v1_21_4/facade/HttpTexture"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -492,7 +493,8 @@
   "net/minecraft/class_3890": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
   "net/minecraft/class_1079$class_5792": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
   "net/minecraft/class_4005": "PreloadedTexture is gone in 1.21.4; the facade is 1.21.3's, a SimpleTexture whose contents are its getTextureImage",
-  "net/minecraft/class_1049$class_4006": "SimpleTexture.TextureImage is gone in 1.21.4 (TextureContents); the facade is 1.21.3's"
+  "net/minecraft/class_1049$class_4006": "SimpleTexture.TextureImage is gone in 1.21.4 (TextureContents); the facade is 1.21.3's",
+  "net/minecraft/class_1046": "HttpTexture is gone in 1.21.4 (skins download through SkinTextureDownloader); the facade is 1.21.3's, its legacy-skin processing 1.21.4's same code"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -799,6 +801,16 @@
     "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#cbTime(I)Ljava/util/Optional;"
    ],
    "basis": "AnimationFrame's time is an Optional since 1.21.4: 1.21.3's UNKNOWN_FRAME_TIME (-1) is the empty one"
+  },
+  "net/minecraft/class_1071.<init>(Lnet/minecraft/class_1060;Ljava/nio/file/Path;Lcom/mojang/authlib/minecraft/MinecraftSessionService;Ljava/util/concurrent/Executor;)V": {
+   "desc": "(Ljava/nio/file/Path;Lcom/mojang/authlib/minecraft/MinecraftSessionService;Ljava/util/concurrent/Executor;)V",
+   "ops": [
+    "drop:0",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "SkinManager registers downloaded skins with the game's texture manager since 1.21.4 (SkinTextureDownloader); 1.21.3 took it as an argument, the game's in every vanilla use"
   }
  },
  "superRenames": {
