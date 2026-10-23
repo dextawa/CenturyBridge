@@ -149,6 +149,15 @@
     "method_18867(Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;"
    ],
    "basis": "1.21.11 LivingEntity.makeBrain(Dynamic) read the saved brain as a Dynamic; 26.1's makeBrain(Brain.Packed) takes it decoded (same {\"memories\": ...} format): the mod's override gets the Packed re-encoded to NBT, its super.makeBrain(dynamic) reaches super's makeBrain(Packed) with the dynamic decoded, and Brain.Provider.makeBrain(dynamic) inside it builds for the entity being made (CbWallBrain)"
+  },
+  {
+   "old": "method_28310(Lcom/mojang/serialization/DynamicOps;)Lcom/mojang/serialization/DataResult;",
+   "new": "pack()Lnet/minecraft/world/entity/ai/Brain$Packed;",
+   "onlyUnder": "net/minecraft/class_4095",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain$SerializeStart",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.pack(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$SerializeStart;)Lnet/minecraft/world/entity/ai/Brain$Packed;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "1.21.11 saved a brain through serializeStart(ops); 26.1 saves Brain.pack(): a mod brain overriding serializeStart is saved as its override writes (same {\"memories\": ...} format, read back through Brain.Packed's codec); its super.serializeStart reaches the covered 1.21.11 method, whose pack() falls through to 26.1's on re-entry"
   }
  ],
  "frameDefaults": {
@@ -180,7 +189,8 @@
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newModelBlockRenderer",
   "net/minecraft/class_775.<init>(Lnet/minecraft/class_11701;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newLiquidBlockRenderer",
-  "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#newSnippet"
+  "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#newSnippet",
+  "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#newBrain"
  },
  "adapterHooks": [
   {
@@ -474,7 +484,8 @@
   "net/minecraft/class_2540.method_62785(Lio/netty/buffer/ByteBuf;)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#readVec3",
   "com/mojang/blaze3d/pipeline/RenderPipeline.builder([Lcom/mojang/blaze3d/pipeline/RenderPipeline$Snippet;)Lcom/mojang/blaze3d/pipeline/RenderPipeline$Builder;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#builder",
   "com/mojang/blaze3d/opengl/GlConst.toGl(Lcom/mojang/blaze3d/platform/DepthTestFunction;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#toGl",
-  "com/mojang/blaze3d/opengl/GlStateManager._colorMask(ZZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#colorMask"
+  "com/mojang/blaze3d/opengl/GlStateManager._colorMask(ZZZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#colorMask",
+  "net/minecraft/class_4095.method_28313(Ljava/util/Collection;Ljava/util/Collection;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#codec"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -520,6 +531,17 @@
     13,
     16,
     17
+   ]
+  },
+  "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": {
+   "desc": "(Ljava/util/Collection;Ljava/util/Collection;Ljava/util/List;Lnet/minecraft/world/entity/ai/memory/MemoryMap;Lnet/minecraft/util/RandomSource;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBrain#noActivities()Ljava/util/List;",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallBrain#memoryValues(Lcom/google/common/collect/ImmutableList;)Lnet/minecraft/world/entity/ai/memory/MemoryMap;",
+    "drop",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallBrain#sensorDelays()Lnet/minecraft/util/RandomSource;"
    ]
   }
  },
@@ -597,6 +619,8 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasConstant"
  },
  "covers": [
-  "net/minecraft/class_4095.method_35058()Ljava/util/Map;"
+  "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
+  "net/minecraft/class_4095.method_28310(Lcom/mojang/serialization/DynamicOps;)Lcom/mojang/serialization/DataResult;",
+  "net/minecraft/class_4095.method_18911()Lnet/minecraft/class_4095;"
  ]
 }

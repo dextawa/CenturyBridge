@@ -5,7 +5,10 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
+import com.mojang.serialization.DynamicOps;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayDeque;
@@ -15,17 +18,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.BehaviorControl;
+import net.minecraft.world.entity.ai.memory.MemoryMap;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemorySlot;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.schedule.Activity;
 import org.slf4j.Logger;
 import top.dext.centurybridge.step.v26_1.facade.ExpirableValue;
+import top.dext.centurybridge.step.v26_1.mixin.CbWallBrainAccess;
 import top.dext.centurybridge.step.v26_1.mixin.CbWallLivingEntityAccess;
 
 /**
@@ -167,6 +174,74 @@ public final class CbWallBrain {
                 return slot == null ? null : Optional.ofNullable(ExpirableValue.cb$of(slot));
             }
         };
+    }
+
+    // ---------------------------------------------------------------- Brain constructor, codec, copy
+
+    /**
+     * The random source 26.1's Brain delays each sensor's first tick with (Sensor.randomlyDelayStart):
+     * 1.21.11's sensors drew that delay from one thread-safe random source shared by every sensor.
+     */
+    private static final RandomSource SENSOR_DELAYS = RandomSource.createThreadSafe();
+
+    public static RandomSource sensorDelays() {
+        return SENSOR_DELAYS;
+    }
+
+    /** 26.1's activity list of a brain 1.21.11 code makes: none (1.21.11 added activities afterwards) */
+    public static List<?> noActivities() {
+        return List.of();
+    }
+
+    /**
+     * 1.21.11's initial memory values (an ImmutableList of Brain.MemoryValue, a package-private class
+     * 26.1 no longer has -- only Brain.codec built non-empty ones): as 26.1's MemoryMap.
+     */
+    public static MemoryMap memoryValues(ImmutableList<?> values) {
+        if (!values.isEmpty()) {
+            throw new IllegalArgumentException("1.21.11 Brain memory values " + values
+                    + ": a Brain.MemoryValue cannot exist on 26.1 (the class is gone; saved brains decode through Brain.codec)");
+        }
+        return MemoryMap.EMPTY;
+    }
+
+    /** 1.21.11 new Brain(memories, sensors, memoryValues, codec): the codec was what serializeStart wrote with */
+    public static Brain newBrain(Collection memories, Collection sensors, ImmutableList<?> memoryValues, Supplier<?> codec) {
+        return CbWallBrainAccess.cb$new(memories, sensors, List.of(), memoryValues(memoryValues), SENSOR_DELAYS);
+    }
+
+    /** 1.21.11 Brain.codec(memories, sensors): 1.21.11's brain format is 26.1's Brain.Packed */
+    public static Codec<Brain> codec(Collection memories, Collection sensors) {
+        return Brain.Packed.CODEC.xmap(p -> CbWallBrainAccess.cb$new(memories, sensors, List.of(), p.memories(), SENSOR_DELAYS),
+                Brain::pack);
+    }
+
+    /**
+     * 1.21.11 Brain.copyWithoutBehaviors(): a brain of the same memory types and sensors and no activities,
+     * holding this brain's memories -- the same objects, as 1.21.11 put this brain's ExpirableValues in the
+     * copy's map: the copy shares each memory's slot.
+     */
+    public static Brain<?> copyWithoutBehaviors(Brain<?> brain) {
+        CbWallBrainAccess self = (CbWallBrainAccess) brain;
+        Brain<?> copy = CbWallBrainAccess.cb$new(self.cb$memories().keySet(), self.cb$sensors().keySet(), List.of(),
+                MemoryMap.EMPTY, SENSOR_DELAYS);
+        Map<MemoryModuleType<?>, MemorySlot<?>> to = ((CbWallBrainAccess) copy).cb$memories();
+        self.cb$memories().forEach((type, slot) -> {
+            if (slot.hasValue()) {
+                to.put(type, slot);
+            }
+        });
+        return copy;
+    }
+
+    /** 1.21.11 Brain.serializeStart(ops), declared by a mod's brain class (the override hook adds it) */
+    public interface SerializeStart {
+        <T> DataResult<T> serializeStart(DynamicOps<T> ops);
+    }
+
+    /** the synthesized pack() of such a brain: 26.1 saves what the mod's serializeStart writes */
+    public static Brain.Packed pack(SerializeStart self) {
+        return Brain.Packed.CODEC.parse(NbtOps.INSTANCE, self.serializeStart(NbtOps.INSTANCE).getOrThrow()).getOrThrow();
     }
 
     // ---------------------------------------------------------------- makeBrain(Dynamic)

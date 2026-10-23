@@ -13,6 +13,7 @@
     "CbFapiTagLoaderMixin",
     "CbFapiTagsProviderMixin",
     "CbFapiTooltipFlagMixin",
+    "CbWallBrainAccess",
     "CbWallBrainMixin",
     "CbWallLivingEntityAccess",
     "CbWallServerMixin"
