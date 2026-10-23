@@ -1013,6 +1013,96 @@ public final class CbRestFields {
         return CbCodecs.fromMapCodec(net.minecraft.class_8247.field_43344);
     }
 
+    /** net/minecraft/world/Container.field_29952: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static int field_29952() {
+        return 64;
+    }
+
+    /** net/minecraft/world/Container.field_42619: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static int field_42619() {
+        return 8;
+    }
+
+    /** net/minecraft/world/entity/Entity.field_29991: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static float field_29991() {
+        return 0.11111111f;
+    }
+
+    /** net/minecraft/world/entity/EntityType.field_30053: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static java.lang.String field_30053() {
+        return "EntityTag";
+    }
+
+    /** net/minecraft/world/entity/LivingEntity.field_30067: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static float field_30067() {
+        return 1.74f;
+    }
+
+    /** net/minecraft/world/entity/animal/equine/AbstractHorse.field_30417: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static int field_30417() {
+        return 1;
+    }
+
+    /** net/minecraft/world/entity/decoration/painting/Painting.field_42463: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static java.lang.String field_42463() {
+        return "variant";
+    }
+
+    /** net/minecraft/SharedConstants.field_29699: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static boolean field_29699() {
+        return false;
+    }
+
+    /** net/minecraft/SharedConstants.field_29701: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static boolean field_29701() {
+        return false;
+    }
+
+    /** net/minecraft/world/entity/monster/zombie/Zombie.field_41028: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static float field_41028() {
+        return 0.81f;
+    }
+
+    /** net/minecraft/world/entity/player/Player.field_30643: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static int field_30643() {
+        return 16;
+    }
+
+    /** net/minecraft/gametest/framework/GameTestRunner.field_33149: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static int field_33149() {
+        return 5;
+    }
+
+    /** net/minecraft/gametest/framework/GameTestRunner.field_33150: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static int field_33150() {
+        return 6;
+    }
+
+    /** net/minecraft/world/entity/monster/piglin/AbstractPiglin.field_41030: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static float field_41030() {
+        return 1.79f;
+    }
+
+    /** net/minecraft/world/entity/EntityEvent.field_30011: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static byte field_30011() {
+        return (byte) 43;
+    }
+
+    /** net/minecraft/world/entity/animal/goat/GoatAi.field_33494: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static float field_33494() {
+        return 1.5f;
+    }
+
+    /** net/minecraft/util/debugchart/SampleLogger.field_45719: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static int field_45719() {
+        return 240;
+    }
+
+    /** net/minecraft/server/MinecraftServer.field_33210: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static int field_33210() {
+        return 11;
+    }
+
     /** net/minecraft/world/entity/monster/spider/Spider$SpiderEffectsGroupData.field_7404, read */
     public static net.minecraft.class_1291 field_7404(net.minecraft.class_1628.class_1630 self) {
         return CbHolders.mobEffectValue(self.field_7404);

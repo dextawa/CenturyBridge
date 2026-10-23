@@ -101,6 +101,31 @@ public final class CbItemHolders {
         return new net.minecraft.class_9129(buf, CbRegistries.currentAccess());
     }
 
+    // ---------------------------------------------------------------- builtInRegistryHolder()
+
+    /** the stand-ins for values not (yet) registered, one per value as 1.20.4's intrusive holder was */
+    private static final java.util.Map<Object, net.minecraft.class_6880.class_6883<?>> UNREGISTERED =
+        java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
+
+    /**
+     * value.builtInRegistryHolder() of a registry 1.20.4 made intrusive and 1.20.5 does not (potions, mob
+     * effects): the registry's reference once the value is registered, as 1.20.4's was bound by then;
+     * before that, an unbound intrusive reference holding the value, the same one each time, as 1.20.4's
+     * was (value() answers, key() throws "unbound").
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static net.minecraft.class_6880.class_6883 builtIn(net.minecraft.class_2378 registry, Object value) {
+        Optional key = registry.method_29113(value);
+        if (key.isPresent()) {
+            Optional ref = registry.method_40264((net.minecraft.class_5321) key.get());
+            if (ref.isPresent()) {
+                return (net.minecraft.class_6880.class_6883) ref.get();
+            }
+        }
+        return UNREGISTERED.computeIfAbsent(value,
+            v -> net.minecraft.class_6880.class_6883.method_40233(registry.method_46770(), v));
+    }
+
     private CbItemHolders() {
     }
 }

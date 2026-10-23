@@ -1,6 +1,7 @@
 package top.dext.centurybridge.step.v1_20_5.rt;
 
 import net.minecraft.class_1297;
+import net.minecraft.class_2540;
 import net.minecraft.class_2940;
 import net.minecraft.class_2943;
 import net.minecraft.class_2945;
@@ -117,6 +118,76 @@ public final class CbNetEntityData {
             return net.minecraft.class_7923.field_41164.method_47983(frog);
         }
         return value;
+    }
+
+    // ---------------------------------------------------------------- serializers
+
+    /**
+     * was EntityDataSerializer.write(buf, value): a 1.20.4 mod's serializer writes itself; any other
+     * encodes with its 1.20.5 codec, through the buffer's registry view, the value as 1.20.5 holds it.
+     */
+    @SuppressWarnings("unchecked")
+    public static void method_12715(net.minecraft.class_2941<?> serializer, class_2540 buf, Object value) {
+        if (serializer instanceof CbNetLegacySerializer legacy) {
+            legacy.method_12715(buf, value);
+            return;
+        }
+        ((net.minecraft.class_9139<net.minecraft.class_9129, Object>) (Object) serializer.codec())
+            .encode(CbNetBufs.cbRegistryBuf(buf), cbNewValueOf(serializer, value));
+    }
+
+    /** was EntityDataSerializer.read(buf): as {@link #method_12715}, the value as 1.20.4 code holds it */
+    public static Object method_12716(net.minecraft.class_2941<?> serializer, class_2540 buf) {
+        if (serializer instanceof CbNetLegacySerializer legacy) {
+            return legacy.method_12716(buf);
+        }
+        return cbOldValue(serializer.codec().decode(CbNetBufs.cbRegistryBuf(buf)));
+    }
+
+    /** the codec made for each 1.20.4 mod serializer, once (vanilla asks a serializer for its codec at every sync) */
+    private static final java.util.Map<Object, net.minecraft.class_9139<?, ?>> LEGACY_CODECS =
+        new com.google.common.collect.MapMaker().weakKeys().makeMap();
+
+    /**
+     * EntityDataSerializer.codec() of a 1.20.4 mod's serializer class (abstractFills): a stream codec
+     * whose encoder and decoder are the serializer's own write and read.
+     */
+    public static net.minecraft.class_9139<?, ?> cbLegacyCodec(net.minecraft.class_2941<?> serializer) {
+        if (!(serializer instanceof CbNetLegacySerializer legacy)) {
+            throw new IllegalStateException("CenturyBridge: " + serializer.getClass().getName()
+                + " is a 1.20.4 serializer class without write and read of its own");
+        }
+        return LEGACY_CODECS.computeIfAbsent(serializer, s -> net.minecraft.class_9139.<net.minecraft.class_9129, Object>method_56437(
+            legacy::method_12715, legacy::method_12716));
+    }
+
+    /** was EntityDataSerializer.simple(writer, reader): a value-type serializer over 1.20.4's writer and reader */
+    public static <T> net.minecraft.class_2941<T> method_43242(top.dext.centurybridge.step.v1_20_5.facade.FriendlyByteBufWriter<T> writer,
+            top.dext.centurybridge.step.v1_20_5.facade.FriendlyByteBufReader<T> reader) {
+        return net.minecraft.class_2941.method_56031(net.minecraft.class_9139.<class_2540, T>method_56437(writer::accept, reader::apply));
+    }
+
+    /** was EntityDataSerializer.optional(writer, reader): as simple, over the optional forms */
+    public static <T> net.minecraft.class_2941<java.util.Optional<T>> method_43243(
+            top.dext.centurybridge.step.v1_20_5.facade.FriendlyByteBufWriter<T> writer,
+            top.dext.centurybridge.step.v1_20_5.facade.FriendlyByteBufReader<T> reader) {
+        return method_43242(writer.asOptional(), reader.asOptional());
+    }
+
+    /** was EntityDataSerializer.simpleEnum(Class): the enum's ordinal, as FriendlyByteBuf.writeEnum / readEnum */
+    public static <T extends Enum<T>> net.minecraft.class_2941<T> method_43240(Class<T> type) {
+        return method_43242((buf, value) -> buf.method_10817(value), buf -> buf.method_10818(type));
+    }
+
+    /** was EntityDataSerializer.simpleId(IdMap): the value's VarInt id in the map (1.20.4's writeId / readById) */
+    public static <T> net.minecraft.class_2941<T> method_43237(net.minecraft.class_2359<T> map) {
+        return method_43242((buf, value) -> {
+            int id = map.method_10206(value);
+            if (id == -1) {
+                throw new IllegalArgumentException("Can't find id for '" + value + "' in map " + map);
+            }
+            buf.method_10804(id);
+        }, buf -> map.method_10200(buf.method_10816()));
     }
 
     private CbNetEntityData() {

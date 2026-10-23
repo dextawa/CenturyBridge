@@ -454,21 +454,6 @@ public final class CbItemFields {
         return "resolved";
     }
 
-    /** PotionContents.field_30943: gone in 1.20.5; 1.20.4's constant */
-    public static java.lang.String field_30943() {
-        return "custom_potion_effects";
-    }
-
-    /** PotionContents.field_30944: gone in 1.20.5; 1.20.4's constant */
-    public static java.lang.String field_30944() {
-        return "CustomPotionColor";
-    }
-
-    /** PotionContents.field_30945: gone in 1.20.5; 1.20.4's constant */
-    public static java.lang.String field_30945() {
-        return "Potion";
-    }
-
     /** Potions.HEALING: 1.20.5 holds the registry holder, 1.20.4 the registered value */
     public static net.minecraft.class_1842 field_8963() {
         return net.minecraft.class_1847.field_8963.comp_349();

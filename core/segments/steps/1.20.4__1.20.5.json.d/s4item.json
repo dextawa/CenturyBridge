@@ -27,7 +27,9 @@
   "net/minecraft/class_2392.field_11191:Lnet/minecraft/class_2394$class_2395;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#itemDeserializer",
   "net/minecraft/class_7227.field_38006:Lnet/minecraft/class_2394$class_2395;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#sculkChargeDeserializer",
   "net/minecraft/class_7290.field_38359:Lnet/minecraft/class_2394$class_2395;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#shriekDeserializer",
-  "net/minecraft/class_5745.field_28278:Lnet/minecraft/class_2394$class_2395;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#vibrationDeserializer"
+  "net/minecraft/class_5745.field_28278:Lnet/minecraft/class_2394$class_2395;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#vibrationDeserializer",
+  "net/minecraft/class_1847.field_42473:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions#emptyId",
+  "net/minecraft/class_1847.field_8984:Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions#empty"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_7788.field_40610:Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#blockLootMap",
@@ -303,6 +305,29 @@
     "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbParticles#pend(ZLnet/minecraft/class_2394$class_2395;)Z"
    ],
    "basis": "s4item: 1.20.5's ParticleType takes no deserializer; the type keeps the one its 1.20.4 constructor was given (CbParticles.pend, claimed by CbParticleTypeMixin)"
+  },
+  "net/minecraft/class_1845.<init>()V": {
+   "desc": "(Ljava/util/List;Ljava/util/List;Ljava/util/List;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#emptyList()Ljava/util/List;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#emptyList()Ljava/util/List;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#emptyList()Ljava/util/List;"
+   ],
+   "basis": "s4item: 1.20.4's PotionBrewing instance held nothing (its tables were static); 1.20.5's takes its mixes: empty ones (the constructor is opened by the layer's access widener)"
+  },
+  "net/minecraft/class_1293.<init>(Lnet/minecraft/class_1291;IIZZZLnet/minecraft/class_1293;Ljava/util/Optional;)V": {
+   "desc": "(Lnet/minecraft/class_6880;IIZZZLnet/minecraft/class_1293;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbHolders#mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "drop:7 top/dext/centurybridge/step/v1_20_5/rt/CbEffects#pendFactorData(Ljava/util/Optional;)V"
+   ],
+   "basis": "s4item: 1.20.5's instance takes the effect's holder and no factor data; the factor data named goes to the instance (CbEffects.pendFactorData, taken by CbEffectInstanceMixin)"
   }
  },
  "callReshapes": {
@@ -634,7 +659,15 @@
   "net/minecraft/class_5744.method_10293()Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#writeToString",
   "net/minecraft/class_2396.method_10298()Lnet/minecraft/class_2394$class_2395;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#deserializer",
   "net/minecraft/class_5744.method_33119()Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#dustColor",
-  "net/minecraft/class_5744.method_33120()F": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#dustScale"
+  "net/minecraft/class_5744.method_33120()F": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#dustScale",
+  "net/minecraft/class_1842.method_8051(Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions#getName",
+  "net/minecraft/class_1842.method_53211()Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions#builtInRegistryHolder",
+  "net/minecraft/class_1291.method_42126(Ljava/util/function/Supplier;)Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#setFactorDataFactory",
+  "net/minecraft/class_1291.method_42127()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#createFactorData",
+  "net/minecraft/class_1291.method_5565()Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#attributeModifiers",
+  "net/minecraft/class_1291.method_53123()Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#builtInRegistryHolder",
+  "net/minecraft/class_1293.method_42129()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#getFactorData",
+  "net/minecraft/class_1293.method_5582(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#save"
  },
  "staticRedirects": {
   "net/minecraft/class_1799.method_7915(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_5/rt/CbItemTags#of",
@@ -653,7 +686,19 @@
   "net/minecraft/class_2090$class_2091.method_53180(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090$class_2091;": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#inBiome",
   "net/minecraft/class_2090$class_2091.method_53183(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090$class_2091;": "top/dext/centurybridge/step/v1_20_5/rt/CbPredicates#inStructure",
   "net/minecraft/class_5744.method_33118(Lcom/mojang/brigadier/StringReader;)Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#readVector3f",
-  "net/minecraft/class_5744.method_33466(Lnet/minecraft/class_2540;)Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#readVector3f"
+  "net/minecraft/class_5744.method_33466(Lnet/minecraft/class_2540;)Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#readVector3f",
+  "net/minecraft/class_1842.method_8048(Ljava/lang/String;)Lnet/minecraft/class_1842;": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions#byName",
+  "net/minecraft/class_1845.method_8077(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#isIngredient",
+  "net/minecraft/class_1845.method_8079(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#isContainerIngredient",
+  "net/minecraft/class_1845.method_8069(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#isPotionIngredient",
+  "net/minecraft/class_1845.method_20361(Lnet/minecraft/class_1842;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#isBrewablePotion",
+  "net/minecraft/class_1845.method_8072(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#hasMix",
+  "net/minecraft/class_1845.method_8070(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#hasContainerMix",
+  "net/minecraft/class_1845.method_8075(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#hasPotionMix",
+  "net/minecraft/class_1845.method_8078(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#mix",
+  "net/minecraft/class_1845.method_8076()V": "top/dext/centurybridge/step/v1_20_5/rt/CbBrewing#bootStrap",
+  "net/minecraft/class_1830.method_8021(Lnet/minecraft/class_1799;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbStew#saveMobEffects",
+  "net/minecraft/class_1830.method_53209(Lnet/minecraft/class_1799;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbStew#appendMobEffects"
  },
  "ctorRedirects": {
   "net/minecraft/class_1799.<init>(Lnet/minecraft/class_6880;ILjava/util/Optional;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbItemStacks"
@@ -681,7 +726,10 @@
   "net/minecraft/class_8489": "top/dext/centurybridge/step/v1_20_5/facade/LootDataResolver",
   "net/minecraft/class_60": "top/dext/centurybridge/step/v1_20_5/facade/LootDataManager",
   "net/minecraft/class_2394$class_2395": "top/dext/centurybridge/step/v1_20_5/facade/ParticleOptionsDeserializer",
-  "net/minecraft/class_5744": "net/minecraft/class_9679"
+  "net/minecraft/class_5744": "net/minecraft/class_9679",
+  "net/minecraft/class_1844": "top/dext/centurybridge/step/v1_20_5/facade/PotionUtils",
+  "net/minecraft/class_1293$class_7247": "top/dext/centurybridge/step/v1_20_5/facade/FactorData",
+  "net/minecraft/class_8630": "top/dext/centurybridge/step/v1_20_5/facade/AttributeModifierTemplate"
  },
  "overrideHooks": [
   {
@@ -718,7 +766,8 @@
    "old": "method_7865(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F",
    "new": "method_58404(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)F",
    "onlyUnder": "net/minecraft/class_1792",
-   "basis": "s4item: getDestroySpeed(stack, state) has a new name in 1.20.5, the same arguments"
+   "basis": "s4item: getDestroySpeed(stack, state) has a new name in 1.20.5, the same arguments; guarded: the super call (CbTools) reaches Item's own method past the synthesized one",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard"
   },
   {
    "old": "method_7856(Lnet/minecraft/class_2680;)Z",
@@ -727,7 +776,8 @@
    "args": [
     1
    ],
-   "basis": "s4item: 1.20.5's isCorrectToolForDrops also takes the stack, which the 1.20.4 override never had"
+   "basis": "s4item: 1.20.5's isCorrectToolForDrops also takes the stack, which the 1.20.4 override never had; guarded: the super call (CbTools) reaches Item's own method past the synthesized one",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard"
   },
   {
    "old": "method_7860(Lnet/minecraft/class_2487;)V",
@@ -848,6 +898,14 @@
    "new": "method_33110()Lorg/joml/Vector3f;",
    "onlyUnder": "net/minecraft/class_5743",
    "basis": "s4item: a colour transition's 1.20.4 getColor() was its starting colour, which 1.20.5 asks by getFromColor"
+  },
+  {
+   "old": "method_5572(Lnet/minecraft/class_1309;I)V",
+   "new": "method_5572(Lnet/minecraft/class_1309;I)Z",
+   "onlyUnder": "net/minecraft/class_1291",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects.applyEffectTick(Ltop/dext/centurybridge/step/v1_20_5/rt/CbEffects$LegacyTick;Lnet/minecraft/class_1309;I)Z",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects$LegacyTick",
+   "basis": "s4item: 1.20.5's applyEffectTick answers whether the effect stays; a 1.20.4 override answered nothing and the effect stayed, unless the vanilla tick its super call reached says it goes (CbEffects.applyEffectTick)"
   }
  ],
  "superRedirects": {
@@ -933,9 +991,16 @@
   "net/minecraft/class_5744.method_10294(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#superWriteToNetwork",
   "net/minecraft/class_5744.method_10293()Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#superWriteToString",
   "net/minecraft/class_2396.method_10298()Lnet/minecraft/class_2394$class_2395;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#superGetDeserializer",
-  "net/minecraft/class_2400.method_29138()Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#superCodec",
   "net/minecraft/class_5744.method_33119()Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#superDustColor",
-  "net/minecraft/class_5744.method_33120()F": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#superDustScale"
+  "net/minecraft/class_5744.method_33120()F": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#superDustScale",
+  "net/minecraft/class_1842.method_8051(Ljava/lang/String;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions#superGetName",
+  "net/minecraft/class_1842.method_53211()Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions#superBuiltInRegistryHolder",
+  "net/minecraft/class_1291.method_42126(Ljava/util/function/Supplier;)Lnet/minecraft/class_1291;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#superSetFactorDataFactory",
+  "net/minecraft/class_1291.method_42127()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#superCreateFactorData",
+  "net/minecraft/class_1291.method_5565()Ljava/util/Map;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#superAttributeModifiers",
+  "net/minecraft/class_1291.method_53123()Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#superBuiltInRegistryHolder",
+  "net/minecraft/class_1293.method_42129()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#superGetFactorData",
+  "net/minecraft/class_1293.method_5582(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects#superSave"
  },
  "adapterHooks": [
   {
@@ -1210,6 +1275,78 @@
    ],
    "synth": [],
    "basis": "s4item: a 1.20.4 type class's own getDeserializer, which CbParticles reads with"
+  },
+  {
+   "under": "net/minecraft/class_1842",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions$Named",
+   "requires": [
+    "method_8051(Ljava/lang/String;)Ljava/lang/String;"
+   ],
+   "synth": [],
+   "basis": "s4item: a 1.20.4 potion class's own getName(prefix), which names its potion again (CbPotionNameMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1842",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions$BuiltIn",
+   "requires": [
+    "method_53211()Lnet/minecraft/class_6880$class_6883;"
+   ],
+   "synth": [],
+   "basis": "s4item: a 1.20.4 potion class's own builtInRegistryHolder()"
+  },
+  {
+   "under": "net/minecraft/class_1291",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects$SetsFactorData",
+   "requires": [
+    "method_42126(Ljava/util/function/Supplier;)Lnet/minecraft/class_1291;"
+   ],
+   "synth": [],
+   "basis": "s4item: a 1.20.4 effect class's own setFactorDataFactory"
+  },
+  {
+   "under": "net/minecraft/class_1291",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects$CreatesFactorData",
+   "requires": [
+    "method_42127()Ljava/util/Optional;"
+   ],
+   "synth": [],
+   "basis": "s4item: a 1.20.4 effect class's own createFactorData, which makes its instances' factor data"
+  },
+  {
+   "under": "net/minecraft/class_1291",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects$ListsModifiers",
+   "requires": [
+    "method_5565()Ljava/util/Map;"
+   ],
+   "synth": [],
+   "basis": "s4item: a 1.20.4 effect class's own getAttributeModifiers(), which lists its modifiers again (CbMobEffectMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1291",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects$BuiltIn",
+   "requires": [
+    "method_53123()Lnet/minecraft/class_6880$class_6883;"
+   ],
+   "synth": [],
+   "basis": "s4item: a 1.20.4 effect class's own builtInRegistryHolder()"
+  },
+  {
+   "under": "net/minecraft/class_1293",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects$GetsFactorData",
+   "requires": [
+    "method_42129()Ljava/util/Optional;"
+   ],
+   "synth": [],
+   "basis": "s4item: a 1.20.4 effect instance class's own getFactorData(), which its blend factor answers from"
+  },
+  {
+   "under": "net/minecraft/class_1293",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEffects$Saves",
+   "requires": [
+    "method_5582(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;"
+   ],
+   "synth": [],
+   "basis": "s4item: a 1.20.4 effect instance class's own save(tag), which 1.20.5's save() answers with"
   }
  ],
  "frameDefaults": {
@@ -1322,5 +1459,8 @@
  },
  "superRenames": {
   "net/minecraft/class_5744": "top/dext/centurybridge/step/v1_20_5/facade/DustParticleOptionsBase"
+ },
+ "staticFieldSetters": {
+  "net/minecraft/class_1847.field_42473:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_20_5/rt/CbPotions#emptyId"
  }
 }

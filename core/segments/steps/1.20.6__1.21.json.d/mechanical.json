@@ -98,76 +98,6 @@
    ],
    "basis": "mechanical: same values"
   },
-  "net/minecraft/class_1421.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_1433.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_1440.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_1477.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_1481.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_1480.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_5762.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_5136.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_4760.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
-  "net/minecraft/class_3988.method_5931(Lnet/minecraft/class_1657;)Z": {
-   "desc": "()Z",
-   "ops": [
-    "drop:0"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1657;, never read in V"
-  },
   "net/minecraft/class_1676.method_59859(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Z)V": {
    "desc": "(Lnet/minecraft/class_9109;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Z)Z",
    "ops": [
@@ -359,17 +289,6 @@
    "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_4174; not passed"
   },
   {
-   "old": "method_20235(Lnet/minecraft/class_1304;)V",
-   "new": "method_20235(Lnet/minecraft/class_1792;Lnet/minecraft/class_1304;)V",
-   "args": [
-    1
-   ],
-   "onlyUnder": "net/minecraft/class_1309",
-   "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_1792; not passed"
-  },
-  {
    "old": "method_5984(Lnet/minecraft/class_5819;Lnet/minecraft/class_1266;)V",
    "new": "method_5984(Lnet/minecraft/class_5425;Lnet/minecraft/class_5819;Lnet/minecraft/class_1266;)V",
    "args": [
@@ -462,19 +381,6 @@
    "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had"
-  },
-  {
-   "old": "method_21845(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V",
-   "new": "method_21845(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;)V",
-   "args": [
-    0,
-    1,
-    2
-   ],
-   "onlyUnder": "net/minecraft/class_2269",
-   "frames": "top/dext/centurybridge/step/v1_21/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_1657; not passed"
   },
   {
    "old": "method_17503(Lnet/minecraft/class_1297;Lnet/minecraft/class_1799;I)Z",
