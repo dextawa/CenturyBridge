@@ -20,9 +20,11 @@ LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client
 CP="$WD/core/build/classes:$LIBS"
 SEG="${V}__${W}"
 code_of() { case "$1" in 26.*) echo "data/jars/client-$1.jar" ;; *) echo "data/jars/client-$1-intermediary-code.jar" ;; esac; }
-if [ "$SEG" = "1.21.11__26.1" ]; then
-    echo "mixin probe: the namespace wall is not measured yet"; exit 0
-fi
+# The namespace wall (1.21.11 -> 26.1): the probe is intermediary-named like every 1.21.11 mod. Its raw
+# verdict on 26.1 is the probe renamed by the wall table alone (Main remap-mojang: class files and the
+# refmap, as the converter's wall pass renames a mod), so the damage table holds what a rename does not carry.
+WALL=""
+[ "$SEG" = "1.21.11__26.1" ] && WALL="$(python3 "$WD/core/tools/wall_tables.py" "$W")"
 DAMAGE="$WD/core/segments/damage-mixin/$SEG.tsv"
 if [ "${CB_MIXIN_GEN:-}" = 1 ]; then
     PR="${CB_MIXIN_PROBES:-probe}"
@@ -32,10 +34,16 @@ if [ "${CB_MIXIN_GEN:-}" = 1 ]; then
         || { echo "mixin probe failed"; tail -3 "$P/probe.log"; exit 1; }
     "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-judge "$(code_of "$V")" "$P/mprobe-$V.jar" "$P/mprobe-$V.jar.index.tsv" \
         "$P/raw-$V.tsv" > "$P/control.log" 2>&1 || { echo "mixin control failed"; tail -3 "$P/control.log"; exit 1; }
-    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-judge "$(code_of "$W")" "$P/mprobe-$V.jar" "$P/mprobe-$V.jar.index.tsv" \
+    RAWJAR="$P/mprobe-$V.jar"
+    if [ -n "$WALL" ]; then
+        "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main remap-mojang "$WALL" "$P/mprobe-$V.jar" "$P/mprobe-$V-wall.jar" \
+            > "$P/wall.log" 2>&1 || { echo "mixin probe wall rename failed"; tail -3 "$P/wall.log"; exit 1; }
+        RAWJAR="$P/mprobe-$V-wall.jar"
+    fi
+    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-judge "$(code_of "$W")" "$RAWJAR" "$P/mprobe-$V.jar.index.tsv" \
         "$P/raw-$W.tsv" > "$P/raw.log" 2>&1 || { echo "mixin raw judge failed"; tail -3 "$P/raw.log"; exit 1; }
     python3 "$WD/core/tools/mixin_damage.py" "$P/raw-$W.tsv" "$P/raw-$V.tsv" "$DAMAGE" > "$P/damage.log"
-    rm -f "$P/mprobe-$V.jar" "$P/mprobe-$V.jar.index.tsv"
+    rm -f "$P/mprobe-$V.jar" "$P/mprobe-$V-wall.jar" "$P/mprobe-$V.jar.index.tsv"
     echo "mixin control on $V: $(head -1 "$P/control.log" | sed 's/^mixin-judge: //; s/ -> .*//')"
     head -1 "$P/damage.log"
 elif [ ! -f "$DAMAGE.gz" ]; then

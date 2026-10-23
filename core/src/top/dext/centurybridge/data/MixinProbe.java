@@ -340,12 +340,12 @@ public final class MixinProbe {
             // @Accessor getter (and setter)
             if (want("accessor-get", x.name, fk, "", -1)) {
                 ClassNode a = acc.cls();
-                MethodNode ag = accessorMethod(a, st, "ag" + (n++), "()" + f.desc, ACCESSOR, f.name);
+                MethodNode ag = accessorMethod(a, st, "ag" + (n++), "()" + f.desc, ACCESSOR, f.name, fk);
                 row(a, ag, "accessor-get", x.name, fk, "", -1, 0);
             }
             if (!fin && want("accessor-set", x.name, fk, "", -1)) {
                 ClassNode a = acc.cls();
-                MethodNode as = accessorMethod(a, st, "as" + (n++), "(" + f.desc + ")V", ACCESSOR, f.name);
+                MethodNode as = accessorMethod(a, st, "as" + (n++), "(" + f.desc + ")V", ACCESSOR, f.name, fk);
                 row(a, as, "accessor-set", x.name, fk, "", -1, 0);
             }
         }
@@ -362,13 +362,13 @@ public final class MixinProbe {
                 }
                 if (want("invoker", x.name, m.name + m.desc, "", -1)) {
                     ClassNode a = acc.cls();
-                    MethodNode iv = accessorMethod(a, st, "iv" + (n++), m.desc, INVOKER, m.name);
+                    MethodNode iv = accessorMethod(a, st, "iv" + (n++), m.desc, INVOKER, m.name, m.name + m.desc);
                     row(a, iv, "invoker", x.name, m.name + m.desc, "", -1, 0);
                 }
             } else if (ctor && concrete && want("invoker-new", x.name, m.name + m.desc, "", -1)) {
                 ClassNode a = acc.cls();
                 MethodNode iv = accessorMethod(a, true, "in" + (n++), m.desc.substring(0, m.desc.length() - 1) + "L" + x.name + ";",
-                    INVOKER, "<init>");
+                    INVOKER, "<init>", null);
                 row(a, iv, "invoker-new", x.name, m.name + m.desc, "", -1, 0);
             }
             if (m.instructions == null || m.instructions.size() == 0) {
@@ -507,7 +507,7 @@ public final class MixinProbe {
         AnnotationNode an = new AnnotationNode(ann);
         an.values = new ArrayList<>();
         an.values.add("method");
-        an.values.add(new ArrayList<>(List.of(sel)));
+        an.values.add(new ArrayList<>(List.of(ref(c, "L" + x.name + ";" + sel))));
         an.values.add("at");
         an.values.add(atArray ? new ArrayList<>(List.of(at)) : at);
         if (index != null) {
@@ -515,6 +515,10 @@ public final class MixinProbe {
             an.values.add(index);
         }
         h.visibleAnnotations = new ArrayList<>(List.of(an));
+        int ti = at.values.indexOf("target");
+        if (ti >= 0 && ti % 2 == 0 && at.values.get(ti + 1) instanceof String ts) {
+            at.values.set(ti + 1, ref(c, ts));
+        }
         row(c, h, usage, x.name, target.name + target.desc, anchor, ordinal, count);
     }
 
@@ -538,7 +542,10 @@ public final class MixinProbe {
         return at;
     }
 
-    private MethodNode accessorMethod(ClassNode a, boolean st, String name, String desc, String ann, String value) {
+    private MethodNode accessorMethod(ClassNode a, boolean st, String name, String desc, String ann, String value, String mapped) {
+        if (mapped != null) {
+            value = ref(a, mapped);
+        }
         MethodNode m = new MethodNode(Opcodes.ACC_PUBLIC | (st ? Opcodes.ACC_STATIC : Opcodes.ACC_ABSTRACT), name, desc, null, null);
         AnnotationNode an = new AnnotationNode(ann);
         an.values = new ArrayList<>(List.of("value", value));
@@ -549,6 +556,29 @@ public final class MixinProbe {
         a.methods.add(m);
         return m;
     }
+
+    /**
+     * An annotation string the way a mod's build leaves it: a development name (here "cbk<n>", unique in its
+     * mixin) that the refmap maps to the member, as loom writes it -- a selector to its owner-qualified member,
+     * an @At target to itself, an accessor / invoker name to "name:desc" / "name(desc)". Mixin, and the
+     * engine's repair and bridge, resolve the strings through the refmap; the 1.21.11 -> 26.1 pass renames the
+     * refmap's values (the class files keep their strings), so through the wall the probe's names travel the
+     * way a mod's do. A key carries no intermediary token: the wall pass renames refmap text as a whole, and an
+     * intermediary-named key would be renamed away from the string that looks it up.
+     */
+    private String ref(ClassNode c, String value) {
+        Map<String, String> t = refmap.computeIfAbsent(c.name, k -> new LinkedHashMap<>());
+        Map<String, String> back = refKeys.computeIfAbsent(c.name, k -> new java.util.HashMap<>());
+        return back.computeIfAbsent(value, v -> {
+            String key = "cbk" + t.size();
+            t.put(key, v);
+            return key;
+        });
+    }
+
+    private final Map<String, Map<String, String>> refKeys = new java.util.HashMap<>();
+
+    private final Map<String, Map<String, String>> refmap = new LinkedHashMap<>();
 
     private static MethodNode method(ClassNode c, int access, String name, String desc) {
         MethodNode m = new MethodNode(access, name, desc, null, null);
@@ -591,7 +621,7 @@ public final class MixinProbe {
     private void write(Path jar) throws IOException {
         Files.createDirectories(jar.toAbsolutePath().getParent());
         StringBuilder cfg = new StringBuilder("{\"required\":true,\"package\":\"cbmprobe\",\"compatibilityLevel\":\"JAVA_17\","
-            + "\"minVersion\":\"0.8\",\"injectors\":{\"defaultRequire\":1},\"mixins\":[");
+            + "\"minVersion\":\"0.8\",\"refmap\":\"cbmprobe.refmap.json\",\"injectors\":{\"defaultRequire\":1},\"mixins\":[");
         for (int i = 0; i < configNames.size(); i++) {
             cfg.append(i == 0 ? "" : ",").append('"').append(configNames.get(i)).append('"');
         }
@@ -603,6 +633,20 @@ public final class MixinProbe {
             zip.closeEntry();
             zip.putNextEntry(new ZipEntry("cbmprobe.mixins.json"));
             zip.write(cfg.toString().getBytes(StandardCharsets.UTF_8));
+            zip.closeEntry();
+            com.google.gson.JsonObject mappings = new com.google.gson.JsonObject();
+            for (Map.Entry<String, Map<String, String>> e : refmap.entrySet()) {
+                com.google.gson.JsonObject t = new com.google.gson.JsonObject();
+                e.getValue().forEach(t::addProperty);
+                mappings.add(e.getKey(), t);
+            }
+            com.google.gson.JsonObject rm = new com.google.gson.JsonObject();
+            rm.add("mappings", mappings);
+            com.google.gson.JsonObject data = new com.google.gson.JsonObject();
+            data.add("named:intermediary", mappings);
+            rm.add("data", data);
+            zip.putNextEntry(new ZipEntry("cbmprobe.refmap.json"));
+            zip.write(rm.toString().getBytes(StandardCharsets.UTF_8));
             zip.closeEntry();
             for (Map.Entry<String, byte[]> e : out.entrySet()) {
                 zip.putNextEntry(new ZipEntry(e.getKey() + ".class"));

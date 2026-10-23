@@ -18,10 +18,24 @@ import org.objectweb.asm.commons.Remapper;
  */
 public final class JarRemapper {
 
+    /**
+     * An intermediary member id in a refmap: method_, field_ and comp_ (a record component's accessor; the
+     * class files' pass already maps all three, the refmap pass took only the first two, leaving every mod
+     * mixin that names a record accessor -- injector selector, @At target, @Invoker -- pointing at a name
+     * 26.x does not have). Preceded by "L<owner>;" it is looked up under that owner first, as the class
+     * files' pass does, so an id the table holds ambiguously still maps where the refmap says whose it is.
+     */
     private static final java.util.regex.Pattern MEMBER_TOKEN =
-        java.util.regex.Pattern.compile("(?:method|field)_\\d+");
-    private static final java.util.regex.Pattern CLASS_TOKEN =
-        java.util.regex.Pattern.compile("net/minecraft/class_\\d+(?:\\$[\\w$]+)?");
+        java.util.regex.Pattern.compile("(?:L([\\w/$]+);)?((?:method|field|comp)_\\d+)");
+    /**
+     * An intermediary class name: net/minecraft/class_N with its nested classes, and an intermediary-named
+     * nested class of a class whose own name is not intermediary (com/mojang/blaze3d/opengl/GlStateManager$class_1017
+     * -> GlStateManager$BlendState; net/minecraft/util/profiling/jfr/event/...$class_N). The second form is
+     * anchored at the two package roots that have such classes, so it never starts at a descriptor's "L"
+     * and never takes a match from the first. A match the table does not hold maps to itself.
+     */
+    private static final java.util.regex.Pattern CLASS_TOKEN = java.util.regex.Pattern.compile(
+        "net/minecraft/class_\\d+(?:\\$[\\w$]+)?|(?:com/mojang|net/minecraft)/(?:\\w+/)*\\w+\\$class_\\d+(?:\\$[\\w$]+)?");
 
     /**
      * Remaps a jar from the intermediary namespace into Mojang names using a
@@ -220,9 +234,15 @@ public final class JarRemapper {
                         // ("Lnet/minecraft/class_310;method_1507()V"); rewrite
                         // them textually or every mixin target goes stale
                         String text = new String(data, java.nio.charset.StandardCharsets.UTF_8);
-                        text = MEMBER_TOKEN.matcher(text).replaceAll(
-                            mr -> java.util.regex.Matcher.quoteReplacement(
-                                members.getOrDefault(mr.group(), mr.group())));
+                        text = MEMBER_TOKEN.matcher(text).replaceAll(mr -> {
+                            String owner = mr.group(1);
+                            String id = mr.group(2);
+                            String moj = owner != null ? byOwner.get(owner + "." + id) : null;
+                            if (moj == null) {
+                                moj = members.getOrDefault(id, id);
+                            }
+                            return java.util.regex.Matcher.quoteReplacement((owner != null ? "L" + owner + ";" : "") + moj);
+                        });
                         text = CLASS_TOKEN.matcher(text).replaceAll(
                             mr -> java.util.regex.Matcher.quoteReplacement(
                                 remapper.map(mr.group())));

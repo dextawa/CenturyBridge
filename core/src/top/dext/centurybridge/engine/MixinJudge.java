@@ -70,6 +70,22 @@ public final class MixinJudge {
     private final Map<String, ClassNode> extra = new HashMap<>();
     private final Map<String, byte[]> jar = new HashMap<>();
     private final Set<String> listed = new HashSet<>();
+    /**
+     * each listed mixin's refmap table: the names its annotation strings stand for (identity in the probe as
+     * generated; past the 1.21.11 -> 26.1 wall the converter renamed the refmap, not the strings)
+     */
+    private final Map<String, com.google.gson.JsonObject> refmaps = new HashMap<>();
+
+    private com.google.gson.JsonObject refmap(ClassNode mx) {
+        return refmaps.get(mx.name);
+    }
+
+    /** an accessor / invoker name through the refmap: "name:desc" or "name(desc)" gives the name */
+    private static String refName(com.google.gson.JsonObject rm, String s) {
+        String m = MixinRepair.refmapLookup(rm, s);
+        int i = m.indexOf(':') >= 0 ? m.indexOf(':') : m.indexOf('(');
+        return i > 0 ? m.substring(0, i) : m;
+    }
 
     private MixinJudge(Path codeJar) throws IOException {
         this.code = new MixinRepair(codeJar);
@@ -122,7 +138,7 @@ public final class MixinJudge {
                     } else {
                         String name = r[1].substring(0, r[1].indexOf('('));
                         // the mixin's own target as it stands now (a class rename moves it), else V's owner
-                        List<String> ts = MixinRepair.mixinTargets(mx, null);
+                        List<String> ts = MixinRepair.mixinTargets(mx, j.refmap(mx));
                         why = j.judgeMember(mx, ts.size() == 1 ? ts.get(0) : r[3], name, Integer.parseInt(r[7]), new HashSet<>());
                     }
                     if (why != null) {
@@ -217,10 +233,20 @@ public final class MixinJudge {
             com.google.gson.JsonObject cfg = com.google.gson.JsonParser.parseString(
                 new String(jar.get(name), StandardCharsets.UTF_8)).getAsJsonObject();
             String pkg = cfg.get("package").getAsString().replace('.', '/');
+            com.google.gson.JsonObject mappings = null;
+            if (cfg.has("refmap") && jar.get(cfg.get("refmap").getAsString()) != null) {
+                com.google.gson.JsonObject rm = com.google.gson.JsonParser.parseString(
+                    new String(jar.get(cfg.get("refmap").getAsString()), StandardCharsets.UTF_8)).getAsJsonObject();
+                mappings = rm.has("mappings") ? rm.getAsJsonObject("mappings") : null;
+            }
             for (String k : new String[] {"mixins", "client", "server"}) {
                 if (cfg.has(k)) {
                     for (com.google.gson.JsonElement m : cfg.getAsJsonArray(k)) {
-                        listed.add(pkg + "/" + m.getAsString().replace('.', '/'));
+                        String mn = pkg + "/" + m.getAsString().replace('.', '/');
+                        listed.add(mn);
+                        if (mappings != null && mappings.has(mn)) {
+                            refmaps.put(mn, mappings.getAsJsonObject(mn));
+                        }
                     }
                 }
             }
@@ -283,13 +309,13 @@ public final class MixinJudge {
                     return declared(tc, m.name, m.desc, st) ? null : methodFate(tc, m.name, m.desc, st, "shadow");
                 }
                 case ACCESSOR -> {
-                    String fname = str(an);
+                    String fname = refName(refmap(mx), str(an));
                     Type[] a = Type.getArgumentTypes(m.desc);
                     String fdesc = a.length == 1 ? a[0].getDescriptor() : Type.getReturnType(m.desc).getDescriptor();
                     return declaredField(tc, fname, fdesc, st) ? null : fieldFate(tc, fname, fdesc, st);
                 }
                 case INVOKER -> {
-                    String iname = str(an);
+                    String iname = refName(refmap(mx), str(an));
                     if ("<init>".equals(iname)) {
                         String d = m.desc.substring(0, m.desc.indexOf(')') + 1) + "V";
                         return declared(tc, "<init>", d, false) ? null : methodFate(tc, "<init>", d, false, "constructor");
@@ -298,7 +324,7 @@ public final class MixinJudge {
                 }
                 default -> {
                     if (MixinRepair.values(an).containsKey("method")) {
-                        return judgeInjector(tc, m, an, vcount);
+                        return judgeInjector(tc, m, an, vcount, refmap(mx));
                     }
                 }
             }
@@ -310,14 +336,14 @@ public final class MixinJudge {
         return judgeBody(mx, target, m, seen);
     }
 
-    private String judgeInjector(ClassNode tc, MethodNode h, AnnotationNode an, int vcount) {
+    private String judgeInjector(ClassNode tc, MethodNode h, AnnotationNode an, int vcount, com.google.gson.JsonObject rm) {
         Map<String, Object> v = MixinRepair.values(an);
         List<String> sels = MixinRepair.strings(v.get("method"));
         boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
-        List<MixinRepair.Anchor> anchors = code.anchors(an, v, null);
+        List<MixinRepair.Anchor> anchors = code.anchors(an, v, rm);
         String first = null;
         for (String sel : sels) {
-            MixinRepair.Sel s = MixinRepair.Sel.parse(sel);
+            MixinRepair.Sel s = MixinRepair.Sel.parse(MixinRepair.refmapLookup(rm, sel));
             ClassNode oc = s.owner() != null ? code.target(s.owner()) : tc;
             if (oc == null) {
                 first = first != null ? first : "target class gone";
