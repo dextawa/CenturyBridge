@@ -1106,6 +1106,14 @@ def fapi_model_loading(frag):
     WRC = "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext"
     fills.append({"under": WRC, "method": "translucentBlockOutline()Z", "call": W + ".translucentBlockOutline(L" + WRC + ";)Z",
                   "family": "fapi-model-loading", "basis": "WorldRenderContext.translucentBlockOutline is new in 1.21.4; 1.21.3 drew the outline once, not translucently"})
+    P = "net/fabricmc/fabric/api/event/client/player/"
+    I = "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/"
+    for c in ["ClientPickBlockGatherCallback", "ClientPickBlockApplyCallback", "ClientPickBlockCallback", "ClientPickBlockCallback$Container"]:
+        cr[P + c] = I + c
+        notes[P + c] = "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)"
+    cr["net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider"] = "net/fabricmc/fabric/api/client/datagen/v1/provider/FabricModelProvider"
+    notes["net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider"] = (
+        "FabricModelProvider moved to the client data generation package in 1.21.4 (the model generators are client classes there), same members")
 
 
 if __name__ == "__main__":

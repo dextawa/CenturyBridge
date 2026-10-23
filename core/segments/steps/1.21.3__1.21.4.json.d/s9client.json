@@ -751,7 +751,12 @@
   "net/minecraft/class_4942$class_8073": "top/dext/centurybridge/step/v1_21_4/facade/ModelTemplateJsonFactory",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/ModelResolver",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/ModelResolver$Context",
-  "net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/DelegatingUnbakedModel"
+  "net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/DelegatingUnbakedModel",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockGatherCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockGatherCallback",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockApplyCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockApplyCallback",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockCallback",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback$Container": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockCallback$Container",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "net/fabricmc/fabric/api/client/datagen/v1/provider/FabricModelProvider"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -774,7 +779,12 @@
   "net/minecraft/class_4942$class_8073": "ModelTemplate.JsonFactory is gone in 1.21.4 (ModelTemplate builds its JSON itself); the facade is 1.21.3's interface, which ModelTemplate's 1.21.3 create(id, mapping, output, factory) takes again (CbDataModelTemplateMixin)",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver": "gone from Fabric API's model loading API in 1.21.4; the facade is 1.21.3's (CbFapiModelLoading asks resolvers where 1.21.3 did)",
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context": "gone from Fabric API's model loading API in 1.21.4; the facade is 1.21.3's (CbFapiModelLoading asks resolvers where 1.21.3 did)",
-  "net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel": "gone from Fabric API's model loading API in 1.21.4; the facade is 1.21.3's (CbFapiModelLoading asks resolvers where 1.21.3 did)"
+  "net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel": "gone from Fabric API's model loading API in 1.21.4; the facade is 1.21.3's (CbFapiModelLoading asks resolvers where 1.21.3 did)",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockGatherCallback": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockApplyCallback": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback$Container": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "FabricModelProvider moved to the client data generation package in 1.21.4 (the model generators are client classes there), same members"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
