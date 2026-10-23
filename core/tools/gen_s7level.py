@@ -556,6 +556,57 @@ def fluids_light(f):
                  "(SectionPos.getZeroNode): a 1.21.1 override is asked for the column's bottom section (CbLevelFluids)")
 
 
+# ------------------------------------------------------------------------------------------- Level-wide API
+LLV = RT + "/CbLevelLevels"
+
+
+def level_api(f):
+    GR, PF, SUPP, RM, RA = L("class_1928"), L("class_3695"), "Ljava/util/function/Supplier;", L("class_1863"), L("class_10286")
+    for m, n, base in (("method_8450()" + GR, "GameRules", "gameRules"), ("method_16107()" + PF, "Profiler", "profiler"),
+                       ("method_24367()" + SUPP, "ProfilerSupplier", "profilerSupplier")):
+        f.put("instanceRedirects", LEVEL + "." + m, LLV)
+        f.put("superRedirects", LEVEL + "." + m, LLV + "#" + base)
+        f.w["adapterHooks"].append({"under": LEVEL, "adapter": LLV + "$Legacy" + n, "requires": [m], "synth": [],
+                                    "basis": "1.21.2 no longer asks a level this (CbLevelLevels): a 1.21.1 override is "
+                                             "reached by its mod's calls, through this adapter"})
+    f.put("instanceRedirects", LEVEL + ".method_8433()" + RM, LLV)
+    f.hook(old="method_8433()" + RM, new="method_8433()" + RA, onlyUnder=LEVEL,
+           unwrap=LLV + ".recipeAccess(" + RM + ")" + RA,
+           basis="1.21.2 asks a level its recipeAccess(), which a RecipeManager is: a 1.21.1 level's getRecipeManager "
+                 "answers it (CbLevelLevels)")
+    f.w["adapterHooks"].append({"under": LEVEL, "adapter": LLV + "$LegacyRecipeManager", "requires": ["method_8433()" + RM],
+                                "synth": [], "basis": "a 1.21.1 level's getRecipeManager, reached by its mod's calls"})
+    f.put("instanceRedirects", MC + "class_5217.method_146()" + GR, LLV)
+    f.w["adapterHooks"].append({"under": MC + "class_5217", "adapter": LLV + "$LegacyDataGameRules",
+                                "requires": ["method_146()" + GR], "synth": [],
+                                "basis": "1.21.2's LevelData has no getGameRules (ServerLevelData keeps it): a 1.21.1 "
+                                         "implementation's is reached by its mod's calls, through this adapter"})
+    FF = L("class_7699")
+    push = "push " + LLV + "#defaultFeatures()" + FF
+    f.put("superCtorReshapes", MC + "class_1928.<init>()V", {"desc": "(" + FF + ")V", "ops": [push],
+          "basis": "GameRules is made for a feature set since 1.21.2: the default one (1.21.1 had no gated rules)"})
+    f.put("superCtorReshapes", MC + "class_1928.<init>(Lcom/mojang/serialization/DynamicLike;)V",
+          {"desc": "(" + FF + "Lcom/mojang/serialization/DynamicLike;)V", "ops": [push, "keep"],
+           "basis": "GameRules is made for a feature set since 1.21.2: the default one (1.21.1 had no gated rules)"})
+    f.put("instanceRedirects", MC + "class_1928.method_27325()" + GR, LLV)
+    f.put("staticRedirects", MC + "class_1928.method_20744(" + L("class_1928$class_4311") + ")V", LLV)
+    WLD, RKL, RAC, HDT = L("class_5269"), L("class_5321"), L("class_5455"), L("class_6880")
+    f.put("superCtorReshapes", LEVEL + ".<init>(" + WLD + RKL + RAC + HDT + SUPP + "ZZJI)V", {
+        "desc": "(" + WLD + RKL + RAC + HDT + "ZZJI)V",
+        "ops": ["keep", "keep", "keep", "keep", "drop", "keep", "keep", "keep", "keep"],
+        "post": LLV + "#constructed(L" + LEVEL + ";" + SUPP + ")V", "postArgs": [4],
+        "basis": "Level no longer takes a profiler supplier (1.21.2 has the thread's): the level keeps the one its "
+                 "1.21.1 constructor call handed, for its getProfiler (CbLevelLevels)"})
+    full = L("class_1297") + L("class_1282") + L("class_5362") + "DDDFZ" + L("class_1937$class_7867") + L("class_2394")         + L("class_2394") + L("class_6880")
+    f.w["abstractFills"].append({"under": LEVEL, "method": "method_8454(" + full + ")V",
+                                 "call": RT + "/CbLevelExplosions.fill8454(L" + LEVEL + ";" + full + ")V",
+                                 "basis": "explode is abstract since 1.21.2; 1.21.1's Level made the explosion itself"})
+    f.w["abstractFills"].append({"under": LEVEL, "method": "method_61269()" + L("class_9895"),
+                                 "call": LLV + ".fuelValues(L" + LEVEL + ";)" + L("class_9895"),
+                                 "basis": "fuelValues is new and abstract in 1.21.2: the vanilla burn times for the "
+                                          "level's registries and features"})
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -571,6 +622,7 @@ def main():
     chunk_state(f)
     chunk_storage(f)
     fluids_light(f)
+    level_api(f)
     f.write()
 
 
