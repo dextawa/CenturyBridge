@@ -4,16 +4,23 @@
   "package": "top.dext.centurybridge.step.v1_21_4.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CbRestBannerAccess",
+    "CbRestBedAccess",
+    "CbRestBlockEntityNbtMixin",
     "CbRestBoundingBoxAbstractWindChargeMixin",
     "CbRestBoundingBoxEntityMixin",
     "CbRestBoundingBoxInteractionMixin",
     "CbRestBoundingBoxShulkerMixin",
+    "CbRestCloneBlocksMixin",
+    "CbRestClonePotMixin",
     "CbRestDeathScoreMixin",
     "CbRestDoorGoalsMixin",
     "CbRestEntityNbtMixin",
     "CbRestKillScoreMixin",
     "CbRestLeashDataInvoker",
     "CbRestServerVehicleMixin",
+    "CbRestStackAccess",
+    "CbRestTrialDataInvoker",
     "CbRestVillageGoalMixin"
   ],
   "client": [
