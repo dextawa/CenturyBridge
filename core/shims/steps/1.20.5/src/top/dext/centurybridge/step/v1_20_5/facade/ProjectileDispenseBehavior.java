@@ -35,6 +35,22 @@ public abstract class ProjectileDispenseBehavior extends net.minecraft.class_296
         source.comp_1967().method_20290(1002, source.comp_1968(), 0);
     }
 
+    /** a 1.20.4 call of getProjectile on a ProjectileDispenseBehavior (its owner 1.20.5's class): this class's */
+    public static net.minecraft.class_1676 cbProjectile(net.minecraft.class_2965 b, net.minecraft.class_1937 level, net.minecraft.class_2374 pos,
+                                                        net.minecraft.class_1799 stack) {
+        return ((ProjectileDispenseBehavior) b).method_12844(level, pos, stack);
+    }
+
+    /** ... getUncertainty */
+    public static float cbUncertainty(net.minecraft.class_2965 b) {
+        return ((ProjectileDispenseBehavior) b).method_12845();
+    }
+
+    /** ... getPower */
+    public static float cbPower(net.minecraft.class_2965 b) {
+        return ((ProjectileDispenseBehavior) b).method_12846();
+    }
+
     /** getProjectile(level, position, stack) */
     protected abstract net.minecraft.class_1676 method_12844(net.minecraft.class_1937 level, net.minecraft.class_2374 position, net.minecraft.class_1799 stack);
 

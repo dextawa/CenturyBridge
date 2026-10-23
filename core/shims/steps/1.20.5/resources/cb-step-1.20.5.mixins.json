@@ -61,6 +61,7 @@
     "CbFapiRegistryRemovalMixin",
     "CbFinBundleTooltipMixin",
     "CbFinChunkHolderMixin",
+    "CbFinCompoundTagMixin",
     "CbFinGameEventMixin",
     "CbFinHolderVariantTypeAccess",
     "CbFinItemArmorAccess",
