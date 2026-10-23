@@ -43,6 +43,17 @@ public final class CbRenderStates {
         void cb$setHeadItemModel(net.minecraft.class_1087 model);
     }
 
+    /** LivingEntityRenderState's 1.21.3 hand fields, read by the layer bridges (CbRenderLayers) */
+    public interface CbLegacyHands {
+        net.minecraft.class_1087 cb$rightHandItemModel();
+
+        net.minecraft.class_1087 cb$leftHandItemModel();
+
+        net.minecraft.class_1799 cb$rightHandItem();
+
+        net.minecraft.class_1799 cb$leftHandItem();
+    }
+
     /** was LivingEntityRenderState.headItem (field_53467, an ItemStack: 1.21.4's field of that name is the head item's render state) */
     public static net.minecraft.class_1799 field_53467(net.minecraft.class_10042 state) {
         return ((CbLegacyLivingState) state).cb$headItem();

@@ -31,6 +31,13 @@
     "CbRestVillageGoalMixin"
   ],
   "client": [
+    "CbDataModelTemplateMixin",
+    "CbDataTexturedModelAccess",
+    "CbEquipDispatcherAccess",
+    "CbEquipMinecraftMixin",
+    "CbFapiItemResolverMixin",
+    "CbFapiItemStateMixin",
+    "CbFapiPickMixin",
     "CbGuiRecipeCollectionMixin",
     "CbGuiScrollAreaAccess",
     "CbGuiScrollListMixin",
@@ -42,6 +49,8 @@
     "CbItemRendererMixin",
     "CbItemStackRenderStateAccess",
     "CbItemTintSourcesMixin",
+    "CbLayerHumanoidModelMixin",
+    "CbLayerPlayerItemInHandAccess",
     "CbModelBakeryMixin",
     "CbModelBlockModelDeserializerMixin",
     "CbModelBlockModelMixin",
@@ -74,7 +83,19 @@
     "CbStatePlayerRendererMixin",
     "CbStateSnowGolemRendererMixin",
     "CbStateThrownItemMixin",
-    "CbStateThrownItemRendererMixin"
+    "CbStateThrownItemRendererMixin",
+    "CbTailBlockRenderDispatcherAccess",
+    "CbTailCubeMapAccess",
+    "CbTailHorseScaleMixin",
+    "CbTailKeyboardInputAccess",
+    "CbTailLivingScaleAccess",
+    "CbTailParticleSpriteAccess",
+    "CbTextureAbstractMixin",
+    "CbTextureAnimationMixin",
+    "CbTextureAtlasMixin",
+    "CbTextureManagerMixin",
+    "CbTextureReloadableMixin",
+    "CbTextureSkinDownloaderAccess"
   ],
   "server": [],
   "injectors": {

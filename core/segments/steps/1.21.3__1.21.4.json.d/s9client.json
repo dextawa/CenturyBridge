@@ -211,6 +211,110 @@
    "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch$CbLegacyContextItemRenderer",
    "family": "render-dispatch",
    "basis": "EntityRendererProvider.Context.getItemRenderer is gone in 1.21.4; a subclass's answer is what a mod's call gets (CbRenderDispatch)"
+  },
+  {
+   "old": "method_4684()I",
+   "new": "comp_3456",
+   "onlyUnder": "net/minecraft/class_1079",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_4685()Z",
+   "new": "comp_3457",
+   "onlyUnder": "net/minecraft/class_1079",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_4690()I",
+   "new": "comp_3451",
+   "onlyUnder": "net/minecraft/class_1080",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_4696()Z",
+   "new": "comp_3459",
+   "onlyUnder": "net/minecraft/class_1084",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_4697()Z",
+   "new": "comp_3460",
+   "onlyUnder": "net/minecraft/class_1084",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_17167()Lnet/minecraft/class_3888$class_3889;",
+   "new": "comp_3458",
+   "onlyUnder": "net/minecraft/class_3888",
+   "superCalls": "rename",
+   "family": "texture-metadata",
+   "basis": "the section is a record since 1.21.4: the 1.21.3 getter is its component accessor, which 1.21.4 reads"
+  },
+  {
+   "old": "method_33460(Lnet/minecraft/class_1079$class_5792;)V",
+   "new": "cb$forEachFrame",
+   "onlyUnder": "net/minecraft/class_1079",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata$CbLegacyForEachFrame",
+   "family": "texture-metadata",
+   "basis": "AnimationMetadataSection.forEachFrame is gone in 1.21.4; a subclass's frames are what 1.21.4 builds the animation from (CbTextureAnimationMixin), as 1.21.3's sprite loader asked it"
+  },
+  {
+   "old": "method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V",
+   "new": "method_65820",
+   "onlyUnder": "net/minecraft/class_837",
+   "superCalls": "rename",
+   "family": "block-entity-renders",
+   "basis": "SignRenderer / HangingSignRenderer.render(sign, ..) is AbstractSignRenderer.render(sign, ..) since 1.21.4 (the bridge render calls it)"
+  },
+  {
+   "old": "method_52815(Lnet/minecraft/class_1923;)V",
+   "new": "method_65201",
+   "onlyUnder": "net/minecraft/class_761",
+   "superCalls": "rename",
+   "family": "render-tail",
+   "basis": "LevelRenderer.onChunkLoaded is onChunkReadyToRender since 1.21.4 (same body)"
+  },
+  {
+   "old": "method_62081(Lnet/minecraft/class_10034;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+   "new": "cb$getArmPose",
+   "onlyUnder": "net/minecraft/class_572",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyArmPose",
+   "family": "render-layers",
+   "basis": "HumanoidModel.getArmPose is gone in 1.21.4 (renderers compute the poses into the state); a 1.21.3 model's answer is asked where 1.21.3's setupAnim asked it and is the pose the model uses (CbLayerHumanoidModelMixin)"
+  },
+  {
+   "old": "method_62117(Lnet/minecraft/class_10066;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+   "new": "cb$getSkeletonArmPose",
+   "onlyUnder": "net/minecraft/class_606",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacySkeletonArmPose",
+   "family": "render-layers",
+   "basis": "HumanoidModel.getArmPose is gone in 1.21.4 (renderers compute the poses into the state); a 1.21.3 model's answer is asked where 1.21.3's setupAnim asked it and is the pose the model uses (CbLayerHumanoidModelMixin)"
+  },
+  {
+   "old": "method_62082(Lnet/minecraft/class_10086;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+   "new": "cb$getDrownedArmPose",
+   "onlyUnder": "net/minecraft/class_564",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyDrownedArmPose",
+   "family": "render-layers",
+   "basis": "HumanoidModel.getArmPose is gone in 1.21.4 (renderers compute the poses into the state); a 1.21.3 model's answer is asked where 1.21.3's setupAnim asked it and is the pose the model uses (CbLayerHumanoidModelMixin)"
+  },
+  {
+   "old": "method_62111(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;",
+   "new": "cb$getPlayerArmPose",
+   "onlyUnder": "net/minecraft/class_591",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyPlayerArmPose",
+   "family": "render-layers",
+   "basis": "HumanoidModel.getArmPose is gone in 1.21.4 (renderers compute the poses into the state); a 1.21.3 model's answer is asked where 1.21.3's setupAnim asked it and is the pose the model uses (CbLayerHumanoidModelMixin)"
   }
  ],
  "covers": [
@@ -218,7 +322,18 @@
   "net/minecraft/class_10042.method_62615()Lnet/minecraft/class_1087;",
   "net/minecraft/class_10097.method_62632(Lnet/minecraft/class_9824$class_10095;)V",
   "net/minecraft/class_10097.method_62637()Ljava/util/Map;",
+  "net/minecraft/class_1043.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_1044.method_18169(Lnet/minecraft/class_1060;Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)V",
+  "net/minecraft/class_1044.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_1044.method_62619()Z",
+  "net/minecraft/class_1049.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_1059.method_24198(Lnet/minecraft/class_7766$class_7767;)V",
+  "net/minecraft/class_1059.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_1060.method_18168(Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_1060.method_34590(Lnet/minecraft/class_2960;Lnet/minecraft/class_1044;)Lnet/minecraft/class_1044;",
+  "net/minecraft/class_1060.method_4617(Ljava/lang/String;Lnet/minecraft/class_1043;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_1088.method_4734()Ljava/util/Map;",
+  "net/minecraft/class_310.method_64036()Lnet/minecraft/class_10201;",
   "net/minecraft/class_339.method_25361(DD)Z",
   "net/minecraft/class_350.method_25307(D)V",
   "net/minecraft/class_350.method_25310(II)Z",
@@ -233,6 +348,9 @@
   "net/minecraft/class_350.method_57718()I",
   "net/minecraft/class_350.method_60321(D)V",
   "net/minecraft/class_350.method_60322()V",
+  "net/minecraft/class_380.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_4942.method_48524(Lnet/minecraft/class_2960;Ljava/util/Map;)Lcom/google/gson/JsonObject;",
+  "net/minecraft/class_4942.method_48525(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;Lnet/minecraft/class_4942$class_8073;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_516.method_2656()Z",
   "net/minecraft/class_5599.method_14491(Lnet/minecraft/class_3300;)V",
   "net/minecraft/class_7528.method_44381()I",
@@ -342,6 +460,245 @@
    "onlyUnder": "net/minecraft/class_9483",
    "family": "render-states",
    "basis": "1.21.4 renders its ItemClusterRenderState, which for this renderer is 1.21.3's state"
+  },
+  {
+   "old": "method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;",
+   "new": "method_65809(Lnet/minecraft/class_3300;)Lnet/minecraft/class_10539;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures.contents(Ltop/dext/centurybridge/step/v1_21_4/facade/LegacyTextureImage;)Lnet/minecraft/class_10539;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1049",
+   "family": "textures",
+   "basis": "1.21.3's SimpleTexture loaded the image its getTextureImage answered; 1.21.4 loads a ReloadableTexture's contents, which for a 1.21.3 subclass are that image and its metadata"
+  },
+  {
+   "old": "method_64087(Lnet/minecraft/class_2960;)Lnet/minecraft/class_10186;",
+   "new": "method_64087(Lnet/minecraft/class_5321;)Lnet/minecraft/class_10186;",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_10201",
+   "family": "equipment",
+   "basis": "EquipmentAssetManager.get takes the asset's key since 1.21.4 (1.21.3: its model id, the key's location); a 1.21.3 override is reached with the key's location"
+  },
+  {
+   "old": "method_64077(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_2960;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_64077(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5321;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_10197",
+   "family": "equipment",
+   "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id); a 1.21.3 override is reached with the key's location"
+  },
+  {
+   "old": "method_64078(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_2960;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;)V",
+   "new": "method_64078(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5321;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_10197",
+   "family": "equipment",
+   "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id); a 1.21.3 override is reached with the key's location"
+  },
+  {
+   "old": "method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FI)V",
+   "new": "method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;FI)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.tesselator(Lnet/minecraft/class_4597$class_4598;)Lnet/minecraft/class_289;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9975",
+   "family": "render-tail",
+   "basis": "SkyRenderer draws into the frame's buffer source since 1.21.4; a 1.21.3 override draws with the Tesselator 1.21.3 handed it"
+  },
+  {
+   "old": "method_62307(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FIFFLnet/minecraft/class_9958;)V",
+   "new": "method_62307(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;FIFFLnet/minecraft/class_9958;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.tesselator(Lnet/minecraft/class_4597$class_4598;)Lnet/minecraft/class_289;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9975",
+   "family": "render-tail",
+   "basis": "SkyRenderer draws into the frame's buffer source since 1.21.4; a 1.21.3 override draws with the Tesselator 1.21.3 handed it"
+  },
+  {
+   "old": "method_62312(Lnet/minecraft/class_4587;)V",
+   "new": "method_62312()V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.endSky(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyEndSky;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyEndSky",
+   "onlyUnder": "net/minecraft/class_9975",
+   "family": "render-tail",
+   "basis": "SkyRenderer.renderEndSky takes no pose since 1.21.4; 1.21.3's sky pass handed a fresh (identity) one"
+  },
+  {
+   "old": "method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_765;IFLnet/minecraft/class_243;)V",
+   "new": "method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_4597;IFLnet/minecraft/class_243;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.lightTexture(Lnet/minecraft/class_4597;)Lnet/minecraft/class_765;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9976",
+   "family": "render-tail",
+   "basis": "WeatherEffectRenderer.render takes the buffer source in the LightTexture's place since 1.21.4; a 1.21.3 override gets the game's LightTexture"
+  },
+  {
+   "old": "method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V",
+   "new": "method_3049(Lnet/minecraft/class_4184;FLnet/minecraft/class_4597$class_4598;)V",
+   "args": [
+    2,
+    0,
+    1
+   ],
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.lightTexture(Lnet/minecraft/class_4597;)Lnet/minecraft/class_765;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_702",
+   "family": "render-tail",
+   "basis": "ParticleEngine.render takes the camera, partial tick and buffer source since 1.21.4; a 1.21.3 override gets the game's LightTexture"
+  },
+  {
+   "old": "method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "new": "method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.renderLevel(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyRenderLevel;Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyRenderLevel",
+   "onlyUnder": "net/minecraft/class_761",
+   "family": "render-tail",
+   "basis": "LevelRenderer.renderLevel no longer takes the LightTexture; a 1.21.3 override gets the game's, as 1.21.3's game renderer passed it"
+  },
+  {
+   "old": "method_3129(ZF)V",
+   "new": "method_3129()V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.tick(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyInputTick;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyInputTick",
+   "onlyUnder": "net/minecraft/class_744",
+   "family": "render-tail",
+   "basis": "ClientInput.tick takes no sneaking slowdown since 1.21.4 (the player applies it after the input's tick); a 1.21.3 input is ticked without it, so it applies once"
+  },
+  {
+   "old": "method_4858(Lnet/minecraft/class_5195;)V",
+   "new": "method_4858(Lnet/minecraft/class_10383;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc.cbMusic(Lnet/minecraft/class_10383;)Lnet/minecraft/class_5195;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1142",
+   "family": "render-tail",
+   "basis": "MusicManager.startPlaying takes a MusicInfo since 1.21.4; a 1.21.3 override gets its music"
+  },
+  {
+   "old": "method_3874(Lnet/minecraft/class_10019;Lnet/minecraft/class_4587;)V",
+   "new": "method_4042(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_875",
+   "family": "render-tail",
+   "basis": "the renderer's typed scale(state, pose) is gone in 1.21.4: LivingEntityRenderer.scale is what vanilla asks, and a 1.21.3 override's super call reaches it (1.21.4 scales babies and horse sizes in the model layers)"
+  },
+  {
+   "old": "method_4149(Lnet/minecraft/class_10080;Lnet/minecraft/class_4587;)V",
+   "new": "method_4042(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_963",
+   "family": "render-tail",
+   "basis": "the renderer's typed scale(state, pose) is gone in 1.21.4: LivingEntityRenderer.scale is what vanilla asks, and a 1.21.3 override's super call reaches it (1.21.4 scales babies and horse sizes in the model layers)"
+  },
+  {
+   "old": "method_56155(Lnet/minecraft/class_10070;Lnet/minecraft/class_4587;)V",
+   "new": "method_4042(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_4999",
+   "family": "render-tail",
+   "basis": "the renderer's typed scale(state, pose) is gone in 1.21.4: LivingEntityRenderer.scale is what vanilla asks, and a 1.21.3 override's super call reaches it (1.21.4 scales babies and horse sizes in the model layers)"
+  },
+  {
+   "old": "method_4117(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4054(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_945",
+   "family": "render-tail",
+   "basis": "the renderer's typed render(state, ..) is gone in 1.21.4 (its shadow is asked from the state): LivingEntityRenderer.render is what vanilla calls and what a 1.21.3 override's super call reaches"
+  },
+  {
+   "old": "method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4054(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_917",
+   "family": "render-tail",
+   "basis": "the renderer's typed render(state, ..) is gone in 1.21.4 (its shadow is asked from the state): LivingEntityRenderer.render is what vanilla calls and what a 1.21.3 override's super call reaches"
+  },
+  {
+   "old": "method_62537()Lnet/minecraft/class_10042;",
+   "new": "method_62537()Lnet/minecraft/class_10429;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.cbSnowGolemState(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10429;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_948",
+   "family": "render-layers",
+   "basis": "SnowGolemRenderer's state is a SnowGolemRenderState since 1.21.4; a 1.21.3 override's state is one, or 1.21.4 gets a fresh one"
+  },
+  {
+   "old": "method_62536(Lnet/minecraft/class_1473;Lnet/minecraft/class_10042;F)V",
+   "new": "method_62536(Lnet/minecraft/class_1473;Lnet/minecraft/class_10429;F)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.cbLiving(Lnet/minecraft/class_10429;)Lnet/minecraft/class_10042;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_948",
+   "family": "render-layers",
+   "basis": "SnowGolemRenderer extracts into a SnowGolemRenderState since 1.21.4, a LivingEntityRenderState as 1.21.3's override took"
+  },
+  {
+   "old": "method_62599(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10082;FF)V",
+   "new": "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10427;FF)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_1005",
+   "family": "render-layers",
+   "shadows": [
+    "method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V"
+   ],
+   "basis": "WitchItemLayer's typed render is gone in 1.21.4: CrossedArmsItemLayer.render is what vanilla calls (the witch's adjustment moved into it)"
+  },
+  {
+   "old": "method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4192(Lnet/minecraft/class_10426;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.armWithItem(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyArmWithItem;Lnet/minecraft/class_10426;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyArmWithItem",
+   "onlyUnder": "net/minecraft/class_989",
+   "family": "render-layers",
+   "basis": "ItemInHandLayer.renderArmWithItem takes the hand's item render state since 1.21.4; a 1.21.3 override gets the hand's model and stack, as 1.21.3's render handed them"
+  },
+  {
+   "old": "method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.playerArmWithItem(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyPlayerArmWithItem;Lnet/minecraft/class_10055;Lnet/minecraft/class_10444;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyPlayerArmWithItem",
+   "onlyUnder": "net/minecraft/class_5697",
+   "family": "render-layers",
+   "basis": "PlayerItemInHandLayer.renderArmWithItem takes the hand's item render state since 1.21.4; a 1.21.3 override gets the hand's model and stack, as 1.21.3's render handed them"
+  },
+  {
+   "old": "method_18143(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_65815(Lnet/minecraft/class_1060;)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.registerTextures(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyCubeMapPreload;Lnet/minecraft/class_1060;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyCubeMapPreload",
+   "onlyUnder": "net/minecraft/class_751",
+   "family": "render-layers",
+   "basis": "CubeMap.preload is registerTextures since 1.21.4 (the title screen's panorama textures); a 1.21.3 override preloads them there"
+  },
+  {
+   "old": "emitBlockQuads(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V",
+   "new": "emitBlockQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.emitBlockQuads(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyBlockQuads;Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyBlockQuads",
+   "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel",
+   "family": "fapi-renderer",
+   "basis": "1.21.4's renderers call emitBlockQuads(emitter, .., cullTest); a 1.21.3 model gets a block context over them"
+  },
+  {
+   "old": "emitItemQuads(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V",
+   "new": "emitItemQuads(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.emitItemQuads(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyItemQuads;Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyItemQuads",
+   "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel",
+   "family": "fapi-renderer",
+   "basis": "1.21.4's item renderer calls emitItemQuads(emitter, random); a 1.21.3 model gets the drawn item's stack and an item context in its display context (CbFapiItemStateMixin)"
   }
  ],
  "fieldGetters": {
@@ -353,7 +710,24 @@
   "net/minecraft/class_793.field_54858:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_793.field_32792:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_1091.field_52277:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
-  "net/minecraft/class_10097.field_54194:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading"
+  "net/minecraft/class_10097.field_54194:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
+  "net/minecraft/class_1079.field_5337:Lnet/minecraft/class_1081;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1079.field_32974:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1079.field_32975:I": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1079.field_32976:I": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1079.field_21768:Lnet/minecraft/class_1079;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1080.field_32973:I": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1084.field_5344:Lnet/minecraft/class_1085;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_3888.field_17158:Lnet/minecraft/class_3890;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_3888.field_32977:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_823.field_32816:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_582.field_52910:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_4915.field_42086:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_4943.field_22944:Lnet/minecraft/class_4942;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_4943.field_22945:Lnet/minecraft/class_4942;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_4946.field_23047:Lnet/minecraft/class_4946$class_4947;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_7766.field_45632:Ljava/util/Set;": "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient",
+  "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial.MATERIAL_STANDARD:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -384,7 +758,30 @@
   "net/minecraft/class_10101": "top/dext/centurybridge/step/v1_21_4/facade/SpecialModels",
   "net/minecraft/class_10202": "top/dext/centurybridge/step/v1_21_4/facade/ItemModel",
   "net/minecraft/class_10055$class_10056": "top/dext/centurybridge/step/v1_21_4/facade/LegacyPlayerHandState",
-  "net/minecraft/class_10048": "top/dext/centurybridge/step/v1_21_4/facade/OminousItemSpawnerRenderState"
+  "net/minecraft/class_10048": "top/dext/centurybridge/step/v1_21_4/facade/OminousItemSpawnerRenderState",
+  "net/minecraft/class_1081": "top/dext/centurybridge/step/v1_21_4/facade/AnimationMetadataSectionSerializer",
+  "net/minecraft/class_1085": "top/dext/centurybridge/step/v1_21_4/facade/TextureMetadataSectionSerializer",
+  "net/minecraft/class_3890": "top/dext/centurybridge/step/v1_21_4/facade/VillagerMetadataSectionSerializer",
+  "net/minecraft/class_1079$class_5792": "top/dext/centurybridge/step/v1_21_4/facade/AnimationFrameOutput",
+  "net/minecraft/class_4005": "top/dext/centurybridge/step/v1_21_4/facade/PreloadedTexture",
+  "net/minecraft/class_1049$class_4006": "top/dext/centurybridge/step/v1_21_4/facade/LegacyTextureImage",
+  "net/minecraft/class_1046": "top/dext/centurybridge/step/v1_21_4/facade/HttpTexture",
+  "net/minecraft/class_7761$class_7762": "top/dext/centurybridge/step/v1_21_4/facade/LegacyHangingSignModel",
+  "net/minecraft/class_4942$class_8073": "top/dext/centurybridge/step/v1_21_4/facade/ModelTemplateJsonFactory",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/ModelResolver",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/ModelResolver$Context",
+  "net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/DelegatingUnbakedModel",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockGatherCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockGatherCallback",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockApplyCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockApplyCallback",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockCallback",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback$Container": "top/dext/centurybridge/step/v1_21_4/compat/fapi/interaction/ClientPickBlockCallback$Container",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "net/fabricmc/fabric/api/client/datagen/v1/provider/FabricModelProvider",
+  "net/fabricmc/fabric/api/renderer/v1/RendererAccess": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/RendererAccess",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/MeshBuilder",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderContext": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/RenderContext",
+  "net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/ForwardingBakedModel",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderContext$QuadTransform": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadTransform",
+  "net/fabricmc/fabric/api/renderer/v1/model/WrapperBakedModel": "net/fabricmc/fabric/api/client/model/loading/v1/UnwrappableBakedModel"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -395,7 +792,30 @@
   "net/minecraft/class_10101": "SpecialModels is gone in 1.21.4: builtin/generated is the ItemModelGenerator model, builtin/entity has none (facade)",
   "net/minecraft/class_10202": "ItemModel (an item's unbaked model naming its model by id) is gone in 1.21.4; the facade is 1.21.3's class as a 1.21.4 UnbakedModel",
   "net/minecraft/class_10055$class_10056": "PlayerRenderState.HandState is gone in 1.21.4; the player renderer fills the facade per hand again",
-  "net/minecraft/class_10048": "OminousItemSpawnerRenderState is gone in 1.21.4 (the renderer draws an ItemClusterRenderState); the facade is one, with 1.21.3's fields, and the renderer makes and fills it"
+  "net/minecraft/class_10048": "OminousItemSpawnerRenderState is gone in 1.21.4 (the renderer draws an ItemClusterRenderState); the facade is one, with 1.21.3's fields, and the renderer makes and fills it",
+  "net/minecraft/class_1081": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
+  "net/minecraft/class_1085": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
+  "net/minecraft/class_3890": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
+  "net/minecraft/class_1079$class_5792": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
+  "net/minecraft/class_4005": "PreloadedTexture is gone in 1.21.4; the facade is 1.21.3's, a SimpleTexture whose contents are its getTextureImage",
+  "net/minecraft/class_1049$class_4006": "SimpleTexture.TextureImage is gone in 1.21.4 (TextureContents); the facade is 1.21.3's",
+  "net/minecraft/class_1046": "HttpTexture is gone in 1.21.4 (skins download through SkinTextureDownloader); the facade is 1.21.3's, its legacy-skin processing 1.21.4's same code",
+  "net/minecraft/class_7761$class_7762": "HangingSignRenderer.HangingSignModel is gone in 1.21.4 (a model per attachment); the facade is 1.21.3's, over its one layer",
+  "net/minecraft/class_4942$class_8073": "ModelTemplate.JsonFactory is gone in 1.21.4 (ModelTemplate builds its JSON itself); the facade is 1.21.3's interface, which ModelTemplate's 1.21.3 create(id, mapping, output, factory) takes again (CbDataModelTemplateMixin)",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver": "gone from Fabric API's model loading API in 1.21.4; the facade is 1.21.3's (CbFapiModelLoading asks resolvers where 1.21.3 did)",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelResolver$Context": "gone from Fabric API's model loading API in 1.21.4; the facade is 1.21.3's (CbFapiModelLoading asks resolvers where 1.21.3 did)",
+  "net/fabricmc/fabric/api/client/model/loading/v1/DelegatingUnbakedModel": "gone from Fabric API's model loading API in 1.21.4; the facade is 1.21.3's (CbFapiModelLoading asks resolvers where 1.21.3 did)",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockGatherCallback": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockApplyCallback": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
+  "net/fabricmc/fabric/api/event/client/player/ClientPickBlockCallback$Container": "Fabric API's client pick-block events are gone in 1.21.4 (the server picks); the facade is 1.21.3's, asked where 1.21.3's client asked it (CbFapiPick)",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricModelProvider": "FabricModelProvider moved to the client data generation package in 1.21.4 (the model generators are client classes there), same members",
+  "net/fabricmc/fabric/api/renderer/v1/RendererAccess": "RendererAccess is gone in 1.21.4 (Renderer.register / Renderer.get); the facade is 1.21.3's, null before a renderer registered",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder": "MeshBuilder is gone in 1.21.4 (Renderer.mutableMesh); the facade is 1.21.3's, built over a MutableMesh (CbFapiRenderer)",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderContext": "RenderContext is gone in 1.21.4 (models get the emitter and a cull test); the facade is 1.21.3's, the layer's contexts over what 1.21.4 passes (CbFapiRenderer)",
+  "net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel": "ForwardingBakedModel is gone in 1.21.4; the facade is 1.21.3's, forwarding every member to the wrapped model",
+  "net/fabricmc/fabric/api/renderer/v1/render/RenderContext$QuadTransform": "RenderContext.QuadTransform is mesh.QuadTransform since 1.21.4 (same single method transform(MutableQuadView))",
+  "net/fabricmc/fabric/api/renderer/v1/model/WrapperBakedModel": "WrapperBakedModel is the model loading API's UnwrappableBakedModel since 1.21.4: getWrappedModel() (a default answering null where 1.21.3's was abstract) and unwrap(model) with 1.21.3's body"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -683,6 +1103,157 @@
     "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbEmptyModels()Ljava/util/Map;"
    ],
    "basis": "EntityModelSet is made from its roots since 1.21.4; 1.21.3's started empty and took them on reload (CbRenderEntityModelSetMixin)"
+  },
+  "net/minecraft/class_1079.<init>(Ljava/util/List;IIIZ)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;IZ)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#cbFrames(Ljava/util/List;)Ljava/util/Optional;",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#cbSize(I)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#cbSize(I)Ljava/util/Optional;",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "AnimationMetadataSection is a record of Optionals since 1.21.4: 1.21.3's empty frame list / UNKNOWN_SIZE (-1) are the empty Optionals"
+  },
+  "net/minecraft/class_1080.<init>(II)V": {
+   "desc": "(ILjava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#cbTime(I)Ljava/util/Optional;"
+   ],
+   "basis": "AnimationFrame's time is an Optional since 1.21.4: 1.21.3's UNKNOWN_FRAME_TIME (-1) is the empty one"
+  },
+  "net/minecraft/class_1071.<init>(Lnet/minecraft/class_1060;Ljava/nio/file/Path;Lcom/mojang/authlib/minecraft/MinecraftSessionService;Ljava/util/concurrent/Executor;)V": {
+   "desc": "(Ljava/nio/file/Path;Lcom/mojang/authlib/minecraft/MinecraftSessionService;Ljava/util/concurrent/Executor;)V",
+   "ops": [
+    "drop:0",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "SkinManager registers downloaded skins with the game's texture manager since 1.21.4 (SkinTextureDownloader); 1.21.3 took it as an argument, the game's in every vanilla use"
+  },
+  "net/minecraft/class_647.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_10444;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbEmptyState(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10444;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbBreakingSprite(Lnet/minecraft/class_647;Lnet/minecraft/class_638;Lnet/minecraft/class_1799;)V",
+   "postArgs": [
+    0,
+    4
+   ],
+   "basis": "BreakingItemParticle takes the item's render state since 1.21.4; the sprite is 1.21.3's, the particle icon of the stack's model"
+  },
+  "net/minecraft/class_8253.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_4002;)V": {
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_4002;FFZZFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafGravity()F",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafWind()F",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafSwirl()Z",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafFlowAway()Z",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafSize()F",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafYSpeed()F"
+   ],
+   "basis": "FallingLeavesParticle takes its motion as parameters since 1.21.4; 1.21.3's was the cherry leaf, whose values 1.21.4's CherryProvider passes"
+  },
+  "net/minecraft/class_693.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_4599;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;)V": {
+   "desc": "(Lnet/minecraft/class_898;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;)V",
+   "ops": [
+    "keep:0",
+    "drop:1",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "ItemPickupParticle draws into the buffer source its render call hands it since 1.21.4 (1.21.3 kept the RenderBuffers to get it)"
+  },
+  "net/minecraft/class_776.<init>(Lnet/minecraft/class_773;Lnet/minecraft/class_756;Lnet/minecraft/class_324;)V": {
+   "desc": "(Lnet/minecraft/class_773;Ljava/util/function/Supplier;Lnet/minecraft/class_324;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbSpecialRenderer(Lnet/minecraft/class_756;)Ljava/util/function/Supplier;",
+    "keep:2"
+   ],
+   "basis": "BlockRenderDispatcher draws special blocks with the SpecialBlockModelRenderer since 1.21.4 (1.21.3: the BlockEntityWithoutLevelRenderer); the game's"
+  },
+  "net/minecraft/class_875.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;Lnet/minecraft/class_583;F)V": {
+   "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;Lnet/minecraft/class_583;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "drop:3"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbHorseScale(Lnet/minecraft/class_875;F)V",
+   "postArgs": [
+    3
+   ],
+   "basis": "AbstractHorseRenderer takes no scale since 1.21.4 (vanilla scales the layers); the renderer applies 1.21.3's (CbTailHorseScaleMixin)"
+  },
+  "net/minecraft/class_9991.<init>(Lnet/minecraft/class_5617$class_5618;FLnet/minecraft/class_5601;Lnet/minecraft/class_5601;Z)V": {
+   "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_5601;Lnet/minecraft/class_5601;Z)V",
+   "ops": [
+    "keep:0",
+    "drop:1",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbDonkeyScale(Lnet/minecraft/class_9991;FLnet/minecraft/class_5601;)V",
+   "postArgs": [
+    1,
+    2
+   ],
+   "basis": "DonkeyRenderer takes no scale since 1.21.4; 1.21.3's applies unless the layer is a vanilla donkey / mule layer, which 1.21.4 scales itself"
+  },
+  "net/minecraft/class_7288.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;Ljava/util/function/Function;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;Ljava/util/function/Function;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbNotAlwaysVisible()Z"
+   ],
+   "basis": "LivingEntityEmissiveLayer takes whether it shows on an invisible entity since 1.21.4; 1.21.3's never did"
+  },
+  "net/minecraft/class_4915.<init>(Ljava/util/function/BiConsumer;)V": {
+   "desc": "(Lnet/minecraft/class_10405;Ljava/util/function/BiConsumer;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbClientRest#cbNoItemDefinitions(Ljava/util/function/BiConsumer;)Lnet/minecraft/class_10405;",
+    "keep:0"
+   ],
+   "basis": "ItemModelGenerators also writes item definitions since 1.21.4; 1.21.3's wrote item model files only (its output here)"
+  },
+  "net/minecraft/class_4910.<init>(Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;Ljava/util/function/Consumer;)V": {
+   "desc": "(Ljava/util/function/Consumer;Lnet/minecraft/class_10405;Ljava/util/function/BiConsumer;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2 top/dext/centurybridge/step/v1_21_4/rt/CbClientRest#cbDelegatingItemModels(Ljava/util/function/BiConsumer;Ljava/util/function/Consumer;)Lnet/minecraft/class_10405;",
+    "keep:1"
+   ],
+   "basis": "BlockModelGenerators hands block items' definitions to an ItemModelOutput since 1.21.4; 1.21.3 wrote a delegating item model and reported the item as skipped, which the output does"
+  },
+  "net/minecraft/class_4075.<init>(Lnet/minecraft/class_1060;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Ljava/util/Set;)V": {
+   "desc": "(Lnet/minecraft/class_1060;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Ljava/util/Set;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#typeSet(Ljava/util/Set;)Ljava/util/Set;"
+   ],
+   "basis": "TextureAtlasHolder takes metadata section types since 1.21.4 (1.21.3: serializers)"
   }
  },
  "superRenames": {
@@ -714,11 +1285,280 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbMusic(Lnet/minecraft/class_10383;)Lnet/minecraft/class_5195;",
    "basis": "Minecraft.getSituationalMusic answers MusicInfo(music, volume) since 1.21.4; 1.21.3 answered the music"
+  },
+  "net/minecraft/class_10201.method_64087(Lnet/minecraft/class_2960;)Lnet/minecraft/class_10186;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_10186;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#asset(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "EquipmentAssetManager.get takes the asset's key since 1.21.4 (1.21.3: its model id, the key's location)"
+  },
+  "net/minecraft/class_10197.method_64077(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_2960;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "desc": "(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5321;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#asset(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id)"
+  },
+  "net/minecraft/class_10197.method_64078(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_2960;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5321;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#asset(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id)"
+  },
+  "net/minecraft/class_761.method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V": {
+   "desc": "(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop",
+    "keep",
+    "keep"
+   ],
+   "basis": "LevelRenderer.renderLevel no longer takes the LightTexture since 1.21.4 (its render types carry the lightmap)"
+  },
+  "net/minecraft/class_1142.method_4858(Lnet/minecraft/class_5195;)V": {
+   "desc": "(Lnet/minecraft/class_10383;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbMusicInfo(Lnet/minecraft/class_5195;)Lnet/minecraft/class_10383;"
+   ],
+   "basis": "MusicManager.startPlaying takes a MusicInfo since 1.21.4 (the music at full volume, as 1.21.3 played it)"
+  },
+  "net/minecraft/class_909.method_62461(Lnet/minecraft/class_1309;Lnet/minecraft/class_10034;F)V": {
+   "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_10034;FLnet/minecraft/class_10442;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbResolver()Lnet/minecraft/class_10442;"
+   ],
+   "basis": "HumanoidMobRenderer.extractHumanoidRenderState also resolves the held items since 1.21.4: with the game's item model resolver"
+  },
+  "net/minecraft/class_9945.method_62079()Lnet/minecraft/class_5607;": {
+   "desc": "(F)Lnet/minecraft/class_5607;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbUnitScale()F"
+   ],
+   "basis": "DonkeyModel's layer takes a scale since 1.21.4; 1.21.3's was unscaled (the renderer scaled), scale 1"
+  },
+  "net/minecraft/class_9945.method_62080()Lnet/minecraft/class_5607;": {
+   "desc": "(F)Lnet/minecraft/class_5607;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbUnitScale()F"
+   ],
+   "basis": "DonkeyModel's layer takes a scale since 1.21.4; 1.21.3's was unscaled (the renderer scaled), scale 1"
+  },
+  "net/minecraft/class_989.method_17162(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10426;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#cbArmed(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10426;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the layer's state type narrowed in 1.21.4; the state a 1.21.3 call hands is the one the 1.21.4 renderer made, which is one"
+  },
+  "net/minecraft/class_4004.method_4208(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10427;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#cbHolding(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10427;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the layer's state type narrowed in 1.21.4; the state a 1.21.3 call hands is the one the 1.21.4 renderer made, which is one"
+  },
+  "net/minecraft/class_996.method_4201(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10042;FF)V": {
+   "desc": "(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10429;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#cbSnowGolem(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10429;",
+    "keep",
+    "keep"
+   ],
+   "basis": "the layer's state type narrowed in 1.21.4; the state a 1.21.3 call hands is the one the 1.21.4 renderer made, which is one"
+  },
+  "net/minecraft/class_948.method_62536(Lnet/minecraft/class_1473;Lnet/minecraft/class_10042;F)V": {
+   "desc": "(Lnet/minecraft/class_1473;Lnet/minecraft/class_10429;F)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#cbSnowGolem(Lnet/minecraft/class_10042;)Lnet/minecraft/class_10429;",
+    "keep"
+   ],
+   "basis": "SnowGolemRenderer's state is a SnowGolemRenderState since 1.21.4 (the one its createRenderState makes)"
+  },
+  "net/minecraft/class_1071.method_52863(Lcom/mojang/authlib/GameProfile;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#skinFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "SkinManager.getOrLoad answers a future of an Optional skin since 1.21.4 (empty where 1.21.3's future failed)"
+  },
+  "net/minecraft/class_4942.method_25846(Lnet/minecraft/class_2248;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4942.method_25847(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4942.method_25852(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4942.method_25853(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4946.method_25915(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4946.method_25916(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4946$class_4947.method_25922(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4946$class_4947.method_25923(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_7766.method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#types(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "SpriteLoader.loadAndStitch takes metadata section types since 1.21.4 (1.21.3: serializers; CbRestMetadata converts)"
+  },
+  "net/minecraft/class_8684.create(Ljava/util/Collection;)Lnet/minecraft/class_8684;": {
+   "desc": "(Ljava/util/Collection;)Lnet/minecraft/class_8684;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#types(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "SpriteResourceLoader.create takes metadata section types since 1.21.4 (1.21.3: serializers)"
+  },
+  "net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context.setModel(Lnet/minecraft/class_2680;Lnet/minecraft/class_1100;)V": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading#cbStateModel(Lnet/minecraft/class_1100;)Lnet/minecraft/class_9979;"
+   ],
+   "basis": "BlockStateResolver.Context.setModel takes a block state model since 1.21.4 (CbModelLoading's wrapper, unwrapped again)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.faceNormal()Lorg/joml/Vector3f;": {
+   "desc": "()Lorg/joml/Vector3fc;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#faceNormal(Lorg/joml/Vector3fc;)Lorg/joml/Vector3f;",
+   "basis": "QuadView.faceNormal() answers a Vector3fc since 1.21.4; 1.21.3's Vector3f was the quad's own (the same object when it is one)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel.emitBlockQuads(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V",
+   "ops": [
+    "conv:4 top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#emitter(Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;",
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#cullTest(Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)Ljava/util/function/Predicate;"
+   ],
+   "basis": "FabricBakedModel.emitBlockQuads takes the emitter and a cull test since 1.21.4: the context's, which a 1.21.3 model called this way gets back (CbFapiRenderer)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/model/FabricBakedModel.emitItemQuads(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Ljava/util/function/Supplier;)V",
+   "ops": [
+    "conv:2 top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#emitter(Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;",
+    "conv:1,0,2 top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#itemRandom(Ljava/util/function/Supplier;Lnet/minecraft/class_1799;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)Ljava/util/function/Supplier;"
+   ],
+   "basis": "FabricBakedModel.emitItemQuads takes the emitter and no stack since 1.21.4: the context's emitter; a 1.21.3 model called this way gets the stack and context back (CbFapiRenderer)"
   }
  },
  "staticRedirects": {
   "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105",
-  "net/minecraft/class_1091.method_61078(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading"
+  "net/minecraft/class_1091.method_61078(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
+  "net/minecraft/class_3888$class_3889.method_17170(Ljava/lang/String;)Lnet/minecraft/class_3888$class_3889;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1047.method_4540()Lnet/minecraft/class_1043;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures",
+  "net/minecraft/class_7761.method_45795()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_823.method_32135()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_836.method_32160(Lnet/minecraft/class_5599;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_9214.method_56851(FLnet/minecraft/class_1937;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_918;FFLnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_916.method_56856(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_916.method_56857(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_5819;Lnet/minecraft/class_1937;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_4603.method_23067(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "com/mojang/blaze3d/systems/RenderSystem.overlayBlendFunc()V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_5602.method_45719(Lnet/minecraft/class_4719;)Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_1007.method_64258(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers"
  },
  "resourceTypes": [
   "centurybridge:legacy_builtin",
@@ -760,17 +1600,137 @@
   "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch",
   "net/minecraft/class_9483.method_62496()Lnet/minecraft/class_10048;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
   "net/minecraft/class_9483.method_62497(Lnet/minecraft/class_9461;Lnet/minecraft/class_10048;F)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
-  "net/minecraft/class_9483.method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
+  "net/minecraft/class_9483.method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_1060.method_4616(Lnet/minecraft/class_2960;Lnet/minecraft/class_1044;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures#register",
+  "net/minecraft/class_1049.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures",
+  "net/minecraft/class_9975.method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FI)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_9975.method_62307(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FIFFLnet/minecraft/class_9958;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_9975.method_62312(Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_9976.method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_765;IFLnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_702.method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_1011.method_22619(IIIIIIIZZZZ)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_1011.method_4312(IIIIIIIZZ)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_744.method_3129(ZF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_751.method_18143(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_945.method_4117(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_917.method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_875.method_3874(Lnet/minecraft/class_10019;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_963.method_4149(Lnet/minecraft/class_10080;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_4999.method_56155(Lnet/minecraft/class_10070;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_572.method_62081(Lnet/minecraft/class_10034;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_606.method_62117(Lnet/minecraft/class_10066;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_564.method_62082(Lnet/minecraft/class_10086;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_591.method_62111(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_1005.method_62599(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10082;FF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_989.method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_5697.method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_636.method_2916(I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_3999.method_18130(Lnet/minecraft/class_289;Lnet/minecraft/class_1060;)Lnet/minecraft/class_287;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context.resolveModel()Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context.modifyModelOnLoad()Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context.modifyModelBeforeBake()Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context.modifyModelAfterBake()Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context.resourceId()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context.topLevelId()Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context.resourceId()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context.topLevelId()Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context.textureGetter()Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context.resourceId()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context.topLevelId()Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context.textureGetter()Ljava/util/function/Function;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading",
+  "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext.lightmapTextureManager()Lnet/minecraft/class_765;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/CbFapiWorldRenderContext",
+  "net/fabricmc/fabric/api/renderer/v1/Renderer.meshBuilder()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.colorIndex()I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.colorIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.colorIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteColor(II)I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteU(II)F": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteV(II)F": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.copyTo(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)V": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.toVanilla(I[IIZ)V": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.toBakedQuad(ILnet/minecraft/class_1058;Z)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteUnitSquare(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.blendMode(ILnet/minecraft/class_1921;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.blendMode(ILnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableAo(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableDiffuse(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.emissive(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.spriteDepth(I)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial.spriteDepth()I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.glint(Lnet/fabricmc/fabric/api/util/TriState;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialView.glint()Lnet/fabricmc/fabric/api/util/TriState;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
   "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#superGetGuiLight",
   "net/minecraft/class_809.method_3501(Lnet/minecraft/class_811;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#superHasTransform",
-  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#superGetItemRenderer"
+  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#superGetItemRenderer",
+  "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#superForEachFrame",
+  "net/minecraft/class_1049.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures#method_18153",
+  "net/minecraft/class_744.method_3129(ZF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#superTick",
+  "net/minecraft/class_572.method_62081(Lnet/minecraft/class_10034;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62081",
+  "net/minecraft/class_606.method_62117(Lnet/minecraft/class_10066;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62117",
+  "net/minecraft/class_564.method_62082(Lnet/minecraft/class_10086;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62082",
+  "net/minecraft/class_591.method_62111(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62111",
+  "net/minecraft/class_989.method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_4192",
+  "net/minecraft/class_5697.method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#method_62594",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteColor(II)I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteU(II)F": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteU",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.spriteV(II)F": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteV",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.copyTo(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)V": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superCopyTo",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.toVanilla(I[IIZ)V": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superToVanilla",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.toBakedQuad(ILnet/minecraft/class_1058;Z)Lnet/minecraft/class_777;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superToBakedQuad",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superFromVanilla",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSprite",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSprite",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteBake",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superFromVanilla",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSprite",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSprite",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteBake",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteColor",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteUnitSquare(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteUnitSquare",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.blendMode(ILnet/minecraft/class_1921;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superBlendMode",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.blendMode(ILnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superBlendMode",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableAo(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superDisableAo",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableDiffuse(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superDisableDiffuse",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.emissive(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superEmissive",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.spriteDepth(I)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteDepth",
+  "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial.spriteDepth()I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteDepth",
+  "net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superGetOverrides",
+  "net/minecraft/class_636.method_2916(I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest#superPickItem"
  },
  "methodRenames": {
   "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",
-  "net/minecraft/class_813.method_3511()I": "comp_3382"
+  "net/minecraft/class_813.method_3511()I": "comp_3382",
+  "net/minecraft/class_1079.method_4684()I": "comp_3456",
+  "net/minecraft/class_1079.method_4685()Z": "comp_3457",
+  "net/minecraft/class_1080.method_4690()I": "comp_3451",
+  "net/minecraft/class_1084.method_4696()Z": "comp_3459",
+  "net/minecraft/class_1084.method_4697()Z": "comp_3460",
+  "net/minecraft/class_3888.method_17167()Lnet/minecraft/class_3888$class_3889;": "comp_3458",
+  "net/minecraft/class_3888$class_3889.method_17168()Ljava/lang/String;": "method_15434",
+  "net/minecraft/class_837.method_37311(Lnet/minecraft/class_8242;)I": "method_65822",
+  "net/minecraft/class_836.method_3578(Lnet/minecraft/class_2484$class_2485;Lnet/minecraft/class_9296;)Lnet/minecraft/class_1921;": "method_65832",
+  "net/minecraft/class_837.method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V": "method_65820",
+  "net/minecraft/class_7761.method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V": "method_65820",
+  "net/minecraft/class_761.method_52815(Lnet/minecraft/class_1923;)V": "method_65201"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_809.field_4305:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
@@ -784,7 +1744,9 @@
   "net/minecraft/class_793.field_4251:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
-  "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
+  "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
+  "net/minecraft/class_1049.field_5224:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures",
+  "net/minecraft/class_922.field_53193:Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail"
  },
  "ctorRedirects": {
   "net/minecraft/class_809.<init>(Lnet/minecraft/class_809;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#copy"
@@ -810,6 +1772,48 @@
    "call": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading.missingReference(Lnet/minecraft/class_1088$class_9826;Lnet/minecraft/class_10525;Ljava/lang/String;)Lnet/minecraft/class_1058;",
    "family": "model-loading",
    "basis": "TextureGetter.reportMissingReference is new in 1.21.4; 1.21.3 answered a missing reference with the missing material"
+  },
+  {
+   "under": "net/minecraft/class_3884",
+   "method": "method_65191(Lnet/minecraft/class_4587;)V",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers.translateToArms(Lnet/minecraft/class_3884;Lnet/minecraft/class_4587;)V",
+   "family": "render-layers",
+   "basis": "VillagerLikeModel.translateToArms is new in 1.21.4; a 1.21.3 model gets 1.21.3's crossed-arms item placement"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context",
+   "method": "modifyBlockModelOnLoad()Lnet/fabricmc/fabric/api/event/Event;",
+   "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading.modifyBlockModelOnLoad(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context;)Lnet/fabricmc/fabric/api/event/Event;",
+   "family": "fapi-model-loading",
+   "basis": "a 1.21.3 plugin context implementation has no block model events (1.21.3's API had none)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context",
+   "method": "modifyBlockModelBeforeBake()Lnet/fabricmc/fabric/api/event/Event;",
+   "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading.modifyBlockModelBeforeBake(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context;)Lnet/fabricmc/fabric/api/event/Event;",
+   "family": "fapi-model-loading",
+   "basis": "a 1.21.3 plugin context implementation has no block model events (1.21.3's API had none)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context",
+   "method": "modifyBlockModelAfterBake()Lnet/fabricmc/fabric/api/event/Event;",
+   "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading.modifyBlockModelAfterBake(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin$Context;)Lnet/fabricmc/fabric/api/event/Event;",
+   "family": "fapi-model-loading",
+   "basis": "a 1.21.3 plugin context implementation has no block model events (1.21.3's API had none)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext",
+   "method": "translucentBlockOutline()Z",
+   "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/CbFapiWorldRenderContext.translucentBlockOutline(Lnet/fabricmc/fabric/api/client/rendering/v1/WorldRenderContext;)Z",
+   "family": "fapi-model-loading",
+   "basis": "WorldRenderContext.translucentBlockOutline is new in 1.21.4; 1.21.3 drew the outline once, not translucently"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/Mesh",
+   "method": "size()I",
+   "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.size(Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;)I",
+   "family": "fapi-renderer",
+   "basis": "Mesh.size() is new in 1.21.4; a 1.21.3 mesh's quads, counted"
   }
  ],
  "lambdaAdapters": {
@@ -820,11 +1824,600 @@
   "net/minecraft/class_1088$class_9826.get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;": {
    "iface": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter",
    "adapt": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#adaptTextureGetter(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter;)Lnet/minecraft/class_1088$class_9826;"
+  },
+  "net/minecraft/class_3884.method_17150(Z)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyVillagerLikeModel",
+   "adapt": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers#adaptVillagerLikeModel(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers$CbLegacyVillagerLikeModel;)Lnet/minecraft/class_3884;"
   }
  },
  "instanceFieldSetters": {
   "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
   "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1044",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures$CbLegacyTexture",
+   "requires": [
+    "method_4625(Lnet/minecraft/class_3300;)V"
+   ],
+   "synth": [],
+   "family": "textures",
+   "basis": "a 1.21.3 texture class that loads or resets itself: reset on reload as 1.21.3 reset every texture (CbTextureManagerMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1044",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures$CbLegacyTexture",
+   "requires": [
+    "method_18169(Lnet/minecraft/class_1060;Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;Ljava/util/concurrent/Executor;)V"
+   ],
+   "synth": [],
+   "family": "textures",
+   "basis": "a 1.21.3 texture class that loads or resets itself: reset on reload as 1.21.3 reset every texture (CbTextureManagerMixin)"
+  },
+  {
+   "under": "net/minecraft/class_636",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest$CbLegacyPickItem",
+   "requires": [
+    "method_2916(I)V"
+   ],
+   "synth": [],
+   "family": "client-rest",
+   "basis": "a 1.21.3 MultiPlayerGameMode overriding handlePickItem: the client picks as 1.21.3's did while the game's mode is one (CbFapiPickMixin), and the pick of an inventory slot reaches its override"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading$CbLegacyIdContext",
+   "requires": [
+    "resourceId()Lnet/minecraft/class_2960;",
+    "topLevelId()Lnet/minecraft/class_1091;"
+   ],
+   "synth": [
+    {
+     "new": "id()Lnet/minecraft/class_2960;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading.id(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading$CbLegacyIdContext;)Lnet/minecraft/class_2960;"
+    }
+   ],
+   "family": "fapi-model-loading",
+   "basis": "a 1.21.3 implementation of the context: id() is its resource id, else its top level location's"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBake$Context",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading$CbLegacyIdContext",
+   "requires": [
+    "resourceId()Lnet/minecraft/class_2960;",
+    "topLevelId()Lnet/minecraft/class_1091;"
+   ],
+   "synth": [
+    {
+     "new": "id()Lnet/minecraft/class_2960;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading.id(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading$CbLegacyIdContext;)Lnet/minecraft/class_2960;"
+    }
+   ],
+   "family": "fapi-model-loading",
+   "basis": "a 1.21.3 implementation of the context: id() is its resource id, else its top level location's"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBake$Context",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading$CbLegacyIdContext",
+   "requires": [
+    "resourceId()Lnet/minecraft/class_2960;",
+    "topLevelId()Lnet/minecraft/class_1091;"
+   ],
+   "synth": [
+    {
+     "new": "id()Lnet/minecraft/class_2960;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading.id(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading$CbLegacyIdContext;)Lnet/minecraft/class_2960;"
+    }
+   ],
+   "family": "fapi-model-loading",
+   "basis": "a 1.21.3 implementation of the context: id() is its resource id, else its top level location's"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/BlockStateResolver$Context",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading$CbLegacyBlockStateContext",
+   "requires": [
+    "setModel(Lnet/minecraft/class_2680;Lnet/minecraft/class_1100;)V"
+   ],
+   "synth": [
+    {
+     "new": "setModel(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading.setModel(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/modelloading/CbFapiModelLoading$CbLegacyBlockStateContext;Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V"
+    }
+   ],
+   "family": "fapi-model-loading",
+   "basis": "a 1.21.3 implementation of BlockStateResolver.Context takes the model as an UnbakedModel"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewSpriteColor",
+   "requires": [
+    "spriteColor(II)I"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewSpriteU",
+   "requires": [
+    "spriteU(II)F"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewSpriteV",
+   "requires": [
+    "spriteV(II)F"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewCopyTo",
+   "requires": [
+    "copyTo(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)V"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewToVanilla",
+   "requires": [
+    "toVanilla(I[IIZ)V"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewToBakedQuad",
+   "requires": [
+    "toBakedQuad(ILnet/minecraft/class_1058;Z)Lnet/minecraft/class_777;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableFromVanilla",
+   "requires": [
+    "fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSprite",
+   "requires": [
+    "sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSpriteVec",
+   "requires": [
+    "sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSpriteBake",
+   "requires": [
+    "spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSpriteColor",
+   "requires": [
+    "spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableSpriteColors",
+   "requires": [
+    "spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterFromVanilla",
+   "requires": [
+    "fromVanilla([IIZ)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSprite",
+   "requires": [
+    "sprite(IIFF)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteVec",
+   "requires": [
+    "sprite(IILnet/minecraft/class_241;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteBake",
+   "requires": [
+    "spriteBake(ILnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteColor",
+   "requires": [
+    "spriteColor(III)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteColors",
+   "requires": [
+    "spriteColor(IIIII)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterSpriteUnitSquare",
+   "requires": [
+    "spriteUnitSquare(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderBlendLayer",
+   "requires": [
+    "blendMode(ILnet/minecraft/class_1921;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderBlendMode",
+   "requires": [
+    "blendMode(ILnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderDisableAo",
+   "requires": [
+    "disableAo(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderDisableDiffuse",
+   "requires": [
+    "disableDiffuse(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderEmissive",
+   "requires": [
+    "emissive(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderSpriteDepth",
+   "requires": [
+    "spriteDepth(I)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMaterialSpriteDepth",
+   "requires": [
+    "spriteDepth()I"
+   ],
+   "synth": [],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation overriding a default method 1.21.4 removed: calls through the API still reach its own"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterColorIndex",
+   "requires": [
+    "colorIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+   ],
+   "synth": [
+    {
+     "new": "tintIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.tintIndex(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterColorIndex;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;"
+    },
+    {
+     "new": "tintIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.tintIndexMutable(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyEmitterColorIndex;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableColorIndex",
+   "requires": [
+    "colorIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+   ],
+   "synth": [
+    {
+     "new": "tintIndex(I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.tintIndex(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyMutableColorIndex;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewColorIndex",
+   "requires": [
+    "colorIndex()I"
+   ],
+   "synth": [
+    {
+     "new": "tintIndex()I",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.tintIndex(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewColorIndex;)I"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewFaceNormal",
+   "requires": [
+    "faceNormal()Lorg/joml/Vector3f;"
+   ],
+   "synth": [
+    {
+     "new": "faceNormal()Lorg/joml/Vector3fc;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.faceNormal(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewFaceNormal;)Lorg/joml/Vector3fc;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderGlint",
+   "requires": [
+    "glint(Lnet/fabricmc/fabric/api/util/TriState;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+   ],
+   "synth": [
+    {
+     "new": "glintMode(Lnet/fabricmc/fabric/api/renderer/v1/material/GlintMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.glintMode(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyFinderGlint;Lnet/fabricmc/fabric/api/renderer/v1/material/GlintMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/material/MaterialView",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewGlint",
+   "requires": [
+    "glint()Lnet/fabricmc/fabric/api/util/TriState;"
+   ],
+   "synth": [
+    {
+     "new": "glintMode()Lnet/fabricmc/fabric/api/renderer/v1/material/GlintMode;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.glintMode(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyViewGlint;)Lnet/fabricmc/fabric/api/renderer/v1/material/GlintMode;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/renderer/v1/Renderer",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyRenderer",
+   "requires": [
+    "meshBuilder()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder;"
+   ],
+   "synth": [
+    {
+     "new": "mutableMesh()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableMesh;",
+     "call": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer.mutableMesh(Ltop/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer$CbLegacyRenderer;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableMesh;"
+    }
+   ],
+   "family": "fapi-renderer",
+   "basis": "a 1.21.3 implementation: 1.21.4's member (colorIndex is tintIndex, glint(TriState) glintMode, faceNormal a Vector3fc, meshBuilder() a mutableMesh()) answered by its 1.21.3 one"
+  }
+ ],
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_1071",
+   "member": "method_52863(Lcom/mojang/authlib/GameProfile;)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#optionalSkinFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "family": "generic-client",
+   "basis": "a 1.21.3 getOrLoad override answers a future of the skin; 1.21.4 reads a future of an Optional skin"
+  },
+  {
+   "under": "net/minecraft/class_4942",
+   "member": "method_25846(Lnet/minecraft/class_2248;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4942",
+   "member": "method_25847(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4942",
+   "member": "method_25852(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4942",
+   "member": "method_25853(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4946",
+   "member": "method_25915(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4946",
+   "member": "method_25916(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4946$class_4947",
+   "member": "method_25922(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4946$class_4947",
+   "member": "method_25923(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_7766",
+   "member": "method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;",
+   "args": [
+    null,
+    null,
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#serializers(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 loadAndStitch override reads metadata section serializers"
+  }
+ ],
+ "frameDefaults": {
+  "method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V": {
+   "6": "zero: 1.21.3's GuiGraphics.drawWordWrap drew its lines without shadow (drawString(.., false)); false is that"
+  }
+ },
+ "ledger": {
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableColorIndex": "not bridgeable: 1.21.4's materials have no colour-index flag -- Indigo 2.0.3's RenderMaterialImpl is one canonical instance per bit pattern of blend mode, emissive, diffuse, AO, glint and shade mode (MaterialViewImpl has no other bit), the quad encoding stores that index, and MutableQuadViewImpl.material casts to RenderMaterialImpl, so neither a native nor a stand-in material can carry 1.21.3's disableColorIndex; 1.21.4 expresses it per quad (tintIndex -1), which a material chosen before the quad's tint cannot decide. Every other MaterialFinder / MaterialView member is bridged (CbFapiRenderer)",
+  "net/fabricmc/fabric/api/renderer/v1/material/MaterialView.disableColorIndex": "not bridgeable: 1.21.4's materials have no colour-index flag -- Indigo 2.0.3's RenderMaterialImpl is one canonical instance per bit pattern of blend mode, emissive, diffuse, AO, glint and shade mode (MaterialViewImpl has no other bit), the quad encoding stores that index, and MutableQuadViewImpl.material casts to RenderMaterialImpl, so neither a native nor a stand-in material can carry 1.21.3's disableColorIndex; 1.21.4 expresses it per quad (tintIndex -1), which a material chosen before the quad's tint cannot decide. Every other MaterialFinder / MaterialView member is bridged (CbFapiRenderer)",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.pushTransform": "for a mod's own implementation of 1.21.3's QuadEmitter only: 1.21.3's emitters had no transform stack (RenderContext held it), 1.21.4 applies transforms inside the emitter's own emit(), which is the implementation's code, so no fill can apply one; no 1.21.4 caller pushes onto an emitter it did not get from its renderer (Fabric API 0.119.4: only Indigo's own emitter refers to pushTransform; vanilla never), and 1.21.3 models push through RenderContext, which the layer serves (CbFapiRenderer); tintIndex is bridged from the implementation's colorIndex",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.popTransform": "for a mod's own implementation of 1.21.3's QuadEmitter only: 1.21.3's emitters had no transform stack (RenderContext held it), 1.21.4 applies transforms inside the emitter's own emit(), which is the implementation's code, so no fill can apply one; no 1.21.4 caller pushes onto an emitter it did not get from its renderer (Fabric API 0.119.4: only Indigo's own emitter refers to pushTransform; vanilla never), and 1.21.3 models push through RenderContext, which the layer serves (CbFapiRenderer); tintIndex is bridged from the implementation's colorIndex"
  }
 }
