@@ -3,5 +3,43 @@
   "net/minecraft/class_5253": "top/dext/centurybridge/step/v1_21_2/facade/FastColor",
   "net/minecraft/class_5253$class_5254": "top/dext/centurybridge/step/v1_21_2/facade/FastColor$ARGB32",
   "net/minecraft/class_5253$class_8045": "top/dext/centurybridge/step/v1_21_2/facade/FastColor$ABGR32"
+ },
+ "covers": [
+  "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
+  "net/minecraft/class_332.method_51450()Lnet/minecraft/class_4597$class_4598;",
+  "net/minecraft/class_332.method_51422(FFFF)V",
+  "net/minecraft/class_332.method_25298(IIIIILnet/minecraft/class_1058;)V",
+  "net/minecraft/class_332.method_48465(IIIIILnet/minecraft/class_1058;FFFF)V",
+  "net/minecraft/class_332.method_52706(Lnet/minecraft/class_2960;IIII)V",
+  "net/minecraft/class_332.method_52707(Lnet/minecraft/class_2960;IIIII)V",
+  "net/minecraft/class_332.method_52708(Lnet/minecraft/class_2960;IIIIIIII)V",
+  "net/minecraft/class_332.method_52709(Lnet/minecraft/class_2960;IIIIIIIII)V",
+  "net/minecraft/class_332.method_25302(Lnet/minecraft/class_2960;IIIIII)V",
+  "net/minecraft/class_332.method_25291(Lnet/minecraft/class_2960;IIIFFIIII)V",
+  "net/minecraft/class_332.method_25293(Lnet/minecraft/class_2960;IIIIFFIIII)V",
+  "net/minecraft/class_332.method_25290(Lnet/minecraft/class_2960;IIFFIIII)V"
+ ],
+ "frameDefaults": {
+  "method_52706(Lnet/minecraft/class_2960;IIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_52707(Lnet/minecraft/class_2960;IIIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_52708(Lnet/minecraft/class_2960;IIIIIIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_25291(Lnet/minecraft/class_2960;IIIFFIIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_25290(Lnet/minecraft/class_2960;IIFFIIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": {
+   "5": "zero: a null tooltip style is the default background, what 1.21.2's own five-argument renderTooltip passes"
+  }
+ },
+ "methodRenames": {
+  "net/minecraft/class_332.method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": "method_64038"
  }
 }
