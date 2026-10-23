@@ -1,0 +1,127 @@
+{
+ "methodRenames": {
+  "net/minecraft/class_3193.method_13994()Lnet/minecraft/class_1923;": "method_60473",
+  "net/minecraft/class_3193.method_23271()Lnet/minecraft/class_3194;": "method_60474",
+  "net/minecraft/class_3193.method_20456(Lnet/minecraft/class_2821;)V": "method_60456",
+  "net/minecraft/class_3193.method_40066()Ljava/util/List;": "method_60475",
+  "net/minecraft/class_3193.method_23270()Lnet/minecraft/class_2806;": "method_60476",
+  "net/minecraft/class_3193.method_14010()Lnet/minecraft/class_2791;": "method_60471",
+  "net/minecraft/class_3193.method_13993(Lnet/minecraft/class_2806;Lnet/minecraft/class_3898;)Ljava/util/concurrent/CompletableFuture;": "method_60458"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_13994()Lnet/minecraft/class_1923;",
+   "new": "method_60473",
+   "onlyUnder": "net/minecraft/class_3193",
+   "superCalls": "rename",
+   "basis": "getPos is 1.21 GenerationChunkHolder.getPos: the same position"
+  },
+  {
+   "old": "method_23271()Lnet/minecraft/class_3194;",
+   "new": "method_60474",
+   "onlyUnder": "net/minecraft/class_3193",
+   "superCalls": "rename",
+   "basis": "getFullStatus is 1.21 GenerationChunkHolder.getFullStatus: ChunkLevel.fullStatus(ticket level) in both"
+  },
+  {
+   "old": "method_20456(Lnet/minecraft/class_2821;)V",
+   "new": "method_60456",
+   "onlyUnder": "net/minecraft/class_3193",
+   "superCalls": "rename",
+   "basis": "replaceProtoChunk is 1.21 GenerationChunkHolder.replaceProtoChunk: every proto chunk future replaced by one of the imposter wrapping the level chunk, called where 1.20.6 called it (protoChunkToFullChunk); 1.20.6 also re-pointed its chunk-to-save future at the level chunk, 1.21 saves getLatestChunk(), which then is that imposter"
+  },
+  {
+   "old": "method_40066()Ljava/util/List;",
+   "new": "method_60475",
+   "onlyUnder": "net/minecraft/class_3193",
+   "superCalls": "rename",
+   "basis": "getAllFutures is 1.21 GenerationChunkHolder.getAllFutures: (status, future) for every status, the same bytecode"
+  },
+  {
+   "old": "method_23270()Lnet/minecraft/class_2806;",
+   "new": "method_60476",
+   "onlyUnder": "net/minecraft/class_3193",
+   "superCalls": "rename",
+   "basis": "getLastAvailableStatus is 1.21 GenerationChunkHolder.getLatestStatus: the highest status whose future completed with a chunk (1.20.6: getNow(UNLOADED_CHUNK).isSuccess(); 1.21: getNow(NOT_DONE_YET).orElse(null) != null -- a success result always holds its chunk)"
+  },
+  {
+   "old": "method_14010()Lnet/minecraft/class_2791;",
+   "new": "method_60471",
+   "onlyUnder": "net/minecraft/class_3193",
+   "superCalls": "rename",
+   "basis": "getLastAvailable is 1.21 GenerationChunkHolder.getLatestChunk: the chunk of the highest status reached (1.20.6 scanned the futures from the top for the first completed chunk; 1.21 reads the status work last started on -- its chunk, or while that step still runs its parent status's, the highest completed one, since a step starts only once its parent completed)"
+  },
+  {
+   "old": "method_13993(Lnet/minecraft/class_2806;Lnet/minecraft/class_3898;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_60458",
+   "onlyUnder": "net/minecraft/class_3193",
+   "superCalls": "rename",
+   "basis": "getOrScheduleFuture(status, chunkMap) is 1.21 GenerationChunkHolder.scheduleChunkGenerationTask(status, chunkMap): the future of the chunk reaching the status, scheduling the work when not there yet; vanilla asks it where 1.20.6 asked getOrScheduleFuture (ServerChunkCache.getChunkFutureMainThread)"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_3193.field_16426:Lnet/minecraft/class_9259;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks",
+  "net/minecraft/class_3193.field_16430:Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks",
+  "net/minecraft/class_3193.field_36388:Lnet/minecraft/class_9259;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks",
+  "net/minecraft/class_3230.field_19270:Lnet/minecraft/class_3230;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks"
+ },
+ "covers": [
+  "net/minecraft/class_3193.method_16146(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_3193.method_21737(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_3193.method_39967(Ljava/lang/String;Ljava/util/concurrent/CompletableFuture;)V",
+  "net/minecraft/class_3898.method_37904()V",
+  "net/minecraft/class_3898.method_17236(Lnet/minecraft/class_3193;Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+  "net/minecraft/class_3898.method_20441(Lnet/minecraft/class_1923;)V"
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_2794.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12088",
+  "net/minecraft/class_3754.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12088"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_9312.<init>(Lnet/minecraft/class_3218;Lnet/minecraft/class_2794;Lnet/minecraft/class_3485;Lnet/minecraft/class_3227;)V": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#newWorldGenContext"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_16146(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_60457(Lnet/minecraft/class_2806;)Lnet/minecraft/class_2791;",
+   "onlyUnder": "net/minecraft/class_3193",
+   "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks.chunkNow(Ljava/util/concurrent/CompletableFuture;)Lnet/minecraft/class_2791;",
+   "basis": "1.21 asks getChunkIfPresentUnchecked(status) wherever 1.20.6 asked getFutureIfPresentUnchecked(status) (latest status / chunk, getChunkIfPresent): a 1.20.6 override answers it with the chunk its future holds now, what 1.21 reads off the same future"
+  },
+  {
+   "old": "method_21737(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_60463(Lnet/minecraft/class_2806;)Lnet/minecraft/class_2791;",
+   "onlyUnder": "net/minecraft/class_3193",
+   "unwrap": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks.chunkNow(Ljava/util/concurrent/CompletableFuture;)Lnet/minecraft/class_2791;",
+   "basis": "1.21 asks getChunkIfPresent(status) (ServerChunkCache.getChunkNow, the light and level lookups) where 1.20.6 asked getFutureIfPresent(status): a 1.20.6 override answers with the chunk its future holds now"
+  },
+  {
+   "old": "method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_12088(Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+   "onlyUnder": "net/minecraft/class_2794",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks.fillFromNoise(Ltop/dext/centurybridge/step/v1_21/rt/CbLevelChunks$LegacyGenerator;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks$LegacyGenerator",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks.superFillFromNoise(Ltop/dext/centurybridge/step/v1_21/rt/CbLevelChunks$SuperGenerator;Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks$SuperGenerator",
+   "superAccessors": [
+    "method_12088(Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+    "method_38275(Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "1.21 calls fillFromNoise(blender, random, structures, chunk), without the executor 1.20.6 handed for the continuations: a 1.20.6 generator's own method runs with an executor running them where the future completes, as 1.21 does (CbLevelChunks.DIRECT); a 1.20.6 caller's executor still reaches it (instanceRedirects); its super call reaches super's 1.21 method"
+  },
+  {
+   "old": "method_38275(Ljava/util/concurrent/Executor;Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "method_38275(Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+   "onlyUnder": "net/minecraft/class_2794",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks.createBiomes(Ltop/dext/centurybridge/step/v1_21/rt/CbLevelChunks$LegacyBiomes;Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks$LegacyBiomes",
+   "superBridge": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks.superCreateBiomes(Ltop/dext/centurybridge/step/v1_21/rt/CbLevelChunks$SuperGenerator;Ljava/util/concurrent/Executor;Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+   "superAccess": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks$SuperGenerator",
+   "superAccessors": [
+    "method_12088(Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;",
+    "method_38275(Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "1.21 calls createBiomes(random, blender, structures, chunk) without the executor (1.20.6's own createBiomes never read it): a 1.20.6 generator's own method runs with the direct executor; its super call reaches super's 1.21 method"
+  }
+ ]
+}
