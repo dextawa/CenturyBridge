@@ -48,3 +48,6 @@ accessible method net/minecraft/class_2525 method_9574 (Lnet/minecraft/class_453
 accessible method net/minecraft/class_2667 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
 accessible method net/minecraft/class_2671 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
 accessible method net/minecraft/class_4970 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+
+# s9rest: SimpleJsonResourceReloadListener's private (ops, codec, converter) constructor, which 1.21.3's (registries, codec, directory) is (CbRestMisc)
+accessible method net/minecraft/class_4309 <init> (Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_7654;)V

@@ -6,6 +6,7 @@
   "mixins": [
     "CbRestBannerAccess",
     "CbRestBedAccess",
+    "CbRestBeehiveMixin",
     "CbRestBlockEntityNbtMixin",
     "CbRestBoundingBoxAbstractWindChargeMixin",
     "CbRestBoundingBoxEntityMixin",
@@ -15,6 +16,7 @@
     "CbRestClonePotMixin",
     "CbRestDeathScoreMixin",
     "CbRestDoorGoalsMixin",
+    "CbRestEntityInvoker",
     "CbRestEntityNbtMixin",
     "CbRestItemPropertiesAccess",
     "CbRestItemStateMixin",
