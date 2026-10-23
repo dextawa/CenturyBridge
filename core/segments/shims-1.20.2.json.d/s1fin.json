@@ -7,6 +7,8 @@
   "net/minecraft/class_2096.method_9038()Ljava/lang/Number;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2096.method_9042()Ljava/lang/Number;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2102$class_2103.method_9071()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2102.method_35290(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2102.method_9065(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
   "net/minecraft/class_2105.method_9075()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2152.method_9175()Ljava/lang/Float;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2152.method_9177()Ljava/lang/Float;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
@@ -24,7 +26,12 @@
   "net/minecraft/class_2040.method_8893(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2040;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2050.method_8928(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2050;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2073.method_8972(Lcom/google/gson/JsonElement;)[Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2090.method_38858(Lnet/minecraft/class_2096$class_2099;)Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2090.method_9016(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2090.method_9022(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2096.method_9039(Lcom/google/gson/JsonElement;Lnet/minecraft/class_2096;Ljava/util/function/BiFunction;Lnet/minecraft/class_2096$class_2097;)Lnet/minecraft/class_2096;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2102$class_2103.method_9070(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_2102$class_2103;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2102.method_9066()Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
   "net/minecraft/class_2105.method_9073(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2105;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_3735.method_16224(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_3735;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_4550.method_22453(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_4550;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
@@ -42,5 +49,153 @@
   "net/minecraft/class_2035.field_20687:[Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2050.field_9609:Lnet/minecraft/class_2050;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_7376.field_38723:Lnet/minecraft/class_7376;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2035",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EnchantmentJson",
+   "requires": [
+    "method_8881()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_8881 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2040",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$FlagsJson",
+   "requires": [
+    "method_8894()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_8894 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2050",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EntityTypeJson",
+   "requires": [
+    "method_8927()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_8927 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2102$class_2103",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EffectInstanceJson",
+   "requires": [
+    "method_9071()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9071 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2105",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$NbtJson",
+   "requires": [
+    "method_9075()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9075 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_3735",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EquipmentJson",
+   "requires": [
+    "method_16225()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_16225 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_4550",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BlockJson",
+   "requires": [
+    "method_22452()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_22452 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_4551",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$FluidJson",
+   "requires": [
+    "method_22473()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_22473 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_8129",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$TagJson",
+   "requires": [
+    "method_48964()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_48964 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2152",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$WrappedMin",
+   "requires": [
+    "method_9175()Ljava/lang/Float;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9175 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2152",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$WrappedMax",
+   "requires": [
+    "method_9177()Ljava/lang/Float;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9177 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2102",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EffectsAnd",
+   "requires": [
+    "method_9065(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9065 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2102",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EffectsAndInstance",
+   "requires": [
+    "method_35290(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_35290 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  }
+ ],
+ "superRedirects": {
+  "net/minecraft/class_2035.method_8881()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_8881",
+  "net/minecraft/class_2040.method_8894()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_8894",
+  "net/minecraft/class_2102$class_2103.method_9071()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_9071",
+  "net/minecraft/class_2102.method_35290(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#super_method_35290",
+  "net/minecraft/class_2102.method_9065(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#super_method_9065",
+  "net/minecraft/class_2105.method_9075()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_9075",
+  "net/minecraft/class_2152.method_9175()Ljava/lang/Float;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_9175",
+  "net/minecraft/class_2152.method_9177()Ljava/lang/Float;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_9177",
+  "net/minecraft/class_3735.method_16225()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_16225",
+  "net/minecraft/class_4550.method_22452()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_22452",
+  "net/minecraft/class_4551.method_22473()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_22473",
+  "net/minecraft/class_8129.method_48964()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_48964"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_2102.<init>(Ljava/util/Map;)V": {
+   "desc": "(Ljava/util/Map;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#effectMap(Ljava/util/Map;)Ljava/util/Map;"
+   ],
+   "basis": "s1fin: MobEffectsPredicate(map) took effects as keys, the record takes their holders (generic drift): the keys converted"
+  }
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_2096$class_2097.create(Ljava/lang/Number;Ljava/lang/Number;)Lnet/minecraft/class_2096;": {
+   "iface": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BoundsFactory",
+   "adapt": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#boundsFactory(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BoundsFactory;)Lnet/minecraft/class_2096$class_2097;"
+  }
  }
 }

@@ -271,6 +271,149 @@ def sentinels(root, vjar, wjar, V, W, table, report):
     return names, redirects
 
 
+RECORDS = RT + "/CbAdvRecords"
+
+# 1.20.1 constructor argument (its generic signature) -> 1.20.2 parameter (its signature): the converter
+# that turns the part a 1.20.1 constructor got into what the record takes for the same meaning
+PART_CONVERSIONS = {
+    ("Ljava/lang/Boolean;", "Ljava/util/Optional<Ljava/lang/Boolean;>;"): f"{RECORDS}#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_2048;", "Ljava/util/Optional<Lnet/minecraft/class_2048;>;"): f"{ANY}#entity(Lnet/minecraft/class_2048;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_2073;", "Ljava/util/Optional<Lnet/minecraft/class_2073;>;"): f"{ANY}#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_2022;", "Ljava/util/Optional<Lnet/minecraft/class_2022;>;"): f"{ANY}#damageSource(Lnet/minecraft/class_2022;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_2105;", "Ljava/util/Optional<Lnet/minecraft/class_2105;>;"): f"{ANY}#nbt(Lnet/minecraft/class_2105;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_4559;", "Ljava/util/Optional<Lnet/minecraft/class_4559;>;"): f"{ANY}#state(Lnet/minecraft/class_4559;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_4552;", "Ljava/util/Optional<Lnet/minecraft/class_4552;>;"): f"{ANY}#light(Lnet/minecraft/class_4552;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_4550;", "Ljava/util/Optional<Lnet/minecraft/class_4550;>;"): f"{ANY}#block(Lnet/minecraft/class_4550;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_4551;", "Ljava/util/Optional<Lnet/minecraft/class_4551;>;"): f"{ANY}#fluid(Lnet/minecraft/class_4551;)Ljava/util/Optional;",
+    ("Ljava/util/Set<Lnet/minecraft/class_2248;>;", "Ljava/util/Optional<Lnet/minecraft/class_6885<Lnet/minecraft/class_2248;>;>;"):
+        f"{RECORDS}#blocks(Ljava/util/Set;)Ljava/util/Optional;",
+    ("Ljava/util/Set<Lnet/minecraft/class_1792;>;", "Ljava/util/Optional<Lnet/minecraft/class_6885<Lnet/minecraft/class_1792;>;>;"):
+        f"{RECORDS}#items(Ljava/util/Set;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_3611;", "Ljava/util/Optional<Lnet/minecraft/class_6880<Lnet/minecraft/class_3611;>;>;"):
+        f"{RECORDS}#fluid(Lnet/minecraft/class_3611;)Ljava/util/Optional;",
+    ("Lnet/minecraft/class_1842;", "Ljava/util/Optional<Lnet/minecraft/class_6880<Lnet/minecraft/class_1842;>;>;"):
+        f"{RECORDS}#potion(Lnet/minecraft/class_1842;)Ljava/util/Optional;",
+    ("[Lnet/minecraft/class_2035;", "Ljava/util/List<Lnet/minecraft/class_2035;>;"):
+        f"{RECORDS}#enchantments([Lnet/minecraft/class_2035;)Ljava/util/List;",
+}
+# a tag or a resource key, any type argument: nullable in 1.20.1, an Optional of it in 1.20.2
+PART_GENERIC = {
+    "Lnet/minecraft/class_6862": f"{RECORDS}#tag(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+    "Lnet/minecraft/class_5321": f"{RECORDS}#key(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+}
+# what a 1.20.1 no-argument constructor's record holds for each part: the value 1.20.1's ()V stored
+# (null / ANY / NONE -> absent or empty; MinMaxBounds.*.ANY)
+PART_DEFAULTS = {
+    "Ljava/util/Optional;": f"{RECORDS}#absent()Ljava/util/Optional;",
+    "Ljava/util/List;": f"{RECORDS}#none()Ljava/util/List;",
+    "Lnet/minecraft/class_2096$class_2100;": f"{RECORDS}#anyInts()Lnet/minecraft/class_2096$class_2100;",
+    "Lnet/minecraft/class_2096$class_2099;": f"{RECORDS}#anyDoubles()Lnet/minecraft/class_2096$class_2099;",
+    "Lnet/minecraft/class_6885;": f"{RECORDS}#noEntityTypes()Lnet/minecraft/class_6885;",
+}
+# a no-argument constructor whose record's canonical constructor is not the one 1.20.1's fields match
+# by position: EnchantmentPredicate() stored a null enchantment and MinMaxBounds.Ints.ANY levels, the
+# record's (Optional<Holder<Enchantment>>, Ints) constructor takes the same as absent and ANY
+DEFAULT_TARGET = {
+    "net/minecraft/class_2035": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+}
+
+
+def part_conversion(a, b):
+    """the converter for a 1.20.1 constructor part of signature a where the record takes b, or None"""
+    c = PART_CONVERSIONS.get((a, b))
+    if c:
+        return c
+    for raw, conv in PART_GENERIC.items():
+        if a.startswith(raw + "<") and b.startswith("Ljava/util/Optional<" + raw + "<"):
+            return conv
+    return None
+
+
+def records(V, W, section, report, classes_table):
+    """
+    The advancement predicates 1.20.2 turned into records (final; the layer's access widener makes them
+    extendable). A 1.20.1 constructor the record does not have is reshaped -- at a mod's new X(..) and at
+    a mod subclass's super(..) -- onto the record's constructor of the same arity, positional, each part
+    converted (PART_CONVERSIONS: a nullable or ANY part to an absent Optional, a set to a HolderSet, an
+    array to a List); a no-argument constructor onto the canonical one with the values 1.20.1's stored
+    (PART_DEFAULTS). LocationPredicate's x/y/z bounds fold into its position predicate. A constructor no
+    rule maps is reported for hand wiring.
+    """
+    table = {}
+    for line in open(classes_table, encoding="utf-8"):
+        f = line.rstrip("\n").split("\t")
+        if len(f) >= 3 and f[0] == "C":
+            table[f[1]] = f[2]
+    for p in sorted(V):
+        if p not in W or not table.get(p.split("$")[0], "").startswith("net/minecraft/advancements/criterion"):
+            continue
+        if W[p].super != "java/lang/Record" or V[p].super == "java/lang/Record":
+            continue
+        if not V[p].access & classfile.ACC_PUBLIC:
+            continue  # package-private in 1.20.1: no mod could name its constructors
+        news = [m for m in W[p].methods if m.name == "<init>" and m.access & classfile.ACC_PUBLIC]
+        for om in V[p].methods:
+            if om.name != "<init>" or not om.access & classfile.ACC_PUBLIC or any(n.desc == om.desc for n in news):
+                continue
+            key = f"{p}.<init>{om.desc}"
+            oa = classfile.split_args(om.desc)[0]
+            osig = (classfile.split_signature(om.signature) or [oa])[0] if om.signature else oa
+            if not oa:
+                # 1.20.1's ()V: the canonical constructor (the one with most parameters) with 1.20.1's values
+                nm = next((n for n in news if n.desc == DEFAULT_TARGET.get(p)), None) or                     max(news, key=lambda n: len(classfile.split_args(n.desc)[0]))
+                ops = []
+                for t in classfile.split_args(nm.desc)[0]:
+                    d = PART_DEFAULTS.get(t)
+                    if not d:
+                        report.append(f"design: {key}: no default for {t}")
+                        ops = None
+                        break
+                    ops.append("push " + d)
+                if ops is not None:
+                    section("superCtorReshapes")[key] = {"desc": nm.desc, "ops": ops,
+                        "basis": f"{BASIS}: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"}
+                continue
+            if p == "net/minecraft/class_2090" and len(oa) == 10:
+                # LocationPredicate(x, y, z, biome, structure, dimension, smokey, light, block, fluid)
+                nm = news[0]
+                ops = [f"conv:0,1,2 {RECORDS}#position(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;"
+                       f"Lnet/minecraft/class_2096$class_2099;)Ljava/util/Optional;"]
+                convs = {3: PART_GENERIC["Lnet/minecraft/class_5321"], 4: PART_GENERIC["Lnet/minecraft/class_5321"],
+                         5: PART_GENERIC["Lnet/minecraft/class_5321"]}
+                for i in range(3, 10):
+                    c = convs.get(i) or part_conversion(osig[i], (classfile.split_signature(nm.signature) or [[]])[0][i - 2])
+                    if not c:
+                        report.append(f"design: {key}: part {i}")
+                        ops = None
+                        break
+                    ops.append(f"conv:{i} {c}")
+                if ops is not None:
+                    section("superCtorReshapes")[key] = {"desc": nm.desc, "ops": ops,
+                        "basis": f"{BASIS}: x/y/z bounds as the position predicate (absent when all are any), the rest positional as Optionals"}
+                continue
+            cands = [n for n in news if len(classfile.split_args(n.desc)[0]) == len(oa)]
+            if len(cands) != 1:
+                report.append(f"design: {key}: {len(cands)} record constructors of that arity")
+                continue
+            nm = cands[0]
+            na = classfile.split_args(nm.desc)[0]
+            nsig = (classfile.split_signature(nm.signature) or [na])[0] if nm.signature else na
+            ops = []
+            for i, (a, b, sa, sb) in enumerate(zip(oa, na, osig, nsig)):
+                if a == b:
+                    ops.append("keep")
+                    continue
+                c = part_conversion(sa, sb)
+                if not c:
+                    report.append(f"design: {key}: part {i} {sa} -> {sb}")
+                    ops = None
+                    break
+                ops.append("conv " + c)
+            if ops is not None:
+                section("superCtorReshapes")[key] = {"desc": nm.desc, "ops": ops,
+                    "basis": f"{BASIS}: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"}
+
+
 def java_type(t):
     dim = len(t) - len(t.lstrip("["))
     t = t.lstrip("[")
@@ -441,6 +584,9 @@ def main():
             report.append(f"missing port: {owner}.{name}{desc}")
             continue
         section("staticRedirects")[f"{owner}.{name}{desc}"] = FACTORIES
+
+    # ---------------------------------------------------------------- predicate records
+    records(V, W, section, report, classes_table)
 
     # ---------------------------------------------------------------- ANY sentinels
     table = {}

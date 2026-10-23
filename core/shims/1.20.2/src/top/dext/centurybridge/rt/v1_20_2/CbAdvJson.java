@@ -72,6 +72,11 @@ public final class CbAdvJson {
 
     /** EnchantmentPredicate.serializeToJson() */
     public static JsonElement method_8881(net.minecraft.class_2035 self) {
+        return (Object) self instanceof CbAdvLegacy.EnchantmentJson own ? own.method_8881() : super_method_8881(self);
+    }
+
+    /** the same, without dispatching to a 1.20.1 subclass's override (that subclass's own super call) */
+    public static JsonElement super_method_8881(net.minecraft.class_2035 self) {
         return self == CbAdvAny.field_9571 ? JsonNull.INSTANCE : encode(net.minecraft.class_2035.field_45741, self, "enchantment predicate");
     }
 
@@ -82,6 +87,11 @@ public final class CbAdvJson {
     }
 
     public static JsonElement method_8894(net.minecraft.class_2040 self) {
+        return (Object) self instanceof CbAdvLegacy.FlagsJson own ? own.method_8894() : super_method_8894(self);
+    }
+
+    /** the same, without dispatching to a 1.20.1 subclass's override (that subclass's own super call) */
+    public static JsonElement super_method_8894(net.minecraft.class_2040 self) {
         return self == CbAdvAny.field_9581 ? JsonNull.INSTANCE : encode(net.minecraft.class_2040.field_45745, self, "entity flags predicate");
     }
 
@@ -106,6 +116,11 @@ public final class CbAdvJson {
 
     /** EntityTypePredicate.serializeToJson(): ANY writes JsonNull, a type its id, a tag "#tag" */
     public static JsonElement method_8927(net.minecraft.class_2050 self) {
+        return (Object) self instanceof CbAdvLegacy.EntityTypeJson own ? own.method_8927() : super_method_8927(self);
+    }
+
+    /** the same, without dispatching to a 1.20.1 subclass's override (that subclass's own super call) */
+    public static JsonElement super_method_8927(net.minecraft.class_2050 self) {
         return self == CbAdvAny.field_9609 ? JsonNull.INSTANCE : encode(net.minecraft.class_2050.field_45749, self, "entity type predicate");
     }
 
@@ -132,6 +147,11 @@ public final class CbAdvJson {
     }
 
     public static JsonElement method_9071(net.minecraft.class_2102.class_2103 self) {
+        return (Object) self instanceof CbAdvLegacy.EffectInstanceJson own ? own.method_9071() : super_method_9071(self);
+    }
+
+    /** the same, without dispatching to a 1.20.1 subclass's override (that subclass's own super call) */
+    public static JsonElement super_method_9071(net.minecraft.class_2102.class_2103 self) {
         return encode(net.minecraft.class_2102.class_2103.field_45766, self, "mob effect instance predicate");
     }
 
@@ -151,6 +171,11 @@ public final class CbAdvJson {
 
     /** NbtPredicate.serializeToJson(): ANY and a predicate without a tag write JsonNull, else the SNBT string */
     public static JsonElement method_9075(net.minecraft.class_2105 self) {
+        return (Object) self instanceof CbAdvLegacy.NbtJson own ? own.method_9075() : super_method_9075(self);
+    }
+
+    /** the same, without dispatching to a 1.20.1 subclass's override (that subclass's own super call) */
+    public static JsonElement super_method_9075(net.minecraft.class_2105 self) {
         if (self == CbAdvAny.field_9716 || self.comp_1816() == null) {
             return JsonNull.INSTANCE;
         }
@@ -164,6 +189,11 @@ public final class CbAdvJson {
     }
 
     public static JsonElement method_16225(net.minecraft.class_3735 self) {
+        return (Object) self instanceof CbAdvLegacy.EquipmentJson own ? own.method_16225() : super_method_16225(self);
+    }
+
+    /** the same, without dispatching to a 1.20.1 subclass's override (that subclass's own super call) */
+    public static JsonElement super_method_16225(net.minecraft.class_3735 self) {
         return self == CbAdvAny.field_16485 ? JsonNull.INSTANCE : encode(net.minecraft.class_3735.field_45744, self, "entity equipment predicate");
     }
 
@@ -174,6 +204,11 @@ public final class CbAdvJson {
     }
 
     public static JsonElement method_22452(net.minecraft.class_4550 self) {
+        return (Object) self instanceof CbAdvLegacy.BlockJson own ? own.method_22452() : super_method_22452(self);
+    }
+
+    /** the same, without dispatching to a 1.20.1 subclass's override (that subclass's own super call) */
+    public static JsonElement super_method_22452(net.minecraft.class_4550 self) {
         return self == CbAdvAny.field_20692 ? JsonNull.INSTANCE : encode(net.minecraft.class_4550.field_45723, self, "block predicate");
     }
 
@@ -184,6 +219,11 @@ public final class CbAdvJson {
     }
 
     public static JsonElement method_22473(net.minecraft.class_4551 self) {
+        return (Object) self instanceof CbAdvLegacy.FluidJson own ? own.method_22473() : super_method_22473(self);
+    }
+
+    /** the same, without dispatching to a 1.20.1 subclass's override (that subclass's own super call) */
+    public static JsonElement super_method_22473(net.minecraft.class_4551 self) {
         return self == CbAdvAny.field_20708 ? JsonNull.INSTANCE : encode(net.minecraft.class_4551.field_45753, self, "fluid predicate");
     }
 
@@ -220,6 +260,11 @@ public final class CbAdvJson {
 
     /** TagPredicate.serializeToJson() */
     public static JsonElement method_48964(net.minecraft.class_8129<?> self) {
+        return (Object) self instanceof CbAdvLegacy.TagJson own ? own.method_48964() : super_method_48964(self);
+    }
+
+    /** the same, without dispatching to a 1.20.1 subclass's override (that subclass's own super call) */
+    public static JsonElement super_method_48964(net.minecraft.class_8129<?> self) {
         JsonObject o = new JsonObject();
         o.addProperty("id", self.comp_1836().comp_327().toString());
         o.addProperty("expected", self.comp_1837());
@@ -228,8 +273,14 @@ public final class CbAdvJson {
 
     // ------------------------------------------------------------------ MinMaxBounds
 
-    /** MinMaxBounds.serializeToJson(): any -> JsonNull, an exact value -> the number, else {min, max} */
+    /**
+     * MinMaxBounds.serializeToJson(): any -> JsonNull, an exact value -> the number, else {min, max}.
+     * A 1.20.1 subclass (the MinMaxBounds facade) answers with its own method, as 1.20.1's call did.
+     */
     public static JsonElement method_9036(net.minecraft.class_2096<?> self) {
+        if (self instanceof top.dext.centurybridge.facade.v1_20_2.class_2096<?> own) {
+            return own.method_9036();
+        }
         if (self.method_9041()) {
             return JsonNull.INSTANCE;
         }
@@ -244,23 +295,72 @@ public final class CbAdvJson {
         return o;
     }
 
-    /** MinMaxBounds.getMin(): the bound, null when absent */
+    /** MinMaxBounds.getMin(): the bound, null when absent (a 1.20.1 subclass answers itself) */
     public static Number method_9038(net.minecraft.class_2096<?> self) {
+        if (self instanceof top.dext.centurybridge.facade.v1_20_2.class_2096<?> own) {
+            return own.method_9038();
+        }
         return self.comp_1805().orElse(null);
     }
 
     /** MinMaxBounds.getMax() */
     public static Number method_9042(net.minecraft.class_2096<?> self) {
+        if (self instanceof top.dext.centurybridge.facade.v1_20_2.class_2096<?> own) {
+            return own.method_9042();
+        }
         return self.comp_1806().orElse(null);
     }
 
-    /** WrappedMinMaxBounds.getMin() (a record component in 1.20.2) */
+    /**
+     * MinMaxBounds.fromJson(json, any, reader, factory), the protected helper 1.20.1 subclasses parsed
+     * themselves with: JSON null is {@code any}, a number is min = max, else the "min" / "max" members
+     * (each optional). {@code factory} is 1.20.2's BoundsFactory (a 1.20.1 lambda is adapted to it:
+     * lambdaAdapters), handed the bounds as Optionals.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_2096 method_9039(JsonElement json, net.minecraft.class_2096 any,
+            java.util.function.BiFunction reader, net.minecraft.class_2096.class_2097 factory) {
+        if (absent(json)) {
+            return any;
+        }
+        if (net.minecraft.class_3518.method_15275(json)) {
+            Number v = (Number) reader.apply(json, "value");
+            return factory.create(Optional.of(v), Optional.of(v));
+        }
+        JsonObject o = net.minecraft.class_3518.method_15295(json, "value");
+        Number min = o.has("min") ? (Number) reader.apply(o.get("min"), "min") : null;
+        Number max = o.has("max") ? (Number) reader.apply(o.get("max"), "max") : null;
+        return factory.create(Optional.ofNullable(min), Optional.ofNullable(max));
+    }
+
+    /** a 1.20.1 BoundsFactory lambda (create(min, max), nullable) as 1.20.2's (create(Optional, Optional)) */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_2096.class_2097 boundsFactory(CbAdvLegacy.BoundsFactory legacy) {
+        return (min, max) -> (net.minecraft.class_2096) legacy.create((Number) ((Optional) min).orElse(null),
+            (Number) ((Optional) max).orElse(null));
+    }
+
+    /**
+     * WrappedMinMaxBounds.getMin(): a 1.20.1 subclass's own override answers, as 1.20.1's call did.
+     * (1.20.1's own methods read the fields, never getMin, so an override changed only what callers of
+     * getMin saw -- the same here.)
+     */
     public static Float method_9175(net.minecraft.class_2152 self) {
-        return self.comp_1840();
+        return (Object) self instanceof CbAdvLegacy.WrappedMin own ? own.method_9175() : self.comp_1840();
     }
 
     /** WrappedMinMaxBounds.getMax() */
     public static Float method_9177(net.minecraft.class_2152 self) {
+        return (Object) self instanceof CbAdvLegacy.WrappedMax own ? own.method_9177() : self.comp_1841();
+    }
+
+    /** super.getMin() in a 1.20.1 subclass: the stored bound */
+    public static Float super_method_9175(net.minecraft.class_2152 self) {
+        return self.comp_1840();
+    }
+
+    /** super.getMax() */
+    public static Float super_method_9177(net.minecraft.class_2152 self) {
         return self.comp_1841();
     }
 

@@ -6,6 +6,7 @@
   "net/minecraft/class_2035.field_9571:Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2040.field_9581:Lnet/minecraft/class_2040;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2048.field_9599:Lnet/minecraft/class_2048;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_2050.field_9609:Lnet/minecraft/class_2050;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2073.field_9640:Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2090.field_9685:Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
   "net/minecraft/class_2102.field_9709:Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
@@ -1043,6 +1044,37 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   },
+  "net/minecraft/class_2019.<init>()V": {
+   "desc": "(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyDoubles()Lnet/minecraft/class_2096$class_2099;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyDoubles()Lnet/minecraft/class_2096$class_2099;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"
+  },
+  "net/minecraft/class_2019.<init>(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2048;Ljava/lang/Boolean;Lnet/minecraft/class_2022;)V": {
+   "desc": "(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#entity(Lnet/minecraft/class_2048;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#damageSource(Lnet/minecraft/class_2022;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
+  "net/minecraft/class_2022.<init>(Ljava/util/List;Lnet/minecraft/class_2048;Lnet/minecraft/class_2048;)V": {
+   "desc": "(Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#entity(Lnet/minecraft/class_2048;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#entity(Lnet/minecraft/class_2048;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
   "net/minecraft/class_2027$class_2029.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2102;Lnet/minecraft/class_5258;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
    "ops": [
@@ -1061,6 +1093,14 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   },
+  "net/minecraft/class_2035.<init>()V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyInts()Lnet/minecraft/class_2096$class_2100;"
+   ],
+   "basis": "gen_s1adv: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"
+  },
   "net/minecraft/class_2037$class_2039.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_4559;)V": {
    "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;)V",
    "ops": [
@@ -1070,6 +1110,17 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   },
+  "net/minecraft/class_2040.<init>(Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
   "net/minecraft/class_2044$class_2046.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2019;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
    "ops": [
@@ -1077,6 +1128,13 @@
     "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#damage(Lnet/minecraft/class_2019;)Ljava/util/Optional;"
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2050.<init>()V": {
+   "desc": "(Lnet/minecraft/class_6885;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#noEntityTypes()Lnet/minecraft/class_6885;"
+   ],
+   "basis": "gen_s1adv: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"
   },
   "net/minecraft/class_2054$class_2056.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2073;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
@@ -1117,6 +1175,34 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   },
+  "net/minecraft/class_2073.<init>()V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/util/List;Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyInts()Lnet/minecraft/class_2096$class_2100;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#anyInts()Lnet/minecraft/class_2096$class_2100;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#none()Ljava/util/List;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#none()Ljava/util/List;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;",
+    "push top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#absent()Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: 1.20.1's no-argument predicate (ANY's parts) is the record with every part absent / any"
+  },
+  "net/minecraft/class_2073.<init>(Lnet/minecraft/class_6862;Ljava/util/Set;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;[Lnet/minecraft/class_2035;[Lnet/minecraft/class_2035;Lnet/minecraft/class_1842;Lnet/minecraft/class_2105;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/util/List;Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#tag(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#items(Ljava/util/Set;)Ljava/util/Optional;",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#enchantments([Lnet/minecraft/class_2035;)Ljava/util/List;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#enchantments([Lnet/minecraft/class_2035;)Ljava/util/List;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#potion(Lnet/minecraft/class_1842;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#nbt(Lnet/minecraft/class_2105;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
   "net/minecraft/class_2076$class_2078.<init>(Lnet/minecraft/class_5258;[Lnet/minecraft/class_5258;Lnet/minecraft/class_2096$class_2100;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/List;Lnet/minecraft/class_2096$class_2100;)V",
    "ops": [
@@ -1151,6 +1237,30 @@
     "keep"
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_2090.<init>(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;Ljava/lang/Boolean;Lnet/minecraft/class_4552;Lnet/minecraft/class_4550;Lnet/minecraft/class_4551;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0,1,2 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#position(Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;Lnet/minecraft/class_2096$class_2099;)Ljava/util/Optional;",
+    "conv:3 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#key(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "conv:4 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#key(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "conv:5 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#key(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+    "conv:6 top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv:7 top/dext/centurybridge/rt/v1_20_2/CbAdvAny#light(Lnet/minecraft/class_4552;)Ljava/util/Optional;",
+    "conv:8 top/dext/centurybridge/rt/v1_20_2/CbAdvAny#block(Lnet/minecraft/class_4550;)Ljava/util/Optional;",
+    "conv:9 top/dext/centurybridge/rt/v1_20_2/CbAdvAny#fluid(Lnet/minecraft/class_4551;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: x/y/z bounds as the position predicate (absent when all are any), the rest positional as Optionals"
+  },
+  "net/minecraft/class_2102$class_2103.<init>(Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/lang/Boolean;Ljava/lang/Boolean;)V": {
+   "desc": "(Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#bool(Ljava/lang/Boolean;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
   },
   "net/minecraft/class_2108$class_2110.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_5258;Lnet/minecraft/class_2090;Lnet/minecraft/class_2025;)V": {
    "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
@@ -1249,6 +1359,37 @@
     "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
+  },
+  "net/minecraft/class_3735.<init>(Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;Lnet/minecraft/class_2073;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#item(Lnet/minecraft/class_2073;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
+  "net/minecraft/class_4550.<init>(Lnet/minecraft/class_6862;Ljava/util/Set;Lnet/minecraft/class_4559;Lnet/minecraft/class_2105;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#tag(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#blocks(Ljava/util/Set;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#state(Lnet/minecraft/class_4559;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#nbt(Lnet/minecraft/class_2105;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
+  },
+  "net/minecraft/class_4551.<init>(Lnet/minecraft/class_6862;Lnet/minecraft/class_3611;Lnet/minecraft/class_4559;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#tag(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#fluid(Lnet/minecraft/class_3611;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvAny#state(Lnet/minecraft/class_4559;)Ljava/util/Optional;"
+   ],
+   "basis": "gen_s1adv: positional, nullable or ANY parts as absent Optionals, sets as HolderSets, arrays as Lists"
   },
   "net/minecraft/class_4708$class_4709.<init>(Lnet/minecraft/class_5258;Lnet/minecraft/class_2248;Lnet/minecraft/class_2073;Lnet/minecraft/class_2096$class_2100;)V": {
    "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2248;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;)V",

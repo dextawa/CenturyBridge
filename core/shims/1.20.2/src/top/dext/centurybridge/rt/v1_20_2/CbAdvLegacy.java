@@ -81,6 +81,26 @@ public final class CbAdvLegacy {
         com.google.gson.JsonElement method_8927();
     }
 
+    /** WrappedMinMaxBounds.getMin(), a 1.20.1 method a subclass may override */
+    public interface WrappedMin {
+        Float method_9175();
+    }
+
+    /** WrappedMinMaxBounds.getMax() */
+    public interface WrappedMax {
+        Float method_9177();
+    }
+
+    /** MobEffectsPredicate.and(effect) */
+    public interface EffectsAnd {
+        net.minecraft.class_2102 method_9065(net.minecraft.class_1291 effect);
+    }
+
+    /** MobEffectsPredicate.and(effect, instance) */
+    public interface EffectsAndInstance {
+        net.minecraft.class_2102 method_35290(net.minecraft.class_1291 effect, net.minecraft.class_2102.class_2103 instance);
+    }
+
     /** MinMaxBounds.BoundsFactory.create(min, max), 1.20.1's nullable shape (1.20.2: Optionals) */
     public interface BoundsFactory {
         net.minecraft.class_2096<?> create(Number min, Number max);
