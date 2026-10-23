@@ -164,6 +164,26 @@ public final class CbEntityMisc {
         return superIsAlliedTo((class_1297) entity, other);
     }
 
+    // ------------------------------------------------------------------------------------------ canAttack
+
+    /** a mod class's own 1.21.1 canAttack(target, conditions) (adapter hook) */
+    public interface LegacyCanAttack {
+        boolean method_18391(class_1309 target, net.minecraft.class_4051 conditions);
+    }
+
+    /** 1.21.1 LivingEntity.canAttack(target, conditions), called: the override, else conditions.test(this, target) */
+    public static boolean canAttack(class_1309 entity, class_1309 target, net.minecraft.class_4051 conditions) {
+        if (entity instanceof LegacyCanAttack legacy) {
+            return legacy.method_18391(target, conditions);
+        }
+        return superCanAttack(entity, target, conditions);
+    }
+
+    /** 1.21.1 LivingEntity's body: conditions.test(this, target), 1.21.1's test on any level (CbEntityTargeting) */
+    public static boolean superCanAttack(class_1309 entity, class_1309 target, net.minecraft.class_4051 conditions) {
+        return CbEntityTargeting.test(conditions, entity, target);
+    }
+
     // ------------------------------------------------------------------------------------------ fields
 
     public static boolean getWasOnFire(class_1297 entity) {

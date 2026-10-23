@@ -15,6 +15,14 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbEntityTake;
 @Mixin(class_1309.class)
 public abstract class CbEntityTakeMixin {
 
+    @Inject(method = "method_63623", at = @At("HEAD"), cancellable = true)
+    private void cb$bodyArmor(class_1799 stack, net.minecraft.class_1304 slot, CallbackInfoReturnable<Boolean> cir) {
+        Boolean r = CbEntityTake.bodySlot((class_1309) (Object) this, stack, slot);
+        if (r != null) {
+            cir.setReturnValue(r);
+        }
+    }
+
     @Inject(method = "method_63625", at = @At("HEAD"), cancellable = true)
     private void cb$canTakeItem(class_1799 stack, CallbackInfoReturnable<Boolean> cir) {
         Boolean r = CbEntityTake.dispenserEquip((class_1309) (Object) this, stack);

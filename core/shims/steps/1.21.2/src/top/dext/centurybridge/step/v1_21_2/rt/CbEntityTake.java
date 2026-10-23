@@ -117,6 +117,51 @@ public final class CbEntityTake {
         return entity.method_5805() && !entity.method_7325() && legacy.method_18397(stack);
     }
 
+    // ------------------------------------------------------------------------------------------ body armor
+
+    /** a mod Mob class's own 1.21.1 isBodyArmorItem (adapter hook) */
+    public interface LegacyBodyArmor {
+        boolean method_6773(class_1799 stack);
+    }
+
+    /**
+     * 1.21.1 Mob.isBodyArmorItem(stack), called: the mob class's own override, else 1.21.1's body of the vanilla class
+     * (Mob false; Llama: a wool carpet; Horse: equestrian animal armor -- on 1.21.2 the armor's equippable component
+     * names the body slot and the horse, which isEquippableInSlot(stack, BODY) answers).
+     */
+    public static boolean isBodyArmorItem(class_1308 mob, class_1799 stack) {
+        if (mob instanceof LegacyBodyArmor legacy) {
+            return legacy.method_6773(stack);
+        }
+        return superIsBodyArmorItem(mob, stack);
+    }
+
+    public static boolean superIsBodyArmorItem(class_1308 mob, class_1799 stack) {
+        if (mob instanceof net.minecraft.class_1501) {
+            return stack.method_31573(net.minecraft.class_3489.field_15542);
+        }
+        if (mob instanceof net.minecraft.class_1498 horse) {
+            return horse.method_63623(stack, class_1304.field_48824);
+        }
+        return false;
+    }
+
+    public static boolean superIsBodyArmorItem(net.minecraft.class_1501 mob, class_1799 stack) {
+        return superIsBodyArmorItem((class_1308) mob, stack);
+    }
+
+    public static boolean superIsBodyArmorItem(net.minecraft.class_1498 mob, class_1799 stack) {
+        return superIsBodyArmorItem((class_1308) mob, stack);
+    }
+
+    /** from the mixin on isEquippableInSlot: the body slot answered by a mod class's own 1.21.1 isBodyArmorItem */
+    public static Boolean bodySlot(class_1309 entity, class_1799 stack, class_1304 slot) {
+        if (slot == class_1304.field_48824 && entity instanceof LegacyBodyArmor legacy) {
+            return legacy.method_6773(stack);
+        }
+        return null;
+    }
+
     private CbEntityTake() {
     }
 }
