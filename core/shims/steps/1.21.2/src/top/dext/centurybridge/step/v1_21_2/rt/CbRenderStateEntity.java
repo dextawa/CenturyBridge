@@ -29,6 +29,18 @@ public interface CbRenderStateEntity {
 
     void cb$capture(net.minecraft.class_1297 entity, float partialTick);
 
+    /** the entity's tickCount at the latest extraction */
+    int cb$tick();
+
+    /**
+     * Whether this state holds an extraction of the entity as it is now: same entity, same tick, same partial
+     * tick -- the inputs of everything extractRenderState copies, so extracting again would give the same state.
+     */
+    static boolean holds(Object state, net.minecraft.class_1297 entity, float partialTick) {
+        return state instanceof CbRenderStateEntity s && entity != null && s.cb$entity() == entity
+            && s.cb$tick() == entity.field_6012 && s.cb$partialTick() == partialTick;
+    }
+
     /** the entity of a state, null for a state no extraction filled */
     static net.minecraft.class_1297 entityOf(Object state) {
         return state instanceof CbRenderStateEntity s ? s.cb$entity() : null;

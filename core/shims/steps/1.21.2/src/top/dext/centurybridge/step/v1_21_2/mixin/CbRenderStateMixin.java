@@ -15,6 +15,9 @@ public abstract class CbRenderStateMixin implements CbRenderStateEntity {
     @Unique
     private float cb$partialTick = 1.0F;
 
+    @Unique
+    private int cb$tick;
+
     @Override
     public net.minecraft.class_1297 cb$entity() {
         WeakReference<net.minecraft.class_1297> r = this.cb$entity;
@@ -33,5 +36,11 @@ public abstract class CbRenderStateMixin implements CbRenderStateEntity {
             this.cb$entity = entity == null ? null : new WeakReference<>(entity);
         }
         this.cb$partialTick = partialTick;
+        this.cb$tick = entity == null ? 0 : entity.field_6012;
+    }
+
+    @Override
+    public int cb$tick() {
+        return this.cb$tick;
     }
 }

@@ -96,7 +96,8 @@ public final class CbRenderModels {
             if (self instanceof net.minecraft.class_583<?> model) {
                 CbRenderModelFields.legacy(model, living, pt);
             }
-            legacy.animate(e, living(living, pt, state));
+            // the bob is the renderer's getBob, as 1.21.1's LivingEntityRenderer.render asked it (CbRenderLiving.anim)
+            legacy.animate(e, CbRenderLiving.anim(self, e, pt, state));
         } else {
             // a renderer of a non-living entity posed its model itself, with zeros (MinecartRenderer, LeashKnotRenderer:
             // setupAnim(entity, 0, 0, 0, 0, 0); BoatRenderer (entity, partialTick, 0, -0.1, 0, 0)); a mod's own renderer
