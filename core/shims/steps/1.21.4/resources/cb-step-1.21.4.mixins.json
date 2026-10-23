@@ -20,6 +20,7 @@
     "CbRestItemStateMixin",
     "CbRestKillScoreMixin",
     "CbRestLeashDataInvoker",
+    "CbRestLevelInvoker",
     "CbRestServerVehicleMixin",
     "CbRestStackAccess",
     "CbRestTrialDataInvoker",

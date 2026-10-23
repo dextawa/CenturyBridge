@@ -822,6 +822,21 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#ids(Ljava/util/Map;)Ljava/util/Map;",
    "basis": "generic drift: TrimMaterial.overrideArmorMaterials is keyed by asset key in 1.21.4, by model id in 1.21.3; converted in place (adaptive)"
+  },
+  "net/minecraft/class_1937.method_8466(Lnet/minecraft/class_2394;ZDDDDDD)V": {
+   "desc": "(Lnet/minecraft/class_2394;ZZDDDDDD)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#notAlwaysShown()Z",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "1.21.4 added alwaysShow after force; 1.21.3's Level.addParticle(options, force, ..) is the one with alwaysShow false (ClientLevel passed false on to LevelRenderer, CbRestPackets.notAlwaysShown)"
   }
  },
  "overrideHooks": [
@@ -939,6 +954,24 @@
    "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash$LegacyDrop",
    "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash.removeLeash(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestLeash$LegacyDrop;)V",
    "basis": "1.21.4's removeLeash() is 1.21.3's dropLeash(true, false) (Leashable's static dropLeash(entity, true, false))"
+  },
+  {
+   "old": "method_8466(Lnet/minecraft/class_2394;ZDDDDDD)V",
+   "new": "method_8466(Lnet/minecraft/class_2394;ZZDDDDDD)V",
+   "args": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "onlyUnder": "net/minecraft/class_1937",
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.4 added alwaysShow (index 2): the old override gets every parameter it had, its super call passes on what vanilla passed"
   }
  ],
  "frameDefaults": {
@@ -957,6 +990,9 @@
   },
   "method_8015(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1299;": {
    "0": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#builtInRegistries()Lnet/minecraft/class_7225$class_7874;"
+  },
+  "method_8466(Lnet/minecraft/class_2394;ZDDDDDD)V": {
+   "2": "zero: 1.21.3's addParticle had no alwaysShow and passed false in its place (ClientLevel -> LevelRenderer.addParticle(options, force, false, ..))"
   }
  },
  "classRenames": {
@@ -1033,6 +1069,23 @@
   "net/minecraft/class_10191.field_54141:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
   "net/minecraft/class_10191.field_54142:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
   "net/minecraft/class_10191.field_54144:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
-  "net/minecraft/class_10191.field_54143:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds"
- }
+  "net/minecraft/class_10191.field_54143:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_3481.field_20338:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
+  "net/minecraft/class_3489.field_20343:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
+  "net/minecraft/class_3489.field_20344:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
+  "net/minecraft/class_3489.field_41892:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
+  "net/minecraft/class_1723.field_21668:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
+  "net/minecraft/class_2609.field_52634:I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
+  "net/minecraft/class_3230.field_19347:Lnet/minecraft/class_3230;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
+  "net/minecraft/class_7701.field_54592:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants",
+  "net/minecraft/class_2464.field_11456:Lnet/minecraft/class_2464;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestConstants"
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_1937",
+   "method": "method_65097()Ljava/util/Collection;",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLevel.dragonParts(Lnet/minecraft/class_1937;)Ljava/util/Collection;",
+   "basis": "Level.dragonParts() is abstract since 1.21.4: a 1.21.3 level subclass answers the parts of the ender dragons it holds (CbRestLevel)"
+  }
+ ]
 }
