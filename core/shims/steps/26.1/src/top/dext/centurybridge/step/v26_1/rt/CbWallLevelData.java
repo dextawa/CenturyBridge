@@ -7,10 +7,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.clock.WorldClocks;
 import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.level.levelgen.WorldOptions;
 import net.minecraft.world.level.saveddata.WanderingTraderData;
 import net.minecraft.world.level.saveddata.WeatherData;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
+import net.minecraft.world.level.storage.WorldData;
 import net.minecraft.world.level.timers.TimerQueue;
 
 /**
@@ -81,6 +83,21 @@ public final class CbWallLevelData {
             return CbWallLevelDataClient.getDayTime(data);
         }
         return server(data).overworld().getOverworldClockTime();
+    }
+
+    // ---- WorldData ----
+
+    /**
+     * 1.21.11 WorldData.worldGenOptions() (seed, structures, bonus chest): 26.1 keeps them in the server's
+     * WorldGenSettings saved data. Answered for the running server's own world data; 1.21.11's primary
+     * level data carried them from before a server existed (world creation), which 26.1's no longer does.
+     */
+    public static WorldOptions worldGenOptions(WorldData data) {
+        MinecraftServer s = SERVER;
+        if (s == null || s.getWorldData() != data) {
+            throw new IllegalStateException(data + ": 1.21.11 world data of no running server has no world generation options in 26.1");
+        }
+        return s.getWorldGenSettings().options();
     }
 
     // ---- ServerLevelData ----

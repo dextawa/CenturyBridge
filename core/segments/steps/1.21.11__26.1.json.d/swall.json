@@ -44,7 +44,8 @@
   "net/minecraft/class_5268.method_18038()I": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getWanderingTraderSpawnDelay",
   "net/minecraft/class_5268.method_18041(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setWanderingTraderSpawnDelay",
   "net/minecraft/class_5268.method_18039()I": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getWanderingTraderSpawnChance",
-  "net/minecraft/class_5268.method_18042(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setWanderingTraderSpawnChance"
+  "net/minecraft/class_5268.method_18042(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setWanderingTraderSpawnChance",
+  "net/minecraft/class_5219.method_28057()Lnet/minecraft/class_5285;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#worldGenOptions"
  },
  "overrideHooks": [
   {
