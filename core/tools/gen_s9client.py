@@ -405,6 +405,106 @@ def block_model(frag):
         "SpecialModels is gone in 1.21.4: builtin/generated is the ItemModelGenerator model, builtin/entity has none (facade)")
     frag.setdefault("facadeGaps", {})["net/minecraft/class_10101.method_62665(Ljava/lang/String;Lnet/minecraft/class_793$class_4751;)Lnet/minecraft/class_1100;"] = (
         "private: SpecialModels' own factory of its two markers (an empty named BlockModel); the facade makes them in CbModelSpecial")
+    model_loading(frag)
+
+
+def model_loading(frag):
+    """1.21.3's model loading pipeline (ModelDiscovery, BlockStateModelLoader, ModelBakery, TextureGetter, ItemModel,
+    ItemModelGenerator.generateBlockModel, ModelResourceLocation.inventory) on 1.21.4's (CbModelLoading)."""
+    L = RT + "/CbModelLoading"
+    B = RT + "/CbModelBaking"
+    MRL = "net/minecraft/class_1091"
+    frag.setdefault("staticRedirects", {})[MRL + ".method_61078(Lnet/minecraft/class_2960;)L" + MRL + ";"] = L
+    fg = frag.setdefault("fieldGetters", {})
+    fg[MRL + ".field_52277:Ljava/lang/String;"] = L
+    fg["net/minecraft/class_10097.field_54194:Ljava/lang/String;"] = L
+    covers = set(frag.get("covers", []))
+    covers.add("net/minecraft/class_10097.method_62632(Lnet/minecraft/class_9824$class_10095;)V")
+    covers.add("net/minecraft/class_10097.method_62637()Ljava/util/Map;")
+    covers.add("net/minecraft/class_9824.method_62627(Lnet/minecraft/class_2960;Lnet/minecraft/class_2689;Ljava/util/List;)Lnet/minecraft/class_9824$class_10095;")
+    covers.add("net/minecraft/class_1088.method_4734()Ljava/util/Map;")
+    covers.add("net/minecraft/class_801.method_3479(Ljava/util/function/Function;Lnet/minecraft/class_793;)Lnet/minecraft/class_793;")
+    frag["covers"] = sorted(covers)
+    scr = frag.setdefault("superCtorReshapes", {})
+    scr["net/minecraft/class_9824.<init>(Lnet/minecraft/class_1100;)V"] = {
+        "desc": "()V", "ops": ["drop:0"],
+        "post": L + "#cbStateLoaderConstructed(Lnet/minecraft/class_9824;Lnet/minecraft/class_1100;)V", "postArgs": [0],
+        "basis": "BlockStateModelLoader loads with a missing model it is handed per call since 1.21.4; the loader keeps 1.21.3's"}
+    scr["net/minecraft/class_9824$class_9825.<init>(Lnet/minecraft/class_2680;Lnet/minecraft/class_1100;)V"] = {
+        "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V",
+        "ops": ["keep:0", "conv:1 " + L + "#cbStateModel(Lnet/minecraft/class_1100;)Lnet/minecraft/class_9979;"],
+        "basis": "BlockStateModelLoader.LoadedModel holds an UnbakedBlockStateModel since 1.21.4 (1.21.3: an UnbakedModel); the model is wrapped, "
+                 "unwrapped again by model() (CbModelLoading)"}
+    scr["net/minecraft/class_1088.<init>(Ljava/util/Map;Ljava/util/Map;Lnet/minecraft/class_1100;)V"] = {
+        "desc": "(Lnet/minecraft/class_5599;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Lnet/minecraft/class_1100;)V",
+        "ops": ["push " + L + "#cbEntityModels()Lnet/minecraft/class_5599;", "conv:0 " + L + "#cbStateModels(Ljava/util/Map;)Ljava/util/Map;",
+                "push " + L + "#cbClientItems()Ljava/util/Map;", "keep:1", "keep:2"],
+        "basis": "ModelBakery takes the entity models, block state models and client items apart since 1.21.4; 1.21.3's top models are its block "
+                 "state models (the game's entity models; 1.21.3's bakery baked no item definitions)"}
+    ir = frag.setdefault("instanceRedirects", {})
+    ir["net/minecraft/class_9824$class_9825.comp_2871()Lnet/minecraft/class_1100;"] = L
+    ir["net/minecraft/class_1088.method_45876(Lnet/minecraft/class_1088$class_9826;)V"] = L + "#bakeModels"
+    TG = "net/minecraft/class_1088$class_9826"
+    ir[TG + ".get(L" + MRL + ";Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;"] = L + "#get"
+    orr = frag.setdefault("overrideRenames", [])
+    orr[:] = [r for r in orr if r.get("family") != "model-loading"]
+    orr.append({"old": "method_45876(L" + TG + ";)V", "new": "cb$bakeModels", "onlyUnder": "net/minecraft/class_1088",
+                "adapter": L + "$CbLegacyBakery", "superCalls": "rename", "family": "model-loading",
+                "basis": "ModelBakery.bakeModels answers a BakingResult since 1.21.4; 1.21.3's void bakeModels kept the baked top models, "
+                         "every bakery has it under this name (CbModelBakeryMixin), which a mod's calls reach"})
+    hooks = frag.setdefault("overrideHooks", [])
+    hooks[:] = [h for h in hooks if h.get("family") != "model-loading"]
+    hooks.append({
+        "old": "get(L" + MRL + ";Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+        "new": "method_65739(Lnet/minecraft/class_10525;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+        "bridge": L + ".bridgeGet(L" + L + "$CbLegacyTextureGetter;Lnet/minecraft/class_10525;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+        "adapter": L + "$CbLegacyTextureGetter", "onlyUnder": TG, "family": "model-loading",
+        "basis": "ModelBakery.TextureGetter.get takes a model debug name since 1.21.4 (the model location's string, read back into it)"})
+    OLD_BAKE = "method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;"
+    hooks.append({
+        "old": OLD_BAKE, "new": "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+        "bridge": L + ".bakeState(L" + B + "$CbLegacyUnbakedModel;Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+        "adapter": B + "$CbLegacyUnbakedModel", "onlyUnder": "net/minecraft/class_9979", "family": "model-loading",
+        "basis": "UnbakedBlockStateModel was an UnbakedModel in 1.21.3; 1.21.4 bakes it with bake(baker): its 1.21.3 bake, with the baker's "
+                 "sprites and rotation X0_Y0 (1.21.3's bakery baked every top model so)"})
+    fills = frag.setdefault("abstractFills", [])
+    fills[:] = [f for f in fills if f.get("family") != "model-loading"]
+    fills.append({"under": TG, "method": "method_65740(Lnet/minecraft/class_10525;Ljava/lang/String;)Lnet/minecraft/class_1058;",
+                  "call": L + ".missingReference(L" + TG + ";Lnet/minecraft/class_10525;Ljava/lang/String;)Lnet/minecraft/class_1058;",
+                  "family": "model-loading",
+                  "basis": "TextureGetter.reportMissingReference is new in 1.21.4; 1.21.3 answered a missing reference with the missing material"})
+    frag.setdefault("lambdaAdapters", {})[TG + ".get(L" + MRL + ";Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;"] = {
+        "iface": L + "$CbLegacyTextureGetter",
+        "adapt": L + "#adaptTextureGetter(L" + L + "$CbLegacyTextureGetter;)L" + TG + ";"}
+    frag.setdefault("classRenames", {})["net/minecraft/class_10202"] = FAC + "ItemModel"
+    frag.setdefault("classRenameBasis", {})["net/minecraft/class_10202"] = (
+        "ItemModel (an item's unbaked model naming its model by id) is gone in 1.21.4; the facade is 1.21.3's class as a 1.21.4 UnbakedModel")
+    final_records(frag)
+
+
+def final_records(frag):
+    """ItemTransforms and Variant, final records since 1.21.4, extended by a 1.21.3 mod (the layer's access widener makes them
+    extendable; a record's components are its accessors, overridable as 1.21.3's getters were)."""
+    T = RT + "/CbModelTransforms"
+    IT = "net/minecraft/class_809"
+    scr = frag.setdefault("superCtorReshapes", {})
+    scr[IT + ".<init>(L" + IT + ";)V"] = {
+        "desc": "(" + "Lnet/minecraft/class_804;" * 8 + ")V",
+        "ops": ["conv:0 %s#%s(L%s;)Lnet/minecraft/class_804;" % (T, n, IT)
+                for n in ["cbThirdLeft", "cbThirdRight", "cbFirstLeft", "cbFirstRight", "cbHead", "cbGui", "cbGround", "cbFixed"]],
+        "basis": "ItemTransforms is a record since 1.21.4: a subclass's super(other) is the canonical constructor with the other's eight transforms"}
+    orr = frag.setdefault("overrideRenames", [])
+    orr[:] = [r for r in orr if r.get("family") != "final-records"]
+    orr.append({"old": "method_3501(Lnet/minecraft/class_811;)Z", "new": "cb$hasTransform", "onlyUnder": IT,
+                "adapter": T + "$CbLegacyHasTransform", "family": "final-records",
+                "basis": "ItemTransforms.hasTransform is gone in 1.21.4; a subclass's answer is asked where 1.21.3 asked it (BlockModel's transforms, "
+                         "a mod's calls: CbModelTransforms)"})
+    frag.setdefault("superRedirects", {})[IT + ".method_3501(Lnet/minecraft/class_811;)Z"] = T + "#superHasTransform"
+    V = "net/minecraft/class_813"
+    for old, new in [("method_3510()Lnet/minecraft/class_2960;", "comp_3379"), ("method_3511()I", "comp_3382")]:
+        orr.append({"old": old, "new": new, "onlyUnder": V, "superCalls": "rename", "family": "final-records",
+                    "basis": "Variant is a record since 1.21.4: getModelLocation / getWeight are its modelLocation / weight accessors, "
+                             "which 1.21.4 reads where 1.21.3 asked the getters"})
 
 
 if __name__ == "__main__":

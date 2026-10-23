@@ -49,3 +49,12 @@ mutable field net/minecraft/class_10338 field_54862 Lnet/minecraft/class_7094;
 mutable field net/minecraft/class_10338 field_54863 Lnet/minecraft/class_7094;
 mutable field net/minecraft/class_793 field_4247 Lnet/minecraft/class_2960;
 # ---- END GENERATED (s9client) ----
+# s9client: BlockStateModelLoader.LoadedBlockModelDefinition was a public record in 1.21.3, package-private in 1.21.4 (same components)
+accessible class net/minecraft/class_9824$class_10094
+# s9client: ItemTransforms and Variant are final records since 1.21.4; a 1.21.3 mod may extend them (Variant overriding
+# getModelLocation / getWeight -- its accessors now -- and Object's equals / hashCode / toString, which a record makes final)
+extendable class net/minecraft/class_809
+extendable class net/minecraft/class_813
+extendable method net/minecraft/class_813 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_813 hashCode ()I
+extendable method net/minecraft/class_813 toString ()Ljava/lang/String;

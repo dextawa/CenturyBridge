@@ -170,9 +170,45 @@
    "superCalls": "rename",
    "family": "block-model",
    "basis": "1.21.4 declares a package-private getElements() answering the model's own elements; 1.21.3's public one fell back to the parent's and was asked by bake, which asks it again under this name (CbModelBlockModel)"
+  },
+  {
+   "old": "method_45876(Lnet/minecraft/class_1088$class_9826;)V",
+   "new": "cb$bakeModels",
+   "onlyUnder": "net/minecraft/class_1088",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyBakery",
+   "superCalls": "rename",
+   "family": "model-loading",
+   "basis": "ModelBakery.bakeModels answers a BakingResult since 1.21.4; 1.21.3's void bakeModels kept the baked top models, every bakery has it under this name (CbModelBakeryMixin), which a mod's calls reach"
+  },
+  {
+   "old": "method_3501(Lnet/minecraft/class_811;)Z",
+   "new": "cb$hasTransform",
+   "onlyUnder": "net/minecraft/class_809",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms$CbLegacyHasTransform",
+   "family": "final-records",
+   "basis": "ItemTransforms.hasTransform is gone in 1.21.4; a subclass's answer is asked where 1.21.3 asked it (BlockModel's transforms, a mod's calls: CbModelTransforms)"
+  },
+  {
+   "old": "method_3510()Lnet/minecraft/class_2960;",
+   "new": "comp_3379",
+   "onlyUnder": "net/minecraft/class_813",
+   "superCalls": "rename",
+   "family": "final-records",
+   "basis": "Variant is a record since 1.21.4: getModelLocation / getWeight are its modelLocation / weight accessors, which 1.21.4 reads where 1.21.3 asked the getters"
+  },
+  {
+   "old": "method_3511()I",
+   "new": "comp_3382",
+   "onlyUnder": "net/minecraft/class_813",
+   "superCalls": "rename",
+   "family": "final-records",
+   "basis": "Variant is a record since 1.21.4: getModelLocation / getWeight are its modelLocation / weight accessors, which 1.21.4 reads where 1.21.3 asked the getters"
   }
  ],
  "covers": [
+  "net/minecraft/class_10097.method_62632(Lnet/minecraft/class_9824$class_10095;)V",
+  "net/minecraft/class_10097.method_62637()Ljava/util/Map;",
+  "net/minecraft/class_1088.method_4734()Ljava/util/Map;",
   "net/minecraft/class_339.method_25361(DD)Z",
   "net/minecraft/class_350.method_25307(D)V",
   "net/minecraft/class_350.method_25310(II)Z",
@@ -204,11 +240,13 @@
   "net/minecraft/class_793.method_3446(Ljava/util/function/Function;Lnet/minecraft/class_3665;Z)Lnet/minecraft/class_1087;",
   "net/minecraft/class_793.method_35789()Z",
   "net/minecraft/class_793.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;",
+  "net/minecraft/class_801.method_3479(Ljava/util/function/Function;Lnet/minecraft/class_793;)Lnet/minecraft/class_793;",
   "net/minecraft/class_918.method_14491(Lnet/minecraft/class_3300;)V",
   "net/minecraft/class_918.method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V",
   "net/minecraft/class_918.method_4019(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;",
   "net/minecraft/class_918.method_62475(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_811;)Lnet/minecraft/class_1087;",
-  "net/minecraft/class_918.method_62477(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V"
+  "net/minecraft/class_918.method_62477(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V",
+  "net/minecraft/class_9824.method_62627(Lnet/minecraft/class_2960;Lnet/minecraft/class_2689;Ljava/util/List;)Lnet/minecraft/class_9824$class_10095;"
  ],
  "overrideHooks": [
   {
@@ -247,6 +285,24 @@
    "onlyUnder": "net/minecraft/class_1100",
    "family": "model-baking",
    "basis": "UnbakedModel.bake(baker, spriteGetter, state) is bake(textureSlots, baker, state, ao, blockLight, transforms) since 1.21.4, the sprites carried by the baker; a 1.21.3 model's own bake is reached with the baker's sprites as its sprite getter (1.21.3's model bakery handed every model its texture getter for the model being baked)"
+  },
+  {
+   "old": "get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+   "new": "method_65739(Lnet/minecraft/class_10525;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading.bridgeGet(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter;Lnet/minecraft/class_10525;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter",
+   "onlyUnder": "net/minecraft/class_1088$class_9826",
+   "family": "model-loading",
+   "basis": "ModelBakery.TextureGetter.get takes a model debug name since 1.21.4 (the model location's string, read back into it)"
+  },
+  {
+   "old": "method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;",
+   "new": "method_65542(Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading.bakeState(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyUnbakedModel;Lnet/minecraft/class_7775;)Lnet/minecraft/class_1087;",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyUnbakedModel",
+   "onlyUnder": "net/minecraft/class_9979",
+   "family": "model-loading",
+   "basis": "UnbakedBlockStateModel was an UnbakedModel in 1.21.3; 1.21.4 bakes it with bake(baker): its 1.21.3 bake, with the baker's sprites and rotation X0_Y0 (1.21.3's bakery baked every top model so)"
   }
  ],
  "fieldGetters": {
@@ -256,7 +312,9 @@
   "net/minecraft/class_918.field_40532:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender",
   "net/minecraft/class_918.field_40533:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender",
   "net/minecraft/class_793.field_54858:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
-  "net/minecraft/class_793.field_32792:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel"
+  "net/minecraft/class_793.field_32792:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_1091.field_52277:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
+  "net/minecraft/class_10097.field_54194:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -284,7 +342,8 @@
   "net/minecraft/class_1090": "top/dext/centurybridge/step/v1_21_4/facade/BuiltInModel",
   "net/minecraft/class_793$class_4751": "net/minecraft/class_1100$class_4751",
   "net/minecraft/class_1100$class_10103": "net/minecraft/class_10526$class_10103",
-  "net/minecraft/class_10101": "top/dext/centurybridge/step/v1_21_4/facade/SpecialModels"
+  "net/minecraft/class_10101": "top/dext/centurybridge/step/v1_21_4/facade/SpecialModels",
+  "net/minecraft/class_10202": "top/dext/centurybridge/step/v1_21_4/facade/ItemModel"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -292,7 +351,8 @@
   "net/minecraft/class_5272": "ItemProperties, ClampedItemPropertyFunction, CompassItemPropertyFunction are gone in 1.21.4",
   "net/minecraft/class_793$class_4751": "BlockModel.GuiLight moved to UnbakedModel.GuiLight in 1.21.4 (same enum: FRONT / SIDE, getByName, lightLikeBlock)",
   "net/minecraft/class_1100$class_10103": "UnbakedModel.Resolver moved to ResolvableModel.Resolver in 1.21.4 (same resolve(ResourceLocation) -> UnbakedModel); UnbakedModel extends ResolvableModel, whose resolveDependencies is 1.21.3's",
-  "net/minecraft/class_10101": "SpecialModels is gone in 1.21.4: builtin/generated is the ItemModelGenerator model, builtin/entity has none (facade)"
+  "net/minecraft/class_10101": "SpecialModels is gone in 1.21.4: builtin/generated is the ItemModelGenerator model, builtin/entity has none (facade)",
+  "net/minecraft/class_10202": "ItemModel (an item's unbaked model naming its model by id) is gone in 1.21.4; the facade is 1.21.3's class as a 1.21.4 UnbakedModel"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -461,6 +521,50 @@
     "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#builderTransforms(Lnet/minecraft/class_793;)Lnet/minecraft/class_809;"
    ],
    "basis": "SimpleBakedModel.Builder(model, guiLight3d) read the model's hasAmbientOcclusion, getGuiLight().lightLikeBlock and getTransforms (1.21.3 bodies); 1.21.4 takes the values"
+  },
+  "net/minecraft/class_9824.<init>(Lnet/minecraft/class_1100;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop:0"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbStateLoaderConstructed(Lnet/minecraft/class_9824;Lnet/minecraft/class_1100;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "BlockStateModelLoader loads with a missing model it is handed per call since 1.21.4; the loader keeps 1.21.3's"
+  },
+  "net/minecraft/class_9824$class_9825.<init>(Lnet/minecraft/class_2680;Lnet/minecraft/class_1100;)V": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_9979;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbStateModel(Lnet/minecraft/class_1100;)Lnet/minecraft/class_9979;"
+   ],
+   "basis": "BlockStateModelLoader.LoadedModel holds an UnbakedBlockStateModel since 1.21.4 (1.21.3: an UnbakedModel); the model is wrapped, unwrapped again by model() (CbModelLoading)"
+  },
+  "net/minecraft/class_1088.<init>(Ljava/util/Map;Ljava/util/Map;Lnet/minecraft/class_1100;)V": {
+   "desc": "(Lnet/minecraft/class_5599;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Lnet/minecraft/class_1100;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbEntityModels()Lnet/minecraft/class_5599;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbStateModels(Ljava/util/Map;)Ljava/util/Map;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#cbClientItems()Ljava/util/Map;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "ModelBakery takes the entity models, block state models and client items apart since 1.21.4; 1.21.3's top models are its block state models (the game's entity models; 1.21.3's bakery baked no item definitions)"
+  },
+  "net/minecraft/class_809.<init>(Lnet/minecraft/class_809;)V": {
+   "desc": "(Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;Lnet/minecraft/class_804;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbThirdLeft(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbThirdRight(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbFirstLeft(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbFirstRight(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbHead(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbGui(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbGround(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;",
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbFixed(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;"
+   ],
+   "basis": "ItemTransforms is a record since 1.21.4: a subclass's super(other) is the canonical constructor with the other's eight transforms"
   }
  },
  "superRenames": {
@@ -495,7 +599,8 @@
   }
  },
  "staticRedirects": {
-  "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105"
+  "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105",
+  "net/minecraft/class_1091.method_61078(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading"
  },
  "resourceTypes": [
   "centurybridge:legacy_builtin",
@@ -530,11 +635,15 @@
   "net/minecraft/class_796.method_3455(Lorg/joml/Vector3f;Lnet/minecraft/class_4590;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelFaceBakery",
   "net/minecraft/class_1100.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking",
   "net/minecraft/class_793.method_3433()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
-  "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel"
+  "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
+  "net/minecraft/class_9824$class_9825.comp_2871()Lnet/minecraft/class_1100;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
+  "net/minecraft/class_1088.method_45876(Lnet/minecraft/class_1088$class_9826;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#bakeModels",
+  "net/minecraft/class_1088$class_9826.get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#get"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
-  "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#superGetGuiLight"
+  "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#superGetGuiLight",
+  "net/minecraft/class_809.method_3501(Lnet/minecraft/class_811;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#superHasTransform"
  },
  "methodRenames": {
   "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",
@@ -569,12 +678,23 @@
    "call": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking.rootName(Lnet/minecraft/class_7775;)Lnet/minecraft/class_10525;",
    "family": "model-baking",
    "basis": "ModelBaker.rootName() is new in 1.21.4, a debug name only log messages read"
+  },
+  {
+   "under": "net/minecraft/class_1088$class_9826",
+   "method": "method_65740(Lnet/minecraft/class_10525;Ljava/lang/String;)Lnet/minecraft/class_1058;",
+   "call": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading.missingReference(Lnet/minecraft/class_1088$class_9826;Lnet/minecraft/class_10525;Ljava/lang/String;)Lnet/minecraft/class_1058;",
+   "family": "model-loading",
+   "basis": "TextureGetter.reportMissingReference is new in 1.21.4; 1.21.3 answered a missing reference with the missing material"
   }
  ],
  "lambdaAdapters": {
   "net/minecraft/class_7775.method_45873(Lnet/minecraft/class_2960;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;": {
    "iface": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyModelBaker",
    "adapt": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBaking#adaptModelBaker(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelBaking$CbLegacyModelBaker;)Lnet/minecraft/class_7775;"
+  },
+  "net/minecraft/class_1088$class_9826.get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;": {
+   "iface": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter",
+   "adapt": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#adaptTextureGetter(Ltop/dext/centurybridge/step/v1_21_4/rt/CbModelLoading$CbLegacyTextureGetter;)Lnet/minecraft/class_1088$class_9826;"
   }
  },
  "instanceFieldSetters": {

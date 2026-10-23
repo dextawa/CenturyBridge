@@ -336,7 +336,7 @@ public final class CbModelBlockModel {
     private static net.minecraft.class_804 transform(net.minecraft.class_793 model, net.minecraft.class_811 context) {
         net.minecraft.class_809 own = model.method_65540();
         net.minecraft.class_1100 parent = legacy(model).cb$parent();
-        if (parent != null && (own == null || own.method_3503(context) == net.minecraft.class_804.field_4284)) {
+        if (parent != null && (own == null || !CbModelTransforms.method_3501(own, context))) {
             if (parent instanceof net.minecraft.class_793 bm) {
                 return transform(bm, context);
             }

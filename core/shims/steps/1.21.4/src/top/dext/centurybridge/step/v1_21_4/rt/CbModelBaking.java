@@ -32,7 +32,7 @@ public final class CbModelBaking {
     public static final net.minecraft.class_4730 MISSING = missingMaterial();
 
     /** an UnbakedModel with 1.21.3's bake(baker, spriteGetter, state): a mod's model, and every BlockModel (CbModelBlockModelMixin) */
-    public interface CbLegacyUnbakedModel {
+    public interface CbLegacyUnbakedModel extends net.minecraft.class_1100 {
         net.minecraft.class_1087 method_4753(net.minecraft.class_7775 baker, Function<net.minecraft.class_4730, net.minecraft.class_1058> sprites,
             net.minecraft.class_3665 state);
     }

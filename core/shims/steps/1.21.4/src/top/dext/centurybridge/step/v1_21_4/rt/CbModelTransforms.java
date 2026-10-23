@@ -52,9 +52,55 @@ public final class CbModelTransforms {
         return t.comp_3375();
     }
 
-    /** was hasTransform(context) (method_3501): the context's transform is not ItemTransform.NO_TRANSFORM */
+    /** a 1.21.3 ItemTransforms subclass overriding hasTransform (renamed onto this, overrideRenames) */
+    public interface CbLegacyHasTransform {
+        boolean cb$hasTransform(net.minecraft.class_811 context);
+    }
+
+    /** was hasTransform(context) (method_3501): a subclass's own answer, else the context's transform is not ItemTransform.NO_TRANSFORM */
     public static boolean method_3501(net.minecraft.class_809 t, net.minecraft.class_811 context) {
+        if ((Object) t instanceof CbLegacyHasTransform own) { // final at compile time, extendable at run time (access widener)
+            return own.cb$hasTransform(context);
+        }
+        return superHasTransform(t, context);
+    }
+
+    /** a subclass's super.hasTransform(context): 1.21.3's body */
+    public static boolean superHasTransform(net.minecraft.class_809 t, net.minecraft.class_811 context) {
         return t.method_3503(context) != net.minecraft.class_804.field_4284;
+    }
+
+    /** a 1.21.3 subclass's super(other): the copy constructor is the record's canonical one with the other's transforms */
+    public static net.minecraft.class_804 cbThirdLeft(net.minecraft.class_809 o) {
+        return o.comp_3368();
+    }
+
+    public static net.minecraft.class_804 cbThirdRight(net.minecraft.class_809 o) {
+        return o.comp_3369();
+    }
+
+    public static net.minecraft.class_804 cbFirstLeft(net.minecraft.class_809 o) {
+        return o.comp_3370();
+    }
+
+    public static net.minecraft.class_804 cbFirstRight(net.minecraft.class_809 o) {
+        return o.comp_3371();
+    }
+
+    public static net.minecraft.class_804 cbHead(net.minecraft.class_809 o) {
+        return o.comp_3372();
+    }
+
+    public static net.minecraft.class_804 cbGui(net.minecraft.class_809 o) {
+        return o.comp_3373();
+    }
+
+    public static net.minecraft.class_804 cbGround(net.minecraft.class_809 o) {
+        return o.comp_3374();
+    }
+
+    public static net.minecraft.class_804 cbFixed(net.minecraft.class_809 o) {
+        return o.comp_3375();
     }
 
     /** was new ItemTransforms(other): a copy of the eight transforms (the same ItemTransform objects) */
