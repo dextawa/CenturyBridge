@@ -60,9 +60,6 @@ call	net/minecraft/class_3924	method_17502	(Lnet/minecraft/class_1799;)Ljava/uti
 override	net/minecraft/class_3924	method_17502	(Lnet/minecraft/class_1799;)Ljava/util/Optional;	return	(Lnet/minecraft/class_1799;)Ljava/util/Optional<Lnet/minecraft/class_3920;>;	(Lnet/minecraft/class_1799;)Ljava/util/Optional<Lnet/minecraft/class_8786<Lnet/minecraft/class_3920;>;>;		
 call	net/minecraft/class_3971	method_17863	()Ljava/util/List;	return	()Ljava/util/List<Lnet/minecraft/class_3975;>;	()Ljava/util/List<Lnet/minecraft/class_8786<Lnet/minecraft/class_3975;>;>;		
 override	net/minecraft/class_3971	method_17863	()Ljava/util/List;	return	()Ljava/util/List<Lnet/minecraft/class_3975;>;	()Ljava/util/List<Lnet/minecraft/class_8786<Lnet/minecraft/class_3975;>;>;		
-call	net/minecraft/class_4558	method_22510	(Lnet/minecraft/class_3222;Ljava/util/function/Predicate;)V	param 1	(Lnet/minecraft/class_3222;Ljava/util/function/Predicate<TT;>;)V	(Lnet/minecraft/class_3222;Ljava/util/function/Predicate<TT;>;)V		
-call	net/minecraft/class_4558	method_792	(Lnet/minecraft/class_2985;Lnet/minecraft/class_179$class_180;)V	param 1	(Lnet/minecraft/class_2985;Lnet/minecraft/class_179$class_180<TT;>;)V	(Lnet/minecraft/class_2985;Lnet/minecraft/class_179$class_180<TT;>;)V		
-call	net/minecraft/class_4558	method_793	(Lnet/minecraft/class_2985;Lnet/minecraft/class_179$class_180;)V	param 1	(Lnet/minecraft/class_2985;Lnet/minecraft/class_179$class_180<TT;>;)V	(Lnet/minecraft/class_2985;Lnet/minecraft/class_179$class_180<TT;>;)V		
 get	net/minecraft/class_4881	field_22627	Ljava/util/List;	type	Ljava/util/List<Ljava/lang/String;>;	Ljava/util/List<Ljava/util/UUID;>;		
 put	net/minecraft/class_4881	field_22627	Ljava/util/List;	type	Ljava/util/List<Ljava/lang/String;>;	Ljava/util/List<Ljava/util/UUID;>;		
 call	net/minecraft/class_507	method_2646	(Ljava/util/List;)V	param 0	(Ljava/util/List<Lnet/minecraft/class_1860<*>;>;)V	(Ljava/util/List<Lnet/minecraft/class_8786<*>;>;)V		
