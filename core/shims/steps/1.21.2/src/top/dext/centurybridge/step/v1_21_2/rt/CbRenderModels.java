@@ -92,6 +92,10 @@ public final class CbRenderModels {
         }
         float pt = CbRenderStateEntity.partialTickOf(state);
         if (e instanceof net.minecraft.class_1309 living) {
+            // 1.21.1's LivingEntityRenderer.render set attackTime / riding / young on its model first (CbRenderModelFields)
+            if (self instanceof net.minecraft.class_583<?> model) {
+                CbRenderModelFields.legacy(model, living, pt);
+            }
             legacy.animate(e, living(living, pt, state));
         } else {
             // a renderer of a non-living entity posed its model itself, with zeros (MinecartRenderer, LeashKnotRenderer:
