@@ -884,6 +884,8 @@ def palette_and_be_types(f):
         "basis": "BlockEntityType: 1.21.1 stored the datafixer type in a field nothing read; 1.21.2's constructor "
                  "(protected again by the layer's access widener) takes the factory and blocks alone"})
     f.put("classRenames", BET + "$class_2592", FAC + "/BlockEntityTypeBuilder")
+    f.put("classRenames", "net/fabricmc/fabric/api/object/builder/v1/block/entity/FabricBlockEntityType$Builder",
+          FAC + "/FabricBlockEntityType$Builder")
 
 
 # ------------------------------------------------------------------------------------------- FlowingFluid spreading

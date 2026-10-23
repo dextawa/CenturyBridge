@@ -8,6 +8,7 @@
   "net/minecraft/class_2248$class_2249": "top/dext/centurybridge/step/v1_21_2/facade/BlockStatePairKey",
   "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings": "top/dext/centurybridge/step/v1_21_2/facade/FabricBlockSettings",
   "net/minecraft/class_2591$class_2592": "top/dext/centurybridge/step/v1_21_2/facade/BlockEntityTypeBuilder",
+  "net/fabricmc/fabric/api/object/builder/v1/block/entity/FabricBlockEntityType$Builder": "top/dext/centurybridge/step/v1_21_2/facade/FabricBlockEntityType$Builder",
   "net/minecraft/class_8574": "top/dext/centurybridge/step/v1_21_2/facade/EquipableCarvedPumpkinBlock"
  },
  "instanceOfRedirects": {
