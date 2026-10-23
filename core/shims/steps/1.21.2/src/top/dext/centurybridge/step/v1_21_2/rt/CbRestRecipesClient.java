@@ -149,6 +149,22 @@ public final class CbRestRecipesClient {
         return null;
     }
 
+    /** a display of the recipe the client's recipe book knows (the server sent it), or null */
+    public static class_10295 knownDisplay(class_8786<?> recipe) {
+        class_746 player = class_310.method_1551().field_1724;
+        if (player == null || recipe == null) {
+            return null;
+        }
+        Map<class_10298, class_10297> known = ((CbRestClientRecipeBookAccessor) player.method_3130()).cb$known();
+        for (int id : displayIds(recipe)) {
+            class_10297 entry = known.get(new class_10298(id));
+            if (entry != null) {
+                return entry.comp_3263();
+            }
+        }
+        return null;
+    }
+
     /** LocalPlayer.removeRecipeHighlight(recipe) of 1.21.1: each of the recipe's displays */
     public static void removeRecipeHighlight(class_746 player, class_8786<?> recipe) {
         for (int id : displayIds(recipe)) {

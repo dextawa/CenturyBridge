@@ -11,5 +11,6 @@ public final class CbRestClientInit implements ClientModInitializer {
     public void onInitializeClient() {
         CbRestRecipesClient.init();
         CbRestAttachmentSyncClient.init();
+        CbRestRecipeBookClient.init();
     }
 }

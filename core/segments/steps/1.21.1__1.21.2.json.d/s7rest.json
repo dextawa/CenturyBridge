@@ -31,7 +31,26 @@
   "net/fabricmc/fabric/api/entity/event/v1/FabricElytraItem": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricElytraItem",
   "net/fabricmc/fabric/api/event/registry/FabricRegistry": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricRegistry",
   "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v1_21_2/facade/fapi/FabricTagFile",
-  "net/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate": "top/dext/centurybridge/step/v1_21_2/facade/fapi/AttachmentSyncPredicate"
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentSyncPredicate": "top/dext/centurybridge/step/v1_21_2/facade/fapi/AttachmentSyncPredicate",
+  "net/minecraft/class_314": "top/dext/centurybridge/step/v1_21_2/facade/RecipeBookCategories",
+  "net/minecraft/class_516": "top/dext/centurybridge/step/v1_21_2/facade/RecipeCollection",
+  "net/minecraft/class_505": "top/dext/centurybridge/step/v1_21_2/facade/GhostRecipe",
+  "net/minecraft/class_505$class_506": "top/dext/centurybridge/step/v1_21_2/facade/GhostRecipe$GhostIngredient",
+  "net/minecraft/class_512": "top/dext/centurybridge/step/v1_21_2/facade/RecipeBookTabButton",
+  "net/minecraft/class_514": "top/dext/centurybridge/step/v1_21_2/facade/RecipeButton",
+  "net/minecraft/class_508": "top/dext/centurybridge/step/v1_21_2/facade/OverlayRecipeComponent",
+  "net/minecraft/class_508$class_509": "top/dext/centurybridge/step/v1_21_2/facade/OverlayRecipeComponent$OverlayRecipeButton",
+  "net/minecraft/class_508$class_509$class_510": "top/dext/centurybridge/step/v1_21_2/facade/OverlayRecipeComponent$OverlayRecipeButton$Pos",
+  "net/minecraft/class_508$class_511": "top/dext/centurybridge/step/v1_21_2/facade/OverlayRecipeComponent$OverlaySmeltingRecipeButton",
+  "net/minecraft/class_513": "top/dext/centurybridge/step/v1_21_2/facade/RecipeBookPage",
+  "net/minecraft/class_507": "top/dext/centurybridge/step/v1_21_2/facade/RecipeBookComponent",
+  "net/minecraft/class_517": "top/dext/centurybridge/step/v1_21_2/facade/AbstractFurnaceRecipeBookComponent",
+  "net/minecraft/class_3875": "top/dext/centurybridge/step/v1_21_2/facade/BlastingRecipeBookComponent",
+  "net/minecraft/class_3876": "top/dext/centurybridge/step/v1_21_2/facade/SmeltingRecipeBookComponent",
+  "net/minecraft/class_3877": "top/dext/centurybridge/step/v1_21_2/facade/SmokingRecipeBookComponent",
+  "net/minecraft/class_515": "top/dext/centurybridge/step/v1_21_2/facade/RecipeShownListener",
+  "net/minecraft/class_518": "top/dext/centurybridge/step/v1_21_2/facade/RecipeUpdateListener",
+  "net/minecraft/class_2952": "top/dext/centurybridge/step/v1_21_2/facade/PlaceRecipe"
  },
  "covers": [
   "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
@@ -197,7 +216,20 @@
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.modifyAttached(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
   "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrCreate(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/util/function/Supplier;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
-  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrSet(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync"
+  "net/fabricmc/fabric/api/attachment/v1/AttachmentTarget.getAttachedOrSet(Lnet/fabricmc/fabric/api/attachment/v1/AttachmentType;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestAttachmentSync",
+  "net/minecraft/class_299.method_1401(Ljava/lang/Iterable;Lnet/minecraft/class_5455;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_299.method_1396(Lnet/minecraft/class_314;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_299.method_1393()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_1124.method_60352(Lnet/minecraft/class_299;Lnet/minecraft/class_5455$class_6890;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_1124.method_60364()Lnet/minecraft/class_1129;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
+  "net/minecraft/class_1729.method_7653()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7656()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7655()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7658()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7654(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7657()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_7652(Lnet/minecraft/class_8786;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
+  "net/minecraft/class_1729.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -520,6 +552,20 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#defaultCreationOptions()Lnet/minecraft/class_10220;"
    ],
    "basis": "as the five-argument constructor"
+  },
+  "net/minecraft/class_489.<init>(Lnet/minecraft/class_1720;Lnet/minecraft/class_517;Lnet/minecraft/class_1661;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_1720;Lnet/minecraft/class_1661;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Ljava/util/List;)V",
+   "ops": [
+    "keep:0",
+    "keep:2",
+    "keep:3",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#furnaceComponentArg(Ljava/lang/Object;)Lnet/minecraft/class_2561;",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#noTabs()Ljava/util/List;"
+   ],
+   "basis": "1.21.1's AbstractFurnaceScreen took the recipe book component the screen holds; 1.21.2's takes a filter name and tabs and makes its own: the 1.21.1 component's filter name, and the component itself is handed to AbstractRecipeBookScreen in place of the made one (CbRestFurnaceScreenMixin)"
   }
  },
  "overrideRenames": [
@@ -612,7 +658,102 @@
   "net/minecraft/class_5829.field_28799:Lnet/minecraft/class_315;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_5829.field_28800:Lnet/minecraft/class_372;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_5829.method_33701()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
-  "net/minecraft/class_5829.method_33703()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
+  "net/minecraft/class_5829.method_33703()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_505$class_506.field_3082:Lnet/minecraft/class_1856;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_505$class_506.field_3084:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_505$class_506.field_3083:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.method_2621(Lnet/minecraft/class_332;Lnet/minecraft/class_918;)V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.field_45554:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.field_3123:Lnet/minecraft/class_314;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.field_32412:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_512.field_3122:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_45555:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_45556:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_45557:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_45558:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_32414:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_32415:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_26595:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3137:Lnet/minecraft/class_1729;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3138:Lnet/minecraft/class_3439;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3142:Lnet/minecraft/class_516;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3140:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3139:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.field_3141:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_45541:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_32406:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_32407:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_33739:F": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3106:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3107:Z": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3105:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3103:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3108:Lnet/minecraft/class_310;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3111:Lnet/minecraft/class_516;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508.field_3104:Lnet/minecraft/class_8786;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_508$class_509.field_3115:Z": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.method_2625()V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.method_2626()V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_45552:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_45553:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3131:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3129:Lnet/minecraft/class_514;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3132:Lnet/minecraft/class_508;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3126:Lnet/minecraft/class_310;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3134:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3127:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3128:Lnet/minecraft/class_361;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3130:Lnet/minecraft/class_361;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3124:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3135:I": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3136:Lnet/minecraft/class_3439;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3125:Lnet/minecraft/class_8786;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_513.field_3133:Lnet/minecraft/class_516;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.method_2603(Z)V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.method_2606()V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.method_2602(Lnet/minecraft/class_332;IIII)V": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_45551:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_26593:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_3098:Lnet/minecraft/class_512;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_3086:Lnet/minecraft/class_513;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_507.field_3090:Lnet/minecraft/class_1662;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_517.field_45540:Lnet/minecraft/class_8666;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_517.field_3149:Lnet/minecraft/class_1856;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_3875.field_26592:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_3876.field_26596:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_3877.field_26597:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_514.method_2643()Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_514.field_3143:Lnet/minecraft/class_2960;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_508.method_2615()Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_508.field_3109:Lnet/minecraft/class_2960;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_508.field_3104:Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_508$class_509.method_12815(Ljava/util/Iterator;IIII)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_508$class_509.<init>(Lnet/minecraft/class_508;IILnet/minecraft/class_1860;Z)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_508$class_509.method_2619(Lnet/minecraft/class_1860;)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_508$class_509.field_3114:Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_508$class_511.<init>(Lnet/minecraft/class_508;IILnet/minecraft/class_1860;Z)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_508$class_511.method_2619(Lnet/minecraft/class_1860;)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_513.method_2631()Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_513.field_3125:Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_507.method_12815(Ljava/util/Iterator;IIII)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_507.method_2596(Lnet/minecraft/class_1860;Ljava/util/List;)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_517.method_2596(Lnet/minecraft/class_1860;Ljava/util/List;)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_2952.method_12815(Ljava/util/Iterator;IIII)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_2952.method_12816(IIILnet/minecraft/class_1860;Ljava/util/Iterator;I)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_314.field_1807:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.method_30295(Lnet/minecraft/class_5455;Ljava/util/List;)Z": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_42069:Lnet/minecraft/class_5455;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3144:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3148:Z": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3146:Ljava/util/Set;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3145:Ljava/util/Set;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.field_3147:Ljava/util/Set;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_505.field_3079:Lnet/minecraft/class_8786;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_505.field_3081:Ljava/util/List;": "private in 1.21.1: only an access widener reaches it, and access wideners never reach a CenturyBridge facade class",
+  "net/minecraft/class_516.method_2653(Lnet/minecraft/class_1860;)Z": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_505.method_2566()Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_505.method_2565(Lnet/minecraft/class_1860;)V": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name",
+  "net/minecraft/class_505.field_3079:Lnet/minecraft/class_1860;": "not a member of 1.21.1's class: a shape of an earlier release (Recipe where 1.21.1 had RecipeHolder, Iterator where it took the ingredient, an earlier sprite field) that no 1.21.1 mod can name"
  },
  "overrideHooks": [
   {
@@ -925,7 +1066,8 @@
   "net/minecraft/class_744.field_3904:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputJumping",
   "net/minecraft/class_744.field_3903:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputShiftKeyDown",
   "net/minecraft/class_4883.field_22633:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#spawnAnimals",
-  "net/minecraft/class_4883.field_22635:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#spawnNpcs"
+  "net/minecraft/class_4883.field_22635:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#spawnNpcs",
+  "net/minecraft/class_489.field_2924:Lnet/minecraft/class_517;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#furnaceComponent"
  },
  "superRedirects": {
   "net/minecraft/class_1297.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#entitySuperSystemMessage",
@@ -950,6 +1092,126 @@
     "method_9273()Ljava/util/stream/Stream;"
    ],
    "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeView$LegacyResult",
+   "requires": [
+    "method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeView$LegacyDimensions",
+   "requires": [
+    "method_8113(II)Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeView$LegacyIngredients",
+   "requires": [
+    "method_8117()Lnet/minecraft/class_2371;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeView$LegacyIncomplete",
+   "requires": [
+    "method_31584()Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyGridWidth",
+   "requires": [
+    "method_7653()I"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyGridHeight",
+   "requires": [
+    "method_7656()I"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyResultSlot",
+   "requires": [
+    "method_7655()I"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacySize",
+   "requires": [
+    "method_7658()I"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyFill",
+   "requires": [
+    "method_7654(Lnet/minecraft/class_1662;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyMatches",
+   "requires": [
+    "method_7652(Lnet/minecraft/class_8786;)Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyPlacement",
+   "requires": [
+    "method_17697(ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyBeginPlacing",
+   "requires": [
+    "method_59963()V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyFinishPlacing",
+   "requires": [
+    "method_59964(Lnet/minecraft/class_8786;)V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyClear",
+   "requires": [
+    "method_7657()V"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyMoveToInventory",
+   "requires": [
+    "method_32339(I)Z"
+   ],
+   "synth": []
   }
  ],
  "abstractFills": [
@@ -972,6 +1234,16 @@
    "under": "net/minecraft/class_368",
    "method": "method_61988()Lnet/minecraft/class_368$class_369;",
    "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.wantedVisibility(Lnet/minecraft/class_368;)Lnet/minecraft/class_368$class_369;"
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "method": "method_7654(Lnet/minecraft/class_9875;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus.fillW(Lnet/minecraft/class_1729;Lnet/minecraft/class_9875;)V"
+  },
+  {
+   "under": "net/minecraft/class_1729",
+   "method": "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus.handlePlacement(Lnet/minecraft/class_1729;ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;"
   }
  ],
  "ledger": {
@@ -1156,6 +1428,12 @@
     "net/minecraft/class_3847$class_3849"
    ],
    "basis": "1.21.1's QueueStrictQueue is renamed to the layer's facade (StrictQueue$QueueStrictQueue, generic in T as 1.21.1's): a 1.21.1 mod's constructor call builds that facade, never 1.21.2's Runnable-only class"
+  },
+  "net/minecraft/class_516.method_2650()Ljava/util/List;": {
+   "by": [
+    "net/minecraft/class_516"
+   ],
+   "basis": "1.21.1's RecipeCollection is renamed to the layer's facade, whose getRecipes() answers the RecipeHolders 1.21.1's did (a 1.21.2 collection is never handed to a 1.21.1 mod as one: the book, search tree and screens answer facades)"
   }
  },
  "fieldRedirects": {
