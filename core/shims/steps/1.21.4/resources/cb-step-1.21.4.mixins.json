@@ -12,6 +12,7 @@
     "CbGuiScrollListMixin",
     "CbGuiScrollTextAreaMixin",
     "CbGuiScrollWidgetMixin",
+    "CbItemConditionsMixin",
     "CbItemLayerAccess",
     "CbItemModelTypesMixin",
     "CbItemRendererMixin",

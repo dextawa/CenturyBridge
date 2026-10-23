@@ -418,6 +418,7 @@
  "resourceTypes": [
   "centurybridge:legacy_builtin",
   "centurybridge:legacy_color",
+  "centurybridge:legacy_override",
   "centurybridge:legacy_overrides"
  ],
  "depRenames": {

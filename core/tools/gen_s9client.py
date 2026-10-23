@@ -270,6 +270,7 @@ def item_renderer(frag):
     frag.setdefault("superRedirects", {})["net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;"] = IR + "#superGetOverrides"
     rt = set(frag.get("resourceTypes", []))
     rt.add("centurybridge:legacy_builtin")
+    rt.add("centurybridge:legacy_override")
     frag["resourceTypes"] = sorted(rt)
 
 
