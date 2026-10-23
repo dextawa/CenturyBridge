@@ -10,7 +10,8 @@
   "net/minecraft/class_624.method_32068()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#wolfBodyLayer",
   "net/minecraft/class_8973.method_55233()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
   "net/minecraft/class_8973.method_55234()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
-  "net/minecraft/class_8973.method_55235()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels"
+  "net/minecraft/class_8973.method_55235()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
+  "net/minecraft/class_3872.method_33888(Lnet/minecraft/class_2487;Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks"
  },
  "instanceRedirects": {
   "net/minecraft/class_276.method_1232(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
@@ -21,7 +22,9 @@
   "net/minecraft/class_437.method_25434(Lnet/minecraft/class_332;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
   "net/minecraft/class_1132.method_53620(J)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
   "net/minecraft/class_4904.method_25329()I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
-  "net/minecraft/class_353.method_20406(Lnet/minecraft/class_7172;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui"
+  "net/minecraft/class_353.method_20406(Lnet/minecraft/class_7172;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_702.method_3049(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles",
+  "net/minecraft/class_3872.method_17554(Lnet/minecraft/class_3872$class_3931;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks"
  },
  "superRedirects": {
   "net/minecraft/class_276.method_1232(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#cbSuperFilterMode",
@@ -186,6 +189,19 @@
    "onlyUnder": "net/minecraft/class_8987",
    "superCalls": "rewrite",
    "basis": "s4client: WindChargeRenderer.getTextureLocation takes any AbstractWindCharge since 1.20.5 (1.20.4: WindCharge). A 1.20.4 override still answers only for WindCharges"
+  },
+  {
+   "old": "method_3049(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V",
+   "new": "method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V",
+   "onlyUnder": "net/minecraft/class_702",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles$LegacyRender",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles.render(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientParticles$LegacyRender;Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V",
+   "superBridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles.superRender(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientParticles$SuperRender;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V",
+   "superAccess": "top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles$SuperRender",
+   "superAccessors": [
+    "method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V"
+   ],
+   "basis": "s4client: ParticleEngine.render lost its pose and buffer source in 1.20.5 (the model-view stack carries the camera rotation the pose did). A 1.20.4 engine's override is what 1.20.5 renders through, given an identity pose and the frame's buffer source; its super call is 1.20.4's body (pose onto the model-view stack around super's render)"
   }
  ],
  "frameDefaults": {
@@ -493,6 +509,41 @@
     "push top/dext/centurybridge/step/v1_20_5/rt/CbClientModels#strayOverlay()Lnet/minecraft/class_2960;"
    ],
    "basis": "s4client: 1.20.4's SkeletonClothingLayer(parent, modelSet) was the stray's: ModelLayers.STRAY_OUTER_LAYER and textures/entity/skeleton/stray_overlay.png, which 1.20.5 takes as arguments (the stray renderer passes exactly these)"
+  },
+  "net/minecraft/class_8979$class_8980.<init>()V": {
+   "desc": "(DII)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles#gustSeedScale()D",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles#gustSeedLifetime()I",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles#gustSeedInterval()I"
+   ],
+   "basis": "s4client: 1.20.4's GustSeedParticle.Provider() made the one gust seed 1.20.5 parameterizes: gusts up to 4 blocks out, 7 ticks of life, 3 gusts every tick (1.20.5's tick with scale 4, lifetime 7, interval 0 is 1.20.4's tick)"
+  },
+  "net/minecraft/class_677$class_681.<init>(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_702;Lnet/minecraft/class_2487;)V": {
+   "desc": "(Lnet/minecraft/class_638;DDDDDDLnet/minecraft/class_702;Ljava/util/List;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientParticles#starterExplosions(Lnet/minecraft/class_2487;)Ljava/util/List;"
+   ],
+   "basis": "s4client: FireworkParticles.Starter takes its explosions as 1.20.5 records; 1.20.4's fireworks tag (its Explosions list) read into them as 1.20.4's starter read it. A tag without explosions is 1.20.4's silent 8-tick starter (mixin/CbClientFireworkStarterMixin)"
+  },
+  "net/minecraft/class_3872.<init>(Lnet/minecraft/class_3872$class_3931;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks#cbBuilt(Lnet/minecraft/class_3872;Lnet/minecraft/class_3872$class_3931;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "s4client: 1.20.4's BookViewScreen(access) took a BookAccess interface (facade/BookAccess); 1.20.5's takes a record. The screen is built empty and given the access as 1.20.5's record over a live view of its pages, the page-turn sound on, as 1.20.4's this(access, true) left it (rt/CbClientBooks)"
   }
  },
  "fieldGetters": {
@@ -503,7 +554,8 @@
   "net/minecraft/class_442.field_17774:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
   "net/minecraft/class_389.field_44801:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
   "net/minecraft/class_5602.field_47444:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
-  "net/minecraft/class_5602.field_47445:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels"
+  "net/minecraft/class_5602.field_47445:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
+  "net/minecraft/class_3872.field_17417:Lnet/minecraft/class_3872$class_3931;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientBooks"
  },
  "covers": [
   "net/minecraft/class_312.method_1606()V",
@@ -522,6 +574,15 @@
   "net/minecraft/class_8988.method_55271(Lnet/minecraft/class_8949;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_8989.method_55274(Lnet/minecraft/class_8949;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_958.method_4138(Lnet/minecraft/class_1481;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
-  "net/minecraft/class_967.method_4161(Lnet/minecraft/class_1547;Lnet/minecraft/class_4587;F)V"
- ]
+  "net/minecraft/class_967.method_4161(Lnet/minecraft/class_1547;Lnet/minecraft/class_4587;F)V",
+  "net/minecraft/class_711$class_714.method_3098(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;"
+ ],
+ "classRenames": {
+  "net/minecraft/class_8975": "top/dext/centurybridge/step/v1_20_5/facade/GustDustParticle",
+  "net/minecraft/class_8975$class_8976": "top/dext/centurybridge/step/v1_20_5/facade/GustDustParticle$GustDustParticleProvider",
+  "net/minecraft/class_711$class_712": "top/dext/centurybridge/step/v1_20_5/facade/SpellParticleAmbientMobProvider",
+  "net/minecraft/class_3872$class_3931": "top/dext/centurybridge/step/v1_20_5/facade/BookAccess",
+  "net/minecraft/class_3872$class_3932": "top/dext/centurybridge/step/v1_20_5/facade/WritableBookAccess",
+  "net/minecraft/class_3872$class_3933": "top/dext/centurybridge/step/v1_20_5/facade/WrittenBookAccess"
+ }
 }
