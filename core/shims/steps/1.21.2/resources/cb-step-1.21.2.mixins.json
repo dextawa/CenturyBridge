@@ -3,8 +3,27 @@
   "minVersion": "0.8",
   "package": "top.dext.centurybridge.step.v1_21_2.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [],
-  "client": [],
+  "mixins": [
+    "CbItemServerThreadMixin",
+    "CbPendingIdsBlockMixin",
+    "CbPendingIdsBlockPropsMixin",
+    "CbPendingIdsItemMixin",
+    "CbPendingIdsItemPropsMixin",
+    "CbPendingIdsRegistryMixin",
+    "CbRestChunkSourceMixin",
+    "CbRestDedicatedServerMixin",
+    "CbRestLevelMixin",
+    "CbRestMinecraftServerMixin",
+    "CbRestServerChunkCacheMixin",
+    "CbRestServerLevelMixin",
+    "CbRestServerPropertiesMixin"
+  ],
+  "client": [
+    "CbRestEnchantmentScreenMixin",
+    "CbRestGuiGraphicsMixin",
+    "CbRestMinecraftMixin",
+    "CbRestOptionsMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

@@ -1,10 +1,25 @@
 {
  "callReshapes": {
+  "net/minecraft/class_7744.method_45656(Lnet/minecraft/class_332;Lnet/minecraft/class_2680;)V": {
+   "desc": "(Lnet/minecraft/class_332;)V",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2680;: no body of V reads it, but net/minecraft/class_7743 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
+  },
   "net/minecraft/class_513.method_2633()Lnet/minecraft/class_3439;": {
    "desc": "()Lnet/minecraft/class_299;",
    "ops": [],
    "ret": "keep",
    "basis": "mechanical: same values; returns a subtype of the old type"
+  },
+  "net/minecraft/class_896.method_3919(Lnet/minecraft/class_1559;)F": {
+   "desc": "()F",
+   "ops": [
+    "drop:0"
+   ],
+   "basis": "mechanical: same values; dropped Lnet/minecraft/class_1559;, never read in V"
   },
   "net/minecraft/class_1060.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
    "desc": "(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
@@ -1262,31 +1277,7 @@
     1,
     2
    ],
-   "onlyUnder": "net/minecraft/class_6044",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_3218; not passed"
-  },
-  {
-   "old": "method_35148(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z",
-   "new": "method_35148(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z",
-   "args": [
-    1,
-    2
-   ],
-   "onlyUnder": "net/minecraft/class_7100",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_3218; not passed"
-  },
-  {
-   "old": "method_35148(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z",
-   "new": "method_35148(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z",
-   "args": [
-    1,
-    2
-   ],
-   "onlyUnder": "net/minecraft/class_4150",
+   "onlyUnder": "net/minecraft/class_6045",
    "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_3218; not passed"
@@ -1642,6 +1633,17 @@
    "basis": "mechanical: the old method gets every parameter it had"
   },
   {
+   "old": "method_15737(Lnet/minecraft/class_1937;)Z",
+   "new": "method_15737(Lnet/minecraft/class_3218;)Z",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_3609",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had"
+  },
+  {
    "old": "method_15726(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Ljava/util/Map;",
    "new": "method_15726(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Ljava/util/Map;",
    "args": [
@@ -1677,28 +1679,6 @@
     3
    ],
    "onlyUnder": "net/minecraft/class_3611",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had"
-  },
-  {
-   "old": "method_15737(Lnet/minecraft/class_1937;)Z",
-   "new": "method_15737(Lnet/minecraft/class_3218;)Z",
-   "args": [
-    0
-   ],
-   "onlyUnder": "net/minecraft/class_3616",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had"
-  },
-  {
-   "old": "method_15737(Lnet/minecraft/class_1937;)Z",
-   "new": "method_15737(Lnet/minecraft/class_3218;)Z",
-   "args": [
-    0
-   ],
-   "onlyUnder": "net/minecraft/class_3621",
    "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had"

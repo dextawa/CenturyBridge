@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_itemids",
+ "version": "1.0.0",
+ "name": "CB Item Ids Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.itemids.ItemIdsTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.1" }
+}
