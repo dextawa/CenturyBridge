@@ -146,37 +146,15 @@ public final class CbWallBlockRender {
     }
 
     /**
-     * 1.21.11 ModelBlockRenderer.renderModel(pose, consumer, model, r, g, b, light, overlay): the parts the model
-     * collects with seed 42, every face and the unculled quads, tinted quads coloured r, g, b (each clamped to
-     * 0..1), the others white.
+     * 1.21.11 ModelBlockRenderer.renderModel(pose, consumer, model, r, g, b, light, overlay) as 1.21.11's Fabric API
+     * overwrote it (Indigo's ModelBlockRendererMixin): the renderer's simple path into the one consumer, with no world,
+     * the origin and air (rt/CbFapiRender: seed 42, tinted quads coloured r, g, b clamped to 0..1, meshes included).
      */
     public static void renderModel(PoseStack.Pose pose, VertexConsumer consumer, BlockStateModel model,
                                    float r, float g, float b, int light, int overlay) {
-        for (BlockStateModelPart part : CbWallModels.collectParts(model, RandomSource.create(42L))) {
-            for (Direction d : Direction.values()) {
-                renderQuadList(pose, consumer, r, g, b, part.getQuads(d), light, overlay);
-            }
-            renderQuadList(pose, consumer, r, g, b, part.getQuads(null), light, overlay);
-        }
-    }
-
-    private static void renderQuadList(PoseStack.Pose pose, VertexConsumer consumer, float r, float g, float b,
-                                       List<BakedQuad> quads, int light, int overlay) {
-        for (BakedQuad quad : quads) {
-            float qr;
-            float qg;
-            float qb;
-            if (quad.materialInfo().isTinted()) {
-                qr = Mth.clamp(r, 0.0F, 1.0F);
-                qg = Mth.clamp(g, 0.0F, 1.0F);
-                qb = Mth.clamp(b, 0.0F, 1.0F);
-            } else {
-                qr = 1.0F;
-                qg = 1.0F;
-                qb = 1.0F;
-            }
-            putBulkData(consumer, pose, quad, qr, qg, qb, 1.0F, light, overlay);
-        }
+        CbFapiRender.renderModel(pose, layer -> consumer, model, r, g, b, light, overlay,
+            net.minecraft.client.renderer.block.BlockAndTintGetter.EMPTY, BlockPos.ZERO,
+            net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
     }
 
     /** 1.21.11 ModelBlockRenderer.enableCaching(): the brightness cache moved to BlockModelLighter */

@@ -21,6 +21,7 @@
     "CbFapiFluidStateModelSetMixin",
     "CbFapiGameRendererAccess",
     "CbFapiHudRenderCallbackMixin",
+    "CbFapiLayerRenderStateMixin",
     "CbFapiLevelRendererMixin",
     "CbFapiModelManagerFluidMixin",
     "CbWallBlockStateModelSetMixin",
