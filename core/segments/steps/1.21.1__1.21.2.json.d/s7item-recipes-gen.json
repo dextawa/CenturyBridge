@@ -1,0 +1,175 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_1860.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1851.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1852.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1853.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1867.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1869.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1874.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_3972.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_8060.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_8062.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1860.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1848.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1849.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1850.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1851.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1853.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1854.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1855.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1867.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1869.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1872.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1874.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1876.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_3972.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_4317.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_8059.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_8164.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1860.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1867.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1869.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1874.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_3972.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_9695;)Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1860.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_3859.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_3861.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_3862.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_3920.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_3975.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_8059.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1860.method_31584()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_1869.method_31584()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_8060.method_31584()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes",
+  "net/minecraft/class_8062.method_31584()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1851.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8110",
+  "net/minecraft/class_1852.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8110",
+  "net/minecraft/class_1853.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8110",
+  "net/minecraft/class_1867.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8110",
+  "net/minecraft/class_1869.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8110",
+  "net/minecraft/class_1874.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8110",
+  "net/minecraft/class_3972.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8110",
+  "net/minecraft/class_8060.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8110",
+  "net/minecraft/class_8062.method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8110",
+  "net/minecraft/class_1848.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1849.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1850.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1851.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1853.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1854.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1855.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1867.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1869.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1872.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1874.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1876.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_3972.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_4317.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_8059.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_8164.method_8113(II)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8113",
+  "net/minecraft/class_1860.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8117",
+  "net/minecraft/class_1867.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8117",
+  "net/minecraft/class_1869.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8117",
+  "net/minecraft/class_1874.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8117",
+  "net/minecraft/class_3972.method_8117()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8117",
+  "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_9695;)Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_8111",
+  "net/minecraft/class_1860.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_17447",
+  "net/minecraft/class_3859.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_17447",
+  "net/minecraft/class_3861.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_17447",
+  "net/minecraft/class_3862.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_17447",
+  "net/minecraft/class_3920.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_17447",
+  "net/minecraft/class_3975.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_17447",
+  "net/minecraft/class_8059.method_17447()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_17447",
+  "net/minecraft/class_1860.method_31584()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_31584",
+  "net/minecraft/class_1869.method_31584()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_31584",
+  "net/minecraft/class_8060.method_31584()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_31584",
+  "net/minecraft/class_8062.method_31584()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes#super_method_31584"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes$V1",
+   "requires": [],
+   "synth": [],
+   "basis": "every converted class under Recipe is a 1.21.1 recipe class: Recipe's 1.21.1 defaults answer for it where it has no override (CbItemRecipes)"
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes$LegacyResult",
+   "requires": [
+    "method_8110(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 recipe class overriding getResultItem(registries): calls of it reach the override (CbItemRecipes)"
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes$LegacyDims",
+   "requires": [
+    "method_8113(II)Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 recipe class overriding canCraftInDimensions(width, height): calls of it reach the override (CbItemRecipes)"
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes$LegacyIngredients",
+   "requires": [
+    "method_8117()Lnet/minecraft/class_2371;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 recipe class overriding getIngredients(): calls of it reach the override (CbItemRecipes)"
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes$LegacyRemaining",
+   "requires": [
+    "method_8111(Lnet/minecraft/class_9695;)Lnet/minecraft/class_2371;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 recipe class overriding getRemainingItems(input): calls of it reach the override (CbItemRecipes)"
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes$LegacyToast",
+   "requires": [
+    "method_17447()Lnet/minecraft/class_1799;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 recipe class overriding getToastSymbol(): calls of it reach the override (CbItemRecipes)"
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes$LegacyIncomplete",
+   "requires": [
+    "method_31584()Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 recipe class overriding isIncomplete(): calls of it reach the override (CbItemRecipes)"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_1860",
+   "method": "method_61671()Lnet/minecraft/class_9887;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes.placementInfo(Lnet/minecraft/class_1860;)Lnet/minecraft/class_9887;",
+   "basis": "the placement of the class's 1.21.1 ingredients (getIngredients(); none: not placeable)"
+  },
+  {
+   "under": "net/minecraft/class_1860",
+   "method": "method_64668()Lnet/minecraft/class_10355;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes.recipeBookCategory(Lnet/minecraft/class_1860;)Lnet/minecraft/class_10355;",
+   "basis": "the recipe book category 1.21.1's client gave the recipe's type (ClientRecipeBook.getCategory)"
+  },
+  {
+   "under": "net/minecraft/class_1874",
+   "method": "method_64663()Lnet/minecraft/class_1792;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipes.furnaceIcon(Lnet/minecraft/class_1874;)Lnet/minecraft/class_1792;",
+   "basis": "the item of the class's 1.21.1 toast symbol"
+  }
+ ]
+}

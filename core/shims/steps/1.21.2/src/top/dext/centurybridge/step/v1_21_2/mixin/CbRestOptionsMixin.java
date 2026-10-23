@@ -25,9 +25,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Environment(EnvType.CLIENT)
 @Mixin(class_315.class)
-public abstract class CbRestOptionsMixin {
+public abstract class CbRestOptionsMixin implements top.dext.centurybridge.step.v1_21_2.rt.CbRestTutorial.BundleOption {
 
     public boolean field_28777 = false;
+
+    @Override
+    public boolean cb$hideBundleTutorial() {
+        return this.field_28777;
+    }
+
+    @Override
+    public void cb$setHideBundleTutorial(boolean hide) {
+        this.field_28777 = hide;
+    }
 
     @Unique
     private static MethodHandle cb$processBoolean;

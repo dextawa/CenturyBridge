@@ -174,7 +174,7 @@ public final class CbItemArmor {
         EnumMap<class_8051, Integer> defense = new EnumMap<>(class_8051.class);
         defense.putAll(w.comp_2298());
         class_6862<class_1792> tag = w.comp_2301();
-        Supplier<class_1856> repair = () -> class_1856.method_8106(class_7923.method_62715(class_7923.field_41178).method_46735(tag));
+        Supplier<class_1856> repair = () -> class_1856.method_8106(top.dext.centurybridge.step.v1_21_2.rt.CbItemTags.lookup(class_7923.field_41178).method_46735(tag));
         h = class_6880.method_40223(new ArmorMaterial(defense, w.comp_3167(), w.comp_2300(), repair,
             List.of(new ArmorMaterial.Layer(w.comp_3168())), w.comp_2303(), w.comp_2304()));
         DERIVED.put(w, h);

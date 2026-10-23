@@ -81,12 +81,12 @@ public final class CbRenderStateGen {
 
     /** a 1.21.1 class under net/minecraft/class_881 overriding method_3888(Lnet/minecraft/class_1690;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V */
     public interface St3 {
-        void method_3888(net.minecraft.class_1690 p0, float p1, float p2, net.minecraft.class_4587 p3, net.minecraft.class_4597 p4, int p5);
+        void method_3888(net.minecraft.class_10255 p0, float p1, float p2, net.minecraft.class_4587 p3, net.minecraft.class_4597 p4, int p5);
     }
 
     public static void st3(St3 self, net.minecraft.class_10004 w0, net.minecraft.class_4587 w1, net.minecraft.class_4597 w2, int w3) {
         net.minecraft.class_10017 state = w0;
-        if (CbRenderStateEntity.entityOf(state) instanceof net.minecraft.class_1690 e) {
+        if (CbRenderStateEntity.entityOf(state) instanceof net.minecraft.class_10255 e) {
             float pt = CbRenderStateEntity.partialTickOf(state);
             self.method_3888(e, net.minecraft.class_3532.method_16439(pt, e.field_5982, e.method_36454()), pt, w1, w2, w3);
             return;
