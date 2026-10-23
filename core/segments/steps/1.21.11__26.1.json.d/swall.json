@@ -180,7 +180,12 @@
   "net/minecraft/class_778.method_3367(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;Lnet/minecraft/class_1087;FFFII)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#renderModel",
   "net/minecraft/class_778.method_20544()V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#enableCaching",
   "net/minecraft/class_778.method_20545()V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#clearCache",
-  "net/minecraft/class_310.method_1588()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#ambientOcclusion"
+  "net/minecraft/class_310.method_1588()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#ambientOcclusion",
+  "net/minecraft/class_2378.method_10226(Lnet/minecraft/class_2378;Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#register",
+  "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#register",
+  "net/minecraft/class_2378.method_39197(Lnet/minecraft/class_2378;Lnet/minecraft/class_5321;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#register",
+  "net/minecraft/class_2378.method_47984(Lnet/minecraft/class_2378;Lnet/minecraft/class_5321;Ljava/lang/Object;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#registerForHolder",
+  "net/minecraft/class_2378.method_47985(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#registerForHolder"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
