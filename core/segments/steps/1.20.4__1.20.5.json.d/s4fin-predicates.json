@@ -1,0 +1,166 @@
+{
+ "_s4fin_predicates_basis": "s4fin advancements: 1.20.4's predicate API on 1.20.5's (rt/CbFinPredicates): entity sub-predicate types and variant predicates as facades over 1.20.5's codecs and EntitySubPredicates, tags and single values folded into holder sets, ItemPredicate's parts as 1.20.5 item sub-predicates, network forms over 1.20.5's stream codecs",
+ "classRenames": {
+  "net/minecraft/class_7376$class_8745": "top/dext/centurybridge/step/v1_20_5/facade/EntitySubPredicateType",
+  "net/minecraft/class_7376$class_7378": "top/dext/centurybridge/step/v1_20_5/facade/EntitySubPredicateTypes",
+  "net/minecraft/class_7380": "top/dext/centurybridge/step/v1_20_5/facade/EntityVariantPredicate",
+  "net/minecraft/class_7380$class_8746": "top/dext/centurybridge/step/v1_20_5/facade/EntityVariantSubPredicate"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_7376.comp_1776()Lnet/minecraft/class_7376$class_8745;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_4553.comp_1776()Lnet/minecraft/class_7376$class_8745;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_4965.comp_1776()Lnet/minecraft/class_7376$class_8745;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_6404.comp_1776()Lnet/minecraft/class_7376$class_8745;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_7383.comp_1776()Lnet/minecraft/class_7376$class_8745;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_2048$class_2049.method_43094(Lnet/minecraft/class_7376;)Lnet/minecraft/class_2048$class_2049;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#subPredicate",
+  "net/minecraft/class_4550.comp_1731()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#blockTag",
+  "net/minecraft/class_4551.comp_1780()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#fluidTag",
+  "net/minecraft/class_4551.comp_1781()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#fluid",
+  "net/minecraft/class_2035.method_8880(Ljava/util/Map;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#containedIn",
+  "net/minecraft/class_2073.comp_1783()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_2073.comp_1786()Lnet/minecraft/class_2096$class_2100;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_2073.comp_1787()Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_2073.comp_1788()Ljava/util/List;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_2073.comp_1789()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_2073.comp_1790()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_2073$class_2074.method_35235(Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_2073$class_2074;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#hasDurability",
+  "net/minecraft/class_2073$class_2074.method_35232(Lnet/minecraft/class_1842;)Lnet/minecraft/class_2073$class_2074;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#isPotion",
+  "net/minecraft/class_2073$class_2074.method_20399(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2073$class_2074;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#hasNbt",
+  "net/minecraft/class_2073$class_2074.method_8978(Lnet/minecraft/class_2035;)Lnet/minecraft/class_2073$class_2074;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#hasEnchantment",
+  "net/minecraft/class_2073$class_2074.method_35234(Lnet/minecraft/class_2035;)Lnet/minecraft/class_2073$class_2074;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#hasStoredEnchantment",
+  "net/minecraft/class_185.method_813(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_161.method_53627(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_8779.method_53635(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_7376.method_43095(Lnet/minecraft/class_7375;)Lnet/minecraft/class_7376;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#catVariant",
+  "net/minecraft/class_7376.method_43096(Lnet/minecraft/class_7106;)Lnet/minecraft/class_7376;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#frogVariant",
+  "net/minecraft/class_185.method_820(Lnet/minecraft/class_2540;)Lnet/minecraft/class_185;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_161.method_53632(Lnet/minecraft/class_2540;)Lnet/minecraft/class_161;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates",
+  "net/minecraft/class_8779.method_53636(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8779;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_2048.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "conv:8 top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#unwrapOptional(Ljava/util/Optional;)Ljava/util/Optional;",
+    "keep:9",
+    "keep:10",
+    "keep:11",
+    "keep:12",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#none()Ljava/util/Optional;"
+   ],
+   "basis": "s4fin predicates: EntityPredicate takes a slots predicate in 1.20.5 (none, 1.20.4 had none); a 1.20.4 variant sub-predicate enters as the 1.20.5 one it stands for"
+  },
+  "net/minecraft/class_3735.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#none()Ljava/util/Optional;",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "s4fin predicates: EntityEquipmentPredicate takes a body slot in 1.20.5 (none, 1.20.4 had none)"
+  },
+  "net/minecraft/class_4550.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#blocks(Ljava/util/Optional;Ljava/util/Optional;)Ljava/util/Optional;",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "s4fin predicates: BlockPredicate's tag and blocks are one holder set in 1.20.5"
+  },
+  "net/minecraft/class_4551.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#fluids(Ljava/util/Optional;Ljava/util/Optional;)Ljava/util/Optional;",
+    "keep:2"
+   ],
+   "basis": "s4fin predicates: FluidPredicate's tag and fluid are one holder set in 1.20.5"
+  },
+  "net/minecraft/class_2073.<init>(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_2096$class_2100;Ljava/util/List;Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/Optional;Lnet/minecraft/class_2096$class_2100;Lnet/minecraft/class_9329;Ljava/util/Map;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#itemSet(Ljava/util/Optional;Ljava/util/Optional;)Ljava/util/Optional;",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#noComponents()Lnet/minecraft/class_9329;",
+    "conv:3,4,5,6,7 top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#itemSubPredicates(Lnet/minecraft/class_2096$class_2100;Ljava/util/List;Ljava/util/List;Ljava/util/Optional;Ljava/util/Optional;)Ljava/util/Map;"
+   ],
+   "basis": "s4fin predicates: ItemPredicate's durability, enchantments, stored enchantments, potion and NBT are 1.20.5 item sub-predicates"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_4551$class_6079.method_35222(Lnet/minecraft/class_6862;)Lnet/minecraft/class_4551$class_6079;": {
+   "desc": "(Lnet/minecraft/class_6885;)Lnet/minecraft/class_4551$class_6079;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#fluidTagSet(Lnet/minecraft/class_6862;)Lnet/minecraft/class_6885;"
+   ],
+   "basis": "s4fin predicates: FluidPredicate.Builder.of(tag) takes the tag's holder set in 1.20.5"
+  },
+  "net/minecraft/class_2412.method_49356(Ljava/util/function/Consumer;Lnet/minecraft/class_8779;Lnet/minecraft/class_8197$class_5305;)V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;Lnet/minecraft/class_8779;Lnet/minecraft/class_8197$class_5305;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4fin predicates: VanillaAdventureAdvancements helpers take the registries in 1.20.5"
+  },
+  "net/minecraft/class_2412.method_10337(Lnet/minecraft/class_161$class_162;Ljava/util/List;)Lnet/minecraft/class_161$class_162;": {
+   "desc": "(Lnet/minecraft/class_161$class_162;Lnet/minecraft/class_7225$class_7874;Ljava/util/List;)Lnet/minecraft/class_161$class_162;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;",
+    "keep"
+   ],
+   "basis": "s4fin predicates: VanillaAdventureAdvancements helpers take the registries in 1.20.5"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_7376",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates$Legacy",
+   "requires": [
+    "comp_1776()Lnet/minecraft/class_7376$class_8745;"
+   ],
+   "synth": [
+    {
+     "new": "method_58152()Lcom/mojang/serialization/MapCodec;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates.legacyCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates$Legacy;)Lcom/mojang/serialization/MapCodec;"
+    }
+   ],
+   "basis": "s4fin predicates: a 1.20.4 sub-predicate's type() is its 1.20.5 codec()"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_3735.field_19240:Lnet/minecraft/class_3735;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinPredicates#captain"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_7376$class_7378.field_38724:Lnet/minecraft/class_7376$class_7377;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7376$class_7378.field_38725:Lnet/minecraft/class_7376$class_7377;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7376$class_7378.field_38726:Lnet/minecraft/class_7376$class_7377;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7376$class_7378.field_38727:Lnet/minecraft/class_7376$class_7377;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7376$class_7378.field_38728:Lnet/minecraft/class_7376$class_7377;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7380.method_43114()Lnet/minecraft/class_7376$class_7377;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7380.method_43117(Ljava/lang/Object;)Lnet/minecraft/class_7376;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7380.field_38739:Ljava/lang/String;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7380.field_41547:Lcom/mojang/serialization/Codec;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7380.field_38742:Lnet/minecraft/class_7376$class_7377;": "a shape before 1.20.4 (EntitySubPredicate.Type was class_7376$class_7377 until 1.20.3, and EntityVariantPredicate kept its name and codec fields); the earlier steps of the climb carry such references to 1.20.4's, so no mod reaches this step with them",
+  "net/minecraft/class_7380.<init>(Lcom/mojang/serialization/Codec;Ljava/util/function/Function;)V": "private in 1.20.4 (EntityVariantPredicate's constructor and fields); no mod could reach them without an access widener, which never applies to a CenturyBridge class",
+  "net/minecraft/class_7380.field_38741:Ljava/util/function/Function;": "private in 1.20.4 (EntityVariantPredicate's constructor and fields); no mod could reach them without an access widener, which never applies to a CenturyBridge class",
+  "net/minecraft/class_7380.field_38742:Lnet/minecraft/class_7376$class_8745;": "private in 1.20.4 (EntityVariantPredicate's constructor and fields); no mod could reach them without an access widener, which never applies to a CenturyBridge class"
+ }
+}
