@@ -32,6 +32,7 @@
     "CbRestDedicatedServerMixin",
     "CbRestLevelMixin",
     "CbRestMinecraftServerMixin",
+    "CbRestSelectorContentsMixin",
     "CbRestServerChunkCacheMixin",
     "CbRestServerLevelMixin",
     "CbRestServerPropertiesMixin"

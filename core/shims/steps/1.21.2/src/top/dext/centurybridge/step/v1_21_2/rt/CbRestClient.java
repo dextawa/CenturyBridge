@@ -39,4 +39,40 @@ public final class CbRestClient {
     public static boolean strictErrorHandlingField(net.minecraft.class_8673 listener) {
         return true;
     }
+
+    /**
+     * sendSystemMessage(message) of a client-side entity, 1.21.1's bodies: LocalPlayer and RemotePlayer added
+     * the message to the chat; any other entity (Entity's body) did nothing.
+     */
+    public static void playerSystemMessage(net.minecraft.class_1297 entity, net.minecraft.class_2561 message) {
+        if (entity instanceof net.minecraft.class_746 || entity instanceof net.minecraft.class_745) {
+            net.minecraft.class_310.method_1551().field_1705.method_1743().method_1812(message);
+        }
+    }
+
+    /** super.sendSystemMessage(message) reaching LocalPlayer's 1.21.1 body: the message added to the chat */
+    public static void localPlayerSuperSystemMessage(net.minecraft.class_746 player, net.minecraft.class_2561 message) {
+        net.minecraft.class_310.method_1551().field_1705.method_1743().method_1812(message);
+    }
+
+    /** super.sendSystemMessage(message) reaching RemotePlayer's 1.21.1 body: the message added to the chat */
+    public static void remotePlayerSuperSystemMessage(net.minecraft.class_745 player, net.minecraft.class_2561 message) {
+        net.minecraft.class_310.method_1551().field_1705.method_1743().method_1812(message);
+    }
+
+    /**
+     * ClientSuggestionProvider.getRecipeNames(): 1.21.1 answered the recipes the server had sent the client.
+     * A 1.21.2 server sends the client no recipes (ClientboundUpdateRecipesPacket carries property sets and
+     * stonecutter entries only); in singleplayer the integrated server's recipes are the ones 1.21.1's
+     * server sent. Connected to another server the ids exist only there.
+     */
+    public static java.util.stream.Stream<net.minecraft.class_2960> recipeNames(net.minecraft.class_2172 provider) {
+        net.minecraft.server.MinecraftServer server = net.minecraft.class_310.method_1551().method_1576();
+        if (server == null) {
+            throw new UnsupportedOperationException("CenturyBridge: SharedSuggestionProvider.getRecipeNames() on a"
+                + " client connected to a remote 1.21.2+ server: the server no longer sends the client its recipes,"
+                + " so the client has no recipe ids (suggest them through the server instead)");
+        }
+        return CbRestCommands.recipeIds(server);
+    }
 }
