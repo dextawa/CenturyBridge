@@ -54,6 +54,7 @@
     "CbLevelChunkHolderMixin",
     "CbLevelChunkMapAccessor",
     "CbLevelChunkMapMixin",
+    "CbLevelChunkStorageInvoker",
     "CbLevelGenHolderAccessor",
     "CbLootBlockInvoker",
     "CbLootBlockMixin",

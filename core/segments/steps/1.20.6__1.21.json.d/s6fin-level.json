@@ -79,7 +79,8 @@
   "net/minecraft/class_3193.field_16426:Lnet/minecraft/class_9259;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks",
   "net/minecraft/class_3193.field_16430:Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks",
   "net/minecraft/class_3193.field_36388:Lnet/minecraft/class_9259;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks",
-  "net/minecraft/class_3230.field_19270:Lnet/minecraft/class_3230;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks"
+  "net/minecraft/class_3230.field_19270:Lnet/minecraft/class_3230;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks",
+  "net/minecraft/class_2806.field_19160:Ljava/util/EnumSet;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks"
  },
  "covers": [
   "net/minecraft/class_3193.method_16146(Lnet/minecraft/class_2806;)Ljava/util/concurrent/CompletableFuture;",
@@ -92,7 +93,9 @@
  "instanceRedirects": {
   "net/minecraft/class_2794.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12088",
   "net/minecraft/class_3754.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12088",
-  "net/minecraft/class_3492.method_35476(Z)Lnet/minecraft/class_3492;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_35476"
+  "net/minecraft/class_3492.method_35476(Z)Lnet/minecraft/class_3492;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_35476",
+  "net/minecraft/class_2806.method_12152()I": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12152",
+  "net/minecraft/class_2806.method_51378()Z": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_51378"
  },
  "ctorRedirects": {
   "net/minecraft/class_9312.<init>(Lnet/minecraft/class_3218;Lnet/minecraft/class_2794;Lnet/minecraft/class_3485;Lnet/minecraft/class_3227;)V": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#newWorldGenContext"
@@ -288,6 +291,17 @@
     "push top/dext/centurybridge/step/v1_21/rt/CbData#defaultLiquidSettings()Lnet/minecraft/class_9822;"
    ],
    "basis": "JigsawPlacement.addPieces takes the dimension padding and liquid settings since 1.21; 1.21's own defaults for both (JigsawStructure.DEFAULT_DIMENSION_PADDING: none; DEFAULT_LIQUID_SETTINGS: APPLY_WATERLOGGING) are what 1.20.6 did"
+  },
+  "net/minecraft/class_2852.method_12395(Lnet/minecraft/class_3218;Lnet/minecraft/class_4153;Lnet/minecraft/class_1923;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2839;": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_4153;Lnet/minecraft/class_9240;Lnet/minecraft/class_1923;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2839;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:0 top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#storageOf(Lnet/minecraft/class_3218;)Lnet/minecraft/class_9240;",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "ChunkSerializer.read takes the region storage it reports a misplaced chunk against since 1.21: the level's chunk storage, what the level's own chunk map passes"
   }
  },
  "superCtorReshapes": {
@@ -323,6 +337,18 @@
     "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;"
    ],
    "basis": "PoolElementStructurePiece takes the liquid settings it places with since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  },
+  "net/minecraft/class_4180.<init>(Lnet/minecraft/class_9172;Ljava/util/function/Function;Ljava/util/function/Function;Lnet/minecraft/class_5455;Lnet/minecraft/class_5539;)V": {
+   "desc": "(Lnet/minecraft/class_9172;Ljava/util/function/Function;Ljava/util/function/Function;Lnet/minecraft/class_5455;Lnet/minecraft/class_9820;Lnet/minecraft/class_5539;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#noReports()Lnet/minecraft/class_9820;",
+    "keep"
+   ],
+   "basis": "1.21's SectionStorage hands read and write failures to a ChunkIOErrorReporter; 1.20.6's logged a read failure (1.21's still does) and reported nowhere: a reporter taking the reports and doing nothing more (CbLevelChunks.NO_REPORTS)"
   }
  },
  "frameDefaults": {
@@ -334,7 +360,10 @@
   }
  },
  "staticRedirects": {
-  "net/minecraft/class_3485.method_15085(Ljava/nio/file/Path;Lnet/minecraft/class_2960;Ljava/lang/String;)Ljava/nio/file/Path;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_15085"
+  "net/minecraft/class_3485.method_15085(Ljava/nio/file/Path;Lnet/minecraft/class_2960;Ljava/lang/String;)Ljava/nio/file/Path;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_15085",
+  "net/minecraft/class_2806.method_12161(I)Lnet/minecraft/class_2806;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12161",
+  "net/minecraft/class_2806.method_12155()I": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12155",
+  "net/minecraft/class_2806.method_12175(Lnet/minecraft/class_2806;)I": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12175"
  },
  "superRedirects": {
   "net/minecraft/class_3492.method_35476(Z)Lnet/minecraft/class_3492;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_35476"

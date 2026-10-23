@@ -14,6 +14,7 @@ import net.minecraft.class_3227;
 import net.minecraft.class_3230;
 import net.minecraft.class_3485;
 import net.minecraft.class_3898;
+import net.minecraft.class_8563;
 import net.minecraft.class_9259;
 import net.minecraft.class_9312;
 import net.minecraft.class_9761;
@@ -86,6 +87,72 @@ public final class CbLevelChunks {
 
     public static class_3230<class_1923> field_19270() {
         return LIGHT;
+    }
+
+    // ------------------------------------------------------------------------------------------------ ChunkStatus
+
+    /**
+     * 1.20.6 ChunkStatus.getStatusAroundFullChunk(distance): the status a chunk that far from a full chunk is
+     * generated to -- FULL at or inside it, EMPTY past the range. 1.21 keeps that table in the FULL step's
+     * accumulated dependencies (ChunkLevel.getStatusAroundFullChunk(distance, EMPTY)).
+     */
+    public static class_2806 method_12161(int distance) {
+        return class_8563.method_60437(distance, class_2806.field_12798);
+    }
+
+    /** 1.20.6 ChunkStatus.maxDistance(): the table's length, 1.21's RADIUS_AROUND_FULL_CHUNK + 1 */
+    public static int method_12155() {
+        return class_8563.field_51859 + 1;
+    }
+
+    /** 1.20.6 ChunkStatus.getDistance(status): how far from a full chunk the status is still reached (ChunkLevel.byStatus - 33 in both) */
+    public static int method_12175(class_2806 status) {
+        return class_8563.method_51829(status) - 33;
+    }
+
+    /** 1.20.6 status.getRange(): the radius of neighbours generating the status needs -- 1.21's generation step's direct dependencies */
+    public static int method_12152(class_2806 status) {
+        return net.minecraft.class_9768.field_51900.method_60518(status).comp_2804().method_60517();
+    }
+
+    /** 1.20.6 status.hasLoadDependencies(): loading a chunk at the status needs neighbours -- 1.21's loading step has direct dependencies */
+    public static boolean method_51378(class_2806 status) {
+        return net.minecraft.class_9768.field_51901.method_60518(status).comp_2804().method_60517() > 0;
+    }
+
+    /** 1.20.6 ChunkStatus.POST_FEATURES (the heightmaps kept after features): 1.21's, the same set */
+    public static java.util.EnumSet<net.minecraft.class_2902.class_2903> field_19160() {
+        return class_2806.field_51903;
+    }
+
+    // ------------------------------------------------------------------------------------------------ chunk storage
+
+    /**
+     * The chunk I/O error reporter a 1.20.6 SectionStorage gets. 1.20.6's section storage logged a read error
+     * ("Error reading chunk {} data from disk") and went on without the data, and left a failed write to the
+     * region file's own logging; 1.21's still logs the read error itself and also hands both to a reporter.
+     * 1.20.6 reported nowhere, so this reporter takes the reports and does nothing more.
+     */
+    public static final net.minecraft.class_9820 NO_REPORTS = new net.minecraft.class_9820() {
+        @Override
+        public void method_57821(Throwable error, net.minecraft.class_9240 storage, class_1923 pos) {
+        }
+
+        @Override
+        public void method_57822(Throwable error, net.minecraft.class_9240 storage, class_1923 pos) {
+        }
+    };
+
+    public static net.minecraft.class_9820 noReports() {
+        return NO_REPORTS;
+    }
+
+    /**
+     * 1.20.6 ChunkSerializer.read(level, poi, pos, tag): 1.21's also takes the region storage it reports a
+     * misplaced chunk against -- the level's chunk storage, what the level's own chunk map passes.
+     */
+    public static net.minecraft.class_9240 storageOf(class_3218 level) {
+        return ((top.dext.centurybridge.step.v1_21.mixin.CbLevelChunkStorageInvoker) level.method_14178().field_17254).cb$storageInfo();
     }
 
     // ------------------------------------------------------------------------------------------------ WorldGenContext
