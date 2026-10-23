@@ -63,6 +63,7 @@
   "net/minecraft/class_2102.method_9066()Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
   "net/minecraft/class_2105.method_9073(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2105;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_3735.method_16224(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_3735;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4325.method_23765(Lnet/minecraft/class_3300;)V": "top/dext/centurybridge/rt/v1_20_2/CbNetRealms",
   "net/minecraft/class_4550.method_22453(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_4550;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_4551.method_22474(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_4551;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_4552.method_22482(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_4552;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
