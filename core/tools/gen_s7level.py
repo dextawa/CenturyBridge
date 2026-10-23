@@ -499,6 +499,63 @@ def chunk_storage(f):
                  "executor of 1.21.1's mailbox (CbRestExecutors) and the level ChunkMap's listener (CbLevelStorage)"})
 
 
+# ------------------------------------------------------------------------------------------- fluids and light
+LFL = RT + "/CbLevelFluids"
+LLI = RT + "/CbLevelLight"
+
+
+def fluids_light(f):
+    SL, FS, RS = L("class_3218"), L("class_3610"), L("class_5819")
+    srv = "conv:0 " + LFL + "#server(" + LVL + ")" + SL
+    st = "conv:0,1 " + LFL + "#stateAt(" + LVL + POS + ")" + BS
+    why = ("takes the server level since 1.21.2 (and the block state at the position, which its callers read off the "
+           "level): 1.21.1 ran fluids on server levels only (CbLevelFluids)")
+    for owner, name, old_a, new_a, ret, ops in (
+            ("class_3611", "method_15778", LVL + POS + FS, SL + POS + BS + FS, "V", [srv, "keep:1", st, "keep:2"]),
+            ("class_3609", "method_15725", LVL + POS + FS, SL + POS + BS + FS, "V", [srv, "keep:1", st, "keep:2"]),
+            ("class_3609", "method_15727", LVL + POS + BS, SL + POS + BS, FS, [srv, "keep:1", "keep:2"]),
+            ("class_3609", "method_15737", LVL, SL, "Z", [srv]),
+            ("class_3609", "method_15726", LVL + POS + BS, SL + POS + BS, "Ljava/util/Map;", [srv, "keep:1", "keep:2"]),
+            ("class_3611", "method_15792", LVL + POS + FS + RS, SL + POS + FS + RS, "V", [srv, "keep:1", "keep:2", "keep:3"]),
+            ("class_3610", "method_15770", LVL + POS, SL + POS + BS, "V", [srv, "keep:1", st]),
+            ("class_3610", "method_15757", LVL + POS + RS, SL + POS + RS, "V", [srv, "keep:1", "keep:2"])):
+        f.reshape(MC + owner + "." + name + "(" + old_a + ")" + ret, "(" + new_a + ")" + ret, ops, name + " " + why)
+    LE, SH_, DIRS = MC + "class_3558", L("class_265"), DIR
+    lwhy = ("1.21.2 asks a block's light properties of the state alone, as BlockStateBase's cache answered them for "
+            "1.21.1 (CbLevelLight)")
+    f.reshape(LE + ".method_51561(" + BG + POS + BS + BS + ")Z", "(" + BS + BS + ")Z", ["keep:2", "keep:3"], lwhy)
+    f.reshape(LE + ".method_20049(" + BG + BS + POS + BS + POS + DIRS + "I)I", "(" + BS + BS + DIRS + "I)I",
+              ["keep:1", "keep:3", "keep:5", "keep:6"], lwhy)
+    f.reshape(LE + ".method_51562(" + BG + POS + BS + DIRS + ")" + SH_, "(" + BS + DIRS + ")" + SH_, ["keep:2", "keep:3"], lwhy)
+    f.reshape(LE + ".method_50017(" + BS + POS + ")I", "(" + BS + ")I", ["keep:0"], lwhy)
+    f.reshape(LE + ".method_50016(J" + BS + "J" + BS + DIRS + ")Z", "(" + BS + BS + DIRS + ")Z", ["keep:1", "keep:3", "keep:4"], lwhy)
+    for old, new, n, br, sup_old in (
+            ("method_50017(" + BS + POS + ")I", "method_50017(" + BS + ")I", "Opacity", "opacity", BS + POS),
+            ("method_50016(J" + BS + "J" + BS + DIRS + ")Z", "method_50016(" + BS + BS + DIRS + ")Z", "ShapeOccludes",
+             "shapeOccludes", "J" + BS + "J" + BS + DIRS)):
+        nargs, ret = new[new.index("("):new.index(")") + 1], new[new.index(")") + 1:]
+        f.hook(old=old, new=new, onlyUnder=LE, adapter=LLI + "$Legacy" + n,
+               bridge=LLI + "." + br + "(L" + LLI + "$Legacy" + n + ";" + nargs[1:-1] + ")" + ret,
+               superBridge=LLI + ".super" + n + "(L" + LLI + "$Super" + n + ";" + sup_old + ")" + ret,
+               superAccess=LLI + "$Super" + n, superAccessors=[new],
+               basis="a 1.21.1 light engine's override, asked in 1.21.2's state-only shape: the origin as its position; "
+                     "its super call reaches 1.21.2's (CbLevelLight)")
+    occ = "method_20710(" + BS + "J" + DIRS + ")" + SH_
+    f.put("instanceRedirects", LE + "." + occ, LLI)
+    f.put("superRedirects", LE + "." + occ, LLI + "#occlusionShape")
+    f.w["adapterHooks"].append({"under": LE, "adapter": LLI + "$LegacyOcclusionShape", "requires": [occ], "synth": [],
+                                "basis": "1.21.2's engine asks the static occlusion shape: a 1.21.1 override is reached "
+                                         "by its mod's calls, through this adapter (CbLevelLight)"})
+    LLE, SEC = MC + "class_3568", L("class_4076")
+    f.put("instanceRedirects", LLE + ".method_51559(" + SEC + ")Z", LFL)
+    f.hook(old="method_51559(" + SEC + ")Z", new="method_62874(J)Z", onlyUnder=LLE,
+           adapter=LFL + "$LegacyLightOnInSection", bridge=LFL + ".lightOnInColumn(L" + LFL + "$LegacyLightOnInSection;J)Z",
+           superBridge=LFL + ".superLightOnInSection(L" + LFL + "$SuperLightOnInColumn;" + SEC + ")Z",
+           superAccess=LFL + "$SuperLightOnInColumn", superAccessors=["method_62874(J)Z"],
+           basis="1.21.2 asks lightOnInColumn(column key); 1.21.1's lightOnInSection looked up the section's column "
+                 "(SectionPos.getZeroNode): a 1.21.1 override is asked for the column's bottom section (CbLevelFluids)")
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -513,6 +570,7 @@ def main():
     carving(f)
     chunk_state(f)
     chunk_storage(f)
+    fluids_light(f)
     f.write()
 
 

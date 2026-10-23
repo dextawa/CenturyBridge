@@ -134,6 +134,121 @@
     "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbLevelStorage#supplier(Lnet/minecraft/class_2487;)Ljava/util/function/Supplier;"
    ],
    "basis": "SimpleRegionStorage.write takes a supplier of the tag since 1.21.2: the tag 1.21.1's caller handed"
+  },
+  "net/minecraft/class_3611.method_15778(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;",
+    "keep:1",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#stateAt(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
+    "keep:2"
+   ],
+   "basis": "method_15778 takes the server level since 1.21.2 (and the block state at the position, which its callers read off the level): 1.21.1 ran fluids on server levels only (CbLevelFluids)"
+  },
+  "net/minecraft/class_3609.method_15725(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;",
+    "keep:1",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#stateAt(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
+    "keep:2"
+   ],
+   "basis": "method_15725 takes the server level since 1.21.2 (and the block state at the position, which its callers read off the level): 1.21.1 ran fluids on server levels only (CbLevelFluids)"
+  },
+  "net/minecraft/class_3609.method_15727(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_3610;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "method_15727 takes the server level since 1.21.2 (and the block state at the position, which its callers read off the level): 1.21.1 ran fluids on server levels only (CbLevelFluids)"
+  },
+  "net/minecraft/class_3609.method_15737(Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_3218;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;"
+   ],
+   "basis": "method_15737 takes the server level since 1.21.2 (and the block state at the position, which its callers read off the level): 1.21.1 ran fluids on server levels only (CbLevelFluids)"
+  },
+  "net/minecraft/class_3609.method_15726(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Ljava/util/Map;": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Ljava/util/Map;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "method_15726 takes the server level since 1.21.2 (and the block state at the position, which its callers read off the level): 1.21.1 ran fluids on server levels only (CbLevelFluids)"
+  },
+  "net/minecraft/class_3611.method_15792(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;Lnet/minecraft/class_5819;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;Lnet/minecraft/class_5819;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "method_15792 takes the server level since 1.21.2 (and the block state at the position, which its callers read off the level): 1.21.1 ran fluids on server levels only (CbLevelFluids)"
+  },
+  "net/minecraft/class_3610.method_15770(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;",
+    "keep:1",
+    "conv:0,1 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#stateAt(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;"
+   ],
+   "basis": "method_15770 takes the server level since 1.21.2 (and the block state at the position, which its callers read off the level): 1.21.1 ran fluids on server levels only (CbLevelFluids)"
+  },
+  "net/minecraft/class_3610.method_15757(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "method_15757 takes the server level since 1.21.2 (and the block state at the position, which its callers read off the level): 1.21.1 ran fluids on server levels only (CbLevelFluids)"
+  },
+  "net/minecraft/class_3558.method_51561(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;)Z": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;)Z",
+   "ops": [
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "1.21.2 asks a block's light properties of the state alone, as BlockStateBase's cache answered them for 1.21.1 (CbLevelLight)"
+  },
+  "net/minecraft/class_3558.method_20049(Lnet/minecraft/class_1922;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;I)I": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;I)I",
+   "ops": [
+    "keep:1",
+    "keep:3",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "1.21.2 asks a block's light properties of the state alone, as BlockStateBase's cache answered them for 1.21.1 (CbLevelLight)"
+  },
+  "net/minecraft/class_3558.method_51562(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;",
+   "ops": [
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "1.21.2 asks a block's light properties of the state alone, as BlockStateBase's cache answered them for 1.21.1 (CbLevelLight)"
+  },
+  "net/minecraft/class_3558.method_50017(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)I": {
+   "desc": "(Lnet/minecraft/class_2680;)I",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "1.21.2 asks a block's light properties of the state alone, as BlockStateBase's cache answered them for 1.21.1 (CbLevelLight)"
+  },
+  "net/minecraft/class_3558.method_50016(JLnet/minecraft/class_2680;JLnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z": {
+   "desc": "(Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z",
+   "ops": [
+    "keep:1",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "1.21.2 asks a block's light properties of the state alone, as BlockStateBase's cache answered them for 1.21.1 (CbLevelLight)"
   }
  },
  "ctorRedirects": {
@@ -199,7 +314,9 @@
   "net/minecraft/class_1922.method_8315()I": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks",
   "net/minecraft/class_2791$class_6745.comp_239()Lnet/minecraft/class_6761;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks",
   "net/minecraft/class_2791$class_6745.comp_240()Lnet/minecraft/class_6761;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks",
-  "net/minecraft/class_9312.comp_2808()Lnet/minecraft/class_3906;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStorage"
+  "net/minecraft/class_9312.comp_2808()Lnet/minecraft/class_3906;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStorage",
+  "net/minecraft/class_3558.method_20710(Lnet/minecraft/class_2680;JLnet/minecraft/class_2350;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight",
+  "net/minecraft/class_3568.method_51559(Lnet/minecraft/class_4076;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -230,7 +347,8 @@
  },
  "superRedirects": {
   "net/minecraft/class_2791.method_39294(Lnet/minecraft/class_6749;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks#setBlendingData",
-  "net/minecraft/class_1922.method_8315()I": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks#maxLightLevel"
+  "net/minecraft/class_1922.method_8315()I": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks#maxLightLevel",
+  "net/minecraft/class_3558.method_20710(Lnet/minecraft/class_2680;JLnet/minecraft/class_2350;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight#occlusionShape"
  },
  "overrideHooks": [
   {
@@ -710,6 +828,45 @@
     "method_17910(Lnet/minecraft/class_1923;Ljava/util/function/Supplier;)Ljava/util/concurrent/CompletableFuture;"
    ],
    "basis": "vanilla writes through write(pos, supplier) since 1.21.2: a 1.21.1 override gets the supplied tag; its super call supplies the tag it passes (CbLevelStorage)"
+  },
+  {
+   "old": "method_50017(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)I",
+   "new": "method_50017(Lnet/minecraft/class_2680;)I",
+   "onlyUnder": "net/minecraft/class_3558",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight$LegacyOpacity",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight.opacity(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelLight$LegacyOpacity;Lnet/minecraft/class_2680;)I",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight.superOpacity(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelLight$SuperOpacity;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight$SuperOpacity",
+   "superAccessors": [
+    "method_50017(Lnet/minecraft/class_2680;)I"
+   ],
+   "basis": "a 1.21.1 light engine's override, asked in 1.21.2's state-only shape: the origin as its position; its super call reaches 1.21.2's (CbLevelLight)"
+  },
+  {
+   "old": "method_50016(JLnet/minecraft/class_2680;JLnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z",
+   "new": "method_50016(Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z",
+   "onlyUnder": "net/minecraft/class_3558",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight$LegacyShapeOccludes",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight.shapeOccludes(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelLight$LegacyShapeOccludes;Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight.superShapeOccludes(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelLight$SuperShapeOccludes;JLnet/minecraft/class_2680;JLnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight$SuperShapeOccludes",
+   "superAccessors": [
+    "method_50016(Lnet/minecraft/class_2680;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z"
+   ],
+   "basis": "a 1.21.1 light engine's override, asked in 1.21.2's state-only shape: the origin as its position; its super call reaches 1.21.2's (CbLevelLight)"
+  },
+  {
+   "old": "method_51559(Lnet/minecraft/class_4076;)Z",
+   "new": "method_62874(J)Z",
+   "onlyUnder": "net/minecraft/class_3568",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids$LegacyLightOnInSection",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids.lightOnInColumn(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids$LegacyLightOnInSection;J)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids.superLightOnInSection(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids$SuperLightOnInColumn;Lnet/minecraft/class_4076;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids$SuperLightOnInColumn",
+   "superAccessors": [
+    "method_62874(J)Z"
+   ],
+   "basis": "1.21.2 asks lightOnInColumn(column key); 1.21.1's lightOnInSection looked up the section's column (SectionPos.getZeroNode): a 1.21.1 override is asked for the column's bottom section (CbLevelFluids)"
   }
  ],
  "overrideRenames": [
@@ -812,6 +969,15 @@
    ],
    "synth": [],
    "basis": "1.21.2's lighting no longer asks getMaxLightLevel (fixed at 15): a 1.21.1 override is reached by its mod's calls, which find it through this adapter (CbLevelChunks)"
+  },
+  {
+   "under": "net/minecraft/class_3558",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight$LegacyOcclusionShape",
+   "requires": [
+    "method_20710(Lnet/minecraft/class_2680;JLnet/minecraft/class_2350;)Lnet/minecraft/class_265;"
+   ],
+   "synth": [],
+   "basis": "1.21.2's engine asks the static occlusion shape: a 1.21.1 override is reached by its mod's calls, through this adapter (CbLevelLight)"
   }
  ],
  "lambdaAdapters": {
