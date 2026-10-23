@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.dext.centurybridge.step.v26_1.facade.ChatStatus;
+import top.dext.centurybridge.step.v26_1.facade.ItemRenderer;
 import top.dext.centurybridge.step.v26_1.rt.CbWallGameRenderer;
 
 /**
@@ -29,6 +30,8 @@ import top.dext.centurybridge.step.v26_1.rt.CbWallGameRenderer;
  *     own.</li>
  * <li>setWindowActive(active): 1.21.11's window-focus flag (isWindowActive's answer, set by the window's
  *     focus callback); 26.1's Window keeps that flag.</li>
+ * <li>getItemRenderer(): facade/ItemRenderer's one instance (26.1 has no ItemRenderer; its helpers are
+ *     ItemFeatureRenderer's).</li>
  * <li>getChatStatus(): 1.21.11's ChatStatus (facade/ChatStatus) from the same sources, in the same order:
  *     chat hidden in the options, chat not allowed by the launcher, chat not allowed by the account.</li>
  * <li>noRender: 1.21.11's public flag that made runTick skip the game renderer for a frame; 26.1's runTick
@@ -112,5 +115,9 @@ public abstract class CbWallMinecraftMixin extends ReentrantBlockableEventLoop<R
         if (this.screen != null) {
             this.noRender = false;
         }
+    }
+
+    public ItemRenderer getItemRenderer() {
+        return ItemRenderer.CB$INSTANCE;
     }
 }

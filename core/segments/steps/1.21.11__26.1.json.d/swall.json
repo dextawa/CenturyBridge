@@ -90,7 +90,8 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getDepthBiasConstant",
   "net/minecraft/class_1309.method_18867(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#entityMakeBrain",
   "net/minecraft/class_4095$class_5303.method_28335(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#providerMakeBrain",
-  "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
+  "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive",
+  "net/minecraft/class_766.method_71651(Lnet/minecraft/class_1060;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#registerTextures"
  },
  "overrideHooks": [
   {
@@ -187,14 +188,16 @@
   "net/minecraft/class_4831": "top/dext/centurybridge/step/v26_1/facade/ExpirableValue",
   "net/minecraft/class_765": "top/dext/centurybridge/step/v26_1/facade/LightTexture",
   "net/minecraft/class_12335": "top/dext/centurybridge/step/v26_1/facade/PanoramicScreenshotParameters",
-  "net/minecraft/class_310$class_5859": "top/dext/centurybridge/step/v26_1/facade/ChatStatus"
+  "net/minecraft/class_310$class_5859": "top/dext/centurybridge/step/v26_1/facade/ChatStatus",
+  "net/minecraft/class_918": "top/dext/centurybridge/step/v26_1/facade/ItemRenderer"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newModelBlockRenderer",
   "net/minecraft/class_775.<init>(Lnet/minecraft/class_11701;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBlockRender#newLiquidBlockRenderer",
   "com/mojang/blaze3d/pipeline/RenderPipeline$Snippet.<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#newSnippet",
-  "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#newBrain"
+  "net/minecraft/class_4095.<init>(Ljava/util/Collection;Ljava/util/Collection;Lcom/google/common/collect/ImmutableList;Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#newBrain",
+  "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#newPanorama"
  },
  "adapterHooks": [
   {
@@ -469,7 +472,11 @@
   "net/minecraft/class_765.field_4137:Lnet/minecraft/class_310;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
   "net/minecraft/class_765.field_60112:Lnet/minecraft/class_11285;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
   "net/minecraft/class_765.field_64675:Lnet/minecraft/class_5819;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
-  "net/minecraft/class_310$class_5859.field_28944:Lnet/minecraft/class_2561;": "1.21.11 private final field (the status message): the facade enum keeps it as its own message field, read through method_33885 (getMessage); only an access widener on the dead class ever reached it"
+  "net/minecraft/class_310$class_5859.field_28944:Lnet/minecraft/class_2561;": "1.21.11 private final field (the status message): the facade enum keeps it as its own message field, read through method_33885 (getMessage); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_918.method_71138(Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;Lnet/minecraft/class_4587$class_4665;)Lnet/minecraft/class_4588;": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_918.method_71139(Lnet/minecraft/class_1921;)Z": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_918.method_65569([II)I": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_918.method_23180(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Ljava/util/List;[III)V": "1.21.11 private static helper of ItemRenderer: its 26.1 counterpart is ItemFeatureRenderer's (computeFoilDecalPose / getFoilBuffer, useTransparentGlint, getLayerColorSafe, the quad loop of renderItem), which the facade's method_62476 / method_72988 use; only an access widener on the dead class ever reached it"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -577,6 +584,16 @@
     "keep",
     "conv top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#modelManager(Lnet/minecraft/class_776;)Lnet/minecraft/client/resources/model/ModelManager;"
    ]
+  },
+  "net/minecraft/class_766.<init>(Lnet/minecraft/class_751;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#constructed(Lnet/minecraft/class_766;Lnet/minecraft/class_751;)V",
+   "postArgs": [
+    0
+   ]
   }
  },
  "fieldGetters": {
@@ -669,7 +686,8 @@
   "net/minecraft/class_757.method_76544()Lnet/minecraft/class_12335;",
   "net/minecraft/class_310.method_43587(Lnet/minecraft/class_128;)V",
   "net/minecraft/class_310.method_15995(Z)V",
-  "net/minecraft/class_310.method_33884()Lnet/minecraft/class_310$class_5859;"
+  "net/minecraft/class_310.method_33884()Lnet/minecraft/class_310$class_5859;",
+  "net/minecraft/class_310.method_1480()Lnet/minecraft/class_918;"
  ],
  "interfaceCallRedirects": {
   "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
@@ -685,6 +703,18 @@
     "keep"
    ],
    "basis": "26.1 doWorldLoad takes the new world's initial game rules (empty: the saved world's own, as 1.21.11 loaded them)"
+  },
+  "net/minecraft/class_751.method_3156(Lnet/minecraft/class_310;FF)V": {
+   "desc": "(FF)V",
+   "ops": [
+    "drop",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 CubeMap.render(xRot, yRot): 1.21.11's minecraft argument only fed the window size its own projection now keeps"
   }
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_757.field_60579:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v26_1/rt/CbWallPanorama#guiCubeMap"
  }
 }
