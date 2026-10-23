@@ -157,4 +157,16 @@ public final class CbRenderSystem {
     public static void _setShaderTexture(int unit, int id) {
         com.mojang.blaze3d.systems.RenderSystem.setShaderTexture(unit, id);
     }
+
+    /**
+     * Blaze3D.process(storage, partialTick) / render(storage, partialTick), gone in 1.21.2 with RenderCallStorage
+     * (facade): 1.21.1's bodies only fetched the recording / processed queue and did nothing with it.
+     */
+    public static void method_35596(top.dext.centurybridge.step.v1_21_2.facade.RenderCallStorage storage, float partialTick) {
+        storage.method_35608();
+    }
+
+    public static void method_35597(top.dext.centurybridge.step.v1_21_2.facade.RenderCallStorage storage, float partialTick) {
+        storage.method_35609();
+    }
 }
