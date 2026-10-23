@@ -53,7 +53,7 @@ public final class JarProcessor {
      * parameter type lands on the facade.
      */
     /** verifier frame type for one parameter (locals are never widened here) */
-    private static Object frameType(org.objectweb.asm.Type t) {
+    static Object frameType(org.objectweb.asm.Type t) {
         switch (t.getSort()) {
             case org.objectweb.asm.Type.BOOLEAN, org.objectweb.asm.Type.CHAR, org.objectweb.asm.Type.BYTE,
                  org.objectweb.asm.Type.SHORT, org.objectweb.asm.Type.INT -> {
@@ -1008,8 +1008,7 @@ public final class JarProcessor {
                 }
                 String key = home + "." + nameDesc;
                 Chain.CallReshape r = chain.callReshapes.get(key);
-                reshapeArgs(m, mi, r.args);
-                mi.desc = r.newDesc;
+                reshapeCall(m, mi, r);
                 if (inherited && mi.getOpcode() == Opcodes.INVOKESTATIC) {
                     // a static call through a class of the jar resolved, in the source, to the class
                     // declaring it -- the home. Named through the mod class it no longer resolves when
@@ -1023,13 +1022,6 @@ public final class JarProcessor {
                         mi.itf = itf;
                     }
                 }
-                if (r.retKind != null) {
-                    org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
-                    org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
-                        ? new org.objectweb.asm.tree.InsnNode(newRet.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP)
-                        : new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, r.retOwner, r.retName, r.retDesc, false);
-                    m.instructions.insert(mi, after);
-                }
                 rewrites++;
                 top.dext.centurybridge.data.FullAudit.record(key, "call-reshape");
             }
@@ -1041,6 +1033,25 @@ public final class JarProcessor {
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
         cn.accept(cw);
         return cw.toByteArray();
+    }
+
+    /**
+     * One call site through a {@link Chain.CallReshape}: the arguments on the stack are re-pushed per
+     * the ops, the call takes the new descriptor, and the return value is dropped, converted or
+     * supplied right after it. Straight-line code at the call, so existing frames stay exact. Shared
+     * by {@link #rewriteCalls} and {@link MixinBridge} (a mixin's call through a renamed invoker).
+     */
+    static void reshapeCall(org.objectweb.asm.tree.MethodNode m, org.objectweb.asm.tree.MethodInsnNode mi,
+                            Chain.CallReshape r) {
+        reshapeArgs(m, mi, r.args);
+        mi.desc = r.newDesc;
+        if (r.retKind != null) {
+            org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
+            org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
+                ? new org.objectweb.asm.tree.InsnNode(newRet.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP)
+                : new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, r.retOwner, r.retName, r.retDesc, false);
+            m.instructions.insert(mi, after);
+        }
     }
 
     /**
@@ -1489,9 +1500,9 @@ public final class JarProcessor {
      * sits below the arguments (uninitializedThis, or NEW DUP's two refs) is
      * untouched, so existing frames stay exact.
      */
-    private static int[] reshapeArgs(org.objectweb.asm.tree.MethodNode m,
-                                     org.objectweb.asm.tree.MethodInsnNode mi,
-                                     Chain.CtorReshape r) {
+    static int[] reshapeArgs(org.objectweb.asm.tree.MethodNode m,
+                             org.objectweb.asm.tree.MethodInsnNode mi,
+                             Chain.CtorReshape r) {
         org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
         int[] slots = spillArgs(m, mi, old);
         org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
@@ -1538,12 +1549,12 @@ public final class JarProcessor {
 
     /** Redirect values are a class name, optionally "class#member" past the
      *  namespace wall where call-site names are no longer globally unique. */
-    private static String redirCls(String v) {
+    static String redirCls(String v) {
         int i = v.indexOf('#');
         return i < 0 ? v : v.substring(0, i);
     }
 
-    private static String redirName(String v, String callSiteName) {
+    static String redirName(String v, String callSiteName) {
         int i = v.indexOf('#');
         return i < 0 ? callSiteName : v.substring(i + 1);
     }
@@ -2114,6 +2125,16 @@ public final class JarProcessor {
         LayerIndex layer = indexLayer(entries);
         Map<String, String> jarSuper = layer.superOf;
         stripSignatures(entries, rpt, tag);
+        // the step's wiring knows what became of most members a mixin names: carry the mixins'
+        // invokers, accessors, shadows, injector selectors and @At targets across it first, so
+        // repair and triage judge the retargeted mixin (MixinBridge; every step but the wall --
+        // across it the refmaps take their names later, see repairPastWall)
+        MixinBridge.Result bridged = null;
+        if (MixinBridge.applies(chain)) {
+            bridged = MixinBridge.run(entries, chain,
+                "centurybridge/gen/MixinBridges_" + jarTag + "_" + chain.to.replace('.', '_')
+                    + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count()));
+        }
         // anchors are checked against real target bodies BEFORE triage: a repair
         // (desc-drop / descend) rewrites the selector triage then reads
         MixinRepair.Outcome repaired = chain.mixinRepair != null ? chain.mixinRepair.repair(entries) : null;
@@ -2160,6 +2181,12 @@ public final class JarProcessor {
         }
         stripConfigs(entries, triage, deadMixins);
         markConfigsOptional(entries, triage);
+        if (bridged != null) {
+            // a member MixinBridge carried counts once its mixin survived triage and repair kept its injector
+            for (String l : bridged.report(deadMixins, repaired != null ? repaired.disabled() : List.of())) {
+                rpt.notes.add(tag + l);
+            }
+        }
 
         // tombstone stub class must be unique per jar layer (all layers share the runtime classpath)
         // and per climb step: each step converts the jar again, and a later step's Tombstones class
@@ -2242,6 +2269,14 @@ public final class JarProcessor {
                 // the faithful equivalent of "this lang file adds nothing".
                 e.setValue("{}".getBytes(java.nio.charset.StandardCharsets.UTF_8));
                 rpt.notes.add(tag + "empty lang json " + name + " -> {} (26.2 parser rejects empty)");
+            } else if (name.endsWith(".json") && name.contains("refmap") && !chain.classRenames.isEmpty()) {
+                // the mixins' refmap names classes in strings the class rewrite never reads: the
+                // step's class renames carried into its values (MixinClassRenames)
+                byte[] rew = MixinClassRenames.refmap(e.getValue(), chain.classRenames);
+                if (rew != null) {
+                    e.setValue(rew);
+                    rpt.notes.add(tag + "refmap " + name + ": class renames carried into its values");
+                }
             }
         }
         if (!reg.stubs.isEmpty()) {
@@ -3814,8 +3849,8 @@ public final class JarProcessor {
             }
         };
         ClassVisitor sink = needClassRename
-            ? new org.objectweb.asm.commons.ClassRemapper(kinds,
-                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames))
+            ? MixinClassRenames.annotations(new org.objectweb.asm.commons.ClassRemapper(kinds,
+                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames)), chain.classRenames)
             : kinds;
         // super/implements-only rename layer: rewrites the hierarchy declaration
         // and super-invocations to the facade, leaving every other reference to
