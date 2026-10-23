@@ -99,6 +99,31 @@
    "ret": "keep",
    "basis": "mechanical: same values; returns a subtype of the old type"
   },
+  "net/minecraft/class_9104.method_56049(Lnet/minecraft/class_3222;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_2338;Lnet/minecraft/world/item/ItemInstance;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2 Lnet/minecraft/world/item/ItemInstance;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2073.method_8970(Lnet/minecraft/class_1799;)Z": {
+   "desc": "(Lnet/minecraft/world/item/ItemInstance;)Z",
+   "ops": [
+    "keep:0 Lnet/minecraft/world/item/ItemInstance;"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_4711.method_23889(Lnet/minecraft/class_3222;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_3222;Lnet/minecraft/class_2338;Lnet/minecraft/world/item/ItemInstance;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2 Lnet/minecraft/world/item/ItemInstance;"
+   ],
+   "basis": "mechanical: same values"
+  },
   "net/minecraft/class_10665.method_67051(Lnet/minecraft/class_3218;)V": {
    "desc": "(Lnet/minecraft/class_3218;)Ljava/lang/Object;",
    "ops": [
@@ -251,6 +276,17 @@
     "keep:0 Ljava/lang/Object;"
    ],
    "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_2876.method_12507(Lnet/minecraft/class_3218;Lnet/minecraft/class_2881;Ljava/util/List;ILnet/minecraft/class_2338;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2881;Ljava/util/List;I)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "drop:4"
+   ],
+   "basis": "mechanical: same values; dropped Lnet/minecraft/core/BlockPos;: no body of V reads it, but net/minecraft/class_2876 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
   },
   "net/minecraft/class_4662$class_7402.method_43316()Lnet/minecraft/class_3746;": {
    "desc": "()Lnet/minecraft/class_5281;",
