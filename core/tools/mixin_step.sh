@@ -21,8 +21,10 @@ code_of() { case "$1" in 26.*) echo "data/jars/client-$1.jar" ;; *) echo "data/j
 if [ "$SEG" = "1.21.11__26.1" ]; then
     echo "mixin probe: the namespace wall is not measured yet"; exit 0
 fi
-P=probe/mixin/$SEG; DAMAGE=probe/mixin-damage/$SEG.tsv
-mkdir -p "$P" probe/mixin-damage
+# CB_MIXIN_PROBES: where the probe work and the damage tables live (default ~/cbwork/probe)
+PR="${CB_MIXIN_PROBES:-probe}"
+P=$PR/mixin/$SEG; DAMAGE=$PR/mixin-damage/$SEG.tsv
+mkdir -p "$P" "$PR/mixin-damage"
 if [ ! -f "$DAMAGE" ] || [ "${CB_REPROBE:-}" = 1 ]; then
     "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-probe "$(code_of "$V")" "$P/mprobe-$V.jar" > "$P/probe.log" 2>&1 \
         || { echo "mixin probe failed"; tail -3 "$P/probe.log"; exit 1; }
