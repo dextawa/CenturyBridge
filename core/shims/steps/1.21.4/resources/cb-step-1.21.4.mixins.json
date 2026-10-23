@@ -14,9 +14,11 @@
     "CbGuiScrollWidgetMixin",
     "CbItemLayerAccess",
     "CbItemModelTypesMixin",
+    "CbItemRendererMixin",
     "CbItemStackRenderStateAccess",
     "CbItemTintSourcesMixin",
-    "CbRestClientPacketsMixin"
+    "CbRestClientPacketsMixin",
+    "CbSpecialModelTypesMixin"
   ],
   "server": [],
   "injectors": {

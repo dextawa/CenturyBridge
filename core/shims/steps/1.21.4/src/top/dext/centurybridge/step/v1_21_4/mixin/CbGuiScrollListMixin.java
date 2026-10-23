@@ -15,8 +15,10 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbGuiScroll;
  * override of them is renamed to it, overrideRenames), the rest through the adapters of {@link CbGuiScroll}:
  * <ul>
  * <li>getScrollAmount / setScrollAmount / clampScrollAmount / getMaxScroll / scrollbarVisible /
- *     getScrollbarPosition / isValidMouseClick are scrollAmount / setScrollAmount / refreshScrollAmount /
- *     maxScrollAmount / scrollbarVisible / scrollBarX / isValidClickButton;</li>
+ *     getScrollbarPosition are scrollAmount / setScrollAmount / refreshScrollAmount / maxScrollAmount /
+ *     scrollbarVisible / scrollBarX;</li>
+ * <li>isValidMouseClick: 1.21.3's mouseClicked refused a press it refused first; a list overriding it is asked so again
+ *     (not renamed onto isValidClickButton, which 1.21.4's scroll bar asks: a list overriding both keeps both);</li>
  * <li>getMaxPosition is contentHeight less the 4 pixels 1.21.4 adds to it; updateScrollingState is
  *     updateScrolling (both reconnected by override hooks);</li>
  * <li>setClampedScrollAmount: every 1.21.3 scroll set went through it (setScrollAmount called it), so 1.21.4's
@@ -141,9 +143,16 @@ public abstract class CbGuiScrollListMixin extends net.minecraft.class_9017 {
         }
     }
 
-    /** was isValidMouseClick(int) (method_53812) */
+    /** was isValidMouseClick(int) (method_53812): the left button */
     protected boolean method_53812(int button) {
-        return this.method_25351(button);
+        if (this instanceof CbGuiScroll.CbLegacyValidMouseClick legacy && CbGuiScroll.enter(this, CbGuiScroll.VALID_MOUSE_CLICK)) {
+            try {
+                return legacy.cb$isValidMouseClick(button);
+            } finally {
+                CbGuiScroll.exit(this, CbGuiScroll.VALID_MOUSE_CLICK);
+            }
+        }
+        return button == 0;
     }
 
     /** was updateScrollingState(double, double, int) (method_25318) */
@@ -178,6 +187,10 @@ public abstract class CbGuiScrollListMixin extends net.minecraft.class_9017 {
      */
     @Override
     public boolean method_25402(double mouseX, double mouseY, int button) {
+        // 1.21.3 order: a list with its own isValidMouseClick refuses the press before anything else
+        if (this instanceof CbGuiScroll.CbLegacyValidMouseClick && !this.method_53812(button)) {
+            return false;
+        }
         if (super.method_25402(mouseX, mouseY, button)) {
             return true;
         }
@@ -185,7 +198,7 @@ public abstract class CbGuiScrollListMixin extends net.minecraft.class_9017 {
             return false;
         }
         net.minecraft.class_350<?> self = cb$self();
-        if (!this.method_25351(button) || !this.method_25405(mouseX, mouseY) || self.method_19355(mouseX, mouseY).isPresent()) {
+        if (!this.method_53812(button) || !this.method_25405(mouseX, mouseY) || self.method_19355(mouseX, mouseY).isPresent()) {
             return false;
         }
         int x = (int) (mouseX - (double) (this.method_46426() + this.field_22758 / 2 - self.method_25322() / 2));

@@ -22,3 +22,5 @@ extendable class net/minecraft/class_2735
 extendable method net/minecraft/class_2735 equals (Ljava/lang/Object;)Z
 extendable method net/minecraft/class_2735 hashCode ()I
 extendable method net/minecraft/class_2735 toString ()Ljava/lang/String;
+# s9client: ItemRenderer.getCompassFoilBuffer(buffers, renderType, pose) was public in 1.21.3; private in 1.21.4, same body
+accessible method net/minecraft/class_918 method_30114 (Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;Lnet/minecraft/class_4587$class_4665;)Lnet/minecraft/class_4588;

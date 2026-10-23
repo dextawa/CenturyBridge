@@ -21,7 +21,6 @@ RENAMES = [
     ("method_25331()I", "method_44390", ASL, "AbstractSelectionList.getMaxScroll is AbstractScrollArea.maxScrollAmount: max(0, maxPosition - (height - 4)) = max(0, contentHeight - height)"),
     ("method_57717()Z", "method_44392", ASL, "AbstractSelectionList.scrollbarVisible is AbstractScrollArea.scrollbarVisible (max scroll > 0)"),
     ("method_25329()I", "method_65507", ASL, "AbstractSelectionList.getScrollbarPosition is scrollBarX since 1.21.4 (rows' right + 8 both ways)"),
-    ("method_53812(I)Z", "method_25351", ASL, "AbstractSelectionList.isValidMouseClick is AbstractWidget.isValidClickButton (button 0), which 1.21.4's list asks; the list's own isValidClickButton was unused in 1.21.3"),
     ("method_44381()I", "method_65509", ASW, "AbstractScrollWidget.innerPadding is AbstractTextAreaWidget.innerPadding (4)"),
     ("method_44385()I", "method_65512", ASW, "AbstractScrollWidget.totalInnerPadding is AbstractTextAreaWidget.totalInnerPadding (innerPadding * 2)"),
     ("method_52233(Lnet/minecraft/class_332;IIII)V", "method_65511", ASW, "AbstractScrollWidget.renderBorder(GuiGraphics, x, y, w, h) is AbstractTextAreaWidget.renderBorder"),
@@ -38,6 +37,8 @@ ADAPTERS = [
      "1.21.3's mouseClicked offered a press hitting no entry to clickedHeader; 1.21.4 has no header clicks, the list's mouseClicked asks the override again (CbGuiScrollListMixin)"),
     ("method_44388(DD)Z", "cb$withinContentAreaPoint", "CbLegacyContentAreaPoint", ASW,
      "AbstractScrollWidget.mouseClicked took a press inside withinContentAreaPoint; 1.21.4 asks isMouseOver, so a widget overriding it gets 1.21.3's mouseClicked (CbGuiScrollTextAreaMixin)"),
+    ("method_53812(I)Z", "cb$isValidMouseClick", "CbLegacyValidMouseClick", ASL,
+     "1.21.3's list mouseClicked first asked isValidMouseClick and refused the press on false; 1.21.4 has no such gate. The list's mouseClicked asks the override again (CbGuiScrollListMixin). Not renamed onto isValidClickButton: a list overriding both keeps each where 1.21.3 asked it"),
     ("method_25361(DD)Z", "cb$clicked", "CbLegacyClicked", AW,
      "AbstractWidget.mouseClicked asked clicked(x, y); 1.21.4 asks isMouseOver, so a widget overriding clicked is asked it there again (CbGuiScrollWidgetMixin)"),
 ]
@@ -100,6 +101,7 @@ def main():
     frag["superRenames"] = sr
     gui_misc(frag)
     item_predicates(frag)
+    item_renderer(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -188,6 +190,87 @@ def item_predicates(frag):
     frag["_s9client_depRenames_basis"] = ("1.21.4's Fabric API (0.119.4) no longer ships fabric-rendering-v0, which 1.21.3's (0.114.1) did "
                                           "(core/tools/fapi_modules.py); this layer gives its two classes back (compat/fapi/v0: "
                                           "ColorProviderRegistry, InvalidateRenderStateCallback with v0's forwarding from rendering-v1)")
+
+
+
+def item_renderer(frag):
+    """1.21.3 ItemRenderer's model-based API and ItemModelShaper on 1.21.4."""
+    IR = RT + "/CbItemRender"
+    covers = set(frag.get("covers", []))
+    for m in ["method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V",
+              "method_62477(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V",
+              "method_4019(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;",
+              "method_62475(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_811;)Lnet/minecraft/class_1087;",
+              "method_14491(Lnet/minecraft/class_3300;)V"]:
+        covers.add("net/minecraft/class_918." + m)
+    frag["covers"] = sorted(covers)
+    fg = frag.setdefault("fieldGetters", {})
+    fg["net/minecraft/class_918.field_40532:Lnet/minecraft/class_1091;"] = IR
+    fg["net/minecraft/class_918.field_40533:Lnet/minecraft/class_1091;"] = IR
+    frag.setdefault("superCtorReshapes", {})["net/minecraft/class_918.<init>(Lnet/minecraft/class_1092;Lnet/minecraft/class_325;Lnet/minecraft/class_756;)V"] = {
+        "desc": "(Lnet/minecraft/class_10442;)V",
+        "ops": ["conv:0 " + IR + "#cbResolver(Lnet/minecraft/class_1092;)Lnet/minecraft/class_10442;"],
+        "post": IR + "#cbConstructed(Lnet/minecraft/class_918;Lnet/minecraft/class_325;)V",
+        "postArgs": [1],
+        "basis": "ItemRenderer resolves items through an ItemModelResolver since 1.21.4 (built on the same model manager); the ItemColors given colours the renderer's models of a mod's own as in 1.21.3 (CbItemRender); the BlockEntityWithoutLevelRenderer has no place -- 1.21.4 draws special items through their definitions"}
+    frag.setdefault("classRenames", {})["net/minecraft/class_763"] = FAC + "ItemModelShaper"
+    # render layers that took the ItemRenderer (or ItemInHandRenderer) to draw held / worn items: 1.21.4's layers draw
+    # the ItemStackRenderState their entity's render state carries, resolved by 1.21.4's own renderer
+    scr = frag.setdefault("superCtorReshapes", {})
+    RLP = "Lnet/minecraft/class_3883;"
+    IRD = "Lnet/minecraft/class_918;"
+    for owner in ["class_1005", "class_4004", "class_4043", "class_5697", "class_977", "class_989", "class_990"]:
+        scr["net/minecraft/%s.<init>(%s%s)V" % (owner, RLP, IRD)] = {
+            "desc": "(%s)V" % RLP, "ops": ["keep:0"],
+            "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"}
+    scr["net/minecraft/class_996.<init>(%sLnet/minecraft/class_776;%s)V" % (RLP, IRD)] = {
+        "desc": "(%sLnet/minecraft/class_776;)V" % RLP, "ops": ["keep:0", "keep:1"],
+        "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"}
+    scr["net/minecraft/class_976.<init>(%sLnet/minecraft/class_5599;%s)V" % (RLP, IRD)] = {
+        "desc": "(%sLnet/minecraft/class_5599;)V" % RLP, "ops": ["keep:0", "keep:1"],
+        "basis": "CustomHeadLayer draws a head item from the render state's ItemStackRenderState since 1.21.4"}
+    scr["net/minecraft/class_976.<init>(%sLnet/minecraft/class_5599;Lnet/minecraft/class_976$class_9994;%s)V" % (RLP, IRD)] = {
+        "desc": "(%sLnet/minecraft/class_5599;Lnet/minecraft/class_976$class_9994;)V" % RLP, "ops": ["keep:0", "keep:1", "keep:2"],
+        "basis": "CustomHeadLayer draws a head item from the render state's ItemStackRenderState since 1.21.4"}
+    scr["net/minecraft/class_759.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_898;%s)V" % IRD] = {
+        "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_898;%sLnet/minecraft/class_10442;)V" % IRD,
+        "ops": ["keep:0", "keep:1", "keep:2", "push " + IR + "#cbGameResolver()Lnet/minecraft/class_10442;"],
+        "basis": "ItemInHandRenderer also takes the item model resolver since 1.21.4: the game's"}
+    # BlockEntityWithoutLevelRenderer and Fabric API's builtin item renderers
+    cr = frag.setdefault("classRenames", {})
+    cr["net/minecraft/class_756"] = FAC + "BlockEntityWithoutLevelRenderer"
+    FR = "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/"
+    for c in ["BuiltinItemRenderer", "BuiltinItemRendererRegistry", "BuiltinItemRendererRegistry$DynamicItemRenderer"]:
+        cr["net/fabricmc/fabric/api/client/rendering/v1/" + c] = FR + c
+    gaps = frag.setdefault("facadeGaps", {})
+    why = ("private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; "
+           "the facade draws them through 1.21.4's special model renderers, and only an access widener reached these")
+    for f in ["field_3981:[Lnet/minecraft/class_2627;", "field_3984:Lnet/minecraft/class_2627;", "field_3976:Lnet/minecraft/class_2595;",
+              "field_3978:Lnet/minecraft/class_2595;", "field_3977:Lnet/minecraft/class_2611;", "field_3983:Lnet/minecraft/class_2573;",
+              "field_3982:Lnet/minecraft/class_2587;", "field_3979:Lnet/minecraft/class_2597;", "field_42909:Lnet/minecraft/class_8172;",
+              "field_3980:Lnet/minecraft/class_600;", "field_3985:Lnet/minecraft/class_613;", "field_27737:Ljava/util/Map;"]:
+        gaps["net/minecraft/class_756." + f] = why
+    cr["net/minecraft/class_806"] = FAC + "BakedOverrides"
+    cr["net/minecraft/class_806$class_5827"] = FAC + "BakedOverrides$BakedOverride"
+    cr["net/minecraft/class_806$class_5828"] = FAC + "BakedOverrides$PropertyMatcher"
+    cr["net/minecraft/class_799"] = FAC + "ItemOverride"
+    cr["net/minecraft/class_799$class_5826"] = FAC + "ItemOverride$Predicate"
+    cr["net/minecraft/class_1090"] = FAC + "BuiltInModel"
+    orr = frag.setdefault("overrideRenames", [])
+    orr[:] = [r for r in orr if r.get("family") != "baked-model"]
+    orr.append({"old": "method_4713()Z", "new": "cb$isCustomRenderer", "onlyUnder": "net/minecraft/class_1087",
+                "adapter": IR + "$CbLegacyCustomRenderer", "family": "baked-model",
+                "basis": "BakedModel.isCustomRenderer is gone in 1.21.4; ItemRenderer.render(.., model) asks a 1.21.3 model again (CbItemRender)"})
+    orr.append({"old": "method_4710()Lnet/minecraft/class_806;", "new": "cb$getOverrides", "onlyUnder": "net/minecraft/class_1087",
+                "adapter": IR + "$CbLegacyOverrides", "family": "baked-model",
+                "basis": "BakedModel.getOverrides is gone in 1.21.4; calls through BakedModel reach a 1.21.3 model's own (CbItemRender.getOverrides)"})
+    ir = frag.setdefault("instanceRedirects", {})
+    ir["net/minecraft/class_1087.method_4713()Z"] = IR + "#isCustomRenderer"
+    ir["net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;"] = IR + "#getOverrides"
+    frag.setdefault("superRedirects", {})["net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;"] = IR + "#superGetOverrides"
+    rt = set(frag.get("resourceTypes", []))
+    rt.add("centurybridge:legacy_builtin")
+    frag["resourceTypes"] = sorted(rt)
 
 
 if __name__ == "__main__":
