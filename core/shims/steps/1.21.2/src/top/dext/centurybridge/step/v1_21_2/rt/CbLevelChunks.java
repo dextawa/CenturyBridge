@@ -158,11 +158,16 @@ public final class CbLevelChunks {
 
     /** levelChunk.postProcessGeneration() */
     public static void method_12221(class_2818 self) {
+        self.method_12221(serverLevel(self));
+    }
+
+    /** the chunk's server level (also frameDefaults of a 1.21.1 postProcessGeneration override entered directly) */
+    public static class_3218 serverLevel(class_2818 self) {
         if (!(self.method_12200() instanceof class_3218 level)) {
             throw new UnsupportedOperationException("1.21.1's LevelChunk.postProcessGeneration on a client chunk: "
                 + "1.21.1 ran it on server chunks only, as 1.21.2's runPostProcessing(ServerLevel)");
         }
-        self.method_12221(level);
+        return level;
     }
 
     // ---- light ----
@@ -194,7 +199,8 @@ public final class CbLevelChunks {
         return self.method_39296(gameTime(self));
     }
 
-    private static long gameTime(class_2791 chunk) {
+    /** the game time 1.21.1's chunk serializer packed ticks with (also frameDefaults of getTicksForSerialization) */
+    public static long gameTime(class_2791 chunk) {
         class_2791 c = chunk instanceof class_2821 imposter ? imposter.method_12240() : chunk;
         return c instanceof class_2818 level ? level.method_12200().method_8510() : 0L;
     }

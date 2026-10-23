@@ -6,6 +6,8 @@ import net.minecraft.class_2338;
 import net.minecraft.class_2680;
 import net.minecraft.class_3218;
 import net.minecraft.class_3568;
+import net.minecraft.class_3610;
+import net.minecraft.class_3611;
 import net.minecraft.class_4076;
 
 /**
@@ -37,6 +39,14 @@ public final class CbLevelFluids {
     // ---- light ----
 
     /** levelLightEngine.lightOnInSection(sectionPos) */
+    /**
+     * frameDefaults of a 1.21.1 Fluid.tick / FlowingFluid.spread override entered directly: the block state at the
+     * position, which 1.21.2 hands both and 1.21.1 read from the level there
+     */
+    public static class_2680 stateAt(class_3611 self, class_1937 level, class_2338 pos, class_3610 fluid) {
+        return level.method_8320(pos);
+    }
+
     public static boolean method_51559(class_3568 self, class_4076 section) {
         if (self instanceof LegacyLightOnInSection l) {
             return l.method_51559(section);

@@ -139,6 +139,11 @@ public final class CbLevelMisc {
 
     /** portalShape.createPortalBlocks() in the level it was built in */
     public static void method_10363(class_2424 self) {
+        self.method_10363(portalLevel(self));
+    }
+
+    /** the level a 1.21.1 shape was built in (also frameDefaults of a createPortalBlocks() override entered directly) */
+    public static class_1936 portalLevel(class_2424 self) {
         class_1936 level;
         synchronized (PORTAL_LEVELS) {
             level = PORTAL_LEVELS.get(self);
@@ -147,7 +152,7 @@ public final class CbLevelMisc {
             throw new IllegalStateException("1.21.1's PortalShape.createPortalBlocks() on a shape 1.21.2 made: "
                 + "1.21.2 hands the level to createPortalBlocks(level)");
         }
-        self.method_10363(level);
+        return level;
     }
 
     /** the shape a 1.21.1 subclass's super(level, pos, axis) stands for, field by field (CbLevelPortalAccess) */

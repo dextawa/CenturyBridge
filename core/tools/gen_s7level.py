@@ -937,6 +937,38 @@ def blocks_rest(f):
                                          "(CbLevelSavedDataMixin)"})
 
 
+# ------------------------------------------------------------------------------------------- generic drift
+LGN = RT + "/CbLevelGeneric"
+
+
+def generic(f):
+    m = "method_16627(" + L("class_3485") + L("class_2338") + L("class_2470") + L("class_5819") + ")Ljava/util/List;"
+    for c in f.declarers("method_16627", m[len("method_16627"):]):
+        f.reshape(c + "." + m, m[len("method_16627"):], ["keep", "keep", "keep", "keep"],
+                  "getShuffledJigsawBlocks answers JigsawBlockInfos since 1.21.2: 1.21.1's StructureBlockInfos, each "
+                  "JigsawBlockInfo's block info (CbLevelGeneric)",
+                  ret="conv " + LGN + "#blockInfos(Ljava/util/List;)Ljava/util/List;")
+    f.w["convertHooks"].append({"under": MC + "class_3784", "member": m,
+                                "ret": LGN + "#jigsawInfos(Ljava/util/List;)Ljava/util/List;",
+                                "basis": "a 1.21.1 getShuffledJigsawBlocks override answers StructureBlockInfos; 1.21.2 "
+                                         "reads JigsawBlockInfos parsed from them (JigsawBlockInfo.of)"})
+    f.put("fieldGetters", MC + "class_8965.field_47368:Lcom/mojang/serialization/Codec;", LGN)
+
+
+# ------------------------------------------------------------------------------------------- frames judgments
+def frame_defaults(f):
+    """mechanical.json's frames hooks in this area: what 1.21.1 used, for an old override entered directly"""
+    W_, LV, PO, FS_ = L("class_1937"), L("class_2338"), L("class_2338"), L("class_3610")
+    f.put("frameDefaults", "method_27325()" + L("class_1928"),
+          {"0": LLV + "#features(" + L("class_1928") + ")" + L("class_7699")})
+    f.put("frameDefaults", "method_39296()" + L("class_2791$class_6745"), {"0": LCH + "#gameTime(" + L("class_2791") + ")J"})
+    f.put("frameDefaults", "method_12221()V", {"0": LCH + "#serverLevel(" + L("class_2818") + ")" + L("class_3218")})
+    st = {"2": LFL + "#stateAt(" + L("class_3611") + W_ + PO + FS_ + ")" + L("class_2680")}
+    f.put("frameDefaults", "method_15725(" + W_ + PO + FS_ + ")V", st)
+    f.put("frameDefaults", "method_15778(" + W_ + PO + FS_ + ")V", dict(st))
+    f.put("frameDefaults", "method_10363()V", {"0": LMI + "#portalLevel(" + L("class_2424") + ")" + L("class_1936")})
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -962,6 +994,8 @@ def main():
     palette_and_be_types(f)
     flowing(f)
     blocks_rest(f)
+    generic(f)
+    frame_defaults(f)
     f.write()
 
 

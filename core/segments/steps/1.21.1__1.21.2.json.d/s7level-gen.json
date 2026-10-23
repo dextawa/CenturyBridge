@@ -512,6 +512,61 @@
     "keep:7"
    ],
    "basis": "DoubleBlockCombiner.combineWithNeigbour takes any Property of Direction since 1.21.2; 1.21.1 DirectionProperty is one"
+  },
+  "net/minecraft/class_3776.method_16627(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "getShuffledJigsawBlocks answers JigsawBlockInfos since 1.21.2: 1.21.1's StructureBlockInfos, each JigsawBlockInfo's block info (CbLevelGeneric)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelGeneric#blockInfos(Ljava/util/List;)Ljava/util/List;"
+  },
+  "net/minecraft/class_3777.method_16627(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "getShuffledJigsawBlocks answers JigsawBlockInfos since 1.21.2: 1.21.1's StructureBlockInfos, each JigsawBlockInfo's block info (CbLevelGeneric)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelGeneric#blockInfos(Ljava/util/List;)Ljava/util/List;"
+  },
+  "net/minecraft/class_3781.method_16627(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "getShuffledJigsawBlocks answers JigsawBlockInfos since 1.21.2: 1.21.1's StructureBlockInfos, each JigsawBlockInfo's block info (CbLevelGeneric)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelGeneric#blockInfos(Ljava/util/List;)Ljava/util/List;"
+  },
+  "net/minecraft/class_3782.method_16627(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "getShuffledJigsawBlocks answers JigsawBlockInfos since 1.21.2: 1.21.1's StructureBlockInfos, each JigsawBlockInfo's block info (CbLevelGeneric)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelGeneric#blockInfos(Ljava/util/List;)Ljava/util/List;"
+  },
+  "net/minecraft/class_3784.method_16627(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "getShuffledJigsawBlocks answers JigsawBlockInfos since 1.21.2: 1.21.1's StructureBlockInfos, each JigsawBlockInfo's block info (CbLevelGeneric)",
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelGeneric#blockInfos(Ljava/util/List;)Ljava/util/List;"
   }
  },
  "ctorRedirects": {
@@ -660,7 +715,8 @@
   "net/minecraft/class_39.field_716:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
   "net/minecraft/class_39.field_778:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
   "net/minecraft/class_6798.field_35751:Lnet/minecraft/class_6798;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving",
-  "net/minecraft/class_6749.field_35682:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc"
+  "net/minecraft/class_6749.field_35682:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc",
+  "net/minecraft/class_8965.field_47368:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelGeneric"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -1344,8 +1400,34 @@
   },
   "method_39956()Lnet/minecraft/class_2837;": {
    "0": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette#resize(Lnet/minecraft/class_2837;)Lnet/minecraft/class_2835;"
+  },
+  "method_27325()Lnet/minecraft/class_1928;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels#features(Lnet/minecraft/class_1928;)Lnet/minecraft/class_7699;"
+  },
+  "method_39296()Lnet/minecraft/class_2791$class_6745;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks#gameTime(Lnet/minecraft/class_2791;)J"
+  },
+  "method_12221()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks#serverLevel(Lnet/minecraft/class_2818;)Lnet/minecraft/class_3218;"
+  },
+  "method_15725(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;)V": {
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#stateAt(Lnet/minecraft/class_3611;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;)Lnet/minecraft/class_2680;"
+  },
+  "method_15778(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;)V": {
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFluids#stateAt(Lnet/minecraft/class_3611;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_3610;)Lnet/minecraft/class_2680;"
+  },
+  "method_10363()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc#portalLevel(Lnet/minecraft/class_2424;)Lnet/minecraft/class_1936;"
   }
  },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_3784",
+   "member": "method_16627(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_5819;)Ljava/util/List;",
+   "ret": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelGeneric#jigsawInfos(Ljava/util/List;)Ljava/util/List;",
+   "basis": "a 1.21.1 getShuffledJigsawBlocks override answers StructureBlockInfos; 1.21.2 reads JigsawBlockInfos parsed from them (JigsawBlockInfo.of)"
+  }
+ ],
  "adapterHooks": [
   {
    "under": "net/minecraft/class_4970$class_8176",
