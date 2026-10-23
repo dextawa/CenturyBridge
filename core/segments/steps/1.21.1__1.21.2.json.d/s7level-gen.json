@@ -1,4 +1,11 @@
 {
+ "classRenames": {
+  "net/minecraft/class_2893$class_2894": "top/dext/centurybridge/step/v1_21_2/facade/GenerationStepCarving",
+  "net/minecraft/class_5851": "top/dext/centurybridge/step/v1_21_2/facade/CarvingMaskPlacement"
+ },
+ "facadeGaps": {
+  "net/minecraft/class_5851.field_28934:Lcom/mojang/serialization/Codec;": "a Codec until 1.20.4; 1.20.5 made it the MapCodec the facade has, and the 1.20.4 -> 1.20.5 step moves a mod's read of the Codec (s4rest-gen.json fieldGetters), so no mod reaches this step reading it"
+ },
  "superRenames": {
   "net/minecraft/class_1927": "top/dext/centurybridge/step/v1_21_2/facade/Explosion"
  },
@@ -137,7 +144,15 @@
   "net/minecraft/class_1937.method_46407(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;Lnet/minecraft/class_243;FZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
   "net/minecraft/class_1937.method_55117(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
   "net/minecraft/class_1937.method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
-  "net/minecraft/class_1937.method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions"
+  "net/minecraft/class_1937.method_46668(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;ZLnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1927;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
+  "net/minecraft/class_2794.method_12108(Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;Lnet/minecraft/class_2893$class_2894;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving",
+  "net/minecraft/class_2839.method_12025(Lnet/minecraft/class_2893$class_2894;)Lnet/minecraft/class_6643;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving",
+  "net/minecraft/class_2839.method_28510(Lnet/minecraft/class_2893$class_2894;)Lnet/minecraft/class_6643;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving",
+  "net/minecraft/class_2839.method_12307(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_6643;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving",
+  "net/minecraft/class_5444.method_30459(Lnet/minecraft/class_1923;Lnet/minecraft/class_2893$class_2894;)Lnet/minecraft/class_6643;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving",
+  "net/minecraft/class_5485$class_7868.method_46675(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_6880;)Lnet/minecraft/class_5485$class_7868;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving",
+  "net/minecraft/class_5485$class_5495.method_30991(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)Lnet/minecraft/class_5485$class_5495;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving",
+  "net/minecraft/class_5485.method_30976(Lnet/minecraft/class_2893$class_2894;)Ljava/lang/Iterable;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -156,7 +171,8 @@
   "net/minecraft/class_39.field_489:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
   "net/minecraft/class_39.field_607:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
   "net/minecraft/class_39.field_716:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
-  "net/minecraft/class_39.field_778:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot"
+  "net/minecraft/class_39.field_778:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
+  "net/minecraft/class_6798.field_35751:Lnet/minecraft/class_6798;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_4970.field_23156:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot"
@@ -494,6 +510,97 @@
     "method_8454(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1937$class_7867;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V"
    ],
    "basis": "1.21.1's Level.method_8454 called this.method_46668(.., true, ..) (ServerLevel's: false, then the packets): a level overriding only method_46668 is asked 1.21.2's method_8454 as 1.21.1's inherited one would have asked it; method_8454's own hook takes precedence in a class overriding both"
+  },
+  {
+   "old": "method_12108(Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;Lnet/minecraft/class_2893$class_2894;)V",
+   "new": "method_12108(Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)V",
+   "onlyUnder": "net/minecraft/class_2794",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyApplyCarvers",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.applyCarvers(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyApplyCarvers;Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.superApplyCarvers(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperApplyCarvers;Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;Lnet/minecraft/class_2893$class_2894;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperApplyCarvers",
+   "superAccessors": [
+    "method_12108(Lnet/minecraft/class_3233;JLnet/minecraft/class_7138;Lnet/minecraft/class_4543;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)V"
+   ],
+   "basis": "1.21.2 keeps one carving step, 1.21.1's AIR: vanilla asks a 1.21.1 override for it; the override's super call reaches 1.21.2's for AIR and 1.21.1's second step, LIQUID, otherwise (CbLevelCarving)"
+  },
+  {
+   "old": "method_12025(Lnet/minecraft/class_2893$class_2894;)Lnet/minecraft/class_6643;",
+   "new": "method_12025()Lnet/minecraft/class_6643;",
+   "onlyUnder": "net/minecraft/class_2839",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyCarvingMask",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.carvingMask(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyCarvingMask;)Lnet/minecraft/class_6643;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.superCarvingMask(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperCarvingMask;Lnet/minecraft/class_2893$class_2894;)Lnet/minecraft/class_6643;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperCarvingMask",
+   "superAccessors": [
+    "method_12025()Lnet/minecraft/class_6643;"
+   ],
+   "basis": "1.21.2 keeps one carving step, 1.21.1's AIR: vanilla asks a 1.21.1 override for it; the override's super call reaches 1.21.2's for AIR and 1.21.1's second step, LIQUID, otherwise (CbLevelCarving)"
+  },
+  {
+   "old": "method_28510(Lnet/minecraft/class_2893$class_2894;)Lnet/minecraft/class_6643;",
+   "new": "method_28510()Lnet/minecraft/class_6643;",
+   "onlyUnder": "net/minecraft/class_2839",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyOrCreateCarvingMask",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.orCreateCarvingMask(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyOrCreateCarvingMask;)Lnet/minecraft/class_6643;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.superOrCreateCarvingMask(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperOrCreateCarvingMask;Lnet/minecraft/class_2893$class_2894;)Lnet/minecraft/class_6643;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperOrCreateCarvingMask",
+   "superAccessors": [
+    "method_28510()Lnet/minecraft/class_6643;"
+   ],
+   "basis": "1.21.2 keeps one carving step, 1.21.1's AIR: vanilla asks a 1.21.1 override for it; the override's super call reaches 1.21.2's for AIR and 1.21.1's second step, LIQUID, otherwise (CbLevelCarving)"
+  },
+  {
+   "old": "method_12307(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_6643;)V",
+   "new": "method_12307(Lnet/minecraft/class_6643;)V",
+   "onlyUnder": "net/minecraft/class_2839",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacySetCarvingMask",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.setCarvingMask(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacySetCarvingMask;Lnet/minecraft/class_6643;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.superSetCarvingMask(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperSetCarvingMask;Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_6643;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperSetCarvingMask",
+   "superAccessors": [
+    "method_12307(Lnet/minecraft/class_6643;)V"
+   ],
+   "basis": "1.21.2 keeps one carving step, 1.21.1's AIR: vanilla asks a 1.21.1 override for it; the override's super call reaches 1.21.2's for AIR and 1.21.1's second step, LIQUID, otherwise (CbLevelCarving)"
+  },
+  {
+   "old": "method_30459(Lnet/minecraft/class_1923;Lnet/minecraft/class_2893$class_2894;)Lnet/minecraft/class_6643;",
+   "new": "method_30459(Lnet/minecraft/class_1923;)Lnet/minecraft/class_6643;",
+   "onlyUnder": "net/minecraft/class_5444",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyContextCarvingMask",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.contextCarvingMask(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyContextCarvingMask;Lnet/minecraft/class_1923;)Lnet/minecraft/class_6643;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.superContextCarvingMask(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperContextCarvingMask;Lnet/minecraft/class_1923;Lnet/minecraft/class_2893$class_2894;)Lnet/minecraft/class_6643;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperContextCarvingMask",
+   "superAccessors": [
+    "method_30459(Lnet/minecraft/class_1923;)Lnet/minecraft/class_6643;"
+   ],
+   "basis": "1.21.2 keeps one carving step, 1.21.1's AIR: vanilla asks a 1.21.1 override for it; the override's super call reaches 1.21.2's for AIR and 1.21.1's second step, LIQUID, otherwise (CbLevelCarving)"
+  },
+  {
+   "old": "method_46675(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_6880;)Lnet/minecraft/class_5485$class_7868;",
+   "new": "method_46675(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5485$class_7868;",
+   "onlyUnder": "net/minecraft/class_5485$class_7868",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyPlainAddCarver",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.plainAddCarver(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyPlainAddCarver;Lnet/minecraft/class_6880;)Lnet/minecraft/class_5485$class_7868;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.superPlainAddCarver(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperPlainAddCarver;Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_6880;)Lnet/minecraft/class_5485$class_7868;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperPlainAddCarver",
+   "superAccessors": [
+    "method_46675(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5485$class_7868;"
+   ],
+   "basis": "1.21.2 keeps one carving step, 1.21.1's AIR: vanilla asks a 1.21.1 override for it; the override's super call reaches 1.21.2's for AIR and 1.21.1's second step, LIQUID, otherwise (CbLevelCarving)"
+  },
+  {
+   "old": "method_30991(Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)Lnet/minecraft/class_5485$class_5495;",
+   "new": "method_30991(Lnet/minecraft/class_5321;)Lnet/minecraft/class_5485$class_5495;",
+   "onlyUnder": "net/minecraft/class_5485$class_5495",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyAddCarver",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.addCarver(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$LegacyAddCarver;Lnet/minecraft/class_5321;)Lnet/minecraft/class_5485$class_5495;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving.superAddCarver(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperAddCarver;Lnet/minecraft/class_2893$class_2894;Lnet/minecraft/class_5321;)Lnet/minecraft/class_5485$class_5495;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelCarving$SuperAddCarver",
+   "superAccessors": [
+    "method_30991(Lnet/minecraft/class_5321;)Lnet/minecraft/class_5485$class_5495;"
+   ],
+   "basis": "1.21.2 keeps one carving step, 1.21.1's AIR: vanilla asks a 1.21.1 override for it; the override's super call reaches 1.21.2's for AIR and 1.21.1's second step, LIQUID, otherwise (CbLevelCarving)"
   }
  ],
  "overrideRenames": [

@@ -48,7 +48,13 @@
     "CbRestMinecraftServerMixin",
     "CbRestServerChunkCacheMixin",
     "CbRestServerLevelMixin",
-    "CbRestServerPropertiesMixin"
+    "CbRestServerPropertiesMixin",
+    "CbLevelCarvingBiomeMixin",
+    "CbLevelCarvingBuilderAccess",
+    "CbLevelCarvingBuilderMixin",
+    "CbLevelCarvingImposterAccess",
+    "CbLevelCarvingNoiseMixin",
+    "CbLevelCarvingProtoMixin"
   ],
   "client": [
     "CbRestEnchantmentScreenMixin",

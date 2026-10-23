@@ -45,7 +45,7 @@ class Fragment:
         self.v, self.w_stub = v, w
         self.w = {k: ({} if k not in ("overrideHooks", "overrideRenames", "adapterHooks", "abstractFills",
                                       "convertHooks", "covers") else [])
-                  for k in ("superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
+                  for k in ("classRenames", "facadeGaps", "superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
                             "instanceRedirects", "fieldRedirects", "fieldGetters", "instanceFieldGetters",
                             "superRedirects", "covers", "overrideHooks", "overrideRenames", "frameDefaults",
                             "convertHooks", "adapterHooks", "abstractFills", "lambdaAdapters", "genericWitnesses",
@@ -371,6 +371,42 @@ def explosions(f):
           {"2": LX + "#seenPercent(" + calc + xe + ")F"})
 
 
+# ------------------------------------------------------------------------------------------- carving steps
+LC = RT + "/CbLevelCarving"
+
+
+def carving(f):
+    C, MASK, CP = L("class_2893$class_2894"), L("class_6643"), L("class_1923")
+    f.put("classRenames", MC + "class_2893$class_2894", FAC + "/GenerationStepCarving")
+    f.put("classRenames", MC + "class_5851", FAC + "/CarvingMaskPlacement")
+    f.put("facadeGaps", MC + "class_5851.field_28934:Lcom/mojang/serialization/Codec;",
+          "a Codec until 1.20.4; 1.20.5 made it the MapCodec the facade has, and the 1.20.4 -> 1.20.5 step moves a "
+          "mod's read of the Codec (s4rest-gen.json fieldGetters), so no mod reaches this step reading it")
+    f.put("fieldGetters", MC + "class_6798.field_35751:" + L("class_6798"), LC)
+    PB, BU = MC + "class_5485$class_7868", MC + "class_5485$class_5495"
+    gen_args = L("class_3233") + "J" + L("class_7138") + L("class_4543") + L("class_5138") + L("class_2791")
+    # (owner, name, old args, new args, return, legacy, bridge, super interface, super bridge)
+    fams = ((MC + "class_2794", "method_12108", gen_args + C, gen_args, "V", "ApplyCarvers", "applyCarvers"),
+            (MC + "class_2839", "method_12025", C, "", MASK, "CarvingMask", "carvingMask"),
+            (MC + "class_2839", "method_28510", C, "", MASK, "OrCreateCarvingMask", "orCreateCarvingMask"),
+            (MC + "class_2839", "method_12307", C + MASK, MASK, "V", "SetCarvingMask", "setCarvingMask"),
+            (MC + "class_5444", "method_30459", CP + C, CP, MASK, "ContextCarvingMask", "contextCarvingMask"),
+            (PB, "method_46675", C + L("class_6880"), L("class_6880"), "L" + PB + ";", "PlainAddCarver", "plainAddCarver"),
+            (BU, "method_30991", C + L("class_5321"), L("class_5321"), "L" + BU + ";", "AddCarver", "addCarver"))
+    for owner, name, old_a, new_a, ret, n, br in fams:
+        old = name + "(" + old_a + ")" + ret
+        new = name + "(" + new_a + ")" + ret
+        f.put("instanceRedirects", owner + "." + old, LC)
+        f.hook(old=old, new=new, onlyUnder=owner, adapter=LC + "$Legacy" + n,
+               bridge=LC + "." + br + "(L" + LC + "$Legacy" + n + ";" + new_a + ")" + ret,
+               superBridge=LC + ".super" + br[0].upper() + br[1:] + "(L" + LC + "$Super" + n + ";" + old_a + ")" + ret,
+               superAccess=LC + "$Super" + n, superAccessors=[new],
+               basis="1.21.2 keeps one carving step, 1.21.1's AIR: vanilla asks a 1.21.1 override for it; the "
+                     "override's super call reaches 1.21.2's for AIR and 1.21.1's second step, LIQUID, otherwise "
+                     "(CbLevelCarving)")
+    f.put("instanceRedirects", MC + "class_5485.method_30976(" + C + ")Ljava/lang/Iterable;", LC)
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -382,6 +418,7 @@ def main():
     schedule_tick(f)
     neighbors(f)
     explosions(f)
+    carving(f)
     f.write()
 
 
