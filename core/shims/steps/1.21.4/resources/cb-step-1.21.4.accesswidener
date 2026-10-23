@@ -1,1 +1,9 @@
 accessWidener	v2	intermediary
+
+# ---- BEGIN GENERATED (s9rest): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible field net/minecraft/class_1665 field_54968 I
+accessible method net/minecraft/class_4970 method_9604 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_2464;
+accessible method net/minecraft/class_9848 method_61336 (I)F
+# ---- END GENERATED (s9rest) ----
