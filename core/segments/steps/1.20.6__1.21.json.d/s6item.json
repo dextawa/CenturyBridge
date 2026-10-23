@@ -32,7 +32,11 @@
   "net/minecraft/class_1792.field_8006:Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc",
   "net/minecraft/class_1792.field_8001:Ljava/util/UUID;": "top/dext/centurybridge/step/v1_21/rt/CbItemMisc",
   "net/minecraft/class_3489.field_15541:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21/rt/CbItemTags",
-  "net/minecraft/class_8103.field_47214:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21/rt/CbItemTags"
+  "net/minecraft/class_8103.field_47214:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21/rt/CbItemTags",
+  "net/fabricmc/fabric/api/item/v1/EnchantingContext.RANDOM_ENCHANTMENT:Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi",
+  "net/fabricmc/fabric/api/item/v1/EnchantingContext.ANVIL:Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi",
+  "net/fabricmc/fabric/api/item/v1/EnchantingContext.ENCHANT_COMMAND:Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi",
+  "net/fabricmc/fabric/api/item/v1/EnchantingContext.LOOT_RANDOM_ENCHANTMENT:Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi"
  },
  "methodRenames": {
   "net/minecraft/class_1887$class_9426.comp_2505()I": "comp_2690"
@@ -444,6 +448,57 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v1_21/rt/CbItemPredicates#modifierUuid(Ljava/util/Optional;)Ljava/util/Optional;",
    "basis": "EntryPredicate.id(): 1.21's id as the 1.20.6 uuid (generic drift: same descriptor)"
+  },
+  "net/fabricmc/fabric/api/item/v1/EnchantmentEvents$AllowEnchanting.allowEnchanting(Lnet/minecraft/class_1887;Lnet/minecraft/class_1799;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Lnet/fabricmc/fabric/api/util/TriState;": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_1799;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Lnet/fabricmc/fabric/api/util/TriState;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep"
+   ],
+   "basis": "ALLOW_ENCHANTING: 1.21's event takes the enchantment's holder"
+  },
+  "net/fabricmc/fabric/api/item/v1/EquipmentSlotProvider.getPreferredEquipmentSlot(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;": {
+   "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21/rt/CbItemFapi#cbNoEntity()Lnet/minecraft/class_1309;",
+    "keep:0"
+   ],
+   "basis": "getPreferredEquipmentSlot(stack): 1.21 also names the entity; 1.20.6's answer read the stack alone"
+  },
+  "net/fabricmc/fabric/api/item/v1/FabricItem.canBeEnchantedWith(Lnet/minecraft/class_1799;Lnet/minecraft/class_1887;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_6880;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "FabricItem.canBeEnchantedWith: the enchantment's holder (Item: the interface Fabric API injects)"
+  },
+  "net/minecraft/class_1792.canBeEnchantedWith(Lnet/minecraft/class_1799;Lnet/minecraft/class_1887;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_6880;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "FabricItem.canBeEnchantedWith: the enchantment's holder (Item: the interface Fabric API injects)"
+  },
+  "net/fabricmc/fabric/api/item/v1/FabricItemStack.canBeEnchantedWith(Lnet/minecraft/class_1887;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "FabricItemStack.canBeEnchantedWith: the enchantment's holder (ItemStack: the interface Fabric API injects)"
+  },
+  "net/minecraft/class_1799.canBeEnchantedWith(Lnet/minecraft/class_1887;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21/rt/CbEnchantments#cbHolder(Lnet/minecraft/class_1887;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "FabricItemStack.canBeEnchantedWith: the enchantment's holder (ItemStack: the interface Fabric API injects)"
   }
  },
  "overrideHooks": [
@@ -673,6 +728,36 @@
    "onlyUnder": "net/minecraft/class_4553$class_4557",
    "wrap": "top/dext/centurybridge/step/v1_21/rt/CbItemPredicates.singleGameType(Lnet/minecraft/class_9789;)Lnet/minecraft/class_1934;",
    "basis": "PlayerPredicate.Builder.setGameType overridden by a mod: 1.21's predicate as its one game type"
+  },
+  {
+   "old": "allowEnchanting(Lnet/minecraft/class_1887;Lnet/minecraft/class_1799;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Lnet/fabricmc/fabric/api/util/TriState;",
+   "new": "allowEnchanting(Lnet/minecraft/class_6880;Lnet/minecraft/class_1799;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Lnet/fabricmc/fabric/api/util/TriState;",
+   "onlyUnder": "net/fabricmc/fabric/api/item/v1/EnchantmentEvents$AllowEnchanting",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments.cbEnchantment(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1887;",
+   "basis": "a mod class implementing AllowEnchanting: 1.21 hands the holder, the mod's method takes the object"
+  },
+  {
+   "old": "getPreferredEquipmentSlot(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;",
+   "new": "getPreferredEquipmentSlot(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;",
+   "onlyUnder": "net/fabricmc/fabric/api/item/v1/EquipmentSlotProvider",
+   "args": [
+    1
+   ],
+   "basis": "a mod class implementing EquipmentSlotProvider: 1.21 also passes the entity, the mod's method reads the stack"
+  },
+  {
+   "old": "canBeEnchantedWith(Lnet/minecraft/class_1799;Lnet/minecraft/class_1887;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z",
+   "new": "canBeEnchantedWith(Lnet/minecraft/class_1799;Lnet/minecraft/class_6880;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z",
+   "onlyUnder": "net/fabricmc/fabric/api/item/v1/FabricItem",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments.cbEnchantment(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1887;",
+   "basis": "a mod item overriding FabricItem.canBeEnchantedWith: 1.21 hands the holder; its super call is reshaped"
+  },
+  {
+   "old": "canBeEnchantedWith(Lnet/minecraft/class_1887;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z",
+   "new": "canBeEnchantedWith(Lnet/minecraft/class_6880;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Z",
+   "onlyUnder": "net/fabricmc/fabric/api/item/v1/FabricItemStack",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbEnchantments.cbEnchantment(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1887;",
+   "basis": "a class implementing FabricItemStack.canBeEnchantedWith: as FabricItem's"
   }
  ],
  "convertHooks": [
@@ -833,7 +918,9 @@
   "net/minecraft/class_1761.method_47308(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21/rt/CbItemTabs",
   "net/minecraft/class_1761.method_47314()V": "top/dext/centurybridge/step/v1_21/rt/CbItemTabs",
   "net/minecraft/class_2048.comp_1764()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemPredicates",
-  "net/minecraft/class_9653$class_9654.comp_2626()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemPredicates"
+  "net/minecraft/class_9653$class_9654.comp_2626()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21/rt/CbItemPredicates",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getAttributeModifiers(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9285;": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi",
+  "net/minecraft/class_1792.getAttributeModifiers(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9285;": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi"
  },
  "lambdaAdapters": {
   "net/minecraft/class_2952.method_12815(Ljava/util/Iterator;IIII)V": {
@@ -843,6 +930,14 @@
   "net/minecraft/class_1863$class_7266.method_42303(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Ljava/util/Optional;": {
    "iface": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyCachedCheck",
    "adapt": "top/dext/centurybridge/step/v1_21/rt/CbItemRecipes#cbCachedCheck(Ltop/dext/centurybridge/step/v1_21/rt/CbItemRecipes$CbLegacyCachedCheck;)Lnet/minecraft/class_1863$class_7266;"
+  },
+  "net/fabricmc/fabric/api/item/v1/EnchantmentEvents$AllowEnchanting.allowEnchanting(Lnet/minecraft/class_1887;Lnet/minecraft/class_1799;Lnet/fabricmc/fabric/api/item/v1/EnchantingContext;)Lnet/fabricmc/fabric/api/util/TriState;": {
+   "iface": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi$LegacyAllowEnchanting",
+   "adapt": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi#cbAllowEnchanting(Ltop/dext/centurybridge/step/v1_21/rt/CbItemFapi$LegacyAllowEnchanting;)Lnet/fabricmc/fabric/api/item/v1/EnchantmentEvents$AllowEnchanting;"
+  },
+  "net/fabricmc/fabric/api/item/v1/EquipmentSlotProvider.getPreferredEquipmentSlot(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;": {
+   "iface": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi$LegacyEquipmentSlotProvider",
+   "adapt": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi#cbEquipmentSlotProvider(Ltop/dext/centurybridge/step/v1_21/rt/CbItemFapi$LegacyEquipmentSlotProvider;)Lnet/fabricmc/fabric/api/item/v1/EquipmentSlotProvider;"
   }
  },
  "frameDefaults": {
@@ -900,5 +995,19 @@
    ],
    "basis": "ServerPlaceRecipe's menu and recipe holders pass unchanged (RecipeBookMenu<C> / RecipeHolder<? extends Recipe<C>> became <I, R> / RecipeHolder<R>, the same objects); what a 1.20.6 placer does with a holder's recipe goes through Recipe's container calls, converted (CbItemRecipes)"
   }
- }
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getAttributeModifiers(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9285;": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi#superGetAttributeModifiers"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbItemFapi$LegacyAttributeModifiers",
+   "requires": [
+    "getAttributeModifiers(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9285;"
+   ],
+   "synth": [],
+   "basis": "a mod item declaring 1.20.6's FabricItem.getAttributeModifiers(stack), gone in 1.21: the mod's own and other mods' calls (CbItemFapi) reach it through the adapter; Fabric API never called it"
+  }
+ ]
 }
