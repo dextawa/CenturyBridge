@@ -364,6 +364,19 @@ public final class CbLoot {
      * non-treasure one.
      */
     public static net.minecraft.class_106.class_107 method_484(net.minecraft.class_106.class_107 builder) {
+        if (builder instanceof LegacyAllowTreasure legacy) {
+            return legacy.method_484();
+        }
+        return superAllowTreasure(builder);
+    }
+
+    /** a 1.20.6 EnchantWithLevelsFunction.Builder subclass's own allowTreasure() */
+    public interface LegacyAllowTreasure {
+        net.minecraft.class_106.class_107 method_484();
+    }
+
+    /** 1.20.6's body of allowTreasure(), for a subclass's super.allowTreasure() */
+    public static net.minecraft.class_106.class_107 superAllowTreasure(net.minecraft.class_106.class_107 builder) {
         return builder.method_60295(enchantments().method_46735(net.minecraft.class_9636.field_51550));
     }
 
@@ -424,7 +437,59 @@ public final class CbLoot {
 
     /** ModifierBuilder.withUuid(uuid): the builder's modifier takes the id that uuid stands for; the builder itself, as 1.20.6 answered */
     public static net.minecraft.class_137.class_6156 method_35530(net.minecraft.class_137.class_6156 builder, java.util.UUID uuid) {
+        if (builder instanceof LegacyWithUuid legacy) {
+            return legacy.method_35530(uuid);
+        }
+        return superWithUuid(builder, uuid);
+    }
+
+    /** a 1.20.6 SetAttributesFunction.ModifierBuilder subclass's own withUuid(uuid) */
+    public interface LegacyWithUuid {
+        net.minecraft.class_137.class_6156 method_35530(java.util.UUID uuid);
+    }
+
+    /** 1.20.6's body of withUuid(uuid), for a subclass's super.withUuid(uuid) */
+    public static net.minecraft.class_137.class_6156 superWithUuid(net.minecraft.class_137.class_6156 builder, java.util.UUID uuid) {
         ((CbLootModifierBuilderAccessor) builder).cb$setId(CbEntityAttributes.idOf(uuid));
         return builder;
+    }
+    // ---------------------------------------------------------------- LootDataType
+
+    /** the directory each 1.20.6-built LootDataType was given, by identity (1.21 derives it from the registry key) */
+    private static final Map<net.minecraft.class_8490<?>, String> DIRECTORIES = Collections.synchronizedMap(new WeakHashMap<>());
+
+    /**
+     * new LootDataType(registryKey, codec, directory, validator) of 1.20.6: 1.21's takes no directory, reading
+     * the elements from the registry key's own (Registries.elementsDirPath). The type 1.21 builds is the one
+     * 1.20.6 built; the directory 1.20.6 was given is kept for {@link #comp_2521}.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static net.minecraft.class_8490 newLootDataType(net.minecraft.class_5321 registryKey, com.mojang.serialization.Codec codec,
+                                                         String directory, net.minecraft.class_8490.class_8491 validator) {
+        net.minecraft.class_8490 type = new net.minecraft.class_8490(registryKey, codec, validator);
+        DIRECTORIES.put(type, directory);
+        return type;
+    }
+
+    /**
+     * 1.20.6 LootDataType.directory(): the directory it was built with. 1.21's three vanilla types answer
+     * 1.20.6's names for theirs (predicates, item_modifiers, loot_tables -- 1.21 reads them from predicate,
+     * item_modifier, loot_table); any other 1.21 type the path 1.21 loads its elements from.
+     */
+    public static String comp_2521(net.minecraft.class_8490<?> type) {
+        String d = DIRECTORIES.get(type);
+        if (d != null) {
+            return d;
+        }
+        if (type == net.minecraft.class_8490.field_44496) {
+            return "predicates";
+        }
+        if (type == net.minecraft.class_8490.field_44497) {
+            return "item_modifiers";
+        }
+        if (type == net.minecraft.class_8490.field_44498) {
+            return "loot_tables";
+        }
+        return net.minecraft.class_7924.method_60915(type.comp_2519());
     }
 }
