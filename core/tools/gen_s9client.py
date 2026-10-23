@@ -107,6 +107,8 @@ def main():
     render_states(frag)
     texture_metadata(frag)
     textures(frag)
+    equipment(frag)
+    block_entity_renders(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -694,6 +696,66 @@ def textures(frag):
         "ops": ["drop:0", "keep:1", "keep:2", "keep:3"],
         "basis": "SkinManager registers downloaded skins with the game's texture manager since 1.21.4 (SkinTextureDownloader); 1.21.3 took it as an "
                  "argument, the game's in every vanilla use"}
+
+
+
+def equipment(frag):
+    """1.21.3's client equipment API keyed by model id on 1.21.4's, keyed by EquipmentAsset keys (s9rest's CbRestEquipment converts)."""
+    R = RT + "/CbRestEquipment"
+    TO_KEY = "conv " + R + "#asset(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+    cr = frag.setdefault("callReshapes", {})
+    hooks = frag.setdefault("overrideHooks", [])
+    hooks[:] = [h for h in hooks if h.get("family") != "equipment"]
+    LT = "Lnet/minecraft/class_10186$class_10190;"
+    REST = "Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I"
+    shapes = [("net/minecraft/class_10201", "method_64087", "(Lnet/minecraft/class_2960;)Lnet/minecraft/class_10186;",
+               "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_10186;", [TO_KEY],
+               "EquipmentAssetManager.get takes the asset's key since 1.21.4 (1.21.3: its model id, the key's location)"),
+              ("net/minecraft/class_10197", "method_64077", "(" + LT + "Lnet/minecraft/class_2960;" + REST + ")V",
+               "(" + LT + "Lnet/minecraft/class_5321;" + REST + ")V", ["keep", TO_KEY, "keep", "keep", "keep", "keep", "keep"],
+               "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id)"),
+              ("net/minecraft/class_10197", "method_64078", "(" + LT + "Lnet/minecraft/class_2960;" + REST + "Lnet/minecraft/class_2960;)V",
+               "(" + LT + "Lnet/minecraft/class_5321;" + REST + "Lnet/minecraft/class_2960;)V",
+               ["keep", TO_KEY, "keep", "keep", "keep", "keep", "keep", "keep"],
+               "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id)")]
+    for owner, name, old, new, ops, basis in shapes:
+        cr[owner + "." + name + old] = {"desc": new, "ops": ops, "basis": basis}
+        hooks.append({"old": name + old, "new": name + new, "wrap": R + ".id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+                      "guard": GUARD, "onlyUnder": owner, "family": "equipment", "basis": basis + "; a 1.21.3 override is reached with the key's location"})
+    covers = set(frag.get("covers", []))
+    covers.add("net/minecraft/class_310.method_64036()Lnet/minecraft/class_10201;")
+    frag["covers"] = sorted(covers)
+
+
+
+def block_entity_renders(frag):
+    """1.21.3 block entity renderer members on 1.21.4 (signs, hanging signs, banner, skulls, vault, item clusters): CbBlockEntityRenders."""
+    B = RT + "/CbBlockEntityRenders"
+    sr = frag.setdefault("staticRedirects", {})
+    for k in ["net/minecraft/class_7761.method_45795()Lnet/minecraft/class_5607;",
+              "net/minecraft/class_823.method_32135()Lnet/minecraft/class_5607;",
+              "net/minecraft/class_836.method_32160(Lnet/minecraft/class_5599;)Ljava/util/Map;",
+              "net/minecraft/class_9214.method_56851(FLnet/minecraft/class_1937;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_918;FFLnet/minecraft/class_5819;)V",
+              "net/minecraft/class_916.method_56856(Lnet/minecraft/class_1799;)I",
+              "net/minecraft/class_916.method_56857(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_5819;Lnet/minecraft/class_1937;)V",
+              "net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V"]:
+        sr[k] = B
+    frag.setdefault("fieldGetters", {})["net/minecraft/class_823.field_32816:Ljava/lang/String;"] = B
+    mr = frag.setdefault("methodRenames", {})
+    mr["net/minecraft/class_837.method_37311(Lnet/minecraft/class_8242;)I"] = "method_65822"
+    mr["net/minecraft/class_836.method_3578(Lnet/minecraft/class_2484$class_2485;Lnet/minecraft/class_9296;)Lnet/minecraft/class_1921;"] = "method_65832"
+    RENDER = "method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V"
+    mr["net/minecraft/class_837." + RENDER] = "method_65820"
+    mr["net/minecraft/class_7761." + RENDER] = "method_65820"
+    orr = frag.setdefault("overrideRenames", [])
+    orr[:] = [r for r in orr if r.get("family") != "block-entity-renders"]
+    orr.append({"old": RENDER, "new": "method_65820", "onlyUnder": "net/minecraft/class_837", "superCalls": "rename", "family": "block-entity-renders",
+                "basis": "SignRenderer / HangingSignRenderer.render(sign, ..) is AbstractSignRenderer.render(sign, ..) since 1.21.4 (the bridge render "
+                         "calls it)"})
+    cr = frag.setdefault("classRenames", {})
+    cr["net/minecraft/class_7761$class_7762"] = FAC + "LegacyHangingSignModel"
+    frag.setdefault("classRenameBasis", {})["net/minecraft/class_7761$class_7762"] = (
+        "HangingSignRenderer.HangingSignModel is gone in 1.21.4 (a model per attachment); the facade is 1.21.3's, over its one layer")
 
 
 if __name__ == "__main__":

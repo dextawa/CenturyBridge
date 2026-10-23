@@ -30,6 +30,8 @@
     "CbRestVillageGoalMixin"
   ],
   "client": [
+    "CbEquipDispatcherAccess",
+    "CbEquipMinecraftMixin",
     "CbGuiRecipeCollectionMixin",
     "CbGuiScrollAreaAccess",
     "CbGuiScrollListMixin",

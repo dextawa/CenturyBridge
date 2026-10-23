@@ -267,6 +267,14 @@
    "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata$CbLegacyForEachFrame",
    "family": "texture-metadata",
    "basis": "AnimationMetadataSection.forEachFrame is gone in 1.21.4; a subclass's frames are what 1.21.4 builds the animation from (CbTextureAnimationMixin), as 1.21.3's sprite loader asked it"
+  },
+  {
+   "old": "method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V",
+   "new": "method_65820",
+   "onlyUnder": "net/minecraft/class_837",
+   "superCalls": "rename",
+   "family": "block-entity-renders",
+   "basis": "SignRenderer / HangingSignRenderer.render(sign, ..) is AbstractSignRenderer.render(sign, ..) since 1.21.4 (the bridge render calls it)"
   }
  ],
  "covers": [
@@ -285,6 +293,7 @@
   "net/minecraft/class_1060.method_34590(Lnet/minecraft/class_2960;Lnet/minecraft/class_1044;)Lnet/minecraft/class_1044;",
   "net/minecraft/class_1060.method_4617(Ljava/lang/String;Lnet/minecraft/class_1043;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_1088.method_4734()Ljava/util/Map;",
+  "net/minecraft/class_310.method_64036()Lnet/minecraft/class_10201;",
   "net/minecraft/class_339.method_25361(DD)Z",
   "net/minecraft/class_350.method_25307(D)V",
   "net/minecraft/class_350.method_25310(II)Z",
@@ -418,6 +427,33 @@
    "onlyUnder": "net/minecraft/class_1049",
    "family": "textures",
    "basis": "1.21.3's SimpleTexture loaded the image its getTextureImage answered; 1.21.4 loads a ReloadableTexture's contents, which for a 1.21.3 subclass are that image and its metadata"
+  },
+  {
+   "old": "method_64087(Lnet/minecraft/class_2960;)Lnet/minecraft/class_10186;",
+   "new": "method_64087(Lnet/minecraft/class_5321;)Lnet/minecraft/class_10186;",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_10201",
+   "family": "equipment",
+   "basis": "EquipmentAssetManager.get takes the asset's key since 1.21.4 (1.21.3: its model id, the key's location); a 1.21.3 override is reached with the key's location"
+  },
+  {
+   "old": "method_64077(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_2960;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_64077(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5321;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_10197",
+   "family": "equipment",
+   "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id); a 1.21.3 override is reached with the key's location"
+  },
+  {
+   "old": "method_64078(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_2960;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;)V",
+   "new": "method_64078(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5321;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment.id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_10197",
+   "family": "equipment",
+   "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id); a 1.21.3 override is reached with the key's location"
   }
  ],
  "fieldGetters": {
@@ -438,7 +474,8 @@
   "net/minecraft/class_1080.field_32973:I": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
   "net/minecraft/class_1084.field_5344:Lnet/minecraft/class_1085;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
   "net/minecraft/class_3888.field_17158:Lnet/minecraft/class_3890;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
-  "net/minecraft/class_3888.field_32977:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata"
+  "net/minecraft/class_3888.field_32977:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
+  "net/minecraft/class_823.field_32816:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -476,7 +513,8 @@
   "net/minecraft/class_1079$class_5792": "top/dext/centurybridge/step/v1_21_4/facade/AnimationFrameOutput",
   "net/minecraft/class_4005": "top/dext/centurybridge/step/v1_21_4/facade/PreloadedTexture",
   "net/minecraft/class_1049$class_4006": "top/dext/centurybridge/step/v1_21_4/facade/LegacyTextureImage",
-  "net/minecraft/class_1046": "top/dext/centurybridge/step/v1_21_4/facade/HttpTexture"
+  "net/minecraft/class_1046": "top/dext/centurybridge/step/v1_21_4/facade/HttpTexture",
+  "net/minecraft/class_7761$class_7762": "top/dext/centurybridge/step/v1_21_4/facade/LegacyHangingSignModel"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -494,7 +532,8 @@
   "net/minecraft/class_1079$class_5792": "gone in 1.21.4 (sections are records read by codecs); the facade is 1.21.3's, body for body",
   "net/minecraft/class_4005": "PreloadedTexture is gone in 1.21.4; the facade is 1.21.3's, a SimpleTexture whose contents are its getTextureImage",
   "net/minecraft/class_1049$class_4006": "SimpleTexture.TextureImage is gone in 1.21.4 (TextureContents); the facade is 1.21.3's",
-  "net/minecraft/class_1046": "HttpTexture is gone in 1.21.4 (skins download through SkinTextureDownloader); the facade is 1.21.3's, its legacy-skin processing 1.21.4's same code"
+  "net/minecraft/class_1046": "HttpTexture is gone in 1.21.4 (skins download through SkinTextureDownloader); the facade is 1.21.3's, its legacy-skin processing 1.21.4's same code",
+  "net/minecraft/class_7761$class_7762": "HangingSignRenderer.HangingSignModel is gone in 1.21.4 (a model per attachment); the facade is 1.21.3's, over its one layer"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -842,13 +881,54 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbMusic(Lnet/minecraft/class_10383;)Lnet/minecraft/class_5195;",
    "basis": "Minecraft.getSituationalMusic answers MusicInfo(music, volume) since 1.21.4; 1.21.3 answered the music"
+  },
+  "net/minecraft/class_10201.method_64087(Lnet/minecraft/class_2960;)Lnet/minecraft/class_10186;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_10186;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#asset(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "EquipmentAssetManager.get takes the asset's key since 1.21.4 (1.21.3: its model id, the key's location)"
+  },
+  "net/minecraft/class_10197.method_64077(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_2960;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
+   "desc": "(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5321;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#asset(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id)"
+  },
+  "net/minecraft/class_10197.method_64078(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_2960;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_5321;Lnet/minecraft/class_3879;Lnet/minecraft/class_1799;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_2960;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#asset(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id)"
   }
  },
  "staticRedirects": {
   "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105",
   "net/minecraft/class_1091.method_61078(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
   "net/minecraft/class_3888$class_3889.method_17170(Ljava/lang/String;)Lnet/minecraft/class_3888$class_3889;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
-  "net/minecraft/class_1047.method_4540()Lnet/minecraft/class_1043;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures"
+  "net/minecraft/class_1047.method_4540()Lnet/minecraft/class_1043;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures",
+  "net/minecraft/class_7761.method_45795()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_823.method_32135()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_836.method_32160(Lnet/minecraft/class_5599;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_9214.method_56851(FLnet/minecraft/class_1937;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_918;FFLnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_916.method_56856(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_916.method_56857(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_5819;Lnet/minecraft/class_1937;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders"
  },
  "resourceTypes": [
   "centurybridge:legacy_builtin",
@@ -912,7 +992,11 @@
   "net/minecraft/class_1084.method_4696()Z": "comp_3459",
   "net/minecraft/class_1084.method_4697()Z": "comp_3460",
   "net/minecraft/class_3888.method_17167()Lnet/minecraft/class_3888$class_3889;": "comp_3458",
-  "net/minecraft/class_3888$class_3889.method_17168()Ljava/lang/String;": "method_15434"
+  "net/minecraft/class_3888$class_3889.method_17168()Ljava/lang/String;": "method_15434",
+  "net/minecraft/class_837.method_37311(Lnet/minecraft/class_8242;)I": "method_65822",
+  "net/minecraft/class_836.method_3578(Lnet/minecraft/class_2484$class_2485;Lnet/minecraft/class_9296;)Lnet/minecraft/class_1921;": "method_65832",
+  "net/minecraft/class_837.method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V": "method_65820",
+  "net/minecraft/class_7761.method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V": "method_65820"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_809.field_4305:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
