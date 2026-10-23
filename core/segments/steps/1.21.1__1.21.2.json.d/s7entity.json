@@ -31,7 +31,10 @@
   }
  },
  "instanceRedirects": {
-  "net/minecraft/class_1308.method_5955(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#canReplaceCurrentItem"
+  "net/minecraft/class_1308.method_5955(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#canReplaceCurrentItem",
+  "net/minecraft/class_4051.method_18419(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#test",
+  "net/minecraft/class_4051.method_18420(Ljava/util/function/Predicate;)Lnet/minecraft/class_4051;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#selector",
+  "net/minecraft/class_4019$class_4022.method_18303(Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#foxAlertable"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -65,5 +68,79 @@
   "method_7284()V": {
    "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#shield()Lnet/minecraft/class_1799;"
   }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_4824.method_47119(Ljava/util/function/Function;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#startAttacking",
+  "net/minecraft/class_4824.method_47120(Ljava/util/function/Predicate;Ljava/util/function/Function;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#startAttacking",
+  "net/minecraft/class_4828.method_47137(Ljava/util/function/BiConsumer;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
+  "net/minecraft/class_4828.method_47138(Ljava/util/function/Predicate;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
+  "net/minecraft/class_4828.method_47139(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;Z)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_1400.<init>(Lnet/minecraft/class_1308;Ljava/lang/Class;IZZLjava/util/function/Predicate;)V": {
+   "desc": "(Lnet/minecraft/class_1308;Ljava/lang/Class;IZZLnet/minecraft/class_4051$class_10254;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#selector(Ljava/util/function/Predicate;)Lnet/minecraft/class_4051$class_10254;"
+   ],
+   "basis": "1.21.1's Predicate<LivingEntity> target filter is 1.21.2's TargetingConditions.Selector (level ignored, CbEntityTargeting#selector)"
+  },
+  "net/minecraft/class_1400.<init>(Lnet/minecraft/class_1308;Ljava/lang/Class;ZLjava/util/function/Predicate;)V": {
+   "desc": "(Lnet/minecraft/class_1308;Ljava/lang/Class;ZLnet/minecraft/class_4051$class_10254;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#selector(Ljava/util/function/Predicate;)Lnet/minecraft/class_4051$class_10254;"
+   ],
+   "basis": "1.21.1's Predicate<LivingEntity> target filter is 1.21.2's TargetingConditions.Selector (level ignored, CbEntityTargeting#selector)"
+  },
+  "net/minecraft/class_3760.<init>(Lnet/minecraft/class_3763;Ljava/lang/Class;IZZLjava/util/function/Predicate;)V": {
+   "desc": "(Lnet/minecraft/class_3763;Ljava/lang/Class;IZZLnet/minecraft/class_4051$class_10254;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#selector(Ljava/util/function/Predicate;)Lnet/minecraft/class_4051$class_10254;"
+   ],
+   "basis": "1.21.1's Predicate<LivingEntity> target filter is 1.21.2's TargetingConditions.Selector (level ignored, CbEntityTargeting#selector)"
+  },
+  "net/minecraft/class_3909.<init>(Lnet/minecraft/class_3763;Ljava/lang/Class;ZLjava/util/function/Predicate;)V": {
+   "desc": "(Lnet/minecraft/class_3763;Ljava/lang/Class;ZLnet/minecraft/class_4051$class_10254;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#selector(Ljava/util/function/Predicate;)Lnet/minecraft/class_4051$class_10254;"
+   ],
+   "basis": "1.21.1's Predicate<LivingEntity> target filter is 1.21.2's TargetingConditions.Selector (level ignored, CbEntityTargeting#selector)"
+  },
+  "net/minecraft/class_1404.<init>(Lnet/minecraft/class_1321;Ljava/lang/Class;ZLjava/util/function/Predicate;)V": {
+   "desc": "(Lnet/minecraft/class_1321;Ljava/lang/Class;ZLnet/minecraft/class_4051$class_10254;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#selector(Ljava/util/function/Predicate;)Lnet/minecraft/class_4051$class_10254;"
+   ],
+   "basis": "1.21.1's Predicate<LivingEntity> target filter is 1.21.2's TargetingConditions.Selector (level ignored, CbEntityTargeting#selector)"
+  },
+  "net/minecraft/class_1355.<init>(Ljava/util/function/Supplier;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "basis": "1.21.1's GoalSelector(Supplier<ProfilerFiller>) only stored the supplier for its tick's profiler; 1.21.2's takes the profiler from Profiler.get(): the supplier has no use left"
+  }
+ },
+ "fieldGetters": {
+  "net/minecraft/class_1493.field_18004:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#wolfPreySelector",
+  "net/minecraft/class_1481.field_6921:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#turtleBabyOnLandSelector"
  }
 }

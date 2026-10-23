@@ -26,7 +26,9 @@
   "net/minecraft/class_1856.method_8086(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
   "net/minecraft/class_8957.method_55090(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8957;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
   "net/minecraft/class_1916.method_8265(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1916;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
-  "net/minecraft/class_1764.method_7777(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;FF)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc"
+  "net/minecraft/class_1764.method_7777(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;FF)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc",
+  "net/minecraft/class_5620.method_32210(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Ljava/util/function/Predicate;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron",
+  "net/minecraft/class_5620.method_32207(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_3414;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron"
  },
  "instanceRedirects": {
   "net/minecraft/class_1856.method_8088(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
@@ -480,6 +482,20 @@
    ],
    "synth": [],
    "basis": "s4fin: a 1.20.4 AdventureModePredicate subclass's test(stack, blocks, block), which 1.20.4 calls of it reach"
+  },
+  {
+   "under": "net/minecraft/class_5620",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron$Legacy",
+   "requires": [
+    "interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1269;"
+   ],
+   "synth": [
+    {
+     "new": "interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_9062;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron.interactOf(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron$Legacy;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_9062;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 class implementing CauldronInteraction answers 1.20.5's interact from its own, the result converted"
   }
  ],
  "overrideHooks": [
@@ -726,5 +742,15 @@
    "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc#recipeHolder(Ljava/util/Optional;)Ljava/util/Optional;",
    "basis": "s4fin generic drift: a 1.20.4 RecipeCache subclass's get answers the recipe; 1.20.5 reads a holder"
   }
- ]
+ ],
+ "interfaceCallRedirects": {
+  "net/minecraft/class_5620.interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_5620.interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1269;": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron$Legacy",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron#adapt(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemCauldron$Legacy;)Lnet/minecraft/class_5620;",
+   "basis": "s4fin: a 1.20.4 CauldronInteraction lambda answers InteractionResult; 1.20.5's answers ItemInteractionResult (the same results by name, PASS as PASS_TO_DEFAULT_BLOCK_INTERACTION)"
+  }
+ }
 }

@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_armortest",
+ "version": "1.0.0",
+ "name": "CB Armor/Trade/Serializer Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.armortest.ArmorTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.4", "fabric-lifecycle-events-v1": "*", "fabric-events-interaction-v0": "*" }
+}

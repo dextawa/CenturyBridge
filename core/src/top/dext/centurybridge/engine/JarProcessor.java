@@ -3624,7 +3624,20 @@ public final class JarProcessor {
                     + h.oldName + h.oldDesc);
                 top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-shadowed");
             }
+            java.util.List<String> hookRoots = null;
             for (Chain.OverrideHook h : byShape.values()) {
+                if (hookRoots == null) {
+                    hookRoots = vanillaAncestors(superOf[0], ifacesOf[0], layer);
+                }
+                if (chain.finalOnTarget(h.newName, h.newDesc, hookRoots)) {
+                    // the target made the new shape final under this class (1.21.2's ItemEntity.hurtServer): a
+                    // synthesized override would keep the class from loading; a mixin on the final method
+                    // reconnects the old override there (through the hook's adapter, when the wiring has one)
+                    rpt.notes.add(tag + "override-hook not synthesized (the new shape is final on the target): "
+                        + clsName0(bytes) + "." + h.newName + h.newDesc);
+                    top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-final");
+                    continue;
+                }
                 reconnectOverrides.add(h);
                 rpt.notes.add(tag + "override-hooked: " + h.oldName + h.oldDesc + " -> " + h.newName + h.newDesc);
                 top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hooked");
