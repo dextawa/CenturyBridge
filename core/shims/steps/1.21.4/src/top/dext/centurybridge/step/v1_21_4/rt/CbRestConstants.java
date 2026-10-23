@@ -50,6 +50,12 @@ public final class CbRestConstants {
     public static final class_3230<Integer> field_19347 = class_3230.method_20628("post_teleport", Comparator.<Integer>naturalOrder(), 5);
     /** FeatureFlags.WINTER_DROP */
     public static final class_7696 field_54592 = class_7701.field_40177;
+    /**
+     * EntityType.CREAKING_TRANSIENT: 1.21.4 summons heart-bound creakings as EntityType.CREAKING (the transient
+     * behaviour is Creaking's own when it has a home heart); an entity made from it is a Creaking, not the
+     * CreakingTransient facade class
+     */
+    public static final net.minecraft.class_1299<?> field_54561 = net.minecraft.class_1299.field_54560;
     /** RenderShape.ENTITYBLOCK_ANIMATED */
     public static final class_2464 field_11456 = class_2464.field_11455;
 }

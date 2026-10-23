@@ -26,6 +26,7 @@
     "CbRestLevelInvoker",
     "CbRestServerVehicleMixin",
     "CbRestStackAccess",
+    "CbRestStructureManagerAccess",
     "CbRestTrialDataInvoker",
     "CbRestVillageGoalMixin"
   ],
@@ -56,6 +57,7 @@
     "CbRenderEntityModelSetMixin",
     "CbRestClientPacketsMixin",
     "CbRestEquipmentAssetsInvoker",
+    "CbRestSlotIconMixin",
     "CbSpecialModelTypesMixin",
     "CbStateFireworkMixin",
     "CbStateFireworkRendererMixin",

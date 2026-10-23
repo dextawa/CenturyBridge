@@ -64,4 +64,26 @@ public final class CbRestLevel {
             class_7138 random, class_3485 templates, long seed, class_1923 pos, int refs, class_5539 height, Predicate<?> valid) {
         return registries.method_30530(class_7924.field_41246).method_47983(self);
     }
+
+    /**
+     * ChunkGenerator.createStructures(..) of 1.21.3, as called by a mod: 1.21.4 also takes the level key, which
+     * its own caller takes from the generating level; the structure manager's level is that level.
+     */
+    public static class_5321<class_1937> dimensionOf(net.minecraft.class_5138 structures) {
+        net.minecraft.class_1936 level = ((top.dext.centurybridge.step.v1_21_4.mixin.CbRestStructureManagerAccess) structures).cb$level();
+        return level instanceof net.minecraft.class_5425 server ? server.method_8410().method_27983() : UNKNOWN_LEVEL;
+    }
+
+    /** Structure.generate(..) of 1.21.3, as called by a mod: 1.21.4 also takes the structure's holder and the level key */
+    public static net.minecraft.class_3449 method_41614(class_3195 self, class_5455 registries, class_2794 generator, class_1966 biomes,
+            class_7138 random, class_3485 templates, long seed, class_1923 pos, int refs, class_5539 height,
+            Predicate<class_6880<net.minecraft.class_1959>> valid) {
+        return self.method_41614(structureHolder(self, registries, generator, biomes, random, templates, seed, pos, refs, height, valid),
+            UNKNOWN_LEVEL, registries, generator, biomes, random, templates, seed, pos, refs, height, valid);
+    }
+
+    /** MultifaceBlock.getSpreader() of 1.21.3: every 1.21.3 MultifaceBlock spreads, a MultifaceSpreadeableBlock in 1.21.4 */
+    public static net.minecraft.class_7118 method_41432(net.minecraft.class_5778 block) {
+        return ((net.minecraft.class_10376) block).method_41432();
+    }
 }
