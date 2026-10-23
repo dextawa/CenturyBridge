@@ -3674,6 +3674,19 @@ public final class JarProcessor {
                 top.dext.centurybridge.data.FullAudit.record(f.under + "." + shape, "abstract-fill");
             }
         }
+        // a redirect static takes its receiver as the type the wiring keys the member on (emitOwner); that type
+        // may be one the class never named -- a Fabric API interface reached through the vanilla type it is
+        // injected into (TagAppender.remove is 1.21.11's FabricProvidedTagBuilder's) -- and a renamed one: the
+        // class-rename pass must then run on this class too, or the emitted descriptor keeps the source name
+        if (!needClassRename) {
+            for (String o : emitOwner.values()) {
+                if (chain.classRenames.containsKey(o)) {
+                    needClassRename = true;
+                    rpt.notes.add(tag + "facade-renamed (redirect receiver): " + o + " -> " + chain.classRenames.get(o));
+                    break;
+                }
+            }
+        }
         if (redirects.isEmpty() && instRedirects.isEmpty() && ifaceCallRedirects.isEmpty() && fldRedirects.isEmpty()
                 && fldGetters.isEmpty() && fldSetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()

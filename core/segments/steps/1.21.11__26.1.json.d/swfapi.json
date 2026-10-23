@@ -13,7 +13,8 @@
   "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Replace": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents$Replace",
   "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Modify": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents$Modify",
   "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Loaded": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents$Loaded",
-  "net/fabricmc/fabric/api/item/v1/FabricTooltipFlag": "top/dext/centurybridge/step/v26_1/compat/fapi/item/v1/FabricTooltipFlag"
+  "net/fabricmc/fabric/api/item/v1/FabricTooltipFlag": "top/dext/centurybridge/step/v26_1/compat/fapi/item/v1/FabricTooltipFlag",
+  "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v26_1/compat/fapi/tag/v1/FabricTagFile"
  },
  "instanceRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
@@ -22,12 +23,22 @@
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$DoubleRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$DoubleRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$EnumRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder$EnumRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
   "net/fabricmc/fabric/api/item/v1/FabricItem.getRecipeRemainder(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#getRecipeRemainder",
-  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getRecipeRemainder()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#getRecipeRemainder"
+  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getRecipeRemainder()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#getRecipeRemainder",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove(Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#remove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#remove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/Collection;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeTag"
  },
  "superRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#categoryBase",
   "net/fabricmc/fabric/api/item/v1/FabricItem.getRecipeRemainder(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#superRecipeRemainder",
-  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getRecipeRemainder()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#superRecipeRemainder"
+  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getRecipeRemainder()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems#superRecipeRemainder",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove(Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemove",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/Collection;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveAll",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveTag"
  },
  "instanceFieldGetters": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.fabricCategory:Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#getFabricCategory"
@@ -173,5 +184,6 @@
    "basis": "26.1's TransferVariant extends TypedInstance: typeHolder() is getObject()'s holder in the built-in registry holding it, as 26.1's ItemVariant / FluidVariant defaults answer (they need no fill)"
   }
  ],
- "_swfapi_recipeRemainder_basis": "FabricItem / FabricItemStack.getRecipeRemainder answered an ItemStack in 1.21.11 (EMPTY for none); 26.1's getCraftingRemainder answers an ItemStackTemplate (null for none). Calls convert 26.1's answer (CbFapiItems.stack), dispatched virtually so the item's override answers; super calls run 1.21.11's default bodies; overrides are reached through 26.1's shape (overrideHooks)."
+ "_swfapi_recipeRemainder_basis": "FabricItem / FabricItemStack.getRecipeRemainder answered an ItemStack in 1.21.11 (EMPTY for none); 26.1's getCraftingRemainder answers an ItemStackTemplate (null for none). Calls convert 26.1's answer (CbFapiItems.stack), dispatched virtually so the item's override answers; super calls run 1.21.11's default bodies; overrides are reached through 26.1's shape (overrideHooks).",
+ "_swfapi_tagRemoval_basis": "26.1's Fabric API dropped tag removal: FabricTagFile.remove() and the \"fabric:remove\" list of tag files (loaded and applied by 1.21.11's TagLoaderMixin, mixin/CbFapiTagLoaderMixin + rt/CbFapiTagRemovals, 1.21.11's TagRemovalInternals member for member), and datagen's FabricProvidedTagBuilder.remove/removeAll/removeTag (recorded on the TagBuilder, written into the TagFile: CbFapiTagBuilderMixin, CbFapiTagsProviderMixin, CbFapiTagFileMixin). As in 1.21.11 only vanilla's builder-backed appender removes; any other appender and a mod's super call get 1.21.11's AssertionError(\"Implemented via mixin\")."
 }

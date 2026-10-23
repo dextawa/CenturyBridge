@@ -6,6 +6,12 @@
   "mixins": [
     "CbFapiGameRuleCategoryAccess",
     "CbFapiGameRuleCategoryMixin",
+    "CbFapiTagAppenderAccess",
+    "CbFapiTagBuilderMixin",
+    "CbFapiTagEntryAccess",
+    "CbFapiTagFileMixin",
+    "CbFapiTagLoaderMixin",
+    "CbFapiTagsProviderMixin",
     "CbFapiTooltipFlagMixin"
   ],
   "client": [],
