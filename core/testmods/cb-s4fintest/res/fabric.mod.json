@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s4fintest",
+ "version": "1.0.0",
+ "name": "CB s4fin network/entity/world Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.s4fintest.S4FinTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.20.4", "fabric-lifecycle-events-v1": "*", "fabric-events-interaction-v0": "*" }
+}

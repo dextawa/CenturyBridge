@@ -897,10 +897,7 @@
   "net/minecraft/class_5712.method_40157()Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestGameEvents",
   "net/minecraft/class_1297.method_5693()V": "top/dext/centurybridge/step/v1_20_5/rt/CbRestEntityData"
  },
- "facadeGaps": {
-  "net/minecraft/class_20$class_21.<init>(Ljava/lang/String;IZZ)V": "1.20.1's private enum constructor (before 1.20.2 gave the constants a serialized name): only the enum's own static initializer calls it -- from any other class it is an IllegalAccessError, and reflection refuses to construct an enum",
-  "net/minecraft/class_20$class_21.<init>(Ljava/lang/String;IZIZ)V": "1.20.1's private enum constructor (before 1.20.2 gave the constants a serialized name): only the enum's own static initializer calls it -- from any other class it is an IllegalAccessError, and reflection refuses to construct an enum"
- },
+ "facadeGaps": {},
  "frameDefaults": {
   "method_3926(Lnet/minecraft/class_1297;Lnet/minecraft/class_2561;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": {
    "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestRenderClient#frameTime()F"

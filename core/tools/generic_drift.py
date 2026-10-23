@@ -473,6 +473,14 @@ def main():
         arguments of phantom classes taken out); bx / by: the type variables in scope on each side"""
         if phantom:
             x, y = strip_phantom(x, PV), strip_phantom(y, PW)
+        # a type variable both sides name whose bound only moved upward: whatever a V mod chose for
+        # it lay within V's bound, and V's bound is a W subtype of W's (1.20.2 SimpleCriterionTrigger
+        # <T extends SimpleInstance>, which 1.20.2's AbstractCriterionTriggerInstance implements) --
+        # every value V code passes still fits, so the variable is the same on both sides
+        same = {n for n in (bx or {}) if n in (by or {}) and wsub(cls(bx[n]), by[n])}
+        if same:
+            bx = {n: t for n, t in bx.items() if n not in same}
+            by = {n: t for n, t in by.items() if n not in same}
         a = args_of(canon(map_type(x, cls, bx)))
         b = args_of(canon(map_type(strip_phantom(y, NG), lambda c: c, by)))
         return bool(a and b and a != b)

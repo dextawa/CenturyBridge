@@ -56,6 +56,11 @@ public abstract class CbPendingIdsItemMixin implements CbPendingIdsItems.ItemFie
     }
 
     @Override
+    public String cb$descriptionId() {
+        return this.field_8014;
+    }
+
+    @Override
     public void cb$setComponents(class_9323 components) {
         this.field_49263 = components;
     }
