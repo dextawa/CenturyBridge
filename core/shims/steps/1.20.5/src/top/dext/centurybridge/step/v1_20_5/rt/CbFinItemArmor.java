@@ -168,6 +168,33 @@ public final class CbFinItemArmor {
         return m.method_48402(type);
     }
 
+    // ---------------------------------------------------------------- TrimMaterial's override map (generic drift)
+
+    /**
+     * TrimMaterial's overrideArmorMaterials: 1.20.4 keyed it by the ArmorMaterials constant, 1.20.5 by the
+     * material's holder. Adaptive both ways (a map already keyed the wanted way passes through), each the
+     * other's inverse: a key that is a 1.20.4 material goes to its holder, a holder to its 1.20.4 material.
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static Map materialHolderMap(Map map) {
+        if (map == null || map.isEmpty() || !(map.keySet().iterator().next() instanceof ArmorMaterial)) {
+            return map;
+        }
+        Map out = new java.util.LinkedHashMap();
+        map.forEach((k, v) -> out.put(k instanceof ArmorMaterial m ? holder(m) : k, v));
+        return out;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static Map holderMaterialMap(Map map) {
+        if (map == null || map.isEmpty() || !(map.keySet().iterator().next() instanceof net.minecraft.class_6880)) {
+            return map;
+        }
+        Map out = new java.util.LinkedHashMap();
+        map.forEach((k, v) -> out.put(k instanceof net.minecraft.class_6880 h ? material(h) : k, v));
+        return out;
+    }
+
     // ---------------------------------------------------------------- ArmorItem
 
     /** new ArmorItem(material, type, properties) / super(..): 1.20.4's defaultDurability first, the material's holder */

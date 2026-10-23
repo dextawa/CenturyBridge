@@ -25,7 +25,8 @@
   "net/minecraft/class_8052.method_48419(Lnet/minecraft/class_2960;)Lnet/minecraft/class_8052;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
   "net/minecraft/class_1856.method_8086(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1856;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
   "net/minecraft/class_8957.method_55090(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8957;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
-  "net/minecraft/class_1916.method_8265(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1916;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics"
+  "net/minecraft/class_1916.method_8265(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1916;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1764.method_7777(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;FF)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc"
  },
  "instanceRedirects": {
   "net/minecraft/class_1856.method_8088(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
@@ -50,7 +51,11 @@
   "net/minecraft/class_1738.method_7686()Lnet/minecraft/class_1741;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemArmor",
   "net/minecraft/class_8053.method_48434(Lnet/minecraft/class_1741;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemArmor",
   "net/minecraft/class_8053.method_48436(Lnet/minecraft/class_1741;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemArmor",
-  "net/minecraft/class_4059.method_18455()I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemHorseArmor"
+  "net/minecraft/class_4059.method_18455()I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemHorseArmor",
+  "net/minecraft/class_1914.method_8251()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading",
+  "net/minecraft/class_1916.method_8268()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading",
+  "net/minecraft/class_1916.method_8270(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading",
+  "net/minecraft/class_6538.method_38070(Lnet/minecraft/class_1799;Lnet/minecraft/class_2378;Lnet/minecraft/class_2694;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc"
  },
  "classRenames": {
   "net/minecraft/class_1781$class_1782": "net/minecraft/class_9283$class_1782",
@@ -81,7 +86,11 @@
   "net/minecraft/class_1738.method_7686()Lnet/minecraft/class_1741;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemArmor#method_7686",
   "net/minecraft/class_8053.method_48434(Lnet/minecraft/class_1741;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemArmor#method_48434",
   "net/minecraft/class_8053.method_48436(Lnet/minecraft/class_1741;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemArmor#method_48436",
-  "net/minecraft/class_4059.method_18455()I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemHorseArmor#method_18455"
+  "net/minecraft/class_4059.method_18455()I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemHorseArmor#superGetProtection",
+  "net/minecraft/class_1914.method_8251()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#superOfferTag",
+  "net/minecraft/class_1916.method_8268()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#superOffersTag",
+  "net/minecraft/class_1916.method_8270(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics#method_8270",
+  "net/minecraft/class_6538.method_38070(Lnet/minecraft/class_1799;Lnet/minecraft/class_2378;Lnet/minecraft/class_2694;)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc#superTest"
  },
  "adapterHooks": [
   {
@@ -420,6 +429,57 @@
     }
    ],
    "basis": "s4fin: a 1.20.4 subclass's own toNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_1914",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading$LegacyOfferTag",
+   "requires": [
+    "method_8251()Lnet/minecraft/class_2487;"
+   ],
+   "synth": [],
+   "basis": "s4fin: a 1.20.4 subclass's own createTag(), which 1.20.4 calls of it reach (rt/CbFinItemTrading)"
+  },
+  {
+   "under": "net/minecraft/class_1916",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading$LegacyOffersTag",
+   "requires": [
+    "method_8268()Lnet/minecraft/class_2487;"
+   ],
+   "synth": [],
+   "basis": "s4fin: a 1.20.4 subclass's own createTag(), which 1.20.4 calls of it reach (rt/CbFinItemTrading)"
+  },
+  {
+   "under": "net/minecraft/class_1916",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading$LegacyOffersStream",
+   "requires": [
+    "method_8270(Lnet/minecraft/class_2540;)V"
+   ],
+   "synth": [],
+   "basis": "s4fin: a 1.20.4 subclass's own writeToStream(buf), which 1.20.4 calls of it reach (rt/CbFinItemTrading)"
+  },
+  {
+   "under": "net/minecraft/class_4059",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemHorseArmor$LegacyProtection",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_18455()I"
+   ],
+   "synth": [
+    {
+     "new": "method_7844()Lnet/minecraft/class_9285;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemHorseArmor.modifiers(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemHorseArmor$LegacyProtection;)Lnet/minecraft/class_9285;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 horse armor's getProtection() was the armor value AbstractHorse gave the horse; 1.20.5 gives the body armor item's default modifiers, so those answer their ARMOR from the override (guarded: the rest is super's)"
+  },
+  {
+   "under": "net/minecraft/class_6538",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc$LegacyTest",
+   "requires": [
+    "method_38070(Lnet/minecraft/class_1799;Lnet/minecraft/class_2378;Lnet/minecraft/class_2694;)Z"
+   ],
+   "synth": [],
+   "basis": "s4fin: a 1.20.4 AdventureModePredicate subclass's test(stack, blocks, block), which 1.20.4 calls of it reach"
   }
  ],
  "overrideHooks": [
@@ -480,6 +540,118 @@
     1
    ],
    "basis": "s4fin: HorseArmorItem(protection, identifier, properties), new and super: an equestrian AnimalArmorItem on a material named after the identifier with BODY defense = protection (1.20.4's texture name), its protection remembered"
+  },
+  "net/minecraft/class_1914.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;IIF)V": {
+   "desc": "(Lnet/minecraft/class_9306;Lnet/minecraft/class_1799;IIF)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#cost(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9306;",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "s4fin: 1.20.4's MerchantOffer priced in item stacks, 1.20.5's in ItemCosts (item, count, the components the stack adds; rt/CbFinItemTrading.cost); an empty costB is no second cost; (costA, result, maxUses, xp, multiplier)"
+  },
+  "net/minecraft/class_1914.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;IIF)V": {
+   "desc": "(Lnet/minecraft/class_9306;Ljava/util/Optional;Lnet/minecraft/class_1799;IIF)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#cost(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9306;",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#costB(Lnet/minecraft/class_1799;)Ljava/util/Optional;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "s4fin: 1.20.4's MerchantOffer priced in item stacks, 1.20.5's in ItemCosts (item, count, the components the stack adds; rt/CbFinItemTrading.cost); an empty costB is no second cost; (costA, costB, result, maxUses, xp, multiplier)"
+  },
+  "net/minecraft/class_1914.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;IIIF)V": {
+   "desc": "(Lnet/minecraft/class_9306;Ljava/util/Optional;Lnet/minecraft/class_1799;IIIF)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#cost(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9306;",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#costB(Lnet/minecraft/class_1799;)Ljava/util/Optional;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "s4fin: 1.20.4's MerchantOffer priced in item stacks, 1.20.5's in ItemCosts (item, count, the components the stack adds; rt/CbFinItemTrading.cost); an empty costB is no second cost; (costA, costB, result, uses, maxUses, xp, multiplier)"
+  },
+  "net/minecraft/class_1914.<init>(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;IIIFI)V": {
+   "desc": "(Lnet/minecraft/class_9306;Ljava/util/Optional;Lnet/minecraft/class_1799;IIIFI)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#cost(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9306;",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#costB(Lnet/minecraft/class_1799;)Ljava/util/Optional;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "basis": "s4fin: 1.20.4's MerchantOffer priced in item stacks, 1.20.5's in ItemCosts (item, count, the components the stack adds; rt/CbFinItemTrading.cost); an empty costB is no second cost; (costA, costB, result, uses, maxUses, xp, multiplier, demand)"
+  },
+  "net/minecraft/class_1916.<init>(Lnet/minecraft/class_2487;)V": {
+   "desc": "()V",
+   "ops": [
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#offersPost(Lnet/minecraft/class_1916;Lnet/minecraft/class_2487;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "s4fin: new MerchantOffers(tag) / super(tag): an empty list, then the offers of the tag's Recipes (1.20.5's offer codec)"
+  },
+  "net/minecraft/class_6538.<init>(Ljava/lang/String;)V": {
+   "desc": "(Ljava/util/List;Z)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc#noPredicates(Ljava/lang/String;)Ljava/util/List;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc#showInTooltip()Z"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc#adventurePost(Lnet/minecraft/class_6538;Ljava/lang/String;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "s4fin: a 1.20.4 AdventureModePredicate subclass's super(tagName): 1.20.5's with no block predicates, its key remembered for 1.20.4's test"
+  },
+  "net/minecraft/class_1863.<init>()V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "s4fin: RecipeManager() (new and super): 1.20.5's takes the registries its recipes are parsed with -- the running world's"
+  },
+  "net/minecraft/class_8052.<init>(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Ljava/util/List;Ljava/util/List;[Lnet/minecraft/class_7696;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc#noFeatures()[Lnet/minecraft/class_7696;"
+   ],
+   "basis": "s4fin: SmithingTemplateItem's 1.20.4 constructor (new and super): 1.20.5's takes the template's required features; 1.20.4's had none beyond Item.Properties' default (vanilla)"
+  },
+  "net/minecraft/class_1914.<init>(Lnet/minecraft/class_2487;)V": {
+   "desc": "(Lnet/minecraft/class_1914;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#fromTag(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1914;"
+   ],
+   "basis": "s4fin: a 1.20.4 MerchantOffer subclass's super(tag): the copy constructor (opened by the layer's access widener) of the offer the tag decodes to -- 1.20.4's constructor read the same keys"
+  },
+  "net/minecraft/class_8054.<init>(Ljava/lang/String;Lnet/minecraft/class_6880;FLjava/util/Map;Lnet/minecraft/class_2561;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_6880;FLjava/util/Map;Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemArmor#materialHolderMap(Ljava/util/Map;)Ljava/util/Map;",
+    "keep:4"
+   ],
+   "basis": "s4fin generic drift: TrimMaterial's override map is keyed by armor material holders where 1.20.4 keyed it by ArmorMaterials"
   }
  },
  "instanceFieldGetters": {
@@ -501,5 +673,58 @@
   "net/minecraft/class_1740.field_21978:F": "private in 1.20.4 (ArmorMaterials' constructor and per-constant state); the facade's constants keep the same values (read from 1.20.5's registered records, durability multipliers 1.20.4's), and no mod could reach these without an access widener, which never applies to a CenturyBridge class",
   "net/minecraft/class_1740.field_7885:Lnet/minecraft/class_3528;": "private in 1.20.4 (ArmorMaterials' constructor and per-constant state); the facade's constants keep the same values (read from 1.20.5's registered records, durability multipliers 1.20.4's), and no mod could reach these without an access widener, which never applies to a CenturyBridge class",
   "net/minecraft/class_1740.field_41941:Lnet/minecraft/class_3542$class_7292;": "1.20.2's shape of CODEC (StringRepresentable.EnumCodec): 1.20.3 made it a plain Codec, which is the field this step's facade has (a 1.20.4 mod links that one); a 1.20.2 mod's reference was already moved by the 1.20.2 -> 1.20.3 step"
- }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_1914.<init>(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemTrading#fromTag",
+  "net/minecraft/class_6538.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc#adventure"
+ },
+ "callReshapes": {
+  "net/minecraft/class_1863.method_17720(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;)Lnet/minecraft/class_8786;": {
+   "desc": "(Lnet/minecraft/class_2960;Lcom/google/gson/JsonObject;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_8786;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "s4fin: RecipeManager.fromJson(id, json): 1.20.5's parses with registries -- the running world's"
+  },
+  "net/minecraft/class_8054.method_48438(Ljava/lang/String;Lnet/minecraft/class_1792;FLnet/minecraft/class_2561;Ljava/util/Map;)Lnet/minecraft/class_8054;": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_1792;FLnet/minecraft/class_2561;Ljava/util/Map;)Lnet/minecraft/class_8054;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v1_20_5/rt/CbFinItemArmor#materialHolderMap(Ljava/util/Map;)Ljava/util/Map;"
+   ],
+   "basis": "s4fin generic drift: TrimMaterial.create's override map, keyed by holders in 1.20.5"
+  },
+  "net/minecraft/class_8054.comp_1237()Ljava/util/Map;": {
+   "desc": "()Ljava/util/Map;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinItemArmor#holderMaterialMap(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "s4fin generic drift: TrimMaterial.overrideArmorMaterials() answered by 1.20.4 material"
+  },
+  "net/minecraft/class_8884.method_54470(Lnet/minecraft/class_1937;Lnet/minecraft/class_8566;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_8566;)Ljava/util/Optional;",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc#recipeValue(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4fin generic drift: RecipeCache.get answers the recipe's holder in 1.20.5, the recipe in 1.20.4"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_8884",
+   "member": "method_54470(Lnet/minecraft/class_1937;Lnet/minecraft/class_8566;)Ljava/util/Optional;",
+   "args": [
+    null,
+    null
+   ],
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemMisc#recipeHolder(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4fin generic drift: a 1.20.4 RecipeCache subclass's get answers the recipe; 1.20.5 reads a holder"
+  }
+ ]
 }

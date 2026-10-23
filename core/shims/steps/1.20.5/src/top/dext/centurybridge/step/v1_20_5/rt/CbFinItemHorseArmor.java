@@ -58,6 +58,36 @@ public final class CbFinItemHorseArmor {
         return p != null ? p : item.method_7686().comp_349().method_48403(net.minecraft.class_1738.class_8051.field_48838);
     }
 
+    /** HorseArmorItem.getProtection()'s body: the protection the item was made with */
+    public static int superGetProtection(net.minecraft.class_4059 item) {
+        Integer p = PROTECTION.get(item);
+        return p != null ? p : item.method_7686().comp_349().method_48403(net.minecraft.class_1738.class_8051.field_48838);
+    }
+
+    /** a 1.20.4 horse armor class declaring getProtection() */
+    public interface LegacyProtection {
+        int method_18455();
+    }
+
+    /**
+     * getDefaultAttributeModifiers() of a 1.20.4 horse armor class declaring getProtection() (guarded adapter):
+     * 1.20.4's AbstractHorse gave the horse ARMOR = getProtection() of its armor item; 1.20.5 gives it the body
+     * armor item's modifiers, whose ARMOR entry is the material's body defense. The item's own modifiers with
+     * that entry's amount set to its getProtection().
+     */
+    public static net.minecraft.class_9285 modifiers(LegacyProtection item) {
+        net.minecraft.class_9285 base = ((net.minecraft.class_1792) (Object) item).method_7844();
+        net.minecraft.class_9285.class_9286 b = net.minecraft.class_9285.method_57480();
+        for (net.minecraft.class_9285.class_9287 e : base.comp_2393()) {
+            net.minecraft.class_1322 m = e.comp_2396();
+            if (e.comp_2395().equals(net.minecraft.class_5134.field_23724) && m.comp_2450() == net.minecraft.class_1322.class_1323.field_6328) {
+                m = new net.minecraft.class_1322(m.comp_2447(), m.comp_2448(), item.method_18455(), m.comp_2450());
+            }
+            b.method_57487(e.comp_2395(), m, e.comp_2397());
+        }
+        return b.method_57486();
+    }
+
     /** super(protection, identifier, properties) of a 1.20.4 HorseArmorItem subclass: 1.20.5's constructor arguments */
     public static net.minecraft.class_6880<net.minecraft.class_1741> superMaterial(int protection, String identifier) {
         return material(protection, identifier);
