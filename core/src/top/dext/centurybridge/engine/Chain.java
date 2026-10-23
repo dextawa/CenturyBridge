@@ -915,6 +915,18 @@ public final class Chain {
     /** true unless the owner is a known target-stub class that does NOT declare name(desc). */
     /** injector anchor check/repair against real target bodies; null = unavailable */
     public MixinRepair mixinRepair;
+    /**
+     * The SOURCE release's real method bodies (MixinBridge counts an @At anchor in the body it was
+     * written for before retargeting it to what the step's wiring says stands there now); null =
+     * unavailable, and no anchor is retargeted.
+     */
+    public MixinRepair sourceCode;
+    /**
+     * At the 1.21.11 -> 26.1 namespace wall only: 26.1's bodies renamed into the analysis namespace the step
+     * converts in (WallInverse), for MixinBridge -- the wiring and the mod's mixins are intermediary-named
+     * there until the whole-jar rename. Null on every other step (MixinBridge uses mixinRepair).
+     */
+    public MixinRepair bridgeCode;
 
     /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,

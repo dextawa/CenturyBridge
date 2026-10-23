@@ -62,7 +62,8 @@
   "net/minecraft/class_3218.method_29199(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#setDayTime",
   "net/minecraft/class_3218.method_75003()J": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getDayCount",
   "net/minecraft/class_3218.method_51836(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5819;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getRandomSequence",
-  "net/minecraft/class_3218.method_52168()Lnet/minecraft/class_8565;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getRandomSequences"
+  "net/minecraft/class_3218.method_52168()Lnet/minecraft/class_8565;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getRandomSequences",
+  "net/minecraft/class_1657.method_7353(Lnet/minecraft/class_2561;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer#displayClientMessage"
  },
  "overrideHooks": [
   {
@@ -90,6 +91,24 @@
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssemble",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "26.1 dropped assemble(input, registries) for assemble(input): a 1.21.11 recipe assembles with the registries 1.21.11 callers passed (the level registry access)"
+  },
+  {
+   "old": "method_7353(Lnet/minecraft/class_2561;Z)V",
+   "new": "sendOverlayMessage(Lnet/minecraft/class_2561;)V",
+   "onlyUnder": "net/minecraft/class_1657",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer.sendOverlayMessage(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPlayer$LegacyMessages;Lnet/minecraft/class_2561;)V",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer$LegacyMessages",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 splits displayClientMessage(message, overlay) into sendOverlayMessage / sendSystemMessage; a 1.21.11 override answers both with its overlay flag"
+  },
+  {
+   "old": "method_7353(Lnet/minecraft/class_2561;Z)V",
+   "new": "sendSystemMessage(Lnet/minecraft/class_2561;)V",
+   "onlyUnder": "net/minecraft/class_1657",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer.sendSystemMessage(Ltop/dext/centurybridge/step/v26_1/rt/CbWallPlayer$LegacyMessages;Lnet/minecraft/class_2561;)V",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer$LegacyMessages",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 splits displayClientMessage(message, overlay) into sendOverlayMessage / sendSystemMessage; a 1.21.11 override answers both with its overlay flag"
   }
  ],
  "frameDefaults": {
