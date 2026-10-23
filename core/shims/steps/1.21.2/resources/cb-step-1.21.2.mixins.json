@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CbEntityAnimationStateMixin",
+    "CbEntityArmorStandInvoker",
     "CbEntityBoatMixin",
     "CbEntityDragonPhaseAccess",
     "CbEntityHurtFinalMixin",
@@ -24,6 +25,7 @@
     "CbEntityPiglinAiInvoker",
     "CbEntityPiglinInvoker",
     "CbEntityProjectileInvoker",
+    "CbEntityTakeMixin",
     "CbEntityTargetingAccess",
     "CbEntityTypeAccess",
     "CbEntityTypeBuilderAccess",

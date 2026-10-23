@@ -42,7 +42,8 @@
   "net/minecraft/class_7094.method_43686(FF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#updateTime",
   "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#getAccumulatedTime",
   "net/minecraft/class_1688.method_7518()Lnet/minecraft/class_1688$class_1689;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#getMinecartType",
-  "net/minecraft/class_1661.method_7387(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked#fillStackedContents"
+  "net/minecraft/class_1661.method_7387(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked#fillStackedContents",
+  "net/minecraft/class_1309.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#canTakeItem"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -452,7 +453,15 @@
   "net/minecraft/class_1472.method_5991()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superSheepDefaultLootTable",
   "net/minecraft/class_7094.method_43686(FF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#superUpdateTime",
   "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#superGetAccumulatedTime",
-  "net/minecraft/class_1661.method_7387(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked#superFillStackedContents"
+  "net/minecraft/class_1661.method_7387(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked#superFillStackedContents",
+  "net/minecraft/class_1309.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1308.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1657.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1433.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_4019.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1440.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_7298.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1531.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem"
  },
  "overrideHooks": [
   {
@@ -515,10 +524,20 @@
    ],
    "synth": [],
    "basis": "a mod minecart's own 1.21.1 getMinecartType answers the calls CbEntityMinecarts serves (1.21.2 has no such method)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake$Legacy",
+   "requires": [
+    "method_18397(Lnet/minecraft/class_1799;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 canTakeItem answers where 1.21.1's dispenser asked it (CbEntityTakeMixin on canEquipWithDispenser) and the calls CbEntityTake serves"
   }
  ],
  "classRenames": {
   "net/minecraft/class_1688$class_1689": "top/dext/centurybridge/step/v1_21_2/facade/MinecartType",
-  "net/minecraft/class_1662": "top/dext/centurybridge/step/v1_21_2/facade/StackedContents"
+  "net/minecraft/class_1662": "top/dext/centurybridge/step/v1_21_2/facade/StackedContents",
+  "net/minecraft/class_1301$class_1302": "top/dext/centurybridge/step/v1_21_2/facade/MobCanWearArmorEntitySelector"
  }
 }
