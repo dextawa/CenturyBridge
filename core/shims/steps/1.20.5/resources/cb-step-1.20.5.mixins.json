@@ -350,6 +350,7 @@
     "CbClientFontManagerMixin",
     "CbClientFontSetMixin",
     "CbClientGameRendererMixin",
+    "CbClientGameRendererShadersMixin",
     "CbClientHotbarMixin",
     "CbClientJoinMultiplayerMixin",
     "CbClientLayerDefinitionsMixin",
