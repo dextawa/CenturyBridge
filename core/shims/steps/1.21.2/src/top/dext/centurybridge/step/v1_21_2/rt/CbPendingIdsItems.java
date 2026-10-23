@@ -76,6 +76,9 @@ public final class CbPendingIdsItems {
     public interface ItemFields {
         void cb$setDescriptionId(String id);
 
+        /** the description id field (1.21.2's final getDescriptionId() answers it) */
+        String cb$descriptionId();
+
         void cb$setComponents(class_9323 components);
     }
 
