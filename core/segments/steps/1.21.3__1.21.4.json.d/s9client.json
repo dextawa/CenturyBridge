@@ -1713,7 +1713,8 @@
   "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.emissive(IZ)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superEmissive",
   "net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.spriteDepth(I)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteDepth",
   "net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial.spriteDepth()I": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superSpriteDepth",
-  "net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superGetOverrides"
+  "net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/renderer/CbFapiRenderer#superGetOverrides",
+  "net/minecraft/class_636.method_2916(I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest#superPickItem"
  },
  "methodRenames": {
   "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",
@@ -1854,6 +1855,16 @@
    "synth": [],
    "family": "textures",
    "basis": "a 1.21.3 texture class that loads or resets itself: reset on reload as 1.21.3 reset every texture (CbTextureManagerMixin)"
+  },
+  {
+   "under": "net/minecraft/class_636",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest$CbLegacyPickItem",
+   "requires": [
+    "method_2916(I)V"
+   ],
+   "synth": [],
+   "family": "client-rest",
+   "basis": "a 1.21.3 MultiPlayerGameMode overriding handlePickItem: the client picks as 1.21.3's did while the game's mode is one (CbFapiPickMixin), and the pick of an inventory slot reaches its override"
   },
   {
    "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$OnLoad$Context",

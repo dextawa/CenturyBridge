@@ -14,7 +14,8 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbClientRest;
  * 1.21.3 picked on the client: the gather callback (then the old callback's container) could supply the stack, else vanilla
  * computed it from the block or entity; the apply callback changed or cancelled it; then the client put it in the hand
  * (creative: the picked item and a creative slot update; survival: select the hotbar slot holding it or ask the server to pick
- * its inventory slot). While a 1.21.3 mod listens to any of these events, the client picks as 1.21.3's did, those requests
+ * its inventory slot). While a 1.21.3 mod listens to any of these events (or the game's MultiPlayerGameMode is a 1.21.3 subclass
+ * overriding handlePickItem), the client picks as 1.21.3's did, those requests
  * included ({@link CbClientRest#method_2916}); without a listener the pick is 1.21.4's (CbFapiPickMixin).
  */
 @Environment(EnvType.CLIENT)

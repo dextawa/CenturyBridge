@@ -1006,7 +1006,20 @@ def client_rest(frag):
     frag["covers"] = sorted(covers)
     ir = frag.setdefault("instanceRedirects", {})
     ir["net/minecraft/class_636.method_2916(I)V"] = R
+    frag.setdefault("superRedirects", {})["net/minecraft/class_636.method_2916(I)V"] = R + "#superPickItem"
+    ah = frag.setdefault("adapterHooks", [])
+    ah[:] = [h for h in ah if h.get("family") != "client-rest"]
+    ah.append({"under": "net/minecraft/class_636", "adapter": R + "$CbLegacyPickItem", "requires": ["method_2916(I)V"], "synth": [],
+               "family": "client-rest",
+               "basis": "a 1.21.3 MultiPlayerGameMode overriding handlePickItem: the client picks as 1.21.3's did while the game's mode is one "
+                        "(CbFapiPickMixin), and the pick of an inventory slot reaches its override"})
     ir["net/minecraft/class_3999.method_18130(Lnet/minecraft/class_289;Lnet/minecraft/class_1060;)Lnet/minecraft/class_287;"] = R
+    frag.setdefault("ledger", {})["net/minecraft/class_3999.method_18130"] = (
+        "not bridgeable for a mod class implementing it: 1.21.3's ParticleRenderType interface is a final record (name, RenderType) in 1.21.4 "
+        "that no class can implement or extend, and a stand-in interface would split the type -- the mod's particles answer their type from "
+        "getRenderType() typed ParticleRenderType and the mod stores it in fields of that type, which the verifier rejects for a value of "
+        "another class; 1.21.4's ParticleEngine also draws only the record types of its render order. begin() on the vanilla types is "
+        "bridged (CbClientRest.method_18130)")
 
 
 def generic_client(frag):

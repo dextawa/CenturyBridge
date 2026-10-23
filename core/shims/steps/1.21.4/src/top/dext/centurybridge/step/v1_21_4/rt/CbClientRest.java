@@ -134,8 +134,25 @@ public final class CbClientRest {
 
     // ---- pick item ----
 
-    /** was MultiPlayerGameMode.handlePickItem(slot) (method_2916) */
+    /** a 1.21.3 MultiPlayerGameMode subclass overriding handlePickItem(slot) */
+    public interface CbLegacyPickItem {
+        void method_2916(int slot);
+    }
+
+    /** was MultiPlayerGameMode.handlePickItem(slot) (method_2916): a 1.21.3 subclass's own, else 1.21.3's */
     public static void method_2916(net.minecraft.class_636 gameMode, int slot) {
+        if (gameMode instanceof CbLegacyPickItem own) {
+            own.method_2916(slot);
+        } else {
+            superPickItem(gameMode, slot);
+        }
+    }
+
+    /**
+     * 1.21.3's handlePickItem(slot): the server swapped the picked inventory slot into the selected hotbar slot (its pick packet is
+     * gone in 1.21.4): the same swap as a container click, then the selected slot
+     */
+    public static void superPickItem(net.minecraft.class_636 gameMode, int slot) {
         net.minecraft.class_310 mc = net.minecraft.class_310.method_1551();
         net.minecraft.class_746 player = mc.field_1724;
         if (player == null) {
