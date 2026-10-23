@@ -134,7 +134,8 @@
   "net/minecraft/class_1297.method_5852()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside#checkInsideBlocks",
   "net/minecraft/class_1510.method_6819(Lnet/minecraft/class_1282;F)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#reallyHurt",
   "net/minecraft/class_1309.method_6129(Lnet/minecraft/class_1293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving#onEffectRemoved",
-  "net/minecraft/class_1309.method_59926()Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving#activeLocationDependentEnchantments"
+  "net/minecraft/class_1309.method_59926()Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLiving#activeLocationDependentEnchantments",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#onConversion"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -653,7 +654,8 @@
   "net/minecraft/class_1528.method_6887(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadXRot",
   "net/minecraft/class_1542.method_27314(F)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#superGetSpin",
   "net/minecraft/class_1297.method_36974()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside#superTryCheckInsideBlocks",
-  "net/minecraft/class_1297.method_5852()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside#superCheckInsideBlocks"
+  "net/minecraft/class_1297.method_5852()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityInside#superCheckInsideBlocks",
+  "net/fabricmc/fabric/api/entity/FakePlayer.method_5679(Lnet/minecraft/class_1282;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superFakePlayerInvulnerable"
  },
  "overrideHooks": [
   {
@@ -1239,9 +1241,6 @@
   "net/minecraft/class_1548.method_6872()Z": "method_61492",
   "net/minecraft/class_1333.method_6229(FFF)F": "method_63642",
   "net/minecraft/class_1433.method_6673(I)V": "method_61456"
- },
- "interfaceCallRedirects": {
-  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#onConversion"
  },
  "lambdaAdapters": {
   "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": {
