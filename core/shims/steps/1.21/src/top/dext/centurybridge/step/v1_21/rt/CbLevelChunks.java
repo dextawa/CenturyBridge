@@ -76,6 +76,11 @@ public final class CbLevelChunks {
         return future == null ? null : future.getNow(CbLevelGenHolderAccessor.cb$notDoneYet()).method_57130(null);
     }
 
+    /** the 1.20.6 ChunkMap method CbLevelChunkMapMixin gives back that layer code calls (ResetChunksCommand) */
+    public interface LegacyChunkMap {
+        void method_37904();
+    }
+
     // ------------------------------------------------------------------------------------------------ TicketType
 
     /**
