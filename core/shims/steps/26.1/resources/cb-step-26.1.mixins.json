@@ -23,8 +23,11 @@
     "CbWallBlockStateModelSetMixin",
     "CbWallClientLevelDataMixin",
     "CbWallClientRainMixin",
+    "CbWallGlPipelineStateMixin",
     "CbWallGuiAccess",
-    "CbWallModelBlockRendererAccess"
+    "CbWallModelBlockRendererAccess",
+    "CbWallPipelineBuilderAccess",
+    "CbWallRenderPipelinesAccess"
   ],
   "server": [],
   "injectors": {
