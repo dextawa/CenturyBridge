@@ -1649,7 +1649,7 @@ public final class JarProcessor {
         // the vanilla interfaces the jar's classes on the way implement (through the jar's own interfaces too)
         List<String> vanillaIfaces = new ArrayList<>();
         java.util.ArrayDeque<String> todo = new java.util.ArrayDeque<>();
-        for (String cur = owner; cur != null && !cur.startsWith("net/minecraft/") && layer.superOf.containsKey(cur);
+        for (String cur = owner; cur != null && !Chain.minecraftOwned(cur) && layer.superOf.containsKey(cur);
                 cur = layer.superOf.get(cur)) {
             todo.addAll(layer.interfacesOf.getOrDefault(cur, List.of()));
         }
@@ -1659,7 +1659,7 @@ public final class JarProcessor {
             if (!seen.add(i)) {
                 continue;
             }
-            if (i.startsWith("net/minecraft/")) {
+            if (Chain.minecraftOwned(i)) {
                 vanillaIfaces.add(i);
             } else if (layer.superOf.containsKey(i)) {
                 todo.addAll(layer.interfacesOf.getOrDefault(i, List.of()));
@@ -1681,7 +1681,7 @@ public final class JarProcessor {
             return null;
         }
         for (String i : ifaces) {
-            if (i.startsWith("net/minecraft/") && chain.targetDeclares(name, desc, List.of(i))) {
+            if (Chain.minecraftOwned(i) && chain.targetDeclares(name, desc, List.of(i))) {
                 return i;
             }
         }
@@ -1700,7 +1700,7 @@ public final class JarProcessor {
     private static boolean leavesIntoJdk(String owner, String member, LayerIndex layer) {
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
-            if (cur.startsWith("net/minecraft/")) {
+            if (Chain.minecraftOwned(cur)) {
                 return false;
             }
             Set<String> d = layer.decls.get(cur);
@@ -1715,10 +1715,16 @@ public final class JarProcessor {
         return false;
     }
 
+    /*
+     * "Vanilla" here is every class the game owns (Chain.minecraftOwned): net/minecraft/, and the unobfuscated
+     * com/mojang/blaze3d/ and com/mojang/realmsclient/ classes. Walking only to net/minecraft/ left a call through
+     * a mod subclass of, say, RenderSystem (RenderSystem.initGameThread called as MyRenderSystem.initGameThread)
+     * filed as a library member, so the vanilla class's redirects never applied to it.
+     */
     private static String inheritedVanillaOwner(String owner, String member, LayerIndex layer) {
         String cur = owner;
         for (int hops = 0; cur != null && hops < 64; hops++) {
-            if (cur.startsWith("net/minecraft/")) {
+            if (Chain.minecraftOwned(cur)) {
                 return cur;
             }
             Set<String> d = layer.decls.get(cur);
@@ -2941,6 +2947,16 @@ public final class JarProcessor {
                             // renamed type because the emitted descriptor goes through the same
                             // ClassRemapper. Everything else lives on the facade / renamed class.
                             String rkey = owner + "." + name + desc;
+                            // a super call into a dead class renamed to a CenturyBridge facade resolves on the
+                            // facade, which serves the class's members itself (the build gate holds it to the
+                            // whole surface), as a super call into a superRenames facade does: an instance
+                            // redirect wired for the type's other callers would turn it into a virtual call
+                            // again -- back into the class's own override
+                            if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>")
+                                    && chain.classRenames.get(owner).startsWith("top/dext/") && !chain.facadeGaps.containsKey(rkey)) {
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "super-facade");
+                                return;
+                            }
                             String rirt = chain.instanceRedirects.get(rkey);
                             if (rirt != null && op != Opcodes.INVOKESTATIC && !name.equals("<init>")) {
                                 instRedirects.put(site, rirt);
@@ -3052,6 +3068,17 @@ public final class JarProcessor {
                             // ever called through -- and NoSuchMethodError where it was missing.
                             emitOwner.put(site, irtHome);
                             top.dext.centurybridge.data.FullAudit.record(key, "instance-redirect");
+                            return;
+                        }
+                        // an interface call through a vanilla interface, found as an instance redirect is (the
+                        // supertype the key names may be a Fabric API interface injected into it); only
+                        // INVOKEINTERFACE, the super call keeps reaching the default (Chain.interfaceCallRedirects)
+                        String icrHome = op == Opcodes.INVOKEINTERFACE
+                            ? chain.instanceRedirectHome(chain.interfaceCallRedirects, owner, name + desc) : null;
+                        if (icrHome != null) {
+                            ifaceCallRedirects.put(site, chain.interfaceCallRedirects.get(icrHome + "." + name + desc));
+                            emitOwner.put(site, icrHome);
+                            top.dext.centurybridge.data.FullAudit.record(key, "interface-call-redirect");
                             return;
                         }
                         String mrn = chain.methodRenames.get(key);
@@ -3836,10 +3863,14 @@ public final class JarProcessor {
                                 && name.equals(covariantBridge.oldName) && desc.equals(covariantBridge.oldDesc)) {
                             desc = covariantBridge.newDesc;
                         }
-                        if (op == Opcodes.INVOKESPECIAL && !owner.equals(clsName[0]) && owner.startsWith("net/minecraft/")) {
+                        if (op == Opcodes.INVOKESPECIAL && !owner.equals(clsName[0])) {
                             for (Chain.OverrideRename r : declaredRenames) {
                                 if (r.superCalls && r.oldName.equals(name) && r.oldDesc.equals(desc)) {
-                                    // super.old(..): the vanilla method lives on under the new name
+                                    // super.old(..): the method lives on under the new name -- in vanilla, and in a
+                                    // mod superclass too, whose own declaration (under the same onlyUnder) was
+                                    // renamed with this one. Left on the old name, a mod superclass's call would
+                                    // resolve past its renamed body to whatever still answers the old name, which
+                                    // calls the new name virtually: back into this class's override, forever.
                                     name = r.newName;
                                     break;
                                 }

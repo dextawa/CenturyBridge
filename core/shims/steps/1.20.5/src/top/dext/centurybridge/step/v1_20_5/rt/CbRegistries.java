@@ -37,6 +37,11 @@ public final class CbRegistries {
 
         /** the client world's registries, or null outside a world */
         net.minecraft.class_5455 access();
+
+        /** the client's world itself, or null outside one (for a bridge that needs the world, not only its registries) */
+        default net.minecraft.class_1937 level() {
+            return null;
+        }
     }
 
     private static volatile net.minecraft.server.MinecraftServer server;
@@ -67,6 +72,21 @@ public final class CbRegistries {
      */
     public static net.minecraft.server.MinecraftServer server() {
         return server;
+    }
+
+    /**
+     * The client's world when the calling thread is the client's (render) thread, else null -- what a bridge
+     * that needs the world itself takes on the client before the server's (as {@link #currentAccess} does).
+     */
+    public static net.minecraft.class_1937 clientLevelOnThread() {
+        Client c = client;
+        return c != null && c.onThread() ? c.level() : null;
+    }
+
+    /** the client's world on any thread, or null (none, or a dedicated server) */
+    public static net.minecraft.class_1937 clientLevel() {
+        Client c = client;
+        return c != null ? c.level() : null;
     }
 
     /** the running world's registries as a lookup provider (see the class comment); never null */

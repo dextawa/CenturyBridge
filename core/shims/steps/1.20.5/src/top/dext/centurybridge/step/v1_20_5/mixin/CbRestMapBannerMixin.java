@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.Shadow;
  * Optional), with 1.20.4's bodies: each reads the banner's own fields, so a mod's super call reaches
  * exactly what 1.20.4's did. (getPos() / getColor() are plain getters: the generated
  * CbRestRecMapBannerMixin.) A mod class overriding getName() is hooked so 1.20.5's name() reaches the
- * override (overrideHooks); the interface lets the step's runtime call a banner's save() -- the mod's
- * own where it overrides it.
+ * override (overrideHooks); a mod class overriding save() carries CbRestMaps.OwnSave (adapter hook),
+ * through which the step's runtime calls it.
  */
 @Mixin(net.minecraft.class_17.class)
-public abstract class CbRestMapBannerMixin implements top.dext.centurybridge.step.v1_20_5.rt.CbRestMaps.LegacyBanner {
+public abstract class CbRestMapBannerMixin {
 
     @Shadow
     @Final
@@ -33,7 +33,6 @@ public abstract class CbRestMapBannerMixin implements top.dext.centurybridge.ste
     }
 
     /** 1.20.4 MapBanner.save(): the banner as 1.20.4's NBT */
-    @Override
     public net.minecraft.class_2487 method_74() {
         return top.dext.centurybridge.step.v1_20_5.rt.CbRestMaps.saveBanner(this.comp_2312, this.comp_2313,
             this.comp_2314.orElse(null));

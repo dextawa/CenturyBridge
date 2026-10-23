@@ -16,4 +16,7 @@ public interface CbRestEntityApi {
 
     /** 1.20.4 getNameTagOffsetY() */
     float cbRest$nameTagOffsetY();
+
+    /** 1.20.5's defineSynchedData(builder), protected: the entity's defines into a builder (CbRestEntityData) */
+    void cbRest$defineSynchedData(net.minecraft.class_2945.class_9222 builder);
 }

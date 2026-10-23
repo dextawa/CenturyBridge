@@ -3,7 +3,34 @@
   "net/minecraft/class_2945.method_12784(Lnet/minecraft/class_2940;Ljava/lang/Object;)V",
   "net/minecraft/class_2945.method_51696(Lnet/minecraft/class_2940;)Z",
   "net/minecraft/class_2945.method_12790()Z",
-  "net/minecraft/class_7495.method_45058()Z"
+  "net/minecraft/class_7495.method_45058()Z",
+  "net/minecraft/class_2540.method_10793(Lnet/minecraft/class_1799;)Lnet/minecraft/class_2540;",
+  "net/minecraft/class_2540.method_10805(Lnet/minecraft/class_2561;)Lnet/minecraft/class_2540;",
+  "net/minecraft/class_2540.method_10808()Lnet/minecraft/class_2561;",
+  "net/minecraft/class_2540.method_10819()Lnet/minecraft/class_1799;",
+  "net/minecraft/class_2540.method_34062(Ljava/util/Collection;Lnet/minecraft/class_2540$class_7462;)V",
+  "net/minecraft/class_2540.method_34063(Ljava/util/Map;Lnet/minecraft/class_2540$class_7462;Lnet/minecraft/class_2540$class_7462;)V",
+  "net/minecraft/class_2540.method_34066(Lnet/minecraft/class_2540$class_7461;)Ljava/util/List;",
+  "net/minecraft/class_2540.method_34067(Lnet/minecraft/class_2540$class_7461;Lnet/minecraft/class_2540$class_7461;)Ljava/util/Map;",
+  "net/minecraft/class_2540.method_34068(Ljava/util/function/IntFunction;Lnet/minecraft/class_2540$class_7461;)Ljava/util/Collection;",
+  "net/minecraft/class_2540.method_34069(Ljava/util/function/IntFunction;Lnet/minecraft/class_2540$class_7461;Lnet/minecraft/class_2540$class_7461;)Ljava/util/Map;",
+  "net/minecraft/class_2540.method_37435(Ljava/util/Optional;Lnet/minecraft/class_2540$class_7462;)V",
+  "net/minecraft/class_2540.method_37436(Lnet/minecraft/class_2540$class_7461;)Ljava/util/Optional;",
+  "net/minecraft/class_2540.method_42064(Lnet/minecraft/class_2359;)Ljava/lang/Object;",
+  "net/minecraft/class_2540.method_42065(Lnet/minecraft/class_2359;Ljava/lang/Object;)V",
+  "net/minecraft/class_2540.method_43616(Lcom/mojang/authlib/GameProfile;)V",
+  "net/minecraft/class_2540.method_43617(Lcom/mojang/authlib/properties/Property;)V",
+  "net/minecraft/class_2540.method_43619(Lcom/mojang/datafixers/util/Either;Lnet/minecraft/class_2540$class_7462;Lnet/minecraft/class_2540$class_7462;)V",
+  "net/minecraft/class_2540.method_43622(Lnet/minecraft/class_2540$class_7461;Lnet/minecraft/class_2540$class_7461;)Lcom/mojang/datafixers/util/Either;",
+  "net/minecraft/class_2540.method_43623()Lcom/mojang/authlib/GameProfile;",
+  "net/minecraft/class_2540.method_43624()Lcom/mojang/authlib/properties/Property;",
+  "net/minecraft/class_2540.method_43826(Ljava/lang/Object;Lnet/minecraft/class_2540$class_7462;)V",
+  "net/minecraft/class_2540.method_43827(Lnet/minecraft/class_2540$class_7461;)Ljava/lang/Object;",
+  "net/minecraft/class_2540.method_46249(Lcom/mojang/authlib/properties/PropertyMap;)V",
+  "net/minecraft/class_2540.method_46255()Lcom/mojang/authlib/properties/PropertyMap;",
+  "net/minecraft/class_2540.method_47989(Lnet/minecraft/class_2359;Lnet/minecraft/class_6880;Lnet/minecraft/class_2540$class_7462;)V",
+  "net/minecraft/class_2540.method_47990(Lnet/minecraft/class_2359;Lnet/minecraft/class_2540$class_7461;)Lnet/minecraft/class_6880;",
+  "net/minecraft/class_2540.method_54148()Lnet/minecraft/class_2561;"
  ],
  "superCtorReshapes": {
   "net/minecraft/class_2945.<init>(Lnet/minecraft/class_1297;)V": {
@@ -175,7 +202,9 @@
   "net/minecraft/class_2596.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites",
   "net/minecraft/class_8592.method_52285()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites",
   "net/minecraft/class_8710.method_53028(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloads",
-  "net/minecraft/class_8710.comp_1678()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloads"
+  "net/minecraft/class_8710.comp_1678()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloads",
+  "net/minecraft/class_2941.method_12715(Lnet/minecraft/class_2540;Ljava/lang/Object;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData",
+  "net/minecraft/class_2941.method_12716(Lnet/minecraft/class_2540;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData"
  },
  "superRedirects": {
   "net/minecraft/class_2596.method_52273()Lnet/minecraft/class_2539;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPacketWrites#cbSuperNextProtocol",
@@ -223,6 +252,16 @@
    ],
    "synth": [],
    "basis": "s4net: a 1.20.4 mod's payload keeps its id(); its 1.20.5 type is made from it (CbNetPayloads.cbLegacyPayloadType)"
+  },
+  {
+   "under": "net/minecraft/class_2941",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbNetLegacySerializer",
+   "requires": [
+    "method_12715(Lnet/minecraft/class_2540;Ljava/lang/Object;)V",
+    "method_12716(Lnet/minecraft/class_2540;)Ljava/lang/Object;"
+   ],
+   "synth": [],
+   "basis": "s4net: a 1.20.4 mod's entity data serializer keeps write / read; its 1.20.5 codec() is made from them (CbNetEntityData.cbLegacyCodec)"
   }
  ],
  "abstractFills": [
@@ -237,6 +276,22 @@
    "method": "method_56479()Lnet/minecraft/class_8710$class_9154;",
    "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetPayloads.cbLegacyPayloadType(Lnet/minecraft/class_8710;)Lnet/minecraft/class_8710$class_9154;",
    "basis": "s4net: CustomPacketPayload.type() of a 1.20.4 mod's payload class: the type of its id()"
+  },
+  {
+   "under": "net/minecraft/class_2941",
+   "method": "codec()Lnet/minecraft/class_9139;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData.cbLegacyCodec(Lnet/minecraft/class_2941;)Lnet/minecraft/class_9139;",
+   "basis": "s4net: EntityDataSerializer.codec() of a 1.20.4 mod's serializer class: its own write and read as a stream codec"
   }
- ]
+ ],
+ "classRenames": {
+  "net/minecraft/class_2540$class_7461": "top/dext/centurybridge/step/v1_20_5/facade/FriendlyByteBufReader",
+  "net/minecraft/class_2540$class_7462": "top/dext/centurybridge/step/v1_20_5/facade/FriendlyByteBufWriter"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2941.method_43242(Lnet/minecraft/class_2540$class_7462;Lnet/minecraft/class_2540$class_7461;)Lnet/minecraft/class_2941;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData",
+  "net/minecraft/class_2941.method_43243(Lnet/minecraft/class_2540$class_7462;Lnet/minecraft/class_2540$class_7461;)Lnet/minecraft/class_2941;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData",
+  "net/minecraft/class_2941.method_43240(Ljava/lang/Class;)Lnet/minecraft/class_2941;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData",
+  "net/minecraft/class_2941.method_43237(Lnet/minecraft/class_2359;)Lnet/minecraft/class_2941;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetEntityData"
+ }
 }

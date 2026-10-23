@@ -34,5 +34,8 @@
  },
  "ledger": {
   "com/mojang/blaze3d/systems/CommandEncoder.copyToBuffer": "not bridgeable: 1.21.7 added an abstract buffer-to-buffer copy to the GPU command encoder; a 1.21.6 implementation (a GPU backend or a wrapper around one) has none, and the only composition of 1.21.6's encoder operations -- mapBuffer(source, read) then writeToBuffer(target, bytes) -- needs the source mapped for reading, which 1.21.6/1.21.7's GlCommandEncoder.mapBuffer refuses without USAGE_MAP_READ ('Buffer is not readable') while copyToBuffer's sources need not have it (vanilla's one caller, VertexFormat.uploadToBufferWithWorkaround, copies from a staging buffer made with the target's usage)"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_11228.field_59901:F": "top/dext/centurybridge/step/v1_21_7/rt/CbStepConstants"
  }
 }

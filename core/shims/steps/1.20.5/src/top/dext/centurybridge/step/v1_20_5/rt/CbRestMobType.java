@@ -17,22 +17,13 @@ import top.dext.centurybridge.step.v1_20_5.facade.class_1310;
  */
 public final class CbRestMobType {
 
-    /** what a LivingEntity carries again (mixin/CbRestLivingEntityMixin): getMobType(), called virtually */
-    public interface Api {
-        class_1310 cbRest$mobType();
+    /**
+     * Added to a mod entity class that overrides 1.20.4's getMobType() (adapter hook): what its class
+     * declares (the cover on LivingEntity, mixin/CbRestLivingEntityMixin, answers the type's tags)
+     */
+    public interface Declares {
+        class_1310 method_6046();
     }
-
-    /** whether a class overrides 1.20.4's getMobType (the cover lives on LivingEntity itself) */
-    private static final ClassValue<Boolean> OVERRIDES = new ClassValue<>() {
-        @Override
-        protected Boolean computeValue(Class<?> c) {
-            try {
-                return c.getMethod("method_6046").getDeclaringClass() != net.minecraft.class_1309.class;
-            } catch (NoSuchMethodException e) {
-                return false;
-            }
-        }
-    };
 
     /** the 1.20.4 MobType of an entity type, from the 1.20.5 tags that replaced it */
     public static class_1310 of(net.minecraft.class_1299<?> type) {
@@ -56,8 +47,8 @@ public final class CbRestMobType {
      * class leaves it to the entity's type (then 1.20.5's tags decide, as for every vanilla entity).
      */
     public static class_1310 declared(net.minecraft.class_1297 entity) {
-        if (entity instanceof net.minecraft.class_1309 living && OVERRIDES.get(entity.getClass())) {
-            return ((Api) living).cbRest$mobType();
+        if (entity instanceof Declares declares) {
+            return declares.method_6046();
         }
         return null;
     }

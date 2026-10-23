@@ -128,19 +128,6 @@ public final class CbParticles {
         return c != null ? CbCodecs.toMapCodec(c) : commandForm((net.minecraft.class_2396) (Object) type);
     }
 
-    /** super.codec() in a mod subclass of SimpleParticleType: SimpleParticleType's, as 1.20.4's Codec */
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public static Codec superCodec(net.minecraft.class_2400 type) {
-        boolean entered = Guard.cbEnter(type);
-        try {
-            return CbCodecs.fromMapCodec(type.method_29138());
-        } finally {
-            if (entered) {
-                Guard.cbExit(type);
-            }
-        }
-    }
-
     /** streamCodec() of a converted ParticleType subclass (abstract fill): its deserializer and its options' writeToNetwork */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static net.minecraft.class_9139 streamCodec(net.minecraft.class_2396 type) {
