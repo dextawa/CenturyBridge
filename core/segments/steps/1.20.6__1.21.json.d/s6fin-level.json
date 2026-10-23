@@ -95,7 +95,9 @@
   "net/minecraft/class_3754.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12088",
   "net/minecraft/class_3492.method_35476(Z)Lnet/minecraft/class_3492;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_35476",
   "net/minecraft/class_2806.method_12152()I": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12152",
-  "net/minecraft/class_2806.method_51378()Z": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_51378"
+  "net/minecraft/class_2806.method_51378()Z": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_51378",
+  "net/minecraft/class_2806.method_12154(Lnet/minecraft/class_9312;Ljava/util/concurrent/Executor;Lnet/minecraft/class_9311;Ljava/util/List;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunkGen#method_12154",
+  "net/minecraft/class_2806.method_20612(Lnet/minecraft/class_9312;Lnet/minecraft/class_9311;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunkGen#method_20612"
  },
  "ctorRedirects": {
   "net/minecraft/class_9312.<init>(Lnet/minecraft/class_3218;Lnet/minecraft/class_2794;Lnet/minecraft/class_3485;Lnet/minecraft/class_3227;)V": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#newWorldGenContext"
@@ -349,6 +351,16 @@
     "keep"
    ],
    "basis": "1.21's SectionStorage hands read and write failures to a ChunkIOErrorReporter; 1.20.6's logged a read failure (1.21's still does) and reported nowhere: a reporter taking the reports and doing nothing more (CbLevelChunks.NO_REPORTS)"
+  },
+  "net/minecraft/class_3233.<init>(Lnet/minecraft/class_3218;Ljava/util/List;Lnet/minecraft/class_2806;I)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_9762;Lnet/minecraft/class_9770;Lnet/minecraft/class_2791;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbLevelChunkGen#regionCache(Ljava/util/List;)Lnet/minecraft/class_9762;",
+    "conv:1,2,3 top/dext/centurybridge/step/v1_21/rt/CbLevelChunkGen#regionStep(Ljava/util/List;Lnet/minecraft/class_2806;I)Lnet/minecraft/class_9770;",
+    "conv:1 top/dext/centurybridge/step/v1_21/rt/CbLevelChunkGen#regionCenter(Ljava/util/List;)Lnet/minecraft/class_2791;"
+   ],
+   "basis": "1.21's WorldGenRegion reads its chunks from a cache of generation holders for a chunk step: the 1.20.6 square list as holders each holding its chunk up to its status, a step of the status writing within 1.20.6's radius and reading every listed chunk at its own status, the list's middle chunk (CbLevelChunkGen)"
   }
  },
  "frameDefaults": {
@@ -367,5 +379,8 @@
  },
  "superRedirects": {
   "net/minecraft/class_3492.method_35476(Z)Lnet/minecraft/class_3492;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_35476"
+ },
+ "classRenames": {
+  "net/minecraft/class_9311": "top/dext/centurybridge/step/v1_21/facade/class_9311"
  }
 }
