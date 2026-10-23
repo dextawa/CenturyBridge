@@ -212,6 +212,8 @@
   "net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry$StaticPathNodeTypeProvider.getPathNodeType(Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_7;": "getPathType",
   "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.renderLayer(Lnet/minecraft/class_11515;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "chunkLayer",
   "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.glint(Lnet/minecraft/class_10444$class_10445;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "foilType",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadAtlas.of(Lnet/minecraft/class_2960;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadAtlas;": "ofLocation",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadAtlas.getTextureId()Lnet/minecraft/class_2960;": "getTextureLocation",
   "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.renderLayer(Lnet/minecraft/class_11515;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "chunkLayer",
   "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.glint(Lnet/minecraft/class_10444$class_10445;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "foilType",
   "net/fabricmc/fabric/api/renderer/v1/mesh/QuadView.renderLayer()Lnet/minecraft/class_11515;": "chunkLayer",
