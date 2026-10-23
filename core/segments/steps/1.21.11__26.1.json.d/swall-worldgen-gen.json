@@ -1,0 +1,528 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_4645.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_4646.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_4647.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_4647.method_23449(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;IIZ)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;IIZ)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_4647.method_27385(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;II)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;II)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_4647.method_34359(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_4647.method_49247(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;IIZFF)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;Lnet/minecraft/class_2338;IIZFF)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_4649.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_4650.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5139.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5140.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5141.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5141.method_27401(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4643;)V": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338$class_2339;Lnet/minecraft/class_4643;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5141.method_27402(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;Ljava/util/function/Function;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5141.method_35375(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5141.method_43196(Lnet/minecraft/class_3746;Lnet/minecraft/class_2338;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_2338;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5141.method_43198(Lnet/minecraft/class_3746;Lnet/minecraft/class_2338;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_2338;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5205.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5206.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5207.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5209.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5210.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5211.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5212.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5214.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5215.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5928.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_5930.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_7386.method_43168(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_7386.method_43172(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_7387.method_43168(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_7387.method_43172(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_7390.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_7390.method_43196(Lnet/minecraft/class_3746;Lnet/minecraft/class_2338;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_2338;)Z",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_8178.method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  },
+  "net/minecraft/class_8180.method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;": {
+   "desc": "(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallWorldGen#worldGenLevel(Lnet/minecraft/class_3746;)Lnet/minecraft/class_5281;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "26.1 takes the WorldGenLevel 1.21.11's LevelSimulatedReader always was (TreeFeature hands its WorldGenLevel on)"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "new": "createFoliage(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "onlyUnder": "net/minecraft/class_5205",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls the WorldGenLevel shape; a WorldGenLevel is the LevelSimulatedReader the 1.21.11 override takes"
+  },
+  {
+   "old": "method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "new": "createFoliage(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "onlyUnder": "net/minecraft/class_5207",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls the WorldGenLevel shape; a WorldGenLevel is the LevelSimulatedReader the 1.21.11 override takes"
+  },
+  {
+   "old": "method_23448(Lnet/minecraft/class_3746;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "new": "createFoliage(Lnet/minecraft/class_5281;Lnet/minecraft/class_4647$class_8179;Lnet/minecraft/class_5819;Lnet/minecraft/class_4643;ILnet/minecraft/class_4647$class_5208;III)V",
+   "onlyUnder": "net/minecraft/class_4647",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls the WorldGenLevel shape; a WorldGenLevel is the LevelSimulatedReader the 1.21.11 override takes"
+  },
+  {
+   "old": "method_43172(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V",
+   "new": "placeRoot(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V",
+   "onlyUnder": "net/minecraft/class_7386",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls the WorldGenLevel shape; a WorldGenLevel is the LevelSimulatedReader the 1.21.11 override takes"
+  },
+  {
+   "old": "method_43168(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z",
+   "new": "placeRoots(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z",
+   "onlyUnder": "net/minecraft/class_7387",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls the WorldGenLevel shape; a WorldGenLevel is the LevelSimulatedReader the 1.21.11 override takes"
+  },
+  {
+   "old": "method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "new": "placeTrunk(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_5215",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls the WorldGenLevel shape; a WorldGenLevel is the LevelSimulatedReader the 1.21.11 override takes"
+  },
+  {
+   "old": "method_26991(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "new": "placeTrunk(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;ILnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_5141",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls the WorldGenLevel shape; a WorldGenLevel is the LevelSimulatedReader the 1.21.11 override takes"
+  },
+  {
+   "old": "method_35375(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z",
+   "new": "placeLog(Lnet/minecraft/class_5281;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)Z",
+   "onlyUnder": "net/minecraft/class_5141",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls the WorldGenLevel shape; a WorldGenLevel is the LevelSimulatedReader the 1.21.11 override takes"
+  },
+  {
+   "old": "method_43196(Lnet/minecraft/class_3746;Lnet/minecraft/class_2338;)Z",
+   "new": "validTreePos(Lnet/minecraft/class_5281;Lnet/minecraft/class_2338;)Z",
+   "onlyUnder": "net/minecraft/class_7390",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "basis": "26.1 calls the WorldGenLevel shape; a WorldGenLevel is the LevelSimulatedReader the 1.21.11 override takes"
+  }
+ ]
+}
