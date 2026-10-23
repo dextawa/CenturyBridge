@@ -101,6 +101,7 @@ def main():
     frag["superRenames"] = sr
     gui_misc(frag)
     item_predicates(frag)
+    item_renderer(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -189,6 +190,30 @@ def item_predicates(frag):
     frag["_s9client_depRenames_basis"] = ("1.21.4's Fabric API (0.119.4) no longer ships fabric-rendering-v0, which 1.21.3's (0.114.1) did "
                                           "(core/tools/fapi_modules.py); this layer gives its two classes back (compat/fapi/v0: "
                                           "ColorProviderRegistry, InvalidateRenderStateCallback with v0's forwarding from rendering-v1)")
+
+
+
+def item_renderer(frag):
+    """1.21.3 ItemRenderer's model-based API and ItemModelShaper on 1.21.4."""
+    IR = RT + "/CbItemRender"
+    covers = set(frag.get("covers", []))
+    for m in ["method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V",
+              "method_62477(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V",
+              "method_4019(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;",
+              "method_62475(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_811;)Lnet/minecraft/class_1087;",
+              "method_14491(Lnet/minecraft/class_3300;)V"]:
+        covers.add("net/minecraft/class_918." + m)
+    frag["covers"] = sorted(covers)
+    fg = frag.setdefault("fieldGetters", {})
+    fg["net/minecraft/class_918.field_40532:Lnet/minecraft/class_1091;"] = IR
+    fg["net/minecraft/class_918.field_40533:Lnet/minecraft/class_1091;"] = IR
+    frag.setdefault("superCtorReshapes", {})["net/minecraft/class_918.<init>(Lnet/minecraft/class_1092;Lnet/minecraft/class_325;Lnet/minecraft/class_756;)V"] = {
+        "desc": "(Lnet/minecraft/class_10442;)V",
+        "ops": ["conv:0 " + IR + "#cbResolver(Lnet/minecraft/class_1092;)Lnet/minecraft/class_10442;"],
+        "post": IR + "#cbConstructed(Lnet/minecraft/class_918;Lnet/minecraft/class_325;)V",
+        "postArgs": [1],
+        "basis": "ItemRenderer resolves items through an ItemModelResolver since 1.21.4 (built on the same model manager); the ItemColors given colours the renderer's models of a mod's own as in 1.21.3 (CbItemRender); the BlockEntityWithoutLevelRenderer has no place -- 1.21.4 draws special items through their definitions"}
+    frag.setdefault("classRenames", {})["net/minecraft/class_763"] = FAC + "ItemModelShaper"
 
 
 if __name__ == "__main__":

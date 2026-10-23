@@ -150,7 +150,12 @@
   "net/minecraft/class_7528.method_44385()I",
   "net/minecraft/class_7528.method_44388(DD)Z",
   "net/minecraft/class_7528.method_52233(Lnet/minecraft/class_332;IIII)V",
-  "net/minecraft/class_7528.method_53532()I"
+  "net/minecraft/class_7528.method_53532()I",
+  "net/minecraft/class_918.method_14491(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_918.method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V",
+  "net/minecraft/class_918.method_4019(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;",
+  "net/minecraft/class_918.method_62475(Lnet/minecraft/class_1799;Lnet/minecraft/class_1309;Lnet/minecraft/class_811;)Lnet/minecraft/class_1087;",
+  "net/minecraft/class_918.method_62477(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V"
  ],
  "overrideHooks": [
   {
@@ -185,7 +190,9 @@
  "fieldGetters": {
   "net/minecraft/class_350.field_45909:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll",
   "net/minecraft/class_372.field_32225:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc",
-  "net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry.ITEM:Lnet/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/CbItemColorProviderRegistry#item"
+  "net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry.ITEM:Lnet/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/CbItemColorProviderRegistry#item",
+  "net/minecraft/class_918.field_40532:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender",
+  "net/minecraft/class_918.field_40533:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -199,7 +206,8 @@
   "net/minecraft/class_326": "top/dext/centurybridge/step/v1_21_4/facade/ItemColor",
   "net/minecraft/class_325": "top/dext/centurybridge/step/v1_21_4/facade/ItemColors",
   "net/fabricmc/fabric/api/client/render/ColorProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/ColorProviderRegistry",
-  "net/fabricmc/fabric/api/client/render/InvalidateRenderStateCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/InvalidateRenderStateCallback"
+  "net/fabricmc/fabric/api/client/render/InvalidateRenderStateCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/InvalidateRenderStateCallback",
+  "net/minecraft/class_763": "top/dext/centurybridge/step/v1_21_4/facade/ItemModelShaper"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -250,6 +258,17 @@
     "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadowOffset()F"
    ],
    "basis": "BakedGlyph.GlyphInstance carries its own shadow since 1.21.4 (colour 0 = none); a 1.21.3 instance had none -- its shadow was a second instance"
+  },
+  "net/minecraft/class_918.<init>(Lnet/minecraft/class_1092;Lnet/minecraft/class_325;Lnet/minecraft/class_756;)V": {
+   "desc": "(Lnet/minecraft/class_10442;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#cbResolver(Lnet/minecraft/class_1092;)Lnet/minecraft/class_10442;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#cbConstructed(Lnet/minecraft/class_918;Lnet/minecraft/class_325;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "ItemRenderer resolves items through an ItemModelResolver since 1.21.4 (built on the same model manager); the ItemColors given colours the renderer's models of a mod's own as in 1.21.3 (CbItemRender); the BlockEntityWithoutLevelRenderer has no place -- 1.21.4 draws special items through their definitions"
   }
  },
  "superRenames": {
