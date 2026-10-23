@@ -1,5 +1,23 @@
 {
  "instanceRedirects": {
+  "net/minecraft/class_161$class_162.method_34884([[Ljava/lang/String;)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_161$class_162.method_704(Lnet/minecraft/class_193;)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_161.method_48024()Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_51697()Z": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_680()[[Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_681()Ljava/lang/Iterable;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_682()Ljava/util/Map;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_683()I": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_684()Lnet/minecraft/class_2561;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_687()Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_690(Lnet/minecraft/class_161;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_691()Lnet/minecraft/class_170;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_167.method_727(Ljava/util/Map;[[Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_167.method_728()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_167.method_741()Ljava/util/Date;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_178.method_783()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_178.method_786()Ljava/util/Date;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_189.method_832()I": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
   "net/minecraft/class_2035.method_8881()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2040.method_8894()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2050.method_8927()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
@@ -24,6 +42,8 @@
   "net/minecraft/class_8129.method_48964()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson"
  },
  "staticRedirects": {
+  "net/minecraft/class_161.method_48023(Lnet/minecraft/class_161;)Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_178.method_788(Ljava/lang/String;)Lnet/minecraft/class_178;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
   "net/minecraft/class_2035.method_8879(Lcom/google/gson/JsonElement;)[Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2035.method_8882(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2040.method_8893(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2040;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
@@ -244,9 +264,13 @@
   "net/minecraft/class_4553$class_4557.method_35311(Lnet/minecraft/class_3445;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_4553$class_4557;"
  ],
  "classRenames": {
+  "net/minecraft/class_193": "top/dext/centurybridge/facade/v1_20_2/class_193",
   "net/minecraft/class_7376$class_7377": "top/dext/centurybridge/facade/v1_20_2/class_7376$class_7377"
  },
  "fieldGetters": {
   "net/minecraft/class_7376$class_7378.field_38731:Lcom/google/common/collect/BiMap;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_161.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_161;Lnet/minecraft/class_185;Lnet/minecraft/class_170;Ljava/util/Map;[[Ljava/lang/String;Z)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#newAdvancement"
  }
 }

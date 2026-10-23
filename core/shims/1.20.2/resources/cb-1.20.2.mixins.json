@@ -42,6 +42,7 @@
     "CbAdvHolderTrack",
     "CbAdvInstanceIdClaim",
     "CbAdvListenerAccess",
+    "CbAdvNodeTrack",
     "CbAdvPlayerBuilderStat",
     "CbAdvTriggerIdClaim",
     "CbAdvancementBuilderCriteria",
