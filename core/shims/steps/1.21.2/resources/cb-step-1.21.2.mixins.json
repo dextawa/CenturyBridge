@@ -93,7 +93,8 @@
     "CbLevelBiomeInvoker",
     "CbLevelPortalAccess",
     "CbLevelRegionAccess",
-    "CbLevelPropertiesAccess"
+    "CbLevelPropertiesAccess",
+    "CbLevelFlowingFluidMixin"
   ],
   "client": [
     "CbRenderLivingBob882Mixin",

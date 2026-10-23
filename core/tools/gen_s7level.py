@@ -865,6 +865,32 @@ def palette_and_be_types(f):
     f.put("classRenames", BET + "$class_2592", FAC + "/BlockEntityTypeBuilder")
 
 
+# ------------------------------------------------------------------------------------------- FlowingFluid spreading
+LFW = RT + "/CbLevelFlowing"
+
+
+def flowing(f):
+    FF, BGT, DR, FST, FLU = MC + "class_3609", L("class_1922"), L("class_2350"), L("class_3610"), L("class_3611")
+    cst = "method_15738(" + BGT + POS + BS + DR + POS + BS + FST + FLU + ")Z"
+    f.put("instanceRedirects", FF + "." + cst, LFW)
+    f.put("superRedirects", FF + "." + cst, LFW + "#superCanSpreadTo")
+    f.w["adapterHooks"].append({"under": FF, "adapter": LFW + "$LegacyCanSpreadTo", "requires": [cst], "synth": [],
+                                "basis": "1.21.2 dropped canSpreadTo and asks its checks inline: a 1.21.1 override decides "
+                                         "where 1.21.1 asked it, spreading down and to the sides (CbLevelFlowingFluidMixin)"})
+    LR_, S2O, S2B = L("class_4538"), "Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;", "Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;"
+    head = LR_ + POS + "I" + DR + BS
+    old = "method_15742(" + head + POS + S2O + S2B + ")I"
+    new = "method_15742(" + head + L("class_3609$class_9900") + ")I"
+    f.put("instanceRedirects", FF + "." + old, LFW)
+    f.hook(old=old, new=new, onlyUnder=FF, adapter=LFW + "$LegacySlopeDistance",
+           bridge=LFW + ".slopeDistanceIn(L" + LFW + "$LegacySlopeDistance;" + head + L("class_3609$class_9900") + ")I",
+           superBridge=LFW + ".superSlopeDistance(L" + LFW + "$SuperSlopeDistance;" + head + POS + S2O + S2B + ")I",
+           superAccess=LFW + "$SuperSlopeDistance", superAccessors=[new],
+           basis="getSlopeDistance keeps the source position and caches in a SpreadContext since 1.21.2: a 1.21.1 "
+                 "override is asked with the context's origin and fresh caches, its super call with a context at its "
+                 "source position (CbLevelFlowing)")
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -888,6 +914,7 @@ def main():
     level_misc(f)
     fabric_block_settings(f)
     palette_and_be_types(f)
+    flowing(f)
     f.write()
 
 

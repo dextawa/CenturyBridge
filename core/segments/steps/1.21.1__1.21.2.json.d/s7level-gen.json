@@ -603,7 +603,9 @@
   "net/minecraft/class_2816.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
   "net/minecraft/class_2834.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
   "net/minecraft/class_2837.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
-  "net/minecraft/class_6564.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette"
+  "net/minecraft/class_6564.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
+  "net/minecraft/class_3609.method_15738(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;Lnet/minecraft/class_3611;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing",
+  "net/minecraft/class_3609.method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -653,7 +655,8 @@
   "net/minecraft/class_8567.method_51869(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#getParamOrNull",
   "net/minecraft/class_3924.method_17502(Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#cookableRecipe",
   "net/minecraft/class_8174.method_49217(Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#unpackLootTable",
-  "net/minecraft/class_4970.method_42326(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#occlusionFullBlock"
+  "net/minecraft/class_4970.method_42326(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#occlusionFullBlock",
+  "net/minecraft/class_3609.method_15738(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;Lnet/minecraft/class_3611;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing#superCanSpreadTo"
  },
  "overrideHooks": [
   {
@@ -1213,6 +1216,19 @@
    "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "superCalls": "rewrite",
    "basis": "1.21.2 asks a coral tryScheduleDieTick with reader, tick access and random: every caller reader is a LevelAccessor (narrow); the old method super call gets back the tick access and random vanilla passed"
+  },
+  {
+   "old": "method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;)I",
+   "new": "method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_3609$class_9900;)I",
+   "onlyUnder": "net/minecraft/class_3609",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing$LegacySlopeDistance",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing.slopeDistanceIn(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing$LegacySlopeDistance;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_3609$class_9900;)I",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing.superSlopeDistance(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing$SuperSlopeDistance;Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;)I",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing$SuperSlopeDistance",
+   "superAccessors": [
+    "method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_3609$class_9900;)I"
+   ],
+   "basis": "getSlopeDistance keeps the source position and caches in a SpreadContext since 1.21.2: a 1.21.1 override is asked with the context's origin and fresh caches, its super call with a context at its source position (CbLevelFlowing)"
   }
  ],
  "overrideRenames": [
@@ -1512,6 +1528,15 @@
    ],
    "synth": [],
    "basis": "no vanilla code of either release asks isOcclusionShapeFullBlock: a 1.21.1 override is reached by its mod calls, through this adapter"
+  },
+  {
+   "under": "net/minecraft/class_3609",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing$LegacyCanSpreadTo",
+   "requires": [
+    "method_15738(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;Lnet/minecraft/class_3611;)Z"
+   ],
+   "synth": [],
+   "basis": "1.21.2 dropped canSpreadTo and asks its checks inline: a 1.21.1 override decides where 1.21.1 asked it, spreading down and to the sides (CbLevelFlowingFluidMixin)"
   }
  ],
  "abstractFills": [
