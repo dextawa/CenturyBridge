@@ -1498,8 +1498,13 @@ final class MixinBridge {
                 String where = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "." + vmeth.name + vmeth.desc;
                 List<String> why = new ArrayList<>();
                 Fate fate = selectorFate(target, vmeth.name, vmeth.desc, why);
-                if (fate == null && why.isEmpty() && method(wt, vmeth.name, vmeth.desc) == null) {
-                    fate = bodyFate(vt, wt, vmeth, why); // no wiring for it: where W keeps its code
+                if (fate == null && method(wt, vmeth.name, vmeth.desc) == null) {
+                    // no wiring for it, or wiring for mods' overrides that cannot carry an injector: where W keeps its code
+                    List<String> bwhy = new ArrayList<>();
+                    fate = bodyFate(vt, wt, vmeth, bwhy);
+                    if (fate == null && why.isEmpty()) {
+                        why.addAll(bwhy);
+                    }
                 }
                 if (fate == null) {
                     if (!why.isEmpty()) {
@@ -2107,13 +2112,15 @@ final class MixinBridge {
     /**
      * A V method W no longer declares and the step's wiring says nothing of: the W method of the same
      * class that holds its code now (1.20.5 made every packet's write(FriendlyByteBuf) a private
-     * write(RegistryFriendlyByteBuf) its stream codec calls) -- the vanilla code an injector into V's
-     * method hooked runs there. Candidates are the methods W declares and V does not (by name and
-     * descriptor), not synthetic, of the same static-ness, a constructor for a constructor, with as many
-     * arguments, each V's type or a W subtype of it (the V-typed handler takes it as it is), and the same
-     * return type. Evidence: their significant instructions (SiteMatch.sig) agree with V's body at least
-     * 0.75 (2 x common subsequence / both lengths) and every other candidate trails by 0.15 or more.
-     * Anything less is reported, never picked.
+     * write(RegistryFriendlyByteBuf) its stream codec calls, and split each block's use() into
+     * useItemOn / useWithoutItem) -- the vanilla code an injector into V's method hooked runs there.
+     * Candidates are the methods W declares and V does not (by name and descriptor), not synthetic, of
+     * the same static-ness, a constructor for a constructor. Evidence: their significant instructions
+     * (SiteMatch.sig) agree with V's body at least 0.75 (2 x common subsequence / both lengths) and
+     * every other candidate trails by 0.15 or more; anything less is reported, never picked. V's
+     * arguments are W's where each has exactly one W argument of its type (or a W subtype of it) and no
+     * two share one: otherwise the arguments are unknown and only a handler taking none follows (plan);
+     * a changed return type is plan's to judge as well.
      */
     private Fate bodyFate(ClassNode vt, ClassNode wt, MethodNode vm, List<String> why) {
         if ((vm.access & Opcodes.ACC_SYNTHETIC) != 0 || vm.instructions == null || vm.instructions.size() == 0) {
@@ -2131,15 +2138,7 @@ final class MixinBridge {
         for (MethodNode m : wt.methods) {
             if (vkeys.contains(m.name + m.desc) || (m.access & Opcodes.ACC_SYNTHETIC) != 0
                     || ((m.access ^ vm.access) & Opcodes.ACC_STATIC) != 0 || m.name.equals("<init>") != vm.name.equals("<init>")
-                    || m.name.equals("<clinit>") || !Type.getReturnType(m.desc).equals(Type.getReturnType(vm.desc))) {
-                continue;
-            }
-            Type[] wa = Type.getArgumentTypes(m.desc);
-            boolean fits = wa.length == va.length;
-            for (int i = 0; fits && i < wa.length; i++) {
-                fits = wa[i].equals(va[i]) || wAssignable(wa[i], va[i]);
-            }
-            if (!fits) {
+                    || m.name.equals("<clinit>")) {
                 continue;
             }
             double sim = SiteMatch.similarity(vs, SiteMatch.sig(m));
@@ -2159,8 +2158,22 @@ final class MixinBridge {
                 best.name, best.desc, bs, Math.max(second, 0)));
             return null;
         }
-        return new Fate(best.name, best.desc, identity(va.length), new String[va.length][], new boolean[va.length], true,
-            String.format(Locale.ROOT, "no wiring; W keeps its code there (similarity %.2f, next %.2f)", bs, Math.max(second, 0)));
+        Type[] wa = Type.getArgumentTypes(best.desc);
+        int[] from = new int[va.length];
+        boolean known = true;
+        Set<Integer> used = new HashSet<>();
+        for (int i = 0; i < va.length; i++) {
+            from[i] = -1;
+            for (int j = 0; j < wa.length; j++) {
+                if (wa[j].equals(va[i]) || wAssignable(wa[j], va[i])) {
+                    from[i] = from[i] == -1 ? j : -2;
+                }
+            }
+            known &= from[i] >= 0 && used.add(from[i]);
+        }
+        return new Fate(best.name, best.desc, known ? from : null, new String[va.length][], new boolean[va.length], known,
+            String.format(Locale.ROOT, "W keeps its code there (similarity %.2f, next %.2f)%s", bs, Math.max(second, 0),
+                known ? "" : "; its arguments are not V's one for one"));
     }
 
     /** W argument j of a reshape's "keep" ops is V argument i; drops, conversions and supplies give none */
