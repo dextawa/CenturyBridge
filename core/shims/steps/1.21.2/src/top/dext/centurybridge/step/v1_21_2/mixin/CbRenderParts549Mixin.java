@@ -34,7 +34,12 @@ public abstract class CbRenderParts549Mixin {
     protected net.minecraft.class_630 field_3307;
 
     /** 1.21.1 headParts() */
-    protected Iterable<net.minecraft.class_630> method_22946() {
+    public Iterable<net.minecraft.class_630> method_22946() {
         return com.google.common.collect.ImmutableList.of(this.field_3307);
+    }
+
+    /** 1.21.1 bodyParts() */
+    protected Iterable<net.minecraft.class_630> method_22948() {
+        return com.google.common.collect.ImmutableList.of(this.field_3305, this.field_27425, this.field_27426, this.field_27427, this.field_27428);
     }
 }
