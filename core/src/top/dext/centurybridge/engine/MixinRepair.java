@@ -53,6 +53,11 @@ import org.objectweb.asm.tree.VarInsnNode;
  *              target calls on its own class: retarget there; a static callee
  *              takes a static handler, so an instance handler that never reads
  *              {@code this} is made static
+ *   ordinal-remap  an @At / @Constant pinned to the n-th occurrence of its anchor
+ *              in a target V and W both declare: the ordinal becomes that of the
+ *              occurrence's counterpart in W's body ({@link SiteMatch}, matched by
+ *              context, needs {@link #source}); with no unique counterpart it is
+ *              left as it stands and reported
  *
  * Whatever stays unrepairable with an effective require >= 1 is reported as
  * fatal with the reason, so the caller strips it instead of shipping a crash.
@@ -68,6 +73,8 @@ public final class MixinRepair {
 
     private final ZipFile code;
     private final Map<String, ClassNode> cache = new HashMap<>();
+    /** the step's source release (V) code, for ordinal-remap; null: ordinals are not remapped */
+    public MixinRepair source;
 
     /** disabled: injectors switched to require=0 because their anchor is gone -- a KNOWN loss, reported */
     public record Outcome(Set<String> fatal, Map<String, String> fatalWhy, List<String> repairs, List<String> disabled) {}
@@ -263,6 +270,10 @@ public final class MixinRepair {
                 Map<String, Object> v = values(an);
                 List<String> methods = strings(v.get("method"));
                 if (methods.isEmpty()) continue;
+                if (source != null && remapOrdinals(an, refmap, methods, targets, shortName + "." + handler.name, repairs)) {
+                    dirty[0] = true;
+                    v = values(an);
+                }
                 List<Anchor> anchors = anchors(an, v, refmap); // null = anchor not statically evaluable
                 int require = v.get("require") instanceof Integer i && i >= 0 ? i : defaultRequire;
                 boolean capturesArgs = capturesTargetArgs(an, handler);
@@ -380,6 +391,89 @@ public final class MixinRepair {
         }
         if (out == null && !refmapChanged && repairs.isEmpty() && fatalWhy == null && disabled.isEmpty()) return null;
         return new MixinResult(out, refmapChanged, repairs, disabled, fatalWhy);
+    }
+
+    // ------------------------------------------------------------------ ordinals
+
+    /**
+     * ordinal-remap: every @At (slices included) and @Constant of the injector pinned to an ordinal is
+     * moved to the ordinal of its V site's counterpart in W. Only for a selector naming one method that
+     * V and W both declare on one owner (a target the step moved is not V's body any more). True if an
+     * ordinal changed; each change, and each pinned site left without a counterpart, is reported.
+     */
+    private boolean remapOrdinals(AnnotationNode an, JsonObject refmap, List<String> methods, List<String> targets,
+                                  String where, List<String> notes) {
+        MethodNode wm = null, vm = null;
+        for (String sel : methods) {
+            if (sel.startsWith("/")) return false;
+            Sel s = Sel.parse(refmapLookup(refmap, sel));
+            if (s.wildcard || s.desc == null) return false;
+            List<String> owners = s.owner != null ? List.of(s.owner) : targets;
+            for (String owner : owners) {
+                ClassNode tc = target(owner), vc = source.target(owner);
+                if (tc == null || vc == null) continue;
+                List<MethodNode> w = s.match(tc), v = s.match(vc);
+                if (w.size() != 1 || v.size() != 1) continue;
+                if (wm != null) return false; // several live alternatives: not one body to match
+                wm = w.get(0);
+                vm = v.get(0);
+            }
+        }
+        if (wm == null) return false;
+        List<AnnotationNode> pinned = new ArrayList<>();
+        for (Object a : list(raw(an, "at"))) if (a instanceof AnnotationNode at) pinned.add(at);
+        for (Object sl : list(raw(an, "slice"))) {
+            if (!(sl instanceof AnnotationNode sn)) continue;
+            for (String edge : new String[] {"from", "to"}) if (raw(sn, edge) instanceof AnnotationNode at) pinned.add(at);
+        }
+        boolean changed = false;
+        for (AnnotationNode at : pinned) {
+            Anchor a = parseAt(values(at), refmap);
+            if (a == null || a == POSITIONAL || a.ordinal < 0) continue;
+            changed |= remapOne(at, a, vm, wm, where, notes);
+        }
+        for (Object c : list(raw(an, "constant"))) {
+            if (!(c instanceof AnnotationNode cn)) continue;
+            Map<String, Object> cv = values(cn);
+            if (!(cv.get("ordinal") instanceof Integer ord) || ord < 0 || cv.containsKey("expandZeroConditions")) continue;
+            Object val = null;
+            for (String k : new String[] {"intValue", "floatValue", "longValue", "doubleValue", "stringValue", "classValue"}) {
+                if (cv.containsKey(k)) val = cv.get(k);
+            }
+            if (val == null) continue;
+            changed |= remapOne(cn, new Anchor("CONSTANT", null, null, null, val, ord), vm, wm, where, notes);
+        }
+        return changed;
+    }
+
+    /** an annotation value as stored (nested annotations stay AnnotationNodes) */
+    private static Object raw(AnnotationNode an, String key) {
+        if (an.values == null) return null;
+        for (int i = 0; i + 1 < an.values.size(); i += 2) if (key.equals(an.values.get(i))) return an.values.get(i + 1);
+        return null;
+    }
+
+    private static boolean remapOne(AnnotationNode holder, Anchor a, MethodNode vm, MethodNode wm, String where, List<String> notes) {
+        List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
+        List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> matchesAnchor(in, a));
+        if (a.ordinal >= vo.size() || wo.isEmpty()) return false; // not V's site to begin with / nothing to map onto
+        int j = SiteMatch.match(vm, vo, wm, wo)[a.ordinal];
+        if (j < 0) {
+            if (vo.size() != wo.size()) {
+                notes.add("ordinal-unmatched " + where + " " + a + ": V's site has no unique counterpart among W's "
+                    + wo.size() + " (V " + vo.size() + "), left as it stands");
+            }
+            return false;
+        }
+        if (j == a.ordinal) return false;
+        for (int i = 0; i + 1 < holder.values.size(); i += 2) {
+            if ("ordinal".equals(holder.values.get(i))) {
+                holder.values.set(i + 1, j);
+                notes.add("ordinal-remap " + where + " " + a + " -> #" + j + " (V " + vo.size() + ", W " + wo.size() + " occurrences, by context)");
+                return true;
+            }
+        }
+        return false;
     }
 
     private Map<String, List<String>> implIndex;

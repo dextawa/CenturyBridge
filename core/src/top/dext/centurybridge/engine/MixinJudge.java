@@ -54,7 +54,11 @@ import org.objectweb.asm.tree.TypeInsnNode;
  *                    member of the mixin is judged as that member
  * An injector repair drops leaves the handler without its annotation: judged as "disabled".
  *
- *   mixin-judge <code jar> <probe jar> <index.tsv> <out.tsv> [--layer <jar>]... [--keys <damage.tsv>]
+ * With --source (V's code; the converted probe only, never the raw damage judging) an anchor pinned to
+ * an ordinal that W holds another number of times than V passes when its occurrence is the counterpart
+ * of V's (SiteMatch: matched by surrounding instructions), and fails as shifted / site lost otherwise.
+ *
+ *   mixin-judge <code jar> <probe jar> <index.tsv> <out.tsv> [--layer <jar>]... [--keys <damage.tsv>] [--source <V code jar>]
  * out.tsv: usage owner target anchor ordinal vcount fate -- one row per member that does not survive
  * (with --keys only the members whose key is in that table, i.e. the step's open damage rows).
  */
@@ -87,6 +91,11 @@ public final class MixinJudge {
         return i > 0 ? m.substring(0, i) : m;
     }
 
+    /** V's code (--source): an ordinal-pinned anchor is judged by whether it names V's site's counterpart */
+    private MixinRepair source;
+    /** the V ordinal of the probe row being judged (index column 6) */
+    private int rowOrdinal = -1;
+
     private MixinJudge(Path codeJar) throws IOException {
         this.code = new MixinRepair(codeJar);
     }
@@ -100,6 +109,8 @@ public final class MixinJudge {
         for (int i = 5; i < args.length; i++) {
             if (args[i].equals("--layer")) {
                 j.loadExtra(Path.of(args[++i]));
+            } else if (args[i].equals("--source")) {
+                j.source = new MixinRepair(Path.of(args[++i]));
             } else if (args[i].equals("--keys")) {
                 keys = new HashSet<>();
                 List<String> lines = Files.readAllLines(Path.of(args[++i]), StandardCharsets.UTF_8);
@@ -139,6 +150,7 @@ public final class MixinJudge {
                         String name = r[1].substring(0, r[1].indexOf('('));
                         // the mixin's own target as it stands now (a class rename moves it), else V's owner
                         List<String> ts = MixinRepair.mixinTargets(mx, j.refmap(mx));
+                        j.rowOrdinal = Integer.parseInt(r[6]);
                         why = j.judgeMember(mx, ts.size() == 1 ? ts.get(0) : r[3], name, Integer.parseInt(r[7]), new HashSet<>());
                     }
                     if (why != null) {
@@ -415,6 +427,29 @@ public final class MixinJudge {
             }
             if (c == 0) {
                 return "anchor gone";
+            }
+            if (source != null && a.ordinal() >= 0 && rowOrdinal >= 0 && anchors.size() == 1 && vcount > 0 && c != vcount) {
+                // pinned to one occurrence, and W holds the anchor another number of times: it lands where
+                // V's site landed exactly when its occurrence is that site's counterpart (SiteMatch)
+                ClassNode vc = source.target(oc.name);
+                MethodNode vm = null;
+                if (vc != null) {
+                    for (MethodNode m : vc.methods) {
+                        if (m.name.equals(wm.name) && m.desc.equals(wm.desc)) {
+                            vm = m;
+                        }
+                    }
+                }
+                List<AbstractInsnNode> vo = vm == null ? List.of() : SiteMatch.occurrences(vm, in -> MixinRepair.matchesAnchor(in, a));
+                if (rowOrdinal < vo.size()) {
+                    List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, a));
+                    int j = SiteMatch.match(vm, vo, wm, wo)[rowOrdinal];
+                    if (j == a.ordinal()) {
+                        continue;
+                    }
+                    return j < 0 ? "anchor ordinal site lost (V #" + rowOrdinal + " of " + vo.size() + ", W " + c + ")"
+                        : "anchor ordinal shifted (V #" + rowOrdinal + " is W #" + j + ", pinned to #" + a.ordinal() + ")";
+                }
             }
             if (c <= a.ordinal()) {
                 return "anchor ordinal gone (" + vcount + " -> " + c + ")";

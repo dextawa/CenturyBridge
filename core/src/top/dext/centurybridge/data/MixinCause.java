@@ -34,6 +34,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.TypeInsnNode;
 import org.objectweb.asm.tree.VarInsnNode;
+import top.dext.centurybridge.engine.SiteMatch;
 import top.dext.centurybridge.engine.Wiring;
 
 /**
@@ -336,9 +337,9 @@ public final class MixinCause {
         if (same.size() > 1) return new Verdict("target-private-ambiguous", same.size() + " W methods with the same body");
         MethodNode best = null;
         double bs = 0, second = 0;
-        List<String> vs = sig(vm);
+        List<String> vs = SiteMatch.sig(vm);
         for (MethodNode m : cands) {
-            double s = similarity(vs, sig(m));
+            double s = similarity(vs, SiteMatch.sig(m));
             if (s > bs) { second = bs; bs = s; best = m; } else if (s > second) second = s;
         }
         if (best != null && bs >= 0.6 && bs - second >= 0.2) {
@@ -436,17 +437,8 @@ public final class MixinCause {
         }
     }
 
-    /** a constant as Mixin's @Constant sees it (null for anything else) */
     static Object constantOf(AbstractInsnNode in) {
-        int op = in.getOpcode();
-        if (in instanceof LdcInsnNode ldc) return ldc.cst;
-        if (op >= Opcodes.ICONST_M1 && op <= Opcodes.ICONST_5) return op - Opcodes.ICONST_0;
-        if (in instanceof IntInsnNode ii && (op == Opcodes.BIPUSH || op == Opcodes.SIPUSH)) return ii.operand;
-        if (op == Opcodes.LCONST_0 || op == Opcodes.LCONST_1) return (long) (op - Opcodes.LCONST_0);
-        if (op >= Opcodes.FCONST_0 && op <= Opcodes.FCONST_2) return (float) (op - Opcodes.FCONST_0);
-        if (op == Opcodes.DCONST_0 || op == Opcodes.DCONST_1) return (double) (op - Opcodes.DCONST_0);
-        if (in instanceof TypeInsnNode ti && (op == Opcodes.INSTANCEOF || op == Opcodes.CHECKCAST)) return Type.getObjectType(ti.desc);
-        return null;
+        return SiteMatch.constantOf(in);
     }
 
     private static int count(MethodNode m, Anchor a) {
@@ -604,7 +596,7 @@ public final class MixinCause {
 
     private Verdict judgeCount(Row r, Anchor a, MethodNode vm, MethodNode wm, String fate) {
         List<AbstractInsnNode> vo = occurrences(vm, a), wo = occurrences(wm, a);
-        int[] map = matchSites(vm, vo, wm, wo);
+        int[] map = SiteMatch.match(vm, vo, wm, wo);
         if (r.ordinal() < 0) {
             int kept = 0;
             for (int j : map) if (j >= 0) kept++;
@@ -629,86 +621,6 @@ public final class MixinCause {
         List<AbstractInsnNode> out = new ArrayList<>();
         if (m.instructions != null) for (AbstractInsnNode in : m.instructions) if (a.matches(in)) out.add(in);
         return out;
-    }
-
-    /**
-     * Each V occurrence's W counterpart: the W occurrence whose surrounding significant instructions
-     * (k before and after) equal V's, unique on both sides, widest context first; -1 where none is unique.
-     * Matches must keep V's order.
-     */
-    private static int[] matchSites(MethodNode vm, List<AbstractInsnNode> vo, MethodNode wm, List<AbstractInsnNode> wo) {
-        int[] map = new int[vo.size()];
-        java.util.Arrays.fill(map, -1);
-        boolean[] taken = new boolean[wo.size()];
-        List<String> vs = sig(vm), ws = sig(wm);
-        List<Integer> vi = sigIndex(vm, vo), wi = sigIndex(wm, wo);
-        for (int k = 4; k >= 1; k--) {
-            Map<String, List<Integer>> wctx = new HashMap<>();
-            for (int j = 0; j < wo.size(); j++) if (!taken[j]) wctx.computeIfAbsent(ctx(ws, wi.get(j), k), x -> new ArrayList<>()).add(j);
-            Map<String, List<Integer>> vctx = new HashMap<>();
-            for (int i = 0; i < vo.size(); i++) if (map[i] < 0) vctx.computeIfAbsent(ctx(vs, vi.get(i), k), x -> new ArrayList<>()).add(i);
-            for (Map.Entry<String, List<Integer>> e : vctx.entrySet()) {
-                List<Integer> ws1 = wctx.get(e.getKey());
-                if (e.getValue().size() == 1 && ws1 != null && ws1.size() == 1) {
-                    map[e.getValue().get(0)] = ws1.get(0);
-                    taken[ws1.get(0)] = true;
-                }
-            }
-        }
-        // order: a match out of order with its neighbours is not trusted
-        int last = -1;
-        for (int i = 0; i < map.length; i++) {
-            if (map[i] < 0) continue;
-            if (map[i] < last) map[i] = -1;
-            else last = map[i];
-        }
-        return map;
-    }
-
-    private static String ctx(List<String> s, int at, int k) {
-        StringBuilder b = new StringBuilder();
-        for (int d = -k; d <= k; d++) {
-            int p = at + d;
-            b.append(p < 0 || p >= s.size() ? "^" : s.get(p)).append('|');
-        }
-        return b.toString();
-    }
-
-    /** the significant instructions of a body, rendered (calls/fields by owner.name, types, constants) */
-    static List<String> sig(MethodNode m) {
-        List<String> out = new ArrayList<>();
-        if (m.instructions == null) return out;
-        for (AbstractInsnNode in : m.instructions) {
-            String s = sigOf(in);
-            if (s != null) out.add(s);
-        }
-        return out;
-    }
-
-    private static List<Integer> sigIndex(MethodNode m, List<AbstractInsnNode> occ) {
-        Set<AbstractInsnNode> want = new HashSet<>(occ);
-        List<Integer> out = new ArrayList<>();
-        int idx = 0;
-        if (m.instructions != null) {
-            for (AbstractInsnNode in : m.instructions) {
-                String s = sigOf(in);
-                if (want.contains(in)) out.add(s == null ? idx : idx);
-                if (s != null) idx++;
-            }
-        }
-        return out;
-    }
-
-    private static String sigOf(AbstractInsnNode in) {
-        if (in instanceof MethodInsnNode mi) return mi.owner + "." + mi.name;
-        if (in instanceof FieldInsnNode fi) return fi.getOpcode() + fi.owner + "." + fi.name;
-        if (in instanceof TypeInsnNode ti) return ti.getOpcode() + ti.desc;
-        if (in instanceof InvokeDynamicInsnNode id) return "indy." + id.name;
-        Object c = constantOf(in);
-        if (c != null) return "c" + c;
-        int op = in.getOpcode();
-        if (op >= Opcodes.IRETURN && op <= Opcodes.RETURN || op == Opcodes.ATHROW) return "ret" + op;
-        return null;
     }
 
     private static double similarity(List<String> a, List<String> b) {

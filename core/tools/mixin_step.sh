@@ -60,8 +60,11 @@ WIRING="$WD/core/segments/steps/$SEG.json"
 [ "$SEG" = "1.20.1__1.20.2" ] && WIRING="$WD/core/segments/shims-1.20.2.json"
 "$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -cp "$CP" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/mixin/conv" \
     "$OUT/mixin/mprobe-$V.jar" > "$OUT/mixin/convert.log" 2>&1 || { echo "mixin probe convert failed"; tail -5 "$OUT/mixin/convert.log"; exit 1; }
+# --source: an ordinal-pinned anchor W holds another number of times is judged by whether it names the
+# counterpart of the V site (same namespace on both sides: not at the wall)
+SRC=(); [ -z "$WALL" ] && SRC=(--source "$(code_of "$V")")
 "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-judge "$(code_of "$W")" "$(ls "$OUT"/mixin/conv/*.jar | head -1)" \
-    "$OUT/mixin/mprobe-$V.jar.index.tsv" "$OUT/mixin/judged.tsv" --layer "$WD/build/centurybridge-0.3.0+$W.jar" \
+    "$OUT/mixin/mprobe-$V.jar.index.tsv" "$OUT/mixin/judged.tsv" --layer "$WD/build/centurybridge-0.3.0+$W.jar" "${SRC[@]}" \
     > "$OUT/mixin/judge.log" 2>&1 || { echo "mixin judge failed"; tail -3 "$OUT/mixin/judge.log"; exit 1; }
 python3 - "$OUT/mixin/judged.tsv" "$DAMAGE" "$AREA" "$OUT/open-mixin.tsv" <<'EOF'
 import collections, os, re, sys

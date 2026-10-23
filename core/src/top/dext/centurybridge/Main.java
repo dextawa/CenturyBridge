@@ -217,6 +217,10 @@ public final class Main {
             Path srcCode = sc != null ? Path.of(sc) : codeOf(args[2]);
             if (Files.exists(srcCode)) {
                 chain.sourceCode = new top.dext.centurybridge.engine.MixinRepair(srcCode);
+                // and an ordinal-pinned anchor is moved to its V site's counterpart in W (MixinRepair ordinal-remap)
+                if (chain.mixinRepair != null) {
+                    chain.mixinRepair.source = chain.sourceCode;
+                }
             }
         }
         // past the wall the anchors are checked once the jar has its real names, against
