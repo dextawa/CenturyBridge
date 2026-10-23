@@ -112,6 +112,7 @@ def main():
     render_tail(frag)
     render_layers(frag)
     client_rest(frag)
+    generic_client(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -1004,6 +1005,57 @@ def client_rest(frag):
     ir = frag.setdefault("instanceRedirects", {})
     ir["net/minecraft/class_636.method_2916(I)V"] = R
     ir["net/minecraft/class_3999.method_18130(Lnet/minecraft/class_289;Lnet/minecraft/class_1060;)Lnet/minecraft/class_287;"] = R
+
+
+def generic_client(frag):
+    """generic drift of the client area (same erased shape, changed type arguments): CbGenericClient."""
+    G = RT + "/CbGenericClient"
+    CF = "Ljava/util/concurrent/CompletableFuture;"
+    BC = "Ljava/util/function/BiConsumer;"
+    COL = "Ljava/util/Collection;"
+    cr = frag.setdefault("callReshapes", {})
+    ch = frag.setdefault("convertHooks", [])
+    ch[:] = [h for h in ch if h.get("family") != "generic-client"]
+    skin = "method_52863(Lcom/mojang/authlib/GameProfile;)" + CF
+    cr["net/minecraft/class_1071." + skin] = {
+        "desc": "(Lcom/mojang/authlib/GameProfile;)" + CF, "ops": ["keep"], "ret": "conv " + G + "#skinFuture(" + CF + ")" + CF,
+        "basis": "SkinManager.getOrLoad answers a future of an Optional skin since 1.21.4 (empty where 1.21.3's future failed)"}
+    ch.append({"under": "net/minecraft/class_1071", "member": skin, "ret": G + "#optionalSkinFuture(" + CF + ")" + CF, "family": "generic-client",
+               "basis": "a 1.21.3 getOrLoad override answers a future of the skin; 1.21.4 reads a future of an Optional skin"})
+    outs = [("net/minecraft/class_4942", "method_25846", ["Lnet/minecraft/class_2248;", "Lnet/minecraft/class_4944;", BC]),
+            ("net/minecraft/class_4942", "method_25847", ["Lnet/minecraft/class_2248;", "Ljava/lang/String;", "Lnet/minecraft/class_4944;", BC]),
+            ("net/minecraft/class_4942", "method_25852", ["Lnet/minecraft/class_2960;", "Lnet/minecraft/class_4944;", BC]),
+            ("net/minecraft/class_4942", "method_25853", ["Lnet/minecraft/class_2248;", "Ljava/lang/String;", "Lnet/minecraft/class_4944;", BC]),
+            ("net/minecraft/class_4946", "method_25915", ["Lnet/minecraft/class_2248;", "Ljava/lang/String;", BC]),
+            ("net/minecraft/class_4946", "method_25916", ["Lnet/minecraft/class_2248;", BC]),
+            ("net/minecraft/class_4946$class_4947", "method_25922", ["Lnet/minecraft/class_2248;", "Ljava/lang/String;", BC]),
+            ("net/minecraft/class_4946$class_4947", "method_25923", ["Lnet/minecraft/class_2248;", BC])]
+    for owner, name, params in outs:
+        desc = "(" + "".join(params) + ")Lnet/minecraft/class_2960;"
+        cr[owner + "." + name + desc] = {
+            "desc": desc, "ops": ["keep"] * (len(params) - 1) + ["conv " + G + "#newModelOutput(" + BC + ")" + BC],
+            "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"}
+        ch.append({"under": owner, "member": name + desc, "args": [None] * (len(params) - 1) + [G + "#oldModelOutput(" + BC + ")" + BC],
+                   "family": "generic-client",
+                   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"})
+    load = "method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;" + COL + ")" + CF
+    cr["net/minecraft/class_7766." + load] = {
+        "desc": load[len("method_47661"):], "ops": ["keep", "keep", "keep", "keep", "conv " + G + "#types(" + COL + ")" + COL],
+        "basis": "SpriteLoader.loadAndStitch takes metadata section types since 1.21.4 (1.21.3: serializers; CbRestMetadata converts)"}
+    ch.append({"under": "net/minecraft/class_7766", "member": load, "args": [None, None, None, None, G + "#serializers(" + COL + ")" + COL],
+               "family": "generic-client", "basis": "a 1.21.3 loadAndStitch override reads metadata section serializers"})
+    cr["net/minecraft/class_8684.create(" + COL + ")Lnet/minecraft/class_8684;"] = {
+        "desc": "(" + COL + ")Lnet/minecraft/class_8684;", "ops": ["conv " + G + "#types(" + COL + ")" + COL],
+        "basis": "SpriteResourceLoader.create takes metadata section types since 1.21.4 (1.21.3: serializers)"}
+    frag.setdefault("superCtorReshapes", {})["net/minecraft/class_4075.<init>(Lnet/minecraft/class_1060;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Ljava/util/Set;)V"] = {
+        "desc": "(Lnet/minecraft/class_1060;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Ljava/util/Set;)V",
+        "ops": ["keep:0", "keep:1", "keep:2", "conv:3 " + G + "#typeSet(Ljava/util/Set;)Ljava/util/Set;"],
+        "basis": "TextureAtlasHolder takes metadata section types since 1.21.4 (1.21.3: serializers)"}
+    frag.setdefault("fieldGetters", {})["net/minecraft/class_7766.field_45632:Ljava/util/Set;"] = G
+    # mechanical.json's frames hook for GuiGraphics.drawWordWrap: a 1.21.3 override entered directly calls super with no shadow,
+    # as 1.21.3's drawWordWrap drew its lines (drawString(.., false))
+    frag.setdefault("frameDefaults", {})["method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V"] = {
+        "6": "zero: 1.21.3's GuiGraphics.drawWordWrap drew its lines without shadow (drawString(.., false)); false is that"}
 
 
 if __name__ == "__main__":

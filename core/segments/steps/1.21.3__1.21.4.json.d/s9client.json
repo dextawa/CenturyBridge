@@ -707,7 +707,8 @@
   "net/minecraft/class_4915.field_42086:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
   "net/minecraft/class_4943.field_22944:Lnet/minecraft/class_4942;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
   "net/minecraft/class_4943.field_22945:Lnet/minecraft/class_4942;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
-  "net/minecraft/class_4946.field_23047:Lnet/minecraft/class_4946$class_4947;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest"
+  "net/minecraft/class_4946.field_23047:Lnet/minecraft/class_4946$class_4947;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_7766.field_45632:Ljava/util/Set;": "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -1196,6 +1197,16 @@
     "keep:1"
    ],
    "basis": "BlockModelGenerators hands block items' definitions to an ItemModelOutput since 1.21.4; 1.21.3 wrote a delegating item model and reported the item as skipped, which the output does"
+  },
+  "net/minecraft/class_4075.<init>(Lnet/minecraft/class_1060;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Ljava/util/Set;)V": {
+   "desc": "(Lnet/minecraft/class_1060;Lnet/minecraft/class_2960;Lnet/minecraft/class_2960;Ljava/util/Set;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:3 top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#typeSet(Ljava/util/Set;)Ljava/util/Set;"
+   ],
+   "basis": "TextureAtlasHolder takes metadata section types since 1.21.4 (1.21.3: serializers)"
   }
  },
  "superRenames": {
@@ -1351,6 +1362,104 @@
     "keep"
    ],
    "basis": "SnowGolemRenderer's state is a SnowGolemRenderState since 1.21.4 (the one its createRenderState makes)"
+  },
+  "net/minecraft/class_1071.method_52863(Lcom/mojang/authlib/GameProfile;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": [
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#skinFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "basis": "SkinManager.getOrLoad answers a future of an Optional skin since 1.21.4 (empty where 1.21.3's future failed)"
+  },
+  "net/minecraft/class_4942.method_25846(Lnet/minecraft/class_2248;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4942.method_25847(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4942.method_25852(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4942.method_25853(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4946.method_25915(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4946.method_25916(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4946$class_4947.method_25922(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_4946$class_4947.method_25923(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;": {
+   "desc": "(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#newModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "basis": "the model output is a BiConsumer of ModelInstances since 1.21.4 (1.21.3: of JSON Suppliers; a ModelInstance is one)"
+  },
+  "net/minecraft/class_7766.method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;": {
+   "desc": "(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#types(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "SpriteLoader.loadAndStitch takes metadata section types since 1.21.4 (1.21.3: serializers; CbRestMetadata converts)"
+  },
+  "net/minecraft/class_8684.create(Ljava/util/Collection;)Lnet/minecraft/class_8684;": {
+   "desc": "(Ljava/util/Collection;)Lnet/minecraft/class_8684;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#types(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "SpriteResourceLoader.create takes metadata section types since 1.21.4 (1.21.3: serializers)"
   }
  },
  "staticRedirects": {
@@ -1558,5 +1667,120 @@
    "family": "textures",
    "basis": "a 1.21.3 texture class that loads or resets itself: reset on reload as 1.21.3 reset every texture (CbTextureManagerMixin)"
   }
- ]
+ ],
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_1071",
+   "member": "method_52863(Lcom/mojang/authlib/GameProfile;)Ljava/util/concurrent/CompletableFuture;",
+   "ret": "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#optionalSkinFuture(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;",
+   "family": "generic-client",
+   "basis": "a 1.21.3 getOrLoad override answers a future of the skin; 1.21.4 reads a future of an Optional skin"
+  },
+  {
+   "under": "net/minecraft/class_4942",
+   "member": "method_25846(Lnet/minecraft/class_2248;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4942",
+   "member": "method_25847(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4942",
+   "member": "method_25852(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4942",
+   "member": "method_25853(Lnet/minecraft/class_2248;Ljava/lang/String;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4946",
+   "member": "method_25915(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4946",
+   "member": "method_25916(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4946$class_4947",
+   "member": "method_25922(Lnet/minecraft/class_2248;Ljava/lang/String;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_4946$class_4947",
+   "member": "method_25923(Lnet/minecraft/class_2248;Ljava/util/function/BiConsumer;)Lnet/minecraft/class_2960;",
+   "args": [
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#oldModelOutput(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 override writes JSON Suppliers to the model output; 1.21.4's takes ModelInstances, which they are made"
+  },
+  {
+   "under": "net/minecraft/class_7766",
+   "member": "method_47661(Lnet/minecraft/class_3300;Lnet/minecraft/class_2960;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;",
+   "args": [
+    null,
+    null,
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_4/rt/CbGenericClient#serializers(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "family": "generic-client",
+   "basis": "a 1.21.3 loadAndStitch override reads metadata section serializers"
+  }
+ ],
+ "frameDefaults": {
+  "method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V": {
+   "6": "zero: 1.21.3's GuiGraphics.drawWordWrap drew its lines without shadow (drawString(.., false)); false is that"
+  }
+ }
 }
