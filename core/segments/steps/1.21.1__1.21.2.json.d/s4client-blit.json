@@ -1,0 +1,26 @@
+{
+ "overrideHooks": [
+  {
+   "old": "method_25291(Lnet/minecraft/class_2960;IIIFFIIII)V",
+   "new": "method_25291(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIFFIIIII)V",
+   "onlyUnder": "net/minecraft/class_332",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbClientBlit$LegacyBlit",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbClientBlit.blit(Ltop/dext/centurybridge/step/v1_21_2/rt/CbClientBlit$LegacyBlit;Ljava/util/function/Function;Lnet/minecraft/class_2960;IIFFIIIII)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbClientBlit.superBlit(Ltop/dext/centurybridge/step/v1_21_2/rt/CbClientBlit$SuperBlit;Lnet/minecraft/class_2960;IIIFFIIII)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbClientBlit$SuperBlit",
+   "superAccessors": ["method_25291(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIFFIIIII)V"],
+   "basis": "s4client (for s7rest's GUI area): GuiGraphics.blit(texture, x, y, blitOffset, u, v, w, h, tw, th) is blit(renderType, texture, x, y, u, v, w, h, tw, th, colour) since 1.21.2 -- 1.21.1 hands x, y, blitOffset, w, h on, 1.21.2 x, y, w, h, colour: every argument mapped by what it is (the mechanical hook paired the ints by position and gave the old override the width as its blitOffset). A 1.21.1 override gets blitOffset 0, what 1.21.1's offset-less overloads passed; its super call gets vanilla's render type and colour from the frame (else the GUI texture type and white) at its blitOffset's depth (rt/CbClientBlit)"
+  },
+  {
+   "old": "method_52707(Lnet/minecraft/class_2960;IIIII)V",
+   "new": "method_52707(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIIII)V",
+   "onlyUnder": "net/minecraft/class_332",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbClientBlit$LegacySprite",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbClientBlit.blitSprite(Ltop/dext/centurybridge/step/v1_21_2/rt/CbClientBlit$LegacySprite;Ljava/util/function/Function;Lnet/minecraft/class_2960;IIIII)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbClientBlit.superBlitSprite(Ltop/dext/centurybridge/step/v1_21_2/rt/CbClientBlit$SuperSprite;Lnet/minecraft/class_2960;IIIII)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbClientBlit$SuperSprite",
+   "superAccessors": ["method_52707(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIIII)V"],
+   "basis": "s4client (for s7rest's GUI area): GuiGraphics.blitSprite(sprite, x, y, blitOffset, w, h) is blitSprite(renderType, sprite, x, y, w, h, colour) since 1.21.2 (1.21.1: x, y, blitOffset, w, h into the sprite draw; 1.21.2: x, y, w, h, colour) -- the same mispairing as blit when paired by position. Mapped by what each is, as for blit (rt/CbClientBlit)"
+  }
+ ]
+}

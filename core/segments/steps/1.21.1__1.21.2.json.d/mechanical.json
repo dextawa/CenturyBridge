@@ -316,22 +316,6 @@
    "basis": "mechanical: the old method gets every parameter it had; I x4 paired by use V#1->W#2, V#2->W#3, V#3->W#4, V#4->W#5; new Ljava/util/function/Function; not passed"
   },
   {
-   "old": "method_52707(Lnet/minecraft/class_2960;IIIII)V",
-   "new": "method_52707(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIIII)V",
-   "args": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6
-   ],
-   "onlyUnder": "net/minecraft/class_332",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; I x5 paired by use V#1->W#2, V#2->W#3, V#3->W#4, V#4->W#5, V#5->W#6; new Ljava/util/function/Function; not passed"
-  },
-  {
    "old": "method_52708(Lnet/minecraft/class_2960;IIIIIIII)V",
    "new": "method_52708(Ljava/util/function/Function;Lnet/minecraft/class_2960;IIIIIIII)V",
    "args": [

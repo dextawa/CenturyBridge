@@ -306,9 +306,10 @@ class Evidence:
                         if ev_pair is None:
                             ev_pair = (self.side("V", owner, wname, desc, depth=1, vname=name),
                                        self.side("W", c, m.name, m.desc, depth=1))
-                        perm, _ = self.pair(t, vs, ws, ev_pair[0], ev_pair[1], lambda i: f"#{i}")
-                        if perm is not None:
-                            cmap.update(zip(vs, perm))
+                        # only pairs the uses tie together: a callee that dropped one argument of the type
+                        # and added another (1.21.2's blitSprite: blitOffset gone, colour new) keeps the
+                        # count, and placing the leftover pair by elimination would equate the two
+                        cmap.update(self.mutual(vs, ws, ev_pair[0], ev_pair[1]))
                     if cmap:
                         found.append((m.desc, cmap))
             if len(found) == 1:
@@ -378,6 +379,31 @@ class Evidence:
     @staticmethod
     def _jac(a, b):
         return len(a & b) / len(a | b) if a and b else 0.0
+
+    def _sims(self, vs, ws, v_ev, w_ev):
+        (vb, vc), (wb, wc) = v_ev, w_ev
+        sim = {}
+        for a in vs:
+            for b in ws:
+                b1, c1 = (vb[a] if vb else set()), (vc[a] if vc else set())
+                b2, c2 = (wb[b] if wb else set()), (wc[b] if wc else set())
+                sim[a, b] = self._jac(b1, b2) + self._jac(c1, c2)
+        return sim
+
+    def mutual(self, vs, ws, v_ev, w_ev):
+        """V index -> W index for each pair that is the unique best match of both its parameters and
+        shares a use; the rest stay unplaced"""
+        sim = self._sims(vs, ws, v_ev, w_ev)
+        out = {}
+        for a in vs:
+            row = sorted(((sim[a, b], b) for b in ws), reverse=True)
+            if not row or row[0][0] <= 0 or (len(row) > 1 and row[1][0] == row[0][0]):
+                continue
+            b = row[0][1]
+            col = sorted(((sim[a2, b], a2) for a2 in vs), reverse=True)
+            if col[0][1] == a and (len(col) == 1 or col[1][0] < col[0][0]):
+                out[a] = b
+        return out
 
     def pair(self, t, vs, ws, v_ev, w_ev, label):
         """V parameter indices vs, W parameter indices ws (all of type t): a W index for each V index in

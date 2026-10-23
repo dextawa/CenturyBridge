@@ -43,13 +43,7 @@
   "method_52706(Lnet/minecraft/class_2960;IIII)V": {
    "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
   },
-  "method_52707(Lnet/minecraft/class_2960;IIIII)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
-  },
   "method_52708(Lnet/minecraft/class_2960;IIIIIIII)V": {
-   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
-  },
-  "method_25291(Lnet/minecraft/class_2960;IIIFFIIII)V": {
    "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
   },
   "method_25290(Lnet/minecraft/class_2960;IIFFIIII)V": {
