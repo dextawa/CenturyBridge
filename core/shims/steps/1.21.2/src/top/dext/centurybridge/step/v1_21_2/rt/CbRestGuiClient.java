@@ -23,4 +23,26 @@ public final class CbRestGuiClient {
     public static Function<class_2960, class_1921> guiTextured() {
         return class_1921::method_62277;
     }
+
+    /** RecipeButton.TICKS_TO_SWAP: 30 */
+    public static int field_32413() {
+        return 30;
+    }
+
+    /**
+     * ReportReason.GENERIC ("I want to report them"): 1.21.2 renamed the constant I_WANT_TO_REPORT_THEM, the
+     * same reason with the same text.
+     */
+    public static net.minecraft.class_7573 field_46063() {
+        return net.minecraft.class_7573.field_53035;
+    }
+
+    /**
+     * ParticleRenderType.PARTICLE_SHEET_LIT: in 1.21.1 the opaque particle sheet without its own shader call
+     * (the engine set the particle shader for every sheet), drawn right after PARTICLE_SHEET_OPAQUE in the
+     * same state. 1.21.2 dropped it; its particles are the opaque sheet's.
+     */
+    public static net.minecraft.class_3999 field_17830() {
+        return net.minecraft.class_3999.field_17828;
+    }
 }
