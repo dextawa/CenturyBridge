@@ -269,6 +269,90 @@
     1
    ],
    "basis": "ItemRenderer resolves items through an ItemModelResolver since 1.21.4 (built on the same model manager); the ItemColors given colours the renderer's models of a mod's own as in 1.21.3 (CbItemRender); the BlockEntityWithoutLevelRenderer has no place -- 1.21.4 draws special items through their definitions"
+  },
+  "net/minecraft/class_1005.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_4004.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_4043.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_5697.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_977.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_989.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_990.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep:0"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_996.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_776;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_776;)V",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"
+  },
+  "net/minecraft/class_976.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;)V",
+   "ops": [
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "CustomHeadLayer draws a head item from the render state's ItemStackRenderState since 1.21.4"
+  },
+  "net/minecraft/class_976.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;Lnet/minecraft/class_976$class_9994;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;Lnet/minecraft/class_976$class_9994;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "CustomHeadLayer draws a head item from the render state's ItemStackRenderState since 1.21.4"
+  },
+  "net/minecraft/class_759.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_898;Lnet/minecraft/class_918;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_898;Lnet/minecraft/class_918;Lnet/minecraft/class_10442;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#cbGameResolver()Lnet/minecraft/class_10442;"
+   ],
+   "basis": "ItemInHandRenderer also takes the item model resolver since 1.21.4: the game's"
   }
  },
  "superRenames": {

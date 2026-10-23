@@ -35,6 +35,11 @@ public final class CbItemRender {
         return new net.minecraft.class_10442(modelManager);
     }
 
+    /** the game's item model resolver (Minecraft.getItemModelResolver) */
+    public static net.minecraft.class_10442 cbGameResolver() {
+        return net.minecraft.class_310.method_1551().method_65386();
+    }
+
     /** the constructed renderer keeps the ItemColors it was given, for models of a mod's own */
     public static void cbConstructed(net.minecraft.class_918 renderer, ItemColors colors) {
         synchronized (COLORS) {

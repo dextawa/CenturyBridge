@@ -214,6 +214,28 @@ def item_renderer(frag):
         "postArgs": [1],
         "basis": "ItemRenderer resolves items through an ItemModelResolver since 1.21.4 (built on the same model manager); the ItemColors given colours the renderer's models of a mod's own as in 1.21.3 (CbItemRender); the BlockEntityWithoutLevelRenderer has no place -- 1.21.4 draws special items through their definitions"}
     frag.setdefault("classRenames", {})["net/minecraft/class_763"] = FAC + "ItemModelShaper"
+    # render layers that took the ItemRenderer (or ItemInHandRenderer) to draw held / worn items: 1.21.4's layers draw
+    # the ItemStackRenderState their entity's render state carries, resolved by 1.21.4's own renderer
+    scr = frag.setdefault("superCtorReshapes", {})
+    RLP = "Lnet/minecraft/class_3883;"
+    IRD = "Lnet/minecraft/class_918;"
+    for owner in ["class_1005", "class_4004", "class_4043", "class_5697", "class_977", "class_989", "class_990"]:
+        scr["net/minecraft/%s.<init>(%s%s)V" % (owner, RLP, IRD)] = {
+            "desc": "(%s)V" % RLP, "ops": ["keep:0"],
+            "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"}
+    scr["net/minecraft/class_996.<init>(%sLnet/minecraft/class_776;%s)V" % (RLP, IRD)] = {
+        "desc": "(%sLnet/minecraft/class_776;)V" % RLP, "ops": ["keep:0", "keep:1"],
+        "basis": "the layer draws its item from the render state's ItemStackRenderState since 1.21.4; the ItemRenderer it drew with has no place"}
+    scr["net/minecraft/class_976.<init>(%sLnet/minecraft/class_5599;%s)V" % (RLP, IRD)] = {
+        "desc": "(%sLnet/minecraft/class_5599;)V" % RLP, "ops": ["keep:0", "keep:1"],
+        "basis": "CustomHeadLayer draws a head item from the render state's ItemStackRenderState since 1.21.4"}
+    scr["net/minecraft/class_976.<init>(%sLnet/minecraft/class_5599;Lnet/minecraft/class_976$class_9994;%s)V" % (RLP, IRD)] = {
+        "desc": "(%sLnet/minecraft/class_5599;Lnet/minecraft/class_976$class_9994;)V" % RLP, "ops": ["keep:0", "keep:1", "keep:2"],
+        "basis": "CustomHeadLayer draws a head item from the render state's ItemStackRenderState since 1.21.4"}
+    scr["net/minecraft/class_759.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_898;%s)V" % IRD] = {
+        "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_898;%sLnet/minecraft/class_10442;)V" % IRD,
+        "ops": ["keep:0", "keep:1", "keep:2", "push " + IR + "#cbGameResolver()Lnet/minecraft/class_10442;"],
+        "basis": "ItemInHandRenderer also takes the item model resolver since 1.21.4: the game's"}
 
 
 if __name__ == "__main__":
