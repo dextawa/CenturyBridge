@@ -11,7 +11,7 @@ RELEASES=(1.20.1 1.20.2 1.20.3 1.20.4 1.20.5 1.20.6 1.21 1.21.1 1.21.2 1.21.3 1.
 code_of() { case "$1" in 26.*) echo "data/jars/client-$1.jar" ;; *) echo "data/jars/client-$1-intermediary-code.jar" ;; esac; }
 for ((i = 0; i + 1 < ${#RELEASES[@]}; i++)); do
   V=${RELEASES[$i]}; W=${RELEASES[$((i + 1))]}
-  WALL=(); [ "$V" = "1.21.11" ] && WALL=(--wall data/mappings/inter-to-mojang-1.21.11.tsv)
+  WALL=(); [ "$V" = "1.21.11" ] && WALL=(--wall "$(python3 core/tools/wall_tables.py "$W")")
   java -Xmx2800m -cp "core/build/classes;$LIBS" top.dext.centurybridge.Main anchor-diff "$(code_of "$V")" "$(code_of "$W")" \
       "$OUT/${V}__${W}.tsv" "${WALL[@]}" 2>&1 | tail -1 | sed "s|^|${V}__${W}: |"
 done

@@ -1,0 +1,50 @@
+{
+ "_s4fin_samplelogger_basis": "s4fin: 1.20.4's concrete SampleLogger (class_8743) is, by its 1.20.5 name, the sample-logger interface every 1.20.4 value of the type still is; a subclass extends facade/SampleLogger (superRenames), itself a 1.20.5 LocalSampleLogger with 1.20.4's ring of 240 single samples, and new SampleLogger() makes one; 1.20.4's ring methods read a logger's SampleStorage; where 1.20.4 took the logger 1.20.5 takes a LocalSampleLogger, which every such value is",
+ "superRenames": {
+  "net/minecraft/class_8743": "top/dext/centurybridge/step/v1_20_5/facade/SampleLogger"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_8743.<init>()V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNetLoggers#create"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_8743.method_53064()I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNetLoggers",
+  "net/minecraft/class_8743.method_53067()I": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNetLoggers",
+  "net/minecraft/class_8743.method_53065(I)J": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNetLoggers",
+  "net/minecraft/class_8743.method_53069()V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinNetLoggers"
+ },
+ "callReshapes": {
+  "net/minecraft/class_2535.method_10753(Ljava/net/InetSocketAddress;ZLnet/minecraft/class_8743;)Lnet/minecraft/class_2535;": {
+   "desc": "(Ljava/net/InetSocketAddress;ZLnet/minecraft/class_9191;)Lnet/minecraft/class_2535;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinNetLoggers#logger(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9191;"
+   ],
+   "basis": "s4fin: Connection.connectToServer takes the LocalSampleLogger the 1.20.4 logger is"
+  },
+  "net/minecraft/class_2535.method_53505(Lnet/minecraft/class_8743;)V": {
+   "desc": "(Lnet/minecraft/class_9191;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinNetLoggers#logger(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9191;"
+   ],
+   "basis": "s4fin: Connection.setBandwidthLogger takes the LocalSampleLogger the 1.20.4 logger is"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_8762.<init>(Lnet/minecraft/class_8743;)V": {
+   "desc": "(Lnet/minecraft/class_9191;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinNetLoggers#logger(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9191;"
+   ],
+   "basis": "s4fin: BandwidthDebugMonitor(logger), new and super alike: the LocalSampleLogger the 1.20.4 logger is"
+  },
+  "net/minecraft/class_8761.<init>(Lnet/minecraft/class_634;Lnet/minecraft/class_8743;)V": {
+   "desc": "(Lnet/minecraft/class_634;Lnet/minecraft/class_9191;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinNetLoggers#logger(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9191;"
+   ],
+   "basis": "s4fin: PingDebugMonitor(listener, logger), new and super alike"
+  }
+ }
+}

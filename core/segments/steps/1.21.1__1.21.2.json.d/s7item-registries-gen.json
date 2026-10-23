@@ -1,0 +1,295 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_2378.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_30517()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_31138()Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_40264(Lnet/minecraft/class_5321;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_55841(Lnet/minecraft/class_2960;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_40270()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_40266(Lnet/minecraft/class_6862;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_40273()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_5455.method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_5455.method_41201()Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_7871$class_7872.method_46750(Lnet/minecraft/class_5321;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_40260(Lnet/minecraft/class_6862;)Lnet/minecraft/class_6885$class_6888;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_40257(Ljava/util/Map;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_40278()V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_46770()Lnet/minecraft/class_7876;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_46771()Lnet/minecraft/class_7225$class_7226;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_46772()Lnet/minecraft/class_7225$class_7226;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_2378.method_40290(Lnet/minecraft/class_5321;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_7871$class_7872.method_58561(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries",
+  "net/minecraft/class_7225$class_7874.method_46758()Lnet/minecraft/class_7871$class_7872;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2378.method_40260(Lnet/minecraft/class_6862;)Lnet/minecraft/class_6885$class_6888;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_40260",
+  "net/minecraft/class_2378.method_40257(Ljava/util/Map;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_40257",
+  "net/minecraft/class_2378.method_40278()V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_40278",
+  "net/minecraft/class_2378.method_46770()Lnet/minecraft/class_7876;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_46770",
+  "net/minecraft/class_2378.method_46771()Lnet/minecraft/class_7225$class_7226;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_46771",
+  "net/minecraft/class_2378.method_46772()Lnet/minecraft/class_7225$class_7226;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_46772",
+  "net/minecraft/class_2378.method_40290(Lnet/minecraft/class_5321;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_40290",
+  "net/minecraft/class_7871$class_7872.method_58561(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_58561",
+  "net/minecraft/class_7225$class_7874.method_46758()Lnet/minecraft/class_7871$class_7872;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#super_method_46758"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;",
+   "new": "method_63535(Lnet/minecraft/class_2960;)Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_2378",
+   "args": [
+    0
+   ],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of get(id): the value -- 1.21.2's getValue(id), its get(id) answering the holder: the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_30517()Lnet/minecraft/class_5321;",
+   "new": "method_46765()Lnet/minecraft/class_5321;",
+   "onlyUnder": "net/minecraft/class_2378",
+   "args": [],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of key(): RegistryLookup.key(): the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_31138()Lcom/mojang/serialization/Lifecycle;",
+   "new": "method_46766()Lcom/mojang/serialization/Lifecycle;",
+   "onlyUnder": "net/minecraft/class_2378",
+   "args": [],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of registryLifecycle(): RegistryLookup.registryLifecycle(): the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_40264(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "new": "method_46746(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_2378",
+   "args": [
+    0
+   ],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of getHolder(key): get(key): the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_55841(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "new": "method_10223(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_2378",
+   "args": [
+    0
+   ],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of getHolder(id): get(id): the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_40270()Ljava/util/stream/Stream;",
+   "new": "method_42017()Ljava/util/stream/Stream;",
+   "onlyUnder": "net/minecraft/class_2378",
+   "args": [],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of holders(): listElements(): the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_40266(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+   "new": "method_46733(Lnet/minecraft/class_6862;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_2378",
+   "args": [
+    0
+   ],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of getTag(tag): get(tag): the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_40273()Ljava/util/stream/Stream;",
+   "new": "method_46755()Ljava/util/stream/Stream;",
+   "onlyUnder": "net/minecraft/class_2378",
+   "args": [],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of getTagNames(): listTagIds(): the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "new": "method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_5455",
+   "args": [
+    0
+   ],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of RegistryAccess.registry(key): lookup(key), Optional<Registry<E>> in 1.21.2: the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_41201()Lcom/mojang/serialization/Lifecycle;",
+   "new": "method_62679()Lcom/mojang/serialization/Lifecycle;",
+   "onlyUnder": "net/minecraft/class_5455",
+   "args": [],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of RegistryAccess.allRegistriesLifecycle(): HolderLookup.Provider.allRegistriesLifecycle(), the same reduction: the class answers the 1.21.2 member, its super call reaching super's"
+  },
+  {
+   "old": "method_46750(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "new": "method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_7871$class_7872",
+   "args": [
+    0
+   ],
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "a 1.21.1 override of HolderGetter.Provider.lookup(key): the same method under 1.21.2's name: the class answers the 1.21.2 member, its super call reaching super's"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2378",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyGetOrCreateTag",
+   "requires": [
+    "method_40260(Lnet/minecraft/class_6862;)Lnet/minecraft/class_6885$class_6888;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 class overriding getOrCreateTag(tag): the bound set, the registration set before freezing, else an empty named set: calls of the gone member reach it"
+  },
+  {
+   "under": "net/minecraft/class_2378",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyBindTags",
+   "requires": [
+    "method_40257(Ljava/util/Map;)V"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 class overriding bindTags(map): 1.21.2's prepareTagReload(new LoadResult(key, map)).apply(); bindTag per tag before freezing: calls of the gone member reach it"
+  },
+  {
+   "under": "net/minecraft/class_2378",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyResetTags",
+   "requires": [
+    "method_40278()V"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 class overriding resetTags(): every known tag bound to nothing: calls of the gone member reach it"
+  },
+  {
+   "under": "net/minecraft/class_2378",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyHolderOwner",
+   "requires": [
+    "method_46770()Lnet/minecraft/class_7876;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 class overriding holderOwner(): the registry owns its holders: calls of the gone member reach it"
+  },
+  {
+   "under": "net/minecraft/class_2378",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyAsLookup",
+   "requires": [
+    "method_46771()Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 class overriding asLookup(): the registry is its lookup: calls of the gone member reach it"
+  },
+  {
+   "under": "net/minecraft/class_2378",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyAsTagAddingLookup",
+   "requires": [
+    "method_46772()Lnet/minecraft/class_7225$class_7226;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 class overriding asTagAddingLookup(): a lookup whose tag lookups create missing tags: calls of the gone member reach it"
+  },
+  {
+   "under": "net/minecraft/class_2378",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyGetHolderOrThrow",
+   "requires": [
+    "method_40290(Lnet/minecraft/class_5321;)Lnet/minecraft/class_6880$class_6883;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 class overriding getHolderOrThrow(key): get(key) or 1.21.1's IllegalStateException: calls of the gone member reach it"
+  },
+  {
+   "under": "net/minecraft/class_7871$class_7872",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyProviderGet",
+   "requires": [
+    "method_58561(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;)Ljava/util/Optional;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 class overriding HolderGetter.Provider.get(registry, key): lookup(registry).flatMap(get(key)): calls of the gone member reach it"
+  },
+  {
+   "under": "net/minecraft/class_7225$class_7874",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyAsGetterLookup",
+   "requires": [
+    "method_46758()Lnet/minecraft/class_7871$class_7872;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 class overriding HolderLookup.Provider.asGetterLookup(): the provider, a getter provider in 1.21.2: calls of the gone member reach it"
+  },
+  {
+   "under": "net/minecraft/class_5455",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyRegistry",
+   "requires": [
+    "method_33310(Lnet/minecraft/class_5321;)Ljava/util/Optional;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 RegistryAccess implementation's registry(key): calls of it reach it"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_2378",
+   "method": "method_62683(Lnet/minecraft/class_3503$class_6863;)Lnet/minecraft/class_2378$class_10106;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries.fill_method_62683(Lnet/minecraft/class_2378;Lnet/minecraft/class_3503$class_6863;)Lnet/minecraft/class_2378$class_10106;",
+   "basis": "a 1.21.1 implementation: prepareTagReload(result): the class's 1.21.1 bindTags(map) applied when 1.21.2 applies the result"
+  },
+  {
+   "under": "net/minecraft/class_2385",
+   "method": "method_62681(Lnet/minecraft/class_6862;Ljava/util/List;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries.fill_method_62681(Lnet/minecraft/class_2385;Lnet/minecraft/class_6862;Ljava/util/List;)V",
+   "basis": "a 1.21.1 implementation: WritableRegistry.bindTag(tag, holders): the class's 1.21.1 bindTags of that tag"
+  },
+  {
+   "under": "net/minecraft/class_6885",
+   "method": "method_62680()Z",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries.fill_method_62680(Lnet/minecraft/class_6885;)Z",
+   "basis": "a 1.21.1 implementation: HolderSet.isBound(): a 1.21.1 holder set always had its contents"
+  },
+  {
+   "under": "net/minecraft/class_2378",
+   "method": "method_42020()Ljava/util/stream/Stream;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries.fill_method_42020(Lnet/minecraft/class_2378;)Ljava/util/stream/Stream;",
+   "basis": "a 1.21.1 implementation: listTags(): the sets of the class's getTags()"
+  }
+ ],
+ "callReshapes": {
+  "net/minecraft/class_2378.method_40272()Ljava/util/stream/Stream;": {
+   "desc": "()Ljava/util/stream/Stream;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#tagPairs(Ljava/util/stream/Stream;)Ljava/util/stream/Stream;",
+   "basis": "Registry.getTags(): 1.21.1's stream of (key, set) pairs, from 1.21.2's stream of sets"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_2378",
+   "member": "method_40272()Ljava/util/stream/Stream;",
+   "ret": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#tagSets(Ljava/util/stream/Stream;)Ljava/util/stream/Stream;",
+   "basis": "a 1.21.1 getTags() override answers pairs; 1.21.2 reads the sets"
+  },
+  {
+   "under": "net/minecraft/class_5455",
+   "member": "method_46759(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+   "ret": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#registryOf(Ljava/lang/Object;Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "RegistryAccess.lookup(key): a 1.21.1 override answered Optional<RegistryLookup>, 1.21.2 reads Optional<Registry> (a lookup standing for its registry)"
+  }
+ ],
+ "lambdaAdapters": {
+  "net/minecraft/class_7871$class_7872.method_46750(Lnet/minecraft/class_5321;)Ljava/util/Optional;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyProviderLambda",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries#provider(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRegistries$LegacyProviderLambda;)Lnet/minecraft/class_7871$class_7872;",
+   "basis": "a 1.21.1 HolderGetter.Provider lambda implements lookup(key) under its 1.21.1 name"
+  }
+ }
+}

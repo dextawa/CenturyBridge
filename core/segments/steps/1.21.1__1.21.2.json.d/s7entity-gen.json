@@ -1,0 +1,466 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_1297.method_5768()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_5768",
+  "net/minecraft/class_1297.method_5706(Lnet/minecraft/class_1935;)Lnet/minecraft/class_1542;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_5706",
+  "net/minecraft/class_1297.method_5870(Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1542;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_5870",
+  "net/minecraft/class_1297.method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_5775",
+  "net/minecraft/class_1297.method_5699(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1542;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_5699",
+  "net/minecraft/class_1297.method_36971(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_36971",
+  "net/minecraft/class_1309.method_6121(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_6121",
+  "net/minecraft/class_1309.method_6110()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_6110",
+  "net/minecraft/class_1309.method_60699(Lnet/minecraft/class_1297$class_5529;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_60699",
+  "net/minecraft/class_1309.method_16078()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_16078",
+  "net/minecraft/class_1309.method_23883(Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_23883",
+  "net/minecraft/class_1309.method_16077(Lnet/minecraft/class_1282;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_16077",
+  "net/minecraft/class_1309.method_6074(Lnet/minecraft/class_1282;F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_6074",
+  "net/minecraft/class_1308.method_24523(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24523",
+  "net/minecraft/class_1308.method_20820(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_20820",
+  "net/minecraft/class_1308.method_60973()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_60973",
+  "net/minecraft/class_1308.method_60972(Ljava/util/function/Predicate;)Ljava/util/Set;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_60972",
+  "net/minecraft/class_1308.method_5949(Lnet/minecraft/class_1542;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_5949",
+  "net/minecraft/class_1308.method_5958()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_5958",
+  "net/minecraft/class_1496.method_6746()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_6746",
+  "net/minecraft/class_1688.method_7504()D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_7504",
+  "net/minecraft/class_1688.method_7512()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_7512",
+  "net/minecraft/class_8836.method_7516(Lnet/minecraft/class_1282;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_7516",
+  "net/minecraft/class_8836.method_54298(Lnet/minecraft/class_1792;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_54298",
+  "net/minecraft/class_9691.method_6889(Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_6889",
+  "net/minecraft/class_1510.method_6816(Lnet/minecraft/class_1508;Lnet/minecraft/class_1282;F)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_6816",
+  "net/minecraft/class_1510.method_6828(Lnet/minecraft/class_1511;Lnet/minecraft/class_2338;Lnet/minecraft/class_1282;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_6828",
+  "net/minecraft/class_1588.method_7076(Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_7076",
+  "net/minecraft/class_5354.method_29515(Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_29515",
+  "net/minecraft/class_5354.method_29923(Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_29923",
+  "net/minecraft/class_5354.method_29516(Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_29516",
+  "net/minecraft/class_1521.method_6855()V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_6855",
+  "net/minecraft/class_7265.method_42283(Lnet/minecraft/class_1282;Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_42283",
+  "net/minecraft/class_6045.method_35148(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_35148",
+  "net/minecraft/class_1676.method_54457(Lnet/minecraft/class_1937;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_54457"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_5762.method_35175(Lnet/minecraft/class_5762;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_35175",
+  "net/minecraft/class_4835.method_24672(Lnet/minecraft/class_4760;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24672",
+  "net/minecraft/class_5137.method_26950(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_26950",
+  "net/minecraft/class_6067.method_43544(Lnet/minecraft/class_1308;Lnet/minecraft/class_6067;Lnet/minecraft/class_1542;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_43544",
+  "net/minecraft/class_9817.method_60965(Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_60965",
+  "net/minecraft/class_4838.method_24733(Lnet/minecraft/class_1657;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24733",
+  "net/minecraft/class_4838.method_24728(Lnet/minecraft/class_4836;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24728",
+  "net/minecraft/class_4838.method_24726(Lnet/minecraft/class_4836;Lnet/minecraft/class_1542;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24726",
+  "net/minecraft/class_4838.method_24741(Lnet/minecraft/class_4836;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24741",
+  "net/minecraft/class_4838.method_25948(Lnet/minecraft/class_4836;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_25948",
+  "net/minecraft/class_4838.method_24724(Lnet/minecraft/class_4836;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24724",
+  "net/minecraft/class_4838.method_24759(Lnet/minecraft/class_5418;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24759",
+  "net/minecraft/class_4838.method_24742(Lnet/minecraft/class_5418;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24742",
+  "net/minecraft/class_4838.method_29945(Lnet/minecraft/class_5418;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_29945",
+  "net/minecraft/class_4838.method_24750(Lnet/minecraft/class_5418;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_24750",
+  "net/minecraft/class_5420.method_30251(Lnet/minecraft/class_5419;Lnet/minecraft/class_1309;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_30251",
+  "net/minecraft/class_4148.method_30954(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_30954",
+  "net/minecraft/class_4148.method_36982(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_36982",
+  "net/minecraft/class_4148.method_37456(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen#method_37456"
+ },
+ "frameDefaults": {
+  "method_6074(Lnet/minecraft/class_1282;F)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5679(Lnet/minecraft/class_1282;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5768()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5706(Lnet/minecraft/class_1935;)Lnet/minecraft/class_1542;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5870(Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1542;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5699(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1542;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5671()Lnet/minecraft/class_2168;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6110()I": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_60699(Lnet/minecraft/class_1297$class_5529;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_16078()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_23883(Lnet/minecraft/class_1297;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_16077(Lnet/minecraft/class_1282;Z)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6121(Lnet/minecraft/class_1297;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5949(Lnet/minecraft/class_1542;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_24523(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_20820(Lnet/minecraft/class_1799;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5958()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_60973()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_60972(Ljava/util/function/Predicate;)Ljava/util/Set;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6746()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6816(Lnet/minecraft/class_1508;Lnet/minecraft/class_1282;F)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6828(Lnet/minecraft/class_1511;Lnet/minecraft/class_2338;Lnet/minecraft/class_1282;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_6889(Lnet/minecraft/class_1297;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_7076(Lnet/minecraft/class_1657;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_7504()D": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_7512()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_7516(Lnet/minecraft/class_1282;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_54298(Lnet/minecraft/class_1792;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_5768",
+   "requires": [
+    "method_5768()V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_5706",
+   "requires": [
+    "method_5706(Lnet/minecraft/class_1935;)Lnet/minecraft/class_1542;"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_5870",
+   "requires": [
+    "method_5870(Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1542;"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_5775",
+   "requires": [
+    "method_5775(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1542;"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_5699",
+   "requires": [
+    "method_5699(Lnet/minecraft/class_1799;F)Lnet/minecraft/class_1542;"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_36971",
+   "requires": [
+    "method_36971(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_6121",
+   "requires": [
+    "method_6121(Lnet/minecraft/class_1297;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_6110",
+   "requires": [
+    "method_6110()I"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_60699",
+   "requires": [
+    "method_60699(Lnet/minecraft/class_1297$class_5529;)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_16078",
+   "requires": [
+    "method_16078()V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_23883",
+   "requires": [
+    "method_23883(Lnet/minecraft/class_1297;)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_16077",
+   "requires": [
+    "method_16077(Lnet/minecraft/class_1282;Z)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_6074",
+   "requires": [
+    "method_6074(Lnet/minecraft/class_1282;F)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_24523",
+   "requires": [
+    "method_24523(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_20820",
+   "requires": [
+    "method_20820(Lnet/minecraft/class_1799;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_60973",
+   "requires": [
+    "method_60973()V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_60972",
+   "requires": [
+    "method_60972(Ljava/util/function/Predicate;)Ljava/util/Set;"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_5949",
+   "requires": [
+    "method_5949(Lnet/minecraft/class_1542;)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1308",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_5958",
+   "requires": [
+    "method_5958()V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1496",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_6746",
+   "requires": [
+    "method_6746()V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_7504",
+   "requires": [
+    "method_7504()D"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1688",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_7512",
+   "requires": [
+    "method_7512()V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_8836",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_7516",
+   "requires": [
+    "method_7516(Lnet/minecraft/class_1282;)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_8836",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_54298",
+   "requires": [
+    "method_54298(Lnet/minecraft/class_1792;)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_9691",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_6889",
+   "requires": [
+    "method_6889(Lnet/minecraft/class_1297;)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1510",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_6816",
+   "requires": [
+    "method_6816(Lnet/minecraft/class_1508;Lnet/minecraft/class_1282;F)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1510",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_6828",
+   "requires": [
+    "method_6828(Lnet/minecraft/class_1511;Lnet/minecraft/class_2338;Lnet/minecraft/class_1282;)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1588",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_7076",
+   "requires": [
+    "method_7076(Lnet/minecraft/class_1657;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_5354",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_29515",
+   "requires": [
+    "method_29515(Lnet/minecraft/class_1309;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_5354",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_29923",
+   "requires": [
+    "method_29923(Lnet/minecraft/class_1937;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_5354",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_29516",
+   "requires": [
+    "method_29516(Lnet/minecraft/class_1657;)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1521",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_6855",
+   "requires": [
+    "method_6855()V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_7265",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_42283",
+   "requires": [
+    "method_42283(Lnet/minecraft/class_1282;Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;)V"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_6045",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_35148",
+   "requires": [
+    "method_35148(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  },
+  {
+   "under": "net/minecraft/class_1676",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevelsGen$Legacy_method_54457",
+   "requires": [
+    "method_54457(Lnet/minecraft/class_1937;)Z"
+   ],
+   "synth": [],
+   "basis": "a mod class overriding the 1.21.1 shape answers a call through it on a client level, where the bridge cannot make the 1.21.2 call (CbEntityLevelsGen)"
+  }
+ ]
+}
