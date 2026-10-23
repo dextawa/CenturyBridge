@@ -6,6 +6,7 @@
   "mixins": [
     "CbFapiGameRuleCategoryAccess",
     "CbFapiGameRuleCategoryMixin",
+    "CbFapiGameRuleMixin",
     "CbFapiTagAppenderAccess",
     "CbFapiTagBuilderMixin",
     "CbFapiTagEntryAccess",
@@ -16,10 +17,13 @@
     "CbWallServerMixin"
   ],
   "client": [
+    "CbFapiBuiltInBlockModelsAccess",
+    "CbFapiBuiltInBlockModelsMixin",
     "CbFapiCameraAccess",
     "CbFapiFluidRendererMixin",
     "CbFapiFluidStateModelSetMixin",
     "CbFapiGameRendererAccess",
+    "CbFapiGameRulesScreenMixin",
     "CbFapiHudRenderCallbackMixin",
     "CbFapiLayerRenderStateMixin",
     "CbFapiLevelRendererMixin",
