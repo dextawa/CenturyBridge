@@ -45,7 +45,12 @@
   "net/minecraft/class_1661.method_7387(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked#fillStackedContents",
   "net/minecraft/class_1309.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#canTakeItem",
   "net/minecraft/class_1297.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#getBoundingBoxForCulling",
-  "net/minecraft/class_1297.method_60607(ZLnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setOnGroundWithMovement"
+  "net/minecraft/class_1297.method_60607(ZLnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setOnGroundWithMovement",
+  "net/minecraft/class_1309.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_4174;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#eat",
+  "net/minecraft/class_1309.method_60492(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#eat",
+  "net/minecraft/class_1309.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#getEatingSound",
+  "net/minecraft/class_1309.method_18807(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#getDrinkingSound",
+  "net/minecraft/class_1309.method_6098(Lnet/minecraft/class_1799;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#triggerItemUseEffects"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -449,7 +454,8 @@
  },
  "fieldGetters": {
   "net/minecraft/class_1493.field_18004:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#wolfPreySelector",
-  "net/minecraft/class_1481.field_6921:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#turtleBabyOnLandSelector"
+  "net/minecraft/class_1481.field_6921:Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#turtleBabyOnLandSelector",
+  "net/minecraft/class_1309.field_30063:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat"
  },
  "superRedirects": {
   "net/minecraft/class_1299.method_16351()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superDefaultLootTable",
@@ -475,7 +481,18 @@
   "net/minecraft/class_1297.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
   "net/minecraft/class_1321.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
   "net/minecraft/class_1543.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
-  "net/minecraft/class_1564.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo"
+  "net/minecraft/class_1564.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
+  "net/minecraft/class_1309.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_4174;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superEat",
+  "net/minecraft/class_1657.method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_4174;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superEat",
+  "net/minecraft/class_1309.method_60492(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#eat",
+  "net/minecraft/class_1309.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_4019.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_9069.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_6053.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_8153.method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetEatingSound",
+  "net/minecraft/class_1309.method_18807(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetDrinkingSound",
+  "net/minecraft/class_3989.method_18807(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superGetDrinkingSound",
+  "net/minecraft/class_1309.method_6098(Lnet/minecraft/class_1799;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat#superTriggerItemUseEffects"
  },
  "overrideHooks": [
   {
@@ -568,6 +585,42 @@
    ],
    "synth": [],
    "basis": "1.21.2 asks the renderer for the culling box: a mod class's own 1.21.1 getBoundingBoxForCulling answers there (CbEntityCullingMixin) and the calls CbEntityMisc serves"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat$LegacyEat",
+   "requires": [
+    "method_18866(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_4174;)Lnet/minecraft/class_1799;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers where 1.21.1 asked it (CbEntityEatMixin on Consumable) and the calls CbEntityEat serves"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat$LegacyTrigger",
+   "requires": [
+    "method_6098(Lnet/minecraft/class_1799;I)V"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers where 1.21.1 asked it (CbEntityEatMixin on Consumable) and the calls CbEntityEat serves"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat$LegacyEatingSound",
+   "requires": [
+    "method_18869(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers where 1.21.1 asked it (CbEntityEatMixin on Consumable) and the calls CbEntityEat serves"
+  },
+  {
+   "under": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityEat$LegacyDrinkingSound",
+   "requires": [
+    "method_18807(Lnet/minecraft/class_1799;)Lnet/minecraft/class_3414;"
+   ],
+   "synth": [],
+   "basis": "a mod class's own 1.21.1 override answers where 1.21.1 asked it (CbEntityEatMixin on Consumable) and the calls CbEntityEat serves"
   }
  ],
  "classRenames": {
