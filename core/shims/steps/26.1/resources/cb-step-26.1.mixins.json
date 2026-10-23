@@ -48,6 +48,7 @@
     "CbWallPanoramaMixin",
     "CbWallPipelineBuilderAccess",
     "CbWallRenderPipelinesAccess",
+    "CbWallSectionRenderDispatcherAccess",
     "CbWallWindowAccess"
   ],
   "server": [],
