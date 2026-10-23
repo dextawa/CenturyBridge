@@ -179,13 +179,9 @@
  "facadeGaps": {
   "net/minecraft/class_5339.comp_1858:Lcom/mojang/serialization/MapCodec;": "the 1.21.11 record's private component field: the facade keeps the codec as cb$codec, read through the accessor; only an access widener on the dead class ever reached the field",
   "net/minecraft/class_5342.comp_1878:Lcom/mojang/serialization/MapCodec;": "the 1.21.11 record's private component field: the facade keeps the codec as cb$codec, read through the accessor; only an access widener on the dead class ever reached the field",
-  "net/minecraft/class_5338.<init>(Lnet/minecraft/class_5335;)V": "a member of the class before it became the 1.21.11 record (1.20.x: a Serializer / Codec wrapper, a non-final class): damage of the step that changed it, not part of the 1.21.11 API this layer gives back",
   "net/minecraft/class_5338.comp_1847:Lcom/mojang/serialization/MapCodec;": "the 1.21.11 record's private component field: the facade keeps the codec as cb$codec, read through the accessor; only an access widener on the dead class ever reached the field",
-  "net/minecraft/class_5657.<init>(Lnet/minecraft/class_5335;)V": "a member of the class before it became the 1.21.11 record (1.20.x: a Serializer / Codec wrapper, a non-final class): damage of the step that changed it, not part of the 1.21.11 API this layer gives back",
   "net/minecraft/class_5657.comp_1896:Lcom/mojang/serialization/MapCodec;": "the 1.21.11 record's private component field: the facade keeps the codec as cb$codec, read through the accessor; only an access widener on the dead class ever reached the field",
-  "net/minecraft/class_5650.<init>(Lcom/mojang/serialization/Codec;)V": "a member of the class before it became the 1.21.11 record (1.20.x: a Serializer / Codec wrapper, a non-final class): damage of the step that changed it, not part of the 1.21.11 API this layer gives back",
   "net/minecraft/class_5650.comp_1891:Lcom/mojang/serialization/MapCodec;": "the 1.21.11 record's private component field: the facade keeps the codec as cb$codec, read through the accessor; only an access widener on the dead class ever reached the field",
-  "net/minecraft/class_5669.<init>(Lnet/minecraft/class_5335;)V": "a member of the class before it became the 1.21.11 record (1.20.x: a Serializer / Codec wrapper, a non-final class): damage of the step that changed it, not part of the 1.21.11 API this layer gives back",
   "net/minecraft/class_5669.comp_1904:Lcom/mojang/serialization/MapCodec;": "the 1.21.11 record's private component field: the facade keeps the codec as cb$codec, read through the accessor; only an access widener on the dead class ever reached the field"
  }
 }
