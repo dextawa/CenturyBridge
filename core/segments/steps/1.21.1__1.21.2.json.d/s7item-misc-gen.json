@@ -17,5 +17,13 @@
  "methodRenames": {
   "net/minecraft/class_238.method_61124()Lnet/minecraft/class_243;": "method_64033",
   "net/minecraft/class_2350.method_10163()Lnet/minecraft/class_2382;": "method_62675"
- }
+ },
+ "overrideRenames": [
+  {
+   "old": "method_61124()Lnet/minecraft/class_243;",
+   "new": "method_64033",
+   "onlyUnder": "net/minecraft/class_238",
+   "basis": "AABB.getBottomCenter has 1.21.2's name method_64033 (same body): a subclass's override takes it"
+  }
+ ]
 }

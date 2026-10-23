@@ -33,6 +33,10 @@ def main():
         "net/minecraft/class_238.method_61124()Lnet/minecraft/class_243;": "method_64033",
         "net/minecraft/class_2350.method_10163()Lnet/minecraft/class_2382;": "method_62675",
     }
+    # a 1.21.1 AABB subclass overriding getBottomCenter: renamed to 1.21.2's name, so 1.21.2's calls reach it
+    out["overrideRenames"] = [{"old": "method_61124()Lnet/minecraft/class_243;", "new": "method_64033",
+                               "onlyUnder": "net/minecraft/class_238",
+                               "basis": "AABB.getBottomCenter has 1.21.2's name method_64033 (same body): a subclass's override takes it"}]
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
 
 
