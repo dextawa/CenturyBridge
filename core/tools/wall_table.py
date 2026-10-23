@@ -287,6 +287,20 @@ class Table:
             for x in own_w:
                 if x.name == n and unify_desc(dt, x.desc, []):
                     wused.add((x.name, x.desc))
+        # the class initializer and constructors say nothing about which class it is (every class has
+        # them), but a kept one that is the same code tells the renames it implies: the constant it
+        # assigns (26.1's AllOfCondition.<clinit> stores into MAP_CODEC what 1.21.11's stored into CODEC)
+        if commit:
+            for m in vk.methods:
+                if m.name not in ("<clinit>", "<init>") or m.insns is None:
+                    continue
+                for x in wk.methods:
+                    if x.name == m.name and x.insns is not None and unify_desc(self.tdesc(m.desc), x.desc, []):
+                        ok, bv = self.same_code(m, x)
+                        if ok and self.last_anchors >= 2:
+                            renames.extend(("M" if e[0] == "M" else "F", e[1], e[2], e[4], self.last_anchors,
+                                            "named in a kept body that is the same code") for e in bv if e[0] in ("M", "F"))
+                            break
         for m in vk.methods:
             if m.access & bytecode.ACC_SYNTHETIC or m.name in GENERIC:
                 continue
