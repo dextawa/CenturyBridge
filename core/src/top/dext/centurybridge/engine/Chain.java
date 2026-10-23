@@ -428,6 +428,18 @@ public final class Chain {
          */
         public boolean narrow;
         /**
+         * Precedence between hooks that fold into ONE new shape ("shadows": [old shapes, "name(desc)"]).
+         * A class can synthesize the new shape only once, so in a class declaring this hook's old
+         * method and one of the listed ones, this hook reconnects the new shape and the other old
+         * method is left unhooked (1.20.5: FabricItem.isSuitableFor(stack, state) over vanilla's
+         * isSuitableFor(state), both answered by isCorrectForDrops(stack, state) -- 1.20.4's
+         * ItemStack asked the Fabric method, whose default called the vanilla one). Without a stated
+         * precedence the first of such hooks in wiring order wins -- never the order the class
+         * declares its methods in -- and WiringCheck refuses two such hooks from different wiring
+         * files that can meet in one class: file-name order is not a precedence anyone stated.
+         */
+        public final java.util.Set<String> shadows = new java.util.HashSet<>();
+        /**
          * Super calls through a bridge ("superBridge": "Owner.name(desc)", "superAccess",
          * "superAccessors"), for an old contract the new shapes only meet together: 1.20.4's
          * Block.use was, in 1.20.5 terms, useItemOn and then -- when the item interaction passes
@@ -1691,6 +1703,50 @@ public final class Chain {
     public final java.util.Map<String, String> targetSuperOf = new java.util.HashMap<>();
     public final java.util.Map<String, java.util.List<String>> targetInterfacesOf = new java.util.HashMap<>();
 
+    /**
+     * The source release's library hierarchy outside Minecraft: every class of its Fabric API modules
+     * ({@link #loadLibraryHierarchy}), class -> superclass and class -> direct interfaces. A mod calls a
+     * library member through whatever library type it holds (ItemVariant.getNbt() for TransferVariant's,
+     * SingleItemStorage.writeNbt for SingleVariantStorage's): wiring keyed on the declaring library type
+     * serves such a call where the JVM resolves it, through this hierarchy (JarProcessor's library homes).
+     */
+    public final java.util.Map<String, String> libSuperOf = new java.util.HashMap<>();
+    public final java.util.Map<String, java.util.List<String>> libInterfacesOf = new java.util.HashMap<>();
+
+    /**
+     * Read the class headers of a release's Fabric API modules (its processedMods: the jars the loader
+     * extracts) into {@link #libSuperOf} / {@link #libInterfacesOf}; Minecraft's own classes in them are
+     * skipped (the stub has those). Missing directory: nothing is read.
+     */
+    public void loadLibraryHierarchy(Path processedMods) throws IOException {
+        if (!Files.isDirectory(processedMods)) {
+            return;
+        }
+        java.util.List<Path> jars;
+        try (var s = Files.list(processedMods)) {
+            jars = s.filter(p -> p.toString().endsWith(".jar")).sorted().toList();
+        }
+        for (Path jar : jars) {
+            try (var z = new java.util.zip.ZipFile(jar.toFile())) {
+                for (var en : java.util.Collections.list(z.entries())) {
+                    String n = en.getName();
+                    if (!n.endsWith(".class") || n.startsWith("net/minecraft/") || n.startsWith("META-INF/")) {
+                        continue;
+                    }
+                    var cr = new org.objectweb.asm.ClassReader(z.getInputStream(en).readAllBytes());
+                    String name = cr.getClassName();
+                    if (cr.getSuperName() != null) {
+                        libSuperOf.putIfAbsent(name, cr.getSuperName());
+                    }
+                    String[] itfs = cr.getInterfaces();
+                    if (itfs.length > 0) {
+                        libInterfacesOf.putIfAbsent(name, java.util.List.of(itfs));
+                    }
+                }
+            }
+        }
+    }
+
     public static boolean intermediaryMethod(String name) {
         return METHOD_PAT.matcher(name).matches();
     }
@@ -2041,6 +2097,12 @@ public final class Chain {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": superCalls needs args");
                     }
                     h.narrow = o.has("narrow") && o.get("narrow").getAsBoolean();
+                    if (o.has("shadows")) {
+                        for (var s : o.getAsJsonArray("shadows")) {
+                            String[] ssig = splitSig(s.getAsString());
+                            h.shadows.add(ssig[0] + ssig[1]);
+                        }
+                    }
                     if (h.narrow && (h.wrapName != null || o.has("bridge"))) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
                             + ": narrow forwards the new argument itself (no wrap / bridge)");
