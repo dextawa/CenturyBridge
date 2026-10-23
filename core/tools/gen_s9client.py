@@ -109,6 +109,7 @@ def main():
     textures(frag)
     equipment(frag)
     block_entity_renders(frag)
+    render_tail(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -756,6 +757,135 @@ def block_entity_renders(frag):
     cr["net/minecraft/class_7761$class_7762"] = FAC + "LegacyHangingSignModel"
     frag.setdefault("classRenameBasis", {})["net/minecraft/class_7761$class_7762"] = (
         "HangingSignRenderer.HangingSignModel is gone in 1.21.4 (a model per attachment); the facade is 1.21.3's, over its one layer")
+
+
+def render_tail(frag):
+    """1.21.3 rendering members 1.21.4 reshaped (sky, weather, particles, screen effects, level render, input, music, NativeImage,
+    renderer and particle constructors, renderer scale overrides): CbRenderTail."""
+    T = RT + "/CbRenderTail"
+    G = RT + "/CbGuiMisc"
+    ir = frag.setdefault("instanceRedirects", {})
+    for k in ["net/minecraft/class_9975.method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FI)V",
+              "net/minecraft/class_9975.method_62307(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FIFFLnet/minecraft/class_9958;)V",
+              "net/minecraft/class_9975.method_62312(Lnet/minecraft/class_4587;)V",
+              "net/minecraft/class_9976.method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_765;IFLnet/minecraft/class_243;)V",
+              "net/minecraft/class_702.method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V",
+              "net/minecraft/class_1011.method_22619(IIIIIIIZZZZ)V", "net/minecraft/class_1011.method_4312(IIIIIIIZZ)V",
+              "net/minecraft/class_744.method_3129(ZF)V",
+              "net/minecraft/class_751.method_18143(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+              "net/minecraft/class_945.method_4117(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+              "net/minecraft/class_917.method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"]:
+        ir[k] = T
+    frag.setdefault("superRedirects", {})["net/minecraft/class_744.method_3129(ZF)V"] = T + "#superTick"
+    sr = frag.setdefault("staticRedirects", {})
+    sr["net/minecraft/class_4603.method_23067(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;)V"] = T
+    sr["com/mojang/blaze3d/systems/RenderSystem.overlayBlendFunc()V"] = T
+    sr["net/minecraft/class_5602.method_45719(Lnet/minecraft/class_4719;)Lnet/minecraft/class_5601;"] = T
+    frag.setdefault("instanceFieldGetters", {})["net/minecraft/class_922.field_53193:Lnet/minecraft/class_918;"] = T
+    cr = frag.setdefault("callReshapes", {})
+    LR = "(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;"
+    LR_OLD = LR + "Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V"
+    LR_NEW = LR + "Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V"
+    cr["net/minecraft/class_761.method_22710" + LR_OLD] = {
+        "desc": LR_NEW, "ops": ["keep", "keep", "keep", "keep", "keep", "drop", "keep", "keep"],
+        "basis": "LevelRenderer.renderLevel no longer takes the LightTexture since 1.21.4 (its render types carry the lightmap)"}
+    cr["net/minecraft/class_1142.method_4858(Lnet/minecraft/class_5195;)V"] = {
+        "desc": "(Lnet/minecraft/class_10383;)V", "ops": ["conv " + G + "#cbMusicInfo(Lnet/minecraft/class_5195;)Lnet/minecraft/class_10383;"],
+        "basis": "MusicManager.startPlaying takes a MusicInfo since 1.21.4 (the music at full volume, as 1.21.3 played it)"}
+    cr["net/minecraft/class_909.method_62461(Lnet/minecraft/class_1309;Lnet/minecraft/class_10034;F)V"] = {
+        "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_10034;FLnet/minecraft/class_10442;)V",
+        "ops": ["keep", "keep", "keep", "push " + T + "#cbResolver()Lnet/minecraft/class_10442;"],
+        "basis": "HumanoidMobRenderer.extractHumanoidRenderState also resolves the held items since 1.21.4: with the game's item model resolver"}
+    for m in ["method_62079", "method_62080"]:
+        cr["net/minecraft/class_9945." + m + "()Lnet/minecraft/class_5607;"] = {
+            "desc": "(F)Lnet/minecraft/class_5607;", "ops": ["push " + T + "#cbUnitScale()F"],
+            "basis": "DonkeyModel's layer takes a scale since 1.21.4; 1.21.3's was unscaled (the renderer scaled), scale 1"}
+    mr = frag.setdefault("methodRenames", {})
+    mr["net/minecraft/class_761.method_52815(Lnet/minecraft/class_1923;)V"] = "method_65201"
+    orr = frag.setdefault("overrideRenames", [])
+    orr[:] = [r for r in orr if r.get("family") != "render-tail"]
+    orr.append({"old": "method_52815(Lnet/minecraft/class_1923;)V", "new": "method_65201", "onlyUnder": "net/minecraft/class_761", "superCalls": "rename",
+                "family": "render-tail", "basis": "LevelRenderer.onChunkLoaded is onChunkReadyToRender since 1.21.4 (same body)"})
+    hooks = frag.setdefault("overrideHooks", [])
+    hooks[:] = [h for h in hooks if h.get("family") != "render-tail"]
+    BS = "Lnet/minecraft/class_4597$class_4598;"
+    TES = T + ".tesselator(" + BS + ")Lnet/minecraft/class_289;"
+    LT = T + ".lightTexture(Lnet/minecraft/class_4597;)Lnet/minecraft/class_765;"
+    hooks.append({"old": "method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FI)V", "new": "method_62306(Lnet/minecraft/class_4587;" + BS + "FI)V",
+                  "wrap": TES, "guard": GUARD, "onlyUnder": "net/minecraft/class_9975", "family": "render-tail",
+                  "basis": "SkyRenderer draws into the frame's buffer source since 1.21.4; a 1.21.3 override draws with the Tesselator 1.21.3 handed it"})
+    hooks.append({"old": "method_62307(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FIFFLnet/minecraft/class_9958;)V",
+                  "new": "method_62307(Lnet/minecraft/class_4587;" + BS + "FIFFLnet/minecraft/class_9958;)V",
+                  "wrap": TES, "guard": GUARD, "onlyUnder": "net/minecraft/class_9975", "family": "render-tail",
+                  "basis": "SkyRenderer draws into the frame's buffer source since 1.21.4; a 1.21.3 override draws with the Tesselator 1.21.3 handed it"})
+    hooks.append({"old": "method_62312(Lnet/minecraft/class_4587;)V", "new": "method_62312()V",
+                  "bridge": T + ".endSky(L" + T + "$CbLegacyEndSky;)V", "adapter": T + "$CbLegacyEndSky", "onlyUnder": "net/minecraft/class_9975",
+                  "family": "render-tail", "basis": "SkyRenderer.renderEndSky takes no pose since 1.21.4; 1.21.3's sky pass handed a fresh (identity) one"})
+    hooks.append({"old": "method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_765;IFLnet/minecraft/class_243;)V",
+                  "new": "method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_4597;IFLnet/minecraft/class_243;)V",
+                  "wrap": LT, "guard": GUARD, "onlyUnder": "net/minecraft/class_9976", "family": "render-tail",
+                  "basis": "WeatherEffectRenderer.render takes the buffer source in the LightTexture's place since 1.21.4; a 1.21.3 override gets the game's LightTexture"})
+    hooks.append({"old": "method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V", "new": "method_3049(Lnet/minecraft/class_4184;F" + BS + ")V",
+                  "args": [2, 0, 1], "wrap": LT, "guard": GUARD, "onlyUnder": "net/minecraft/class_702", "family": "render-tail",
+                  "basis": "ParticleEngine.render takes the camera, partial tick and buffer source since 1.21.4; a 1.21.3 override gets the game's LightTexture"})
+    hooks.append({"old": "method_22710" + LR_OLD, "new": "method_22710" + LR_NEW,
+                  "bridge": T + ".renderLevel(L" + T + "$CbLegacyRenderLevel;" + LR_NEW[1:],
+                  "adapter": T + "$CbLegacyRenderLevel", "onlyUnder": "net/minecraft/class_761", "family": "render-tail",
+                  "basis": "LevelRenderer.renderLevel no longer takes the LightTexture; a 1.21.3 override gets the game's, as 1.21.3's game renderer passed it"})
+    hooks.append({"old": "method_3129(ZF)V", "new": "method_3129()V", "bridge": T + ".tick(L" + T + "$CbLegacyInputTick;)V",
+                  "adapter": T + "$CbLegacyInputTick", "onlyUnder": "net/minecraft/class_744", "family": "render-tail",
+                  "basis": "ClientInput.tick takes no sneaking slowdown since 1.21.4 (the player applies it after the input's tick); a 1.21.3 input is "
+                           "ticked without it, so it applies once"})
+    hooks.append({"old": "method_4858(Lnet/minecraft/class_5195;)V", "new": "method_4858(Lnet/minecraft/class_10383;)V",
+                  "wrap": G + ".cbMusic(Lnet/minecraft/class_10383;)Lnet/minecraft/class_5195;", "guard": GUARD,
+                  "onlyUnder": "net/minecraft/class_1142", "family": "render-tail",
+                  "basis": "MusicManager.startPlaying takes a MusicInfo since 1.21.4; a 1.21.3 override gets its music"})
+    for owner, old in [("net/minecraft/class_875", "method_3874(Lnet/minecraft/class_10019;Lnet/minecraft/class_4587;)V"),
+                       ("net/minecraft/class_963", "method_4149(Lnet/minecraft/class_10080;Lnet/minecraft/class_4587;)V"),
+                       ("net/minecraft/class_4999", "method_56155(Lnet/minecraft/class_10070;Lnet/minecraft/class_4587;)V")]:
+        hooks.append({"old": old, "new": "method_4042(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;)V", "narrow": True,
+                      "frames": GUARD, "superCalls": "rewrite", "onlyUnder": owner, "family": "render-tail",
+                      "basis": "the renderer's typed scale(state, pose) is gone in 1.21.4: LivingEntityRenderer.scale is what vanilla asks, and a 1.21.3 "
+                               "override's super call reaches it (1.21.4 scales babies and horse sizes in the model layers)"})
+    for owner, old in [("net/minecraft/class_945", "method_4117"), ("net/minecraft/class_917", "method_48302")]:
+        hooks.append({"old": old + "(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+                      "new": "method_4054(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V", "narrow": True,
+                      "frames": GUARD, "superCalls": "rewrite", "onlyUnder": owner, "family": "render-tail",
+                      "basis": "the renderer's typed render(state, ..) is gone in 1.21.4 (its shadow is asked from the state): LivingEntityRenderer.render "
+                               "is what vanilla calls and what a 1.21.3 override's super call reaches"})
+    scr = frag.setdefault("superCtorReshapes", {})
+    scr["net/minecraft/class_647.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1799;)V"] = {
+        "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_10444;)V",
+        "ops": ["keep:0", "keep:1", "keep:2", "keep:3", "conv:4 " + T + "#cbEmptyState(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10444;"],
+        "post": T + "#cbBreakingSprite(Lnet/minecraft/class_647;Lnet/minecraft/class_638;Lnet/minecraft/class_1799;)V", "postArgs": [0, 4],
+        "basis": "BreakingItemParticle takes the item's render state since 1.21.4; the sprite is 1.21.3's, the particle icon of the stack's model"}
+    scr["net/minecraft/class_8253.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_4002;)V"] = {
+        "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_4002;FFZZFF)V",
+        "ops": ["keep:0", "keep:1", "keep:2", "keep:3", "keep:4", "push " + T + "#cbLeafGravity()F", "push " + T + "#cbLeafWind()F",
+                "push " + T + "#cbLeafSwirl()Z", "push " + T + "#cbLeafFlowAway()Z", "push " + T + "#cbLeafSize()F", "push " + T + "#cbLeafYSpeed()F"],
+        "basis": "FallingLeavesParticle takes its motion as parameters since 1.21.4; 1.21.3's was the cherry leaf, whose values 1.21.4's CherryProvider passes"}
+    scr["net/minecraft/class_693.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_4599;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;)V"] = {
+        "desc": "(Lnet/minecraft/class_898;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;)V",
+        "ops": ["keep:0", "drop:1", "keep:2", "keep:3", "keep:4"],
+        "basis": "ItemPickupParticle draws into the buffer source its render call hands it since 1.21.4 (1.21.3 kept the RenderBuffers to get it)"}
+    scr["net/minecraft/class_776.<init>(Lnet/minecraft/class_773;Lnet/minecraft/class_756;Lnet/minecraft/class_324;)V"] = {
+        "desc": "(Lnet/minecraft/class_773;Ljava/util/function/Supplier;Lnet/minecraft/class_324;)V",
+        "ops": ["keep:0", "conv:1 " + T + "#cbSpecialRenderer(Lnet/minecraft/class_756;)Ljava/util/function/Supplier;", "keep:2"],
+        "basis": "BlockRenderDispatcher draws special blocks with the SpecialBlockModelRenderer since 1.21.4 (1.21.3: the BlockEntityWithoutLevelRenderer); the game's"}
+    scr["net/minecraft/class_875.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;Lnet/minecraft/class_583;F)V"] = {
+        "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;Lnet/minecraft/class_583;)V",
+        "ops": ["keep:0", "keep:1", "keep:2", "drop:3"],
+        "post": T + "#cbHorseScale(Lnet/minecraft/class_875;F)V", "postArgs": [3],
+        "basis": "AbstractHorseRenderer takes no scale since 1.21.4 (vanilla scales the layers); the renderer applies 1.21.3's (CbTailHorseScaleMixin)"}
+    scr["net/minecraft/class_9991.<init>(Lnet/minecraft/class_5617$class_5618;FLnet/minecraft/class_5601;Lnet/minecraft/class_5601;Z)V"] = {
+        "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_5601;Lnet/minecraft/class_5601;Z)V",
+        "ops": ["keep:0", "drop:1", "keep:2", "keep:3", "keep:4"],
+        "post": T + "#cbDonkeyScale(Lnet/minecraft/class_9991;FLnet/minecraft/class_5601;)V", "postArgs": [1, 2],
+        "basis": "DonkeyRenderer takes no scale since 1.21.4; 1.21.3's applies unless the layer is a vanilla donkey / mule layer, which 1.21.4 scales itself"}
+    scr["net/minecraft/class_7288.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;Ljava/util/function/Function;)V"] = {
+        "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;Ljava/util/function/Function;Z)V",
+        "ops": ["keep:0", "keep:1", "keep:2", "keep:3", "keep:4", "push " + T + "#cbNotAlwaysVisible()Z"],
+        "basis": "LivingEntityEmissiveLayer takes whether it shows on an invisible entity since 1.21.4; 1.21.3's never did"}
 
 
 if __name__ == "__main__":

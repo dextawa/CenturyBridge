@@ -21,7 +21,7 @@ import top.dext.centurybridge.step.v1_21_4.rt.CbTextures;
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_1060.class)
-public abstract class CbTextureManagerMixin implements CbTextures.CbTextureManager {
+public abstract class CbTextureManagerMixin implements CbTextures.CbTextureManager, top.dext.centurybridge.step.v1_21_4.rt.CbRenderTail.CbTexturePreload {
 
     @Shadow
     @Final
@@ -59,6 +59,7 @@ public abstract class CbTextureManagerMixin implements CbTextures.CbTextureManag
     }
 
     /** was preload(id, executor) */
+    @Override
     public CompletableFuture<Void> method_18168(net.minecraft.class_2960 id, Executor executor) {
         if (!this.field_5286.containsKey(id)) {
             PreloadedTexture texture = new PreloadedTexture(this.field_5287, id, executor);

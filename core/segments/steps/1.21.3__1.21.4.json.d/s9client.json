@@ -275,6 +275,14 @@
    "superCalls": "rename",
    "family": "block-entity-renders",
    "basis": "SignRenderer / HangingSignRenderer.render(sign, ..) is AbstractSignRenderer.render(sign, ..) since 1.21.4 (the bridge render calls it)"
+  },
+  {
+   "old": "method_52815(Lnet/minecraft/class_1923;)V",
+   "new": "method_65201",
+   "onlyUnder": "net/minecraft/class_761",
+   "superCalls": "rename",
+   "family": "render-tail",
+   "basis": "LevelRenderer.onChunkLoaded is onChunkReadyToRender since 1.21.4 (same body)"
   }
  ],
  "covers": [
@@ -454,6 +462,133 @@
    "onlyUnder": "net/minecraft/class_10197",
    "family": "equipment",
    "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id); a 1.21.3 override is reached with the key's location"
+  },
+  {
+   "old": "method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FI)V",
+   "new": "method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;FI)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.tesselator(Lnet/minecraft/class_4597$class_4598;)Lnet/minecraft/class_289;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9975",
+   "family": "render-tail",
+   "basis": "SkyRenderer draws into the frame's buffer source since 1.21.4; a 1.21.3 override draws with the Tesselator 1.21.3 handed it"
+  },
+  {
+   "old": "method_62307(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FIFFLnet/minecraft/class_9958;)V",
+   "new": "method_62307(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;FIFFLnet/minecraft/class_9958;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.tesselator(Lnet/minecraft/class_4597$class_4598;)Lnet/minecraft/class_289;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9975",
+   "family": "render-tail",
+   "basis": "SkyRenderer draws into the frame's buffer source since 1.21.4; a 1.21.3 override draws with the Tesselator 1.21.3 handed it"
+  },
+  {
+   "old": "method_62312(Lnet/minecraft/class_4587;)V",
+   "new": "method_62312()V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.endSky(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyEndSky;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyEndSky",
+   "onlyUnder": "net/minecraft/class_9975",
+   "family": "render-tail",
+   "basis": "SkyRenderer.renderEndSky takes no pose since 1.21.4; 1.21.3's sky pass handed a fresh (identity) one"
+  },
+  {
+   "old": "method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_765;IFLnet/minecraft/class_243;)V",
+   "new": "method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_4597;IFLnet/minecraft/class_243;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.lightTexture(Lnet/minecraft/class_4597;)Lnet/minecraft/class_765;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_9976",
+   "family": "render-tail",
+   "basis": "WeatherEffectRenderer.render takes the buffer source in the LightTexture's place since 1.21.4; a 1.21.3 override gets the game's LightTexture"
+  },
+  {
+   "old": "method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V",
+   "new": "method_3049(Lnet/minecraft/class_4184;FLnet/minecraft/class_4597$class_4598;)V",
+   "args": [
+    2,
+    0,
+    1
+   ],
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.lightTexture(Lnet/minecraft/class_4597;)Lnet/minecraft/class_765;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_702",
+   "family": "render-tail",
+   "basis": "ParticleEngine.render takes the camera, partial tick and buffer source since 1.21.4; a 1.21.3 override gets the game's LightTexture"
+  },
+  {
+   "old": "method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "new": "method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.renderLevel(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyRenderLevel;Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyRenderLevel",
+   "onlyUnder": "net/minecraft/class_761",
+   "family": "render-tail",
+   "basis": "LevelRenderer.renderLevel no longer takes the LightTexture; a 1.21.3 override gets the game's, as 1.21.3's game renderer passed it"
+  },
+  {
+   "old": "method_3129(ZF)V",
+   "new": "method_3129()V",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail.tick(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyInputTick;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail$CbLegacyInputTick",
+   "onlyUnder": "net/minecraft/class_744",
+   "family": "render-tail",
+   "basis": "ClientInput.tick takes no sneaking slowdown since 1.21.4 (the player applies it after the input's tick); a 1.21.3 input is ticked without it, so it applies once"
+  },
+  {
+   "old": "method_4858(Lnet/minecraft/class_5195;)V",
+   "new": "method_4858(Lnet/minecraft/class_10383;)V",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc.cbMusic(Lnet/minecraft/class_10383;)Lnet/minecraft/class_5195;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1142",
+   "family": "render-tail",
+   "basis": "MusicManager.startPlaying takes a MusicInfo since 1.21.4; a 1.21.3 override gets its music"
+  },
+  {
+   "old": "method_3874(Lnet/minecraft/class_10019;Lnet/minecraft/class_4587;)V",
+   "new": "method_4042(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_875",
+   "family": "render-tail",
+   "basis": "the renderer's typed scale(state, pose) is gone in 1.21.4: LivingEntityRenderer.scale is what vanilla asks, and a 1.21.3 override's super call reaches it (1.21.4 scales babies and horse sizes in the model layers)"
+  },
+  {
+   "old": "method_4149(Lnet/minecraft/class_10080;Lnet/minecraft/class_4587;)V",
+   "new": "method_4042(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_963",
+   "family": "render-tail",
+   "basis": "the renderer's typed scale(state, pose) is gone in 1.21.4: LivingEntityRenderer.scale is what vanilla asks, and a 1.21.3 override's super call reaches it (1.21.4 scales babies and horse sizes in the model layers)"
+  },
+  {
+   "old": "method_56155(Lnet/minecraft/class_10070;Lnet/minecraft/class_4587;)V",
+   "new": "method_4042(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_4999",
+   "family": "render-tail",
+   "basis": "the renderer's typed scale(state, pose) is gone in 1.21.4: LivingEntityRenderer.scale is what vanilla asks, and a 1.21.3 override's super call reaches it (1.21.4 scales babies and horse sizes in the model layers)"
+  },
+  {
+   "old": "method_4117(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4054(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_945",
+   "family": "render-tail",
+   "basis": "the renderer's typed render(state, ..) is gone in 1.21.4 (its shadow is asked from the state): LivingEntityRenderer.render is what vanilla calls and what a 1.21.3 override's super call reaches"
+  },
+  {
+   "old": "method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_4054(Lnet/minecraft/class_10042;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "narrow": true,
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "onlyUnder": "net/minecraft/class_917",
+   "family": "render-tail",
+   "basis": "the renderer's typed render(state, ..) is gone in 1.21.4 (its shadow is asked from the state): LivingEntityRenderer.render is what vanilla calls and what a 1.21.3 override's super call reaches"
   }
  ],
  "fieldGetters": {
@@ -850,6 +985,101 @@
     "keep:3"
    ],
    "basis": "SkinManager registers downloaded skins with the game's texture manager since 1.21.4 (SkinTextureDownloader); 1.21.3 took it as an argument, the game's in every vanilla use"
+  },
+  "net/minecraft/class_647.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_1799;)V": {
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_10444;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbEmptyState(Lnet/minecraft/class_1799;)Lnet/minecraft/class_10444;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbBreakingSprite(Lnet/minecraft/class_647;Lnet/minecraft/class_638;Lnet/minecraft/class_1799;)V",
+   "postArgs": [
+    0,
+    4
+   ],
+   "basis": "BreakingItemParticle takes the item's render state since 1.21.4; the sprite is 1.21.3's, the particle icon of the stack's model"
+  },
+  "net/minecraft/class_8253.<init>(Lnet/minecraft/class_638;DDDLnet/minecraft/class_4002;)V": {
+   "desc": "(Lnet/minecraft/class_638;DDDLnet/minecraft/class_4002;FFZZFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafGravity()F",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafWind()F",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafSwirl()Z",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafFlowAway()Z",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafSize()F",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbLeafYSpeed()F"
+   ],
+   "basis": "FallingLeavesParticle takes its motion as parameters since 1.21.4; 1.21.3's was the cherry leaf, whose values 1.21.4's CherryProvider passes"
+  },
+  "net/minecraft/class_693.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_4599;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;)V": {
+   "desc": "(Lnet/minecraft/class_898;Lnet/minecraft/class_638;Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;)V",
+   "ops": [
+    "keep:0",
+    "drop:1",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "basis": "ItemPickupParticle draws into the buffer source its render call hands it since 1.21.4 (1.21.3 kept the RenderBuffers to get it)"
+  },
+  "net/minecraft/class_776.<init>(Lnet/minecraft/class_773;Lnet/minecraft/class_756;Lnet/minecraft/class_324;)V": {
+   "desc": "(Lnet/minecraft/class_773;Ljava/util/function/Supplier;Lnet/minecraft/class_324;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbSpecialRenderer(Lnet/minecraft/class_756;)Ljava/util/function/Supplier;",
+    "keep:2"
+   ],
+   "basis": "BlockRenderDispatcher draws special blocks with the SpecialBlockModelRenderer since 1.21.4 (1.21.3: the BlockEntityWithoutLevelRenderer); the game's"
+  },
+  "net/minecraft/class_875.<init>(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;Lnet/minecraft/class_583;F)V": {
+   "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;Lnet/minecraft/class_583;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "drop:3"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbHorseScale(Lnet/minecraft/class_875;F)V",
+   "postArgs": [
+    3
+   ],
+   "basis": "AbstractHorseRenderer takes no scale since 1.21.4 (vanilla scales the layers); the renderer applies 1.21.3's (CbTailHorseScaleMixin)"
+  },
+  "net/minecraft/class_9991.<init>(Lnet/minecraft/class_5617$class_5618;FLnet/minecraft/class_5601;Lnet/minecraft/class_5601;Z)V": {
+   "desc": "(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_5601;Lnet/minecraft/class_5601;Z)V",
+   "ops": [
+    "keep:0",
+    "drop:1",
+    "keep:2",
+    "keep:3",
+    "keep:4"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbDonkeyScale(Lnet/minecraft/class_9991;FLnet/minecraft/class_5601;)V",
+   "postArgs": [
+    1,
+    2
+   ],
+   "basis": "DonkeyRenderer takes no scale since 1.21.4; 1.21.3's applies unless the layer is a vanilla donkey / mule layer, which 1.21.4 scales itself"
+  },
+  "net/minecraft/class_7288.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;Ljava/util/function/Function;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_2960;Lnet/minecraft/class_7288$class_7289;Lnet/minecraft/class_7288$class_7311;Ljava/util/function/Function;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbNotAlwaysVisible()Z"
+   ],
+   "basis": "LivingEntityEmissiveLayer takes whether it shows on an invisible entity since 1.21.4; 1.21.3's never did"
   }
  },
  "superRenames": {
@@ -915,6 +1145,51 @@
     "keep"
    ],
    "basis": "EquipmentLayerRenderer.renderLayers takes the equipment asset's key since 1.21.4 (1.21.3: its model id)"
+  },
+  "net/minecraft/class_761.method_22710(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lnet/minecraft/class_765;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V": {
+   "desc": "(Lnet/minecraft/class_9922;Lnet/minecraft/class_9779;ZLnet/minecraft/class_4184;Lnet/minecraft/class_757;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop",
+    "keep",
+    "keep"
+   ],
+   "basis": "LevelRenderer.renderLevel no longer takes the LightTexture since 1.21.4 (its render types carry the lightmap)"
+  },
+  "net/minecraft/class_1142.method_4858(Lnet/minecraft/class_5195;)V": {
+   "desc": "(Lnet/minecraft/class_10383;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbMusicInfo(Lnet/minecraft/class_5195;)Lnet/minecraft/class_10383;"
+   ],
+   "basis": "MusicManager.startPlaying takes a MusicInfo since 1.21.4 (the music at full volume, as 1.21.3 played it)"
+  },
+  "net/minecraft/class_909.method_62461(Lnet/minecraft/class_1309;Lnet/minecraft/class_10034;F)V": {
+   "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_10034;FLnet/minecraft/class_10442;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbResolver()Lnet/minecraft/class_10442;"
+   ],
+   "basis": "HumanoidMobRenderer.extractHumanoidRenderState also resolves the held items since 1.21.4: with the game's item model resolver"
+  },
+  "net/minecraft/class_9945.method_62079()Lnet/minecraft/class_5607;": {
+   "desc": "(F)Lnet/minecraft/class_5607;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbUnitScale()F"
+   ],
+   "basis": "DonkeyModel's layer takes a scale since 1.21.4; 1.21.3's was unscaled (the renderer scaled), scale 1"
+  },
+  "net/minecraft/class_9945.method_62080()Lnet/minecraft/class_5607;": {
+   "desc": "(F)Lnet/minecraft/class_5607;",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbUnitScale()F"
+   ],
+   "basis": "DonkeyModel's layer takes a scale since 1.21.4; 1.21.3's was unscaled (the renderer scaled), scale 1"
   }
  },
  "staticRedirects": {
@@ -928,7 +1203,10 @@
   "net/minecraft/class_9214.method_56851(FLnet/minecraft/class_1937;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_918;FFLnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
   "net/minecraft/class_916.method_56856(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
   "net/minecraft/class_916.method_56857(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_5819;Lnet/minecraft/class_1937;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
-  "net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders"
+  "net/minecraft/class_916.method_56858(Lnet/minecraft/class_918;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1799;Lnet/minecraft/class_1087;ZLnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
+  "net/minecraft/class_4603.method_23067(Lnet/minecraft/class_310;Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "com/mojang/blaze3d/systems/RenderSystem.overlayBlendFunc()V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_5602.method_45719(Lnet/minecraft/class_4719;)Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail"
  },
  "resourceTypes": [
   "centurybridge:legacy_builtin",
@@ -973,7 +1251,18 @@
   "net/minecraft/class_9483.method_58753(Lnet/minecraft/class_10048;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
   "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
   "net/minecraft/class_1060.method_4616(Lnet/minecraft/class_2960;Lnet/minecraft/class_1044;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures#register",
-  "net/minecraft/class_1049.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures"
+  "net/minecraft/class_1049.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures",
+  "net/minecraft/class_9975.method_62306(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FI)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_9975.method_62307(Lnet/minecraft/class_4587;Lnet/minecraft/class_289;FIFFLnet/minecraft/class_9958;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_9975.method_62312(Lnet/minecraft/class_4587;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_9976.method_62316(Lnet/minecraft/class_1937;Lnet/minecraft/class_765;IFLnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_702.method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_1011.method_22619(IIIIIIIZZZZ)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_1011.method_4312(IIIIIIIZZ)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_744.method_3129(ZF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_751.method_18143(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_945.method_4117(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail",
+  "net/minecraft/class_917.method_48302(Lnet/minecraft/class_10067;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
@@ -981,7 +1270,8 @@
   "net/minecraft/class_809.method_3501(Lnet/minecraft/class_811;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#superHasTransform",
   "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#superGetItemRenderer",
   "net/minecraft/class_1079.method_33460(Lnet/minecraft/class_1079$class_5792;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata#superForEachFrame",
-  "net/minecraft/class_1049.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures#method_18153"
+  "net/minecraft/class_1049.method_18153(Lnet/minecraft/class_3300;)Lnet/minecraft/class_1049$class_4006;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures#method_18153",
+  "net/minecraft/class_744.method_3129(ZF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#superTick"
  },
  "methodRenames": {
   "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",
@@ -996,7 +1286,8 @@
   "net/minecraft/class_837.method_37311(Lnet/minecraft/class_8242;)I": "method_65822",
   "net/minecraft/class_836.method_3578(Lnet/minecraft/class_2484$class_2485;Lnet/minecraft/class_9296;)Lnet/minecraft/class_1921;": "method_65832",
   "net/minecraft/class_837.method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V": "method_65820",
-  "net/minecraft/class_7761.method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V": "method_65820"
+  "net/minecraft/class_7761.method_23083(Lnet/minecraft/class_2625;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)V": "method_65820",
+  "net/minecraft/class_761.method_52815(Lnet/minecraft/class_1923;)V": "method_65201"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_809.field_4305:Lnet/minecraft/class_804;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms",
@@ -1011,7 +1302,8 @@
   "net/minecraft/class_793.field_4253:Lnet/minecraft/class_793;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_10042.field_53467:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
   "net/minecraft/class_10025.field_53369:Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderStates",
-  "net/minecraft/class_1049.field_5224:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures"
+  "net/minecraft/class_1049.field_5224:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextures",
+  "net/minecraft/class_922.field_53193:Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail"
  },
  "ctorRedirects": {
   "net/minecraft/class_809.<init>(Lnet/minecraft/class_809;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#copy"
