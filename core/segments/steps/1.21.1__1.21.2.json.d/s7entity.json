@@ -172,7 +172,12 @@
   "net/minecraft/class_4828.method_47137(Ljava/util/function/BiConsumer;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
   "net/minecraft/class_4828.method_47138(Ljava/util/function/Predicate;)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
   "net/minecraft/class_4828.method_47139(Ljava/util/function/Predicate;Ljava/util/function/BiConsumer;Z)Lnet/minecraft/class_7893;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTargeting#stopAttacking",
-  "net/minecraft/class_1688.method_7523(Lnet/minecraft/class_3218;DDDLnet/minecraft/class_1688$class_1689;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1688;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#createMinecart"
+  "net/minecraft/class_1688.method_7523(Lnet/minecraft/class_3218;DDDLnet/minecraft/class_1688$class_1689;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Lnet/minecraft/class_1688;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#createMinecart",
+  "net/minecraft/class_8953.method_55038(Lnet/minecraft/class_8949;Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#isFacingTarget",
+  "net/minecraft/class_4838.method_24719(Lnet/minecraft/class_1309;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#isWearingGold",
+  "net/minecraft/class_3765.method_16515(Lnet/minecraft/class_7871;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#getLeaderBannerInstance",
+  "net/minecraft/class_4156.method_28359(Ljava/lang/Runnable;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#poiRecordCodec",
+  "net/minecraft/class_4157.method_28364(Ljava/lang/Runnable;)Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#poiSectionCodec"
  },
  "superCtorReshapes": {
   "net/minecraft/class_1400.<init>(Lnet/minecraft/class_1308;Ljava/lang/Class;IZZLjava/util/function/Predicate;)V": {
@@ -528,6 +533,26 @@
     3
    ],
    "basis": "1.21.1 AbstractMinecartContainer(type, x, y, z, level) was AbstractMinecart(type, level, x, y, z) -- this(type, level), setPos, xo/yo/zo -- and the item list, which 1.21.2's (type, level) makes too"
+  },
+  "net/minecraft/class_6670.<init>(Lnet/minecraft/class_1309;Ljava/util/List;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Ljava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#level(Lnet/minecraft/class_1309;)Lnet/minecraft/class_3218;",
+    "keep:0",
+    "keep:1"
+   ],
+   "basis": "1.21.2's NearestVisibleLivingEntities takes the level its targetability test runs in: the entity's own, as 1.21.1's (CbEntityStatics#level)"
+  },
+  "net/minecraft/class_1535.<init>(IILnet/minecraft/class_2960;)V": {
+   "desc": "(IILnet/minecraft/class_2960;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#paintingTitle(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbEntityStatics#paintingAuthor(Lnet/minecraft/class_2960;)Ljava/util/Optional;"
+   ],
+   "basis": "1.21.2's PaintingVariant carries its tooltip's title and author; 1.21.1's tooltip showed the painting.<id>.title/.author translations of its id (CbEntityStatics#paintingTitle)"
   }
  },
  "fieldGetters": {
