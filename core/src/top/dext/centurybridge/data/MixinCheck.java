@@ -185,7 +185,7 @@ public final class MixinCheck {
             }
             for (FieldNode f : cn.fields) {
                 if (has(f.visibleAnnotations, f.invisibleAnnotations, SHADOW)
-                        && !hasField(target, f.name, f.desc)) {
+                        && !declaresField(target, f.name, f.desc)) {
                     problems.add(me + ": @Shadow field " + f.name + ":" + f.desc + " not declared on " + t);
                 }
             }
@@ -365,7 +365,7 @@ public final class MixinCheck {
         for (AnnotationNode a : all) {
             switch (a.desc) {
                 case SHADOW -> {
-                    if (!hasMethod(target, m.name, m.desc)) {
+                    if (!declaresMethod(target, m.name, m.desc)) {
                         problems.add(me + ": @Shadow method " + m.name + m.desc + " not declared on " + target.name);
                     }
                 }
@@ -527,6 +527,31 @@ public final class MixinCheck {
             }
             return false;
         });
+    }
+
+    /**
+     * A @Shadow resolves on the target class itself: Mixin looks the member up in the
+     * target's own field and method lists and rejects the shadow at apply ("not located in
+     * the target class"), taking the whole layer down. A member the target only inherits --
+     * from a superclass or an interface (Level.getChunkSource, declared on LevelAccessor) --
+     * is not found; the shadow belongs on a mixin of the declaring class.
+     */
+    private static boolean declaresMethod(ClassNode c, String name, String desc) {
+        for (MethodNode m : c.methods) {
+            if (m.name.equals(name) && m.desc.equals(desc)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean declaresField(ClassNode c, String name, String desc) {
+        for (FieldNode f : c.fields) {
+            if (f.name.equals(name) && f.desc.equals(desc)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean hasMethodNamed(ClassNode c, String name) {
