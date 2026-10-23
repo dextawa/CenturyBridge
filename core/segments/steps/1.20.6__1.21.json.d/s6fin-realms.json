@@ -1,0 +1,47 @@
+{
+ "classRenames": {
+  "net/minecraft/class_4880": "top/dext/centurybridge/step/v1_21/facade/class_4880",
+  "net/minecraft/class_4881": "top/dext/centurybridge/step/v1_21/facade/class_4881",
+  "net/minecraft/class_4882": "top/dext/centurybridge/step/v1_21/facade/class_4882",
+  "net/minecraft/class_4396": "top/dext/centurybridge/step/v1_21/facade/class_4396",
+  "net/minecraft/class_4396$class_4397": "top/dext/centurybridge/step/v1_21/facade/class_4396$class_4397"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_4877.field_22616:Lnet/minecraft/class_4880;": "top/dext/centurybridge/step/v1_21/rt/CbRealms#serverPing"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_4877.field_22616:Lnet/minecraft/class_4880;": "top/dext/centurybridge/step/v1_21/rt/CbRealms#setServerPing"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_4341.method_21018()Lnet/minecraft/class_4882;": "top/dext/centurybridge/step/v1_21/rt/CbRealms#method_21018"
+ },
+ "superRedirects": {
+  "net/minecraft/class_4341.method_21018()Lnet/minecraft/class_4882;": "top/dext/centurybridge/step/v1_21/rt/CbRealms#superGetLiveStats"
+ },
+ "covers": [
+  "net/minecraft/class_4877.method_25059(Lnet/minecraft/class_4881;)V",
+  "net/minecraft/class_4388.method_21218(ZLnet/minecraft/class_437;)V",
+  "net/minecraft/class_4388.method_21217(Lnet/minecraft/class_437;)V"
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_21218(ZLnet/minecraft/class_437;)V",
+   "new": "method_21218(Z)V",
+   "onlyUnder": "net/minecraft/class_4388",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbRealms.openTheWorld(Ltop/dext/centurybridge/step/v1_21/rt/CbRealms$LegacyConfigure;Z)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbRealms$LegacyConfigure",
+   "basis": "1.21 calls openTheWorld(join) (the settings screen's open button, the world switch) where 1.20.6 called openTheWorld(join, lastScreen): a 1.20.6 override runs with the screen 1.21 returns to, a fresh configure screen of the server (getNewScreen()); its super call reaches 1.20.6's body, given back on the class (CbRealmsConfigureMixin)"
+  },
+  {
+   "old": "method_21217(Lnet/minecraft/class_437;)V",
+   "new": "method_21217()V",
+   "onlyUnder": "net/minecraft/class_4388",
+   "bridge": "top/dext/centurybridge/step/v1_21/rt/CbRealms.closeTheWorld(Ltop/dext/centurybridge/step/v1_21/rt/CbRealms$LegacyConfigure;)V",
+   "adapter": "top/dext/centurybridge/step/v1_21/rt/CbRealms$LegacyConfigure",
+   "basis": "1.21 calls closeTheWorld() (the settings screen's close confirmation) where 1.20.6 called closeTheWorld(lastScreen): a 1.20.6 override runs with getNewScreen(); its super call reaches 1.20.6's body (CbRealmsConfigureMixin)"
+  }
+ ],
+ "facadeGaps": {
+  "net/minecraft/class_4881.field_22629:Lcom/google/gson/JsonParser;": "1.20.1's private RealmsServerPlayerList.jsonParser, gone at 1.20.2 (the class parses with JsonParser.parseString since): private in the one release that had it and absent from every later one, so no jar climbing into 1.20.6 names it"
+ }
+}
