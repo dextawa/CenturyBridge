@@ -380,6 +380,13 @@
    "onlyUnder": "net/fabricmc/fabric/api/item/v1/FabricItem",
    "superCalls": "rename",
    "basis": "s4fapi: 1.20.5's FabricItem renamed allowNbtUpdateAnimation, same arguments and meaning (components are 1.20.5's NBT)"
+  },
+  {
+   "old": "method_10319(Lnet/minecraft/class_7403;)Ljava/util/concurrent/CompletableFuture;",
+   "new": "cb$recipeRun",
+   "onlyUnder": "net/minecraft/class_2446",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbRecipeRun$Legacy",
+   "basis": "s4fapi: 1.20.5's RecipeProvider.run(writer) is final (waits for the registries, then run(writer, registries)); a 1.20.4 subclass's override (vanilla's, FabricRecipeProvider's or its own) is renamed and CbRecipeRunMixin hands the final run to it; its super.run(writer) reaches the final body inside the guard"
   }
  ],
  "methodRenames": {

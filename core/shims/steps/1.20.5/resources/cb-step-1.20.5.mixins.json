@@ -288,6 +288,7 @@
     "CbParticleVibrationAccessor",
     "CbPayloadCodecMixin",
     "CbPotionNameMixin",
+    "CbRecipeRunMixin",
     "CbRegistriesServerMixin",
     "CbRestAbstractArrowMixin",
     "CbRestAbstractHorseMixin",
