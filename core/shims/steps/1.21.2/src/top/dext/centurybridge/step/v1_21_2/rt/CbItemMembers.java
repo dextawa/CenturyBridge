@@ -98,9 +98,18 @@ public final class CbItemMembers {
         return super_method_7837(item);
     }
 
+    /**
+     * the components the item was built with -- not the view a 1.21.1 class's overrides answer
+     * (CbItemMemberComponents), which a super call from such an override would otherwise come back through
+     */
+    static net.minecraft.class_9323 built(class_1792 item) {
+        net.minecraft.class_9323 c = item.method_57347();
+        return c instanceof CbItemMemberComponents v ? v.built() : c;
+    }
+
     /** 1.21.1's Item.getEnchantmentValue() on 1.21.2: what the item's components say */
     public static int super_method_7837(class_1792 item) {
-        net.minecraft.class_9889 e = item.method_57347().method_57829(class_9334.field_53695);
+        net.minecraft.class_9889 e = built(item).method_57829(class_9334.field_53695);
         return e == null ? 0 : e.comp_2938();
     }
 
@@ -133,7 +142,7 @@ public final class CbItemMembers {
      * material's ingredient -- on 1.21.2 that is the REPAIRABLE component the item was built with
      */
     public static boolean super_method_7878(class_1792 item, class_1799 stack, class_1799 ingredient) {
-        net.minecraft.class_9890 r = item.method_57347().method_57829(class_9334.field_53696);
+        net.minecraft.class_9890 r = built(item).method_57829(class_9334.field_53696);
         return r != null && r.method_61713(ingredient);
     }
 
@@ -147,7 +156,7 @@ public final class CbItemMembers {
 
     /** 1.21.1's Item.getDefaultAttributeModifiers(): the EMPTY modifiers; the item's built components on 1.21.2 */
     public static class_9285 super_method_7844(class_1792 item) {
-        class_9285 m = item.method_57347().method_57829(class_9334.field_49636);
+        class_9285 m = built(item).method_57829(class_9334.field_49636);
         return m == null ? class_9285.field_49326 : m;
     }
 
