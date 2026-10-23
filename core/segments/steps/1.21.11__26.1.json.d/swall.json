@@ -504,8 +504,6 @@
   "net/minecraft/class_4722.method_33082(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#getSignMaterial",
   "net/minecraft/class_4722.method_45781(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#getHangingSignMaterial",
   "net/minecraft/class_4722.method_24062(Lnet/minecraft/class_11959$class_11960;Lnet/minecraft/class_2745;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#chooseMaterial",
-  "net/minecraft/class_12249.method_75990(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#entityCutout",
-  "net/minecraft/class_12249.method_75994(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#entityCutoutNoCull",
   "net/minecraft/class_765.method_23687(II)I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#pack",
   "net/minecraft/class_765.method_24186(I)I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#block",
   "net/minecraft/class_765.method_24187(I)I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#sky",

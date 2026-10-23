@@ -14,15 +14,11 @@ import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 
 /**
- * 1.21.11's Sheets on 26.1, and the RenderTypes entity cutout pair 26.1 renamed.
+ * 1.21.11's Sheets on 26.1.
  * <ul>
  * <li>The sheet render types: 1.21.11 built them once from the sheet atlases (shulker boxes and signs
  *     entityCutoutNoCull, beds and the block atlas entitySolid, banners and shields bannerPattern, chests
  *     entityCutout); 26.1 keeps the atlases and the factories, which answer the same render type per atlas.</li>
- * <li>RenderTypes: 1.21.11's entityCutout(id) culled back faces and entityCutoutNoCull(id) did not; 26.1 calls
- *     the culling one entityCutoutCull and gave the name entityCutout(id) to the non-culling one. The wall
- *     table renames 1.21.11's entityCutout(id) to 26.1's entityCutout(id) -- same descriptor, the other
- *     render type -- so the call is answered here with the culling one.</li>
  * <li>Sign materials and chest locations: renamed (SIGN_MATERIALS is SIGN_SPRITES, getSignMaterial is
  *     getSignSprite) or folded (each chest's single / left / right location is a MultiblockChestResources).</li>
  * </ul>
@@ -31,18 +27,6 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 public final class CbWallSheets {
 
     private CbWallSheets() {
-    }
-
-    // ---- RenderTypes ----
-
-    /** 1.21.11 RenderTypes.entityCutout(Identifier): the back-face-culling cutout, 26.1's entityCutoutCull */
-    public static RenderType entityCutout(Identifier texture) {
-        return RenderTypes.entityCutoutCull(texture);
-    }
-
-    /** 1.21.11 RenderTypes.entityCutoutNoCull(Identifier): 26.1's entityCutout(Identifier) (outline on, as both had) */
-    public static RenderType entityCutoutNoCull(Identifier texture) {
-        return RenderTypes.entityCutout(texture);
     }
 
     // ---- sheet render types ----
