@@ -712,6 +712,35 @@ def block_entities(f):
     f.put("staticRedirects", MC + "class_3751$class_4991.method_26401(Ljava/lang/String;)" + OPT, LBE)
 
 
+# ------------------------------------------------------------------------------------------- state properties
+LSP = RT + "/CbLevelStateProps"
+
+
+def state_props(f):
+    PR, COL, LIS, STR = MC + "class_2769", "Ljava/util/Collection;", "Ljava/util/List;", "Ljava/lang/String;"
+    f.reshape(PR + ".method_11898()" + COL, "()" + LIS, [],
+              "Property.getPossibleValues answers a List since 1.21.2: 1.21.1's caller takes it as the Collection it is",
+              ret="keep")
+    f.hook(old="method_11898()" + COL, new="method_11898()" + LIS, onlyUnder=PR,
+           unwrap=LSP + ".possibleValues(" + COL + ")" + LIS,
+           basis="1.21.2 asks a property for a List of its values: a 1.21.1 subclass's collection in its order, each "
+                 "value once (CbLevelStateProps)")
+    f.w["abstractFills"].append({"under": PR, "method": "method_64218(Ljava/lang/Comparable;)I",
+                                 "call": LSP + ".internalIndex(L" + PR + ";Ljava/lang/Comparable;)I",
+                                 "basis": "getInternalIndex is new and abstract in 1.21.2: the value's position in "
+                                          "the property's values"})
+    DP, EP = MC + "class_2753", MC + "class_2754"
+    f.put("classRenames", DP, EP)
+    for m in ("method_35305(" + STR + ")", "method_11844(" + STR + "Ljava/util/function/Predicate;)",
+              "method_11845(" + STR + "[" + DIR + ")", "method_11843(" + STR + COL + ")"):
+        f.put("staticRedirects", DP + "." + m + L("class_2753"), LSP)
+    f.reshape(EP + ".method_11847(" + STR + "Ljava/lang/Class;" + COL + ")" + L("class_2754"),
+              "(" + STR + "Ljava/lang/Class;" + LIS + ")" + L("class_2754"),
+              ["keep:0", "keep:1", "conv:2 " + LSP + "#list(" + COL + ")" + LIS],
+              "EnumProperty.create takes a List since 1.21.2: the values in order, each once (1.21.1's ImmutableSet)")
+    f.put("staticRedirects", MC + "class_2688.method_28495(" + COL + "Ljava/lang/Object;)Ljava/lang/Object;", LSP)
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -731,6 +760,7 @@ def main():
     entity_getter(f)
     loot_params_moss(f)
     block_entities(f)
+    state_props(f)
     f.write()
 
 

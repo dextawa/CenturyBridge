@@ -2,7 +2,8 @@
  "classRenames": {
   "net/minecraft/class_2893$class_2894": "top/dext/centurybridge/step/v1_21_2/facade/GenerationStepCarving",
   "net/minecraft/class_5851": "top/dext/centurybridge/step/v1_21_2/facade/CarvingMaskPlacement",
-  "net/minecraft/class_5807": "top/dext/centurybridge/step/v1_21_2/facade/MossBlock"
+  "net/minecraft/class_5807": "top/dext/centurybridge/step/v1_21_2/facade/MossBlock",
+  "net/minecraft/class_2753": "net/minecraft/class_2754"
  },
  "facadeGaps": {
   "net/minecraft/class_5851.field_28934:Lcom/mojang/serialization/Codec;": "a Codec until 1.20.4; 1.20.5 made it the MapCodec the facade has, and the 1.20.4 -> 1.20.5 step moves a mod's read of the Codec (s4rest-gen.json fieldGetters), so no mod reaches this step reading it",
@@ -327,6 +328,21 @@
     "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;"
    ],
    "basis": "TrialSpawner.canSpawnInLevel takes the server level since 1.21.2"
+  },
+  "net/minecraft/class_2769.method_11898()Ljava/util/Collection;": {
+   "desc": "()Ljava/util/List;",
+   "ops": [],
+   "basis": "Property.getPossibleValues answers a List since 1.21.2: 1.21.1's caller takes it as the Collection it is",
+   "ret": "keep"
+  },
+  "net/minecraft/class_2754.method_11847(Ljava/lang/String;Ljava/lang/Class;Ljava/util/Collection;)Lnet/minecraft/class_2754;": {
+   "desc": "(Ljava/lang/String;Ljava/lang/Class;Ljava/util/List;)Lnet/minecraft/class_2754;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:2 top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps#list(Ljava/util/Collection;)Ljava/util/List;"
+   ],
+   "basis": "EnumProperty.create takes a List since 1.21.2: the values in order, each once (1.21.1's ImmutableSet)"
   }
  },
  "ctorRedirects": {
@@ -345,7 +361,12 @@
   "net/minecraft/class_2609.method_11196()Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
   "net/minecraft/class_2609.method_11195(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
   "net/minecraft/class_3924.method_31666(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3924;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
-  "net/minecraft/class_3751$class_4991.method_26401(Ljava/lang/String;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities"
+  "net/minecraft/class_3751$class_4991.method_26401(Ljava/lang/String;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_2753.method_35305(Ljava/lang/String;)Lnet/minecraft/class_2753;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps",
+  "net/minecraft/class_2753.method_11844(Ljava/lang/String;Ljava/util/function/Predicate;)Lnet/minecraft/class_2753;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps",
+  "net/minecraft/class_2753.method_11845(Ljava/lang/String;[Lnet/minecraft/class_2350;)Lnet/minecraft/class_2753;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps",
+  "net/minecraft/class_2753.method_11843(Ljava/lang/String;Ljava/util/Collection;)Lnet/minecraft/class_2753;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps",
+  "net/minecraft/class_2688.method_28495(Ljava/util/Collection;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps"
  },
  "instanceRedirects": {
   "net/minecraft/class_4970.method_9571(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
@@ -1010,6 +1031,13 @@
     "method_17503(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Z"
    ],
    "basis": "1.21.2's placeFood looks the cook time up itself: a 1.21.1 override is asked with the cook time of the recipe 1.21.2 finds (1.21.1's CampfireBlock passed it); its super call is 1.21.1's body (CbLevelBlockEntities)"
+  },
+  {
+   "old": "method_11898()Ljava/util/Collection;",
+   "new": "method_11898()Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_2769",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps.possibleValues(Ljava/util/Collection;)Ljava/util/List;",
+   "basis": "1.21.2 asks a property for a List of its values: a 1.21.1 subclass's collection in its order, each value once (CbLevelStateProps)"
   }
  ],
  "overrideRenames": [
@@ -1307,6 +1335,12 @@
    "method": "method_61269()Lnet/minecraft/class_9895;",
    "call": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels.fuelValues(Lnet/minecraft/class_1937;)Lnet/minecraft/class_9895;",
    "basis": "fuelValues is new and abstract in 1.21.2: the vanilla burn times for the level's registries and features"
+  },
+  {
+   "under": "net/minecraft/class_2769",
+   "method": "method_64218(Ljava/lang/Comparable;)I",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps.internalIndex(Lnet/minecraft/class_2769;Ljava/lang/Comparable;)I",
+   "basis": "getInternalIndex is new and abstract in 1.21.2: the value's position in the property's values"
   }
  ],
  "lambdaAdapters": {
