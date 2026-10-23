@@ -72,6 +72,11 @@ public final class CbLevelStateProps {
             + " cannot be cast to 1.21.1's DirectionProperty (an EnumProperty of Direction)");
     }
 
+    /** the value class 1.21.1's DirectionProperty constructor handed EnumProperty's (superCtorReshapes) */
+    public static Class<class_2350> directionClass() {
+        return class_2350.class;
+    }
+
     /** DirectionProperty.create(name): every direction */
     public static class_2754<class_2350> method_35305(String name) {
         return method_11844(name, d -> true);

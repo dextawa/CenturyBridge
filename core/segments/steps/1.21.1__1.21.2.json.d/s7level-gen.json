@@ -99,6 +99,24 @@
    ],
    "basis": "TrialSpawner takes its configs as holders since 1.21.2: 1.21.1's values as direct holders"
   },
+  "net/minecraft/class_2754.<init>(Ljava/lang/String;Ljava/lang/Class;Ljava/util/Collection;)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/Class;Ljava/util/List;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps#list(Ljava/util/Collection;)Ljava/util/List;"
+   ],
+   "basis": "EnumProperty's constructor takes a List since 1.21.2: the values in order, each once (1.21.1's ImmutableSet); the constructor is protected again by the layer's access widener"
+  },
+  "net/minecraft/class_2753.<init>(Ljava/lang/String;Ljava/util/Collection;)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/Class;Ljava/util/List;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps#directionClass()Ljava/lang/Class;",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps#list(Ljava/util/Collection;)Ljava/util/List;"
+   ],
+   "basis": "1.21.1's DirectionProperty(name, values) was EnumProperty(name, Direction.class, values); the class is EnumProperty<Direction> since 1.21.2 (classRenames)"
+  },
   "net/minecraft/class_2424.<init>(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350$class_2351;)V": {
    "desc": "(Lnet/minecraft/class_2350$class_2351;ILnet/minecraft/class_2350;Lnet/minecraft/class_2338;II)V",
    "ops": [
@@ -1573,14 +1591,6 @@
  },
  "ledger": {
   "net/minecraft/class_2852.<init>": "1.21.1's ChunkSerializer was a static utility (no state, no instance methods); 1.21.2 reuses its intermediary name class_2852 for the final record SerializableChunkData, so no object of that type can stand for a ChunkSerializer instance and no class can extend it; its static API is bridged",
-  "net/minecraft/class_2852": "1.21.1's ChunkSerializer was a static utility (no state, no instance methods); 1.21.2 reuses its intermediary name class_2852 for the final record SerializableChunkData, so no object of that type can stand for a ChunkSerializer instance and no class can extend it; its static API is bridged",
-  "net/minecraft/class_2746": "1.21.2 made BooleanProperty final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its place is refused by wiring-check (superRename onto a type that survives as final): the mod's BooleanProperty-typed fields, parameters and the vanilla APIs taking BooleanProperty would hold a non-BooleanProperty instance and fail verification. Calls, fields and factories of the class are bridged; only subclassing it is not",
-  "net/minecraft/class_2746.<init>": "1.21.2 made BooleanProperty final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its place is refused by wiring-check (superRename onto a type that survives as final): the mod's BooleanProperty-typed fields, parameters and the vanilla APIs taking BooleanProperty would hold a non-BooleanProperty instance and fail verification. Calls, fields and factories of the class are bridged; only subclassing it is not",
-  "net/minecraft/class_2758": "1.21.2 made IntegerProperty final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its place is refused by wiring-check (superRename onto a type that survives as final): the mod's IntegerProperty-typed fields, parameters and the vanilla APIs taking IntegerProperty would hold a non-IntegerProperty instance and fail verification. Calls, fields and factories of the class are bridged; only subclassing it is not",
-  "net/minecraft/class_2758.<init>": "1.21.2 made IntegerProperty final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its place is refused by wiring-check (superRename onto a type that survives as final): the mod's IntegerProperty-typed fields, parameters and the vanilla APIs taking IntegerProperty would hold a non-IntegerProperty instance and fail verification. Calls, fields and factories of the class are bridged; only subclassing it is not",
-  "net/minecraft/class_2754": "1.21.2 made EnumProperty final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its place is refused by wiring-check (superRename onto a type that survives as final): the mod's EnumProperty-typed fields, parameters and the vanilla APIs taking EnumProperty would hold a non-EnumProperty instance and fail verification. Calls, fields and factories of the class are bridged; only subclassing it is not",
-  "net/minecraft/class_2754.<init>": "1.21.2 made EnumProperty final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its place is refused by wiring-check (superRename onto a type that survives as final): the mod's EnumProperty-typed fields, parameters and the vanilla APIs taking EnumProperty would hold a non-EnumProperty instance and fail verification. Calls, fields and factories of the class are bridged; only subclassing it is not",
-  "net/minecraft/class_2753": "1.21.2 made EnumProperty (DirectionProperty is EnumProperty<Direction> there) final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its place is refused by wiring-check (superRename onto a type that survives as final): the mod's EnumProperty (DirectionProperty is EnumProperty<Direction> there)-typed fields, parameters and the vanilla APIs taking EnumProperty (DirectionProperty is EnumProperty<Direction> there) would hold a non-EnumProperty (DirectionProperty is EnumProperty<Direction> there) instance and fail verification. Calls, fields and factories of the class are bridged; only subclassing it is not",
-  "net/minecraft/class_2753.<init>": "1.21.2 made EnumProperty (DirectionProperty is EnumProperty<Direction> there) final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its place is refused by wiring-check (superRename onto a type that survives as final): the mod's EnumProperty (DirectionProperty is EnumProperty<Direction> there)-typed fields, parameters and the vanilla APIs taking EnumProperty (DirectionProperty is EnumProperty<Direction> there) would hold a non-EnumProperty (DirectionProperty is EnumProperty<Direction> there) instance and fail verification. Calls, fields and factories of the class are bridged; only subclassing it is not"
+  "net/minecraft/class_2852": "1.21.1's ChunkSerializer was a static utility (no state, no instance methods); 1.21.2 reuses its intermediary name class_2852 for the final record SerializableChunkData, so no object of that type can stand for a ChunkSerializer instance and no class can extend it; its static API is bridged"
  }
 }

@@ -735,15 +735,19 @@ def state_props(f):
               "(" + STR + "Ljava/lang/Class;" + LIS + ")" + L("class_2754"),
               ["keep:0", "keep:1", "conv:2 " + LSP + "#list(" + COL + ")" + LIS],
               "EnumProperty.create takes a List since 1.21.2: the values in order, each once (1.21.1's ImmutableSet)")
-    fin = ("1.21.2 made {0} final; a 1.21.1 subclass cannot load under it, and a facade subclass of Property in its "
-           "place is refused by wiring-check (superRename onto a type that survives as final): the mod's {0}-typed "
-           "fields, parameters and the vanilla APIs taking {0} would hold a non-{0} instance and fail verification. "
-           "Calls, fields and factories of the class are bridged; only subclassing it is not")
-    for c, n in (("class_2746", "BooleanProperty"), ("class_2758", "IntegerProperty"), ("class_2754", "EnumProperty")):
-        f.put("ledger", MC + c, fin.format(n))
-        f.put("ledger", MC + c + ".<init>", fin.format(n))
-    f.put("ledger", DP, fin.format("EnumProperty (DirectionProperty is EnumProperty<Direction> there)"))
-    f.put("ledger", DP + ".<init>", fin.format("EnumProperty (DirectionProperty is EnumProperty<Direction> there)"))
+    # 1.21.2 made BooleanProperty, IntegerProperty and EnumProperty final with private constructors; the layer's
+    # access widener makes them extendable again (classes non-final, constructors protected, as 1.21.1 had them),
+    # so a 1.21.1 subclass loads as a subclass of the real type. EnumProperty's constructor takes a List.
+    lst = "conv " + LSP + "#list(" + COL + ")" + LIS
+    f.put("superCtorReshapes", EP + ".<init>(" + STR + "Ljava/lang/Class;" + COL + ")V", {
+        "desc": "(" + STR + "Ljava/lang/Class;" + LIS + ")V", "ops": ["keep", "keep", lst],
+        "basis": "EnumProperty's constructor takes a List since 1.21.2: the values in order, each once (1.21.1's "
+                 "ImmutableSet); the constructor is protected again by the layer's access widener"})
+    f.put("superCtorReshapes", DP + ".<init>(" + STR + COL + ")V", {
+        "desc": "(" + STR + "Ljava/lang/Class;" + LIS + ")V",
+        "ops": ["keep", "push " + LSP + "#directionClass()Ljava/lang/Class;", lst],
+        "basis": "1.21.1's DirectionProperty(name, values) was EnumProperty(name, Direction.class, values); the class "
+                 "is EnumProperty<Direction> since 1.21.2 (classRenames)"})
     f.put("staticRedirects", MC + "class_2688.method_28495(" + COL + "Ljava/lang/Object;)Ljava/lang/Object;", LSP)
 
 
