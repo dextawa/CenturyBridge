@@ -82,11 +82,20 @@
   "net/minecraft/class_761.field_4095:[Lnet/minecraft/class_2350;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel",
   "net/minecraft/class_761.field_4108:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderLevel",
   "net/minecraft/class_918.field_40530:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItems",
-  "net/minecraft/class_918.field_40531:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItems"
+  "net/minecraft/class_918.field_40531:Lnet/minecraft/class_1091;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItems",
+  "net/minecraft/class_582.field_32520:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_5944.field_29482:Lnet/minecraft/class_284;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#field_29482",
-  "net/minecraft/class_763.field_4129:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItemModels#field_4129"
+  "net/minecraft/class_763.field_4129:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItemModels#field_4129",
+  "net/minecraft/class_5603.field_27702:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27702",
+  "net/minecraft/class_5603.field_27703:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27703",
+  "net/minecraft/class_5603.field_27704:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27704",
+  "net/minecraft/class_5603.field_27705:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27705",
+  "net/minecraft/class_5603.field_27706:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27706",
+  "net/minecraft/class_5603.field_27707:F": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27707",
+  "net/minecraft/class_620.field_27525:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27525",
+  "net/minecraft/class_4840.field_27464:Lnet/minecraft/class_630;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields#field_27464"
  },
  "superCtorReshapes": {
   "net/minecraft/class_583.<init>()V": {
@@ -165,6 +174,24 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake.resolveDependencies(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderBake$Legacy;Lnet/minecraft/class_1100$class_10103;)V",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 UnbakedModel.getDependencies + resolveParents(getter): 1.21.2 calls resolveDependencies(resolver) instead; the synthesized one resolves every dependency the model names and runs its resolveParents with the resolver as getter (CbRenderBake)"
+  },
+  {
+   "old": "method_29353(Lnet/minecraft/class_1309;F)V",
+   "new": "method_29353(Lnet/minecraft/class_10034;F)V",
+   "onlyUnder": "net/minecraft/class_572",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields$AttackLegacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields.attack(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields$AttackLegacy;Lnet/minecraft/class_10034;F)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 HumanoidModel.setupAttackAnimation(LivingEntity, ageInTicks), called by its setupAnim; 1.21.2's setupAnim(state) calls setupAttackAnimation(state, ageInTicks) at the same point: the synthesized one hands the mod's override the entity the state was extracted from (CbRenderModelFields.attack)"
+  },
+  {
+   "old": "method_29355(Lnet/minecraft/class_1308;F)V",
+   "new": "method_29355(Lnet/minecraft/class_10054;F)V",
+   "onlyUnder": "net/minecraft/class_4840",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields$PiglinAttackLegacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields.piglinAttack(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields$PiglinAttackLegacy;Lnet/minecraft/class_10054;F)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 PiglinModel.setupAttackAnimation(Mob, ageInTicks); 1.21.2 calls its (PiglinRenderState, ageInTicks) form at the same point: the mod's override gets the extracted entity (CbRenderModelFields.piglinAttack)"
   }
  ],
  "covers": [
@@ -203,7 +230,18 @@
   "net/minecraft/class_951.method_4045(Lnet/minecraft/class_1309;F)F",
   "net/minecraft/class_951.method_4125(Lnet/minecraft/class_1477;F)F",
   "net/minecraft/class_969.method_4045(Lnet/minecraft/class_1309;F)F",
-  "net/minecraft/class_969.method_4167(Lnet/minecraft/class_1493;F)F"
+  "net/minecraft/class_969.method_4167(Lnet/minecraft/class_1493;F)F",
+  "net/minecraft/class_572.field_3395:Lnet/minecraft/class_572$class_573;",
+  "net/minecraft/class_572.field_3399:Lnet/minecraft/class_572$class_573;",
+  "net/minecraft/class_572.field_3396:F",
+  "net/minecraft/class_572.field_3400:Z",
+  "net/minecraft/class_566.field_3370:Z",
+  "net/minecraft/class_566.field_3371:Z",
+  "net/minecraft/class_582.field_3434:I",
+  "net/minecraft/class_572.method_2818(Lnet/minecraft/class_572;)V",
+  "net/minecraft/class_572.method_2804(FFF)F",
+  "net/minecraft/class_572.method_29353(Lnet/minecraft/class_1309;F)V",
+  "net/minecraft/class_4840.method_29355(Lnet/minecraft/class_1308;F)V"
  ],
  "ledger": {
   "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",
