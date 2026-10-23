@@ -1,13 +1,5 @@
 {
  "callReshapes": {
-  "net/minecraft/class_7744.method_45656(Lnet/minecraft/class_332;Lnet/minecraft/class_2680;)V": {
-   "desc": "(Lnet/minecraft/class_332;)V",
-   "ops": [
-    "keep:0",
-    "drop:1"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_2680;: no body of V reads it, but net/minecraft/class_7743 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
   "net/minecraft/class_513.method_2633()Lnet/minecraft/class_3439;": {
    "desc": "()Lnet/minecraft/class_299;",
    "ops": [],
@@ -669,17 +661,6 @@
    "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; D x3 paired by use V#1->W#1, V#2->W#2, V#3->W#3; F x2 paired by use V#5->W#5, V#6->W#6; new Z not passed"
-  },
-  {
-   "old": "method_43948(Lnet/minecraft/class_2960;)Ljava/lang/Object;",
-   "new": "method_43948(Lnet/minecraft/class_2960;Z)Ljava/lang/Object;",
-   "args": [
-    0
-   ],
-   "onlyUnder": "net/minecraft/class_3497$class_7474",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
   },
   {
    "old": "method_5572(Lnet/minecraft/class_1309;I)Z",
