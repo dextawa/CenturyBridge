@@ -91,7 +91,7 @@
     1,
     2
    ],
-   "onlyUnder": "com/mojang/blaze3d/opengl/GlBackend",
+   "onlyUnder": "com/mojang/blaze3d/systems/GpuBackend",
    "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new Ljava/lang/Runnable; not passed"
@@ -193,16 +193,16 @@
    "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher; not passed"
   },
   {
-   "old": "submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V",
-   "new": "submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;I)V",
+   "old": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+   "new": "renderToTexture(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V",
    "args": [
     0,
     1
    ],
-   "onlyUnder": "net/minecraft/client/renderer/SubmitNodeCollection",
+   "onlyUnder": "net/minecraft/client/gui/render/pip/PictureInPictureRenderer",
    "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new I not passed"
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/client/renderer/SubmitNodeCollector; not passed"
   },
   {
    "old": "submitMovingBlock(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V",
@@ -211,7 +211,7 @@
     0,
     1
    ],
-   "onlyUnder": "net/minecraft/client/renderer/SubmitNodeStorage",
+   "onlyUnder": "net/minecraft/client/renderer/OrderedSubmitNodeCollector",
    "frames": "top/dext/centurybridge/step/v26_2/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new I not passed"

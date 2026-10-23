@@ -2577,6 +2577,30 @@
    "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_2359; not passed"
+  },
+  {
+   "old": "method_71153(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;)D",
+   "new": "method_71153(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11297;Lnet/minecraft/class_11728;)D",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_11200",
+   "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_11728; not passed"
+  },
+  {
+   "old": "method_71154(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;)Lnet/minecraft/class_11200$class_11379;",
+   "new": "method_71154(Lnet/minecraft/class_1937;Lnet/minecraft/class_11200$class_11204;Lnet/minecraft/class_11728;)Lnet/minecraft/class_11200$class_11379;",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_11200",
+   "frames": "top/dext/centurybridge/step/v1_21_9/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_11728; not passed"
   }
  ]
 }

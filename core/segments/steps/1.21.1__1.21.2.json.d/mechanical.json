@@ -506,6 +506,17 @@
    "basis": "mechanical: the old method gets every parameter it had; new D not passed"
   },
   {
+   "old": "getPartsToDraw(Lnet/minecraft/class_583;)Ljava/util/List;",
+   "new": "getPartsToDraw(Lnet/minecraft/class_583;Lnet/minecraft/class_10042;)Ljava/util/List;",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_7288$class_7311",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_10042; not passed"
+  },
+  {
    "old": "method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;Z)Lnet/minecraft/class_777;",
    "new": "method_3468(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lnet/minecraft/class_783;Lnet/minecraft/class_1058;Lnet/minecraft/class_2350;Lnet/minecraft/class_3665;Lnet/minecraft/class_789;ZI)Lnet/minecraft/class_777;",
    "args": [

@@ -580,6 +580,30 @@
    "basis": "mechanical: the old method gets every parameter it had"
   },
   {
+   "old": "read(Lnet/minecraft/class_2703$class_7831;Lnet/minecraft/class_2540;)V",
+   "new": "read(Lnet/minecraft/class_2703$class_7831;Lnet/minecraft/class_9129;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_2703$class_5893$class_7829",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had"
+  },
+  {
+   "old": "write(Lnet/minecraft/class_2540;Lnet/minecraft/class_2703$class_2705;)V",
+   "new": "write(Lnet/minecraft/class_9129;Lnet/minecraft/class_2703$class_2705;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_2703$class_5893$class_7830",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had"
+  },
+  {
    "old": "method_34182(Lnet/minecraft/class_2540;)V",
    "new": "method_34182(Lnet/minecraft/class_9129;)V",
    "args": [

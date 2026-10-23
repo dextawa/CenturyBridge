@@ -21,6 +21,10 @@ invented:
       hook carries its arguments ("frames": the layer's Guard) and rewrites the old method's own
       super call to the new shape ("superCalls"), so vanilla's implementation still gets every
       argument vanilla passed -- the ones the old method never saw included.
+      A hook goes on the topmost class V declares the member in (onlyUnder), not on the vanilla subclass
+      the damage row names: a mod class extending an abstract base directly (FoliagePlacer, TrunkPlacer,
+      RootPlacer) is reached too. A member V declares abstract gets its hook on that declaration from any
+      row naming it (a call, or overrides seen only in vanilla subclasses; report rows "abstract-base").
 
 Arguments of distinct types may change places (1.20.3 moved a block's Settings to the end of its
 constructor). Arguments of one type are never paired by their order: types alone cannot tell them
@@ -56,7 +60,7 @@ import zipfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import classfile  # noqa: E402
 import bytecode_uses  # noqa: E402
-from classfile import ACC_BRIDGE, ACC_FINAL, ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC, split_args  # noqa: E402
+from classfile import ACC_ABSTRACT, ACC_BRIDGE, ACC_FINAL, ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC, split_args  # noqa: E402
 
 PRIM = set("ZBCSIJFD")
 OVERRIDES = ("override+super", "implement", "implement-inherited")
@@ -574,11 +578,97 @@ def main():
             if len(f) >= 3 and not line.startswith("#"):
                 excluded[(f[0], f[1])] = f[2]
     calls, ctors, hooks, report = {}, {}, [], []
+    abstract_tried = set()
     fit_notes = {}
     hook_seen = set()
 
     def note(r, fate, detail):
         report.append((r[0], r[1], r[2], r[3], fate, detail))
+
+    def top_declaration(owner, name, desc):
+        """the topmost class among the owner and its V supertypes declaring name+desc so that a mod may
+        override it (not static, private or final there; a final one above ends the search)"""
+        top = None
+        for c in hv.supers(owner):
+            k = V.get(c)
+            m = next((m for m in (k.methods if k else []) if m.name == name and m.desc == desc), None)
+            if m is None:
+                continue
+            if m.access & (ACC_STATIC | ACC_PRIVATE):
+                break
+            top = None if m.access & ACC_FINAL else c
+            if m.access & ACC_FINAL:
+                break
+        return top
+
+    def w_shapes(owner, name):
+        wowner, wname = wall.cls(owner), wall.member(owner, name, hv)
+        out = []
+        for c in hw.supers(wowner):
+            k = W.get(c)
+            for m in (k.methods if k else []):
+                if m.name == wname and not m.access & (ACC_BRIDGE | ACC_SYNTHETIC | ACC_PRIVATE) \
+                        and all(m.desc != y.desc for _, y in out):
+                    out.append((c, m))
+        return out
+
+    def keeps(owner, name, desc):
+        """W still has V's shape of the member there (only a subclass changed it)"""
+        d = wall.desc(desc)
+        return any(m.desc == d for _, m in w_shapes(owner, name))
+
+    def try_hook(owner, name, desc):
+        """(fate, detail) for reconnecting an override of V's name+desc under owner; a hook it emits is
+        appended to hooks"""
+        oa, orr = split_args(wall.desc(desc))
+        shapes = w_shapes(owner, name)
+        if not shapes:
+            return "design", "W has no member of this name on the owner or its supertypes"
+        tdesc = "(" + "".join(oa) + ")" + orr
+        if wall.cmap and any(m.desc == tdesc for _, m in shapes):
+            return "renamed", f"the wall table's rename links it as {wall.cls(owner)}.{wall.member(owner, name, hv)}{tdesc}"
+        fits = []
+        for c, m in shapes:
+            if m.access & (ACC_FINAL | ACC_STATIC):
+                continue
+            na, nr = split_args(m.desc)
+            notes = []
+            amap, problem = match(na, oa, hw, resolver(ev, owner, name, desc, c, m, False, notes))  # each OLD parameter from a NEW argument
+            if problem:
+                fits.append((c, m, None, f"old method needs: {problem}"))
+                continue
+            # vanilla used what the old method returned; a new shape that returns nothing gets its
+            # result some other way, so the old method's answer would be lost
+            if not (nr == orr or hw.assignable(orr, nr)):
+                fits.append((c, m, None, f"returns {orr}, the new shape {nr}"))
+                continue
+            gen = generic_change(v_signature(V, hv, owner, name, desc), m.signature,
+                                 [(i, amap[i]) for i in range(len(oa))], True, wall)
+            if gen:
+                fits.append((c, m, None, gen))
+                continue
+            fits.append((c, m, amap, None))
+            fit_notes[id(m)] = notes
+        good = [f for f in fits if f[2] is not None]
+        typed = typed_fits(fits)
+        if len(good) != 1 or len(typed) != 1:
+            return "design", ("; ".join(f"{m.desc}: {p}" for _, m, _, p in fits) if not typed
+                              else f"{len(typed)} new shapes fit" if len(typed) > 1
+                              else f"{typed[0][1].desc}: {typed[0][3]}")
+        c, m, amap, _ = good[0]
+        nd = wall.back_desc(m.desc)
+        hk = (name, desc, nd, owner)
+        if hk in hook_seen:
+            return "hook", f"-> {nd} under {owner} (same hook)"
+        hook_seen.add(hk)
+        na, _ = split_args(m.desc)
+        unpassed = [na[j] for j in range(len(na)) if j not in amap]
+        hooks.append({"old": name + desc, "new": name + nd, "args": amap, "onlyUnder": owner, "frames": guard, "superCalls": "rewrite",
+                      "basis": "mechanical: the old method gets every parameter it had"
+                               + "".join(f"; {x}" for x in fit_notes.get(id(m), []))
+                               + ("" if amap == sorted(amap) else ", reordered")
+                               + (f"; new {','.join(unpassed)} not passed" if unpassed else "")})
+        return "hook", f"-> {nd} under {owner} args {amap}"
 
     rows = [l.rstrip("\n").split("\t") for l in open(damage, encoding="utf-8")][1:]
     for r in rows:
@@ -601,6 +691,16 @@ def main():
         if owner in renamed or (owner, name + desc) in excluded:
             note(r, "excluded", excluded.get((owner, name + desc), "the owner class is renamed by the step's wiring"))
             continue
+        # a member V declares abstract is implemented by mod classes under that declaration, whatever rows
+        # the table has for it (a call, or overrides only in vanilla subclasses): its hook goes there too
+        if not override and name != "<init>" and name + desc not in wired_shapes:
+            top = top_declaration(owner, name, desc)
+            tk = V.get(top) if top else None
+            tm = next((m for m in (tk.methods if tk else []) if m.name == name and m.desc == desc), None)
+            if tm is not None and tm.access & ACC_ABSTRACT and (top, name, desc) not in abstract_tried and top not in renamed                     and not keeps(top, name, desc):
+                abstract_tried.add((top, name, desc))
+                fate, detail = try_hook(top, name, desc)
+                report.append(("abstract-base", top, name, desc, fate, detail))
         # W is looked at in its own names (across the wall: V's intermediary names translated)
         wowner, wname = wall.cls(owner), wall.member(owner, name, hv)
         oa, orr = split_args(wall.desc(desc))
@@ -629,50 +729,16 @@ def main():
         if override:
             if name == "<init>":
                 continue
-            fits = []
-            for c, m in shapes_w:
-                if m.access & (ACC_FINAL | ACC_STATIC):
-                    continue
-                na, nr = split_args(m.desc)
-                notes = []
-                amap, problem = match(na, oa, hw, resolver(ev, owner, name, desc, c, m, False, notes))  # each OLD parameter from a NEW argument
-                if problem:
-                    fits.append((c, m, None, f"old method needs: {problem}"))
-                    continue
-                # vanilla used what the old method returned; a new shape that returns nothing gets its
-                # result some other way, so the old method's answer would be lost
-                if not (nr == orr or hw.assignable(orr, nr)):
-                    fits.append((c, m, None, f"returns {orr}, the new shape {nr}"))
-                    continue
-                gen = generic_change(v_signature(V, hv, owner, name, desc), m.signature,
-                                     [(i, amap[i]) for i in range(len(oa))], True, wall)
-                if gen:
-                    fits.append((c, m, None, gen))
-                    continue
-                fits.append((c, m, amap, None))
-                fit_notes[id(m)] = notes
-            good = [f for f in fits if f[2] is not None]
-            typed = typed_fits(fits)
-            if len(good) != 1 or len(typed) != 1:
-                note(r, "design", "; ".join(f"{m.desc}: {p}" for _, m, _, p in fits) if not typed
-                     else f"{len(typed)} new shapes fit" if len(typed) > 1
-                     else f"{typed[0][1].desc}: {typed[0][3]}")
-                continue
-            c, m, amap, _ = good[0]
-            nd = wall.back_desc(m.desc)
-            hk = (name, desc, nd, owner)
-            if hk in hook_seen:
-                note(r, "hook", f"-> {nd} (same hook)")
-                continue
-            hook_seen.add(hk)
-            na, _ = split_args(m.desc)
-            unpassed = [na[j] for j in range(len(na)) if j not in amap]
-            hooks.append({"old": name + desc, "new": name + nd, "args": amap, "onlyUnder": owner, "frames": guard, "superCalls": "rewrite",
-                          "basis": "mechanical: the old method gets every parameter it had"
-                                   + "".join(f"; {x}" for x in fit_notes.get(id(m), []))
-                                   + ("" if amap == sorted(amap) else ", reordered")
-                                   + (f"; new {','.join(unpassed)} not passed" if unpassed else "")})
-            note(r, "hook", f"-> {nd} args {amap}")
+            # the hook goes on the topmost class V declares the member in (an abstract base a mod extends
+            # directly -- FoliagePlacer.createFoliage, only ever overridden by vanilla subclasses -- is reached
+            # too); on the row's own owner when the topmost one does not take the hook
+            top = top_declaration(owner, name, desc)
+            res = None
+            for hown in ([top] if top and top != owner and not keeps(top, name, desc) else []) + [owner]:
+                res = try_hook(hown, name, desc)
+                if res[0] == "hook":
+                    break
+            note(r, res[0], res[1])
             continue
         # a call: the new shape's arguments from the old call's
         fits = []

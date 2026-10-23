@@ -152,6 +152,15 @@
    "basis": "mechanical: the old method gets every parameter it had; D x7 paired by use V#1->W#3, V#2->W#4, V#3->W#5, V#5->W#7, V#6->W#8, V#7->W#9, V#8->W#10; new Z,Z not passed"
   },
   {
+   "old": "finish()V",
+   "new": "finish(Z)V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_6613",
+   "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
+  },
+  {
    "old": "method_61494(Lnet/minecraft/class_6880;)I",
    "new": "method_61494(Lnet/minecraft/class_6880;Lnet/minecraft/class_1799;)I",
    "args": [
