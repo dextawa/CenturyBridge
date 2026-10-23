@@ -7,7 +7,9 @@
     "CbEntityAnimationStateMixin",
     "CbEntityArmorStandInvoker",
     "CbEntityBoatMixin",
+    "CbEntityCommandSourceMixin",
     "CbEntityDragonPhaseAccess",
+    "CbEntityFieldAccess",
     "CbEntityHurtFinalMixin",
     "CbEntityHurtInvoker",
     "CbEntityHurtMixin",
@@ -21,6 +23,7 @@
     "CbEntityLevelsInvoker6045",
     "CbEntityLevelsInvoker8836",
     "CbEntityLootMobMixin",
+    "CbEntityMiscMixin",
     "CbEntityMobInvoker",
     "CbEntityPiglinAiInvoker",
     "CbEntityPiglinInvoker",
@@ -77,6 +80,8 @@
     "CbRestServerPropertiesMixin"
   ],
   "client": [
+    "CbEntityCullingInvoker",
+    "CbEntityCullingMixin",
     "CbRenderLivingBob882Mixin",
     "CbRenderLivingBob930Mixin",
     "CbRenderLivingBob951Mixin",

@@ -43,7 +43,9 @@
   "net/minecraft/class_7094.method_43687()J": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityAnimation#getAccumulatedTime",
   "net/minecraft/class_1688.method_7518()Lnet/minecraft/class_1688$class_1689;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMinecarts#getMinecartType",
   "net/minecraft/class_1661.method_7387(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked#fillStackedContents",
-  "net/minecraft/class_1309.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#canTakeItem"
+  "net/minecraft/class_1309.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#canTakeItem",
+  "net/minecraft/class_1297.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#getBoundingBoxForCulling",
+  "net/minecraft/class_1297.method_60607(ZLnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setOnGroundWithMovement"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -76,6 +78,9 @@
   },
   "method_7284()V": {
    "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#shield()Lnet/minecraft/class_1799;"
+  },
+  "method_60607(ZLnet/minecraft/class_243;)V": {
+   "1": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#horizontalCollision(Lnet/minecraft/class_1297;ZLnet/minecraft/class_243;)Z"
   }
  },
  "staticRedirects": {
@@ -461,7 +466,16 @@
   "net/minecraft/class_4019.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
   "net/minecraft/class_1440.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
   "net/minecraft/class_7298.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
-  "net/minecraft/class_1531.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem"
+  "net/minecraft/class_1531.method_18397(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTake#superCanTakeItem",
+  "net/minecraft/class_1297.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_1309.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_1688.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_8153.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_1581.method_5830()Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superGetBoundingBoxForCulling",
+  "net/minecraft/class_1297.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
+  "net/minecraft/class_1321.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
+  "net/minecraft/class_1543.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo",
+  "net/minecraft/class_1564.method_5722(Lnet/minecraft/class_1297;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#superIsAlliedTo"
  },
  "overrideHooks": [
   {
@@ -486,6 +500,18 @@
    "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked$LegacyFill",
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked.fillBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityStacked$LegacyFill;Lnet/minecraft/class_9875;)V",
    "basis": "1.21.2's Inventory.fillStackedContents takes StackedItemContents: the mod's 1.21.1 override fills a 1.21.1 StackedContents, poured into it (CbEntityStacked)"
+  },
+  {
+   "old": "method_60607(ZLnet/minecraft/class_243;)V",
+   "new": "method_60607(ZZLnet/minecraft/class_243;)V",
+   "args": [
+    0,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_1297",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.2's setOnGroundWithMovement also takes horizontalCollision (which it sets); the old override gets onGround and the movement, its super call what vanilla passed"
   }
  ],
  "adapterHooks": [
@@ -533,11 +559,35 @@
    ],
    "synth": [],
    "basis": "a mod class's own 1.21.1 canTakeItem answers where 1.21.1's dispenser asked it (CbEntityTakeMixin on canEquipWithDispenser) and the calls CbEntityTake serves"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc$LegacyCulling",
+   "requires": [
+    "method_5830()Lnet/minecraft/class_238;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 asks the renderer for the culling box: a mod class's own 1.21.1 getBoundingBoxForCulling answers there (CbEntityCullingMixin) and the calls CbEntityMisc serves"
   }
  ],
  "classRenames": {
   "net/minecraft/class_1688$class_1689": "top/dext/centurybridge/step/v1_21_2/facade/MinecartType",
   "net/minecraft/class_1662": "top/dext/centurybridge/step/v1_21_2/facade/StackedContents",
   "net/minecraft/class_1301$class_1302": "top/dext/centurybridge/step/v1_21_2/facade/MobCanWearArmorEntitySelector"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_5722(Lnet/minecraft/class_1297;)Z",
+   "new": "cb$method_5722",
+   "onlyUnder": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc$LegacyAllied",
+   "basis": "1.21.2's Entity.isAlliedTo is final: a mod's 1.21.1 override is renamed and answers it (CbEntityMiscMixin); its super call is 1.21.2's isAlliedTo of the vanilla classes"
+  }
+ ],
+ "instanceFieldGetters": {
+  "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#getWasOnFire"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setWasOnFire"
  }
 }
