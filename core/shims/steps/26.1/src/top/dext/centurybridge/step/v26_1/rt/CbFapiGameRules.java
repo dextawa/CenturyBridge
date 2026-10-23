@@ -24,12 +24,13 @@ import top.dext.centurybridge.step.v26_1.mixin.CbFapiGameRuleCategoryAccess;
  *
  * 1.21.11: category(custom) set the vanilla category to MISC and remembered the custom one; build() tied it
  * to the rule; the edit-rules screen listed such rules under the custom name, after the vanilla
- * categories. Here the custom category is a vanilla category of the same id (registered once, or the one
- * already registered under that id), so 26.1's screen lists the rule under it in the same place, and its
- * label() is the custom name (CbFapiGameRuleCategoryMixin). The one visible difference: the rule's
- * GameRule.category() is that category rather than MISC -- 26.1 groups the screen by category() and keeps
- * no other place a rule could carry a second one. 26.1 styles every category header bold yellow, the
- * custom one included (1.21.11 drew the custom name as given).
+ * categories. Here the builder carries a vanilla category of the custom id (registered once) into build();
+ * the rule 26.1 constructs from it is tied to that stand-in and its own category() is MISC again
+ * (CbFapiGameRuleMixin), as in 1.21.11; 26.1's screen, which groups by category(), groups such a rule under
+ * its stand-in (CbFapiGameRulesScreenMixin), listed after the vanilla categories and headed by the custom
+ * name (CbFapiGameRuleCategoryMixin). Where another mod already registered a category of that id, the
+ * stand-in is that category and the rule keeps it as category() (it cannot be told apart from that mod's).
+ * 26.1 styles every category header bold yellow, the custom one included (1.21.11 drew the custom name as given).
  */
 public final class CbFapiGameRules {
     private CbFapiGameRules() {
@@ -40,6 +41,10 @@ public final class CbFapiGameRules {
     /** the vanilla category standing for a custom one, and back (first custom category of the id) */
     private static final Map<Identifier, GameRuleCategory> DISPLAY = new HashMap<>();
     private static final Map<GameRuleCategory, CustomGameRuleCategory> CUSTOM = new HashMap<>();
+    /** stand-ins this bridge registered (not another mod's category of the same id) */
+    private static final java.util.Set<GameRuleCategory> CREATED = new java.util.HashSet<>();
+    /** rule -> the stand-in its builder carried (1.21.11 tied the custom category to the rule) */
+    private static final Map<GameRule<?>, GameRuleCategory> RULE_STAND_IN = new WeakHashMap<>();
 
     /** GameRuleBuilder.category(CustomGameRuleCategory), called on any builder: a mod subclass's override runs */
     @SuppressWarnings({"rawtypes"})
@@ -129,7 +134,29 @@ public final class CbFapiGameRules {
     /** CustomGameRuleCategory.getCategory(rule) */
     public static CustomGameRuleCategory customCategoryOf(GameRule<?> rule) {
         synchronized (DISPLAY) {
-            return CUSTOM.get(rule.category());
+            return CUSTOM.get(screenCategory(rule));
+        }
+    }
+
+    /**
+     * a rule 26.1 constructs with a stand-in this bridge registered: tied to it, and its own category is MISC,
+     * what 1.21.11's category(custom) left it (CbFapiGameRuleMixin); any other category stays
+     */
+    public static GameRuleCategory constructed(GameRule<?> rule, GameRuleCategory category) {
+        synchronized (DISPLAY) {
+            if (!CREATED.contains(category)) {
+                return category;
+            }
+            RULE_STAND_IN.put(rule, category);
+            return GameRuleCategory.MISC;
+        }
+    }
+
+    /** the category 26.1's edit-rules screen groups a rule under: its stand-in, else its own category */
+    public static GameRuleCategory screenCategory(GameRule<?> rule) {
+        synchronized (DISPLAY) {
+            GameRuleCategory standIn = RULE_STAND_IN.get(rule);
+            return standIn != null ? standIn : rule.category();
         }
     }
 
@@ -148,7 +175,12 @@ public final class CbFapiGameRules {
             if (vanilla == null) {
                 GameRuleCategory same = new GameRuleCategory(custom.getId());
                 // a category of that id another mod already registered is the same category (a record of its id)
-                vanilla = CbFapiGameRuleCategoryAccess.cb$sortOrder().contains(same) ? same : GameRuleCategory.register(custom.getId());
+                if (CbFapiGameRuleCategoryAccess.cb$sortOrder().contains(same)) {
+                    vanilla = same;
+                } else {
+                    vanilla = GameRuleCategory.register(custom.getId());
+                    CREATED.add(vanilla);
+                }
                 DISPLAY.put(custom.getId(), vanilla);
                 CUSTOM.putIfAbsent(vanilla, custom);
             }

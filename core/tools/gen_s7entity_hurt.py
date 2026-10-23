@@ -122,6 +122,14 @@ def main():
                  "server; a super call on a client level answers 1.21.1's client answer of the vanilla class "
                  "above (CbEntityHurt.superIsInvulnerableTo), where 1.21.2's needs a ServerLevel",
     })
+    # Fabric API's FakePlayer (a ServerPlayer): calls name it, and the stubs do not see its hierarchy -- the same
+    # redirect and hook keyed on it (the static takes the receiver as a FakePlayer)
+    fake = "net/fabricmc/fabric/api/entity/FakePlayer"
+    frag["instanceRedirects"][f"{fake}.{OLD_INV[0]}{OLD_INV[1]}"] = HURT + "#isInvulnerableTo"
+    inv_hook = dict(frag["overrideHooks"][-1])
+    inv_hook["onlyUnder"] = fake
+    inv_hook["basis"] = "as the LivingEntity hook, for a subclass of Fabric API's FakePlayer (outside the stubs' hierarchy)"
+    frag["overrideHooks"].append(inv_hook)
     frag["adapterHooks"].append({
         "under": ENTITY, "adapter": HURT + "$Legacy", "requires": [OLD_HURT[0] + OLD_HURT[1]], "synth": [],
         "basis": "the mod class's own 1.21.1 hurt answers hurtOrSimulate on a client level (CbEntityHurtMixin) and "

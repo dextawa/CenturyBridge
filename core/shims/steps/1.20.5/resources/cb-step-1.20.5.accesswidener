@@ -1433,3 +1433,12 @@ accessible method net/minecraft/class_1845 <init> (Ljava/util/List;Ljava/util/Li
 # s4fin: MerchantOffer(MerchantOffer) is private in 1.20.5; a 1.20.4 subclass's super(tag) is reshaped onto it with the offer the
 # tag decodes to (rt/CbFinItemTrading.fromTag: 1.20.5's offer codec reads 1.20.4's keys)
 accessible method net/minecraft/class_1914 <init> (Lnet/minecraft/class_1914;)V
+
+
+# s4fin: UUIDUtil.CODEC / STRING_CODEC were writable in 1.20.4 (a mod's put-static); final in 1.20.5
+mutable field net/minecraft/class_4844 field_40825 Lcom/mojang/serialization/Codec;
+mutable field net/minecraft/class_4844 field_46588 Lcom/mojang/serialization/Codec;
+# s4fin: StoringChunkProgressListener's constructor is private in 1.20.5; a 1.20.4 subclass's super(radius) is reshaped onto it
+accessible method net/minecraft/class_3953 <init> (Lnet/minecraft/class_3951;III)V
+# s4fin: BundleTooltip, a class 1.20.4 mods could extend, is a (final) record in 1.20.5; reopened for the 1.20.4 subclass (CbFinBundleTooltipMixin)
+extendable class net/minecraft/class_5631

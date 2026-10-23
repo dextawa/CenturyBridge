@@ -53,7 +53,7 @@ public final class JarProcessor {
      * parameter type lands on the facade.
      */
     /** verifier frame type for one parameter (locals are never widened here) */
-    private static Object frameType(org.objectweb.asm.Type t) {
+    static Object frameType(org.objectweb.asm.Type t) {
         switch (t.getSort()) {
             case org.objectweb.asm.Type.BOOLEAN, org.objectweb.asm.Type.CHAR, org.objectweb.asm.Type.BYTE,
                  org.objectweb.asm.Type.SHORT, org.objectweb.asm.Type.INT -> {
@@ -1050,8 +1050,7 @@ public final class JarProcessor {
                 }
                 String key = home + "." + nameDesc;
                 Chain.CallReshape r = chain.callReshapes.get(key);
-                reshapeArgs(m, mi, r.args);
-                mi.desc = r.newDesc;
+                reshapeCall(m, mi, r);
                 if (inherited && mi.getOpcode() == Opcodes.INVOKESTATIC) {
                     // a static call through a class of the jar resolved, in the source, to the class
                     // declaring it -- the home. Named through the mod class it no longer resolves when
@@ -1065,13 +1064,6 @@ public final class JarProcessor {
                         mi.itf = itf;
                     }
                 }
-                if (r.retKind != null) {
-                    org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
-                    org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
-                        ? new org.objectweb.asm.tree.InsnNode(newRet.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP)
-                        : new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, r.retOwner, r.retName, r.retDesc, false);
-                    m.instructions.insert(mi, after);
-                }
                 rewrites++;
                 top.dext.centurybridge.data.FullAudit.record(key, "call-reshape");
             }
@@ -1083,6 +1075,25 @@ public final class JarProcessor {
         org.objectweb.asm.ClassWriter cw = new org.objectweb.asm.ClassWriter(org.objectweb.asm.ClassWriter.COMPUTE_MAXS);
         cn.accept(cw);
         return cw.toByteArray();
+    }
+
+    /**
+     * One call site through a {@link Chain.CallReshape}: the arguments on the stack are re-pushed per
+     * the ops, the call takes the new descriptor, and the return value is dropped, converted or
+     * supplied right after it. Straight-line code at the call, so existing frames stay exact. Shared
+     * by {@link #rewriteCalls} and {@link MixinBridge} (a mixin's call through a renamed invoker).
+     */
+    static void reshapeCall(org.objectweb.asm.tree.MethodNode m, org.objectweb.asm.tree.MethodInsnNode mi,
+                            Chain.CallReshape r) {
+        reshapeArgs(m, mi, r.args);
+        mi.desc = r.newDesc;
+        if (r.retKind != null) {
+            org.objectweb.asm.Type newRet = org.objectweb.asm.Type.getReturnType(r.newDesc);
+            org.objectweb.asm.tree.AbstractInsnNode after = r.retKind.equals("pop")
+                ? new org.objectweb.asm.tree.InsnNode(newRet.getSize() == 2 ? Opcodes.POP2 : Opcodes.POP)
+                : new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, r.retOwner, r.retName, r.retDesc, false);
+            m.instructions.insert(mi, after);
+        }
     }
 
     /**
@@ -1531,9 +1542,9 @@ public final class JarProcessor {
      * sits below the arguments (uninitializedThis, or NEW DUP's two refs) is
      * untouched, so existing frames stay exact.
      */
-    private static int[] reshapeArgs(org.objectweb.asm.tree.MethodNode m,
-                                     org.objectweb.asm.tree.MethodInsnNode mi,
-                                     Chain.CtorReshape r) {
+    static int[] reshapeArgs(org.objectweb.asm.tree.MethodNode m,
+                             org.objectweb.asm.tree.MethodInsnNode mi,
+                             Chain.CtorReshape r) {
         org.objectweb.asm.Type[] old = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
         int[] slots = spillArgs(m, mi, old);
         org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
@@ -1580,12 +1591,12 @@ public final class JarProcessor {
 
     /** Redirect values are a class name, optionally "class#member" past the
      *  namespace wall where call-site names are no longer globally unique. */
-    private static String redirCls(String v) {
+    static String redirCls(String v) {
         int i = v.indexOf('#');
         return i < 0 ? v : v.substring(0, i);
     }
 
-    private static String redirName(String v, String callSiteName) {
+    static String redirName(String v, String callSiteName) {
         int i = v.indexOf('#');
         return i < 0 ? callSiteName : v.substring(i + 1);
     }
@@ -1670,6 +1681,33 @@ public final class JarProcessor {
         final Map<String, String> superOf = new HashMap<>();
         final Map<String, List<String>> interfacesOf = new HashMap<>();
         final Map<String, Set<String>> decls = new HashMap<>();
+    }
+
+    /**
+     * The new name an override rename ({@link Chain#overrideRenames}) gives the declaration a call naming a jar
+     * class reaches: the first class of the jar up from {@code owner} declaring name+desc, when a rename's
+     * hierarchy filter takes it. Null when no jar class on the way declares the shape (the call reaches vanilla's)
+     * or no rename applies to the declaring class.
+     */
+    private static String jarOverrideRename(String owner, String name, String desc, LayerIndex layer, Chain chain) {
+        if (chain.overrideRenames.isEmpty()) {
+            return null;
+        }
+        for (String cur = owner; cur != null && !Chain.minecraftOwned(cur) && layer.superOf.containsKey(cur);
+                cur = layer.superOf.get(cur)) {
+            if (!layer.decls.getOrDefault(cur, Set.of()).contains(name + desc)) {
+                continue;
+            }
+            List<String> ifs = layer.interfacesOf.getOrDefault(cur, List.of());
+            for (Chain.OverrideRename r : chain.overrideRenames) {
+                if (r.oldName.equals(name) && r.oldDesc.equals(desc)
+                        && isUnder(layer.superOf.get(cur), ifs.toArray(new String[0]), r.onlyUnder, layer, chain)) {
+                    return r.newName;
+                }
+            }
+            return null;
+        }
+        return null;
     }
 
     /** the vanilla types first reached from a mod class through the jar's own hierarchy */
@@ -2156,6 +2194,16 @@ public final class JarProcessor {
         LayerIndex layer = indexLayer(entries);
         Map<String, String> jarSuper = layer.superOf;
         stripSignatures(entries, rpt, tag);
+        // the step's wiring knows what became of most members a mixin names: carry the mixins'
+        // invokers, accessors, shadows, injector selectors and @At targets across it first, so
+        // repair and triage judge the retargeted mixin (MixinBridge; every step but the wall --
+        // across it the refmaps take their names later, see repairPastWall)
+        MixinBridge.Result bridged = null;
+        if (MixinBridge.applies(chain)) {
+            bridged = MixinBridge.run(entries, chain,
+                "centurybridge/gen/MixinBridges_" + jarTag + "_" + chain.to.replace('.', '_')
+                    + (tag.isEmpty() ? "" : "$" + tag.chars().filter(c -> c == '(').count()));
+        }
         // anchors are checked against real target bodies BEFORE triage: a repair
         // (desc-drop / descend) rewrites the selector triage then reads
         MixinRepair.Outcome repaired = chain.mixinRepair != null ? chain.mixinRepair.repair(entries) : null;
@@ -2202,6 +2250,12 @@ public final class JarProcessor {
         }
         stripConfigs(entries, triage, deadMixins);
         markConfigsOptional(entries, triage);
+        if (bridged != null) {
+            // a member MixinBridge carried counts once its mixin survived triage and repair kept its injector
+            for (String l : bridged.report(deadMixins, repaired != null ? repaired.disabled() : List.of())) {
+                rpt.notes.add(tag + l);
+            }
+        }
 
         // tombstone stub class must be unique per jar layer (all layers share the runtime classpath)
         // and per climb step: each step converts the jar again, and a later step's Tombstones class
@@ -2284,6 +2338,14 @@ public final class JarProcessor {
                 // the faithful equivalent of "this lang file adds nothing".
                 e.setValue("{}".getBytes(java.nio.charset.StandardCharsets.UTF_8));
                 rpt.notes.add(tag + "empty lang json " + name + " -> {} (26.2 parser rejects empty)");
+            } else if (name.endsWith(".json") && name.contains("refmap") && !chain.classRenames.isEmpty()) {
+                // the mixins' refmap names classes in strings the class rewrite never reads: the
+                // step's class renames carried into its values (MixinClassRenames)
+                byte[] rew = MixinClassRenames.refmap(e.getValue(), chain.classRenames);
+                if (rew != null) {
+                    e.setValue(rew);
+                    rpt.notes.add(tag + "refmap " + name + ": class renames carried into its values");
+                }
             }
         }
         if (!reg.stubs.isEmpty()) {
@@ -2719,6 +2781,7 @@ public final class JarProcessor {
         Map<String, String> instFldGetters = new HashMap<>(); // GETFIELD -> INVOKESTATIC getter(receiver) on runtime class
         Map<String, String> instFldSetters = new HashMap<>(); // PUTFIELD -> INVOKESTATIC setter(receiver, value) on runtime class
         Map<String, String> instOfSites = new HashMap<>();   // INSTANCEOF type -> INVOKESTATIC predicate(Object)Z
+        Map<String, String> castSites = new HashMap<>();     // CHECKCAST type -> INVOKESTATIC check(Object)Object first
         Map<String, String> fldRenames = new HashMap<>();    // instance fields renamed in place
         Map<String, String> mthRenames = new HashMap<>();    // methods renamed in place (relocated to super)
         Map<String, String> tombstone = new HashMap<>();     // owner.name+desc -> boundary
@@ -3028,6 +3091,18 @@ public final class JarProcessor {
                             return;
                         }
                         if (!Chain.minecraftOwned(owner)) {
+                            // a call naming a class of this jar whose own declaration of the shape an override
+                            // rename moves (1.21.2's final AbstractBoat.getDropItem: a mod Boat's override is
+                            // renamed) follows the rename: the old name would resolve past the renamed body to
+                            // vanilla's -- inaccessible, or not the method the mod meant
+                            if (op != Opcodes.INVOKESTATIC && op != Opcodes.INVOKESPECIAL && !name.equals("<init>")) {
+                                String renamed = jarOverrideRename(owner, name, desc, layer, chain);
+                                if (renamed != null) {
+                                    mthRenames.put(site, renamed);
+                                    top.dext.centurybridge.data.FullAudit.record(site, "override-rename-call");
+                                    return;
+                                }
+                            }
                             String inh = name.equals("<init>") ? null
                                 : inheritedVanillaOwner(owner, name + desc, layer, chain);
                             if (inh == null) {
@@ -3095,6 +3170,17 @@ public final class JarProcessor {
                             owner = inh;
                             emitOwner.put(site, inh);
                         }
+                        if (chain.classRenames.containsKey(owner) && !chain.classRenames.get(owner).startsWith("top/dext/")
+                                && !name.equals("<init>")) {
+                            // a class renamed to a surviving vanilla class (1.21.2: Boat -> AbstractBoat) only
+                            // stands in for the members it declared itself: a member it inherited in the source
+                            // (Entity.kill reached through Boat) is judged on its source declarer, as any vanilla
+                            // owner's call would be. The site still names the renamed class, a subtype of it
+                            String home = chain.sourceDeclarer(name, desc, java.util.List.of(owner));
+                            if (home != null && !home.equals(owner)) {
+                                owner = home;
+                            }
+                        }
                         if (chain.classRenames.containsKey(owner)) {
                             // a class merged into a surviving VANILLA class (BakedModel ->
                             // BlockStateModel) keeps its old members only where a redirect is
@@ -3110,6 +3196,22 @@ public final class JarProcessor {
                             if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>")
                                     && chain.classRenames.get(owner).startsWith("top/dext/") && !chain.facadeGaps.containsKey(rkey)) {
                                 top.dext.centurybridge.data.FullAudit.record(rkey, "super-facade");
+                                return;
+                            }
+                            // a class merged into a surviving vanilla superclass whose members moved there
+                            // under new names (1.21.2: Boat into AbstractBoat): a super call takes the super
+                            // redirect wired on the old owner -- an instance redirect would dispatch back into
+                            // the caller's own override -- and a member that only changed its name keeps its
+                            // site, renamed; the ClassRemapper then names the new class
+                            if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>") && chain.superRedirects.containsKey(rkey)) {
+                                superRedirectSites.put(site, chain.superRedirects.get(rkey));
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "super-redirect");
+                                return;
+                            }
+                            String rmr = name.equals("<init>") ? null : chain.methodRenames.get(rkey);
+                            if (rmr != null) {
+                                mthRenames.put(site, rmr);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "method-rename");
                                 return;
                             }
                             String rirt = chain.instanceRedirects.get(rkey);
@@ -3506,6 +3608,10 @@ public final class JarProcessor {
                                 return; // answered by the predicate; the type itself is not loaded here
                             }
                         }
+                        if (op == Opcodes.CHECKCAST && chain.checkCastRedirects.containsKey(type)) {
+                            castSites.put(type, chain.checkCastRedirects.get(type));
+                            top.dext.centurybridge.data.FullAudit.record("checkcast " + type, "checkcast-redirect");
+                        }
                         if (op == Opcodes.NEW) {
                             pendingNew.computeIfAbsent(type, k -> new java.util.ArrayDeque<>()).push(Boolean.TRUE);
                         }
@@ -3718,8 +3824,21 @@ public final class JarProcessor {
                 top.dext.centurybridge.data.FullAudit.record(f.under + "." + shape, "abstract-fill");
             }
         }
+        // a redirect static takes its receiver as the type the wiring keys the member on (emitOwner); that type
+        // may be one the class never named -- a Fabric API interface reached through the vanilla type it is
+        // injected into (TagAppender.remove is 1.21.11's FabricProvidedTagBuilder's) -- and a renamed one: the
+        // class-rename pass must then run on this class too, or the emitted descriptor keeps the source name
+        if (!needClassRename) {
+            for (String o : emitOwner.values()) {
+                if (chain.classRenames.containsKey(o)) {
+                    needClassRename = true;
+                    rpt.notes.add(tag + "facade-renamed (redirect receiver): " + o + " -> " + chain.classRenames.get(o));
+                    break;
+                }
+            }
+        }
         if (redirects.isEmpty() && instRedirects.isEmpty() && ifaceCallRedirects.isEmpty() && fldRedirects.isEmpty()
-                && fldGetters.isEmpty() && fldSetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty()
+                && fldGetters.isEmpty() && fldSetters.isEmpty() && instFldGetters.isEmpty() && instFldSetters.isEmpty() && instOfSites.isEmpty() && castSites.isEmpty()
                 && fldRenames.isEmpty() && mthRenames.isEmpty() && tombstone.isEmpty()
                 && !needClassRename && !needIfaceFix && hookCallSites.isEmpty() && superRedirectSites.isEmpty()
                 && !needSuperRename[0] && adapterApply.isEmpty() && lambdaSites.isEmpty() && declaredRenames.isEmpty()
@@ -3811,6 +3930,9 @@ public final class JarProcessor {
         for (String k : instOfSites.keySet()) {
             rpt.notes.add(tag + "instanceof-redirected: " + k + " -> " + instOfSites.get(k));
         }
+        for (String k : castSites.keySet()) {
+            rpt.notes.add(tag + "checkcast-redirected: " + k + " -> " + castSites.get(k));
+        }
         for (String k : hookCallSites) {
             rpt.notes.add(tag + "lookup-hooked: " + k);
         }
@@ -3843,8 +3965,8 @@ public final class JarProcessor {
             }
         };
         ClassVisitor sink = needClassRename
-            ? new org.objectweb.asm.commons.ClassRemapper(kinds,
-                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames))
+            ? MixinClassRenames.annotations(new org.objectweb.asm.commons.ClassRemapper(kinds,
+                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames)), chain.classRenames)
             : kinds;
         // super/implements-only rename layer: rewrites the hierarchy declaration
         // and super-invocations to the facade, leaving every other reference to
@@ -4176,6 +4298,12 @@ public final class JarProcessor {
                             super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(pv),
                                 redirName(pv, "cbInstanceOf"), "(Ljava/lang/Object;)Z", false);
                             return;
+                        }
+                        if (op == Opcodes.CHECKCAST && castSites.containsKey(type)) {
+                            // the source release's cast first (throws as it would have), then the renamed type's
+                            String cv = castSites.get(type);
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC, redirCls(cv),
+                                redirName(cv, "cbCheckCast"), "(Ljava/lang/Object;)Ljava/lang/Object;", false);
                         }
                         super.visitTypeInsn(op, type);
                     }

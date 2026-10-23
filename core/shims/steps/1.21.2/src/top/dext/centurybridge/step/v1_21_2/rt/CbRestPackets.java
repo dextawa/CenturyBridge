@@ -52,7 +52,7 @@ public final class CbRestPackets {
     }
 
     /** a RelativeMovement set of 1.21.1 with, for each relative position axis, the matching DELTA_ constant */
-    static Set<net.minecraft.class_2709> withKeptDelta(Set<net.minecraft.class_2709> relatives) {
+    public static Set<net.minecraft.class_2709> withKeptDelta(Set<net.minecraft.class_2709> relatives) {
         EnumSet<net.minecraft.class_2709> out = EnumSet.noneOf(net.minecraft.class_2709.class);
         out.addAll(relatives);
         if (relatives.contains(net.minecraft.class_2709.field_12400)) {
@@ -180,6 +180,34 @@ public final class CbRestPackets {
     /** an override of one of those getters answering the byte, as 1.21.2's degrees */
     public static float degrees(byte packed) {
         return net.minecraft.class_3532.method_62994(packed);
+    }
+
+    /** super's 1.21.2 getyRot(), from a 1.21.1 subclass's super.getyRot() */
+    public interface YRotSuper {
+        float cb$super$method_11649();
+    }
+
+    /** super's 1.21.2 getxRot() */
+    public interface XRotSuper {
+        float cb$super$method_11650();
+    }
+
+    /** super's 1.21.2 getYHeadRot() */
+    public interface HeadRotSuper {
+        float cb$super$method_11787();
+    }
+
+    /** a 1.21.1 subclass's super.getyRot(): super's degrees packed back into 1.21.1's byte */
+    public static byte superYRot(YRotSuper p) {
+        return net.minecraft.class_3532.method_62995(p.cb$super$method_11649());
+    }
+
+    public static byte superXRot(XRotSuper p) {
+        return net.minecraft.class_3532.method_62995(p.cb$super$method_11650());
+    }
+
+    public static byte superHeadRot(HeadRotSuper p) {
+        return net.minecraft.class_3532.method_62995(p.cb$super$method_11787());
     }
 
     // ------------------------------------------------------------------ ClientboundSetTimePacket (class_2761)

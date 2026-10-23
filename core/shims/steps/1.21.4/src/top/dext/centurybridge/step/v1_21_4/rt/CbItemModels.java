@@ -28,6 +28,38 @@ public final class CbItemModels {
 
     public static final net.minecraft.class_2960 LEGACY_OVERRIDES = net.minecraft.class_2960.method_60655("centurybridge", "legacy_overrides");
 
+    public static final net.minecraft.class_2960 LEGACY_OVERRIDE = net.minecraft.class_2960.method_60655("centurybridge", "legacy_override");
+
+    /**
+     * centurybridge:legacy_override, a 1.21.4 conditional item model property: whether one 1.21.3 override applies --
+     * every predicate, read through ItemProperties.getProperty (unknown: -infinity), at least its threshold (a NaN
+     * value does not fail). The converter nests one minecraft:condition per override, the last override outermost,
+     * for the overrides of a "builtin/entity" item model (whose models may be special models themselves).
+     */
+    public record LegacyOverrideCondition(Map<net.minecraft.class_2960, Float> predicate) implements net.minecraft.class_10460 {
+        public static final MapCodec<LegacyOverrideCondition> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+            Codec.unboundedMap(net.minecraft.class_2960.field_25139, Codec.FLOAT).fieldOf("predicate").forGetter(LegacyOverrideCondition::predicate)
+        ).apply(i, LegacyOverrideCondition::new));
+
+        @Override
+        public boolean method_65638(net.minecraft.class_1799 stack, net.minecraft.class_638 level, net.minecraft.class_1309 entity, int seed,
+                net.minecraft.class_811 context) {
+            for (var e : this.predicate.entrySet()) {
+                ItemPropertyFunction p = ItemProperties.method_27878(stack, e.getKey());
+                float v = p != null ? p.call(stack, level, entity, seed) : Float.NEGATIVE_INFINITY;
+                if (v < e.getValue()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public MapCodec<LegacyOverrideCondition> method_65637() {
+            return CODEC;
+        }
+    }
+
     /** one 1.21.3 override: the predicate thresholds and the model it switches to */
     public record LegacyOverride(Map<net.minecraft.class_2960, Float> predicate, net.minecraft.class_2960 model) {
         static final Codec<LegacyOverride> CODEC = RecordCodecBuilder.create(i -> i.group(

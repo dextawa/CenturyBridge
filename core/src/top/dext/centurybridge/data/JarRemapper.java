@@ -18,10 +18,24 @@ import org.objectweb.asm.commons.Remapper;
  */
 public final class JarRemapper {
 
+    /**
+     * An intermediary member id in a refmap: method_, field_ and comp_ (a record component's accessor; the
+     * class files' pass already maps all three, the refmap pass took only the first two, leaving every mod
+     * mixin that names a record accessor -- injector selector, @At target, @Invoker -- pointing at a name
+     * 26.x does not have). Preceded by "L<owner>;" it is looked up under that owner first, as the class
+     * files' pass does, so an id the table holds ambiguously still maps where the refmap says whose it is.
+     */
     private static final java.util.regex.Pattern MEMBER_TOKEN =
-        java.util.regex.Pattern.compile("(?:method|field)_\\d+");
-    private static final java.util.regex.Pattern CLASS_TOKEN =
-        java.util.regex.Pattern.compile("net/minecraft/class_\\d+(?:\\$[\\w$]+)?");
+        java.util.regex.Pattern.compile("(?:L([\\w/$]+);)?((?:method|field|comp)_\\d+)");
+    /**
+     * An intermediary class name: net/minecraft/class_N with its nested classes, and an intermediary-named
+     * nested class of a class whose own name is not intermediary (com/mojang/blaze3d/opengl/GlStateManager$class_1017
+     * -> GlStateManager$BlendState; net/minecraft/util/profiling/jfr/event/...$class_N). The second form is
+     * anchored at the two package roots that have such classes, so it never starts at a descriptor's "L"
+     * and never takes a match from the first. A match the table does not hold maps to itself.
+     */
+    private static final java.util.regex.Pattern CLASS_TOKEN = java.util.regex.Pattern.compile(
+        "net/minecraft/class_\\d+(?:\\$[\\w$]+)?|(?:com/mojang|net/minecraft)/(?:\\w+/)*\\w+\\$class_\\d+(?:\\$[\\w$]+)?");
 
     /**
      * Remaps a jar from the intermediary namespace into Mojang names using a
@@ -50,6 +64,51 @@ public final class JarRemapper {
         public final java.util.Map<String, String> members = new java.util.HashMap<>();
         /** how many bare ids were ambiguous (owner-qualified lookup only) */
         public int ambiguous;
+
+        /**
+         * Tokens only the step's facade classes declare keep their names across the wall. A class the
+         * step retires into a CB facade ({@code classRenames} to a top/dext/centurybridge/ class) keeps
+         * its members' intermediary names -- the facade declares them so, and a reference naming the
+         * facade passes through untouched ({@link #remapper}) -- but a reference through a mod class
+         * under it (a call of an inherited facade method, the mod's own override of one) names the mod
+         * class, and the bare-name map gave it the vanilla member's mojang name: 1.21.11's
+         * ExpirableValue.tick() is method_24913 on the facade, and a mod subclass's this.tick() went out
+         * as tick (NoSuchMethodError), its override of it as tick (never called). A token declared by any
+         * other class as well (an override family reaching vanilla classes) keeps its mapping.
+         */
+        public Table keepFacadeTokens(java.util.Collection<String> facadeOwners) {
+            java.util.Map<String, java.util.Set<String>> owners = new java.util.HashMap<>();
+            for (String k : byOwner.keySet()) {
+                int dot = k.lastIndexOf('.');
+                owners.computeIfAbsent(k.substring(dot + 1), x -> new java.util.HashSet<>()).add(k.substring(0, dot));
+            }
+            for (var e : owners.entrySet()) {
+                if (facadeOwners.containsAll(e.getValue())) {
+                    members.remove(e.getKey());
+                }
+            }
+            return this;
+        }
+
+        /** the classes a wiring's classRenames retire into CB facades */
+        public static java.util.Set<String> facadeOwners(java.util.Map<String, String> classRenames) {
+            java.util.Set<String> out = new java.util.HashSet<>();
+            classRenames.forEach((k, v) -> {
+                if (v.startsWith("top/dext/centurybridge/")) {
+                    out.add(k);
+                }
+            });
+            return out;
+        }
+        /**
+         * The target release's game classes and whether each is an interface (null: not known). 26.1 made
+         * some 1.21.11 interfaces classes (GpuDevice, CommandEncoder, RenderPass wrap a backend now) and
+         * could do the reverse; a call keeps the invoke kind and the interface flag of the type it was
+         * compiled against, which the JVM refuses on the other kind (IncompatibleClassChangeError at the
+         * first call). With this set the rename gives every call, method handle and invokedynamic argument
+         * the kind the target declares the owner as.
+         */
+        public java.util.Map<String, Boolean> targetKinds;
 
         public Remapper remapper() {
             return new Remapper() {
@@ -95,6 +154,23 @@ public final class JarRemapper {
                     // and takes the accessor's mojang name
                     return name.startsWith("field_") || name.startsWith("comp_") ? member(owner, name) : name;
                 }
+
+                /**
+                 * A lambda or method reference names the functional interface's method in its
+                 * invokedynamic (LambdaMetafactory: the call site's name is the SAM's, the interface is
+                 * the descriptor's return type). ASM's default keeps that name, so a 1.21.11 lambda for a
+                 * vanilla interface crossed the wall still implementing method_NNNN -- an
+                 * AbstractMethodError at the first call. Other bootstraps (string concatenation, record
+                 * object methods, pattern switches) never carry a token name and stay as they are.
+                 */
+                @Override
+                public String mapInvokeDynamicMethodName(String name, String desc) {
+                    if (!name.startsWith("method_") && !name.startsWith("comp_")) {
+                        return name;
+                    }
+                    org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(desc);
+                    return ret.getSort() == org.objectweb.asm.Type.OBJECT ? member(ret.getInternalName(), name) : name;
+                }
             };
         }
     }
@@ -129,7 +205,19 @@ public final class JarRemapper {
     }
 
     public static void remapWithTable(Path tsv, Path inJar, Path outJar) throws IOException {
-        Table table = loadTable(tsv);
+        remapWithTable(tsv, inJar, outJar, null);
+    }
+
+    /** as above; with {@code targetJar}, calls also take the invoke kind the target declares their owner as ({@link Table#targetKinds}) */
+    public static void remapWithTable(Path tsv, Path inJar, Path outJar, Path targetJar) throws IOException {
+        remapWithTable(loadTable(tsv), inJar, outJar, targetJar);
+    }
+
+    /** as above, with a loaded table (the conversion's, facade tokens kept: {@link Table#keepFacadeTokens}) */
+    public static void remapWithTable(Table table, Path inJar, Path outJar, Path targetJar) throws IOException {
+        if (targetJar != null && Files.exists(targetJar)) {
+            table.targetKinds = loadKinds(targetJar);
+        }
         int nClasses;
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
              ZipOutputStream zout = new ZipOutputStream(Files.newOutputStream(outJar))) {
@@ -138,6 +226,84 @@ public final class JarRemapper {
         System.out.println("renamed " + nClasses + " classes (table: " + table.classes.size()
             + " classes, " + table.byOwner.size() + " members, " + table.ambiguous
             + " ambiguous ids owner-only) -> " + outJar);
+    }
+
+    /**
+     * Intermediary names in text renamed (a refmap; a mixin annotation's string): member ids first (under the
+     * owner a preceding "L<owner>;" names), then class names.
+     */
+    static String renameText(String text, Table table) {
+        Remapper remapper = table.remapper();
+        text = MEMBER_TOKEN.matcher(text).replaceAll(mr -> {
+            String owner = mr.group(1);
+            String id = mr.group(2);
+            String moj = owner != null ? table.byOwner.get(owner + "." + id) : null;
+            if (moj == null) {
+                moj = table.members.getOrDefault(id, id);
+            }
+            return java.util.regex.Matcher.quoteReplacement((owner != null ? "L" + owner + ";" : "") + moj);
+        });
+        return CLASS_TOKEN.matcher(text).replaceAll(
+            mr -> java.util.regex.Matcher.quoteReplacement(remapper.map(mr.group())));
+    }
+
+    /**
+     * The strings of a class's Mixin / MixinExtras annotations renamed like a refmap (upstream of the
+     * ClassRemapper, which renames Type values only): selectors, @At targets, accessor names a mixin spells
+     * in intermediary itself -- a mod built without a refmap, or what the engine's MixinBridge wrote into an
+     * annotation in the analysis namespace at the wall step. A mod's development names (a refmap's keys)
+     * hold no intermediary token and pass unchanged.
+     */
+    private static org.objectweb.asm.ClassVisitor mixinStrings(org.objectweb.asm.ClassVisitor next, Table table) {
+        java.util.function.Function<org.objectweb.asm.AnnotationVisitor, org.objectweb.asm.AnnotationVisitor>[] wrap =
+            new java.util.function.Function[1];
+        wrap[0] = av -> new org.objectweb.asm.AnnotationVisitor(org.objectweb.asm.Opcodes.ASM9, av) {
+            @Override
+            public void visit(String name, Object value) {
+                super.visit(name, value instanceof String s ? renameText(s, table) : value);
+            }
+
+            @Override
+            public org.objectweb.asm.AnnotationVisitor visitAnnotation(String name, String desc) {
+                org.objectweb.asm.AnnotationVisitor n = super.visitAnnotation(name, desc);
+                return n == null ? null : wrap[0].apply(n);
+            }
+
+            @Override
+            public org.objectweb.asm.AnnotationVisitor visitArray(String name) {
+                org.objectweb.asm.AnnotationVisitor n = super.visitArray(name);
+                return n == null ? null : wrap[0].apply(n);
+            }
+        };
+        java.util.function.BiFunction<String, org.objectweb.asm.AnnotationVisitor, org.objectweb.asm.AnnotationVisitor> top =
+            (desc, av) -> av != null && (desc.startsWith("Lorg/spongepowered/asm/mixin/")
+                || desc.startsWith("Lcom/llamalad7/mixinextras/")) ? wrap[0].apply(av) : av;
+        return new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9, next) {
+            @Override
+            public org.objectweb.asm.AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+                return top.apply(desc, super.visitAnnotation(desc, visible));
+            }
+
+            @Override
+            public org.objectweb.asm.MethodVisitor visitMethod(int acc, String name, String desc, String sig, String[] ex) {
+                return new org.objectweb.asm.MethodVisitor(org.objectweb.asm.Opcodes.ASM9, super.visitMethod(acc, name, desc, sig, ex)) {
+                    @Override
+                    public org.objectweb.asm.AnnotationVisitor visitAnnotation(String d, boolean visible) {
+                        return top.apply(d, super.visitAnnotation(d, visible));
+                    }
+                };
+            }
+
+            @Override
+            public org.objectweb.asm.FieldVisitor visitField(int acc, String name, String desc, String sig, Object value) {
+                return new org.objectweb.asm.FieldVisitor(org.objectweb.asm.Opcodes.ASM9, super.visitField(acc, name, desc, sig, value)) {
+                    @Override
+                    public org.objectweb.asm.AnnotationVisitor visitAnnotation(String d, boolean visible) {
+                        return top.apply(d, super.visitAnnotation(d, visible));
+                    }
+                };
+            }
+        };
     }
 
     /**
@@ -220,13 +386,7 @@ public final class JarRemapper {
                         // ("Lnet/minecraft/class_310;method_1507()V"); rewrite
                         // them textually or every mixin target goes stale
                         String text = new String(data, java.nio.charset.StandardCharsets.UTF_8);
-                        text = MEMBER_TOKEN.matcher(text).replaceAll(
-                            mr -> java.util.regex.Matcher.quoteReplacement(
-                                members.getOrDefault(mr.group(), mr.group())));
-                        text = CLASS_TOKEN.matcher(text).replaceAll(
-                            mr -> java.util.regex.Matcher.quoteReplacement(
-                                remapper.map(mr.group())));
-                        data = text.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                        data = renameText(text, table).getBytes(java.nio.charset.StandardCharsets.UTF_8);
                     }
                     zout.putNextEntry(new ZipEntry(e.getName()));
                     zout.write(data);
@@ -235,7 +395,7 @@ public final class JarRemapper {
                 }
                 ClassReader cr = new ClassReader(data);
                 ClassWriter cw = new ClassWriter(0);
-                cr.accept(new ClassRemapper(cw, remapper), 0);
+                cr.accept(mixinStrings(new ClassRemapper(table.targetKinds == null ? cw : new KindFix(cw, table.targetKinds), remapper), table), 0);
                 String outName = remapper.map(cr.getClassName()) + ".class";
                 if (!outName.equals(e.getName()) && !written.add(outName)) {
                     continue;
@@ -379,5 +539,84 @@ public final class JarRemapper {
             }
         }
         System.out.println("remapped " + classes + " classes -> " + outJar);
+    }
+
+    /** every game class of a jar and whether it is an interface */
+    private static java.util.Map<String, Boolean> loadKinds(Path jar) throws IOException {
+        java.util.Map<String, Boolean> kinds = new java.util.HashMap<>();
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(jar))) {
+            ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                String n = e.getName();
+                if (!n.endsWith(".class") || !(n.startsWith("net/minecraft/") || n.startsWith("com/mojang/"))) {
+                    continue;
+                }
+                ClassReader cr = new ClassReader(zin.readAllBytes());
+                kinds.put(cr.getClassName(), (cr.getAccess() & org.objectweb.asm.Opcodes.ACC_INTERFACE) != 0);
+            }
+        }
+        return kinds;
+    }
+
+    /** gives calls on target game classes the invoke kind the target declares the owner as (runs after the rename) */
+    private static final class KindFix extends org.objectweb.asm.ClassVisitor {
+        private final java.util.Map<String, Boolean> kinds;
+
+        KindFix(org.objectweb.asm.ClassVisitor cv, java.util.Map<String, Boolean> kinds) {
+            super(org.objectweb.asm.Opcodes.ASM9, cv);
+            this.kinds = kinds;
+        }
+
+        private org.objectweb.asm.Handle fix(org.objectweb.asm.Handle h) {
+            Boolean itf = this.kinds.get(h.getOwner());
+            if (itf == null || itf == h.isInterface()) {
+                return h;
+            }
+            int tag = h.getTag();
+            if (tag == org.objectweb.asm.Opcodes.H_INVOKEINTERFACE && !itf) {
+                tag = org.objectweb.asm.Opcodes.H_INVOKEVIRTUAL;
+            } else if (tag == org.objectweb.asm.Opcodes.H_INVOKEVIRTUAL && itf) {
+                tag = org.objectweb.asm.Opcodes.H_INVOKEINTERFACE;
+            }
+            return new org.objectweb.asm.Handle(tag, h.getOwner(), h.getName(), h.getDesc(), itf);
+        }
+
+        private Object fixValue(Object v) {
+            return v instanceof org.objectweb.asm.Handle h ? fix(h) : v;
+        }
+
+        @Override
+        public org.objectweb.asm.MethodVisitor visitMethod(int acc, String name, String desc, String sig, String[] exc) {
+            org.objectweb.asm.MethodVisitor mv = super.visitMethod(acc, name, desc, sig, exc);
+            return mv == null ? null : new org.objectweb.asm.MethodVisitor(org.objectweb.asm.Opcodes.ASM9, mv) {
+                @Override
+                public void visitMethodInsn(int op, String owner, String n, String d, boolean itf) {
+                    Boolean want = KindFix.this.kinds.get(owner);
+                    if (want != null && want != itf) {
+                        if (op == org.objectweb.asm.Opcodes.INVOKEINTERFACE && !want) {
+                            op = org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
+                        } else if (op == org.objectweb.asm.Opcodes.INVOKEVIRTUAL && want) {
+                            op = org.objectweb.asm.Opcodes.INVOKEINTERFACE;
+                        }
+                        itf = want;
+                    }
+                    super.visitMethodInsn(op, owner, n, d, itf);
+                }
+
+                @Override
+                public void visitInvokeDynamicInsn(String n, String d, org.objectweb.asm.Handle bsm, Object... args) {
+                    Object[] fixed = new Object[args.length];
+                    for (int i = 0; i < args.length; i++) {
+                        fixed[i] = fixValue(args[i]);
+                    }
+                    super.visitInvokeDynamicInsn(n, d, fix(bsm), fixed);
+                }
+
+                @Override
+                public void visitLdcInsn(Object value) {
+                    super.visitLdcInsn(fixValue(value));
+                }
+            };
+        }
     }
 }

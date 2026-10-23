@@ -22,5 +22,68 @@ extendable class net/minecraft/class_2735
 extendable method net/minecraft/class_2735 equals (Ljava/lang/Object;)Z
 extendable method net/minecraft/class_2735 hashCode ()I
 extendable method net/minecraft/class_2735 toString ()Ljava/lang/String;
-# s9client: ItemRenderer.getCompassFoilBuffer(buffers, renderType, pose) was public in 1.21.3; private in 1.21.4, same body
+
+# ---- BEGIN GENERATED (s9client): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible field net/minecraft/class_10096 field_53659 Ljava/lang/String;
+accessible field net/minecraft/class_1093 field_21864 Z
+accessible field net/minecraft/class_1093 field_5411 Ljava/util/List;
+accessible field net/minecraft/class_1093 field_5413 Z
+accessible field net/minecraft/class_1093 field_5414 Ljava/util/Map;
+accessible field net/minecraft/class_1093 field_5415 Z
+accessible field net/minecraft/class_1093 field_5416 Lnet/minecraft/class_1058;
+accessible field net/minecraft/class_1093 field_5417 Lnet/minecraft/class_809;
+accessible field net/minecraft/class_4722 field_21713 [Lnet/minecraft/class_4730;
+accessible field net/minecraft/class_793 field_4247 Lnet/minecraft/class_2960;
+accessible method net/minecraft/class_339 method_48579 (Lnet/minecraft/class_332;IIF)V
+accessible method net/minecraft/class_7761 method_51272 ()F
+accessible method net/minecraft/class_7761 method_51273 ()F
+accessible method net/minecraft/class_796 method_3467 ([I)Lnet/minecraft/class_2350;
+accessible method net/minecraft/class_837 method_51272 ()F
+accessible method net/minecraft/class_837 method_51273 ()F
 accessible method net/minecraft/class_918 method_30114 (Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;Lnet/minecraft/class_4587$class_4665;)Lnet/minecraft/class_4588;
+
+# s9rest: getCloneItemStack(level, pos, state, includeData) is protected on every 1.21.4 declarer; 1.21.3's was public (a mod calls it on any block, CbRestClone)
+accessible method net/minecraft/class_2185 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2195 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2202 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_4481 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_5802 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_5545 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_5805 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_5804 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2302 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_8168 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2329 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2334 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2362 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2360 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_4864 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_6089 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2423 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2421 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2513 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_3830 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2525 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2667 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_2671 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_4970 method_9574 (Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;
+accessible method net/minecraft/class_9824 method_62626 ()Ljava/util/function/Function;
+accessible method net/minecraft/class_9824$class_10094 <init> (Ljava/lang/String;Lnet/minecraft/class_790;)V
+mutable field net/minecraft/class_10338 field_54862 Lnet/minecraft/class_7094;
+mutable field net/minecraft/class_10338 field_54863 Lnet/minecraft/class_7094;
+mutable field net/minecraft/class_793 field_4247 Lnet/minecraft/class_2960;
+# ---- END GENERATED (s9client) ----
+# s9client: BlockStateModelLoader.LoadedBlockModelDefinition was a public record in 1.21.3, package-private in 1.21.4 (same components)
+accessible class net/minecraft/class_9824$class_10094
+# s9client: ItemTransforms and Variant are final records since 1.21.4; a 1.21.3 mod may extend them (Variant overriding
+# getModelLocation / getWeight -- its accessors now -- and Object's equals / hashCode / toString, which a record makes final)
+extendable class net/minecraft/class_809
+extendable class net/minecraft/class_813
+extendable method net/minecraft/class_813 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_813 hashCode ()I
+extendable method net/minecraft/class_813 toString ()Ljava/lang/String;
+
+# s9rest: SimpleJsonResourceReloadListener's private (ops, codec, converter) constructor, which 1.21.3's (registries, codec, directory) is (CbRestMisc)
+accessible method net/minecraft/class_4309 <init> (Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_7654;)V

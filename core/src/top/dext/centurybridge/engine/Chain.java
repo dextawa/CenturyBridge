@@ -177,6 +177,14 @@ public final class Chain {
      * Item since 1.21.2) becomes INVOKESTATIC predicate(Object)Z.
      */
     public final java.util.Map<String, String> instanceOfRedirects = new java.util.HashMap<>();
+    /**
+     * CHECKCAST "type" -> "runtimeClass#name": the cast side of {@link #instanceOfRedirects}, for a dead class
+     * renamed onto a wider live one (1.21.2: DirectionProperty is EnumProperty&lt;Direction&gt;, classRenames
+     * onto EnumProperty, so a cast to it would accept every EnumProperty). The site gets INVOKESTATIC
+     * name(Object)Object before the (renamed) CHECKCAST: the static answers its argument when the source
+     * release's cast would have succeeded (null included) and throws ClassCastException otherwise.
+     */
+    public final java.util.Map<String, String> checkCastRedirects = new java.util.HashMap<>();
     /** examined-and-classified damage (quirk tier / structural / etc): "owner" or "owner.name" -> reason */
     public final java.util.Map<String, String> ledger = new java.util.HashMap<>();
 
@@ -915,6 +923,18 @@ public final class Chain {
     /** true unless the owner is a known target-stub class that does NOT declare name(desc). */
     /** injector anchor check/repair against real target bodies; null = unavailable */
     public MixinRepair mixinRepair;
+    /**
+     * The SOURCE release's real method bodies (MixinBridge counts an @At anchor in the body it was
+     * written for before retargeting it to what the step's wiring says stands there now); null =
+     * unavailable, and no anchor is retargeted.
+     */
+    public MixinRepair sourceCode;
+    /**
+     * At the 1.21.11 -> 26.1 namespace wall only: 26.1's bodies renamed into the analysis namespace the step
+     * converts in (WallInverse), for MixinBridge -- the wiring and the mod's mixins are intermediary-named
+     * there until the whole-jar rename. Null on every other step (MixinBridge uses mixinRepair).
+     */
+    public MixinRepair bridgeCode;
 
     /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,
@@ -2399,6 +2419,12 @@ public final class Chain {
                 var ior = root.getAsJsonObject("instanceOfRedirects");
                 for (String k : ior.keySet()) {
                     c.instanceOfRedirects.put(k, ior.get(k).getAsString());
+                }
+            }
+            if (root.has("checkCastRedirects")) {
+                var ccr = root.getAsJsonObject("checkCastRedirects");
+                for (String k : ccr.keySet()) {
+                    c.checkCastRedirects.put(k, ccr.get(k).getAsString());
                 }
             }
             if (root.has("superRedirects")) {

@@ -32,7 +32,7 @@ import org.objectweb.asm.tree.MethodNode;
  * that table, so they compare verbatim.
  *
  * Wiring keys checked: staticRedirects, instanceRedirects, superRedirects, interfaceCallRedirects,
- * fieldRedirects, fieldGetters, staticFieldSetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects,
+ * fieldRedirects, fieldGetters, staticFieldSetters, instanceFieldGetters, instanceFieldSetters, instanceOfRedirects, checkCastRedirects,
  * ctorRedirects, superCtorAdapts (converter), superCtorReshapes (conv / push / post
  * statics), lookupRt, overrideHooks (wrap / unwrap / guard / frames / bridge,
  * and the subtype relation a narrowing hook casts along), lambdaAdapters (the CB
@@ -148,10 +148,15 @@ public final class WiringCheck {
                 w.classes.put(cn.name, cn);
             }
         }
-        if (table != null && Files.exists(table)) {
-            w.wall = JarRemapper.loadTable(table).remapper();
-        }
         var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
+        if (table != null && Files.exists(table)) {
+            // as the conversion renames (Main.convert): tokens only the wiring's facades declare keep their names
+            java.util.Map<String, String> renames = new java.util.HashMap<>();
+            if (root.has("classRenames")) {
+                root.getAsJsonObject("classRenames").entrySet().forEach(e -> renames.put(e.getKey(), e.getValue().getAsString()));
+            }
+            w.wall = JarRemapper.loadTable(table).keepFacadeTokens(JarRemapper.Table.facadeOwners(renames)).remapper();
+        }
         w.genericOverrides = genericOverrideRows(shimsJson);
         w.check(root);
         w.checkFacadeSurfaces(root);
@@ -567,6 +572,8 @@ public final class WiringCheck {
         });
         obj(root, "instanceOfRedirects", (k, v) ->
             wantMethod("instanceOfRedirects " + k, v, "cbInstanceOf", "(Ljava/lang/Object;)Z"));
+        obj(root, "checkCastRedirects", (k, v) ->
+            wantMethod("checkCastRedirects " + k, v, "cbCheckCast", "(Ljava/lang/Object;)Ljava/lang/Object;"));
         // "owner.<init>(args)V" -> factory (args)Lowner;
         obj(root, "ctorRedirects", (k, v) -> {
             Sym s = Sym.method(k);
@@ -943,8 +950,10 @@ public final class WiringCheck {
                         if (from.equals(to)) {
                             continue;
                         }
+                        // both sides as the converted class names them: the converter applies the facade
+                        // classRenames to the whole class, the synthesized narrowing test included
                         if (from.getSort() != org.objectweb.asm.Type.OBJECT || to.getSort() != org.objectweb.asm.Type.OBJECT
-                                || !isSubtype(targetName(from.getInternalName()), targetName(to.getInternalName()))) {
+                                || !isSubtype(convertedName(from.getInternalName()), convertedName(to.getInternalName()))) {
                             problems.add(where + " narrow: " + from.getDescriptor() + " is not a subtype of "
                                 + to.getDescriptor() + " on the target");
                         }
@@ -1039,6 +1048,11 @@ public final class WiringCheck {
         // classRename remapper), so it is the type the facade must be a subtype of.
         String merged = facade.map(key);
         String kt = targetName(merged != null && !merged.startsWith("top/dext/") ? merged : key);
+        if ("java/lang/Object".equals(kt)) {
+            // merged into Object (1.21.2: Equipable, whose 1.21.1 instances were items and blocks alike): every
+            // facade is one, and the stub (Minecraft only) does not carry it
+            return;
+        }
         ClassNode kn = stub.get(kt);
         if (kn == null) {
             problems.add("superRename " + key + ": the class is gone on the target -- superRenames only move"
@@ -1176,6 +1190,15 @@ public final class WiringCheck {
             todo.addAll(n.interfaces);
         }
         return false;
+    }
+
+    /** a type as the converted class names it: through the facade renames, then (a vanilla type) the wall */
+    private String convertedName(String internalName) {
+        String f = facade.map(internalName); // null when the type is not renamed
+        if (f == null) {
+            f = internalName;
+        }
+        return f.startsWith("top/dext/") ? f : targetName(f);
     }
 
     private String targetName(String internalName) {

@@ -96,6 +96,8 @@ public final class CbRenderModels {
             if (self instanceof net.minecraft.class_583<?> model) {
                 CbRenderModelFields.legacy(model, living, pt);
             }
+            // and the model's own pose fields its 1.21.1 renderer set (arm poses, crouching, carrying...)
+            CbRenderModelFields.legacyState(self, e, state);
             // the bob is the renderer's getBob, as 1.21.1's LivingEntityRenderer.render asked it (CbRenderLiving.anim)
             legacy.animate(e, CbRenderLiving.anim(self, e, pt, state));
         } else {
