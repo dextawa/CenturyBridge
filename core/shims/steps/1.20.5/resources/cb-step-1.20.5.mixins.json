@@ -64,6 +64,7 @@
     "CbFinBundleTooltipMixin",
     "CbFinChunkHolderMixin",
     "CbFinCompoundTagMixin",
+    "CbFinConnectionMixin",
     "CbFinDisplayInfoMixin",
     "CbFinGameEventMixin",
     "CbFinHolderLookupMixin",
