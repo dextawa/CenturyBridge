@@ -49,14 +49,6 @@
    "basis": "AbstractSelectionList.getScrollbarPosition is scrollBarX since 1.21.4 (rows' right + 8 both ways)"
   },
   {
-   "old": "method_53812(I)Z",
-   "new": "method_25351",
-   "onlyUnder": "net/minecraft/class_350",
-   "superCalls": "rename",
-   "family": "gui-scroll",
-   "basis": "AbstractSelectionList.isValidMouseClick is AbstractWidget.isValidClickButton (button 0), which 1.21.4's list asks; the list's own isValidClickButton was unused in 1.21.3"
-  },
-  {
    "old": "method_44381()I",
    "new": "method_65509",
    "onlyUnder": "net/minecraft/class_7528",
@@ -119,6 +111,14 @@
    "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyContentAreaPoint",
    "family": "gui-scroll",
    "basis": "AbstractScrollWidget.mouseClicked took a press inside withinContentAreaPoint; 1.21.4 asks isMouseOver, so a widget overriding it gets 1.21.3's mouseClicked (CbGuiScrollTextAreaMixin)"
+  },
+  {
+   "old": "method_53812(I)Z",
+   "new": "cb$isValidMouseClick",
+   "onlyUnder": "net/minecraft/class_350",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyValidMouseClick",
+   "family": "gui-scroll",
+   "basis": "1.21.3's list mouseClicked first asked isValidMouseClick and refused the press on false; 1.21.4 has no such gate. The list's mouseClicked asks the override again (CbGuiScrollListMixin). Not renamed onto isValidClickButton: a list overriding both keeps each where 1.21.3 asked it"
   },
   {
    "old": "method_25361(DD)Z",

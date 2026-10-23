@@ -32,6 +32,8 @@ public final class CbGuiScroll {
     public static final int CONTENT_AREA_POINT = 1 << 3;
     /** AbstractWidget.clicked(double, double) (method_25361) */
     public static final int CLICKED = 1 << 4;
+    /** AbstractSelectionList.isValidMouseClick(int) (method_53812) */
+    public static final int VALID_MOUSE_CLICK = 1 << 5;
 
     private static final ThreadLocal<Map<Object, Integer>> ACTIVE = ThreadLocal.withInitial(IdentityHashMap::new);
 
@@ -81,6 +83,11 @@ public final class CbGuiScroll {
     /** a 1.21.3 widget overriding clicked(double, double): AbstractWidget.mouseClicked asked it */
     public interface CbLegacyClicked {
         boolean cb$clicked(double x, double y);
+    }
+
+    /** a 1.21.3 list overriding isValidMouseClick(int): its mouseClicked refused a press the override refused */
+    public interface CbLegacyValidMouseClick {
+        boolean cb$isValidMouseClick(int button);
     }
 
     /** the old void updateScrollingState(double, double, int) a 1.21.3 list declares (the override hook's adapter) */
