@@ -101,18 +101,6 @@
    "ret": "pop",
    "basis": "mechanical: same values; return value popped"
   },
-  "net/minecraft/class_3847$class_3849.method_16909()Ljava/lang/Object;": {
-   "desc": "()Ljava/lang/Runnable;",
-   "ops": [],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_3847.method_16909()Ljava/lang/Object;": {
-   "desc": "()Ljava/lang/Runnable;",
-   "ops": [],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
   "net/minecraft/class_1299.method_48009(Lnet/minecraft/class_3218;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Ljava/util/function/Consumer;": {
    "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_1657;)Ljava/util/function/Consumer;",
    "ops": [
@@ -914,17 +902,6 @@
    "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
-  },
-  {
-   "old": "method_16910(Ljava/lang/Object;)Z",
-   "new": "method_16910(Ljava/lang/Runnable;)Z",
-   "args": [
-    0
-   ],
-   "onlyUnder": "net/minecraft/class_3847",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had"
   },
   {
    "old": "method_5572(Lnet/minecraft/class_1309;I)Z",
