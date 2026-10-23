@@ -62,6 +62,8 @@
     "CbLevelStoragePlayerDataAccessor",
     "CbMobEffectMixin",
     "CbNetChatCommandMixin",
+    "CbNetDecodeExceptionMixin",
+    "CbNetDecodeFailureMixin",
     "CbNetDispatchAccess",
     "CbNetEffectBlendMixin",
     "CbNetEffectBlendSlotMixin",

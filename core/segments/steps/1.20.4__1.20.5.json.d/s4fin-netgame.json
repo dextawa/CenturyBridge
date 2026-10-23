@@ -143,6 +143,35 @@
     "keep"
    ],
    "basis": "s4fin network: ClientboundLevelChunkPacketData reads from a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2561$class_8822.<init>()V": {
+   "desc": "(Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "s4fin network: Component.SerializerAdapter takes the registries in 1.20.5; 1.20.4's the running world's"
+  },
+  "net/minecraft/class_2568$class_5247.<init>(Ljava/lang/String;ZLcom/mojang/serialization/Codec;Ljava/util/function/Function;)V": {
+   "desc": "(Ljava/lang/String;ZLcom/mojang/serialization/Codec;Lnet/minecraft/class_2568$class_9341;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetChat#legacyConverter(Ljava/util/function/Function;)Lnet/minecraft/class_2568$class_9341;"
+   ],
+   "basis": "s4fin network: HoverEvent.Action's legacy converter takes registry ops too in 1.20.5; 1.20.4's took the component only"
+  },
+  "net/minecraft/class_7610$class_7825.<init>(Lnet/minecraft/class_2561;Z)V": {
+   "desc": "(Lnet/minecraft/class_2561;)V",
+   "ops": [
+    "keep",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbNetChat#decodeBuilt(Lnet/minecraft/class_7610$class_7825;Z)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "s4fin network: DecodeException(message, shouldDisconnect): 1.20.5's takes the message; the flag stays on the exception (CbNetDecodeExceptionMixin) and the server honours it (CbNetDecodeFailureMixin)"
   }
  },
  "callReshapes": {
@@ -253,6 +282,46 @@
     "keep"
    ],
    "basis": "s4fin network: PlayerInfoUpdate Action.Writer.write takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2561$class_2562.method_10867(Lnet/minecraft/class_2561;)Ljava/lang/String;": {
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_7225$class_7874;)Ljava/lang/String;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "s4fin network: Component.Serializer takes the registries in 1.20.5; 1.20.4's call the running world's"
+  },
+  "net/minecraft/class_2561$class_2562.method_10877(Ljava/lang/String;)Lnet/minecraft/class_5250;": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5250;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "s4fin network: Component.Serializer takes the registries in 1.20.5; 1.20.4's call the running world's"
+  },
+  "net/minecraft/class_2561$class_2562.method_10872(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_5250;": {
+   "desc": "(Lcom/google/gson/JsonElement;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5250;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "s4fin network: Component.Serializer takes the registries in 1.20.5; 1.20.4's call the running world's"
+  },
+  "net/minecraft/class_2561$class_2562.method_10873(Ljava/lang/String;)Lnet/minecraft/class_5250;": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_5250;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "s4fin network: Component.Serializer takes the registries in 1.20.5; 1.20.4's call the running world's"
+  },
+  "net/minecraft/class_2568$class_5248.method_54195(Lnet/minecraft/class_2561;)Lcom/mojang/serialization/DataResult;": {
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_6903;)Lcom/mojang/serialization/DataResult;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbNetChat#jsonOps()Lnet/minecraft/class_6903;"
+   ],
+   "basis": "s4fin network: EntityTooltipInfo.legacyCreate parses with registry ops in 1.20.5; 1.20.4's the running world's over JSON"
   }
  },
  "overrideHooks": [
@@ -315,7 +384,8 @@
   "net/minecraft/class_2783.method_42625()Lnet/minecraft/class_1293$class_7247;",
   "net/minecraft/class_2664.method_55331()Lnet/minecraft/class_3414;",
   "net/minecraft/class_2664.method_55628(Lnet/minecraft/class_2540;Lnet/minecraft/class_2394;)V",
-  "net/minecraft/class_2751.method_55336()Lnet/minecraft/class_9022;"
+  "net/minecraft/class_2751.method_55336()Lnet/minecraft/class_9022;",
+  "net/minecraft/class_7610$class_7825.method_46314()Z"
  ],
  "instanceRedirects": {
   "net/minecraft/class_2556$class_7602.method_44836(Lnet/minecraft/class_5455;)Lnet/minecraft/class_2556$class_7603;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#toNetwork",
@@ -323,13 +393,20 @@
   "net/minecraft/class_7472.comp_809()Ljava/time/Instant;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommandTimeStamp",
   "net/minecraft/class_7472.comp_944()J": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommandSalt",
   "net/minecraft/class_7472.comp_810()Lnet/minecraft/class_7450;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommandSignatures",
-  "net/minecraft/class_7472.comp_969()Lnet/minecraft/class_7635$class_7636;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommandLastSeen"
+  "net/minecraft/class_7472.comp_969()Lnet/minecraft/class_7635$class_7636;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommandLastSeen",
+  "net/minecraft/class_9023.method_55462(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9022;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetChat",
+  "net/minecraft/class_9023.method_55461(Lnet/minecraft/class_2540;Lnet/minecraft/class_9022;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetChat",
+  "net/minecraft/class_2547.method_40065()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners",
+  "net/minecraft/class_6857.method_40065()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners"
  },
  "classRenames": {
   "net/minecraft/class_2556$class_7603": "top/dext/centurybridge/step/v1_20_5/facade/ChatTypeBoundNetwork"
  },
  "staticRedirects": {
-  "net/minecraft/class_2788.method_17816(Lnet/minecraft/class_2540;Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#recipeToNetwork"
+  "net/minecraft/class_2788.method_17816(Lnet/minecraft/class_2540;Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#recipeToNetwork",
+  "net/minecraft/class_2561$class_2562.method_10868(Lnet/minecraft/class_2561;)Lcom/google/gson/JsonElement;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetChat#toJsonTree",
+  "net/minecraft/class_9024.method_55468(Lnet/minecraft/class_2540;Lnet/minecraft/class_9022;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetChat#writeFormat",
+  "net/minecraft/class_9024.method_55467(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9022;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetChat#readFormat"
  },
  "ctorRedirects": {
   "net/minecraft/class_7472.<init>(Ljava/lang/String;Ljava/time/Instant;JLnet/minecraft/class_7450;Lnet/minecraft/class_7635$class_7636;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommand"
@@ -340,5 +417,120 @@
    "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#infoWriter(Ltop/dext/centurybridge/step/v1_20_5/rt/CbNetGame$LegacyInfoWriter;)Lnet/minecraft/class_2703$class_5893$class_7830;",
    "basis": "s4fin network: a 1.20.4 Action.Writer lambda, adapted to 1.20.5's RegistryFriendlyByteBuf shape"
   }
- }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_9023",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbNetChat$LegacyFormatType",
+   "requires": [
+    "method_55462(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9022;",
+    "method_55461(Lnet/minecraft/class_2540;Lnet/minecraft/class_9022;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56360()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetChat.streamCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbNetChat$LegacyFormatType;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin network: a 1.20.4 NumberFormatType's readFromStream / writeToStream are its 1.20.5 streamCodec()"
+  },
+  {
+   "under": "net/minecraft/class_2547",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners$Propagates",
+   "requires": [
+    "method_40065()Z"
+   ],
+   "synth": [
+    {
+     "new": "method_59807(Lnet/minecraft/class_2596;Ljava/lang/Exception;)V",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.onPacketError(Ltop/dext/centurybridge/step/v1_20_5/rt/CbNetListeners$Propagates;Lnet/minecraft/class_2596;Ljava/lang/Exception;)V"
+    }
+   ],
+   "basis": "s4fin network: a 1.20.4 listener's shouldPropagateHandlingExceptions() answer is its 1.20.5 onPacketError (propagate as a ReportedException, or log and go on, as 1.20.4's PacketUtils did)"
+  }
+ ],
+ "superRedirects": {
+  "net/minecraft/class_2547.method_40065()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners#superPacketListener",
+  "net/minecraft/class_6857.method_40065()Z": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners#superServerPacketListener"
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_8705",
+   "method": "method_55845(Lnet/minecraft/class_9088;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.cookieRequest(Lnet/minecraft/class_8705;Lnet/minecraft/class_9088;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2896",
+   "method": "method_55845(Lnet/minecraft/class_9088;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.cookieRequest(Lnet/minecraft/class_2896;Lnet/minecraft/class_9088;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2911",
+   "method": "method_55851(Lnet/minecraft/class_9091;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.cookieResponse(Lnet/minecraft/class_2911;Lnet/minecraft/class_9091;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_8705",
+   "method": "method_56149(Lnet/minecraft/class_9150;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.storeCookie(Lnet/minecraft/class_8705;Lnet/minecraft/class_9150;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_8705",
+   "method": "method_56150(Lnet/minecraft/class_9151;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.transfer(Lnet/minecraft/class_8705;Lnet/minecraft/class_9151;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_8706",
+   "method": "method_55851(Lnet/minecraft/class_9091;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.cookieResponse(Lnet/minecraft/class_8706;Lnet/minecraft/class_9091;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_56607(Lnet/minecraft/class_9178;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.debugSample(Lnet/minecraft/class_2602;Lnet/minecraft/class_9178;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2602",
+   "method": "method_59504(Lnet/minecraft/class_9632;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.projectilePower(Lnet/minecraft/class_2602;Lnet/minecraft/class_9632;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_56619(Lnet/minecraft/class_9179;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.debugSubscription(Lnet/minecraft/class_2792;Lnet/minecraft/class_9179;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_2792",
+   "method": "method_58580(Lnet/minecraft/class_9449;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.signedChatCommand(Lnet/minecraft/class_2792;Lnet/minecraft/class_9449;)V",
+   "basis": "s4fin network: 1.20.5's handleSignedChatCommand is 1.20.4's handleChatCommand with the signed ServerboundChatCommandPacket"
+  },
+  {
+   "under": "net/minecraft/class_8732",
+   "method": "method_57045(Lnet/minecraft/class_9250;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.selectKnownPacks(Lnet/minecraft/class_8732;Lnet/minecraft/class_9250;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_8732",
+   "method": "method_58577(Lnet/minecraft/class_9448;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.resetChat(Lnet/minecraft/class_8732;Lnet/minecraft/class_9448;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  },
+  {
+   "under": "net/minecraft/class_8735",
+   "method": "method_56909(Lnet/minecraft/class_9220;)V",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbNetListeners.selectedKnownPacks(Lnet/minecraft/class_8735;Lnet/minecraft/class_9220;)V",
+   "basis": "s4fin network: a 1.20.4 listener has no handler for this packet, which 1.20.4 did not have (its connection failed on an unknown id); the handler fails naming the packet"
+  }
+ ]
 }

@@ -28,4 +28,17 @@ public abstract class CbNetChatCommandMixin implements CbNetGame.ChatCommandSlot
     public Instant cbS4net$timeStamp() {
         return this.cbS4net$timeStamp;
     }
+
+    @Unique
+    private net.minecraft.class_9449 cbS4net$signed;
+
+    @Override
+    public net.minecraft.class_9449 cbS4net$signed() {
+        return this.cbS4net$signed;
+    }
+
+    @Override
+    public void cbS4net$signed(net.minecraft.class_9449 signed) {
+        this.cbS4net$signed = signed;
+    }
 }

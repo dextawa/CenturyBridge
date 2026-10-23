@@ -228,9 +228,22 @@ public final class CbNetGame {
 
     // ---------------------------------------------------------------- ServerboundChatCommandPacket
 
-    /** ServerboundChatCommandPacket (CbNetChatCommandMixin): when it was made, 1.20.4's timestamp */
+    /**
+     * ServerboundChatCommandPacket (CbNetChatCommandMixin): 1.20.4's signing fields. When it was made (1.20.4's
+     * timestamp); for one standing in for 1.20.5's signed command packet (a 1.20.4 listener's handleChatCommand),
+     * that packet's timestamp, salt, signatures and acknowledgements.
+     */
     public interface ChatCommandSlot {
         Instant cbS4net$timeStamp();
+
+        /** the signed packet this one stands in for, or null */
+        net.minecraft.class_9449 cbS4net$signed();
+
+        void cbS4net$signed(net.minecraft.class_9449 signed);
+    }
+
+    private static ChatCommandSlot slot(net.minecraft.class_7472 packet) {
+        return (ChatCommandSlot) (Object) packet;
     }
 
     /**
@@ -249,24 +262,35 @@ public final class CbNetGame {
         return new net.minecraft.class_7472(command);
     }
 
-    /** timeStamp(): when the packet was made (1.20.4's client stamped it with Instant.now() as it made it) */
+    /** 1.20.5's signed command packet as 1.20.4's ServerboundChatCommandPacket (its fields carried along) */
+    public static net.minecraft.class_7472 chatCommandOf(net.minecraft.class_9449 signed) {
+        net.minecraft.class_7472 packet = new net.minecraft.class_7472(signed.comp_2532());
+        slot(packet).cbS4net$signed(signed);
+        return packet;
+    }
+
+    /** timeStamp(): a signed packet's; else when the packet was made (1.20.4's client stamped Instant.now() as it made it) */
     public static Instant chatCommandTimeStamp(net.minecraft.class_7472 packet) {
-        return ((ChatCommandSlot) (Object) packet).cbS4net$timeStamp();
+        net.minecraft.class_9449 signed = slot(packet).cbS4net$signed();
+        return signed != null ? signed.comp_2533() : slot(packet).cbS4net$timeStamp();
     }
 
-    /** salt(): an unsigned command's salt signs nothing */
+    /** salt(): a signed packet's; an unsigned command's salt signs nothing */
     public static long chatCommandSalt(net.minecraft.class_7472 packet) {
-        return 0L;
+        net.minecraft.class_9449 signed = slot(packet).cbS4net$signed();
+        return signed != null ? signed.comp_2534() : 0L;
     }
 
-    /** argumentSignatures(): an unsigned command has none */
+    /** argumentSignatures(): a signed packet's; an unsigned command has none */
     public static net.minecraft.class_7450 chatCommandSignatures(net.minecraft.class_7472 packet) {
-        return net.minecraft.class_7450.field_39807;
+        net.minecraft.class_9449 signed = slot(packet).cbS4net$signed();
+        return signed != null ? signed.comp_2535() : net.minecraft.class_7450.field_39807;
     }
 
-    /** lastSeenMessages(): an unsigned command acknowledges nothing (1.20.5's unsigned path updates no chat state) */
+    /** lastSeenMessages(): a signed packet's; an unsigned command acknowledges nothing (1.20.5's unsigned path updates no chat state) */
     public static net.minecraft.class_7635.class_7636 chatCommandLastSeen(net.minecraft.class_7472 packet) {
-        return new net.minecraft.class_7635.class_7636(0, new BitSet());
+        net.minecraft.class_9449 signed = slot(packet).cbS4net$signed();
+        return signed != null ? signed.comp_2536() : new net.minecraft.class_7635.class_7636(0, new BitSet());
     }
 
     // ---------------------------------------------------------------- ClientboundPlayerInfoUpdatePacket.Action.Writer
