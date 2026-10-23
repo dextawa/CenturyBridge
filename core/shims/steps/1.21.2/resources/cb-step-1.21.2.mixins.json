@@ -32,6 +32,7 @@
     "CbRestDedicatedServerMixin",
     "CbRestGameTestHelperMixin",
     "CbRestGenerationChunkHolderMixin",
+    "CbRestJsonListenerAccessor",
     "CbRestLevelMixin",
     "CbRestMinecraftServerMixin",
     "CbRestRecipeManagerAccessor",
@@ -42,7 +43,8 @@
     "CbRestServerGamePacketListenerMixin",
     "CbRestServerLevelMixin",
     "CbRestServerPlayerMixin",
-    "CbRestServerPropertiesMixin"
+    "CbRestServerPropertiesMixin",
+    "CbRestWorldLoaderMixin"
   ],
   "client": [
     "CbRestClientLevelMixin",

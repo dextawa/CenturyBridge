@@ -849,7 +849,8 @@
  "superRedirects": {
   "net/minecraft/class_1297.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#entitySuperSystemMessage",
   "net/minecraft/class_746.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#localPlayerSuperSystemMessage",
-  "net/minecraft/class_745.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#remotePlayerSuperSystemMessage"
+  "net/minecraft/class_745.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#remotePlayerSuperSystemMessage",
+  "net/minecraft/class_4309.method_20731(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#superPrepare"
  },
  "adapterHooks": [
   {
@@ -996,6 +997,83 @@
     "drop:1"
    ],
    "basis": "renderSignBackground: 1.21.2 reads the sign's state itself; 1.21.1's callers passed the edited sign's state"
+  },
+  "net/minecraft/class_3222.method_7335(Ljava/util/List;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#recipeKeys(Ljava/util/List;)Ljava/util/List;"
+   ]
+  },
+  "net/minecraft/class_2989.method_20724(Ljava/util/Map;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V": {
+   "desc": "(Ljava/util/Map;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#advancements(Ljava/util/Map;)Ljava/util/Map;",
+    "keep",
+    "keep"
+   ]
+  },
+  "net/minecraft/class_7196.method_41895(Ljava/lang/String;Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Ljava/util/function/Function;Lnet/minecraft/class_437;)V": {
+   "desc": "(Ljava/lang/String;Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Ljava/util/function/Function;Lnet/minecraft/class_437;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#worldgenDimensions(Ljava/util/function/Function;)Ljava/util/function/Function;",
+    "keep"
+   ]
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_3222",
+   "member": "method_7335(Ljava/util/List;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#recipeIds(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "ret": null,
+   "basis": "1.21.2's ServerPlayer.awardRecipesByKey takes recipe ResourceKeys where 1.21.1's took ids: a 1.21.1 override reads each key's id, and every call (its own super call included) hands keys"
+  },
+  {
+   "under": "net/minecraft/class_2989",
+   "member": "method_20724(Ljava/util/Map;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#advancementJson(Lnet/minecraft/class_2989;Ljava/util/Map;)Ljava/util/Map;",
+    null,
+    null
+   ],
+   "ret": null,
+   "basis": "1.21.2's ServerAdvancementManager.apply takes the parsed advancements where 1.21.1's took their JSON: a 1.21.1 override reads each advancement's JSON (encoded with the manager's own JSON ops), and its super call gives 1.21.2 back the advancements the untouched entries stand for (CbRestServer.AdvancementJson)"
+  },
+  {
+   "under": "net/minecraft/class_4309",
+   "member": "method_20731(Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;)Ljava/util/Map;",
+   "args": [
+    null,
+    null
+   ],
+   "ret": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#preparedValues(Lnet/minecraft/class_4309;Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "1.21.1's SimpleJsonResourceReloadListener.prepare answered each file's JSON; 1.21.2's answers the values its codec parses. A 1.21.1 override's JSON is parsed with the listener's own codec and ops (identity for a 1.21.1 listener, built with the JSON codec); its super call scans the files as 1.21.2 does and answers their JSON (superRedirects), so a 1.21.1 subclass of ServerAdvancementManager reads JSON as it did"
+  },
+  {
+   "under": "net/minecraft/class_7196",
+   "member": "method_41895(Ljava/lang/String;Lnet/minecraft/class_1940;Lnet/minecraft/class_5285;Ljava/util/function/Function;Lnet/minecraft/class_437;)V",
+   "args": [
+    null,
+    null,
+    null,
+    "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#legacyDimensions(Ljava/util/function/Function;)Ljava/util/function/Function;",
+    null
+   ],
+   "ret": null,
+   "basis": "1.21.2's createFreshLevel takes a dimensions function of a lookup provider where 1.21.1's took one of a registry access: a 1.21.1 override applies 1.21.2's function to registry accesses, which are lookup providers, so it is handed on as it is; a 1.21.1 function handed in is asked with the access the provider stands for (CbRestServer.worldgenDimensions)"
+  }
+ ],
+ "genericWitnesses": {
+  "net/minecraft/class_3847$class_3849.<init>(Ljava/util/Queue;)V": {
+   "by": [
+    "net/minecraft/class_3847$class_3849"
+   ],
+   "basis": "1.21.1's QueueStrictQueue is renamed to the layer's facade (StrictQueue$QueueStrictQueue, generic in T as 1.21.1's): a 1.21.1 mod's constructor call builds that facade, never 1.21.2's Runnable-only class"
   }
  }
 }
