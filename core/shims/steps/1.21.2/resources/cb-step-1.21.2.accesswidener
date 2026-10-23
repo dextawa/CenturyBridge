@@ -21,12 +21,6 @@ accessible method net/minecraft/class_2852 method_12393 ([Lit/unimi/dsi/fastutil
 
 # s7render: ModelBakery's baker getModel(id), the 1.21.1 ModelBaker.getModel (CbRenderBakeBakerMixin)
 accessible method net/minecraft/class_1088$class_7778 method_45872 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
-
-# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
-accessible method net/minecraft/class_1011 method_4305 (III)V
-accessible method net/minecraft/class_1011 method_4315 (II)I
-accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
-# ---- END GENERATED (s7render) ----
 # ---- s7entity: Phantom.canAttack(level, target, conditions), package-private in 1.21.2, answered by a mod Phantom's 1.21.1 canAttack(target, conditions) override (s7entity.json overrideHooks) ----
 accessible method net/minecraft/class_1593 method_64463 (Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z
 extendable method net/minecraft/class_1593 method_64463 (Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z
@@ -38,3 +32,9 @@ accessible field net/minecraft/class_1541 field_46776 Ljava/lang/String;
 accessible method net/minecraft/class_1309 method_26318 (Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;
 extendable method net/minecraft/class_1309 method_26318 (Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;
 # ---- END GENERATED (s7entity) ----
+
+# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
+accessible method net/minecraft/class_1011 method_4305 (III)V
+accessible method net/minecraft/class_1011 method_4315 (II)I
+accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
+# ---- END GENERATED (s7render) ----

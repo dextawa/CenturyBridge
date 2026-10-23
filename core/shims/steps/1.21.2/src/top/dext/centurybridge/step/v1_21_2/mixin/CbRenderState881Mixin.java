@@ -16,7 +16,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.Guard;
 public abstract class CbRenderState881Mixin {
 
     /** 1.21.1 method_3888(Lnet/minecraft/class_1690;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V: the 1.21.2 method_3936 of a state extracted from the entity, as vanilla's */
-    public void method_3888(net.minecraft.class_1690 p0, float p1, float p2, net.minecraft.class_4587 p3, net.minecraft.class_4597 p4, int p5) {
+    public void method_3888(net.minecraft.class_10255 p0, float p1, float p2, net.minecraft.class_4587 p3, net.minecraft.class_4597 p4, int p5) {
         net.minecraft.class_10017 s = CbRenderLiving.stateOf((net.minecraft.class_897<?, ?>) (Object) this, p0, p2);
         boolean in = Guard.cbEnter(this);
         try {
@@ -30,6 +30,6 @@ public abstract class CbRenderState881Mixin {
 
     /** javac's 1.21.1 bridge method_3936(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V to it */
     public void method_3936(net.minecraft.class_1297 p0, float p1, float p2, net.minecraft.class_4587 p3, net.minecraft.class_4597 p4, int p5) {
-        this.method_3888((net.minecraft.class_1690) p0, p1, p2, p3, p4, p5);
+        this.method_3888((net.minecraft.class_10255) p0, p1, p2, p3, p4, p5);
     }
 }

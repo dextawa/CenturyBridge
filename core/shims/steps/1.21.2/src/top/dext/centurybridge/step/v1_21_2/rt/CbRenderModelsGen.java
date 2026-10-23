@@ -572,7 +572,7 @@ public final class CbRenderModelsGen {
 
     /** a 1.21.1 model overriding setupAnim(Lnet/minecraft/class_1690;FFFFF)V */
     public interface Anim28 {
-        void method_22952(net.minecraft.class_1690 entity, float limbAngle, float limbDistance, float ageInTicks, float headYaw, float headPitch);
+        void method_22952(net.minecraft.class_10255 entity, float limbAngle, float limbDistance, float ageInTicks, float headYaw, float headPitch);
 
         /** prepareMobModel(Lnet/minecraft/class_1297;FFF)V: 1.21.1's EntityModel one is empty; a model overriding it implements it */
         default void method_2816(net.minecraft.class_1297 entity, float limbAngle, float limbDistance, float partialTick) {
@@ -581,7 +581,7 @@ public final class CbRenderModelsGen {
 
     public static void anim28(Anim28 self, net.minecraft.class_10017 state) {
         CbRenderModels.setupAnim(self, state, (e, a) -> {
-            if (e instanceof net.minecraft.class_1690 t) {
+            if (e instanceof net.minecraft.class_10255 t) {
                 if (e instanceof net.minecraft.class_1297 p) {
                     self.method_2816(p, a.walkPos(), a.walkSpeed(), a.partialTick());
                 }
@@ -892,7 +892,7 @@ public final class CbRenderModelsGen {
 
     /** a 1.21.1 model overriding setupAnim(Lnet/minecraft/class_1690;FFFFF)V */
     public interface Anim44 {
-        void method_45711(net.minecraft.class_1690 entity, float limbAngle, float limbDistance, float ageInTicks, float headYaw, float headPitch);
+        void method_45711(net.minecraft.class_10255 entity, float limbAngle, float limbDistance, float ageInTicks, float headYaw, float headPitch);
 
         /** prepareMobModel(Lnet/minecraft/class_1297;FFF)V: 1.21.1's EntityModel one is empty; a model overriding it implements it */
         default void method_2816(net.minecraft.class_1297 entity, float limbAngle, float limbDistance, float partialTick) {
@@ -901,7 +901,7 @@ public final class CbRenderModelsGen {
 
     public static void anim44(Anim44 self, net.minecraft.class_10017 state) {
         CbRenderModels.setupAnim(self, state, (e, a) -> {
-            if (e instanceof net.minecraft.class_1690 t) {
+            if (e instanceof net.minecraft.class_10255 t) {
                 if (e instanceof net.minecraft.class_1297 p) {
                     self.method_2816(p, a.walkPos(), a.walkSpeed(), a.partialTick());
                 }
