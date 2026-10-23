@@ -6,7 +6,9 @@
   "net/minecraft/class_3193.method_40066()Ljava/util/List;": "method_60475",
   "net/minecraft/class_3193.method_23270()Lnet/minecraft/class_2806;": "method_60476",
   "net/minecraft/class_3193.method_14010()Lnet/minecraft/class_2791;": "method_60471",
-  "net/minecraft/class_3193.method_13993(Lnet/minecraft/class_2806;Lnet/minecraft/class_3898;)Ljava/util/concurrent/CompletableFuture;": "method_60458"
+  "net/minecraft/class_3193.method_13993(Lnet/minecraft/class_2806;Lnet/minecraft/class_3898;)Ljava/util/concurrent/CompletableFuture;": "method_60458",
+  "net/minecraft/class_3492.method_15120()Z": "method_61021",
+  "net/minecraft/class_3485.method_44228(Lnet/minecraft/class_2960;Ljava/lang/String;)Ljava/nio/file/Path;": "method_15085"
  },
  "overrideRenames": [
   {
@@ -57,6 +59,20 @@
    "onlyUnder": "net/minecraft/class_3193",
    "superCalls": "rename",
    "basis": "getOrScheduleFuture(status, chunkMap) is 1.21 GenerationChunkHolder.scheduleChunkGenerationTask(status, chunkMap): the future of the chunk reaching the status, scheduling the work when not there yet; vanilla asks it where 1.20.6 asked getOrScheduleFuture (ServerChunkCache.getChunkFutureMainThread)"
+  },
+  {
+   "old": "method_15120()Z",
+   "new": "method_61021",
+   "onlyUnder": "net/minecraft/class_3492",
+   "superCalls": "rename",
+   "basis": "shouldKeepLiquids is 1.21's shouldApplyWaterlogging: StructureTemplate.placeInWorld waterlogs blocks placed into fluid exactly when it answers true, as 1.20.6 did on keepLiquids"
+  },
+  {
+   "old": "method_44228(Lnet/minecraft/class_2960;Ljava/lang/String;)Ljava/nio/file/Path;",
+   "new": "method_15085",
+   "onlyUnder": "net/minecraft/class_3485",
+   "superCalls": "rename",
+   "basis": "getPathToGeneratedStructure(id, extension) is 1.21's createPathToStructure(id, extension): the generated directory's namespace/structures/path + extension, asked where 1.20.6 asked it (save, the test structure commands); 1.21 also refuses an id resolving outside that directory"
   }
  ],
  "fieldGetters": {
@@ -75,7 +91,8 @@
  ],
  "instanceRedirects": {
   "net/minecraft/class_2794.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12088",
-  "net/minecraft/class_3754.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12088"
+  "net/minecraft/class_3754.method_12088(Ljava/util/concurrent/Executor;Lnet/minecraft/class_6748;Lnet/minecraft/class_7138;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#method_12088",
+  "net/minecraft/class_3492.method_35476(Z)Lnet/minecraft/class_3492;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_35476"
  },
  "ctorRedirects": {
   "net/minecraft/class_9312.<init>(Lnet/minecraft/class_3218;Lnet/minecraft/class_2794;Lnet/minecraft/class_3485;Lnet/minecraft/class_3227;)V": "top/dext/centurybridge/step/v1_21/rt/CbLevelChunks#newWorldGenContext"
@@ -122,6 +139,204 @@
     "method_38275(Lnet/minecraft/class_7138;Lnet/minecraft/class_6748;Lnet/minecraft/class_5138;Lnet/minecraft/class_2791;)Ljava/util/concurrent/CompletableFuture;"
    ],
    "basis": "1.21 calls createBiomes(random, blender, structures, chunk) without the executor (1.20.6's own createBiomes never read it): a 1.20.6 generator's own method runs with the direct executor; its super call reaches super's 1.21 method"
+  },
+  {
+   "old": "method_35476(Z)Lnet/minecraft/class_3492;",
+   "new": "method_61020(Lnet/minecraft/class_9822;)Lnet/minecraft/class_3492;",
+   "onlyUnder": "net/minecraft/class_3492",
+   "wrap": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures.keepLiquids(Lnet/minecraft/class_9822;)Z",
+   "guard": "top/dext/centurybridge/step/v1_21/rt/Guard",
+   "basis": "1.21 sets setLiquidSettings(liquids) where 1.20.6 set setKeepLiquids(keep): a 1.20.6 override is handed keep = (liquids == APPLY_WATERLOGGING); its super call sets the matching liquid settings, reaching 1.21's own method through the guard"
   }
- ]
+ ],
+ "callReshapes": {
+  "net/minecraft/class_3784.method_16626(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Z)Z": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_9822;Z)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;",
+    "keep:9"
+   ],
+   "basis": "place(...) takes the liquid settings since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  },
+  "net/minecraft/class_3781.method_16626(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Z)Z": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_9822;Z)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;",
+    "keep:9"
+   ],
+   "basis": "place(...) takes the liquid settings since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  },
+  "net/minecraft/class_3776.method_16626(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Z)Z": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_9822;Z)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;",
+    "keep:9"
+   ],
+   "basis": "place(...) takes the liquid settings since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  },
+  "net/minecraft/class_3782.method_16626(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Z)Z": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_9822;Z)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;",
+    "keep:9"
+   ],
+   "basis": "place(...) takes the liquid settings since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  },
+  "net/minecraft/class_3777.method_16626(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Z)Z": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_9822;Z)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;",
+    "keep:9"
+   ],
+   "basis": "place(...) takes the liquid settings since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  },
+  "net/minecraft/class_5188.method_16626(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Z)Z": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_9822;Z)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;",
+    "keep:9"
+   ],
+   "basis": "place(...) takes the liquid settings since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  },
+  "net/minecraft/class_3781.method_16616(Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Z)Lnet/minecraft/class_3492;": {
+   "desc": "(Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_9822;Z)Lnet/minecraft/class_3492;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;",
+    "keep:2"
+   ],
+   "basis": "getSettings(rotation, box, keepJigsaws) takes the liquid settings since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  },
+  "net/minecraft/class_5188.method_16616(Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Z)Lnet/minecraft/class_3492;": {
+   "desc": "(Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_9822;Z)Lnet/minecraft/class_3492;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;",
+    "keep:2"
+   ],
+   "basis": "getSettings(rotation, box, keepJigsaws) takes the liquid settings since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  },
+  "net/minecraft/class_3778.method_30419(Lnet/minecraft/class_3195$class_7149;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_2338;ZLjava/util/Optional;ILnet/minecraft/class_8891;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_3195$class_7149;Lnet/minecraft/class_6880;Ljava/util/Optional;ILnet/minecraft/class_2338;ZLjava/util/Optional;ILnet/minecraft/class_8891;Lnet/minecraft/class_9778;Lnet/minecraft/class_9822;)Ljava/util/Optional;",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "push top/dext/centurybridge/step/v1_21/rt/CbData#defaultPadding()Lnet/minecraft/class_9778;",
+    "push top/dext/centurybridge/step/v1_21/rt/CbData#defaultLiquidSettings()Lnet/minecraft/class_9822;"
+   ],
+   "basis": "JigsawPlacement.addPieces takes the dimension padding and liquid settings since 1.21; 1.21's own defaults for both (JigsawStructure.DEFAULT_DIMENSION_PADDING: none; DEFAULT_LIQUID_SETTINGS: APPLY_WATERLOGGING) are what 1.20.6 did"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_3781.<init>(Lcom/mojang/datafixers/util/Either;Lnet/minecraft/class_6880;Lnet/minecraft/class_3785$class_3786;)V": {
+   "desc": "(Lcom/mojang/datafixers/util/Either;Lnet/minecraft/class_6880;Lnet/minecraft/class_3785$class_3786;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#noLiquidOverride()Ljava/util/Optional;"
+   ],
+   "basis": "a 1.21 single pool element may override the placement's liquid settings; a 1.20.6 one has no such override (Optional.empty(), what 1.21's codec reads for an element without one)"
+  },
+  "net/minecraft/class_5188.<init>(Lcom/mojang/datafixers/util/Either;Lnet/minecraft/class_6880;Lnet/minecraft/class_3785$class_3786;)V": {
+   "desc": "(Lcom/mojang/datafixers/util/Either;Lnet/minecraft/class_6880;Lnet/minecraft/class_3785$class_3786;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#noLiquidOverride()Ljava/util/Optional;"
+   ],
+   "basis": "a 1.21 single pool element may override the placement's liquid settings; a 1.20.6 one has no such override (Optional.empty(), what 1.21's codec reads for an element without one)"
+  },
+  "net/minecraft/class_3790.<init>(Lnet/minecraft/class_3485;Lnet/minecraft/class_3784;Lnet/minecraft/class_2338;ILnet/minecraft/class_2470;Lnet/minecraft/class_3341;)V": {
+   "desc": "(Lnet/minecraft/class_3485;Lnet/minecraft/class_3784;Lnet/minecraft/class_2338;ILnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_9822;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;"
+   ],
+   "basis": "PoolElementStructurePiece takes the liquid settings it places with since 1.21; 1.20.6 placed with keepLiquids, true unless a caller cleared it, and no pool element, piece or jigsaw placement of 1.20.6 cleared it: 1.21's APPLY_WATERLOGGING"
+  }
+ },
+ "frameDefaults": {
+  "method_16626(Lnet/minecraft/class_3485;Lnet/minecraft/class_5281;Lnet/minecraft/class_5138;Lnet/minecraft/class_2794;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Z)Z": {
+   "9": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;"
+  },
+  "method_16616(Lnet/minecraft/class_2470;Lnet/minecraft/class_3341;Z)Lnet/minecraft/class_3492;": {
+   "2": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#applyWaterlogging()Lnet/minecraft/class_9822;"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_3485.method_15085(Ljava/nio/file/Path;Lnet/minecraft/class_2960;Ljava/lang/String;)Ljava/nio/file/Path;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_15085"
+ },
+ "superRedirects": {
+  "net/minecraft/class_3492.method_35476(Z)Lnet/minecraft/class_3492;": "top/dext/centurybridge/step/v1_21/rt/CbLevelStructures#method_35476"
+ }
 }
