@@ -15,3 +15,6 @@ mutable field net/minecraft/class_507 field_3095 Lnet/minecraft/class_1729;
 mutable field net/minecraft/class_5699 field_42268 Lcom/mojang/serialization/Codec;
 mutable field net/minecraft/class_5699 field_45075 Lcom/mojang/serialization/Codec;
 # ---- END GENERATED (s7rest) ----
+
+# ---- s7level: members 1.21.1 had public that 1.21.2 keeps private (same body, verified) ----
+accessible method net/minecraft/class_2852 method_12393 ([Lit/unimi/dsi/fastutil/shorts/ShortList;)Lnet/minecraft/class_2499;

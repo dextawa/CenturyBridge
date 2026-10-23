@@ -70,7 +70,16 @@
     "CbRestSelectorContentsMixin",
     "CbRestServerChunkCacheMixin",
     "CbRestServerLevelMixin",
-    "CbRestServerPropertiesMixin"
+    "CbRestServerPropertiesMixin",
+    "CbLevelCarvingBiomeMixin",
+    "CbLevelCarvingBuilderAccess",
+    "CbLevelCarvingBuilderMixin",
+    "CbLevelCarvingImposterAccess",
+    "CbLevelCarvingNoiseMixin",
+    "CbLevelCarvingProtoMixin",
+    "CbLevelChunkAccess",
+    "CbLevelChunkMapAccess",
+    "CbLevelGameRulesAccess"
   ],
   "client": [
     "CbRenderLivingBob882Mixin",
