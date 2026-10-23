@@ -290,6 +290,16 @@
     "method_3188(FJ)V"
    ],
    "basis": "s4client: GameRenderer.renderLevel lost its pose stack in 1.20.5 (1.20.4's render() handed it a fresh one; 1.20.5 starts from the model-view stack). A 1.20.4 override is what 1.20.5 renders through (rt/CbClientLevelRender); its super call is 1.20.4's over super's new shape"
+  },
+  {
+   "old": "method_3317(FF)V",
+   "new": "method_3317(Lnet/minecraft/class_332;IIFF)V",
+   "args": [
+    4,
+    3
+   ],
+   "onlyUnder": "net/minecraft/class_766",
+   "basis": "s4client: PanoramaRenderer.render(delta, alpha) is render(graphics, width, height, fade, partialTick) since 1.20.5: a 1.20.4 override gets the frame delta (1.20.5's partialTick, which advances the spin) and the alpha (1.20.5's fade) -- mechanical.json matched the two floats in order, swapping them. Its super call stays 1.20.4's render(delta, alpha) (mixin/CbClientPanoramaMixin: the cube map only, as 1.20.4 drew it)"
   }
  ],
  "frameDefaults": {
