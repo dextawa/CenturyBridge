@@ -1783,13 +1783,20 @@ final class MixinBridge {
                 // what ats() can retarget: the wiring's new anchor, as often in W as the old in V, with the
                 // handler able to take it
                 AtFate af = a.kind().equals("INVOKE") || a.kind().equals("FIELD") ? atFate(a) : null;
+                boolean byContext = a.role().equals("main") && counterpartAnchor(kind, h, a, List.of(vmeth), List.of(wmeth), new ArrayList<>()) != null;
                 if (af == null || !af.desc().equals(a.desc()) && !kind.equals("Inject")
                         || kind.equals("Inject") && capturesLocals(h) || hasSugar(h, "Local;")) {
+                    if (byContext) {
+                        continue; // ats() retargets it to what stands in its place
+                    }
                     return a.toString();
                 }
                 MixinRepair.Anchor na = new MixinRepair.Anchor(a.kind(), af.owner(), af.name(), af.desc(), null, a.ordinal(), a.role());
                 int vc = count(List.of(vmeth), a);
                 if (vc == 0 || count(List.of(wmeth), na) != vc) {
+                    if (byContext) {
+                        continue;
+                    }
                     return a.toString();
                 }
             }
@@ -1810,6 +1817,15 @@ final class MixinBridge {
             for (AnnotationNode at : atNodes(sel.an())) {
                 Map<String, Object> av = MixinRepair.values(at);
                 String value = String.valueOf(av.get("value"));
+                if (value.equals("NEW") || value.equals("CONSTANT")) {
+                    // no wiring speaks of allocations or constants: only what W's body has in their place
+                    MixinRepair.Anchor a = MixinRepair.parseAt(av, table);
+                    if (a == null || a == MixinRepair.POSITIONAL || count(sel.w(), a) > 0 || count(sel.v(), a) == 0) {
+                        continue;
+                    }
+                    counterpartAt(sel, kind, at, value, av.get("target") instanceof String nt ? nt : null, a, null);
+                    continue;
+                }
                 if (!value.equals("INVOKE") && !value.equals("INVOKE_ASSIGN") && !value.equals("FIELD")
                         || !(av.get("target") instanceof String t)) {
                     continue;
@@ -1827,13 +1843,19 @@ final class MixinBridge {
                     + "." + a.name() + (fld ? ":" : "") + a.desc();
                 AtFate af = atFate(a);
                 if (af == null) {
+                    if (!value.equals("INVOKE_ASSIGN")) {
+                        counterpartAt(sel, kind, at, value, t, a, null);
+                    }
                     continue;
                 }
                 MixinRepair.Anchor na = new MixinRepair.Anchor(a.kind(), af.owner(), af.name(), af.desc(), null, a.ordinal());
                 int wc = count(sel.w(), na);
                 if (wc != vc) {
-                    left.add(where + ": " + af.how() + " gives " + af.name() + af.desc() + ", standing " + wc + " time(s) in "
-                        + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from);
+                    String wired = af.how() + " gives " + af.name() + af.desc() + ", standing " + wc + " time(s) in "
+                        + chain.to + " where the old one stood " + vc + " time(s) in " + chain.from;
+                    if (value.equals("INVOKE_ASSIGN") || !counterpartAt(sel, kind, at, value, t, a, wired)) {
+                        left.add(where + ": " + wired);
+                    }
                     continue;
                 }
                 if (!af.desc().equals(a.desc()) && !kind.equals("Inject")) {
@@ -1855,6 +1877,116 @@ final class MixinBridge {
                 changed = true;
                 injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + af.name() + (fld ? ":" : "") + af.desc() + " (" + af.how() + ")");
             }
+        }
+
+        /**
+         * An @At whose anchor W's body no longer holds, with no wiring that puts the same number of
+         * anything in its place: retargeted to the instruction W has where each V site stood
+         * ({@link SiteMatch#counterpart}: same kind, same significant neighbours, unique on both sides).
+         * A positional @Inject only -- every other injector handles the call or value itself, and a
+         * handler reading the target's locals reads them at a site whose surroundings changed. One new
+         * anchor must stand at every counterpart; it is pinned by ordinal unless its occurrences in W
+         * are exactly the counterparts. True when retargeted; otherwise the reason is reported.
+         */
+        private boolean counterpartAt(Selection sel, String kind, AnnotationNode at, String value, String t,
+                                      MixinRepair.Anchor a, String wired) {
+            String where = "@" + kind + " " + sn + "." + sel.handler().name + " @At " + value + " " + a;
+            List<String> why = new ArrayList<>();
+            MixinRepair.Anchor na = counterpartAnchor(kind, sel.handler(), a, sel.v(), sel.w(), why);
+            if (na == null) {
+                if (!why.isEmpty()) {
+                    left.add(where + ": " + (wired != null ? wired + "; " : "") + "in its place " + why.get(0));
+                }
+                return false;
+            }
+            switch (value) {
+                case "INVOKE", "FIELD" -> {
+                    String nt = "L" + na.owner() + ";" + na.name() + (value.equals("FIELD") ? ":" : "") + na.desc();
+                    if (t != null && ownKey(t)) {
+                        MixinRepair.refmapPut(table, t, nt);
+                        refmapDirty = true;
+                    } else {
+                        setValue(at, "target", nt);
+                    }
+                }
+                case "NEW" -> {
+                    String nt = t != null && t.startsWith("L") ? "L" + na.owner() + ";" : na.owner();
+                    if (t != null && ownKey(t)) {
+                        MixinRepair.refmapPut(table, t, nt);
+                        refmapDirty = true;
+                    } else {
+                        setValue(at, "target", nt);
+                    }
+                }
+                case "CONSTANT" -> {
+                    String key = constantKey(na.constant());
+                    List<Object> args = new ArrayList<>();
+                    for (Object o : MixinRepair.list(MixinRepair.values(at).get("args"))) {
+                        String sa = String.valueOf(o);
+                        args.add(sa.matches("\\s*(int|float|long|double|string)Value\\s*=.*") ? key + "=" + na.constant() : sa);
+                    }
+                    setValue(at, "args", args);
+                }
+                default -> {
+                    return false;
+                }
+            }
+            if (na.ordinal() >= 0) {
+                setValue(at, "ordinal", na.ordinal());
+            } else if (at.values != null) {
+                for (int i = 0; i + 1 < at.values.size(); i += 2) {
+                    if ("ordinal".equals(at.values.get(i))) {
+                        at.values.remove(i + 1);
+                        at.values.remove(i);
+                        break;
+                    }
+                }
+            }
+            changed = true;
+            injected("@" + kind + " " + sn + "." + sel.handler().name, where + " => " + na + " (the instruction standing in its place in "
+                + chain.to + ", by context" + (wired != null ? "; the wiring's own count differs" : "") + ")");
+            return true;
+        }
+
+        /** the anchor standing where V's sites of {@code a} stood (see counterpartAt), or null with why */
+        private MixinRepair.Anchor counterpartAnchor(String kind, MethodNode h, MixinRepair.Anchor a, List<MethodNode> vms,
+                                                     List<MethodNode> wms, List<String> why) {
+            if (!kind.equals("Inject") || capturesLocals(h) || hasSugar(h, "Local;") || vms.size() != 1 || wms.size() != 1) {
+                return null;
+            }
+            MethodNode vm = vms.get(0);
+            MethodNode wm = wms.get(0);
+            List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> MixinRepair.matchesAnchor(in, a));
+            if (vo.isEmpty() || a.ordinal() >= vo.size()) {
+                return null;
+            }
+            List<AbstractInsnNode> sites = a.ordinal() >= 0 ? List.of(vo.get(a.ordinal())) : vo;
+            List<AbstractInsnNode> found = new ArrayList<>();
+            for (AbstractInsnNode site : sites) {
+                AbstractInsnNode c = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in));
+                if (c == null) {
+                    why.add("W's body has no single instruction of its kind between the same neighbours ("
+                        + (sites.size() == 1 ? "the site" : found.size() + " of " + sites.size() + " sites found") + ")");
+                    return null;
+                }
+                found.add(c);
+            }
+            MixinRepair.Anchor na = anchorOf(found.get(0));
+            for (AbstractInsnNode c : found) {
+                if (!MixinRepair.matchesAnchor(c, na)) {
+                    why.add("different instructions stand in place of its " + sites.size() + " sites");
+                    return null;
+                }
+            }
+            List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, na));
+            if (sites.size() == 1 && (a.ordinal() >= 0 || wo.size() > 1)) {
+                return withOrdinal(na, wo.indexOf(found.get(0)));
+            }
+            if (!new HashSet<>(found).equals(new HashSet<>(wo))) {
+                why.add(na + " stands in place of all " + sites.size() + " sites, and " + (wo.size() - found.size()) + " time(s) elsewhere");
+                return null;
+            }
+            return na;
         }
     }
 
@@ -2276,5 +2408,27 @@ final class MixinBridge {
         }
         boolean field = desc != null && !desc.startsWith("(");
         return prefix + name + (desc == null ? "" : (field ? ":" : "") + desc);
+    }
+
+    private static MixinRepair.Anchor anchorOf(AbstractInsnNode in) {
+        if (in instanceof MethodInsnNode mi) {
+            return new MixinRepair.Anchor("INVOKE", mi.owner, mi.name, mi.desc, null, -1);
+        }
+        if (in instanceof FieldInsnNode fi) {
+            return new MixinRepair.Anchor("FIELD", fi.owner, fi.name, fi.desc, null, -1);
+        }
+        if (in instanceof TypeInsnNode ti) {
+            return new MixinRepair.Anchor("NEW", ti.desc, null, null, null, -1);
+        }
+        return new MixinRepair.Anchor("CONSTANT", null, null, null, SiteMatch.constantOf(in), -1);
+    }
+
+    private static MixinRepair.Anchor withOrdinal(MixinRepair.Anchor a, int ordinal) {
+        return new MixinRepair.Anchor(a.kind(), a.owner(), a.name(), a.desc(), a.constant(), ordinal, a.role());
+    }
+
+    private static String constantKey(Object c) {
+        return c instanceof Integer ? "intValue" : c instanceof Float ? "floatValue" : c instanceof Long ? "longValue"
+            : c instanceof Double ? "doubleValue" : "stringValue";
     }
 }

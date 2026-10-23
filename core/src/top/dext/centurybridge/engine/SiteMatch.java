@@ -77,6 +77,80 @@ public final class SiteMatch {
         return map;
     }
 
+    /**
+     * The W instruction standing where V's {@code site} stood when the site itself is gone from W: the
+     * one W instruction accepted by {@code candidate} whose significant neighbours (k before, k after,
+     * the instruction itself left out) are V's site's, for the widest k from 4 down to 2 that finds any.
+     * Null when no such instruction, or when two or more stand there, or when another V instruction of
+     * the site's kind has the same neighbours (V's site is then not singled out either).
+     */
+    public static AbstractInsnNode counterpart(MethodNode vm, AbstractInsnNode site, MethodNode wm, Predicate<AbstractInsnNode> candidate) {
+        List<String> vs = sig(vm), ws = sig(wm);
+        List<AbstractInsnNode> vsi = sigInsns(vm), wsi = sigInsns(wm);
+        int p = vsi.indexOf(site);
+        if (p < 0) return null;
+        for (int k = 4; k >= 2; k--) {
+            String key = around(vs, p, k);
+            for (int r = 0; r < vsi.size(); r++) {
+                if (r != p && candidate.test(vsi.get(r)) && around(vs, r, k).equals(key)) return null;
+            }
+            AbstractInsnNode hit = null;
+            int hits = 0;
+            for (int q = 0; q < wsi.size(); q++) {
+                if (candidate.test(wsi.get(q)) && around(ws, q, k).equals(key)) {
+                    hit = wsi.get(q);
+                    hits++;
+                }
+            }
+            if (hits == 1) return hit;
+            if (hits > 1) return null;
+        }
+        return null;
+    }
+
+    /**
+     * A W instruction of the same anchor kind as V's site: a call (a constructor call for one), the
+     * same field opcode, an allocation, a constant of the same type.
+     */
+    public static boolean sameKind(AbstractInsnNode site, AbstractInsnNode in) {
+        if (site instanceof MethodInsnNode sm) {
+            return in instanceof MethodInsnNode mi && mi.name.equals("<init>") == sm.name.equals("<init>");
+        }
+        if (site instanceof FieldInsnNode) {
+            return in instanceof FieldInsnNode && in.getOpcode() == site.getOpcode();
+        }
+        if (site instanceof TypeInsnNode && site.getOpcode() == Opcodes.NEW) {
+            return in instanceof TypeInsnNode && in.getOpcode() == Opcodes.NEW;
+        }
+        Object c = constantOf(site);
+        Object d = constantOf(in);
+        return c != null && d != null && !(c instanceof Type) && c.getClass() == d.getClass();
+    }
+
+    /** the context of position at, without the instruction itself */
+    private static String around(List<String> s, int at, int k) {
+        StringBuilder b = new StringBuilder();
+        for (int d = -k; d <= k; d++) {
+            if (d == 0) {
+                b.append("*|");
+                continue;
+            }
+            int p = at + d;
+            b.append(p < 0 || p >= s.size() ? "^" : s.get(p)).append('|');
+        }
+        return b.toString();
+    }
+
+    private static List<AbstractInsnNode> sigInsns(MethodNode m) {
+        List<AbstractInsnNode> out = new ArrayList<>();
+        if (m.instructions != null) {
+            for (AbstractInsnNode in : m.instructions) {
+                if (sigOf(in) != null) out.add(in);
+            }
+        }
+        return out;
+    }
+
     private static String ctx(List<String> s, int at, int k) {
         StringBuilder b = new StringBuilder();
         for (int d = -k; d <= k; d++) {
