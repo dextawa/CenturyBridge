@@ -18,7 +18,28 @@ import net.minecraft.class_243;
  */
 public final class CbEntitySmall {
 
+    /** a mod ItemEntity class's own 1.21.1 getSpin(partialTick) (adapter hook; CbEntitySpinMixin, CbEntitySpinRenderMixin) */
+    public interface LegacySpin {
+        float method_27314(float partialTick);
+    }
+
+    /** the override's spin CbEntitySpinStateMixin keeps on an item entity render state (NaN: none) */
+    public interface SpinState {
+        float cb$spin();
+
+        void cb$spin(float spin);
+    }
+
+    /** 1.21.1 ItemEntity.getSpin(partialTick), called: a mod class's own override answers */
     public static float getSpin(class_1542 item, float partialTick) {
+        if (item instanceof LegacySpin legacy) {
+            return legacy.method_27314(partialTick);
+        }
+        return superGetSpin(item, partialTick);
+    }
+
+    /** 1.21.1 ItemEntity's own getSpin body */
+    public static float superGetSpin(class_1542 item, float partialTick) {
         return class_1542.method_27314((float) item.method_6985() + partialTick, item.field_7203);
     }
 

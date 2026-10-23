@@ -612,7 +612,8 @@
   "net/minecraft/class_1510.method_6817(IF)[D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetLatencyPos",
   "net/minecraft/class_1510.method_6823(I[D[D)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadPartYOffset",
   "net/minecraft/class_1528.method_6879(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadYRot",
-  "net/minecraft/class_1528.method_6887(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadXRot"
+  "net/minecraft/class_1528.method_6887(I)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityDragon#superGetHeadXRot",
+  "net/minecraft/class_1542.method_27314(F)F": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#superGetSpin"
  },
  "overrideHooks": [
   {
@@ -1047,6 +1048,15 @@
    ],
    "synth": [],
    "basis": "1.21.1's getHeadXRot of a mod wither, asked by the model per head: getHeadXRots answers with it (CbEntityWitherMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1542",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall$LegacySpin",
+   "requires": [
+    "method_27314(F)F"
+   ],
+   "synth": [],
+   "basis": "1.21.1's getSpin(partialTick) of a mod item entity, asked by getVisualRotationYInDegrees and the renderer: CbEntitySpinMixin / CbEntitySpinRenderMixin ask it where 1.21.2 computes the static getSpin"
   }
  ],
  "classRenames": {
