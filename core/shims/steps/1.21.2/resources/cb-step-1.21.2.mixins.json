@@ -18,6 +18,7 @@
     "CbEntityPiglinAiInvoker",
     "CbEntityPiglinInvoker",
     "CbEntityTargetingAccess",
+    "CbItemAnimalArmorMixin",
     "CbItemArmorMaterialMixin",
     "CbItemArmorMixin",
     "CbItemConsumeSoundMixin",

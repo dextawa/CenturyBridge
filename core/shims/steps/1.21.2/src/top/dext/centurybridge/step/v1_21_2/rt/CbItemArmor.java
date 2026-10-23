@@ -17,6 +17,7 @@ import net.minecraft.class_1741;
 import net.minecraft.class_1792;
 import net.minecraft.class_1856;
 import net.minecraft.class_2357;
+import net.minecraft.class_4059;
 import net.minecraft.class_2370;
 import net.minecraft.class_2378;
 import net.minecraft.class_2960;
@@ -270,8 +271,8 @@ public final class CbItemArmor {
         class_8051 cb$armorType();
     }
 
-    /** 1.21.2's ArmorItem carries its material and type (CbItemArmorMixin) */
-    private static ArmorFields fields(class_1738 item) {
+    /** the material and type 1.21.2's ArmorItem / AnimalArmorItem was built with (CbItemArmorMixin, CbItemAnimalArmorMixin) */
+    private static ArmorFields f(class_1792 item) {
         return (ArmorFields) (Object) item;
     }
 
@@ -306,69 +307,168 @@ public final class CbItemArmor {
         class_6880<class_3414> method_31570();
     }
 
+    // 1.21.1's ArmorItem members: a call reaches the class's own override, else 1.21.1's body (super_); one overload
+    // per receiver 1.21.2 has for them -- ArmorItem, and AnimalArmorItem, an ArmorItem in 1.21.1 but not in 1.21.2
+
     /** getType() */
+    private static class_8051 call_method_48398(class_1792 item) {
+        return item instanceof LegacyType l ? l.method_48398() : body_method_48398(item);
+    }
+
+    private static class_8051 body_method_48398(class_1792 item) {
+        return f(item).cb$armorType();
+    }
+
     public static class_8051 method_48398(class_1738 item) {
-        return item instanceof LegacyType l ? l.method_48398() : super_method_48398(item);
+        return call_method_48398(item);
     }
 
     public static class_8051 super_method_48398(class_1738 item) {
-        return fields(item).cb$armorType();
+        return body_method_48398(item);
+    }
+
+    public static class_8051 method_48398(class_4059 item) {
+        return call_method_48398(item);
+    }
+
+    public static class_8051 super_method_48398(class_4059 item) {
+        return body_method_48398(item);
     }
 
     /** getMaterial() */
+    private static class_6880<ArmorMaterial> call_method_7686(class_1792 item) {
+        return item instanceof LegacyMaterial l ? l.method_7686() : body_method_7686(item);
+    }
+
+    private static class_6880<ArmorMaterial> body_method_7686(class_1792 item) {
+        return fromW(f(item).cb$armorMaterial());
+    }
+
     public static class_6880<ArmorMaterial> method_7686(class_1738 item) {
-        return item instanceof LegacyMaterial l ? l.method_7686() : super_method_7686(item);
+        return call_method_7686(item);
     }
 
     public static class_6880<ArmorMaterial> super_method_7686(class_1738 item) {
-        return fromW(fields(item).cb$armorMaterial());
+        return body_method_7686(item);
     }
 
-    /** getDefense(): the material's defense for the item's type (1.21.1 read its fields, not getMaterial()) */
-    public static int method_7687(class_1738 item) {
-        return item instanceof LegacyDefense l ? l.method_7687() : super_method_7687(item);
+    public static class_6880<ArmorMaterial> method_7686(class_4059 item) {
+        return call_method_7686(item);
     }
 
-    public static int super_method_7687(class_1738 item) {
-        ArmorFields f = fields(item);
+    public static class_6880<ArmorMaterial> super_method_7686(class_4059 item) {
+        return body_method_7686(item);
+    }
+
+    /** getDefense(): the material's defense for the type (1.21.1 read its fields, not getMaterial()) */
+    private static int call_method_7687(class_1792 item) {
+        return item instanceof LegacyDefense l ? l.method_7687() : body_method_7687(item);
+    }
+
+    private static int body_method_7687(class_1792 item) {
+        ArmorFields f = f(item);
         return fromW(f.cb$armorMaterial()).comp_349().method_48403(f.cb$armorType());
     }
 
+    public static int method_7687(class_1738 item) {
+        return call_method_7687(item);
+    }
+
+    public static int super_method_7687(class_1738 item) {
+        return body_method_7687(item);
+    }
+
+    public static int method_7687(class_4059 item) {
+        return call_method_7687(item);
+    }
+
+    public static int super_method_7687(class_4059 item) {
+        return body_method_7687(item);
+    }
+
     /** getToughness() */
+    private static float call_method_26353(class_1792 item) {
+        return item instanceof LegacyToughness l ? l.method_26353() : body_method_26353(item);
+    }
+
+    private static float body_method_26353(class_1792 item) {
+        return fromW(f(item).cb$armorMaterial()).comp_349().comp_2303();
+    }
+
     public static float method_26353(class_1738 item) {
-        return item instanceof LegacyToughness l ? l.method_26353() : super_method_26353(item);
+        return call_method_26353(item);
     }
 
     public static float super_method_26353(class_1738 item) {
-        return fromW(fields(item).cb$armorMaterial()).comp_349().comp_2303();
+        return body_method_26353(item);
+    }
+
+    public static float method_26353(class_4059 item) {
+        return call_method_26353(item);
+    }
+
+    public static float super_method_26353(class_4059 item) {
+        return body_method_26353(item);
     }
 
     /** getEquipmentSlot(): the type's slot */
+    private static class_1304 call_method_7685(class_1792 item) {
+        return item instanceof LegacyEquipmentSlot l ? l.method_7685() : body_method_7685(item);
+    }
+
+    private static class_1304 body_method_7685(class_1792 item) {
+        return f(item).cb$armorType().method_48399();
+    }
+
     public static class_1304 method_7685(class_1738 item) {
-        return item instanceof LegacyEquipmentSlot l ? l.method_7685() : super_method_7685(item);
+        return call_method_7685(item);
     }
 
     public static class_1304 super_method_7685(class_1738 item) {
-        return fields(item).cb$armorType().method_48399();
+        return body_method_7685(item);
     }
 
-    /** getEquipSound(): getMaterial().value().equipSound() -- through the class's getMaterial() as 1.21.1's did */
+    public static class_1304 method_7685(class_4059 item) {
+        return call_method_7685(item);
+    }
+
+    public static class_1304 super_method_7685(class_4059 item) {
+        return body_method_7685(item);
+    }
+
+    /** getEquipSound(): getMaterial().value().equipSound(), through the class's getMaterial() as 1.21.1's */
+    private static class_6880<class_3414> call_method_31570(class_1792 item) {
+        return item instanceof LegacyEquipSound l ? l.method_31570() : body_method_31570(item);
+    }
+
+    private static class_6880<class_3414> body_method_31570(class_1792 item) {
+        return call_method_7686(item).comp_349().comp_2300();
+    }
+
     public static class_6880<class_3414> method_31570(class_1738 item) {
-        return item instanceof LegacyEquipSound l ? l.method_31570() : super_method_31570(item);
+        return call_method_31570(item);
     }
 
     public static class_6880<class_3414> super_method_31570(class_1738 item) {
-        return method_7686(item).comp_349().comp_2300();
+        return body_method_31570(item);
+    }
+
+    public static class_6880<class_3414> method_31570(class_4059 item) {
+        return call_method_31570(item);
+    }
+
+    public static class_6880<class_3414> super_method_31570(class_4059 item) {
+        return body_method_31570(item);
     }
 
     /** the protected field type: the type the item was built with */
     public static class_8051 field_41933(class_1738 item) {
-        return fields(item).cb$armorType();
+        return f(item).cb$armorType();
     }
 
     /** the protected field material: the holder the item was built with */
     public static class_6880<ArmorMaterial> field_7881(class_1738 item) {
-        return fromW(fields(item).cb$armorMaterial());
+        return fromW(f(item).cb$armorMaterial());
     }
 
     /**
@@ -377,6 +477,94 @@ public final class CbItemArmor {
      */
     public static class_2357 field_7879() {
         return class_10205.field_54201;
+    }
+
+    // ---- AnimalArmorItem ----
+
+    /** 1.21.2's AnimalArmorItem's body type and 1.21.1's overlay flag (CbItemAnimalArmorMixin) */
+    public interface AnimalFields {
+        class_4059.class_9076 cb$bodyType();
+
+        boolean cb$overlay();
+
+        void cb$setOverlay(boolean overlay);
+    }
+
+    private static AnimalFields a(class_4059 item) {
+        return (AnimalFields) (Object) item;
+    }
+
+    /**
+     * whether an AnimalArmorItem 1.21.1's constructor never saw has the dyed overlay: 1.21.1's vanilla ones -- leather
+     * horse armor and wolf armor had it, the iron, gold and diamond horse armors not -- by their material
+     */
+    public static boolean vanillaOverlay(class_1741 w) {
+        return w == class_1740.field_7897 || w == class_1740.field_48846;
+    }
+
+    /** new AnimalArmorItem(material, bodyType, hasOverlay, properties) */
+    public static class_4059 newAnimalArmorItem(class_6880<ArmorMaterial> material, class_4059.class_9076 bodyType, boolean hasOverlay,
+                                                class_1792.class_1793 props) {
+        class_4059 item = new class_4059(toW(material), bodyType, props);
+        a(item).cb$setOverlay(hasOverlay);
+        return item;
+    }
+
+    public interface LegacyTexture {
+        class_2960 method_18454();
+    }
+
+    public interface LegacyOverlayTexture {
+        class_2960 method_57335();
+    }
+
+    public interface LegacyBodyType {
+        class_4059.class_9076 method_55756();
+    }
+
+    /**
+     * 1.21.1's texture: the body type's locator applied to the material's registry id (horse: the id's path as
+     * textures/entity/horse/armor/horse_armor_&lt;path&gt;, wolf: textures/entity/wolf/wolf_armor, in its namespace)
+     * plus the suffix. 1.21.1 computed it in the constructor and failed there for an unregistered material.
+     */
+    private static class_2960 texture(class_4059 item, String suffix) {
+        class_2960 id = fromW(f(item).cb$armorMaterial()).method_40230().orElseThrow().method_29177();
+        class_2960 base = a(item).cb$bodyType() == class_4059.class_9076.field_47826
+            ? id.method_45136("textures/entity/wolf/wolf_armor")
+            : id.method_45134(path -> "textures/entity/horse/armor/horse_armor_" + path);
+        return base.method_48331(suffix);
+    }
+
+    /** getTexture() */
+    public static class_2960 method_18454(class_4059 item) {
+        return item instanceof LegacyTexture l ? l.method_18454() : super_method_18454(item);
+    }
+
+    public static class_2960 super_method_18454(class_4059 item) {
+        return texture(item, ".png");
+    }
+
+    /** getOverlayTexture(): null without an overlay */
+    public static class_2960 method_57335(class_4059 item) {
+        return item instanceof LegacyOverlayTexture l ? l.method_57335() : super_method_57335(item);
+    }
+
+    public static class_2960 super_method_57335(class_4059 item) {
+        return a(item).cb$overlay() ? texture(item, "_overlay.png") : null;
+    }
+
+    /** getBodyType() */
+    public static class_4059.class_9076 method_55756(class_4059 item) {
+        return item instanceof LegacyBodyType l ? l.method_55756() : super_method_55756(item);
+    }
+
+    public static class_4059.class_9076 super_method_55756(class_4059 item) {
+        return a(item).cb$bodyType();
+    }
+
+    /** isEnchantable(stack): a class's own override (the Item members' Legacy interface), else 1.21.1's false */
+    public static boolean method_7870(class_4059 item, net.minecraft.class_1799 stack) {
+        return item instanceof CbItemMembers.LegacyEnchantable l && l.method_7870(stack);
     }
 
     // ---- ArmorItem.Type (1.21.2's ArmorType) ----

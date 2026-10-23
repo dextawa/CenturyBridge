@@ -6,10 +6,12 @@
   "net/minecraft/class_1738$class_8051": "net/minecraft/class_8051"
  },
  "superRenames": {
-  "net/minecraft/class_1738": "top/dext/centurybridge/step/v1_21_2/facade/ArmorItem"
+  "net/minecraft/class_1738": "top/dext/centurybridge/step/v1_21_2/facade/ArmorItem",
+  "net/minecraft/class_4059": "top/dext/centurybridge/step/v1_21_2/facade/AnimalArmorItem"
  },
  "ctorRedirects": {
-  "net/minecraft/class_1738.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_1738$class_8051;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#newArmorItem"
+  "net/minecraft/class_1738.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_1738$class_8051;Lnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#newArmorItem",
+  "net/minecraft/class_4059.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_4059$class_9076;ZLnet/minecraft/class_1792$class_1793;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#newAnimalArmorItem"
  },
  "instanceRedirects": {
   "net/minecraft/class_1738$class_8051.method_56691()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
@@ -18,7 +20,17 @@
   "net/minecraft/class_1738.method_7687()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
   "net/minecraft/class_1738.method_26353()F": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
   "net/minecraft/class_1738.method_7685()Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
-  "net/minecraft/class_1738.method_31570()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor"
+  "net/minecraft/class_1738.method_31570()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_48398()Lnet/minecraft/class_1738$class_8051;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_7686()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_7687()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_26353()F": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_7685()Lnet/minecraft/class_1304;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_31570()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_18454()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_57335()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_55756()Lnet/minecraft/class_4059$class_9076;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_4059.method_7870(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor"
  },
  "superRedirects": {
   "net/minecraft/class_1738.method_48398()Lnet/minecraft/class_1738$class_8051;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor#super_method_48398",
@@ -82,6 +94,33 @@
    ],
    "synth": [],
    "basis": "a 1.21.1 ArmorItem subclass overriding getEquipSound(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_4059",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyTexture",
+   "requires": [
+    "method_18454()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 AnimalArmorItem subclass overriding getTexture(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_4059",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyOverlayTexture",
+   "requires": [
+    "method_57335()Lnet/minecraft/class_2960;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 AnimalArmorItem subclass overriding getOverlayTexture(): calls of it reach the override (CbItemArmor)"
+  },
+  {
+   "under": "net/minecraft/class_4059",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor$LegacyBodyType",
+   "requires": [
+    "method_55756()Lnet/minecraft/class_4059$class_9076;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 AnimalArmorItem subclass overriding getBodyType(): calls of it reach the override (CbItemArmor)"
   }
  ],
  "instanceFieldGetters": {
