@@ -95,6 +95,23 @@ public final class JarRemapper {
                     // and takes the accessor's mojang name
                     return name.startsWith("field_") || name.startsWith("comp_") ? member(owner, name) : name;
                 }
+
+                /**
+                 * A lambda or method reference names the functional interface's method in its
+                 * invokedynamic (LambdaMetafactory: the call site's name is the SAM's, the interface is
+                 * the descriptor's return type). ASM's default keeps that name, so a 1.21.11 lambda for a
+                 * vanilla interface crossed the wall still implementing method_NNNN -- an
+                 * AbstractMethodError at the first call. Other bootstraps (string concatenation, record
+                 * object methods, pattern switches) never carry a token name and stay as they are.
+                 */
+                @Override
+                public String mapInvokeDynamicMethodName(String name, String desc) {
+                    if (!name.startsWith("method_") && !name.startsWith("comp_")) {
+                        return name;
+                    }
+                    org.objectweb.asm.Type ret = org.objectweb.asm.Type.getReturnType(desc);
+                    return ret.getSort() == org.objectweb.asm.Type.OBJECT ? member(ret.getInternalName(), name) : name;
+                }
             };
         }
     }

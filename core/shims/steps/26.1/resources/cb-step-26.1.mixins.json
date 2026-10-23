@@ -5,10 +5,13 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CbFapiGameRuleCategoryAccess",
-    "CbFapiGameRuleCategoryMixin"
+    "CbFapiGameRuleCategoryMixin",
+    "CbWallServerMixin"
   ],
   "client": [
     "CbWallBlockStateModelSetMixin",
+    "CbWallClientLevelDataMixin",
+    "CbWallClientRainMixin",
     "CbWallGuiAccess",
     "CbWallModelBlockRendererAccess"
   ],
