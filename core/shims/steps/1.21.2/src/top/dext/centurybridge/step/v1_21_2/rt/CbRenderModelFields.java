@@ -74,6 +74,18 @@ public final class CbRenderModelFields {
         void cb$enderman(boolean carrying, boolean creepy);
     }
 
+    /** WitchModel's holdingItem (CbRenderModelWitchMixin) */
+    public interface Witch {
+        boolean cb$holdingItem();
+
+        void cb$holdingItem(boolean holdingItem);
+    }
+
+    /** AbstractZombieModel.isAggressive(T), put back (CbRenderModelZombieMixin) */
+    public interface ZombieAggressive {
+        boolean method_17790(net.minecraft.class_1588 monster);
+    }
+
     /** FelineModel's state (CbRenderFelineMixin) */
     public interface Feline {
         int cb$felineState();
@@ -192,6 +204,10 @@ public final class CbRenderModelFields {
             // EndermanRenderer.render
             en.cb$enderman(e.method_7027() != null, e.method_7028());
         }
+        if (model instanceof Witch w && entity instanceof net.minecraft.class_1309 living) {
+            // WitchRenderer.render: setHoldingItem(!witch.getMainHandItem().isEmpty())
+            w.cb$holdingItem(!living.method_6047().method_7960());
+        }
     }
 
     /** the fields 1.21.1's vanilla prepareMobModel of the model's classes set (their bodies, see the class doc) */
@@ -237,7 +253,7 @@ public final class CbRenderModelFields {
      * attackTime / riding / young go to HumanoidRenderState.attackTime / isPassenger and LivingEntityRenderState.isBaby.
      */
     public static Object carry(Object model, net.minecraft.class_1297 entity, net.minecraft.class_10017 state) {
-        Object[] saved = new Object[10];
+        Object[] saved = new Object[14];
         Pose pose = (Pose) model;
         if (state instanceof net.minecraft.class_10042 l) {
             saved[0] = l.field_53457;
@@ -276,6 +292,10 @@ public final class CbRenderModelFields {
             fs.field_53362 = s == 2;
             fs.field_53363 = s == 3;
         }
+        if (state instanceof net.minecraft.class_10082 ws && model instanceof Witch w) {
+            saved[10] = ws.field_53616;
+            ws.field_53616 = w.cb$holdingItem();
+        }
         return saved;
     }
 
@@ -300,6 +320,9 @@ public final class CbRenderModelFields {
             fs.field_53361 = (Boolean) saved[7];
             fs.field_53362 = (Boolean) saved[8];
             fs.field_53363 = (Boolean) saved[9];
+        }
+        if (state instanceof net.minecraft.class_10082 ws && saved[10] != null) {
+            ws.field_53616 = (Boolean) saved[10];
         }
     }
 }

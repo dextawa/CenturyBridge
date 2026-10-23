@@ -47,7 +47,9 @@
   "net/minecraft/class_761.method_3258(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;DDDDDDFFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShapes",
   "net/minecraft/class_761.method_49041(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;FFFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShapes",
   "net/minecraft/class_761.method_61044(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Lnet/minecraft/class_2350;FFFFFFFFFF)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShapes",
-  "net/minecraft/class_918.method_29711(Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;ZZ)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItems"
+  "net/minecraft/class_918.method_29711(Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;ZZ)Lnet/minecraft/class_4588;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderItems",
+  "com/mojang/blaze3d/platform/GlStateManager._clear(IZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets",
+  "com/mojang/blaze3d/platform/GlStateManager.glShaderSource(ILjava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets"
  },
  "instanceRedirects": {
   "net/minecraft/class_757.method_35767(Ljava/lang/String;)Lnet/minecraft/class_5944;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders",
@@ -67,7 +69,8 @@
  "ctorRedirects": {
   "net/minecraft/class_5944.<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders#create",
   "net/minecraft/class_806.<init>(Lnet/minecraft/class_7775;Lnet/minecraft/class_793;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#overrides",
-  "net/minecraft/class_1097.<init>(Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#weightedModel"
+  "net/minecraft/class_1097.<init>(Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderBake#weightedModel",
+  "net/minecraft/class_6367.<init>(IIZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets#textureTarget"
  },
  "fieldRedirects": {
   "net/minecraft/class_5944.field_32778:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders"
@@ -192,6 +195,42 @@
    "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields.piglinAttack(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderModelFields$PiglinAttackLegacy;Lnet/minecraft/class_10054;F)V",
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "1.21.1 PiglinModel.setupAttackAnimation(Mob, ageInTicks); 1.21.2 calls its (PiglinRenderState, ageInTicks) form at the same point: the mod's override gets the extracted entity (CbRenderModelFields.piglinAttack)"
+  },
+  {
+   "old": "method_1234(IIZ)V",
+   "new": "method_1234(II)V",
+   "onlyUnder": "net/minecraft/class_276",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets$Resize",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets.resize(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets$Resize;II)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 RenderTarget.method_1234(IIZ)V: 1.21.2 calls method_1234(II)V; the synthesized one calls the mod's override with resize(width, height, Minecraft.ON_OSX) as every 1.21.1 caller (CbRenderTargets)"
+  },
+  {
+   "old": "method_1231(IIZ)V",
+   "new": "method_1231(II)V",
+   "onlyUnder": "net/minecraft/class_276",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets$CreateBuffers",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets.createBuffers(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets$CreateBuffers;II)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 RenderTarget.method_1231(IIZ)V: 1.21.2 calls method_1231(II)V; the synthesized one calls the mod's override with createBuffers(width, height, Minecraft.ON_OSX), as 1.21.1 resize passed its callers' flag (CbRenderTargets)"
+  },
+  {
+   "old": "method_1230(Z)V",
+   "new": "method_1230()V",
+   "onlyUnder": "net/minecraft/class_276",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets$Clear",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets.clear(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets$Clear;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 RenderTarget.method_1230(Z)V: 1.21.2 calls method_1230()V; the synthesized one calls the mod's override with clear(Minecraft.ON_OSX) as every 1.21.1 caller (CbRenderTargets)"
+  },
+  {
+   "old": "method_22594(IIZ)V",
+   "new": "method_1233(II)V",
+   "onlyUnder": "net/minecraft/class_276",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets$Blit",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets.blit(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRenderTargets$Blit;II)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.1 RenderTarget.method_22594(IIZ)V: 1.21.2 calls method_1233(II)V; the synthesized one calls the mod's override with blitToScreen(width, height, true): 1.21.1's blitToScreen(width, height) passed true (CbRenderTargets)"
   }
  ],
  "covers": [
@@ -241,7 +280,27 @@
   "net/minecraft/class_572.method_2818(Lnet/minecraft/class_572;)V",
   "net/minecraft/class_572.method_2804(FFF)F",
   "net/minecraft/class_572.method_29353(Lnet/minecraft/class_1309;F)V",
-  "net/minecraft/class_4840.method_29355(Lnet/minecraft/class_1308;F)V"
+  "net/minecraft/class_4840.method_29355(Lnet/minecraft/class_1308;F)V",
+  "net/minecraft/class_602.method_2829()Lnet/minecraft/class_630;",
+  "net/minecraft/class_602.method_2830()Lnet/minecraft/class_630;",
+  "net/minecraft/class_602.method_22960()Ljava/lang/Iterable;",
+  "net/minecraft/class_557.method_24184(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V",
+  "net/minecraft/class_7280.method_42738()Ljava/util/List;",
+  "net/minecraft/class_7280.method_42739()Ljava/util/List;",
+  "net/minecraft/class_7280.method_42740()Ljava/util/List;",
+  "net/minecraft/class_7280.method_42741()Ljava/util/List;",
+  "net/minecraft/class_5601.method_35743()Lnet/minecraft/class_2960;",
+  "net/minecraft/class_5601.method_35744()Ljava/lang/String;",
+  "net/minecraft/class_622.method_2840(Z)V",
+  "net/minecraft/class_3968.method_17790(Lnet/minecraft/class_1588;)Z",
+  "net/minecraft/class_623.method_17793(Lnet/minecraft/class_1642;)Z",
+  "net/minecraft/class_623.method_17790(Lnet/minecraft/class_1588;)Z",
+  "net/minecraft/class_3969.method_17792(Lnet/minecraft/class_1570;)Z",
+  "net/minecraft/class_3969.method_17790(Lnet/minecraft/class_1588;)Z",
+  "net/minecraft/class_276.method_1234(IIZ)V",
+  "net/minecraft/class_276.method_1231(IIZ)V",
+  "net/minecraft/class_276.method_1230(Z)V",
+  "net/minecraft/class_276.method_22594(IIZ)V"
  ],
  "ledger": {
   "net/minecraft/class_5944.method_1274()Lnet/minecraft/class_281;": "getVertexProgram(): 1.21.2 links a core shader program from compiled vertex/fragment shaders it does not keep: class_281 (Program) is gone and CompiledShaderProgram holds no shader objects, so there is no Program to answer (checked: class_5944 and class_10151 of 1.21.2 keep no reference to the compiled shaders after linking)",

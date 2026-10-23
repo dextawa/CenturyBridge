@@ -1079,6 +1079,41 @@ def family_parts(V, W):
                 if m.name in PARTS and m.desc == "()Ljava/lang/Iterable;" and m.code:
                     bodies[(c, m.name)] = _parse_parts(m.code, refs, frefs)
 
+    vz = zipfile.ZipFile(jar)
+    wz = zipfile.ZipFile(os.path.join(DATA, "jars/client-1.21.2-intermediary-code.jar"))
+    sys.path.insert(0, HERE)
+    import bytecode  # noqa: E402
+    dropped = []
+
+    def part_source(owner, fname):
+        """what 1.21.1's constructor of owner stored in fname: ("root",) the constructor's part, ("child", name)"""
+        k = bytecode.read(vz.read(owner + ".class"))
+        for m in k.methods:
+            if m.name != "<init>" or not m.insns:
+                continue
+            ins = m.insns
+            for j, (op, a) in enumerate(ins):
+                if op == 181 and a and a[3] == fname:
+                    if j >= 1 and ins[j - 1][0] == 43:  # aload_1: the constructor's root part
+                        return ("root",)
+                    if j >= 2 and ins[j - 1][0] == 182 and ins[j - 1][1][3] == "method_32086" and ins[j - 2][1] and ins[j - 2][1][0] == "str":
+                        return ("child", ins[j - 2][1][1])
+        return None
+
+    def w_strings(c):
+        """string constants of 1.21.2's model class and its model superclasses (the part names it builds / looks up)"""
+        out = set()
+        for x in chain(c, W):
+            try:
+                k = bytecode.read(wz.read(x + ".class"))
+            except KeyError:
+                continue
+            for m in k.methods:
+                for op, a in m.insns or []:
+                    if a and isinstance(a, tuple) and a[0] == "str":
+                        out.add(a[1])
+        return out
+
     def decl(c, name):
         """the nearest 1.21.1 class at or above c declaring a parts body"""
         for x in chain(c, V):
@@ -1105,16 +1140,27 @@ def family_parts(V, W):
                 parts = []
                 for _, owner, fname, fdesc in it[1]:
                     wo = [x for x in chain(c, W) if any(f[0] == fname and f[1] == fdesc for f in W[x].fields)]
-                    if not wo:
-                        return None
-                    acc = [f for f in W[wo[0]].fields if f[0] == fname][0][2]
-                    if acc & 0x1:
+                    acc = [f for f in W[wo[0]].fields if f[0] == fname][0][2] if wo else 0
+                    if wo and acc & 0x1:
                         parts.append(f"(({jtype('L' + wo[0] + ';')}) (Object) this).{fname}")
-                    elif wo[0] == target[0]:
+                    elif wo and wo[0] == target[0]:
                         shadows.add((fname, fdesc, acc))
                         parts.append(f"this.{fname}")
                     else:
-                        return None
+                        # 1.21.2 dropped the field (or keeps it private elsewhere): the part 1.21.1's constructor
+                        # stored there, found as 1.21.2 builds the same model -- the root itself, or the descendant
+                        # of that name (Model.getAnyDescendantWithName) when 1.21.2's model class names it
+                        src = part_source(owner, fname)
+                        if src == ("root",):
+                            parts.append("((net.minecraft.class_3879) (Object) this).method_63512()")
+                        elif src and src[1] in w_strings(target[0]):
+                            parts.append(f"((net.minecraft.class_3879) (Object) this).method_62104(\"{src[1]}\").orElseThrow()")
+                        elif src and "baby" in src[1]:
+                            # 1.21.1's adult-model baby legs, shown only for a young entity; 1.21.2 draws the young
+                            # with a separate baby model whose own legs are these parts: none on this model
+                            dropped.append(f"{target[0]}.{name}: {src[1]} (1.21.2 has a separate baby model)")
+                        else:
+                            return None
                 stack.append("com.google.common.collect.ImmutableList.of(" + ", ".join(parts) + ")")
             elif it[0] == "concat":
                 b2, a2 = stack.pop(), stack.pop()
@@ -1153,12 +1199,17 @@ def family_parts(V, W):
             out.append(f"    {vis}{jtype(fdesc)} {fname};")
         for name, e in ms:
             label = "headParts" if name == PARTS[0] else "bodyParts"
-            out += ["", f"    /** 1.21.1 {label}() */", f"    protected Iterable<net.minecraft.class_630> {name}() {{", f"        return {e};", "    }"]
+            # the 1.21.1 access of this class's own declaration (AbstractEquineModel's headParts is public)
+            own = [m for m in V[c].methods if m.name == name and m.desc == "()Ljava/lang/Iterable;"]
+            vis = "public" if own and own[0].access & 0x1 else "protected"
+            out += ["", f"    /** 1.21.1 {label}() */", f"    {vis} Iterable<net.minecraft.class_630> {name}() {{", f"        return {e};", "    }"]
             covers.append(f"{c}.{name}()Ljava/lang/Iterable;")
         out.append("}")
         open(os.path.join(MIXIN_SRC, nm + ".java"), "w", encoding="utf-8", newline="\n").write("\n".join(out) + "\n")
     for n in notes:
         print("  note:", n)
+    for n in sorted(set(dropped)):
+        print("  part not on the 1.21.2 model:", n)
     print(f"model parts: headParts/bodyParts put back in {len(by_class)} classes")
     return mixins, covers
 

@@ -11,6 +11,22 @@ public abstract class CbRenderParts558Mixin {
 
     @org.spongepowered.asm.mixin.Shadow
     @org.spongepowered.asm.mixin.Final
+    private net.minecraft.class_630 field_27401;
+
+    @org.spongepowered.asm.mixin.Shadow
+    @org.spongepowered.asm.mixin.Final
+    private net.minecraft.class_630 field_27402;
+
+    @org.spongepowered.asm.mixin.Shadow
+    @org.spongepowered.asm.mixin.Final
+    private net.minecraft.class_630 field_27403;
+
+    @org.spongepowered.asm.mixin.Shadow
+    @org.spongepowered.asm.mixin.Final
+    private net.minecraft.class_630 field_27404;
+
+    @org.spongepowered.asm.mixin.Shadow
+    @org.spongepowered.asm.mixin.Final
     private net.minecraft.class_630 field_3340;
 
     @org.spongepowered.asm.mixin.Shadow
@@ -24,5 +40,10 @@ public abstract class CbRenderParts558Mixin {
     /** 1.21.1 headParts() */
     protected Iterable<net.minecraft.class_630> method_22946() {
         return com.google.common.collect.ImmutableList.of(this.field_3344, this.field_3340, this.field_3342);
+    }
+
+    /** 1.21.1 bodyParts() */
+    protected Iterable<net.minecraft.class_630> method_22948() {
+        return com.google.common.collect.ImmutableList.of(((net.minecraft.class_3879) (Object) this).method_62104("body").orElseThrow(), this.field_27401, this.field_27402, this.field_27403, this.field_27404);
     }
 }
