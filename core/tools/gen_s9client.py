@@ -99,6 +99,7 @@ def main():
     sr["net/minecraft/class_9017"] = "top/dext/centurybridge/step/v1_21_4/facade/LegacyAbstractContainerWidget"
     frag["superRenames"] = sr
     gui_misc(frag)
+    item_predicates(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -150,6 +151,29 @@ def gui_misc(frag):
     covers = set(frag.get("covers", []))
     covers.add("net/minecraft/class_516.method_2656()Z")
     frag["covers"] = sorted(covers)
+
+
+FAC = "top/dext/centurybridge/step/v1_21_4/facade/"
+
+
+def item_predicates(frag):
+    """1.21.3 model predicates (ItemProperties and its functions) on 1.21.4's item model definitions."""
+    cr = frag.setdefault("classRenames", {})
+    cr["net/minecraft/class_1800"] = FAC + "ItemPropertyFunction"
+    cr["net/minecraft/class_6395"] = FAC + "ClampedItemPropertyFunction"
+    cr["net/minecraft/class_5272"] = FAC + "ItemProperties"
+    cr["net/minecraft/class_7391"] = FAC + "CompassItemPropertyFunction"
+    cr["net/minecraft/class_7391$class_7392"] = FAC + "CompassItemPropertyFunction$CompassTarget"
+    cr["net/minecraft/class_7391$class_5171"] = FAC + "CompassItemPropertyFunction$CompassWobble"
+    cr["net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry"] = \
+        "top/dext/centurybridge/step/v1_21_4/compat/fapi/FabricModelPredicateProviderRegistry"
+    basis = frag.setdefault("classRenameBasis", {})
+    basis["net/minecraft/class_1800"] = ("1.21.3 ItemPropertyFunction; 1.21.4 reused class_1800 for RangeSelectItemModelProperty, "
+                                         "so every 1.21.3 reference meant the predicate function")
+    basis["net/minecraft/class_5272"] = "ItemProperties, ClampedItemPropertyFunction, CompassItemPropertyFunction are gone in 1.21.4"
+    rt = set(frag.get("resourceTypes", []))
+    rt.add("centurybridge:legacy_overrides")
+    frag["resourceTypes"] = sorted(rt)
 
 
 if __name__ == "__main__":

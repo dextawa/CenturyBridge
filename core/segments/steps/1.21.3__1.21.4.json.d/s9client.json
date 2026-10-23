@@ -187,10 +187,19 @@
   "net/minecraft/class_372.field_32225:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc"
  },
  "classRenames": {
-  "net/minecraft/class_7528": "net/minecraft/class_10415"
+  "net/minecraft/class_7528": "net/minecraft/class_10415",
+  "net/minecraft/class_1800": "top/dext/centurybridge/step/v1_21_4/facade/ItemPropertyFunction",
+  "net/minecraft/class_6395": "top/dext/centurybridge/step/v1_21_4/facade/ClampedItemPropertyFunction",
+  "net/minecraft/class_5272": "top/dext/centurybridge/step/v1_21_4/facade/ItemProperties",
+  "net/minecraft/class_7391": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction",
+  "net/minecraft/class_7391$class_7392": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction$CompassTarget",
+  "net/minecraft/class_7391$class_5171": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction$CompassWobble",
+  "net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/FabricModelPredicateProviderRegistry"
  },
  "classRenameBasis": {
-  "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget"
+  "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
+  "net/minecraft/class_1800": "1.21.3 ItemPropertyFunction; 1.21.4 reused class_1800 for RangeSelectItemModelProperty, so every 1.21.3 reference meant the predicate function",
+  "net/minecraft/class_5272": "ItemProperties, ClampedItemPropertyFunction, CompassItemPropertyFunction are gone in 1.21.4"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -271,5 +280,8 @@
  },
  "staticRedirects": {
   "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105"
- }
+ },
+ "resourceTypes": [
+  "centurybridge:legacy_overrides"
+ ]
 }
