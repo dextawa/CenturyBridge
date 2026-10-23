@@ -59,6 +59,8 @@ public final class StubDiff {
         public final Set<String> statics = new HashSet<>();
         /** "owner.name(desc)" of abstract methods: what a concrete subclass must implement (Chain.abstractFills) */
         public final Set<String> abstracts = new HashSet<>();
+        /** "owner.name(desc)" of final methods: a subclass may not override them (Chain.targetFinalMethods) */
+        public final Set<String> finals = new HashSet<>();
         /** class -> superclass / implemented interfaces */
         public final Map<String, String> superOf = new HashMap<>();
         public final Map<String, List<String>> interfacesOf = new HashMap<>();
@@ -197,6 +199,9 @@ public final class StubDiff {
                             }
                             if ((acc & Opcodes.ACC_ABSTRACT) != 0) {
                                 idx.abstracts.add(owner + "." + name + desc);
+                            }
+                            if ((acc & Opcodes.ACC_FINAL) != 0) {
+                                idx.finals.add(owner + "." + name + desc);
                             }
                         }
                         return null;
