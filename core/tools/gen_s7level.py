@@ -45,7 +45,7 @@ class Fragment:
         self.v, self.w_stub = v, w
         self.w = {k: ({} if k not in ("overrideHooks", "overrideRenames", "adapterHooks", "abstractFills",
                                       "convertHooks", "covers") else [])
-                  for k in ("methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
+                  for k in ("superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
                             "instanceRedirects", "fieldRedirects", "fieldGetters", "instanceFieldGetters",
                             "superRedirects", "covers", "overrideHooks", "overrideRenames", "frameDefaults",
                             "convertHooks", "adapterHooks", "abstractFills", "lambdaAdapters", "genericWitnesses",
@@ -224,6 +224,153 @@ def schedule_tick(f):
             "basis": "scheduleTick is ScheduledTickAccess's since 1.21.2: the same default body, under its new name"})
 
 
+# ------------------------------------------------------------------------------------------- neighbor updates
+NB = RT + "/CbLevelNeighbors"
+BLK, ORI = L("class_2248"), L("class_9904")
+LEVEL, NU = MC + "class_1937", MC + "class_7165"
+
+
+def neighbors(f):
+    # Block.neighborChanged(state, level, pos, block, fromPos, moved) -> (.., Orientation, moved)
+    args_old = BS + LVL + POS + BLK + POS + "Z"
+    args_new = BS + LVL + POS + BLK + ORI + "Z"
+    old = "method_9612(" + args_old + ")V"
+    new = "method_9612(" + args_new + ")V"
+    f.hook(old=old, new=new, onlyUnder=BB, adapter=NB + "$Legacy",
+           bridge=NB + ".neighborChanged(L" + NB + "$Legacy;" + args_new + ")V",
+           superBridge=NB + ".superNeighborChanged(L" + NB + "$Super;" + args_old + ")V",
+           superAccess=NB + "$Super", superAccessors=[new],
+           basis="1.21.2 tells a block an Orientation where 1.21.1 told it the neighbor's position: the 1.21.1 override "
+                 "gets the source the update was made for (recorded where 1.21.2 starts it, CbLevelNeighbors); its super "
+                 "call reaches super's 1.21.2 neighborChanged with the orientation vanilla passed")
+    f.put("instanceRedirects", BB + "." + old, NB)
+    # BlockStateBase.handleNeighborChanged(level, pos, block, fromPos, moved)
+    sa_old = LVL + POS + BLK + POS + "Z"
+    sa_new = LVL + POS + BLK + ORI + "Z"
+    sold = "method_26181(" + sa_old + ")V"
+    snew = "method_26181(" + sa_new + ")V"
+    f.hook(old=sold, new=snew, onlyUnder=BSB, adapter=NB + "$LegacyState",
+           bridge=NB + ".handleNeighborChanged(L" + NB + "$LegacyState;" + sa_new + ")V",
+           superBridge=NB + ".superHandleNeighborChanged(L" + NB + "$SuperState;" + sa_old + ")V",
+           superAccess=NB + "$SuperState", superAccessors=[snew],
+           basis="BlockState.handleNeighborChanged, as Block.neighborChanged (CbLevelNeighbors)")
+    f.put("instanceRedirects", BSB + "." + sold, NB)
+    # Level.neighborChanged(pos, block, fromPos) / (state, pos, block, fromPos, moved)
+    for name, a_old, a_new, legacy, sup, bridge in (
+            ("method_8492", POS + BLK + POS, POS + BLK + ORI, "LegacyLevel", "SuperLevel", "levelNeighborChanged"),
+            ("method_41410", BS + POS + BLK + POS + "Z", BS + POS + BLK + ORI + "Z", "LegacyLevelFull", "SuperLevelFull",
+             "levelNeighborChangedFull")):
+        o = name + "(" + a_old + ")V"
+        n = name + "(" + a_new + ")V"
+        f.put("instanceRedirects", LEVEL + "." + o, NB)
+        f.hook(old=o, new=n, onlyUnder=LEVEL, adapter=NB + "$" + legacy,
+               bridge=NB + "." + bridge + "(L" + NB + "$" + legacy + ";" + a_new + ")V",
+               superBridge=NB + ".super" + bridge[0].upper() + bridge[1:] + "(L" + NB + "$" + sup + ";" + a_old + ")V",
+               superAccess=NB + "$" + sup, superAccessors=[n],
+               basis="a 1.21.1 Level subclass's neighborChanged override, told the source its caller named "
+                     "(CbLevelNeighbors)")
+    # NeighborUpdater.neighborChanged(pos, block, fromPos) / (state, pos, block, fromPos, moved), interface methods
+    for name, a_old, a_new, legacy, sup, bridge in (
+            ("method_41704", POS + BLK + POS, POS + BLK + ORI, "LegacyUpdater", "SuperUpdater", "updaterNeighborChanged"),
+            ("method_41703", BS + POS + BLK + POS + "Z", BS + POS + BLK + ORI + "Z", "LegacyUpdaterFull", "SuperUpdaterFull",
+             "updaterNeighborChangedFull")):
+        o = name + "(" + a_old + ")V"
+        n = name + "(" + a_new + ")V"
+        f.put("instanceRedirects", NU + "." + o, NB)
+        f.hook(old=o, new=n, onlyUnder=NU, adapter=NB + "$" + legacy,
+               bridge=NB + "." + bridge + "(L" + NB + "$" + legacy + ";" + a_new + ")V",
+               superBridge=NB + ".super" + bridge[0].upper() + bridge[1:] + "(L" + NB + "$" + sup + ";" + a_old + ")V",
+               superAccess=NB + "$" + sup, superAccessors=[n],
+               basis="a 1.21.1 NeighborUpdater implementation's neighborChanged, told the source its caller named "
+                     "(CbLevelNeighbors)")
+    f.put("staticRedirects", NU + ".method_41708(" + LVL + BS + POS + BLK + POS + "Z)V", NB)
+    # Level.updateNeighborsAt(pos, block) -> updateNeighborsAt(pos, block) is method_61271 now; method_8452 took an orientation
+    f.put("methodRenames", LEVEL + ".method_8452(" + POS + BLK + ")V", "method_61271")
+    f.put("callReshapes", LEVEL + ".method_8508(" + POS + BLK + DIR + ")V",
+          {"desc": "(" + POS + BLK + DIR + ORI + ")V",
+           "ops": ["keep:0", "keep:1", "keep:2", "push " + NB + "#noOrientation()" + ORI],
+           "basis": "updateNeighborsAtExceptFromFacing takes an Orientation since 1.21.2; none is what 1.21.2 passes "
+                    "for an update without one (MultiNeighborUpdate works it out when the experiments are on)"})
+    f.put("callReshapes", NU + ".method_41705(" + POS + BLK + DIR + ")V",
+          {"desc": "(" + POS + BLK + DIR + ORI + ")V",
+           "ops": ["keep:0", "keep:1", "keep:2", "push " + NB + "#noOrientation()" + ORI],
+           "basis": "NeighborUpdater.updateNeighborsAtExceptFromFacing, as Level's"})
+    # the mechanical hooks of Level.updateNeighborsAt / updateNeighborsAtExceptFromFacing and NeighborUpdater's
+    # (mechanical.json) carry the orientation; entered directly, their super call passes none, which is what 1.21.2
+    # passes there itself: ServerLevel hands it to MultiNeighborUpdate, which computes initialOrientation(level,
+    # skipped direction's opposite, null) when it has none -- the value Level.updateNeighborsAt(pos, block) computes
+    why = "zero: no orientation -- 1.21.2's MultiNeighborUpdate computes the initial one itself when it is handed none"
+    f.put("frameDefaults", "method_8452(" + POS + BLK + ")V", {"2": why})
+    f.put("frameDefaults", "method_8508(" + POS + BLK + DIR + ")V", {"3": why})
+    f.put("frameDefaults", "method_41705(" + POS + BLK + DIR + ")V", {"3": why})
+
+
+# ------------------------------------------------------------------------------------------- explosions
+EX = MC + "class_1927"
+LX = RT + "/CbLevelExplosions"
+
+
+def explosions(f):
+    f.put("superRenames", EX, FAC + "/Explosion")
+    ent, lst, bi, po, snd = L("class_1297"), "Ljava/util/List;", L("class_1927$class_4179"), L("class_2394"), L("class_6880")
+    for args in (LVL + ent + "DDDF" + lst + bi + po + po + snd,
+                 LVL + ent + "DDDFZ" + bi + lst,
+                 LVL + ent + "DDDFZ" + bi,
+                 LVL + ent + L("class_1282") + L("class_5362") + "DDDFZ" + bi + po + po + snd):
+        f.put("ctorRedirects", EX + ".<init>(" + args + ")V", LX)
+    f.put("staticRedirects", EX + ".method_17752(" + L("class_243") + ent + ")F", LX)
+    for m in ("method_8348()V", "method_8350(Z)V", "method_46667()Z", "method_8351()Ljava/util/Map;", "method_8352()V",
+              "method_8346()Ljava/util/List;", "method_55112()" + po, "method_55113()" + po, "method_55114()" + snd):
+        f.put("instanceRedirects", EX + "." + m, LX)
+    ds, calc, ia, v3 = L("class_1282"), L("class_5362"), L("class_1937$class_7867"), L("class_243")
+    for m in ("method_8437(" + ent + "DDDF" + ia + ")",
+              "method_8537(" + ent + "DDDFZ" + ia + ")",
+              "method_46407(" + ent + ds + calc + v3 + "FZ" + ia + ")",
+              "method_55117(" + ent + ds + calc + "DDDFZ" + ia + ")",
+              "method_8454(" + ent + ds + calc + "DDDFZ" + ia + po + po + snd + ")",
+              "method_46668(" + ent + ds + calc + "DDDFZ" + ia + "Z" + po + po + snd + ")"):
+        f.put("instanceRedirects", LEVEL + "." + m + L("class_1927"), LX)
+    # a 1.21.1 Level subclass's explode overrides: vanilla asks 1.21.2's void shapes
+    EXR = L("class_1927")
+    full = ent + ds + calc + "DDDFZ" + ia + po + po + snd
+    shapes_ = (("method_8437", ent + "DDDF" + ia, "8437"), ("method_8537", ent + "DDDFZ" + ia, "8537"),
+               ("method_46407", ent + ds + calc + v3 + "FZ" + ia, "46407"),
+               ("method_55117", ent + ds + calc + "DDDFZ" + ia, "55117"), ("method_8454", full, "8454"))
+    old46668 = "method_46668(" + ent + ds + calc + "DDDFZ" + ia + "Z" + po + po + snd + ")" + EXR
+    for name, a, n in shapes_:
+        old = name + "(" + a + ")" + EXR
+        new = name + "(" + a + ")V"
+        h = dict(old=old, new=new, onlyUnder=LEVEL, adapter=LX + "$Legacy" + n,
+                 bridge=LX + ".explode" + n + "(L" + LX + "$Legacy" + n + ";" + a + ")V",
+                 superBridge=LX + ".superExplode" + n + "(L" + LX + "$Super" + n + ";" + a + ")" + EXR,
+                 superAccess=LX + "$Super" + n, superAccessors=[new],
+                 basis="1.21.2's explode answers nothing: vanilla asking a 1.21.1 level's override runs it and drops its "
+                       "explosion; its super call answers the one 1.21.1's Level/ServerLevel dispatch made "
+                       "(CbLevelExplosions)")
+        if n == "8454":
+            h["shadows"] = [old46668]
+        f.hook(**h)
+    f.hook(old=old46668, new="method_8454(" + full + ")V", onlyUnder=LEVEL, adapter=LX + "$Legacy46668",
+           bridge=LX + ".explode46668(L" + LX + "$Legacy46668;" + full + ")V",
+           superBridge=LX + ".superExplode46668(L" + LX + "$Super8454;" + old46668[len("method_46668("):-len(EXR) - 1] + ")" + EXR,
+           superAccess=LX + "$Super8454", superAccessors=["method_8454(" + full + ")V"],
+           basis="1.21.1's Level.method_8454 called this.method_46668(.., true, ..) (ServerLevel's: false, then the "
+                 "packets): a level overriding only method_46668 is asked 1.21.2's method_8454 as 1.21.1's inherited "
+                 "one would have asked it; method_8454's own hook takes precedence in a class overriding both")
+    f.w["adapterHooks"].append({
+        "under": LEVEL, "adapter": LX + "$Legacy46668", "requires": [old46668], "synth": [],
+        "basis": "a level overriding 1.21.1's method_46668 is reached through it by the method_8454 bridges (1.21.1's "
+                 "this.method_46668 dispatch), also in a class whose own method_8454 hook takes the new shape"})
+    # ExplosionDamageCalculator.getEntityDamageAmount(explosion, entity) -> (.., seenPercent)
+    xe = L("class_1927") + ent
+    f.reshape(MC + "class_5362.method_55115(" + xe + ")F", "(" + xe + "F)F",
+              ["keep:0", "keep:1", "conv:0,1 " + LX + "#seenPercent(" + xe + ")F"],
+              "getEntityDamageAmount takes the seen percent since 1.21.2; 1.21.1's computed it as "
+              "Explosion.getSeenPercent(explosion.center(), entity)")
+    f.put("frameDefaults", "method_55115(" + xe + ")F",
+          {"2": LX + "#seenPercent(" + calc + xe + ")F"})
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -233,6 +380,8 @@ def main():
     use_item_on(f)
     names_and_loot(f)
     schedule_tick(f)
+    neighbors(f)
+    explosions(f)
     f.write()
 
 

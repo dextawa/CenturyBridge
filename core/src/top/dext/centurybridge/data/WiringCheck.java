@@ -623,6 +623,38 @@ public final class WiringCheck {
                 }
             }
         }
+        // methodRenames / fieldRenames of a Fabric API member (-Dcb.fapi): the renamed site -- the class
+        // renames applied, then the wall -- must name a member the target's Fabric API declares on the
+        // renamed owner or a supertype, with exactly the converter's descriptor. A rename onto a name the
+        // target lacks, or one whose descriptor moved too, links as NoSuchMethodError / NoSuchFieldError.
+        if (!lib.isEmpty()) {
+            for (String sec : new String[] {"methodRenames", "fieldRenames"}) {
+                if (!root.has(sec)) {
+                    continue;
+                }
+                boolean field = sec.equals("fieldRenames");
+                for (var e : root.getAsJsonObject(sec).entrySet()) {
+                    Sym s = field ? Sym.field(e.getKey()) : Sym.method(e.getKey());
+                    if (!s.owner.startsWith("net/fabricmc/")) {
+                        continue;
+                    }
+                    checked++;
+                    String owner = targetName(facade.mapType(s.owner));
+                    String nn = e.getValue().getAsString();
+                    if (field) {
+                        String nd = typeDesc(s.desc);
+                        if (!libField(owner, nn, nd)) {
+                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + ":" + nd + " is no field of the target's Fabric API");
+                        }
+                    } else {
+                        String nd = methodDesc(s.desc);
+                        if (!libMethod(owner, nn, nd)) {
+                            problems.add(sec + " " + e.getKey() + ": " + owner + "." + nn + nd + " is no method of the target's Fabric API");
+                        }
+                    }
+                }
+            }
+        }
         // callReshapes: the reshaped call must resolve on the target (the owner or a supertype
         // declares the new shape), and every converter / supplier it runs must exist
         if (root.has("callReshapes")) {
@@ -1118,6 +1150,30 @@ public final class WiringCheck {
                 viaInjection.add(i);
                 todo.add(i);
             }
+        }
+        return false;
+    }
+
+    /** whether the target's Fabric API (or the game) declares name+desc on owner or a supertype */
+    private boolean libMethod(String owner, String name, String desc) {
+        return libMember(owner, n -> n.methods.stream().anyMatch(m -> m.name.equals(name) && m.desc.equals(desc)));
+    }
+
+    private boolean libField(String owner, String name, String desc) {
+        return libMember(owner, n -> n.fields.stream().anyMatch(f -> f.name.equals(name) && f.desc.equals(desc)));
+    }
+
+    private boolean libMember(String owner, java.util.function.Predicate<ClassNode> has) {
+        java.util.Deque<String> todo = new java.util.ArrayDeque<>(List.of(owner));
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.pop();
+            if (!seen.add(c)) continue;
+            ClassNode n = lib.containsKey(c) ? lib.get(c) : stub.get(c);
+            if (n == null) continue;
+            if (has.test(n)) return true;
+            if (n.superName != null) todo.push(n.superName);
+            todo.addAll(n.interfaces);
         }
         return false;
     }
