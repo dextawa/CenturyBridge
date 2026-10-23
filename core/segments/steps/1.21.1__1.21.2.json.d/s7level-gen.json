@@ -357,7 +357,14 @@
   "net/minecraft/class_1937.method_24367()Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels",
   "net/minecraft/class_1937.method_8433()Lnet/minecraft/class_1863;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels",
   "net/minecraft/class_5217.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels",
-  "net/minecraft/class_1928.method_27325()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels"
+  "net/minecraft/class_1928.method_27325()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels",
+  "net/minecraft/class_1924.method_18462(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;)Lnet/minecraft/class_1657;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
+  "net/minecraft/class_1924.method_18463(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDD)Lnet/minecraft/class_1657;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
+  "net/minecraft/class_1924.method_18461(Lnet/minecraft/class_4051;DDD)Lnet/minecraft/class_1657;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
+  "net/minecraft/class_1924.method_21726(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDDLnet/minecraft/class_238;)Lnet/minecraft/class_1309;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
+  "net/minecraft/class_1924.method_18468(Ljava/util/List;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDD)Lnet/minecraft/class_1309;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
+  "net/minecraft/class_1924.method_18464(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities",
+  "net/minecraft/class_1924.method_18466(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -392,7 +399,14 @@
   "net/minecraft/class_3558.method_20710(Lnet/minecraft/class_2680;JLnet/minecraft/class_2350;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLight#occlusionShape",
   "net/minecraft/class_1937.method_8450()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels#gameRules",
   "net/minecraft/class_1937.method_16107()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels#profiler",
-  "net/minecraft/class_1937.method_24367()Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels#profilerSupplier"
+  "net/minecraft/class_1937.method_24367()Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels#profilerSupplier",
+  "net/minecraft/class_1924.method_18462(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;)Lnet/minecraft/class_1657;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearestPlayer",
+  "net/minecraft/class_1924.method_18463(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDD)Lnet/minecraft/class_1657;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearestPlayerAt",
+  "net/minecraft/class_1924.method_18461(Lnet/minecraft/class_4051;DDD)Lnet/minecraft/class_1657;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearestPlayerPos",
+  "net/minecraft/class_1924.method_21726(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDDLnet/minecraft/class_238;)Lnet/minecraft/class_1309;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearestEntityOfClass",
+  "net/minecraft/class_1924.method_18468(Ljava/util/List;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDD)Lnet/minecraft/class_1309;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearestEntity",
+  "net/minecraft/class_1924.method_18464(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearbyPlayers",
+  "net/minecraft/class_1924.method_18466(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities#nearbyEntities"
  },
  "overrideHooks": [
   {
@@ -1074,6 +1088,69 @@
    ],
    "synth": [],
    "basis": "1.21.2's LevelData has no getGameRules (ServerLevelData keeps it): a 1.21.1 implementation's is reached by its mod's calls, through this adapter"
+  },
+  {
+   "under": "net/minecraft/class_1924",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities$LegacyNearestPlayer",
+   "requires": [
+    "method_18462(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;)Lnet/minecraft/class_1657;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's override is reached by the calls 1.21.1's defaults made, through this adapter (CbLevelEntities)"
+  },
+  {
+   "under": "net/minecraft/class_1924",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities$LegacyNearestPlayerAt",
+   "requires": [
+    "method_18463(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDD)Lnet/minecraft/class_1657;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's override is reached by the calls 1.21.1's defaults made, through this adapter (CbLevelEntities)"
+  },
+  {
+   "under": "net/minecraft/class_1924",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities$LegacyNearestPlayerPos",
+   "requires": [
+    "method_18461(Lnet/minecraft/class_4051;DDD)Lnet/minecraft/class_1657;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's override is reached by the calls 1.21.1's defaults made, through this adapter (CbLevelEntities)"
+  },
+  {
+   "under": "net/minecraft/class_1924",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities$LegacyNearestEntityOfClass",
+   "requires": [
+    "method_21726(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDDLnet/minecraft/class_238;)Lnet/minecraft/class_1309;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's override is reached by the calls 1.21.1's defaults made, through this adapter (CbLevelEntities)"
+  },
+  {
+   "under": "net/minecraft/class_1924",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities$LegacyNearestEntity",
+   "requires": [
+    "method_18468(Ljava/util/List;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;DDD)Lnet/minecraft/class_1309;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's override is reached by the calls 1.21.1's defaults made, through this adapter (CbLevelEntities)"
+  },
+  {
+   "under": "net/minecraft/class_1924",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities$LegacyNearbyPlayers",
+   "requires": [
+    "method_18464(Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's override is reached by the calls 1.21.1's defaults made, through this adapter (CbLevelEntities)"
+  },
+  {
+   "under": "net/minecraft/class_1924",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelEntities$LegacyNearbyEntities",
+   "requires": [
+    "method_18466(Ljava/lang/Class;Lnet/minecraft/class_4051;Lnet/minecraft/class_1309;Lnet/minecraft/class_238;)Ljava/util/List;"
+   ],
+   "synth": [],
+   "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's override is reached by the calls 1.21.1's defaults made, through this adapter (CbLevelEntities)"
   }
  ],
  "abstractFills": [

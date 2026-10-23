@@ -607,6 +607,28 @@ def level_api(f):
                                           "level's registries and features"})
 
 
+# ------------------------------------------------------------------------------------------- EntityGetter targeting
+LEN = RT + "/CbLevelEntities"
+
+
+def entity_getter(f):
+    EG, TC, LE_, PL, AB, LST_, CLS = (MC + "class_1924", L("class_4051"), L("class_1309"), L("class_1657"), L("class_238"),
+                                      "Ljava/util/List;", "Ljava/lang/Class;")
+    for m, n, base in (("method_18462(" + TC + LE_ + ")" + PL, "NearestPlayer", "nearestPlayer"),
+                       ("method_18463(" + TC + LE_ + "DDD)" + PL, "NearestPlayerAt", "nearestPlayerAt"),
+                       ("method_18461(" + TC + "DDD)" + PL, "NearestPlayerPos", "nearestPlayerPos"),
+                       ("method_21726(" + CLS + TC + LE_ + "DDD" + AB + ")" + LE_, "NearestEntityOfClass", "nearestEntityOfClass"),
+                       ("method_18468(" + LST_ + TC + LE_ + "DDD)" + LE_, "NearestEntity", "nearestEntity"),
+                       ("method_18464(" + TC + LE_ + AB + ")" + LST_, "NearbyPlayers", "nearbyPlayers"),
+                       ("method_18466(" + CLS + TC + LE_ + AB + ")" + LST_, "NearbyEntities", "nearbyEntities")):
+        f.put("instanceRedirects", EG + "." + m, LEN)
+        f.put("superRedirects", EG + "." + m, LEN + "#" + base)
+        f.w["adapterHooks"].append({"under": EG, "adapter": LEN + "$Legacy" + n, "requires": [m], "synth": [],
+                                    "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's "
+                                             "override is reached by the calls 1.21.1's defaults made, through this "
+                                             "adapter (CbLevelEntities)"})
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -623,6 +645,7 @@ def main():
     chunk_storage(f)
     fluids_light(f)
     level_api(f)
+    entity_getter(f)
     f.write()
 
 
