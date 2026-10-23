@@ -84,3 +84,6 @@ extendable class net/minecraft/class_813
 extendable method net/minecraft/class_813 equals (Ljava/lang/Object;)Z
 extendable method net/minecraft/class_813 hashCode ()I
 extendable method net/minecraft/class_813 toString ()Ljava/lang/String;
+
+# s9rest: SimpleJsonResourceReloadListener's private (ops, codec, converter) constructor, which 1.21.3's (registries, codec, directory) is (CbRestMisc)
+accessible method net/minecraft/class_4309 <init> (Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_7654;)V
