@@ -127,6 +127,22 @@
    "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll$CbLegacyClicked",
    "family": "gui-scroll",
    "basis": "AbstractWidget.mouseClicked asked clicked(x, y); 1.21.4 asks isMouseOver, so a widget overriding clicked is asked it there again (CbGuiScrollWidgetMixin)"
+  },
+  {
+   "old": "method_4713()Z",
+   "new": "cb$isCustomRenderer",
+   "onlyUnder": "net/minecraft/class_1087",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender$CbLegacyCustomRenderer",
+   "family": "baked-model",
+   "basis": "BakedModel.isCustomRenderer is gone in 1.21.4; ItemRenderer.render(.., model) asks a 1.21.3 model again (CbItemRender)"
+  },
+  {
+   "old": "method_4710()Lnet/minecraft/class_806;",
+   "new": "cb$getOverrides",
+   "onlyUnder": "net/minecraft/class_1087",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender$CbLegacyOverrides",
+   "family": "baked-model",
+   "basis": "BakedModel.getOverrides is gone in 1.21.4; calls through BakedModel reach a 1.21.3 model's own (CbItemRender.getOverrides)"
   }
  ],
  "covers": [
@@ -211,7 +227,13 @@
   "net/minecraft/class_756": "top/dext/centurybridge/step/v1_21_4/facade/BlockEntityWithoutLevelRenderer",
   "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRenderer": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRenderer",
   "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRendererRegistry",
-  "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer"
+  "net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer": "top/dext/centurybridge/step/v1_21_4/compat/fapi/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer",
+  "net/minecraft/class_806": "top/dext/centurybridge/step/v1_21_4/facade/BakedOverrides",
+  "net/minecraft/class_806$class_5827": "top/dext/centurybridge/step/v1_21_4/facade/BakedOverrides$BakedOverride",
+  "net/minecraft/class_806$class_5828": "top/dext/centurybridge/step/v1_21_4/facade/BakedOverrides$PropertyMatcher",
+  "net/minecraft/class_799": "top/dext/centurybridge/step/v1_21_4/facade/ItemOverride",
+  "net/minecraft/class_799$class_5826": "top/dext/centurybridge/step/v1_21_4/facade/ItemOverride$Predicate",
+  "net/minecraft/class_1090": "top/dext/centurybridge/step/v1_21_4/facade/BuiltInModel"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -415,5 +437,12 @@
   "net/minecraft/class_756.field_3980:Lnet/minecraft/class_600;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
   "net/minecraft/class_756.field_3985:Lnet/minecraft/class_613;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these",
   "net/minecraft/class_756.field_27737:Ljava/util/Map;": "private state of the dead class: 1.21.3's own block entity instances and models it drew special items with; the facade draws them through 1.21.4's special model renderers, and only an access widener reached these"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1087.method_4713()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#isCustomRenderer",
+  "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#getOverrides"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides"
  }
 }

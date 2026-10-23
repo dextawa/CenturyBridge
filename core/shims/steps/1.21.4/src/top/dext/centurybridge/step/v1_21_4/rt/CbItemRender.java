@@ -47,6 +47,43 @@ public final class CbItemRender {
         }
     }
 
+    // ------------------------------------------------------------------ BakedModel's 1.21.3 members
+
+    /** a 1.21.3 BakedModel implementing isCustomRenderer() (renamed onto this, overrideRenames) */
+    public interface CbLegacyCustomRenderer {
+        boolean cb$isCustomRenderer();
+    }
+
+    /** a 1.21.3 BakedModel overriding getOverrides() */
+    public interface CbLegacyOverrides {
+        top.dext.centurybridge.step.v1_21_4.facade.BakedOverrides cb$getOverrides();
+    }
+
+    /** was BakedModel.isCustomRenderer() (method_4713): the model's own answer; a 1.21.4 model is none */
+    public static boolean isCustomRenderer(net.minecraft.class_1087 model) {
+        return model instanceof CbLegacyCustomRenderer legacy && legacy.cb$isCustomRenderer();
+    }
+
+    /** was BakedModel.getOverrides() (method_4710): the model's own; else 1.21.3's default, none */
+    public static top.dext.centurybridge.step.v1_21_4.facade.BakedOverrides getOverrides(net.minecraft.class_1087 model) {
+        return model instanceof CbLegacyOverrides legacy ? legacy.cb$getOverrides() : top.dext.centurybridge.step.v1_21_4.facade.BakedOverrides.field_4292;
+    }
+
+    /** a mod model's super.getOverrides(): BakedModel's 1.21.3 default */
+    public static top.dext.centurybridge.step.v1_21_4.facade.BakedOverrides superGetOverrides(net.minecraft.class_1087 model) {
+        return top.dext.centurybridge.step.v1_21_4.facade.BakedOverrides.field_4292;
+    }
+
+    private static top.dext.centurybridge.step.v1_21_4.facade.BlockEntityWithoutLevelRenderer bewlr;
+
+    private static top.dext.centurybridge.step.v1_21_4.facade.BlockEntityWithoutLevelRenderer bewlr() {
+        if (bewlr == null) {
+            net.minecraft.class_310 mc = net.minecraft.class_310.method_1551();
+            bewlr = new top.dext.centurybridge.step.v1_21_4.facade.BlockEntityWithoutLevelRenderer(mc.method_31975(), mc.method_31974());
+        }
+        return bewlr;
+    }
+
     // ------------------------------------------------------------------ the stack-carrying model
 
     /** the BakedModel getModel answers: 1.21.4's resolved model for the stack, which render draws as 1.21.4 draws the stack */
@@ -149,6 +186,12 @@ public final class CbItemRender {
         pose.method_22903();
         model.method_4709().method_3503(context).method_23075(leftHand, pose);
         pose.method_46416(-0.5F, -0.5F, -0.5F);
+        if (isCustomRenderer(model) || stack.method_31574(net.minecraft.class_1802.field_8547) && !flat) {
+            // 1.21.3: a custom-renderer model (BuiltInModel) or the trident in hand went to BlockEntityWithoutLevelRenderer
+            bewlr().method_3166(stack, context, pose, buffers, light, overlay);
+            pose.method_22909();
+            return;
+        }
         net.minecraft.class_10444.class_10445 foil = !stack.method_7958() ? net.minecraft.class_10444.class_10445.field_55341
             : stack.method_31573(net.minecraft.class_3489.field_38699) || stack.method_31574(net.minecraft.class_1802.field_8557)
                 ? net.minecraft.class_10444.class_10445.field_55343 : net.minecraft.class_10444.class_10445.field_55342;

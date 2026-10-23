@@ -250,6 +250,24 @@ def item_renderer(frag):
               "field_3982:Lnet/minecraft/class_2587;", "field_3979:Lnet/minecraft/class_2597;", "field_42909:Lnet/minecraft/class_8172;",
               "field_3980:Lnet/minecraft/class_600;", "field_3985:Lnet/minecraft/class_613;", "field_27737:Ljava/util/Map;"]:
         gaps["net/minecraft/class_756." + f] = why
+    cr["net/minecraft/class_806"] = FAC + "BakedOverrides"
+    cr["net/minecraft/class_806$class_5827"] = FAC + "BakedOverrides$BakedOverride"
+    cr["net/minecraft/class_806$class_5828"] = FAC + "BakedOverrides$PropertyMatcher"
+    cr["net/minecraft/class_799"] = FAC + "ItemOverride"
+    cr["net/minecraft/class_799$class_5826"] = FAC + "ItemOverride$Predicate"
+    cr["net/minecraft/class_1090"] = FAC + "BuiltInModel"
+    orr = frag.setdefault("overrideRenames", [])
+    orr[:] = [r for r in orr if r.get("family") != "baked-model"]
+    orr.append({"old": "method_4713()Z", "new": "cb$isCustomRenderer", "onlyUnder": "net/minecraft/class_1087",
+                "adapter": IR + "$CbLegacyCustomRenderer", "family": "baked-model",
+                "basis": "BakedModel.isCustomRenderer is gone in 1.21.4; ItemRenderer.render(.., model) asks a 1.21.3 model again (CbItemRender)"})
+    orr.append({"old": "method_4710()Lnet/minecraft/class_806;", "new": "cb$getOverrides", "onlyUnder": "net/minecraft/class_1087",
+                "adapter": IR + "$CbLegacyOverrides", "family": "baked-model",
+                "basis": "BakedModel.getOverrides is gone in 1.21.4; calls through BakedModel reach a 1.21.3 model's own (CbItemRender.getOverrides)"})
+    ir = frag.setdefault("instanceRedirects", {})
+    ir["net/minecraft/class_1087.method_4713()Z"] = IR + "#isCustomRenderer"
+    ir["net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;"] = IR + "#getOverrides"
+    frag.setdefault("superRedirects", {})["net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;"] = IR + "#superGetOverrides"
     rt = set(frag.get("resourceTypes", []))
     rt.add("centurybridge:legacy_builtin")
     frag["resourceTypes"] = sorted(rt)
