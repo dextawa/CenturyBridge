@@ -65,6 +65,13 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbEntitySmall#unscaled()F"
    ],
    "basis": "1.21.2's WalkAnimationState.update also sets positionScale (default 1, the position getters multiply by it); 1.21.1 had no scale: 1"
+  },
+  "net/minecraft/class_1657.method_7335(Ljava/util/List;)V": {
+   "desc": "(Ljava/util/List;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbEntityGeneric#recipeKeys(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "basis": "generic drift: 1.21.1's Player.awardRecipesByKey took recipe ids, 1.21.2's recipe keys (CbEntityGeneric)"
   }
  },
  "instanceRedirects": {
@@ -568,7 +575,8 @@
   "net/minecraft/class_4148.field_30258:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors",
   "net/minecraft/class_5760.field_30262:I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntitySensors",
   "net/minecraft/class_1661.field_33767:[I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail",
-  "net/minecraft/class_1661.field_33768:[I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail"
+  "net/minecraft/class_1661.field_33768:[I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail",
+  "net/minecraft/class_1535.field_51945:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityGeneric#paintingDirectStreamCodec"
  },
  "superRedirects": {
   "net/minecraft/class_1299.method_16351()Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLoot#superDefaultLootTable",
@@ -1153,7 +1161,8 @@
   "net/minecraft/class_1662": "top/dext/centurybridge/step/v1_21_2/facade/StackedContents",
   "net/minecraft/class_1301$class_1302": "top/dext/centurybridge/step/v1_21_2/facade/MobCanWearArmorEntitySelector",
   "net/minecraft/class_4582": "top/dext/centurybridge/step/v1_21_2/facade/PowerableMob",
-  "net/minecraft/class_6035": "net/minecraft/class_10183"
+  "net/minecraft/class_6035": "net/minecraft/class_10183",
+  "net/minecraft/class_6375": "top/dext/centurybridge/step/v1_21_2/facade/LerpingModel"
  },
  "overrideRenames": [
   {
@@ -1223,7 +1232,8 @@
   "net/minecraft/class_1297.method_43496(Lnet/minecraft/class_2561;)V",
   "net/minecraft/class_1297.method_9200()Z",
   "net/minecraft/class_1297.method_9201()Z",
-  "net/minecraft/class_1297.method_9202()Z"
+  "net/minecraft/class_1297.method_9202()Z",
+  "net/minecraft/class_5762.method_36976()Ljava/util/Map;"
  ],
  "methodRenames": {
   "net/minecraft/class_1548.method_6872()Z": "method_61492",
@@ -1238,5 +1248,16 @@
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi$LegacyConversion",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#conversion(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi$LegacyConversion;)Lnet/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion;"
   }
- }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_1657",
+   "member": "method_7335(Ljava/util/List;)V",
+   "args": [
+    "top/dext/centurybridge/step/v1_21_2/rt/CbEntityGeneric#recipeIds(Ljava/util/List;)Ljava/util/List;"
+   ],
+   "ret": null,
+   "basis": "generic drift: a mod Player's 1.21.1 awardRecipesByKey override gets the recipe ids of the keys 1.21.2 passes (CbEntityGeneric)"
+  }
+ ]
 }
