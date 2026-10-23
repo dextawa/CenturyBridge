@@ -1,0 +1,54 @@
+{
+ "classRenames": {
+  "net/minecraft/class_4174$class_9423": "top/dext/centurybridge/step/v1_21_2/facade/FoodPossibleEffect"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_4174.<init>(IFZFLjava/util/Optional;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood#newFoodProperties"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_4174.method_58399()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood",
+  "net/minecraft/class_4174.comp_2494()F": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood",
+  "net/minecraft/class_4174.comp_2794()Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood",
+  "net/minecraft/class_4174.comp_2495()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood",
+  "net/minecraft/class_4174$class_4175.method_19241()Lnet/minecraft/class_4174$class_4175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood",
+  "net/minecraft/class_4174$class_4175.method_19239(Lnet/minecraft/class_1293;F)Lnet/minecraft/class_4174$class_4175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood",
+  "net/minecraft/class_4174$class_4175.method_60500(Lnet/minecraft/class_1935;)Lnet/minecraft/class_4174$class_4175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood"
+ },
+ "superRedirects": {
+  "net/minecraft/class_4174$class_4175.method_19241()Lnet/minecraft/class_4174$class_4175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood#super_method_19241",
+  "net/minecraft/class_4174$class_4175.method_19239(Lnet/minecraft/class_1293;F)Lnet/minecraft/class_4174$class_4175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood#super_method_19239",
+  "net/minecraft/class_4174$class_4175.method_60500(Lnet/minecraft/class_1935;)Lnet/minecraft/class_4174$class_4175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood#super_method_60500"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_4174$class_4175",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood$LegacyFast",
+   "requires": [
+    "method_19241()Lnet/minecraft/class_4174$class_4175;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 FoodProperties.Builder subclass overriding it: calls reach the override (CbItemFood)"
+  },
+  {
+   "under": "net/minecraft/class_4174$class_4175",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood$LegacyEffect",
+   "requires": [
+    "method_19239(Lnet/minecraft/class_1293;F)Lnet/minecraft/class_4174$class_4175;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 FoodProperties.Builder subclass overriding it: calls reach the override (CbItemFood)"
+  },
+  {
+   "under": "net/minecraft/class_4174$class_4175",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood$LegacyConvertsTo",
+   "requires": [
+    "method_60500(Lnet/minecraft/class_1935;)Lnet/minecraft/class_4174$class_4175;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 FoodProperties.Builder subclass overriding it: calls reach the override (CbItemFood)"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_4176.field_50138:Lnet/minecraft/class_4174;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemFood"
+ }
+}

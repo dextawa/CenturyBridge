@@ -63,7 +63,50 @@
   "net/minecraft/class_2833.method_12276()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_12276",
   "net/minecraft/class_2833.method_12281()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_12281",
   "net/minecraft/class_2833.method_12277()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_12277",
-  "net/minecraft/class_2735.method_11803()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_11803"
+  "net/minecraft/class_2735.method_11803()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#method_11803",
+  "net/minecraft/class_3262.method_14407(Lnet/minecraft/class_3270;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14407",
+  "net/minecraft/class_3255.method_14407(Lnet/minecraft/class_3270;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14407",
+  "net/minecraft/class_8614.method_14407(Lnet/minecraft/class_3270;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14407",
+  "net/minecraft/class_3268.method_14407(Lnet/minecraft/class_3270;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14407",
+  "net/minecraft/class_7368.method_43041(Lnet/minecraft/class_3270;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_43041",
+  "net/minecraft/class_7368$class_8622.method_52448(Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7368$class_8622;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_52448",
+  "net/minecraft/class_7662.method_45173(Lnet/minecraft/class_3270;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45173",
+  "net/minecraft/class_7677.method_14420()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14420",
+  "net/minecraft/class_7677.method_14421(Lcom/google/gson/JsonObject;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14421",
+  "net/minecraft/class_7677.method_45251(Ljava/lang/Object;)Lcom/google/gson/JsonObject;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45251",
+  "net/minecraft/class_3270.method_14420()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14420",
+  "net/minecraft/class_3270.method_14421(Lcom/google/gson/JsonObject;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14421",
+  "net/minecraft/class_1407.method_35128()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#method_35128",
+  "net/minecraft/class_1407.method_6331(Z)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#method_6331",
+  "net/minecraft/class_1407.method_35129()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#method_35129",
+  "net/minecraft/class_1409.method_35140()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#method_35140",
+  "net/minecraft/class_1409.method_35139(Z)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#method_35139",
+  "net/minecraft/class_1409.method_6366()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#method_6366",
+  "net/minecraft/class_1297.method_5716(Lnet/minecraft/class_1297;ILnet/minecraft/class_1282;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore#method_5716",
+  "net/minecraft/class_3222.method_5716(Lnet/minecraft/class_1297;ILnet/minecraft/class_1282;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore#method_5716",
+  "net/minecraft/class_1297.method_5833()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEntityNbt#method_5833",
+  "net/minecraft/class_1540.method_5833()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEntityNbt#method_5833",
+  "net/minecraft/class_1697.method_5833()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEntityNbt#method_5833",
+  "net/minecraft/class_1699.method_5833()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEntityNbt#method_5833",
+  "net/minecraft/class_1309.method_64619(Lnet/minecraft/class_1309;DZZLjava/util/function/Predicate;[Ljava/util/function/DoubleSupplier;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking#method_64619",
+  "net/minecraft/class_1309.method_64618(Lnet/minecraft/class_1297;Lnet/minecraft/class_3959$class_3960;Lnet/minecraft/class_3959$class_242;Ljava/util/function/DoubleSupplier;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking#method_64618",
+  "net/minecraft/class_9817.method_60967(Lnet/minecraft/class_2487;)Lnet/minecraft/class_9817$class_9818;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash#method_60967",
+  "net/minecraft/class_9817.method_5932(ZZ)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash#method_5932",
+  "net/minecraft/class_1308.method_60967(Lnet/minecraft/class_2487;)Lnet/minecraft/class_9817$class_9818;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash#method_60967",
+  "net/minecraft/class_1308.method_5932(ZZ)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash#method_5932",
+  "net/minecraft/class_2586.method_38240(Lnet/minecraft/class_1799;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_38240",
+  "net/minecraft/class_2586.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_11011",
+  "net/minecraft/class_2593.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_11011",
+  "net/minecraft/class_3722.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_11011",
+  "net/minecraft/class_2625.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_11011",
+  "net/minecraft/class_2636.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_11011",
+  "net/minecraft/class_8961.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_11011",
+  "net/minecraft/class_8172.method_49196(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_49196",
+  "net/minecraft/class_8172.method_52578()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_52578",
+  "net/minecraft/class_2573.method_10913(Lnet/minecraft/class_1799;Lnet/minecraft/class_1767;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_10913",
+  "net/minecraft/class_2587.method_11019(Lnet/minecraft/class_1767;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_11019",
+  "net/minecraft/class_8966.method_55189(Lnet/minecraft/class_8963;Lnet/minecraft/class_5819;Lnet/minecraft/class_1299;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_55189",
+  "net/minecraft/class_1799.method_61656()V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#method_61656"
  },
  "superRedirects": {
   "net/minecraft/class_2692.method_11673()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawX",
@@ -76,7 +119,33 @@
   "net/minecraft/class_2833.method_12276()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawZ",
   "net/minecraft/class_2833.method_12281()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawYRot",
   "net/minecraft/class_2833.method_12277()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawXRot",
-  "net/minecraft/class_2735.method_11803()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawSlot"
+  "net/minecraft/class_2735.method_11803()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawSlot",
+  "net/minecraft/class_1407.method_35128()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#superCanPassDoors",
+  "net/minecraft/class_1407.method_6331(Z)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#superSetCanPassDoors",
+  "net/minecraft/class_1407.method_35129()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#superCanOpenDoors",
+  "net/minecraft/class_1409.method_35140()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#superCanPassDoors",
+  "net/minecraft/class_1409.method_35139(Z)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#superSetCanPassDoors",
+  "net/minecraft/class_1409.method_6366()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation#superCanOpenDoors",
+  "net/minecraft/class_1297.method_5833()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEntityNbt#superOnlyOp",
+  "net/minecraft/class_1540.method_5833()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEntityNbt#superOnlyOp",
+  "net/minecraft/class_1697.method_5833()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEntityNbt#superOnlyOp",
+  "net/minecraft/class_1699.method_5833()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEntityNbt#superOnlyOp",
+  "net/minecraft/class_9817.method_60967(Lnet/minecraft/class_2487;)Lnet/minecraft/class_9817$class_9818;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash#method_60967",
+  "net/minecraft/class_9817.method_5932(ZZ)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash#method_5932",
+  "net/minecraft/class_1308.method_60967(Lnet/minecraft/class_2487;)Lnet/minecraft/class_9817$class_9818;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash#method_60967",
+  "net/minecraft/class_1308.method_5932(ZZ)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash#method_5932",
+  "net/minecraft/class_2586.method_38240(Lnet/minecraft/class_1799;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superSaveToItem",
+  "net/minecraft/class_2586.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superOnlyOp",
+  "net/minecraft/class_2593.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superOnlyOp",
+  "net/minecraft/class_3722.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superOnlyOp",
+  "net/minecraft/class_2625.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superOnlyOp",
+  "net/minecraft/class_2636.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superOnlyOp",
+  "net/minecraft/class_8961.method_11011()Z": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superOnlyOp",
+  "net/minecraft/class_8172.method_49196(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superSetFromItem",
+  "net/minecraft/class_8172.method_52578()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superGetPotAsItem",
+  "net/minecraft/class_2573.method_10913(Lnet/minecraft/class_1799;Lnet/minecraft/class_1767;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superFromItem",
+  "net/minecraft/class_2587.method_11019(Lnet/minecraft/class_1767;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superSetColor",
+  "net/minecraft/class_8966.method_55189(Lnet/minecraft/class_8963;Lnet/minecraft/class_5819;Lnet/minecraft/class_1299;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities#superSetEntityId"
  },
  "adapterHooks": [
   {
@@ -177,6 +246,132 @@
    ],
    "synth": [],
    "basis": "1.21.4 made the packet a record read through its accessors; a 1.21.3 subclass's getter override gets this interface so the handler (CbRestServerVehicleMixin / CbRestClientPacketsMixin) and the mod's calls (CbRestPackets) reach it as 1.21.3's virtual getter call did"
+  },
+  {
+   "under": "net/minecraft/class_1407",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation$FlyingCanPassDoors",
+   "requires": [
+    "method_35128()Z"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this navigation door accessor (1.21.3's body read the node evaluator, CbRestNavigation): a 1.21.3 subclass's override gets this interface so mod calls (and, for canOpenDoors, DoorInteractGoal / MoveThroughVillageGoal) reach it as 1.21.3's virtual call did"
+  },
+  {
+   "under": "net/minecraft/class_1407",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation$FlyingSetCanPassDoors",
+   "requires": [
+    "method_6331(Z)V"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this navigation door accessor (1.21.3's body read the node evaluator, CbRestNavigation): a 1.21.3 subclass's override gets this interface so mod calls (and, for canOpenDoors, DoorInteractGoal / MoveThroughVillageGoal) reach it as 1.21.3's virtual call did"
+  },
+  {
+   "under": "net/minecraft/class_1407",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation$FlyingCanOpenDoors",
+   "requires": [
+    "method_35129()Z"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this navigation door accessor (1.21.3's body read the node evaluator, CbRestNavigation): a 1.21.3 subclass's override gets this interface so mod calls (and, for canOpenDoors, DoorInteractGoal / MoveThroughVillageGoal) reach it as 1.21.3's virtual call did"
+  },
+  {
+   "under": "net/minecraft/class_1409",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation$GroundCanPassDoors",
+   "requires": [
+    "method_35140()Z"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this navigation door accessor (1.21.3's body read the node evaluator, CbRestNavigation): a 1.21.3 subclass's override gets this interface so mod calls (and, for canOpenDoors, DoorInteractGoal / MoveThroughVillageGoal) reach it as 1.21.3's virtual call did"
+  },
+  {
+   "under": "net/minecraft/class_1409",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation$GroundSetCanPassDoors",
+   "requires": [
+    "method_35139(Z)V"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this navigation door accessor (1.21.3's body read the node evaluator, CbRestNavigation): a 1.21.3 subclass's override gets this interface so mod calls (and, for canOpenDoors, DoorInteractGoal / MoveThroughVillageGoal) reach it as 1.21.3's virtual call did"
+  },
+  {
+   "under": "net/minecraft/class_1409",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestNavigation$GroundCanOpenDoors",
+   "requires": [
+    "method_6366()Z"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this navigation door accessor (1.21.3's body read the node evaluator, CbRestNavigation): a 1.21.3 subclass's override gets this interface so mod calls (and, for canOpenDoors, DoorInteractGoal / MoveThroughVillageGoal) reach it as 1.21.3's virtual call did"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEntityNbt$OnlyOp",
+   "requires": [
+    "method_5833()Z"
+   ],
+   "synth": [],
+   "basis": "1.21.4 asks EntityType.onlyOpCanSetNbt(): a 1.21.3 entity's own onlyOpCanSetNbt override gets this interface so mod calls and EntityType.updateCustomEntityTag (CbRestEntityNbtMixin) reach it as 1.21.3's virtual call did"
+  },
+  {
+   "under": "net/minecraft/class_2586",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities$SaveToItem",
+   "requires": [
+    "method_38240(Lnet/minecraft/class_1799;Lnet/minecraft/class_7225$class_7874;)V"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestBlockEntities)"
+  },
+  {
+   "under": "net/minecraft/class_2586",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities$OnlyOp",
+   "requires": [
+    "method_11011()Z"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestBlockEntities)"
+  },
+  {
+   "under": "net/minecraft/class_8172",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities$PotSetFromItem",
+   "requires": [
+    "method_49196(Lnet/minecraft/class_1799;)V"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestBlockEntities)"
+  },
+  {
+   "under": "net/minecraft/class_8172",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities$PotAsItem",
+   "requires": [
+    "method_52578()Lnet/minecraft/class_1799;"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestBlockEntities)"
+  },
+  {
+   "under": "net/minecraft/class_2573",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities$BannerFromItem",
+   "requires": [
+    "method_10913(Lnet/minecraft/class_1799;Lnet/minecraft/class_1767;)V"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestBlockEntities)"
+  },
+  {
+   "under": "net/minecraft/class_2587",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities$BedSetColor",
+   "requires": [
+    "method_11019(Lnet/minecraft/class_1767;)V"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestBlockEntities)"
+  },
+  {
+   "under": "net/minecraft/class_8966",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBlockEntities$TrialSetEntityId",
+   "requires": [
+    "method_55189(Lnet/minecraft/class_8963;Lnet/minecraft/class_5819;Lnet/minecraft/class_1299;)V"
+   ],
+   "synth": [],
+   "basis": "1.21.4 dropped this member: a 1.21.3 subclass's override gets this interface so calls reach it as 1.21.3's virtual call did (CbRestBlockEntities)"
   }
  ],
  "callReshapes": {
@@ -214,6 +409,277 @@
     "keep"
    ],
    "basis": "1.21.4 added alwaysShow after force; 1.21.3's packet had none and its client passed false there (CbRestPackets.notAlwaysShown); the body is otherwise 1.21.3's (packet(options, force, ..), sendToPlayer(player, force, ..))"
+  },
+  "net/minecraft/class_7368.method_52446(Ljava/util/Collection;)Lnet/minecraft/class_7368;": {
+   "desc": "(Ljava/util/Collection;)Lnet/minecraft/class_7368;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#types(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "basis": "copySections takes 1.21.4 records where 1.21.3 took serializers (same erasure): converted in place, records pass as they are"
+  },
+  "net/minecraft/class_2185.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2195.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2202.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2248.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2302.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2329.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2334.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2360.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2362.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2421.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2423.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2480.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2513.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2525.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2667.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_2671.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_3830.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_4864.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_5545.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_5802.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_5804.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_5805.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_6089.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
+  },
+  "net/minecraft/class_8168.method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "desc": "(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Lnet/minecraft/class_1799;",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#legacyCall()Z"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestClone#endLegacyCall(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;",
+   "basis": "1.21.4 added includeData: 1.21.3's getCloneItemStack took no requested data (false), marked as 1.21.3's for ShulkerBoxBlock / DecoratedPotBlock's 1.21.3 bodies (CbRestClone)"
   }
  },
  "overrideHooks": [
@@ -237,6 +703,100 @@
    "frames": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
    "superCalls": "rewrite",
    "basis": "1.21.4 added alwaysShow (index 3) after force; the old override gets every parameter it had, its super call passes on what vanilla passed"
+  },
+  {
+   "old": "method_14407(Lnet/minecraft/class_3270;)Ljava/lang/Object;",
+   "new": "method_14407(Lnet/minecraft/class_7677;)Ljava/lang/Object;",
+   "onlyUnder": "net/minecraft/class_3262",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata.wrap(Lnet/minecraft/class_7677;)Lnet/minecraft/class_3270;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata.superGetMetadataSection(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata$SuperPack;Lnet/minecraft/class_3270;)Ljava/lang/Object;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata$SuperPack",
+   "superAccessors": [
+    "method_14407(Lnet/minecraft/class_7677;)Ljava/lang/Object;"
+   ],
+   "basis": "1.21.4's PackResources.getMetadataSection takes the record where 1.21.3's took a serializer: a 1.21.3 pack's own method gets the record as the serializer it was written for (CbRestMetadata.wrap); its super call reaches the vanilla implementation with the record again"
+  },
+  {
+   "old": "method_43041(Lnet/minecraft/class_3270;)Ljava/util/Optional;",
+   "new": "method_43041(Lnet/minecraft/class_7677;)Ljava/util/Optional;",
+   "onlyUnder": "net/minecraft/class_7368",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata.wrap(Lnet/minecraft/class_7677;)Lnet/minecraft/class_3270;",
+   "basis": "1.21.4's ResourceMetadata.getSection takes the record: a 1.21.3 implementation gets it as the serializer it was written for (an interface method: no super call)"
+  },
+  {
+   "old": "method_52448(Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7368$class_8622;",
+   "new": "method_52448(Lnet/minecraft/class_7677;Ljava/lang/Object;)Lnet/minecraft/class_7368$class_8622;",
+   "onlyUnder": "net/minecraft/class_7368$class_8622",
+   "wrap": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata.wrap(Lnet/minecraft/class_7677;)Lnet/minecraft/class_3270;",
+   "superBridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata.superPut(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata$SuperBuilder;Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7368$class_8622;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata$SuperBuilder",
+   "superAccessors": [
+    "method_52448(Lnet/minecraft/class_7677;Ljava/lang/Object;)Lnet/minecraft/class_7368$class_8622;"
+   ],
+   "basis": "1.21.4's ResourceMetadata.Builder.put takes the record: a 1.21.3 subclass's put gets it as its serializer, its super call puts the record"
+  },
+  {
+   "old": "method_5716(Lnet/minecraft/class_1297;ILnet/minecraft/class_1282;)V",
+   "new": "method_5716(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;)V",
+   "onlyUnder": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore$Legacy",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore.awardKillScore(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore$Legacy;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore.superAwardKillScore(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore$Super;Lnet/minecraft/class_1297;ILnet/minecraft/class_1282;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore$Super",
+   "superAccessors": [
+    "method_5716(Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;)V"
+   ],
+   "basis": "1.21.4 dropped the score from awardKillScore: a 1.21.3 override gets the score 1.21.3 passed (the killed's deathScore, or the one a 1.21.3-shaped call named), its super call carries its score to ServerPlayer's increaseScore (CbRestKillScore)"
+  },
+  {
+   "old": "method_64619(Lnet/minecraft/class_1309;DZZLjava/util/function/Predicate;[Ljava/util/function/DoubleSupplier;)Z",
+   "new": "method_64619(Lnet/minecraft/class_1309;DZZ[D)Z",
+   "onlyUnder": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking$LegacyLooking",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking.isLookingAtMe(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestLooking$LegacyLooking;Lnet/minecraft/class_1309;DZZ[D)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking.superIsLookingAtMe(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestLooking$SuperLooking;Lnet/minecraft/class_1309;DZZLjava/util/function/Predicate;[Ljava/util/function/DoubleSupplier;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking$SuperLooking",
+   "superAccessors": [
+    "method_64619(Lnet/minecraft/class_1309;DZZ[D)Z"
+   ],
+   "basis": "1.21.4 dropped isLookingAtMe's target predicate (its callers test first) and takes the eye heights as doubles: a 1.21.3 override gets them as suppliers and a predicate passing every target; its super call keeps 1.21.3's lazy order (CbRestLooking)"
+  },
+  {
+   "old": "method_64618(Lnet/minecraft/class_1297;Lnet/minecraft/class_3959$class_3960;Lnet/minecraft/class_3959$class_242;Ljava/util/function/DoubleSupplier;)Z",
+   "new": "method_64618(Lnet/minecraft/class_1297;Lnet/minecraft/class_3959$class_3960;Lnet/minecraft/class_3959$class_242;D)Z",
+   "onlyUnder": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking$LegacySight",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking.hasLineOfSight(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestLooking$LegacySight;Lnet/minecraft/class_1297;Lnet/minecraft/class_3959$class_3960;Lnet/minecraft/class_3959$class_242;D)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking.superHasLineOfSight(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestLooking$SuperSight;Lnet/minecraft/class_1297;Lnet/minecraft/class_3959$class_3960;Lnet/minecraft/class_3959$class_242;Ljava/util/function/DoubleSupplier;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLooking$SuperSight",
+   "superAccessors": [
+    "method_64618(Lnet/minecraft/class_1297;Lnet/minecraft/class_3959$class_3960;Lnet/minecraft/class_3959$class_242;D)Z"
+   ],
+   "basis": "1.21.4's hasLineOfSight takes the eye height as a double: a 1.21.3 override gets it as a supplier; its super call reads its supplier after the same-level test, as 1.21.3 did (CbRestLooking)"
+  },
+  {
+   "old": "method_60967(Lnet/minecraft/class_2487;)Lnet/minecraft/class_9817$class_9818;",
+   "new": "method_60967(Lnet/minecraft/class_2487;)V",
+   "onlyUnder": "net/minecraft/class_9817",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash$LegacyRead",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash.readLeashData(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestLeash$LegacyRead;Lnet/minecraft/class_2487;)V",
+   "basis": "1.21.4's readLeashData(tag) reads and applies: a 1.21.3 override's answer is applied as 1.21.4's default applies its own parse (CbRestLeash)"
+  },
+  {
+   "old": "method_5932(ZZ)V",
+   "new": "method_5932()V",
+   "onlyUnder": "net/minecraft/class_9817",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash$LegacyDrop",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash.dropLeash(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestLeash$LegacyDrop;)V",
+   "basis": "1.21.4's dropLeash() is 1.21.3's dropLeash(true, true) (both call Leashable's static dropLeash(entity, true, true))"
+  },
+  {
+   "old": "method_5932(ZZ)V",
+   "new": "method_65894()V",
+   "onlyUnder": "net/minecraft/class_9817",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash$LegacyDrop",
+   "bridge": "top/dext/centurybridge/step/v1_21_4/rt/CbRestLeash.removeLeash(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestLeash$LegacyDrop;)V",
+   "basis": "1.21.4's removeLeash() is 1.21.3's dropLeash(true, false) (Leashable's static dropLeash(entity, true, false))"
   }
  ],
  "frameDefaults": {
@@ -246,6 +806,53 @@
   "method_14199(Lnet/minecraft/class_2394;DDDIDDDD)I": {
    "1": "zero: 1.21.3's sendParticles(options, ..) sent with overrideLimiter false (1.21.3 bytecode: packet(options, false, ..), sendToPlayer(player, false, ..)); 1.21.4's no-flag overload passes false too",
    "2": "zero: 1.21.3's particle packet had no alwaysShow and its client passed false in its place"
+  },
+  "method_9574(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1799;": {
+   "3": "zero: 1.21.3's getCloneItemStack had no includeData and took no requested block-entity data (1.21.4's base body ignores the flag; it is read only by the pick-block handler)"
   }
- }
+ },
+ "classRenames": {
+  "net/minecraft/class_3270": "top/dext/centurybridge/step/v1_21_4/facade/MetadataSectionSerializer"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_7662.method_45174(Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7662;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45174",
+  "net/minecraft/class_7662.method_45175(Lnet/minecraft/class_3270;Ljava/lang/Object;Lnet/minecraft/class_3270;Ljava/lang/Object;)Lnet/minecraft/class_7662;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45175",
+  "net/minecraft/class_3255.method_14392(Lnet/minecraft/class_3270;Ljava/io/InputStream;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_14392",
+  "net/minecraft/class_7677.method_45252(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_7677;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45252"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_7368.method_43041(Lnet/minecraft/class_3270;)Ljava/util/Optional;": {
+   "iface": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata$LegacyResourceMetadata",
+   "adapt": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#resourceMetadata(Ltop/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata$LegacyResourceMetadata;)Lnet/minecraft/class_7368;"
+  }
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_7368",
+   "member": "method_52446(Ljava/util/Collection;)Lnet/minecraft/class_7368;",
+   "args": [
+    "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#serializers(Ljava/util/Collection;)Ljava/util/Collection;"
+   ],
+   "ret": null,
+   "basis": "a 1.21.3 ResourceMetadata overriding copySections gets vanilla's records as the serializers it was written for"
+  }
+ ],
+ "ledger": {
+  "net/minecraft/class_7677.method_45251": "not bridgeable for a mod class implementing it: 1.21.3's MetadataSectionType interface is a final record (name, codec) in 1.21.4 that no class can implement or extend, and a stand-in interface would split the type -- the mod hands its instance on where a MetadataSectionType is expected, which the verifier rejects (wiring-check refuses the superRename for exactly this). Calls of toJson/getMetadataSectionName/fromJson on a type, fromCodec, and every serializer-taking pack API are bridged (CbRestMetadata); a mod's own MetadataSectionSerializer implementation is bridged through the facade"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_1309.field_6232:I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore#field_6232"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_1309.field_6232:I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestKillScore#field_6232"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_33332()Lnet/minecraft/class_238;",
+   "new": "cb$makeBoundingBox",
+   "onlyUnder": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRestBoundingBox$Legacy",
+   "basis": "Entity.makeBoundingBox() is final since 1.21.4 (makeBoundingBox(position())): a 1.21.3 override is renamed and every 1.21.4 makeBoundingBox(pos) hands the call to it (CbRestBoundingBox*Mixin); its super call reaches the final method, whose nested call runs vanilla's body"
+  }
+ ]
 }

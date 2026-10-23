@@ -12,7 +12,14 @@
   "net/minecraft/class_3847$class_3848": "top/dext/centurybridge/step/v1_21_2/facade/StrictQueue$FixedPriorityQueue",
   "net/minecraft/class_3847$class_3849": "top/dext/centurybridge/step/v1_21_2/facade/StrictQueue$QueueStrictQueue",
   "net/minecraft/class_3847$class_3907": "top/dext/centurybridge/step/v1_21_2/facade/StrictQueue$RunnableWithPriority",
-  "net/minecraft/class_3899": "top/dext/centurybridge/step/v1_21_2/facade/ChunkTaskPriorityQueue"
+  "net/minecraft/class_3899": "top/dext/centurybridge/step/v1_21_2/facade/ChunkTaskPriorityQueue",
+  "net/minecraft/class_9175": "top/dext/centurybridge/step/v1_21_2/facade/TagCollector",
+  "net/minecraft/class_5514$class_5515": "net/minecraft/class_9847$class_5515",
+  "net/minecraft/class_4413": "top/dext/centurybridge/step/v1_21_2/facade/WorldGenerationInfo",
+  "net/minecraft/class_4904": "top/dext/centurybridge/step/v1_21_2/facade/RealmsObjectSelectionList",
+  "net/minecraft/class_4409": "top/dext/centurybridge/step/v1_21_2/facade/RealmsResetNormalWorldScreen",
+  "net/minecraft/class_5673": "top/dext/centurybridge/step/v1_21_2/facade/ResettingGeneratedWorldTask",
+  "net/minecraft/class_8844": "top/dext/centurybridge/step/v1_21_2/facade/CreateSnapshotRealmTask"
  },
  "covers": [
   "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
@@ -37,7 +44,20 @@
   "net/minecraft/class_310.method_1524(I)V",
   "net/minecraft/class_2802.method_12128(ZZ)V",
   "net/minecraft/class_3215.method_12128(ZZ)V",
-  "net/minecraft/class_1937.method_8424(ZZ)V"
+  "net/minecraft/class_1937.method_8424(ZZ)V",
+  "net/minecraft/class_3222.method_14218(FFZZ)V",
+  "net/minecraft/class_3222.method_14251(Lnet/minecraft/class_3218;DDDFF)V",
+  "net/minecraft/class_3244.method_14360(DDDFFLjava/util/Set;)V",
+  "net/minecraft/class_4516.method_46224(Lnet/minecraft/class_1299;Lnet/minecraft/class_243;Lnet/minecraft/class_243;)V",
+  "net/minecraft/class_4516.method_59872(Lnet/minecraft/class_1299;Lnet/minecraft/class_243;Lnet/minecraft/class_243;)V",
+  "net/minecraft/class_9761.method_60470()I",
+  "net/minecraft/class_638.method_29089(J)V",
+  "net/minecraft/class_638.method_8435(J)V",
+  "net/minecraft/class_638.method_38743()Z",
+  "net/minecraft/class_638.method_23777(Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;",
+  "net/minecraft/class_638.method_23785(F)Lnet/minecraft/class_243;",
+  "net/minecraft/class_315.method_1641(Lnet/minecraft/class_304;Lnet/minecraft/class_3675$class_306;)V",
+  "net/minecraft/class_315.method_1631(Lnet/minecraft/class_1664;Z)V"
  ],
  "frameDefaults": {
   "method_52706(Lnet/minecraft/class_2960;IIII)V": {
@@ -57,6 +77,17 @@
   },
   "method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": {
    "5": "zero: a null tooltip style is the default background, what 1.21.2's own five-argument renderTooltip passes"
+  },
+  "method_32666(Lnet/minecraft/class_327;IILnet/minecraft/class_332;)V": {
+   "3": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#tooltipWidthDefault(Lnet/minecraft/class_5684;Lnet/minecraft/class_327;IILnet/minecraft/class_332;)I",
+   "4": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#tooltipHeightDefault(Lnet/minecraft/class_5684;Lnet/minecraft/class_327;IILnet/minecraft/class_332;)I"
+  },
+  "method_32661()I": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#font()Lnet/minecraft/class_327;"
+  },
+  "method_3118()F": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#firstPersonCamera()Z",
+   "1": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#unscaledFovEffect()F"
   }
  },
  "methodRenames": {
@@ -109,7 +140,21 @@
   "net/minecraft/class_2578.method_36137()Lnet/minecraft/class_2300;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#scoreSelector",
   "net/minecraft/class_2578.method_10928()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#scoreObjective",
   "net/minecraft/class_2165.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#sendSystemMessage",
-  "net/minecraft/class_2172.method_9273()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#recipeNames"
+  "net/minecraft/class_2172.method_9273()Ljava/util/stream/Stream;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#recipeNames",
+  "net/minecraft/class_5349.method_29459(Lnet/minecraft/class_2960;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#libraryTag",
+  "net/minecraft/class_2991.method_29462(Lnet/minecraft/class_2960;)Ljava/util/Collection;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#managerTag",
+  "net/minecraft/class_176.method_35553(Lnet/minecraft/class_169;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#isAllowed",
+  "net/minecraft/class_176.method_60298(Lnet/minecraft/class_58;Lnet/minecraft/class_46;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#validateUser",
+  "net/minecraft/class_176.method_776(Lnet/minecraft/class_8942;Lnet/minecraft/class_46;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#validateUser",
+  "net/minecraft/class_9173.method_56585(Lnet/minecraft/class_5912;Lnet/minecraft/class_5455;Z)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#collectGameRegistries",
+  "net/minecraft/class_742.method_3118()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#fieldOfViewModifier",
+  "net/minecraft/class_5684.method_32661()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#tooltipHeight",
+  "net/minecraft/class_5684.method_32666(Lnet/minecraft/class_327;IILnet/minecraft/class_332;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#renderImage",
+  "net/minecraft/class_437.method_57734(F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#renderBlurredBackground",
+  "net/minecraft/class_368.method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts#callRender",
+  "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#resetWorldWithSeed",
+  "net/minecraft/class_4341.method_21026(JLjava/lang/String;)Lnet/minecraft/class_4888;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#requestUploadInfo",
+  "net/minecraft/class_4337.method_20973(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#upload"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -124,7 +169,16 @@
   "net/minecraft/class_2232.method_9442(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_8786;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands",
   "net/minecraft/class_2280.method_9751()Lnet/minecraft/class_2280;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands",
   "net/minecraft/class_2561.method_43467(Ljava/lang/String;Ljava/util/Optional;)Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands",
-  "net/minecraft/class_3065.method_13392(Lcom/mojang/brigadier/CommandDispatcher;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands"
+  "net/minecraft/class_3065.method_13392(Lcom/mojang/brigadier/CommandDispatcher;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands",
+  "net/minecraft/class_176.method_35554()Lnet/minecraft/class_176$class_177;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_5514.method_33805(Ljava/lang/String;)Lnet/minecraft/class_5514;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_7532.method_44443(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;III)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient",
+  "net/minecraft/class_7532.method_44445(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;IIIZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient",
+  "net/minecraft/class_8002.method_47946(Lnet/minecraft/class_332;IIIII)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
+  "net/minecraft/class_437.method_25412(Ljava/lang/Runnable;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
+  "net/minecraft/class_4883.method_25078(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_4883;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms",
+  "net/minecraft/class_4371.method_21113(Lnet/minecraft/class_332;Ljava/util/List;Lnet/minecraft/class_4904;IIII)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms",
+  "net/minecraft/class_4371.method_21114(Lnet/minecraft/class_4904;Lnet/minecraft/class_4280$class_4281;Ljava/util/List;IDD)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
@@ -297,6 +351,61 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#noTracyCapture()Z"
    ],
    "basis": "GameConfig.GameData gained captureTracyImages in 1.21.2; false without the launch option"
+  },
+  "net/minecraft/class_638.<init>(Lnet/minecraft/class_634;Lnet/minecraft/class_638$class_5271;Lnet/minecraft/class_5321;Lnet/minecraft/class_6880;IILjava/util/function/Supplier;Lnet/minecraft/class_761;ZJ)V": {
+   "desc": "(Lnet/minecraft/class_634;Lnet/minecraft/class_638$class_5271;Lnet/minecraft/class_5321;Lnet/minecraft/class_6880;IILnet/minecraft/class_761;ZJI)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#legacySeaLevel()I"
+   ],
+   "basis": "1.21.2's ClientLevel takes no profiler supplier (it profiles through Profiler.get(), the running thread's profiler 1.21.1's Minecraft supplied) and takes the sea level the server sends; a 1.21.1 level has no sent sea level and 1.21.1's client used 63 for every level"
+  },
+  "net/minecraft/class_8690$class_8691.<init>(IILnet/minecraft/class_8690$class_8691$class_8692;)V": {
+   "desc": "(IILnet/minecraft/class_8690$class_8691$class_8692;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#tiledCentre()Z"
+   ],
+   "basis": "1.21.2's nine-slice scaling may stretch its centre (stretch_inner); 1.21.1 always tiled it, which is stretchInner false"
+  },
+  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;Lnet/minecraft/class_4877;)V": {
+   "desc": "(Lnet/minecraft/class_4325;Lnet/minecraft/class_4877;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#notSnapshot()Z"
+   ],
+   "basis": "1.21.2's RealmsCreateRealmScreen(lastScreen, server, snapshot): 1.21.1's (lastScreen, server) created the realm of a new server, not a snapshot"
+  },
+  "net/minecraft/class_4883.<init>(ZZZZIZIIZLjava/lang/String;Ljava/lang/String;Lnet/minecraft/class_4877$class_8842;)V": {
+   "desc": "(ZZIZIIZZLjava/lang/String;Ljava/lang/String;Lnet/minecraft/class_4877$class_8842;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "keep",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#notHardcore()Z",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "RealmsWorldOptions: 1.21.2 dropped spawnAnimals and spawnNPCs (no longer realm settings) and added hardcore after the game mode, which a 1.21.1 options object did not carry (false)"
   }
  },
  "overrideRenames": [
@@ -347,7 +456,25 @@
   "net/minecraft/class_3846.field_17041:Ljava/util/concurrent/atomic/AtomicInteger;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_3846.field_17039:Lnet/minecraft/class_3847;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_3846.field_17042:Ljava/util/concurrent/Executor;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
-  "net/minecraft/class_3846.field_17043:Ljava/lang/String;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
+  "net/minecraft/class_3846.field_17043:Ljava/lang/String;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_9175.method_57054()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_9175.method_56591(Lnet/minecraft/class_5455;Ljava/util/function/Predicate;)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.method_54378(Lnet/minecraft/class_8667;)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.method_52693()Lnet/minecraft/class_4413;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_26506:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_45278:I": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_45279:I": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_45280:Lnet/minecraft/class_8132;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_27938:Ljava/util/function/Consumer;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_19984:Lnet/minecraft/class_342;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_27939:Lnet/minecraft/class_5672;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_27940:Z": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_46708:Ljava/util/Set;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_4409.field_24206:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_8844.field_46710:Lorg/slf4j/Logger;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_8844.field_46711:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_8844.field_46717:Lnet/minecraft/class_4445;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_8844.field_46718:Lnet/minecraft/class_5673;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
  },
  "overrideHooks": [
   {
@@ -362,12 +489,163 @@
     "method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;"
    ],
    "basis": "PreparableReloadListener.reload lost its two ProfilerFiller arguments in 1.21.2 (listeners profile on the running thread): a 1.21.1 listener's own six-argument reload is run with the thread's profiler for both phases; its super.reload(..) reaches super's 1.21.2 reload"
+  },
+  {
+   "old": "method_29459(Lnet/minecraft/class_2960;)Ljava/util/Collection;",
+   "new": "method_29459(Lnet/minecraft/class_2960;)Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_5349",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.tagList(Ljava/util/Collection;)Ljava/util/List;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.superLibraryTag(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestServer$LibraryTagSuper;Lnet/minecraft/class_2960;)Ljava/util/Collection;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer$LibraryTagSuper",
+   "superAccessors": [
+    "method_29459(Lnet/minecraft/class_2960;)Ljava/util/List;"
+   ],
+   "basis": "1.21.2's getTag answers the tag's functions as a List where 1.21.1's answered a Collection: vanilla asks a 1.21.1 subclass through the List shape and gets its answer as a list (the same list when it is one); its super.getTag(id) reaches super's 1.21.2 getTag"
+  },
+  {
+   "old": "method_29462(Lnet/minecraft/class_2960;)Ljava/util/Collection;",
+   "new": "method_29462(Lnet/minecraft/class_2960;)Ljava/util/List;",
+   "onlyUnder": "net/minecraft/class_2991",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.tagList(Ljava/util/Collection;)Ljava/util/List;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.superManagerTag(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestServer$ManagerTagSuper;Lnet/minecraft/class_2960;)Ljava/util/Collection;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer$ManagerTagSuper",
+   "superAccessors": [
+    "method_29462(Lnet/minecraft/class_2960;)Ljava/util/List;"
+   ],
+   "basis": "1.21.2's getTag answers the tag's functions as a List where 1.21.1's answered a Collection: vanilla asks a 1.21.1 subclass through the List shape and gets its answer as a list (the same list when it is one); its super.getTag(id) reaches super's 1.21.2 getTag"
+  },
+  {
+   "old": "method_14002(Lnet/minecraft/class_2338;)V",
+   "new": "method_14002(Lnet/minecraft/class_2338;)Z",
+   "onlyUnder": "net/minecraft/class_3193",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.broadcastAfterChange()Z",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.superBlockChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestServer$BlockChangedSuper;Lnet/minecraft/class_2338;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer$BlockChangedSuper",
+   "superAccessors": [
+    "method_14002(Lnet/minecraft/class_2338;)Z"
+   ],
+   "basis": "1.21.2's ChunkHolder change notifications answer whether the holder should be broadcast (1.21.1's were void and every holder was broadcast each tick): a 1.21.1 subclass's override is asked through the new shape and answers yes (CbRestServer.broadcastAfterChange: a holder with no changed section broadcasts nothing); its super call reaches super's 1.21.2 method"
+  },
+  {
+   "old": "method_14012(Lnet/minecraft/class_1944;I)V",
+   "new": "method_14012(Lnet/minecraft/class_1944;I)Z",
+   "onlyUnder": "net/minecraft/class_3193",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.broadcastAfterChange()Z",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.superLightChanged(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestServer$LightChangedSuper;Lnet/minecraft/class_1944;I)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer$LightChangedSuper",
+   "superAccessors": [
+    "method_14012(Lnet/minecraft/class_1944;I)Z"
+   ],
+   "basis": "1.21.2's ChunkHolder change notifications answer whether the holder should be broadcast (1.21.1's were void and every holder was broadcast each tick): a 1.21.1 subclass's override is asked through the new shape and answers yes (CbRestServer.broadcastAfterChange: a holder with no changed section broadcasts nothing); its super call reaches super's 1.21.2 method"
+  },
+  {
+   "old": "method_23777(Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;",
+   "new": "method_23777(Lnet/minecraft/class_243;F)I",
+   "onlyUnder": "net/minecraft/class_638",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient.rgbInt(Lnet/minecraft/class_243;)I",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2 asks a level for its sky / cloud colour packed (the colour drawn); a 1.21.1 subclass's component vector answers it, each component to 8 bits; its super call reaches the 1.21.1 shape CbRestClientLevelMixin restores, which answers 1.21.2's colour"
+  },
+  {
+   "old": "method_23785(F)Lnet/minecraft/class_243;",
+   "new": "method_23785(F)I",
+   "onlyUnder": "net/minecraft/class_638",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient.rgbInt(Lnet/minecraft/class_243;)I",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2 asks a level for its sky / cloud colour packed (the colour drawn); a 1.21.1 subclass's component vector answers it, each component to 8 bits; its super call reaches the 1.21.1 shape CbRestClientLevelMixin restores, which answers 1.21.2's colour"
+  },
+  {
+   "old": "method_2784(Lnet/minecraft/class_332;FI)V",
+   "new": "method_2784(Lnet/minecraft/class_332;FF)V",
+   "onlyUnder": "net/minecraft/class_537",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.iconAlphaInt(F)I",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2's SpectatorGui asks a 1.21.1 menu item's renderIcon with the float alpha; its override gets the int 1.21.1's SpectatorGui computed from it ((int) (alpha * 255))"
+  },
+  {
+   "old": "method_32666(Lnet/minecraft/class_327;IILnet/minecraft/class_332;)V",
+   "new": "method_32666(Lnet/minecraft/class_327;IIIILnet/minecraft/class_332;)V",
+   "args": [
+    0,
+    1,
+    2,
+    5
+   ],
+   "onlyUnder": "net/minecraft/class_5684",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "1.21.2 hands renderImage the size the component is drawn at (its own getWidth / getHeight); a 1.21.1 component never read it, and its super call passes on what vanilla passed"
+  },
+  {
+   "old": "method_57734(F)V",
+   "new": "method_57734()V",
+   "onlyUnder": "net/minecraft/class_437",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$LegacyBlur",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.blur(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$LegacyBlur;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.superBlur(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$BlurSuper;F)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$BlurSuper",
+   "superAccessors": [
+    "method_57734()V"
+   ],
+   "basis": "1.21.2's renderBackground calls renderBlurredBackground() where 1.21.1's passed its partial tick: a 1.21.1 screen's override is asked with the partial tick the screen renders with; its super call reaches 1.21.2's blur, which needs none"
+  },
+  {
+   "old": "method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;",
+   "new": "method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_327;J)V",
+   "onlyUnder": "net/minecraft/class_368",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.render(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast;Lnet/minecraft/class_332;Lnet/minecraft/class_327;J)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.superRender(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$ToastSuper;Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$ToastSuper",
+   "superAccessors": [
+    "method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_327;J)V",
+    "method_61988()Lnet/minecraft/class_368$class_369;"
+   ],
+   "basis": "1.21.2 draws a toast through render(graphics, font, time) and reads its visibility from getWantedVisibility(); a 1.21.1 toast's render(graphics, manager, time) runs there and its answer is the visibility the manager reads (CbRestToasts, CbRestToastInstanceMixin); a 1.21.1 subclass of a vanilla toast calling super.render gets the vanilla toast drawn and its visibility"
+  },
+  {
+   "old": "method_20973(Ljava/util/function/Consumer;)V",
+   "new": "method_20973()Lnet/minecraft/class_4429;",
+   "onlyUnder": "net/minecraft/class_4337",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms$LegacyUpload",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms.legacyUpload(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestRealms$LegacyUpload;)Lnet/minecraft/class_4429;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms.superUpload(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestRealms$UploadSuper;Ljava/util/function/Consumer;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms$UploadSuper",
+   "superAccessors": [
+    "method_20973()Lnet/minecraft/class_4429;"
+   ],
+   "basis": "1.21.2 runs an upload through upload() and waits for its result; a 1.21.1 subclass's upload(callback) runs there and the result it hands the callback is the answer; its super call runs 1.21.2's upload on another thread and hands the result on, as 1.21.1's did"
+  },
+  {
+   "old": "method_21026(JLjava/lang/String;)Lnet/minecraft/class_4888;",
+   "new": "method_21026(J)Lnet/minecraft/class_4888;",
+   "onlyUnder": "net/minecraft/class_4341",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms$LegacyUploadInfo",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms.legacyUploadInfo(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestRealms$LegacyUploadInfo;J)Lnet/minecraft/class_4888;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms.superUploadInfo(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestRealms$UploadInfoSuper;JLjava/lang/String;)Lnet/minecraft/class_4888;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms$UploadInfoSuper",
+   "superAccessors": [
+    "method_21026(J)Lnet/minecraft/class_4888;"
+   ],
+   "basis": "1.21.2's requestUploadInfo(worldId) reads the upload token from UploadTokenCache, the token 1.21.1's callers passed: a 1.21.1 subclass's override gets it; its super call caches its token and makes 1.21.2's request"
   }
  ],
  "lambdaAdapters": {
   "net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#listener(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy;)Lnet/minecraft/class_3302;"
+  },
+  "net/minecraft/class_368.method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts#toast(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast;)Lnet/minecraft/class_368;"
   }
  },
  "ctorRedirects": {
@@ -377,10 +655,21 @@
   "net/minecraft/class_2851.<init>(FFZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#newPlayerInput",
   "net/minecraft/class_2656.<init>(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#newCooldown",
   "net/minecraft/class_2579.<init>(Ljava/lang/String;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#newSelectorContents",
-  "net/minecraft/class_2578.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#newScoreContents"
+  "net/minecraft/class_2578.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#newScoreContents",
+  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#newCreateSnapshotRealmScreen"
  },
  "instanceFieldGetters": {
-  "net/minecraft/class_8673.field_51520:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#strictErrorHandlingField"
+  "net/minecraft/class_8673.field_51520:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#strictErrorHandlingField",
+  "net/minecraft/class_3806.field_16836:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#spawnAnimals",
+  "net/minecraft/class_3806.field_16809:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#spawnNpcs",
+  "net/minecraft/class_744.field_3910:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputUp",
+  "net/minecraft/class_744.field_3909:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputDown",
+  "net/minecraft/class_744.field_3908:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputLeft",
+  "net/minecraft/class_744.field_3906:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputRight",
+  "net/minecraft/class_744.field_3904:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputJumping",
+  "net/minecraft/class_744.field_3903:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputShiftKeyDown",
+  "net/minecraft/class_4883.field_22633:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#spawnAnimals",
+  "net/minecraft/class_4883.field_22635:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#spawnNpcs"
  },
  "superRedirects": {
   "net/minecraft/class_1297.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#entitySuperSystemMessage",
@@ -410,6 +699,21 @@
    "under": "net/minecraft/class_7157",
    "method": "method_64226()Lnet/minecraft/class_7699;",
    "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands.enabledFeatures(Lnet/minecraft/class_7157;)Lnet/minecraft/class_7699;"
+  },
+  {
+   "under": "net/minecraft/class_9761",
+   "method": "method_39967(Ljava/util/concurrent/CompletableFuture;)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.addSaveDependency(Lnet/minecraft/class_9761;Ljava/util/concurrent/CompletableFuture;)V"
+  },
+  {
+   "under": "net/minecraft/class_368",
+   "method": "method_61989(Lnet/minecraft/class_374;J)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.update(Lnet/minecraft/class_368;Lnet/minecraft/class_374;J)V"
+  },
+  {
+   "under": "net/minecraft/class_368",
+   "method": "method_61988()Lnet/minecraft/class_368$class_369;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.wantedVisibility(Lnet/minecraft/class_368;)Lnet/minecraft/class_368$class_369;"
   }
  ],
  "ledger": {
@@ -421,6 +725,30 @@
   "net/minecraft/class_2578": "a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
   "net/minecraft/class_2578.<init>(Ljava/lang/String;Ljava/lang/String;)V": "super(..) of a 1.21.1 subclass of ScoreContents: 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
   "net/minecraft/class_2578.equals(Ljava/lang/Object;)Z": "equals override of a 1.21.1 subclass of ScoreContents (final on the record): 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
-  "net/minecraft/class_2578.hashCode()I": "hashCode override of a 1.21.1 subclass of ScoreContents (final on the record): 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)"
+  "net/minecraft/class_2578.hashCode()I": "hashCode override of a 1.21.1 subclass of ScoreContents (final on the record): 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
+  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "a 1.21.1 MinecraftServer subclass overriding getProfiler(): 1.21.2's MinecraftServer has only a private method of that name and descriptor (vanilla reads the profiler from Profiler.get()), so nothing can reach an override; 1.21.1 callers of server.getProfiler() are bridged (CbRestServer.profiler, Profiler.get() -- the same profiler 1.21.2's server ticks with)",
+  "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "RealmsClient.resetWorldWithSeed: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
+  "net/minecraft/class_5673.method_32517(Lnet/minecraft/class_4341;J)V": "ResettingGeneratedWorldTask.sendResetRequest: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
+  "net/minecraft/class_8844.run()V": "CreateSnapshotRealmTask.run: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
+  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "RealmsCreateRealmScreen(lastScreen, parentWorldId), the snapshot-creation screen whose only action is the removed request (and whose 1.21.1 subclass super(..) has no 1.21.2 constructor to call): 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_744.field_3910:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputUp",
+  "net/minecraft/class_744.field_3909:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputDown",
+  "net/minecraft/class_744.field_3908:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputLeft",
+  "net/minecraft/class_744.field_3906:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputRight",
+  "net/minecraft/class_744.field_3904:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputJumping",
+  "net/minecraft/class_744.field_3903:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputShiftKeyDown"
+ },
+ "callReshapes": {
+  "net/minecraft/class_537.method_2784(Lnet/minecraft/class_332;FI)V": {
+   "desc": "(Lnet/minecraft/class_332;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#iconAlphaFloat(I)F"
+   ],
+   "basis": "SpectatorMenuItem.renderIcon's alpha: 1.21.1 an int 0..255 (SpectatorGui passed (int) (alpha * 255)), 1.21.2 the float 0..1; super calls follow"
+  }
  }
 }

@@ -45,8 +45,8 @@ class Fragment:
         self.v, self.w_stub = v, w
         self.w = {k: ({} if k not in ("overrideHooks", "overrideRenames", "adapterHooks", "abstractFills",
                                       "convertHooks", "covers") else [])
-                  for k in ("superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
-                            "instanceRedirects", "fieldRedirects", "fieldGetters", "instanceFieldGetters",
+                  for k in ("classRenames", "facadeGaps", "superCtorReshapes", "superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
+                            "instanceRedirects", "fieldRedirects", "fieldGetters", "instanceFieldGetters", "instanceFieldSetters",
                             "superRedirects", "covers", "overrideHooks", "overrideRenames", "frameDefaults",
                             "convertHooks", "adapterHooks", "abstractFills", "lambdaAdapters", "genericWitnesses",
                             "ledger")}
@@ -371,6 +371,291 @@ def explosions(f):
           {"2": LX + "#seenPercent(" + calc + xe + ")F"})
 
 
+# ------------------------------------------------------------------------------------------- carving steps
+LC = RT + "/CbLevelCarving"
+
+
+def carving(f):
+    C, MASK, CP = L("class_2893$class_2894"), L("class_6643"), L("class_1923")
+    f.put("classRenames", MC + "class_2893$class_2894", FAC + "/GenerationStepCarving")
+    f.put("classRenames", MC + "class_5851", FAC + "/CarvingMaskPlacement")
+    f.put("facadeGaps", MC + "class_5851.field_28934:Lcom/mojang/serialization/Codec;",
+          "a Codec until 1.20.4; 1.20.5 made it the MapCodec the facade has, and the 1.20.4 -> 1.20.5 step moves a "
+          "mod's read of the Codec (s4rest-gen.json fieldGetters), so no mod reaches this step reading it")
+    f.put("fieldGetters", MC + "class_6798.field_35751:" + L("class_6798"), LC)
+    PB, BU = MC + "class_5485$class_7868", MC + "class_5485$class_5495"
+    gen_args = L("class_3233") + "J" + L("class_7138") + L("class_4543") + L("class_5138") + L("class_2791")
+    # (owner, name, old args, new args, return, legacy, bridge, super interface, super bridge)
+    fams = ((MC + "class_2794", "method_12108", gen_args + C, gen_args, "V", "ApplyCarvers", "applyCarvers"),
+            (MC + "class_2839", "method_12025", C, "", MASK, "CarvingMask", "carvingMask"),
+            (MC + "class_2839", "method_28510", C, "", MASK, "OrCreateCarvingMask", "orCreateCarvingMask"),
+            (MC + "class_2839", "method_12307", C + MASK, MASK, "V", "SetCarvingMask", "setCarvingMask"),
+            (MC + "class_5444", "method_30459", CP + C, CP, MASK, "ContextCarvingMask", "contextCarvingMask"),
+            (PB, "method_46675", C + L("class_6880"), L("class_6880"), "L" + PB + ";", "PlainAddCarver", "plainAddCarver"),
+            (BU, "method_30991", C + L("class_5321"), L("class_5321"), "L" + BU + ";", "AddCarver", "addCarver"))
+    for owner, name, old_a, new_a, ret, n, br in fams:
+        old = name + "(" + old_a + ")" + ret
+        new = name + "(" + new_a + ")" + ret
+        f.put("instanceRedirects", owner + "." + old, LC)
+        f.hook(old=old, new=new, onlyUnder=owner, adapter=LC + "$Legacy" + n,
+               bridge=LC + "." + br + "(L" + LC + "$Legacy" + n + ";" + new_a + ")" + ret,
+               superBridge=LC + ".super" + br[0].upper() + br[1:] + "(L" + LC + "$Super" + n + ";" + old_a + ")" + ret,
+               superAccess=LC + "$Super" + n, superAccessors=[new],
+               basis="1.21.2 keeps one carving step, 1.21.1's AIR: vanilla asks a 1.21.1 override for it; the "
+                     "override's super call reaches 1.21.2's for AIR and 1.21.1's second step, LIQUID, otherwise "
+                     "(CbLevelCarving)")
+    f.put("instanceRedirects", MC + "class_5485.method_30976(" + C + ")Ljava/lang/Iterable;", LC)
+
+
+# ------------------------------------------------------------------------------------------- chunk state
+LCH = RT + "/CbLevelChunks"
+
+
+def chunk_state(f):
+    CA = MC + "class_2791"
+    for m in ("method_12008(Z)V", "method_39294(" + L("class_6749") + ")V", "method_12029(SI)V",
+              "method_39296()" + L("class_2791$class_6745")):
+        f.put("instanceRedirects", CA + "." + m, LCH)
+    f.put("instanceRedirects", MC + "class_2818.method_12221()V", LCH)
+    f.put("instanceRedirects", MC + "class_1922.method_8315()I", LCH)
+    for c in ("comp_239", "comp_240"):
+        f.put("instanceRedirects", MC + "class_2791$class_6745." + c + "()" + L("class_6761"), LCH)
+    f.put("instanceFieldGetters", CA + ".field_34537:Z", LCH)
+    f.put("instanceFieldSetters", CA + ".field_34537:Z", LCH)
+    sup = dict(superBridge=LCH + ".superSetUnsaved(L" + LCH + "$SuperSetUnsaved;Z)V", superAccess=LCH + "$SuperSetUnsaved",
+               superAccessors=["method_65063()V", "method_65064()Z"])
+    f.hook(old="method_12008(Z)V", new="method_65063()V", onlyUnder=CA, adapter=LCH + "$LegacySetUnsaved",
+           bridge=LCH + ".markUnsaved(L" + LCH + "$LegacySetUnsaved;)V", **sup,
+           basis="1.21.2 marks a chunk unsaved with markUnsaved(): a 1.21.1 chunk's setUnsaved override is asked "
+                 "setUnsaved(true); its super call is markUnsaved / tryMarkSaved (CbLevelChunks)")
+    f.hook(old="method_12008(Z)V", new="method_65064()Z", onlyUnder=CA, adapter=LCH + "$LegacySetUnsaved",
+           bridge=LCH + ".tryMarkSaved(L" + LCH + "$LegacySetUnsaved;)Z", **sup,
+           basis="1.21.2 saves through tryMarkSaved(): a 1.21.1 chunk's setUnsaved override is asked setUnsaved(false), "
+                 "the answer whether it was unsaved (CbLevelChunks)")
+    SL = "Lit/unimi/dsi/fastutil/shorts/ShortList;"
+    f.hook(old="method_12029(SI)V", new="method_12029(" + SL + "I)V", onlyUnder=CA,
+           adapter=LCH + "$LegacyAddPackedPostProcess",
+           bridge=LCH + ".addPackedPostProcess(L" + LCH + "$LegacyAddPackedPostProcess;" + SL + "I)V",
+           superBridge=LCH + ".superAddPackedPostProcess(L" + LCH + "$SuperAddPackedPostProcess;SI)V",
+           superAccess=LCH + "$SuperAddPackedPostProcess", superAccessors=["method_12029(" + SL + "I)V"],
+           basis="1.21.2 adds post-process positions a list at a time: a 1.21.1 override is asked each in turn; its "
+                 "super call adds the list of one (CbLevelChunks)")
+    f.w["adapterHooks"].append({
+        "under": CA, "adapter": LCH + "$LegacySetBlendingData", "requires": ["method_39294(" + L("class_6749") + ")V"],
+        "synth": [], "basis": "nothing in 1.21.1's or 1.21.2's vanilla code calls setBlendingData: a 1.21.1 override "
+                              "is reached by its mod's calls, which find it through this adapter (CbLevelChunks)"})
+    f.put("superRedirects", CA + ".method_39294(" + L("class_6749") + ")V", LCH + "#setBlendingData")
+    f.w["adapterHooks"].append({
+        "under": MC + "class_1922", "adapter": LCH + "$LegacyMaxLightLevel", "requires": ["method_8315()I"],
+        "synth": [], "basis": "1.21.2's lighting no longer asks getMaxLightLevel (fixed at 15): a 1.21.1 override is "
+                              "reached by its mod's calls, which find it through this adapter (CbLevelChunks)"})
+    f.put("superRedirects", MC + "class_1922.method_8315()I", LCH + "#maxLightLevel")
+
+
+# ------------------------------------------------------------------------------------------- chunk storage
+LST = RT + "/CbLevelStorage"
+
+
+def chunk_storage(f):
+    POS, TAG, CF, SUP = L("class_1923"), L("class_2487"), "Ljava/util/concurrent/CompletableFuture;", "Ljava/util/function/Supplier;"
+    SRS = MC + "class_3977"
+    f.reshape(SRS + ".method_17910(" + POS + TAG + ")" + CF, "(" + POS + SUP + ")" + CF,
+              ["keep:0", "conv:1 " + LST + "#supplier(" + TAG + ")" + SUP],
+              "SimpleRegionStorage.write takes a supplier of the tag since 1.21.2: the tag 1.21.1's caller handed")
+    f.hook(old="method_17910(" + POS + TAG + ")" + CF, new="method_17910(" + POS + SUP + ")" + CF, onlyUnder=SRS,
+           adapter=LST + "$LegacyWrite", bridge=LST + ".write(L" + LST + "$LegacyWrite;" + POS + SUP + ")" + CF,
+           superBridge=LST + ".superWrite(L" + LST + "$SuperWrite;" + POS + TAG + ")" + CF,
+           superAccess=LST + "$SuperWrite", superAccessors=["method_17910(" + POS + SUP + ")" + CF],
+           basis="vanilla writes through write(pos, supplier) since 1.21.2: a 1.21.1 override gets the supplied tag; "
+                 "its super call supplies the tag it passes (CbLevelStorage)")
+    FN, BIF, COD = "Ljava/util/function/Function;", "Ljava/util/function/BiFunction;", "Lcom/mojang/serialization/Codec;"
+    old = "(" + L("class_9172") + FN + FN + L("class_5455") + L("class_9820") + L("class_5539") + ")V"
+    f.put("superCtorReshapes", MC + "class_4180.<init>" + old, {
+        "desc": "(" + L("class_9172") + COD + FN + BIF + FN + L("class_5455") + L("class_9820") + L("class_5539") + ")V",
+        "ops": ["keep:0", "conv:1 " + LST + "#packedCodec(" + FN + ")" + COD,
+                "conv:1,3 " + LST + "#packer(" + FN + L("class_5455") + ")" + FN,
+                "conv:1 " + LST + "#unpacker(" + FN + ")" + BIF, "keep:2", "keep:3", "keep:4", "keep:5"],
+        "basis": "SectionStorage keeps sections in a packed form since 1.21.2: the packed form is the section's data, "
+                 "parsed and written with 1.21.1's per-section codec (CbLevelStorage)"})
+    CS = MC + "class_2852"
+    f.put("staticRedirects", CS + ".method_12395(" + L("class_3218") + L("class_4153") + L("class_9240") + POS + TAG + ")"
+          + L("class_2839"), LST)
+    f.put("staticRedirects", CS + ".method_12410(" + L("class_3218") + L("class_2791") + ")" + TAG, LST)
+    why = ("1.21.1's ChunkSerializer was a static utility (no state, no instance methods); 1.21.2 reuses its "
+           "intermediary name class_2852 for the final record SerializableChunkData, so no object of that type can "
+           "stand for a ChunkSerializer instance and no class can extend it; its static API is bridged")
+    f.put("ledger", CS + ".<init>", why)
+    f.put("ledger", CS, why)
+    WGC = MC + "class_9312"
+    f.put("instanceRedirects", WGC + ".comp_2808()" + L("class_3906"), LST)
+    f.put("superCtorReshapes", WGC + ".<init>(" + L("class_3218") + L("class_2794") + L("class_3485") + L("class_3227")
+          + L("class_3906") + ")V", {
+        "desc": "(" + L("class_3218") + L("class_2794") + L("class_3485") + L("class_3227") + "Ljava/util/concurrent/Executor;"
+                + L("class_2818$class_10368") + ")V",
+        "ops": ["keep:0", "keep:1", "keep:2", "keep:3",
+                "conv:4 " + LST + "#executor(" + L("class_3906") + ")Ljava/util/concurrent/Executor;",
+                "conv:0 " + LST + "#unsavedListener(" + L("class_3218") + ")" + L("class_2818$class_10368")],
+        "basis": "WorldGenContext takes the main-thread executor and the chunks' unsaved listener since 1.21.2: the "
+                 "executor of 1.21.1's mailbox (CbRestExecutors) and the level ChunkMap's listener (CbLevelStorage)"})
+
+
+# ------------------------------------------------------------------------------------------- fluids and light
+LFL = RT + "/CbLevelFluids"
+LLI = RT + "/CbLevelLight"
+
+
+def fluids_light(f):
+    SL, FS, RS = L("class_3218"), L("class_3610"), L("class_5819")
+    srv = "conv:0 " + LFL + "#server(" + LVL + ")" + SL
+    st = "conv:0,1 " + LFL + "#stateAt(" + LVL + POS + ")" + BS
+    why = ("takes the server level since 1.21.2 (and the block state at the position, which its callers read off the "
+           "level): 1.21.1 ran fluids on server levels only (CbLevelFluids)")
+    for owner, name, old_a, new_a, ret, ops in (
+            ("class_3611", "method_15778", LVL + POS + FS, SL + POS + BS + FS, "V", [srv, "keep:1", st, "keep:2"]),
+            ("class_3609", "method_15725", LVL + POS + FS, SL + POS + BS + FS, "V", [srv, "keep:1", st, "keep:2"]),
+            ("class_3609", "method_15727", LVL + POS + BS, SL + POS + BS, FS, [srv, "keep:1", "keep:2"]),
+            ("class_3609", "method_15737", LVL, SL, "Z", [srv]),
+            ("class_3609", "method_15726", LVL + POS + BS, SL + POS + BS, "Ljava/util/Map;", [srv, "keep:1", "keep:2"]),
+            ("class_3611", "method_15792", LVL + POS + FS + RS, SL + POS + FS + RS, "V", [srv, "keep:1", "keep:2", "keep:3"]),
+            ("class_3610", "method_15770", LVL + POS, SL + POS + BS, "V", [srv, "keep:1", st]),
+            ("class_3610", "method_15757", LVL + POS + RS, SL + POS + RS, "V", [srv, "keep:1", "keep:2"])):
+        f.reshape(MC + owner + "." + name + "(" + old_a + ")" + ret, "(" + new_a + ")" + ret, ops, name + " " + why)
+    LE, SH_, DIRS = MC + "class_3558", L("class_265"), DIR
+    lwhy = ("1.21.2 asks a block's light properties of the state alone, as BlockStateBase's cache answered them for "
+            "1.21.1 (CbLevelLight)")
+    f.reshape(LE + ".method_51561(" + BG + POS + BS + BS + ")Z", "(" + BS + BS + ")Z", ["keep:2", "keep:3"], lwhy)
+    f.reshape(LE + ".method_20049(" + BG + BS + POS + BS + POS + DIRS + "I)I", "(" + BS + BS + DIRS + "I)I",
+              ["keep:1", "keep:3", "keep:5", "keep:6"], lwhy)
+    f.reshape(LE + ".method_51562(" + BG + POS + BS + DIRS + ")" + SH_, "(" + BS + DIRS + ")" + SH_, ["keep:2", "keep:3"], lwhy)
+    f.reshape(LE + ".method_50017(" + BS + POS + ")I", "(" + BS + ")I", ["keep:0"], lwhy)
+    f.reshape(LE + ".method_50016(J" + BS + "J" + BS + DIRS + ")Z", "(" + BS + BS + DIRS + ")Z", ["keep:1", "keep:3", "keep:4"], lwhy)
+    for old, new, n, br, sup_old in (
+            ("method_50017(" + BS + POS + ")I", "method_50017(" + BS + ")I", "Opacity", "opacity", BS + POS),
+            ("method_50016(J" + BS + "J" + BS + DIRS + ")Z", "method_50016(" + BS + BS + DIRS + ")Z", "ShapeOccludes",
+             "shapeOccludes", "J" + BS + "J" + BS + DIRS)):
+        nargs, ret = new[new.index("("):new.index(")") + 1], new[new.index(")") + 1:]
+        f.hook(old=old, new=new, onlyUnder=LE, adapter=LLI + "$Legacy" + n,
+               bridge=LLI + "." + br + "(L" + LLI + "$Legacy" + n + ";" + nargs[1:-1] + ")" + ret,
+               superBridge=LLI + ".super" + n + "(L" + LLI + "$Super" + n + ";" + sup_old + ")" + ret,
+               superAccess=LLI + "$Super" + n, superAccessors=[new],
+               basis="a 1.21.1 light engine's override, asked in 1.21.2's state-only shape: the origin as its position; "
+                     "its super call reaches 1.21.2's (CbLevelLight)")
+    occ = "method_20710(" + BS + "J" + DIRS + ")" + SH_
+    f.put("instanceRedirects", LE + "." + occ, LLI)
+    f.put("superRedirects", LE + "." + occ, LLI + "#occlusionShape")
+    f.w["adapterHooks"].append({"under": LE, "adapter": LLI + "$LegacyOcclusionShape", "requires": [occ], "synth": [],
+                                "basis": "1.21.2's engine asks the static occlusion shape: a 1.21.1 override is reached "
+                                         "by its mod's calls, through this adapter (CbLevelLight)"})
+    LLE, SEC = MC + "class_3568", L("class_4076")
+    f.put("instanceRedirects", LLE + ".method_51559(" + SEC + ")Z", LFL)
+    f.hook(old="method_51559(" + SEC + ")Z", new="method_62874(J)Z", onlyUnder=LLE,
+           adapter=LFL + "$LegacyLightOnInSection", bridge=LFL + ".lightOnInColumn(L" + LFL + "$LegacyLightOnInSection;J)Z",
+           superBridge=LFL + ".superLightOnInSection(L" + LFL + "$SuperLightOnInColumn;" + SEC + ")Z",
+           superAccess=LFL + "$SuperLightOnInColumn", superAccessors=["method_62874(J)Z"],
+           basis="1.21.2 asks lightOnInColumn(column key); 1.21.1's lightOnInSection looked up the section's column "
+                 "(SectionPos.getZeroNode): a 1.21.1 override is asked for the column's bottom section (CbLevelFluids)")
+
+
+# ------------------------------------------------------------------------------------------- Level-wide API
+LLV = RT + "/CbLevelLevels"
+
+
+def level_api(f):
+    GR, PF, SUPP, RM, RA = L("class_1928"), L("class_3695"), "Ljava/util/function/Supplier;", L("class_1863"), L("class_10286")
+    for m, n, base in (("method_8450()" + GR, "GameRules", "gameRules"), ("method_16107()" + PF, "Profiler", "profiler"),
+                       ("method_24367()" + SUPP, "ProfilerSupplier", "profilerSupplier")):
+        f.put("instanceRedirects", LEVEL + "." + m, LLV)
+        f.put("superRedirects", LEVEL + "." + m, LLV + "#" + base)
+        f.w["adapterHooks"].append({"under": LEVEL, "adapter": LLV + "$Legacy" + n, "requires": [m], "synth": [],
+                                    "basis": "1.21.2 no longer asks a level this (CbLevelLevels): a 1.21.1 override is "
+                                             "reached by its mod's calls, through this adapter"})
+    f.put("instanceRedirects", LEVEL + ".method_8433()" + RM, LLV)
+    f.hook(old="method_8433()" + RM, new="method_8433()" + RA, onlyUnder=LEVEL,
+           unwrap=LLV + ".recipeAccess(" + RM + ")" + RA,
+           basis="1.21.2 asks a level its recipeAccess(), which a RecipeManager is: a 1.21.1 level's getRecipeManager "
+                 "answers it (CbLevelLevels)")
+    f.w["adapterHooks"].append({"under": LEVEL, "adapter": LLV + "$LegacyRecipeManager", "requires": ["method_8433()" + RM],
+                                "synth": [], "basis": "a 1.21.1 level's getRecipeManager, reached by its mod's calls"})
+    f.put("instanceRedirects", MC + "class_5217.method_146()" + GR, LLV)
+    f.w["adapterHooks"].append({"under": MC + "class_5217", "adapter": LLV + "$LegacyDataGameRules",
+                                "requires": ["method_146()" + GR], "synth": [],
+                                "basis": "1.21.2's LevelData has no getGameRules (ServerLevelData keeps it): a 1.21.1 "
+                                         "implementation's is reached by its mod's calls, through this adapter"})
+    FF = L("class_7699")
+    push = "push " + LLV + "#defaultFeatures()" + FF
+    f.put("superCtorReshapes", MC + "class_1928.<init>()V", {"desc": "(" + FF + ")V", "ops": [push],
+          "basis": "GameRules is made for a feature set since 1.21.2: the default one (1.21.1 had no gated rules)"})
+    f.put("superCtorReshapes", MC + "class_1928.<init>(Lcom/mojang/serialization/DynamicLike;)V",
+          {"desc": "(" + FF + "Lcom/mojang/serialization/DynamicLike;)V", "ops": [push, "keep"],
+           "basis": "GameRules is made for a feature set since 1.21.2: the default one (1.21.1 had no gated rules)"})
+    f.put("instanceRedirects", MC + "class_1928.method_27325()" + GR, LLV)
+    f.put("staticRedirects", MC + "class_1928.method_20744(" + L("class_1928$class_4311") + ")V", LLV)
+    WLD, RKL, RAC, HDT = L("class_5269"), L("class_5321"), L("class_5455"), L("class_6880")
+    f.put("superCtorReshapes", LEVEL + ".<init>(" + WLD + RKL + RAC + HDT + SUPP + "ZZJI)V", {
+        "desc": "(" + WLD + RKL + RAC + HDT + "ZZJI)V",
+        "ops": ["keep", "keep", "keep", "keep", "drop", "keep", "keep", "keep", "keep"],
+        "post": LLV + "#constructed(L" + LEVEL + ";" + SUPP + ")V", "postArgs": [4],
+        "basis": "Level no longer takes a profiler supplier (1.21.2 has the thread's): the level keeps the one its "
+                 "1.21.1 constructor call handed, for its getProfiler (CbLevelLevels)"})
+    full = L("class_1297") + L("class_1282") + L("class_5362") + "DDDFZ" + L("class_1937$class_7867") + L("class_2394")         + L("class_2394") + L("class_6880")
+    f.w["abstractFills"].append({"under": LEVEL, "method": "method_8454(" + full + ")V",
+                                 "call": RT + "/CbLevelExplosions.fill8454(L" + LEVEL + ";" + full + ")V",
+                                 "basis": "explode is abstract since 1.21.2; 1.21.1's Level made the explosion itself"})
+    f.w["abstractFills"].append({"under": LEVEL, "method": "method_61269()" + L("class_9895"),
+                                 "call": LLV + ".fuelValues(L" + LEVEL + ";)" + L("class_9895"),
+                                 "basis": "fuelValues is new and abstract in 1.21.2: the vanilla burn times for the "
+                                          "level's registries and features"})
+
+
+# ------------------------------------------------------------------------------------------- EntityGetter targeting
+LEN = RT + "/CbLevelEntities"
+
+
+def entity_getter(f):
+    EG, TC, LE_, PL, AB, LST_, CLS = (MC + "class_1924", L("class_4051"), L("class_1309"), L("class_1657"), L("class_238"),
+                                      "Ljava/util/List;", "Ljava/lang/Class;")
+    for m, n, base in (("method_18462(" + TC + LE_ + ")" + PL, "NearestPlayer", "nearestPlayer"),
+                       ("method_18463(" + TC + LE_ + "DDD)" + PL, "NearestPlayerAt", "nearestPlayerAt"),
+                       ("method_18461(" + TC + "DDD)" + PL, "NearestPlayerPos", "nearestPlayerPos"),
+                       ("method_21726(" + CLS + TC + LE_ + "DDD" + AB + ")" + LE_, "NearestEntityOfClass", "nearestEntityOfClass"),
+                       ("method_18468(" + LST_ + TC + LE_ + "DDD)" + LE_, "NearestEntity", "nearestEntity"),
+                       ("method_18464(" + TC + LE_ + AB + ")" + LST_, "NearbyPlayers", "nearbyPlayers"),
+                       ("method_18466(" + CLS + TC + LE_ + AB + ")" + LST_, "NearbyEntities", "nearbyEntities")):
+        f.put("instanceRedirects", EG + "." + m, LEN)
+        f.put("superRedirects", EG + "." + m, LEN + "#" + base)
+        f.w["adapterHooks"].append({"under": EG, "adapter": LEN + "$Legacy" + n, "requires": [m], "synth": [],
+                                    "basis": "1.21.2 moved this default to ServerEntityGetter: a 1.21.1 implementation's "
+                                             "override is reached by the calls 1.21.1's defaults made, through this "
+                                             "adapter (CbLevelEntities)"})
+
+
+# ------------------------------------------------------------------------------------------- loot params, moss
+LLP = RT + "/CbLevelLootParams"
+
+
+def loot_params_moss(f):
+    LP, P, O = MC + "class_8567", L("class_169"), "Ljava/lang/Object;"
+    for m, n, base in (("method_51865(" + P + ")Z", "HasParam", "hasParam"),
+                       ("method_51867(" + P + ")" + O, "GetParameter", "getParameter"),
+                       ("method_51868(" + P + ")" + O, "GetOptionalParameter", "getOptionalParameter"),
+                       ("method_51869(" + P + ")" + O, "GetParamOrNull", "getParamOrNull")):
+        f.put("instanceRedirects", LP + "." + m, LLP)
+        f.put("superRedirects", LP + "." + m, LLP + "#" + base)
+        f.w["adapterHooks"].append({"under": LP, "adapter": LLP + "$Legacy" + n, "requires": [m], "synth": [],
+                                    "basis": "1.21.2 reads the parameters off its ContextMap: a 1.21.1 subclass's "
+                                             "override is reached by the calls, through this adapter (CbLevelLootParams)"})
+    MAP = "Ljava/util/Map;"
+    f.put("superCtorReshapes", LP + ".<init>(" + L("class_3218") + MAP + MAP + "F)V", {
+        "desc": "(" + L("class_3218") + L("class_10352") + MAP + "F)V",
+        "ops": ["keep", "conv " + LLP + "#contextMap(" + MAP + ")" + L("class_10352"), "keep", "keep"],
+        "basis": "LootParams holds a ContextMap since 1.21.2: 1.21.1's parameter map as one (CbLevelLootParams)"})
+    f.put("methodRenames", MC + "class_47.method_296(" + P + ")" + O, "method_65013")
+    f.put("classRenames", MC + "class_5807", FAC + "/MossBlock")
+    f.put("facadeGaps", MC + "class_5807.method_9651(" + L("class_4538") + POS + BS + "Z)Z",
+          "1.20.1's isValidBonemealTarget(level, pos, state, isClient), gone at 1.20.2: the 1.20.1 -> 1.20.2 step "
+          "rewires it (shims-1.20.2.json), so no mod reaches this step with it")
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -382,6 +667,13 @@ def main():
     schedule_tick(f)
     neighbors(f)
     explosions(f)
+    carving(f)
+    chunk_state(f)
+    chunk_storage(f)
+    fluids_light(f)
+    level_api(f)
+    entity_getter(f)
+    loot_params_moss(f)
     f.write()
 
 

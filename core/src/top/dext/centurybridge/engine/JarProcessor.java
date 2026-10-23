@@ -3226,8 +3226,10 @@ public final class JarProcessor {
                         }
                         // a shim on any ancestor satisfies this call site: the mod
                         // holds a subclass reference, but the member is declared
-                        // (and bridged) further up
-                        if (chain.coveredAnywhere(owner, name + desc)) {
+                        // (and bridged) further up -- unless an instance redirect keys
+                        // it on a nearer class (Chain#instanceRedirectNearerThanCover)
+                        String covHome = chain.coverHome(owner, name + desc);
+                        if (covHome != null && !chain.instanceRedirectNearerThanCover(owner, name + desc, covHome)) {
                             top.dext.centurybridge.data.FullAudit.record(key, "covered");
                             return; // restored at runtime by a shim mixin
                         }
@@ -3738,6 +3740,19 @@ public final class JarProcessor {
                 fillApply.add(f);
                 rpt.notes.add(tag + "abstract-filled: " + clsName0(bytes) + "." + shape);
                 top.dext.centurybridge.data.FullAudit.record(f.under + "." + shape, "abstract-fill");
+            }
+        }
+        // a redirect static takes its receiver as the type the wiring keys the member on (emitOwner); that type
+        // may be one the class never named -- a Fabric API interface reached through the vanilla type it is
+        // injected into (TagAppender.remove is 1.21.11's FabricProvidedTagBuilder's) -- and a renamed one: the
+        // class-rename pass must then run on this class too, or the emitted descriptor keeps the source name
+        if (!needClassRename) {
+            for (String o : emitOwner.values()) {
+                if (chain.classRenames.containsKey(o)) {
+                    needClassRename = true;
+                    rpt.notes.add(tag + "facade-renamed (redirect receiver): " + o + " -> " + chain.classRenames.get(o));
+                    break;
+                }
             }
         }
         if (redirects.isEmpty() && instRedirects.isEmpty() && ifaceCallRedirects.isEmpty() && fldRedirects.isEmpty()

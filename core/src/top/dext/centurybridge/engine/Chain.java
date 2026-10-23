@@ -212,12 +212,29 @@ public final class Chain {
 
     /** A cover/redirect recorded on any ancestor applies to this call site too. */
     public boolean coveredAnywhere(String owner, String nameDesc) {
+        return coverHome(owner, nameDesc) != null;
+    }
+
+    /** The class (owner or an ancestor) whose shim cover serves the member, nearest first; null when uncovered. */
+    public String coverHome(String owner, String nameDesc) {
         for (String o : selfAndSupers(owner)) {
             if (shimCovers.contains(o + "." + nameDesc)) {
-                return true;
+                return o;
             }
         }
-        return false;
+        return null;
+    }
+
+    /**
+     * Whether an instance redirect keys the member on a class strictly between the call's owner (inclusive)
+     * and the class whose cover would serve it: the nearer declaration wins, as the JVM's resolution would
+     * have found the source's own override first (1.20.4 IntegratedServer.logTickTime, public, over the
+     * protected MinecraftServer.logTickTime a mixin gives back: the cover alone left a mod's call resolving
+     * to the protected one -- an IllegalAccessError -- and skipped IntegratedServer's own redirect).
+     */
+    public boolean instanceRedirectNearerThanCover(String owner, String nameDesc, String coverHome) {
+        String home = redirectHome(instanceRedirects, owner, nameDesc);
+        return home != null && !home.equals(coverHome) && selfAndSupers(home).contains(coverHome);
     }
 
     /** Look a member up in a redirect map, walking the hierarchy. */
