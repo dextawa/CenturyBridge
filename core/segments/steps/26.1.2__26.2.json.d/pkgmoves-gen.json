@@ -1,0 +1,1475 @@
+{
+ "_pkgmoves_generated": "core/tools/wall_table.py --identity ... --fragment <this> 26.1.2__26.2: the classes this release moved or renamed, each found by member overlap and same-code bodies; regenerate, never hand-edit",
+ "classRenames": {
+  "com/mojang/blaze3d/pipeline/RenderPipeline$UniformDescription": "com/mojang/blaze3d/pipeline/BindGroupLayout$UniformDescription",
+  "com/mojang/blaze3d/platform/ScreenManager": "com/mojang/blaze3d/platform/MonitorManager",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer": "com/mojang/blaze3d/vertex/StagingBuffer$Cpu",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer": "com/mojang/blaze3d/vertex/StagingBuffer$PersistentlyMapped",
+  "com/mojang/blaze3d/vertex/VertexFormat$IndexType": "com/mojang/blaze3d/IndexType",
+  "com/mojang/blaze3d/vertex/VertexFormat$Mode": "com/mojang/blaze3d/PrimitiveTopology",
+  "net/minecraft/advancements/CriteriaTriggers": "net/minecraft/advancements/triggers/CriteriaTriggers",
+  "net/minecraft/advancements/Criterion": "net/minecraft/advancements/triggers/Criterion",
+  "net/minecraft/advancements/CriterionTrigger": "net/minecraft/advancements/triggers/CriterionTrigger",
+  "net/minecraft/advancements/criterion/AnyBlockInteractionTrigger": "net/minecraft/advancements/triggers/AnyBlockInteractionTrigger",
+  "net/minecraft/advancements/criterion/AnyBlockInteractionTrigger$TriggerInstance": "net/minecraft/advancements/triggers/AnyBlockInteractionTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/BeeNestDestroyedTrigger": "net/minecraft/advancements/triggers/BeeNestDestroyedTrigger",
+  "net/minecraft/advancements/criterion/BeeNestDestroyedTrigger$TriggerInstance": "net/minecraft/advancements/triggers/BeeNestDestroyedTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/BlockPredicate": "net/minecraft/advancements/predicates/BlockPredicate",
+  "net/minecraft/advancements/criterion/BlockPredicate$Builder": "net/minecraft/advancements/predicates/BlockPredicate$Builder",
+  "net/minecraft/advancements/criterion/BredAnimalsTrigger": "net/minecraft/advancements/triggers/BredAnimalsTrigger",
+  "net/minecraft/advancements/criterion/BredAnimalsTrigger$TriggerInstance": "net/minecraft/advancements/triggers/BredAnimalsTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/BrewedPotionTrigger": "net/minecraft/advancements/triggers/BrewedPotionTrigger",
+  "net/minecraft/advancements/criterion/BrewedPotionTrigger$TriggerInstance": "net/minecraft/advancements/triggers/BrewedPotionTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/ChangeDimensionTrigger": "net/minecraft/advancements/triggers/ChangeDimensionTrigger",
+  "net/minecraft/advancements/criterion/ChangeDimensionTrigger$TriggerInstance": "net/minecraft/advancements/triggers/ChangeDimensionTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/ChanneledLightningTrigger": "net/minecraft/advancements/triggers/ChanneledLightningTrigger",
+  "net/minecraft/advancements/criterion/ChanneledLightningTrigger$TriggerInstance": "net/minecraft/advancements/triggers/ChanneledLightningTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/CollectionContentsPredicate": "net/minecraft/advancements/predicates/CollectionContentsPredicate",
+  "net/minecraft/advancements/criterion/CollectionContentsPredicate$Multiple": "net/minecraft/advancements/predicates/CollectionContentsPredicate$Multiple",
+  "net/minecraft/advancements/criterion/CollectionContentsPredicate$Single": "net/minecraft/advancements/predicates/CollectionContentsPredicate$Single",
+  "net/minecraft/advancements/criterion/CollectionContentsPredicate$Zero": "net/minecraft/advancements/predicates/CollectionContentsPredicate$Zero",
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate": "net/minecraft/advancements/predicates/CollectionCountsPredicate",
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate$Entry": "net/minecraft/advancements/predicates/CollectionCountsPredicate$Entry",
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate$Multiple": "net/minecraft/advancements/predicates/CollectionCountsPredicate$Multiple",
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate$Single": "net/minecraft/advancements/predicates/CollectionCountsPredicate$Single",
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate$Zero": "net/minecraft/advancements/predicates/CollectionCountsPredicate$Zero",
+  "net/minecraft/advancements/criterion/CollectionPredicate": "net/minecraft/advancements/predicates/CollectionPredicate",
+  "net/minecraft/advancements/criterion/ConstructBeaconTrigger": "net/minecraft/advancements/triggers/ConstructBeaconTrigger",
+  "net/minecraft/advancements/criterion/ConstructBeaconTrigger$TriggerInstance": "net/minecraft/advancements/triggers/ConstructBeaconTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/ConsumeItemTrigger": "net/minecraft/advancements/triggers/ConsumeItemTrigger",
+  "net/minecraft/advancements/criterion/ConsumeItemTrigger$TriggerInstance": "net/minecraft/advancements/triggers/ConsumeItemTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/ContextAwarePredicate": "net/minecraft/advancements/predicates/ContextAwarePredicate",
+  "net/minecraft/advancements/criterion/CuredZombieVillagerTrigger": "net/minecraft/advancements/triggers/CuredZombieVillagerTrigger",
+  "net/minecraft/advancements/criterion/CuredZombieVillagerTrigger$TriggerInstance": "net/minecraft/advancements/triggers/CuredZombieVillagerTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/DamagePredicate": "net/minecraft/advancements/predicates/DamagePredicate",
+  "net/minecraft/advancements/criterion/DamagePredicate$Builder": "net/minecraft/advancements/predicates/DamagePredicate$Builder",
+  "net/minecraft/advancements/criterion/DamageSourcePredicate": "net/minecraft/advancements/predicates/DamageSourcePredicate",
+  "net/minecraft/advancements/criterion/DamageSourcePredicate$Builder": "net/minecraft/advancements/predicates/DamageSourcePredicate$Builder",
+  "net/minecraft/advancements/criterion/DataComponentMatchers": "net/minecraft/advancements/predicates/DataComponentMatchers",
+  "net/minecraft/advancements/criterion/DataComponentMatchers$Builder": "net/minecraft/advancements/predicates/DataComponentMatchers$Builder",
+  "net/minecraft/advancements/criterion/DefaultBlockInteractionTrigger": "net/minecraft/advancements/triggers/DefaultBlockInteractionTrigger",
+  "net/minecraft/advancements/criterion/DefaultBlockInteractionTrigger$TriggerInstance": "net/minecraft/advancements/triggers/DefaultBlockInteractionTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/DistancePredicate": "net/minecraft/advancements/predicates/DistancePredicate",
+  "net/minecraft/advancements/criterion/DistanceTrigger": "net/minecraft/advancements/triggers/DistanceTrigger",
+  "net/minecraft/advancements/criterion/DistanceTrigger$TriggerInstance": "net/minecraft/advancements/triggers/DistanceTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/EffectsChangedTrigger": "net/minecraft/advancements/triggers/EffectsChangedTrigger",
+  "net/minecraft/advancements/criterion/EffectsChangedTrigger$TriggerInstance": "net/minecraft/advancements/triggers/EffectsChangedTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/EnchantedItemTrigger": "net/minecraft/advancements/triggers/EnchantedItemTrigger",
+  "net/minecraft/advancements/criterion/EnchantedItemTrigger$TriggerInstance": "net/minecraft/advancements/triggers/EnchantedItemTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/EnchantmentPredicate": "net/minecraft/advancements/predicates/EnchantmentPredicate",
+  "net/minecraft/advancements/criterion/EnterBlockTrigger": "net/minecraft/advancements/triggers/EnterBlockTrigger",
+  "net/minecraft/advancements/criterion/EnterBlockTrigger$TriggerInstance": "net/minecraft/advancements/triggers/EnterBlockTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/EntityEquipmentPredicate": "net/minecraft/advancements/predicates/entity/EntityEquipmentPredicate",
+  "net/minecraft/advancements/criterion/EntityEquipmentPredicate$Builder": "net/minecraft/advancements/predicates/entity/EntityEquipmentPredicate$Builder",
+  "net/minecraft/advancements/criterion/EntityFlagsPredicate": "net/minecraft/advancements/predicates/entity/EntityFlagsPredicate",
+  "net/minecraft/advancements/criterion/EntityFlagsPredicate$Builder": "net/minecraft/advancements/predicates/entity/EntityFlagsPredicate$Builder",
+  "net/minecraft/advancements/criterion/EntityHurtPlayerTrigger": "net/minecraft/advancements/triggers/EntityHurtPlayerTrigger",
+  "net/minecraft/advancements/criterion/EntityHurtPlayerTrigger$TriggerInstance": "net/minecraft/advancements/triggers/EntityHurtPlayerTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/EntityPredicate": "net/minecraft/advancements/predicates/entity/EntityPredicate",
+  "net/minecraft/advancements/criterion/EntityPredicate$Builder": "net/minecraft/advancements/predicates/entity/EntityPredicate$Builder",
+  "net/minecraft/advancements/criterion/EntitySubPredicate": "net/minecraft/advancements/predicates/entity/EntitySubPredicate",
+  "net/minecraft/advancements/criterion/EntityTypePredicate": "net/minecraft/advancements/predicates/entity/EntityTypePredicate",
+  "net/minecraft/advancements/criterion/FallAfterExplosionTrigger": "net/minecraft/advancements/triggers/FallAfterExplosionTrigger",
+  "net/minecraft/advancements/criterion/FallAfterExplosionTrigger$TriggerInstance": "net/minecraft/advancements/triggers/FallAfterExplosionTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/FilledBucketTrigger": "net/minecraft/advancements/triggers/FilledBucketTrigger",
+  "net/minecraft/advancements/criterion/FilledBucketTrigger$TriggerInstance": "net/minecraft/advancements/triggers/FilledBucketTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/FishingHookPredicate": "net/minecraft/advancements/predicates/entity/FishingHookPredicate",
+  "net/minecraft/advancements/criterion/FishingRodHookedTrigger": "net/minecraft/advancements/triggers/FishingRodHookedTrigger",
+  "net/minecraft/advancements/criterion/FishingRodHookedTrigger$TriggerInstance": "net/minecraft/advancements/triggers/FishingRodHookedTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/FluidPredicate": "net/minecraft/advancements/predicates/FluidPredicate",
+  "net/minecraft/advancements/criterion/FluidPredicate$Builder": "net/minecraft/advancements/predicates/FluidPredicate$Builder",
+  "net/minecraft/advancements/criterion/FoodPredicate": "net/minecraft/advancements/predicates/FoodPredicate",
+  "net/minecraft/advancements/criterion/FoodPredicate$Builder": "net/minecraft/advancements/predicates/FoodPredicate$Builder",
+  "net/minecraft/advancements/criterion/GameTypePredicate": "net/minecraft/advancements/predicates/GameTypePredicate",
+  "net/minecraft/advancements/criterion/ImpossibleTrigger": "net/minecraft/advancements/triggers/ImpossibleTrigger",
+  "net/minecraft/advancements/criterion/ImpossibleTrigger$TriggerInstance": "net/minecraft/advancements/triggers/ImpossibleTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/InputPredicate": "net/minecraft/advancements/predicates/InputPredicate",
+  "net/minecraft/advancements/criterion/InventoryChangeTrigger": "net/minecraft/advancements/triggers/InventoryChangeTrigger",
+  "net/minecraft/advancements/criterion/InventoryChangeTrigger$TriggerInstance": "net/minecraft/advancements/triggers/InventoryChangeTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/InventoryChangeTrigger$TriggerInstance$Slots": "net/minecraft/advancements/triggers/InventoryChangeTrigger$TriggerInstance$Slots",
+  "net/minecraft/advancements/criterion/ItemDurabilityTrigger": "net/minecraft/advancements/triggers/ItemDurabilityTrigger",
+  "net/minecraft/advancements/criterion/ItemDurabilityTrigger$TriggerInstance": "net/minecraft/advancements/triggers/ItemDurabilityTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/ItemPredicate": "net/minecraft/advancements/predicates/ItemPredicate",
+  "net/minecraft/advancements/criterion/ItemPredicate$Builder": "net/minecraft/advancements/predicates/ItemPredicate$Builder",
+  "net/minecraft/advancements/criterion/ItemUsedOnLocationTrigger": "net/minecraft/advancements/triggers/ItemUsedOnLocationTrigger",
+  "net/minecraft/advancements/criterion/ItemUsedOnLocationTrigger$TriggerInstance": "net/minecraft/advancements/triggers/ItemUsedOnLocationTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/KilledByArrowTrigger": "net/minecraft/advancements/triggers/KilledByArrowTrigger",
+  "net/minecraft/advancements/criterion/KilledByArrowTrigger$TriggerInstance": "net/minecraft/advancements/triggers/KilledByArrowTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/KilledTrigger": "net/minecraft/advancements/triggers/KilledTrigger",
+  "net/minecraft/advancements/criterion/KilledTrigger$TriggerInstance": "net/minecraft/advancements/triggers/KilledTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/LevitationTrigger": "net/minecraft/advancements/triggers/LevitationTrigger",
+  "net/minecraft/advancements/criterion/LevitationTrigger$TriggerInstance": "net/minecraft/advancements/triggers/LevitationTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/LightPredicate": "net/minecraft/advancements/predicates/LightPredicate",
+  "net/minecraft/advancements/criterion/LightPredicate$Builder": "net/minecraft/advancements/predicates/LightPredicate$Builder",
+  "net/minecraft/advancements/criterion/LightningBoltPredicate": "net/minecraft/advancements/predicates/entity/LightningBoltPredicate",
+  "net/minecraft/advancements/criterion/LightningStrikeTrigger": "net/minecraft/advancements/triggers/LightningStrikeTrigger",
+  "net/minecraft/advancements/criterion/LightningStrikeTrigger$TriggerInstance": "net/minecraft/advancements/triggers/LightningStrikeTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/LocationPredicate": "net/minecraft/advancements/predicates/LocationPredicate",
+  "net/minecraft/advancements/criterion/LocationPredicate$Builder": "net/minecraft/advancements/predicates/LocationPredicate$Builder",
+  "net/minecraft/advancements/criterion/LocationPredicate$PositionPredicate": "net/minecraft/advancements/predicates/LocationPredicate$PositionPredicate",
+  "net/minecraft/advancements/criterion/LootTableTrigger": "net/minecraft/advancements/triggers/LootTableTrigger",
+  "net/minecraft/advancements/criterion/LootTableTrigger$TriggerInstance": "net/minecraft/advancements/triggers/LootTableTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/MinMaxBounds": "net/minecraft/advancements/predicates/MinMaxBounds",
+  "net/minecraft/advancements/criterion/MinMaxBounds$Bounds": "net/minecraft/advancements/predicates/MinMaxBounds$Bounds",
+  "net/minecraft/advancements/criterion/MinMaxBounds$Bounds$1": "net/minecraft/advancements/predicates/MinMaxBounds$Bounds$1",
+  "net/minecraft/advancements/criterion/MinMaxBounds$Doubles": "net/minecraft/advancements/predicates/MinMaxBounds$Doubles",
+  "net/minecraft/advancements/criterion/MinMaxBounds$FloatDegrees": "net/minecraft/advancements/predicates/MinMaxBounds$FloatDegrees",
+  "net/minecraft/advancements/criterion/MinMaxBounds$Ints": "net/minecraft/advancements/predicates/MinMaxBounds$Ints",
+  "net/minecraft/advancements/criterion/MobEffectsPredicate": "net/minecraft/advancements/predicates/MobEffectsPredicate",
+  "net/minecraft/advancements/criterion/MobEffectsPredicate$Builder": "net/minecraft/advancements/predicates/MobEffectsPredicate$Builder",
+  "net/minecraft/advancements/criterion/MobEffectsPredicate$MobEffectInstancePredicate": "net/minecraft/advancements/predicates/MobEffectsPredicate$MobEffectInstancePredicate",
+  "net/minecraft/advancements/criterion/MovementPredicate": "net/minecraft/advancements/predicates/entity/MovementPredicate",
+  "net/minecraft/advancements/criterion/NbtPredicate": "net/minecraft/advancements/predicates/NbtPredicate",
+  "net/minecraft/advancements/criterion/PickedUpItemTrigger": "net/minecraft/advancements/triggers/PickedUpItemTrigger",
+  "net/minecraft/advancements/criterion/PickedUpItemTrigger$TriggerInstance": "net/minecraft/advancements/triggers/PickedUpItemTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/PlayerHurtEntityTrigger": "net/minecraft/advancements/triggers/PlayerHurtEntityTrigger",
+  "net/minecraft/advancements/criterion/PlayerHurtEntityTrigger$TriggerInstance": "net/minecraft/advancements/triggers/PlayerHurtEntityTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/PlayerInteractTrigger": "net/minecraft/advancements/triggers/PlayerInteractTrigger",
+  "net/minecraft/advancements/criterion/PlayerInteractTrigger$TriggerInstance": "net/minecraft/advancements/triggers/PlayerInteractTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/PlayerPredicate": "net/minecraft/advancements/predicates/entity/PlayerPredicate",
+  "net/minecraft/advancements/criterion/PlayerPredicate$AdvancementCriterionsPredicate": "net/minecraft/advancements/predicates/entity/PlayerPredicate$AdvancementCriterionsPredicate",
+  "net/minecraft/advancements/criterion/PlayerPredicate$AdvancementDonePredicate": "net/minecraft/advancements/predicates/entity/PlayerPredicate$AdvancementDonePredicate",
+  "net/minecraft/advancements/criterion/PlayerPredicate$AdvancementPredicate": "net/minecraft/advancements/predicates/entity/PlayerPredicate$AdvancementPredicate",
+  "net/minecraft/advancements/criterion/PlayerPredicate$Builder": "net/minecraft/advancements/predicates/entity/PlayerPredicate$Builder",
+  "net/minecraft/advancements/criterion/PlayerPredicate$StatMatcher": "net/minecraft/advancements/predicates/entity/PlayerPredicate$StatMatcher",
+  "net/minecraft/advancements/criterion/PlayerTrigger": "net/minecraft/advancements/triggers/PlayerTrigger",
+  "net/minecraft/advancements/criterion/PlayerTrigger$TriggerInstance": "net/minecraft/advancements/triggers/PlayerTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/RaiderPredicate": "net/minecraft/advancements/predicates/entity/RaiderPredicate",
+  "net/minecraft/advancements/criterion/RecipeCraftedTrigger": "net/minecraft/advancements/triggers/RecipeCraftedTrigger",
+  "net/minecraft/advancements/criterion/RecipeCraftedTrigger$TriggerInstance": "net/minecraft/advancements/triggers/RecipeCraftedTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/RecipeUnlockedTrigger": "net/minecraft/advancements/triggers/RecipeUnlockedTrigger",
+  "net/minecraft/advancements/criterion/RecipeUnlockedTrigger$TriggerInstance": "net/minecraft/advancements/triggers/RecipeUnlockedTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/SheepPredicate": "net/minecraft/advancements/predicates/entity/SheepPredicate",
+  "net/minecraft/advancements/criterion/ShotCrossbowTrigger": "net/minecraft/advancements/triggers/ShotCrossbowTrigger",
+  "net/minecraft/advancements/criterion/ShotCrossbowTrigger$TriggerInstance": "net/minecraft/advancements/triggers/ShotCrossbowTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/SimpleCriterionTrigger": "net/minecraft/advancements/triggers/SimpleCriterionTrigger",
+  "net/minecraft/advancements/criterion/SimpleCriterionTrigger$SimpleInstance": "net/minecraft/advancements/triggers/SimpleCriterionTrigger$SimpleInstance",
+  "net/minecraft/advancements/criterion/SingleComponentItemPredicate": "net/minecraft/advancements/predicates/SingleComponentItemPredicate",
+  "net/minecraft/advancements/criterion/SlideDownBlockTrigger": "net/minecraft/advancements/triggers/SlideDownBlockTrigger",
+  "net/minecraft/advancements/criterion/SlideDownBlockTrigger$TriggerInstance": "net/minecraft/advancements/triggers/SlideDownBlockTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/SlimePredicate": "net/minecraft/advancements/predicates/entity/CubeMobPredicate",
+  "net/minecraft/advancements/criterion/SlotsPredicate": "net/minecraft/advancements/predicates/SlotsPredicate",
+  "net/minecraft/advancements/criterion/SpearMobsTrigger": "net/minecraft/advancements/triggers/SpearMobsTrigger",
+  "net/minecraft/advancements/criterion/SpearMobsTrigger$TriggerInstance": "net/minecraft/advancements/triggers/SpearMobsTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/StartRidingTrigger": "net/minecraft/advancements/triggers/StartRidingTrigger",
+  "net/minecraft/advancements/criterion/StartRidingTrigger$TriggerInstance": "net/minecraft/advancements/triggers/StartRidingTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate": "net/minecraft/advancements/predicates/StatePropertiesPredicate",
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$Builder": "net/minecraft/advancements/predicates/StatePropertiesPredicate$Builder",
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$ExactMatcher": "net/minecraft/advancements/predicates/StatePropertiesPredicate$ExactMatcher",
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$PropertyMatcher": "net/minecraft/advancements/predicates/StatePropertiesPredicate$PropertyMatcher",
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$RangedMatcher": "net/minecraft/advancements/predicates/StatePropertiesPredicate$RangedMatcher",
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$ValueMatcher": "net/minecraft/advancements/predicates/StatePropertiesPredicate$ValueMatcher",
+  "net/minecraft/advancements/criterion/SummonedEntityTrigger": "net/minecraft/advancements/triggers/SummonedEntityTrigger",
+  "net/minecraft/advancements/criterion/SummonedEntityTrigger$TriggerInstance": "net/minecraft/advancements/triggers/SummonedEntityTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/TagPredicate": "net/minecraft/advancements/predicates/TagPredicate",
+  "net/minecraft/advancements/criterion/TameAnimalTrigger": "net/minecraft/advancements/triggers/TameAnimalTrigger",
+  "net/minecraft/advancements/criterion/TameAnimalTrigger$TriggerInstance": "net/minecraft/advancements/triggers/TameAnimalTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/TargetBlockTrigger": "net/minecraft/advancements/triggers/TargetBlockTrigger",
+  "net/minecraft/advancements/criterion/TargetBlockTrigger$TriggerInstance": "net/minecraft/advancements/triggers/TargetBlockTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/TradeTrigger": "net/minecraft/advancements/triggers/TradeTrigger",
+  "net/minecraft/advancements/criterion/TradeTrigger$TriggerInstance": "net/minecraft/advancements/triggers/TradeTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/UsedEnderEyeTrigger": "net/minecraft/advancements/triggers/UsedEnderEyeTrigger",
+  "net/minecraft/advancements/criterion/UsedEnderEyeTrigger$TriggerInstance": "net/minecraft/advancements/triggers/UsedEnderEyeTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/UsedTotemTrigger": "net/minecraft/advancements/triggers/UsedTotemTrigger",
+  "net/minecraft/advancements/criterion/UsedTotemTrigger$TriggerInstance": "net/minecraft/advancements/triggers/UsedTotemTrigger$TriggerInstance",
+  "net/minecraft/advancements/criterion/UsingItemTrigger": "net/minecraft/advancements/triggers/UsingItemTrigger",
+  "net/minecraft/advancements/criterion/UsingItemTrigger$TriggerInstance": "net/minecraft/advancements/triggers/UsingItemTrigger$TriggerInstance",
+  "net/minecraft/client/Minecraft$GameLoadCookie": "net/minecraft/client/GameLoadCookie",
+  "net/minecraft/client/gui/Gui$1DisplayEntry": "net/minecraft/client/gui/Hud$1DisplayEntry",
+  "net/minecraft/client/gui/Gui$ContextualInfo": "net/minecraft/client/gui/Hud$ContextualInfo",
+  "net/minecraft/client/gui/Gui$HeartType": "net/minecraft/client/gui/Hud$HeartType",
+  "net/minecraft/client/gui/contextualbar/ContextualBarRenderer": "net/minecraft/client/gui/contextualbar/ContextualBar",
+  "net/minecraft/client/gui/contextualbar/ContextualBarRenderer$1": "net/minecraft/client/gui/contextualbar/ContextualBar$1",
+  "net/minecraft/client/gui/contextualbar/ExperienceBarRenderer": "net/minecraft/client/gui/contextualbar/ExperienceBar",
+  "net/minecraft/client/gui/contextualbar/JumpableVehicleBarRenderer": "net/minecraft/client/gui/contextualbar/JumpableVehicleBar",
+  "net/minecraft/client/gui/contextualbar/LocatorBarRenderer": "net/minecraft/client/gui/contextualbar/LocatorBar",
+  "net/minecraft/client/renderer/LevelRenderer$BrightnessGetter": "net/minecraft/util/LightCoordsUtil$BrightnessGetter",
+  "net/minecraft/client/renderer/SubmitNodeStorage$BlockModelSubmit": "net/minecraft/client/renderer/feature/BlockModelFeatureRenderer$Submit",
+  "net/minecraft/client/renderer/SubmitNodeStorage$CustomGeometrySubmit": "net/minecraft/client/renderer/feature/CustomFeatureRenderer$Submit",
+  "net/minecraft/client/renderer/SubmitNodeStorage$FlameSubmit": "net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit",
+  "net/minecraft/client/renderer/SubmitNodeStorage$ItemSubmit": "net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit",
+  "net/minecraft/client/renderer/SubmitNodeStorage$LeashSubmit": "net/minecraft/client/renderer/feature/LeashFeatureRenderer$Submit",
+  "net/minecraft/client/renderer/SubmitNodeStorage$ModelSubmit": "net/minecraft/client/renderer/feature/ModelFeatureRenderer$Submit",
+  "net/minecraft/client/renderer/SubmitNodeStorage$MovingBlockSubmit": "net/minecraft/client/renderer/feature/MovingBlockFeatureRenderer$Submit",
+  "net/minecraft/client/renderer/SubmitNodeStorage$ShadowSubmit": "net/minecraft/client/renderer/feature/ShadowFeatureRenderer$Submit",
+  "net/minecraft/client/renderer/chunk/CompileTaskDynamicQueue": "net/minecraft/client/renderer/chunk/SectionTaskDynamicQueue",
+  "net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$CompileTask$SectionTaskResult": "net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$SectionTask$SectionTaskResult",
+  "net/minecraft/client/renderer/rendertype/RenderSetup$TextureAndSampler": "net/minecraft/client/renderer/rendertype/PreparedRenderType$Texture",
+  "net/minecraft/commands/arguments/ColorArgument": "net/minecraft/commands/arguments/TeamColorArgument",
+  "net/minecraft/util/CubicSpline$1Point": "net/minecraft/util/CubicSpline$Multipoint$Point",
+  "net/minecraft/world/entity/animal/Bucketable": "net/minecraft/world/entity/Bucketable",
+  "net/minecraft/world/entity/monster/MagmaCube": "net/minecraft/world/entity/monster/cubemob/MagmaCube",
+  "net/minecraft/world/entity/monster/Slime": "net/minecraft/world/entity/monster/cubemob/Slime",
+  "net/minecraft/world/entity/monster/Slime$SlimeAttackGoal": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobAttackGoal",
+  "net/minecraft/world/entity/monster/Slime$SlimeFloatGoal": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobFloatGoal",
+  "net/minecraft/world/entity/monster/Slime$SlimeKeepOnJumpingGoal": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobKeepOnJumpingGoal",
+  "net/minecraft/world/entity/monster/Slime$SlimeMoveControl": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobMoveControl",
+  "net/minecraft/world/entity/monster/Slime$SlimeRandomDirectionGoal": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobRandomDirectionGoal",
+  "net/minecraft/world/level/block/state/properties/DripstoneThickness": "net/minecraft/world/level/block/state/properties/SpeleothemThickness",
+  "net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity": "net/minecraft/world/level/levelgen/NoiseChunk$BlendDensity",
+  "net/minecraft/world/level/levelgen/feature/DripstoneClusterFeature": "net/minecraft/world/level/levelgen/feature/SpeleothemClusterFeature",
+  "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration": "net/minecraft/world/level/levelgen/feature/configurations/SpeleothemClusterConfiguration"
+ },
+ "_pkgmoves_check": {
+  "com/mojang/blaze3d/pipeline/RenderPipeline$UniformDescription": {
+   "to": "com/mojang/blaze3d/pipeline/BindGroupLayout$UniformDescription",
+   "kept": 8,
+   "missing": [
+    "textureFormat()Lcom/mojang/blaze3d/textures/TextureFormat;"
+   ],
+   "basis": "members 5.0/6 vs 6 (dice 0.83, 2nd 0.50), body votes 0/0"
+  },
+  "com/mojang/blaze3d/platform/ScreenManager": {
+   "to": "com/mojang/blaze3d/platform/MonitorManager",
+   "kept": 3,
+   "renamed": [
+    "shutdown()V -> close"
+   ],
+   "missing": [
+    "<init>(Lcom/mojang/blaze3d/platform/MonitorCreator;)V"
+   ],
+   "basis": "members 6.0/7 vs 6 (dice 0.92, 2nd 0.00), body votes 0/0"
+  },
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer": {
+   "to": "com/mojang/blaze3d/vertex/StagingBuffer$Cpu",
+   "kept": 0,
+   "renamed": [
+    "getStagingBuffer()Ljava/nio/ByteBuffer; -> getWriteBuffer",
+    "copyToHeap(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/buffers/GpuBuffer;JJJ)V -> copyTo"
+   ],
+   "missing": [
+    "clearFrame(Lcom/mojang/blaze3d/systems/CommandEncoder;)V",
+    "destroyBuffer()V"
+   ],
+   "basis": "members 3.0/5 vs 4 (dice 0.67, 2nd 0.04), body votes 0/0"
+  },
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer": {
+   "to": "com/mojang/blaze3d/vertex/StagingBuffer$PersistentlyMapped",
+   "kept": 0,
+   "renamed": [
+    "getStagingBuffer()Ljava/nio/ByteBuffer; -> getWriteBuffer",
+    "copyToHeap(Lcom/mojang/blaze3d/systems/CommandEncoder;Lcom/mojang/blaze3d/buffers/GpuBuffer;JJJ)V -> copyTo"
+   ],
+   "missing": [
+    "clearFrame(Lcom/mojang/blaze3d/systems/CommandEncoder;)V",
+    "destroyBuffer()V"
+   ],
+   "basis": "members 6.0/8 vs 8 (dice 0.75, 2nd 0.00), body votes 0/0"
+  },
+  "com/mojang/blaze3d/vertex/VertexFormat$IndexType": {
+   "to": "com/mojang/blaze3d/IndexType",
+   "kept": 6,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.00), body votes 19/20"
+  },
+  "com/mojang/blaze3d/vertex/VertexFormat$Mode": {
+   "to": "com/mojang/blaze3d/PrimitiveTopology",
+   "kept": 14,
+   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.04), body votes 5/8"
+  },
+  "net/minecraft/advancements/CriteriaTriggers": {
+   "to": "net/minecraft/advancements/triggers/CriteriaTriggers",
+   "kept": 61,
+   "basis": "members 60.0/60 vs 60 (dice 1.00, 2nd 0.03), body votes 0/0"
+  },
+  "net/minecraft/advancements/Criterion": {
+   "to": "net/minecraft/advancements/triggers/Criterion",
+   "kept": 7,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.00), body votes 24/24"
+  },
+  "net/minecraft/advancements/CriterionTrigger": {
+   "to": "net/minecraft/advancements/triggers/CriterionTrigger",
+   "kept": 2,
+   "missing": [
+    "addPlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+    "removePlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+    "removePlayerListeners(Lnet/minecraft/server/PlayerAdvancements;)V"
+   ],
+   "basis": "members 2.0/5 vs 2 (dice 0.57, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/AnyBlockInteractionTrigger": {
+   "to": "net/minecraft/advancements/triggers/AnyBlockInteractionTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/AnyBlockInteractionTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/AnyBlockInteractionTrigger$TriggerInstance",
+   "kept": 9,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.11), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/advancements/criterion/BeeNestDestroyedTrigger": {
+   "to": "net/minecraft/advancements/triggers/BeeNestDestroyedTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/BeeNestDestroyedTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/BeeNestDestroyedTrigger$TriggerInstance",
+   "kept": 11,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.61), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/BlockPredicate": {
+   "to": "net/minecraft/advancements/predicates/BlockPredicate",
+   "kept": 13,
+   "basis": "members 14.0/14 vs 14 (dice 1.00, 2nd 0.47), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/BlockPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/BlockPredicate$Builder",
+   "kept": 8,
+   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.58), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/BredAnimalsTrigger": {
+   "to": "net/minecraft/advancements/triggers/BredAnimalsTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/BredAnimalsTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/BredAnimalsTrigger$TriggerInstance",
+   "kept": 14,
+   "basis": "members 14.0/14 vs 14 (dice 1.00, 2nd 0.50), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/BrewedPotionTrigger": {
+   "to": "net/minecraft/advancements/triggers/BrewedPotionTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/BrewedPotionTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/BrewedPotionTrigger$TriggerInstance",
+   "kept": 9,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.58), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ChangeDimensionTrigger": {
+   "to": "net/minecraft/advancements/triggers/ChangeDimensionTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ChangeDimensionTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/ChangeDimensionTrigger$TriggerInstance",
+   "kept": 13,
+   "basis": "members 11.0/11 vs 11 (dice 1.00, 2nd 0.41), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ChanneledLightningTrigger": {
+   "to": "net/minecraft/advancements/triggers/ChanneledLightningTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ChanneledLightningTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/ChanneledLightningTrigger$TriggerInstance",
+   "kept": 10,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.58), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CollectionContentsPredicate": {
+   "to": "net/minecraft/advancements/predicates/CollectionContentsPredicate",
+   "kept": 4,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.88), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CollectionContentsPredicate$Multiple": {
+   "to": "net/minecraft/advancements/predicates/CollectionContentsPredicate$Multiple",
+   "kept": 7,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.75), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CollectionContentsPredicate$Single": {
+   "to": "net/minecraft/advancements/predicates/CollectionContentsPredicate$Single",
+   "kept": 7,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.83), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CollectionContentsPredicate$Zero": {
+   "to": "net/minecraft/advancements/predicates/CollectionContentsPredicate$Zero",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.20), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate": {
+   "to": "net/minecraft/advancements/predicates/CollectionCountsPredicate",
+   "kept": 4,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate$Entry": {
+   "to": "net/minecraft/advancements/predicates/CollectionCountsPredicate$Entry",
+   "kept": 8,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.60), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate$Multiple": {
+   "to": "net/minecraft/advancements/predicates/CollectionCountsPredicate$Multiple",
+   "kept": 7,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.67), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate$Single": {
+   "to": "net/minecraft/advancements/predicates/CollectionCountsPredicate$Single",
+   "kept": 7,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.67), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CollectionCountsPredicate$Zero": {
+   "to": "net/minecraft/advancements/predicates/CollectionCountsPredicate$Zero",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 1.00), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/advancements/criterion/CollectionPredicate": {
+   "to": "net/minecraft/advancements/predicates/CollectionPredicate",
+   "kept": 9,
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.30), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ConstructBeaconTrigger": {
+   "to": "net/minecraft/advancements/triggers/ConstructBeaconTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ConstructBeaconTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/ConstructBeaconTrigger$TriggerInstance",
+   "kept": 10,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.62), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ConsumeItemTrigger": {
+   "to": "net/minecraft/advancements/triggers/ConsumeItemTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ConsumeItemTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/ConsumeItemTrigger$TriggerInstance",
+   "kept": 11,
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.71), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ContextAwarePredicate": {
+   "to": "net/minecraft/advancements/predicates/ContextAwarePredicate",
+   "kept": 5,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.14), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CuredZombieVillagerTrigger": {
+   "to": "net/minecraft/advancements/triggers/CuredZombieVillagerTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/CuredZombieVillagerTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/CuredZombieVillagerTrigger$TriggerInstance",
+   "kept": 11,
+   "basis": "members 9.0/9 vs 9 (dice 1.00, 2nd 0.68), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DamagePredicate": {
+   "to": "net/minecraft/advancements/predicates/DamagePredicate",
+   "kept": 11,
+   "basis": "members 11.0/11 vs 11 (dice 1.00, 2nd 0.24), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DamagePredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/DamagePredicate$Builder",
+   "kept": 9,
+   "basis": "members 13.0/13 vs 13 (dice 1.00, 2nd 0.67), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DamageSourcePredicate": {
+   "to": "net/minecraft/advancements/predicates/DamageSourcePredicate",
+   "kept": 11,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.04), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DamageSourcePredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/DamageSourcePredicate$Builder",
+   "kept": 7,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.40), body votes 1/1"
+  },
+  "net/minecraft/advancements/criterion/DataComponentMatchers": {
+   "to": "net/minecraft/advancements/predicates/DataComponentMatchers",
+   "kept": 11,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.11), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DataComponentMatchers$Builder": {
+   "to": "net/minecraft/advancements/predicates/DataComponentMatchers$Builder",
+   "kept": 5,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.36), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DefaultBlockInteractionTrigger": {
+   "to": "net/minecraft/advancements/triggers/DefaultBlockInteractionTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DefaultBlockInteractionTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/DefaultBlockInteractionTrigger$TriggerInstance",
+   "kept": 9,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 1.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DistancePredicate": {
+   "to": "net/minecraft/advancements/predicates/DistancePredicate",
+   "kept": 14,
+   "basis": "members 14.0/14 vs 14 (dice 1.00, 2nd 0.59), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DistanceTrigger": {
+   "to": "net/minecraft/advancements/triggers/DistanceTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/DistanceTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/DistanceTrigger$TriggerInstance",
+   "kept": 12,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.62), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EffectsChangedTrigger": {
+   "to": "net/minecraft/advancements/triggers/EffectsChangedTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EffectsChangedTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/EffectsChangedTrigger$TriggerInstance",
+   "kept": 12,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.56), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EnchantedItemTrigger": {
+   "to": "net/minecraft/advancements/triggers/EnchantedItemTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EnchantedItemTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/EnchantedItemTrigger$TriggerInstance",
+   "kept": 10,
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.64), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EnchantmentPredicate": {
+   "to": "net/minecraft/advancements/predicates/EnchantmentPredicate",
+   "kept": 10,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.33), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EnterBlockTrigger": {
+   "to": "net/minecraft/advancements/triggers/EnterBlockTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EnterBlockTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/EnterBlockTrigger$TriggerInstance",
+   "kept": 10,
+   "basis": "members 9.0/9 vs 9 (dice 1.00, 2nd 0.89), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EntityEquipmentPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/EntityEquipmentPredicate",
+   "kept": 14,
+   "basis": "members 16.0/16 vs 17 (dice 0.97, 2nd 0.04), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EntityEquipmentPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/entity/EntityEquipmentPredicate$Builder",
+   "kept": 10,
+   "basis": "members 16.0/16 vs 16 (dice 1.00, 2nd 0.64), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EntityFlagsPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/EntityFlagsPredicate",
+   "kept": 15,
+   "basis": "members 19.0/19 vs 20 (dice 0.97, 2nd 0.03), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EntityFlagsPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/entity/EntityFlagsPredicate$Builder",
+   "kept": 12,
+   "basis": "members 20.0/20 vs 20 (dice 1.00, 2nd 0.45), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EntityHurtPlayerTrigger": {
+   "to": "net/minecraft/advancements/triggers/EntityHurtPlayerTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EntityHurtPlayerTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/EntityHurtPlayerTrigger$TriggerInstance",
+   "kept": 11,
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.50), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EntityPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/EntityPredicate",
+   "kept": 12,
+   "missing": [
+    "<init>(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/advancements/criterion/EntityPredicate$LocationWrapper;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/advancements/criterion/DataComponentMatchers;)V",
+    "entityType()Ljava/util/Optional;",
+    "distanceToPlayer()Ljava/util/Optional;",
+    "movement()Ljava/util/Optional;",
+    "location()Lnet/minecraft/advancements/criterion/EntityPredicate$LocationWrapper;",
+    "effects()Ljava/util/Optional;",
+    "nbt()Ljava/util/Optional;",
+    "flags()Ljava/util/Optional;",
+    "equipment()Ljava/util/Optional;",
+    "subPredicate()Ljava/util/Optional;",
+    "periodicTick()Ljava/util/Optional;",
+    "vehicle()Ljava/util/Optional;",
+    "passenger()Ljava/util/Optional;",
+    "targetedEntity()Ljava/util/Optional;",
+    "team()Ljava/util/Optional;",
+    "slots()Ljava/util/Optional;",
+    "components()Lnet/minecraft/advancements/criterion/DataComponentMatchers;"
+   ],
+   "basis": "members 8.0/40 vs 12 (dice 0.31, 2nd 0.14), body votes 2/3"
+  },
+  "net/minecraft/advancements/criterion/EntityPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/entity/EntityPredicate$Builder",
+   "kept": 23,
+   "missing": [
+    "subPredicate(Lnet/minecraft/advancements/criterion/EntitySubPredicate;)Lnet/minecraft/advancements/criterion/EntityPredicate$Builder;"
+   ],
+   "basis": "members 22.0/41 vs 32 (dice 0.60, 2nd 0.22), body votes 2/2"
+  },
+  "net/minecraft/advancements/criterion/EntitySubPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/EntitySubPredicate",
+   "kept": 1,
+   "missing": [
+    "codec()Lcom/mojang/serialization/MapCodec;",
+    "CODEC:Lcom/mojang/serialization/Codec;"
+   ],
+   "basis": "members 1.0/2 vs 3 (dice 0.40, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/EntityTypePredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/EntityTypePredicate",
+   "kept": 9,
+   "basis": "members 5.0/5 vs 6 (dice 0.91, 2nd 0.45), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FallAfterExplosionTrigger": {
+   "to": "net/minecraft/advancements/triggers/FallAfterExplosionTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FallAfterExplosionTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/FallAfterExplosionTrigger$TriggerInstance",
+   "kept": 12,
+   "basis": "members 11.0/11 vs 11 (dice 1.00, 2nd 0.53), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FilledBucketTrigger": {
+   "to": "net/minecraft/advancements/triggers/FilledBucketTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FilledBucketTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/FilledBucketTrigger$TriggerInstance",
+   "kept": 9,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.83), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FishingHookPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/FishingHookPredicate",
+   "kept": 8,
+   "missing": [
+    "codec()Lcom/mojang/serialization/MapCodec;",
+    "CODEC:Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "members 5.0/6 vs 5 (dice 0.91, 2nd 0.25), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FishingRodHookedTrigger": {
+   "to": "net/minecraft/advancements/triggers/FishingRodHookedTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FishingRodHookedTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/FishingRodHookedTrigger$TriggerInstance",
+   "kept": 12,
+   "basis": "members 11.0/11 vs 11 (dice 1.00, 2nd 0.71), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FluidPredicate": {
+   "to": "net/minecraft/advancements/predicates/FluidPredicate",
+   "kept": 8,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.25), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FluidPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/FluidPredicate$Builder",
+   "kept": 5,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.38), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FoodPredicate": {
+   "to": "net/minecraft/advancements/predicates/FoodPredicate",
+   "kept": 9,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.21), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/FoodPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/FoodPredicate$Builder",
+   "kept": 5,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.60), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/GameTypePredicate": {
+   "to": "net/minecraft/advancements/predicates/GameTypePredicate",
+   "kept": 10,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.27), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ImpossibleTrigger": {
+   "to": "net/minecraft/advancements/triggers/ImpossibleTrigger",
+   "kept": 2,
+   "missing": [
+    "addPlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+    "removePlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+    "removePlayerListeners(Lnet/minecraft/server/PlayerAdvancements;)V"
+   ],
+   "basis": "members 1.0/4 vs 1 (dice 0.40, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ImpossibleTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/ImpossibleTrigger$TriggerInstance",
+   "kept": 6,
+   "basis": "members 1.0/1 vs 1 (dice 1.00, 2nd 0.29), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/InputPredicate": {
+   "to": "net/minecraft/advancements/predicates/InputPredicate",
+   "kept": 13,
+   "basis": "members 16.0/16 vs 16 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/InventoryChangeTrigger": {
+   "to": "net/minecraft/advancements/triggers/InventoryChangeTrigger",
+   "kept": 3,
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/InventoryChangeTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/InventoryChangeTrigger$TriggerInstance",
+   "kept": 12,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.35), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/InventoryChangeTrigger$TriggerInstance$Slots": {
+   "to": "net/minecraft/advancements/triggers/InventoryChangeTrigger$TriggerInstance$Slots",
+   "kept": 10,
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.33), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ItemDurabilityTrigger": {
+   "to": "net/minecraft/advancements/triggers/ItemDurabilityTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ItemDurabilityTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/ItemDurabilityTrigger$TriggerInstance",
+   "kept": 12,
+   "basis": "members 11.0/11 vs 11 (dice 1.00, 2nd 0.53), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ItemPredicate": {
+   "to": "net/minecraft/advancements/predicates/ItemPredicate",
+   "kept": 9,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.11), body votes 6/7"
+  },
+  "net/minecraft/advancements/criterion/ItemPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/ItemPredicate$Builder",
+   "kept": 7,
+   "basis": "members 9.0/9 vs 9 (dice 1.00, 2nd 0.46), body votes 3/3"
+  },
+  "net/minecraft/advancements/criterion/ItemUsedOnLocationTrigger": {
+   "to": "net/minecraft/advancements/triggers/ItemUsedOnLocationTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ItemUsedOnLocationTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/ItemUsedOnLocationTrigger$TriggerInstance",
+   "kept": 17,
+   "basis": "members 15.0/15 vs 15 (dice 1.00, 2nd 0.57), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/KilledByArrowTrigger": {
+   "to": "net/minecraft/advancements/triggers/KilledByArrowTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/KilledByArrowTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/KilledByArrowTrigger$TriggerInstance",
+   "kept": 13,
+   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.50), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/KilledTrigger": {
+   "to": "net/minecraft/advancements/triggers/KilledTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/KilledTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/KilledTrigger$TriggerInstance",
+   "kept": 25,
+   "basis": "members 23.0/23 vs 23 (dice 1.00, 2nd 0.39), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LevitationTrigger": {
+   "to": "net/minecraft/advancements/triggers/LevitationTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LevitationTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/LevitationTrigger$TriggerInstance",
+   "kept": 10,
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.69), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LightPredicate": {
+   "to": "net/minecraft/advancements/predicates/LightPredicate",
+   "kept": 7,
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LightPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/LightPredicate$Builder",
+   "kept": 4,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.44), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LightningBoltPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/LightningBoltPredicate",
+   "kept": 8,
+   "missing": [
+    "codec()Lcom/mojang/serialization/MapCodec;",
+    "CODEC:Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "members 6.0/7 vs 6 (dice 0.92, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LightningStrikeTrigger": {
+   "to": "net/minecraft/advancements/triggers/LightningStrikeTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LightningStrikeTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/LightningStrikeTrigger$TriggerInstance",
+   "kept": 11,
+   "basis": "members 9.0/9 vs 9 (dice 1.00, 2nd 0.60), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LocationPredicate": {
+   "to": "net/minecraft/advancements/predicates/LocationPredicate",
+   "kept": 15,
+   "basis": "members 19.0/19 vs 19 (dice 1.00, 2nd 0.08), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LocationPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/LocationPredicate$Builder",
+   "kept": 18,
+   "basis": "members 28.0/28 vs 28 (dice 1.00, 2nd 0.34), body votes 3/3"
+  },
+  "net/minecraft/advancements/criterion/LocationPredicate$PositionPredicate": {
+   "to": "net/minecraft/advancements/predicates/LocationPredicate$PositionPredicate",
+   "kept": 8,
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.46), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LootTableTrigger": {
+   "to": "net/minecraft/advancements/triggers/LootTableTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/LootTableTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/LootTableTrigger$TriggerInstance",
+   "kept": 9,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.64), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/MinMaxBounds": {
+   "to": "net/minecraft/advancements/predicates/MinMaxBounds",
+   "kept": 7,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/MinMaxBounds$Bounds": {
+   "to": "net/minecraft/advancements/predicates/MinMaxBounds$Bounds",
+   "kept": 20,
+   "basis": "members 20.0/20 vs 20 (dice 1.00, 2nd 0.25), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/MinMaxBounds$Bounds$1": {
+   "to": "net/minecraft/advancements/predicates/MinMaxBounds$Bounds$1",
+   "kept": 3,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/advancements/criterion/MinMaxBounds$Doubles": {
+   "to": "net/minecraft/advancements/predicates/MinMaxBounds$Doubles",
+   "kept": 16,
+   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.75), body votes 11/11"
+  },
+  "net/minecraft/advancements/criterion/MinMaxBounds$FloatDegrees": {
+   "to": "net/minecraft/advancements/predicates/MinMaxBounds$FloatDegrees",
+   "kept": 9,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.50), body votes 7/7"
+  },
+  "net/minecraft/advancements/criterion/MinMaxBounds$Ints": {
+   "to": "net/minecraft/advancements/predicates/MinMaxBounds$Ints",
+   "kept": 16,
+   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.00), body votes 25/26"
+  },
+  "net/minecraft/advancements/criterion/MobEffectsPredicate": {
+   "to": "net/minecraft/advancements/predicates/MobEffectsPredicate",
+   "kept": 9,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/MobEffectsPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/MobEffectsPredicate$Builder",
+   "kept": 4,
+   "missing": [
+    "build()Ljava/util/Optional;"
+   ],
+   "basis": "members 4.5/5 vs 5 (dice 0.90, 2nd 0.33), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/MobEffectsPredicate$MobEffectInstancePredicate": {
+   "to": "net/minecraft/advancements/predicates/MobEffectsPredicate$MobEffectInstancePredicate",
+   "kept": 11,
+   "basis": "members 9.0/9 vs 9 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/MovementPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/MovementPredicate",
+   "kept": 17,
+   "basis": "members 19.0/19 vs 20 (dice 0.97, 2nd 0.17), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/NbtPredicate": {
+   "to": "net/minecraft/advancements/predicates/NbtPredicate",
+   "kept": 12,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.33), body votes 3/3"
+  },
+  "net/minecraft/advancements/criterion/PickedUpItemTrigger": {
+   "to": "net/minecraft/advancements/triggers/PickedUpItemTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PickedUpItemTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/PickedUpItemTrigger$TriggerInstance",
+   "kept": 11,
+   "missing": [
+    "thrownItemPickedUpByEntity(Lnet/minecraft/advancements/criterion/ContextAwarePredicate;Ljava/util/Optional;Ljava/util/Optional;)Lnet/minecraft/advancements/Criterion;"
+   ],
+   "basis": "members 9.5/10 vs 10 (dice 0.95, 2nd 0.68), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerHurtEntityTrigger": {
+   "to": "net/minecraft/advancements/triggers/PlayerHurtEntityTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerHurtEntityTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/PlayerHurtEntityTrigger$TriggerInstance",
+   "kept": 16,
+   "basis": "members 14.0/14 vs 14 (dice 1.00, 2nd 0.52), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerInteractTrigger": {
+   "to": "net/minecraft/advancements/triggers/PlayerInteractTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerInteractTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/PlayerInteractTrigger$TriggerInstance",
+   "kept": 14,
+   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.59), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/PlayerPredicate",
+   "kept": 14,
+   "missing": [
+    "codec()Lcom/mojang/serialization/MapCodec;",
+    "CODEC:Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "members 18.0/19 vs 18 (dice 0.97, 2nd 0.08), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerPredicate$AdvancementCriterionsPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/PlayerPredicate$AdvancementCriterionsPredicate",
+   "kept": 6,
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.20), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerPredicate$AdvancementDonePredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/PlayerPredicate$AdvancementDonePredicate",
+   "kept": 6,
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.20), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerPredicate$AdvancementPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/PlayerPredicate$AdvancementPredicate",
+   "kept": 1,
+   "basis": "members 0.0/0 vs 0 (dice 0.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/advancements/criterion/PlayerPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/entity/PlayerPredicate$Builder",
+   "kept": 12,
+   "basis": "members 19.0/19 vs 19 (dice 1.00, 2nd 0.41), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerPredicate$StatMatcher": {
+   "to": "net/minecraft/advancements/predicates/entity/PlayerPredicate$StatMatcher",
+   "kept": 10,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.12), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerTrigger": {
+   "to": "net/minecraft/advancements/triggers/PlayerTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/PlayerTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/PlayerTrigger$TriggerInstance",
+   "kept": 14,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.31), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/RaiderPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/RaiderPredicate",
+   "kept": 8,
+   "missing": [
+    "codec()Lcom/mojang/serialization/MapCodec;",
+    "CODEC:Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "members 6.0/7 vs 6 (dice 0.92, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/RecipeCraftedTrigger": {
+   "to": "net/minecraft/advancements/triggers/RecipeCraftedTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/RecipeCraftedTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/RecipeCraftedTrigger$TriggerInstance",
+   "kept": 11,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.47), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/RecipeUnlockedTrigger": {
+   "to": "net/minecraft/advancements/triggers/RecipeUnlockedTrigger",
+   "kept": 4,
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/RecipeUnlockedTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/RecipeUnlockedTrigger$TriggerInstance",
+   "kept": 8,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.50), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SheepPredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/SheepPredicate",
+   "kept": 7,
+   "missing": [
+    "codec()Lcom/mojang/serialization/MapCodec;",
+    "CODEC:Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "members 4.0/5 vs 4 (dice 0.89, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ShotCrossbowTrigger": {
+   "to": "net/minecraft/advancements/triggers/ShotCrossbowTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/ShotCrossbowTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/ShotCrossbowTrigger$TriggerInstance",
+   "kept": 10,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.77), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SimpleCriterionTrigger": {
+   "to": "net/minecraft/advancements/triggers/SimpleCriterionTrigger",
+   "kept": 2,
+   "missing": [
+    "addPlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+    "removePlayerListener(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+    "removePlayerListeners(Lnet/minecraft/server/PlayerAdvancements;)V"
+   ],
+   "basis": "members 1.0/5 vs 1 (dice 0.33, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SimpleCriterionTrigger$SimpleInstance": {
+   "to": "net/minecraft/advancements/triggers/SimpleCriterionTrigger$SimpleInstance",
+   "kept": 2,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SingleComponentItemPredicate": {
+   "to": "net/minecraft/advancements/predicates/SingleComponentItemPredicate",
+   "kept": 3,
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SlideDownBlockTrigger": {
+   "to": "net/minecraft/advancements/triggers/SlideDownBlockTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SlideDownBlockTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/SlideDownBlockTrigger$TriggerInstance",
+   "kept": 10,
+   "basis": "members 9.0/9 vs 9 (dice 1.00, 2nd 0.53), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SlimePredicate": {
+   "to": "net/minecraft/advancements/predicates/entity/CubeMobPredicate",
+   "kept": 7,
+   "missing": [
+    "codec()Lcom/mojang/serialization/MapCodec;",
+    "CODEC:Lcom/mojang/serialization/MapCodec;"
+   ],
+   "basis": "members 4.0/5 vs 4 (dice 0.89, 2nd 0.18), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SlotsPredicate": {
+   "to": "net/minecraft/advancements/predicates/SlotsPredicate",
+   "kept": 7,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.43), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SpearMobsTrigger": {
+   "to": "net/minecraft/advancements/triggers/SpearMobsTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SpearMobsTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/SpearMobsTrigger$TriggerInstance",
+   "kept": 9,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.58), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/StartRidingTrigger": {
+   "to": "net/minecraft/advancements/triggers/StartRidingTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/StartRidingTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/StartRidingTrigger$TriggerInstance",
+   "kept": 7,
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.50), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate": {
+   "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate",
+   "kept": 11,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$Builder": {
+   "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$Builder",
+   "kept": 6,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.14), body votes 1/1"
+  },
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$ExactMatcher": {
+   "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$ExactMatcher",
+   "kept": 7,
+   "basis": "members 3.0/3 vs 3 (dice 1.00, 2nd 0.40), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$PropertyMatcher": {
+   "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$PropertyMatcher",
+   "kept": 8,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.40), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$RangedMatcher": {
+   "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$RangedMatcher",
+   "kept": 8,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.17), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/StatePropertiesPredicate$ValueMatcher": {
+   "to": "net/minecraft/advancements/predicates/StatePropertiesPredicate$ValueMatcher",
+   "kept": 3,
+   "basis": "members 1.0/1 vs 1 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SummonedEntityTrigger": {
+   "to": "net/minecraft/advancements/triggers/SummonedEntityTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/SummonedEntityTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/SummonedEntityTrigger$TriggerInstance",
+   "kept": 10,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.80), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/TagPredicate": {
+   "to": "net/minecraft/advancements/predicates/TagPredicate",
+   "kept": 10,
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/TameAnimalTrigger": {
+   "to": "net/minecraft/advancements/triggers/TameAnimalTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/TameAnimalTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/TameAnimalTrigger$TriggerInstance",
+   "kept": 11,
+   "basis": "members 8.0/8 vs 8 (dice 1.00, 2nd 0.71), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/TargetBlockTrigger": {
+   "to": "net/minecraft/advancements/triggers/TargetBlockTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/TargetBlockTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/TargetBlockTrigger$TriggerInstance",
+   "kept": 11,
+   "basis": "members 9.0/9 vs 9 (dice 1.00, 2nd 0.60), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/TradeTrigger": {
+   "to": "net/minecraft/advancements/triggers/TradeTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/TradeTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/TradeTrigger$TriggerInstance",
+   "kept": 12,
+   "basis": "members 10.0/10 vs 10 (dice 1.00, 2nd 0.62), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/UsedEnderEyeTrigger": {
+   "to": "net/minecraft/advancements/triggers/UsedEnderEyeTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/UsedEnderEyeTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/UsedEnderEyeTrigger$TriggerInstance",
+   "kept": 8,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.45), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/UsedTotemTrigger": {
+   "to": "net/minecraft/advancements/triggers/UsedTotemTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/UsedTotemTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/UsedTotemTrigger$TriggerInstance",
+   "kept": 10,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.77), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/UsingItemTrigger": {
+   "to": "net/minecraft/advancements/triggers/UsingItemTrigger",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/advancements/criterion/UsingItemTrigger$TriggerInstance": {
+   "to": "net/minecraft/advancements/triggers/UsingItemTrigger$TriggerInstance",
+   "kept": 9,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.58), body votes 0/0"
+  },
+  "net/minecraft/client/Minecraft$GameLoadCookie": {
+   "to": "net/minecraft/client/GameLoadCookie",
+   "kept": 5,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.00), body votes 5/5"
+  },
+  "net/minecraft/client/gui/Gui$1DisplayEntry": {
+   "to": "net/minecraft/client/gui/Hud$1DisplayEntry",
+   "kept": 7,
+   "basis": "members 6.0/6 vs 6 (dice 1.00, 2nd 0.40), body votes 0/0"
+  },
+  "net/minecraft/client/gui/Gui$ContextualInfo": {
+   "to": "net/minecraft/client/gui/Hud$ContextualInfo",
+   "kept": 6,
+   "basis": "members 4.0/4 vs 4 (dice 1.00, 2nd 0.20), body votes 0/0"
+  },
+  "net/minecraft/client/gui/Gui$HeartType": {
+   "to": "net/minecraft/client/gui/Hud$HeartType",
+   "kept": 9,
+   "basis": "members 16.0/16 vs 16 (dice 1.00, 2nd 0.04), body votes 0/0"
+  },
+  "net/minecraft/client/gui/contextualbar/ContextualBarRenderer": {
+   "to": "net/minecraft/client/gui/contextualbar/ContextualBar",
+   "kept": 9,
+   "basis": "members 9.0/9 vs 9 (dice 1.00, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/client/gui/contextualbar/ContextualBarRenderer$1": {
+   "to": "net/minecraft/client/gui/contextualbar/ContextualBar$1",
+   "kept": 3,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/client/gui/contextualbar/ExperienceBarRenderer": {
+   "to": "net/minecraft/client/gui/contextualbar/ExperienceBar",
+   "kept": 3,
+   "basis": "members 5.0/5 vs 5 (dice 1.00, 2nd 0.50), body votes 0/0"
+  },
+  "net/minecraft/client/gui/contextualbar/JumpableVehicleBarRenderer": {
+   "to": "net/minecraft/client/gui/contextualbar/JumpableVehicleBar",
+   "kept": 3,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.32), body votes 0/0"
+  },
+  "net/minecraft/client/gui/contextualbar/LocatorBarRenderer": {
+   "to": "net/minecraft/client/gui/contextualbar/LocatorBar",
+   "kept": 3,
+   "basis": "members 12.0/12 vs 12 (dice 1.00, 2nd 0.02), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/LevelRenderer$BrightnessGetter": {
+   "to": "net/minecraft/util/LightCoordsUtil$BrightnessGetter",
+   "kept": 2,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 1/1"
+  },
+  "net/minecraft/client/renderer/SubmitNodeStorage$BlockModelSubmit": {
+   "to": "net/minecraft/client/renderer/feature/BlockModelFeatureRenderer$Submit",
+   "kept": 9,
+   "missing": [
+    "<init>(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/renderer/rendertype/RenderType;Ljava/util/List;[IIII)V",
+    "outlineColor()I"
+   ],
+   "basis": "members 13.0/14 vs 18 (dice 0.81, 2nd 0.40), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/SubmitNodeStorage$CustomGeometrySubmit": {
+   "to": "net/minecraft/client/renderer/feature/CustomFeatureRenderer$Submit",
+   "kept": 5,
+   "missing": [
+    "<init>(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/renderer/SubmitNodeCollector$CustomGeometryRenderer;)V"
+   ],
+   "basis": "members 4.0/4 vs 8 (dice 0.67, 2nd 0.36), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/SubmitNodeStorage$FlameSubmit": {
+   "to": "net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit",
+   "kept": 7,
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.18), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/SubmitNodeStorage$ItemSubmit": {
+   "to": "net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit",
+   "kept": 12,
+   "basis": "members 16.0/16 vs 19 (dice 0.91, 2nd 0.59), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/SubmitNodeStorage$LeashSubmit": {
+   "to": "net/minecraft/client/renderer/feature/LeashFeatureRenderer$Submit",
+   "kept": 6,
+   "basis": "members 4.0/4 vs 5 (dice 0.89, 2nd 0.22), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/SubmitNodeStorage$ModelSubmit": {
+   "to": "net/minecraft/client/renderer/feature/ModelFeatureRenderer$Submit",
+   "kept": 10,
+   "missing": [
+    "<init>(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/model/Model;Ljava/lang/Object;IIILnet/minecraft/client/renderer/texture/TextureAtlasSprite;ILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V",
+    "outlineColor()I",
+    "crumblingOverlay()Lnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;"
+   ],
+   "basis": "members 14.0/18 vs 21 (dice 0.72, 2nd 0.39), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/SubmitNodeStorage$MovingBlockSubmit": {
+   "to": "net/minecraft/client/renderer/feature/MovingBlockFeatureRenderer$Submit",
+   "kept": 5,
+   "missing": [
+    "<init>(Lorg/joml/Matrix4fc;Lnet/minecraft/client/renderer/block/MovingBlockRenderState;)V"
+   ],
+   "basis": "members 4.0/4 vs 8 (dice 0.67, 2nd 0.36), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/SubmitNodeStorage$ShadowSubmit": {
+   "to": "net/minecraft/client/renderer/feature/ShadowFeatureRenderer$Submit",
+   "kept": 7,
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.17), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/chunk/CompileTaskDynamicQueue": {
+   "to": "net/minecraft/client/renderer/chunk/SectionTaskDynamicQueue",
+   "kept": 3,
+   "missing": [
+    "add(Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$CompileTask;)V",
+    "poll(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$CompileTask;"
+   ],
+   "basis": "members 6.5/8 vs 8 (dice 0.81, 2nd 0.19), body votes 0/0"
+  },
+  "net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$CompileTask$SectionTaskResult": {
+   "to": "net/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection$SectionTask$SectionTaskResult",
+   "kept": 4,
+   "basis": "members 2.0/2 vs 2 (dice 1.00, 2nd 0.00), body votes 2/2, follows its outer class"
+  },
+  "net/minecraft/client/renderer/rendertype/RenderSetup$TextureAndSampler": {
+   "to": "net/minecraft/client/renderer/rendertype/PreparedRenderType$Texture",
+   "kept": 5,
+   "missing": [
+    "<init>(Lcom/mojang/blaze3d/textures/GpuTextureView;Lcom/mojang/blaze3d/textures/GpuSampler;)V"
+   ],
+   "basis": "members 4.0/4 vs 6 (dice 0.80, 2nd 0.50), body votes 0/0"
+  },
+  "net/minecraft/commands/arguments/ColorArgument": {
+   "to": "net/minecraft/commands/arguments/TeamColorArgument",
+   "kept": 3,
+   "renamed": [
+    "color()Lnet/minecraft/commands/arguments/ColorArgument; -> teamColor"
+   ],
+   "missing": [
+    "getColor(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/ChatFormatting;",
+    "parse(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/ChatFormatting;"
+   ],
+   "basis": "members 5.5/7 vs 7 (dice 0.79, 2nd 0.06), body votes 0/0"
+  },
+  "net/minecraft/util/CubicSpline$1Point": {
+   "to": "net/minecraft/util/CubicSpline$Multipoint$Point",
+   "kept": 7,
+   "basis": "members 6.0/6 vs 7 (dice 0.92, 2nd 0.25), body votes 0/0"
+  },
+  "net/minecraft/world/entity/animal/Bucketable": {
+   "to": "net/minecraft/world/entity/Bucketable",
+   "kept": 9,
+   "basis": "members 9.0/9 vs 10 (dice 0.95, 2nd 0.00), body votes 0/0"
+  },
+  "net/minecraft/world/entity/monster/MagmaCube": {
+   "to": "net/minecraft/world/entity/monster/cubemob/MagmaCube",
+   "kept": 17,
+   "basis": "members 16.0/16 vs 20 (dice 0.89, 2nd 0.74), body votes 1/1"
+  },
+  "net/minecraft/world/entity/monster/Slime": {
+   "to": "net/minecraft/world/entity/monster/cubemob/Slime",
+   "kept": 40,
+   "basis": "members 21.0/43 vs 11 (dice 0.78, 2nd 0.78), body votes 0/0; split: the members live on its parent net/minecraft/world/entity/monster/cubemob/AbstractCubeMob (dice 0.91)"
+  },
+  "net/minecraft/world/entity/monster/Slime$SlimeAttackGoal": {
+   "to": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobAttackGoal",
+   "kept": 5,
+   "missing": [
+    "<init>(Lnet/minecraft/world/entity/monster/Slime;)V"
+   ],
+   "basis": "members 6.0/7 vs 7 (dice 0.86, 2nd 0.73), body votes 0/0"
+  },
+  "net/minecraft/world/entity/monster/Slime$SlimeFloatGoal": {
+   "to": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobFloatGoal",
+   "kept": 3,
+   "missing": [
+    "<init>(Lnet/minecraft/world/entity/monster/Slime;)V"
+   ],
+   "basis": "members 3.0/4 vs 4 (dice 0.75, 2nd 0.71), body votes 0/0"
+  },
+  "net/minecraft/world/entity/monster/Slime$SlimeKeepOnJumpingGoal": {
+   "to": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobKeepOnJumpingGoal",
+   "kept": 2,
+   "missing": [
+    "<init>(Lnet/minecraft/world/entity/monster/Slime;)V"
+   ],
+   "basis": "members 2.0/3 vs 3 (dice 0.67, 2nd 0.57), body votes 0/0, follows its outer class"
+  },
+  "net/minecraft/world/entity/monster/Slime$SlimeMoveControl": {
+   "to": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobMoveControl",
+   "kept": 3,
+   "missing": [
+    "<init>(Lnet/minecraft/world/entity/monster/Slime;)V"
+   ],
+   "basis": "members 6.0/7 vs 6 (dice 0.92, 2nd 0.50), body votes 0/0"
+  },
+  "net/minecraft/world/entity/monster/Slime$SlimeRandomDirectionGoal": {
+   "to": "net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobRandomDirectionGoal",
+   "kept": 2,
+   "missing": [
+    "<init>(Lnet/minecraft/world/entity/monster/Slime;)V"
+   ],
+   "basis": "members 4.0/5 vs 5 (dice 0.80, 2nd 0.50), body votes 0/0"
+  },
+  "net/minecraft/world/level/block/state/properties/DripstoneThickness": {
+   "to": "net/minecraft/world/level/block/state/properties/SpeleothemThickness",
+   "kept": 9,
+   "basis": "members 7.0/7 vs 7 (dice 1.00, 2nd 0.36), body votes 0/0"
+  },
+  "net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity": {
+   "to": "net/minecraft/world/level/levelgen/NoiseChunk$BlendDensity",
+   "kept": 4,
+   "renamed": [
+    "input()Lnet/minecraft/world/level/levelgen/DensityFunction; -> wrapped"
+   ],
+   "missing": [
+    "transform(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;D)D",
+    "toString()Ljava/lang/String;",
+    "hashCode()I",
+    "equals(Ljava/lang/Object;)Z"
+   ],
+   "basis": "members 5.0/7 vs 7 (dice 0.71, 2nd 0.48), body votes 0/0"
+  },
+  "net/minecraft/world/level/levelgen/feature/DripstoneClusterFeature": {
+   "to": "net/minecraft/world/level/levelgen/feature/SpeleothemClusterFeature",
+   "kept": 2,
+   "basis": "members 6.5/9 vs 9 (dice 0.72, 2nd 0.20), body votes 0/0"
+  },
+  "net/minecraft/world/level/levelgen/feature/configurations/DripstoneClusterConfiguration": {
+   "to": "net/minecraft/world/level/levelgen/feature/configurations/SpeleothemClusterConfiguration",
+   "kept": 9,
+   "missing": [
+    "<init>(ILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/IntProvider;IILnet/minecraft/util/valueproviders/IntProvider;Lnet/minecraft/util/valueproviders/FloatProvider;Lnet/minecraft/util/valueproviders/FloatProvider;FII)V",
+    "dripstoneBlockLayerThickness:Lnet/minecraft/util/valueproviders/IntProvider;",
+    "chanceOfDripstoneColumnAtMaxDistanceFromCenter:F",
+    "maxDistanceFromEdgeAffectingChanceOfDripstoneColumn:I"
+   ],
+   "basis": "members 8.0/11 vs 28 (dice 0.41, 2nd 0.06), body votes 2/2"
+  }
+ },
+ "_pkgmoves_member_renames": {
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getVertexFormatMode": "getPrimitiveTopology",
+  "com/mojang/blaze3d/platform/Monitor.getCurrentMode": "currentMode",
+  "com/mojang/blaze3d/platform/Monitor.getMode": "mode",
+  "com/mojang/blaze3d/platform/Monitor.getModeCount": "modeCount",
+  "com/mojang/blaze3d/platform/Monitor.getMonitor": "monitor",
+  "com/mojang/blaze3d/platform/Monitor.getVideoModeIndex": "indexOfMode",
+  "com/mojang/blaze3d/platform/Monitor.getX": "x",
+  "com/mojang/blaze3d/platform/Monitor.getY": "y",
+  "com/mojang/blaze3d/platform/ScreenManager.shutdown": "close",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer.copyToHeap": "copyTo",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$CPUStagingBuffer.getStagingBuffer": "getWriteBuffer",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer.copyToHeap": "copyTo",
+  "com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferStagingBuffer$MappedStagingBuffer.getStagingBuffer": "getWriteBuffer",
+  "net/minecraft/CrashReportCategory$Entry.getKey": "key",
+  "net/minecraft/CrashReportCategory$Entry.getValue": "value",
+  "net/minecraft/client/gui/font/GlyphRenderTypes.createForIntensityTexture": "createForGrayscaleTexture",
+  "net/minecraft/client/gui/render/GuiRenderer$1.accept": "acceptRenderable",
+  "net/minecraft/client/renderer/GameRenderer.getBossOverlayWorldDarkening": "bossOverlayWorldDarkening",
+  "net/minecraft/client/renderer/GameRenderer.getFeatureRenderDispatcher": "featureRenderDispatcher",
+  "net/minecraft/client/renderer/GameRenderer.getGameRenderState": "gameRenderState",
+  "net/minecraft/client/renderer/GameRenderer.getLighting": "lighting",
+  "net/minecraft/client/renderer/GameRenderer.getMainCamera": "mainCamera",
+  "net/minecraft/client/renderer/GameRenderer.getNightVisionScale": "nightVisionScale",
+  "net/minecraft/client/renderer/GameRenderer.getPanorama": "panorama",
+  "net/minecraft/client/renderer/LevelRenderer.collectPerFrameGizmos": "collectPerFrameRenderThreadGizmos",
+  "net/minecraft/client/renderer/LevelRenderer.collectedGizmos": "renderThreadGizmos",
+  "net/minecraft/client/renderer/LevelRenderer.getCloudRenderer": "cloudRenderer",
+  "net/minecraft/client/renderer/LevelRenderer.getCloudsTarget": "cloudsTarget",
+  "net/minecraft/client/renderer/LevelRenderer.getItemEntityTarget": "itemEntityTarget",
+  "net/minecraft/client/renderer/LevelRenderer.getParticlesTarget": "particlesTarget",
+  "net/minecraft/client/renderer/LevelRenderer.getSectionOcclusionGraph": "sectionOcclusionGraph",
+  "net/minecraft/client/renderer/LevelRenderer.getSectionRenderDispatcher": "sectionRenderDispatcher",
+  "net/minecraft/client/renderer/LevelRenderer.getTranslucentTarget": "translucentTarget",
+  "net/minecraft/client/renderer/LevelRenderer.getVisibleSections": "visibleSections",
+  "net/minecraft/client/renderer/LevelRenderer.getWeatherTarget": "weatherTarget",
+  "net/minecraft/client/renderer/RenderPipelines.GUI_TEXT_INTENSITY": "GUI_TEXT_GRAYSCALE",
+  "net/minecraft/client/renderer/SubmitNodeCollection.submitParticleGroup": "submitQuadParticleGroup",
+  "net/minecraft/client/renderer/SubmitNodeStorage.submitParticleGroup": "submitQuadParticleGroup",
+  "net/minecraft/client/renderer/rendertype/RenderType.mode": "primitiveTopology",
+  "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensity": "textGrayscale",
+  "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensityPolygonOffset": "textGrayscalePolygonOffset",
+  "net/minecraft/client/renderer/rendertype/RenderTypes.textIntensitySeeThrough": "textGrayscaleSeeThrough",
+  "net/minecraft/client/renderer/rendertype/TextureTransform.getMatrix": "createMatrix",
+  "net/minecraft/commands/arguments/ColorArgument.color": "teamColor",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getCollisionRule": "collisionRule",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getDisplayName": "displayName",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getPlayerPrefix": "playerPrefix",
+  "net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket$Parameters.getPlayerSuffix": "playerSuffix",
+  "net/minecraft/references/BlockIds.createKey": "create",
+  "net/minecraft/references/ItemIds.createKey": "create",
+  "net/minecraft/server/commands/TeamCommand.lambda$setNametagVisibility$0": "lambda$setNameTagVisibility$0",
+  "net/minecraft/server/commands/TeamCommand.setNametagVisibility": "setNameTagVisibility",
+  "net/minecraft/server/level/PlayerSpawnFinder.getOverworldRespawnPos": "getLevelRespawnPos",
+  "net/minecraft/server/level/WorldGenRegion.markPosForPostprocessing": "markPosForPostProcessing",
+  "net/minecraft/world/effect/HealOrHarmMobEffect.applyInstantenousEffect": "applyInstantaneousEffect",
+  "net/minecraft/world/effect/MobEffect.applyInstantenousEffect": "applyInstantaneousEffect",
+  "net/minecraft/world/entity/Entity.collectColliders": "collectCollidersIgnoringWorldBorder",
+  "net/minecraft/world/level/chunk/ChunkAccess.markPosForPostprocessing": "markPosForPostProcessing",
+  "net/minecraft/world/level/chunk/ProtoChunk.markPosForPostprocessing": "markPosForPostProcessing",
+  "net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity.input": "wrapped",
+  "net/minecraft/world/level/levelgen/feature/configurations/MultifaceGrowthConfiguration.apply": "validateBlock",
+  "net/minecraft/world/level/levelgen/feature/configurations/MultifaceGrowthConfiguration.lambda$apply$0": "lambda$validateBlock$0",
+  "net/minecraft/world/level/lighting/LightEngine.getLightBlockInto": "getLightDampeningInto"
+ }
+}
