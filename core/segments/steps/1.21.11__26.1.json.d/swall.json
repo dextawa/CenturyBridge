@@ -1,7 +1,17 @@
 {
  "instanceRedirects": {
   "net/minecraft/class_332.method_73199()V": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#renderDeferredElements",
-  "net/minecraft/class_332.method_51441(Lnet/minecraft/class_327;Lnet/minecraft/class_2583;II)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#renderComponentHoverEffect"
+  "net/minecraft/class_332.method_51441(Lnet/minecraft/class_327;Lnet/minecraft/class_2583;II)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGui#renderComponentHoverEffect",
+  "net/minecraft/class_777.comp_3722()I": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#tintIndex",
+  "net/minecraft/class_777.comp_3724()Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#sprite",
+  "net/minecraft/class_777.comp_3725()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#shade",
+  "net/minecraft/class_777.comp_3726()I": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#lightEmission",
+  "net/minecraft/class_777.method_3360()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#isTinted",
+  "net/minecraft/class_1087.method_68511()Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#particleIcon",
+  "net/minecraft/class_1087.method_68512(Lnet/minecraft/class_5819;)Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#collectParts",
+  "net/minecraft/class_10889.comp_3752()Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#partParticleIcon",
+  "net/minecraft/class_1092.method_68046()Lnet/minecraft/class_1087;": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#getMissingBlockStateModel",
+  "net/minecraft/class_1092.method_4743()Lnet/minecraft/class_773;": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#getBlockModelShaper"
  },
  "overrideHooks": [
   {
@@ -29,5 +39,57 @@
    "superCalls": "rename",
    "basis": "GuiGraphics.renderComponentHoverEffect lives on as GuiGraphicsExtractor.componentHoverEffect, same descriptor and body; vanilla calls it with invokevirtual and the layer's access widener makes it extendable, so the renamed override is what 26.1 calls. Vanilla never passes a null style (both releases test first); the mod's own calls go through CbWallGui, which keeps 1.21.11's null test"
   }
- ]
+ ],
+ "classRenames": {
+  "net/minecraft/class_773": "top/dext/centurybridge/step/v26_1/facade/BlockModelShaper"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1087",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallModels$LegacyBlockStateModel",
+   "requires": [
+    "method_68511()Lnet/minecraft/class_1058;"
+   ],
+   "synth": [
+    {
+     "new": "particleMaterial()Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallModels.modelParticleMaterial(Ltop/dext/centurybridge/step/v26_1/rt/CbWallModels$LegacyBlockStateModel;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
+    },
+    {
+     "new": "materialFlags()I",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallModels.modelMaterialFlags(Ltop/dext/centurybridge/step/v26_1/rt/CbWallModels$LegacyBlockStateModel;)I"
+    }
+   ],
+   "basis": "1.21.11 BlockStateModel.particleIcon() became particleMaterial() (sprite + forceTranslucent, false for what 1.21.11 could express); materialFlags() is new and computed from the quads of the parts the model collects (seed 42, as 1.21.11 ModelBlockRenderer.renderModel)"
+  },
+  {
+   "under": "net/minecraft/class_10889",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallModels$LegacyBlockModelPart",
+   "requires": [
+    "comp_3752()Lnet/minecraft/class_1058;"
+   ],
+   "synth": [
+    {
+     "new": "particleMaterial()Lnet/minecraft/client/resources/model/sprite/Material$Baked;",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallModels.partParticleMaterial(Ltop/dext/centurybridge/step/v26_1/rt/CbWallModels$LegacyBlockModelPart;)Lnet/minecraft/client/resources/model/sprite/Material$Baked;"
+    },
+    {
+     "new": "materialFlags()I",
+     "call": "top/dext/centurybridge/step/v26_1/rt/CbWallModels.partMaterialFlags(Ltop/dext/centurybridge/step/v26_1/rt/CbWallModels$LegacyBlockModelPart;)I"
+    }
+   ],
+   "basis": "1.21.11 BlockModelPart.particleIcon() became particleMaterial(); materialFlags() is new: the OR of the quads flags, as 26.1 QuadCollection computes it"
+  }
+ ],
+ "facadeGaps": {
+  "net/minecraft/class_773.method_3340(Lnet/minecraft/class_2680;)Lnet/minecraft/class_1091;": "gone at 1.21.5 (BlockModelShaper lost its model-location helpers with the 1.21.5 model rework; absent from 1.21.11 class_773): damage of the 1.21.4->1.21.5 step, not part of the 1.21.11 API this layer gives back",
+  "net/minecraft/class_773.method_3336(Lnet/minecraft/class_2960;Lnet/minecraft/class_2680;)Lnet/minecraft/class_1091;": "gone at 1.21.5 (BlockModelShaper lost its model-location helpers with the 1.21.5 model rework; absent from 1.21.11 class_773): damage of the 1.21.4->1.21.5 step, not part of the 1.21.11 API this layer gives back",
+  "net/minecraft/class_773.method_3338(Ljava/util/Map;)Ljava/lang/String;": "gone at 1.21.5 (BlockModelShaper lost its model-location helpers with the 1.21.5 model rework; absent from 1.21.11 class_773): damage of the 1.21.4->1.21.5 step, not part of the 1.21.11 API this layer gives back",
+  "net/minecraft/class_773.method_3334(Lnet/minecraft/class_2769;Ljava/lang/Comparable;)Ljava/lang/String;": "gone at 1.21.5 (BlockModelShaper lost its model-location helpers with the 1.21.5 model rework; absent from 1.21.11 class_773): damage of the 1.21.4->1.21.5 step, not part of the 1.21.11 API this layer gives back",
+  "net/minecraft/class_773.field_4162:Ljava/util/Map;": "1.21.11 private field (the state -> model map): the facade keeps the map as cb$models (a mod-built shaper) or in the model manager BlockStateModelSet (the live one); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_773.field_4163:Lnet/minecraft/class_1092;": "1.21.11 private final field (the model manager): the facade keeps it as cb$modelManager, read through method_3333 (getModelManager); only an access widener on the dead class ever reached it"
+ }
 }
