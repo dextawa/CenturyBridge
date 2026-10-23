@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.dext.centurybridge.step.v1_21_2.facade.Equipable;
 import top.dext.centurybridge.step.v1_21_2.rt.CbItemArmor;
 
 /**
@@ -16,7 +17,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemArmor;
  * the components): 1.21.1's getMaterial / getType / getDefense / ... read them (CbItemArmor).
  */
 @Mixin(class_1738.class)
-public abstract class CbItemArmorMixin implements CbItemArmor.ArmorFields {
+public abstract class CbItemArmorMixin implements CbItemArmor.ArmorFields, Equipable {
 
     @Unique
     private class_1741 cb$material;
@@ -38,5 +39,17 @@ public abstract class CbItemArmorMixin implements CbItemArmor.ArmorFields {
     @Override
     public class_8051 cb$armorType() {
         return cb$type;
+    }
+
+    /** Equipable.getEquipmentSlot(), as 1.21.1's ArmorItem answered it (CbItemArmor) */
+    @Override
+    public net.minecraft.class_1304 method_7685() {
+        return CbItemArmor.method_7685((class_1738) (Object) this);
+    }
+
+    /** Equipable.getEquipSound(), as 1.21.1's ArmorItem answered it (CbItemArmor) */
+    @Override
+    public net.minecraft.class_6880<net.minecraft.class_3414> method_31570() {
+        return CbItemArmor.method_31570((class_1738) (Object) this);
     }
 }

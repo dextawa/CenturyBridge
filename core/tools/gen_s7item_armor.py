@@ -46,7 +46,26 @@ def main():
             "net/minecraft/class_1741$class_9196": FAC + "ArmorMaterial$Layer",
             "net/minecraft/class_1740": FAC + "ArmorMaterials",
             TYPE: "net/minecraft/class_8051",
+            # Equipable: the slot/sound/swap interface 1.21.2 replaced by the EQUIPPABLE component (CbItemEquipable)
+            "net/minecraft/class_5151": FAC + "Equipable",
+            # ElytraItem: a plain item with components since 1.21.2
+            "net/minecraft/class_1770": FAC + "ElytraItem",
         },
+        "facadeGaps": {
+            "net/minecraft/class_1770.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;":
+                "use(level, player, hand) answered an InteractionResultHolder in 1.21.1; 1.21.2's Item.use has the same "
+                "parameters, which Java cannot declare a second time on the facade. Calls take the Item.use instance "
+                "redirect and a subclass's super.use(..) the Item.use override hook's super bridge (CbItemResults); "
+                "1.21.1's body was swapWithEquipmentSlot, which 1.21.2's Item.use does for the swappable EQUIPPABLE "
+                "an ElytraItem gets (CbItemEquipable)",
+        },
+        # 1.21.1's vanilla Equipables implement facade Equipable again (CbItemEquipable*Mixin): their members exist
+        "covers": [
+            "net/minecraft/class_1819.method_7685()Lnet/minecraft/class_1304;",
+            "net/minecraft/class_2190.method_7685()Lnet/minecraft/class_1304;",
+            "net/minecraft/class_5815.method_7685()Lnet/minecraft/class_1304;",
+            "net/minecraft/class_5815.method_31570()Lnet/minecraft/class_6880;",
+        ],
         "superRenames": {ARMOR: FAC + "ArmorItem", ANIMAL: FAC + "AnimalArmorItem"},
         "ctorRedirects": {
             ARMOR + ".<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_1738$class_8051;Lnet/minecraft/class_1792$class_1793;)V":
@@ -72,6 +91,8 @@ def main():
         },
     }
     out["instanceRedirects"][TYPE + ".method_56691()Z"] = RT
+    out["instanceRedirects"]["net/minecraft/class_1770.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;"
+                             "Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;"] =         "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable"
     for member, legacy, why in MEMBERS:
         name = member[:member.index("(")]
         out["instanceRedirects"][ARMOR + "." + member] = RT

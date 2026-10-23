@@ -102,7 +102,7 @@ public final class CbItemMembers {
      * the components the item was built with -- not the view a 1.21.1 class's overrides answer
      * (CbItemMemberComponents), which a super call from such an override would otherwise come back through
      */
-    static net.minecraft.class_9323 built(class_1792 item) {
+    public static net.minecraft.class_9323 built(class_1792 item) {
         net.minecraft.class_9323 c = item.method_57347();
         return c instanceof CbItemMemberComponents v ? v.built() : c;
     }
