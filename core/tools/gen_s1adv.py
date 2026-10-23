@@ -28,6 +28,8 @@ entry each. Every rule is read off both releases' class files:
 
   records    the predicates 1.20.2 turned into records (records()): 1.20.1 constructors reshaped onto the
              record's, part by part (PART_CONVERSIONS / PART_DEFAULTS).
+  holders    members whose only change is Advancement -> AdvancementNode / AdvancementHolder (holders()):
+             calls converted both ways, overrides hooked, constructors reshaped (CbAdvNodes).
   builders   the predicate builders' 1.20.1 setters, put back as covers (builders(): generated CbAdvBuilder*
              mixins; "covers" entries of those builders are this generator's).
 
@@ -37,6 +39,7 @@ generator replaces exactly those and keeps the rest of the fragment.
 
   python core/tools/gen_s1adv.py <worktree root> <1.20.1 code jar> <1.20.2 code jar> <inter-to-mojang-classes.tsv>
 """
+import glob
 import json
 import os
 import re
@@ -508,6 +511,131 @@ def builders(root, vjar, V, W, table, report):
     return names, covers
 
 
+NODES = RT + "/CbAdvNodes"
+ADV, NODE, HOLDER = "Lnet/minecraft/class_161;", "Lnet/minecraft/class_8781;", "Lnet/minecraft/class_8779;"
+# 1.20.1 Advancement -> what 1.20.2 takes in its place, and back
+TO_NEW = {NODE: f"{NODES}#nodeOf({ADV})" + NODE, HOLDER: f"{NODES}#holderOf({ADV})" + HOLDER}
+TO_OLD = {NODE: f"{NODES}#valueOf({NODE})" + ADV, HOLDER: f"{NODES}#valueOf({HOLDER})" + ADV}
+
+
+# the sections that serve a member's call sites (a key here is wired on the call side already)
+CALL_SIDE = ("staticRedirects", "instanceRedirects", "interfaceCallRedirects", "callReshapes", "superRedirects",
+             "ctorRedirects", "superCtorReshapes", "methodRenames", "covers")
+
+
+def holders(root, V, W, section, report, frag):
+    """
+    Members whose 1.20.2 shape differs from 1.20.1's only in Advancement standing where 1.20.2 has an
+    AdvancementNode (tree code: listeners, tabs, positions) or an AdvancementHolder (id-keyed code:
+    progress, selection). The 1.20.1 Advancement is the record (CbAdvNodes): a call converts each such
+    argument to the node it is placed at / its holder and the answer back to the record (callReshapes);
+    a 1.20.1 override is reached from the new shape with the record (overrideHooks wrap / unwrap, one hook
+    per topmost declaring type, so a class under two declaring types gets one); a constructor's super(..)
+    and new are reshaped the same way (superCtorReshapes). Members with other type-argument drift are left
+    for hand wiring, as are members another fragment or the hand-written part already wires.
+    """
+    wired = set()
+    for f in [os.path.join(root, "core/segments/shims-1.20.2.json")] + sorted(
+            glob.glob(os.path.join(root, "core/segments/shims-1.20.2.json.d/*.json"))):
+        if f.endswith("s1adv.json"):
+            continue
+        d = json.load(open(f, encoding="utf-8"))
+        for s, v in d.items():
+            if s in CALL_SIDE:
+                wired |= set(v)
+    hooked = set()
+    for f in [os.path.join(root, "core/segments/shims-1.20.2.json")] + sorted(
+            glob.glob(os.path.join(root, "core/segments/shims-1.20.2.json.d/*.json"))):
+        if not f.endswith("s1adv.json"):
+            hooked |= {h.get("old") for h in json.load(open(f, encoding="utf-8")).get("overrideHooks", [])}
+    hooked |= {h.get("old") for h in frag.get("overrideHooks", [])}
+    for s, v in frag.items():  # the hand-written part of this fragment (generated entries are dropped by now)
+        if s in CALL_SIDE:
+            wired |= set(v)
+    found = []
+    for p in sorted(V):
+        if p not in W:
+            continue
+        wm = {}
+        for m in W[p].methods:
+            wm.setdefault(m.name, []).append(m)
+        for m in V[p].methods:
+            if ADV not in m.desc or not m.access & (classfile.ACC_PUBLIC | classfile.ACC_PROTECTED) \
+                    or m.name.startswith("lambda") or m.access & classfile.ACC_SYNTHETIC:
+                continue
+            if any(w.desc == m.desc for w in wm.get(m.name, [])):
+                continue
+            oa, orr = classfile.split_args(m.desc)
+            match = None
+            for w in wm.get(m.name, []):
+                na, nr = classfile.split_args(w.desc)
+                if len(na) == len(oa) and all(x == y or (x == ADV and y in (NODE, HOLDER)) for x, y in zip(oa + [orr], na + [nr])):
+                    match = w
+            if not match:
+                continue
+            na, nr = classfile.split_args(match.desc)
+            # other drift: a parameter that is not the advancement whose type arguments changed
+            os_ = (classfile.split_signature(m.signature) or [oa])[0] if m.signature else oa
+            ns_ = (classfile.split_signature(match.signature) or [na])[0] if match.signature else na
+            drift = [i for i, (a, b, x, y) in enumerate(zip(oa, na, os_, ns_)) if a == b and x != y and a != ADV]
+            key = f"{p}.{m.name}{m.desc}"
+            if drift:
+                report.append(f"design: {key}: parameters {drift} drift as well")
+                continue
+            found.append((p, m, match))
+    by_shape = {}
+    guarded = set()
+    for p, m, w in found:
+        key = f"{p}.{m.name}{m.desc}"
+        oa, orr = classfile.split_args(m.desc)
+        na, nr = classfile.split_args(w.desc)
+        overridable = not m.access & (classfile.ACC_STATIC | classfile.ACC_FINAL | classfile.ACC_PRIVATE)             and not V[p].access & classfile.ACC_FINAL and m.name != "<init>"
+        if key in wired:
+            # the call side is wired by hand elsewhere; a mod's override still needs its hook
+            report.append(f"wired elsewhere (calls): {key}")
+            if overridable:
+                by_shape.setdefault((m.name, m.desc, w.desc), []).append(p)
+                guarded.add((m.name, m.desc))
+            continue
+        if m.name == "<init>":
+            section("superCtorReshapes")[key] = {
+                "desc": w.desc, "ops": ["keep" if a == b else "conv " + TO_NEW[b] for a, b in zip(oa, na)],
+                "basis": f"{BASIS}: the advancement as the node / holder 1.20.2 takes (CbAdvNodes)"}
+            continue
+        entry = {"desc": w.desc, "ops": ["keep" if a == b else "conv " + TO_NEW[b] for a, b in zip(oa, na)],
+                 "basis": f"{BASIS}: the advancement as the node / holder 1.20.2 takes, the answer back as the advancement"}
+        if orr != nr:
+            entry["ret"] = "conv " + TO_OLD[nr]
+        section("callReshapes")[key] = entry
+        if overridable:
+            by_shape.setdefault((m.name, m.desc, w.desc), []).append(p)
+    for (name, od, nd), owners in sorted(by_shape.items()):
+        if name + od in hooked:
+            report.append(f"hooked elsewhere: {name}{od}")
+            continue
+        oa, orr = classfile.split_args(od)
+        na, nr = classfile.split_args(nd)
+        changed = {b for a, b in zip(oa, na) if a != b}
+        if len(changed) > 1:
+            report.append(f"design: {owners}.{name}{od}: node and holder arguments together")
+            continue
+        top = [o for o in owners if not any(o != q and is_under(V, o, q) for q in owners)]
+        for o in top:
+            h = {"old": name + od, "new": name + nd, "onlyUnder": o,
+                 "basis": f"{BASIS}: a 1.20.1 override is reached from the new shape with the advancement (CbAdvNodes)"}
+            if changed:
+                b = changed.pop()
+                h["wrap"] = TO_OLD[b].replace("#", ".")
+            if orr != nr:
+                h["unwrap"] = TO_NEW[nr].replace("#", ".")
+            if (name, od) in guarded:
+                # the old shape is served by a cover / redirect that calls the new shape on the object: the
+                # mod's super.old(..) comes back into the synthesized method, which then falls through to super
+                h["guard"] = RT + "/Guard"
+                h["basis"] += "; guarded: the old shape's call side reaches the new shape on the object"
+            section("overrideHooks", list).append(h)
+
+
 def java_type(t):
     dim = len(t) - len(t.lstrip("["))
     t = t.lstrip("[")
@@ -681,6 +809,9 @@ def main():
 
     # ---------------------------------------------------------------- predicate records
     records(V, W, section, report, classes_table)
+
+    # ---------------------------------------------------------------- Advancement -> node / holder
+    holders(root, V, W, section, report, frag)
 
     # ---------------------------------------------------------------- ANY sentinels
     table = {}

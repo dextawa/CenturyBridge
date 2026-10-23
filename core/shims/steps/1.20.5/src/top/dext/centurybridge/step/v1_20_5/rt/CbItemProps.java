@@ -138,9 +138,10 @@ public final class CbItemProps {
 
     /** Item.Properties.defaultDurability's 1.20.4 body: the durability unless the properties already set one */
     public static net.minecraft.class_1792.class_1793 superDefaultDurability(net.minecraft.class_1792.class_1793 p, int durability) {
-        Object set = ((top.dext.centurybridge.step.v1_20_5.mixin.CbComponentBuilderAccessor)
-            ((top.dext.centurybridge.step.v1_20_5.mixin.CbItemPropertiesAccessor) p).cbS4$components())
-            .cbS4$map().get(net.minecraft.class_9334.field_50072);
+        // the properties' component builder is made by the first component set (Item.Properties.component); none yet: none set
+        Object builder = ((top.dext.centurybridge.step.v1_20_5.mixin.CbItemPropertiesAccessor) p).cbS4$components();
+        Object set = builder == null ? null
+            : ((top.dext.centurybridge.step.v1_20_5.mixin.CbComponentBuilderAccessor) builder).cbS4$map().get(net.minecraft.class_9334.field_50072);
         return set == null || (Integer) set == 0 ? p.method_7895(durability) : p;
     }
 
