@@ -66,7 +66,42 @@
  "instanceRedirects": {
   "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#profiler",
   "net/minecraft/class_3414.method_14833()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#soundLocation",
-  "net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#reload"
+  "net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#reload",
+  "net/minecraft/class_2708.method_11734()D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2708.method_11735()D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2708.method_11738()D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2708.method_11736()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2708.method_11739()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2708.method_11737()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2708.method_11733()Ljava/util/Set;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2777.method_11916()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2777.method_11917()D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2777.method_11919()D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2777.method_11918()D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2777.method_11920()B": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2777.method_11921()B": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2777.method_11923()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2761.method_11871()J": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2761.method_11873()J": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2664.method_11475()D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2664.method_11477()D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2664.method_11478()D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2664.method_11472()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2664.method_11473()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2664.method_11474()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2664.method_55331()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2664.method_55329()Lnet/minecraft/class_2394;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2664.method_55330()Lnet/minecraft/class_2394;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2851.method_12372()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2851.method_12373()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2851.method_12371()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2851.method_12370()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2684.method_11649()B": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2684.method_11650()B": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2726.method_11787()B": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets",
+  "net/minecraft/class_2656.comp_2198()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#cooldownItem",
+  "net/minecraft/class_2901.comp_2662()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#strictErrorHandling",
+  "net/minecraft/class_8675.comp_2663()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#strictErrorHandling"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -108,6 +143,146 @@
     "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestExecutors#lightDispatcher(Lnet/minecraft/class_3906;)Lnet/minecraft/class_10171;"
    ],
    "basis": "ThreadedLevelLightEngine takes 1.21.2's ConsecutiveExecutor and ChunkTaskDispatcher where 1.21.1 took the light mailbox and its sorter handle: the executor runs on the mailbox, the dispatcher submits to the handle (CbRestExecutors)"
+  },
+  "net/minecraft/class_2828.<init>(DDDFFZZZ)V": {
+   "desc": "(DDDFFZZZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#noHorizontalCollision()Z",
+    "keep",
+    "keep"
+   ],
+   "basis": "ServerboundMovePlayerPacket and its four kinds take the horizontal-collision flag 1.21.2 added after onGround; 1.21.1's packet carried none (CbRestPackets.noHorizontalCollision)"
+  },
+  "net/minecraft/class_2828$class_2829.<init>(DDDZ)V": {
+   "desc": "(DDDZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#noHorizontalCollision()Z"
+   ],
+   "basis": "ServerboundMovePlayerPacket and its four kinds take the horizontal-collision flag 1.21.2 added after onGround; 1.21.1's packet carried none (CbRestPackets.noHorizontalCollision)"
+  },
+  "net/minecraft/class_2828$class_2830.<init>(DDDFFZ)V": {
+   "desc": "(DDDFFZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#noHorizontalCollision()Z"
+   ],
+   "basis": "ServerboundMovePlayerPacket and its four kinds take the horizontal-collision flag 1.21.2 added after onGround; 1.21.1's packet carried none (CbRestPackets.noHorizontalCollision)"
+  },
+  "net/minecraft/class_2828$class_2831.<init>(FFZ)V": {
+   "desc": "(FFZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#noHorizontalCollision()Z"
+   ],
+   "basis": "ServerboundMovePlayerPacket and its four kinds take the horizontal-collision flag 1.21.2 added after onGround; 1.21.1's packet carried none (CbRestPackets.noHorizontalCollision)"
+  },
+  "net/minecraft/class_2828$class_5911.<init>(Z)V": {
+   "desc": "(ZZ)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#noHorizontalCollision()Z"
+   ],
+   "basis": "ServerboundMovePlayerPacket and its four kinds take the horizontal-collision flag 1.21.2 added after onGround; 1.21.1's packet carried none (CbRestPackets.noHorizontalCollision)"
+  },
+  "net/minecraft/class_8589.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_5321;JLnet/minecraft/class_1934;Lnet/minecraft/class_1934;ZZLjava/util/Optional;I)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_5321;JLnet/minecraft/class_1934;Lnet/minecraft/class_1934;ZZLjava/util/Optional;II)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#legacySeaLevel()I"
+   ],
+   "basis": "CommonPlayerSpawnInfo gained the level's sea level in 1.21.2; 1.21.1's client used 63 for every level"
+  },
+  "net/minecraft/class_8791.<init>(Ljava/lang/String;ILnet/minecraft/class_1659;ZILnet/minecraft/class_1306;ZZ)V": {
+   "desc": "(Ljava/lang/String;ILnet/minecraft/class_1659;ZILnet/minecraft/class_1306;ZZLnet/minecraft/class_4066;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#defaultParticleStatus()Lnet/minecraft/class_4066;"
+   ],
+   "basis": "ClientInformation gained the particle status in 1.21.2; 1.21.2's default, ALL"
+  },
+  "net/minecraft/class_2703$class_2705.<init>(Ljava/util/UUID;Lcom/mojang/authlib/GameProfile;ZILnet/minecraft/class_1934;Lnet/minecraft/class_2561;Lnet/minecraft/class_7822$class_7823;)V": {
+   "desc": "(Ljava/util/UUID;Lcom/mojang/authlib/GameProfile;ZILnet/minecraft/class_1934;Lnet/minecraft/class_2561;ILnet/minecraft/class_7822$class_7823;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#defaultListOrder()I",
+    "keep:6"
+   ],
+   "basis": "PlayerInfoUpdate.Entry gained the tab-list order in 1.21.2; 0, every player's default"
+  },
+  "net/minecraft/class_2901.<init>(Lcom/mojang/authlib/GameProfile;Z)V": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;)V",
+   "ops": [
+    "keep",
+    "drop"
+   ],
+   "basis": "ClientboundGameProfilePacket(profile, strictErrorHandling) is ClientboundLoginFinishedPacket(profile): 1.21.2's client always handles packet errors strictly (1.21.1's server always sent true)"
+  },
+  "net/minecraft/class_8675.<init>(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Ljava/lang/String;Lnet/minecraft/class_642;Lnet/minecraft/class_437;Ljava/util/Map;Lnet/minecraft/class_338$class_9477;ZLjava/util/Map;Lnet/minecraft/class_9782;)V": {
+   "desc": "(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/class_7975;Lnet/minecraft/class_5455$class_6890;Lnet/minecraft/class_7699;Ljava/lang/String;Lnet/minecraft/class_642;Lnet/minecraft/class_437;Ljava/util/Map;Lnet/minecraft/class_338$class_9477;Ljava/util/Map;Lnet/minecraft/class_9782;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop",
+    "keep",
+    "keep"
+   ],
+   "basis": "CommonListenerCookie lost strictErrorHandling in 1.21.2: the client always handles packet errors strictly"
+  },
+  "net/minecraft/class_542$class_545.<init>(ZLjava/lang/String;Ljava/lang/String;ZZ)V": {
+   "desc": "(ZLjava/lang/String;Ljava/lang/String;ZZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#noTracyCapture()Z"
+   ],
+   "basis": "GameConfig.GameData gained captureTracyImages in 1.21.2; false without the launch option"
   }
  },
  "overrideRenames": [
@@ -175,5 +350,15 @@
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#listener(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy;)Lnet/minecraft/class_3302;"
   }
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_2708.<init>(DDDFFLjava/util/Set;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#newPlayerPosition",
+  "net/minecraft/class_2777.<init>(Lnet/minecraft/class_1297;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#newTeleportEntity",
+  "net/minecraft/class_2664.<init>(DDDFLjava/util/List;Lnet/minecraft/class_243;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#newExplode",
+  "net/minecraft/class_2851.<init>(FFZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#newPlayerInput",
+  "net/minecraft/class_2656.<init>(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#newCooldown"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_8673.field_51520:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#strictErrorHandlingField"
  }
 }
