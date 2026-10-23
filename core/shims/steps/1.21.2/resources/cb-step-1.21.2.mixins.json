@@ -94,7 +94,11 @@
     "CbLevelPortalAccess",
     "CbLevelRegionAccess",
     "CbLevelPropertiesAccess",
-    "CbLevelFlowingFluidMixin"
+    "CbLevelFlowingFluidMixin",
+    "CbLevelGrowingPlantMixin",
+    "CbLevelGrowingPlantBodyMixin",
+    "CbLevelSavedDataMixin",
+    "CbLevelPathFinderMixin"
   ],
   "client": [
     "CbRenderLivingBob882Mixin",

@@ -475,15 +475,26 @@ def chunk_storage(f):
                 "conv:1 " + LST + "#unpacker(" + FN + ")" + BIF, "keep:2", "keep:3", "keep:4", "keep:5"],
         "basis": "SectionStorage keeps sections in a packed form since 1.21.2: the packed form is the section's data, "
                  "parsed and written with 1.21.1's per-section codec (CbLevelStorage)"})
-    CS = MC + "class_2852"
+    CS, POS_ = MC + "class_2852", L("class_1923")
     f.put("staticRedirects", CS + ".method_12395(" + L("class_3218") + L("class_4153") + L("class_9240") + POS + TAG + ")"
           + L("class_2839"), LST)
     f.put("staticRedirects", CS + ".method_12410(" + L("class_3218") + L("class_2791") + ")" + TAG, LST)
-    why = ("1.21.1's ChunkSerializer was a static utility (no state, no instance methods); 1.21.2 reuses its "
-           "intermediary name class_2852 for the final record SerializableChunkData, so no object of that type can "
-           "stand for a ChunkSerializer instance and no class can extend it; its static API is bridged")
-    f.put("ledger", CS + ".<init>", why)
-    f.put("ledger", CS, why)
+    # 1.21.1's ChunkSerializer, a static utility; 1.21.2 gives class_2852 to the record SerializableChunkData, which a
+    # 1.21.1 mod never means: its instances, subclasses and remaining statics go to the facade
+    f.put("classRenames", CS, FAC + "/ChunkSerializer")
+    priv = ("private in 1.21.1 (ChunkSerializer's helpers, logger, codec and tag keys); the facade's read and write are "
+            "1.21.1's results through 1.21.2's SerializableChunkData, and no mod could reach these without an access "
+            "widener, which never applies to a CenturyBridge class")
+    for m in ("method_39035(" + POS_ + "ILjava/lang/String;)V", "method_39036(" + L("class_2378") + ")Lcom/mojang/serialization/Codec;",
+              "method_39311(" + L("class_3218") + TAG + L("class_2791$class_6745") + ")V",
+              "method_12386(" + L("class_3218") + TAG + ")" + L("class_2818$class_6829"),
+              "method_39796(" + TAG + "Ljava/lang/String;)" + L("class_2499"),
+              "method_12385(" + L("class_6625") + POS_ + "Ljava/util/Map;Ljava/util/Map;)" + TAG,
+              "method_12392(" + L("class_6625") + TAG + "J)Ljava/util/Map;",
+              "method_12387(" + L("class_5455") + POS_ + TAG + ")Ljava/util/Map;",
+              "field_34576:Lcom/mojang/serialization/Codec;", "field_13001:Lorg/slf4j/Logger;",
+              "field_31413:Ljava/lang/String;", "field_35476:Ljava/lang/String;", "field_35477:Ljava/lang/String;"):
+        f.put("facadeGaps", CS + "." + m, priv)
     WGC = MC + "class_9312"
     f.put("instanceRedirects", WGC + ".comp_2808()" + L("class_3906"), LST)
     f.put("superCtorReshapes", WGC + ".<init>(" + L("class_3218") + L("class_2794") + L("class_3485") + L("class_3227")
@@ -801,9 +812,15 @@ def level_misc(f):
         "basis": "DimensionDataStorage takes the directory as a Path since 1.21.2"})
     f.put("instanceRedirects", MC + "class_1950.method_37233()" + L("class_3695"), LMI)
     LA_ = L("class_1936")
-    f.reshape(MC + "class_4863.method_24948(" + LA_ + ")" + BS, "(" + RND + ")" + BS,
-              ["conv:0 " + LMI + "#random(" + LA_ + ")" + RND],
-              "GrowingPlantBlock.getStateForPlacement takes the level random since 1.21.2")
+    # GrowingPlantBlock.getStateForPlacement(LevelAccessor) -> (RandomSource): CbLevelGrowingPlants
+    gp, gpold = RT + "/CbLevelGrowingPlants", "method_24948(" + LA_ + ")" + BS
+    for c in f.declarers("method_24948", "(" + LA_ + ")" + BS):
+        f.put("instanceRedirects", c + "." + gpold, gp)
+    f.put("superRedirects", MC + "class_4863." + gpold, gp + "#superPlacementState")
+    f.put("superRedirects", MC + "class_4865." + gpold, gp + "#superHeadPlacementState")
+    f.w["adapterHooks"].append({"under": MC + "class_4863", "adapter": gp + "$LegacyPlacementState", "requires": [gpold],
+                                "synth": [], "basis": "1.21.2 asks getStateForPlacement with the level's random: a 1.21.1 "
+                                "override is asked with the level where 1.21.1 asked it (CbLevelGrowingPlant*Mixin)"})
     f.reshape(MC + "class_2230.method_9430(" + BS + LA_ + POS + ")V", "(" + BS + BG + STA + RND + POS + ")V",
               ["keep:0", "keep:1 " + BG, "keep:1 " + STA, "conv:1 " + LMI + "#random(" + LA_ + ")" + RND, "keep:2"],
               "tryScheduleDieTick takes the level as reader and tick access and its random since 1.21.2")
@@ -895,6 +912,31 @@ def flowing(f):
                  "source position (CbLevelFlowing)")
 
 
+# ------------------------------------------------------------------------------------------- remaining block rows
+def blocks_rest(f):
+    ECP = MC + "class_8574"
+    f.put("classRenames", ECP, FAC + "/EquipableCarvedPumpkinBlock")
+    f.put("instanceOfRedirects", ECP, FAC + "/EquipableCarvedPumpkinBlock#isInstance")
+    SBI = L("class_3499$class_3501")
+    f.put("staticRedirects", MC + "class_3748.method_16546(" + SBI + SBI + ")Z", LMI)
+    f.put("fieldGetters", MC + "class_6749.field_35682:Lcom/mojang/serialization/Codec;", LMI)
+    f.put("instanceRedirects", MC + "class_8490.method_51204(" + L("class_2960") + "Lcom/mojang/serialization/DynamicOps;"
+          "Ljava/lang/Object;)Ljava/util/Optional;", LMI)
+    f.put("staticRedirects", MC + "class_1948.method_27821(" + L("class_3218") + L("class_2818") + L("class_1948$class_5262")
+          + "ZZZ)V", LMI)
+    gp_ = "method_37233()" + L("class_3695")
+    f.put("superRedirects", MC + "class_1950." + gp_, LMI + "#superProfiler")
+    f.w["adapterHooks"].append({"under": MC + "class_1950", "adapter": LMI + "$LegacyRegionProfiler", "requires": [gp_],
+                                "synth": [], "basis": "1.21.2's PathFinder profiles on the thread's profiler: a 1.21.1 "
+                                "region's getProfiler override answers it for its searches (CbLevelPathFinderMixin)"})
+    sv = "method_17919(Ljava/io/File;" + L("class_7225$class_7874") + ")V"
+    f.put("superRedirects", MC + "class_18." + sv, LMI + "#superSave")
+    f.w["adapterHooks"].append({"under": MC + "class_18", "adapter": LMI + "$LegacySaveFile", "requires": [sv], "synth": [],
+                                "basis": "1.21.2's DimensionDataStorage writes the data's tags itself: a 1.21.1 override of "
+                                         "save(file, registries) is asked for every loaded data, as 1.21.1 asked it "
+                                         "(CbLevelSavedDataMixin)"})
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -919,6 +961,7 @@ def main():
     fabric_block_settings(f)
     palette_and_be_types(f)
     flowing(f)
+    blocks_rest(f)
     f.write()
 
 

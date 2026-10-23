@@ -1,12 +1,17 @@
 package top.dext.centurybridge.step.v1_21_2.rt;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.WeakHashMap;
 import net.minecraft.class_1936;
+import net.minecraft.class_1948;
 import net.minecraft.class_1937;
 import net.minecraft.class_1950;
 import net.minecraft.class_1959;
@@ -21,12 +26,19 @@ import net.minecraft.class_2507;
 import net.minecraft.class_2512;
 import net.minecraft.class_2680;
 import net.minecraft.class_2709;
+import net.minecraft.class_2818;
 import net.minecraft.class_2960;
+import net.minecraft.class_3218;
+import net.minecraft.class_3499;
 import net.minecraft.class_3695;
+import net.minecraft.class_3748;
+import net.minecraft.class_3751;
 import net.minecraft.class_5321;
 import net.minecraft.class_5819;
 import net.minecraft.class_6568;
+import net.minecraft.class_6749;
 import net.minecraft.class_7225;
+import net.minecraft.class_8490;
 import net.minecraft.class_7923;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -183,8 +195,27 @@ public final class CbLevelMisc {
 
     // ---- saved data ----
 
-    /** savedData.save(file, registries) */
+    /**
+     * A 1.21.1 SavedData subclass declaring save(file, registries) (adapterHooks). 1.21.1's DimensionDataStorage
+     * asked every loaded data to save itself to its file, and save(file, registries) wrote it when dirty; 1.21.2's
+     * collects the dirty data's tags and writes them itself. Such an override is asked as 1.21.1 asked it, for every
+     * loaded data, with its file (CbLevelSavedDataMixin).
+     */
+    public interface LegacySaveFile {
+        void method_17919(File file, class_7225.class_7874 registries);
+    }
+
+    /** savedData.save(file, registries): a 1.21.1 override where the data has one, else 1.21.1's body */
     public static void method_17919(class_18 self, File file, class_7225.class_7874 registries) {
+        if (self instanceof LegacySaveFile l) {
+            l.method_17919(file, registries);
+        } else {
+            superSave(self, file, registries);
+        }
+    }
+
+    /** 1.21.1's save(file, registries) body (also its super call): the dirty data's tag, written to the file */
+    public static void superSave(class_18 self, File file, class_7225.class_7874 registries) {
         if (!self.method_79()) {
             return;
         }
@@ -209,8 +240,38 @@ public final class CbLevelMisc {
         class_1937 cb$level();
     }
 
-    /** region.getProfiler(): its level's, as 1.21.1 answered */
+    /**
+     * A 1.21.1 PathNavigationRegion subclass declaring getProfiler() (adapterHooks): 1.21.1's PathFinder.findPath
+     * profiled the search on the region's profiler, 1.21.2's on the thread's (Profiler.get()). The region being
+     * searched is noted for the search (CbLevelPathFinderMixin) and such an override answers its profiler.
+     */
+    public interface LegacyRegionProfiler {
+        class_3695 method_37233();
+    }
+
+    private static final ThreadLocal<class_1950> SEARCHED_REGION = new ThreadLocal<>();
+
+    /** PathFinder.findPath starting (region) and done (null) on this thread */
+    public static void searchedRegion(class_1950 region) {
+        if (region == null) {
+            SEARCHED_REGION.remove();
+        } else {
+            SEARCHED_REGION.set(region);
+        }
+    }
+
+    /** the profiler of the search: a 1.21.1 override's on the searched region, else 1.21.2's */
+    public static class_3695 searchProfiler(class_3695 profiler) {
+        return SEARCHED_REGION.get() instanceof LegacyRegionProfiler l ? l.method_37233() : profiler;
+    }
+
+    /** region.getProfiler(): a 1.21.1 override where the region has one, else its level's, as 1.21.1 answered */
     public static class_3695 method_37233(class_1950 self) {
+        return self instanceof LegacyRegionProfiler l ? l.method_37233() : superProfiler(self);
+    }
+
+    /** 1.21.1's getProfiler body (also its super call): the level's profiler */
+    public static class_3695 superProfiler(class_1950 self) {
         return CbLevelLevels.method_16107(((RegionAccess) self).cb$level());
     }
 
@@ -249,6 +310,57 @@ public final class CbLevelMisc {
 
     public static Set<class_2709> noRelatives() {
         return Set.of();
+    }
+
+    /**
+     * JigsawBlock.canAttach(info, other), 1.21.1's body: 1.21.2 compares JigsawBlockInfo records, their target and name
+     * parsed to resource locations; 1.21.1 read the joint, target and name strings off the infos' tags and compared the
+     * strings (the joint type by name, CbLevelBlockEntities, else aligned for a horizontal front, rollable otherwise)
+     */
+    public static boolean method_16546(class_3499.class_3501 info, class_3499.class_3501 other) {
+        class_2350 front = class_3748.method_26378(info.comp_1342());
+        class_2350 otherFront = class_3748.method_26378(other.comp_1342());
+        class_2350 top = class_3748.method_26379(info.comp_1342());
+        class_2350 otherTop = class_3748.method_26379(other.comp_1342());
+        class_3751.class_4991 joint = CbLevelBlockEntities.method_26401(info.comp_1343().method_10558("joint"))
+            .orElseGet(() -> front.method_10166().method_10179() ? class_3751.class_4991.field_23330 : class_3751.class_4991.field_23329);
+        boolean rollable = joint == class_3751.class_4991.field_23329;
+        return front == otherFront.method_10153() && (rollable || top == otherTop)
+            && info.comp_1343().method_10558("target").equals(other.comp_1343().method_10558("name"));
+    }
+
+    /**
+     * BlendingData.CODEC: 1.21.1's codec of the blending data itself (min_section, max_section, optional heights,
+     * validated); 1.21.2 keeps the same fields and validation in BlendingData.Packed's codec and converts with
+     * unpack / pack -- composed, the codec 1.21.1 had
+     */
+    private static final Codec<class_6749> BLENDING_DATA = class_6749.class_9899.field_52655.xmap(class_6749::method_61807,
+        class_6749::method_61806);
+
+    public static Codec<class_6749> field_35682() {
+        return BLENDING_DATA;
+    }
+
+    /**
+     * LootDataType.deserialize(id, ops, value), 1.21.1's body (gone in 1.21.2, whose loot data loads through the
+     * registry): the type's codec parses the value, an error is logged with the type's registry and the id, and the
+     * result is answered
+     */
+    public static <T, V> Optional<T> method_51204(class_8490<T> self, class_2960 id, DynamicOps<V> ops, V value) {
+        DataResult<T> result = self.comp_2520().parse(ops, value);
+        result.error().ifPresent(e -> LOGGER.error("Couldn't parse element {}/{} - {}", self.comp_2519().method_29177(), id, e.message()));
+        return result.result();
+    }
+
+    /**
+     * NaturalSpawner.spawnForChunk(level, chunk, state, spawnFriendlies, spawnMonsters, spawnPersistent): 1.21.1 spawned
+     * each category the three flags allowed whose global and local caps had room; 1.21.2 takes the categories the
+     * flags and the global cap allow (getFilteredSpawningCategories, the same flag tests) and checks the local cap
+     * as it spawns them
+     */
+    public static void method_27821(class_3218 level, class_2818 chunk, class_1948.class_5262 state, boolean spawnFriendlies,
+                                    boolean spawnMonsters, boolean spawnPersistent) {
+        class_1948.method_27821(level, chunk, state, class_1948.method_61729(state, spawnFriendlies, spawnMonsters, spawnPersistent));
     }
 
     private CbLevelMisc() {
