@@ -4,10 +4,7 @@
   "net/minecraft/class_5851": "top/dext/centurybridge/step/v1_21_2/facade/CarvingMaskPlacement",
   "net/minecraft/class_5807": "top/dext/centurybridge/step/v1_21_2/facade/MossBlock"
  },
- "facadeGaps": {
-  "net/minecraft/class_5851.field_28934:Lcom/mojang/serialization/Codec;": "a Codec until 1.20.4; 1.20.5 made it the MapCodec the facade has, and the 1.20.4 -> 1.20.5 step moves a mod's read of the Codec (s4rest-gen.json fieldGetters), so no mod reaches this step reading it",
-  "net/minecraft/class_5807.method_9651(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Z)Z": "1.20.1's isValidBonemealTarget(level, pos, state, isClient), gone at 1.20.2: the 1.20.1 -> 1.20.2 step rewires it (shims-1.20.2.json), so no mod reaches this step with it"
- },
+ "facadeGaps": {},
  "superCtorReshapes": {
   "net/minecraft/class_4180.<init>(Lnet/minecraft/class_9172;Ljava/util/function/Function;Ljava/util/function/Function;Lnet/minecraft/class_5455;Lnet/minecraft/class_9820;Lnet/minecraft/class_5539;)V": {
    "desc": "(Lnet/minecraft/class_9172;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/BiFunction;Ljava/util/function/Function;Lnet/minecraft/class_5455;Lnet/minecraft/class_9820;Lnet/minecraft/class_5539;)V",

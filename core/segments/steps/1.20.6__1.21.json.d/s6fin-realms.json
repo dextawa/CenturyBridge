@@ -41,7 +41,5 @@
    "basis": "1.21 calls closeTheWorld() (the settings screen's close confirmation) where 1.20.6 called closeTheWorld(lastScreen): a 1.20.6 override runs with getNewScreen(); its super call reaches 1.20.6's body (CbRealmsConfigureMixin)"
   }
  ],
- "facadeGaps": {
-  "net/minecraft/class_4881.field_22629:Lcom/google/gson/JsonParser;": "1.20.1's private RealmsServerPlayerList.jsonParser, gone at 1.20.2 (the class parses with JsonParser.parseString since): private in the one release that had it and absent from every later one, so no jar climbing into 1.20.6 names it"
- }
+ "facadeGaps": {}
 }
