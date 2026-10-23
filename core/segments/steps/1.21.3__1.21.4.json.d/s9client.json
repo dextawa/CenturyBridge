@@ -144,6 +144,7 @@
   "net/minecraft/class_350.method_57718()I",
   "net/minecraft/class_350.method_60321(D)V",
   "net/minecraft/class_350.method_60322()V",
+  "net/minecraft/class_516.method_2656()Z",
   "net/minecraft/class_7528.method_44381()I",
   "net/minecraft/class_7528.method_44383(II)Z",
   "net/minecraft/class_7528.method_44385()I",
@@ -170,10 +171,20 @@
    "onlyUnder": "net/minecraft/class_350",
    "family": "gui-scroll",
    "basis": "AbstractSelectionList.updateScrollingState set the drag state; 1.21.4's updateScrolling sets it and answers it"
+  },
+  {
+   "old": "method_1544()Lnet/minecraft/class_5195;",
+   "new": "method_1544()Lnet/minecraft/class_10383;",
+   "unwrap": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc.cbMusicInfo(Lnet/minecraft/class_5195;)Lnet/minecraft/class_10383;",
+   "guard": "top/dext/centurybridge/step/v1_21_4/rt/Guard",
+   "onlyUnder": "net/minecraft/class_310",
+   "family": "gui-misc",
+   "basis": "a 1.21.3 Minecraft subclass's getSituationalMusic: the music manager asks the MusicInfo shape; full volume, as 1.21.4's one-argument MusicInfo"
   }
  ],
  "fieldGetters": {
-  "net/minecraft/class_350.field_45909:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll"
+  "net/minecraft/class_350.field_45909:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll",
+  "net/minecraft/class_372.field_32225:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415"
@@ -188,9 +199,77 @@
     "drop:0"
    ],
    "basis": "ChatSelectionScreen.ChatSelectionList.PaddingEntry is a static class since 1.21.4; 1.21.3 only handed the list on to Entry, which no longer takes it"
+  },
+  "net/minecraft/class_372.<init>(Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;ZI)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;ZI)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbFont()Lnet/minecraft/class_327;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "TutorialToast lays its message out with the game's font in the constructor since 1.21.4"
+  },
+  "net/minecraft/class_372.<init>(Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Z)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Z)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbFont()Lnet/minecraft/class_327;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "TutorialToast lays its message out with the game's font in the constructor since 1.21.4"
+  },
+  "net/minecraft/class_382$class_10364.<init>(FFILnet/minecraft/class_382;Lnet/minecraft/class_2583;F)V": {
+   "desc": "(FFIILnet/minecraft/class_382;Lnet/minecraft/class_2583;FF)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadowColor()I",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadowOffset()F"
+   ],
+   "basis": "BakedGlyph.GlyphInstance carries its own shadow since 1.21.4 (colour 0 = none); a 1.21.3 instance had none -- its shadow was a second instance"
   }
  },
  "superRenames": {
   "net/minecraft/class_9017": "top/dext/centurybridge/step/v1_21_4/facade/LegacyAbstractContainerWidget"
+ },
+ "callReshapes": {
+  "net/minecraft/class_332.method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIIIZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbNoShadow()Z"
+   ],
+   "basis": "GuiGraphics.drawWordWrap drew its lines without shadow in 1.21.3 (drawString(.., false)); 1.21.4 takes the shadow flag"
+  },
+  "net/minecraft/class_425.method_18819(Lnet/minecraft/class_310;)V": {
+   "desc": "(Lnet/minecraft/class_1060;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbTextureManager(Lnet/minecraft/class_310;)Lnet/minecraft/class_1060;"
+   ],
+   "basis": "LoadingOverlay.registerTextures takes the Minecraft's texture manager since 1.21.4 (1.21.3 read it off the Minecraft)"
+  },
+  "net/minecraft/class_310.method_1544()Lnet/minecraft/class_5195;": {
+   "desc": "()Lnet/minecraft/class_10383;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#cbMusic(Lnet/minecraft/class_10383;)Lnet/minecraft/class_5195;",
+   "basis": "Minecraft.getSituationalMusic answers MusicInfo(music, volume) since 1.21.4; 1.21.3 answered the music"
+  }
+ },
+ "staticRedirects": {
+  "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105"
  }
 }

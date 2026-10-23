@@ -1,4 +1,4 @@
-"""Write the GUI scroll family of core/segments/steps/1.21.3__1.21.4.json.d/s9client.json.
+"""Write the hand-designed families (GUI scroll, GUI misc) of core/segments/steps/1.21.3__1.21.4.json.d/s9client.json.
 
 Hand-designed entries (each checked against 1.21.3 / 1.21.4 bytecode); kept as a script so the
 family's renames, adapters and covers stay in one table. Merges into the existing fragment.
@@ -98,8 +98,58 @@ def main():
     sr = frag.get("superRenames", {})
     sr["net/minecraft/class_9017"] = "top/dext/centurybridge/step/v1_21_4/facade/LegacyAbstractContainerWidget"
     frag["superRenames"] = sr
+    gui_misc(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
+
+
+M = RT + "/CbGuiMisc"
+
+
+def gui_misc(frag):
+    """Small GUI constructor / static / return reshapes of 1.21.3 -> 1.21.4."""
+    cr = frag.setdefault("callReshapes", {})
+    cr["net/minecraft/class_332.method_51440(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIII)V"] = {
+        "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_5348;IIIIZ)V",
+        "ops": ["keep", "keep", "keep", "keep", "keep", "keep", "push " + M + "#cbNoShadow()Z"],
+        "basis": "GuiGraphics.drawWordWrap drew its lines without shadow in 1.21.3 (drawString(.., false)); 1.21.4 takes the shadow flag"}
+    cr["net/minecraft/class_425.method_18819(Lnet/minecraft/class_310;)V"] = {
+        "desc": "(Lnet/minecraft/class_1060;)V",
+        "ops": ["conv " + M + "#cbTextureManager(Lnet/minecraft/class_310;)Lnet/minecraft/class_1060;"],
+        "basis": "LoadingOverlay.registerTextures takes the Minecraft's texture manager since 1.21.4 (1.21.3 read it off the Minecraft)"}
+    cr["net/minecraft/class_310.method_1544()Lnet/minecraft/class_5195;"] = {
+        "desc": "()Lnet/minecraft/class_10383;", "ops": [],
+        "ret": "conv " + M + "#cbMusic(Lnet/minecraft/class_10383;)Lnet/minecraft/class_5195;",
+        "basis": "Minecraft.getSituationalMusic answers MusicInfo(music, volume) since 1.21.4; 1.21.3 answered the music"}
+    hooks = frag.setdefault("overrideHooks", [])
+    hooks[:] = [h for h in hooks if h.get("family") != "gui-misc"]
+    hooks.append({
+        "old": "method_1544()Lnet/minecraft/class_5195;", "new": "method_1544()Lnet/minecraft/class_10383;",
+        "unwrap": M + ".cbMusicInfo(Lnet/minecraft/class_5195;)Lnet/minecraft/class_10383;",
+        "guard": GUARD, "onlyUnder": "net/minecraft/class_310", "family": "gui-misc",
+        "basis": "a 1.21.3 Minecraft subclass's getSituationalMusic: the music manager asks the MusicInfo shape; full volume, as 1.21.4's one-argument MusicInfo"})
+    scr = frag.setdefault("superCtorReshapes", {})
+    font = "push " + M + "#cbFont()Lnet/minecraft/class_327;"
+    scr["net/minecraft/class_372.<init>(Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;ZI)V"] = {
+        "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;ZI)V",
+        "ops": [font, "keep", "keep", "keep", "keep", "keep"],
+        "basis": "TutorialToast lays its message out with the game's font in the constructor since 1.21.4"}
+    scr["net/minecraft/class_372.<init>(Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Z)V"] = {
+        "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_372$class_373;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;Z)V",
+        "ops": [font, "keep", "keep", "keep", "keep"],
+        "basis": "TutorialToast lays its message out with the game's font in the constructor since 1.21.4"}
+    scr["net/minecraft/class_382$class_10364.<init>(FFILnet/minecraft/class_382;Lnet/minecraft/class_2583;F)V"] = {
+        "desc": "(FFIILnet/minecraft/class_382;Lnet/minecraft/class_2583;FF)V",
+        "ops": ["keep", "keep", "keep", "push " + M + "#cbNoShadowColor()I", "keep", "keep", "keep",
+                "push " + M + "#cbNoShadowOffset()F"],
+        "basis": "BakedGlyph.GlyphInstance carries its own shadow since 1.21.4 (colour 0 = none); a 1.21.3 instance had none -- its shadow was a second instance"}
+    fg = frag.setdefault("fieldGetters", {})
+    fg["net/minecraft/class_372.field_32225:I"] = M
+    sr = frag.setdefault("staticRedirects", {})
+    sr["net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;"] = M + "#method_18105"
+    covers = set(frag.get("covers", []))
+    covers.add("net/minecraft/class_516.method_2656()Z")
+    frag["covers"] = sorted(covers)
 
 
 if __name__ == "__main__":
