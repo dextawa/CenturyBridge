@@ -49,6 +49,7 @@
     "CbItemShapedRecipeAccess",
     "CbItemShapelessRecipeAccess",
     "CbItemSingleItemRecipeAccess",
+    "CbItemSingleRecipeFieldsMixin",
     "CbItemSmithingTransformAccess",
     "CbItemStackMembersMixin",
     "CbItemToolDiggerMixin",
