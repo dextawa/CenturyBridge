@@ -332,3 +332,5 @@ N	net/fabricmc/fabric/api/loot/v2/FabricLootPoolBuilder	with	add
 N	net/fabricmc/fabric/api/loot/v2/FabricLootPoolBuilder	conditionally	when
 # cb: convention-tags-v1 TagUtil.isIn(tag, v) / isIn(registries, tag, v) only forwarded to v2 TagUtil.isIn(null|registries, tag, v) (1.21.11 bytecode); v2 has both shapes
 C	net/fabricmc/fabric/api/tag/convention/v1/TagUtil	net/fabricmc/fabric/api/tag/convention/v2/TagUtil
+N	net/fabricmc/fabric/api/renderer/v1/mesh/QuadAtlas	of	ofLocation
+N	net/fabricmc/fabric/api/renderer/v1/mesh/QuadAtlas	getTextureId	getTextureLocation

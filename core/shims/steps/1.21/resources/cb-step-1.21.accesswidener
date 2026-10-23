@@ -28,3 +28,10 @@ accessible method net/minecraft/class_293 <init> (Ljava/util/List;Ljava/util/Lis
 
 # ItemStack.transmuteCopyIgnoreEmpty(item, count): public in 1.20.6, private in 1.21 with the same body (s6item)
 accessible method net/minecraft/class_1799 method_56704 (Lnet/minecraft/class_1935;I)Lnet/minecraft/class_1799;
+
+# ---- BEGIN GENERATED (s6fin-client): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible method net/minecraft/class_1088 method_4726 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
+accessible method net/minecraft/class_1124$class_1125 <init> ()V
+# ---- END GENERATED (s6fin-client) ----

@@ -44,6 +44,9 @@ public final class Main {
             case "lib-diff" -> top.dext.centurybridge.data.LibDiff.run(Path.of(args[1]), Path.of(args[2]), Path.of(args[3]));
             case "api-probe" -> top.dext.centurybridge.data.ApiProbe.run(args);
             case "anchor-diff" -> top.dext.centurybridge.data.AnchorDiff.run(args);
+            // mixin-probe <V code jar> <out.jar>; mixin-judge <code jar> <probe jar> <index.tsv> <out.tsv> [--layer <jar>]... [--keys <tsv>]
+            case "mixin-probe" -> top.dext.centurybridge.data.MixinProbe.run(args);
+            case "mixin-judge" -> top.dext.centurybridge.engine.MixinJudge.run(args);
             // access-diff <oldStub> <newStub> [<wall.tsv>] [<shims-ver.json>] <out.aw>
             case "access-diff" -> top.dext.centurybridge.data.AccessDiff.run(args);
             case "gen-renames" -> {
@@ -207,6 +210,13 @@ public final class Main {
             } else {
                 System.out.println("mixin anchors: NOT checked (no code-bearing target jar; set CB_TARGET_CODE)");
             }
+            // the source release's bodies: an @At anchor the step's wiring moves is counted where the
+            // mod wrote it before it is retargeted (MixinBridge)
+            String sc = System.getProperty("cb.sourceCode", System.getenv("CB_SOURCE_CODE"));
+            Path srcCode = sc != null ? Path.of(sc) : codeOf(args[2]);
+            if (Files.exists(srcCode)) {
+                chain.sourceCode = new top.dext.centurybridge.engine.MixinRepair(srcCode);
+            }
         }
         // past the wall the anchors are checked once the jar has its real names, against
         // the target's own unobfuscated code
@@ -219,6 +229,14 @@ public final class Main {
                 System.out.println("mixin anchors past the wall: checked against " + code);
             } else {
                 System.out.println("mixin anchors past the wall: NOT checked (no " + code + "; set CB_TARGET_CODE)");
+            }
+            // the wall step itself: MixinBridge carries the mods' mixins through the step's wiring in the
+            // analysis namespace, against 26.1's bodies taken back into it (WallInverse) and 1.21.11's own
+            Path vCode = codeOf(args[2]);
+            if (args[2].equals("1.21.11") && Files.exists(code) && Files.exists(vCode)) {
+                chain.bridgeCode = new top.dext.centurybridge.engine.MixinRepair(
+                    top.dext.centurybridge.engine.WallInverse.intermediaryView(code, vCode, renameTable));
+                chain.sourceCode = new top.dext.centurybridge.engine.MixinRepair(vCode);
             }
         }
         java.util.Map<String, Integer> verdicts = new java.util.TreeMap<>();
@@ -234,7 +252,10 @@ public final class Main {
                 if (crossesWall && r.outputJar != null && Files.exists(r.outputJar)) {
                     Path tmp = r.outputJar.resolveSibling(r.outputJar.getFileName() + ".preNs");
                     Files.move(r.outputJar, tmp);
-                    top.dext.centurybridge.data.JarRemapper.remapWithTable(renameTable, tmp, r.outputJar);
+                    // with the target's code jar: calls also take the invoke kind the target declares their owner as
+                    top.dext.centurybridge.data.JarRemapper.remapWithTable(renameTable, tmp, r.outputJar,
+                        System.getenv("CB_TARGET_CODE") != null ? Path.of(System.getenv("CB_TARGET_CODE"))
+                                                                : Path.of("data/jars/client-" + args[3] + ".jar"));
                     Files.delete(tmp);
                     if (wallRepair != null) {
                         JarProcessor.repairPastWall(r.outputJar, wallRepair, r);
