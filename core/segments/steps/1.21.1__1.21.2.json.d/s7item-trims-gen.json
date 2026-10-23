@@ -1,0 +1,19 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_8053.method_48424()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTrims",
+  "net/minecraft/class_8053.method_48431()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTrims",
+  "net/minecraft/class_8053.method_48434(Lnet/minecraft/class_6880;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTrims",
+  "net/minecraft/class_8053.method_48436(Lnet/minecraft/class_6880;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTrims"
+ },
+ "superRedirects": {
+  "net/minecraft/class_8053.method_48424()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTrims",
+  "net/minecraft/class_8053.method_48431()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTrims",
+  "net/minecraft/class_8053.method_48434(Lnet/minecraft/class_6880;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTrims",
+  "net/minecraft/class_8053.method_48436(Lnet/minecraft/class_6880;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTrims"
+ },
+ "ledger": {
+  "net/minecraft/class_8053": "a 1.21.1 subclass of ArmorTrim: 1.21.2 made ArmorTrim a final record (javap: public final class class_8053 extends Record): the TRIM component's codec and stream codec build class_8053 records and every reader of the component gets one, so a 1.21.1 subclass can neither load nor stand where 1.21.1 put its instance; a stand-in superclass would split the type at every DataComponents.TRIM read (ClassCastException). ArmorTrim's 1.21.1 members are bridged on the record (CbItemTrims)",
+  "net/minecraft/class_8053.equals(Ljava/lang/Object;)Z": "equals override of a 1.21.1 subclass of ArmorTrim (final on the record): 1.21.2 made ArmorTrim a final record (javap: public final class class_8053 extends Record): the TRIM component's codec and stream codec build class_8053 records and every reader of the component gets one, so a 1.21.1 subclass can neither load nor stand where 1.21.1 put its instance; a stand-in superclass would split the type at every DataComponents.TRIM read (ClassCastException). ArmorTrim's 1.21.1 members are bridged on the record (CbItemTrims)",
+  "net/minecraft/class_8053.hashCode()I": "hashCode override of a 1.21.1 subclass of ArmorTrim (final on the record): 1.21.2 made ArmorTrim a final record (javap: public final class class_8053 extends Record): the TRIM component's codec and stream codec build class_8053 records and every reader of the component gets one, so a 1.21.1 subclass can neither load nor stand where 1.21.1 put its instance; a stand-in superclass would split the type at every DataComponents.TRIM read (ClassCastException). ArmorTrim's 1.21.1 members are bridged on the record (CbItemTrims)"
+ }
+}

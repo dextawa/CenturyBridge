@@ -154,4 +154,48 @@ public final class CbRestGuiClient {
             ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestScreenInvoker) screen).cb$renderBlurredBackground();
         }
     }
+
+    // ------------------------------------------------------------------ sign and book screens
+
+    /** a 1.21.1 sign edit screen implementing renderSignBackground(graphics, state) (bridge adapter) */
+    public interface LegacySignBackground {
+        void method_45656(net.minecraft.class_332 graphics, net.minecraft.class_2680 state);
+    }
+
+    /**
+     * 1.21.2's renderSignBackground(graphics) of a 1.21.1 sign screen: its own, with the state 1.21.1's renderSign
+     * passed (the edited sign's block state)
+     */
+    public static void signBackground(LegacySignBackground screen, net.minecraft.class_332 graphics) {
+        net.minecraft.class_2625 sign = ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestSignEditAccessor) screen).cb$sign();
+        screen.method_45656(graphics, sign.method_11010());
+    }
+
+    /** super's 1.21.2 renderSignBackground(graphics), from a 1.21.1 subclass's super call */
+    public interface SignBackgroundSuper {
+        void cb$super$method_45656(net.minecraft.class_332 graphics);
+    }
+
+    /** a 1.21.1 subclass's super.renderSignBackground(graphics, state): 1.21.2's, which reads the sign's state itself */
+    public static void superSignBackground(SignBackgroundSuper screen, net.minecraft.class_332 graphics, net.minecraft.class_2680 state) {
+        screen.cb$super$method_45656(graphics);
+    }
+
+    /** BookEditScreen's content: 1.21.1's constructor read the stack's writable book content (no pages when it had none) */
+    public static net.minecraft.class_9301 bookContent(net.minecraft.class_1799 stack) {
+        return stack.method_57825(net.minecraft.class_9334.field_49653, net.minecraft.class_9301.field_49369);
+    }
+
+    /**
+     * ReportReasonSelectionScreen's report type: 1.21.2 leaves out the reasons a type excludes; 1.21.1 offered every
+     * reason, as for USERNAME, which excludes none
+     */
+    public static net.minecraft.class_8776 everyReason() {
+        return net.minecraft.class_8776.field_46066;
+    }
+
+    /** AbstractContainerScreen.renderSlotHighlight(graphics, x, y, z): 1.21.1's body, the translucent white overlay */
+    public static void method_33285(net.minecraft.class_332 graphics, int x, int y, int z) {
+        graphics.method_51740(net.minecraft.class_1921.method_51785(), x, y, x + 16, y + 16, -2130706433, -2130706433, z);
+    }
 }

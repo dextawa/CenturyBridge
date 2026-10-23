@@ -30,6 +30,45 @@ DATA="${CB_DATA:-data}"
 case "$VERSION" in 26.*) DEFAULT_STUB="$DATA/jars/client-$VERSION.jar" ;; *) DEFAULT_STUB="$DATA/jars/client-$VERSION-intermediary.jar" ;; esac
 STUB="${CB_STUB:-$DEFAULT_STUB}"
 [ -f "$STUB" ] || { echo "stub not found: $STUB (set CB_STUB)"; exit 1; }
+FAPI_JAR="${CB_FAPI_JAR:-$(ls $DATA/runtime/client-$VERSION/mods/fabric-api-*.jar 2>/dev/null | head -1)}"
+
+# A climb step's layer (core/shims/steps/<W>) compiles against the game with the access it has at
+# runtime, as the anchor trees 1.21.4 and 26.2 do: W's plain stub with every Fabric API module's
+# access widener plus the layer's own cb-step-<W>.accesswidener applied with the loader's semantics
+# (core/tools/make_aw_stub.sh -> Main apply-aw, data/AwRules.java). Without it a member the layer's
+# AW opens (a private field, a protected constructor) compiles nowhere, and the layer had to reach it
+# by reflection or a mixin accessor. When CB_STUB is unset build.sh makes that stub itself and keeps
+# it under the work dir's build/awstub/ (never data/), keyed by a hash of the layer's AW, W's Fabric
+# API jar, the plain stub and the AW-applying code: any of them changing rebuilds it. javac, and the
+# wiring and mixin gates below, all judge against this one stub. CB_STUB set = that stub, as given.
+case "$SHIM" in
+core/shims/steps/*|*/core/shims/steps/*)
+    if [ -z "${CB_STUB:-}" ]; then
+        LAYER_AW=$(ls "$SHIM"/resources/*.accesswidener 2>/dev/null | head -1)
+        [ -n "$LAYER_AW" ] || { echo "no access widener in $SHIM/resources"; exit 1; }
+        [ -f "$FAPI_JAR" ] || { echo "fabric-api jar not found (set CB_FAPI_JAR): needed for the layer's access-widened stub"; exit 1; }
+        [ -d core/build/classes/top/dext/centurybridge ] || {
+            echo "engine not compiled (core/build/classes): it applies the access wideners to the stub"; exit 1; }
+        AW_KEY=$(sha256sum "$LAYER_AW" "$FAPI_JAR" "$STUB" core/src/top/dext/centurybridge/data/AwRules.java \
+                     core/src/top/dext/centurybridge/data/ApplyAw.java core/tools/make_aw_stub.sh \
+                 | cut -d' ' -f1 | sha256sum | cut -c1-16)
+        # the name keeps "intermediary" where the plain stub has it: the gates below tell the era by it
+        AW_STUB="build/awstub/$(basename "$STUB" .jar)-aw.jar"
+        if [ ! -f "$AW_STUB" ] || [ "$(cat "$AW_STUB.key" 2>/dev/null)" != "$AW_KEY" ]; then
+            mkdir -p build/awstub
+            rm -f "$AW_STUB" "$AW_STUB.key"
+            CB_DATA="$DATA" CB_FAPI_JAR="$FAPI_JAR" bash core/tools/make_aw_stub.sh "$VERSION" "$STUB" "$AW_STUB.tmp" "$LAYER_AW" \
+                || { rm -f "$AW_STUB.tmp"; echo "build aborted: could not make the layer's access-widened stub"; exit 1; }
+            mv "$AW_STUB.tmp" "$AW_STUB"
+            echo "$AW_KEY" > "$AW_STUB.key"
+        else
+            echo "access-widened stub up to date: $AW_STUB"
+        fi
+        STUB="$AW_STUB"
+        # the interface-target gate below reads the stub from the environment
+        export CB_STUB="$STUB"
+    fi;;
+esac
 
 # Loader-side deps the shims compile against: mixin, and whatever the game
 # itself pulls in (gson, datafixerupper, joml, netty...).
@@ -175,7 +214,6 @@ SERVER="${CB_SERVER:-$(find "$DATA/runtime/server-$VERSION" -name server-interme
 [ -n "$SERVER" ] || SERVER="$DATA/runtime/server-$VERSION/versions/$VERSION/server-$VERSION.jar"
 [ -f "$SERVER" ] || { echo "dedicated server jar not found (set CB_SERVER): needed to verify what loads on a server"; exit 1; }
 SERVER_LIBS="${CB_SERVER_LIBS:-$DATA/runtime/server-$VERSION/libraries}"
-FAPI_JAR="${CB_FAPI_JAR:-$(ls $DATA/runtime/client-$VERSION/mods/fabric-api-*.jar 2>/dev/null | head -1)}"
 [ -f "$FAPI_JAR" ] || { echo "fabric-api jar not found (set CB_FAPI_JAR): needed to verify what loads on a server"; exit 1; }
 MIXIN_CFG=$(ls "$SHIM"/resources/*.mixins.json | head -1)
 java -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main server-check "$CLASSES" "$MIXIN_CFG" "$SERVER" "$SERVER_LIBS" "$FAPI_JAR" \

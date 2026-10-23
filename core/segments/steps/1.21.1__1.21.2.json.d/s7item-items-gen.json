@@ -1,0 +1,9 @@
+{
+ "staticRedirects": {
+  "net/minecraft/class_1802.method_7993(Lnet/minecraft/class_1747;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemItems",
+  "net/minecraft/class_1802.method_7992(Lnet/minecraft/class_2248;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemItems",
+  "net/minecraft/class_1802.method_7991(Ljava/lang/String;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemItems",
+  "net/minecraft/class_1802.method_7990(Lnet/minecraft/class_2960;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemItems",
+  "net/minecraft/class_1802.method_51348(Lnet/minecraft/class_5321;Lnet/minecraft/class_1792;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemItems"
+ }
+}
