@@ -33,17 +33,35 @@ public final class Wiring {
 
     public static JsonObject read(Path base) throws IOException {
         JsonObject root = Files.exists(base) ? parse(base) : new JsonObject();
-        Path dir = fragments(base);
-        if (Files.isDirectory(dir)) {
-            List<Path> files;
-            try (var s = Files.list(dir)) {
-                files = s.filter(p -> p.getFileName().toString().endsWith(".json")).sorted().toList();
-            }
-            for (Path f : files) {
-                merge(root, parse(f), base.getFileName() + " + " + dir.getFileName() + "/" + f.getFileName(), "");
-            }
+        for (Path f : fragmentFiles(base)) {
+            merge(root, parse(f), base.getFileName() + " + " + fragments(base).getFileName() + "/" + f.getFileName(), "");
         }
         return root;
+    }
+
+    /**
+     * The wiring's files one by one, in merge order, each with its name (the base file's, then each
+     * fragment's "dir/file") -- for a gate that judges entries by the area that wrote them.
+     */
+    public static java.util.LinkedHashMap<String, JsonObject> areas(Path base) throws IOException {
+        java.util.LinkedHashMap<String, JsonObject> out = new java.util.LinkedHashMap<>();
+        if (Files.exists(base)) {
+            out.put(base.getFileName().toString(), parse(base));
+        }
+        for (Path f : fragmentFiles(base)) {
+            out.put(fragments(base).getFileName() + "/" + f.getFileName(), parse(f));
+        }
+        return out;
+    }
+
+    private static List<Path> fragmentFiles(Path base) throws IOException {
+        Path dir = fragments(base);
+        if (!Files.isDirectory(dir)) {
+            return List.of();
+        }
+        try (var s = Files.list(dir)) {
+            return s.filter(p -> p.getFileName().toString().endsWith(".json")).sorted().toList();
+        }
     }
 
     private static JsonObject parse(Path p) throws IOException {

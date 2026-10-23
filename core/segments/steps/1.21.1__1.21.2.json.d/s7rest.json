@@ -1,0 +1,87 @@
+{
+ "classRenames": {
+  "net/minecraft/class_5253": "top/dext/centurybridge/step/v1_21_2/facade/FastColor",
+  "net/minecraft/class_5253$class_5254": "top/dext/centurybridge/step/v1_21_2/facade/FastColor$ARGB32",
+  "net/minecraft/class_5253$class_8045": "top/dext/centurybridge/step/v1_21_2/facade/FastColor$ABGR32"
+ },
+ "covers": [
+  "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
+  "net/minecraft/class_332.method_51450()Lnet/minecraft/class_4597$class_4598;",
+  "net/minecraft/class_332.method_51422(FFFF)V",
+  "net/minecraft/class_332.method_25298(IIIIILnet/minecraft/class_1058;)V",
+  "net/minecraft/class_332.method_48465(IIIIILnet/minecraft/class_1058;FFFF)V",
+  "net/minecraft/class_332.method_52706(Lnet/minecraft/class_2960;IIII)V",
+  "net/minecraft/class_332.method_52707(Lnet/minecraft/class_2960;IIIII)V",
+  "net/minecraft/class_332.method_52708(Lnet/minecraft/class_2960;IIIIIIII)V",
+  "net/minecraft/class_332.method_52709(Lnet/minecraft/class_2960;IIIIIIIII)V",
+  "net/minecraft/class_332.method_25302(Lnet/minecraft/class_2960;IIIIII)V",
+  "net/minecraft/class_332.method_25291(Lnet/minecraft/class_2960;IIIFFIIII)V",
+  "net/minecraft/class_332.method_25293(Lnet/minecraft/class_2960;IIIIFFIIII)V",
+  "net/minecraft/class_332.method_25290(Lnet/minecraft/class_2960;IIFFIIII)V",
+  "net/minecraft/server/MinecraftServer.method_3796()Z",
+  "net/minecraft/server/MinecraftServer.method_3736()Z",
+  "net/minecraft/class_3176.method_3796()Z",
+  "net/minecraft/class_3176.method_3736()Z",
+  "net/minecraft/class_310.method_16011()Lnet/minecraft/class_3695;",
+  "net/minecraft/class_310.method_60646()Lnet/minecraft/class_9779;",
+  "net/minecraft/class_310.method_1524(I)V",
+  "net/minecraft/class_2802.method_12128(ZZ)V",
+  "net/minecraft/class_3215.method_12128(ZZ)V",
+  "net/minecraft/class_1937.method_8424(ZZ)V"
+ ],
+ "frameDefaults": {
+  "method_52706(Lnet/minecraft/class_2960;IIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_52707(Lnet/minecraft/class_2960;IIIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_52708(Lnet/minecraft/class_2960;IIIIIIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_25291(Lnet/minecraft/class_2960;IIIFFIIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_25290(Lnet/minecraft/class_2960;IIFFIIII)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#guiTextured()Ljava/util/function/Function;"
+  },
+  "method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": {
+   "5": "zero: a null tooltip style is the default background, what 1.21.2's own five-argument renderTooltip passes"
+  }
+ },
+ "methodRenames": {
+  "net/minecraft/class_332.method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": "method_64038"
+ },
+ "instanceRedirects": {
+  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#profiler",
+  "net/minecraft/class_3414.method_14833()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#soundLocation"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
+  "net/minecraft/class_156.method_27958()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#ioPool",
+  "net/minecraft/class_156.method_55473()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#nonCriticalIoPool",
+  "net/minecraft/class_3532.method_15353(FFF)I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#color",
+  "net/minecraft/class_156.method_33787(Ljava/lang/String;Ljava/lang/Runnable;)Ljava/lang/Runnable;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#wrapThreadWithTaskName",
+  "net/minecraft/class_156.method_37910(Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#wrapThreadWithTaskName",
+  "net/minecraft/class_3695.method_24338(Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;)Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#tee"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_20614:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_20615:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_15141:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_50103:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_39025:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_39026:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_155.field_29694:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_155.field_29720:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_2653.field_33324:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_2653.field_33325:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_2820.field_34038:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3222.field_47708:D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_5949.field_29552:Lnet/minecraft/class_5949;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_514.field_32413:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
+  "net/minecraft/class_7573.field_46063:Lnet/minecraft/class_7573;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
+  "net/minecraft/class_3999.field_17830:Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient"
+ }
+}
