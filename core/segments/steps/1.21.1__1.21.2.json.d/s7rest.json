@@ -96,7 +96,10 @@
  },
  "methodRenames": {
   "net/minecraft/class_332.method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": "method_64038",
-  "net/minecraft/class_1255.method_18858(Ljava/lang/Runnable;)V": "method_63588"
+  "net/minecraft/class_1255.method_18858(Ljava/lang/Runnable;)V": "method_63588",
+  "net/minecraft/class_2840.method_12318()I": "comp_3243",
+  "net/minecraft/class_2840.method_12319()Z": "comp_3245",
+  "net/minecraft/class_2695.method_11685()I": "comp_3226"
  },
  "instanceRedirects": {
   "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#profiler",
@@ -161,7 +164,14 @@
   "net/minecraft/class_4337.method_20973(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#upload",
   "net/minecraft/class_9383$class_9385.method_58289()Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#holderRegistries",
   "net/minecraft/class_5350.method_40421()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#updateRegistryTags",
-  "net/minecraft/class_7237$class_7660.comp_989()Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#datapackWorldgen"
+  "net/minecraft/class_7237$class_7660.comp_989()Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#datapackWorldgen",
+  "net/minecraft/class_634.method_2877()Lnet/minecraft/class_1863;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#getRecipeManager",
+  "net/minecraft/class_2788.method_11998()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeSync#getRecipes",
+  "net/minecraft/class_746.method_3141(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#removeRecipeHighlight",
+  "net/minecraft/class_636.method_2912(ILnet/minecraft/class_8786;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#handlePlaceRecipe",
+  "net/minecraft/class_2840.method_12320()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#placeRecipeId",
+  "net/minecraft/class_2853.method_12406()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#seenRecipeId",
+  "net/minecraft/class_2695.method_11684()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#ghostRecipeId"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -817,7 +827,11 @@
   "net/minecraft/class_2656.<init>(Lnet/minecraft/class_1792;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#newCooldown",
   "net/minecraft/class_2579.<init>(Ljava/lang/String;Ljava/util/Optional;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#newSelectorContents",
   "net/minecraft/class_2578.<init>(Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#newScoreContents",
-  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#newCreateSnapshotRealmScreen"
+  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms#newCreateSnapshotRealmScreen",
+  "net/minecraft/class_2788.<init>(Ljava/util/Collection;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeSync#newUpdateRecipesPacket",
+  "net/minecraft/class_2840.<init>(ILnet/minecraft/class_8786;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newPlaceRecipe",
+  "net/minecraft/class_2853.<init>(Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newSeenRecipe",
+  "net/minecraft/class_2695.<init>(ILnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeNet#newGhostRecipe"
  },
  "instanceFieldGetters": {
   "net/minecraft/class_8673.field_51520:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#strictErrorHandlingField",
