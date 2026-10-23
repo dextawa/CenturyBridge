@@ -21,30 +21,6 @@
    ],
    "basis": "mechanical: same values; dropped Lnet/minecraft/class_1559;, never read in V"
   },
-  "net/minecraft/class_1060.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
-   "desc": "(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:4",
-    "keep:5",
-    "drop:2",
-    "drop:3"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_3695;,Lnet/minecraft/class_3695;: no body of V reads it, but net/minecraft/class_3302 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
-  "net/minecraft/class_5349.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
-   "desc": "(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:4",
-    "keep:5",
-    "drop:2",
-    "drop:3"
-   ],
-   "basis": "mechanical: same values; dropped Lnet/minecraft/class_3695;,Lnet/minecraft/class_3695;: no body of V reads it, but net/minecraft/class_3302 declares the method abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
-  },
   "net/minecraft/class_3806.method_45157(Lnet/minecraft/class_5455;)Lnet/minecraft/class_7723;": {
    "desc": "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_7723;",
    "ops": [

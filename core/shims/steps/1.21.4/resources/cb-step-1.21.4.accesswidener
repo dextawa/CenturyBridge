@@ -1,1 +1,26 @@
 accessWidener	v2	intermediary
+
+# ---- BEGIN GENERATED (s9rest): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible field net/minecraft/class_1665 field_54968 I
+accessible method net/minecraft/class_4970 method_9604 (Lnet/minecraft/class_2680;)Lnet/minecraft/class_2464;
+accessible method net/minecraft/class_9848 method_61336 (I)F
+# ---- END GENERATED (s9rest) ----
+
+# s9rest: 1.21.3 packet classes 1.21.4 made final records (ClientboundMoveVehiclePacket, ServerboundMoveVehiclePacket,
+# ClientboundSetHeldSlotPacket): a 1.21.3 mod may extend them and override Object's equals/hashCode/toString
+extendable class net/minecraft/class_2692
+extendable method net/minecraft/class_2692 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2692 hashCode ()I
+extendable method net/minecraft/class_2692 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2833
+extendable method net/minecraft/class_2833 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2833 hashCode ()I
+extendable method net/minecraft/class_2833 toString ()Ljava/lang/String;
+extendable class net/minecraft/class_2735
+extendable method net/minecraft/class_2735 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_2735 hashCode ()I
+extendable method net/minecraft/class_2735 toString ()Ljava/lang/String;
+# s9client: ItemRenderer.getCompassFoilBuffer(buffers, renderType, pose) was public in 1.21.3; private in 1.21.4, same body
+accessible method net/minecraft/class_918 method_30114 (Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;Lnet/minecraft/class_4587$class_4665;)Lnet/minecraft/class_4588;

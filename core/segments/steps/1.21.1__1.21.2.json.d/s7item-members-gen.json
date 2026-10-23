@@ -1,0 +1,148 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_1792.method_7837()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_7870(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_7878(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_7844()Lnet/minecraft/class_9285;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_21831()Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_21830()Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_7866(Lnet/minecraft/class_1799;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_7848()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_7869()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_16698()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_7857()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1792.method_7858()Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1799.method_7922()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1799.method_21832()Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1799.method_21833()Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1799.method_7979(Lnet/minecraft/class_1309;Lnet/minecraft/class_1657;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers",
+  "net/minecraft/class_1799.method_59979(Lnet/minecraft/class_1309;Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1792.method_7837()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_7837",
+  "net/minecraft/class_1792.method_7870(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_7870",
+  "net/minecraft/class_1792.method_7878(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_7878",
+  "net/minecraft/class_1792.method_7844()Lnet/minecraft/class_9285;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_7844",
+  "net/minecraft/class_1792.method_21831()Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_21831",
+  "net/minecraft/class_1792.method_21830()Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_21830",
+  "net/minecraft/class_1792.method_7866(Lnet/minecraft/class_1799;)Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_7866",
+  "net/minecraft/class_1792.method_7848()Lnet/minecraft/class_2561;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_7848",
+  "net/minecraft/class_1792.method_7869()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_7869",
+  "net/minecraft/class_1792.method_16698()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_16698",
+  "net/minecraft/class_1792.method_7857()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_7857",
+  "net/minecraft/class_1792.method_7876()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers#super_method_7876"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyEnchantmentValue",
+   "requires": [
+    "method_7837()I"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding getEnchantmentValue(): the ENCHANTABLE component: 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyEnchantable",
+   "requires": [
+    "method_7870(Lnet/minecraft/class_1799;)Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding isEnchantable(stack): ItemStack.isEnchantable: 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyRepairItem",
+   "requires": [
+    "method_7878(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding isValidRepairItem(stack, ingredient): the REPAIRABLE component (anvil): 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyDefaultModifiers",
+   "requires": [
+    "method_7844()Lnet/minecraft/class_9285;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding getDefaultAttributeModifiers(): the ATTRIBUTE_MODIFIERS component: 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyDrinkingSound",
+   "requires": [
+    "method_21831()Lnet/minecraft/class_3414;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding getDrinkingSound(): the consumption's sound: 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyEatingSound",
+   "requires": [
+    "method_21830()Lnet/minecraft/class_3414;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding getEatingSound(): the consumption's sound: 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyDescriptionId",
+   "requires": [
+    "method_7866(Lnet/minecraft/class_1799;)Ljava/lang/String;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding getDescriptionId(stack): the stack's name (Item.getName(stack)): 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyDescription",
+   "requires": [
+    "method_7848()Lnet/minecraft/class_2561;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding getDescription(): Item.getName(): 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyOrCreateDescriptionId",
+   "requires": [
+    "method_7869()Ljava/lang/String;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding getOrCreateDescriptionId(): 1.21.2's final getDescriptionId() asks it (CbItemMembersMixin): 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyComplex",
+   "requires": [
+    "method_16698()Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding isComplex(): 1.21.2's reads ask it (CbItemMembers)"
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyHasRemaining",
+   "requires": [
+    "method_7857()Z"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 item overriding hasCraftingRemainingItem(): the remainder stack: 1.21.2's reads ask it (CbItemMembers)"
+  }
+ ],
+ "fieldRedirects": {
+  "net/minecraft/class_1799.field_47312:Lcom/mojang/serialization/Codec;": "net/minecraft/class_1792#field_54952"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_7876()Ljava/lang/String;",
+   "new": "cb$getDescriptionId",
+   "onlyUnder": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemMembers$LegacyDescriptionIdOverride",
+   "basis": "Item.getDescriptionId() is final since 1.21.2: a 1.21.1 override is renamed and reached through the adapter by the mixin on the final method"
+  }
+ ]
+}
