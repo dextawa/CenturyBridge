@@ -1641,6 +1641,33 @@ public final class JarProcessor {
         final Map<String, Set<String>> decls = new HashMap<>();
     }
 
+    /**
+     * The new name an override rename ({@link Chain#overrideRenames}) gives the declaration a call naming a jar
+     * class reaches: the first class of the jar up from {@code owner} declaring name+desc, when a rename's
+     * hierarchy filter takes it. Null when no jar class on the way declares the shape (the call reaches vanilla's)
+     * or no rename applies to the declaring class.
+     */
+    private static String jarOverrideRename(String owner, String name, String desc, LayerIndex layer, Chain chain) {
+        if (chain.overrideRenames.isEmpty()) {
+            return null;
+        }
+        for (String cur = owner; cur != null && !Chain.minecraftOwned(cur) && layer.superOf.containsKey(cur);
+                cur = layer.superOf.get(cur)) {
+            if (!layer.decls.getOrDefault(cur, Set.of()).contains(name + desc)) {
+                continue;
+            }
+            List<String> ifs = layer.interfacesOf.getOrDefault(cur, List.of());
+            for (Chain.OverrideRename r : chain.overrideRenames) {
+                if (r.oldName.equals(name) && r.oldDesc.equals(desc)
+                        && isUnder(layer.superOf.get(cur), ifs.toArray(new String[0]), r.onlyUnder, layer, chain)) {
+                    return r.newName;
+                }
+            }
+            return null;
+        }
+        return null;
+    }
+
     /** the vanilla types first reached from a mod class through the jar's own hierarchy */
     private static List<String> vanillaAncestors(String superName, String[] ifaces, LayerIndex layer) {
         List<String> out = new ArrayList<>();
@@ -3021,6 +3048,18 @@ public final class JarProcessor {
                             return;
                         }
                         if (!Chain.minecraftOwned(owner)) {
+                            // a call naming a class of this jar whose own declaration of the shape an override
+                            // rename moves (1.21.2's final AbstractBoat.getDropItem: a mod Boat's override is
+                            // renamed) follows the rename: the old name would resolve past the renamed body to
+                            // vanilla's -- inaccessible, or not the method the mod meant
+                            if (op != Opcodes.INVOKESTATIC && op != Opcodes.INVOKESPECIAL && !name.equals("<init>")) {
+                                String renamed = jarOverrideRename(owner, name, desc, layer, chain);
+                                if (renamed != null) {
+                                    mthRenames.put(site, renamed);
+                                    top.dext.centurybridge.data.FullAudit.record(site, "override-rename-call");
+                                    return;
+                                }
+                            }
                             String inh = name.equals("<init>") ? null
                                 : inheritedVanillaOwner(owner, name + desc, layer, chain);
                             if (inh == null) {
@@ -3088,6 +3127,17 @@ public final class JarProcessor {
                             owner = inh;
                             emitOwner.put(site, inh);
                         }
+                        if (chain.classRenames.containsKey(owner) && !chain.classRenames.get(owner).startsWith("top/dext/")
+                                && !name.equals("<init>")) {
+                            // a class renamed to a surviving vanilla class (1.21.2: Boat -> AbstractBoat) only
+                            // stands in for the members it declared itself: a member it inherited in the source
+                            // (Entity.kill reached through Boat) is judged on its source declarer, as any vanilla
+                            // owner's call would be. The site still names the renamed class, a subtype of it
+                            String home = chain.sourceDeclarer(name, desc, java.util.List.of(owner));
+                            if (home != null && !home.equals(owner)) {
+                                owner = home;
+                            }
+                        }
                         if (chain.classRenames.containsKey(owner)) {
                             // a class merged into a surviving VANILLA class (BakedModel ->
                             // BlockStateModel) keeps its old members only where a redirect is
@@ -3103,6 +3153,22 @@ public final class JarProcessor {
                             if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>")
                                     && chain.classRenames.get(owner).startsWith("top/dext/") && !chain.facadeGaps.containsKey(rkey)) {
                                 top.dext.centurybridge.data.FullAudit.record(rkey, "super-facade");
+                                return;
+                            }
+                            // a class merged into a surviving vanilla superclass whose members moved there
+                            // under new names (1.21.2: Boat into AbstractBoat): a super call takes the super
+                            // redirect wired on the old owner -- an instance redirect would dispatch back into
+                            // the caller's own override -- and a member that only changed its name keeps its
+                            // site, renamed; the ClassRemapper then names the new class
+                            if (op == Opcodes.INVOKESPECIAL && !name.equals("<init>") && chain.superRedirects.containsKey(rkey)) {
+                                superRedirectSites.put(site, chain.superRedirects.get(rkey));
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "super-redirect");
+                                return;
+                            }
+                            String rmr = name.equals("<init>") ? null : chain.methodRenames.get(rkey);
+                            if (rmr != null) {
+                                mthRenames.put(site, rmr);
+                                top.dext.centurybridge.data.FullAudit.record(rkey, "method-rename");
                                 return;
                             }
                             String rirt = chain.instanceRedirects.get(rkey);

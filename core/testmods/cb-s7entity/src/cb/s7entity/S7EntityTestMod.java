@@ -111,6 +111,7 @@ public class S7EntityTestMod implements ModInitializer {
             server.execute(() -> {
                 try {
                     hurt(server);
+                    boats(server);
                 } catch (Throwable e) {
                     check(false, "threw " + e);
                     e.printStackTrace(System.out);
@@ -193,6 +194,72 @@ public class S7EntityTestMod implements ModInitializer {
         zombie.method_31472();
         he.method_31472();
         shielded.method_31472();
+    }
+
+    static String typeId(class_1297 e) {
+        return class_7923.field_41177.method_10221(e.method_5864()).toString();
+    }
+
+    static void boats(MinecraftServer server) {
+        class_3218 level = server.method_30002();
+        class_2338 spawn = level.method_43126();
+        double x = spawn.method_10263() + 0.5, y = spawn.method_10264() + 2, z = spawn.method_10260() + 4.5;
+
+        net.minecraft.class_1690 boat = new net.minecraft.class_1690(level, x, y, z);
+        check(boat.method_47885() == net.minecraft.class_1690.class_1692.field_7727, "new Boat(level, x, y, z) is an OAK boat: " + boat.method_47885());
+        check(boat.method_7557() == class_1802.field_8533, "its getDropItem: oak boat");
+        boat.method_47884(net.minecraft.class_1690.class_1692.field_7729);
+        check(boat.method_47885() == net.minecraft.class_1690.class_1692.field_7729, "setVariant(BIRCH): getVariant answers BIRCH");
+        check(typeId(boat).equals("minecraft:birch_boat"), "... and the boat is a birch boat to the game: " + typeId(boat));
+        check(boat.method_7557() == class_1802.field_8442 && boat.method_31480().method_7909() == class_1802.field_8442,
+            "... dropping and picking a birch boat (" + boat.method_7557() + ", " + boat.method_31480() + ")");
+        check(level.method_8649(boat), "the birch boat can be added");
+        boat.method_47884(net.minecraft.class_1690.class_1692.field_7728);
+        check(typeId(boat).equals("minecraft:spruce_boat") && level.method_14190(boat.method_5667()) == boat,
+            "setVariant(SPRUCE) on a boat in the level: spruce, still held by the level (" + typeId(boat) + ")");
+
+        net.minecraft.class_7264 chest = new net.minecraft.class_7264(level, x + 2, y, z);
+        net.minecraft.class_1690 asBoat = chest;
+        class_1297 asEntity = chest;
+        check(asEntity instanceof net.minecraft.class_1690, "a ChestBoat is a Boat (1.21.1's hierarchy)");
+        asBoat.method_47884(net.minecraft.class_1690.class_1692.field_40161);
+        check(typeId(chest).equals("minecraft:bamboo_chest_raft") && asBoat.method_7557() == class_1802.field_40225,
+            "ChestBoat.setVariant(BAMBOO): a bamboo chest raft dropping one (" + typeId(chest) + ", " + asBoat.method_7557() + ")");
+
+        ModBoat mod = new ModBoat(class_1299.field_6121, level);
+        check(mod.method_7557() == class_1802.field_8477, "a mod Boat's own getDropItem answers: " + mod.method_7557());
+        check(mod.method_31480().method_7909() == class_1802.field_8477, "... and the pick result follows it: " + mod.method_31480());
+        check(!mod.method_7556(0) && mod.paddleCalls == 1, "its getPaddleState override (super: false) answers: calls=" + mod.paddleCalls);
+        check(mod.method_47885() == net.minecraft.class_1690.class_1692.field_7727, "a mod Boat of EntityType.BOAT: OAK");
+
+        check(net.minecraft.class_1690.class_1692.method_7561("birch") == net.minecraft.class_1690.class_1692.field_7729
+            && net.minecraft.class_1690.class_1692.field_7729.method_7560() == net.minecraft.class_2246.field_10148,
+            "Boat.Type.byName(\"birch\") is BIRCH, its planks birch planks");
+        check(net.minecraft.class_1690.class_1692.method_7558(99) == net.minecraft.class_1690.class_1692.field_7727, "Boat.Type.byId(99): OAK (ZERO strategy)");
+        check(net.minecraft.class_1690.method_30959(boat, chest), "Boat.canVehicleCollide(boat, chestBoat)");
+        class_1297 made = class_1299.field_6121.method_5883(level);
+        check(made instanceof net.minecraft.class_1690 b && b.method_47885() == net.minecraft.class_1690.class_1692.field_7727,
+            "EntityType.BOAT.create(level): an oak boat (" + (made == null ? null : typeId(made)) + ")");
+        boat.method_31472();
+    }
+
+    public static class ModBoat extends net.minecraft.class_1690 {
+        int paddleCalls;
+
+        public ModBoat(class_1299<? extends net.minecraft.class_1690> type, class_1937 level) {
+            super(type, level);
+        }
+
+        @Override
+        public net.minecraft.class_1792 method_7557() {
+            return class_1802.field_8477;
+        }
+
+        @Override
+        public boolean method_7556(int side) {
+            paddleCalls++;
+            return super.method_7556(side);
+        }
     }
 
     public static class PlainEntity extends class_1297 {

@@ -27,3 +27,14 @@ accessible method net/minecraft/class_1011 method_4305 (III)V
 accessible method net/minecraft/class_1011 method_4315 (II)I
 accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
 # ---- END GENERATED (s7render) ----
+# ---- s7entity: Phantom.canAttack(level, target, conditions), package-private in 1.21.2, answered by a mod Phantom's 1.21.1 canAttack(target, conditions) override (s7entity.json overrideHooks) ----
+accessible method net/minecraft/class_1593 method_64463 (Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z
+extendable method net/minecraft/class_1593 method_64463 (Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_4051;)Z
+
+# ---- BEGIN GENERATED (s7entity): access narrowed at this step (core/tools/step_access_aw.py) ----
+# members a mod of the previous release could reach that this release narrowed: the same
+# members, given back so a converted mod's call, read or write links again
+accessible field net/minecraft/class_1541 field_46776 Ljava/lang/String;
+accessible method net/minecraft/class_1309 method_26318 (Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;
+extendable method net/minecraft/class_1309 method_26318 (Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;
+# ---- END GENERATED (s7entity) ----
