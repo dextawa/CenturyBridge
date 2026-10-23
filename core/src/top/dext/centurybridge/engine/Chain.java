@@ -836,6 +836,12 @@ public final class Chain {
      * unavailable, and no anchor is retargeted.
      */
     public MixinRepair sourceCode;
+    /**
+     * At the 1.21.11 -> 26.1 namespace wall only: 26.1's bodies renamed into the analysis namespace the step
+     * converts in (WallInverse), for MixinBridge -- the wiring and the mod's mixins are intermediary-named
+     * there until the whole-jar rename. Null on every other step (MixinBridge uses mixinRepair).
+     */
+    public MixinRepair bridgeCode;
 
     /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,

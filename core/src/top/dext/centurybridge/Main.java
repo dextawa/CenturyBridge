@@ -230,6 +230,14 @@ public final class Main {
             } else {
                 System.out.println("mixin anchors past the wall: NOT checked (no " + code + "; set CB_TARGET_CODE)");
             }
+            // the wall step itself: MixinBridge carries the mods' mixins through the step's wiring in the
+            // analysis namespace, against 26.1's bodies taken back into it (WallInverse) and 1.21.11's own
+            Path vCode = codeOf(args[2]);
+            if (args[2].equals("1.21.11") && Files.exists(code) && Files.exists(vCode)) {
+                chain.bridgeCode = new top.dext.centurybridge.engine.MixinRepair(
+                    top.dext.centurybridge.engine.WallInverse.intermediaryView(code, vCode, renameTable));
+                chain.sourceCode = new top.dext.centurybridge.engine.MixinRepair(vCode);
+            }
         }
         java.util.Map<String, Integer> verdicts = new java.util.TreeMap<>();
         int engineErrors = 0;

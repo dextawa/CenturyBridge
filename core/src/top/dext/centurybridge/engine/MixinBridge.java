@@ -162,6 +162,9 @@ final class MixinBridge {
         int from = Chain.RELEASES.indexOf(chain.from);
         int to = Chain.RELEASES.indexOf(chain.to);
         int wall = Chain.RELEASES.indexOf("1.21.11");
+        if (chain.bridgeCode != null) {
+            return true; // the wall step, with W's bodies in the analysis namespace (WallInverse)
+        }
         return from >= 0 && to >= 0 && !(from <= wall && to > wall) && chain.wallClassFwd.isEmpty();
     }
 
@@ -363,7 +366,13 @@ final class MixinBridge {
 
     /** W's class with its real bodies (the step's code jar), or null */
     private ClassNode w(String owner) {
-        return chain.mixinRepair == null ? null : chain.mixinRepair.target(owner);
+        MixinRepair c = wcode(chain);
+        return c == null ? null : c.target(owner);
+    }
+
+    /** W's bodies as the step converts in: the wall view at the namespace wall, else the code jar */
+    static MixinRepair wcode(Chain chain) {
+        return chain.bridgeCode != null ? chain.bridgeCode : chain.mixinRepair;
     }
 
     /** V's class with its real bodies, or null */
@@ -1760,7 +1769,7 @@ final class MixinBridge {
          * leaves them alone too.
          */
         private String anchorGone(AnnotationNode an, MethodNode h, String kind, MethodNode vmeth, MethodNode wmeth, ClassNode wt) {
-            List<MixinRepair.Anchor> anchors = chain.mixinRepair.anchors(an, MixinRepair.values(an), table);
+            List<MixinRepair.Anchor> anchors = wcode(chain).anchors(an, MixinRepair.values(an), table);
             if (anchors == null || anchors.isEmpty() || MixinRepair.anchorsIn(wmeth, wt, anchors)) {
                 return null;
             }
