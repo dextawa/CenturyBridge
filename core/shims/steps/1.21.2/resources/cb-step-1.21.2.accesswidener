@@ -21,3 +21,5 @@ accessible method net/minecraft/class_2852 method_12393 ([Lit/unimi/dsi/fastutil
 accessible field net/minecraft/class_4970$class_4971 field_23166 Lnet/minecraft/class_4970$class_4971$class_3752;
 accessible method net/minecraft/class_2424 <init> (Lnet/minecraft/class_2350$class_2351;ILnet/minecraft/class_2350;Lnet/minecraft/class_2338;II)V
 extendable method net/minecraft/class_2424 <init> (Lnet/minecraft/class_2350$class_2351;ILnet/minecraft/class_2350;Lnet/minecraft/class_2338;II)V
+# 1.21.1 Fabric API (fabric-object-builder-api-v1) made Properties() extendable for FabricBlockSettings; 1.21.2 dropped both
+extendable method net/minecraft/class_4970$class_2251 <init> ()V

@@ -4,7 +4,8 @@
   "net/minecraft/class_5851": "top/dext/centurybridge/step/v1_21_2/facade/CarvingMaskPlacement",
   "net/minecraft/class_5807": "top/dext/centurybridge/step/v1_21_2/facade/MossBlock",
   "net/minecraft/class_2753": "net/minecraft/class_2754",
-  "net/minecraft/class_2248$class_2249": "top/dext/centurybridge/step/v1_21_2/facade/BlockStatePairKey"
+  "net/minecraft/class_2248$class_2249": "top/dext/centurybridge/step/v1_21_2/facade/BlockStatePairKey",
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings": "top/dext/centurybridge/step/v1_21_2/facade/FabricBlockSettings"
  },
  "instanceOfRedirects": {
   "net/minecraft/class_2753": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps#isDirectionProperty"
@@ -12,7 +13,6 @@
  "checkCastRedirects": {
   "net/minecraft/class_2753": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps#castDirectionProperty"
  },
- "facadeGaps": {},
  "superCtorReshapes": {
   "net/minecraft/class_4180.<init>(Lnet/minecraft/class_9172;Ljava/util/function/Function;Ljava/util/function/Function;Lnet/minecraft/class_5455;Lnet/minecraft/class_9820;Lnet/minecraft/class_5539;)V": {
    "desc": "(Lnet/minecraft/class_9172;Lcom/mojang/serialization/Codec;Ljava/util/function/Function;Ljava/util/function/BiFunction;Ljava/util/function/Function;Lnet/minecraft/class_5455;Lnet/minecraft/class_9820;Lnet/minecraft/class_5539;)V",

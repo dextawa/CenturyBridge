@@ -379,9 +379,6 @@ def carving(f):
     C, MASK, CP = L("class_2893$class_2894"), L("class_6643"), L("class_1923")
     f.put("classRenames", MC + "class_2893$class_2894", FAC + "/GenerationStepCarving")
     f.put("classRenames", MC + "class_5851", FAC + "/CarvingMaskPlacement")
-    f.put("facadeGaps", MC + "class_5851.field_28934:Lcom/mojang/serialization/Codec;",
-          "a Codec until 1.20.4; 1.20.5 made it the MapCodec the facade has, and the 1.20.4 -> 1.20.5 step moves a "
-          "mod's read of the Codec (s4rest-gen.json fieldGetters), so no mod reaches this step reading it")
     f.put("fieldGetters", MC + "class_6798.field_35751:" + L("class_6798"), LC)
     PB, BU = MC + "class_5485$class_7868", MC + "class_5485$class_5495"
     gen_args = L("class_3233") + "J" + L("class_7138") + L("class_4543") + L("class_5138") + L("class_2791")
@@ -651,9 +648,6 @@ def loot_params_moss(f):
         "basis": "LootParams holds a ContextMap since 1.21.2: 1.21.1's parameter map as one (CbLevelLootParams)"})
     f.put("methodRenames", MC + "class_47.method_296(" + P + ")" + O, "method_65013")
     f.put("classRenames", MC + "class_5807", FAC + "/MossBlock")
-    f.put("facadeGaps", MC + "class_5807.method_9651(" + L("class_4538") + POS + BS + "Z)Z",
-          "1.20.1's isValidBonemealTarget(level, pos, state, isClient), gone at 1.20.2: the 1.20.1 -> 1.20.2 step "
-          "rewires it (shims-1.20.2.json), so no mod reaches this step with it")
 
 
 # ------------------------------------------------------------------------------------------- block entities
@@ -844,6 +838,11 @@ def level_misc(f):
               "DirectionProperty is one")
 
 
+# ------------------------------------------------------------------------------------------- Fabric API: block settings
+def fabric_block_settings(f):
+    f.put("classRenames", "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings", FAC + "/FabricBlockSettings")
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -865,6 +864,7 @@ def main():
     block_entities(f)
     state_props(f)
     level_misc(f)
+    fabric_block_settings(f)
     f.write()
 
 
