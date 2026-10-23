@@ -177,6 +177,14 @@ public final class Chain {
      * Item since 1.21.2) becomes INVOKESTATIC predicate(Object)Z.
      */
     public final java.util.Map<String, String> instanceOfRedirects = new java.util.HashMap<>();
+    /**
+     * CHECKCAST "type" -> "runtimeClass#name": the cast side of {@link #instanceOfRedirects}, for a dead class
+     * renamed onto a wider live one (1.21.2: DirectionProperty is EnumProperty&lt;Direction&gt;, classRenames
+     * onto EnumProperty, so a cast to it would accept every EnumProperty). The site gets INVOKESTATIC
+     * name(Object)Object before the (renamed) CHECKCAST: the static answers its argument when the source
+     * release's cast would have succeeded (null included) and throws ClassCastException otherwise.
+     */
+    public final java.util.Map<String, String> checkCastRedirects = new java.util.HashMap<>();
     /** examined-and-classified damage (quirk tier / structural / etc): "owner" or "owner.name" -> reason */
     public final java.util.Map<String, String> ledger = new java.util.HashMap<>();
 
@@ -2387,6 +2395,12 @@ public final class Chain {
                 var ior = root.getAsJsonObject("instanceOfRedirects");
                 for (String k : ior.keySet()) {
                     c.instanceOfRedirects.put(k, ior.get(k).getAsString());
+                }
+            }
+            if (root.has("checkCastRedirects")) {
+                var ccr = root.getAsJsonObject("checkCastRedirects");
+                for (String k : ccr.keySet()) {
+                    c.checkCastRedirects.put(k, ccr.get(k).getAsString());
                 }
             }
             if (root.has("superRedirects")) {

@@ -23,6 +23,7 @@ import net.minecraft.class_9886;
 import net.minecraft.class_9889;
 import net.minecraft.class_9890;
 import top.dext.centurybridge.step.v1_21_2.facade.Tier;
+import top.dext.centurybridge.step.v1_21_2.facade.TieredItem;
 import top.dext.centurybridge.step.v1_21_2.facade.Tiers;
 
 /**
@@ -220,7 +221,23 @@ public final class CbItemTiers {
     }
 
     private static Tier tier(class_1792 item) {
-        return item instanceof LegacyTier l ? l.method_8022() : super_tier(item);
+        if (item instanceof LegacyTier l) {
+            return l.method_8022();
+        }
+        return item instanceof TieredItem t ? t.method_8022() : super_tier(item);
+    }
+
+    /**
+     * getTier() through a TieredItem reference (an Item since TieredItem is renamed onto it; CbItemTypes has let only
+     * 1.21.1's TieredItems through): the class's override, the facade's tier, or the 1.21.2 tool's
+     */
+    public static Tier method_8022(class_1792 item) {
+        return tier(item);
+    }
+
+    /** new TieredItem(tier, properties): the facade, typed as the Item TieredItem references are */
+    public static class_1792 newTieredItem(Tier tier, class_1792.class_1793 properties) {
+        return new TieredItem(tier, properties);
     }
 
     /** 1.21.1's TieredItem.getTier(): the tier the tool was built with */

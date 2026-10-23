@@ -16,11 +16,16 @@ import net.minecraft.class_1741;
 import net.minecraft.class_1792;
 import net.minecraft.class_1799;
 import net.minecraft.class_1802;
+import net.minecraft.class_1770;
 import net.minecraft.class_1810;
 import net.minecraft.class_1829;
+import net.minecraft.class_1831;
 import net.minecraft.class_1832;
 import net.minecraft.class_1834;
 import net.minecraft.class_1856;
+import net.minecraft.class_1860;
+import net.minecraft.class_1869;
+import net.minecraft.class_1874;
 import net.minecraft.class_2246;
 import net.minecraft.class_2248;
 import net.minecraft.class_2378;
@@ -35,6 +40,7 @@ import net.minecraft.class_5151;
 import net.minecraft.class_6862;
 import net.minecraft.class_6880;
 import net.minecraft.class_7923;
+import net.minecraft.class_8786;
 import net.minecraft.class_8791;
 import net.minecraft.class_9285;
 import net.minecraft.class_9334;
@@ -165,6 +171,8 @@ public class GearTestMod implements ModInitializer {
             tools();
             food(server);
             ingredients();
+            types();
+            recipes(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -258,5 +266,73 @@ public class GearTestMod implements ModInitializer {
         class_1799 left = eaten.method_7910(server.method_30002(), zombie);
         check(zombie.method_6059(class_1294.field_5904), "eating gives the food's effect (speed)");
         check(left.method_7947() == 1, "eating uses one: " + left.method_7947());
+    }
+
+    /**
+     * type tests and casts against 1.21.1 types 1.21.2 removed (TieredItem, ElytraItem, Equipable): 1.21.1's answer
+     * for vanilla objects, the cast and the calls on the cast reference
+     */
+    static void types() {
+        Object diamondSword = class_1802.field_8802;
+        check(diamondSword instanceof class_1831, "vanilla diamond sword instanceof TieredItem");
+        check(class_1802.field_8377 instanceof class_1831, "vanilla diamond pickaxe instanceof TieredItem");
+        check(SWORD instanceof class_1831 && PICK instanceof class_1831, "converted tools instanceof TieredItem");
+        class_1831 tiered = (class_1831) diamondSword;
+        check(tiered.method_8022() == class_1834.field_8930, "((TieredItem) diamond sword).getTier() = Tiers.DIAMOND");
+        check(((class_1831) SWORD).method_8022() == GearTier.EMERALD, "((TieredItem) converted sword).getTier() = its tier");
+        Object diamond = class_1802.field_8477;
+        check(!(diamond instanceof class_1831), "a diamond is no TieredItem");
+        boolean threw = false;
+        try {
+            class_1831 bad = (class_1831) diamond;
+            check(bad == null, "unreachable");
+        } catch (ClassCastException e) {
+            threw = true;
+        }
+        check(threw, "(TieredItem) diamond throws ClassCastException");
+        Object elytra = class_1802.field_8833;
+        check(elytra instanceof class_1770, "vanilla elytra instanceof ElytraItem");
+        check(!(class_1802.field_8523 instanceof class_1770), "iron chestplate is no ElytraItem");
+        class_1770 ely = (class_1770) elytra;
+        check(ely.method_7685() == class_1304.field_6174, "((ElytraItem) elytra).getEquipmentSlot() = chest");
+        check(class_1770.method_7804(new class_1799(class_1802.field_8833)), "ElytraItem.isFlyEnabled(new elytra)");
+        check(elytra instanceof class_5151, "vanilla elytra instanceof Equipable");
+        check(((class_5151) elytra).method_31570() == class_3417.field_14966, "((Equipable) elytra).getEquipSound() = elytra's");
+        check(class_2246.field_10147 instanceof class_5151, "carved pumpkin block instanceof Equipable");
+        check(((class_5151) (Object) class_2246.field_10147).method_7685() == class_1304.field_6169, "carved pumpkin equips to head");
+        check(class_1802.field_8523 instanceof class_5151 && CHEST instanceof class_5151, "armor instanceof Equipable");
+        check(!(diamond instanceof class_5151), "a diamond is not Equipable");
+        check(class_5151.method_48957(new class_1799(class_1802.field_8833)) == elytra, "Equipable.get(elytra stack) = the elytra item");
+    }
+
+    /** 1.21.1's Recipe members on loaded vanilla recipes */
+    static void recipes(MinecraftServer server) {
+        class_1869 shaped = null;
+        class_1874 cooking = null;
+        int n = 0;
+        for (class_8786<?> h : server.method_3772().method_8126()) {
+            class_1860<?> r = h.comp_1933();
+            n++;
+            if (shaped == null && r instanceof class_1869 s && s.method_8150() == 3 && s.method_8158() == 3) {
+                shaped = s;
+            }
+            if (cooking == null && r instanceof class_1874 c) {
+                cooking = c;
+            }
+        }
+        check(shaped != null && cooking != null, "found a 3x3 shaped and a cooking recipe among " + n);
+        if (shaped == null || cooking == null) {
+            return;
+        }
+        class_1860<?> r = shaped;
+        check(!r.method_8110(server.method_30611()).method_7960(), "shaped getResultItem non-empty: " + r.method_8110(server.method_30611()));
+        check(r.method_8117().size() == 9, "shaped getIngredients: 9 slots: " + r.method_8117().size());
+        check(r.method_8113(3, 3) && !r.method_8113(2, 2), "shaped canCraftInDimensions 3x3 yes, 2x2 no");
+        check(!r.method_31584(), "shaped isIncomplete false");
+        check(r.method_17447().method_31574(class_1802.field_8465), "shaped getToastSymbol = crafting table");
+        class_1860<?> c = cooking;
+        check(c.method_8117().size() == 1 && c.method_8113(1, 1), "cooking: one ingredient, fits 1x1");
+        check(!c.method_8110(server.method_30611()).method_7960(), "cooking getResultItem non-empty");
+        check(!c.method_17447().method_31574(class_1802.field_8465), "cooking getToastSymbol is its workstation: " + c.method_17447());
     }
 }

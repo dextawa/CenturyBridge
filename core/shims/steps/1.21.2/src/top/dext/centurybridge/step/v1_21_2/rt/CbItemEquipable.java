@@ -5,9 +5,12 @@ import net.minecraft.class_1304;
 import net.minecraft.class_1738;
 import net.minecraft.class_1747;
 import net.minecraft.class_1792;
+import net.minecraft.class_1802;
 import net.minecraft.class_1819;
 import net.minecraft.class_2190;
+import net.minecraft.class_2246;
 import net.minecraft.class_3414;
+import net.minecraft.class_3417;
 import net.minecraft.class_4059;
 import net.minecraft.class_5815;
 import net.minecraft.class_6880;
@@ -93,10 +96,83 @@ public final class CbItemEquipable {
         }
     }
 
-    /** ElytraItem.use(level, player, hand) called through the class: Item.use's 1.21.1 shape (CbItemResults) */
+    /**
+     * ElytraItem.use(level, player, hand) called through the class (an ElytraItem reference is an Item since the
+     * rename): Item.use's 1.21.1 shape (CbItemResults)
+     */
     public static top.dext.centurybridge.step.v1_21_2.facade.InteractionResultHolder<net.minecraft.class_1799> method_7836(
-            ElytraItem item, net.minecraft.class_1937 level, net.minecraft.class_1657 player, net.minecraft.class_1268 hand) {
+            class_1792 item, net.minecraft.class_1937 level, net.minecraft.class_1657 player, net.minecraft.class_1268 hand) {
         return CbItemResults.method_7836(item, level, player, hand);
+    }
+
+    /** new ElytraItem(properties): the facade, typed as the Item ElytraItem references are */
+    public static class_1792 newElytraItem(class_1792.class_1793 properties) {
+        return new ElytraItem(properties);
+    }
+
+    // ---- Equipable's members through an Equipable reference (an Object since the rename; CbItemTypes has let only
+    // ---- 1.21.1's Equipables through) or an ElytraItem one (an Item)
+
+    /** getEquipmentSlot(): the implementor's; 1.21.1's ElytraItem the chest, its EquipableCarvedPumpkinBlock the head */
+    public static class_1304 method_7685(Object o) {
+        if (o instanceof Equipable e) {
+            return e.method_7685();
+        }
+        if (o == class_1802.field_8833) {
+            return class_1304.field_6174;
+        }
+        if (o == class_2246.field_10147) {
+            return class_1304.field_6169;
+        }
+        return ((Equipable) o).method_7685();
+    }
+
+    public static class_1304 method_7685(class_1792 item) {
+        return method_7685((Object) item);
+    }
+
+    /** getEquipSound(): the implementor's; 1.21.1's ElytraItem the elytra's, the carved pumpkin Equipable's default */
+    public static class_6880<class_3414> method_31570(Object o) {
+        if (o instanceof Equipable e) {
+            return e.method_31570();
+        }
+        if (o == class_1802.field_8833) {
+            return class_3417.field_14966;
+        }
+        if (o == class_2246.field_10147) {
+            return class_3417.field_14883;
+        }
+        return ((Equipable) o).method_31570();
+    }
+
+    public static class_6880<class_3414> method_31570(class_1792 item) {
+        return method_31570((Object) item);
+    }
+
+    /** an Equipable whose swapWithEquipmentSlot is the interface's default (which reads nothing of its receiver) */
+    private static final Equipable DEFAULT_SWAP = () -> class_1304.field_6174;
+
+    /** swapWithEquipmentSlot(item, level, player, hand): the implementor's, else Equipable's 1.21.1 default */
+    public static top.dext.centurybridge.step.v1_21_2.facade.InteractionResultHolder<net.minecraft.class_1799> method_48576(
+            Object o, class_1792 item, net.minecraft.class_1937 level, net.minecraft.class_1657 player,
+            net.minecraft.class_1268 hand) {
+        Equipable e = o instanceof Equipable q ? q : DEFAULT_SWAP;
+        return e.method_48576(item, level, player, hand);
+    }
+
+    /**
+     * Equipable.get(stack): the item if it is one of 1.21.1's Equipables, else the block of a block item if that is,
+     * else (an item 1.21.2 gives no Equipable class) a view of its EQUIPPABLE component; null otherwise
+     */
+    public static Object method_48957(net.minecraft.class_1799 stack) {
+        class_1792 item = stack.method_7909();
+        if (CbItemTypes.isEquipable(item)) {
+            return item;
+        }
+        if (item instanceof class_1747 bi && CbItemTypes.isEquipable(bi.method_7711())) {
+            return bi.method_7711();
+        }
+        return view(item);
     }
 
     private CbItemEquipable() {
