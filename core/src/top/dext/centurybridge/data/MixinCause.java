@@ -86,6 +86,10 @@ public final class MixinCause {
     /** wiring member keys by name+descriptor without owner: an override family's entry on its base */
     private final Map<String, List<String>> wiredByMember = new HashMap<>();
     private final Map<String, String> classRenames = new HashMap<>();
+    /** redirect sections: section -> key -> value */
+    private final Map<String, Map<String, String>> redirects = new HashMap<>();
+    /** the step's layer (optional): redirect bodies are read there */
+    private Jar layer;
 
     static final class Jar {
         final ZipFile zip;
@@ -152,6 +156,9 @@ public final class MixinCause {
             if (!sec.getValue().isJsonObject() || sec.getKey().startsWith("_") || sec.getKey().equals("ledger")) continue;
             for (String k : sec.getValue().getAsJsonObject().keySet()) {
                 wired.add(k);
+                if (sec.getKey().endsWith("Redirects") && sec.getValue().getAsJsonObject().get(k).isJsonPrimitive()) {
+                    redirects.computeIfAbsent(sec.getKey(), x -> new HashMap<>()).put(k, sec.getValue().getAsJsonObject().get(k).getAsString());
+                }
                 if (sec.getKey().equals("classRenames") || sec.getKey().equals("superRenames")) {
                     JsonElement to = sec.getValue().getAsJsonObject().get(k);
                     if (to.isJsonPrimitive()) classRenames.put(k, to.getAsString());
@@ -173,6 +180,7 @@ public final class MixinCause {
         Map<String, Integer> col = new HashMap<>();
         for (int i = 0; i < head.length; i++) col.put(head[i], i);
         Map<String, String> said = args.length > 7 ? said(Path.of(args[6]), Path.of(args[7])) : Map.of();
+        if (args.length > 8) mc.layer = new Jar(Path.of(args[8]));
         Map<String, int[]> counts = new TreeMap<>();
         Map<String, Set<String>> targets = new HashMap<>();
         try (PrintWriter o = new PrintWriter(Files.newBufferedWriter(Path.of(args[5]), StandardCharsets.UTF_8))) {
@@ -187,6 +195,10 @@ public final class MixinCause {
                     if (vd.cause().endsWith("-wired") || vd.cause().equals("target-wired-on-super") || vd.cause().equals("target-stands")) {
                         String why = said.get(String.join("\t", r.usage(), r.owner(), r.target(), r.anchor(), String.valueOf(r.ordinal())));
                         if (why != null) vd = new Verdict(vd.cause() + ": " + whyKind(why), why);
+                    }
+                    if (mc.layer != null && vd.cause().startsWith("target-wired") && !r.target().contains(":")) {
+                        String[] d = mc.delegation(r.owner(), r.target());
+                        if (d != null) vd = new Verdict(vd.cause() + " / " + d[0], vd.evidence() + " | " + d[1]);
                     }
                 } catch (RuntimeException ex) {
                     vd = new Verdict("triage-error", String.valueOf(ex));
@@ -670,6 +682,56 @@ public final class MixinCause {
 
     private boolean isWired(String fullKey, String nameKey) {
         return wired.contains(fullKey) || wiredByName.containsKey(nameKey);
+    }
+
+    /**
+     * What a redirect of owner.target (on owner or a V supertype) does in the layer: {kind, evidence} --
+     * "delegates" (one call, into the game), "cb-code" (calls only the layer), "computes" (several), or
+     * null when the member is not redirected.
+     */
+    String[] delegation(String owner, String target) {
+        Set<String> seen = new HashSet<>();
+        List<String> todo = new ArrayList<>(List.of(owner));
+        while (!todo.isEmpty()) {
+            String c = todo.remove(0);
+            if (!seen.add(c)) continue;
+            for (String sec : List.of("staticRedirects", "instanceRedirects", "interfaceCallRedirects", "superRedirects")) {
+                String val = redirects.getOrDefault(sec, Map.of()).get(c + "." + target);
+                if (val == null) continue;
+                String cls = val.contains("#") ? val.substring(0, val.indexOf('#')) : val;
+                String name = val.contains("#") ? val.substring(val.indexOf('#') + 1) : name(target);
+                ClassNode cn = layer.get(cls);
+                if (cn == null) return new String[] {"redirect class missing", val};
+                MethodNode body = null;
+                for (MethodNode m : cn.methods) {
+                    if (!m.name.equals(name)) continue;
+                    boolean exact = m.desc.equals(desc(target)) || m.desc.equals("(L" + c + ";" + desc(target).substring(1));
+                    if (exact || body == null) body = m;
+                }
+                if (body == null || body.instructions == null) return new String[] {"redirect body missing", val};
+                List<String> game = new ArrayList<>(), cb = new ArrayList<>(), other = new ArrayList<>();
+                for (AbstractInsnNode in : body.instructions) {
+                    if (in instanceof MethodInsnNode mi) {
+                        String k = mi.owner + "." + mi.name + mi.desc;
+                        if (inGame(mi.owner)) game.add(k);
+                        else if (mi.owner.startsWith("top/dext/")) cb.add(k);
+                        else other.add(k);
+                    } else if (in instanceof InvokeDynamicInsnNode) {
+                        other.add("indy");
+                    }
+                }
+                String sn = sec.replace("Redirects", "");
+                if (game.size() == 1 && cb.isEmpty() && other.isEmpty()) return new String[] {sn + " delegates to one game call", game.get(0)};
+                if (game.isEmpty() && other.isEmpty()) return new String[] {sn + " into CB code", cb.size() + " CB calls"};
+                return new String[] {sn + " computes", game.size() + " game, " + cb.size() + " CB, " + other.size() + " other calls"};
+            }
+            ClassNode vc = v.get(c);
+            if (vc != null) {
+                if (vc.superName != null) todo.add(vc.superName);
+                todo.addAll(vc.interfaces);
+            }
+        }
+        return null;
     }
 
     /** the member (name+desc) wired on a supertype of owner in V: the override family's entry */

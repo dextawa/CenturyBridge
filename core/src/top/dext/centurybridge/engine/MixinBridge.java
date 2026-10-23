@@ -1498,6 +1498,9 @@ final class MixinBridge {
                 String where = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "." + vmeth.name + vmeth.desc;
                 List<String> why = new ArrayList<>();
                 Fate fate = selectorFate(target, vmeth.name, vmeth.desc, why);
+                if (fate == null && why.isEmpty() && method(wt, vmeth.name, vmeth.desc) == null) {
+                    fate = bodyFate(vt, wt, vmeth, why); // no wiring for it: where W keeps its code
+                }
                 if (fate == null) {
                     if (!why.isEmpty()) {
                         left.add(where + ": " + why.get(0));
@@ -2099,6 +2102,65 @@ final class MixinBridge {
             }
         }
         return null;
+    }
+
+    /**
+     * A V method W no longer declares and the step's wiring says nothing of: the W method of the same
+     * class that holds its code now (1.20.5 made every packet's write(FriendlyByteBuf) a private
+     * write(RegistryFriendlyByteBuf) its stream codec calls) -- the vanilla code an injector into V's
+     * method hooked runs there. Candidates are the methods W declares and V does not (by name and
+     * descriptor), not synthetic, of the same static-ness, a constructor for a constructor, with as many
+     * arguments, each V's type or a W subtype of it (the V-typed handler takes it as it is), and the same
+     * return type. Evidence: their significant instructions (SiteMatch.sig) agree with V's body at least
+     * 0.75 (2 x common subsequence / both lengths) and every other candidate trails by 0.15 or more.
+     * Anything less is reported, never picked.
+     */
+    private Fate bodyFate(ClassNode vt, ClassNode wt, MethodNode vm, List<String> why) {
+        if ((vm.access & Opcodes.ACC_SYNTHETIC) != 0 || vm.instructions == null || vm.instructions.size() == 0) {
+            return null;
+        }
+        Set<String> vkeys = new HashSet<>();
+        for (MethodNode m : vt.methods) {
+            vkeys.add(m.name + m.desc);
+        }
+        Type[] va = Type.getArgumentTypes(vm.desc);
+        List<String> vs = SiteMatch.sig(vm);
+        MethodNode best = null;
+        double bs = -1;
+        double second = -1;
+        for (MethodNode m : wt.methods) {
+            if (vkeys.contains(m.name + m.desc) || (m.access & Opcodes.ACC_SYNTHETIC) != 0
+                    || ((m.access ^ vm.access) & Opcodes.ACC_STATIC) != 0 || m.name.equals("<init>") != vm.name.equals("<init>")
+                    || m.name.equals("<clinit>") || !Type.getReturnType(m.desc).equals(Type.getReturnType(vm.desc))) {
+                continue;
+            }
+            Type[] wa = Type.getArgumentTypes(m.desc);
+            boolean fits = wa.length == va.length;
+            for (int i = 0; fits && i < wa.length; i++) {
+                fits = wa[i].equals(va[i]) || wAssignable(wa[i], va[i]);
+            }
+            if (!fits) {
+                continue;
+            }
+            double sim = SiteMatch.similarity(vs, SiteMatch.sig(m));
+            if (sim > bs) {
+                second = bs;
+                bs = sim;
+                best = m;
+            } else if (sim > second) {
+                second = sim;
+            }
+        }
+        if (best == null) {
+            return null;
+        }
+        if (bs < 0.75 || bs - second < 0.15) {
+            why.add(String.format(Locale.ROOT, "no wiring; the closest W method by code is %s%s at %.2f (next %.2f), short of evidence",
+                best.name, best.desc, bs, Math.max(second, 0)));
+            return null;
+        }
+        return new Fate(best.name, best.desc, identity(va.length), new String[va.length][], new boolean[va.length], true,
+            String.format(Locale.ROOT, "no wiring; W keeps its code there (similarity %.2f, next %.2f)", bs, Math.max(second, 0)));
     }
 
     /** W argument j of a reshape's "keep" ops is V argument i; drops, conversions and supplies give none */
