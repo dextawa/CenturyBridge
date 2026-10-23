@@ -143,6 +143,15 @@ public final class CbAdvNodes {
         return self.comp_1918().orElseGet(() -> net.minecraft.class_161.method_53622(holderOf(self)));
     }
 
+    /** a collection of 1.20.1 advancements (a 1.20.1 override's answer) as their nodes */
+    public static java.util.Collection<net.minecraft.class_8781> nodes(java.util.Collection<net.minecraft.class_161> advancements) {
+        List<net.minecraft.class_8781> out = new ArrayList<>(advancements.size());
+        for (net.minecraft.class_161 a : advancements) {
+            out.add(nodeOf(a));
+        }
+        return out;
+    }
+
     private CbAdvNodes() {
     }
 }

@@ -30,6 +30,7 @@
     "CbAdvBuilderEntityPredicateBuilder",
     "CbAdvBuilderLocationPredicateBuilder",
     "CbAdvBuilderPlayerPredicateBuilder",
+    "CbAdvBuilderState",
     "CbAdvContextAny",
     "CbAdvCriterionAccess",
     "CbAdvCriterionMissing",

@@ -98,6 +98,30 @@ public final class CbAdvProgress {
         return i == null ? null : Date.from(i);
     }
 
+    /**
+     * 1.20.2's update(requirements) on a 1.20.1 subclass overriding update(criteria, requirements): the
+     * override gets the groups and the criteria map 1.20.1 handed it, keyed by the requirement names (1.20.1's
+     * own update read only the key set; the values are the advancement's criteria, which 1.20.2 does not
+     * pass -- each name maps to a criterion without an instance, as a 1.20.1 client's criteria were)
+     */
+    public static void update(CbAdvLegacy.ProgressUpdate self, net.minecraft.class_8782 requirements) {
+        Map<String, net.minecraft.class_175<?>> criteria = new java.util.LinkedHashMap<>();
+        for (String name : requirements.method_53678()) {
+            criteria.put(name, CbAdvCriteria.cbNewCriterion());
+        }
+        self.method_727(criteria, requirements.comp_1922());
+    }
+
+    /** a 1.20.1 subclass's getProgressText string as the text 1.20.2 draws */
+    public static net.minecraft.class_2561 progressText(String s) {
+        return s == null ? null : net.minecraft.class_2561.method_43470(s);
+    }
+
+    /** a Date a 1.20.1 subclass answered, as 1.20.2's Instant */
+    public static Instant instant(Date d) {
+        return d == null ? null : d.toInstant();
+    }
+
     // ------------------------------------------------------------------ CriterionProgress
 
     private static final ThreadLocal<SimpleDateFormat> FORMAT =

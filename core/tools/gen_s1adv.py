@@ -540,6 +540,12 @@ def holders(root, V, W, section, report, frag):
                 wired |= set(v)
             elif s == "covers":
                 wired |= set(v)
+    hooked = set()
+    for f in [os.path.join(root, "core/segments/shims-1.20.2.json")] + sorted(
+            glob.glob(os.path.join(root, "core/segments/shims-1.20.2.json.d/*.json"))):
+        if not f.endswith("s1adv.json"):
+            hooked |= {h.get("old") for h in json.load(open(f, encoding="utf-8")).get("overrideHooks", [])}
+    hooked |= {h.get("old") for h in frag.get("overrideHooks", [])}
     for s, v in frag.items():  # the hand-written part of this fragment (generated entries are dropped by now)
         if isinstance(v, dict):
             wired |= set(v)
@@ -577,13 +583,19 @@ def holders(root, V, W, section, report, frag):
                 continue
             found.append((p, m, match))
     by_shape = {}
+    guarded = set()
     for p, m, w in found:
         key = f"{p}.{m.name}{m.desc}"
-        if key in wired:
-            report.append(f"wired elsewhere: {key}")
-            continue
         oa, orr = classfile.split_args(m.desc)
         na, nr = classfile.split_args(w.desc)
+        overridable = not m.access & (classfile.ACC_STATIC | classfile.ACC_FINAL | classfile.ACC_PRIVATE)             and not V[p].access & classfile.ACC_FINAL and m.name != "<init>"
+        if key in wired:
+            # the call side is wired by hand elsewhere; a mod's override still needs its hook
+            report.append(f"wired elsewhere (calls): {key}")
+            if overridable:
+                by_shape.setdefault((m.name, m.desc, w.desc), []).append(p)
+                guarded.add((m.name, m.desc))
+            continue
         if m.name == "<init>":
             section("superCtorReshapes")[key] = {
                 "desc": w.desc, "ops": ["keep" if a == b else "conv " + TO_NEW[b] for a, b in zip(oa, na)],
@@ -594,9 +606,12 @@ def holders(root, V, W, section, report, frag):
         if orr != nr:
             entry["ret"] = "conv " + TO_OLD[nr]
         section("callReshapes")[key] = entry
-        if not m.access & (classfile.ACC_STATIC | classfile.ACC_FINAL | classfile.ACC_PRIVATE) and not V[p].access & classfile.ACC_FINAL:
+        if overridable:
             by_shape.setdefault((m.name, m.desc, w.desc), []).append(p)
     for (name, od, nd), owners in sorted(by_shape.items()):
+        if name + od in hooked:
+            report.append(f"hooked elsewhere: {name}{od}")
+            continue
         oa, orr = classfile.split_args(od)
         na, nr = classfile.split_args(nd)
         changed = {b for a, b in zip(oa, na) if a != b}
@@ -612,6 +627,11 @@ def holders(root, V, W, section, report, frag):
                 h["wrap"] = TO_OLD[b].replace("#", ".")
             if orr != nr:
                 h["unwrap"] = TO_NEW[nr].replace("#", ".")
+            if (name, od) in guarded:
+                # the old shape is served by a cover / redirect that calls the new shape on the object: the
+                # mod's super.old(..) comes back into the synthesized method, which then falls through to super
+                h["guard"] = RT + "/Guard"
+                h["basis"] += "; guarded: the old shape's call side reaches the new shape on the object"
             section("overrideHooks", list).append(h)
 
 

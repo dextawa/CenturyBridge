@@ -106,6 +106,16 @@ public final class CbAdvLegacy {
         top.dext.centurybridge.facade.v1_20_2.class_7376$class_7377 method_43099();
     }
 
+    /** AdvancementProgress.update(criteria, requirements) (a 1.20.1 subclass's override) */
+    public interface ProgressUpdate {
+        void method_727(java.util.Map<String, net.minecraft.class_175<?>> criteria, String[][] requirements);
+    }
+
+    /** AdvancementList.add(builders) (a 1.20.1 subclass's override) */
+    public interface TreeAdd {
+        void method_711(java.util.Map<net.minecraft.class_2960, net.minecraft.class_161.class_162> builders);
+    }
+
     /** MobEffectsPredicate.and(effect) */
     public interface EffectsAnd {
         net.minecraft.class_2102 method_9065(net.minecraft.class_1291 effect);
