@@ -45,7 +45,14 @@
   "net/minecraft/class_3244.method_14360(DDDFFLjava/util/Set;)V",
   "net/minecraft/class_4516.method_46224(Lnet/minecraft/class_1299;Lnet/minecraft/class_243;Lnet/minecraft/class_243;)V",
   "net/minecraft/class_4516.method_59872(Lnet/minecraft/class_1299;Lnet/minecraft/class_243;Lnet/minecraft/class_243;)V",
-  "net/minecraft/class_9761.method_60470()I"
+  "net/minecraft/class_9761.method_60470()I",
+  "net/minecraft/class_638.method_29089(J)V",
+  "net/minecraft/class_638.method_8435(J)V",
+  "net/minecraft/class_638.method_38743()Z",
+  "net/minecraft/class_638.method_23777(Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;",
+  "net/minecraft/class_638.method_23785(F)Lnet/minecraft/class_243;",
+  "net/minecraft/class_315.method_1641(Lnet/minecraft/class_304;Lnet/minecraft/class_3675$class_306;)V",
+  "net/minecraft/class_315.method_1631(Lnet/minecraft/class_1664;Z)V"
  ],
  "frameDefaults": {
   "method_52706(Lnet/minecraft/class_2960;IIII)V": {
@@ -123,7 +130,8 @@
   "net/minecraft/class_176.method_35553(Lnet/minecraft/class_169;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#isAllowed",
   "net/minecraft/class_176.method_60298(Lnet/minecraft/class_58;Lnet/minecraft/class_46;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#validateUser",
   "net/minecraft/class_176.method_776(Lnet/minecraft/class_8942;Lnet/minecraft/class_46;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#validateUser",
-  "net/minecraft/class_9173.method_56585(Lnet/minecraft/class_5912;Lnet/minecraft/class_5455;Z)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#collectGameRegistries"
+  "net/minecraft/class_9173.method_56585(Lnet/minecraft/class_5912;Lnet/minecraft/class_5455;Z)Lnet/minecraft/class_5455$class_6890;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#collectGameRegistries",
+  "net/minecraft/class_742.method_3118()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#fieldOfViewModifier"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -140,7 +148,9 @@
   "net/minecraft/class_2561.method_43467(Ljava/lang/String;Ljava/util/Optional;)Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands",
   "net/minecraft/class_3065.method_13392(Lcom/mojang/brigadier/CommandDispatcher;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands",
   "net/minecraft/class_176.method_35554()Lnet/minecraft/class_176$class_177;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
-  "net/minecraft/class_5514.method_33805(Ljava/lang/String;)Lnet/minecraft/class_5514;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer"
+  "net/minecraft/class_5514.method_33805(Ljava/lang/String;)Lnet/minecraft/class_5514;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_7532.method_44443(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;III)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient",
+  "net/minecraft/class_7532.method_44445(Lnet/minecraft/class_332;Lnet/minecraft/class_2960;IIIZZ)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
@@ -313,6 +323,23 @@
     "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#noTracyCapture()Z"
    ],
    "basis": "GameConfig.GameData gained captureTracyImages in 1.21.2; false without the launch option"
+  },
+  "net/minecraft/class_638.<init>(Lnet/minecraft/class_634;Lnet/minecraft/class_638$class_5271;Lnet/minecraft/class_5321;Lnet/minecraft/class_6880;IILjava/util/function/Supplier;Lnet/minecraft/class_761;ZJ)V": {
+   "desc": "(Lnet/minecraft/class_634;Lnet/minecraft/class_638$class_5271;Lnet/minecraft/class_5321;Lnet/minecraft/class_6880;IILnet/minecraft/class_761;ZJI)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "drop",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets#legacySeaLevel()I"
+   ],
+   "basis": "1.21.2's ClientLevel takes no profiler supplier (it profiles through Profiler.get(), the running thread's profiler 1.21.1's Minecraft supplied) and takes the sea level the server sends; a 1.21.1 level has no sent sea level and 1.21.1's client used 63 for every level"
   }
  },
  "overrideRenames": [
@@ -435,6 +462,22 @@
     "method_14012(Lnet/minecraft/class_1944;I)Z"
    ],
    "basis": "1.21.2's ChunkHolder change notifications answer whether the holder should be broadcast (1.21.1's were void and every holder was broadcast each tick): a 1.21.1 subclass's override is asked through the new shape and answers yes (CbRestServer.broadcastAfterChange: a holder with no changed section broadcasts nothing); its super call reaches super's 1.21.2 method"
+  },
+  {
+   "old": "method_23777(Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;",
+   "new": "method_23777(Lnet/minecraft/class_243;F)I",
+   "onlyUnder": "net/minecraft/class_638",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient.rgbInt(Lnet/minecraft/class_243;)I",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2 asks a level for its sky / cloud colour packed (the colour drawn); a 1.21.1 subclass's component vector answers it, each component to 8 bits; its super call reaches the 1.21.1 shape CbRestClientLevelMixin restores, which answers 1.21.2's colour"
+  },
+  {
+   "old": "method_23785(F)Lnet/minecraft/class_243;",
+   "new": "method_23785(F)I",
+   "onlyUnder": "net/minecraft/class_638",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient.rgbInt(Lnet/minecraft/class_243;)I",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "1.21.2 asks a level for its sky / cloud colour packed (the colour drawn); a 1.21.1 subclass's component vector answers it, each component to 8 bits; its super call reaches the 1.21.1 shape CbRestClientLevelMixin restores, which answers 1.21.2's colour"
   }
  ],
  "lambdaAdapters": {
@@ -455,7 +498,13 @@
  "instanceFieldGetters": {
   "net/minecraft/class_8673.field_51520:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#strictErrorHandlingField",
   "net/minecraft/class_3806.field_16836:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#spawnAnimals",
-  "net/minecraft/class_3806.field_16809:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#spawnNpcs"
+  "net/minecraft/class_3806.field_16809:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#spawnNpcs",
+  "net/minecraft/class_744.field_3910:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputUp",
+  "net/minecraft/class_744.field_3909:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputDown",
+  "net/minecraft/class_744.field_3908:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputLeft",
+  "net/minecraft/class_744.field_3906:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputRight",
+  "net/minecraft/class_744.field_3904:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputJumping",
+  "net/minecraft/class_744.field_3903:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputShiftKeyDown"
  },
  "superRedirects": {
   "net/minecraft/class_1297.method_43496(Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestCommands#entitySuperSystemMessage",
@@ -503,5 +552,13 @@
   "net/minecraft/class_2578.equals(Ljava/lang/Object;)Z": "equals override of a 1.21.1 subclass of ScoreContents (final on the record): 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
   "net/minecraft/class_2578.hashCode()I": "hashCode override of a 1.21.1 subclass of ScoreContents (final on the record): 1.21.2 made ScoreContents a final record whose type() is ScoreContents.TYPE: every encoding of text contents (network, NBT, JSON) picks the MapCodec by type() and that codec reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time its text is sent or saved; and a stand-in would split the type wherever the mod passes its instance as ScoreContents. Text a 1.21.1 mod makes through the constructor is bridged (ctorRedirects to CbRestCommands)",
   "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "a 1.21.1 MinecraftServer subclass overriding getProfiler(): 1.21.2's MinecraftServer has only a private method of that name and descriptor (vanilla reads the profiler from Profiler.get()), so nothing can reach an override; 1.21.1 callers of server.getProfiler() are bridged (CbRestServer.profiler, Profiler.get() -- the same profiler 1.21.2's server ticks with)"
+ },
+ "instanceFieldSetters": {
+  "net/minecraft/class_744.field_3910:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputUp",
+  "net/minecraft/class_744.field_3909:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputDown",
+  "net/minecraft/class_744.field_3908:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputLeft",
+  "net/minecraft/class_744.field_3906:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputRight",
+  "net/minecraft/class_744.field_3904:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputJumping",
+  "net/minecraft/class_744.field_3903:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputShiftKeyDown"
  }
 }

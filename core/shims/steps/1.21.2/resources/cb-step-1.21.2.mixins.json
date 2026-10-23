@@ -42,9 +42,11 @@
     "CbRestServerPropertiesMixin"
   ],
   "client": [
+    "CbRestClientLevelMixin",
     "CbRestEnchantmentScreenMixin",
     "CbRestGuiGraphicsMixin",
     "CbRestMinecraftMixin",
+    "CbRestOptionsKeysMixin",
     "CbRestOptionsMixin"
   ],
   "server": [],
