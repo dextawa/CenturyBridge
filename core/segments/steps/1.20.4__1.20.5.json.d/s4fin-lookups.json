@@ -64,5 +64,9 @@
  "covers": [
   "net/minecraft/class_7157.method_41699(Lnet/minecraft/class_5321;)Lnet/minecraft/class_7225;",
   "net/minecraft/class_7225.method_46753(Ljava/util/function/Predicate;)Lnet/minecraft/class_7225;"
- ]
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_7923.field_41179:Lnet/minecraft/class_7922;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#potionRegistry",
+  "net/minecraft/class_7782.field_40587:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#registryNetworkCodec"
+ }
 }
