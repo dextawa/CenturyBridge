@@ -45,7 +45,13 @@
   "net/minecraft/class_5268.method_18041(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setWanderingTraderSpawnDelay",
   "net/minecraft/class_5268.method_18039()I": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getWanderingTraderSpawnChance",
   "net/minecraft/class_5268.method_18042(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setWanderingTraderSpawnChance",
-  "net/minecraft/class_5219.method_28057()Lnet/minecraft/class_5285;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#worldGenOptions"
+  "net/minecraft/class_5219.method_28057()Lnet/minecraft/class_5285;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#worldGenOptions",
+  "net/minecraft/class_4095.method_18881(Lnet/minecraft/class_4168;Lcom/google/common/collect/ImmutableList;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#addActivity",
+  "net/minecraft/class_4095.method_18882(Lnet/minecraft/class_4168;ILcom/google/common/collect/ImmutableList;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#addActivity",
+  "net/minecraft/class_4095.method_24527(Lnet/minecraft/class_4168;ILcom/google/common/collect/ImmutableList;Lnet/minecraft/class_4140;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#addActivityAndRemoveMemoryWhenStopped",
+  "net/minecraft/class_4095.method_24529(Lnet/minecraft/class_4168;Lcom/google/common/collect/ImmutableList;Ljava/util/Set;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#addActivityWithConditions",
+  "net/minecraft/class_4095.method_66676(Lnet/minecraft/class_4168;ILcom/google/common/collect/ImmutableList;Ljava/util/Set;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#addActivityWithConditions",
+  "net/minecraft/class_4095.method_24530(Lnet/minecraft/class_4168;Lcom/google/common/collect/ImmutableList;Ljava/util/Set;Ljava/util/Set;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#addActivityAndRemoveMemoriesWhenStopped"
  },
  "overrideHooks": [
   {
@@ -204,7 +210,21 @@
   "net/minecraft/class_2378.method_10230(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#register",
   "net/minecraft/class_2378.method_39197(Lnet/minecraft/class_2378;Lnet/minecraft/class_5321;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#register",
   "net/minecraft/class_2378.method_47984(Lnet/minecraft/class_2378;Lnet/minecraft/class_5321;Ljava/lang/Object;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#registerForHolder",
-  "net/minecraft/class_2378.method_47985(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#registerForHolder"
+  "net/minecraft/class_2378.method_47985(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#registerForHolder",
+  "net/minecraft/class_4095.method_28311(Ljava/util/Collection;Ljava/util/Collection;)Lnet/minecraft/class_4095$class_5303;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#provider",
+  "net/minecraft/class_4722.method_24059()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#bannerSheet",
+  "net/minecraft/class_4722.method_24067()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#shieldSheet",
+  "net/minecraft/class_4722.method_24069()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#bedSheet",
+  "net/minecraft/class_4722.method_24070()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#shulkerBoxSheet",
+  "net/minecraft/class_4722.method_24071()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#signSheet",
+  "net/minecraft/class_4722.method_45783()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#hangingSignSheet",
+  "net/minecraft/class_4722.method_24072()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#chestSheet",
+  "net/minecraft/class_4722.method_24073()Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#solidBlockSheet",
+  "net/minecraft/class_4722.method_33082(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#getSignMaterial",
+  "net/minecraft/class_4722.method_45781(Lnet/minecraft/class_4719;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#getHangingSignMaterial",
+  "net/minecraft/class_4722.method_24062(Lnet/minecraft/class_11959$class_11960;Lnet/minecraft/class_2745;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#chooseMaterial",
+  "net/minecraft/class_12249.method_75990(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#entityCutout",
+  "net/minecraft/class_12249.method_75994(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets#entityCutoutNoCull"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -225,6 +245,29 @@
   }
  },
  "fieldGetters": {
-  "net/minecraft/class_1092.field_64468:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites"
+  "net/minecraft/class_1092.field_64468:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites",
+  "net/minecraft/class_4722.field_21712:Ljava/util/Map;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_40515:Ljava/util/Map;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_21714:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_21715:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_21716:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_21717:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_21718:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_21719:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_21720:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_21721:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_21722:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61745:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61746:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61747:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61748:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61749:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61750:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61751:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61752:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61753:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61754:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61755:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
+  "net/minecraft/class_4722.field_61756:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets"
  }
 }
