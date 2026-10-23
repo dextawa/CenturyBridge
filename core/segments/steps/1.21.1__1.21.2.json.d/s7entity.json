@@ -110,7 +110,11 @@
   "net/minecraft/class_1661.method_7373(D)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#swapPaint",
   "net/minecraft/class_1665.method_7456()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#shotFromCrossbow",
   "net/minecraft/class_8949.method_55009()D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getSnoutYPosition",
-  "net/minecraft/class_1304.method_5926()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getFilterFlag"
+  "net/minecraft/class_1304.method_5926()I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#getFilterFlag",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#build",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#build",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#build",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#fabricBuild"
  },
  "frameDefaults": {
   "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
@@ -590,7 +594,10 @@
   "net/minecraft/class_1661.method_7371(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superFindSlotMatchingUnusedItem",
   "net/minecraft/class_1661.method_7373(D)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superSwapPaint",
   "net/minecraft/class_1665.method_7456()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superShotFromCrossbow",
-  "net/minecraft/class_8949.method_55009()D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetSnoutYPosition"
+  "net/minecraft/class_8949.method_55009()D": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityTail#superGetSnoutYPosition",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild",
+  "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob.build()Lnet/minecraft/class_1299;": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#superBuild"
  },
  "overrideHooks": [
   {
@@ -666,6 +673,13 @@
    "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "superCalls": "rewrite",
    "basis": "1.21.1's only vanilla asker of canAttack(target, conditions) was Phantom's goals, which 1.21.2's ask Phantom.canAttack(level, target, conditions) (made extendable by the layer's access widener): a mod Phantom's 1.21.1 override answers it"
+  },
+  {
+   "old": "onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V",
+   "new": "onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Lnet/minecraft/class_10179;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion",
+   "wrap": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi.keepEquipment(Lnet/minecraft/class_10179;)Z",
+   "basis": "1.21.2's MobConversion takes the ConversionParams; a 1.21.1 implementation gets its keepEquipment (CbEntityFapi)"
   }
  ],
  "adapterHooks": [
@@ -929,6 +943,15 @@
    ],
    "synth": [],
    "basis": "a mod class's own 1.21.1 override answers the calls CbEntityTail serves (1.21.2 has no such member)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi$LegacyBuild",
+   "requires": [
+    "build()Lnet/minecraft/class_1299;"
+   ],
+   "synth": [],
+   "basis": "a mod subclass of FabricEntityTypeBuilder's own 1.21.1 build() answers the calls CbEntityFapi serves (1.21.2's takes a key)"
   }
  ],
  "classRenames": {
@@ -982,5 +1005,14 @@
  "methodRenames": {
   "net/minecraft/class_1548.method_6872()Z": "method_61492",
   "net/minecraft/class_1333.method_6229(FFF)F": "method_63642"
+ },
+ "interfaceCallRedirects": {
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#onConversion"
+ },
+ "lambdaAdapters": {
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi$LegacyConversion",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi#conversion(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityFapi$LegacyConversion;)Lnet/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion;"
+  }
  }
 }

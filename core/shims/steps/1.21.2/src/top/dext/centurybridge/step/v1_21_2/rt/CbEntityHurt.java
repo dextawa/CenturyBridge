@@ -136,6 +136,11 @@ public final class CbEntityHurt {
         return ((CbEntityHurtInvoker) entity).cb$isInvulnerableToBase(source);
     }
 
+    /** the same, for a call naming Fabric API's FakePlayer */
+    public static boolean isInvulnerableTo(net.fabricmc.fabric.api.entity.FakePlayer player, class_1282 source) {
+        return isInvulnerableTo((class_1297) player, source);
+    }
+
     // ------------------------------------------------------------------------------------------ super calls
 
     /**

@@ -1,7 +1,8 @@
 {
  "instanceRedirects": {
   "net/minecraft/class_1297.method_5643(Lnet/minecraft/class_1282;F)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt#hurt",
-  "net/minecraft/class_1297.method_5679(Lnet/minecraft/class_1282;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt#isInvulnerableTo"
+  "net/minecraft/class_1297.method_5679(Lnet/minecraft/class_1282;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt#isInvulnerableTo",
+  "net/fabricmc/fabric/api/entity/FakePlayer.method_5679(Lnet/minecraft/class_1282;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt#isInvulnerableTo"
  },
  "overrideHooks": [
   {
@@ -35,6 +36,21 @@
     "method_5679(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)Z"
    ],
    "basis": "1.21.1 LivingEntity.isInvulnerableTo(source) is 1.21.2's isInvulnerableTo(level, source) on the server; a super call on a client level answers 1.21.1's client answer of the vanilla class above (CbEntityHurt.superIsInvulnerableTo), where 1.21.2's needs a ServerLevel"
+  },
+  {
+   "old": "method_5679(Lnet/minecraft/class_1282;)Z",
+   "new": "method_5679(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)Z",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/fabricmc/fabric/api/entity/FakePlayer",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt.superIsInvulnerableTo(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt$SuperInvulnerable;Lnet/minecraft/class_1282;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt$SuperInvulnerable",
+   "superAccessors": [
+    "method_5679(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)Z"
+   ],
+   "basis": "as the LivingEntity hook, for a subclass of Fabric API's FakePlayer (outside the stubs' hierarchy)"
   }
  ],
  "adapterHooks": [
