@@ -3520,29 +3520,41 @@ public final class JarProcessor {
         }
         final java.util.List<Chain.OverrideHook> reconnectOverrides = new ArrayList<>();
         if ((classAccess[0] & Opcodes.ACC_INTERFACE) == 0) {
-            for (Chain.OverrideHook h : declaredOldOverrides) {
-                if (!declaredNewOverrides.contains(h) && !reconnectOverrides.contains(h)) {
-                    // two old overrides folding into ONE new shape (Entity.interact +
-                    // interactAt -> interact(player, hand, pos)): a second synthesized
-                    // method with the same name+desc is a ClassFormatError, so the
-                    // first hook (config order) wins and the other is noted
-                    boolean dup = false;
-                    for (Chain.OverrideHook x : reconnectOverrides) {
-                        if (x.newName.equals(h.newName) && x.newDesc.equals(h.newDesc)) {
-                            dup = true;
-                            break;
-                        }
-                    }
-                    if (dup) {
-                        rpt.notes.add(tag + "override-hook skipped (new shape already synthesized from another old override): "
-                            + h.oldName + h.oldDesc);
-                        top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-shadowed");
-                        continue;
-                    }
-                    reconnectOverrides.add(h);
-                    rpt.notes.add(tag + "override-hooked: " + h.oldName + h.oldDesc + " -> " + h.newName + h.newDesc);
-                    top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hooked");
+            // two old overrides folding into ONE new shape (Entity.interact + interactAt ->
+            // interact(player, hand, pos)): a second synthesized method with the same name+desc is a
+            // ClassFormatError, so one hook reconnects the shape and the other is noted. The hook that
+            // states it shadows the other wins (Chain.OverrideHook#shadows); else the first in wiring
+            // order -- not the order the class happens to declare its methods in
+            java.util.List<Chain.OverrideHook> ordered = new ArrayList<>(declaredOldOverrides);
+            ordered.sort(java.util.Comparator.comparingInt(chain.overrideHooks::indexOf));
+            java.util.Map<String, Chain.OverrideHook> byShape = new java.util.LinkedHashMap<>();
+            java.util.List<Chain.OverrideHook> shadowed = new ArrayList<>();
+            for (Chain.OverrideHook h : ordered) {
+                if (declaredNewOverrides.contains(h)) {
+                    continue;
                 }
+                String shape = h.newName + h.newDesc;
+                Chain.OverrideHook x = byShape.get(shape);
+                if (x == null) {
+                    byShape.put(shape, h);
+                } else if (x != h) {
+                    if (h.shadows.contains(x.oldName + x.oldDesc) && !x.shadows.contains(h.oldName + h.oldDesc)) {
+                        byShape.put(shape, h);
+                        shadowed.add(x);
+                    } else {
+                        shadowed.add(h);
+                    }
+                }
+            }
+            for (Chain.OverrideHook h : shadowed) {
+                rpt.notes.add(tag + "override-hook skipped (new shape already synthesized from another old override): "
+                    + h.oldName + h.oldDesc);
+                top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hook-shadowed");
+            }
+            for (Chain.OverrideHook h : byShape.values()) {
+                reconnectOverrides.add(h);
+                rpt.notes.add(tag + "override-hooked: " + h.oldName + h.oldDesc + " -> " + h.newName + h.newDesc);
+                top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "override-hooked");
             }
         }
         final boolean reconnectUse = hasOldUse[0] && !hasNewUse[0];

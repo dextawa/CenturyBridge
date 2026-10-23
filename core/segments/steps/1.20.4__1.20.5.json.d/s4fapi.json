@@ -32,7 +32,14 @@
   "net/fabricmc/fabric/api/client/screenhandler/v1/ScreenRegistry": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/screenhandler/v1/ScreenRegistry",
   "net/fabricmc/fabric/api/client/screenhandler/v1/ScreenRegistry$Factory": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/screenhandler/v1/ScreenRegistry$Factory",
   "net/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider": "top/dext/centurybridge/step/v1_20_5/compat/fapi/resource/conditions/v1/ConditionJsonProvider",
-  "net/fabricmc/fabric/api/resource/conditions/v1/DefaultResourceConditions": "top/dext/centurybridge/step/v1_20_5/compat/fapi/resource/conditions/v1/DefaultResourceConditions"
+  "net/fabricmc/fabric/api/resource/conditions/v1/DefaultResourceConditions": "top/dext/centurybridge/step/v1_20_5/compat/fapi/resource/conditions/v1/DefaultResourceConditions",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Replace": "top/dext/centurybridge/step/v1_20_5/compat/fapi/loot/v2/LootTableEvents$Replace",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Modify": "top/dext/centurybridge/step/v1_20_5/compat/fapi/loot/v2/LootTableEvents$Modify",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Loaded": "top/dext/centurybridge/step/v1_20_5/compat/fapi/loot/v2/LootTableEvents$Loaded",
+  "net/fabricmc/fabric/api/item/v1/FabricItemSettings": "top/dext/centurybridge/step/v1_20_5/compat/fapi/item/v1/FabricItemSettings",
+  "net/fabricmc/fabric/api/item/v1/CustomDamageHandler": "top/dext/centurybridge/step/v1_20_5/compat/fapi/item/v1/CustomDamageHandler",
+  "net/fabricmc/fabric/api/item/v1/ModifyItemAttributeModifiersCallback": "top/dext/centurybridge/step/v1_20_5/compat/fapi/item/v1/ModifyItemAttributeModifiersCallback",
+  "net/fabricmc/fabric/api/client/item/v1/ItemTooltipCallback": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/item/v1/ItemTooltipCallback"
  },
  "staticRedirects": {
   "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking.registerGlobalReceiver(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$ConfigurationChannelHandler;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/client/networking/v1/ClientConfigurationNetworking",
@@ -98,7 +105,9 @@
   "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.get(Lnet/minecraft/class_2960;)Ljava/util/function/Predicate;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions",
   "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.objectMatchesConditions(Lcom/google/gson/JsonObject;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions",
   "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.conditionsMatch(Lcom/google/gson/JsonArray;Z)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions",
-  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.conditionMatches(Lcom/google/gson/JsonObject;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions"
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.conditionMatches(Lcom/google/gson/JsonObject;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions",
+  "net/fabricmc/fabric/api/particle/v1/FabricParticleTypes.complex(Lnet/minecraft/class_2394$class_2395;)Lnet/minecraft/class_2396;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/particle/CbFapiParticles",
+  "net/fabricmc/fabric/api/particle/v1/FabricParticleTypes.complex(ZLnet/minecraft/class_2394$class_2395;)Lnet/minecraft/class_2396;": "top/dext/centurybridge/step/v1_20_5/rt/CbParticles#legacyType"
  },
  "instanceRedirects": {
   "net/fabricmc/fabric/api/networking/v1/PacketSender.createPacket(Lnet/minecraft/class_2960;Lnet/minecraft/class_2540;)Lnet/minecraft/class_2596;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders",
@@ -122,7 +131,17 @@
   "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.copyOrCreateNbt()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants",
   "net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage.writeNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages",
   "net/fabricmc/fabric/api/transfer/v1/item/base/SingleItemStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages",
-  "net/fabricmc/fabric/api/transfer/v1/fluid/base/SingleFluidStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages"
+  "net/fabricmc/fabric/api/transfer/v1/fluid/base/SingleFluidStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getAttributeModifiers(Lnet/minecraft/class_1799;Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems",
+  "net/minecraft/class_1792.getAttributeModifiers(Lnet/minecraft/class_1799;Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getFoodComponent(Lnet/minecraft/class_1799;)Lnet/minecraft/class_4174;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems",
+  "net/minecraft/class_1792.getFoodComponent(Lnet/minecraft/class_1799;)Lnet/minecraft/class_4174;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getIntrinsicEnchantments(Lnet/minecraft/class_1799;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems",
+  "net/minecraft/class_1792.getIntrinsicEnchantments(Lnet/minecraft/class_1799;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.isSuitableFor(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems",
+  "net/minecraft/class_1792.isSuitableFor(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems",
+  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getFoodComponent()Lnet/minecraft/class_4174;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems#stackFood",
+  "net/minecraft/class_1799.getFoodComponent()Lnet/minecraft/class_4174;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems#stackFood"
  },
  "superRedirects": {
   "net/fabricmc/fabric/api/networking/v1/PacketSender.sendPacket(Lnet/fabricmc/fabric/api/networking/v1/FabricPacket;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/networking/CbPacketSenders#superSendPacket",
@@ -138,7 +157,12 @@
   "net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant.copyOrCreateNbt()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbVariants#superCopyOrCreateNbt",
   "net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage.writeNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages#superWriteNbt",
   "net/fabricmc/fabric/api/transfer/v1/item/base/SingleItemStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages#superReadNbt",
-  "net/fabricmc/fabric/api/transfer/v1/fluid/base/SingleFluidStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages#superReadNbt"
+  "net/fabricmc/fabric/api/transfer/v1/fluid/base/SingleFluidStorage.readNbt(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/transfer/CbStorages#superReadNbt",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getAttributeModifiers(Lnet/minecraft/class_1799;Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems#superGetAttributeModifiers",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getFoodComponent(Lnet/minecraft/class_1799;)Lnet/minecraft/class_4174;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems#superGetFoodComponent",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.getIntrinsicEnchantments(Lnet/minecraft/class_1799;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems#superGetIntrinsicEnchantments",
+  "net/fabricmc/fabric/api/item/v1/FabricItem.isSuitableFor(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems#superIsSuitableFor",
+  "net/fabricmc/fabric/api/item/v1/FabricItemStack.getFoodComponent()Lnet/minecraft/class_4174;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems#superStackFood"
  },
  "overrideHooks": [
   {
@@ -171,6 +195,16 @@
    "bridge": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers.getScreenOpeningData(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers$LegacyFactory;Lnet/minecraft/class_3222;)Ljava/lang/Object;",
    "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/screenhandler/CbScreenHandlers$LegacyFactory",
    "onlyUnder": "net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerFactory"
+  },
+  {
+   "old": "isSuitableFor(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)Z",
+   "new": "method_58405(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)Z",
+   "onlyUnder": "net/minecraft/class_1792",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "shadows": [
+    "method_7856(Lnet/minecraft/class_2680;)Z"
+   ],
+   "basis": "s4fapi: 1.20.4's ItemStack.isSuitableFor(state) asked FabricItem.isSuitableFor(stack, state), whose default asked the item's isSuitableFor(state): in a class declaring both, the Fabric method answers 1.20.5's isCorrectForDrops(stack, state) and reaches the vanilla one through its super call (CbFapiItems.superIsSuitableFor)"
   }
  ],
  "abstractFills": [
@@ -232,7 +266,10 @@
  "_s4fapi_networking_basis": "Fabric API 1.20.5 replaced 1.20.4's channel networking (an Identifier plus a raw PacketByteBuf, and FabricPacket/PacketType on top of it) with CustomPayload types registered per phase and direction in PayloadTypeRegistry. compat/fapi gives 1.20.4's API back: a channel is a CbChannelPayload type of its id (impl/networking/CbChannels; registered for the receiving side when a 1.20.4 receiver is registered, the send side written through CbPayloads' fallback where nothing registered it), 1.20.4 handlers are wrapped as 1.20.5 handlers, PacketSender's dropped members dispatch to a mod's own 1.20.4 implementation (CbLegacyPacketSender) or build channel payloads for 1.20.5's senders, and a GenericFutureListener reaches its write's channel future again (CbFapiFutureListenerMixin).",
  "fieldGetters": {
   "net/fabricmc/fabric/api/resource/ResourceReloadListenerKeys.LOOT_TABLES:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/CbFapiReloadKeys",
-  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.CONDITION_ID_KEY:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions"
+  "net/fabricmc/fabric/api/resource/conditions/v1/ResourceConditions.CONDITION_ID_KEY:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents.REPLACE:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/loot/v2/LootTableEvents",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents.MODIFY:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/loot/v2/LootTableEvents",
+  "net/fabricmc/fabric/api/loot/v2/LootTableEvents.ALL_LOADED:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_20_5/compat/fapi/loot/v2/LootTableEvents"
  },
  "depRenames": {
   "fabric-events-lifecycle-v0": "centurybridge_step_1_20_5@*",
@@ -285,6 +322,68 @@
     "readNbt(Lnet/minecraft/class_2487;)V"
    ],
    "synth": []
+  },
+  {
+   "under": "net/fabricmc/fabric/api/item/v1/FabricItem",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems$StackModifiers",
+   "requires": [
+    "getAttributeModifiers(Lnet/minecraft/class_1799;Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/fabricmc/fabric/api/item/v1/FabricItem",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems$StackFood",
+   "requires": [
+    "getFoodComponent(Lnet/minecraft/class_1799;)Lnet/minecraft/class_4174;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/fabricmc/fabric/api/item/v1/FabricItem",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems$StackIntrinsic",
+   "requires": [
+    "getIntrinsicEnchantments(Lnet/minecraft/class_1799;)Lit/unimi/dsi/fastutil/objects/Object2IntMap;"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/fabricmc/fabric/api/item/v1/FabricItem",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems$StackSuitable",
+   "requires": [
+    "isSuitableFor(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;)Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/minecraft/class_1792",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems$Suitable",
+   "requires": [
+    "method_7856(Lnet/minecraft/class_2680;)Z"
+   ],
+   "synth": []
+  },
+  {
+   "under": "net/fabricmc/fabric/api/item/v1/FabricItemStack",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/item/CbFapiItems$OwnFood",
+   "requires": [
+    "getFoodComponent()Lnet/minecraft/class_4174;"
+   ],
+   "synth": []
   }
- ]
+ ],
+ "_s4fapi_loot_basis": "Fabric API 1.20.5 kept LootTableEvents and its three fields but changed every listener's shape (a registry key, no resource or loot manager), so a 1.20.4 listener cannot be registered on them (the event's array is typed by the new interface). A 1.20.4 mod's listener types are compat/fapi/loot/v2/LootTableEvents' (1.20.4 shapes, s4item's facade/LootDataManager for the loot manager), its reads of the three fields reach those events, and impl/loot/CbLootEvents fires them as 1.20.4 did once all loot data of a reload is read (CbFapiLootEventsMixin at ReloadableRegistries.apply, before vanilla freezes the registries)",
+ "overrideRenames": [
+  {
+   "old": "allowNbtUpdateAnimation(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z",
+   "new": "allowComponentsUpdateAnimation",
+   "onlyUnder": "net/fabricmc/fabric/api/item/v1/FabricItem",
+   "superCalls": "rename",
+   "basis": "s4fapi: 1.20.5's FabricItem renamed allowNbtUpdateAnimation, same arguments and meaning (components are 1.20.5's NBT)"
+  }
+ ],
+ "methodRenames": {
+  "net/fabricmc/fabric/api/item/v1/FabricItem.allowNbtUpdateAnimation(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "allowComponentsUpdateAnimation",
+  "net/minecraft/class_1792.allowNbtUpdateAnimation(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "allowComponentsUpdateAnimation"
+ }
 }

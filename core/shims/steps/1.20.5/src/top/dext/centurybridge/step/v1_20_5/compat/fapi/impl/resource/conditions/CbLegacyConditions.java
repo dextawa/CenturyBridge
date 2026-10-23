@@ -145,7 +145,7 @@ public final class CbLegacyConditions {
     // ---------------------------------------------------------------- a JSON condition as a 1.20.5 condition
 
     /** a condition as 1.20.4 wrote it: its whole JSON object, "condition" included */
-    record JsonCondition(ResourceConditionType<JsonCondition> type, JsonObject json) implements ResourceCondition {
+    record JsonCondition(ResourceConditionType<JsonCondition> type, JsonObject json, ConditionJsonProvider provider) implements ResourceCondition {
 
         @Override
         public ResourceConditionType<?> getType() {
@@ -188,7 +188,7 @@ public final class CbLegacyConditions {
                         json.add(key, ops.convertTo(JsonOps.INSTANCE, e.getSecond()));
                     }
                 });
-                return DataResult.success(new JsonCondition(self[0], json));
+                return DataResult.success(new JsonCondition(self[0], json, null));
             }
 
             @Override
@@ -214,7 +214,42 @@ public final class CbLegacyConditions {
         ResourceCondition[] out = new ResourceCondition[providers.length];
         for (int i = 0; i < providers.length; i++) {
             ConditionJsonProvider provider = Objects.requireNonNull(providers[i], "condition cannot be null");
-            out[i] = new JsonCondition(jsonType(provider.getConditionId()), provider.toJson());
+            out[i] = new JsonCondition(jsonType(provider.getConditionId()), provider.toJson(), provider);
+        }
+        return out;
+    }
+
+    /**
+     * 1.20.5 conditions as the 1.20.4 providers a 1.20.4 override of a data generator's withConditions takes
+     * (the override hooks' wrap): a condition made from a provider gives that provider back, any other writes
+     * the JSON 1.20.5 writes for it.
+     */
+    public static ConditionJsonProvider[] providers(ResourceCondition[] conditions) {
+        ConditionJsonProvider[] out = new ConditionJsonProvider[conditions.length];
+        for (int i = 0; i < conditions.length; i++) {
+            ResourceCondition c = conditions[i];
+            if (c instanceof JsonCondition j && j.provider() != null) {
+                out[i] = j.provider();
+                continue;
+            }
+            JsonObject json = ResourceCondition.CODEC.encodeStart(JsonOps.INSTANCE, c)
+                .getOrThrow(error -> new IllegalStateException("Cannot write condition " + c + ": " + error)).getAsJsonObject();
+            net.minecraft.class_2960 id = new net.minecraft.class_2960(net.minecraft.class_3518.method_15265(json, CONDITION_ID_KEY()));
+            out[i] = new ConditionJsonProvider() {
+                @Override
+                public net.minecraft.class_2960 getConditionId() {
+                    return id;
+                }
+
+                @Override
+                public void writeParameters(JsonObject object) {
+                    for (Map.Entry<String, JsonElement> e : json.entrySet()) {
+                        if (!e.getKey().equals(CONDITION_ID_KEY())) {
+                            object.add(e.getKey(), e.getValue().deepCopy());
+                        }
+                    }
+                }
+            };
         }
         return out;
     }

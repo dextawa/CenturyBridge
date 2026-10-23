@@ -155,6 +155,7 @@ public final class WiringCheck {
         w.genericOverrides = genericOverrideRows(shimsJson);
         w.check(root);
         w.checkFacadeSurfaces(root);
+        w.checkHookPrecedence(top.dext.centurybridge.engine.Wiring.areas(shimsJson));
         w.sources.close();
         System.out.println("wiring-check: " + w.checked + " wired targets against " + classesDir
             + ", " + w.problems.size() + " dangling");
@@ -164,6 +165,96 @@ public final class WiringCheck {
         if (!w.problems.isEmpty()) {
             System.exit(1);
         }
+    }
+
+    /**
+     * Override hooks that fold into one new shape (Chain.OverrideHook#shadows): a class declaring both old
+     * methods can synthesize the new shape once, so which hook reconnects it must be stated. A pair that
+     * can meet in one class -- either is unfiltered, either filter is an interface or a type the source
+     * stubs do not know (a library's: Fabric API), or one filter class is under the other -- needs one
+     * hook to name the other's old shape in "shadows", unless both come from the same wiring file, whose
+     * order its author wrote (the first wins). Two files, no statement: an error, since which loads first
+     * is a file-name accident.
+     */
+    private void checkHookPrecedence(java.util.Map<String, com.google.gson.JsonObject> areas) {
+        record Hook(String area, String old, String nw, String onlyUnder, java.util.Set<String> shadows) {
+        }
+        List<Hook> hooks = new ArrayList<>();
+        for (var a : areas.entrySet()) {
+            if (!a.getValue().has("overrideHooks")) {
+                continue;
+            }
+            for (var el : a.getValue().getAsJsonArray("overrideHooks")) {
+                var o = el.getAsJsonObject();
+                java.util.Set<String> sh = new java.util.HashSet<>();
+                if (o.has("shadows")) {
+                    for (var s : o.getAsJsonArray("shadows")) {
+                        sh.add(s.getAsString());
+                    }
+                }
+                hooks.add(new Hook(a.getKey(), o.get("old").getAsString(), o.get("new").getAsString(),
+                    o.has("onlyUnder") ? o.get("onlyUnder").getAsString() : null, sh));
+            }
+        }
+        java.util.Set<String> oldShapes = new java.util.HashSet<>();
+        for (Hook h : hooks) {
+            oldShapes.add(h.old());
+        }
+        for (Hook h : hooks) {
+            for (String s : h.shadows()) {
+                if (!oldShapes.contains(s)) {
+                    problems.add("overrideHooks " + h.old() + " (" + h.area() + "): shadows " + s + ", which no hook has as its old shape");
+                }
+            }
+        }
+        for (int i = 0; i < hooks.size(); i++) {
+            for (int j = i + 1; j < hooks.size(); j++) {
+                Hook a = hooks.get(i);
+                Hook b = hooks.get(j);
+                if (!a.nw().equals(b.nw()) || a.old().equals(b.old()) || !canMeet(a.onlyUnder(), b.onlyUnder())) {
+                    continue;
+                }
+                boolean ab = a.shadows().contains(b.old());
+                boolean ba = b.shadows().contains(a.old());
+                if (ab && ba) {
+                    problems.add("overrideHooks " + a.old() + " (" + a.area() + ") and " + b.old() + " (" + b.area()
+                        + ") both fold into " + a.nw() + " and each says it shadows the other");
+                } else if (!ab && !ba && !a.area().equals(b.area())) {
+                    problems.add("overrideHooks " + a.old() + " (" + a.area() + ") and " + b.old() + " (" + b.area()
+                        + ") both fold into " + a.nw() + " and can meet in one class: state which wins (\"shadows\")");
+                }
+                checked++;
+            }
+        }
+    }
+
+    /** whether one class can be under both hook filters (see checkHookPrecedence) */
+    private boolean canMeet(String a, String b) {
+        if (a == null || b == null || a.equals(b)) {
+            return true;
+        }
+        List<ClassNode> av = sources.versionsOf(a);
+        List<ClassNode> bv = sources.versionsOf(b);
+        if (av.isEmpty() || bv.isEmpty()) {
+            return true;
+        }
+        if ((av.get(0).access & Opcodes.ACC_INTERFACE) != 0 || (bv.get(0).access & Opcodes.ACC_INTERFACE) != 0) {
+            return true;
+        }
+        return sourceSuperclass(a, b) || sourceSuperclass(b, a);
+    }
+
+    /** whether {@code sup} is {@code sub} or one of its superclasses, in the newest source stub knowing each */
+    private boolean sourceSuperclass(String sub, String sup) {
+        String c = sub;
+        for (int guard = 0; c != null && guard < 64; guard++) {
+            if (c.equals(sup)) {
+                return true;
+            }
+            List<ClassNode> v = sources.versionsOf(c);
+            c = v.isEmpty() ? null : v.get(0).superName;
+        }
+        return false;
     }
 
     /**

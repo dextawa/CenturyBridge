@@ -9,9 +9,9 @@ import top.dext.centurybridge.step.v1_20_5.compat.fapi.event.world.WorldTickCall
 
 /**
  * 1.20.4's fabric-events-lifecycle-v0 LegacyClientEventInvokers (that module's client entrypoint, run from
- * this layer's, compat/fapi/CbFapiClientInit): the ticks on lifecycle v1's client events, the tooltip on
- * 1.20.5's item API ItemTooltipCallback, whose Item.TooltipContext argument the 1.20.4 event never had;
- * 1.20.5's tooltip type is the 1.20.4 tooltip context (the same class_1836).
+ * this layer's, compat/fapi/CbFapiClientInit): the ticks on lifecycle v1's client events, the tooltip on the
+ * 1.20.4 item API's client ItemTooltipCallback, as there (this layer's copy, itself fired from 1.20.5's:
+ * impl/client/item/CbFapiItemClient).
  */
 @Environment(EnvType.CLIENT)
 public final class CbLegacyClientEventInvokers {
@@ -25,9 +25,9 @@ public final class CbLegacyClientEventInvokers {
         ClientTickEvents.END_WORLD_TICK.register(world -> WorldTickCallback.EVENT.invoker().tick(world));
     }
 
-    /** the tooltip event (fabric-item-api-v1) */
+    /** the tooltip event (the 1.20.4 item API's, fired when fabric-item-api-v1 is loaded) */
     public static void initTooltips() {
-        net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback.EVENT.register(
-            (stack, context, type, lines) -> ItemTooltipCallback.EVENT.invoker().getTooltip(stack, type, lines));
+        top.dext.centurybridge.step.v1_20_5.compat.fapi.client.item.v1.ItemTooltipCallback.EVENT.register(
+            (stack, context, lines) -> ItemTooltipCallback.EVENT.invoker().getTooltip(stack, context, lines));
     }
 }

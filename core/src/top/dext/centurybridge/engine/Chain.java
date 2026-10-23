@@ -420,6 +420,18 @@ public final class Chain {
          */
         public boolean narrow;
         /**
+         * Precedence between hooks that fold into ONE new shape ("shadows": [old shapes, "name(desc)"]).
+         * A class can synthesize the new shape only once, so in a class declaring this hook's old
+         * method and one of the listed ones, this hook reconnects the new shape and the other old
+         * method is left unhooked (1.20.5: FabricItem.isSuitableFor(stack, state) over vanilla's
+         * isSuitableFor(state), both answered by isCorrectForDrops(stack, state) -- 1.20.4's
+         * ItemStack asked the Fabric method, whose default called the vanilla one). Without a stated
+         * precedence the first of such hooks in wiring order wins -- never the order the class
+         * declares its methods in -- and WiringCheck refuses two such hooks from different wiring
+         * files that can meet in one class: file-name order is not a precedence anyone stated.
+         */
+        public final java.util.Set<String> shadows = new java.util.HashSet<>();
+        /**
          * Super calls through a bridge ("superBridge": "Owner.name(desc)", "superAccess",
          * "superAccessors"), for an old contract the new shapes only meet together: 1.20.4's
          * Block.use was, in 1.20.5 terms, useItemOn and then -- when the item interaction passes
@@ -2061,6 +2073,12 @@ public final class Chain {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": superCalls needs args");
                     }
                     h.narrow = o.has("narrow") && o.get("narrow").getAsBoolean();
+                    if (o.has("shadows")) {
+                        for (var s : o.getAsJsonArray("shadows")) {
+                            String[] ssig = splitSig(s.getAsString());
+                            h.shadows.add(ssig[0] + ssig[1]);
+                        }
+                    }
                     if (h.narrow && (h.frames != null || h.wrapName != null || o.has("bridge"))) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
                             + ": narrow forwards the new argument itself (no wrap / bridge / frames)");
