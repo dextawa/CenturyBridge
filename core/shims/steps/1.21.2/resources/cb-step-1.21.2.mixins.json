@@ -34,6 +34,7 @@
     "CbRestGenerationChunkHolderMixin",
     "CbRestLevelMixin",
     "CbRestMinecraftServerMixin",
+    "CbRestRegistriesHolderAccessor",
     "CbRestSelectorContentsMixin",
     "CbRestServerChunkCacheMixin",
     "CbRestServerGamePacketListenerMixin",

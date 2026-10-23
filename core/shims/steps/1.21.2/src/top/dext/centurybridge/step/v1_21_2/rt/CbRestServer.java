@@ -356,4 +356,79 @@ public final class CbRestServer {
     public static net.minecraft.class_5514 method_33805(String config) {
         return (net.minecraft.class_5514) net.minecraft.class_5514.method_33805(config);
     }
+
+    // ------------------------------------------------------------------ data pack loading
+
+    /**
+     * RegistryDataLoader.load(resources, context, registries): 1.21.2 takes the context as registry lookups;
+     * 1.21.1's context access answers them as its registries (each a lookup of itself, tags as bound)
+     */
+    public static net.minecraft.class_5455.class_6890 method_56515(net.minecraft.class_3300 resources, net.minecraft.class_5455 context,
+            java.util.List<net.minecraft.class_7655.class_7657<?>> registries) {
+        return net.minecraft.class_7655.method_56515(resources, context.method_62678().toList(), registries);
+    }
+
+    /** RegistryDataLoader.load(networkContents, resources, context, registries), as above */
+    public static net.minecraft.class_5455.class_6890 method_56519(
+            java.util.Map<net.minecraft.class_5321<? extends net.minecraft.class_2378<?>>, net.minecraft.class_7655.class_9841> contents,
+            net.minecraft.class_5912 resources, net.minecraft.class_5455 context, java.util.List<net.minecraft.class_7655.class_7657<?>> registries) {
+        return net.minecraft.class_7655.method_56519(contents, resources, context.method_62678().toList(), registries);
+    }
+
+    /**
+     * ReloadableServerRegistries.reload(registries, resources, executor): 1.21.2 also takes the tags still to be
+     * bound and answers the layers with the lookup they were validated against; 1.21.1 reloaded against the
+     * registries' tags as bound (no pending tags) and answered the layers
+     */
+    public static java.util.concurrent.CompletableFuture<net.minecraft.class_7780<net.minecraft.class_7659>> method_58284(
+            net.minecraft.class_7780<net.minecraft.class_7659> registries, net.minecraft.class_3300 resources, java.util.concurrent.Executor executor) {
+        return net.minecraft.class_9383.method_58284(registries, java.util.List.of(), resources, executor).thenApply(r -> r.comp_2898());
+    }
+
+    /**
+     * ReloadableServerRegistries.Holder.get(): the frozen registries the holder was made of. 1.21.2's
+     * ReloadableServerResources makes it of the reloaded layers' composite access, as 1.21.1 did, and keeps it as a
+     * lookup provider; a holder made of a plain provider has no registry access to answer
+     */
+    public static net.minecraft.class_5455.class_6890 holderRegistries(net.minecraft.class_9383.class_9385 holder) {
+        net.minecraft.class_7225.class_7874 registries = ((top.dext.centurybridge.step.v1_21_2.mixin.CbRestRegistriesHolderAccessor) holder).cb$registries();
+        if (registries instanceof net.minecraft.class_5455.class_6890 frozen) {
+            return frozen;
+        }
+        throw new UnsupportedOperationException("CenturyBridge: ReloadableServerRegistries.Holder.get() of a holder made of a"
+            + " lookup provider that is not a frozen registry access (1.21.2 allows that; 1.21.1 holders were always made of one)");
+    }
+
+    /**
+     * ReloadableServerResources.loadResources(resources, registries, features, commands, permissionLevel, background, main):
+     * 1.21.1 loaded the tags among its reload listeners; 1.21.2 takes them loaded, as MinecraftServer and WorldLoader
+     * load them (TagLoader.loadTagsForExistingRegistries over the composite access), and binds them in
+     * updateStaticRegistryTags, 1.21.1's updateRegistryTags
+     */
+    public static java.util.concurrent.CompletableFuture<net.minecraft.class_5350> method_29466(net.minecraft.class_3300 resources,
+            net.minecraft.class_7780<net.minecraft.class_7659> registries, net.minecraft.class_7699 features,
+            net.minecraft.class_2170.class_5364 commands, int permissionLevel, java.util.concurrent.Executor background,
+            java.util.concurrent.Executor main) {
+        java.util.List<net.minecraft.class_2378.class_10106<?>> tags = net.minecraft.class_3503.method_61307(resources, registries.method_45926());
+        return net.minecraft.class_5350.method_29466(resources, registries, tags, features, commands, permissionLevel, background, main);
+    }
+
+    /** ReloadableServerResources.updateRegistryTags(): 1.21.2's updateStaticRegistryTags, which binds the loaded tags */
+    public static void updateRegistryTags(net.minecraft.class_5350 resources) {
+        resources.method_61248();
+    }
+
+    /**
+     * WorldLoader.DataLoadContext.datapackWorldgen(): 1.21.1 answered the frozen worldgen registries; 1.21.2 keeps a
+     * lookup provider, which WorldLoader makes of those registries' lookups with their pending tags -- a registry
+     * access only when the context was made of one (a 1.21.1 caller's)
+     */
+    public static net.minecraft.class_5455.class_6890 datapackWorldgen(net.minecraft.class_7237.class_7660 context) {
+        net.minecraft.class_7225.class_7874 worldgen = context.comp_989();
+        if (worldgen instanceof net.minecraft.class_5455.class_6890 frozen) {
+            return frozen;
+        }
+        throw new UnsupportedOperationException("CenturyBridge: WorldLoader.DataLoadContext.datapackWorldgen() as a frozen"
+            + " registry access: 1.21.2's WorldLoader keeps only registry lookups with pending tags there");
+    }
 }
