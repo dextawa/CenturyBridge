@@ -202,6 +202,22 @@
     "method_3049(Lnet/minecraft/class_765;Lnet/minecraft/class_4184;F)V"
    ],
    "basis": "s4client: ParticleEngine.render lost its pose and buffer source in 1.20.5 (the model-view stack carries the camera rotation the pose did). A 1.20.4 engine's override is what 1.20.5 renders through, given an identity pose and the frame's buffer source; its super call is 1.20.4's body (pose onto the model-view stack around super's render)"
+  },
+  {
+   "old": "method_53543()Lnet/minecraft/class_8743;",
+   "new": "method_53543()Lnet/minecraft/class_9191;",
+   "args": [],
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui.cbOverlayLogger(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9191;",
+   "onlyUnder": "net/minecraft/class_340",
+   "basis": "s4client: DebugScreenOverlay.getFrameTimeLogger answers a LocalSampleLogger since 1.20.5; a 1.20.4 override's sample logger is one (facade/SampleLogger)"
+  },
+  {
+   "old": "method_53544()Lnet/minecraft/class_8743;",
+   "new": "method_53544()Lnet/minecraft/class_9191;",
+   "args": [],
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui.cbOverlayLogger(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9191;",
+   "onlyUnder": "net/minecraft/class_340",
+   "basis": "s4client: DebugScreenOverlay.getTickTimeLogger answers a LocalSampleLogger since 1.20.5; a 1.20.4 override's sample logger is one (facade/SampleLogger)"
   }
  ],
  "frameDefaults": {
@@ -356,6 +372,15 @@
     "push top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#noTransfer()Lnet/minecraft/class_9112;"
    ],
    "basis": "s4client: ConnectScreen.startConnecting takes the transfer state since 1.20.5; a fresh connection (the only 1.20.4 kind) is null, as 1.20.5's own callers pass"
+  },
+  "net/minecraft/class_353.method_29624(DD)Ljava/util/Optional;": {
+   "desc": "(DD)Ljava/util/Optional;",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#cbWidgetOnly(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4client: OptionsList.getMouseOver answers Optional<GuiEventListener> since 1.20.5 (1.20.4: Optional<AbstractWidget>), found among each row's children -- its widgets, which 1.20.4 searched: a widget passes as is (generic drift)"
   }
  },
  "superCtorReshapes": {
@@ -544,6 +569,58 @@
     0
    ],
    "basis": "s4client: 1.20.4's BookViewScreen(access) took a BookAccess interface (facade/BookAccess); 1.20.5's takes a record. The screen is built empty and given the access as 1.20.5's record over a live view of its pages, the page-turn sound on, as 1.20.4's this(access, true) left it (rt/CbClientBooks)"
+  },
+  "net/minecraft/class_4416.<init>(JILnet/minecraft/class_4410;)V": {
+   "desc": "(Lnet/minecraft/class_4445;JILnet/minecraft/class_4410;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientRealms#noCreationTask()Lnet/minecraft/class_4445;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4client: RealmsSelectFileToUploadScreen takes the realm creation task an upload may finish since 1.20.5; 1.20.4's uploaded to an existing realm: no task (1.20.5's flow without one)"
+  },
+  "net/minecraft/class_4427.<init>(JILnet/minecraft/class_4410;Lnet/minecraft/class_34;)V": {
+   "desc": "(Lnet/minecraft/class_4445;JILnet/minecraft/class_4410;Lnet/minecraft/class_34;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientRealms#noCreationTask()Lnet/minecraft/class_4445;",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4client: RealmsUploadScreen takes the realm creation task an upload may finish since 1.20.5; 1.20.4's uploaded to an existing realm: no task (1.20.5 adds the task to the upload's task list only when there is one)"
+  },
+  "net/minecraft/class_4337.<init>(Ljava/io/File;JILnet/minecraft/class_4888;Lnet/minecraft/class_320;Ljava/lang/String;Lnet/minecraft/class_4351;)V": {
+   "desc": "(Ljava/io/File;JILnet/minecraft/class_4888;Lnet/minecraft/class_320;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_4351;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientRealms#uploadWorldVersion()Ljava/lang/String;",
+    "keep"
+   ],
+   "basis": "s4client: FileUpload sends the uploaded world's version in its cookie since 1.20.5; 1.20.4's constructor has no level to name it from, so it is this game's version (rt/CbClientRealms.uploadWorldVersion); the rest of the upload is unchanged"
+  },
+  "net/minecraft/class_353.<init>(Lnet/minecraft/class_310;IIII)V": {
+   "desc": "(Lnet/minecraft/class_310;IILnet/minecraft/class_4667;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#optionsHost(I)Lnet/minecraft/class_4667;"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#cbOptionsListBuilt(Lnet/minecraft/class_353;IIII)V",
+   "postArgs": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "basis": "s4client: 1.20.4's OptionsList(minecraft, width, height, y, itemHeight) placed itself and its rows by its own geometry; 1.20.5's takes the options screen whose layout sizes it and whose width centres its rows. It gets an options screen as wide as the list (rows at width / 2 - 155, as 1.20.4 placed them), then 1.20.4's size, position and row height"
   }
  },
  "fieldGetters": {
@@ -575,7 +652,18 @@
   "net/minecraft/class_8989.method_55274(Lnet/minecraft/class_8949;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_958.method_4138(Lnet/minecraft/class_1481;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
   "net/minecraft/class_967.method_4161(Lnet/minecraft/class_1547;Lnet/minecraft/class_4587;F)V",
-  "net/minecraft/class_711$class_714.method_3098(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;"
+  "net/minecraft/class_711$class_714.method_3098(Lnet/minecraft/class_2400;Lnet/minecraft/class_638;DDDDDD)Lnet/minecraft/class_703;",
+  "net/minecraft/class_4410.method_21377(Ljava/lang/Runnable;)V",
+  "net/minecraft/class_766.method_3317(FF)V",
+  "net/minecraft/class_310.method_44024()Lnet/minecraft/class_7478;",
+  "net/minecraft/class_7065.method_41160(I)V",
+  "net/minecraft/class_7065.method_44663(Lnet/minecraft/class_332;)V",
+  "net/minecraft/class_7065.method_44068()I",
+  "net/minecraft/class_4749.method_41160(I)V",
+  "net/minecraft/class_748.method_3153()Lnet/minecraft/class_2499;",
+  "net/minecraft/class_748.method_3152(Lnet/minecraft/class_2499;)V",
+  "net/minecraft/class_748.isEmpty()Z",
+  "net/minecraft/class_748.delegate()Ljava/util/List;"
  ],
  "classRenames": {
   "net/minecraft/class_8975": "top/dext/centurybridge/step/v1_20_5/facade/GustDustParticle",
@@ -583,6 +671,25 @@
   "net/minecraft/class_711$class_712": "top/dext/centurybridge/step/v1_20_5/facade/SpellParticleAmbientMobProvider",
   "net/minecraft/class_3872$class_3931": "top/dext/centurybridge/step/v1_20_5/facade/BookAccess",
   "net/minecraft/class_3872$class_3932": "top/dext/centurybridge/step/v1_20_5/facade/WritableBookAccess",
-  "net/minecraft/class_3872$class_3933": "top/dext/centurybridge/step/v1_20_5/facade/WrittenBookAccess"
- }
+  "net/minecraft/class_3872$class_3933": "top/dext/centurybridge/step/v1_20_5/facade/WrittenBookAccess",
+  "net/minecraft/class_7478": "top/dext/centurybridge/step/v1_20_5/facade/Realms32BitWarningStatus",
+  "net/minecraft/class_7064": "top/dext/centurybridge/step/v1_20_5/facade/Realms32bitWarningScreen",
+  "net/minecraft/class_452": "top/dext/centurybridge/step/v1_20_5/facade/StatsUpdateListener"
+ },
+ "superRenames": {
+  "net/minecraft/class_7065": "top/dext/centurybridge/step/v1_20_5/facade/WarningScreen",
+  "net/minecraft/class_4749": "top/dext/centurybridge/step/v1_20_5/facade/SafetyScreen"
+ },
+ "convertHooks": [
+  {
+   "under": "net/minecraft/class_353",
+   "member": "method_29624(DD)Ljava/util/Optional;",
+   "args": [
+    null,
+    null
+   ],
+   "ret": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#cbWidgetOnly(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "s4client: a 1.20.4 OptionsList subclass's getMouseOver answers a widget, which 1.20.5 takes as the listener it is"
+  }
+ ]
 }
