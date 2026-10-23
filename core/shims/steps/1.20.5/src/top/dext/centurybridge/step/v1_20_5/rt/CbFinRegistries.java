@@ -78,7 +78,47 @@ public final class CbFinRegistries {
             throw new IllegalArgumentException("1.20.5 registers " + key + " in " + registry.method_30517() + " at id "
                 + registry.method_10204() + " only, not " + id);
         }
-        return registry.method_10272(key, value, new net.minecraft.class_9248(Optional.empty(), lifecycle));
+        return registry.method_10272(key, value, registrationInfo(registry, key, lifecycle));
+    }
+
+    /**
+     * The registration info of a registerMapping: the one 1.20.5 handed {@link #cbRegister} for this
+     * registration when the 1.20.4 override passes it on unchanged (its pack identity kept), else the
+     * lifecycle alone (1.20.4 had no pack identity).
+     */
+    private static net.minecraft.class_9248 registrationInfo(net.minecraft.class_2370<?> registry, net.minecraft.class_5321<?> key,
+                                                            com.mojang.serialization.Lifecycle lifecycle) {
+        Object[] top = REGISTERING.get().peek();
+        if (top != null && top[0] == registry && top[1] == key && ((net.minecraft.class_9248) top[2]).comp_2355() == lifecycle) {
+            return (net.minecraft.class_9248) top[2];
+        }
+        return new net.minecraft.class_9248(Optional.empty(), lifecycle);
+    }
+
+    /** registrations in progress through a 1.20.4 override: {registry, key, info} */
+    private static final ThreadLocal<java.util.ArrayDeque<Object[]>> REGISTERING = ThreadLocal.withInitial(java.util.ArrayDeque::new);
+
+    /** a 1.20.4 MappedRegistry subclass's registerMapping(id, key, value, lifecycle) (the adapter the override hook adds) */
+    public interface LegacyRegisterMapping {
+        net.minecraft.class_6880.class_6883<?> method_46744(int id, net.minecraft.class_5321<?> key, Object value,
+                                                            com.mojang.serialization.Lifecycle lifecycle);
+    }
+
+    /**
+     * 1.20.5 registers through register(key, value, info); 1.20.4's register(key, value, lifecycle) was
+     * registerMapping(next id, key, value, lifecycle), which a subclass overrode to see every
+     * registration. Its override gets exactly that; a super call passing the lifecycle on registers
+     * with the info 1.20.5 gave.
+     */
+    public static net.minecraft.class_6880.class_6883<?> cbRegister(LegacyRegisterMapping registry, net.minecraft.class_5321<?> key,
+                                                                    Object value, net.minecraft.class_9248 info) {
+        java.util.ArrayDeque<Object[]> stack = REGISTERING.get();
+        stack.push(new Object[] {registry, key, info});
+        try {
+            return registry.method_46744(((net.minecraft.class_2370<?>) registry).method_10204(), key, value, info.comp_2355());
+        } finally {
+            stack.pop();
+        }
     }
 
     @SuppressWarnings("rawtypes")

@@ -71,5 +71,10 @@
    "onlyUnder": "net/minecraft/class_1219",
    "basis": "VillagerTradeFix fixes trades type-wide since 1.20.5; a 1.20.4 subclass's fix(typed) gets 1.20.4's NamedEntityFix rule on minecraft:villager"
   }
+ ],
+ "covers": [
+  "net/minecraft/class_3553.method_15476(Ljava/lang/String;Lcom/mojang/datafixers/types/templates/TaggedChoice$TaggedChoiceType;Lcom/mojang/datafixers/types/templates/TaggedChoice$TaggedChoiceType;)Lcom/mojang/datafixers/TypeRewriteRule;",
+  "net/minecraft/class_1175.method_5164(Ljava/lang/String;Lcom/mojang/serialization/Dynamic;)Lcom/mojang/datafixers/util/Pair;",
+  "net/minecraft/class_1219.method_5105(Lcom/mojang/datafixers/Typed;)Lcom/mojang/datafixers/Typed;"
  ]
 }
