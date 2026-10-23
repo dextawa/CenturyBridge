@@ -1,0 +1,445 @@
+{
+ "staticRedirects": {
+  "com/mojang/blaze3d/systems/RenderSystem.getModelViewStack()Lnet/minecraft/class_4587;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
+  "com/mojang/blaze3d/systems/RenderSystem.getInverseViewRotationMatrix()Lorg/joml/Matrix3f;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
+  "com/mojang/blaze3d/systems/RenderSystem.setInverseViewRotationMatrix(Lorg/joml/Matrix3f;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
+  "com/mojang/blaze3d/systems/RenderSystem.setupLevelDiffuseLighting(Lorg/joml/Vector3f;Lorg/joml/Vector3f;Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
+  "net/minecraft/class_308.method_1452(Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#setupLevel",
+  "net/minecraft/class_308.method_27869(Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#setupNetherLevel",
+  "net/minecraft/class_437.method_40041([Lnet/minecraft/class_339;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_624.method_32068()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#wolfBodyLayer"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_276.method_1232(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
+  "net/minecraft/class_1011.method_4316(Lorg/lwjgl/stb/STBTTFontinfo;IIIFFFFII)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
+  "net/minecraft/class_383.method_41713()F": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
+  "net/minecraft/class_7919.method_54383(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_7919.method_54384(ZZLnet/minecraft/class_8030;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_437.method_25434(Lnet/minecraft/class_332;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_1132.method_53620(J)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_4904.method_25329()I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_353.method_20406(Lnet/minecraft/class_7172;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui"
+ },
+ "superRedirects": {
+  "net/minecraft/class_276.method_1232(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#cbSuperFilterMode",
+  "net/minecraft/class_383.method_41713()F": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#cbSuperBearingY",
+  "net/minecraft/class_437.method_25434(Lnet/minecraft/class_332;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#cbSuperDirtBackground",
+  "net/minecraft/class_4904.method_25329()I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#cbSuperScrollbar",
+  "net/minecraft/class_353.method_20406(Lnet/minecraft/class_7172;)I": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#cbSuperAddBig"
+ },
+ "instanceFieldGetters": {
+  "net/minecraft/class_5944.field_36323:Lnet/minecraft/class_284;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#inverseViewRotationUniform",
+  "net/minecraft/class_8755.field_45919:Lnet/minecraft/class_8743;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#cbChartLogger"
+ },
+ "methodRenames": {
+  "net/minecraft/class_383.method_41712()F": "method_56129",
+  "net/minecraft/class_7196.method_54618(Ljava/lang/String;Ljava/lang/Runnable;)V": "method_57784",
+  "net/minecraft/class_4228.method_19721()Ljava/nio/ByteBuffer;": "method_59757"
+ },
+ "overrideRenames": [
+  {
+   "old": "method_41712()F",
+   "new": "method_56129",
+   "onlyUnder": "net/minecraft/class_383",
+   "superCalls": "rename",
+   "basis": "s4client: GlyphBitmap.getBearingX() is getBearingLeft() since 1.20.5: the same left edge (getLeft() answers it in both, the baked glyph draws from it unchanged)"
+  },
+  {
+   "old": "method_54618(Ljava/lang/String;Ljava/lang/Runnable;)V",
+   "new": "method_57784",
+   "onlyUnder": "net/minecraft/class_7196",
+   "superCalls": "rename",
+   "basis": "s4client: WorldOpenFlows.loadLevel(id, onCancel) is openWorld(id, onCancel) since 1.20.5: the same entry (the data-read screen, the level access, the checks, the load)"
+  },
+  {
+   "old": "method_19721()Ljava/nio/ByteBuffer;",
+   "new": "method_59757",
+   "onlyUnder": "net/minecraft/class_4228",
+   "superCalls": "rename",
+   "basis": "s4client: JOrbisAudioStream.readAll() is the FloatSampleSource default readAll() since 1.20.5: every sample read into one 16 KiB-chunked buffer, as the 1.20.4 body read it"
+  }
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_41713()F",
+   "new": "method_56130()F",
+   "args": [],
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender.cbBearingTop(F)F",
+   "onlyUnder": "net/minecraft/class_383",
+   "basis": "s4client: 1.20.4's getBearingY() was the glyph's top edge (getTop()), the baked glyph drawn 3 above it; 1.20.5's top edge is 7 - getBearingTop(), drawn as is: bearingTop = 10 - bearingY (rt/CbClientRender)"
+  },
+  {
+   "old": "method_22919(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;FFFII)V",
+   "new": "method_22919(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;FFFFII)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    7
+   ],
+   "onlyUnder": "net/minecraft/class_4588",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "s4client: VertexConsumer.putBulkData(pose, quad, r, g, b, light, overlay) takes the alpha since 1.20.5; a 1.20.4 consumer's own gets every value it had, its super call the alpha vanilla passed"
+  },
+  {
+   "old": "method_22920(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFF[IIZ)V",
+   "new": "method_22920(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFFF[IIZ)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9
+   ],
+   "onlyUnder": "net/minecraft/class_4588",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "s4client: VertexConsumer.putBulkData(pose, quad, brightness, r, g, b, lights, overlay, readAlpha) takes the alpha since 1.20.5, as the 7-argument form"
+  },
+  {
+   "old": "method_23763(Lorg/joml/Matrix3f;FFF)Lnet/minecraft/class_4588;",
+   "new": "method_23763(Lnet/minecraft/class_4587$class_4665;FFF)Lnet/minecraft/class_4588;",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender.normalMatrix(Lnet/minecraft/class_4587$class_4665;)Lorg/joml/Matrix3f;",
+   "onlyUnder": "net/minecraft/class_4588",
+   "basis": "s4client: VertexConsumer.normal(Matrix3f, x, y, z) is normal(Pose, x, y, z) since 1.20.5: a 1.20.4 consumer's own gets the pose's normal matrix; its super call is reshaped onto a trusted-normals pose of that matrix (1.20.4 did not renormalize)"
+  },
+  {
+   "old": "method_23153(Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;Lnet/minecraft/class_4588;IIIFFIIII)V",
+   "new": "method_23153(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIIFFIIII)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender.cbArrowVertex(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientRender$CbLegacyArrowVertex;Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIIFFIIII)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender$CbLegacyArrowVertex",
+   "onlyUnder": "net/minecraft/class_876",
+   "basis": "s4client: ArrowRenderer.vertex(pose matrix, normal matrix, ..) is vertex(Pose, ..) since 1.20.5: a 1.20.4 renderer's own gets the pose's two matrices; its super call is reshaped onto a pose of them"
+  },
+  {
+   "old": "method_47402(I)V",
+   "new": "method_47402(Ljava/time/Duration;)V",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui.millisOf(Ljava/time/Duration;)I",
+   "onlyUnder": "net/minecraft/class_339",
+   "basis": "s4client: AbstractWidget.setTooltipDelay(int ms) takes a Duration since 1.20.5: a 1.20.4 widget's own gets the milliseconds; its super call is reshaped onto the Duration"
+  },
+  {
+   "old": "method_44056(Ljava/lang/String;Z)Z",
+   "new": "method_44056(Ljava/lang/String;Z)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui.cbChatInput(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientGui$CbLegacyChatInput;Ljava/lang/String;Z)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui$CbLegacyChatInput",
+   "onlyUnder": "net/minecraft/class_408",
+   "basis": "s4client: ChatScreen.handleChatInput answers nothing since 1.20.5; a 1.20.4 screen's own answers whether it handled the input, which keyPressed acts on (mixin/CbClientChatScreenMixin keeps the screen open on false, as 1.20.4 did)"
+  },
+  {
+   "old": "method_20406(Lnet/minecraft/class_7172;)I",
+   "new": "method_20406(Lnet/minecraft/class_7172;)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui.cbAddBig(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientGui$CbLegacyAddBig;Lnet/minecraft/class_7172;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui$CbLegacyAddBig",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_353",
+   "basis": "s4client: OptionsList.addBig answers nothing since 1.20.5; vanilla's addBig calls reach a 1.20.4 list's own (which answered the index)"
+  },
+  {
+   "old": "method_2004(Ljava/util/List;)V",
+   "new": "method_2004(Ljava/util/List;Ljava/util/Set;)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui.cbFontReload(Ltop/dext/centurybridge/step/v1_20_5/rt/CbClientGui$CbLegacyFontReload;Ljava/util/List;Ljava/util/Set;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui$CbLegacyFontReload",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_377",
+   "basis": "s4client: FontSet.reload(providers) takes option-filtered providers and the options since 1.20.5: a 1.20.4 set's own gets the providers the options select, as 1.20.5's reload selects them"
+  }
+ ],
+ "frameDefaults": {
+  "method_22919(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;FFFII)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#opaque()F"
+  },
+  "method_22920(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFF[IIZ)V": {
+   "6": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#opaque()F"
+  }
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_276",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender$CbLegacyFilterMode",
+   "requires": [
+    "method_1232(I)V"
+   ],
+   "synth": [],
+   "basis": "s4client: a 1.20.4 RenderTarget subclass's own setFilterMode(int) is the one vanilla's filter-mode changes reach (mixin/CbClientRenderTargetMixin hands them to it)"
+  },
+  {
+   "under": "net/minecraft/class_437",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui$CbLegacyDirtBackground",
+   "requires": [
+    "method_25434(Lnet/minecraft/class_332;)V"
+   ],
+   "synth": [],
+   "basis": "s4client: a 1.20.4 screen's own renderDirtBackground is its background without a level (mixin/CbClientScreenMixin)"
+  },
+  {
+   "under": "net/minecraft/class_4904",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui$CbLegacyScrollbar",
+   "requires": [
+    "method_25329()I"
+   ],
+   "synth": [],
+   "basis": "s4client: a 1.20.4 Realms list's own getScrollbarPosition() answers 1.20.4 callers"
+  }
+ ],
+ "callReshapes": {
+  "net/minecraft/class_4588.method_22919(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;FFFII)V": {
+   "desc": "(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;FFFFII)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#opaque()F",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4client: 1.20.4's putBulkData wrote opaque vertices (alpha 1)"
+  },
+  "net/minecraft/class_4588.method_22920(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFF[IIZ)V": {
+   "desc": "(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFFF[IIZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#opaque()F",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4client: 1.20.4's putBulkData wrote opaque vertices (alpha 1)"
+  },
+  "net/minecraft/class_4588.method_23763(Lorg/joml/Matrix3f;FFF)Lnet/minecraft/class_4588;": {
+   "desc": "(Lnet/minecraft/class_4587$class_4665;FFF)Lnet/minecraft/class_4588;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#normalPose(Lorg/joml/Matrix3f;)Lnet/minecraft/class_4587$class_4665;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4client: 1.20.4's normal(matrix, x, y, z) transformed the normal by the matrix without renormalizing: a trusted-normals pose of that matrix"
+  },
+  "net/minecraft/class_876.method_23153(Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;Lnet/minecraft/class_4588;IIIFFIIII)V": {
+   "desc": "(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_4588;IIIFFIIII)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#pose(Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;)Lnet/minecraft/class_4587$class_4665;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7",
+    "keep:8",
+    "keep:9",
+    "keep:10",
+    "keep:11"
+   ],
+   "basis": "s4client: ArrowRenderer.vertex(pose matrix, normal matrix, ..) is vertex(Pose, ..): a pose of the two matrices"
+  },
+  "net/minecraft/class_339.method_47402(I)V": {
+   "desc": "(Ljava/time/Duration;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#millis(I)Ljava/time/Duration;"
+   ],
+   "basis": "s4client: setTooltipDelay(ms) as a Duration of those milliseconds"
+  },
+  "net/minecraft/class_408.method_44056(Ljava/lang/String;Z)Z": {
+   "desc": "(Ljava/lang/String;Z)V",
+   "ops": [
+    "keep",
+    "keep"
+   ],
+   "ret": "push top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#handled()Z",
+   "basis": "s4client: the 1.20.4 handleChatInput answered true on every path of its body"
+  },
+  "net/minecraft/class_490.method_48472(Lnet/minecraft/class_332;FFILorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/class_1309;)V": {
+   "desc": "(Lnet/minecraft/class_332;FFFLorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/class_1309;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#scale(I)F",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4client: InventoryScreen.renderEntityInInventory takes the scale as a float since 1.20.5 (scaled the same: x, x, -x)"
+  },
+  "net/minecraft/class_836.method_3578(Lnet/minecraft/class_2484$class_2485;Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_1921;": {
+   "desc": "(Lnet/minecraft/class_2484$class_2485;Lnet/minecraft/class_9296;)Lnet/minecraft/class_1921;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#resolvable(Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_9296;"
+   ],
+   "basis": "s4client: SkullBlockRenderer.getRenderType takes a ResolvableProfile since 1.20.5 and reads its profile: the profile wrapped (null stays null)"
+  },
+  "net/minecraft/class_5272.method_27878(Lnet/minecraft/class_1792;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1800;": {
+   "desc": "(Lnet/minecraft/class_1799;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1800;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#stackOf(Lnet/minecraft/class_1792;)Lnet/minecraft/class_1799;",
+    "keep"
+   ],
+   "basis": "s4client: ItemProperties.getProperty looks the property up on a stack since 1.20.5 (by its item; the damage properties when the item is damageable): a stack of the item"
+  },
+  "net/minecraft/class_412.method_36877(Lnet/minecraft/class_437;Lnet/minecraft/class_310;Lnet/minecraft/class_639;Lnet/minecraft/class_642;Z)V": {
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_310;Lnet/minecraft/class_639;Lnet/minecraft/class_642;ZLnet/minecraft/class_9112;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#noTransfer()Lnet/minecraft/class_9112;"
+   ],
+   "basis": "s4client: ConnectScreen.startConnecting takes the transfer state since 1.20.5; a fresh connection (the only 1.20.4 kind) is null, as 1.20.5's own callers pass"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_4583.<init>(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;F)V": {
+   "desc": "(Lnet/minecraft/class_4588;Lnet/minecraft/class_4587$class_4665;F)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2 top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#pose(Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;)Lnet/minecraft/class_4587$class_4665;",
+    "keep:3"
+   ],
+   "basis": "s4client: SheetedDecalTextureGenerator(consumer, pose, normal, scale) takes the Pose since 1.20.5 and inverts its two matrices, as 1.20.4 inverted the two it was given"
+  },
+  "net/minecraft/class_395.<init>(Ljava/nio/ByteBuffer;Lorg/lwjgl/stb/STBTTFontinfo;FFFFLjava/lang/String;)V": {
+   "desc": "(Ljava/nio/ByteBuffer;Lorg/lwjgl/util/freetype/FT_Face;FFFFLjava/lang/String;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#cbFace(Ljava/nio/ByteBuffer;Lorg/lwjgl/stb/STBTTFontinfo;)Lorg/lwjgl/util/freetype/FT_Face;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#cbTrueTypeBuilt(Lnet/minecraft/class_395;Lorg/lwjgl/stb/STBTTFontinfo;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "s4client: TrueTypeGlyphProvider reads its font through FreeType since 1.20.5: the same font bytes opened as a FreeType face (as 1.20.5's definition opens one); size, oversample and shift mean what they meant; the 1.20.4 font info is freed on close as 1.20.4 freed it"
+  },
+  "net/minecraft/class_8019.<init>(ILnet/minecraft/class_2561;Lnet/minecraft/class_327;Z)V": {
+   "desc": "(ILnet/minecraft/class_2561;Lnet/minecraft/class_327;ZI)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#padding()I"
+   ],
+   "basis": "s4client: FocusableTextWidget takes its padding since 1.20.5; the 1.20.4 one was a fixed 4 px"
+  },
+  "net/minecraft/class_8662$class_8664.<init>(IILnet/minecraft/class_2561;IILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V": {
+   "desc": "(IILnet/minecraft/class_2561;IILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;Lnet/minecraft/class_4185$class_7841;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#defaultNarration()Lnet/minecraft/class_4185$class_7841;"
+   ],
+   "basis": "s4client: SpriteIconButton takes its narration since 1.20.5; the 1.20.4 one narrated with the default button narration"
+  },
+  "net/minecraft/class_8662$class_8665.<init>(IILnet/minecraft/class_2561;IILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;)V": {
+   "desc": "(IILnet/minecraft/class_2561;IILnet/minecraft/class_2960;Lnet/minecraft/class_4185$class_4241;Lnet/minecraft/class_4185$class_7841;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#defaultNarration()Lnet/minecraft/class_4185$class_7841;"
+   ],
+   "basis": "s4client: as SpriteIconButton.CenteredIcon"
+  },
+  "net/minecraft/class_5682.<init>(Lnet/minecraft/class_5631;)V": {
+   "desc": "(Lnet/minecraft/class_9276;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#bundleContents(Lnet/minecraft/class_5631;)Lnet/minecraft/class_9276;"
+   ],
+   "basis": "s4client: ClientBundleTooltip takes the bundle contents since 1.20.5, which the BundleTooltip carries"
+  },
+  "net/minecraft/class_8755.<init>(Lnet/minecraft/class_327;Lnet/minecraft/class_8743;)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_9194;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#storage(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9194;"
+   ],
+   "basis": "s4client: the debug charts take the SampleStorage since 1.20.5; every 1.20.4 SampleLogger is a LocalSampleLogger, which is one (rt/CbFinNetLoggers)"
+  },
+  "net/minecraft/class_8756.<init>(Lnet/minecraft/class_327;Lnet/minecraft/class_8743;)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_9194;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#storage(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9194;"
+   ],
+   "basis": "s4client: the debug charts take the SampleStorage since 1.20.5; every 1.20.4 SampleLogger is a LocalSampleLogger, which is one (rt/CbFinNetLoggers)"
+  },
+  "net/minecraft/class_8757.<init>(Lnet/minecraft/class_327;Lnet/minecraft/class_8743;)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_9194;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#storage(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9194;"
+   ],
+   "basis": "s4client: the debug charts take the SampleStorage since 1.20.5; every 1.20.4 SampleLogger is a LocalSampleLogger, which is one (rt/CbFinNetLoggers)"
+  },
+  "net/minecraft/class_8758.<init>(Lnet/minecraft/class_327;Lnet/minecraft/class_8743;)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_9194;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#storage(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9194;"
+   ],
+   "basis": "s4client: the debug charts take the SampleStorage since 1.20.5; every 1.20.4 SampleLogger is a LocalSampleLogger, which is one (rt/CbFinNetLoggers)"
+  },
+  "net/minecraft/class_8759.<init>(Lnet/minecraft/class_327;Lnet/minecraft/class_8743;Ljava/util/function/Supplier;)V": {
+   "desc": "(Lnet/minecraft/class_327;Lnet/minecraft/class_9194;Ljava/util/function/Supplier;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#storage(Lnet/minecraft/class_8743;)Lnet/minecraft/class_9194;",
+    "keep"
+   ],
+   "basis": "s4client: the debug charts take the SampleStorage since 1.20.5; every 1.20.4 SampleLogger is a LocalSampleLogger, which is one (rt/CbFinNetLoggers)"
+  }
+ },
+ "fieldGetters": {
+  "net/minecraft/class_437.field_44669:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_525.field_43081:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_525.field_43082:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_525.field_44672:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_442.field_17774:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_389.field_44801:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui"
+ },
+ "covers": [
+  "net/minecraft/class_312.method_1606()V",
+  "net/minecraft/class_310.method_1540()Z",
+  "net/minecraft/class_315.field_37208:Z",
+  "net/minecraft/class_350.method_31322(Z)V",
+  "net/minecraft/class_4069.method_20086(Lnet/minecraft/class_364;)V",
+  "net/minecraft/class_500.method_2528(Ljava/util/List;)V",
+  "net/minecraft/class_378.method_27541(Ljava/util/Map;)V",
+  "net/minecraft/class_377.method_2004(Ljava/util/List;)V",
+  "net/minecraft/class_353.method_20407(Lnet/minecraft/class_7172;Lnet/minecraft/class_7172;)V",
+  "net/minecraft/class_340.method_53535(J)V"
+ ]
+}

@@ -1426,3 +1426,7 @@ extendable class net/minecraft/class_7495
 # s4item: PotionBrewing(containers, potionMixes, containerMixes) is package-private in 1.20.5; a 1.20.4 subclass's super() (1.20.4's
 # public no-argument constructor) is reshaped onto it with empty mixes (rt/CbBrewing)
 accessible method net/minecraft/class_1845 <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+
+# s4fin: MerchantOffer(MerchantOffer) is private in 1.20.5; a 1.20.4 subclass's super(tag) is reshaped onto it with the offer the
+# tag decodes to (rt/CbFinItemTrading.fromTag: 1.20.5's offer codec reads 1.20.4's keys)
+accessible method net/minecraft/class_1914 <init> (Lnet/minecraft/class_1914;)V

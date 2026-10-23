@@ -162,56 +162,6 @@
    ],
    "basis": "mechanical: same values"
   },
-  "net/minecraft/class_9123$class_9124.method_56310(Lcom/mojang/brigadier/context/CommandContext;I)Ljava/lang/Object;": {
-   "desc": "(Lcom/mojang/brigadier/context/CommandContext;I)Lnet/minecraft/class_9123;",
-   "ops": [
-    "keep:0",
-    "keep:1"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_9123$class_9124.method_56309(Lcom/mojang/brigadier/context/CommandContext;)Ljava/lang/Object;": {
-   "desc": "(Lcom/mojang/brigadier/context/CommandContext;)Lnet/minecraft/class_9123;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_9123$class_9124.method_56318(Lcom/mojang/brigadier/context/CommandContext;)Ljava/lang/Object;": {
-   "desc": "(Lcom/mojang/brigadier/context/CommandContext;)Lnet/minecraft/class_9123;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_9123$class_9124.method_56321(Lcom/mojang/brigadier/context/CommandContext;)Ljava/lang/Object;": {
-   "desc": "(Lcom/mojang/brigadier/context/CommandContext;)Lnet/minecraft/class_9123;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_9123$class_9124.method_56312(Lcom/mojang/brigadier/context/CommandContext;Z)Ljava/lang/Object;": {
-   "desc": "(Lcom/mojang/brigadier/context/CommandContext;Z)Lnet/minecraft/class_9123;",
-   "ops": [
-    "keep:0",
-    "keep:1"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_9123$class_9124.method_56324(Lcom/mojang/brigadier/context/CommandContext;)Ljava/lang/Object;": {
-   "desc": "(Lcom/mojang/brigadier/context/CommandContext;)Lnet/minecraft/class_9123;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
   "net/minecraft/class_3215.method_12124(Lnet/minecraft/class_1923;Z)V": {
    "desc": "(Lnet/minecraft/class_1923;Z)Z",
    "ops": [
@@ -357,6 +307,15 @@
    ],
    "basis": "mechanical: same values"
   },
+  "net/minecraft/class_1755.method_7727(Lnet/minecraft/class_1657;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;)V": {
+   "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_1309;",
+    "keep:1",
+    "keep:2"
+   ],
+   "basis": "mechanical: same values"
+  },
   "net/minecraft/class_5633.method_7728(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_2338;)V": {
    "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_1799;Lnet/minecraft/class_2338;)V",
    "ops": [
@@ -384,6 +343,15 @@
     "keep:1",
     "keep:2",
     "keep:3"
+   ],
+   "basis": "mechanical: same values"
+  },
+  "net/minecraft/class_1785.method_7727(Lnet/minecraft/class_1657;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;)V": {
+   "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;)V",
+   "ops": [
+    "keep:0 Lnet/minecraft/class_1309;",
+    "keep:1",
+    "keep:2"
    ],
    "basis": "mechanical: same values"
   },
@@ -1137,17 +1105,6 @@
    "frames": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
    "superCalls": "rewrite",
    "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
-  },
-  {
-   "old": "method_58318(Lnet/minecraft/class_9393;)Ljava/util/Optional;",
-   "new": "method_58318(Lnet/minecraft/class_9393;)Ljava/lang/Object;",
-   "args": [
-    0
-   ],
-   "onlyUnder": "net/minecraft/class_9396",
-   "frames": "top/dext/centurybridge/step/v1_21_5/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had"
   },
   {
    "old": "method_5585(Lnet/minecraft/class_1309;Ljava/lang/Runnable;)Z",

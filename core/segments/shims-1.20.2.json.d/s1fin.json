@@ -1,0 +1,508 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_161$class_162.method_34884([[Ljava/lang/String;)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_161$class_162.method_699(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvBuilders",
+  "net/minecraft/class_161$class_162.method_700(Ljava/util/function/Function;)Z": "top/dext/centurybridge/rt/v1_20_2/CbAdvBuilders",
+  "net/minecraft/class_161$class_162.method_704(Lnet/minecraft/class_193;)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_161.method_48024()Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_51697()Z": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_680()[[Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_681()Ljava/lang/Iterable;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_682()Ljava/util/Map;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_683()I": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_684()Lnet/minecraft/class_2561;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_687()Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_690(Lnet/minecraft/class_161;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_161.method_691()Lnet/minecraft/class_170;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_163.method_711(Ljava/util/Map;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvBuilders",
+  "net/minecraft/class_167.method_727(Ljava/util/Map;[[Ljava/lang/String;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_167.method_728()Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_167.method_741()Ljava/util/Date;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_178.method_783()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_178.method_786()Ljava/util/Date;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_189.method_832()I": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_2035.method_8881()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2040.method_8894()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2050.method_8927()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2096.method_9036()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2096.method_9038()Ljava/lang/Number;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2096.method_9042()Ljava/lang/Number;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2102$class_2103.method_9071()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2102.method_35290(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2102.method_9065(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2105.method_9075()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2152.method_9175()Ljava/lang/Float;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2152.method_9177()Ljava/lang/Float;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_3735.method_16225()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_454.method_2307()Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodesClient",
+  "net/minecraft/class_4550.method_22452()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4551.method_22473()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4552.method_22481()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4559$class_4560.method_22528()Lnet/minecraft/class_4559;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_7376.method_22494()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_7376.method_43098()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_7376.method_43099()Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7380.method_43114()Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_8129.method_48964()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_161$class_162.method_692(Lcom/google/gson/JsonObject;Lnet/minecraft/class_5257;)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/rt/v1_20_2/CbAdvBuilders",
+  "net/minecraft/class_161$class_162.method_696(Lnet/minecraft/class_2540;)Lnet/minecraft/class_161$class_162;": "top/dext/centurybridge/rt/v1_20_2/CbAdvBuilders",
+  "net/minecraft/class_161.method_48023(Lnet/minecraft/class_161;)Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_178.method_788(Ljava/lang/String;)Lnet/minecraft/class_178;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress",
+  "net/minecraft/class_2035.method_8879(Lcom/google/gson/JsonElement;)[Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2035.method_8882(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2040.method_8893(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2040;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2050.method_8928(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2050;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2073.method_8972(Lcom/google/gson/JsonElement;)[Lnet/minecraft/class_2073;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2090.method_38858(Lnet/minecraft/class_2096$class_2099;)Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2090.method_9016(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2090.method_9022(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2090;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2096.method_9039(Lcom/google/gson/JsonElement;Lnet/minecraft/class_2096;Ljava/util/function/BiFunction;Lnet/minecraft/class_2096$class_2097;)Lnet/minecraft/class_2096;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2102$class_2103.method_9070(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_2102$class_2103;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2102.method_9066()Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
+  "net/minecraft/class_2105.method_9073(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_2105;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_3735.method_16224(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_3735;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4550.method_22453(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_4550;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4551.method_22474(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_4551;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4552.method_22482(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_4552;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4553.method_22499(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_4553;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4559.method_22519(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_4559;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4965.method_26094(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_4965;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_6404.method_37238(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_6404;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_7376.method_43097(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_7376;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_7383.method_43158(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_7383;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_8005.method_48031(Lnet/minecraft/class_161;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
+  "net/minecraft/class_8129.method_48966(Lcom/google/gson/JsonElement;Lnet/minecraft/class_5321;)Lnet/minecraft/class_8129;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_2035.field_20687:[Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_2050.field_9609:Lnet/minecraft/class_2050;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_457.field_2716:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodesClient",
+  "net/minecraft/class_7376$class_7378.field_38724:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7376$class_7378.field_38725:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7376$class_7378.field_38726:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7376$class_7378.field_38727:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7376$class_7378.field_38728:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7376.field_38723:Lnet/minecraft/class_7376;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2035",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EnchantmentJson",
+   "requires": [
+    "method_8881()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_8881 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2040",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$FlagsJson",
+   "requires": [
+    "method_8894()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_8894 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2050",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EntityTypeJson",
+   "requires": [
+    "method_8927()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_8927 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2102$class_2103",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EffectInstanceJson",
+   "requires": [
+    "method_9071()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9071 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2105",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$NbtJson",
+   "requires": [
+    "method_9075()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9075 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_3735",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EquipmentJson",
+   "requires": [
+    "method_16225()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_16225 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_4550",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BlockJson",
+   "requires": [
+    "method_22452()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_22452 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_4551",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$FluidJson",
+   "requires": [
+    "method_22473()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_22473 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_8129",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$TagJson",
+   "requires": [
+    "method_48964()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_48964 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2152",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$WrappedMin",
+   "requires": [
+    "method_9175()Ljava/lang/Float;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9175 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2152",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$WrappedMax",
+   "requires": [
+    "method_9177()Ljava/lang/Float;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9177 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2102",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EffectsAnd",
+   "requires": [
+    "method_9065(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_9065 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_2102",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$EffectsAndInstance",
+   "requires": [
+    "method_35290(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 subclass's own method_35290 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_7376",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$SubType",
+   "requires": [
+    "method_43099()Lnet/minecraft/class_7376$class_7377;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1776()Lnet/minecraft/class_7376$class_8745;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes.legacyType(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$SubType;)Lnet/minecraft/class_7376$class_8745;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 EntitySubPredicate's type() is its kind; 1.20.2 asks the kind's codec holder (comp_1776), a kind of the mod's own built on its Type (CbAdvSubTypes)"
+  },
+  {
+   "under": "net/minecraft/class_7376",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$SubJson",
+   "requires": [
+    "method_22494()Lcom/google/gson/JsonObject;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 EntitySubPredicate's serializeCustomData is what its kind writes, and what a call of it answers"
+  },
+  {
+   "under": "net/minecraft/class_7376",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$SubSerialize",
+   "requires": [
+    "method_43098()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 EntitySubPredicate's own serialize() is what a call of it answers"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvParent",
+   "requires": [
+    "method_687()Lnet/minecraft/class_161;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_687 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRoot",
+   "requires": [
+    "method_48024()Lnet/minecraft/class_161;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_48024 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvChildren",
+   "requires": [
+    "method_681()Ljava/lang/Iterable;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_681 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvAddChild",
+   "requires": [
+    "method_690(Lnet/minecraft/class_161;)V"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_690 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRewards",
+   "requires": [
+    "method_691()Lnet/minecraft/class_170;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1914()Lnet/minecraft/class_170;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyRewards(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRewards;)Lnet/minecraft/class_170;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_691 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvCriteria",
+   "requires": [
+    "method_682()Ljava/util/Map;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1915()Ljava/util/Map;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyCriteria(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvCriteria;)Ljava/util/Map;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_682 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRequirements",
+   "requires": [
+    "method_680()[[Ljava/lang/String;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1916()Lnet/minecraft/class_8782;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyRequirements(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRequirements;)Lnet/minecraft/class_8782;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_680 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvMaxCriteria",
+   "requires": [
+    "method_683()I"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_683 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvChat",
+   "requires": [
+    "method_684()Lnet/minecraft/class_2561;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1918()Ljava/util/Optional;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyName(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvChat;)Ljava/util/Optional;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_684 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvTelemetry",
+   "requires": [
+    "method_51697()Z"
+   ],
+   "synth": [
+    {
+     "new": "comp_1917()Z",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyTelemetry(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvTelemetry;)Z"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_51697 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_178",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$CriterionJson",
+   "requires": [
+    "method_783()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 CriterionProgress subclass's serializeToJson answers calls of it"
+  }
+ ],
+ "superRedirects": {
+  "net/minecraft/class_161.method_48024()Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_48024",
+  "net/minecraft/class_161.method_51697()Z": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_51697",
+  "net/minecraft/class_161.method_680()[[Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_680",
+  "net/minecraft/class_161.method_681()Ljava/lang/Iterable;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_681",
+  "net/minecraft/class_161.method_682()Ljava/util/Map;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_682",
+  "net/minecraft/class_161.method_683()I": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_683",
+  "net/minecraft/class_161.method_684()Lnet/minecraft/class_2561;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_684",
+  "net/minecraft/class_161.method_687()Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_687",
+  "net/minecraft/class_161.method_690(Lnet/minecraft/class_161;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_690",
+  "net/minecraft/class_161.method_691()Lnet/minecraft/class_170;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_691",
+  "net/minecraft/class_178.method_783()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#super_method_783",
+  "net/minecraft/class_2035.method_8881()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_8881",
+  "net/minecraft/class_2040.method_8894()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_8894",
+  "net/minecraft/class_2102$class_2103.method_9071()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_9071",
+  "net/minecraft/class_2102.method_35290(Lnet/minecraft/class_1291;Lnet/minecraft/class_2102$class_2103;)Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#super_method_35290",
+  "net/minecraft/class_2102.method_9065(Lnet/minecraft/class_1291;)Lnet/minecraft/class_2102;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#super_method_9065",
+  "net/minecraft/class_2105.method_9075()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_9075",
+  "net/minecraft/class_2152.method_9175()Ljava/lang/Float;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_9175",
+  "net/minecraft/class_2152.method_9177()Ljava/lang/Float;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_9177",
+  "net/minecraft/class_3735.method_16225()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_16225",
+  "net/minecraft/class_4550.method_22452()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_22452",
+  "net/minecraft/class_4551.method_22473()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_22473",
+  "net/minecraft/class_7376.method_43098()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_43098",
+  "net/minecraft/class_8129.method_48964()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_48964"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_161.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_161;Lnet/minecraft/class_185;Lnet/minecraft/class_170;Ljava/util/Map;[[Ljava/lang/String;Z)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_170;Ljava/util/Map;Lnet/minecraft/class_8782;Z)V",
+   "ops": [
+    "drop",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#parentId(Lnet/minecraft/class_161;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#display(Lnet/minecraft/class_185;)Ljava/util/Optional;",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#requirements([[Ljava/lang/String;)Lnet/minecraft/class_8782;",
+    "keep"
+   ],
+   "post": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#named(Lnet/minecraft/class_161;Lnet/minecraft/class_2960;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's super(..): the record with the parent's id and the requirements as the record; the id it was built with names it (a holder, made right after)"
+  },
+  "net/minecraft/class_2102.<init>(Ljava/util/Map;)V": {
+   "desc": "(Ljava/util/Map;)V",
+   "ops": [
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvRecords#effectMap(Ljava/util/Map;)Ljava/util/Map;"
+   ],
+   "basis": "s1fin: MobEffectsPredicate(map) took effects as keys, the record takes their holders (generic drift): the keys converted"
+  }
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_2096$class_2097.create(Ljava/lang/Number;Ljava/lang/Number;)Lnet/minecraft/class_2096;": {
+   "iface": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BoundsFactory",
+   "adapt": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#boundsFactory(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BoundsFactory;)Lnet/minecraft/class_2096$class_2097;"
+  },
+  "net/minecraft/class_8005$class_8006.accept(Lnet/minecraft/class_161;Z)V": {
+   "iface": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$VisibilityOutput",
+   "adapt": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#visibilityOutput(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$VisibilityOutput;)Lnet/minecraft/class_8005$class_8006;"
+  }
+ },
+ "covers": [
+  "net/minecraft/class_4550$class_4710.method_37214(Ljava/lang/Iterable;)Lnet/minecraft/class_4550$class_4710;",
+  "net/minecraft/class_4553$class_4557.method_35311(Lnet/minecraft/class_3445;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_4553$class_4557;"
+ ],
+ "classRenames": {
+  "net/minecraft/class_167$class_168": "top/dext/centurybridge/facade/v1_20_2/class_167$class_168",
+  "net/minecraft/class_193": "top/dext/centurybridge/facade/v1_20_2/class_193",
+  "net/minecraft/class_7376$class_7377": "top/dext/centurybridge/facade/v1_20_2/class_7376$class_7377"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_7376$class_7378.field_38731:Lcom/google/common/collect/BiMap;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_161.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_161;Lnet/minecraft/class_185;Lnet/minecraft/class_170;Ljava/util/Map;[[Ljava/lang/String;Z)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#newAdvancement"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_728()Ljava/lang/String;",
+   "new": "method_728()Lnet/minecraft/class_2561;",
+   "onlyUnder": "net/minecraft/class_167",
+   "basis": "s1fin: a 1.20.1 subclass's getProgressText answers the progress text 1.20.2 draws (the string as a literal text)",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress.progressText(Ljava/lang/String;)Lnet/minecraft/class_2561;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_741()Ljava/util/Date;",
+   "new": "method_741()Ljava/time/Instant;",
+   "onlyUnder": "net/minecraft/class_167",
+   "basis": "s1fin: a 1.20.1 subclass's getFirstProgressDate answers 1.20.2's (the Date as an Instant)",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress.instant(Ljava/util/Date;)Ljava/time/Instant;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_786()Ljava/util/Date;",
+   "new": "method_786()Ljava/time/Instant;",
+   "onlyUnder": "net/minecraft/class_178",
+   "basis": "s1fin: a 1.20.1 subclass's getObtained answers 1.20.2's (the Date as an Instant)",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress.instant(Ljava/util/Date;)Ljava/time/Instant;",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard"
+  },
+  {
+   "old": "method_727(Ljava/util/Map;[[Ljava/lang/String;)V",
+   "new": "method_727(Lnet/minecraft/class_8782;)V",
+   "onlyUnder": "net/minecraft/class_167",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$ProgressUpdate",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress.update(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$ProgressUpdate;Lnet/minecraft/class_8782;)V",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "s1fin: a 1.20.1 subclass's update(criteria, requirements) is reached from 1.20.2's update(requirements) with the requirement groups and the criteria by name (1.20.1 read only the map's key set: the names, every one of which the requirements list)"
+  },
+  {
+   "old": "method_2863()Lnet/minecraft/class_163;",
+   "new": "method_53814()Lnet/minecraft/class_163;",
+   "onlyUnder": "net/minecraft/class_632",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "basis": "s1fin: ClientAdvancements.getAdvancements() is getTree() in 1.20.2 (methodRenames for calls); a 1.20.1 override answers it"
+  },
+  {
+   "old": "method_712()Ljava/util/Collection;",
+   "new": "method_53693()Ljava/util/Collection;",
+   "onlyUnder": "net/minecraft/class_163",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.nodes(Ljava/util/Collection;)Ljava/util/Collection;",
+   "basis": "s1fin: a 1.20.1 override of AdvancementList.getAllAdvancements answers 1.20.2's nodes() (each advancement as its node)"
+  },
+  {
+   "old": "method_2307()Lnet/minecraft/class_161;",
+   "new": "method_53813()Lnet/minecraft/class_8781;",
+   "onlyUnder": "net/minecraft/class_454",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "unwrap": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.nodeOf(Lnet/minecraft/class_161;)Lnet/minecraft/class_8781;",
+   "basis": "s1fin: a 1.20.1 override of AdvancementTab.getAdvancement answers 1.20.2's getRootNode() (the advancement as its node)"
+  },
+  {
+   "old": "method_711(Ljava/util/Map;)V",
+   "new": "method_53691(Ljava/util/Collection;)V",
+   "onlyUnder": "net/minecraft/class_163",
+   "guard": "top/dext/centurybridge/rt/v1_20_2/Guard",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$TreeAdd",
+   "bridge": "top/dext/centurybridge/rt/v1_20_2/CbAdvBuilders.add(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$TreeAdd;Ljava/util/Collection;)V",
+   "basis": "s1fin: a 1.20.1 override of AdvancementList.add(builders) is reached from 1.20.2's addAll(holders), each holder as its id and a builder of it"
+  }
+ ]
+}

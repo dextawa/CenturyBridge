@@ -34,7 +34,8 @@ handles are skipped ("wired"). The output is a wiring fragment for the step
 (<step wiring>.d/mechanical.json, see engine/Wiring.java) and a report of every row.
 
   python gen_step_reshapes.py <damage.tsv> <V code jar> <W stub jar> <step wiring.json> <guard class> <out report.tsv>
-         [--wall <inter-to-mojang-1.21.11.tsv>]   (the 1.21.11 -> 26.1 step: V intermediary, W mojang)
+         [--wall <wall table>]   (the 1.21.11 -> 26.1 step: V intermediary, W mojang; the table the
+                                  step's target reads names with: python3 core/tools/wall_tables.py 26.1)
 """
 import collections
 import json
@@ -348,6 +349,13 @@ def main():
         if not shapes_w:
             note(r, "design", "W has no member of this name on the owner or its supertypes")
             continue
+        # across the wall: W declares the member under the translated name with the translated descriptor
+        # -- the whole-jar rename links it (a member the table renames: GuiGraphics.drawString is
+        # GuiGraphicsExtractor.text, same code); a reshape to the same shape would do nothing
+        tdesc = "(" + "".join(oa) + ")" + orr
+        if wall.cmap and any(m.desc == tdesc for _, m in shapes_w):
+            note(r, "renamed", f"the wall table's rename links it as {wowner}.{wname}{tdesc}")
+            continue
         if override:
             if name == "<init>":
                 continue
@@ -366,7 +374,7 @@ def main():
                     fits.append((c, m, None, f"returns {orr}, the new shape {nr}"))
                     continue
                 gen = generic_change(v_signature(V, hv, owner, name, desc), m.signature,
-                                     [(i, amap[i]) for i in range(len(oa))], nr == orr, wall)
+                                     [(i, amap[i]) for i in range(len(oa))], True, wall)
                 if gen:
                     fits.append((c, m, None, gen))
                     continue
@@ -405,8 +413,10 @@ def main():
             if not (nr == orr or orr == "V" or hw.assignable(nr, orr)):
                 fits.append((c, m, None, f"returns {nr}, the old call wants {orr}"))
                 continue
+            # the return is compared whenever its value passes (not only when the erased types agree: a
+            # bare T -- erased to Object -- that is an Optional<Holder<T>> now is "assignable" and wrong)
             gen = generic_change(v_signature(V, hv, owner, name, desc), m.signature,
-                                 [(amap[j], j) for j in range(len(na))], nr == orr, wall)
+                                 [(amap[j], j) for j in range(len(na))], orr != "V", wall)
             if gen:
                 fits.append((c, m, None, gen))
                 continue
