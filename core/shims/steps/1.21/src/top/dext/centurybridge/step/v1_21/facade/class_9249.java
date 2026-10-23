@@ -12,7 +12,7 @@ import net.minecraft.class_47.class_50;
  * on 1.21 (CbLoot, CbData, CbWorldConstants, CbWorldResources, CbItemTags).
  */
 public class class_9249 extends class_7789 {
-   protected class_9249() {
+   public class_9249() {
       super(class_7699.method_45399(class_7701.field_40177, top.dext.centurybridge.step.v1_21.rt.CbWorldConstants.field_46779()), class_7699.method_45398(top.dext.centurybridge.step.v1_21.rt.CbWorldConstants.field_46779()), top.dext.centurybridge.step.v1_21.rt.CbLoot.registries());
    }
 

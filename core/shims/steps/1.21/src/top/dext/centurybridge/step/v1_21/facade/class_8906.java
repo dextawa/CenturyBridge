@@ -13,7 +13,7 @@ import net.minecraft.class_7877.class_8993;
  * on 1.21 (CbLoot, CbData, CbWorldConstants, CbWorldResources, CbItemTags).
  */
 public class class_8906 {
-   private static final class_7877 field_47150 = new class_7877()
+   public static final class_7877 field_47150 = new class_7877()
       .method_46777(class_7924.field_41236, class_9686::method_59883)
       .method_46777(class_7924.field_41249, class_8999::method_55315)
       .method_46777(class_7924.field_41246, class_9002::method_55321)

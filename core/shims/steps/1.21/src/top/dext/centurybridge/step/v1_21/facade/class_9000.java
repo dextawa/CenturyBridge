@@ -44,7 +44,7 @@ public class class_9000 {
       );
    }
 
-   private static void method_55318(class_7891<class_5497> var0, class_5321<class_5497> var1, List<class_3491> var2) {
+   public static void method_55318(class_7891<class_5497> var0, class_5321<class_5497> var1, List<class_3491> var2) {
       var0.method_46838(var1, new class_5497(var2));
    }
 }

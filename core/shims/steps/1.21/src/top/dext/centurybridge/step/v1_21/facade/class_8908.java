@@ -20,7 +20,7 @@ public class class_8908 extends class_7805 {
    }
 
    @Override
-   protected void method_10514(class_7874 var1) {
+   public void method_10514(class_7874 var1) {
       this.method_46827(class_3489.field_15526).method_46830(class_1802.field_46999, class_1802.field_47004, class_1802.field_47008);
       this.method_46827(class_3489.field_15535).method_46830(class_1802.field_46989, class_1802.field_47003, class_1802.field_47007);
       this.method_46827(class_3489.field_15560).method_46830(class_1802.field_47000, class_1802.field_47005, class_1802.field_47016);

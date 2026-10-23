@@ -11,12 +11,12 @@ import java.util.Set;
  * on 1.21 (CbLoot, CbData, CbWorldConstants, CbWorldResources, CbItemTags).
  */
 public class class_8902 extends class_7788 {
-   protected class_8902() {
+   public class_8902() {
       super(Set.of(), class_7699.method_45398(top.dext.centurybridge.step.v1_21.rt.CbWorldConstants.field_46779()), top.dext.centurybridge.step.v1_21.rt.CbLoot.registries());
    }
 
    @Override
-   protected void method_10379() {
+   public void method_10379() {
       this.method_46025(class_2246.field_46797);
       this.method_46025(class_2246.field_47034);
       this.method_46025(class_2246.field_47028);

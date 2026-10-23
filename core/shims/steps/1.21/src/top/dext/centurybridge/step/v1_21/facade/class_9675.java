@@ -14,10 +14,13 @@ import net.minecraft.class_7225.class_7874;
 public class class_9675 extends class_9674 {
    public class_9675(class_7784 var1, CompletableFuture<class_7874> var2) {
       super(var1, var2);
+      // 1.20.6 passed (VANILLA, UPDATE_1_21) to the provider, read by tooltipOrder's check (CbData.keepFlags)
+      top.dext.centurybridge.step.v1_21.rt.CbData.keepFlags(this, class_7699.method_45399(class_7701.field_40177,
+         top.dext.centurybridge.step.v1_21.rt.CbWorldConstants.field_46779()));
    }
 
    @Override
-   protected void method_10514(class_7874 var1) {
+   public void method_10514(class_7874 var1) {
       this.method_59781(
          var1,
          new class_5321[]{

@@ -18,7 +18,7 @@ public class class_9382 extends class_2474<class_2582> {
    }
 
    @Override
-   protected void method_10514(class_7874 var1) {
+   public void method_10514(class_7874 var1) {
       this.method_10512(class_7440.field_49786).method_46835(class_7446.field_49835);
       this.method_10512(class_7440.field_49787).method_46835(class_7446.field_49836);
    }

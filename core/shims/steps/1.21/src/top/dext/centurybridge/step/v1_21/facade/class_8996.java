@@ -17,7 +17,7 @@ public class class_8996 extends class_2474<class_8110> {
    }
 
    @Override
-   protected void method_10514(class_7874 var1) {
+   public void method_10514(class_7874 var1) {
       this.method_10512(top.dext.centurybridge.step.v1_21.rt.CbItemTags.field_47214()).method_40565(class_8111.field_42321, class_8111.field_42322);
       this.method_10512(class_8103.field_42247).method_46835(class_8111.field_47737);
       this.method_10512(class_8103.field_46211).method_46835(class_8111.field_47737);

@@ -19,7 +19,7 @@ public class class_8904 extends class_2446 {
    }
 
    @Override
-   protected void method_10419(class_8790 var1) {
+   public void method_10419(class_8790 var1) {
       method_46207(var1, class_7699.method_45398(top.dext.centurybridge.step.v1_21.rt.CbWorldConstants.field_46779()));
       class_2447.method_10437(class_7800.field_40636, class_2246.field_46797)
          .method_10434('#', class_1802.field_8620)
