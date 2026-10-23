@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Unique;
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_310.class)
-public abstract class CbClientMinecraftMixin {
+public abstract class CbClientMinecraftMixin implements top.dext.centurybridge.step.v1_20_5.rt.CbClientRealms.Minecraft64 {
 
     @Unique
     private static final boolean CB$IS_64_BIT = cb$checkIs64Bit();
@@ -31,5 +31,22 @@ public abstract class CbClientMinecraftMixin {
     /** 1.20.4 Minecraft.is64Bit() */
     public boolean method_1540() {
         return CB$IS_64_BIT;
+    }
+
+    @Override
+    public boolean cb$is64Bit() {
+        return CB$IS_64_BIT;
+    }
+
+    /** 1.20.4's realms32BitWarningStatus: made on first use (1.20.4 made it in the constructor; it only keeps the Minecraft) */
+    @Unique
+    private top.dext.centurybridge.step.v1_20_5.facade.Realms32BitWarningStatus cb$realms32BitWarningStatus;
+
+    /** 1.20.4 Minecraft.getRealms32BitWarningStatus() */
+    public top.dext.centurybridge.step.v1_20_5.facade.Realms32BitWarningStatus method_44024() {
+        if (this.cb$realms32BitWarningStatus == null) {
+            this.cb$realms32BitWarningStatus = new top.dext.centurybridge.step.v1_20_5.facade.Realms32BitWarningStatus((net.minecraft.class_310) (Object) this);
+        }
+        return this.cb$realms32BitWarningStatus;
     }
 }

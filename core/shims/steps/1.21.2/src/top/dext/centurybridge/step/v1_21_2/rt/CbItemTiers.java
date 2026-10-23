@@ -121,7 +121,7 @@ public final class CbItemTiers {
 
         @Override
         public class_1856 method_8023() {
-            return class_1856.method_8106(class_7923.field_41178.method_46735(w.comp_2935()));
+            return class_1856.method_8106(class_7923.method_62715(class_7923.field_41178).method_46735(w.comp_2935()));
         }
     }
 
@@ -146,14 +146,14 @@ public final class CbItemTiers {
     public static class_9424 swordTool() {
         return new class_9424(List.of(
             class_9424.class_9425.method_58431(class_6885.method_40246(class_2246.field_10343.method_40142()), 15.0F),
-            class_9424.class_9425.method_58434(class_7923.field_41175.method_46735(class_3481.field_44469), 1.5F)),
+            class_9424.class_9425.method_58434(class_7923.method_62715(class_7923.field_41175).method_46735(class_3481.field_44469), 1.5F)),
             1.0F, 2);
     }
 
     // ---- Tool.Rule's 1.21.1 factories (tag / block list where 1.21.2 takes a holder set) ----
 
     private static class_6885<class_2248> blocks(class_6862<class_2248> tag) {
-        return class_7923.field_41175.method_46735(tag);
+        return class_7923.method_62715(class_7923.field_41175).method_46735(tag);
     }
 
     private static class_6885<class_2248> blocks(List<class_2248> list) {
