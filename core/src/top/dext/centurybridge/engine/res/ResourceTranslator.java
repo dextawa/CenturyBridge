@@ -112,7 +112,9 @@ public final class ResourceTranslator {
      * BlockEntityWithoutLevelRenderer -- for a mod item, Fabric API's BuiltinItemRendererRegistry
      * renderer; it gets a "minecraft:special" definition of the runtime's legacy_builtin type over
      * the mod's model, and the "builtin/entity" parent, which 1.21.4 does not have, is dropped
-     * (the model keeps its own display and particle).
+     * (the model keeps its own display and particle). Its overrides become nested minecraft:condition
+     * models over the runtime's legacy_override property, last override outermost, so the switch to
+     * another (builtin or plain) model happens as before.
      *
      * Models under the minecraft namespace are resource-pack overrides of vanilla items,
      * which keep vanilla's own definitions; their overrides no longer switch anything.
@@ -180,18 +182,34 @@ public final class ResourceTranslator {
                 // 1.20.1..1.21.3 drew a "builtin/entity" item through BlockEntityWithoutLevelRenderer (Fabric API's
                 // BuiltinItemRendererRegistry); 1.21.4 has neither, and a special model draws such items: the runtime's
                 // centurybridge:legacy_builtin asks the registered renderer, the mod's model stays the base (transforms)
-                if (model.has("overrides")) {
-                    out.lost("item model overrides of builtin item " + namespace + ":" + path
-                        + " (the legacy_builtin special model draws the registered renderer; they switch nothing)");
+                JsonObject tints = colorType ? legacyTints(maxTint) : null;
+                JsonElement expr = builtinLeaf(entries, builtinParents, namespace + ":item/" + path, tints);
+                if (model.has("overrides") && model.get("overrides").isJsonArray() && model.getAsJsonArray("overrides").size() > 0) {
+                    if (runtimeTypes.contains("centurybridge:legacy_override")) {
+                        // 1.21.3 took the last override in file order whose thresholds the predicates reach: one
+                        // minecraft:condition per override, the last outermost, each leaf a special model when its
+                        // model is a builtin one (a shield's blocking model, a trident's throwing one)
+                        for (JsonElement oe : model.getAsJsonArray("overrides")) {
+                            if (!oe.isJsonObject() || !oe.getAsJsonObject().has("model") || !oe.getAsJsonObject().has("predicate")) {
+                                out.lost("malformed override in builtin item model " + namespace + ":" + path + ": " + oe);
+                                continue;
+                            }
+                            JsonObject o = oe.getAsJsonObject();
+                            JsonObject cond = new JsonObject();
+                            cond.addProperty("type", "minecraft:condition");
+                            cond.addProperty("property", "centurybridge:legacy_override");
+                            cond.add("predicate", o.get("predicate").deepCopy());
+                            cond.add("on_true", builtinLeaf(entries, builtinParents, o.get("model").getAsString(), tints));
+                            cond.add("on_false", expr);
+                            expr = cond;
+                        }
+                    } else {
+                        out.lost("item model overrides of builtin item " + namespace + ":" + path
+                            + " (this target's runtime has no legacy_override condition: the base model only)");
+                    }
                 }
-                JsonObject special = new JsonObject();
-                special.addProperty("type", "minecraft:special");
-                special.addProperty("base", namespace + ":item/" + path);
-                JsonObject type = new JsonObject();
-                type.addProperty("type", "centurybridge:legacy_builtin");
-                special.add("model", type);
                 JsonObject root = new JsonObject();
-                root.add("model", special);
+                root.add("model", expr);
                 add.put(def, Json.write(root));
                 continue;
             }
@@ -224,6 +242,49 @@ public final class ResourceTranslator {
         }
         entries.putAll(add);
         out.generated += add.size();
+    }
+
+    /** one legacy_color tint source per tint index, 0..maxTint, in a "tints" array (wrapped in an object for reuse) */
+    private static JsonObject legacyTints(int maxTint) {
+        com.google.gson.JsonArray tints = new com.google.gson.JsonArray();
+        for (int i = 0; i <= maxTint; i++) {
+            JsonObject t = new JsonObject();
+            t.addProperty("type", "centurybridge:legacy_color");
+            t.addProperty("index", i);
+            tints.add(t);
+        }
+        JsonObject holder = new JsonObject();
+        holder.add("tints", tints);
+        return holder;
+    }
+
+    /**
+     * The item model drawing one old model id: a special legacy_builtin model over it when it is a builtin one (in the
+     * jar, through its parents), else the plain model (with the legacy tints when the runtime has them)
+     */
+    private static JsonElement builtinLeaf(Map<String, byte[]> entries, java.util.Set<String> builtinParents, String modelId, JsonObject tints) {
+        String ns = modelId.contains(":") ? modelId.substring(0, modelId.indexOf(':')) : "minecraft";
+        String path = modelId.contains(":") ? modelId.substring(modelId.indexOf(':') + 1) : modelId;
+        String file = "assets/" + ns + "/models/" + path + ".json";
+        byte[] bytes = entries.get(file);
+        JsonElement j = bytes == null ? null : Json.tryParse(bytes);
+        boolean builtin = builtinParents.contains(file)
+            || (j != null && j.isJsonObject() && reachesBuiltinEntity(entries, builtinParents, j.getAsJsonObject(), 0));
+        JsonObject leaf = new JsonObject();
+        if (builtin) {
+            leaf.addProperty("type", "minecraft:special");
+            leaf.addProperty("base", ns + ":" + path);
+            JsonObject type = new JsonObject();
+            type.addProperty("type", "centurybridge:legacy_builtin");
+            leaf.add("model", type);
+        } else {
+            leaf.addProperty("type", "minecraft:model");
+            leaf.addProperty("model", ns + ":" + path);
+            if (tints != null) {
+                leaf.add("tints", tints.get("tints").deepCopy());
+            }
+        }
+        return leaf;
     }
 
     private static boolean isBuiltinEntity(JsonObject model) {
