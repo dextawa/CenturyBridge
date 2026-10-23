@@ -417,6 +417,7 @@ def chunk_state(f):
     f.put("instanceRedirects", MC + "class_1922.method_8315()I", LCH)
     for c in ("comp_239", "comp_240"):
         f.put("instanceRedirects", MC + "class_2791$class_6745." + c + "()" + L("class_6761"), LCH)
+    f.put("ctorRedirects", MC + "class_2791$class_6745.<init>(" + L("class_6761") + L("class_6761") + ")V", LCH)
     f.put("instanceFieldGetters", CA + ".field_34537:Z", LCH)
     f.put("instanceFieldSetters", CA + ".field_34537:Z", LCH)
     sup = dict(superBridge=LCH + ".superSetUnsaved(L" + LCH + "$SuperSetUnsaved;Z)V", superAccess=LCH + "$SuperSetUnsaved",
@@ -843,6 +844,27 @@ def fabric_block_settings(f):
     f.put("classRenames", "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings", FAC + "/FabricBlockSettings")
 
 
+# ------------------------------------------------------------------------------------------- palette copy, block entity types
+def palette_and_be_types(f):
+    PAL, PR = L("class_2837"), L("class_2835")
+    old = "method_39956()" + PAL
+    for c in f.declarers("method_39956", "()" + PAL):
+        f.put("instanceRedirects", c + "." + old, RT + "/CbLevelPalette")
+    # the override hook itself is mechanical.json's (copy() asked as copy(PaletteResize), frames + superCalls)
+    f.put("frameDefaults", old, {"0": RT + "/CbLevelPalette#resize(" + PAL + ")" + PR})
+    RO, PC = L("class_7522"), L("class_2841")
+    f.w["abstractFills"].append({"under": MC + "class_7522", "method": "method_39957()" + PC,
+                                 "call": RT + "/CbLevelPalette.copy(" + RO + ")" + PC})
+    BET, SUP = MC + "class_2591", L("class_2591$class_5559")
+    key = BET + ".<init>(" + SUP + "Ljava/util/Set;Lcom/mojang/datafixers/types/Type;)V"
+    f.put("ctorRedirects", key, RT + "/CbLevelBlockEntityTypes")
+    f.put("superCtorReshapes", key, {
+        "desc": "(" + SUP + "Ljava/util/Set;)V", "ops": ["keep", "keep", "drop"],
+        "basis": "BlockEntityType: 1.21.1 stored the datafixer type in a field nothing read; 1.21.2's constructor "
+                 "(protected again by the layer's access widener) takes the factory and blocks alone"})
+    f.put("classRenames", BET + "$class_2592", FAC + "/BlockEntityTypeBuilder")
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -865,6 +887,7 @@ def main():
     state_props(f)
     level_misc(f)
     fabric_block_settings(f)
+    palette_and_be_types(f)
     f.write()
 
 

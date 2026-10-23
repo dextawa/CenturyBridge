@@ -23,3 +23,13 @@ accessible method net/minecraft/class_2424 <init> (Lnet/minecraft/class_2350$cla
 extendable method net/minecraft/class_2424 <init> (Lnet/minecraft/class_2350$class_2351;ILnet/minecraft/class_2350;Lnet/minecraft/class_2338;II)V
 # 1.21.1 Fabric API (fabric-object-builder-api-v1) made Properties() extendable for FabricBlockSettings; 1.21.2 dropped both
 extendable method net/minecraft/class_4970$class_2251 <init> ()V
+# palettes' own resize handler, which 1.21.1's Palette.copy() handed on (rt/CbLevelPalette)
+accessible class net/minecraft/class_2835
+accessible field net/minecraft/class_2814 field_12825 Lnet/minecraft/class_2835;
+accessible field net/minecraft/class_2834 field_12905 Lnet/minecraft/class_2835;
+accessible field net/minecraft/class_6564 field_34575 Lnet/minecraft/class_2835;
+# BlockEntityType's constructor, public in 1.21.1 (minus the datafixer type 1.21.2 dropped), private in 1.21.2
+accessible method net/minecraft/class_2591 <init> (Lnet/minecraft/class_2591$class_5559;Ljava/util/Set;)V
+extendable method net/minecraft/class_2591 <init> (Lnet/minecraft/class_2591$class_5559;Ljava/util/Set;)V
+# PalettedContainer's strategy, to copy a mod's read-only container as 1.21.2's copy() does (rt/CbLevelPalette)
+accessible field net/minecraft/class_2841 field_34561 Lnet/minecraft/class_2841$class_6563;

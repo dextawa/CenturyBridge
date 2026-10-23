@@ -80,6 +80,22 @@ public final class CbLevelBlockEntities {
         throw new IllegalStateException("1.21.1's furnace fuel API asked before any server or client level exists");
     }
 
+    /**
+     * The game time of the side asking, picked as {@link #fuel()} picks its side (every level of a server shares the
+     * overworld's game time); 0 before any server or client level exists, when no level's ticks can be packed.
+     */
+    static long gameTime() {
+        MinecraftServer s = server.get();
+        if (s != null && s.method_18854()) {
+            return s.method_30002().method_8510();
+        }
+        class_1937 c = clientLevel.get();
+        if (c != null) {
+            return c.method_8510();
+        }
+        return s != null ? s.method_30002().method_8510() : 0L;
+    }
+
     /** AbstractFurnaceBlockEntity.invalidateCache(): 1.21.2 rebuilds its FuelValues with the data; nothing is cached here */
     public static void method_56120() {
     }

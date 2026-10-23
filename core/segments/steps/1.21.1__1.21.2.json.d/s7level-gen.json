@@ -5,7 +5,8 @@
   "net/minecraft/class_5807": "top/dext/centurybridge/step/v1_21_2/facade/MossBlock",
   "net/minecraft/class_2753": "net/minecraft/class_2754",
   "net/minecraft/class_2248$class_2249": "top/dext/centurybridge/step/v1_21_2/facade/BlockStatePairKey",
-  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings": "top/dext/centurybridge/step/v1_21_2/facade/FabricBlockSettings"
+  "net/fabricmc/fabric/api/object/builder/v1/block/FabricBlockSettings": "top/dext/centurybridge/step/v1_21_2/facade/FabricBlockSettings",
+  "net/minecraft/class_2591$class_2592": "top/dext/centurybridge/step/v1_21_2/facade/BlockEntityTypeBuilder"
  },
  "instanceOfRedirects": {
   "net/minecraft/class_2753": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps#isDirectionProperty"
@@ -144,6 +145,15 @@
     "keep"
    ],
    "basis": "TeleportTransition adds asPassenger and relative movement since 1.21.2: neither, as 1.21.2 own shorter constructors pass"
+  },
+  "net/minecraft/class_2591.<init>(Lnet/minecraft/class_2591$class_5559;Ljava/util/Set;Lcom/mojang/datafixers/types/Type;)V": {
+   "desc": "(Lnet/minecraft/class_2591$class_5559;Ljava/util/Set;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "drop"
+   ],
+   "basis": "BlockEntityType: 1.21.1 stored the datafixer type in a field nothing read; 1.21.2's constructor (protected again by the layer's access widener) takes the factory and blocks alone"
   }
  },
  "superRenames": {
@@ -480,7 +490,9 @@
   "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1927$class_4179;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
   "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;DDDFZLnet/minecraft/class_1927$class_4179;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
   "net/minecraft/class_1927.<init>(Lnet/minecraft/class_1937;Lnet/minecraft/class_1297;Lnet/minecraft/class_1282;Lnet/minecraft/class_5362;DDDFZLnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
-  "net/minecraft/class_2424.<init>(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350$class_2351;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc"
+  "net/minecraft/class_2791$class_6745.<init>(Lnet/minecraft/class_6761;Lnet/minecraft/class_6761;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelChunks",
+  "net/minecraft/class_2424.<init>(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350$class_2351;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc",
+  "net/minecraft/class_2591.<init>(Lnet/minecraft/class_2591$class_5559;Ljava/util/Set;Lcom/mojang/datafixers/types/Type;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntityTypes"
  },
  "staticRedirects": {
   "net/minecraft/class_7165.method_41708(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_2248;Lnet/minecraft/class_2338;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelNeighbors",
@@ -586,7 +598,12 @@
   "net/minecraft/class_2424.method_10363()V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc",
   "net/minecraft/class_18.method_17919(Ljava/io/File;Lnet/minecraft/class_7225$class_7874;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc",
   "net/minecraft/class_1950.method_37233()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc",
-  "net/minecraft/class_6582.comp_437()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc"
+  "net/minecraft/class_6582.comp_437()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc",
+  "net/minecraft/class_2814.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
+  "net/minecraft/class_2816.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
+  "net/minecraft/class_2834.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
+  "net/minecraft/class_2837.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
+  "net/minecraft/class_6564.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -1269,6 +1286,9 @@
   "method_9430(Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;)V": {
    "2": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc#coralTicks(Ljava/lang/Object;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;)Lnet/minecraft/class_10225;",
    "3": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc#coralRandom(Ljava/lang/Object;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;)Lnet/minecraft/class_5819;"
+  },
+  "method_39956()Lnet/minecraft/class_2837;": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette#resize(Lnet/minecraft/class_2837;)Lnet/minecraft/class_2835;"
   }
  },
  "adapterHooks": [
@@ -1512,6 +1532,11 @@
    "method": "method_64218(Ljava/lang/Comparable;)I",
    "call": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStateProps.internalIndex(Lnet/minecraft/class_2769;Ljava/lang/Comparable;)I",
    "basis": "getInternalIndex is new and abstract in 1.21.2: the value's position in the property's values"
+  },
+  {
+   "under": "net/minecraft/class_7522",
+   "method": "method_39957()Lnet/minecraft/class_2841;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette.copy(Lnet/minecraft/class_7522;)Lnet/minecraft/class_2841;"
   }
  ],
  "lambdaAdapters": {
