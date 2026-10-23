@@ -7,7 +7,7 @@
 #     judged raw on V (the control: must be empty) and on W (Main mixin-judge against W's real bodies): the
 #     step's mixin damage table, written to $CB_MIXIN_PROBES/mixin-damage/<V>__<W>.tsv (default ~/cbwork/probe;
 #     mixin_damage.py). It depends only on V's and W's code: frozen into core/segments/damage-mixin/.
-#  2. the step's damage rows (core/segments/damage-mixin/<V>__<W>.tsv; with CB_MIXIN_GEN=1 the fresh one)
+#  2. the step's damage rows (core/segments/damage-mixin/<V>__<W>.tsv.gz; with CB_MIXIN_GEN=1 the fresh one)
 #     alone, each its own probe mixin (mixin-probe --only: Mixin applies or rejects a mixin whole),
 #     converted one step by the engine with the step's wiring, then judged on W with the step's layer: a row
 #     still failing is open. Prints "mixin probe: N of M still open" (areaRegex filters by the target owner's
@@ -38,10 +38,14 @@ if [ "${CB_MIXIN_GEN:-}" = 1 ]; then
     rm -f "$P/mprobe-$V.jar" "$P/mprobe-$V.jar.index.tsv"
     echo "mixin control on $V: $(head -1 "$P/control.log" | sed 's/^mixin-judge: //; s/ -> .*//')"
     head -1 "$P/damage.log"
-elif [ ! -f "$DAMAGE" ]; then
+elif [ ! -f "$DAMAGE.gz" ]; then
     echo "mixin probe: no mixin damage table for $SEG"; exit 0
 fi
 OUT="$WD/step/$SEG"; mkdir -p "$OUT"; rm -rf "$OUT/mixin"; mkdir -p "$OUT/mixin"
+# the frozen tables are kept gzipped (tens of MB of tsv in all)
+if [ "${CB_MIXIN_GEN:-}" != 1 ]; then
+    gzip -dc "$DAMAGE.gz" > "$OUT/mixin/damage.tsv"; DAMAGE="$OUT/mixin/damage.tsv"
+fi
 "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-probe "$(code_of "$V")" "$OUT/mixin/mprobe-$V.jar" --only "$DAMAGE" \
     > "$OUT/mixin/probe.log" 2>&1 || { echo "isolated mixin probe failed"; tail -3 "$OUT/mixin/probe.log"; exit 1; }
 WIRING="$WD/core/segments/steps/$SEG.json"
