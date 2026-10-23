@@ -485,6 +485,14 @@ public final class Chain {
         /** "superCalls": "rewrite": a mod's super.old(..) in a class under the hook becomes super.new(..) */
         public boolean superCalls;
         /**
+         * "superDefault", with superCalls: the old method had a concrete default in V while the new shape is
+         * abstract where the mod's super call lands in W (1.21.11's TestEnvironmentDefinition.teardown was a
+         * no-op default, 26.1's is abstract): super.new(..) would be an AbstractMethodError, so the rewritten
+         * super call is V's default body instead -- the receiver and arguments dropped and V's answer pushed:
+         * "void", a constant ("i:N", "l:N", "f:X", "d:X", "null") or "new OWNER" (a no-argument constructor).
+         */
+        public String superDefault;
+        /**
          * Narrowing forward ("narrow": true), for a parameter the release widened (1.20.2: a
          * packet's handle(ClientGamePacketListener) became handle(ClientCommonPacketListener),
          * because the packet now also arrives in the configuration phase). The old override was
@@ -2193,6 +2201,10 @@ public final class Chain {
                     h.notUnder = o.has("notUnder") ? o.get("notUnder").getAsString() : null;
                     h.frames = o.has("frames") ? o.get("frames").getAsString() : null;
                     h.superCalls = o.has("superCalls") && o.get("superCalls").getAsString().equals("rewrite");
+                    h.superDefault = o.has("superDefault") ? o.get("superDefault").getAsString() : null;
+                    if (h.superDefault != null && !h.superCalls) {
+                        throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": superDefault goes with superCalls rewrite");
+                    }
                     if (h.frames != null && (h.guard != null || h.wrapName != null || h.unwrapName != null || o.has("bridge"))) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
                             + ": frames go with plain argument forwarding only (no guard / wrap / unwrap / bridge)");

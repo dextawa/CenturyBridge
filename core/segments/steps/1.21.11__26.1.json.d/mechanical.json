@@ -431,7 +431,8 @@
    "onlyUnder": "net/minecraft/class_10529",
    "frames": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had"
+   "superDefault": "new net/minecraft/class_11971",
+   "basis": "mechanical: the old method gets every parameter it had; W's method_74334 is abstract where a mod's super call lands, V's default was new net/minecraft/class_11971: the super call is that default (superDefault)"
   },
   {
    "old": "method_74755(Lnet/minecraft/class_11977$class_12051;)Lnet/minecraft/class_11944$class_12041;",
@@ -530,7 +531,8 @@
    "onlyUnder": "net/minecraft/class_10665",
    "frames": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Ljava/lang/Object; not passed"
+   "superDefault": "void",
+   "basis": "mechanical: the old method gets every parameter it had; new Ljava/lang/Object; not passed; W's method_67054 is abstract where a mod's super call lands, V's default was void: the super call is that default (superDefault)"
   },
   {
    "old": "method_12970(Lnet/minecraft/class_2960;Lnet/minecraft/class_2561;)Lnet/minecraft/class_3002;",

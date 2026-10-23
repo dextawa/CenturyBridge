@@ -643,6 +643,41 @@ def main():
         d = wall.desc(desc)
         return any(m.desc == d for _, m in w_shapes(owner, name))
 
+    def first_decl(classes, h, owner, name, desc):
+        for c in h.supers(owner):
+            k = classes.get(c)
+            m = next((m for m in (k.methods if k else []) if m.name == name and m.desc == desc), None)
+            if m is not None:
+                return c, k, m
+        return None, None, None
+
+    def super_default(owner, name, desc, wm):
+        """(superDefault, None) when W's new shape is abstract where a mod's super call under owner lands
+        while V's old one had a concrete default -- V's body as a value ("void", a constant, "new OWNER");
+        (None, reason) when that body is more than such a value; (None, None) when nothing is in the way"""
+        _, _, wdecl = first_decl(W, hw, wall.cls(owner), wm.name, wm.desc)
+        vcls, vk, vdecl = first_decl(V, hv, owner, name, desc)
+        if wdecl is None or vdecl is None or not wdecl.access & ACC_ABSTRACT or vdecl.access & ACC_ABSTRACT:
+            return None, None
+        code = vdecl.code or b""
+        consts = {0x01: "null", 0x02: "i:-1", 0x03: "i:0", 0x04: "i:1", 0x05: "i:2", 0x06: "i:3", 0x07: "i:4", 0x08: "i:5",
+                  0x09: "l:0", 0x0a: "l:1", 0x0b: "f:0.0", 0x0c: "f:1.0", 0x0d: "f:2.0", 0x0e: "d:0.0", 0x0f: "d:1.0"}
+        if code == b"\xb1":
+            return "void", None
+        if len(code) == 2 and code[0] in consts and 0xac <= code[1] <= 0xb0:
+            return consts[code[0]], None
+        if len(code) == 3 and code[0] == 0x10 and code[2] == 0xac:
+            return "i:%d" % int.from_bytes(code[1:2], "big", signed=True), None
+        if len(code) == 8 and code[0] == 0xbb and code[3] == 0x59 and code[4] == 0xb7 and code[7] == 0xb0:
+            cls = bytecode_uses._resolve(vk.cp, int.from_bytes(code[1:3], "big"))
+            ref = bytecode_uses._resolve(vk.cp, int.from_bytes(code[5:7], "big"))
+            if cls and ref and ref[0] == "ref" and ref[1] == cls[1] and ref[2] == "<init>" and ref[3] == "()V":
+                wk = W.get(wall.cls(cls[1]))
+                if wk and any(x.name == "<init>" and x.desc == "()V" and x.access & 0x1 for x in wk.methods):
+                    return "new " + cls[1], None
+        return None, (f"W's {wm.name}{wm.desc} is abstract where a mod's super call lands under {owner}, while V's"
+                      f" {name}{desc} had a concrete default in {vcls}: its super call needs a static carrying that body")
+
     def try_hook(owner, name, desc):
         """(fate, detail) for reconnecting an override of V's name+desc under owner; a hook it emits is
         appended to hooks"""
@@ -683,18 +718,28 @@ def main():
                               else f"{typed[0][1].desc}: {typed[0][3]}")
         c, m, amap, _ = good[0]
         nd = wall.back_desc(m.desc)
+        # where a mod's super call lands: V had a concrete default the override's super call ran, W's new
+        # shape is abstract there -- the rewritten super call would be an AbstractMethodError
+        sdefault, why = super_default(owner, name, desc, m)
+        if why:
+            return "design", why
         hk = (name, desc, nd, owner)
         if hk in hook_seen:
             return "hook", f"-> {nd} under {owner} (same hook)"
         hook_seen.add(hk)
         na, _ = split_args(m.desc)
         unpassed = [na[j] for j in range(len(na)) if j not in amap]
-        hooks.append({"old": name + desc, "new": name + nd, "args": amap, "onlyUnder": owner, "frames": guard, "superCalls": "rewrite",
-                      "basis": "mechanical: the old method gets every parameter it had"
+        hook = {"old": name + desc, "new": name + nd, "args": amap, "onlyUnder": owner, "frames": guard, "superCalls": "rewrite"}
+        if sdefault:
+            hook["superDefault"] = sdefault
+        hooks.append(hook)
+        hook["basis"] = ("mechanical: the old method gets every parameter it had"
                                + "".join(f"; {x}" for x in fit_notes.get(id(m), []))
                                + ("" if amap == sorted(amap) else ", reordered")
-                               + (f"; new {','.join(unpassed)} not passed" if unpassed else "")})
-        return "hook", f"-> {nd} under {owner} args {amap}"
+                               + (f"; new {','.join(unpassed)} not passed" if unpassed else "")
+                               + (f"; W's {name} is abstract where a mod's super call lands, V's default was"
+                                  f" {sdefault}: the super call is that default (superDefault)" if sdefault else ""))
+        return "hook", f"-> {nd} under {owner} args {amap}" + (f" superDefault {sdefault}" if sdefault else "")
 
     rows = [l.rstrip("\n").split("\t") for l in open(damage, encoding="utf-8")][1:]
     for r in rows:

@@ -447,6 +447,33 @@ public final class JarProcessor {
      * (the mod calling its super's old shape from another method) there is no frame and the
      * argument is its type's zero value.
      */
+    /** the value a superDefault pushes (Chain.OverrideHook#superDefault) */
+    private static org.objectweb.asm.tree.InsnList superDefaultValue(String d) {
+        org.objectweb.asm.tree.InsnList out = new org.objectweb.asm.tree.InsnList();
+        if (d.equals("void")) {
+            return out;
+        }
+        if (d.equals("null")) {
+            out.add(new org.objectweb.asm.tree.InsnNode(Opcodes.ACONST_NULL));
+        } else if (d.startsWith("new ")) {
+            String owner = d.substring(4);
+            out.add(new org.objectweb.asm.tree.TypeInsnNode(Opcodes.NEW, owner));
+            out.add(new org.objectweb.asm.tree.InsnNode(Opcodes.DUP));
+            out.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESPECIAL, owner, "<init>", "()V", false));
+        } else if (d.startsWith("i:")) {
+            out.add(new org.objectweb.asm.tree.LdcInsnNode(Integer.valueOf(d.substring(2))));
+        } else if (d.startsWith("l:")) {
+            out.add(new org.objectweb.asm.tree.LdcInsnNode(Long.valueOf(d.substring(2))));
+        } else if (d.startsWith("f:")) {
+            out.add(new org.objectweb.asm.tree.LdcInsnNode(Float.valueOf(d.substring(2))));
+        } else if (d.startsWith("d:")) {
+            out.add(new org.objectweb.asm.tree.LdcInsnNode(Double.valueOf(d.substring(2))));
+        } else {
+            throw new IllegalArgumentException("superDefault " + d);
+        }
+        return out;
+    }
+
     private static byte[] rewriteHookSuperCalls(byte[] bytes, Chain chain, LayerIndex layer, Report rpt, String tag) {
         java.util.Map<String, java.util.List<Chain.OverrideHook>> byOld = superCallHooks(chain);
         if (byOld.isEmpty()) {
@@ -497,6 +524,21 @@ public final class JarProcessor {
                     mi.itf = false;
                     rewrites++;
                     top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "hook-super-bridge");
+                    continue;
+                }
+                if (h.superDefault != null) {
+                    // W's target is abstract: V's default body in place of the call (Chain.OverrideHook#superDefault)
+                    org.objectweb.asm.tree.InsnList seq = new org.objectweb.asm.tree.InsnList();
+                    org.objectweb.asm.Type[] dropped = org.objectweb.asm.Type.getArgumentTypes(mi.desc);
+                    for (int i = dropped.length - 1; i >= 0; i--) {
+                        seq.add(new org.objectweb.asm.tree.InsnNode(dropped[i].getSize() == 2 ? Opcodes.POP2 : Opcodes.POP));
+                    }
+                    seq.add(new org.objectweb.asm.tree.InsnNode(Opcodes.POP));
+                    seq.add(superDefaultValue(h.superDefault));
+                    m.instructions.insert(mi, seq);
+                    m.instructions.remove(mi);
+                    rewrites++;
+                    top.dext.centurybridge.data.FullAudit.record(h.oldName + h.oldDesc, "hook-super-default");
                     continue;
                 }
                 org.objectweb.asm.Type[] oa = org.objectweb.asm.Type.getArgumentTypes(h.oldDesc);
