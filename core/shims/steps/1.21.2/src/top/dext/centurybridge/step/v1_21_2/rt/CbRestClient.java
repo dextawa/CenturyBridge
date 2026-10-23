@@ -75,4 +75,14 @@ public final class CbRestClient {
         }
         return CbRestCommands.recipeIds(server);
     }
+
+    /**
+     * RegistryDataCollector.collectGameRegistries(resources, registries, memoryConnection): 1.21.2 takes the
+     * fallback registries frozen; 1.21.1 used them as given and froze its answer (freezing a frozen access is
+     * the access itself), so the given access frozen first is the same.
+     */
+    public static net.minecraft.class_5455.class_6890 collectGameRegistries(net.minecraft.class_9173 collector,
+            net.minecraft.class_5912 resources, net.minecraft.class_5455 registries, boolean memoryConnection) {
+        return collector.method_56585(resources, registries.method_40316(), memoryConnection);
+    }
 }

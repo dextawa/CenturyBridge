@@ -30,11 +30,15 @@
     "CbRestBlockableEventLoopMixin",
     "CbRestChunkSourceMixin",
     "CbRestDedicatedServerMixin",
+    "CbRestGameTestHelperMixin",
+    "CbRestGenerationChunkHolderMixin",
     "CbRestLevelMixin",
     "CbRestMinecraftServerMixin",
     "CbRestSelectorContentsMixin",
     "CbRestServerChunkCacheMixin",
+    "CbRestServerGamePacketListenerMixin",
     "CbRestServerLevelMixin",
+    "CbRestServerPlayerMixin",
     "CbRestServerPropertiesMixin"
   ],
   "client": [
