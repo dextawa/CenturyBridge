@@ -26,7 +26,25 @@
   "net/minecraft/class_9826.method_65739(Lnet/minecraft/class_4730;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites#get",
   "net/minecraft/class_9826.method_65740(Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites#reportMissingReference",
   "net/minecraft/class_9826.method_68061(Lnet/minecraft/class_10419;Ljava/lang/String;Lnet/minecraft/class_10813;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites#resolveSlot",
-  "net/minecraft/class_10419.method_65545(Ljava/lang/String;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites#getMaterial"
+  "net/minecraft/class_10419.method_65545(Ljava/lang/String;)Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSprites#getMaterial",
+  "net/minecraft/class_5217.method_156()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#isRaining",
+  "net/minecraft/class_5217.method_203()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#isThundering",
+  "net/minecraft/class_5217.method_217()J": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getDayTime",
+  "net/minecraft/class_5217.method_157(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setRaining",
+  "net/minecraft/class_5268.method_29035(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setDayTime",
+  "net/minecraft/class_5268.method_155()I": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getClearWeatherTime",
+  "net/minecraft/class_5268.method_167(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setClearWeatherTime",
+  "net/minecraft/class_5268.method_147(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setThundering",
+  "net/minecraft/class_5268.method_145()I": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getThunderTime",
+  "net/minecraft/class_5268.method_173(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setThunderTime",
+  "net/minecraft/class_5268.method_190()I": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getRainTime",
+  "net/minecraft/class_5268.method_164(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setRainTime",
+  "net/minecraft/class_5268.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getGameRules",
+  "net/minecraft/class_5268.method_143()Lnet/minecraft/class_236;": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getScheduledEvents",
+  "net/minecraft/class_5268.method_18038()I": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getWanderingTraderSpawnDelay",
+  "net/minecraft/class_5268.method_18041(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setWanderingTraderSpawnDelay",
+  "net/minecraft/class_5268.method_18039()I": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#getWanderingTraderSpawnChance",
+  "net/minecraft/class_5268.method_18042(I)V": "top/dext/centurybridge/step/v26_1/rt/CbWallLevelData#setWanderingTraderSpawnChance"
  },
  "overrideHooks": [
   {
