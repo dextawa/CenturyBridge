@@ -10,7 +10,10 @@
     "CbGuiScrollListMixin",
     "CbGuiScrollTextAreaMixin",
     "CbGuiScrollWidgetMixin",
-    "CbItemModelTypesMixin"
+    "CbItemLayerAccess",
+    "CbItemModelTypesMixin",
+    "CbItemStackRenderStateAccess",
+    "CbItemTintSourcesMixin"
   ],
   "server": [],
   "injectors": {

@@ -173,7 +173,21 @@ def item_predicates(frag):
     basis["net/minecraft/class_5272"] = "ItemProperties, ClampedItemPropertyFunction, CompassItemPropertyFunction are gone in 1.21.4"
     rt = set(frag.get("resourceTypes", []))
     rt.add("centurybridge:legacy_overrides")
+    rt.add("centurybridge:legacy_color")
     frag["resourceTypes"] = sorted(rt)
+    # colours
+    cr["net/minecraft/class_326"] = FAC + "ItemColor"
+    cr["net/minecraft/class_325"] = FAC + "ItemColors"
+    V0 = "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/"
+    cr["net/fabricmc/fabric/api/client/render/ColorProviderRegistry"] = V0 + "ColorProviderRegistry"
+    cr["net/fabricmc/fabric/api/client/render/InvalidateRenderStateCallback"] = V0 + "InvalidateRenderStateCallback"
+    fg = frag.setdefault("fieldGetters", {})
+    fg["net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry.ITEM:Lnet/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry;"] = \
+        "top/dext/centurybridge/step/v1_21_4/compat/fapi/CbItemColorProviderRegistry#item"
+    frag.setdefault("depRenames", {})["fabric-rendering-v0"] = "centurybridge_step_1_21_4@*"
+    frag["_s9client_depRenames_basis"] = ("1.21.4's Fabric API (0.119.4) no longer ships fabric-rendering-v0, which 1.21.3's (0.114.1) did "
+                                          "(core/tools/fapi_modules.py); this layer gives its two classes back (compat/fapi/v0: "
+                                          "ColorProviderRegistry, InvalidateRenderStateCallback with v0's forwarding from rendering-v1)")
 
 
 if __name__ == "__main__":

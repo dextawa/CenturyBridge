@@ -184,7 +184,8 @@
  ],
  "fieldGetters": {
   "net/minecraft/class_350.field_45909:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiScroll",
-  "net/minecraft/class_372.field_32225:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc"
+  "net/minecraft/class_372.field_32225:I": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc",
+  "net/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry.ITEM:Lnet/fabricmc/fabric/api/client/rendering/v1/ColorProviderRegistry;": "top/dext/centurybridge/step/v1_21_4/compat/fapi/CbItemColorProviderRegistry#item"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -194,7 +195,11 @@
   "net/minecraft/class_7391": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction",
   "net/minecraft/class_7391$class_7392": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction$CompassTarget",
   "net/minecraft/class_7391$class_5171": "top/dext/centurybridge/step/v1_21_4/facade/CompassItemPropertyFunction$CompassWobble",
-  "net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/FabricModelPredicateProviderRegistry"
+  "net/fabricmc/fabric/api/object/builder/v1/client/model/FabricModelPredicateProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/FabricModelPredicateProviderRegistry",
+  "net/minecraft/class_326": "top/dext/centurybridge/step/v1_21_4/facade/ItemColor",
+  "net/minecraft/class_325": "top/dext/centurybridge/step/v1_21_4/facade/ItemColors",
+  "net/fabricmc/fabric/api/client/render/ColorProviderRegistry": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/ColorProviderRegistry",
+  "net/fabricmc/fabric/api/client/render/InvalidateRenderStateCallback": "top/dext/centurybridge/step/v1_21_4/compat/fapi/v0/InvalidateRenderStateCallback"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -282,6 +287,11 @@
   "net/minecraft/class_442.method_18105(Lnet/minecraft/class_1060;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_21_4/rt/CbGuiMisc#method_18105"
  },
  "resourceTypes": [
+  "centurybridge:legacy_color",
   "centurybridge:legacy_overrides"
- ]
+ ],
+ "depRenames": {
+  "fabric-rendering-v0": "centurybridge_step_1_21_4@*"
+ },
+ "_s9client_depRenames_basis": "1.21.4's Fabric API (0.119.4) no longer ships fabric-rendering-v0, which 1.21.3's (0.114.1) did (core/tools/fapi_modules.py); this layer gives its two classes back (compat/fapi/v0: ColorProviderRegistry, InvalidateRenderStateCallback with v0's forwarding from rendering-v1)"
 }
