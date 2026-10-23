@@ -24,13 +24,18 @@
     "CbFapiHudRenderCallbackMixin",
     "CbFapiLevelRendererMixin",
     "CbWallBlockStateModelSetMixin",
+    "CbWallCameraAccess",
     "CbWallClientLevelDataMixin",
     "CbWallClientRainMixin",
+    "CbWallGameRendererMixin",
     "CbWallGlPipelineStateMixin",
     "CbWallGuiAccess",
+    "CbWallMinecraftAccess",
+    "CbWallMinecraftMixin",
     "CbWallModelBlockRendererAccess",
     "CbWallPipelineBuilderAccess",
-    "CbWallRenderPipelinesAccess"
+    "CbWallRenderPipelinesAccess",
+    "CbWallWindowAccess"
   ],
   "server": [],
   "injectors": {

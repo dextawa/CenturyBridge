@@ -89,7 +89,8 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasScaleFactor()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getDepthBiasScaleFactor",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getDepthBiasConstant",
   "net/minecraft/class_1309.method_18867(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#entityMakeBrain",
-  "net/minecraft/class_4095$class_5303.method_28335(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#providerMakeBrain"
+  "net/minecraft/class_4095$class_5303.method_28335(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#providerMakeBrain",
+  "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
  },
  "overrideHooks": [
   {
@@ -183,7 +184,10 @@
   "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/facade/RecipeSerializer",
   "com/mojang/blaze3d/platform/DepthTestFunction": "top/dext/centurybridge/step/v26_1/facade/DepthTestFunction",
   "com/mojang/blaze3d/platform/LogicOp": "top/dext/centurybridge/step/v26_1/facade/LogicOp",
-  "net/minecraft/class_4831": "top/dext/centurybridge/step/v26_1/facade/ExpirableValue"
+  "net/minecraft/class_4831": "top/dext/centurybridge/step/v26_1/facade/ExpirableValue",
+  "net/minecraft/class_765": "top/dext/centurybridge/step/v26_1/facade/LightTexture",
+  "net/minecraft/class_12335": "top/dext/centurybridge/step/v26_1/facade/PanoramicScreenshotParameters",
+  "net/minecraft/class_310$class_5859": "top/dext/centurybridge/step/v26_1/facade/ChatStatus"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -428,6 +432,15 @@
     }
    ],
    "basis": "1.21.11's GL backend read a pipeline's depth / colour state through its getters (getDepthBiasConstant among them), so a subclass overriding one changed what was drawn; 26.1's reads getDepthStencilState() / getColorTargetState(), synthesized from the 1.21.11 getters (the ones not overridden answer RenderPipeline's own)"
+  },
+  {
+   "under": "net/minecraft/class_3678",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer$CbWallMinecraftWindow",
+   "requires": [
+    "method_15995(Z)V"
+   ],
+   "synth": [],
+   "basis": "1.21.11 WindowEventHandler.setWindowActive(boolean), gone from 26.1's interface: an implementation's own method answers interface calls of it through the adapter (CbWallGameRenderer.setWindowActive)"
   }
  ],
  "facadeGaps": {
@@ -444,7 +457,19 @@
   "net/minecraft/class_1865.field_9044:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_mapcloning\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
   "net/minecraft/class_1865.field_9037:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_tippedarrow\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
   "net/minecraft/class_4831.field_22330:Ljava/lang/Object;": "1.21.11 private final field (the value): the facade keeps it as its own value field, read through method_24637 (getValue); only an access widener on the dead class ever reached it",
-  "net/minecraft/class_4831.field_22331:J": "1.21.11 private field (the time to live): the facade keeps it, or reads the brain's MemorySlot it stands for, through method_35127 (getTimeToLive) and method_24913 (tick); only an access widener on the dead class ever reached it"
+  "net/minecraft/class_4831.field_22331:J": "1.21.11 private field (the time to live): the facade keeps it, or reads the brain's MemorySlot it stands for, through method_35127 (getTimeToLive) and method_24913 (tick); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.method_42596(Lnet/minecraft/class_1309;FF)F": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_53098:I": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_60111:I": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_57927:Lcom/mojang/blaze3d/textures/GpuTexture;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_60581:Lcom/mojang/blaze3d/textures/GpuTextureView;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_4135:Z": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_21528:F": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_4134:Lnet/minecraft/class_757;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_4137:Lnet/minecraft/class_310;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_60112:Lnet/minecraft/class_11285;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_765.field_64675:Lnet/minecraft/class_5819;": "1.21.11 private member of LightTexture: the facade keeps the texture, its state and the flicker in 26.1's Lightmap / LightmapRenderStateExtractor / LightmapRenderState (or the game renderer's), reached through method_71650, method_3314 and method_3313; only an access widener on the dead class ever reached it",
+  "net/minecraft/class_310$class_5859.field_28944:Lnet/minecraft/class_2561;": "1.21.11 private final field (the status message): the facade enum keeps it as its own message field, read through method_33885 (getMessage); only an access widener on the dead class ever reached it"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -543,6 +568,15 @@
     "drop",
     "push top/dext/centurybridge/step/v26_1/rt/CbWallBrain#sensorDelays()Lnet/minecraft/util/RandomSource;"
    ]
+  },
+  "net/minecraft/class_757.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_759;Lnet/minecraft/class_4599;Lnet/minecraft/class_776;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_759;Lnet/minecraft/class_4599;Lnet/minecraft/client/resources/model/ModelManager;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#modelManager(Lnet/minecraft/class_776;)Lnet/minecraft/client/resources/model/ModelManager;"
+   ]
   }
  },
  "fieldGetters": {
@@ -572,7 +606,8 @@
   "net/minecraft/class_4722.field_61756:Lnet/minecraft/class_4730;": "top/dext/centurybridge/step/v26_1/rt/CbWallSheets",
   "net/minecraft/class_765.field_32767:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
   "net/minecraft/class_765.field_32768:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
-  "net/minecraft/class_765.field_32769:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight"
+  "net/minecraft/class_765.field_32769:I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight",
+  "net/minecraft/class_757.field_32686:F": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer"
  },
  "abstractFills": [
   {
@@ -621,6 +656,35 @@
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
   "net/minecraft/class_4095.method_28310(Lcom/mojang/serialization/DynamicOps;)Lcom/mojang/serialization/DataResult;",
-  "net/minecraft/class_4095.method_18911()Lnet/minecraft/class_4095;"
- ]
+  "net/minecraft/class_4095.method_18911()Lnet/minecraft/class_4095;",
+  "net/minecraft/class_757.method_22973(F)Lorg/joml/Matrix4f;",
+  "net/minecraft/class_757.method_22974()Lnet/minecraft/class_765;",
+  "net/minecraft/class_757.method_3190(F)V",
+  "net/minecraft/class_757.method_3193()F",
+  "net/minecraft/class_757.method_32796()F",
+  "net/minecraft/class_757.method_35765()Z",
+  "net/minecraft/class_757.method_72912()Lnet/minecraft/class_11658;",
+  "net/minecraft/class_757.method_76295(Lnet/minecraft/class_9779;)V",
+  "net/minecraft/class_757.method_76543(Lnet/minecraft/class_12335;)V",
+  "net/minecraft/class_757.method_76544()Lnet/minecraft/class_12335;",
+  "net/minecraft/class_310.method_43587(Lnet/minecraft/class_128;)V",
+  "net/minecraft/class_310.method_15995(Z)V",
+  "net/minecraft/class_310.method_33884()Lnet/minecraft/class_310$class_5859;"
+ ],
+ "interfaceCallRedirects": {
+  "net/minecraft/class_3678.method_15995(Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#setWindowActive"
+ },
+ "callReshapes": {
+  "net/minecraft/class_310.method_29610(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Z)V": {
+   "desc": "(Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_3283;Lnet/minecraft/class_6904;Ljava/util/Optional;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallGameRenderer#noGameRules()Ljava/util/Optional;",
+    "keep"
+   ],
+   "basis": "26.1 doWorldLoad takes the new world's initial game rules (empty: the saved world's own, as 1.21.11 loaded them)"
+  }
+ }
 }

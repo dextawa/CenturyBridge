@@ -67,6 +67,8 @@ public final class MixinCheck {
     /** inter->mojang table for real-name targets: covers are keyed in the analysis namespace */
     private final Map<String, String> classMap = new HashMap<>();
     private final Map<String, String> memberMap = new HashMap<>();
+    /** the converter's own wall rename (JarRemapper), so a cover is checked under the name the call site gets */
+    private org.objectweb.asm.commons.Remapper wall;
 
     public static void run(Path classesDir, Path targetJar, Path shimsJson, Path table) throws IOException {
         run(classesDir, targetJar, shimsJson, table, null, null);
@@ -80,6 +82,7 @@ public final class MixinCheck {
             c.sources = SourceStubs.before(stubDir, targetVersion);
         }
         if (table != null && Files.exists(table)) {
+            c.wall = JarRemapper.loadTable(table).remapper();
             for (String ln : Files.readAllLines(table)) {
                 String[] p = ln.split("\t");
                 if (p.length < 3) {
@@ -266,7 +269,10 @@ public final class MixinCheck {
             if (!classMap.isEmpty()) {
                 // real-name target: the bridge declares mojang names for members
                 // the table knows, tokens for the rest (see translate_tree.py)
-                name = memberMap.getOrDefault(owner + "." + name, name);
+                // as the converter renames it (owner-qualified, else the bare token: a call through a
+                // subclass of the declaring class -- 1.21.11 Minecraft.setWindowActive is
+                // WindowEventHandler's method_15995, a row the table has only for the interface)
+                name = wall != null ? wall.mapMethodName(owner, name, key.substring(paren)) : memberMap.getOrDefault(owner + "." + name, name);
             }
             // an owner merged into a surviving vanilla class carries its covers
             // there; one renamed onto a facade we ship is checked by direct target
