@@ -1,0 +1,120 @@
+{
+ "_s4fin_entity_basis": "s4fin world/entity: 1.20.4 entity members 1.20.5 removed, renamed or reshaped. Members 1.20.5 dropped come back by mixin (covers) with 1.20.4's bodies over 1.20.5's state, so calls, super calls and overrides all link; members 1.20.5 renamed onto Mob's body-armor API or the horse's saddle sync are renamed at call sites and reached from 1.20.5's shape by override hooks",
+ "covers": [
+  "net/minecraft/class_1295.method_5612(Lnet/minecraft/class_1842;)V",
+  "net/minecraft/class_1295.method_5606()I",
+  "net/minecraft/class_1295.method_5602(I)V",
+  "net/minecraft/class_1295.method_35048()Lnet/minecraft/class_1842;",
+  "net/minecraft/class_1324.method_6193(Lnet/minecraft/class_1322$class_1323;)Ljava/util/Set;",
+  "net/minecraft/class_1355.method_19048()Ljava/util/stream/Stream;",
+  "net/minecraft/class_1355.method_35114(I)V",
+  "net/minecraft/class_1496.method_6771()D"
+ ],
+ "methodRenames": {
+  "net/minecraft/class_1322$class_1323.method_6191()I": "method_56082",
+  "net/minecraft/class_1496.method_6731()V": "method_56679",
+  "net/minecraft/class_1498.method_6731()V": "method_56679",
+  "net/minecraft/class_1501.method_6731()V": "method_56679",
+  "net/minecraft/class_1496.method_6753()Z": "method_56677",
+  "net/minecraft/class_1501.method_6753()Z": "method_56677",
+  "net/minecraft/class_1498.method_6786()Lnet/minecraft/class_1799;": "method_56676"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_6731()V",
+   "new": "method_56679()V",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1496",
+   "superCalls": "rewrite",
+   "basis": "s4fin entity: AbstractHorse.updateContainerEquipment() is 1.20.5's syncSaddleToClients() (the same body; the armor 1.20.4's Horse and Llama took from the inventory is 1.20.5's body armor slot)"
+  },
+  {
+   "old": "method_6753()Z",
+   "new": "method_56677()Z",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1496",
+   "superCalls": "rewrite",
+   "basis": "s4fin entity: AbstractHorse/Llama.isWearingArmor() is 1.20.5's Mob.isWearingBodyArmor()"
+  },
+  {
+   "old": "method_6786()Lnet/minecraft/class_1799;",
+   "new": "method_56676()Lnet/minecraft/class_1799;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_1498",
+   "superCalls": "rewrite",
+   "basis": "s4fin entity: Horse.getArmor() is 1.20.5's Mob.getBodyArmorItem()"
+  }
+ ],
+ "staticRedirects": {
+  "net/minecraft/class_1322$class_1323.method_6190(I)Lnet/minecraft/class_1322$class_1323;": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityMisc#operation",
+  "net/minecraft/class_1439$class_4621.method_23693(F)Lnet/minecraft/class_1439$class_4621;": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityMisc#crackiness"
+ },
+ "classRenames": {
+  "net/minecraft/class_1439$class_4621": "net/minecraft/class_9273$class_4621"
+ },
+ "callReshapes": {
+  "net/minecraft/class_4215.method_19548(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;F)V": {
+   "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;FI)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbEntityMisc#walkCloseEnough()I"
+   ],
+   "basis": "s4fin entity: BehaviorUtils.lockGazeAndWalkToEachOther takes how close they walk in 1.20.5; 1.20.4 walked them to 2"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_4806.<init>(Lnet/minecraft/class_1299;F)V": {
+   "desc": "(Lnet/minecraft/class_1299;FI)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbEntityMisc#walkCloseEnough()I"
+   ],
+   "basis": "s4fin entity: AnimalMakeLove(type, speed) walks the partners to within 2, as 1.20.4's always did"
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_3745.method_18811(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1676;F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow",
+  "net/minecraft/class_1604.method_18811(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1676;F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow",
+  "net/minecraft/class_4836.method_18811(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1676;F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow",
+  "net/minecraft/class_3745.method_24652(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;Lnet/minecraft/class_1676;FF)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow",
+  "net/minecraft/class_3745.method_24653(Lnet/minecraft/class_1309;Lnet/minecraft/class_243;F)Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow"
+ },
+ "superRedirects": {
+  "net/minecraft/class_1604.method_18811(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1676;F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow#superShoot",
+  "net/minecraft/class_4836.method_18811(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1676;F)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow#superShoot",
+  "net/minecraft/class_3745.method_24652(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;Lnet/minecraft/class_1676;FF)V": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow#superAim",
+  "net/minecraft/class_3745.method_24653(Lnet/minecraft/class_1309;Lnet/minecraft/class_243;F)Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow#superVector"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_3745",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow$Shooter",
+   "requires": [
+    "method_18811(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1676;F)V"
+   ],
+   "synth": [],
+   "basis": "s4fin entity: a 1.20.4 crossbow mob's own method_18811 is what the bridge (and, for shootCrossbowProjectile(target, crossbow, projectile, angle), 1.20.5's CrossbowItem through CbEntityCrossbowItemMixin) calls"
+  },
+  {
+   "under": "net/minecraft/class_3745",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow$Aims",
+   "requires": [
+    "method_24652(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;Lnet/minecraft/class_1676;FF)V"
+   ],
+   "synth": [],
+   "basis": "s4fin entity: a 1.20.4 crossbow mob's own method_24652 is what the bridge (and, for shootCrossbowProjectile(target, crossbow, projectile, angle), 1.20.5's CrossbowItem through CbEntityCrossbowItemMixin) calls"
+  },
+  {
+   "under": "net/minecraft/class_3745",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbEntityCrossbow$Vectors",
+   "requires": [
+    "method_24653(Lnet/minecraft/class_1309;Lnet/minecraft/class_243;F)Lorg/joml/Vector3f;"
+   ],
+   "synth": [],
+   "basis": "s4fin entity: a 1.20.4 crossbow mob's own method_24653 is what the bridge (and, for shootCrossbowProjectile(target, crossbow, projectile, angle), 1.20.5's CrossbowItem through CbEntityCrossbowItemMixin) calls"
+  }
+ ]
+}
