@@ -1,5 +1,6 @@
 package top.dext.centurybridge.step.v1_21_2.rt;
 
+import java.util.concurrent.Executor;
 import java.util.function.IntSupplier;
 import top.dext.centurybridge.step.v1_21_2.facade.ChunkTaskPriorityQueueSorter;
 import top.dext.centurybridge.step.v1_21_2.facade.ProcessorHandle;
@@ -34,6 +35,75 @@ public final class CbRestExecutors {
      */
     public static net.minecraft.class_10171 lightDispatcher(ProcessorHandle<ChunkTaskPriorityQueueSorter.Message<Runnable>> sorter) {
         return new LegacySorterDispatcher(sorter);
+    }
+
+    /**
+     * WorldGenContext.mainThreadMailBox (1.21.1: a sorter handle taking ChunkTaskPriorityQueueSorter
+     * messages; 1.21.2: mainThreadExecutor, an Executor) seen as 1.21.2's executor. 1.21.1's only user,
+     * ChunkStatusTasks.full, ran each task through it as tell(message(task, pos, level)) -- at the chunk's
+     * ticket level; an executor has no chunk to sort by, so a task runs as message(task, no chunk, level 0),
+     * the order of submission at the front of the queue, which is the place 1.21.2 gives it (straight to
+     * the main thread). Adaptive and the inverse of {@link #handle}: an executor this class made from a
+     * handle comes back as that handle, null stays null.
+     */
+    public static Executor executor(ProcessorHandle<ChunkTaskPriorityQueueSorter.Message<Runnable>> handle) {
+        if (handle == null) {
+            return null;
+        }
+        if (handle instanceof ExecutorHandle eh) {
+            return eh.executor;
+        }
+        return new HandleExecutor(handle);
+    }
+
+    /**
+     * 1.21.2's main-thread executor as the 1.21.1 sorter handle WorldGenContext held: a message runs its
+     * task on the executor, then releases the slot with the unit answer the sorter's messages expect
+     * (ChunkTaskPriorityQueueSorter.message(runnable, ..) wraps the task so). The inverse of
+     * {@link #executor}.
+     */
+    public static ProcessorHandle<ChunkTaskPriorityQueueSorter.Message<Runnable>> handle(Executor executor) {
+        if (executor == null) {
+            return null;
+        }
+        if (executor instanceof HandleExecutor he) {
+            return he.handle;
+        }
+        return new ExecutorHandle(executor);
+    }
+
+    /** an executor over a 1.21.1 sorter handle (see {@link #executor}) */
+    static final class HandleExecutor implements Executor {
+        final ProcessorHandle<ChunkTaskPriorityQueueSorter.Message<Runnable>> handle;
+
+        HandleExecutor(ProcessorHandle<ChunkTaskPriorityQueueSorter.Message<Runnable>> handle) {
+            this.handle = handle;
+        }
+
+        @Override
+        public void execute(Runnable task) {
+            this.handle.method_16901(ChunkTaskPriorityQueueSorter.method_17626(task, net.minecraft.class_1923.field_17348, () -> 0));
+        }
+    }
+
+    /** a 1.21.1 sorter handle over an executor (see {@link #handle}) */
+    static final class ExecutorHandle implements ProcessorHandle<ChunkTaskPriorityQueueSorter.Message<Runnable>> {
+        final Executor executor;
+
+        ExecutorHandle(Executor executor) {
+            this.executor = executor;
+        }
+
+        @Override
+        public String method_16898() {
+            return "main";
+        }
+
+        @Override
+        public void method_16901(ChunkTaskPriorityQueueSorter.Message<Runnable> message) {
+            Runnable task = message.field_17446.apply(ProcessorHandle.method_17344("main release", unit -> { }));
+            this.executor.execute(task);
+        }
     }
 
     /** a ChunkTaskDispatcher whose submit goes to a 1.21.1 sorter handle */
