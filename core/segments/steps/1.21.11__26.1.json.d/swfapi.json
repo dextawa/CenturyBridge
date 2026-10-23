@@ -14,7 +14,8 @@
   "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Modify": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents$Modify",
   "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Loaded": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents$Loaded",
   "net/fabricmc/fabric/api/item/v1/FabricTooltipFlag": "top/dext/centurybridge/step/v26_1/compat/fapi/item/v1/FabricTooltipFlag",
-  "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v26_1/compat/fapi/tag/v1/FabricTagFile"
+  "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v26_1/compat/fapi/tag/v1/FabricTagFile",
+  "net/fabricmc/fabric/api/client/rendering/v1/HudRenderCallback": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/HudRenderCallback"
  },
  "instanceRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",

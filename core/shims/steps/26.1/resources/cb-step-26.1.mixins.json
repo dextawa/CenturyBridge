@@ -14,7 +14,9 @@
     "CbFapiTagsProviderMixin",
     "CbFapiTooltipFlagMixin"
   ],
-  "client": [],
+  "client": [
+    "CbFapiHudRenderCallbackMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1
