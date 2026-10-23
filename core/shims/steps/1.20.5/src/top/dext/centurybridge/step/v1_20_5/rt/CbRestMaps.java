@@ -90,24 +90,12 @@ public final class CbRestMaps {
     }
 
     /**
-     * 1.20.4 MapBanner.save(), on 1.20.5's MapBanner through CbRestMapBannerMixin; a mod's MapBanner class
-     * overrides it as it did in 1.20.4.
+     * Added to a mod MapBanner class that overrides 1.20.4's save() (adapter hook): its save(), which the
+     * banner list below reads (vanilla's is the cover of CbRestMapBannerMixin, 1.20.4's own keys only).
      */
-    public interface LegacyBanner {
+    public interface OwnSave {
         net.minecraft.class_2487 method_74();
     }
-
-    /** whether a MapBanner class overrides 1.20.4's save() (the cover is the vanilla one) */
-    private static final ClassValue<Boolean> OVERRIDES_SAVE = new ClassValue<>() {
-        @Override
-        protected Boolean computeValue(Class<?> type) {
-            try {
-                return type.getMethod("method_74").getDeclaringClass() != net.minecraft.class_17.class;
-            } catch (NoSuchMethodException e) {
-                return false;
-            }
-        }
-    };
 
     /**
      * The banner list 1.20.5's MapItemSavedData.save encoded with MapBanner.CODEC, one compound per
@@ -123,8 +111,8 @@ public final class CbRestMaps {
         int i = 0;
         for (net.minecraft.class_17 banner : banners) {
             net.minecraft.class_2520 element = list.method_10534(i++);
-            if (OVERRIDES_SAVE.get(banner.getClass()) && element instanceof net.minecraft.class_2487 compound) {
-                net.minecraft.class_2487 own = ((LegacyBanner) (Object) banner).method_74();
+            if ((Object) banner instanceof OwnSave saves && element instanceof net.minecraft.class_2487 compound) {
+                net.minecraft.class_2487 own = saves.method_74();
                 if (own == null) {
                     continue;
                 }

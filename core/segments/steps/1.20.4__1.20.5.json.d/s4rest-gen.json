@@ -1,5 +1,6 @@
 {
  "fieldGetters": {
+  "net/minecraft/class_8901.field_46903:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestClientFields",
   "net/minecraft/class_7955.field_41402:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestClientFields",
   "net/minecraft/class_7956.field_41407:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestClientFields",
   "net/minecraft/class_8066.field_42077:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestClientFields",
@@ -8,6 +9,11 @@
   "net/minecraft/class_8690$class_8694.field_45655:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestClientFields",
   "net/minecraft/class_8690$class_8691.field_45650:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestClientFields",
   "net/minecraft/class_8690$class_8693.field_45654:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestClientFields",
+  "net/minecraft/class_155.field_29699:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_155.field_29701:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_4520.field_33149:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_4520.field_33150:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/server/MinecraftServer.field_33210:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_3417.field_15191:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_3417.field_15103:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_3417.field_14966:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
@@ -19,7 +25,14 @@
   "net/minecraft/class_3417.field_14684:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_3417.field_15152:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_3417.field_14554:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_8743.field_45719:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_6642.field_35035:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_1263.field_29952:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_1263.field_42619:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_1297.field_29991:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_6024.field_30011:B": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_1299.field_30053:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_1309.field_30067:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_5134.field_23724:Lnet/minecraft/class_1320;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_5134.field_23725:Lnet/minecraft/class_1320;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_5134.field_23721:Lnet/minecraft/class_1320;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
@@ -37,6 +50,12 @@
   "net/minecraft/class_7106.field_37462:Lnet/minecraft/class_7106;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_7106.field_37463:Lnet/minecraft/class_7106;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_7106.field_37464:Lnet/minecraft/class_7106;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_6054.field_33494:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_1496.field_30417:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_1534.field_42463:Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_1642.field_41028:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_5418.field_41030:F": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
+  "net/minecraft/class_1657.field_30643:I": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_5707.field_28137:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_5709.field_28139:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
   "net/minecraft/class_5712.field_28174:Lnet/minecraft/class_5712;": "top/dext/centurybridge/step/v1_20_5/rt/CbRestFields",
@@ -236,6 +255,186 @@
     "keep:5"
    ],
    "basis": "generated: mapid"
+  },
+  "net/minecraft/class_885.method_3896(Lnet/minecraft/class_1431;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1431;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1431;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_959.method_4142(Lnet/minecraft/class_1474;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1474;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1474;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_938.method_4100(Lnet/minecraft/class_1462;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1462;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1462;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_943.method_4114(Lnet/minecraft/class_1606;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1606;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1606;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_931.method_4085(Lnet/minecraft/class_1440;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1440;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1440;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_936.method_4095(Lnet/minecraft/class_1454;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1454;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1454;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_951.method_4126(Lnet/minecraft/class_1477;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1477;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1477;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_922.method_4058(Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1309;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_890.method_4164(Lnet/minecraft/class_1551;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1551;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1551;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_1007.method_4212(Lnet/minecraft/class_742;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_742;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_742;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_933.method_4089(Lnet/minecraft/class_1593;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1593;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1593;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_877.method_3877(Lnet/minecraft/class_1531;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1531;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1531;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_929.method_16045(Lnet/minecraft/class_1451;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1451;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1451;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_913.method_3986(Lnet/minecraft/class_1439;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_1439;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_1439;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
+  },
+  "net/minecraft/class_4042.method_18334(Lnet/minecraft/class_4019;Lnet/minecraft/class_4587;FFF)V": {
+   "desc": "(Lnet/minecraft/class_4019;Lnet/minecraft/class_4587;FFFF)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Lnet/minecraft/class_4019;)F"
+   ],
+   "basis": "generated: appended; LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first)"
   },
   "net/minecraft/class_7951.comp_1162()Lcom/mojang/serialization/Codec;": {
    "desc": "()Lcom/mojang/serialization/MapCodec;",
@@ -522,6 +721,12 @@
    ],
    "basis": "generated: holder"
   },
+  "net/minecraft/class_1308.method_5991()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_5321;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbLootTableId(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "generated: loot"
+  },
   "net/minecraft/class_1324.method_6198()Lnet/minecraft/class_1320;": {
    "desc": "()Lnet/minecraft/class_6880;",
    "ops": [],
@@ -614,12 +819,6 @@
     "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbCatVariantHolder(Lnet/minecraft/class_7375;)Lnet/minecraft/class_6880;"
    ],
    "basis": "generated: holder"
-  },
-  "net/minecraft/class_1308.method_5991()Lnet/minecraft/class_2960;": {
-   "desc": "()Lnet/minecraft/class_5321;",
-   "ops": [],
-   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbLootTableId(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
-   "basis": "generated: loot"
   },
   "net/minecraft/class_7102.method_41354()Lnet/minecraft/class_7106;": {
    "desc": "()Lnet/minecraft/class_6880;",
@@ -921,6 +1120,45 @@
    ],
    "basis": "generated: provider"
   },
+  "net/minecraft/class_3443.method_14915(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_2960;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_5321;)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "conv:6 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbLootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "generated: loot"
+  },
+  "net/minecraft/class_3443.method_14921(Lnet/minecraft/class_5425;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2960;Lnet/minecraft/class_2680;)Z": {
+   "desc": "(Lnet/minecraft/class_5425;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_5321;Lnet/minecraft/class_2680;)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbLootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
+    "keep:5"
+   ],
+   "basis": "generated: loot"
+  },
+  "net/minecraft/class_3443.method_14930(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_2350;Lnet/minecraft/class_2960;)Z": {
+   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_2350;Lnet/minecraft/class_5321;)Z",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "conv:7 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbLootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "generated: loot"
+  },
   "net/minecraft/class_7151.codec()Lcom/mojang/serialization/Codec;": {
    "desc": "()Lcom/mojang/serialization/MapCodec;",
    "ops": [],
@@ -1090,53 +1328,6 @@
    ],
    "basis": "generated: provider"
   },
-  "net/minecraft/class_273.method_32481(Lnet/minecraft/class_2487;)Lnet/minecraft/class_273;": {
-   "desc": "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_273;",
-   "ops": [
-    "keep:0",
-    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
-   ],
-   "basis": "generated: provider"
-  },
-  "net/minecraft/class_3443.method_14915(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_2960;)Z": {
-   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_5321;)Z",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:2",
-    "keep:3",
-    "keep:4",
-    "keep:5",
-    "conv:6 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbLootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
-   ],
-   "basis": "generated: loot"
-  },
-  "net/minecraft/class_3443.method_14921(Lnet/minecraft/class_5425;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_2960;Lnet/minecraft/class_2680;)Z": {
-   "desc": "(Lnet/minecraft/class_5425;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_5321;Lnet/minecraft/class_2680;)Z",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:2",
-    "keep:3",
-    "conv:4 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbLootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
-    "keep:5"
-   ],
-   "basis": "generated: loot"
-  },
-  "net/minecraft/class_3443.method_14930(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_2350;Lnet/minecraft/class_2960;)Z": {
-   "desc": "(Lnet/minecraft/class_5281;Lnet/minecraft/class_3341;Lnet/minecraft/class_5819;IIILnet/minecraft/class_2350;Lnet/minecraft/class_5321;)Z",
-   "ops": [
-    "keep:0",
-    "keep:1",
-    "keep:2",
-    "keep:3",
-    "keep:4",
-    "keep:5",
-    "keep:6",
-    "conv:7 top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders#cbLootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
-   ],
-   "basis": "generated: loot"
-  },
   "net/minecraft/class_269.method_1169()Lnet/minecraft/class_2499;": {
    "desc": "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_2499;",
    "ops": [
@@ -1146,6 +1337,14 @@
   },
   "net/minecraft/class_269.method_1188(Lnet/minecraft/class_2499;)V": {
    "desc": "(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
+   ],
+   "basis": "generated: provider"
+  },
+  "net/minecraft/class_273.method_32481(Lnet/minecraft/class_2487;)Lnet/minecraft/class_273;": {
+   "desc": "(Lnet/minecraft/class_2487;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_273;",
    "ops": [
     "keep:0",
     "push top/dext/centurybridge/step/v1_20_5/rt/CbRegistries#current()Lnet/minecraft/class_7225$class_7874;"
@@ -1249,6 +1448,21 @@
   }
  },
  "overrideHooks": [
+  {
+   "old": "method_4212(Lnet/minecraft/class_742;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4212(Lnet/minecraft/class_742;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_1007",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
   {
    "old": "method_7659(Lnet/minecraft/class_2499;)V",
    "new": "method_7659(Lnet/minecraft/class_2499;Lnet/minecraft/class_7225$class_7874;)V",
@@ -1616,6 +1830,21 @@
    "basis": "generated: mapid; the mod's super call is reshaped (callReshapes)"
   },
   {
+   "old": "method_18334(Lnet/minecraft/class_4019;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_18334(Lnet/minecraft/class_4019;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_4042",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
    "old": "method_18663(Lnet/minecraft/class_1291;)Lnet/minecraft/class_1058;",
    "new": "method_18663(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1058;",
    "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffectValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1291;",
@@ -1955,11 +2184,56 @@
    "basis": "generated: holder; the mod's super call is reshaped (callReshapes)"
   },
   {
+   "old": "method_3877(Lnet/minecraft/class_1531;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_3877(Lnet/minecraft/class_1531;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_877",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_3896(Lnet/minecraft/class_1431;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_3896(Lnet/minecraft/class_1431;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_885",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
    "old": "method_54502()Lcom/mojang/serialization/Codec;",
    "new": "method_54502()Lcom/mojang/serialization/MapCodec;",
    "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbCodecs.toMapCodec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;",
    "onlyUnder": "net/minecraft/class_8889",
    "basis": "generated: codec; the mod's super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_4164(Lnet/minecraft/class_1551;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4164(Lnet/minecraft/class_1551;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_890",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
   },
   {
    "old": "method_11285(Lnet/minecraft/class_2960;)V",
@@ -1981,6 +2255,156 @@
    "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestHolders.cbLootTableKey(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;",
    "onlyUnder": "net/minecraft/class_8934",
    "basis": "generated: loot; the mod's super call is reshaped (callReshapes)"
+  },
+  {
+   "old": "method_3986(Lnet/minecraft/class_1439;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_3986(Lnet/minecraft/class_1439;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_913",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_4058(Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4058(Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_922",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_16045(Lnet/minecraft/class_1451;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_16045(Lnet/minecraft/class_1451;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_929",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_4085(Lnet/minecraft/class_1440;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4085(Lnet/minecraft/class_1440;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_931",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_4089(Lnet/minecraft/class_1593;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4089(Lnet/minecraft/class_1593;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_933",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_4095(Lnet/minecraft/class_1454;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4095(Lnet/minecraft/class_1454;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_936",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_4100(Lnet/minecraft/class_1462;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4100(Lnet/minecraft/class_1462;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_938",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_4114(Lnet/minecraft/class_1606;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4114(Lnet/minecraft/class_1606;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_943",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_4126(Lnet/minecraft/class_1477;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4126(Lnet/minecraft/class_1477;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_951",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
+  },
+  {
+   "old": "method_4142(Lnet/minecraft/class_1474;Lnet/minecraft/class_4587;FFF)V",
+   "new": "method_4142(Lnet/minecraft/class_1474;Lnet/minecraft/class_4587;FFFF)V",
+   "args": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "onlyUnder": "net/minecraft/class_959",
+   "frames": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "superCalls": "rewrite",
+   "basis": "generated: appended; the old override gets its arguments, its super call the frame's scale (LivingEntityRenderer.setupRotations: 1.20.5 appends the entity's scale, which its render() passes as entity.getScale() (the pose is scaled by it first))"
   }
  ],
  "lambdaAdapters": {
@@ -2056,5 +2480,52 @@
   "net/minecraft/class_4529.method_32259()I",
   "net/minecraft/class_5712.method_32941()I",
   "net/minecraft/class_6008$class_6010.method_34983()Ljava/lang/Object;"
- ]
+ ],
+ "frameDefaults": {
+  "method_16045(Lnet/minecraft/class_1451;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1451;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_18334(Lnet/minecraft/class_4019;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_4019;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_3877(Lnet/minecraft/class_1531;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1531;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_3896(Lnet/minecraft/class_1431;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1431;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_3986(Lnet/minecraft/class_1439;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1439;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4058(Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4085(Lnet/minecraft/class_1440;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1440;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4089(Lnet/minecraft/class_1593;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1593;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4095(Lnet/minecraft/class_1454;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1454;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4100(Lnet/minecraft/class_1462;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1462;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4114(Lnet/minecraft/class_1606;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1606;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4126(Lnet/minecraft/class_1477;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1477;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4142(Lnet/minecraft/class_1474;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1474;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4164(Lnet/minecraft/class_1551;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_1551;Lnet/minecraft/class_4587;FFF)F"
+  },
+  "method_4212(Lnet/minecraft/class_742;Lnet/minecraft/class_4587;FFF)V": {
+   "5": "top/dext/centurybridge/step/v1_20_5/rt/CbRestShapesClient#scale(Ljava/lang/Object;Lnet/minecraft/class_742;Lnet/minecraft/class_4587;FFF)F"
+  }
+ }
 }

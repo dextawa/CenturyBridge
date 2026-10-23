@@ -52,6 +52,11 @@ public final class CbRestClientFields {
         return CbCodecs.fromMapCodec(net.minecraft.class_8690.class_8694.field_45655);
     }
 
+    /** net/minecraft/client/renderer/SectionBufferBuilderPool.field_46903: the constant 1.20.4 had (1.20.5 dropped the field) */
+    public static int field_46903() {
+        return 4;
+    }
+
     private CbRestClientFields() {
     }
 }
