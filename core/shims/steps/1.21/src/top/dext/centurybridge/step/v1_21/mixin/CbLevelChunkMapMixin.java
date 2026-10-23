@@ -27,7 +27,7 @@ import top.dext.centurybridge.step.v1_21.rt.CbLevelChunks;
  * gone -- so an override is reached exactly where the mod itself calls it.
  */
 @Mixin(class_3898.class)
-public abstract class CbLevelChunkMapMixin {
+public abstract class CbLevelChunkMapMixin implements CbLevelChunks.LegacyChunkMap {
 
     @Shadow
     @Final
@@ -43,6 +43,7 @@ public abstract class CbLevelChunkMapMixin {
      * JSON, and on success put in place of the old one in a WorldGenContext rebuilt around it. 1.21 keeps the
      * generator only in the context (with the main thread mailbox it also carries, kept as it was).
      */
+    @Override
     public void method_37904() {
         class_2794.field_24746.encodeStart(JsonOps.INSTANCE, this.field_51861.comp_2435())
             .flatMap(json -> class_2794.field_24746.parse(JsonOps.INSTANCE, json))

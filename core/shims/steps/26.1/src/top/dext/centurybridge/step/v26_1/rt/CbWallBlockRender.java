@@ -14,7 +14,7 @@ import net.minecraft.ReportedException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.model.geom.builders.UVPair;
-import net.minecraft.util.LightCoordsUtil;
+
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.BlockQuadOutput;
 import net.minecraft.client.renderer.block.FluidRenderer;
@@ -215,7 +215,7 @@ public final class CbWallBlockRender {
             long uv = quad.packedUV(i);
             float bri = brightness[i];
             int color = ARGB.colorFromFloat(a, bri * r, bri * g, bri * b);
-            int lightCoords = LightCoordsUtil.lightCoordsWithEmission(lights[i], emission);
+            int lightCoords = CbWallLight.lightCoordsWithEmission(lights[i], emission);
             Vector3f p = matrix.transformPosition(position, new Vector3f());
             consumer.addVertex(p.x(), p.y(), p.z(), color, UVPair.unpackU(uv), UVPair.unpackV(uv), overlay, lightCoords,
                 normal.x(), normal.y(), normal.z());

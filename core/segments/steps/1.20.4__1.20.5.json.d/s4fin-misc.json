@@ -158,6 +158,22 @@
     "push top/dext/centurybridge/step/v1_20_5/rt/CbFinClient#lenientErrors()Z"
    ],
    "basis": "s4fin client: the client CommonListenerCookie carries server cookies, chat state and strict error handling in 1.20.5; 1.20.4 had none of them"
+  },
+  "net/minecraft/class_2290.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_2487;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_9323;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#components(Lnet/minecraft/class_6880;Lnet/minecraft/class_2487;)Lnet/minecraft/class_9323;"
+   ],
+   "basis": "s4fin commands: ItemInput carries components in 1.20.5; 1.20.4's NBT read into them as ItemStack.setTag does"
+  },
+  "net/minecraft/class_2291$class_7215.<init>(Lnet/minecraft/class_6880;Lnet/minecraft/class_2487;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_9323;)V",
+   "ops": [
+    "keep:0",
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#components(Lnet/minecraft/class_6880;Lnet/minecraft/class_2487;)Lnet/minecraft/class_9323;"
+   ],
+   "basis": "s4fin commands: ItemParser.ItemResult carries components in 1.20.5"
   }
  },
  "ctorRedirects": {
@@ -168,10 +184,21 @@
   "net/minecraft/class_4208.method_19446()Lnet/minecraft/class_2338;": "comp_2208"
  },
  "instanceRedirects": {
-  "net/minecraft/class_3414.method_47958(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon"
+  "net/minecraft/class_3414.method_47958(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_2291$class_7215.comp_629()Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands",
+  "net/minecraft/class_7450.method_43748(Ljava/lang/String;)Lnet/minecraft/class_7469;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#get",
+  "net/minecraft/class_2378.method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries",
+  "net/minecraft/class_2370.method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries",
+  "net/minecraft/class_2370.method_46744(ILnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#registerMapping",
+  "net/minecraft/class_2348.method_46744(ILnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#registerMapping"
  },
  "staticRedirects": {
-  "net/minecraft/class_3414.method_47961(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon"
+  "net/minecraft/class_3414.method_47961(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
+  "net/minecraft/class_2291.method_41972(Lnet/minecraft/class_7225;Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/class_2291$class_7215;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#parseForItem",
+  "net/minecraft/class_2291.method_41974(Lnet/minecraft/class_7225;Lcom/mojang/brigadier/StringReader;)Lcom/mojang/datafixers/util/Either;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#parseForTesting",
+  "net/minecraft/class_2291.method_9793(Lnet/minecraft/class_7225;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;Z)Ljava/util/concurrent/CompletableFuture;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#fillSuggestions",
+  "net/minecraft/class_2232.method_23727(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_5341;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#getPredicate",
+  "net/minecraft/class_2232.method_32688(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/class_117;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommands#getItemModifier"
  },
  "fieldGetters": {
   "net/minecraft/class_3244.field_37280:D": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon",
@@ -201,7 +228,8 @@
   "net/minecraft/class_636.method_2904()F",
   "net/minecraft/class_636.method_2926()Z",
   "net/minecraft/class_642.method_45056()Z",
-  "net/minecraft/class_642.method_45055(Z)V"
+  "net/minecraft/class_642.method_45055(Z)V",
+  "net/minecraft/class_2290.method_9783(Lnet/minecraft/class_1799;)Z"
  ],
  "instanceFieldGetters": {
   "net/minecraft/class_642.field_3754:Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinClient"
@@ -241,5 +269,42 @@
   "method_39831(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833;": {
    "2": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#unrestrictedPlacement()Lnet/minecraft/class_6874;"
   }
- }
+ },
+ "classRenames": {
+  "net/minecraft/class_2291$class_7216": "top/dext/centurybridge/step/v1_20_5/facade/ItemParserTagResult"
+ },
+ "superRedirects": {
+  "net/minecraft/class_2370.method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#superLifecycle"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_2378",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries$Lifecycles",
+   "requires": [
+    "method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;"
+   ],
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "synth": [
+    {
+     "new": "method_57058(Lnet/minecraft/class_5321;)Ljava/util/Optional;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries.registrationInfo(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries$Lifecycles;Lnet/minecraft/class_5321;)Ljava/util/Optional;"
+    }
+   ],
+   "basis": "s4fin registries: a 1.20.4 registry's lifecycle(value) answers 1.20.5's registrationInfo(key)"
+  }
+ ],
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_2378",
+   "method": "method_55841(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries.getHolderById(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;)Ljava/util/Optional;",
+   "basis": "s4fin registries: Registry.getHolder(id) of a 1.20.4 registry is its getHolder of that key"
+  },
+  {
+   "under": "net/minecraft/class_6880",
+   "method": "method_55838(Lnet/minecraft/class_6880;)Z",
+   "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries.holderIs(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;)Z",
+   "basis": "s4fin registries: Holder.is(holder) of a 1.20.4 holder: the same holder or the same value"
+  }
+ ]
 }

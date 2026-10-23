@@ -37,7 +37,10 @@
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.frustum()Lnet/minecraft/class_4604;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#frustum",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.viewMatrix()Lorg/joml/Matrix4fc;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#viewMatrix",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.cullProjectionMatrix()Lorg/joml/Matrix4fc;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#cullProjectionMatrix",
-  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.blockOutlines()Z": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#blockOutlines"
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.blockOutlines()Z": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#blockOutlines",
+  "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder.find(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadView;I)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers#find",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#spriteBake",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#spriteBake"
  },
  "superRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#categoryBase",
@@ -47,7 +50,10 @@
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemove",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/Collection;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveAll",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveAll",
-  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveTag"
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#superRemoveTag",
+  "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder.find(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadView;I)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers#superFind",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#superSpriteBake",
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.spriteBake(Lnet/minecraft/class_1058;I)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#superSpriteBake"
  },
  "instanceFieldGetters": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.fabricCategory:Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#getFabricCategory"
@@ -101,6 +107,13 @@
    "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiItems.template(Lnet/minecraft/class_1799;)Lnet/minecraft/world/item/ItemStackTemplate;",
    "onlyUnder": "net/fabricmc/fabric/api/item/v1/FabricItemStack",
    "basis": "a 1.21.11 class implementing FabricItemStack.getRecipeRemainder(): 26.1 asks getCraftingRemainder() for an ItemStackTemplate, the override's ItemStack converted"
+  },
+  {
+   "old": "uvUnitSquare()Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;",
+   "new": "uvUnitSquare()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;",
+   "unwrap": "top/dext/centurybridge/step/v26_1/rt/CbFapiQuads.view(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;",
+   "onlyUnder": "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter",
+   "basis": "a 1.21.11 QuadEmitter's own uvUnitSquare() answers itself as a QuadEmitter; 26.1 asks for the MutableQuadView shape"
   }
  ],
  "lambdaAdapters": {
@@ -165,6 +178,12 @@
     "push top/dext/centurybridge/step/v26_1/rt/CbFapiEvents#notGenerated()Z"
    ],
    "basis": "a 1.21.11 mod's own call of CHUNK_LOAD's invoker announces a chunk already there: not generated (CbFapiEvents.notGenerated; 26.1 fires CHUNK_GENERATE for that)"
+  },
+  "net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter.uvUnitSquare()Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;": {
+   "desc": "()Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbFapiQuads#emitter(Lnet/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView;)Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;",
+   "basis": "26.1's QuadEmitter.uvUnitSquare() answers a MutableQuadView (the emitter itself); a 1.21.11 call, its super call included, takes it back as the QuadEmitter"
   }
  },
  "abstractFills": [
@@ -197,6 +216,18 @@
    "method": "bufferSource()Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
    "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts.bufferSource(Lnet/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext;)Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
    "basis": "26.1's LevelRenderContext made bufferSource() (a BufferSource) abstract; a 1.21.11 context's consumers() is renamed bufferSource() (a MultiBufferSource) and answers it when it is a BufferSource, as 1.21.11's own context's was"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeItem$Context",
+   "method": "transformation()Lorg/joml/Matrix4fc;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers.transformation(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeItem$Context;)Lorg/joml/Matrix4fc;",
+   "basis": "26.1 made ModelModifier.BeforeBakeItem.Context.transformation() abstract (the item model's transformation); 1.21.11 baked item models with none, so a 1.21.11 context answers the identity"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBakeItem$Context",
+   "method": "transformation()Lorg/joml/Matrix4fc;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers.transformation(Lnet/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBakeItem$Context;)Lorg/joml/Matrix4fc;",
+   "basis": "26.1 made ModelModifier.AfterBakeItem.Context.transformation() abstract (the item model's transformation); 1.21.11 baked item models with none, so a 1.21.11 context answers the identity"
   }
  ],
  "_swfapi_recipeRemainder_basis": "FabricItem / FabricItemStack.getRecipeRemainder answered an ItemStack in 1.21.11 (EMPTY for none); 26.1's getCraftingRemainder answers an ItemStackTemplate (null for none). Calls convert 26.1's answer (CbFapiItems.stack), dispatched virtually so the item's override answers; super calls run 1.21.11's default bodies; overrides are reached through 26.1's shape (overrideHooks).",
@@ -205,7 +236,12 @@
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_ENTITIES:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.AFTER_ENTITIES:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_DEBUG_RENDER:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
-  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_TRANSLUCENT:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents"
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_TRANSLUCENT:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
+  "net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client.BLOCK_RENDER_MANAGER:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbFapiReloadKeys"
  },
- "_swfapi_worldRender_basis": "WorldRenderEvents' BEFORE_ENTITIES / AFTER_ENTITIES / BEFORE_DEBUG_RENDER / BEFORE_TRANSLUCENT are gone in 26.1's LevelRenderEvents: given back with 1.21.11's listener types (CbWorldRenderEvents) and fired at the matching points of 26.1's main pass (CbFapiLevelRendererMixin) with the frame's render context; WorldExtractionContext's frustum / viewMatrix / cullProjectionMatrix / blockOutlines read off the camera and GameRenderer (CbFapiWorldContexts)"
+ "_swfapi_worldRender_basis": "WorldRenderEvents' BEFORE_ENTITIES / AFTER_ENTITIES / BEFORE_DEBUG_RENDER / BEFORE_TRANSLUCENT are gone in 26.1's LevelRenderEvents: given back with 1.21.11's listener types (CbWorldRenderEvents) and fired at the matching points of 26.1's main pass (CbFapiLevelRendererMixin) with the frame's render context; WorldExtractionContext's frustum / viewMatrix / cullProjectionMatrix / blockOutlines read off the camera and GameRenderer (CbFapiWorldContexts)",
+ "staticRedirects": {
+  "net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder.get(Lnet/minecraft/class_1059;)Lnet/fabricmc/fabric/api/renderer/v1/model/SpriteFinder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers",
+  "net/fabricmc/fabric/api/renderer/v1/model/ModelHelper.toQuadLists(Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;)[Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbFapiRendererHelpers"
+ }
 }
