@@ -29,6 +29,8 @@
     "CbItemEquipableCarpetMixin",
     "CbItemEquipableShieldMixin",
     "CbItemEquipableSkullMixin",
+    "CbItemFoodBuilderMixin",
+    "CbItemFoodPropertiesMixin",
     "CbItemMembersMixin",
     "CbItemRegistryMixin",
     "CbItemServerThreadMixin",
