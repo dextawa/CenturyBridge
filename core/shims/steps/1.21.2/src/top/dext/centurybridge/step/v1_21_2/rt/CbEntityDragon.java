@@ -1,5 +1,6 @@
 package top.dext.centurybridge.step.v1_21_2.rt;
 
+import net.minecraft.class_1282;
 import net.minecraft.class_1510;
 import net.minecraft.class_1521;
 import net.minecraft.class_1527;
@@ -7,8 +8,10 @@ import net.minecraft.class_1528;
 import net.minecraft.class_2338;
 import net.minecraft.class_2902;
 import net.minecraft.class_3033;
+import net.minecraft.class_3218;
 import net.minecraft.class_3532;
 import net.minecraft.class_9871;
+import top.dext.centurybridge.step.v1_21_2.mixin.CbEntityDragonInvoker;
 
 /**
  * 1.21.1's EnderDragon flight history and WitherBoss head rotations on 1.21.2.
@@ -162,6 +165,67 @@ public final class CbEntityDragon {
             offset = b[1] - a[1];
         }
         return (float) offset;
+    }
+
+    // ---- reallyHurt ----
+
+    /** a mod dragon's own 1.21.1 reallyHurt(source, amount) (override hook adapter) */
+    public interface LegacyReallyHurt {
+        boolean method_6819(class_1282 source, float amount);
+    }
+
+    /** the super accessor the reallyHurt hook adds to such a class */
+    public interface ReallyHurtSuper {
+        void cb$super$method_6819(class_3218 level, class_1282 source, float amount);
+    }
+
+    /** the entity whose LivingEntity.hurtServer answer CbEntityHurtResultMixin records, and the answer */
+    private static final ThreadLocal<Object[]> HURT_RESULT = new ThreadLocal<>();
+
+    /** from CbEntityHurtResultMixin: LivingEntity.hurtServer of {@code entity} answered {@code result} */
+    public static void hurtResult(Object entity, boolean result) {
+        Object[] capture = HURT_RESULT.get();
+        if (capture != null && capture[0] == entity) {
+            capture[1] = result;
+        }
+    }
+
+    /**
+     * 1.21.1 EnderDragon.reallyHurt(source, amount) answered super.hurt (Mob's, i.e. LivingEntity's) -- false on a
+     * client level; 1.21.2's reallyHurt(level, source, amount) runs LivingEntity.hurtServer and drops its answer
+     * (1.21.1's vanilla caller dropped it too). The answer is recorded while {@code run} runs on the server.
+     */
+    private static boolean capturing(class_1510 dragon, java.util.function.Consumer<class_3218> run) {
+        if (!(dragon.method_37908() instanceof class_3218 level)) {
+            return false;
+        }
+        Object[] outer = HURT_RESULT.get();
+        Object[] capture = {dragon, Boolean.FALSE};
+        HURT_RESULT.set(capture);
+        try {
+            run.accept(level);
+            return (Boolean) capture[1];
+        } finally {
+            HURT_RESULT.set(outer);
+        }
+    }
+
+    /** 1.21.1 EnderDragon.reallyHurt(source, amount), called (protected: from the dragon's class) */
+    public static boolean reallyHurt(class_1510 dragon, class_1282 source, float amount) {
+        if (dragon instanceof LegacyReallyHurt legacy) {
+            return legacy.method_6819(source, amount);
+        }
+        return capturing(dragon, level -> ((CbEntityDragonInvoker) dragon).cb$reallyHurt(level, source, amount));
+    }
+
+    /** 1.21.2's reallyHurt(level, source, amount) of a mod dragon overriding 1.21.1's: its answer is dropped, as vanilla's */
+    public static void reallyHurtBridge(LegacyReallyHurt self, class_3218 level, class_1282 source, float amount) {
+        self.method_6819(source, amount);
+    }
+
+    /** super.reallyHurt(source, amount) of such an override: super's 1.21.2 reallyHurt, answering hurtServer's result */
+    public static boolean superReallyHurt(ReallyHurtSuper self, class_1282 source, float amount) {
+        return capturing((class_1510) self, level -> self.cb$super$method_6819(level, source, amount));
     }
 
     // ---- WitherBoss ----
