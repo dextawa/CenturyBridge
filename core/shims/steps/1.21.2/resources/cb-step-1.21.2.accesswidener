@@ -18,3 +18,12 @@ mutable field net/minecraft/class_5699 field_45075 Lcom/mojang/serialization/Cod
 
 # ---- s7level: members 1.21.1 had public that 1.21.2 keeps private (same body, verified) ----
 accessible method net/minecraft/class_2852 method_12393 ([Lit/unimi/dsi/fastutil/shorts/ShortList;)Lnet/minecraft/class_2499;
+
+# s7render: ModelBakery's baker getModel(id), the 1.21.1 ModelBaker.getModel (CbRenderBakeBakerMixin)
+accessible method net/minecraft/class_1088$class_7778 method_45872 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
+
+# ---- BEGIN GENERATED (s7render): members 1.21.2 keeps unchanged but narrowed (core/tools/gen_s7render.py family 8) ----
+accessible method net/minecraft/class_1011 method_4305 (III)V
+accessible method net/minecraft/class_1011 method_4315 (II)I
+accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
+# ---- END GENERATED (s7render) ----

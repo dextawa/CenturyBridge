@@ -13,6 +13,11 @@ public abstract class CbRenderParts7201Mixin {
     @org.spongepowered.asm.mixin.Final
     private net.minecraft.class_630 field_37934;
 
+    /** 1.21.1 headParts() */
+    protected Iterable<net.minecraft.class_630> method_22946() {
+        return com.google.common.collect.ImmutableList.of(((net.minecraft.class_3879) (Object) this).method_63512());
+    }
+
     /** 1.21.1 bodyParts() */
     protected Iterable<net.minecraft.class_630> method_22948() {
         return com.google.common.collect.ImmutableList.of(this.field_37934);
