@@ -26,6 +26,136 @@ public final class CbWallLootTypes {
         return type == null ? null : type.comp_1858();
     }
 
+    /** net/minecraft/class_3837.field_45819: the codec registered as "copy_custom_data", 26.1's net.minecraft.world.level.storage.loot.functions.CopyCustomDataFunction.MAP_CODEC */
+    public static MapCodec field_45819() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("copy_custom_data"));
+    }
+
+    /** net/minecraft/class_101.field_45817: the codec registered as "copy_name", 26.1's net.minecraft.world.level.storage.loot.functions.CopyNameFunction.MAP_CODEC */
+    public static MapCodec field_45817() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("copy_name"));
+    }
+
+    /** net/minecraft/class_4488.field_45816: the codec registered as "copy_state", 26.1's net.minecraft.world.level.storage.loot.functions.CopyBlockState.MAP_CODEC */
+    public static MapCodec field_45816() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("copy_state"));
+    }
+
+    /** net/minecraft/class_106.field_45825: the codec registered as "enchant_with_levels", 26.1's net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction.MAP_CODEC */
+    public static MapCodec field_45825() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("enchant_with_levels"));
+    }
+
+    /** net/minecraft/class_125.field_45833: the codec registered as "enchanted_count_increase", 26.1's net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction.MAP_CODEC */
+    public static MapCodec field_45833() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("enchanted_count_increase"));
+    }
+
+    /** net/minecraft/class_3668.field_45827: the codec registered as "fill_player_head", 26.1's net.minecraft.world.level.storage.loot.functions.FillPlayerHead.MAP_CODEC */
+    public static MapCodec field_45827() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("fill_player_head"));
+    }
+
+    /** net/minecraft/class_9668.field_51421: the codec registered as "filtered", 26.1's net.minecraft.world.level.storage.loot.functions.FilteredFunction.MAP_CODEC */
+    public static MapCodec field_51421() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("filtered"));
+    }
+
+    /** net/minecraft/class_114.field_45829: the codec registered as "limit_count", 26.1's net.minecraft.world.level.storage.loot.functions.LimitCount.MAP_CODEC */
+    public static MapCodec field_45829() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("limit_count"));
+    }
+
+    /** net/minecraft/class_9669.field_51429: the codec registered as "modify_contents", 26.1's net.minecraft.world.level.storage.loot.functions.ModifyContainerContents.MAP_CODEC */
+    public static MapCodec field_51429() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("modify_contents"));
+    }
+
+    /** net/minecraft/class_137.field_45836: the codec registered as "set_attributes", 26.1's net.minecraft.world.level.storage.loot.functions.SetAttributesFunction.MAP_CODEC */
+    public static MapCodec field_45836() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_attributes"));
+    }
+
+    /** net/minecraft/class_5592.field_45839: the codec registered as "set_banner_pattern", 26.1's net.minecraft.world.level.storage.loot.functions.SetBannerPatternFunction.MAP_CODEC */
+    public static MapCodec field_45839() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_banner_pattern"));
+    }
+
+    /** net/minecraft/class_9374.field_49870: the codec registered as "set_book_cover", 26.1's net.minecraft.world.level.storage.loot.functions.SetBookCoverFunction.MAP_CODEC */
+    public static MapCodec field_49870() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_book_cover"));
+    }
+
+    /** net/minecraft/class_9320.field_49444: the codec registered as "set_components", 26.1's net.minecraft.world.level.storage.loot.functions.SetComponentsFunction.MAP_CODEC */
+    public static MapCodec field_49444() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_components"));
+    }
+
+    /** net/minecraft/class_134.field_45841: the codec registered as "set_contents", 26.1's net.minecraft.world.level.storage.loot.functions.SetContainerContents.MAP_CODEC */
+    public static MapCodec field_45841() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_contents"));
+    }
+
+    /** net/minecraft/class_141.field_45845: the codec registered as "set_count", 26.1's net.minecraft.world.level.storage.loot.functions.SetItemCountFunction.MAP_CODEC */
+    public static MapCodec field_45845() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_count"));
+    }
+
+    /** net/minecraft/class_159.field_45849: the codec registered as "set_custom_data", 26.1's net.minecraft.world.level.storage.loot.functions.SetCustomDataFunction.MAP_CODEC */
+    public static MapCodec field_45849() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_custom_data"));
+    }
+
+    /** net/minecraft/class_5642.field_45843: the codec registered as "set_enchantments", 26.1's net.minecraft.world.level.storage.loot.functions.SetEnchantmentsFunction.MAP_CODEC */
+    public static MapCodec field_45843() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_enchantments"));
+    }
+
+    /** net/minecraft/class_7431.field_45844: the codec registered as "set_instrument", 26.1's net.minecraft.world.level.storage.loot.functions.SetInstrumentFunction.MAP_CODEC */
+    public static MapCodec field_45844() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_instrument"));
+    }
+
+    /** net/minecraft/class_9671.field_51436: the codec registered as "set_item", 26.1's net.minecraft.world.level.storage.loot.functions.SetItemFunction.MAP_CODEC */
+    public static MapCodec field_51436() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_item"));
+    }
+
+    /** net/minecraft/class_144.field_45842: the codec registered as "set_loot_table", 26.1's net.minecraft.world.level.storage.loot.functions.SetContainerLootTable.MAP_CODEC */
+    public static MapCodec field_45842() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_loot_table"));
+    }
+
+    /** net/minecraft/class_3671.field_45847: the codec registered as "set_lore", 26.1's net.minecraft.world.level.storage.loot.functions.SetLoreFunction.MAP_CODEC */
+    public static MapCodec field_45847() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_lore"));
+    }
+
+    /** net/minecraft/class_9476.field_50215: the codec registered as "set_ominous_bottle_amplifier", 26.1's net.minecraft.world.level.storage.loot.functions.SetOminousBottleAmplifierFunction.MAP_CODEC */
+    public static MapCodec field_50215() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_ominous_bottle_amplifier"));
+    }
+
+    /** net/minecraft/class_6662.field_45850: the codec registered as "set_potion", 26.1's net.minecraft.world.level.storage.loot.functions.SetPotionFunction.MAP_CODEC */
+    public static MapCodec field_45850() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_potion"));
+    }
+
+    /** net/minecraft/class_9377.field_49886: the codec registered as "set_writable_book_pages", 26.1's net.minecraft.world.level.storage.loot.functions.SetWritableBookPagesFunction.MAP_CODEC */
+    public static MapCodec field_49886() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_writable_book_pages"));
+    }
+
+    /** net/minecraft/class_9378.field_49889: the codec registered as "set_written_book_pages", 26.1's net.minecraft.world.level.storage.loot.functions.SetWrittenBookPagesFunction.MAP_CODEC */
+    public static MapCodec field_49889() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_written_book_pages"));
+    }
+
+    /** net/minecraft/class_9429.field_50027: the codec registered as "toggle_tooltips", 26.1's net.minecraft.world.level.storage.loot.functions.ToggleTooltips.MAP_CODEC */
+    public static MapCodec field_50027() {
+        return BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("toggle_tooltips"));
+    }
+
     /** net/minecraft/class_131.field_25214: the LootItemFunctionType registered as "set_count" */
     public static top.dext.centurybridge.step.v26_1.facade.LootItemFunctionType field_25214() {
         return (top.dext.centurybridge.step.v26_1.facade.LootItemFunctionType) top.dext.centurybridge.step.v26_1.facade.LootItemFunctionType.cb$of(BuiltInRegistries.LOOT_FUNCTION_TYPE.getValue(Identifier.withDefaultNamespace("set_count")));
@@ -344,6 +474,26 @@ public final class CbWallLootTypes {
     /** codec() of a 1.21.11 override of getType(): its type's codec */
     public static MapCodec entryCodec(top.dext.centurybridge.step.v26_1.facade.LootPoolEntryType type) {
         return type == null ? null : type.comp_1847();
+    }
+
+    /** net/minecraft/class_67.field_45798: the codec registered as "dynamic", 26.1's net.minecraft.world.level.storage.loot.entries.DynamicLoot.MAP_CODEC */
+    public static MapCodec field_45798() {
+        return BuiltInRegistries.LOOT_POOL_ENTRY_TYPE.getValue(Identifier.withDefaultNamespace("dynamic"));
+    }
+
+    /** net/minecraft/class_77.field_45801: the codec registered as "item", 26.1's net.minecraft.world.level.storage.loot.entries.LootItem.MAP_CODEC */
+    public static MapCodec field_45801() {
+        return BuiltInRegistries.LOOT_POOL_ENTRY_TYPE.getValue(Identifier.withDefaultNamespace("item"));
+    }
+
+    /** net/minecraft/class_12287.field_64182: the codec registered as "slots", 26.1's net.minecraft.world.level.storage.loot.entries.SlotLoot.MAP_CODEC */
+    public static MapCodec field_64182() {
+        return BuiltInRegistries.LOOT_POOL_ENTRY_TYPE.getValue(Identifier.withDefaultNamespace("slots"));
+    }
+
+    /** net/minecraft/class_91.field_45805: the codec registered as "tag", 26.1's net.minecraft.world.level.storage.loot.entries.TagEntry.MAP_CODEC */
+    public static MapCodec field_45805() {
+        return BuiltInRegistries.LOOT_POOL_ENTRY_TYPE.getValue(Identifier.withDefaultNamespace("tag"));
     }
 
     /** net/minecraft/class_75.field_25206: the LootPoolEntryType registered as "empty" */

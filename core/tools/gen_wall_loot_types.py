@@ -14,14 +14,17 @@ MapCodec itself and asks codec() instead. Per type this writes:
               codec() (overrideHooks, the facade's codec as the answer);
   constants   fieldGetters: the facade of the codec 26.1 registers under the same id (the id read from
               1.21.11's registration in the constants class, checked against 26.1's bootstrap);
+  codecs      1.21.11's per-class codec constants 26.1 renamed (CopyBlockState.CODEC is MAP_CODEC): the
+              codec 1.21.11 registered under an id and the one 26.1 registers under the same id are the
+              same class's codec; a 1.21.11 field 26.1 does not declare reads 26.1's (fieldGetters);
   register    Registry.register(registry, id, facade) registers the codec (CbWallRegistry): a mod
               registering its type the 1.21.11 way puts the codec 26.1's registry holds.
 
-  python gen_wall_loot_types.py <V code jar> <W jar> <fragment.json> <src root> <report.tsv>
+  python gen_wall_loot_types.py <V code jar> <W jar> <fragment.json> <src root> <report.tsv> <wall table>
 
 Regenerating (from the repo root):
   python3 core/tools/gen_wall_loot_types.py data/jars/client-1.21.11-intermediary-code.jar data/jars/client-26.1.jar \
-      core/segments/steps/1.21.11__26.1.json.d/swall-loottypes-gen.json core/shims/steps/26.1/src <tmp>/loot-report.tsv
+      core/segments/steps/1.21.11__26.1.json.d/swall-loottypes-gen.json core/shims/steps/26.1/src <tmp>/loot-report.tsv       data/mappings/inter-to-mojang-1.21.11-26.1.tsv
 """
 import json
 import os
@@ -59,6 +62,22 @@ TYPES = [
 LDC = re.compile(r"ldc(?:_w)?\s+#\d+\s+// String (\S+)")
 PUT = re.compile(r"putstatic\s+#\d+\s+// Field (field_\d+):L([\w/$]+);")
 LDC_ANY = re.compile(r"// String (\S+)")
+GET = re.compile(r"getstatic\s+#\d+\s+// Field ([\w/$]+)\.(\w+):Lcom/mojang/serialization/MapCodec;")
+
+
+def codecs_by_id(text):
+    """id -> (owner, field) of the MapCodec registered under it (an id string followed by a codec read)"""
+    out, last = {}, None
+    for line in text.splitlines():
+        m = LDC.search(line)
+        if m:
+            last = m.group(1)
+            continue
+        m = GET.search(line)
+        if m and last:
+            out.setdefault(last, (m.group(1), m.group(2)))
+            last = None
+    return out
 
 
 def javap(jar, cls):
@@ -90,6 +109,17 @@ def v_constants(vjar, consts, vtype):
 def w_ids(wjar, wconsts):
     """every id string 26.1's constants class names in its code (its bootstrap registers them)"""
     return set(LDC_ANY.findall(javap(wjar, wconsts)))
+
+
+WALL_F = {}
+_DECL = {}
+
+
+def wf_declared(wjar, owner, name):
+    if owner not in _DECL:
+        _DECL[owner] = set(re.findall(r" (\w+);$", subprocess.run(["javap", "-p", "-cp", wjar, owner.replace("/", ".")],
+                           capture_output=True, text=True, errors="replace").stdout, re.M))
+    return name in _DECL[owner]
 
 
 def dot(c):
@@ -167,7 +197,12 @@ public class {simple}<T extends {dot(wiface)}> implements CbWallRegistry.Wrapper
 
 
 def main():
-    vjar, wjar, frag, src, report = sys.argv[1:6]
+    vjar, wjar, frag, src, report, table = sys.argv[1:7]
+    for line in open(table, encoding="utf-8"):
+        f = line.rstrip("\n").split("\t")
+        if len(f) >= 3 and f[0] == "F":
+            o = f[2].rsplit(".", 1)
+            WALL_F[f[1]] = (o[0], o[1])
     fragment = {"classRenames": {}, "instanceRedirects": {}, "overrideHooks": [], "fieldGetters": {}, "facadeGaps": {}}
     helper = [f"package {dot(PKG)}.rt;", "",
               "import com.mojang.serialization.MapCodec;",
@@ -217,6 +252,23 @@ def main():
                    f"        return type == null ? null : type.{comp}();",
                    "    }"]
         have = w_ids(wjar, wconsts)
+        wcodecs = codecs_by_id(javap(wjar, wconsts))
+        for ident, (vo, vf) in sorted(codecs_by_id(clinit(javap(vjar, consts))).items()):
+            if ident not in wcodecs:
+                continue
+            wo, wf = wcodecs[ident]
+            wtable = WALL_F.get(f"{vo}.{vf}")
+            if wtable and wtable[0] == wo and wtable[1] == wf:
+                continue  # the wall table already renames it to 26.1's field
+            if f"{vo}.{vf}" in WALL_F and wf_declared(wjar, wo, WALL_F[f"{vo}.{vf}"][1]):
+                continue  # 26.1 declares the table's name: not damage
+            fragment["fieldGetters"][f"{vo}.{vf}:Lcom/mojang/serialization/MapCodec;"] = HELPER
+            helper += ["",
+                       f"    /** {vo}.{vf}: the codec registered as \"{ident}\", 26.1's {dot(wo)}.{wf} */",
+                       f"    public static MapCodec {vf}() {{",
+                       # through the registry: the same object, and readable where 26.1 made the field package-private
+                       f"        return BuiltInRegistries.{reg}.getValue(Identifier.withDefaultNamespace(\"{ident}\"));",
+                       "    }"]
         for field, ident in sorted(v_constants(vjar, consts, vrec).items()):
             if ident not in have:
                 rep.append((consts, field, ident, f"26.1 {wconsts} registers no '{ident}'"))
