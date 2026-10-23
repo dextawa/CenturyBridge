@@ -15,7 +15,11 @@
   "net/fabricmc/fabric/api/loot/v2/LootTableEvents$Loaded": "top/dext/centurybridge/step/v26_1/compat/fapi/loot/v2/LootTableEvents$Loaded",
   "net/fabricmc/fabric/api/item/v1/FabricTooltipFlag": "top/dext/centurybridge/step/v26_1/compat/fapi/item/v1/FabricTooltipFlag",
   "net/fabricmc/fabric/api/tag/v1/FabricTagFile": "top/dext/centurybridge/step/v26_1/compat/fapi/tag/v1/FabricTagFile",
-  "net/fabricmc/fabric/api/client/rendering/v1/HudRenderCallback": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/HudRenderCallback"
+  "net/fabricmc/fabric/api/client/rendering/v1/HudRenderCallback": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/HudRenderCallback",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeEntities": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$BeforeEntities",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$AfterEntities": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$AfterEntities",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$DebugRender": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$DebugRender",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeTranslucent": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents$BeforeTranslucent"
  },
  "instanceRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#category",
@@ -29,7 +33,11 @@
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.remove([Lnet/minecraft/class_5321;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#remove",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/Collection;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeAll",
   "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeAll(Ljava/util/stream/Stream;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeAll",
-  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeTag"
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder.removeTag(Lnet/minecraft/class_6862;)Lnet/minecraft/class_11389;": "top/dext/centurybridge/step/v26_1/rt/CbFapiTagDatagen#removeTag",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.frustum()Lnet/minecraft/class_4604;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#frustum",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.viewMatrix()Lorg/joml/Matrix4fc;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#viewMatrix",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.cullProjectionMatrix()Lorg/joml/Matrix4fc;": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#cullProjectionMatrix",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.blockOutlines()Z": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts#blockOutlines"
  },
  "superRedirects": {
   "net/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder.category(Lnet/fabricmc/fabric/api/gamerule/v1/CustomGameRuleCategory;)Lnet/fabricmc/fabric/api/gamerule/v1/GameRuleBuilder;": "top/dext/centurybridge/step/v26_1/rt/CbFapiGameRules#categoryBase",
@@ -183,8 +191,21 @@
    "method": "typeHolder()Lnet/minecraft/class_6880;",
    "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiFills.typeHolder(Lnet/fabricmc/fabric/api/transfer/v1/storage/TransferVariant;)Lnet/minecraft/class_6880;",
    "basis": "26.1's TransferVariant extends TypedInstance: typeHolder() is getObject()'s holder in the built-in registry holding it, as 26.1's ItemVariant / FluidVariant defaults answer (they need no fill)"
+  },
+  {
+   "under": "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext",
+   "method": "bufferSource()Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
+   "call": "top/dext/centurybridge/step/v26_1/rt/CbFapiWorldContexts.bufferSource(Lnet/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext;)Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
+   "basis": "26.1's LevelRenderContext made bufferSource() (a BufferSource) abstract; a 1.21.11 context's consumers() is renamed bufferSource() (a MultiBufferSource) and answers it when it is a BufferSource, as 1.21.11's own context's was"
   }
  ],
  "_swfapi_recipeRemainder_basis": "FabricItem / FabricItemStack.getRecipeRemainder answered an ItemStack in 1.21.11 (EMPTY for none); 26.1's getCraftingRemainder answers an ItemStackTemplate (null for none). Calls convert 26.1's answer (CbFapiItems.stack), dispatched virtually so the item's override answers; super calls run 1.21.11's default bodies; overrides are reached through 26.1's shape (overrideHooks).",
- "_swfapi_tagRemoval_basis": "26.1's Fabric API dropped tag removal: FabricTagFile.remove() and the \"fabric:remove\" list of tag files (loaded and applied by 1.21.11's TagLoaderMixin, mixin/CbFapiTagLoaderMixin + rt/CbFapiTagRemovals, 1.21.11's TagRemovalInternals member for member), and datagen's FabricProvidedTagBuilder.remove/removeAll/removeTag (recorded on the TagBuilder, written into the TagFile: CbFapiTagBuilderMixin, CbFapiTagsProviderMixin, CbFapiTagFileMixin). As in 1.21.11 only vanilla's builder-backed appender removes; any other appender and a mod's super call get 1.21.11's AssertionError(\"Implemented via mixin\")."
+ "_swfapi_tagRemoval_basis": "26.1's Fabric API dropped tag removal: FabricTagFile.remove() and the \"fabric:remove\" list of tag files (loaded and applied by 1.21.11's TagLoaderMixin, mixin/CbFapiTagLoaderMixin + rt/CbFapiTagRemovals, 1.21.11's TagRemovalInternals member for member), and datagen's FabricProvidedTagBuilder.remove/removeAll/removeTag (recorded on the TagBuilder, written into the TagFile: CbFapiTagBuilderMixin, CbFapiTagsProviderMixin, CbFapiTagFileMixin). As in 1.21.11 only vanilla's builder-backed appender removes; any other appender and a mod's super call get 1.21.11's AssertionError(\"Implemented via mixin\").",
+ "fieldRedirects": {
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_ENTITIES:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.AFTER_ENTITIES:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_DEBUG_RENDER:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents.BEFORE_TRANSLUCENT:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v26_1/compat/fapi/client/rendering/v1/world/CbWorldRenderEvents"
+ },
+ "_swfapi_worldRender_basis": "WorldRenderEvents' BEFORE_ENTITIES / AFTER_ENTITIES / BEFORE_DEBUG_RENDER / BEFORE_TRANSLUCENT are gone in 26.1's LevelRenderEvents: given back with 1.21.11's listener types (CbWorldRenderEvents) and fired at the matching points of 26.1's main pass (CbFapiLevelRendererMixin) with the frame's render context; WorldExtractionContext's frustum / viewMatrix / cullProjectionMatrix / blockOutlines read off the camera and GameRenderer (CbFapiWorldContexts)"
 }

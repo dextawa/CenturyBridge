@@ -15,7 +15,10 @@
     "CbFapiTooltipFlagMixin"
   ],
   "client": [
-    "CbFapiHudRenderCallbackMixin"
+    "CbFapiCameraAccess",
+    "CbFapiGameRendererAccess",
+    "CbFapiHudRenderCallbackMixin",
+    "CbFapiLevelRendererMixin"
   ],
   "server": [],
   "injectors": {

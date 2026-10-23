@@ -172,6 +172,7 @@
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext.tickCounter()Lnet/minecraft/class_9779;": "deltaTracker",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext.commandQueue()Lnet/minecraft/class_11659;": "submitNodeCollector",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext.matrices()Lnet/minecraft/class_4587;": "poseStack",
+  "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext.consumers()Lnet/minecraft/class_4597;": "bufferSource",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldTerrainRenderContext.sectionState()Lnet/minecraft/class_11532;": "sectionsToRender",
   "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$AfterRender.afterRender(Lnet/minecraft/class_437;Lnet/minecraft/class_332;IIF)V": "afterExtract",
   "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$BeforeRender.beforeRender(Lnet/minecraft/class_437;Lnet/minecraft/class_332;IIF)V": "beforeExtract",
@@ -491,6 +492,13 @@
    "onlyUnder": "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext",
    "superCalls": "rename",
    "basis": "swfapi: 26.1's Fabric API renamed WorldRenderContext.matrices to poseStack (same descriptor); vanilla and Fabric API call the new name"
+  },
+  {
+   "old": "consumers()Lnet/minecraft/class_4597;",
+   "new": "bufferSource",
+   "onlyUnder": "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext",
+   "superCalls": "rename",
+   "basis": "swfapi: 26.1's Fabric API renamed WorldRenderContext.consumers to bufferSource (same descriptor); vanilla and Fabric API call the new name"
   },
   {
    "old": "sectionState()Lnet/minecraft/class_11532;",
