@@ -79,9 +79,10 @@ import org.objectweb.asm.tree.VarInsnNode;
  * other annotation of the mixin shares the key; otherwise the annotation carries the intermediary
  * target itself.
  *
- * Intermediary era only ({@link #applies}): past the 1.21.11 -> 26.1 namespace wall the converted
- * jar takes its mojang names after this pass and the refmaps with them, while the wiring keys stay
- * intermediary, so the same lookups would compare two namespaces (see repairPastWall).
+ * Not across the 1.21.11 -> 26.1 namespace wall ({@link #applies}): there the converted jar takes its
+ * mojang names after this pass and the refmaps with them, while the wiring keys stay intermediary, so
+ * the same lookups would compare two namespaces (see repairPastWall). The 26.x steps after it are
+ * mojang-named on both sides and are bridged like any other.
  */
 final class MixinBridge {
     private static final Gson GSON = new Gson();
@@ -152,10 +153,16 @@ final class MixinBridge {
         this.step = chain.to.replace('.', '_');
     }
 
-    /** intermediary-era steps only: wiring keys and the jar's names are the same namespace there */
+    /**
+     * Every step but the 1.21.11 -> 26.1 namespace wall: wiring keys and the jar's names are the same
+     * namespace there -- intermediary before the wall, mojang names after it (26.x steps' wiring is keyed
+     * by the names 26.x declares, as their mods are, and the target code jar is the release's own).
+     */
     static boolean applies(Chain chain) {
+        int from = Chain.RELEASES.indexOf(chain.from);
         int to = Chain.RELEASES.indexOf(chain.to);
-        return to >= 0 && to <= Chain.RELEASES.indexOf("1.21.11") && chain.wallClassFwd.isEmpty();
+        int wall = Chain.RELEASES.indexOf("1.21.11");
+        return from >= 0 && to >= 0 && !(from <= wall && to > wall) && chain.wallClassFwd.isEmpty();
     }
 
     /**
