@@ -123,6 +123,8 @@ def main():
     out["fieldGetters"][N + "class_7709.field_40245:Lnet/minecraft/class_3542$class_7292;"] = RT
 
     out["instanceRedirects"][N + "class_8957.method_59997()Lnet/minecraft/class_2371;"] = RT
+    # CraftingInput.stackedContents(): 1.21.1's StackedContents (s7entity's facade, classRenames of class_1662)
+    out["instanceRedirects"][N + "class_9694.method_59988()Lnet/minecraft/class_1662;"] = RT
     out["instanceRedirects"][N + "class_8786.comp_1932()Lnet/minecraft/class_2960;"] = RT
     rs[N + "class_8786.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_1860;)V"] = {
         "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_1860;)V",

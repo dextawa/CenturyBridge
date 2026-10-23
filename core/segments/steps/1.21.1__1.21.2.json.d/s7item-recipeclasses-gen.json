@@ -182,6 +182,7 @@
   "net/minecraft/class_8060.method_30029(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
   "net/minecraft/class_8062.method_30029(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
   "net/minecraft/class_8957.method_59997()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_9694.method_59988()Lnet/minecraft/class_1662;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
   "net/minecraft/class_8786.comp_1932()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses"
  },
  "superRedirects": {

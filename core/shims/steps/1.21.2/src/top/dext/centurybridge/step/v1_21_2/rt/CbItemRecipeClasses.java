@@ -267,6 +267,36 @@ public final class CbItemRecipeClasses {
         return smithing(r)[2];
     }
 
+    // ---- CraftingInput ----
+
+    /** the 1.21.1 StackedContents an input keeps (CbItemCraftingInputMixin) */
+    public interface LegacyStacked {
+        top.dext.centurybridge.step.v1_21_2.facade.StackedContents cb$stacked();
+
+        void cb$setStacked(top.dext.centurybridge.step.v1_21_2.facade.StackedContents stacked);
+    }
+
+    /**
+     * CraftingInput.stackedContents(): 1.21.1's (StackedContents is s7entity's facade), built as 1.21.1's constructor
+     * built it -- one of each non-empty stack -- once per input
+     */
+    public static top.dext.centurybridge.step.v1_21_2.facade.StackedContents method_59988(net.minecraft.class_9694 input) {
+        LegacyStacked l = (LegacyStacked) (Object) input;
+        synchronized (l) {
+            top.dext.centurybridge.step.v1_21_2.facade.StackedContents s = l.cb$stacked();
+            if (s == null) {
+                s = new top.dext.centurybridge.step.v1_21_2.facade.StackedContents();
+                for (class_1799 stack : input.method_59989()) {
+                    if (!stack.method_7960()) {
+                        s.method_20478(stack, 1);
+                    }
+                }
+                l.cb$setStacked(s);
+            }
+            return s;
+        }
+    }
+
     // ---- RecipeHolder ----
 
     /** new RecipeHolder(id, recipe): 1.21.2 keys it by the recipe registry's key of that id */
