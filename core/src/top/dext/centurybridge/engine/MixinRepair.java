@@ -694,9 +694,10 @@ public final class MixinRepair {
             if (op >= Opcodes.ICONST_M1 && op <= Opcodes.ICONST_5) return i == op - Opcodes.ICONST_0;
             if (in instanceof IntInsnNode ii && (op == Opcodes.BIPUSH || op == Opcodes.SIPUSH)) return ii.operand == i;
         }
+        // boxed equality, as Mixin's BeforeConstant compares: -0.0f is an LDC, not FCONST_0
         if (c instanceof Long l && (op == Opcodes.LCONST_0 || op == Opcodes.LCONST_1)) return l == op - Opcodes.LCONST_0;
-        if (c instanceof Float f && op >= Opcodes.FCONST_0 && op <= Opcodes.FCONST_2) return f == op - Opcodes.FCONST_0;
-        if (c instanceof Double d && (op == Opcodes.DCONST_0 || op == Opcodes.DCONST_1)) return d == op - Opcodes.DCONST_0;
+        if (c instanceof Float f && op >= Opcodes.FCONST_0 && op <= Opcodes.FCONST_2) return f.equals((float) (op - Opcodes.FCONST_0));
+        if (c instanceof Double d && (op == Opcodes.DCONST_0 || op == Opcodes.DCONST_1)) return d.equals((double) (op - Opcodes.DCONST_0));
         return false;
     }
 

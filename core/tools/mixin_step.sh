@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+# mixin_step.sh <workDir> <V> <W> [areaRegex]: the mixin side of one climb step (V -> W), as step_check.sh is
+# the API side. Run on beta2 from ~/cbwork; <workDir> holds core/build/classes, core/segments and the step's
+# layer (build/centurybridge-0.3.0+<W>.jar), as step_check.sh expects.
+#
+#  1. the mixin probe of V (Main mixin-probe: every point of V's code a mixin can name) judged raw on V (the
+#     control: must be empty) and on W (Main mixin-judge against W's real bodies): the step's mixin damage
+#     table, probe/mixin-damage/<V>__<W>.tsv (mixin_damage.py; kept, it depends only on V's and W's code).
+#  2. the damage rows alone, each its own probe mixin (mixin-probe --only: Mixin applies or rejects a mixin
+#     whole), converted one step by the engine with the step's wiring, then judged on W with the step's layer:
+#     a row still failing is open. Prints "mixin probe: N of M still open" (areaRegex filters by the target
+#     owner's mojang name, as step_check does) and writes <workDir>/step/<V>__<W>/open-mixin.tsv.
+set -uo pipefail
+cd ~/cbwork
+WD="$1"; V="$2"; W="$3"; AREA="${4:-}"
+JAVA=~/cbtest/jdk-25.0.4.1+1/bin/java
+LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
+CP="$WD/core/build/classes:$LIBS"
+SEG="${V}__${W}"
+code_of() { case "$1" in 26.*) echo "data/jars/client-$1.jar" ;; *) echo "data/jars/client-$1-intermediary-code.jar" ;; esac; }
+if [ "$SEG" = "1.21.11__26.1" ]; then
+    echo "mixin probe: the namespace wall is not measured yet"; exit 0
+fi
+P=probe/mixin/$SEG; DAMAGE=probe/mixin-damage/$SEG.tsv
+mkdir -p "$P" probe/mixin-damage
+if [ ! -f "$DAMAGE" ] || [ "${CB_REPROBE:-}" = 1 ]; then
+    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-probe "$(code_of "$V")" "$P/mprobe-$V.jar" > "$P/probe.log" 2>&1 \
+        || { echo "mixin probe failed"; tail -3 "$P/probe.log"; exit 1; }
+    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-judge "$(code_of "$V")" "$P/mprobe-$V.jar" "$P/mprobe-$V.jar.index.tsv" \
+        "$P/raw-$V.tsv" > "$P/control.log" 2>&1 || { echo "mixin control failed"; tail -3 "$P/control.log"; exit 1; }
+    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-judge "$(code_of "$W")" "$P/mprobe-$V.jar" "$P/mprobe-$V.jar.index.tsv" \
+        "$P/raw-$W.tsv" > "$P/raw.log" 2>&1 || { echo "mixin raw judge failed"; tail -3 "$P/raw.log"; exit 1; }
+    python3 "$WD/core/tools/mixin_damage.py" "$P/raw-$W.tsv" "$P/raw-$V.tsv" "$DAMAGE" > "$P/damage.log"
+    rm -f "$P/mprobe-$V.jar" "$P/mprobe-$V.jar.index.tsv"
+fi
+echo "mixin control on $V: $(head -1 "$P/control.log" | sed 's/^mixin-judge: //; s/ -> .*//')"
+OUT="$WD/step/$SEG"; mkdir -p "$OUT"; rm -rf "$OUT/mixin"; mkdir -p "$OUT/mixin"
+"$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-probe "$(code_of "$V")" "$OUT/mixin/mprobe-$V.jar" --only "$DAMAGE" \
+    > "$OUT/mixin/probe.log" 2>&1 || { echo "isolated mixin probe failed"; tail -3 "$OUT/mixin/probe.log"; exit 1; }
+WIRING="$WD/core/segments/steps/$SEG.json"
+[ "$SEG" = "1.20.1__1.20.2" ] && WIRING="$WD/core/segments/shims-1.20.2.json"
+"$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -cp "$CP" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/mixin/conv" \
+    "$OUT/mixin/mprobe-$V.jar" > "$OUT/mixin/convert.log" 2>&1 || { echo "mixin probe convert failed"; tail -5 "$OUT/mixin/convert.log"; exit 1; }
+"$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-judge "$(code_of "$W")" "$(ls "$OUT"/mixin/conv/*.jar | head -1)" \
+    "$OUT/mixin/mprobe-$V.jar.index.tsv" "$OUT/mixin/judged.tsv" --layer "$WD/build/centurybridge-0.3.0+$W.jar" \
+    > "$OUT/mixin/judge.log" 2>&1 || { echo "mixin judge failed"; tail -3 "$OUT/mixin/judge.log"; exit 1; }
+python3 - "$OUT/mixin/judged.tsv" "$DAMAGE" "$AREA" "$OUT/open-mixin.tsv" <<'EOF'
+import collections, os, re, sys
+judged, damage, area, out = sys.argv[1:5]
+cm = {}
+names = "data/mappings/inter-to-mojang-classes.tsv"
+for line in open(names if os.path.exists(names) else "data/mappings/inter-to-mojang-1.21.11.tsv", encoding="utf-8"):
+    f = line.rstrip("\n").split("\t")
+    if len(f) >= 3 and f[0] == "C":
+        cm[f[1]] = f[2]
+def moj(c):
+    if c in cm:
+        return cm[c]
+    d = c.rfind("$")
+    return moj(c[:d]) + c[d:] if d > 0 else c
+def rows(p):
+    with open(p, encoding="utf-8") as f:
+        next(f)
+        return [l.rstrip("\n").split("\t") for l in f]
+dmg = {tuple(r[:5]): r for r in rows(damage)}
+inarea = {k for k in dmg if not area or re.search(area, moj(k[1]))}
+still = {tuple(r[:5]): r[6] for r in rows(judged)}
+open_rows = [dmg[k] + [still[k]] for k in sorted(inarea) if k in still]
+print(f"mixin probe: {len(open_rows)} of {len(inarea)} mixin damage entries still open" + (f" (area /{area}/)" if area else ""))
+by = collections.Counter(r[0] for r in open_rows)
+print("  " + ", ".join(f"{u} {n}" for u, n in sorted(by.items())))
+with open(out, "w", encoding="utf-8") as o:
+    o.write("usage\towner\tmojang\ttarget\tanchor\tordinal\tvcount\tw\tnow\n")
+    for r in open_rows:
+        o.write("\t".join([r[0], r[1], moj(r[1])] + r[2:]) + "\n")
+print("open mixin entries ->", out)
+EOF
+rm -f "$OUT"/mixin/*.jar "$OUT"/mixin/conv/*.jar

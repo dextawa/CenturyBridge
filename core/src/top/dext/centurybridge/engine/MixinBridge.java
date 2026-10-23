@@ -301,6 +301,39 @@ final class MixinBridge {
         return false;
     }
 
+    /** class name -> the jar's classes whose constant pool names it (built once per jar layer) */
+    private Map<String, List<String>> classesNaming;
+
+    private Map<String, List<String>> classesNaming() {
+        if (classesNaming == null) {
+            classesNaming = new HashMap<>();
+            char[] buf = new char[1 << 16];
+            for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+                String k = e.getKey();
+                if (!k.endsWith(".class")) {
+                    continue;
+                }
+                String self = k.substring(0, k.length() - 6);
+                try {
+                    ClassReader cr = new ClassReader(e.getValue());
+                    Set<String> named = new HashSet<>();
+                    for (int i = 1; i < cr.getItemCount(); i++) {
+                        int off = cr.getItem(i);
+                        if (off > 0 && e.getValue()[off - 1] == 7) { // CONSTANT_Class
+                            named.add(cr.readUTF8(off, buf));
+                        }
+                    }
+                    for (String n : named) {
+                        classesNaming.computeIfAbsent(n, x -> new ArrayList<>()).add(self);
+                    }
+                } catch (RuntimeException ex) {
+                    // unreadable entry: names nothing
+                }
+            }
+        }
+        return classesNaming;
+    }
+
     /** the jar layer's bridge class: statics an accessor interface's synthetic methods call */
     private ClassNode helper() {
         if (helper == null) {
@@ -741,32 +774,36 @@ final class MixinBridge {
         Refs refs(String name, String desc, boolean field) {
             Refs r = new Refs();
             collect(mx, name, desc, field, r);
-            byte[] needle = mx.name.getBytes(StandardCharsets.ISO_8859_1);
-            for (Map.Entry<String, byte[]> e : entries.entrySet()) {
-                String k = e.getKey();
-                if (!k.endsWith(".class") || k.equals(mx.name + ".class")) {
-                    continue;
-                }
-                String cls = k.substring(0, k.length() - 6);
-                ClassNode cn = others.get(cls);
-                if (cn == null) {
-                    if (!contains(e.getValue(), needle)) {
-                        continue;
-                    }
-                    cn = new ClassNode();
-                    try {
-                        new ClassReader(e.getValue()).accept(cn, 0);
-                    } catch (RuntimeException ex) {
-                        continue;
-                    }
-                }
+            for (Map.Entry<String, ClassNode> e : mentioning().entrySet()) {
                 int before = r.calls.size() + r.fieldInsns.size() + r.handles.size();
-                collect(cn, name, desc, field, r);
+                collect(e.getValue(), name, desc, field, r);
                 if (r.calls.size() + r.fieldInsns.size() + r.handles.size() > before) {
-                    others.put(cls, cn);
+                    others.put(e.getKey(), e.getValue());
                 }
             }
             return r;
+        }
+
+        /** the jar's other classes whose bytes name the mixin, parsed once per mixin (a jar of thousands of mixins) */
+        private Map<String, ClassNode> mentioning;
+
+        private Map<String, ClassNode> mentioning() {
+            if (mentioning == null) {
+                mentioning = new LinkedHashMap<>();
+                for (String k : classesNaming().getOrDefault(mx.name, List.of())) {
+                    if (k.equals(mx.name)) {
+                        continue;
+                    }
+                    ClassNode cn = new ClassNode();
+                    try {
+                        new ClassReader(entries.get(k + ".class")).accept(cn, 0);
+                    } catch (RuntimeException ex) {
+                        continue;
+                    }
+                    mentioning.put(k, cn);
+                }
+            }
+            return mentioning;
         }
 
         private void collect(ClassNode cn, String name, String desc, boolean field, Refs r) {
