@@ -28,7 +28,9 @@ import org.objectweb.asm.tree.TypeInsnNode;
  * accesses by owner.name, type instructions, constants, invokedynamic names, returns/throws). A V
  * occurrence and a W occurrence are counterparts when their context of width k is the same and no
  * other unmatched occurrence on either side has that context; the widest context (k = 4) is tried
- * first, down to k = 1. A match out of order with the matches before it is dropped. Every
+ * first, down to k = 1. What context leaves unmatched is matched by the two bodies' alignment (the
+ * longest common subsequence of their significant instructions) where the occurrence and both its
+ * neighbours are aligned in a row. A match out of order with the matches before it is dropped. Every
  * occurrence with no unique counterpart stays unmatched (-1): never guessed.
  */
 public final class SiteMatch {
@@ -65,6 +67,22 @@ public final class SiteMatch {
                 if (e.getValue().size() == 1 && w != null && w.size() == 1) {
                     map[e.getValue().get(0)] = w.get(0);
                     taken[w.get(0)] = true;
+                }
+            }
+        }
+        // what context alone leaves: the two bodies' alignment (longest common subsequence of their
+        // significant instructions), where the occurrence and both its neighbours are aligned in a row
+        int[] aligned = align(vs, ws);
+        if (aligned != null) {
+            for (int i = 0; i < vo.size(); i++) {
+                if (map[i] >= 0) continue;
+                int p = vi.get(i);
+                int q = aligned[p];
+                if (q < 0 || p == 0 || p + 1 >= vs.size() || aligned[p - 1] != q - 1 || aligned[p + 1] != q + 1) continue;
+                int j = wi.indexOf(q);
+                if (j >= 0 && !taken[j]) {
+                    map[i] = j;
+                    taken[j] = true;
                 }
             }
         }
@@ -158,6 +176,34 @@ public final class SiteMatch {
             b.append(p < 0 || p >= s.size() ? "^" : s.get(p)).append('|');
         }
         return b.toString();
+    }
+
+    /**
+     * For each position of a, the position of b it is aligned with by a longest common subsequence
+     * (-1: not aligned), ties broken the same way every time; null when the bodies are too long.
+     */
+    static int[] align(List<String> a, List<String> b) {
+        int n = a.size(), m = b.size();
+        if ((long) n * m > 4_000_000L) return null;
+        int[][] t = new int[n + 1][m + 1];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = m - 1; j >= 0; j--) {
+                t[i][j] = a.get(i).equals(b.get(j)) ? t[i + 1][j + 1] + 1 : Math.max(t[i + 1][j], t[i][j + 1]);
+            }
+        }
+        int[] out = new int[n];
+        Arrays.fill(out, -1);
+        int i = 0, j = 0;
+        while (i < n && j < m) {
+            if (a.get(i).equals(b.get(j))) {
+                out[i++] = j++;
+            } else if (t[i + 1][j] >= t[i][j + 1]) {
+                i++;
+            } else {
+                j++;
+            }
+        }
+        return out;
     }
 
     /** 2 x longest common subsequence / both lengths: 1 for the same sequence (0 when too long to compare) */
