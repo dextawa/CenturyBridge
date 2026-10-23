@@ -56,7 +56,7 @@ public enum Tiers implements Tier {
 
     /** Ingredient.of(tag) */
     private static class_1856 tag(class_6862<net.minecraft.class_1792> tag) {
-        return class_1856.method_8106(class_7923.field_41178.method_46735(tag));
+        return class_1856.method_8106(class_7923.method_62715(class_7923.field_41178).method_46735(tag));
     }
 
     @Override
