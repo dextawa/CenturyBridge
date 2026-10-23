@@ -2,7 +2,17 @@
  "classRenames": {
   "net/minecraft/class_5253": "top/dext/centurybridge/step/v1_21_2/facade/FastColor",
   "net/minecraft/class_5253$class_5254": "top/dext/centurybridge/step/v1_21_2/facade/FastColor$ARGB32",
-  "net/minecraft/class_5253$class_8045": "top/dext/centurybridge/step/v1_21_2/facade/FastColor$ABGR32"
+  "net/minecraft/class_5253$class_8045": "top/dext/centurybridge/step/v1_21_2/facade/FastColor$ABGR32",
+  "net/minecraft/class_3906": "top/dext/centurybridge/step/v1_21_2/facade/ProcessorHandle",
+  "net/minecraft/class_3846": "top/dext/centurybridge/step/v1_21_2/facade/ProcessorMailbox",
+  "net/minecraft/class_3900": "top/dext/centurybridge/step/v1_21_2/facade/ChunkTaskPriorityQueueSorter",
+  "net/minecraft/class_3900$class_3946": "top/dext/centurybridge/step/v1_21_2/facade/ChunkTaskPriorityQueueSorter$Message",
+  "net/minecraft/class_3900$class_3947": "top/dext/centurybridge/step/v1_21_2/facade/ChunkTaskPriorityQueueSorter$Release",
+  "net/minecraft/class_3847": "top/dext/centurybridge/step/v1_21_2/facade/StrictQueue",
+  "net/minecraft/class_3847$class_3848": "top/dext/centurybridge/step/v1_21_2/facade/StrictQueue$FixedPriorityQueue",
+  "net/minecraft/class_3847$class_3849": "top/dext/centurybridge/step/v1_21_2/facade/StrictQueue$QueueStrictQueue",
+  "net/minecraft/class_3847$class_3907": "top/dext/centurybridge/step/v1_21_2/facade/StrictQueue$RunnableWithPriority",
+  "net/minecraft/class_3899": "top/dext/centurybridge/step/v1_21_2/facade/ChunkTaskPriorityQueue"
  },
  "covers": [
   "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
@@ -17,7 +27,17 @@
   "net/minecraft/class_332.method_25302(Lnet/minecraft/class_2960;IIIIII)V",
   "net/minecraft/class_332.method_25291(Lnet/minecraft/class_2960;IIIFFIIII)V",
   "net/minecraft/class_332.method_25293(Lnet/minecraft/class_2960;IIIIFFIIII)V",
-  "net/minecraft/class_332.method_25290(Lnet/minecraft/class_2960;IIFFIIII)V"
+  "net/minecraft/class_332.method_25290(Lnet/minecraft/class_2960;IIFFIIII)V",
+  "net/minecraft/server/MinecraftServer.method_3796()Z",
+  "net/minecraft/server/MinecraftServer.method_3736()Z",
+  "net/minecraft/class_3176.method_3796()Z",
+  "net/minecraft/class_3176.method_3736()Z",
+  "net/minecraft/class_310.method_16011()Lnet/minecraft/class_3695;",
+  "net/minecraft/class_310.method_60646()Lnet/minecraft/class_9779;",
+  "net/minecraft/class_310.method_1524(I)V",
+  "net/minecraft/class_2802.method_12128(ZZ)V",
+  "net/minecraft/class_3215.method_12128(ZZ)V",
+  "net/minecraft/class_1937.method_8424(ZZ)V"
  ],
  "frameDefaults": {
   "method_52706(Lnet/minecraft/class_2960;IIII)V": {
@@ -40,6 +60,97 @@
   }
  },
  "methodRenames": {
-  "net/minecraft/class_332.method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": "method_64038"
+  "net/minecraft/class_332.method_51437(Lnet/minecraft/class_327;Ljava/util/List;Ljava/util/Optional;II)V": "method_64038",
+  "net/minecraft/class_1255.method_18858(Ljava/lang/Runnable;)V": "method_63588"
+ },
+ "instanceRedirects": {
+  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#profiler",
+  "net/minecraft/class_3414.method_14833()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#soundLocation"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
+  "net/minecraft/class_156.method_27958()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#ioPool",
+  "net/minecraft/class_156.method_55473()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#nonCriticalIoPool",
+  "net/minecraft/class_3532.method_15353(FFF)I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#color",
+  "net/minecraft/class_156.method_33787(Ljava/lang/String;Ljava/lang/Runnable;)Ljava/lang/Runnable;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#wrapThreadWithTaskName",
+  "net/minecraft/class_156.method_37910(Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/function/Supplier;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#wrapThreadWithTaskName",
+  "net/minecraft/class_3695.method_24338(Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;)Lnet/minecraft/class_3695;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#tee"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_20614:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_20615:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_15141:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_50103:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_39025:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3417.field_39026:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_155.field_29694:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_155.field_29720:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_2653.field_33324:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_2653.field_33325:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_2820.field_34038:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_3222.field_47708:D": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_5949.field_29552:Lnet/minecraft/class_5949;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
+  "net/minecraft/class_514.field_32413:I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
+  "net/minecraft/class_7573.field_46063:Lnet/minecraft/class_7573;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
+  "net/minecraft/class_3999.field_17830:Lnet/minecraft/class_3999;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient"
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_3227.<init>(Lnet/minecraft/class_2823;Lnet/minecraft/class_3898;ZLnet/minecraft/class_3846;Lnet/minecraft/class_3906;)V": {
+   "desc": "(Lnet/minecraft/class_2823;Lnet/minecraft/class_3898;ZLnet/minecraft/class_10176;Lnet/minecraft/class_10171;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestExecutors#lightTaskExecutor(Lnet/minecraft/class_3846;)Lnet/minecraft/class_10176;",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestExecutors#lightDispatcher(Lnet/minecraft/class_3906;)Lnet/minecraft/class_10171;"
+   ],
+   "basis": "ThreadedLevelLightEngine takes 1.21.2's ConsecutiveExecutor and ChunkTaskDispatcher where 1.21.1 took the light mailbox and its sorter handle: the executor runs on the mailbox, the dispatcher submits to the handle (CbRestExecutors)"
+  }
+ },
+ "overrideRenames": [
+  {
+   "old": "method_18858(Ljava/lang/Runnable;)V",
+   "new": "method_63588",
+   "onlyUnder": "net/minecraft/class_1255",
+   "superCalls": "rename",
+   "basis": "BlockableEventLoop.tell(task) is 1.21.2's schedule(task) (TaskScheduler), the same body: a 1.21.1 subclass's tell overrides schedule"
+  }
+ ],
+ "facadeGaps": {
+  "net/minecraft/class_3900.method_17615(Lnet/minecraft/class_3906;JLjava/lang/Runnable;Z)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3900.method_17282(Lnet/minecraft/class_3906;Ljava/util/function/Function;JLjava/util/function/IntSupplier;Z)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3900.method_17630(Lnet/minecraft/class_3899;Lnet/minecraft/class_3906;)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3900.method_17632(Lnet/minecraft/class_3906;)Lnet/minecraft/class_3899;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3900.field_17248:Lorg/slf4j/Logger;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3900.field_17249:Ljava/util/Map;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3900.field_17250:Ljava/util/Set;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3900.field_17251:Lnet/minecraft/class_3846;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3847$class_3848.field_35032:[Ljava/util/Queue;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3847$class_3848.field_35033:Ljava/util/concurrent/atomic/AtomicInteger;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3847$class_3849.field_17045:Ljava/util/Queue;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3847$class_3907.field_17279:Ljava/lang/Runnable;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3899.method_17607(J)Ljava/lang/Runnable;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3899.field_17243:Ljava/util/List;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3899.field_17244:I": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3899.field_17247:Ljava/lang/String;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3899.field_17444:Lit/unimi/dsi/fastutil/longs/LongSet;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3899.field_17445:I": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3900.method_17629(Lnet/minecraft/class_3193;Ljava/lang/Runnable;)Lnet/minecraft/class_3900$class_3946;": "ChunkTaskPriorityQueueSorter.message(ChunkHolder, ..): the shape before 1.21 (ChunkHolder); 1.21.1 takes GenerationChunkHolder (method_17629 / method_34870 with class_9761, served), and an earlier release's call was reshaped to it by the step that changed it",
+  "net/minecraft/class_3900.method_34870(Lnet/minecraft/class_3193;Ljava/util/function/Function;)Lnet/minecraft/class_3900$class_3946;": "ChunkTaskPriorityQueueSorter.message(ChunkHolder, ..): the shape before 1.21 (ChunkHolder); 1.21.1 takes GenerationChunkHolder (method_17629 / method_34870 with class_9761, served), and an earlier release's call was reshaped to it by the step that changed it",
+  "net/minecraft/class_3846.method_16903()Z": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.method_16904()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.method_16905()Z": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.method_16906()Z": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.method_16907()Z": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.method_16908()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.method_16900(Lit/unimi/dsi/fastutil/ints/Int2BooleanFunction;)I": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.field_17040:Lorg/slf4j/Logger;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.field_29940:I": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.field_29941:I": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.field_17041:Ljava/util/concurrent/atomic/AtomicInteger;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.field_17039:Lnet/minecraft/class_3847;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.field_17042:Ljava/util/concurrent/Executor;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_3846.field_17043:Ljava/lang/String;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
  }
 }

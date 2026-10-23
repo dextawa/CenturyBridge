@@ -333,6 +333,14 @@
     "CbTooltipLevelAccessor"
   ],
   "client": [
+    "CbClientGameRendererMixin",
+    "CbClientLightingAccessor",
+    "CbClientNativeImageAccessor",
+    "CbClientPoseInvoker",
+    "CbClientRenderTargetMixin",
+    "CbClientShaderAccessor",
+    "CbClientTrueTypeMixin",
+    "CbClientVertexBufferMixin",
     "CbFapiClientConfigurationMixin",
     "CbLevelDataClientMixin",
     "CbNetClientPacketListenerAccess",

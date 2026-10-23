@@ -8,11 +8,9 @@ accessible field net/minecraft/class_4351 field_19602 J
 accessible method net/minecraft/class_1255 method_20813 ()V
 accessible method net/minecraft/class_507 method_2579 ()V
 accessible method net/minecraft/class_634 method_47657 (Lnet/minecraft/class_7427;)V
-accessible method net/minecraft/server/MinecraftServer method_16044 ()Lnet/minecraft/class_3695;
 accessible method net/minecraft/server/MinecraftServer method_3813 (Ljava/util/function/BooleanSupplier;)V
 extendable method net/minecraft/class_507 method_2579 ()V
 extendable method net/minecraft/class_634 method_47657 (Lnet/minecraft/class_7427;)V
-extendable method net/minecraft/server/MinecraftServer method_16044 ()Lnet/minecraft/class_3695;
 mutable field net/minecraft/class_507 field_3095 Lnet/minecraft/class_1729;
 mutable field net/minecraft/class_5699 field_42268 Lcom/mojang/serialization/Codec;
 mutable field net/minecraft/class_5699 field_45075 Lcom/mojang/serialization/Codec;
