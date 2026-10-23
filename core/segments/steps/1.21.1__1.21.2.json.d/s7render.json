@@ -15,22 +15,7 @@
   "net/minecraft/class_1097$class_1098": "top/dext/centurybridge/step/v1_21_2/facade/WeightedBakedModelBuilder",
   "net/minecraft/class_1095$class_1096": "top/dext/centurybridge/step/v1_21_2/facade/MultiPartBakedModelBuilder"
  },
- "facadeGaps": {
-  "net/minecraft/class_5597.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": "the 1.20.x renderToBuffer(pose, consumer, light, overlay, r, g, b, a); 1.21 replaced it with the packed-colour shape the facade has, and the 1.20.6 -> 1.21 step rewrote every call and override of it, so no 1.21.1 class references it",
-  "net/minecraft/class_8184.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": "the 1.20.x renderToBuffer(pose, consumer, light, overlay, r, g, b, a); 1.21 replaced it with the packed-colour shape the facade has, and the 1.20.6 -> 1.21 step rewrote every call and override of it, so no 1.21.1 class references it",
-  "net/minecraft/class_4595.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": "the 1.20.x renderToBuffer(pose, consumer, light, overlay, r, g, b, a); 1.21 replaced it with the packed-colour shape the facade has, and the 1.20.6 -> 1.21 step rewrote every call and override of it, so no 1.21.1 class references it",
-  "net/minecraft/class_4592.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": "the 1.20.x renderToBuffer(pose, consumer, light, overlay, r, g, b, a); 1.21 replaced it with the packed-colour shape the facade has, and the 1.20.6 -> 1.21 step rewrote every call and override of it, so no 1.21.1 class references it",
-  "net/minecraft/class_4593.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": "the 1.20.x renderToBuffer(pose, consumer, light, overlay, r, g, b, a); 1.21 replaced it with the packed-colour shape the facade has, and the 1.20.6 -> 1.21 step rewrote every call and override of it, so no 1.21.1 class references it",
-  "net/minecraft/class_4594.method_2828(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;IIFFFF)V": "the 1.20.x renderToBuffer(pose, consumer, light, overlay, r, g, b, a); 1.21 replaced it with the packed-colour shape the facade has, and the 1.20.6 -> 1.21 step rewrote every call and override of it, so no 1.21.1 class references it",
-  "net/minecraft/class_4593.method_22955(FFF)V": "the 1.20.x setColor(r, g, b); 1.21 replaced it with setColor(int), which the facade has, and the 1.20.6 -> 1.21 step rewrote every call, so no 1.21.1 class references it",
-  "net/minecraft/class_4593.field_20923:F": "1.20.x private colour channel field, gone at 1.21 (the packed int the facade has replaced it): only an access widener ever reached it, and none of 1.21.1 names it",
-  "net/minecraft/class_4593.field_20924:F": "1.20.x private colour channel field, gone at 1.21 (the packed int the facade has replaced it): only an access widener ever reached it, and none of 1.21.1 names it",
-  "net/minecraft/class_4593.field_20925:F": "1.20.x private colour channel field, gone at 1.21 (the packed int the facade has replaced it): only an access widener ever reached it, and none of 1.21.1 names it",
-  "net/minecraft/class_4594.method_22956(FFF)V": "the 1.20.x setColor(r, g, b); 1.21 replaced it with setColor(int), which the facade has, and the 1.20.6 -> 1.21 step rewrote every call, so no 1.21.1 class references it",
-  "net/minecraft/class_4594.field_20926:F": "1.20.x private colour channel field, gone at 1.21 (the packed int the facade has replaced it): only an access widener ever reached it, and none of 1.21.1 names it",
-  "net/minecraft/class_4594.field_20927:F": "1.20.x private colour channel field, gone at 1.21 (the packed int the facade has replaced it): only an access widener ever reached it, and none of 1.21.1 names it",
-  "net/minecraft/class_4594.field_20928:F": "1.20.x private colour channel field, gone at 1.21 (the packed int the facade has replaced it): only an access widener ever reached it, and none of 1.21.1 names it"
- },
+ "facadeGaps": {},
  "staticRedirects": {
   "net/minecraft/class_7187.method_41827(Lnet/minecraft/class_5597;Lnet/minecraft/class_7184;JFLorg/joml/Vector3f;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderModelBase",
   "com/mojang/blaze3d/systems/RenderSystem.setShader(Ljava/util/function/Supplier;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRenderShaders",

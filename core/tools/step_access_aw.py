@@ -189,6 +189,11 @@ def lines_for(row, classes):
     # what V allowed this usage: a public member from anywhere, a protected one from a subclass
     was_public = not usage.endswith("-protected")
     out = []
+    # the JVM checks the class a reference names before the member: a public member of a class W
+    # made package-private (26.1's GlRenderPass) is an IllegalAccessError too
+    oc = classes.get(owner)
+    if oc is not None and not oc.access & ACC_PUBLIC:
+        out.append(f"accessible class {owner}")
     if not desc.startswith("("):
         if was_public and not acc & ACC_PUBLIC or not was_public and not acc & (ACC_PUBLIC | ACC_PROTECTED):
             out.append("accessible field" + at)

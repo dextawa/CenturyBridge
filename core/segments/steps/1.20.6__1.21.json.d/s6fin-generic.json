@@ -1,0 +1,59 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_7923.field_42940:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21/rt/CbWorldBlocks"
+ },
+ "genericWitnesses": {
+  "net/minecraft/class_7924.field_42941:Lnet/minecraft/class_5321;": {
+   "by": [
+    "net/minecraft/class_7923.field_42940:Lnet/minecraft/class_2378;"
+   ],
+   "basis": "phantom key: Registries.DECORATED_POT_PATTERNS names the registry 1.21 keeps the patterns in; 1.20.6 code reaches its values only through BuiltInRegistries.DECORATED_POT_PATTERNS, which answers the names view over 1.21's registry under this same key (CbWorldBlocks.field_42940: texture names as 1.20.6 registered them, a 1.20.6 registration landing in 1.21's registry too)"
+  },
+  "net/minecraft/class_4722.field_42911:Ljava/util/Map;": {
+   "by": [
+    "net/minecraft/class_7923.field_42940:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_8173.method_49205(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "phantom key: Sheets.DECORATED_POT_MATERIALS maps each pattern key of the registry to its material; the keys 1.20.6 code holds are that registry's own (the names view shares them), and each material is 1.20.6's for the key -- DECORATED_POT_SHEET with entity/decorated_pot/<texture> (1.21 builds it from the pattern's asset, which is what DecoratedPotPatterns.location(key) answers, CbWorldBlocks.location)"
+  },
+  "net/minecraft/class_4722.method_49341(Lnet/minecraft/class_5321;)Lnet/minecraft/class_4730;": {
+   "by": [
+    "net/minecraft/class_7923.field_42940:Lnet/minecraft/class_2378;",
+    "net/minecraft/class_8173.method_49205(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;"
+   ],
+   "basis": "phantom key: Sheets.getDecoratedPotMaterial(key) is DECORATED_POT_MATERIALS.get(key) (null for null) in both releases, over the same keys and the same materials (see field_42911)"
+  },
+  "net/minecraft/class_1729.method_7652(Lnet/minecraft/class_8786;)Z": {
+   "by": [
+    "net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+    "net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+    "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "RecipeBookMenu.recipeMatches(holder): the recipe holder passes unchanged (RecipeHolder<? extends Recipe<C>> became RecipeHolder<R>, the same object, in both directions -- a 1.20.6 caller's holder in, vanilla's holder into a 1.20.6 override); what 1.20.6 code does with the holder's recipe goes through Recipe's container calls, converted (CbItemRecipes, as for ServerPlaceRecipe)"
+  },
+  "net/minecraft/class_1714.method_7652(Lnet/minecraft/class_8786;)Z": {
+   "by": [
+    "net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+    "net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+    "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "RecipeBookMenu.recipeMatches(holder): the recipe holder passes unchanged (RecipeHolder<? extends Recipe<C>> became RecipeHolder<R>, the same object, in both directions -- a 1.20.6 caller's holder in, vanilla's holder into a 1.20.6 override); what 1.20.6 code does with the holder's recipe goes through Recipe's container calls, converted (CbItemRecipes, as for ServerPlaceRecipe)"
+  },
+  "net/minecraft/class_1720.method_7652(Lnet/minecraft/class_8786;)Z": {
+   "by": [
+    "net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+    "net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+    "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "RecipeBookMenu.recipeMatches(holder): the recipe holder passes unchanged (RecipeHolder<? extends Recipe<C>> became RecipeHolder<R>, the same object, in both directions -- a 1.20.6 caller's holder in, vanilla's holder into a 1.20.6 override); what 1.20.6 code does with the holder's recipe goes through Recipe's container calls, converted (CbItemRecipes, as for ServerPlaceRecipe)"
+  },
+  "net/minecraft/class_1723.method_7652(Lnet/minecraft/class_8786;)Z": {
+   "by": [
+    "net/minecraft/class_1860.method_8115(Lnet/minecraft/class_1263;Lnet/minecraft/class_1937;)Z",
+    "net/minecraft/class_1860.method_8116(Lnet/minecraft/class_1263;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
+    "net/minecraft/class_1860.method_8111(Lnet/minecraft/class_1263;)Lnet/minecraft/class_2371;"
+   ],
+   "basis": "RecipeBookMenu.recipeMatches(holder): the recipe holder passes unchanged (RecipeHolder<? extends Recipe<C>> became RecipeHolder<R>, the same object, in both directions -- a 1.20.6 caller's holder in, vanilla's holder into a 1.20.6 override); what 1.20.6 code does with the holder's recipe goes through Recipe's container calls, converted (CbItemRecipes, as for ServerPlaceRecipe)"
+  }
+ }
+}
