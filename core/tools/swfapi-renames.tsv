@@ -1,0 +1,332 @@
+# Fabric API 1.21.11 -> 26.1 renames: hints for gen_swfapi_renames.py, which pairs a class or member only
+# when 26.1's bytecode confirms it member by member (a hint that does not check out is reported, never emitted).
+# Source: FabricMC/fabric-api PR #5060 "Rename APIs to match Mojang's naming" (its rename list, verbatim where its
+# target exists in 0.145.1+26.1), plus the package moves it leaves out (marked "cb:"), read off both jars.
+# C <TAB> V class <TAB> W class        N <TAB> V owner <TAB> V member name <TAB> W member name
+C	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$MobSpawnSettingsContext
+C	net/fabricmc/fabric/api/client/command/v2/ClientCommandManager	net/fabricmc/fabric/api/client/command/v2/ClientCommands
+C	net/fabricmc/fabric/api/client/datagen/v1/builder/SoundTypeBuilder$EntryBuilder	net/fabricmc/fabric/api/client/datagen/v1/builder/SoundTypeBuilder$RegistrationBuilder
+C	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$EndWorldTick	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$EndLevelTick
+C	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$StartWorldTick	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$StartLevelTick
+C	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientLevelEvents
+C	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientLevelEvents$AfterClientLevelChange
+C	net/fabricmc/fabric/api/client/itemgroup/v1/FabricCreativeInventoryScreen	net/fabricmc/fabric/api/client/creativetab/v1/FabricCreativeModeInventoryScreen
+C	net/fabricmc/fabric/api/client/itemgroup/v1/package-info	net/fabricmc/fabric/api/client/creativetab/v1/package-info
+C	net/fabricmc/fabric/api/client/keybinding/v1/KeyBindingHelper	net/fabricmc/fabric/api/client/keymapping/v1/KeyMappingHelper
+C	net/fabricmc/fabric/api/client/keybinding/v1/package-info	net/fabricmc/fabric/api/client/keymapping/v1/package-info
+C	net/fabricmc/fabric/api/client/model/loading/v1/FabricBakedModelManager	net/fabricmc/fabric/api/client/model/loading/v1/FabricModelManager
+C	net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperUnbakedGroupedBlockStateModel	net/fabricmc/fabric/api/client/model/loading/v1/wrapper/WrapperUnbakedRootBlockStateModel
+C	net/fabricmc/fabric/api/client/networking/v1/C2SConfigurationChannelEvents	net/fabricmc/fabric/api/client/networking/v1/ServerboundConfigurationChannelEvents
+C	net/fabricmc/fabric/api/client/networking/v1/C2SConfigurationChannelEvents$Register	net/fabricmc/fabric/api/client/networking/v1/ServerboundConfigurationChannelEvents$Register
+C	net/fabricmc/fabric/api/client/networking/v1/C2SConfigurationChannelEvents$Unregister	net/fabricmc/fabric/api/client/networking/v1/ServerboundConfigurationChannelEvents$Unregister
+C	net/fabricmc/fabric/api/client/networking/v1/C2SPlayChannelEvents	net/fabricmc/fabric/api/client/networking/v1/ServerboundPlayChannelEvents
+C	net/fabricmc/fabric/api/client/networking/v1/C2SPlayChannelEvents$Register	net/fabricmc/fabric/api/client/networking/v1/ServerboundPlayChannelEvents$Register
+C	net/fabricmc/fabric/api/client/networking/v1/C2SPlayChannelEvents$Unregister	net/fabricmc/fabric/api/client/networking/v1/ServerboundPlayChannelEvents$Unregister
+C	net/fabricmc/fabric/api/client/particle/v1/FabricSpriteProvider	net/fabricmc/fabric/api/client/particle/v1/FabricSpriteSet
+C	net/fabricmc/fabric/api/client/particle/v1/ParticleFactoryRegistry	net/fabricmc/fabric/api/client/particle/v1/ParticleProviderRegistry
+C	net/fabricmc/fabric/api/client/particle/v1/ParticleFactoryRegistry$PendingParticleFactory	net/fabricmc/fabric/api/client/particle/v1/ParticleProviderRegistry$PendingParticleProvider
+C	net/fabricmc/fabric/api/client/particle/v1/ParticleRenderEvents$AllowBlockDustTint	net/fabricmc/fabric/api/client/particle/v1/ParticleRenderEvents$AllowTerrainParticleTint
+C	net/fabricmc/fabric/api/client/particle/v1/ParticleRendererRegistry	net/fabricmc/fabric/api/client/particle/v1/ParticleGroupRegistry
+C	net/fabricmc/fabric/api/client/rendering/v1/AtlasSourceRegistry	net/fabricmc/fabric/api/client/rendering/v1/SpriteSourceRegistry
+C	net/fabricmc/fabric/api/client/rendering/v1/BlockRenderLayerMap	net/fabricmc/fabric/api/client/rendering/v1/ChunkSectionLayerMap
+C	net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry	net/fabricmc/fabric/api/client/rendering/v1/ModelLayerRegistry
+C	net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry$TexturedEquipmentModelDataProvider	net/fabricmc/fabric/api/client/rendering/v1/ModelLayerRegistry$TexturedArmorModelSetProvider
+C	net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry$TexturedModelDataProvider	net/fabricmc/fabric/api/client/rendering/v1/ModelLayerRegistry$TexturedLayerDefinitionProvider
+C	net/fabricmc/fabric/api/client/rendering/v1/LivingEntityFeatureRendererRegistrationCallback	net/fabricmc/fabric/api/client/rendering/v1/LivingEntityRenderLayerRegistrationCallback
+C	net/fabricmc/fabric/api/client/rendering/v1/LivingEntityFeatureRendererRegistrationCallback$RegistrationHelper	net/fabricmc/fabric/api/client/rendering/v1/LivingEntityRenderLayerRegistrationCallback$RegistrationHelper
+C	net/fabricmc/fabric/api/client/rendering/v1/SpecialGuiElementRegistry	net/fabricmc/fabric/api/client/rendering/v1/PictureInPictureRendererRegistry
+C	net/fabricmc/fabric/api/client/rendering/v1/SpecialGuiElementRegistry$Context	net/fabricmc/fabric/api/client/rendering/v1/PictureInPictureRendererRegistry$Context
+C	net/fabricmc/fabric/api/client/rendering/v1/SpecialGuiElementRegistry$Factory	net/fabricmc/fabric/api/client/rendering/v1/PictureInPictureRendererRegistry$Factory
+C	net/fabricmc/fabric/api/client/rendering/v1/TooltipComponentCallback	net/fabricmc/fabric/api/client/rendering/v1/ClientTooltipComponentCallback
+C	net/fabricmc/fabric/api/client/rendering/v1/world/AbstractWorldRenderContext	net/fabricmc/fabric/api/client/rendering/v1/level/AbstractLevelRenderContext
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext	net/fabricmc/fabric/api/client/rendering/v1/level/LevelExtractionContext
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderContext
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$AfterBlockOutlineExtraction	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents$AfterBlockOutlineExtraction
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$AfterEntities	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents$AfterEntities
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeBlockOutline	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents$BeforeBlockOutline
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeEntities	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents$BeforeEntities
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$BeforeTranslucent	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents$BeforeTranslucent
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$DebugRender	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents$DebugRender
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$EndExtraction	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents$EndExtraction
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$EndMain	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents$EndMain
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderEvents$StartMain	net/fabricmc/fabric/api/client/rendering/v1/level/LevelRenderEvents$StartMain
+C	net/fabricmc/fabric/api/client/rendering/v1/world/WorldTerrainRenderContext	net/fabricmc/fabric/api/client/rendering/v1/level/LevelTerrainRenderContext
+C	net/fabricmc/fabric/api/client/rendering/v1/world/package-info	net/fabricmc/fabric/api/client/rendering/v1/level/package-info
+C	net/fabricmc/fabric/api/command/v2/FabricEntitySelectorReader	net/fabricmc/fabric/api/command/v2/FabricEntitySelectorParser
+C	net/fabricmc/fabric/api/datagen/v1/FabricDataOutput	net/fabricmc/fabric/api/datagen/v1/FabricPackOutput
+C	net/fabricmc/fabric/api/datagen/v1/loot/FabricBlockLootTableGenerator	net/fabricmc/fabric/api/datagen/v1/loot/FabricBlockLootSubProvider
+C	net/fabricmc/fabric/api/datagen/v1/loot/FabricEntityLootTableGenerator	net/fabricmc/fabric/api/datagen/v1/loot/FabricEntityLootSubProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootSubProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricEntityLootTableProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricEntityLootSubProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricLootTableProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricLootTableSubProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricProvidedTagBuilder	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagAppender
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagsProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$AliasGroupBuilder	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagsProvider$AliasGroupBuilder
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$BlockEntityTypeTagProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagsProvider$BlockEntityTypeTagsProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$BlockTagProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagsProvider$BlockTagsProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$EntityTypeTagProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagsProvider$EntityTypeTagsProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FabricValueLookupTagProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagsProvider$FabricIntrinsicHolderTagsProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$FluidTagProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagsProvider$FluidTagsProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$ItemTagProvider	net/fabricmc/fabric/api/datagen/v1/provider/FabricTagsProvider$ItemTagsProvider
+C	net/fabricmc/fabric/api/datagen/v1/provider/SimpleFabricLootTableProvider	net/fabricmc/fabric/api/datagen/v1/provider/SimpleFabricLootTableSubProvider
+C	net/fabricmc/fabric/api/datagen/v1/recipe/FabricRecipeExporter	net/fabricmc/fabric/api/datagen/v1/recipe/FabricRecipeOutput
+C	net/fabricmc/fabric/api/entity/event/v1/ServerEntityWorldChangeEvents	net/fabricmc/fabric/api/entity/event/v1/ServerEntityLevelChangeEvents
+C	net/fabricmc/fabric/api/entity/event/v1/ServerEntityWorldChangeEvents$AfterEntityChange	net/fabricmc/fabric/api/entity/event/v1/ServerEntityLevelChangeEvents$AfterEntityChange
+C	net/fabricmc/fabric/api/entity/event/v1/ServerEntityWorldChangeEvents$AfterPlayerChange	net/fabricmc/fabric/api/entity/event/v1/ServerEntityLevelChangeEvents$AfterPlayerChange
+C	net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$LevelTypeChange	net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$FullChunkStatusChange
+C	net/fabricmc/fabric/api/event/lifecycle/v1/ServerTickEvents$EndWorldTick	net/fabricmc/fabric/api/event/lifecycle/v1/ServerTickEvents$EndLevelTick
+C	net/fabricmc/fabric/api/event/lifecycle/v1/ServerTickEvents$StartWorldTick	net/fabricmc/fabric/api/event/lifecycle/v1/ServerTickEvents$StartLevelTick
+C	net/fabricmc/fabric/api/event/lifecycle/v1/ServerWorldEvents	net/fabricmc/fabric/api/event/lifecycle/v1/ServerLevelEvents
+C	net/fabricmc/fabric/api/event/lifecycle/v1/ServerWorldEvents$Load	net/fabricmc/fabric/api/event/lifecycle/v1/ServerLevelEvents$Load
+C	net/fabricmc/fabric/api/event/lifecycle/v1/ServerWorldEvents$Unload	net/fabricmc/fabric/api/event/lifecycle/v1/ServerLevelEvents$Unload
+C	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleVisitor	net/fabricmc/fabric/api/gamerule/v1/FabricGameRuleTypeVisitor
+C	net/fabricmc/fabric/api/item/v1/ComponentTooltipAppenderRegistry	net/fabricmc/fabric/api/item/v1/ItemComponentTooltipProviderRegistry
+C	net/fabricmc/fabric/api/item/v1/FabricItem$Settings	net/fabricmc/fabric/api/item/v1/FabricItem$Properties
+C	net/fabricmc/fabric/api/itemgroup/v1/FabricItemGroup	net/fabricmc/fabric/api/creativetab/v1/FabricCreativeModeTab
+C	net/fabricmc/fabric/api/itemgroup/v1/FabricItemGroupEntries	net/fabricmc/fabric/api/creativetab/v1/FabricCreativeModeTabOutput
+C	net/fabricmc/fabric/api/itemgroup/v1/ItemGroupEvents	net/fabricmc/fabric/api/creativetab/v1/CreativeModeTabEvents
+C	net/fabricmc/fabric/api/itemgroup/v1/ItemGroupEvents$ModifyEntries	net/fabricmc/fabric/api/creativetab/v1/CreativeModeTabEvents$ModifyOutput
+C	net/fabricmc/fabric/api/itemgroup/v1/ItemGroupEvents$ModifyEntriesAll	net/fabricmc/fabric/api/creativetab/v1/CreativeModeTabEvents$ModifyOutputAll
+C	net/fabricmc/fabric/api/itemgroup/v1/package-info	net/fabricmc/fabric/api/creativetab/v1/package-info
+C	net/fabricmc/fabric/api/networking/v1/FabricServerConfigurationNetworkHandler	net/fabricmc/fabric/api/networking/v1/FabricServerConfigurationPacketListenerImpl
+C	net/fabricmc/fabric/api/networking/v1/PacketByteBufs	net/fabricmc/fabric/api/networking/v1/FriendlyByteBufs
+C	net/fabricmc/fabric/api/networking/v1/S2CConfigurationChannelEvents	net/fabricmc/fabric/api/networking/v1/ClientboundConfigurationChannelEvents
+C	net/fabricmc/fabric/api/networking/v1/S2CConfigurationChannelEvents$Register	net/fabricmc/fabric/api/networking/v1/ClientboundConfigurationChannelEvents$Register
+C	net/fabricmc/fabric/api/networking/v1/S2CConfigurationChannelEvents$Unregister	net/fabricmc/fabric/api/networking/v1/ClientboundConfigurationChannelEvents$Unregister
+C	net/fabricmc/fabric/api/networking/v1/S2CPlayChannelEvents	net/fabricmc/fabric/api/networking/v1/ClientboundPlayChannelEvents
+C	net/fabricmc/fabric/api/networking/v1/S2CPlayChannelEvents$Register	net/fabricmc/fabric/api/networking/v1/ClientboundPlayChannelEvents$Register
+C	net/fabricmc/fabric/api/networking/v1/S2CPlayChannelEvents$Unregister	net/fabricmc/fabric/api/networking/v1/ClientboundPlayChannelEvents$Unregister
+C	net/fabricmc/fabric/api/object/builder/v1/entity/FabricTrackedDataRegistry	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityDataRegistry
+C	net/fabricmc/fabric/api/object/builder/v1/world/poi/PointOfInterestHelper	net/fabricmc/fabric/api/object/builder/v1/world/poi/PoiHelper
+C	net/fabricmc/fabric/api/particle/v1/FabricBlockStateParticleEffect	net/fabricmc/fabric/api/particle/v1/FabricBlockParticleOption
+C	net/fabricmc/fabric/api/recipe/v1/FabricRecipeManager	net/fabricmc/fabric/api/recipe/v1/FabricRecipeAccess
+C	net/fabricmc/fabric/api/recipe/v1/FabricServerRecipeManager	net/fabricmc/fabric/api/recipe/v1/FabricRecipeManager
+C	net/fabricmc/fabric/api/registry/CompostingChanceRegistry	net/fabricmc/fabric/api/registry/CompostableRegistry
+C	net/fabricmc/fabric/api/registry/FabricBrewingRecipeRegistryBuilder	net/fabricmc/fabric/api/registry/FabricPotionBrewingBuilder
+C	net/fabricmc/fabric/api/registry/FabricBrewingRecipeRegistryBuilder$BuildCallback	net/fabricmc/fabric/api/registry/FabricPotionBrewingBuilder$BuildCallback
+C	net/fabricmc/fabric/api/registry/FuelRegistryEvents	net/fabricmc/fabric/api/registry/FuelValueEvents
+C	net/fabricmc/fabric/api/registry/FuelRegistryEvents$BuildCallback	net/fabricmc/fabric/api/registry/FuelValueEvents$BuildCallback
+C	net/fabricmc/fabric/api/registry/FuelRegistryEvents$Context	net/fabricmc/fabric/api/registry/FuelValueEvents$Context
+C	net/fabricmc/fabric/api/registry/FuelRegistryEvents$ExclusionsCallback	net/fabricmc/fabric/api/registry/FuelValueEvents$ExclusionsCallback
+C	net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry	net/fabricmc/fabric/api/registry/LandPathTypeRegistry
+C	net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry$DynamicPathNodeTypeProvider	net/fabricmc/fabric/api/registry/LandPathTypeRegistry$DynamicPathTypeProvider
+C	net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry$PathNodeTypeProvider	net/fabricmc/fabric/api/registry/LandPathTypeRegistry$PathTypeProvider
+C	net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry$StaticPathNodeTypeProvider	net/fabricmc/fabric/api/registry/LandPathTypeRegistry$StaticPathTypeProvider
+C	net/fabricmc/fabric/api/registry/SculkSensorFrequencyRegistry	net/fabricmc/fabric/api/registry/VibrationFrequencyRegistry
+C	net/fabricmc/fabric/api/renderer/v1/render/BlockVertexConsumerProvider	net/fabricmc/fabric/api/renderer/v1/render/BlockMultiBufferSource
+C	net/fabricmc/fabric/api/renderer/v1/render/FabricBlockModelRenderer	net/fabricmc/fabric/api/renderer/v1/render/FabricModelBlockRenderer
+C	net/fabricmc/fabric/api/renderer/v1/render/FabricBlockRenderManager	net/fabricmc/fabric/api/renderer/v1/render/FabricBlockRenderDispatcher
+C	net/fabricmc/fabric/api/resource/v1/reloader/SimpleResourceReloader	net/fabricmc/fabric/api/resource/v1/reloader/SimpleReloadListener
+C	net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerFactory	net/fabricmc/fabric/api/menu/v1/ExtendedMenuProvider
+C	net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType	net/fabricmc/fabric/api/menu/v1/ExtendedMenuType
+C	net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType$ExtendedFactory	net/fabricmc/fabric/api/menu/v1/ExtendedMenuType$ExtendedFactory
+C	net/fabricmc/fabric/api/screenhandler/v1/FabricScreenHandlerFactory	net/fabricmc/fabric/api/menu/v1/FabricMenuProvider
+C	net/fabricmc/fabric/api/screenhandler/v1/package-info	net/fabricmc/fabric/api/menu/v1/package-info
+C	net/fabricmc/fabric/api/serialization/v1/view/FabricReadView	net/fabricmc/fabric/api/serialization/v1/value/FabricValueInput
+C	net/fabricmc/fabric/api/serialization/v1/view/FabricWriteView	net/fabricmc/fabric/api/serialization/v1/value/FabricValueOutput
+C	net/fabricmc/fabric/api/serialization/v1/view/package-info	net/fabricmc/fabric/api/serialization/v1/value/package-info
+C	net/fabricmc/fabric/api/transfer/v1/item/InventoryStorage	net/fabricmc/fabric/api/transfer/v1/item/ContainerStorage
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext	getSpawnSettings	getMobSpawnSettings
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearDryFoliageColor	clearDryFoliageColorOverride
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearFoliageColor	clearFoliageColorOverride
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	clearGrassColor	clearGrassColorOverride
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setDryFoliageColor	setDryFoliageColorOverride
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setFoliageColor	setFoliageColorOverride
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$EffectsContext	setGrassColor	setGrassColorOverride
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext	clearSpawnCost	clearMobCharge
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext	getSpawnEntries	getMobs
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext	setCreatureSpawnProbability	setCreatureGenerationProbability
+N	net/fabricmc/fabric/api/biome/v1/BiomeModificationContext$SpawnSettingsContext	setSpawnCost	addMobCharge
+N	net/fabricmc/fabric/api/biome/v1/BiomeSelectionContext	getBiomeRegistryEntry	getBiomeHolder
+N	net/fabricmc/fabric/api/client/command/v2/FabricClientCommandSource	getWorld	getLevel
+N	net/fabricmc/fabric/api/client/datagen/v1/builder/SoundTypeBuilder	category	source
+N	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents	END_WORLD_TICK	END_LEVEL_TICK
+N	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents	START_WORLD_TICK	START_LEVEL_TICK
+N	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents	AFTER_CLIENT_WORLD_CHANGE	AFTER_CLIENT_LEVEL_CHANGE
+N	net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange	afterWorldChange	afterLevelChange
+N	net/fabricmc/fabric/api/client/itemgroup/v1/FabricCreativeInventoryScreen	getItemGroupsOnPage	getTabsOnPage
+N	net/fabricmc/fabric/api/client/itemgroup/v1/FabricCreativeInventoryScreen	getSelectedItemGroup	getSelectedTab
+N	net/fabricmc/fabric/api/client/itemgroup/v1/FabricCreativeInventoryScreen	setSelectedItemGroup	setSelectedTab
+N	net/fabricmc/fabric/api/client/keybinding/v1/KeyBindingHelper	registerKeyBinding	registerKeyMapping
+N	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$AfterBakeItem$Context	bakeContext	bakingContext
+N	net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeItem$Context	bakeContext	bakingContext
+N	net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context	networkHandler	packetListener
+N	net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking	createC2SPacket	createServerboundPacket
+N	net/fabricmc/fabric/api/client/particle/v1/ParticleRenderEvents	ALLOW_BLOCK_DUST_TINT	ALLOW_TERRAIN_PARTICLE_TINT
+N	net/fabricmc/fabric/api/client/particle/v1/ParticleRenderEvents$AllowBlockDustTint	allowBlockDustTint	allowTerrainParticleTint
+N	net/fabricmc/fabric/api/client/particle/v1/ParticleRendererRegistry	getParticleTextureSheet	getParticleRenderType
+N	net/fabricmc/fabric/api/client/rendering/v1/DrawItemStackOverlayCallback	onDrawItemStackOverlay	onRenderItemDecorations
+N	net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry	registerEquipmentModelLayers	registerArmorModelLayers
+N	net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry$TexturedEquipmentModelDataProvider	createEquipmentModelData	createArmorModelSet
+N	net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry$TexturedModelDataProvider	createModelData	createLayerDefinition
+N	net/fabricmc/fabric/api/client/rendering/v1/LivingEntityFeatureRendererRegistrationCallback	registerRenderers	registerLayers
+N	net/fabricmc/fabric/api/client/rendering/v1/SpecialGuiElementRegistry$Context	client	minecraft
+N	net/fabricmc/fabric/api/client/rendering/v1/SpecialGuiElementRegistry$Context	orderedRenderCommandQueue	submitNodeCollector
+N	net/fabricmc/fabric/api/client/rendering/v1/SpecialGuiElementRegistry$Context	vertexConsumers	bufferSource
+N	net/fabricmc/fabric/api/client/rendering/v1/SpecialGuiElementRegistry$Factory	createSpecialRenderer	createRenderer
+N	net/fabricmc/fabric/api/client/rendering/v1/TooltipComponentCallback	getComponent	getClientComponent
+N	net/fabricmc/fabric/api/client/rendering/v1/hud/VanillaHudElements	STATUS_EFFECTS	MOB_EFFECTS
+N	net/fabricmc/fabric/api/client/rendering/v1/world/AbstractWorldRenderContext	worldRenderer	levelRenderer
+N	net/fabricmc/fabric/api/client/rendering/v1/world/AbstractWorldRenderContext	worldState	levelState
+N	net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext	tickCounter	deltaTracker
+N	net/fabricmc/fabric/api/client/rendering/v1/world/WorldExtractionContext	world	level
+N	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext	commandQueue	submitNodeCollector
+N	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext	consumers	bufferSource
+N	net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext	matrices	poseStack
+N	net/fabricmc/fabric/api/client/rendering/v1/world/WorldTerrainRenderContext	sectionState	sectionsToRender
+N	net/fabricmc/fabric/api/client/screen/v1/Screens	getButtons	getWidgets
+N	net/fabricmc/fabric/api/client/screen/v1/Screens	getClient	getMinecraft
+N	net/fabricmc/fabric/api/client/screen/v1/Screens	getTextRenderer	getFont
+N	net/fabricmc/fabric/api/datagen/v1/provider/FabricAdvancementProvider	pathResolver	pathProvider
+N	net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider	registryLookupFuture	registriesFuture
+N	net/fabricmc/fabric/api/datagen/v1/provider/FabricCodecDataProvider	pathResolver	pathProvider
+N	net/fabricmc/fabric/api/datagen/v1/provider/FabricDynamicRegistryProvider	writeRegistryEntries	writeHolders
+N	net/fabricmc/fabric/api/datagen/v1/provider/FabricDynamicRegistryProvider$RegistryEntries	entries	resources
+N	net/fabricmc/fabric/api/datagen/v1/provider/FabricEntityLootTableProvider	registryLookupFuture	registriesFuture
+N	net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider	dataOutput	packOutput
+N	net/fabricmc/fabric/api/datagen/v1/provider/SimpleFabricLootTableProvider	contextType	contextParamSet
+N	net/fabricmc/fabric/api/datagen/v1/provider/SimpleFabricLootTableProvider	registryLookup	registryLookupFuture
+N	net/fabricmc/fabric/api/entity/FakePlayer$FakePlayerKey	world	level
+N	net/fabricmc/fabric/api/entity/event/v1/ServerEntityWorldChangeEvents	AFTER_ENTITY_CHANGE_WORLD	AFTER_ENTITY_CHANGE_LEVEL
+N	net/fabricmc/fabric/api/entity/event/v1/ServerEntityWorldChangeEvents	AFTER_PLAYER_CHANGE_WORLD	AFTER_PLAYER_CHANGE_LEVEL
+N	net/fabricmc/fabric/api/entity/event/v1/ServerEntityWorldChangeEvents$AfterEntityChange	afterChangeWorld	afterChangeLevel
+N	net/fabricmc/fabric/api/entity/event/v1/ServerEntityWorldChangeEvents$AfterPlayerChange	afterChangeWorld	afterChangeLevel
+N	net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents	CHUNK_LEVEL_TYPE_CHANGE	FULL_CHUNK_STATUS_CHANGE
+N	net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$LevelTypeChange	onChunkLevelTypeChange	onFullChunkStatusChange
+N	net/fabricmc/fabric/api/event/lifecycle/v1/ServerTickEvents	END_WORLD_TICK	END_LEVEL_TICK
+N	net/fabricmc/fabric/api/event/lifecycle/v1/ServerTickEvents	START_WORLD_TICK	START_LEVEL_TICK
+N	net/fabricmc/fabric/api/event/lifecycle/v1/ServerWorldEvents$Load	onWorldLoad	onLevelLoad
+N	net/fabricmc/fabric/api/event/lifecycle/v1/ServerWorldEvents$Unload	onWorldUnload	onLevelUnload
+N	net/fabricmc/fabric/api/event/registry/DynamicRegistryView	asDynamicRegistryManager	asRegistryAccess
+N	net/fabricmc/fabric/api/event/registry/FabricRegistryBuilder	createSimple	create
+N	net/fabricmc/fabric/api/item/v1/CustomDamageHandler	damage	hurtAndBreak
+N	net/fabricmc/fabric/api/item/v1/EquipmentSlotProvider	getPreferredEquipmentSlot	getEquipmentSlotForItem
+N	net/fabricmc/fabric/api/item/v1/FabricItem	getRecipeRemainder	getCraftingRemainder
+N	net/fabricmc/fabric/api/item/v1/FabricItemStack	getRecipeRemainder	getCraftingRemainder
+N	net/fabricmc/fabric/api/itemgroup/v1/FabricItemGroupEntries	addAfter	insertAfter
+N	net/fabricmc/fabric/api/itemgroup/v1/FabricItemGroupEntries	addBefore	insertBefore
+N	net/fabricmc/fabric/api/itemgroup/v1/ItemGroupEvents	MODIFY_ENTRIES_ALL	MODIFY_OUTPUT_ALL
+N	net/fabricmc/fabric/api/itemgroup/v1/ItemGroupEvents	modifyEntriesEvent	modifyOutputEvent
+N	net/fabricmc/fabric/api/itemgroup/v1/ItemGroupEvents$ModifyEntries	modifyEntries	modifyOutput
+N	net/fabricmc/fabric/api/itemgroup/v1/ItemGroupEvents$ModifyEntriesAll	modifyEntries	modifyOutput
+N	net/fabricmc/fabric/api/lookup/v1/block/BlockApiCache	getWorld	getLevel
+N	net/fabricmc/fabric/api/loot/v3/FabricLootPoolBuilder	conditionally	when
+N	net/fabricmc/fabric/api/loot/v3/FabricLootPoolBuilder	with	add
+N	net/fabricmc/fabric/api/networking/v1/PacketByteBufs	EMPTY_PACKET_BYTE_BUF	EMPTY_FRIENDLY_BYTE_BUF
+N	net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry	configurationC2S	serverboundConfiguration
+N	net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry	configurationS2C	clientboundConfiguration
+N	net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry	playC2S	serverboundPlay
+N	net/fabricmc/fabric/api/networking/v1/PayloadTypeRegistry	playS2C	clientboundPlay
+N	net/fabricmc/fabric/api/networking/v1/PlayerLookup	world	level
+N	net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking	createS2CPacket	createClientboundPacket
+N	net/fabricmc/fabric/api/networking/v1/ServerConfigurationNetworking$Context	networkHandler	packetListener
+N	net/fabricmc/fabric/api/networking/v1/ServerPlayNetworking	createS2CPacket	createClientboundPacket
+N	net/fabricmc/fabric/api/object/builder/v1/block/entity/FabricBlockEntityType	addSupportedBlock	addValidBlock
+N	net/fabricmc/fabric/api/object/builder/v1/block/type/BlockSetTypeBuilder	soundGroup	soundType
+N	net/fabricmc/fabric/api/object/builder/v1/block/type/WoodTypeBuilder	hangingSignSoundGroup	hangingSignSoundType
+N	net/fabricmc/fabric/api/object/builder/v1/block/type/WoodTypeBuilder	soundGroup	soundType
+N	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityType$Builder$Mob	spawnRestriction	spawnPlacement
+N	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder	spawnGroup	mobCategory
+N	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Living	spawnGroup	mobCategory
+N	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob	restrictionHeightmap	placementHeightmap
+N	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob	spawnGroup	mobCategory
+N	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob	spawnLocation	spawnPlacementType
+N	net/fabricmc/fabric/api/object/builder/v1/entity/FabricEntityTypeBuilder$Mob	spawnRestriction	spawnPlacement
+N	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient	getMatchingItems	items
+N	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredient	toDisplay	display
+N	net/fabricmc/fabric/api/recipe/v1/ingredient/CustomIngredientSerializer	getPacketCodec	getStreamCodec
+N	net/fabricmc/fabric/api/registry/FlammableBlockRegistry$Entry	burn	igniteOdds
+N	net/fabricmc/fabric/api/registry/FlammableBlockRegistry$Entry	getBurnChance	getIgniteOdds
+N	net/fabricmc/fabric/api/registry/FlammableBlockRegistry$Entry	getSpreadChance	getBurnOdds
+N	net/fabricmc/fabric/api/registry/FlammableBlockRegistry$Entry	spread	burnOdds
+N	net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry	NODE_TYPES	PATH_TYPES
+N	net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry	getPathNodeType	getPathType
+N	net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry	getPathNodeTypeProvider	getPathTypeProvider
+N	net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry$DynamicPathNodeTypeProvider	getPathNodeType	getPathType
+N	net/fabricmc/fabric/api/registry/LandPathNodeTypesRegistry$StaticPathNodeTypeProvider	getPathNodeType	getPathType
+N	net/fabricmc/fabric/api/registry/OxidizableBlocksRegistry	registerCopperBlockSet	registerWeatheringCopperBlocks
+N	net/fabricmc/fabric/api/registry/OxidizableBlocksRegistry	registerOxidizableBlockPair	registerNextStage
+N	net/fabricmc/fabric/api/registry/OxidizableBlocksRegistry	registerWaxableBlockPair	registerWaxable
+N	net/fabricmc/fabric/api/registry/VillagerInteractionRegistries	registerCollectable	registerGatherableItem
+N	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	glint	foilType
+N	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	renderLayer	chunkLayer
+N	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	glint	foilType
+N	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	renderLayer	chunkLayer
+N	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	glint	foilType
+N	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	renderLayer	chunkLayer
+N	net/fabricmc/fabric/api/renderer/v1/model/FabricBlockModels	getModelParticleSprite	getParticleIcon
+N	net/fabricmc/fabric/api/renderer/v1/model/FabricBlockStateModel	particleSprite	particleIcon
+N	net/fabricmc/fabric/api/resource/v1/DataResourceLoader	registerReloader	registerReloadListener
+N	net/fabricmc/fabric/api/resource/v1/ResourceLoader	RELOADER_FEATURE_SET_KEY	FEATURE_FLAG_SET_KEY
+N	net/fabricmc/fabric/api/resource/v1/ResourceLoader	RELOADER_REGISTRY_LOOKUP_KEY	REGISTRY_LOOKUP_KEY
+N	net/fabricmc/fabric/api/resource/v1/ResourceLoader	addReloaderOrdering	addListenerOrdering
+N	net/fabricmc/fabric/api/resource/v1/ResourceLoader	registerReloader	registerReloadListener
+N	net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client	BLOCK_ENTITY_RENDERERS	BLOCK_ENTITY_RENDER_DISPATCHER
+N	net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client	BLOCK_RENDER_MANAGER	BLOCK_RENDER_DISPATCHER
+N	net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client	CLOUD_CELLS	CLOUD_RENDERER
+N	net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client	DRY_FOLIAGE_COLORMAP	DRY_FOLIAGE_COLOR
+N	net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client	ENTITY_RENDERERS	ENTITY_RENDER_DISPATCHER
+N	net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client	EQUIPMENT_MODELS	EQUIPMENT_ASSETS
+N	net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client	FOLIAGE_COLORMAP	FOLIAGE_COLOR
+N	net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client	GRASS_COLORMAP	GRASS_COLOR
+N	net/fabricmc/fabric/api/resource/v1/reloader/ResourceReloaderKeys$Client	WAYPOINT_STYLE_ASSETS	WAYPOINT_STYLE
+N	net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType	getPacketCodec	getStreamCodec
+N	net/fabricmc/fabric/api/screenhandler/v1/ExtendedScreenHandlerType	packetCodec	streamCodec
+N	net/fabricmc/fabric/api/serialization/v1/view/FabricReadView	keys	keySet
+N	net/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant	getRegistryEntry	typeHolder
+N	net/fabricmc/fabric/api/transfer/v1/fluid/FluidVariant	withComponentChanges	withComponents
+N	net/fabricmc/fabric/api/transfer/v1/fluid/FluidVariantAttributeHandler	getLuminance	getLightEmission
+N	net/fabricmc/fabric/api/transfer/v1/fluid/base/SingleFluidStorage	readData	readValue
+N	net/fabricmc/fabric/api/transfer/v1/fluid/base/SingleFluidStorage	writeData	writeValue
+N	net/fabricmc/fabric/api/transfer/v1/item/ItemVariant	getRegistryEntry	typeHolder
+N	net/fabricmc/fabric/api/transfer/v1/item/ItemVariant	withComponentChanges	withComponents
+N	net/fabricmc/fabric/api/transfer/v1/item/base/SingleItemStorage	readData	readValue
+N	net/fabricmc/fabric/api/transfer/v1/item/base/SingleItemStorage	writeData	writeValue
+N	net/fabricmc/fabric/api/transfer/v1/storage/StorageUtil	calculateComparatorOutput	getRedstoneSignal
+N	net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant	getComponentMap	getComponents
+N	net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant	getComponents	getComponentsPatch
+N	net/fabricmc/fabric/api/transfer/v1/storage/TransferVariant	withComponentChanges	withComponents
+N	net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage	readData	readValue
+N	net/fabricmc/fabric/api/transfer/v1/storage/base/SingleVariantStorage	writeData	writeValue
+# cb: package moves and successors PR #5060 leaves out or names in a package 26.1 does not use
+C	net/fabricmc/fabric/api/renderer/v1/Renderer	net/fabricmc/fabric/api/client/renderer/v1/Renderer
+C	net/fabricmc/fabric/api/renderer/v1/mesh/Mesh	net/fabricmc/fabric/api/client/renderer/v1/mesh/Mesh
+C	net/fabricmc/fabric/api/renderer/v1/mesh/MeshView	net/fabricmc/fabric/api/client/renderer/v1/mesh/MeshView
+C	net/fabricmc/fabric/api/renderer/v1/mesh/MutableMesh	net/fabricmc/fabric/api/client/renderer/v1/mesh/MutableMesh
+C	net/fabricmc/fabric/api/renderer/v1/mesh/MutableQuadView	net/fabricmc/fabric/api/client/renderer/v1/mesh/MutableQuadView
+C	net/fabricmc/fabric/api/renderer/v1/mesh/QuadAtlas	net/fabricmc/fabric/api/client/renderer/v1/mesh/QuadAtlas
+C	net/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter	net/fabricmc/fabric/api/client/renderer/v1/mesh/QuadEmitter
+C	net/fabricmc/fabric/api/renderer/v1/mesh/QuadTransform	net/fabricmc/fabric/api/client/renderer/v1/mesh/QuadTransform
+C	net/fabricmc/fabric/api/renderer/v1/mesh/QuadView	net/fabricmc/fabric/api/client/renderer/v1/mesh/QuadView
+C	net/fabricmc/fabric/api/renderer/v1/mesh/ShadeMode	net/fabricmc/fabric/api/client/renderer/v1/mesh/ShadeMode
+C	net/fabricmc/fabric/api/renderer/v1/model/FabricBlockStateModel	net/fabricmc/fabric/api/client/renderer/v1/model/FabricBlockStateModel
+C	net/fabricmc/fabric/api/renderer/v1/model/ModelHelper	net/fabricmc/fabric/api/client/renderer/v1/model/ModelHelper
+C	net/fabricmc/fabric/api/renderer/v1/model/SpriteFinder	net/fabricmc/fabric/api/client/renderer/v1/sprite/SpriteFinder
+C	net/fabricmc/fabric/api/renderer/v1/render/FabricLayerRenderState	net/fabricmc/fabric/api/client/renderer/v1/render/FabricLayerRenderState
+C	net/fabricmc/fabric/api/renderer/v1/sprite/SpriteFinderGetter	net/fabricmc/fabric/api/client/renderer/v1/sprite/SpriteFinderGetter
+C	net/fabricmc/fabric/api/renderer/v1/model/MeshBakedGeometry	net/fabricmc/fabric/api/client/renderer/v1/model/MeshQuadCollection
+C	net/fabricmc/fabric/api/renderer/v1/model/ModelBakeSettingsHelper	net/fabricmc/fabric/api/client/renderer/v1/model/ModelStateHelper
+C	net/fabricmc/fabric/api/renderer/v1/render/RenderLayerHelper	net/fabricmc/fabric/api/client/renderer/v1/render/ChunkSectionLayerHelper
+C	net/fabricmc/fabric/api/renderer/v1/render/FabricRenderCommandQueue	net/fabricmc/fabric/api/client/renderer/v1/render/FabricOrderedSubmitNodeCollector
+C	net/fabricmc/fabric/api/renderer/v1/sprite/FabricSpriteAtlasTexture	net/fabricmc/fabric/api/client/renderer/v1/sprite/FabricPreparations
+C	net/fabricmc/fabric/api/renderer/v1/sprite/FabricStitchResult	net/fabricmc/fabric/api/client/renderer/v1/sprite/FabricTextureAtlas
+C	net/fabricmc/fabric/api/renderer/v1/model/FabricBlockModelPart	net/fabricmc/fabric/api/client/renderer/v1/model/FabricBlockStateModelPart
+C	net/fabricmc/fabric/api/renderer/v1/model/FabricBlockModels	net/fabricmc/fabric/api/client/renderer/v1/model/FabricBlockStateModelSet
+C	net/fabricmc/fabric/api/renderer/v1/sprite/FabricErrorCollectingSpriteGetter	net/fabricmc/fabric/api/client/renderer/v1/sprite/FabricMaterialBaker
+C	net/fabricmc/fabric/api/blockview/v2/FabricBlockView	net/fabricmc/fabric/api/blockgetter/v2/FabricBlockGetter
+C	net/fabricmc/fabric/api/blockview/v2/RenderDataBlockEntity	net/fabricmc/fabric/api/blockgetter/v2/RenderDataBlockEntity
+C	net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$BeforeRender	net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$BeforeExtract
+N	net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$BeforeRender	beforeRender	beforeExtract
+C	net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$AfterRender	net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$AfterExtract
+N	net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$AfterRender	afterRender	afterExtract
+N	net/fabricmc/fabric/api/client/screen/v1/ScreenEvents	beforeRender	beforeExtract
+N	net/fabricmc/fabric/api/client/screen/v1/ScreenEvents	afterRender	afterExtract
+C	net/fabricmc/fabric/api/client/rendering/v1/DrawItemStackOverlayCallback	net/fabricmc/fabric/api/client/rendering/v1/ExtractItemDecorationsCallback
+N	net/fabricmc/fabric/api/client/rendering/v1/DrawItemStackOverlayCallback	onDrawItemStackOverlay	onExtractItemDecorations
+N	net/fabricmc/fabric/api/client/rendering/v1/hud/HudElement	render	extractRenderState
+C	net/fabricmc/fabric/api/loot/v2/LootTableSource	net/fabricmc/fabric/api/loot/v3/LootTableSource
+C	net/fabricmc/fabric/api/loot/v2/FabricLootTableBuilder	net/fabricmc/fabric/api/loot/v3/FabricLootTableBuilder
+C	net/fabricmc/fabric/api/loot/v2/FabricLootPoolBuilder	net/fabricmc/fabric/api/loot/v3/FabricLootPoolBuilder
+N	net/fabricmc/fabric/api/loot/v2/FabricLootPoolBuilder	with	add
+N	net/fabricmc/fabric/api/loot/v2/FabricLootPoolBuilder	conditionally	when
