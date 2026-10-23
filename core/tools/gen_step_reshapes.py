@@ -23,8 +23,13 @@ invented:
       argument vanilla passed -- the ones the old method never saw included.
 
 Arguments of distinct types may change places (1.20.3 moved a block's Settings to the end of its
-constructor); arguments of one type keep their relative order, since types alone cannot tell them
-apart -- a release that swapped two of them would need a hand-written entry. Erased descriptors
+constructor). Arguments of one type are never paired by their order: types alone cannot tell them
+apart (1.20.5's PanoramaRenderer.render(graphics, width, height, fade, partialTick) is 1.20.4's
+render(delta, alpha) with the two floats the other way round). Each is paired by what V's and W's
+bodies (the member's declaration and every override) and vanilla callers do with it -- which calls it
+reaches at which argument position, which fields it is stored to or read from, what arithmetic and
+constants it meets (bytecode_uses.py; the rule is Evidence.pair). A pairing the uses do not single out
+is "design" with the reason, never a guess. Erased descriptors
 are not enough either: where both releases' generic signatures are known and a connected parameter
 or the return value changed its type arguments (a List of 1.20.1 goal records that is a List of
 1.20.2 payload records now), the value would pass the verifier and fail at the first element. Everything else -- a value the new shape
@@ -34,10 +39,14 @@ handles are skipped ("wired"). The output is a wiring fragment for the step
 (<step wiring>.d/mechanical.json, see engine/Wiring.java) and a report of every row.
 
   python gen_step_reshapes.py <damage.tsv> <V code jar> <W stub jar> <step wiring.json> <guard class> <out report.tsv>
+         [--wcode <W code jar>]  (W's bodies, for pairing same-typed arguments: data/jars/client-<W>-intermediary-code.jar;
+                                  a 26.x W jar carries its code and needs none)
          [--wall <wall table>]   (the 1.21.11 -> 26.1 step: V intermediary, W mojang; the table the
                                   step's target reads names with: python3 core/tools/wall_tables.py 26.1)
+  every step at once: core/tools/regen_mechanical.sh
 """
 import collections
+import itertools
 import json
 import os
 import re
@@ -46,6 +55,7 @@ import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import classfile  # noqa: E402
+import bytecode_uses  # noqa: E402
 from classfile import ACC_BRIDGE, ACC_FINAL, ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC, split_args  # noqa: E402
 
 PRIM = set("ZBCSIJFD")
@@ -96,12 +106,25 @@ class Hierarchy:
         return to[1:-1] in self.supers(frm[1:-1])
 
 
-def match(src, dst, h):
+def match(src, dst, h, resolve=None):
     """Map every dst argument to the src argument that supplies it.
 
-    Returns (mapping, problem): mapping[j] is the src index feeding dst[j]. Exact types pair up in
-    order and must occur as often on both sides; a dst type absent from src takes the one unused src
-    argument of a subtype. problem is a reason string when no such mapping exists."""
+    Returns (mapping, problem): mapping[j] is the src index feeding dst[j]. Exact types must occur as
+    often on both sides; a type that occurs once pairs up directly, two or more of one type are paired
+    by resolve(type, src indices, dst indices) -> (src index for each dst index, None) or (None,
+    reason) -- by what the bodies and callers do with each of them, never by their order alone. A dst
+    type absent from src takes the one unused src argument of a subtype. problem is a reason string
+    when no such mapping exists."""
+    if resolve is not None:
+        # the types first: a shape that cannot take the call at all is not one whose pairing is undecided
+        _, problem = _match(src, dst, h, lambda t, s, d: (list(s), None))
+        if problem:
+            return None, problem
+    return _match(src, dst, h, resolve)
+
+
+def _match(src, dst, h, resolve):
+    """match() itself; resolve as there (None: same-typed arguments are a problem)"""
     mapping = [None] * len(dst)
     used = set()
     src_pos = collections.defaultdict(list)
@@ -114,7 +137,14 @@ def match(src, dst, h):
         if t in src_pos:
             if len(src_pos[t]) != len(js):
                 return None, f"{t} occurs {len(src_pos[t])}x before and {len(js)}x after: which one is which is not decidable by type"
-            for i, j in zip(src_pos[t], js):
+            srcs = src_pos[t]
+            if len(js) > 1:
+                if resolve is None:
+                    return None, f"{t} occurs {len(js)}x: which one is which is not decidable by type"
+                srcs, why = resolve(t, src_pos[t], js)
+                if srcs is None:
+                    return None, why
+            for i, j in zip(srcs, js):
                 mapping[j] = i
                 used.add(i)
     for j, t in enumerate(dst):
@@ -193,6 +223,232 @@ def generic_change(v_sig, w_sig, pairs, compare_return, wall):
         if (a.lstrip("[").startswith("T")) != (b.lstrip("[").startswith("T")):
             return f"generic type {a} -> {b}"
     return None
+
+
+class Evidence:
+    """What V's and W's bodies and vanilla callers do with each parameter of a member (bytecode_uses.py),
+    and the pairing of same-typed arguments it justifies.
+
+    For one type occurring k times on both sides, every pairing of V's k parameters with W's k is scored
+    by how alike each pair is used: the Jaccard overlap of their use features in the member's bodies (V's
+    declaration and overrides, W's), plus that of what vanilla callers pass at the two positions. The
+    pairing is taken only when it scores best on its own and every pair in it is the best match of both
+    its parameters (a pair sharing no use is then the one left once the others are placed by theirs).
+    Anything else is undecidable and becomes "design"."""
+
+    MAX_GROUP = 8
+
+    def __init__(self, V, hv, Wc, hwc, wall):
+        self.V, self.hv, self.Wc, self.hwc, self.wall = V, hv, Wc, hwc, wall
+        self._calls = {}
+        self._vrename = (lambda o, n: wall.member(o, n, hv)) if wall.mmap else None
+        self._vcrename = wall.cls if wall.cmap else None
+        self._cmap = {}
+
+    def _callers(self, side):
+        if side not in self._calls:
+            if side == "V":
+                self._calls[side] = bytecode_uses.call_sites(self.V, self._vrename, self._vcrename)
+            else:
+                self._calls[side] = bytecode_uses.call_sites(self.Wc, None)
+        return self._calls[side]
+
+    def _stable(self):
+        """members V and W declare with one descriptor (V's translated across the wall)"""
+        if not hasattr(self, "_stable_set"):
+            w = {(m.name, m.desc) for k in self.Wc.values() for m in k.methods}
+            v = set()
+            for c, k in self.V.items():
+                for m in k.methods:
+                    nm = self.wall.member(c, m.name, self.hv) if self.wall.mmap else m.name
+                    v.add((nm, self.wall.desc(m.desc)))
+            self._stable_set = v & w
+        return self._stable_set
+
+    def _callee_map(self, owner, name, desc):
+        """A call in a V body to a member the release reshaped too puts the value at the callee's new
+        position: V's argument index -> (W's descriptor, W's index), from the callee's own pairing -- an
+        argument of a type the callee has once on both sides directly, several of one type by use one level
+        deep (their bodies' calls to stable members and their callers). None when the callee has no single
+        W shape of the name, or nothing is placed."""
+        key = (owner, name, desc)
+        if key not in self._cmap:
+            self._cmap[key] = None
+            wowner = self.wall.cls(owner)
+            wname = self._vname(owner, name)
+            oa = split_args(self.wall.desc(desc))[0]
+            found = []
+            for c in self.hwc.supers(wowner):
+                k = self.Wc.get(c)
+                for m in (k.methods if k else []):
+                    if m.name != wname or m.access & (ACC_BRIDGE | ACC_SYNTHETIC):
+                        continue
+                    na = split_args(m.desc)[0]
+                    vpos, wpos = collections.defaultdict(list), collections.defaultdict(list)
+                    for i, t in enumerate(oa):
+                        vpos[t].append(i)
+                    for j, t in enumerate(na):
+                        wpos[t].append(j)
+                    # only the callee's arguments of a type it has as often on both sides are placed (the
+                    # rest are what the callee's own change is about); several of one type by use
+                    cmap, ev_pair = {}, None
+                    for t, vs in vpos.items():
+                        ws = wpos.get(t, [])
+                        if len(vs) != len(ws):
+                            continue
+                        if len(vs) == 1:
+                            cmap[vs[0]] = ws[0]
+                            continue
+                        if ev_pair is None:
+                            ev_pair = (self.side("V", owner, wname, desc, depth=1, vname=name),
+                                       self.side("W", c, m.name, m.desc, depth=1))
+                        perm, _ = self.pair(t, vs, ws, ev_pair[0], ev_pair[1], lambda i: f"#{i}")
+                        if perm is not None:
+                            cmap.update(zip(vs, perm))
+                    if cmap:
+                        found.append((m.desc, cmap))
+            if len(found) == 1:
+                self._cmap[key] = found[0]
+        return self._cmap[key]
+
+    def _vname(self, owner, name):
+        return self.wall.member(owner, name, self.hv) if self.wall.mmap else name
+
+    def _keep(self, feats, vside, depth):
+        """use features as both sides compare them: a call position as ordinals (from the start and from
+        the end, among arguments of its type) in W's terms -- a V call to a stable member as it is, to a
+        reshaped one through the callee's own pairing (depth 0 only), dropped when that is undecided"""
+        crename = self.wall.cls if vside and self.wall.cmap else None
+        out = set()
+        for f in feats:
+            if f[0] not in ("call", "indy") or len(f) != 5:
+                out.add(f)
+                continue
+            kind, name, k, desc, owner = f
+            if kind == "indy" or not vside:
+                args = split_args(desc)[0]
+                nm = self._vname(owner, name) if vside and owner and kind == "call" else name
+                out.add((kind, nm, bytecode_uses.ordinal(args, k, crename)))
+                out.add((kind, nm, bytecode_uses.ordinal(args, k, crename, True)))
+                continue
+            wname = self._vname(owner, name) if owner else name
+            d = self.wall.desc(desc)
+            if (wname, d) in self._stable():
+                args = split_args(d)[0]
+                j = k
+            elif depth == 0 and owner:
+                cm = self._callee_map(owner, name, desc)
+                if cm is None or k not in cm[1]:
+                    continue
+                args, j = split_args(cm[0])[0], cm[1][k]
+            else:
+                continue
+            out.add((kind, wname, bytecode_uses.ordinal(args, j)))
+            out.add((kind, wname, bytecode_uses.ordinal(args, j, None, True)))
+        return out
+
+    def side(self, side, owner, name, desc, depth=0, vname=None):
+        """(per-parameter body features or None, per-position caller features or None). For V, name is
+        the member's W name across the wall (features are compared in W's terms) and vname its own."""
+        classes, h = (self.V, self.hv) if side == "V" else (self.Wc, self.hwc)
+        rename, crename = (self._vrename, self._vcrename) if side == "V" else (None, None)
+        lookup = vname or name if side == "V" else name
+        n = len(split_args(desc)[0])
+        body = [set() for _ in range(n)]
+        seen = False
+        for c, m in implementations(classes, h, owner, lookup, desc):
+            u = bytecode_uses.uses(classes[c], m, rename, crename)
+            if u is not None:
+                seen = True
+                for k in range(n):
+                    body[k] |= self._keep(u[k], side == "V", depth)
+        calls = [set() for _ in range(n)]
+        cseen = False
+        for o, per in self._callers(side).get((lookup, desc), {}).items():
+            if o == owner or o in h.supers(owner) or owner in h.supers(o):
+                cseen = True
+                for k in range(min(n, len(per))):
+                    calls[k] |= per[k]
+        return (body if seen else None), (calls if cseen else None)
+
+    @staticmethod
+    def _jac(a, b):
+        return len(a & b) / len(a | b) if a and b else 0.0
+
+    def pair(self, t, vs, ws, v_ev, w_ev, label):
+        """V parameter indices vs, W parameter indices ws (all of type t): a W index for each V index in
+        order, or (None, reason). label(i) names a V parameter for the reason."""
+        k = len(vs)
+        if k > self.MAX_GROUP:
+            return None, f"{k} arguments of type {t}: too many to pair by use"
+        (vb, vc), (wb, wc) = v_ev, w_ev
+
+        def feats(b, c, i):
+            return (b[i] if b else set()), (c[i] if c else set())
+
+        sim = {}
+        for a in vs:
+            for b in ws:
+                (b1, c1), (b2, c2) = feats(vb, vc, a), feats(wb, wc, b)
+                sim[a, b] = self._jac(b1, b2) + self._jac(c1, c2)
+        scored = [(sum(sim[a, b] for a, b in zip(vs, perm)), perm) for perm in itertools.permutations(ws)]
+        best = max(sc for sc, _ in scored)
+        if best <= 0:
+            vside, wside = bool(vb or vc), bool(wb or wc)
+            if vside and wside:
+                return None, f"{k} arguments of type {t}: V's and W's bodies and callers share no use of them"
+            missing = "either side" if not vside and not wside else ("V's side" if not vside else "W's side")
+            return None, f"{k} arguments of type {t}: no body or caller on {missing} to tell them apart"
+        tops = [perm for sc, perm in scored if abs(sc - best) < 1e-9]
+        if len(tops) != 1:
+            return None, f"{k} arguments of type {t}: their uses fit {len(tops)} pairings equally"
+        perm = tops[0]
+        for a, b in zip(vs, perm):
+            # every pair is the best match of both its parameters; a pair sharing no use is taken only
+            # when no use ties either of them to anything else -- the one left once the others are
+            # placed by their uses (the unique best pairing guarantees there is just one such way)
+            if any(sim[a, b2] > sim[a, b] for b2 in ws) or any(sim[a2, b] > sim[a, b] for a2 in vs):
+                return None, f"argument {label(a)} ({t}): its best match by use is not the pairing's"
+        return list(perm), None
+
+
+# marks a shape whose types fit but whose same-typed arguments the uses do not pair: it still counts as a
+# fitting shape (two such shapes are as ambiguous as before), it is just not one the generator can emit
+UNDECIDED = "[by use] "
+
+
+def typed_fits(fits):
+    """the shapes whose types fit: emittable ones and those only the pairing by use left undecided"""
+    return [f for f in fits if f[2] is not None or (f[3] and UNDECIDED in f[3])]
+
+
+def resolver(ev, owner, name, desc, wowner, wm, v_is_src, notes):
+    """match()'s resolve for one V member against one W shape: same-typed arguments paired by use
+    (Evidence.pair). v_is_src: the V parameters are match's src (a call; else an override's dst).
+    Every pairing taken goes to notes, for the entry's basis."""
+    cache = {}
+
+    def evidence():
+        if not cache:
+            cache["v"] = ev.side("V", owner, name, desc)
+            cache["w"] = ev.side("W", wowner, wm.name, wm.desc)
+        return cache["v"], cache["w"]
+
+    def resolve(t, src, dst):
+        vs, ws = (src, dst) if v_is_src else (dst, src)
+        v_ev, w_ev = evidence()
+        perm, why = ev.pair(t, vs, ws, v_ev, w_ev, lambda i: f"#{i}")
+        if perm is None:
+            return None, UNDECIDED + why
+        pairs = dict(zip(vs, perm))  # V index -> W index
+        notes.append(f"{t} x{len(vs)} paired by use " + ", ".join(f"V#{a}->W#{pairs[a]}" for a in vs)
+                     + ("" if list(perm) == sorted(perm) else " (not their order)"))
+        if v_is_src:
+            back = {w: v for v, w in pairs.items()}
+            return [back[j] for j in dst], None
+        return [pairs[j] for j in dst], None
+
+    return resolve
 
 
 def wired_keys(wiring):
@@ -280,10 +536,19 @@ def main():
         k = args.index("--wall")
         wall = Wall(args[k + 1])
         args = args[:k] + args[k + 2:]
+    wcode = None
+    if "--wcode" in args:
+        k = args.index("--wcode")
+        wcode = args[k + 1]
+        args = args[:k] + args[k + 2:]
     damage, vjar, wjar, wiring_path, guard, out_report = args[0:6]
     V = load(vjar, True)
-    W = load(wjar, False)
+    W = load(wjar, wcode is None)
     hv, hw = Hierarchy(V), Hierarchy(W)
+    # W's bodies: its code jar (an intermediary stub has none), else the jar itself (26.x jars carry code)
+    Wc = load(wcode, True) if wcode else W
+    hwc = Hierarchy(Wc) if wcode else hw
+    ev = Evidence(V, hv, Wc, hwc, wall)
     base = json.load(open(wiring_path, encoding="utf-8")) if os.path.exists(wiring_path) else {}
     # what the step's hand-written wiring serves: the base table and every area fragment (not the
     # generated one), so an area that bridged a member -- or renamed its class -- keeps it
@@ -309,6 +574,7 @@ def main():
             if len(f) >= 3 and not line.startswith("#"):
                 excluded[(f[0], f[1])] = f[2]
     calls, ctors, hooks, report = {}, {}, [], []
+    fit_notes = {}
     hook_seen = set()
 
     def note(r, fate, detail):
@@ -368,7 +634,8 @@ def main():
                 if m.access & (ACC_FINAL | ACC_STATIC):
                     continue
                 na, nr = split_args(m.desc)
-                amap, problem = match(na, oa, hw)  # each OLD parameter from a NEW argument
+                notes = []
+                amap, problem = match(na, oa, hw, resolver(ev, owner, name, desc, c, m, False, notes))  # each OLD parameter from a NEW argument
                 if problem:
                     fits.append((c, m, None, f"old method needs: {problem}"))
                     continue
@@ -383,10 +650,13 @@ def main():
                     fits.append((c, m, None, gen))
                     continue
                 fits.append((c, m, amap, None))
+                fit_notes[id(m)] = notes
             good = [f for f in fits if f[2] is not None]
-            if len(good) != 1:
-                note(r, "design", "; ".join(f"{m.desc}: {p}" for _, m, _, p in fits) if not good
-                     else f"{len(good)} new shapes fit")
+            typed = typed_fits(fits)
+            if len(good) != 1 or len(typed) != 1:
+                note(r, "design", "; ".join(f"{m.desc}: {p}" for _, m, _, p in fits) if not typed
+                     else f"{len(typed)} new shapes fit" if len(typed) > 1
+                     else f"{typed[0][1].desc}: {typed[0][3]}")
                 continue
             c, m, amap, _ = good[0]
             nd = wall.back_desc(m.desc)
@@ -399,7 +669,8 @@ def main():
             unpassed = [na[j] for j in range(len(na)) if j not in amap]
             hooks.append({"old": name + desc, "new": name + nd, "args": amap, "onlyUnder": owner, "frames": guard, "superCalls": "rewrite",
                           "basis": "mechanical: the old method gets every parameter it had"
-                                   + ("" if amap == sorted(amap) else ", reordered by type")
+                                   + "".join(f"; {x}" for x in fit_notes.get(id(m), []))
+                                   + ("" if amap == sorted(amap) else ", reordered")
                                    + (f"; new {','.join(unpassed)} not passed" if unpassed else "")})
             note(r, "hook", f"-> {nd} args {amap}")
             continue
@@ -410,7 +681,8 @@ def main():
                 fits.append((c, m, None, "static-ness changed"))
                 continue
             na, nr = split_args(m.desc)
-            amap, problem = match(oa, na, hw)
+            notes = []
+            amap, problem = match(oa, na, hw, resolver(ev, owner, name, desc, c, m, True, notes))
             if problem:
                 fits.append((c, m, None, problem))
                 continue
@@ -425,9 +697,13 @@ def main():
                 fits.append((c, m, None, gen))
                 continue
             fits.append((c, m, amap, None))
+            fit_notes[id(m)] = notes
         good = [f for f in fits if f[2] is not None]
-        if len(good) != 1:
-            note(r, "design", "; ".join(f"{m.desc}: {p}" for _, m, _, p in fits) if not good else f"{len(good)} new shapes fit")
+        typed = typed_fits(fits)
+        if len(good) != 1 or len(typed) != 1:
+            note(r, "design", "; ".join(f"{m.desc}: {p}" for _, m, _, p in fits) if not typed
+                 else f"{len(typed)} new shapes fit" if len(typed) > 1
+                 else f"{typed[0][1].desc}: {typed[0][3]}")
             continue
         c, m, amap, _ = good[0]
         na, nr = split_args(m.desc)
@@ -458,7 +734,7 @@ def main():
         entry = {"desc": nd, "ops": ops}
         if nr != orr:
             entry["ret"] = "pop" if orr == "V" else "keep"
-        entry["basis"] = "mechanical: same values" + ("" if amap == sorted(amap) else ", reordered by type")             + (f"; dropped {','.join(oa[i] for i in dropped)}, never read in V" if dropped and not abstract else "")             + (f"; dropped {','.join(oa[i] for i in dropped)}: no body of V reads it, but {abstract} declares the method"
+        entry["basis"] = "mechanical: same values" + ("" if amap == sorted(amap) else ", reordered")             + "".join(f"; {x}" for x in fit_notes.get(id(m), []))             + (f"; dropped {','.join(oa[i] for i in dropped)}, never read in V" if dropped and not abstract else "")             + (f"; dropped {','.join(oa[i] for i in dropped)}: no body of V reads it, but {abstract} declares the method"
                " abstract -- an implementation outside V (a mod's) gets its override hook's value instead"
                if dropped and abstract else "") \
             + {"pop": "; return value popped", "keep": "; returns a subtype of the old type"}.get(entry.get("ret"), "")
