@@ -37,6 +37,27 @@ public abstract class class_2096<T extends Number> implements net.minecraft.clas
         return field_9699;
     }
 
+    /**
+     * serializeToJson(), as 1.20.1 wrote it: any bounds -> JsonNull, min == max -> the number, else
+     * {"min", "max"} with the present bounds
+     */
+    public com.google.gson.JsonElement method_9036() {
+        if (this.method_9041()) {
+            return com.google.gson.JsonNull.INSTANCE;
+        }
+        if (field_9702 != null && field_9702.equals(field_9699)) {
+            return new com.google.gson.JsonPrimitive(field_9702);
+        }
+        com.google.gson.JsonObject o = new com.google.gson.JsonObject();
+        if (field_9702 != null) {
+            o.addProperty("min", field_9702);
+        }
+        if (field_9699 != null) {
+            o.addProperty("max", field_9699);
+        }
+        return o;
+    }
+
     /** interface accessor min -> Optional */
     @Override
     public Optional<T> comp_1805() {

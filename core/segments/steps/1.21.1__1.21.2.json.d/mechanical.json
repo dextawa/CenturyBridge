@@ -21,38 +21,6 @@
    ],
    "basis": "mechanical: same values; dropped Lnet/minecraft/class_1559;, never read in V"
   },
-  "net/minecraft/class_2348.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": {
-   "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_7922.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": {
-   "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_2370.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": {
-   "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
-  "net/minecraft/class_2378.method_10223(Lnet/minecraft/class_2960;)Ljava/lang/Object;": {
-   "desc": "(Lnet/minecraft/class_2960;)Ljava/util/Optional;",
-   "ops": [
-    "keep:0"
-   ],
-   "ret": "keep",
-   "basis": "mechanical: same values; returns a subtype of the old type"
-  },
   "net/minecraft/class_3806.method_45157(Lnet/minecraft/class_5455;)Lnet/minecraft/class_7723;": {
    "desc": "(Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_7723;",
    "ops": [
