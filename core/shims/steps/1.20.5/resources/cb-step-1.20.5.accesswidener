@@ -1437,3 +1437,5 @@ mutable field net/minecraft/class_4844 field_40825 Lcom/mojang/serialization/Cod
 mutable field net/minecraft/class_4844 field_46588 Lcom/mojang/serialization/Codec;
 # s4fin: StoringChunkProgressListener's constructor is private in 1.20.5; a 1.20.4 subclass's super(radius) is reshaped onto it
 accessible method net/minecraft/class_3953 <init> (Lnet/minecraft/class_3951;III)V
+# s4fin: BundleTooltip, a class 1.20.4 mods could extend, is a (final) record in 1.20.5; reopened for the 1.20.4 subclass (CbFinBundleTooltipMixin)
+extendable class net/minecraft/class_5631

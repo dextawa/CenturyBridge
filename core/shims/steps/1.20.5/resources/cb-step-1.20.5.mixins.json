@@ -59,6 +59,7 @@
     "CbFapiItemStackMixin",
     "CbFapiLootEventsMixin",
     "CbFapiRegistryRemovalMixin",
+    "CbFinBundleTooltipMixin",
     "CbFinChunkHolderMixin",
     "CbFinGameEventMixin",
     "CbFinItemArmorAccess",

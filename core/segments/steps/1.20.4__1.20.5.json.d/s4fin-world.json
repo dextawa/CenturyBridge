@@ -1,0 +1,138 @@
+{
+ "_s4fin_world_basis": "s4fin world/level, world/inventory, core/dispenser, loot and saved data (rt/CbFinWorld): 1.20.4 formulas kept as 1.20.4 computed them, registries 1.20.5 passes as maps, loot builders whose arguments 1.20.5 generalised, ProjectileDispenseBehavior as 1.20.4's abstract behaviour (facade, superRenames)",
+ "staticRedirects": {
+  "net/minecraft/class_1263.method_49106(Lnet/minecraft/class_2586;Lnet/minecraft/class_1657;I)Z": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#stillValid",
+  "net/minecraft/class_1280.method_5496(FFF)F": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#damageAfterAbsorb",
+  "net/minecraft/class_2357.method_27042(Lnet/minecraft/class_2342;Lnet/minecraft/class_1299;Lnet/minecraft/class_2350;)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#pokingOut",
+  "net/minecraft/class_3415.method_14834(Lnet/minecraft/class_3485;Lnet/minecraft/class_2338;Lnet/minecraft/class_2470;Lnet/minecraft/class_6130;Lnet/minecraft/class_5819;Z)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#addShipwreck",
+  "net/minecraft/class_7723.method_45520(Lnet/minecraft/class_2378;Lnet/minecraft/class_2378;Lnet/minecraft/class_2794;)Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#withOverworld",
+  "net/minecraft/class_7723.method_45519(Lnet/minecraft/class_2378;Lnet/minecraft/class_6880;Lnet/minecraft/class_2794;)Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#withOverworld",
+  "net/minecraft/class_217.method_924(Ljava/util/List;)Ljava/util/function/Predicate;": "net/minecraft/class_156#method_56613",
+  "net/minecraft/class_217.method_925(Ljava/util/List;)Ljava/util/function/Predicate;": "net/minecraft/class_156#method_56616"
+ },
+ "callReshapes": {
+  "net/minecraft/class_5317.method_41594(Lnet/minecraft/class_2378;)Ljava/util/Optional;": {
+   "desc": "(Lnet/minecraft/class_7723;)Ljava/util/Optional;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#worldDimensions(Lnet/minecraft/class_2378;)Lnet/minecraft/class_7723;"
+   ],
+   "basis": "s4fin world: WorldPresets.fromSettings takes the world dimensions in 1.20.5 (1.20.4: their level stem registry)"
+  },
+  "net/minecraft/class_18$class_8645.comp_1591()Ljava/util/function/Function;": {
+   "desc": "()Ljava/util/function/BiFunction;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#savedLoaderOf(Ljava/util/function/BiFunction;)Ljava/util/function/Function;",
+   "basis": "s4fin world: Factory.deserializer() as 1.20.4's one-argument loader, with the running world's registries"
+  },
+  "net/minecraft/class_111$class_112.method_499(Lnet/minecraft/class_20$class_21;)Lnet/minecraft/class_111$class_112;": {
+   "desc": "(Lnet/minecraft/class_6880;)Lnet/minecraft/class_111$class_112;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps#typeHolder(Lnet/minecraft/class_20$class_21;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "s4fin world: ExplorationMapFunction.Builder.setMapDecoration takes the decoration type's holder in 1.20.5"
+  },
+  "net/minecraft/class_134.method_601(Lnet/minecraft/class_2591;)Lnet/minecraft/class_134$class_135;": {
+   "desc": "(Lnet/minecraft/class_9666;)Lnet/minecraft/class_134$class_135;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#containerContents(Lnet/minecraft/class_2591;)Lnet/minecraft/class_9666;"
+   ],
+   "basis": "s4fin world: SetContainerContents.setContents takes the contents manipulator in 1.20.5"
+  },
+  "net/minecraft/class_3670.method_35549(Lnet/minecraft/class_2561;)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_3670$class_9475;)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#nameTarget()Lnet/minecraft/class_3670$class_9475;"
+   ],
+   "basis": "s4fin world: SetNameFunction.setName takes the name's target in 1.20.5; 1.20.4 set the custom name"
+  },
+  "net/minecraft/class_3670.method_35550(Lnet/minecraft/class_2561;Lnet/minecraft/class_47$class_50;)Lnet/minecraft/class_120$class_121;": {
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_3670$class_9475;Lnet/minecraft/class_47$class_50;)Lnet/minecraft/class_120$class_121;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#nameTarget()Lnet/minecraft/class_3670$class_9475;",
+    "keep"
+   ],
+   "basis": "s4fin world: SetNameFunction.setName takes the name's target in 1.20.5; 1.20.4 set the custom name"
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_5631.<init>(Lnet/minecraft/class_2371;I)V": {
+   "desc": "(Lnet/minecraft/class_9276;)V",
+   "ops": [
+    "conv:0,1 top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#bundle(Lnet/minecraft/class_2371;I)Lnet/minecraft/class_9276;"
+   ],
+   "basis": "s4fin world: BundleTooltip carries the bundle contents in 1.20.5 (their weight is the items')"
+  },
+  "net/minecraft/class_18$class_8645.<init>(Ljava/util/function/Supplier;Ljava/util/function/Function;Lnet/minecraft/class_4284;)V": {
+   "desc": "(Ljava/util/function/Supplier;Ljava/util/function/BiFunction;Lnet/minecraft/class_4284;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#savedLoader(Ljava/util/function/Function;)Ljava/util/function/BiFunction;",
+    "keep"
+   ],
+   "basis": "s4fin world: SavedData.Factory's loader takes the registries in 1.20.5; 1.20.4's ignores them"
+  },
+  "net/minecraft/class_134$class_135.<init>(Lnet/minecraft/class_2591;)V": {
+   "desc": "(Lnet/minecraft/class_9666;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#containerContents(Lnet/minecraft/class_2591;)Lnet/minecraft/class_9666;"
+   ],
+   "basis": "s4fin world: SetContainerContents writes 1.20.5's container component where 1.20.4 wrote the block entity's items"
+  },
+  "net/minecraft/class_3671.<init>(Ljava/util/List;ZLjava/util/List;Ljava/util/Optional;)V": {
+   "desc": "(Ljava/util/List;Ljava/util/List;Lnet/minecraft/class_9368;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:2",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#loreMode(Z)Lnet/minecraft/class_9368;",
+    "keep:3"
+   ],
+   "basis": "s4fin world: SetLoreFunction's replace flag is 1.20.5's list operation"
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_7723.comp_1014()Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#dimensions",
+  "net/minecraft/class_8181.method_54080()Lnet/minecraft/class_2586;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld",
+  "net/minecraft/class_5592$class_6157.method_43741(Lnet/minecraft/class_5321;Lnet/minecraft/class_1767;)Lnet/minecraft/class_5592$class_6157;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#addPattern",
+  "net/minecraft/class_3671$class_6159.method_35548(Z)Lnet/minecraft/class_3671$class_6159;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld#setReplace"
+ },
+ "superRenames": {
+  "net/minecraft/class_2965": "top/dext/centurybridge/step/v1_20_5/facade/ProjectileDispenseBehavior"
+ },
+ "covers": [
+  "net/minecraft/class_5631.method_32340()Lnet/minecraft/class_2371;",
+  "net/minecraft/class_5631.method_32341()I"
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_8181",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld$BlockContainer",
+   "requires": [
+    "method_54080()Lnet/minecraft/class_2586;"
+   ],
+   "synth": [],
+   "basis": "s4fin world: a 1.20.4 ContainerSingleItem naming its block entity is 1.20.5's BlockContainerSingleItem (whose stillValid default is 1.20.4's)"
+  }
+ ],
+ "fieldGetters": {
+  "net/minecraft/class_111.field_1034:Lnet/minecraft/class_20$class_21;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld",
+  "net/minecraft/class_131.field_25217:Lnet/minecraft/class_5339;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld",
+  "net/minecraft/class_131.field_25233:Lnet/minecraft/class_5339;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinWorld"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_499(Lnet/minecraft/class_20$class_21;)Lnet/minecraft/class_111$class_112;",
+   "new": "method_499(Lnet/minecraft/class_6880;)Lnet/minecraft/class_111$class_112;",
+   "args": [
+    0
+   ],
+   "onlyUnder": "net/minecraft/class_111$class_112",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbRestMaps.typeOf(Lnet/minecraft/class_6880;)Lnet/minecraft/class_20$class_21;",
+   "basis": "s4fin world: a 1.20.4 builder's setMapDecoration(type) gets 1.20.5's holder as the 1.20.4 type"
+  }
+ ],
+ "methodRenames": {
+  "net/minecraft/class_159.method_677(Lnet/minecraft/class_2487;)Lnet/minecraft/class_120$class_121;": "method_57654"
+ }
+}

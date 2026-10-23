@@ -87,6 +87,16 @@
     "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#noCallback()Ljava/lang/Runnable;"
    ],
    "basis": "s4fin client: ServerStatusPinger.pingServer takes a ping-complete callback too in 1.20.5; 1.20.4's call had none"
+  },
+  "net/minecraft/class_6832.method_39831(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833;": {
+   "desc": "(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Lnet/minecraft/class_6874;Z)Lnet/minecraft/class_6833;",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#unrestrictedPlacement()Lnet/minecraft/class_6874;",
+    "keep"
+   ],
+   "basis": "s4fin: StructureCheck.checkStart takes the placement in 1.20.5 to apply its frequency reduction / exclusion zone, which 1.20.4's callers applied themselves; a placement with neither keeps 1.20.4's check"
   }
  },
  "superCtorReshapes": {
@@ -227,6 +237,9 @@
  "frameDefaults": {
   "method_3003(Lnet/minecraft/class_642;Ljava/lang/Runnable;)V": {
    "2": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#noCallback()Ljava/lang/Runnable;"
+  },
+  "method_39831(Lnet/minecraft/class_1923;Lnet/minecraft/class_3195;Z)Lnet/minecraft/class_6833;": {
+   "2": "top/dext/centurybridge/step/v1_20_5/rt/CbFinCommon#unrestrictedPlacement()Lnet/minecraft/class_6874;"
   }
  }
 }

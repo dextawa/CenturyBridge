@@ -33,6 +33,15 @@ public final class CbFinCommon {
         };
     }
 
+    /**
+     * StructureCheck.checkStart(pos, structure, skipKnown): 1.20.5 also applies the placement's frequency reduction
+     * and exclusion zone there, which 1.20.4's callers applied themselves before asking; a placement with neither
+     * (frequency 1, no exclusion zone) leaves 1.20.4's check as it was
+     */
+    public static net.minecraft.class_6874 unrestrictedPlacement() {
+        return new net.minecraft.class_6872(1, 0, net.minecraft.class_6873.field_36421, 0);
+    }
+
     /** ServerGamePacketListenerImpl.MAX_INTERACTION_DISTANCE: 1.20.4's 6 blocks, squared */
     public static double field_37280() {
         return 36.0;
