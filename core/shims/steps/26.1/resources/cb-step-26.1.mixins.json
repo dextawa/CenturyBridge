@@ -17,9 +17,12 @@
   ],
   "client": [
     "CbFapiCameraAccess",
+    "CbFapiFluidRendererMixin",
+    "CbFapiFluidStateModelSetMixin",
     "CbFapiGameRendererAccess",
     "CbFapiHudRenderCallbackMixin",
     "CbFapiLevelRendererMixin",
+    "CbFapiModelManagerFluidMixin",
     "CbWallBlockStateModelSetMixin",
     "CbWallClientLevelDataMixin",
     "CbWallClientRainMixin",
