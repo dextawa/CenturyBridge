@@ -9,6 +9,13 @@ public final class CbAdvNodesClient {
         return CbAdvNodes.valueOf(self.method_53813());
     }
 
+    /**
+     * AdvancementsScreen.TABS_LOCATION, 1.20.1's tab sheet textures/gui/advancements/tabs.png: 1.20.2 draws
+     * the tabs from sprites; the layer rebuilds the 1.20.1 sheet from them whenever it is loaded
+     * (CbGuiLegacyTextures, every visible 1.20.1 pixel reproduced), so the id draws what it drew in 1.20.1
+     */
+    public static final net.minecraft.class_2960 field_2716 = new net.minecraft.class_2960("textures/gui/advancements/tabs.png");
+
     private CbAdvNodesClient() {
     }
 }

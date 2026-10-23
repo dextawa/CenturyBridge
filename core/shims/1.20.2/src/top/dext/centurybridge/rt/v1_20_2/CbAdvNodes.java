@@ -237,6 +237,24 @@ public final class CbAdvNodes {
         return java.util.Optional.ofNullable(own.method_684());
     }
 
+    /**
+     * AdvancementVisibilityEvaluator.evaluateVisibility(advancement, isDone, output): 1.20.1's walked the
+     * advancement's tree testing Predicate&lt;Advancement&gt; and reporting each to output.accept(advancement,
+     * visible); 1.20.2's walks the node's tree with Predicate&lt;AdvancementNode&gt; and Output.accept(node, visible).
+     * The 1.20.1 predicate and output see the nodes' advancements.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void method_48031(net.minecraft.class_161 advancement, java.util.function.Predicate isDone,
+            net.minecraft.class_8005.class_8006 output) {
+        java.util.function.Predicate<net.minecraft.class_161> done = isDone;
+        net.minecraft.class_8005.method_48031(nodeOf(advancement), n -> done.test(n.method_53647()), output);
+    }
+
+    /** a 1.20.1 visibility output lambda (accept(advancement, visible)) as 1.20.2's (accept(node, visible)) */
+    public static net.minecraft.class_8005.class_8006 visibilityOutput(CbAdvLegacy.VisibilityOutput legacy) {
+        return (node, visible) -> legacy.accept(node.method_53647(), visible);
+    }
+
     /** a collection of 1.20.1 advancements (a 1.20.1 override's answer) as their nodes */
     public static java.util.Collection<net.minecraft.class_8781> nodes(java.util.Collection<net.minecraft.class_161> advancements) {
         List<net.minecraft.class_8781> out = new ArrayList<>(advancements.size());

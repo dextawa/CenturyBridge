@@ -518,6 +518,11 @@ TO_NEW = {NODE: f"{NODES}#nodeOf({ADV})" + NODE, HOLDER: f"{NODES}#holderOf({ADV
 TO_OLD = {NODE: f"{NODES}#valueOf({NODE})" + ADV, HOLDER: f"{NODES}#valueOf({HOLDER})" + ADV}
 
 
+# the sections that serve a member's call sites (a key here is wired on the call side already)
+CALL_SIDE = ("staticRedirects", "instanceRedirects", "interfaceCallRedirects", "callReshapes", "superRedirects",
+             "ctorRedirects", "superCtorReshapes", "methodRenames", "covers")
+
+
 def holders(root, V, W, section, report, frag):
     """
     Members whose 1.20.2 shape differs from 1.20.1's only in Advancement standing where 1.20.2 has an
@@ -536,9 +541,7 @@ def holders(root, V, W, section, report, frag):
             continue
         d = json.load(open(f, encoding="utf-8"))
         for s, v in d.items():
-            if isinstance(v, dict):
-                wired |= set(v)
-            elif s == "covers":
+            if s in CALL_SIDE:
                 wired |= set(v)
     hooked = set()
     for f in [os.path.join(root, "core/segments/shims-1.20.2.json")] + sorted(
@@ -547,9 +550,7 @@ def holders(root, V, W, section, report, frag):
             hooked |= {h.get("old") for h in json.load(open(f, encoding="utf-8")).get("overrideHooks", [])}
     hooked |= {h.get("old") for h in frag.get("overrideHooks", [])}
     for s, v in frag.items():  # the hand-written part of this fragment (generated entries are dropped by now)
-        if isinstance(v, dict):
-            wired |= set(v)
-        elif s == "covers":
+        if s in CALL_SIDE:
             wired |= set(v)
     found = []
     for p in sorted(V):

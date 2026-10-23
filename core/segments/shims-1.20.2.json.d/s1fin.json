@@ -72,11 +72,13 @@
   "net/minecraft/class_6404.method_37238(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_6404;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_7376.method_43097(Lcom/google/gson/JsonElement;)Lnet/minecraft/class_7376;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_7383.method_43158(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_7383;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_8005.method_48031(Lnet/minecraft/class_161;Ljava/util/function/Predicate;Lnet/minecraft/class_8005$class_8006;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes",
   "net/minecraft/class_8129.method_48966(Lcom/google/gson/JsonElement;Lnet/minecraft/class_5321;)Lnet/minecraft/class_8129;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson"
  },
  "fieldRedirects": {
   "net/minecraft/class_2035.field_20687:[Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2050.field_9609:Lnet/minecraft/class_2050;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_457.field_2716:Lnet/minecraft/class_2960;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodesClient",
   "net/minecraft/class_7376$class_7378.field_38724:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
   "net/minecraft/class_7376$class_7378.field_38725:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
   "net/minecraft/class_7376$class_7378.field_38726:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
@@ -415,6 +417,10 @@
   "net/minecraft/class_2096$class_2097.create(Ljava/lang/Number;Ljava/lang/Number;)Lnet/minecraft/class_2096;": {
    "iface": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BoundsFactory",
    "adapt": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#boundsFactory(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BoundsFactory;)Lnet/minecraft/class_2096$class_2097;"
+  },
+  "net/minecraft/class_8005$class_8006.accept(Lnet/minecraft/class_161;Z)V": {
+   "iface": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$VisibilityOutput",
+   "adapt": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#visibilityOutput(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$VisibilityOutput;)Lnet/minecraft/class_8005$class_8006;"
   }
  },
  "covers": [

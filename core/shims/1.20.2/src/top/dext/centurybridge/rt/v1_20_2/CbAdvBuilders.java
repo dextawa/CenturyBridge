@@ -3,7 +3,7 @@ package top.dext.centurybridge.rt.v1_20_2;
 import com.google.gson.JsonObject;
 import java.util.Map;
 import java.util.function.Function;
-import top.dext.centurybridge.shims.v1_20_2.CbAdvBuilderState;
+import top.dext.centurybridge.shims.v1_20_2.CbAdvStateOfBuilder;
 
 /**
  * 1.20.1's Advancement.Builder methods that 1.20.2 dropped, on 1.20.2's builder: the network form
@@ -16,13 +16,13 @@ import top.dext.centurybridge.shims.v1_20_2.CbAdvBuilderState;
  */
 public final class CbAdvBuilders {
 
-    private static CbAdvBuilderState state(net.minecraft.class_161.class_162 b) {
-        return (CbAdvBuilderState) (Object) b;
+    private static CbAdvStateOfBuilder state(net.minecraft.class_161.class_162 b) {
+        return (CbAdvStateOfBuilder) (Object) b;
     }
 
     /** the requirements 1.20.1's builder would write: its own, else its strategy over the criteria names */
     private static net.minecraft.class_8782 requirements(net.minecraft.class_161.class_162 b) {
-        CbAdvBuilderState s = state(b);
+        CbAdvStateOfBuilder s = state(b);
         return s.cb$requirements().orElseGet(() -> s.cb$strategy().create(
             ((top.dext.centurybridge.shims.v1_20_2.CbAdvancementBuilderCriteria) (Object) b).cbCriteria().build().keySet()));
     }
@@ -38,7 +38,7 @@ public final class CbAdvBuilders {
      * criteria (names only, Criterion.serializeToNetwork), the requirement groups, the telemetry flag
      */
     public static void method_699(net.minecraft.class_161.class_162 self, net.minecraft.class_2540 buf) {
-        CbAdvBuilderState s = state(self);
+        CbAdvStateOfBuilder s = state(self);
         buf.method_43826(s.cb$parent().orElse(null), net.minecraft.class_2540::method_10812);
         buf.method_43826(s.cb$display().orElse(null), (b, d) -> d.method_813(b));
         Map<String, net.minecraft.class_175<?>> criteria =

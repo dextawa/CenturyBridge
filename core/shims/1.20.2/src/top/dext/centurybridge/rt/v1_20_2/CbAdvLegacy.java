@@ -173,6 +173,12 @@ public final class CbAdvLegacy {
         com.google.gson.JsonElement method_783();
     }
 
+    /** AdvancementVisibilityEvaluator.Output.accept(advancement, visible), 1.20.1's shape (a lambda's) */
+    @FunctionalInterface
+    public interface VisibilityOutput {
+        void accept(net.minecraft.class_161 advancement, boolean visible);
+    }
+
     /** MobEffectsPredicate.and(effect) */
     public interface EffectsAnd {
         net.minecraft.class_2102 method_9065(net.minecraft.class_1291 effect);

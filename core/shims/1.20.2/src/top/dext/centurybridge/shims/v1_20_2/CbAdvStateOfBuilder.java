@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
  * serializeToNetwork and the like.
  */
 @Mixin(net.minecraft.class_161.class_162.class)
-public interface CbAdvBuilderState {
+public interface CbAdvStateOfBuilder {
 
     @Accessor("field_1149")
     java.util.Optional<net.minecraft.class_2960> cb$parent();
