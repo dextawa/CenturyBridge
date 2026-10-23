@@ -30,10 +30,390 @@
  "instanceRedirects": {
   "net/minecraft/class_1856.method_8088(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
   "net/minecraft/class_8957.method_55087(Lnet/minecraft/class_2540;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
-  "net/minecraft/class_1781$class_1782.method_7812()Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics"
+  "net/minecraft/class_1781$class_1782.method_7812()Ljava/lang/String;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemStatics",
+  "net/minecraft/class_1865.method_8122(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1860;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_1865.method_8124(Lnet/minecraft/class_2540;Lnet/minecraft/class_1860;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_1869$class_1870.method_8163(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_1869$class_1870.method_8165(Lnet/minecraft/class_2540;Lnet/minecraft/class_1869;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_1867$class_1868.method_8141(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1867;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_1867$class_1868.method_8143(Lnet/minecraft/class_2540;Lnet/minecraft/class_1867;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_3957.method_17737(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1874;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_3957.method_17735(Lnet/minecraft/class_2540;Lnet/minecraft/class_1874;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_1866.method_45444(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_1866.method_45442(Lnet/minecraft/class_2540;Lnet/minecraft/class_3955;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_3972$class_3973.method_17882(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3972;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_3972$class_3973.method_17880(Lnet/minecraft/class_2540;Lnet/minecraft/class_3972;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_8060$class_8061.method_48456(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8060;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_8060$class_8061.method_48457(Lnet/minecraft/class_2540;Lnet/minecraft/class_8060;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_8062$class_8063.method_48460(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8062;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes",
+  "net/minecraft/class_8062$class_8063.method_48461(Lnet/minecraft/class_2540;Lnet/minecraft/class_8062;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes"
  },
  "classRenames": {
   "net/minecraft/class_1781$class_1782": "net/minecraft/class_9283$class_1782"
  },
- "_s4fin_shape_basis": "s4fin: 1.20.4 FireworkRocketItem.Shape is 1.20.5's FireworkExplosion.Shape: the same five constants in the same order with the same ids, names, byId and values; only getName() changed (a component now; the name is getSerializedName), redirected"
+ "_s4fin_shape_basis": "s4fin: 1.20.4 FireworkRocketItem.Shape is 1.20.5's FireworkExplosion.Shape: the same five constants in the same order with the same ids, names, byId and values; only getName() changed (a component now; the name is getSerializedName), redirected",
+ "superRedirects": {
+  "net/minecraft/class_1869$class_1870.method_8163(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superShapedRead",
+  "net/minecraft/class_1869$class_1870.method_8165(Lnet/minecraft/class_2540;Lnet/minecraft/class_1869;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superShapedWrite",
+  "net/minecraft/class_1867$class_1868.method_8141(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1867;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superShapelessRead",
+  "net/minecraft/class_1867$class_1868.method_8143(Lnet/minecraft/class_2540;Lnet/minecraft/class_1867;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superShapelessWrite",
+  "net/minecraft/class_3957.method_17737(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1874;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superCookingRead",
+  "net/minecraft/class_3957.method_17735(Lnet/minecraft/class_2540;Lnet/minecraft/class_1874;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superCookingWrite",
+  "net/minecraft/class_1866.method_45444(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superSimpleRead",
+  "net/minecraft/class_1866.method_45442(Lnet/minecraft/class_2540;Lnet/minecraft/class_3955;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superSimpleWrite",
+  "net/minecraft/class_3972$class_3973.method_17882(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3972;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superSingleRead",
+  "net/minecraft/class_3972$class_3973.method_17880(Lnet/minecraft/class_2540;Lnet/minecraft/class_3972;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superSingleWrite",
+  "net/minecraft/class_8060$class_8061.method_48456(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8060;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superTransformRead",
+  "net/minecraft/class_8060$class_8061.method_48457(Lnet/minecraft/class_2540;Lnet/minecraft/class_8060;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superTransformWrite",
+  "net/minecraft/class_8062$class_8063.method_48460(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8062;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superTrimRead",
+  "net/minecraft/class_8062$class_8063.method_48461(Lnet/minecraft/class_2540;Lnet/minecraft/class_8062;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes#superTrimWrite"
+ },
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1865",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$LegacyNetwork",
+   "requires": [
+    "method_8122(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1860;",
+    "method_8124(Lnet/minecraft/class_2540;Lnet/minecraft/class_1860;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.streamCodec(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$LegacyNetwork;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 RecipeSerializer's fromNetwork / toNetwork are its 1.20.5 streamCodec()"
+  },
+  {
+   "under": "net/minecraft/class_1869$class_1870",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapedBoth",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_8163(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;",
+    "method_8165(Lnet/minecraft/class_2540;Lnet/minecraft/class_1869;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.shapedBoth(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapedBoth;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork and toNetwork answer its streamCodec()"
+  },
+  {
+   "under": "net/minecraft/class_1869$class_1870",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapedRead",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_8163(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1869;"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.shapedRead(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapedRead;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_1869$class_1870",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapedWrite",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_8165(Lnet/minecraft/class_2540;Lnet/minecraft/class_1869;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.shapedWrite(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapedWrite;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own toNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_1867$class_1868",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapelessBoth",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_8141(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1867;",
+    "method_8143(Lnet/minecraft/class_2540;Lnet/minecraft/class_1867;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.shapelessBoth(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapelessBoth;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork and toNetwork answer its streamCodec()"
+  },
+  {
+   "under": "net/minecraft/class_1867$class_1868",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapelessRead",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_8141(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1867;"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.shapelessRead(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapelessRead;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_1867$class_1868",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapelessWrite",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_8143(Lnet/minecraft/class_2540;Lnet/minecraft/class_1867;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.shapelessWrite(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$ShapelessWrite;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own toNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_3957",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$CookingBoth",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_17737(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1874;",
+    "method_17735(Lnet/minecraft/class_2540;Lnet/minecraft/class_1874;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.cookingBoth(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$CookingBoth;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork and toNetwork answer its streamCodec()"
+  },
+  {
+   "under": "net/minecraft/class_3957",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$CookingRead",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_17737(Lnet/minecraft/class_2540;)Lnet/minecraft/class_1874;"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.cookingRead(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$CookingRead;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_3957",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$CookingWrite",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_17735(Lnet/minecraft/class_2540;Lnet/minecraft/class_1874;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.cookingWrite(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$CookingWrite;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own toNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_1866",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SimpleBoth",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_45444(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;",
+    "method_45442(Lnet/minecraft/class_2540;Lnet/minecraft/class_3955;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.simpleBoth(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SimpleBoth;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork and toNetwork answer its streamCodec()"
+  },
+  {
+   "under": "net/minecraft/class_1866",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SimpleRead",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_45444(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3955;"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.simpleRead(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SimpleRead;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_1866",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SimpleWrite",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_45442(Lnet/minecraft/class_2540;Lnet/minecraft/class_3955;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.simpleWrite(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SimpleWrite;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own toNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_3972$class_3973",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SingleBoth",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_17882(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3972;",
+    "method_17880(Lnet/minecraft/class_2540;Lnet/minecraft/class_3972;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.singleBoth(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SingleBoth;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork and toNetwork answer its streamCodec()"
+  },
+  {
+   "under": "net/minecraft/class_3972$class_3973",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SingleRead",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_17882(Lnet/minecraft/class_2540;)Lnet/minecraft/class_3972;"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.singleRead(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SingleRead;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_3972$class_3973",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SingleWrite",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_17880(Lnet/minecraft/class_2540;Lnet/minecraft/class_3972;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.singleWrite(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$SingleWrite;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own toNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_8060$class_8061",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TransformBoth",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_48456(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8060;",
+    "method_48457(Lnet/minecraft/class_2540;Lnet/minecraft/class_8060;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.transformBoth(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TransformBoth;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork and toNetwork answer its streamCodec()"
+  },
+  {
+   "under": "net/minecraft/class_8060$class_8061",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TransformRead",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_48456(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8060;"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.transformRead(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TransformRead;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_8060$class_8061",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TransformWrite",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_48457(Lnet/minecraft/class_2540;Lnet/minecraft/class_8060;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.transformWrite(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TransformWrite;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own toNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_8062$class_8063",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TrimBoth",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_48460(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8062;",
+    "method_48461(Lnet/minecraft/class_2540;Lnet/minecraft/class_8062;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.trimBoth(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TrimBoth;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork and toNetwork answer its streamCodec()"
+  },
+  {
+   "under": "net/minecraft/class_8062$class_8063",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TrimRead",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_48460(Lnet/minecraft/class_2540;)Lnet/minecraft/class_8062;"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.trimRead(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TrimRead;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own fromNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  },
+  {
+   "under": "net/minecraft/class_8062$class_8063",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TrimWrite",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "requires": [
+    "method_48461(Lnet/minecraft/class_2540;Lnet/minecraft/class_8062;)V"
+   ],
+   "synth": [
+    {
+     "new": "method_56104()Lnet/minecraft/class_9139;",
+     "call": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.trimWrite(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes$TrimWrite;)Lnet/minecraft/class_9139;"
+    }
+   ],
+   "basis": "s4fin: a 1.20.4 subclass's own toNetwork answer its streamCodec(), the other half the vanilla serializer's own (guarded: re-entry reaches super's)"
+  }
+ ],
+ "overrideHooks": [
+  {
+   "old": "method_53736()Lcom/mojang/serialization/Codec;",
+   "new": "method_53736()Lcom/mojang/serialization/MapCodec;",
+   "onlyUnder": "net/minecraft/class_1865",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbFinItemRecipes.codec(Lcom/mojang/serialization/Codec;)Lcom/mojang/serialization/MapCodec;",
+   "basis": "s4fin: a 1.20.4 serializer's codec() Codec answers 1.20.5's MapCodec codec() as 1.20.4's dispatch read it (CbCodecs.toMapCodec); its super.codec() is reshaped onto vanilla's MapCodec one (s4item-gen callReshapes)"
+  }
+ ]
 }
