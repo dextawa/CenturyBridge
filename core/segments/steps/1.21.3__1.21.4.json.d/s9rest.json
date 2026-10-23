@@ -75,6 +75,34 @@
     1
    ],
    "basis": "1.21.4 moved the bundle's open models to the client item model: the constructor's models are kept on the item for 1.21.3's getters (CbRestItems)"
+  },
+  "net/minecraft/class_1741.<init>(ILjava/util/Map;ILnet/minecraft/class_6880;FFLnet/minecraft/class_6862;Lnet/minecraft/class_2960;)V": {
+   "desc": "(ILjava/util/Map;ILnet/minecraft/class_6880;FFLnet/minecraft/class_6862;Lnet/minecraft/class_5321;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#asset(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "1.21.4 names the armor's model by its equipment_asset key, whose location is 1.21.3's model id (CbRestEquipment.asset)"
+  },
+  "net/minecraft/class_10192.<init>(Lnet/minecraft/class_1304;Lnet/minecraft/class_6880;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;ZZZ)V": {
+   "desc": "(Lnet/minecraft/class_1304;Lnet/minecraft/class_6880;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;ZZZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#optionalAsset(Ljava/util/Optional;)Ljava/util/Optional;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "generic drift: Equippable's model is an Optional<asset key> where 1.21.3 took Optional<model id>; converted in place (adaptive)"
   }
  },
  "instanceRedirects": {
@@ -136,7 +164,9 @@
   "net/minecraft/class_5537.method_63677()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_63677",
   "net/minecraft/class_5537.method_63678()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_63678",
   "net/minecraft/class_1792$class_1793.method_63681(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_63681",
-  "net/minecraft/class_9280.comp_2382()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#comp_2382"
+  "net/minecraft/class_9280.comp_2382()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#comp_2382",
+  "net/minecraft/class_8053.method_64019(Lnet/minecraft/class_10186$class_10190;Lnet/minecraft/class_2960;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentClient#method_64019",
+  "net/minecraft/class_8054.comp_1210()F": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#comp_1210"
  },
  "superRedirects": {
   "net/minecraft/class_2692.method_11673()D": "top/dext/centurybridge/step/v1_21_4/rt/CbRestPackets#rawX",
@@ -767,6 +797,31 @@
     "keep"
    ],
    "basis": "1.21.3 parsed the egg's entity id against the built-in entity type registry (CbRestItems.builtInRegistries)"
+  },
+  "net/minecraft/class_1741.comp_3168()Lnet/minecraft/class_2960;": {
+   "desc": "()Lnet/minecraft/class_5321;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#id(Lnet/minecraft/class_5321;)Lnet/minecraft/class_2960;",
+   "basis": "ArmorMaterial.modelId(): the asset key's location (1.21.4 assetId)"
+  },
+  "net/minecraft/class_10192$class_10217.method_64204(Lnet/minecraft/class_2960;)Lnet/minecraft/class_10192$class_10217;": {
+   "desc": "(Lnet/minecraft/class_5321;)Lnet/minecraft/class_10192$class_10217;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#asset(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "Equippable.Builder.setModel(id) is 1.21.4's setAsset(key) of the same location"
+  },
+  "net/minecraft/class_10192.comp_3176()Ljava/util/Optional;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#optionalId(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "generic drift: Equippable.model() answers Optional<asset key> where 1.21.3 answered Optional<model id>; converted in place (adaptive)"
+  },
+  "net/minecraft/class_8054.comp_1237()Ljava/util/Map;": {
+   "desc": "()Ljava/util/Map;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#ids(Ljava/util/Map;)Ljava/util/Map;",
+   "basis": "generic drift: TrimMaterial.overrideArmorMaterials is keyed by asset key in 1.21.4, by model id in 1.21.3; converted in place (adaptive)"
   }
  },
  "overrideHooks": [
@@ -914,7 +969,18 @@
   "net/minecraft/class_7677.method_45252(Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/class_7677;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestMetadata#method_45252",
   "net/minecraft/class_1844.method_8062(Lnet/minecraft/class_6880;)I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_8062",
   "net/minecraft/class_1844.method_8055(Ljava/lang/Iterable;)I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_8055",
-  "net/minecraft/class_1759.method_43123(Lnet/minecraft/class_1937;)Lnet/minecraft/class_4208;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_43123"
+  "net/minecraft/class_1759.method_43123(Lnet/minecraft/class_1937;)Lnet/minecraft/class_4208;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#method_43123",
+  "net/minecraft/class_10191.method_64013(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentClient#method_64013",
+  "net/minecraft/class_8054.method_48438(Ljava/lang/String;Lnet/minecraft/class_1792;FLnet/minecraft/class_2561;Ljava/util/Map;)Lnet/minecraft/class_8054;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#method_48438",
+  "net/minecraft/class_1926.method_8342()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_8342",
+  "net/minecraft/class_1926.method_8343()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_8343",
+  "net/minecraft/class_1926.method_8341()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_8341",
+  "net/minecraft/class_1926.method_43717()I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_43717",
+  "net/minecraft/class_2480.method_10527(Lnet/minecraft/class_1792;)Lnet/minecraft/class_1767;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_10527",
+  "net/minecraft/class_2480.method_10526(Lnet/minecraft/class_2248;)Lnet/minecraft/class_1767;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_10526",
+  "net/minecraft/class_1606.method_33346(FLnet/minecraft/class_2350;F)Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_33346",
+  "net/minecraft/class_1606.method_33347(FLnet/minecraft/class_2350;FF)Lnet/minecraft/class_238;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_33347",
+  "net/minecraft/class_2338.method_49925(Lnet/minecraft/class_2338;IILjava/util/function/BiConsumer;Ljava/util/function/Predicate;)I": "top/dext/centurybridge/step/v1_21_4/rt/CbRestStatics#method_49925"
  },
  "lambdaAdapters": {
   "net/minecraft/class_7368.method_43041(Lnet/minecraft/class_3270;)Ljava/util/Optional;": {
@@ -952,9 +1018,21 @@
   }
  ],
  "ctorRedirects": {
-  "net/minecraft/class_9280.<init>(I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#customModelData"
+  "net/minecraft/class_9280.<init>(I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItems#customModelData",
+  "net/minecraft/class_8054.<init>(Ljava/lang/String;Lnet/minecraft/class_6880;FLjava/util/Map;Lnet/minecraft/class_2561;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipment#trimMaterial"
  },
  "fieldRedirects": {
-  "net/minecraft/class_9280.field_49307:Lnet/minecraft/class_9280;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItemDefaults"
+  "net/minecraft/class_9280.field_49307:Lnet/minecraft/class_9280;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestItemDefaults",
+  "net/minecraft/class_10191.field_54134:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54135:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54136:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54137:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54138:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54139:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54140:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54141:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54142:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54144:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds",
+  "net/minecraft/class_10191.field_54143:Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_4/rt/CbRestEquipmentIds"
  }
 }

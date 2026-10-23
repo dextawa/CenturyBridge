@@ -26,7 +26,8 @@
     "CbRestVillageGoalMixin"
   ],
   "client": [
-    "CbRestClientPacketsMixin"
+    "CbRestClientPacketsMixin",
+    "CbRestEquipmentAssetsInvoker"
   ],
   "server": [],
   "injectors": {
