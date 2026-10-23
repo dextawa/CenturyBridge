@@ -10,7 +10,8 @@ import net.minecraft.class_9334;
 /**
  * A converted 1.21.1 item's default components as its class's 1.21.1 overrides answer them (see
  * CbItemMembers): 1.21.2 reads ENCHANTABLE and ATTRIBUTE_MODIFIERS where 1.21.1 asked the item's
- * getEnchantmentValue() and getDefaultAttributeModifiers(). Every other component is the item's built one.
+ * getEnchantmentValue() and getDefaultAttributeModifiers(), and EQUIPPABLE where 1.21.1 asked an Equipable item or
+ * block (CbItemEquipable). Every other component is the item's built one.
  * Installed by CbItemMembersMixin only for a class that overrides one of those members, at the end of its
  * construction; the overrides are asked on each read, as 1.21.1 asked them.
  */
@@ -26,7 +27,8 @@ public final class CbItemMemberComponents implements class_9323 {
 
     /** whether a class overrides a 1.21.1 member these components answer */
     public static boolean needed(class_1792 item) {
-        return item instanceof CbItemMembers.LegacyEnchantmentValue || item instanceof CbItemMembers.LegacyDefaultModifiers;
+        return item instanceof CbItemMembers.LegacyEnchantmentValue || item instanceof CbItemMembers.LegacyDefaultModifiers
+            || CbItemEquipable.needed(item);
     }
 
     @Override
@@ -38,6 +40,9 @@ public final class CbItemMemberComponents implements class_9323 {
         if (type == class_9334.field_49636 && item instanceof CbItemMembers.LegacyDefaultModifiers l) {
             class_9285 m = l.method_7844();
             return (T) (m == null ? class_9285.field_49326 : m);
+        }
+        if (type == class_9334.field_54196 && CbItemEquipable.needed(item)) {
+            return (T) CbItemEquipable.equippable(item, built.method_57829(class_9334.field_54196));
         }
         return built.method_57829(type);
     }
@@ -54,6 +59,9 @@ public final class CbItemMemberComponents implements class_9323 {
         }
         if (item instanceof CbItemMembers.LegacyDefaultModifiers) {
             keys.add(class_9334.field_49636);
+        }
+        if (CbItemEquipable.needed(item)) {
+            keys.add(class_9334.field_54196);
         }
         return keys;
     }

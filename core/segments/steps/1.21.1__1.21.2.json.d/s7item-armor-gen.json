@@ -3,8 +3,19 @@
   "net/minecraft/class_1741": "top/dext/centurybridge/step/v1_21_2/facade/ArmorMaterial",
   "net/minecraft/class_1741$class_9196": "top/dext/centurybridge/step/v1_21_2/facade/ArmorMaterial$Layer",
   "net/minecraft/class_1740": "top/dext/centurybridge/step/v1_21_2/facade/ArmorMaterials",
-  "net/minecraft/class_1738$class_8051": "net/minecraft/class_8051"
+  "net/minecraft/class_1738$class_8051": "net/minecraft/class_8051",
+  "net/minecraft/class_5151": "top/dext/centurybridge/step/v1_21_2/facade/Equipable",
+  "net/minecraft/class_1770": "top/dext/centurybridge/step/v1_21_2/facade/ElytraItem"
  },
+ "facadeGaps": {
+  "net/minecraft/class_1770.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "use(level, player, hand) answered an InteractionResultHolder in 1.21.1; 1.21.2's Item.use has the same parameters, which Java cannot declare a second time on the facade. Calls take the Item.use instance redirect and a subclass's super.use(..) the Item.use override hook's super bridge (CbItemResults); 1.21.1's body was swapWithEquipmentSlot, which 1.21.2's Item.use does for the swappable EQUIPPABLE an ElytraItem gets (CbItemEquipable)"
+ },
+ "covers": [
+  "net/minecraft/class_1819.method_7685()Lnet/minecraft/class_1304;",
+  "net/minecraft/class_2190.method_7685()Lnet/minecraft/class_1304;",
+  "net/minecraft/class_5815.method_7685()Lnet/minecraft/class_1304;",
+  "net/minecraft/class_5815.method_31570()Lnet/minecraft/class_6880;"
+ ],
  "superRenames": {
   "net/minecraft/class_1738": "top/dext/centurybridge/step/v1_21_2/facade/ArmorItem",
   "net/minecraft/class_4059": "top/dext/centurybridge/step/v1_21_2/facade/AnimalArmorItem"
@@ -15,6 +26,7 @@
  },
  "instanceRedirects": {
   "net/minecraft/class_1738$class_8051.method_56691()Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
+  "net/minecraft/class_1770.method_7836(Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemEquipable",
   "net/minecraft/class_1738.method_48398()Lnet/minecraft/class_1738$class_8051;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
   "net/minecraft/class_1738.method_7686()Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",
   "net/minecraft/class_1738.method_7687()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemArmor",

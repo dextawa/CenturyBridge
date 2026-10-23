@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.dext.centurybridge.step.v1_21_2.facade.Equipable;
 import top.dext.centurybridge.step.v1_21_2.rt.CbItemArmor;
 
 /**
@@ -19,7 +20,7 @@ import top.dext.centurybridge.step.v1_21_2.rt.CbItemArmor;
  * getTexture / getOverlayTexture / getBodyType read them (CbItemArmor).
  */
 @Mixin(class_4059.class)
-public abstract class CbItemAnimalArmorMixin implements CbItemArmor.ArmorFields, CbItemArmor.AnimalFields {
+public abstract class CbItemAnimalArmorMixin implements CbItemArmor.ArmorFields, CbItemArmor.AnimalFields, Equipable {
 
     @Unique
     private class_1741 cb$material;
@@ -68,5 +69,17 @@ public abstract class CbItemAnimalArmorMixin implements CbItemArmor.ArmorFields,
     @Override
     public void cb$setOverlay(boolean overlay) {
         this.cb$overlay = overlay;
+    }
+
+    /** Equipable.getEquipmentSlot(), as 1.21.1's ArmorItem answered it (CbItemArmor) */
+    @Override
+    public net.minecraft.class_1304 method_7685() {
+        return CbItemArmor.method_7685((class_4059) (Object) this);
+    }
+
+    /** Equipable.getEquipSound(), as 1.21.1's ArmorItem answered it (CbItemArmor) */
+    @Override
+    public net.minecraft.class_6880<net.minecraft.class_3414> method_31570() {
+        return CbItemArmor.method_31570((class_4059) (Object) this);
     }
 }
