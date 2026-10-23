@@ -19,6 +19,12 @@ public final class CbRenderModelFields {
     /** EntityModel's attackTime / riding / young, put back on the model */
     public interface Pose {
         void cb$pose(float attackTime, boolean riding, boolean young);
+
+        float cb$attackTime();
+
+        boolean cb$riding();
+
+        boolean cb$young();
     }
 
     private CbRenderModelFields() {
