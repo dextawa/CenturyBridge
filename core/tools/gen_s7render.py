@@ -966,6 +966,157 @@ def family_models(V, W, targets, setup, prepare):
 
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Family 6 -- AgeableListModel.headParts() / bodyParts() of 1.21.1's vanilla models (HumanoidModel, QuadrupedModel ...),
+# gone with AgeableListModel in 1.21.2 (those models are root-built EntityModels there). Put back per class with the
+# 1.21.1 body (CbRenderParts<n>Mixin): every one is `[Iterables.concat(super.x(), ] ImmutableList.of(this.f, ...) [)]`
+# over the class's part fields, which 1.21.2 keeps (checked: same name, same type); a super call is inlined as the
+# nearest 1.21.1 ancestor's body, so no mixin needs a super call. Fields are read through the declaring 1.21.2 class
+# (public there) or @Shadow when the mixin's own class declares them.
+# ---------------------------------------------------------------------------------------------------------------------
+PARTS = ("method_22946", "method_22948")
+PARTS_MIXIN = "CbRenderParts%sMixin"
+
+
+def _parse_parts(code, refs, frefs):
+    """[("super", owner, name)] / [("field", owner, name)] items of a parts body, or None for another shape"""
+    i, items, out = 0, [], []
+    while i < len(code):
+        op = code[i]
+        if op == 0x2a:  # aload_0
+            i += 1
+            continue
+        if op == 0xb4:  # getfield
+            f = frefs.get(struct.unpack(">H", code[i + 1:i + 3])[0])
+            items.append(("field", f[0], f[1], f[2]))
+            i += 3
+            continue
+        if op == 0xb7:  # invokespecial super.parts()
+            r = refs.get(struct.unpack(">H", code[i + 1:i + 3])[0])
+            if r[1] not in PARTS:
+                return None
+            out.append(("super", r[0], r[1]))
+            i += 3
+            continue
+        if op == 0xb8:  # invokestatic ImmutableList.of / Iterables.concat
+            r = refs.get(struct.unpack(">H", code[i + 1:i + 3])[0])
+            if r[0] == "com/google/common/collect/ImmutableList" and r[1] == "of" and not r[2].startswith("([L"):
+                out.append(("list", items))
+                items = []
+            elif r[0] == "com/google/common/collect/Iterables" and r[1] == "concat" and r[2].count("Ljava/lang/Iterable;") == 3:
+                out.append(("concat",))
+            else:
+                return None
+            i += 3
+            continue
+        if op == 0xb0:  # areturn
+            return out
+        return None
+    return None
+
+
+def family_parts(V, W):
+    jar = os.path.join(DATA, "jars/client-1.21.1-intermediary-code.jar")
+    bodies, notes = {}, []
+    with zipfile.ZipFile(jar) as z:
+        for c, ci in sorted(V.items()):
+            if MC + "class_4592" not in chain(c, V) or _anonymous(c):
+                continue
+            mine = [m for m in ci.methods if m.name in PARTS and m.desc == "()Ljava/lang/Iterable;" and not m.access & 0x400]
+            if not mine:
+                continue
+            b = z.read(c + ".class")
+            cc = classfile.read(b, True)
+            refs, frefs = _cp_methodrefs(b), _cp_fieldrefs(b)
+            for m in cc.methods:
+                if m.name in PARTS and m.desc == "()Ljava/lang/Iterable;" and m.code:
+                    bodies[(c, m.name)] = _parse_parts(m.code, refs, frefs)
+
+    def decl(c, name):
+        """the nearest 1.21.1 class at or above c declaring a parts body"""
+        for x in chain(c, V):
+            if (x, name) in bodies:
+                return x
+        return None
+
+    def expr(c, name, depth=0):
+        shadows = shadows_of[target[0]]
+        code = bodies.get((c, name))
+        if code is None:
+            return None
+        stack = []
+        for it in code:
+            if it[0] == "super":
+                up = decl(V[c].super, name)
+                if up is None or up == MC + "class_4592":
+                    return None
+                e = expr(up, name, depth + 1)
+                if e is None:
+                    return None
+                stack.append(e)
+            elif it[0] == "list":
+                parts = []
+                for _, owner, fname, fdesc in it[1]:
+                    wo = [x for x in chain(c, W) if any(f[0] == fname and f[1] == fdesc for f in W[x].fields)]
+                    if not wo:
+                        return None
+                    acc = [f for f in W[wo[0]].fields if f[0] == fname][0][2]
+                    if acc & 0x1:
+                        parts.append(f"(({jtype('L' + wo[0] + ';')}) (Object) this).{fname}")
+                    elif wo[0] == target[0]:
+                        shadows.add((fname, fdesc, acc))
+                        parts.append(f"this.{fname}")
+                    else:
+                        return None
+                stack.append("com.google.common.collect.ImmutableList.of(" + ", ".join(parts) + ")")
+            elif it[0] == "concat":
+                b2, a2 = stack.pop(), stack.pop()
+                stack.append(f"com.google.common.collect.Iterables.concat({a2}, {b2})")
+        return stack[-1] if len(stack) == 1 else None
+
+    for fn in os.listdir(MIXIN_SRC):
+        if fn.startswith("CbRenderParts") and fn.endswith("Mixin.java"):
+            os.remove(os.path.join(MIXIN_SRC, fn))
+    mixins, covers = [], []
+    by_class = {}
+    target, shadows_of = [None], {}
+    for (c, name) in sorted(bodies):
+        if c not in W:
+            notes.append(f"{c}: gone in 1.21.2, {name} not put back")
+            continue
+        target[0] = c
+        shadows = shadows_of.setdefault(c, set())
+        e = expr(c, name)
+        if e is None:
+            notes.append(f"{c}.{name}: 1.21.1 body not of the parts-list shape, or a field 1.21.2 does not keep public: not put back")
+            continue
+        by_class.setdefault(c, []).append((name, e))
+    for c, ms in sorted(by_class.items()):
+        nm = PARTS_MIXIN % _num(c)
+        mixins.append(nm)
+        out = ["package top.dext.centurybridge.step.v1_21_2.mixin;", "",
+               "import net.fabricmc.api.EnvType;", "import net.fabricmc.api.Environment;", "import org.spongepowered.asm.mixin.Mixin;", "",
+               "/** Generated by core/tools/gen_s7render.py: 1.21.1 AgeableListModel headParts / bodyParts of this model put back, 1.21.1's bodies. */",
+               "@Environment(EnvType.CLIENT)", f"@Mixin({jtype('L' + c + ';')}.class)", f"public abstract class {nm} {{"]
+        for fname, fdesc, acc in sorted(shadows_of.get(c, ())):
+            vis = "private " if acc & 0x2 else "protected " if acc & 0x4 else ""
+            out += ["", "    @org.spongepowered.asm.mixin.Shadow"]
+            if acc & 0x10:
+                out.append("    @org.spongepowered.asm.mixin.Final")
+            out.append(f"    {vis}{jtype(fdesc)} {fname};")
+        for name, e in ms:
+            label = "headParts" if name == PARTS[0] else "bodyParts"
+            out += ["", f"    /** 1.21.1 {label}() */", f"    protected Iterable<net.minecraft.class_630> {name}() {{", f"        return {e};", "    }"]
+            covers.append(f"{c}.{name}()Ljava/lang/Iterable;")
+        out.append("}")
+        open(os.path.join(MIXIN_SRC, nm + ".java"), "w", encoding="utf-8", newline="\n").write("\n".join(out) + "\n")
+    for n in notes:
+        print("  note:", n)
+    print(f"model parts: headParts/bodyParts put back in {len(by_class)} classes")
+    return mixins, covers
+
+
+
 class ClassInfoStub:
     fields = []
 
@@ -974,7 +1125,7 @@ def write_mixin_config(generated):
     """the generated CbRenderTex<n>Mixin names in the client list, replacing the previous generation's"""
     cfg = json.load(open(MIXIN_CONFIG, encoding="utf-8"))
     def gen(m):
-        for pre in ("CbRenderTex", "CbRenderState", "CbRenderModel"):
+        for pre in ("CbRenderTex", "CbRenderState", "CbRenderModel", "CbRenderParts"):
             if m.startswith(pre) and m.endswith("Mixin") and m[len(pre):-len("Mixin")].replace("_", "").isdigit():
                 return True
         return False
@@ -1093,6 +1244,9 @@ def main():
     md_mixins, md_covers = family_models(V, W, targets, setup, prepare)
     mixins += md_mixins
     covers += md_covers
+    pt_mixins, pt_covers = family_parts(V, W)
+    mixins += pt_mixins
+    covers += pt_covers
     frag = {"overrideHooks": hooks, "abstractFills": fills, "covers": sorted(covers)}
     open(FRAGMENT, "w", encoding="utf-8", newline="\n").write(json.dumps(frag, indent=1, ensure_ascii=False) + "\n")
     write_mixin_config(mixins)
