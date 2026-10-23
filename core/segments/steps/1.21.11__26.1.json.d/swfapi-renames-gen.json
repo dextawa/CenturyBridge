@@ -156,6 +156,7 @@
   "net/fabricmc/fabric/api/client/keybinding/v1/KeyBindingHelper.registerKeyBinding(Lnet/minecraft/class_304;)Lnet/minecraft/class_304;": "registerKeyMapping",
   "net/fabricmc/fabric/api/client/particle/v1/ParticleRenderEvents$AllowBlockDustTint.allowBlockDustTint(Lnet/minecraft/class_2680;Lnet/minecraft/class_638;Lnet/minecraft/class_2338;)Z": "allowTerrainParticleTint",
   "net/fabricmc/fabric/api/client/particle/v1/ParticleRendererRegistry.getParticleTextureSheet(Lnet/minecraft/class_2960;)Lnet/minecraft/class_3999;": "getParticleRenderType",
+  "net/fabricmc/fabric/api/client/rendering/v1/DrawItemStackOverlayCallback.onDrawItemStackOverlay(Lnet/minecraft/class_332;Lnet/minecraft/class_327;Lnet/minecraft/class_1799;II)V": "onExtractItemDecorations",
   "net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry.registerEquipmentModelLayers(Lnet/minecraft/class_11677;Lnet/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry$TexturedEquipmentModelDataProvider;)V": "registerArmorModelLayers",
   "net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry$TexturedEquipmentModelDataProvider.createEquipmentModelData()Lnet/minecraft/class_11677;": "createArmorModelSet",
   "net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry$TexturedModelDataProvider.createModelData()Lnet/minecraft/class_5607;": "createLayerDefinition",
@@ -172,6 +173,8 @@
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext.commandQueue()Lnet/minecraft/class_11659;": "submitNodeCollector",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldRenderContext.matrices()Lnet/minecraft/class_4587;": "poseStack",
   "net/fabricmc/fabric/api/client/rendering/v1/world/WorldTerrainRenderContext.sectionState()Lnet/minecraft/class_11532;": "sectionsToRender",
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$AfterRender.afterRender(Lnet/minecraft/class_437;Lnet/minecraft/class_332;IIF)V": "afterExtract",
+  "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$BeforeRender.beforeRender(Lnet/minecraft/class_437;Lnet/minecraft/class_332;IIF)V": "beforeExtract",
   "net/fabricmc/fabric/api/entity/event/v1/ServerEntityWorldChangeEvents$AfterEntityChange.afterChangeWorld(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_3218;Lnet/minecraft/class_3218;)V": "afterChangeLevel",
   "net/fabricmc/fabric/api/entity/event/v1/ServerEntityWorldChangeEvents$AfterPlayerChange.afterChangeWorld(Lnet/minecraft/class_3222;Lnet/minecraft/class_3218;Lnet/minecraft/class_3218;)V": "afterChangeLevel",
   "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$LevelTypeChange.onChunkLevelTypeChange(Lnet/minecraft/class_3218;Lnet/minecraft/class_2818;Lnet/minecraft/class_3194;Lnet/minecraft/class_3194;)V": "onFullChunkStatusChange",
@@ -234,6 +237,7 @@
   "net/fabricmc/fabric/api/client/model/loading/v1/ModelModifier$BeforeBakeItem$Context.bakeContext()Lnet/minecraft/class_10439$class_10440;": "bakingContext",
   "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context.networkHandler()Lnet/minecraft/class_8674;": "packetListener",
   "net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.createC2SPacket(Lnet/minecraft/class_8710;)Lnet/minecraft/class_2596;": "createServerboundPacket",
+  "net/fabricmc/fabric/api/client/rendering/v1/hud/HudElement.render(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V": "extractRenderState",
   "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents.beforeRender(Lnet/minecraft/class_437;)Lnet/fabricmc/fabric/api/event/Event;": "beforeExtract",
   "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents.afterRender(Lnet/minecraft/class_437;)Lnet/fabricmc/fabric/api/event/Event;": "afterExtract",
   "net/fabricmc/fabric/api/client/screen/v1/Screens.getButtons(Lnet/minecraft/class_437;)Ljava/util/List;": "getWidgets",
@@ -384,6 +388,13 @@
    "basis": "swfapi: 26.1's Fabric API renamed ParticleRenderEvents$AllowBlockDustTint.allowBlockDustTint to allowTerrainParticleTint (same descriptor); vanilla and Fabric API call the new name"
   },
   {
+   "old": "onDrawItemStackOverlay(Lnet/minecraft/class_332;Lnet/minecraft/class_327;Lnet/minecraft/class_1799;II)V",
+   "new": "onExtractItemDecorations",
+   "onlyUnder": "net/fabricmc/fabric/api/client/rendering/v1/DrawItemStackOverlayCallback",
+   "superCalls": "rename",
+   "basis": "swfapi: 26.1's Fabric API renamed DrawItemStackOverlayCallback.onDrawItemStackOverlay to onExtractItemDecorations (same descriptor); vanilla and Fabric API call the new name"
+  },
+  {
    "old": "createEquipmentModelData()Lnet/minecraft/class_11677;",
    "new": "createArmorModelSet",
    "onlyUnder": "net/fabricmc/fabric/api/client/rendering/v1/EntityModelLayerRegistry$TexturedEquipmentModelDataProvider",
@@ -487,6 +498,20 @@
    "onlyUnder": "net/fabricmc/fabric/api/client/rendering/v1/world/WorldTerrainRenderContext",
    "superCalls": "rename",
    "basis": "swfapi: 26.1's Fabric API renamed WorldTerrainRenderContext.sectionState to sectionsToRender (same descriptor); vanilla and Fabric API call the new name"
+  },
+  {
+   "old": "afterRender(Lnet/minecraft/class_437;Lnet/minecraft/class_332;IIF)V",
+   "new": "afterExtract",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$AfterRender",
+   "superCalls": "rename",
+   "basis": "swfapi: 26.1's Fabric API renamed ScreenEvents$AfterRender.afterRender to afterExtract (same descriptor); vanilla and Fabric API call the new name"
+  },
+  {
+   "old": "beforeRender(Lnet/minecraft/class_437;Lnet/minecraft/class_332;IIF)V",
+   "new": "beforeExtract",
+   "onlyUnder": "net/fabricmc/fabric/api/client/screen/v1/ScreenEvents$BeforeRender",
+   "superCalls": "rename",
+   "basis": "swfapi: 26.1's Fabric API renamed ScreenEvents$BeforeRender.beforeRender to beforeExtract (same descriptor); vanilla and Fabric API call the new name"
   },
   {
    "old": "afterChangeWorld(Lnet/minecraft/class_1297;Lnet/minecraft/class_1297;Lnet/minecraft/class_3218;Lnet/minecraft/class_3218;)V",
@@ -893,6 +918,13 @@
    "onlyUnder": "net/fabricmc/fabric/api/client/networking/v1/ClientConfigurationNetworking$Context",
    "superCalls": "rename",
    "basis": "swfapi: 26.1's Fabric API renamed ClientConfigurationNetworking$Context.networkHandler to packetListener (same descriptor); vanilla and Fabric API call the new name"
+  },
+  {
+   "old": "render(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V",
+   "new": "extractRenderState",
+   "onlyUnder": "net/fabricmc/fabric/api/client/rendering/v1/hud/HudElement",
+   "superCalls": "rename",
+   "basis": "swfapi: 26.1's Fabric API renamed HudElement.render to extractRenderState (same descriptor); vanilla and Fabric API call the new name"
   },
   {
    "old": "asDynamicRegistryManager()Lnet/minecraft/class_5455;",

@@ -3296,6 +3296,24 @@ public final class JarProcessor {
                                     top.dext.centurybridge.data.FullAudit.record(fsite, "field-setter");
                                     return;
                                 }
+                                // a library instance field that is gone and lives on as other state (1.21.11's
+                                // protected GameRuleBuilder.fabricCategory, read and written by a mod's builder
+                                // subclass under its own name): found as the JVM resolves it (libraryHome), the
+                                // static takes the receiver as the keyed library class
+                                if (op == Opcodes.GETFIELD || op == Opcodes.PUTFIELD) {
+                                    java.util.Map<String, String> fmap = op == Opcodes.GETFIELD
+                                        ? chain.instanceFieldGetters : chain.instanceFieldSetters;
+                                    String ifHome = fmap.containsKey(fsite) ? owner
+                                        : libraryHome(owner, name + ":" + desc, false, layer, chain, fmap::containsKey);
+                                    if (ifHome != null) {
+                                        String hk = ifHome + "." + name + ":" + desc;
+                                        (op == Opcodes.GETFIELD ? instFldGetters : instFldSetters).put(fsite, fmap.get(hk));
+                                        emitOwner.put(fsite, ifHome);
+                                        top.dext.centurybridge.data.FullAudit.record(hk,
+                                            op == Opcodes.GETFIELD ? "instance-field-getter" : "instance-field-setter");
+                                        return;
+                                    }
+                                }
                                 return;
                             }
                             // this.field_22789 inside a Screen subclass: an inherited

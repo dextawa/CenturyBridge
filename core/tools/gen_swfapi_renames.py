@@ -25,7 +25,8 @@ member ids (a Fabric API class overriding vanilla's method_NNNN) are compared un
 wall rename gives them.
 
   python gen_swfapi_renames.py <V fabric-api.jar> <W fabric-api.jar> <V game stub> <W game jar>
-         <inter-to-mojang-1.21.11.tsv> <hints.tsv> <step wiring.json> <out report.tsv>
+         <data dir> <hints.tsv> <step wiring.json> <out report.tsv>
+(the wall table is the one core/segments/wall-tables.tsv names for target 26.1, read from <data dir>/mappings)
 writes <step wiring>.d/swfapi-renames-gen.json -- regenerate, never hand-edit.
 """
 import collections
@@ -38,6 +39,7 @@ import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import classfile  # noqa: E402
+import wall_tables  # noqa: E402
 from classfile import ACC_ABSTRACT, ACC_FINAL, ACC_INTERFACE, ACC_PRIVATE, ACC_PROTECTED, ACC_PUBLIC, ACC_STATIC, ACC_SYNTHETIC  # noqa: E402
 
 API = "net/fabricmc/fabric/api/"
@@ -88,7 +90,8 @@ def members(c):
 
 
 def main():
-    vjar, wjar, vgame, wgame, table, hints_path, wiring_path, out_report = sys.argv[1:9]
+    vjar, wjar, vgame, wgame, data_dir, hints_path, wiring_path, out_report = sys.argv[1:9]
+    table = wall_tables.table_for("26.1", data_dir)  # the step's target picks the table (wall-tables.tsv)
     V, W = load_fapi(vjar), load_fapi(wjar)
     VG, WG = load_game(vgame), load_game(wgame)
     cmap, mmap, ambiguous = {}, {}, set()

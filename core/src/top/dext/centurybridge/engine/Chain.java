@@ -166,6 +166,9 @@ public final class Chain {
      * setter converts) or one that is gone and lives on as other state (1.20.2 AbstractSelectionList's
      * x0/x1/y0/y1/width/height, which 1.20.3 keeps as the widget's geometry: a write moves the widget,
      * as the field write moved the list). Found up the hierarchy from the site's owner, as a getter.
+     * Both also serve a library (Fabric API) owner, found as the JVM resolves the field (a mod subclass
+     * reading its Fabric API superclass's protected field under its own name: 1.21.11's
+     * GameRuleBuilder.fabricCategory); the static takes the receiver as the keyed library class.
      */
     public final java.util.Map<String, String> instanceFieldSetters = new java.util.HashMap<>();
     /**
