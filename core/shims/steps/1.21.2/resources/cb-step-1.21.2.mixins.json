@@ -27,6 +27,8 @@
     "CbPendingIdsItemMixin",
     "CbPendingIdsItemPropsMixin",
     "CbPendingIdsRegistryMixin",
+    "CbRestAttachmentChunkMixin",
+    "CbRestAttachmentTrackingMixin",
     "CbRestBlockableEventLoopMixin",
     "CbRestChunkSourceMixin",
     "CbRestDedicatedServerMixin",
