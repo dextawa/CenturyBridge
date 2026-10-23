@@ -23,4 +23,9 @@ public final class CbRegistriesClient implements CbRegistries.Client {
         net.minecraft.class_638 level = minecraft.field_1687;
         return level == null ? null : level.method_30349();
     }
+
+    @Override
+    public net.minecraft.class_1937 level() {
+        return minecraft.field_1687;
+    }
 }
