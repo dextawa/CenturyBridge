@@ -54,7 +54,9 @@
     "CbLevelCarvingBuilderMixin",
     "CbLevelCarvingImposterAccess",
     "CbLevelCarvingNoiseMixin",
-    "CbLevelCarvingProtoMixin"
+    "CbLevelCarvingProtoMixin",
+    "CbLevelChunkAccess",
+    "CbLevelChunkMapAccess"
   ],
   "client": [
     "CbRestEnchantmentScreenMixin",

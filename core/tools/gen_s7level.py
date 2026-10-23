@@ -45,8 +45,8 @@ class Fragment:
         self.v, self.w_stub = v, w
         self.w = {k: ({} if k not in ("overrideHooks", "overrideRenames", "adapterHooks", "abstractFills",
                                       "convertHooks", "covers") else [])
-                  for k in ("classRenames", "facadeGaps", "superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
-                            "instanceRedirects", "fieldRedirects", "fieldGetters", "instanceFieldGetters",
+                  for k in ("classRenames", "facadeGaps", "superCtorReshapes", "superRenames", "methodRenames", "callReshapes", "superCtorReshapes", "ctorRedirects", "staticRedirects",
+                            "instanceRedirects", "fieldRedirects", "fieldGetters", "instanceFieldGetters", "instanceFieldSetters",
                             "superRedirects", "covers", "overrideHooks", "overrideRenames", "frameDefaults",
                             "convertHooks", "adapterHooks", "abstractFills", "lambdaAdapters", "genericWitnesses",
                             "ledger")}
@@ -407,6 +407,98 @@ def carving(f):
     f.put("instanceRedirects", MC + "class_5485.method_30976(" + C + ")Ljava/lang/Iterable;", LC)
 
 
+# ------------------------------------------------------------------------------------------- chunk state
+LCH = RT + "/CbLevelChunks"
+
+
+def chunk_state(f):
+    CA = MC + "class_2791"
+    for m in ("method_12008(Z)V", "method_39294(" + L("class_6749") + ")V", "method_12029(SI)V",
+              "method_39296()" + L("class_2791$class_6745")):
+        f.put("instanceRedirects", CA + "." + m, LCH)
+    f.put("instanceRedirects", MC + "class_2818.method_12221()V", LCH)
+    f.put("instanceRedirects", MC + "class_1922.method_8315()I", LCH)
+    for c in ("comp_239", "comp_240"):
+        f.put("instanceRedirects", MC + "class_2791$class_6745." + c + "()" + L("class_6761"), LCH)
+    f.put("instanceFieldGetters", CA + ".field_34537:Z", LCH)
+    f.put("instanceFieldSetters", CA + ".field_34537:Z", LCH)
+    sup = dict(superBridge=LCH + ".superSetUnsaved(L" + LCH + "$SuperSetUnsaved;Z)V", superAccess=LCH + "$SuperSetUnsaved",
+               superAccessors=["method_65063()V", "method_65064()Z"])
+    f.hook(old="method_12008(Z)V", new="method_65063()V", onlyUnder=CA, adapter=LCH + "$LegacySetUnsaved",
+           bridge=LCH + ".markUnsaved(L" + LCH + "$LegacySetUnsaved;)V", **sup,
+           basis="1.21.2 marks a chunk unsaved with markUnsaved(): a 1.21.1 chunk's setUnsaved override is asked "
+                 "setUnsaved(true); its super call is markUnsaved / tryMarkSaved (CbLevelChunks)")
+    f.hook(old="method_12008(Z)V", new="method_65064()Z", onlyUnder=CA, adapter=LCH + "$LegacySetUnsaved",
+           bridge=LCH + ".tryMarkSaved(L" + LCH + "$LegacySetUnsaved;)Z", **sup,
+           basis="1.21.2 saves through tryMarkSaved(): a 1.21.1 chunk's setUnsaved override is asked setUnsaved(false), "
+                 "the answer whether it was unsaved (CbLevelChunks)")
+    SL = "Lit/unimi/dsi/fastutil/shorts/ShortList;"
+    f.hook(old="method_12029(SI)V", new="method_12029(" + SL + "I)V", onlyUnder=CA,
+           adapter=LCH + "$LegacyAddPackedPostProcess",
+           bridge=LCH + ".addPackedPostProcess(L" + LCH + "$LegacyAddPackedPostProcess;" + SL + "I)V",
+           superBridge=LCH + ".superAddPackedPostProcess(L" + LCH + "$SuperAddPackedPostProcess;SI)V",
+           superAccess=LCH + "$SuperAddPackedPostProcess", superAccessors=["method_12029(" + SL + "I)V"],
+           basis="1.21.2 adds post-process positions a list at a time: a 1.21.1 override is asked each in turn; its "
+                 "super call adds the list of one (CbLevelChunks)")
+    f.w["adapterHooks"].append({
+        "under": CA, "adapter": LCH + "$LegacySetBlendingData", "requires": ["method_39294(" + L("class_6749") + ")V"],
+        "synth": [], "basis": "nothing in 1.21.1's or 1.21.2's vanilla code calls setBlendingData: a 1.21.1 override "
+                              "is reached by its mod's calls, which find it through this adapter (CbLevelChunks)"})
+    f.put("superRedirects", CA + ".method_39294(" + L("class_6749") + ")V", LCH + "#setBlendingData")
+    f.w["adapterHooks"].append({
+        "under": MC + "class_1922", "adapter": LCH + "$LegacyMaxLightLevel", "requires": ["method_8315()I"],
+        "synth": [], "basis": "1.21.2's lighting no longer asks getMaxLightLevel (fixed at 15): a 1.21.1 override is "
+                              "reached by its mod's calls, which find it through this adapter (CbLevelChunks)"})
+    f.put("superRedirects", MC + "class_1922.method_8315()I", LCH + "#maxLightLevel")
+
+
+# ------------------------------------------------------------------------------------------- chunk storage
+LST = RT + "/CbLevelStorage"
+
+
+def chunk_storage(f):
+    POS, TAG, CF, SUP = L("class_1923"), L("class_2487"), "Ljava/util/concurrent/CompletableFuture;", "Ljava/util/function/Supplier;"
+    SRS = MC + "class_3977"
+    f.reshape(SRS + ".method_17910(" + POS + TAG + ")" + CF, "(" + POS + SUP + ")" + CF,
+              ["keep:0", "conv:1 " + LST + "#supplier(" + TAG + ")" + SUP],
+              "SimpleRegionStorage.write takes a supplier of the tag since 1.21.2: the tag 1.21.1's caller handed")
+    f.hook(old="method_17910(" + POS + TAG + ")" + CF, new="method_17910(" + POS + SUP + ")" + CF, onlyUnder=SRS,
+           adapter=LST + "$LegacyWrite", bridge=LST + ".write(L" + LST + "$LegacyWrite;" + POS + SUP + ")" + CF,
+           superBridge=LST + ".superWrite(L" + LST + "$SuperWrite;" + POS + TAG + ")" + CF,
+           superAccess=LST + "$SuperWrite", superAccessors=["method_17910(" + POS + SUP + ")" + CF],
+           basis="vanilla writes through write(pos, supplier) since 1.21.2: a 1.21.1 override gets the supplied tag; "
+                 "its super call supplies the tag it passes (CbLevelStorage)")
+    FN, BIF, COD = "Ljava/util/function/Function;", "Ljava/util/function/BiFunction;", "Lcom/mojang/serialization/Codec;"
+    old = "(" + L("class_9172") + FN + FN + L("class_5455") + L("class_9820") + L("class_5539") + ")V"
+    f.put("superCtorReshapes", MC + "class_4180.<init>" + old, {
+        "desc": "(" + L("class_9172") + COD + FN + BIF + FN + L("class_5455") + L("class_9820") + L("class_5539") + ")V",
+        "ops": ["keep:0", "conv:1 " + LST + "#packedCodec(" + FN + ")" + COD,
+                "conv:1,3 " + LST + "#packer(" + FN + L("class_5455") + ")" + FN,
+                "conv:1 " + LST + "#unpacker(" + FN + ")" + BIF, "keep:2", "keep:3", "keep:4", "keep:5"],
+        "basis": "SectionStorage keeps sections in a packed form since 1.21.2: the packed form is the section's data, "
+                 "parsed and written with 1.21.1's per-section codec (CbLevelStorage)"})
+    CS = MC + "class_2852"
+    f.put("staticRedirects", CS + ".method_12395(" + L("class_3218") + L("class_4153") + L("class_9240") + POS + TAG + ")"
+          + L("class_2839"), LST)
+    f.put("staticRedirects", CS + ".method_12410(" + L("class_3218") + L("class_2791") + ")" + TAG, LST)
+    why = ("1.21.1's ChunkSerializer was a static utility (no state, no instance methods); 1.21.2 reuses its "
+           "intermediary name class_2852 for the final record SerializableChunkData, so no object of that type can "
+           "stand for a ChunkSerializer instance and no class can extend it; its static API is bridged")
+    f.put("ledger", CS + ".<init>", why)
+    f.put("ledger", CS, why)
+    WGC = MC + "class_9312"
+    f.put("instanceRedirects", WGC + ".comp_2808()" + L("class_3906"), LST)
+    f.put("superCtorReshapes", WGC + ".<init>(" + L("class_3218") + L("class_2794") + L("class_3485") + L("class_3227")
+          + L("class_3906") + ")V", {
+        "desc": "(" + L("class_3218") + L("class_2794") + L("class_3485") + L("class_3227") + "Ljava/util/concurrent/Executor;"
+                + L("class_2818$class_10368") + ")V",
+        "ops": ["keep:0", "keep:1", "keep:2", "keep:3",
+                "conv:4 " + LST + "#executor(" + L("class_3906") + ")Ljava/util/concurrent/Executor;",
+                "conv:0 " + LST + "#unsavedListener(" + L("class_3218") + ")" + L("class_2818$class_10368")],
+        "basis": "WorldGenContext takes the main-thread executor and the chunks' unsaved listener since 1.21.2: the "
+                 "executor of 1.21.1's mailbox (CbRestExecutors) and the level ChunkMap's listener (CbLevelStorage)"})
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -419,6 +511,8 @@ def main():
     neighbors(f)
     explosions(f)
     carving(f)
+    chunk_state(f)
+    chunk_storage(f)
     f.write()
 
 
