@@ -420,7 +420,11 @@ public final class Chain {
          * </pre>
          * Every argument whose old type differs from its new one is narrowed this way, so the
          * old type must be a subtype of the new one (wiring-check holds the target to it). No
-         * wrap / bridge / frames; a guard may be combined (it is checked after the type test).
+         * wrap / bridge; a guard may be combined (it is checked after the type test). With
+         * {@link #frames} the type test comes before the frame is pushed, and the old method's
+         * rewritten super call passes the narrowed value on as the wider type (1.21.2's
+         * updateShape: a LevelReader where 1.21.1 took a LevelAccessor; every vanilla caller passes
+         * a LevelAccessor, so the old override still gets exactly what vanilla passed).
          */
         public boolean narrow;
         /**
@@ -2037,9 +2041,9 @@ public final class Chain {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc + ": superCalls needs args");
                     }
                     h.narrow = o.has("narrow") && o.get("narrow").getAsBoolean();
-                    if (h.narrow && (h.frames != null || h.wrapName != null || o.has("bridge"))) {
+                    if (h.narrow && (h.wrapName != null || o.has("bridge"))) {
                         throw new IllegalArgumentException("overrideHooks " + h.oldName + h.oldDesc
-                            + ": narrow forwards the new argument itself (no wrap / bridge / frames)");
+                            + ": narrow forwards the new argument itself (no wrap / bridge)");
                     }
                     if (o.has("bridge")) {
                         String br = o.get("bridge").getAsString();
