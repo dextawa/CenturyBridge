@@ -78,6 +78,20 @@
     "keep"
    ],
    "basis": "LootParams holds a ContextMap since 1.21.2: 1.21.1's parameter map as one (CbLevelLootParams)"
+  },
+  "net/minecraft/class_8963.<init>(Lnet/minecraft/class_8965;Lnet/minecraft/class_8965;Lnet/minecraft/class_8966;IILnet/minecraft/class_8963$class_8964;Lnet/minecraft/class_8962;Lnet/minecraft/class_8962$class_9198;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_6880;Lnet/minecraft/class_8966;IILnet/minecraft/class_8963$class_8964;Lnet/minecraft/class_8962;Lnet/minecraft/class_8962$class_9198;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#configHolder(Lnet/minecraft/class_8965;)Lnet/minecraft/class_6880;",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#configHolder(Lnet/minecraft/class_8965;)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "TrialSpawner takes its configs as holders since 1.21.2: 1.21.1's values as direct holders"
   }
  },
  "superRenames": {
@@ -296,6 +310,23 @@
     "keep:4"
    ],
    "basis": "1.21.2 asks a block's light properties of the state alone, as BlockStateBase's cache answered them for 1.21.1 (CbLevelLight)"
+  },
+  "net/minecraft/class_2609.method_31651(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2609;)V": {
+   "desc": "(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2609;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "AbstractFurnaceBlockEntity.serverTick takes the server level since 1.21.2 (CbLevelBlockEntities)"
+  },
+  "net/minecraft/class_8963.method_55162(Lnet/minecraft/class_1937;)Z": {
+   "desc": "(Lnet/minecraft/class_3218;)Z",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#server(Lnet/minecraft/class_1937;)Lnet/minecraft/class_3218;"
+   ],
+   "basis": "TrialSpawner.canSpawnInLevel takes the server level since 1.21.2"
   }
  },
  "ctorRedirects": {
@@ -309,7 +340,12 @@
   "net/minecraft/class_1927.method_17752(Lnet/minecraft/class_243;Lnet/minecraft/class_1297;)F": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions",
   "net/minecraft/class_2852.method_12395(Lnet/minecraft/class_3218;Lnet/minecraft/class_4153;Lnet/minecraft/class_9240;Lnet/minecraft/class_1923;Lnet/minecraft/class_2487;)Lnet/minecraft/class_2839;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStorage",
   "net/minecraft/class_2852.method_12410(Lnet/minecraft/class_3218;Lnet/minecraft/class_2791;)Lnet/minecraft/class_2487;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStorage",
-  "net/minecraft/class_1928.method_20744(Lnet/minecraft/class_1928$class_4311;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels"
+  "net/minecraft/class_1928.method_20744(Lnet/minecraft/class_1928$class_4311;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels",
+  "net/minecraft/class_2609.method_56120()V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_2609.method_11196()Ljava/util/Map;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_2609.method_11195(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_3924.method_31666(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3924;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_3751$class_4991.method_26401(Ljava/lang/String;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities"
  },
  "instanceRedirects": {
   "net/minecraft/class_4970.method_9571(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes",
@@ -381,7 +417,13 @@
   "net/minecraft/class_8567.method_51865(Lnet/minecraft/class_169;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams",
   "net/minecraft/class_8567.method_51867(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams",
   "net/minecraft/class_8567.method_51868(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams",
-  "net/minecraft/class_8567.method_51869(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams"
+  "net/minecraft/class_8567.method_51869(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams",
+  "net/minecraft/class_2609.method_11200(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_3924.method_17502(Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_3924.method_17503(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_8174.method_49215(JLnet/minecraft/class_1657;Lnet/minecraft/class_2350;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_8174.method_49219()V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities",
+  "net/minecraft/class_8174.method_49217(Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -427,7 +469,9 @@
   "net/minecraft/class_8567.method_51865(Lnet/minecraft/class_169;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#hasParam",
   "net/minecraft/class_8567.method_51867(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#getParameter",
   "net/minecraft/class_8567.method_51868(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#getOptionalParameter",
-  "net/minecraft/class_8567.method_51869(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#getParamOrNull"
+  "net/minecraft/class_8567.method_51869(Lnet/minecraft/class_169;)Ljava/lang/Object;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLootParams#getParamOrNull",
+  "net/minecraft/class_3924.method_17502(Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#cookableRecipe",
+  "net/minecraft/class_8174.method_49217(Lnet/minecraft/class_1657;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#unpackLootTable"
  },
  "overrideHooks": [
   {
@@ -953,6 +997,19 @@
    "onlyUnder": "net/minecraft/class_1937",
    "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLevels.recipeAccess(Lnet/minecraft/class_1863;)Lnet/minecraft/class_10286;",
    "basis": "1.21.2 asks a level its recipeAccess(), which a RecipeManager is: a 1.21.1 level's getRecipeManager answers it (CbLevelLevels)"
+  },
+  {
+   "old": "method_17503(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;I)Z",
+   "new": "method_17503(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Z",
+   "onlyUnder": "net/minecraft/class_3924",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities$LegacyPlaceFood",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities.placeFoodIn(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities$LegacyPlaceFood;Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Z",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities.superPlaceFood(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities$SuperPlaceFood;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;I)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities$SuperPlaceFood",
+   "superAccessors": [
+    "method_17503(Lnet/minecraft/class_3218;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)Z"
+   ],
+   "basis": "1.21.2's placeFood looks the cook time up itself: a 1.21.1 override is asked with the cook time of the recipe 1.21.2 finds (1.21.1's CampfireBlock passed it); its super call is 1.21.1's body (CbLevelBlockEntities)"
   }
  ],
  "overrideRenames": [
@@ -1012,6 +1069,16 @@
   },
   "method_55115(Lnet/minecraft/class_1927;Lnet/minecraft/class_1297;)F": {
    "2": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelExplosions#seenPercent(Lnet/minecraft/class_5362;Lnet/minecraft/class_1927;Lnet/minecraft/class_1297;)F"
+  },
+  "method_11200(Lnet/minecraft/class_1799;)I": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#fuelValues(Lnet/minecraft/class_2609;Lnet/minecraft/class_1799;)Lnet/minecraft/class_9895;"
+  },
+  "method_49215(JLnet/minecraft/class_1657;Lnet/minecraft/class_2350;)Z": {
+   "1": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#brushLevel(Lnet/minecraft/class_8174;JLnet/minecraft/class_1657;Lnet/minecraft/class_2350;)Lnet/minecraft/class_3218;",
+   "4": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#brushStack(Lnet/minecraft/class_8174;JLnet/minecraft/class_1657;Lnet/minecraft/class_2350;)Lnet/minecraft/class_1799;"
+  },
+  "method_49219()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities#resetLevel(Lnet/minecraft/class_8174;)Lnet/minecraft/class_3218;"
   }
  },
  "adapterHooks": [
@@ -1208,6 +1275,24 @@
    ],
    "synth": [],
    "basis": "1.21.2 reads the parameters off its ContextMap: a 1.21.1 subclass's override is reached by the calls, through this adapter (CbLevelLootParams)"
+  },
+  {
+   "under": "net/minecraft/class_3924",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities$LegacyCookableRecipe",
+   "requires": [
+    "method_17502(Lnet/minecraft/class_1799;)Ljava/util/Optional;"
+   ],
+   "synth": [],
+   "basis": "1.21.2's campfire block looks the recipe up itself: a 1.21.1 override is reached by its mod's calls, through this adapter (CbLevelBlockEntities)"
+  },
+  {
+   "under": "net/minecraft/class_8174",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelBlockEntities$LegacyUnpackLootTable",
+   "requires": [
+    "method_49217(Lnet/minecraft/class_1657;)V"
+   ],
+   "synth": [],
+   "basis": "1.21.2's unpackLootTable is private: a 1.21.1 override is asked where 1.21.2's brush() unpacks (CbLevelBrushableMixin) and by its mod's calls"
   }
  ],
  "abstractFills": [

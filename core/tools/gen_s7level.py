@@ -656,6 +656,62 @@ def loot_params_moss(f):
           "rewires it (shims-1.20.2.json), so no mod reaches this step with it")
 
 
+# ------------------------------------------------------------------------------------------- block entities
+LBE = RT + "/CbLevelBlockEntities"
+
+
+def block_entities(f):
+    ST, MAP, OPT = L("class_1799"), "Ljava/util/Map;", "Ljava/util/Optional;"
+    FU = MC + "class_2609"
+    for m in ("method_56120()V", "method_11196()" + MAP, "method_11195(" + ST + ")Z"):
+        f.put("staticRedirects", FU + "." + m, LBE)
+    srv = "conv:0 " + LBE + "#server(" + LVL + ")" + L("class_3218")
+    f.reshape(FU + ".method_31651(" + LVL + POS + BS + L("class_2609") + ")V",
+              "(" + L("class_3218") + POS + BS + L("class_2609") + ")V", [srv, "keep:1", "keep:2", "keep:3"],
+              "AbstractFurnaceBlockEntity.serverTick takes the server level since 1.21.2 (CbLevelBlockEntities)")
+    f.put("instanceRedirects", FU + ".method_11200(" + ST + ")I", LBE)
+    f.put("frameDefaults", "method_11200(" + ST + ")I", {"0": LBE + "#fuelValues(L" + FU + ";" + ST + ")" + L("class_9895")})
+    CF, LE_ = MC + "class_3924", L("class_1309")
+    f.put("staticRedirects", CF + ".method_31666(" + LVL + POS + BS + L("class_3924") + ")V", LBE)
+    f.put("instanceRedirects", CF + ".method_17502(" + ST + ")" + OPT, LBE)
+    f.put("superRedirects", CF + ".method_17502(" + ST + ")" + OPT, LBE + "#cookableRecipe")
+    f.w["adapterHooks"].append({"under": CF, "adapter": LBE + "$LegacyCookableRecipe",
+                                "requires": ["method_17502(" + ST + ")" + OPT], "synth": [],
+                                "basis": "1.21.2's campfire block looks the recipe up itself: a 1.21.1 override is "
+                                         "reached by its mod's calls, through this adapter (CbLevelBlockEntities)"})
+    f.put("instanceRedirects", CF + ".method_17503(" + LE_ + ST + "I)Z", LBE)
+    f.hook(old="method_17503(" + LE_ + ST + "I)Z", new="method_17503(" + L("class_3218") + LE_ + ST + ")Z", onlyUnder=CF,
+           adapter=LBE + "$LegacyPlaceFood",
+           bridge=LBE + ".placeFoodIn(L" + LBE + "$LegacyPlaceFood;" + L("class_3218") + LE_ + ST + ")Z",
+           superBridge=LBE + ".superPlaceFood(L" + LBE + "$SuperPlaceFood;" + LE_ + ST + "I)Z",
+           superAccess=LBE + "$SuperPlaceFood", superAccessors=["method_17503(" + L("class_3218") + LE_ + ST + ")Z"],
+           basis="1.21.2's placeFood looks the cook time up itself: a 1.21.1 override is asked with the cook time of the "
+                 "recipe 1.21.2 finds (1.21.1's CampfireBlock passed it); its super call is 1.21.1's body (CbLevelBlockEntities)")
+    BR, PL, DIRS = MC + "class_8174", L("class_1657"), DIR
+    f.put("instanceRedirects", BR + ".method_49215(J" + PL + DIRS + ")Z", LBE)
+    f.put("instanceRedirects", BR + ".method_49219()V", LBE)
+    f.put("instanceRedirects", BR + ".method_49217(" + PL + ")V", LBE)
+    f.put("superRedirects", BR + ".method_49217(" + PL + ")V", LBE + "#unpackLootTable")
+    f.w["adapterHooks"].append({"under": BR, "adapter": LBE + "$LegacyUnpackLootTable",
+                                "requires": ["method_49217(" + PL + ")V"], "synth": [],
+                                "basis": "1.21.2's unpackLootTable is private: a 1.21.1 override is asked where 1.21.2's "
+                                         "brush() unpacks (CbLevelBrushableMixin) and by its mod's calls"})
+    sig = "(L" + BR + ";J" + PL + DIRS + ")"
+    f.put("frameDefaults", "method_49215(J" + PL + DIRS + ")Z",
+          {"1": LBE + "#brushLevel" + sig + L("class_3218"), "4": LBE + "#brushStack" + sig + ST})
+    f.put("frameDefaults", "method_49219()V", {"0": LBE + "#resetLevel(L" + BR + ";)" + L("class_3218")})
+    TS, TSC = MC + "class_8963", L("class_8965")
+    tail = L("class_8966") + "II" + L("class_8963$class_8964") + L("class_8962") + L("class_8962$class_9198")
+    conv = "conv " + LBE + "#configHolder(" + TSC + ")" + L("class_6880")
+    f.put("superCtorReshapes", TS + ".<init>(" + TSC + TSC + tail + ")V", {
+        "desc": "(" + L("class_6880") + L("class_6880") + tail + ")V",
+        "ops": [conv, conv, "keep", "keep", "keep", "keep", "keep", "keep"],
+        "basis": "TrialSpawner takes its configs as holders since 1.21.2: 1.21.1's values as direct holders"})
+    f.reshape(TS + ".method_55162(" + LVL + ")Z", "(" + L("class_3218") + ")Z", [srv],
+              "TrialSpawner.canSpawnInLevel takes the server level since 1.21.2")
+    f.put("staticRedirects", MC + "class_3751$class_4991.method_26401(Ljava/lang/String;)" + OPT, LBE)
+
+
 def main():
     v = load(sys.argv[1])
     w = load(sys.argv[2])
@@ -674,6 +730,7 @@ def main():
     level_api(f)
     entity_getter(f)
     loot_params_moss(f)
+    block_entities(f)
     f.write()
 
 

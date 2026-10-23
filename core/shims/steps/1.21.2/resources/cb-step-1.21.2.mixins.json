@@ -57,13 +57,18 @@
     "CbLevelCarvingProtoMixin",
     "CbLevelChunkAccess",
     "CbLevelChunkMapAccess",
-    "CbLevelGameRulesAccess"
+    "CbLevelGameRulesAccess",
+    "CbLevelFurnaceInvoker",
+    "CbLevelCampfireAccess",
+    "CbLevelBrushableMixin",
+    "CbLevelFuelServerMixin"
   ],
   "client": [
     "CbRestEnchantmentScreenMixin",
     "CbRestGuiGraphicsMixin",
     "CbRestMinecraftMixin",
-    "CbRestOptionsMixin"
+    "CbRestOptionsMixin",
+    "CbLevelFuelClientMixin"
   ],
   "server": [],
   "injectors": {
