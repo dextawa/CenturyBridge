@@ -175,6 +175,7 @@ public class GearTestMod implements ModInitializer {
             recipes(server);
             recipeClasses(server);
             serializers(server);
+            cookingBytes(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -458,5 +459,57 @@ public class GearTestMod implements ModInitializer {
             new class_1799(class_1802.field_20391), 0.1F, 100) instanceof TestCooking, "own SimpleCookingSerializer.create uses its factory");
         net.minecraft.class_1662 contents = in.method_59988();
         check(contents == in.method_59988() && contents.field_7550.size() == 2, "CraftingInput.stackedContents: one per input, two items");
+    }
+
+    /** what 1.21.1's SimpleCookingSerializer wrote: group, category (enum ordinal), ingredient, result, experience, time */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    static byte[] v1211Bytes(MinecraftServer server, class_1874 r, boolean intTime) {
+        net.minecraft.class_9129 buf = new net.minecraft.class_9129(io.netty.buffer.Unpooled.buffer(), server.method_30611());
+        buf.method_10814(r.method_8112());
+        buf.method_10817(r.method_45438());
+        ((net.minecraft.class_9139) class_1856.field_48355).encode(buf, r.method_8117().get(0));
+        ((net.minecraft.class_9139) class_1799.field_48349).encode(buf, r.method_8110(server.method_30611()));
+        buf.writeFloat(r.method_8171());
+        if (intTime) {
+            buf.writeInt(r.method_8167());
+        } else {
+            buf.method_10804(r.method_8167());
+        }
+        byte[] out = new byte[buf.readableBytes()];
+        buf.readBytes(out);
+        return out;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    static void roundTrip(MinecraftServer server, String what, net.minecraft.class_9139 codec, class_1874 r, boolean intTime) {
+        byte[] expected = v1211Bytes(server, r, intTime);
+        net.minecraft.class_9129 buf = new net.minecraft.class_9129(io.netty.buffer.Unpooled.buffer(), server.method_30611());
+        codec.encode(buf, r);
+        byte[] written = new byte[buf.readableBytes()];
+        buf.getBytes(buf.readerIndex(), written);
+        check(java.util.Arrays.equals(expected, written), what + (intTime ? ": the serializer writes 1.21.1's fields, the cooking time as 1.21.2's int: " : ": the serializer writes 1.21.1's bytes: ") + java.util.HexFormat.of().formatHex(written)
+            + (java.util.Arrays.equals(expected, written) ? "" : " vs 1.21.1 " + java.util.HexFormat.of().formatHex(expected)));
+        net.minecraft.class_9129 in = new net.minecraft.class_9129(io.netty.buffer.Unpooled.wrappedBuffer(expected), server.method_30611());
+        class_1874 back = (class_1874) codec.decode(in);
+        check(back.method_8112().equals(r.method_8112()) && back.method_45438() == r.method_45438()
+            && back.method_8171() == r.method_8171() && back.method_8167() == r.method_8167()
+            && class_1799.method_7973(back.method_8110(server.method_30611()), r.method_8110(server.method_30611()))
+            && in.readableBytes() == 0, what + ": the bytes read back to the same recipe");
+    }
+
+    static void cookingBytes(MinecraftServer server) {
+        net.minecraft.class_3861 vanilla = null;
+        for (class_8786<?> h : server.method_3772().method_8126()) {
+            if (h.comp_1933() instanceof net.minecraft.class_3861 s) {
+                vanilla = s;
+                break;
+            }
+        }
+        check(vanilla != null, "found a vanilla smelting recipe");
+        if (vanilla != null) {
+            roundTrip(server, "vanilla smelting", net.minecraft.class_1865.field_9042.method_56104(), vanilla, true);
+        }
+        net.minecraft.class_3957<TestCooking> own = new net.minecraft.class_3957<>((g, c, i, r, x, t) -> new TestCooking(), 100);
+        roundTrip(server, "mod cooking", own.method_56104(), new TestCooking(), false);
     }
 }
