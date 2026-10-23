@@ -203,6 +203,14 @@
    "superCalls": "rename",
    "family": "final-records",
    "basis": "Variant is a record since 1.21.4: getModelLocation / getWeight are its modelLocation / weight accessors, which 1.21.4 reads where 1.21.3 asked the getters"
+  },
+  {
+   "old": "method_32168()Lnet/minecraft/class_918;",
+   "new": "cb$getItemRenderer",
+   "onlyUnder": "net/minecraft/class_5617$class_5618",
+   "adapter": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch$CbLegacyContextItemRenderer",
+   "family": "render-dispatch",
+   "basis": "EntityRendererProvider.Context.getItemRenderer is gone in 1.21.4; a subclass's answer is what a mod's call gets (CbRenderDispatch)"
   }
  ],
  "covers": [
@@ -224,6 +232,7 @@
   "net/minecraft/class_350.method_60321(D)V",
   "net/minecraft/class_350.method_60322()V",
   "net/minecraft/class_516.method_2656()Z",
+  "net/minecraft/class_5599.method_14491(Lnet/minecraft/class_3300;)V",
   "net/minecraft/class_7528.method_44381()I",
   "net/minecraft/class_7528.method_44383(II)Z",
   "net/minecraft/class_7528.method_44385()I",
@@ -241,6 +250,7 @@
   "net/minecraft/class_793.method_35789()Z",
   "net/minecraft/class_793.method_4753(Lnet/minecraft/class_7775;Ljava/util/function/Function;Lnet/minecraft/class_3665;)Lnet/minecraft/class_1087;",
   "net/minecraft/class_801.method_3479(Ljava/util/function/Function;Lnet/minecraft/class_793;)Lnet/minecraft/class_793;",
+  "net/minecraft/class_824.method_23077(Lnet/minecraft/class_2586;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)Z",
   "net/minecraft/class_918.method_14491(Lnet/minecraft/class_3300;)V",
   "net/minecraft/class_918.method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V",
   "net/minecraft/class_918.method_4019(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)Lnet/minecraft/class_1087;",
@@ -565,6 +575,81 @@
     "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#cbFixed(Lnet/minecraft/class_809;)Lnet/minecraft/class_804;"
    ],
    "basis": "ItemTransforms is a record since 1.21.4: a subclass's super(other) is the canonical constructor with the other's eight transforms"
+  },
+  "net/minecraft/class_824.<init>(Lnet/minecraft/class_327;Lnet/minecraft/class_5599;Ljava/util/function/Supplier;Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V": {
+   "desc": "(Lnet/minecraft/class_327;Ljava/util/function/Supplier;Lnet/minecraft/class_776;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_898;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbModelSupplier(Lnet/minecraft/class_5599;)Ljava/util/function/Supplier;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbLaterBlockRenderer()Lnet/minecraft/class_776;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbLaterResolver()Lnet/minecraft/class_10442;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbLaterItemRenderer()Lnet/minecraft/class_918;",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbLaterEntityRenderer()Lnet/minecraft/class_898;",
+    "drop:2",
+    "drop:3",
+    "drop:4"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbBlockEntityDispatcherConstructed(Lnet/minecraft/class_824;Ljava/util/function/Supplier;Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V",
+   "postArgs": [
+    2,
+    3,
+    4
+   ],
+   "basis": "BlockEntityRenderDispatcher takes the renderers (and the item model resolver) as values since 1.21.4; 1.21.3 took Suppliers it asked only on reload, which a 1.21.3 dispatcher does again (CbRenderDispatchMixin); the entity models become the Supplier 1.21.4 takes"
+  },
+  "net/minecraft/class_5614$class_5615.<init>(Lnet/minecraft/class_824;Lnet/minecraft/class_776;Lnet/minecraft/class_918;Lnet/minecraft/class_898;Lnet/minecraft/class_5599;Lnet/minecraft/class_327;)V": {
+   "desc": "(Lnet/minecraft/class_824;Lnet/minecraft/class_776;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_898;Lnet/minecraft/class_5599;Lnet/minecraft/class_327;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbGameResolver()Lnet/minecraft/class_10442;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5"
+   ],
+   "basis": "BlockEntityRendererProvider.Context also carries the item model resolver since 1.21.4: the game's"
+  },
+  "net/minecraft/class_5617$class_5618.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_918;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_3300;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;Lnet/minecraft/class_327;)V": {
+   "desc": "(Lnet/minecraft/class_898;Lnet/minecraft/class_10442;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_3300;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;Lnet/minecraft/class_327;)V",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbResolver(Lnet/minecraft/class_918;)Lnet/minecraft/class_10442;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "keep:7"
+   ],
+   "post": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbEntityContextConstructed(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_918;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "EntityRendererProvider.Context carries the item model resolver where 1.21.3 carried the item renderer (the game's resolver); the context keeps the renderer for getItemRenderer()"
+  },
+  "net/minecraft/class_898.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_1060;Lnet/minecraft/class_918;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_327;Lnet/minecraft/class_315;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;)V": {
+   "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_1060;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_327;Lnet/minecraft/class_315;Ljava/util/function/Supplier;Lnet/minecraft/class_10201;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbGameResolver()Lnet/minecraft/class_10442;",
+    "keep:2",
+    "keep:3",
+    "keep:4",
+    "keep:5",
+    "keep:6",
+    "conv:7 top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbModelSupplier(Lnet/minecraft/class_5599;)Ljava/util/function/Supplier;",
+    "keep:8"
+   ],
+   "basis": "EntityRenderDispatcher also takes the item model resolver (the game's) and the entity models as a Supplier since 1.21.4"
+  },
+  "net/minecraft/class_5599.<init>()V": {
+   "desc": "(Ljava/util/Map;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#cbEmptyModels()Ljava/util/Map;"
+   ],
+   "basis": "EntityModelSet is made from its roots since 1.21.4; 1.21.3's started empty and took them on reload (CbRenderEntityModelSetMixin)"
   }
  },
  "superRenames": {
@@ -638,12 +723,14 @@
   "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel",
   "net/minecraft/class_9824$class_9825.comp_2871()Lnet/minecraft/class_1100;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading",
   "net/minecraft/class_1088.method_45876(Lnet/minecraft/class_1088$class_9826;)V": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#bakeModels",
-  "net/minecraft/class_1088$class_9826.get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#get"
+  "net/minecraft/class_1088$class_9826.get(Lnet/minecraft/class_1091;Lnet/minecraft/class_4730;)Lnet/minecraft/class_1058;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelLoading#get",
+  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",
   "net/minecraft/class_793.method_24298()Lnet/minecraft/class_793$class_4751;": "top/dext/centurybridge/step/v1_21_4/rt/CbModelBlockModel#superGetGuiLight",
-  "net/minecraft/class_809.method_3501(Lnet/minecraft/class_811;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#superHasTransform"
+  "net/minecraft/class_809.method_3501(Lnet/minecraft/class_811;)Z": "top/dext/centurybridge/step/v1_21_4/rt/CbModelTransforms#superHasTransform",
+  "net/minecraft/class_5617$class_5618.method_32168()Lnet/minecraft/class_918;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderDispatch#superGetItemRenderer"
  },
  "methodRenames": {
   "net/minecraft/class_813.method_3510()Lnet/minecraft/class_2960;": "comp_3379",

@@ -103,6 +103,7 @@ def main():
     item_predicates(frag)
     item_renderer(frag)
     models(frag)
+    render_dispatch(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -505,6 +506,53 @@ def final_records(frag):
         orr.append({"old": old, "new": new, "onlyUnder": V, "superCalls": "rename", "family": "final-records",
                     "basis": "Variant is a record since 1.21.4: getModelLocation / getWeight are its modelLocation / weight accessors, "
                              "which 1.21.4 reads where 1.21.3 asked the getters"})
+
+
+
+def render_dispatch(frag):
+    """1.21.3's renderer dispatcher / provider context constructors on 1.21.4's (CbRenderDispatch, CbRenderDispatchMixin)."""
+    D = RT + "/CbRenderDispatch"
+    scr = frag.setdefault("superCtorReshapes", {})
+    scr["net/minecraft/class_824.<init>(Lnet/minecraft/class_327;Lnet/minecraft/class_5599;Ljava/util/function/Supplier;Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V"] = {
+        "desc": "(Lnet/minecraft/class_327;Ljava/util/function/Supplier;Lnet/minecraft/class_776;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_898;)V",
+        "ops": ["keep:0", "conv:1 " + D + "#cbModelSupplier(Lnet/minecraft/class_5599;)Ljava/util/function/Supplier;",
+                "push " + D + "#cbLaterBlockRenderer()Lnet/minecraft/class_776;", "push " + D + "#cbLaterResolver()Lnet/minecraft/class_10442;",
+                "push " + D + "#cbLaterItemRenderer()Lnet/minecraft/class_918;", "push " + D + "#cbLaterEntityRenderer()Lnet/minecraft/class_898;",
+                "drop:2", "drop:3", "drop:4"],
+        "post": D + "#cbBlockEntityDispatcherConstructed(Lnet/minecraft/class_824;Ljava/util/function/Supplier;Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V",
+        "postArgs": [2, 3, 4],
+        "basis": "BlockEntityRenderDispatcher takes the renderers (and the item model resolver) as values since 1.21.4; 1.21.3 took Suppliers it asked "
+                 "only on reload, which a 1.21.3 dispatcher does again (CbRenderDispatchMixin); the entity models become the Supplier 1.21.4 takes"}
+    scr["net/minecraft/class_5614$class_5615.<init>(Lnet/minecraft/class_824;Lnet/minecraft/class_776;Lnet/minecraft/class_918;Lnet/minecraft/class_898;Lnet/minecraft/class_5599;Lnet/minecraft/class_327;)V"] = {
+        "desc": "(Lnet/minecraft/class_824;Lnet/minecraft/class_776;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_898;Lnet/minecraft/class_5599;Lnet/minecraft/class_327;)V",
+        "ops": ["keep:0", "keep:1", "push " + D + "#cbGameResolver()Lnet/minecraft/class_10442;", "keep:2", "keep:3", "keep:4", "keep:5"],
+        "basis": "BlockEntityRendererProvider.Context also carries the item model resolver since 1.21.4: the game's"}
+    scr["net/minecraft/class_5617$class_5618.<init>(Lnet/minecraft/class_898;Lnet/minecraft/class_918;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_3300;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;Lnet/minecraft/class_327;)V"] = {
+        "desc": "(Lnet/minecraft/class_898;Lnet/minecraft/class_10442;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_3300;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;Lnet/minecraft/class_327;)V",
+        "ops": ["keep:0", "conv:1 " + D + "#cbResolver(Lnet/minecraft/class_918;)Lnet/minecraft/class_10442;", "keep:2", "keep:3", "keep:4", "keep:5", "keep:6", "keep:7"],
+        "post": D + "#cbEntityContextConstructed(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_918;)V", "postArgs": [1],
+        "basis": "EntityRendererProvider.Context carries the item model resolver where 1.21.3 carried the item renderer (the game's resolver); the "
+                 "context keeps the renderer for getItemRenderer()"}
+    scr["net/minecraft/class_898.<init>(Lnet/minecraft/class_310;Lnet/minecraft/class_1060;Lnet/minecraft/class_918;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_327;Lnet/minecraft/class_315;Lnet/minecraft/class_5599;Lnet/minecraft/class_10201;)V"] = {
+        "desc": "(Lnet/minecraft/class_310;Lnet/minecraft/class_1060;Lnet/minecraft/class_10442;Lnet/minecraft/class_918;Lnet/minecraft/class_330;Lnet/minecraft/class_776;Lnet/minecraft/class_327;Lnet/minecraft/class_315;Ljava/util/function/Supplier;Lnet/minecraft/class_10201;)V",
+        "ops": ["keep:0", "keep:1", "push " + D + "#cbGameResolver()Lnet/minecraft/class_10442;", "keep:2", "keep:3", "keep:4", "keep:5", "keep:6",
+                "conv:7 " + D + "#cbModelSupplier(Lnet/minecraft/class_5599;)Ljava/util/function/Supplier;", "keep:8"],
+        "basis": "EntityRenderDispatcher also takes the item model resolver (the game's) and the entity models as a Supplier since 1.21.4"}
+    scr["net/minecraft/class_5599.<init>()V"] = {
+        "desc": "(Ljava/util/Map;)V", "ops": ["push " + D + "#cbEmptyModels()Ljava/util/Map;"],
+        "basis": "EntityModelSet is made from its roots since 1.21.4; 1.21.3's started empty and took them on reload (CbRenderEntityModelSetMixin)"}
+    C = "net/minecraft/class_5617$class_5618"
+    frag.setdefault("instanceRedirects", {})[C + ".method_32168()Lnet/minecraft/class_918;"] = D
+    frag.setdefault("superRedirects", {})[C + ".method_32168()Lnet/minecraft/class_918;"] = D + "#superGetItemRenderer"
+    orr = frag.setdefault("overrideRenames", [])
+    orr[:] = [r for r in orr if r.get("family") != "render-dispatch"]
+    orr.append({"old": "method_32168()Lnet/minecraft/class_918;", "new": "cb$getItemRenderer", "onlyUnder": C,
+                "adapter": D + "$CbLegacyContextItemRenderer", "family": "render-dispatch",
+                "basis": "EntityRendererProvider.Context.getItemRenderer is gone in 1.21.4; a subclass's answer is what a mod's call gets (CbRenderDispatch)"})
+    covers = set(frag.get("covers", []))
+    covers.add("net/minecraft/class_5599.method_14491(Lnet/minecraft/class_3300;)V")
+    covers.add("net/minecraft/class_824.method_23077(Lnet/minecraft/class_2586;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;II)Z")
+    frag["covers"] = sorted(covers)
 
 
 if __name__ == "__main__":

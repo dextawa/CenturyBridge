@@ -29,6 +29,8 @@
     "CbModelSlotReferenceAccess",
     "CbModelSlotValueAccess",
     "CbModelStateLoaderMixin",
+    "CbRenderDispatchMixin",
+    "CbRenderEntityModelSetMixin",
     "CbRestClientPacketsMixin",
     "CbSpecialModelTypesMixin"
   ],
