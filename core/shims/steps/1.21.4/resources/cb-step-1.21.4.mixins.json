@@ -26,12 +26,14 @@
     "CbRestLevelInvoker",
     "CbRestServerVehicleMixin",
     "CbRestStackAccess",
+    "CbRestStructureManagerAccess",
     "CbRestTrialDataInvoker",
     "CbRestVillageGoalMixin"
   ],
   "client": [
     "CbRestClientPacketsMixin",
-    "CbRestEquipmentAssetsInvoker"
+    "CbRestEquipmentAssetsInvoker",
+    "CbRestSlotIconMixin"
   ],
   "server": [],
   "injectors": {
