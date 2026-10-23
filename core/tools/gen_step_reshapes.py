@@ -366,7 +366,7 @@ def main():
                     fits.append((c, m, None, f"returns {orr}, the new shape {nr}"))
                     continue
                 gen = generic_change(v_signature(V, hv, owner, name, desc), m.signature,
-                                     [(i, amap[i]) for i in range(len(oa))], nr == orr, wall)
+                                     [(i, amap[i]) for i in range(len(oa))], True, wall)
                 if gen:
                     fits.append((c, m, None, gen))
                     continue
@@ -405,8 +405,10 @@ def main():
             if not (nr == orr or orr == "V" or hw.assignable(nr, orr)):
                 fits.append((c, m, None, f"returns {nr}, the old call wants {orr}"))
                 continue
+            # the return is compared whenever its value passes (not only when the erased types agree: a
+            # bare T -- erased to Object -- that is an Optional<Holder<T>> now is "assignable" and wrong)
             gen = generic_change(v_signature(V, hv, owner, name, desc), m.signature,
-                                 [(amap[j], j) for j in range(len(na))], nr == orr, wall)
+                                 [(amap[j], j) for j in range(len(na))], orr != "V", wall)
             if gen:
                 fits.append((c, m, None, gen))
                 continue
