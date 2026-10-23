@@ -18,6 +18,13 @@
     "CbItemRendererMixin",
     "CbItemStackRenderStateAccess",
     "CbItemTintSourcesMixin",
+    "CbModelBlockModelDeserializerMixin",
+    "CbModelBlockModelMixin",
+    "CbModelFaceBakeryMixin",
+    "CbModelManagerNamesMixin",
+    "CbModelMissingNameMixin",
+    "CbModelSlotReferenceAccess",
+    "CbModelSlotValueAccess",
     "CbRestClientPacketsMixin",
     "CbSpecialModelTypesMixin"
   ],
