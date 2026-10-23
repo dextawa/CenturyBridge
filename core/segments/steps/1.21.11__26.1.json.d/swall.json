@@ -87,7 +87,9 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteAlpha()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#isWriteAlpha",
   "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteDepth()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#isWriteDepth",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasScaleFactor()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getDepthBiasScaleFactor",
-  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getDepthBiasConstant"
+  "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#getDepthBiasConstant",
+  "net/minecraft/class_1309.method_18867(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#entityMakeBrain",
+  "net/minecraft/class_4095$class_5303.method_28335(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#providerMakeBrain"
  },
  "overrideHooks": [
   {
@@ -133,6 +135,20 @@
    "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallPlayer$LegacyMessages",
    "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
    "basis": "26.1 splits displayClientMessage(message, overlay) into sendOverlayMessage / sendSystemMessage; a 1.21.11 override answers both with its overlay flag"
+  },
+  {
+   "old": "method_18867(Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;",
+   "new": "method_18867(Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;",
+   "onlyUnder": "net/minecraft/class_1309",
+   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain$MakeBrain",
+   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.makeBrain(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$MakeBrain;Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;",
+   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain.superMakeBrain(Ltop/dext/centurybridge/step/v26_1/rt/CbWallBrain$SuperMakeBrain;Lcom/mojang/serialization/Dynamic;)Lnet/minecraft/class_4095;",
+   "superAccess": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain$SuperMakeBrain",
+   "superAccessors": [
+    "method_18867(Lnet/minecraft/world/entity/ai/Brain$Packed;)Lnet/minecraft/class_4095;"
+   ],
+   "basis": "1.21.11 LivingEntity.makeBrain(Dynamic) read the saved brain as a Dynamic; 26.1's makeBrain(Brain.Packed) takes it decoded (same {\"memories\": ...} format): the mod's override gets the Packed re-encoded to NBT, its super.makeBrain(dynamic) reaches super's makeBrain(Packed) with the dynamic decoded, and Brain.Provider.makeBrain(dynamic) inside it builds for the entity being made (CbWallBrain)"
   }
  ],
  "frameDefaults": {
@@ -157,7 +173,8 @@
   "net/minecraft/class_776": "top/dext/centurybridge/step/v26_1/facade/BlockRenderDispatcher",
   "net/minecraft/class_1865": "top/dext/centurybridge/step/v26_1/facade/RecipeSerializer",
   "com/mojang/blaze3d/platform/DepthTestFunction": "top/dext/centurybridge/step/v26_1/facade/DepthTestFunction",
-  "com/mojang/blaze3d/platform/LogicOp": "top/dext/centurybridge/step/v26_1/facade/LogicOp"
+  "com/mojang/blaze3d/platform/LogicOp": "top/dext/centurybridge/step/v26_1/facade/LogicOp",
+  "net/minecraft/class_4831": "top/dext/centurybridge/step/v26_1/facade/ExpirableValue"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -415,7 +432,9 @@
   "net/minecraft/class_776.field_20987:Lnet/minecraft/class_324;": "1.21.11 private field of the dead class: only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; kept as cb$blockColors",
   "net/minecraft/class_1865.field_9028:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_armordye\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
   "net/minecraft/class_1865.field_9044:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_mapcloning\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
-  "net/minecraft/class_1865.field_9037:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_tippedarrow\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back"
+  "net/minecraft/class_1865.field_9037:Lnet/minecraft/class_1865;": "1.21.11 serializer \"crafting_special_tippedarrow\" whose recipe type 26.1 removed (no serializer is registered under its id in 26.1 RecipeSerializers.bootstrap; data packs naming it fail in 26.1 itself): nothing in 26.1 performs that recipe, so there is no serializer to give back",
+  "net/minecraft/class_4831.field_22330:Ljava/lang/Object;": "1.21.11 private final field (the value): the facade keeps it as its own value field, read through method_24637 (getValue); only an access widener on the dead class ever reached it",
+  "net/minecraft/class_4831.field_22331:J": "1.21.11 private field (the time to live): the facade keeps it, or reads the brain's MemorySlot it stands for, through method_35127 (getTimeToLive) and method_24913 (tick); only an access widener on the dead class ever reached it"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -576,5 +595,8 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.isWriteDepth()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superIsWriteDepth",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasScaleFactor()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasScaleFactor",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasConstant"
- }
+ },
+ "covers": [
+  "net/minecraft/class_4095.method_35058()Ljava/util/Map;"
+ ]
 }

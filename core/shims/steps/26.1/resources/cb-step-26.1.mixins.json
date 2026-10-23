@@ -13,6 +13,8 @@
     "CbFapiTagLoaderMixin",
     "CbFapiTagsProviderMixin",
     "CbFapiTooltipFlagMixin",
+    "CbWallBrainMixin",
+    "CbWallLivingEntityAccess",
     "CbWallServerMixin"
   ],
   "client": [

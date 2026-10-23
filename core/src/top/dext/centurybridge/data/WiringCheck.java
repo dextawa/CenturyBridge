@@ -148,10 +148,15 @@ public final class WiringCheck {
                 w.classes.put(cn.name, cn);
             }
         }
-        if (table != null && Files.exists(table)) {
-            w.wall = JarRemapper.loadTable(table).remapper();
-        }
         var root = top.dext.centurybridge.engine.Wiring.read(shimsJson);
+        if (table != null && Files.exists(table)) {
+            // as the conversion renames (Main.convert): tokens only the wiring's facades declare keep their names
+            java.util.Map<String, String> renames = new java.util.HashMap<>();
+            if (root.has("classRenames")) {
+                root.getAsJsonObject("classRenames").entrySet().forEach(e -> renames.put(e.getKey(), e.getValue().getAsString()));
+            }
+            w.wall = JarRemapper.loadTable(table).keepFacadeTokens(JarRemapper.Table.facadeOwners(renames)).remapper();
+        }
         w.genericOverrides = genericOverrideRows(shimsJson);
         w.check(root);
         w.checkFacadeSurfaces(root);

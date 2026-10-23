@@ -4,14 +4,29 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
+import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Dynamic;
+import java.util.AbstractMap;
+import java.util.AbstractSet;
+import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.BehaviorControl;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemorySlot;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.schedule.Activity;
+import org.slf4j.Logger;
+import top.dext.centurybridge.step.v26_1.facade.ExpirableValue;
+import top.dext.centurybridge.step.v26_1.mixin.CbWallLivingEntityAccess;
 
 /**
  * 1.21.11's Brain.addActivity* family on 26.1, which kept only the general form: 26.1's
@@ -23,6 +38,8 @@ import net.minecraft.world.entity.schedule.Activity;
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public final class CbWallBrain {
+
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     private CbWallBrain() {
     }
@@ -73,5 +90,148 @@ public final class CbWallBrain {
     /** 1.21.11 Brain.provider(memories, sensors) */
     public static Brain.Provider provider(Collection memories, Collection sensors) {
         return Brain.provider(memories, sensors, e -> List.of());
+    }
+
+    /**
+     * 1.21.11 Brain.getMemories(): its own map, every registered memory type to Optional.empty() or the
+     * memory's ExpirableValue. Over 26.1's slots: reading answers each slot's memory (a value ticking
+     * which ticks the slot, see facade/ExpirableValue), put stores a value in the type's slot (or empties
+     * it; a type the brain had not registered gets a slot, as 1.21.11's map took the key), remove
+     * unregisters the type, as removing the key did.
+     */
+    public static Map<MemoryModuleType<?>, Optional<? extends ExpirableValue<?>>> memories(Map<MemoryModuleType<?>, MemorySlot<?>> slots) {
+        return new AbstractMap<>() {
+            @Override
+            public Set<Map.Entry<MemoryModuleType<?>, Optional<? extends ExpirableValue<?>>>> entrySet() {
+                return new AbstractSet<>() {
+                    @Override
+                    public Iterator<Map.Entry<MemoryModuleType<?>, Optional<? extends ExpirableValue<?>>>> iterator() {
+                        Iterator<Map.Entry<MemoryModuleType<?>, MemorySlot<?>>> it = slots.entrySet().iterator();
+                        return new Iterator<>() {
+                            @Override
+                            public boolean hasNext() {
+                                return it.hasNext();
+                            }
+
+                            @Override
+                            public Map.Entry<MemoryModuleType<?>, Optional<? extends ExpirableValue<?>>> next() {
+                                Map.Entry<MemoryModuleType<?>, MemorySlot<?>> e = it.next();
+                                return new AbstractMap.SimpleImmutableEntry<>(e.getKey(), Optional.ofNullable(ExpirableValue.cb$of(e.getValue())));
+                            }
+
+                            @Override
+                            public void remove() {
+                                it.remove();
+                            }
+                        };
+                    }
+
+                    @Override
+                    public int size() {
+                        return slots.size();
+                    }
+                };
+            }
+
+            @Override
+            public boolean containsKey(Object key) {
+                return slots.containsKey(key);
+            }
+
+            @Override
+            public Optional<? extends ExpirableValue<?>> get(Object key) {
+                MemorySlot<?> slot = slots.get(key);
+                return slot == null ? null : Optional.ofNullable(ExpirableValue.cb$of(slot));
+            }
+
+            @Override
+            public Optional<? extends ExpirableValue<?>> put(MemoryModuleType<?> key, Optional<? extends ExpirableValue<?>> value) {
+                Optional<? extends ExpirableValue<?>> old = get(key);
+                MemorySlot slot = slots.get(key);
+                if (slot == null) {
+                    slot = MemorySlot.create();
+                    slots.put(key, slot);
+                }
+                if (value.isPresent()) {
+                    ExpirableValue<?> v = value.get();
+                    slot.set(v.method_24637(), v.method_35127());
+                } else {
+                    slot.clear();
+                }
+                return old;
+            }
+
+            @Override
+            public Optional<? extends ExpirableValue<?>> remove(Object key) {
+                MemorySlot<?> slot = slots.remove(key);
+                return slot == null ? null : Optional.ofNullable(ExpirableValue.cb$of(slot));
+            }
+        };
+    }
+
+    // ---------------------------------------------------------------- makeBrain(Dynamic)
+
+    /**
+     * 1.21.11 LivingEntity.makeBrain(Dynamic), declared by a mod's entity class (the override hook adds
+     * it): 26.1 makes the brain through makeBrain(Brain.Packed).
+     */
+    public interface MakeBrain {
+        Brain makeBrain(Dynamic<?> dynamic);
+    }
+
+    /** super's makeBrain(Packed), reached from a mod entity's super.makeBrain(dynamic) (the accessor keeps the intermediary name) */
+    public interface SuperMakeBrain {
+        Brain cb$super$method_18867(Brain.Packed packed);
+    }
+
+    /** the entities whose makeBrain is running on this thread (innermost first) */
+    private static final ThreadLocal<ArrayDeque<LivingEntity>> MAKING = ThreadLocal.withInitial(ArrayDeque::new);
+
+    /**
+     * 1.21.11's saved brain ({"memories": {...}}, the same format 26.1's Brain.Packed codec writes) as the
+     * Dynamic 1.21.11 handed makeBrain: the NBT 1.21.11 read from the entity's "Brain" tag.
+     */
+    public static Dynamic<Tag> toDynamic(Brain.Packed packed) {
+        return new Dynamic<>(NbtOps.INSTANCE, Brain.Packed.CODEC.encodeStart(NbtOps.INSTANCE, packed).getOrThrow());
+    }
+
+    /** a Dynamic as 26.1's Brain.Packed (1.21.11's makeBrain: unreadable memories are dropped, logged) */
+    public static Brain.Packed toPacked(Dynamic<?> dynamic) {
+        return Brain.Packed.CODEC.parse(dynamic).resultOrPartial(LOGGER::error).orElse(Brain.Packed.EMPTY);
+    }
+
+    /** the synthesized makeBrain(Packed) of a mod entity: its own makeBrain(Dynamic), the entity known */
+    public static Brain makeBrain(MakeBrain self, Brain.Packed packed) {
+        ArrayDeque<LivingEntity> making = MAKING.get();
+        making.push((LivingEntity) self);
+        try {
+            return self.makeBrain(toDynamic(packed));
+        } finally {
+            making.pop();
+        }
+    }
+
+    /** a mod entity's super.makeBrain(dynamic): super's makeBrain(Packed) */
+    public static Brain superMakeBrain(SuperMakeBrain self, Dynamic<?> dynamic) {
+        return self.cb$super$method_18867(toPacked(dynamic));
+    }
+
+    /** a mod's call of an entity's makeBrain(dynamic) (one it does not declare itself): 26.1's makeBrain(Packed) */
+    public static Brain entityMakeBrain(LivingEntity entity, Dynamic<?> dynamic) {
+        return ((CbWallLivingEntityAccess) entity).cb$makeBrain(toPacked(dynamic));
+    }
+
+    /**
+     * 1.21.11 Brain.Provider.makeBrain(Dynamic): 26.1's makeBrain(entity, Packed) takes the entity (its
+     * activities and random source), which 1.21.11's call made inside the entity's makeBrain had no
+     * place for -- it is the entity whose makeBrain is running.
+     */
+    public static Brain providerMakeBrain(Brain.Provider provider, Dynamic<?> dynamic) {
+        LivingEntity entity = MAKING.get().peek();
+        if (entity == null) {
+            throw new IllegalStateException("1.21.11 Brain.Provider.makeBrain(Dynamic) outside an entity's makeBrain: "
+                    + "26.1 builds a brain for an entity (its activities and random source), and none is being made");
+        }
+        return provider.makeBrain(entity, toPacked(dynamic));
     }
 }
