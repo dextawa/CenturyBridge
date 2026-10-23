@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CbItemServerThreadMixin",
+    "CbLevelBlockInvoker",
+    "CbLevelBlockNameMixin",
     "CbPendingIdsBlockMixin",
     "CbPendingIdsBlockPropsMixin",
     "CbPendingIdsItemMixin",
