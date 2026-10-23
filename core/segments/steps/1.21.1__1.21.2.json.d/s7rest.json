@@ -19,7 +19,9 @@
   "net/minecraft/class_4904": "top/dext/centurybridge/step/v1_21_2/facade/RealmsObjectSelectionList",
   "net/minecraft/class_4409": "top/dext/centurybridge/step/v1_21_2/facade/RealmsResetNormalWorldScreen",
   "net/minecraft/class_5673": "top/dext/centurybridge/step/v1_21_2/facade/ResettingGeneratedWorldTask",
-  "net/minecraft/class_8844": "top/dext/centurybridge/step/v1_21_2/facade/CreateSnapshotRealmTask"
+  "net/minecraft/class_8844": "top/dext/centurybridge/step/v1_21_2/facade/CreateSnapshotRealmTask",
+  "net/minecraft/class_485": "top/dext/centurybridge/step/v1_21_2/facade/EffectRenderingInventoryScreen",
+  "net/minecraft/class_5829": "top/dext/centurybridge/step/v1_21_2/facade/BundleTutorial"
  },
  "covers": [
   "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
@@ -57,7 +59,9 @@
   "net/minecraft/class_638.method_23777(Lnet/minecraft/class_243;F)Lnet/minecraft/class_243;",
   "net/minecraft/class_638.method_23785(F)Lnet/minecraft/class_243;",
   "net/minecraft/class_315.method_1641(Lnet/minecraft/class_304;Lnet/minecraft/class_3675$class_306;)V",
-  "net/minecraft/class_315.method_1631(Lnet/minecraft/class_1664;Z)V"
+  "net/minecraft/class_315.method_1631(Lnet/minecraft/class_1664;Z)V",
+  "net/minecraft/class_1156.method_31364(Lnet/minecraft/class_372;)V",
+  "net/minecraft/class_1156.method_31365(Lnet/minecraft/class_372;I)V"
  ],
  "frameDefaults": {
   "method_52706(Lnet/minecraft/class_2960;IIII)V": {
@@ -178,7 +182,8 @@
   "net/minecraft/class_437.method_25412(Ljava/lang/Runnable;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient",
   "net/minecraft/class_4883.method_25078(Lcom/google/gson/JsonObject;)Lnet/minecraft/class_4883;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms",
   "net/minecraft/class_4371.method_21113(Lnet/minecraft/class_332;Ljava/util/List;Lnet/minecraft/class_4904;IIII)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms",
-  "net/minecraft/class_4371.method_21114(Lnet/minecraft/class_4904;Lnet/minecraft/class_4280$class_4281;Ljava/util/List;IDD)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms"
+  "net/minecraft/class_4371.method_21114(Lnet/minecraft/class_4904;Lnet/minecraft/class_4280$class_4281;Ljava/util/List;IDD)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRealms",
+  "net/minecraft/class_465.method_33285(Lnet/minecraft/class_332;III)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient"
  },
  "fieldGetters": {
   "net/minecraft/class_3417.field_20613:Lnet/minecraft/class_3414;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer",
@@ -406,6 +411,35 @@
     "keep"
    ],
    "basis": "RealmsWorldOptions: 1.21.2 dropped spawnAnimals and spawnNPCs (no longer realm settings) and added hardcore after the game mode, which a 1.21.1 options object did not carry (false)"
+  },
+  "net/minecraft/class_4309.<init>(Lcom/google/gson/Gson;Ljava/lang/String;)V": {
+   "desc": "(Lcom/mojang/serialization/Codec;Ljava/lang/String;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#jsonCodec()Lcom/mojang/serialization/Codec;",
+    "drop",
+    "keep"
+   ],
+   "basis": "SimpleJsonResourceReloadListener(gson, directory): 1.21.2's (codec, directory) parses each file as JSON and decodes it with the codec; a 1.21.1 listener read JSON elements and handed them on unchanged, which ExtraCodecs.JSON does (the Gson only parsed); its prepare/apply overrides keep their erased shapes (Map of id -> element)"
+  },
+  "net/minecraft/class_473.<init>(Lnet/minecraft/class_1657;Lnet/minecraft/class_1799;Lnet/minecraft/class_1268;)V": {
+   "desc": "(Lnet/minecraft/class_1657;Lnet/minecraft/class_1799;Lnet/minecraft/class_1268;Lnet/minecraft/class_9301;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "conv:1 top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#bookContent(Lnet/minecraft/class_1799;)Lnet/minecraft/class_9301;"
+   ],
+   "basis": "BookEditScreen: 1.21.2 takes the book's content, which 1.21.1's constructor read from the stack (no pages when it had none)"
+  },
+  "net/minecraft/class_7551.<init>(Lnet/minecraft/class_437;Lnet/minecraft/class_7573;Ljava/util/function/Consumer;)V": {
+   "desc": "(Lnet/minecraft/class_437;Lnet/minecraft/class_7573;Lnet/minecraft/class_8776;Ljava/util/function/Consumer;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#everyReason()Lnet/minecraft/class_8776;",
+    "keep"
+   ],
+   "basis": "ReportReasonSelectionScreen: 1.21.2 offers the reasons the report type allows; 1.21.1 offered every reason, as for USERNAME (which excludes none)"
   }
  },
  "overrideRenames": [
@@ -486,7 +520,19 @@
   "net/minecraft/class_8844.field_46710:Lorg/slf4j/Logger;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_8844.field_46711:Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
   "net/minecraft/class_8844.field_46717:Lnet/minecraft/class_4445;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
-  "net/minecraft/class_8844.field_46718:Lnet/minecraft/class_5673;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
+  "net/minecraft/class_8844.field_46718:Lnet/minecraft/class_5673;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_485.field_45462:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.field_45463:Lnet/minecraft/class_2960;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_2477(Lnet/minecraft/class_332;II)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_18642(Lnet/minecraft/class_332;IILjava/lang/Iterable;Z)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_18643(Lnet/minecraft/class_332;IILjava/lang/Iterable;Z)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_18644(Lnet/minecraft/class_332;IILjava/lang/Iterable;)V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_485.method_38933(Lnet/minecraft/class_1293;)Lnet/minecraft/class_2561;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming the class is rejected at load now that class_485 is another class (EffectsInInventory), so no converted mod can",
+  "net/minecraft/class_5829.field_28798:Lnet/minecraft/class_1156;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_5829.field_28799:Lnet/minecraft/class_315;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_5829.field_28800:Lnet/minecraft/class_372;": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_5829.method_33701()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can",
+  "net/minecraft/class_5829.method_33703()V": "private in 1.21.1: only an access widener ever reached it, and a 1.21.1 access widener naming a class 1.21.2 dropped is rejected at load, so no converted mod can"
  },
  "overrideHooks": [
   {
@@ -648,6 +694,59 @@
     "method_21026(J)Lnet/minecraft/class_4888;"
    ],
    "basis": "1.21.2's requestUploadInfo(worldId) reads the upload token from UploadTokenCache, the token 1.21.1's callers passed: a 1.21.1 subclass's override gets it; its super call caches its token and makes 1.21.2's request"
+  },
+  {
+   "old": "method_45656(Lnet/minecraft/class_332;Lnet/minecraft/class_2680;)V",
+   "new": "method_45656(Lnet/minecraft/class_332;)V",
+   "onlyUnder": "net/minecraft/class_7743",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$LegacySignBackground",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.signBackground(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$LegacySignBackground;Lnet/minecraft/class_332;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient.superSignBackground(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$SignBackgroundSuper;Lnet/minecraft/class_332;Lnet/minecraft/class_2680;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient$SignBackgroundSuper",
+   "superAccessors": [
+    "method_45656(Lnet/minecraft/class_332;)V"
+   ],
+   "basis": "1.21.2 asks a sign screen for renderSignBackground(graphics); a 1.21.1 screen's override is handed the edited sign's block state, which 1.21.1's renderSign passed; its super call reaches 1.21.2's"
+  },
+  {
+   "old": "method_11649()B",
+   "new": "method_11649()F",
+   "onlyUnder": "net/minecraft/class_2684",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.degrees(B)F",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.superYRot(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$YRotSuper;)B",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$YRotSuper",
+   "superAccessors": [
+    "method_11649()F"
+   ],
+   "basis": "1.21.2 unpacks a move packet's rotations to degrees; a 1.21.1 subclass's packed byte answers as those degrees; its super call gets super's degrees packed back"
+  },
+  {
+   "old": "method_11650()B",
+   "new": "method_11650()F",
+   "onlyUnder": "net/minecraft/class_2684",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.degrees(B)F",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.superXRot(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$XRotSuper;)B",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$XRotSuper",
+   "superAccessors": [
+    "method_11650()F"
+   ],
+   "basis": "1.21.2 unpacks a move packet's rotations to degrees; a 1.21.1 subclass's packed byte answers as those degrees; its super call gets super's degrees packed back"
+  },
+  {
+   "old": "method_11787()B",
+   "new": "method_11787()F",
+   "onlyUnder": "net/minecraft/class_2726",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.degrees(B)F",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets.superHeadRot(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$HeadRotSuper;)B",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestPackets$HeadRotSuper",
+   "superAccessors": [
+    "method_11787()F"
+   ],
+   "basis": "as the move packet: the head rotation in degrees, a 1.21.1 subclass's byte unpacked"
   }
  ],
  "lambdaAdapters": {
@@ -742,7 +841,44 @@
   "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "RealmsClient.resetWorldWithSeed: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
   "net/minecraft/class_5673.method_32517(Lnet/minecraft/class_4341;J)V": "ResettingGeneratedWorldTask.sendResetRequest: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
   "net/minecraft/class_8844.run()V": "CreateSnapshotRealmTask.run: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
-  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "RealmsCreateRealmScreen(lastScreen, parentWorldId), the snapshot-creation screen whose only action is the removed request (and whose 1.21.1 subclass super(..) has no 1.21.2 constructor to call): 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead"
+  "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "RealmsCreateRealmScreen(lastScreen, parentWorldId), the snapshot-creation screen whose only action is the removed request (and whose 1.21.1 subclass super(..) has no 1.21.2 constructor to call): 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
+  "net/minecraft/class_2761": "a 1.21.1 subclass of ClientboundSetTimePacket: 1.21.2 made ClientboundSetTimePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundSetTimePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2761.method_11871()J": "override of method_11871 in a 1.21.1 subclass of ClientboundSetTimePacket: 1.21.2 made ClientboundSetTimePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundSetTimePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2761.method_11873()J": "override of method_11873 in a 1.21.1 subclass of ClientboundSetTimePacket: 1.21.2 made ClientboundSetTimePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundSetTimePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664": "a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_11472()F": "override of method_11472 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_11473()F": "override of method_11473 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_11474()F": "override of method_11474 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_11475()D": "override of method_11475 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_11477()D": "override of method_11477 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_11478()D": "override of method_11478 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_11476()F": "override of method_11476 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_11479()Ljava/util/List;": "override of method_11479 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_55328()Lnet/minecraft/class_1927$class_4179;": "override of method_55328 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_55329()Lnet/minecraft/class_2394;": "override of method_55329 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_55330()Lnet/minecraft/class_2394;": "override of method_55330 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2664.method_55331()Lnet/minecraft/class_6880;": "override of method_55331 in a 1.21.1 subclass of ClientboundExplodePacket: 1.21.2 made ClientboundExplodePacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundExplodePacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2708": "a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundPlayerPositionPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2708.method_11733()I": "override of method_11733 in a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundPlayerPositionPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2708.method_11734()D": "override of method_11734 in a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundPlayerPositionPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2708.method_11735()D": "override of method_11735 in a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundPlayerPositionPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2708.method_11736()F": "override of method_11736 in a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundPlayerPositionPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2708.method_11737()D": "override of method_11737 in a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundPlayerPositionPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2708.method_11738()Ljava/util/Set;": "override of method_11738 in a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundPlayerPositionPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2708.method_11739()F": "override of method_11739 in a 1.21.1 subclass of ClientboundPlayerPositionPacket: 1.21.2 made ClientboundPlayerPositionPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundPlayerPositionPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2777": "a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundTeleportEntityPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2777.method_11916()I": "override of method_11916 in a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundTeleportEntityPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2777.method_11917()D": "override of method_11917 in a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundTeleportEntityPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2777.method_11918()B": "override of method_11918 in a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundTeleportEntityPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2777.method_11919()D": "override of method_11919 in a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundTeleportEntityPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2777.method_11920()Z": "override of method_11920 in a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundTeleportEntityPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2777.method_11921()B": "override of method_11921 in a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundTeleportEntityPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2777.method_11923()D": "override of method_11923 in a 1.21.1 subclass of ClientboundTeleportEntityPacket: 1.21.2 made ClientboundTeleportEntityPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ClientboundTeleportEntityPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2851": "a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ServerboundPlayerInputPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2851.method_12370()Z": "override of method_12370 in a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ServerboundPlayerInputPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2851.method_12371()F": "override of method_12371 in a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ServerboundPlayerInputPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2851.method_12372()F": "override of method_12372 in a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ServerboundPlayerInputPacket); 1.21.1 construction and getters are bridged (CbRestPackets)",
+  "net/minecraft/class_2851.method_12373()Z": "override of method_12373 in a 1.21.1 subclass of ServerboundPlayerInputPacket: 1.21.2 made ServerboundPlayerInputPacket a final record whose type() is its packet type: the protocol encodes a packet with that type's codec, which reads the record's components, so a 1.21.1 subclass -- or a stand-in superclass a renamed subclass could extend -- fails the first time it is sent (and splits the type wherever the mod passes it as ServerboundPlayerInputPacket); 1.21.1 construction and getters are bridged (CbRestPackets)"
  },
  "instanceFieldSetters": {
   "net/minecraft/class_744.field_3910:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#inputUp",
@@ -761,6 +897,14 @@
     "conv top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#iconAlphaFloat(I)F"
    ],
    "basis": "SpectatorMenuItem.renderIcon's alpha: 1.21.1 an int 0..255 (SpectatorGui passed (int) (alpha * 255)), 1.21.2 the float 0..1; super calls follow"
+  },
+  "net/minecraft/class_7743.method_45656(Lnet/minecraft/class_332;Lnet/minecraft/class_2680;)V": {
+   "desc": "(Lnet/minecraft/class_332;)V",
+   "ops": [
+    "keep:0",
+    "drop:1"
+   ],
+   "basis": "renderSignBackground: 1.21.2 reads the sign's state itself; 1.21.1's callers passed the edited sign's state"
   }
  }
 }

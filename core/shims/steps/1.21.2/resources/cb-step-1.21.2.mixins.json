@@ -49,7 +49,9 @@
     "CbRestOptionsKeysMixin",
     "CbRestOptionsMixin",
     "CbRestScreenInvoker",
-    "CbRestToastInstanceMixin"
+    "CbRestSignEditAccessor",
+    "CbRestToastInstanceMixin",
+    "CbRestTutorialMixin"
   ],
   "server": [],
   "injectors": {
