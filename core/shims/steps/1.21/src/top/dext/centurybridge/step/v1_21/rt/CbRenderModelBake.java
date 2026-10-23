@@ -93,6 +93,12 @@ public final class CbRenderModelBake {
         return method_4753((class_1100) model, baker, sprites, state, id);
     }
 
+    /** the same, the call made on Fabric API's DelegatingUnbakedModel (final: never a 1.20.6 class's own) */
+    public static class_1087 method_4753(net.fabricmc.fabric.api.client.model.loading.v1.DelegatingUnbakedModel model, class_7775 baker,
+                                         Function<class_4730, class_1058> sprites, class_3665 state, class_2960 id) {
+        return model.method_4753(baker, sprites, state);
+    }
+
     /** 1.21's bake(baker, sprites, state) of a 1.20.6 model class: its own bake with the id of the model being baked */
     public static class_1087 bake(LegacyUnbaked self, class_7775 baker, Function<class_4730, class_1058> sprites, class_3665 state) {
         return self.method_4753(baker, sprites, state, idOf(baker));
