@@ -1,0 +1,79 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_1297.method_5643(Lnet/minecraft/class_1282;F)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt#hurt",
+  "net/minecraft/class_1297.method_5679(Lnet/minecraft/class_1282;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt#isInvulnerableTo"
+ },
+ "overrideHooks": [
+  {
+   "old": "method_5643(Lnet/minecraft/class_1282;F)Z",
+   "new": "method_64397(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;F)Z",
+   "args": [
+    1,
+    2
+   ],
+   "onlyUnder": "net/minecraft/class_1297",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt.superHurt(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt$Super;Lnet/minecraft/class_1282;F)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt$Super",
+   "superAccessors": [
+    "method_64397(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;F)Z",
+    "method_5643(Lnet/minecraft/class_1282;)Z"
+   ],
+   "basis": "1.21.1 hurt(source, amount) is 1.21.2's hurtServer on the server (the level vanilla passed is on record for the super call); a super.hurt(..) is super's hurtServer / hurtClient by side, under Entity itself (abstract hurtServer) 1.21.1 Entity.hurt's body (CbEntityHurt.superHurt). Not synthesized under the 12 classes whose hurtServer is final: CbEntityHurtFinalMixin hands the call to the old hurt there"
+  },
+  {
+   "old": "method_5679(Lnet/minecraft/class_1282;)Z",
+   "new": "method_5679(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)Z",
+   "args": [
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_1309",
+   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt.superIsInvulnerableTo(Ltop/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt$SuperInvulnerable;Lnet/minecraft/class_1282;)Z",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt$SuperInvulnerable",
+   "superAccessors": [
+    "method_5679(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;)Z"
+   ],
+   "basis": "1.21.1 LivingEntity.isInvulnerableTo(source) is 1.21.2's isInvulnerableTo(level, source) on the server; a super call on a client level answers 1.21.1's client answer of the vanilla class above (CbEntityHurt.superIsInvulnerableTo), where 1.21.2's needs a ServerLevel"
+  }
+ ],
+ "adapterHooks": [
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt$Legacy",
+   "requires": [
+    "method_5643(Lnet/minecraft/class_1282;F)Z"
+   ],
+   "synth": [],
+   "basis": "the mod class's own 1.21.1 hurt answers hurtOrSimulate on a client level (CbEntityHurtMixin) and the final hurtServer of class_1295, class_1303, class_1508, class_1511, class_1538, class_1540, class_1541, class_1542, class_6335, class_8113, class_8150, class_9461 (CbEntityHurtFinalMixin)"
+  },
+  {
+   "under": "net/minecraft/class_1297",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt$LegacyInvulnerable",
+   "requires": [
+    "method_5679(Lnet/minecraft/class_1282;)Z"
+   ],
+   "synth": [],
+   "basis": "a non-living mod entity's 1.21.1 isInvulnerableTo answers isInvulnerableToBase, which 1.21.2's vanilla entities ask where 1.21.1's asked isInvulnerableTo (CbEntityHurtMixin); a living one's answers a 1.21.1 call on a client level (CbEntityHurt.isInvulnerableTo)"
+  }
+ ],
+ "superRedirects": {
+  "net/minecraft/class_1297.method_5679(Lnet/minecraft/class_1282;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt#superIsInvulnerableToBase"
+ },
+ "abstractFills": [
+  {
+   "under": "net/minecraft/class_1297",
+   "method": "method_64397(Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;F)Z",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityHurt.fillHurtServer(Lnet/minecraft/class_1297;Lnet/minecraft/class_3218;Lnet/minecraft/class_1282;F)Z",
+   "basis": "a mod class extending Entity without a hurt of its own inherited 1.21.1 Entity.hurt: invulnerable -> false, else markHurt and false"
+  }
+ ],
+ "frameDefaults": {
+  "method_5643(Lnet/minecraft/class_1282;F)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  },
+  "method_5679(Lnet/minecraft/class_1282;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityLevels#serverLevel(Lnet/minecraft/class_1297;)Lnet/minecraft/class_3218;"
+  }
+ }
+}
