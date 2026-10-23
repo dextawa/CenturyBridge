@@ -69,18 +69,46 @@ public final class CbAdvNodes {
 
     // ------------------------------------------------------------------ Advancement's 1.20.1 members
 
-    /** getParent(): the parent of the node the advancement is placed at (null for a root or an unplaced one) */
+    /*
+     * Each is a call (instanceRedirects): a 1.20.1 subclass's own override answers first (its class has the
+     * adapter interface: adapterHooks), as 1.20.1's virtual call did; the super_ variant is that subclass's
+     * own super call (superRedirects) and 1.20.1's body on the 1.20.2 record. A subclass overriding one of
+     * the record-backed getters (rewards, criteria, requirements, telemetry, chat name) also answers 1.20.2's
+     * accessor (synthesized: vanilla reads what the subclass answers, as 1.20.1's vanilla called the getter);
+     * its super call reads the record's stored component.
+     */
+
+    /** the node's own child set, read past a 1.20.1 subclass's getChildren override (CbAdvNodeChildren) */
+    public interface NodeChildren {
+        java.util.Set<net.minecraft.class_8781> cb$children();
+    }
+
+    private static top.dext.centurybridge.shims.v1_20_2.CbAdvRecordFields fields(net.minecraft.class_161 self) {
+        return (top.dext.centurybridge.shims.v1_20_2.CbAdvRecordFields) (Object) self;
+    }
+
+    /** getParent() */
     public static net.minecraft.class_161 method_687(net.minecraft.class_161 self) {
+        return (Object) self instanceof CbAdvLegacy.AdvParent own ? own.method_687() : super_method_687(self);
+    }
+
+    /** 1.20.1's getParent(): the parent of the node the advancement is placed at (null for a root or an unplaced one) */
+    public static net.minecraft.class_161 super_method_687(net.minecraft.class_161 self) {
         net.minecraft.class_8781 node = NODES.get(self);
         return node == null ? null : valueOf(node.method_53651());
     }
 
-    /** getRoot(): the root of its tree (itself when unplaced) */
+    /** getRoot() */
     public static net.minecraft.class_161 method_48024(net.minecraft.class_161 self) {
+        return (Object) self instanceof CbAdvLegacy.AdvRoot own ? own.method_48024() : method_48023(self);
+    }
+
+    /** 1.20.1's getRoot(): getRoot(this) */
+    public static net.minecraft.class_161 super_method_48024(net.minecraft.class_161 self) {
         return method_48023(self);
     }
 
-    /** getRoot(advancement) (static), as 1.20.1 walked it: parents until there is none */
+    /** getRoot(advancement) (static), as 1.20.1 walked it: getParent() until there is none */
     public static net.minecraft.class_161 method_48023(net.minecraft.class_161 advancement) {
         net.minecraft.class_161 a = advancement;
         while (true) {
@@ -92,26 +120,45 @@ public final class CbAdvNodes {
         }
     }
 
-    /** getChildren(): the children of its node, in the order 1.20.2 added them */
+    /** getChildren() */
     public static Iterable<net.minecraft.class_161> method_681(net.minecraft.class_161 self) {
+        return (Object) self instanceof CbAdvLegacy.AdvChildren own ? own.method_681() : super_method_681(self);
+    }
+
+    /** 1.20.1's getChildren(): the children of its node as the tree placed them */
+    public static Iterable<net.minecraft.class_161> super_method_681(net.minecraft.class_161 self) {
         net.minecraft.class_8781 node = NODES.get(self);
         List<net.minecraft.class_161> out = new ArrayList<>();
         if (node != null) {
-            for (net.minecraft.class_8781 child : node.method_53653()) {
+            for (net.minecraft.class_8781 child : ((NodeChildren) (Object) node).cb$children()) {
                 out.add(child.method_53647());
             }
         }
         return out;
     }
 
-    /** addChild(child): 1.20.1 linked the child under this advancement; 1.20.2 links the nodes */
+    /** addChild(child) */
     public static void method_690(net.minecraft.class_161 self, net.minecraft.class_161 child) {
+        if ((Object) self instanceof CbAdvLegacy.AdvAddChild own) {
+            own.method_690(child);
+        } else {
+            super_method_690(self, child);
+        }
+    }
+
+    /** 1.20.1's addChild(child): the child linked under this advancement's node */
+    public static void super_method_690(net.minecraft.class_161 self, net.minecraft.class_161 child) {
         nodeOf(self).method_53650(nodeOf(child));
     }
 
-    /** sendsTelemetryEvent() */
+    /** sendsTelemetryEvent() (a subclass's override answers through the synthesized accessor) */
     public static boolean method_51697(net.minecraft.class_161 self) {
         return self.comp_1917();
+    }
+
+    /** super.sendsTelemetryEvent() */
+    public static boolean super_method_51697(net.minecraft.class_161 self) {
+        return fields(self).cb$telemetry();
     }
 
     /** getRewards() */
@@ -119,9 +166,19 @@ public final class CbAdvNodes {
         return self.comp_1914();
     }
 
+    /** super.getRewards() */
+    public static net.minecraft.class_170 super_method_691(net.minecraft.class_161 self) {
+        return fields(self).cb$rewards();
+    }
+
     /** getCriteria(): name -> criterion */
     public static Map<String, net.minecraft.class_175<?>> method_682(net.minecraft.class_161 self) {
         return self.comp_1915();
+    }
+
+    /** super.getCriteria() */
+    public static Map<String, net.minecraft.class_175<?>> super_method_682(net.minecraft.class_161 self) {
+        return fields(self).cb$criteria();
     }
 
     /** getRequirements(): the requirement groups */
@@ -129,18 +186,55 @@ public final class CbAdvNodes {
         return self.comp_1916().comp_1922();
     }
 
-    /** getMaxCriteraRequired(): the number of requirement groups */
+    /** super.getRequirements() */
+    public static String[][] super_method_680(net.minecraft.class_161 self) {
+        return fields(self).cb$requirements().comp_1922();
+    }
+
+    /** getMaxCriteraRequired() */
     public static int method_683(net.minecraft.class_161 self) {
-        return self.comp_1916().method_53664();
+        return (Object) self instanceof CbAdvLegacy.AdvMaxCriteria own ? own.method_683() : super_method_683(self);
+    }
+
+    /** 1.20.1's getMaxCriteraRequired(): requirements.length */
+    public static int super_method_683(net.minecraft.class_161 self) {
+        return method_680(self).length;
+    }
+
+    /** getChatComponent() (a subclass's override answers through the synthesized name accessor) */
+    public static net.minecraft.class_2561 method_684(net.minecraft.class_161 self) {
+        return (Object) self instanceof CbAdvLegacy.AdvChat own ? own.method_684() : super_method_684(self);
     }
 
     /**
-     * getChatComponent(): 1.20.1 built it from the display (title in the frame's colour, hover with the
-     * description) or, without a display, the id as literal text; 1.20.2's record keeps the first, its
+     * 1.20.1's getChatComponent(): built from the display (title in the frame's colour, hover with the
+     * description) or, without a display, the id as literal text; 1.20.2's record keeps the first, the
      * holder's name answers the second (Advancement.name(holder))
      */
-    public static net.minecraft.class_2561 method_684(net.minecraft.class_161 self) {
-        return self.comp_1918().orElseGet(() -> net.minecraft.class_161.method_53622(holderOf(self)));
+    public static net.minecraft.class_2561 super_method_684(net.minecraft.class_161 self) {
+        return fields(self).cb$name().orElseGet(() -> net.minecraft.class_2561.method_43470(holderOf(self).comp_1919().toString()));
+    }
+
+    // ---- the record accessors a 1.20.1 subclass's override answers (adapterHooks synthesize them)
+
+    public static boolean legacyTelemetry(CbAdvLegacy.AdvTelemetry own) {
+        return own.method_51697();
+    }
+
+    public static net.minecraft.class_170 legacyRewards(CbAdvLegacy.AdvRewards own) {
+        return own.method_691();
+    }
+
+    public static Map<String, net.minecraft.class_175<?>> legacyCriteria(CbAdvLegacy.AdvCriteria own) {
+        return own.method_682();
+    }
+
+    public static net.minecraft.class_8782 legacyRequirements(CbAdvLegacy.AdvRequirements own) {
+        return new net.minecraft.class_8782(own.method_680());
+    }
+
+    public static java.util.Optional<net.minecraft.class_2561> legacyName(CbAdvLegacy.AdvChat own) {
+        return java.util.Optional.ofNullable(own.method_684());
     }
 
     /** a collection of 1.20.1 advancements (a 1.20.1 override's answer) as their nodes */

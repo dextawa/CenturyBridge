@@ -46,6 +46,28 @@ public final class CbAdvProgress {
         return a;
     }
 
+    /**
+     * super(id, parent, display, rewards, criteria, requirements, telemetry) of a 1.20.1 Advancement subclass:
+     * the record's constructor takes the parent's id (superCtorReshapes conv) and the requirements as the
+     * record ...
+     */
+    public static java.util.Optional<net.minecraft.class_2960> parentId(net.minecraft.class_161 parent) {
+        return parent == null ? java.util.Optional.empty() : java.util.Optional.of(CbAdvNodes.holderOf(parent).comp_1919());
+    }
+
+    public static java.util.Optional<net.minecraft.class_185> display(net.minecraft.class_185 display) {
+        return java.util.Optional.ofNullable(display);
+    }
+
+    public static net.minecraft.class_8782 requirements(String[][] requirements) {
+        return new net.minecraft.class_8782(requirements);
+    }
+
+    /** ... and once the record is built, the holder naming it with the id the subclass was built with (post) */
+    public static void named(net.minecraft.class_161 self, net.minecraft.class_2960 id) {
+        new net.minecraft.class_8779(id, self);
+    }
+
     // ------------------------------------------------------------------ Advancement.Builder
 
     /** Builder.requirements(String[][]) */
@@ -133,8 +155,13 @@ public final class CbAdvProgress {
         return i == null ? null : Date.from(i);
     }
 
-    /** CriterionProgress.serializeToJson(): the obtain time in 1.20.1's pattern, JsonNull when not obtained */
+    /** CriterionProgress.serializeToJson(): a 1.20.1 subclass's own override answers */
     public static JsonElement method_783(net.minecraft.class_178 self) {
+        return (Object) self instanceof CbAdvLegacy.CriterionJson own ? own.method_783() : super_method_783(self);
+    }
+
+    /** 1.20.1's serializeToJson(): the obtain time in 1.20.1's pattern, JsonNull when not obtained */
+    public static JsonElement super_method_783(net.minecraft.class_178 self) {
         Instant i = self.method_786();
         return i == null ? JsonNull.INSTANCE : new JsonPrimitive(FORMAT.get().format(Date.from(i)));
     }

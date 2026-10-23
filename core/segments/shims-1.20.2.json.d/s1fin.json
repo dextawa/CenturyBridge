@@ -233,9 +233,144 @@
    ],
    "synth": [],
    "basis": "s1fin: a 1.20.1 EntitySubPredicate's own serialize() is what a call of it answers"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvParent",
+   "requires": [
+    "method_687()Lnet/minecraft/class_161;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_687 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRoot",
+   "requires": [
+    "method_48024()Lnet/minecraft/class_161;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_48024 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvChildren",
+   "requires": [
+    "method_681()Ljava/lang/Iterable;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_681 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvAddChild",
+   "requires": [
+    "method_690(Lnet/minecraft/class_161;)V"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_690 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRewards",
+   "requires": [
+    "method_691()Lnet/minecraft/class_170;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1914()Lnet/minecraft/class_170;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyRewards(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRewards;)Lnet/minecraft/class_170;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_691 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvCriteria",
+   "requires": [
+    "method_682()Ljava/util/Map;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1915()Ljava/util/Map;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyCriteria(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvCriteria;)Ljava/util/Map;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_682 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRequirements",
+   "requires": [
+    "method_680()[[Ljava/lang/String;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1916()Lnet/minecraft/class_8782;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyRequirements(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvRequirements;)Lnet/minecraft/class_8782;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_680 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvMaxCriteria",
+   "requires": [
+    "method_683()I"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_683 answers calls of it"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvChat",
+   "requires": [
+    "method_684()Lnet/minecraft/class_2561;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1918()Ljava/util/Optional;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyName(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvChat;)Ljava/util/Optional;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_684 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_161",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvTelemetry",
+   "requires": [
+    "method_51697()Z"
+   ],
+   "synth": [
+    {
+     "new": "comp_1917()Z",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes.legacyTelemetry(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$AdvTelemetry;)Z"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's own method_51697 answers calls of it and the record accessor vanilla 1.20.2 reads in its place"
+  },
+  {
+   "under": "net/minecraft/class_178",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$CriterionJson",
+   "requires": [
+    "method_783()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 CriterionProgress subclass's serializeToJson answers calls of it"
   }
  ],
  "superRedirects": {
+  "net/minecraft/class_161.method_48024()Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_48024",
+  "net/minecraft/class_161.method_51697()Z": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_51697",
+  "net/minecraft/class_161.method_680()[[Ljava/lang/String;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_680",
+  "net/minecraft/class_161.method_681()Ljava/lang/Iterable;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_681",
+  "net/minecraft/class_161.method_682()Ljava/util/Map;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_682",
+  "net/minecraft/class_161.method_683()I": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_683",
+  "net/minecraft/class_161.method_684()Lnet/minecraft/class_2561;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_684",
+  "net/minecraft/class_161.method_687()Lnet/minecraft/class_161;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_687",
+  "net/minecraft/class_161.method_690(Lnet/minecraft/class_161;)V": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_690",
+  "net/minecraft/class_161.method_691()Lnet/minecraft/class_170;": "top/dext/centurybridge/rt/v1_20_2/CbAdvNodes#super_method_691",
+  "net/minecraft/class_178.method_783()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#super_method_783",
   "net/minecraft/class_2035.method_8881()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_8881",
   "net/minecraft/class_2040.method_8894()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_8894",
   "net/minecraft/class_2102$class_2103.method_9071()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_9071",
@@ -251,6 +386,23 @@
   "net/minecraft/class_8129.method_48964()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_48964"
  },
  "superCtorReshapes": {
+  "net/minecraft/class_161.<init>(Lnet/minecraft/class_2960;Lnet/minecraft/class_161;Lnet/minecraft/class_185;Lnet/minecraft/class_170;Ljava/util/Map;[[Ljava/lang/String;Z)V": {
+   "desc": "(Ljava/util/Optional;Ljava/util/Optional;Lnet/minecraft/class_170;Ljava/util/Map;Lnet/minecraft/class_8782;Z)V",
+   "ops": [
+    "drop",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#parentId(Lnet/minecraft/class_161;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#display(Lnet/minecraft/class_185;)Ljava/util/Optional;",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#requirements([[Ljava/lang/String;)Lnet/minecraft/class_8782;",
+    "keep"
+   ],
+   "post": "top/dext/centurybridge/rt/v1_20_2/CbAdvProgress#named(Lnet/minecraft/class_161;Lnet/minecraft/class_2960;)V",
+   "postArgs": [
+    0
+   ],
+   "basis": "s1fin: a 1.20.1 Advancement subclass's super(..): the record with the parent's id and the requirements as the record; the id it was built with names it (a holder, made right after)"
+  },
   "net/minecraft/class_2102.<init>(Ljava/util/Map;)V": {
    "desc": "(Ljava/util/Map;)V",
    "ops": [

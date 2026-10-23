@@ -116,6 +116,63 @@ public final class CbAdvLegacy {
         void method_711(java.util.Map<net.minecraft.class_2960, net.minecraft.class_161.class_162> builders);
     }
 
+    // ---- Advancement, 1.20.1 methods a subclass may override (1.20.2's record has its accessors instead)
+
+    /** Advancement.getParent() */
+    public interface AdvParent {
+        net.minecraft.class_161 method_687();
+    }
+
+    /** Advancement.getRoot() */
+    public interface AdvRoot {
+        net.minecraft.class_161 method_48024();
+    }
+
+    /** Advancement.getChildren() */
+    public interface AdvChildren {
+        Iterable<net.minecraft.class_161> method_681();
+    }
+
+    /** Advancement.addChild(child) */
+    public interface AdvAddChild {
+        void method_690(net.minecraft.class_161 child);
+    }
+
+    /** Advancement.getRewards() */
+    public interface AdvRewards {
+        net.minecraft.class_170 method_691();
+    }
+
+    /** Advancement.getCriteria() */
+    public interface AdvCriteria {
+        java.util.Map<String, net.minecraft.class_175<?>> method_682();
+    }
+
+    /** Advancement.getRequirements() */
+    public interface AdvRequirements {
+        String[][] method_680();
+    }
+
+    /** Advancement.getMaxCriteraRequired() */
+    public interface AdvMaxCriteria {
+        int method_683();
+    }
+
+    /** Advancement.getChatComponent() */
+    public interface AdvChat {
+        net.minecraft.class_2561 method_684();
+    }
+
+    /** Advancement.sendsTelemetryEvent() */
+    public interface AdvTelemetry {
+        boolean method_51697();
+    }
+
+    /** CriterionProgress.serializeToJson() */
+    public interface CriterionJson {
+        com.google.gson.JsonElement method_783();
+    }
+
     /** MobEffectsPredicate.and(effect) */
     public interface EffectsAnd {
         net.minecraft.class_2102 method_9065(net.minecraft.class_1291 effect);
