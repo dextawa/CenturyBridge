@@ -48,7 +48,8 @@
     "CbRestMinecraftMixin",
     "CbRestOptionsKeysMixin",
     "CbRestOptionsMixin",
-    "CbRestScreenInvoker"
+    "CbRestScreenInvoker",
+    "CbRestToastInstanceMixin"
   ],
   "server": [],
   "injectors": {

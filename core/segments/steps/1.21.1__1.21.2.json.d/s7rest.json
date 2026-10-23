@@ -145,7 +145,8 @@
   "net/minecraft/class_742.method_3118()F": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#fieldOfViewModifier",
   "net/minecraft/class_5684.method_32661()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#tooltipHeight",
   "net/minecraft/class_5684.method_32666(Lnet/minecraft/class_327;IILnet/minecraft/class_332;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#renderImage",
-  "net/minecraft/class_437.method_57734(F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#renderBlurredBackground"
+  "net/minecraft/class_437.method_57734(F)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestGuiClient#renderBlurredBackground",
+  "net/minecraft/class_368.method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts#callRender"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -540,12 +541,31 @@
     "method_57734()V"
    ],
    "basis": "1.21.2's renderBackground calls renderBlurredBackground() where 1.21.1's passed its partial tick: a 1.21.1 screen's override is asked with the partial tick the screen renders with; its super call reaches 1.21.2's blur, which needs none"
+  },
+  {
+   "old": "method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;",
+   "new": "method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_327;J)V",
+   "onlyUnder": "net/minecraft/class_368",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.render(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast;Lnet/minecraft/class_332;Lnet/minecraft/class_327;J)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.superRender(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$ToastSuper;Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$ToastSuper",
+   "superAccessors": [
+    "method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_327;J)V",
+    "method_61988()Lnet/minecraft/class_368$class_369;"
+   ],
+   "basis": "1.21.2 draws a toast through render(graphics, font, time) and reads its visibility from getWantedVisibility(); a 1.21.1 toast's render(graphics, manager, time) runs there and its answer is the visibility the manager reads (CbRestToasts, CbRestToastInstanceMixin); a 1.21.1 subclass of a vanilla toast calling super.render gets the vanilla toast drawn and its visibility"
   }
  ],
  "lambdaAdapters": {
   "net/minecraft/class_3302.method_25931(Lnet/minecraft/class_3302$class_4045;Lnet/minecraft/class_3300;Lnet/minecraft/class_3695;Lnet/minecraft/class_3695;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;": {
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestReload#listener(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestReload$Legacy;)Lnet/minecraft/class_3302;"
+  },
+  "net/minecraft/class_368.method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts#toast(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast;)Lnet/minecraft/class_368;"
   }
  },
  "ctorRedirects": {
@@ -601,6 +621,16 @@
    "under": "net/minecraft/class_9761",
    "method": "method_39967(Ljava/util/concurrent/CompletableFuture;)V",
    "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer.addSaveDependency(Lnet/minecraft/class_9761;Ljava/util/concurrent/CompletableFuture;)V"
+  },
+  {
+   "under": "net/minecraft/class_368",
+   "method": "method_61989(Lnet/minecraft/class_374;J)V",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.update(Lnet/minecraft/class_368;Lnet/minecraft/class_374;J)V"
+  },
+  {
+   "under": "net/minecraft/class_368",
+   "method": "method_61988()Lnet/minecraft/class_368$class_369;",
+   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.wantedVisibility(Lnet/minecraft/class_368;)Lnet/minecraft/class_368$class_369;"
   }
  ],
  "ledger": {
