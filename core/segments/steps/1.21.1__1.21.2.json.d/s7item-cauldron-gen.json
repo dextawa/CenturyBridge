@@ -1,0 +1,32 @@
+{
+ "instanceRedirects": {
+  "net/minecraft/class_5620.interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_9062;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_5620.method_32210(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;Ljava/util/function/Predicate;Lnet/minecraft/class_3414;)Lnet/minecraft/class_9062;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron",
+  "net/minecraft/class_5620.method_32207(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_3414;)Lnet/minecraft/class_9062;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_5620.field_27778:Lnet/minecraft/class_5620;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron",
+  "net/minecraft/class_5620.field_27779:Lnet/minecraft/class_5620;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron",
+  "net/minecraft/class_5620.field_28012:Lnet/minecraft/class_5620;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron",
+  "net/minecraft/class_5620.field_27780:Lnet/minecraft/class_5620;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron",
+  "net/minecraft/class_5620.field_27781:Lnet/minecraft/class_5620;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron",
+  "net/minecraft/class_5620.field_27782:Lnet/minecraft/class_5620;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_5620.interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_9062;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron$Legacy",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron#fromLambda(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemCauldron$Legacy;)Lnet/minecraft/class_5620;"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_9062;",
+   "new": "interact(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1269;",
+   "onlyUnder": "net/minecraft/class_5620",
+   "unwrap": "top/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult.toResult(Ltop/dext/centurybridge/step/v1_21_2/facade/ItemInteractionResult;)Lnet/minecraft/class_1269;",
+   "basis": "CauldronInteraction.interact answers an InteractionResult since 1.21.2: a 1.21.1 class's answer converted (facade ItemInteractionResult.toResult)"
+  }
+ ]
+}
