@@ -1,5 +1,4 @@
 {
- "_comment": "s4fin JFR: 1.20.4 packet profiling by numeric id <-> 1.20.5 PacketType / string ids (rt/CbFinJfr, facade/JfrPacketIdentification)",
  "instanceRedirects": {
   "net/minecraft/class_6611.method_38656(Lnet/minecraft/class_2539;ILjava/net/SocketAddress;I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr",
   "net/minecraft/class_6611.method_38657(Lnet/minecraft/class_2539;ILjava/net/SocketAddress;I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinJfr"

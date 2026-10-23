@@ -1,0 +1,75 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3577.field_15827:Lcom/google/gson/Gson;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_5527.method_31446(Lcom/mojang/datafixers/schemas/Schema;Ljava/lang/String;Ljava/util/function/Function;)Lcom/mojang/datafixers/DataFix;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix",
+  "net/minecraft/class_3984.method_17997(Lcom/mojang/datafixers/schemas/Schema;)Lcom/mojang/datafixers/types/templates/TypeTemplate;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix",
+  "net/minecraft/class_7294.method_42645(Lcom/mojang/datafixers/schemas/Schema;Ljava/util/Map;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix",
+  "net/minecraft/class_1248.method_5292(Lcom/mojang/datafixers/schemas/Schema;Ljava/util/Map;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix"
+ },
+ "classRenames": {
+  "net/minecraft/class_5527": "net/minecraft/class_3579"
+ },
+ "callReshapes": {
+  "net/minecraft/class_1254.method_5359(Lcom/mojang/serialization/Dynamic;Ljava/util/Map;Ljava/lang/String;)Ljava/lang/Object;": {
+   "desc": "(Lcom/mojang/serialization/Dynamic;Ljava/util/Map;Ljava/util/Map;)Ljava/lang/Object;",
+   "ops": [
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix#cbArmorStandEntityIds(Ljava/lang/String;)Ljava/util/Map;"
+   ]
+  }
+ },
+ "superCtorReshapes": {
+  "net/minecraft/class_5129.<init>(Lcom/mojang/datafixers/schemas/Schema;)V": {
+   "desc": "(Lcom/mojang/datafixers/schemas/Schema;Ljava/lang/String;Ljava/util/function/UnaryOperator;)V",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix#cbAttributeRenamesName()Ljava/lang/String;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix#cbAttributeRenames1204()Ljava/util/function/UnaryOperator;"
+   ]
+  },
+  "net/minecraft/class_3605.<init>(Lcom/mojang/datafixers/schemas/Schema;Z)V": {
+   "desc": "(Lcom/mojang/datafixers/schemas/Schema;)V",
+   "ops": [
+    "keep",
+    "drop"
+   ]
+  },
+  "net/minecraft/class_1175.<init>(Lcom/mojang/datafixers/schemas/Schema;Z)V": {
+   "desc": "(Lcom/mojang/datafixers/schemas/Schema;)V",
+   "ops": [
+    "keep",
+    "drop"
+   ]
+  },
+  "net/minecraft/class_1219.<init>(Lcom/mojang/datafixers/schemas/Schema;Z)V": {
+   "desc": "(Lcom/mojang/datafixers/schemas/Schema;)V",
+   "ops": [
+    "keep",
+    "drop"
+   ]
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_5164(Ljava/lang/String;Lcom/mojang/serialization/Dynamic;)Lcom/mojang/datafixers/util/Pair;",
+   "new": "method_4982(Ljava/lang/String;Lcom/mojang/datafixers/Typed;)Lcom/mojang/datafixers/util/Pair;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix.cbZombieSplit(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix$CbLegacyZombieSplit;Ljava/lang/String;Lcom/mojang/datafixers/Typed;)Lcom/mojang/datafixers/util/Pair;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix$CbLegacyZombieSplit",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1175",
+   "basis": "EntityZombieSplitFix renames through getNewNameAndTyped since 1.20.5; a 1.20.4 subclass's getNewNameAndTag is reached the way 1.20.5's SimpleEntityRenameFix reaches its own (typed remainder in, answer's tag back as the remainder)"
+  },
+  {
+   "old": "method_5105(Lcom/mojang/datafixers/Typed;)Lcom/mojang/datafixers/Typed;",
+   "new": "makeRule()Lcom/mojang/datafixers/TypeRewriteRule;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix.cbVillagerTradeRule(Ltop/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix$CbLegacyVillagerTrade;)Lcom/mojang/datafixers/TypeRewriteRule;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/rt/CbFinDatafix$CbLegacyVillagerTrade",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/minecraft/class_1219",
+   "basis": "VillagerTradeFix fixes trades type-wide since 1.20.5; a 1.20.4 subclass's fix(typed) gets 1.20.4's NamedEntityFix rule on minecraft:villager"
+  }
+ ]
+}
