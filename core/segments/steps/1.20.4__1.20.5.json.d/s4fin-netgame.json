@@ -1,0 +1,344 @@
+{
+ "_s4fin_netgame_basis": "s4fin network: 1.20.4 game / login / configuration packet members whose value types 1.20.5 changed (rt/CbNetGame): holders, Optional for nullable values, ChatType.Bound and the dropped BoundNetwork (facade/ChatTypeBoundNetwork), arguments 1.20.5 added, buffers that became RegistryFriendlyByteBuf; getters 1.20.4 subclasses override come back by mixin beside 1.20.5's and are reached from 1.20.5's shape by override hooks",
+ "superCtorReshapes": {
+  "net/minecraft/class_2783.<init>(ILnet/minecraft/class_1293;)V": {
+   "desc": "(ILnet/minecraft/class_1293;Z)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#mobEffectBlend(Lnet/minecraft/class_1293;)Z"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#mobEffectBuilt(Lnet/minecraft/class_2783;Lnet/minecraft/class_1293;)V",
+   "postArgs": [
+    1
+   ],
+   "basis": "s4fin network: new / super ClientboundUpdateMobEffectPacket(id, instance): 1.20.5's blend flag from the instance's fade (blends while it has not settled), and the packet keeps the factor data 1.20.4's carried"
+  },
+  "net/minecraft/class_2664.<init>(DDDFLjava/util/List;Lnet/minecraft/class_243;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_3414;)V": {
+   "desc": "(DDDFLjava/util/List;Lnet/minecraft/class_243;Lnet/minecraft/class_1927$class_4179;Lnet/minecraft/class_2394;Lnet/minecraft/class_2394;Lnet/minecraft/class_6880;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;"
+   ],
+   "basis": "s4fin network: ClientboundExplodePacket takes the explosion sound's holder in 1.20.5"
+  },
+  "net/minecraft/class_2757.<init>(Ljava/lang/String;Ljava/lang/String;ILnet/minecraft/class_2561;Lnet/minecraft/class_9022;)V": {
+   "desc": "(Ljava/lang/String;Ljava/lang/String;ILjava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#optionalComponent(Lnet/minecraft/class_2561;)Ljava/util/Optional;",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#optionalNumberFormat(Lnet/minecraft/class_9022;)Ljava/util/Optional;"
+   ],
+   "basis": "s4fin network: ClientboundSetScorePacket's display and number format are Optional in 1.20.5 (null was none)"
+  },
+  "net/minecraft/class_8143.<init>(IIIILjava/util/Optional;)V": {
+   "desc": "(ILnet/minecraft/class_6880;IILjava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#damageType(I)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4fin network: the damage type's id in the world's DAMAGE_TYPE registry (1.20.4) is its holder in 1.20.5"
+  },
+  "net/minecraft/class_2678.<init>(IZLjava/util/Set;IIIZZZLnet/minecraft/class_8589;)V": {
+   "desc": "(IZLjava/util/Set;IIIZZZLnet/minecraft/class_8589;Z)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#enforcesSecureChat()Z"
+   ],
+   "basis": "s4fin network: 1.20.5's login packet carries enforcesSecureChat (1.20.4 sent it in the server data packet); the running server's enforceSecureProfile(), as 1.20.5's PlayerList passes"
+  },
+  "net/minecraft/class_2905.<init>(Ljava/lang/String;[B[B)V": {
+   "desc": "(Ljava/lang/String;[B[BZ)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#helloAuthenticates()Z"
+   ],
+   "basis": "s4fin network: 1.20.4 sent a hello only to a client it authenticated; 1.20.5 sends one always and says whether to authenticate"
+  },
+  "net/minecraft/class_2720.<init>(Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;ZLnet/minecraft/class_2561;)V": {
+   "desc": "(Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;ZLjava/util/Optional;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#optionalComponent(Lnet/minecraft/class_2561;)Ljava/util/Optional;"
+   ],
+   "basis": "s4fin network: the resource pack prompt is Optional in 1.20.5 (null was none)"
+  },
+  "net/minecraft/class_7827.<init>(Lnet/minecraft/class_2561;Lnet/minecraft/class_2556$class_7603;)V": {
+   "desc": "(Lnet/minecraft/class_2561;Lnet/minecraft/class_2556$class_7602;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#bound(Lnet/minecraft/class_2556$class_7603;)Lnet/minecraft/class_2556$class_7602;"
+   ],
+   "basis": "s4fin network: ClientboundDisguisedChatPacket carries the bound chat type itself in 1.20.5, resolved in the running world's registries"
+  },
+  "net/minecraft/class_7438.<init>(Ljava/util/UUID;ILnet/minecraft/class_7469;Lnet/minecraft/class_7608$class_7824;Lnet/minecraft/class_2561;Lnet/minecraft/class_7649;Lnet/minecraft/class_2556$class_7603;)V": {
+   "desc": "(Ljava/util/UUID;ILnet/minecraft/class_7469;Lnet/minecraft/class_7608$class_7824;Lnet/minecraft/class_2561;Lnet/minecraft/class_7649;Lnet/minecraft/class_2556$class_7602;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#bound(Lnet/minecraft/class_2556$class_7603;)Lnet/minecraft/class_2556$class_7602;"
+   ],
+   "basis": "s4fin network: ClientboundPlayerChatPacket carries the bound chat type itself in 1.20.5, resolved in the running world's registries"
+  },
+  "net/minecraft/class_2556$class_7602.<init>(Lnet/minecraft/class_2556;Lnet/minecraft/class_2561;Lnet/minecraft/class_2561;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_2561;Ljava/util/Optional;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatType(Lnet/minecraft/class_2556;)Lnet/minecraft/class_6880;",
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#optionalComponent(Lnet/minecraft/class_2561;)Ljava/util/Optional;"
+   ],
+   "basis": "s4fin network: ChatType.Bound takes the chat type's holder (the running world's CHAT_TYPE registry) and an Optional target name"
+  },
+  "net/minecraft/class_8589.<init>(Lnet/minecraft/class_5321;Lnet/minecraft/class_5321;JLnet/minecraft/class_1934;Lnet/minecraft/class_1934;ZZLjava/util/Optional;I)V": {
+   "desc": "(Lnet/minecraft/class_6880;Lnet/minecraft/class_5321;JLnet/minecraft/class_1934;Lnet/minecraft/class_1934;ZZLjava/util/Optional;I)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#dimensionType(Lnet/minecraft/class_5321;)Lnet/minecraft/class_6880;",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4fin network: CommonPlayerSpawnInfo takes the dimension type's holder (the running world's DIMENSION_TYPE registry)"
+  },
+  "net/minecraft/class_6603.<init>(Lnet/minecraft/class_2540;II)V": {
+   "desc": "(Lnet/minecraft/class_9129;II)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;",
+    "keep",
+    "keep"
+   ],
+   "basis": "s4fin network: ClientboundLevelChunkPacketData reads from a RegistryFriendlyByteBuf in 1.20.5"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_2757.comp_2125()Lnet/minecraft/class_2561;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#componentOrNull(Ljava/util/Optional;)Lnet/minecraft/class_2561;",
+   "basis": "s4fin network: ClientboundSetScorePacket.display(), null for none"
+  },
+  "net/minecraft/class_2757.comp_2126()Lnet/minecraft/class_9022;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#numberFormatOrNull(Ljava/util/Optional;)Lnet/minecraft/class_9022;",
+   "basis": "s4fin network: ClientboundSetScorePacket.numberFormat(), null for none"
+  },
+  "net/minecraft/class_8143.comp_1268()I": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#damageTypeId(Lnet/minecraft/class_6880;)I",
+   "basis": "s4fin network: sourceTypeId(), the holder's id in the world's DAMAGE_TYPE registry"
+  },
+  "net/minecraft/class_2720.comp_2162()Lnet/minecraft/class_2561;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#componentOrNull(Ljava/util/Optional;)Lnet/minecraft/class_2561;",
+   "basis": "s4fin network: prompt(), null for none"
+  },
+  "net/minecraft/class_7827.comp_1098()Lnet/minecraft/class_2556$class_7603;": {
+   "desc": "()Lnet/minecraft/class_2556$class_7602;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#boundNetwork(Lnet/minecraft/class_2556$class_7602;)Lnet/minecraft/class_2556$class_7603;",
+   "basis": "s4fin network: chatType(), 1.20.4's network form of the packet's bound chat type (ids in the running world's registries)"
+  },
+  "net/minecraft/class_7438.comp_943()Lnet/minecraft/class_2556$class_7603;": {
+   "desc": "()Lnet/minecraft/class_2556$class_7602;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#boundNetwork(Lnet/minecraft/class_2556$class_7602;)Lnet/minecraft/class_2556$class_7603;",
+   "basis": "s4fin network: chatType(), 1.20.4's network form of the packet's bound chat type (ids in the running world's registries)"
+  },
+  "net/minecraft/class_2556$class_7602.comp_919()Lnet/minecraft/class_2556;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatTypeValue(Lnet/minecraft/class_6880;)Lnet/minecraft/class_2556;",
+   "basis": "s4fin network: Bound.chatType(), the chat type itself"
+  },
+  "net/minecraft/class_2556$class_7602.comp_921()Lnet/minecraft/class_2561;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#componentOrNull(Ljava/util/Optional;)Lnet/minecraft/class_2561;",
+   "basis": "s4fin network: Bound.targetName(), null for none"
+  },
+  "net/minecraft/class_8589.method_52274(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4fin network: CommonPlayerSpawnInfo.write takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_8589.comp_1553()Lnet/minecraft/class_5321;": {
+   "desc": "()Lnet/minecraft/class_6880;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#dimensionTypeKey(Lnet/minecraft/class_6880;)Lnet/minecraft/class_5321;",
+   "basis": "s4fin network: dimensionType(), the dimension type's key"
+  },
+  "net/minecraft/class_6603.method_38590(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4fin network: ClientboundLevelChunkPacketData.write takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_5900$class_5902.method_34182(Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4fin network: ClientboundSetPlayerTeamPacket.Parameters.write takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2622.method_39026(Lnet/minecraft/class_2586;Ljava/util/function/Function;)Lnet/minecraft/class_2622;": {
+   "desc": "(Lnet/minecraft/class_2586;Ljava/util/function/BiFunction;)Lnet/minecraft/class_2622;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#blockEntityTag(Ljava/util/function/Function;)Ljava/util/function/BiFunction;"
+   ],
+   "basis": "s4fin network: ClientboundBlockEntityDataPacket.create's tag getter takes the registries too in 1.20.5; 1.20.4's ignores them"
+  },
+  "net/minecraft/class_4209.method_33139(Lnet/minecraft/class_1937;Lnet/minecraft/class_5712;Lnet/minecraft/class_243;)V": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_6880;Lnet/minecraft/class_243;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbHolders#gameEvent(Lnet/minecraft/class_5712;)Lnet/minecraft/class_6880;",
+    "keep"
+   ],
+   "basis": "s4fin network: DebugPackets.sendGameEventInfo takes the game event's holder in 1.20.5"
+  },
+  "net/minecraft/class_2703$class_5893$class_7829.read(Lnet/minecraft/class_2703$class_7831;Lnet/minecraft/class_2540;)V": {
+   "desc": "(Lnet/minecraft/class_2703$class_7831;Lnet/minecraft/class_9129;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;"
+   ],
+   "basis": "s4fin network: PlayerInfoUpdate Action.Reader.read takes a RegistryFriendlyByteBuf in 1.20.5"
+  },
+  "net/minecraft/class_2703$class_5893$class_7830.write(Lnet/minecraft/class_2540;Lnet/minecraft/class_2703$class_2705;)V": {
+   "desc": "(Lnet/minecraft/class_9129;Lnet/minecraft/class_2703$class_2705;)V",
+   "ops": [
+    "conv top/dext/centurybridge/step/v1_20_5/rt/CbNetBufs#cbRegistryBuf(Lnet/minecraft/class_2540;)Lnet/minecraft/class_9129;",
+    "keep"
+   ],
+   "basis": "s4fin network: PlayerInfoUpdate Action.Writer.write takes a RegistryFriendlyByteBuf in 1.20.5"
+  }
+ },
+ "overrideHooks": [
+  {
+   "old": "method_11946()Lnet/minecraft/class_1291;",
+   "new": "method_11946()Lnet/minecraft/class_6880;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2783",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.mobEffect(Lnet/minecraft/class_1291;)Lnet/minecraft/class_6880;",
+   "basis": "s4fin network: a 1.20.4 subclass's getEffect() answers 1.20.5's holder getter (the client handler calls that)"
+  },
+  {
+   "old": "method_11945()B",
+   "new": "method_11945()I",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2783",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame.amplifierInt(B)I",
+   "basis": "s4fin network: a 1.20.4 subclass's byte getEffectAmplifier() answers 1.20.5's int getter, widened as 1.20.4's client widened it"
+  },
+  {
+   "old": "method_55331()Lnet/minecraft/class_3414;",
+   "new": "method_55331()Lnet/minecraft/class_6880;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2664",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbHolders.soundEvent(Lnet/minecraft/class_3414;)Lnet/minecraft/class_6880;",
+   "basis": "s4fin network: a 1.20.4 subclass's getExplosionSound() answers 1.20.5's holder getter"
+  },
+  {
+   "old": "method_55336()Lnet/minecraft/class_9022;",
+   "new": "method_55336()Ljava/util/Optional;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2751",
+   "unwrap": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame.optionalNumberFormat(Lnet/minecraft/class_9022;)Ljava/util/Optional;",
+   "basis": "s4fin network: a 1.20.4 subclass's getNumberFormat() (nullable) answers 1.20.5's Optional getter"
+  },
+  {
+   "old": "read(Lnet/minecraft/class_2703$class_7831;Lnet/minecraft/class_2540;)V",
+   "new": "read(Lnet/minecraft/class_2703$class_7831;Lnet/minecraft/class_9129;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_2703$class_5893$class_7829",
+   "basis": "s4fin network: a 1.20.4 Action.Reader reads from the RegistryFriendlyByteBuf 1.20.5 hands it (a FriendlyByteBuf)"
+  },
+  {
+   "old": "write(Lnet/minecraft/class_2540;Lnet/minecraft/class_2703$class_2705;)V",
+   "new": "write(Lnet/minecraft/class_9129;Lnet/minecraft/class_2703$class_2705;)V",
+   "args": [
+    0,
+    1
+   ],
+   "onlyUnder": "net/minecraft/class_2703$class_5893$class_7830",
+   "basis": "s4fin network: a 1.20.4 Action.Writer writes to the RegistryFriendlyByteBuf 1.20.5 hands it (a FriendlyByteBuf)"
+  }
+ ],
+ "covers": [
+  "net/minecraft/class_2783.method_11946()Lnet/minecraft/class_1291;",
+  "net/minecraft/class_2783.method_11945()B",
+  "net/minecraft/class_2783.method_42625()Lnet/minecraft/class_1293$class_7247;",
+  "net/minecraft/class_2664.method_55331()Lnet/minecraft/class_3414;",
+  "net/minecraft/class_2664.method_55628(Lnet/minecraft/class_2540;Lnet/minecraft/class_2394;)V",
+  "net/minecraft/class_2751.method_55336()Lnet/minecraft/class_9022;"
+ ],
+ "instanceRedirects": {
+  "net/minecraft/class_2556$class_7602.method_44836(Lnet/minecraft/class_5455;)Lnet/minecraft/class_2556$class_7603;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#toNetwork",
+  "net/minecraft/class_2556.method_44835(Lnet/minecraft/class_2561;)Lnet/minecraft/class_2556$class_7602;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#bind",
+  "net/minecraft/class_7472.comp_809()Ljava/time/Instant;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommandTimeStamp",
+  "net/minecraft/class_7472.comp_944()J": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommandSalt",
+  "net/minecraft/class_7472.comp_810()Lnet/minecraft/class_7450;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommandSignatures",
+  "net/minecraft/class_7472.comp_969()Lnet/minecraft/class_7635$class_7636;": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommandLastSeen"
+ },
+ "classRenames": {
+  "net/minecraft/class_2556$class_7603": "top/dext/centurybridge/step/v1_20_5/facade/ChatTypeBoundNetwork"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_2788.method_17816(Lnet/minecraft/class_2540;Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#recipeToNetwork"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_7472.<init>(Ljava/lang/String;Ljava/time/Instant;JLnet/minecraft/class_7450;Lnet/minecraft/class_7635$class_7636;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#chatCommand"
+ },
+ "lambdaAdapters": {
+  "net/minecraft/class_2703$class_5893$class_7830.write(Lnet/minecraft/class_2540;Lnet/minecraft/class_2703$class_2705;)V": {
+   "iface": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame$LegacyInfoWriter",
+   "adapt": "top/dext/centurybridge/step/v1_20_5/rt/CbNetGame#infoWriter(Ltop/dext/centurybridge/step/v1_20_5/rt/CbNetGame$LegacyInfoWriter;)Lnet/minecraft/class_2703$class_5893$class_7830;",
+   "basis": "s4fin network: a 1.20.4 Action.Writer lambda, adapted to 1.20.5's RegistryFriendlyByteBuf shape"
+  }
+ }
+}
