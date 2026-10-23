@@ -104,7 +104,11 @@ public final class CbWallLevelData {
 
     /** 1.21.11 ServerLevelData.setDayTime(long) */
     public static void setDayTime(ServerLevelData data, long time) {
-        MinecraftServer s = server(data);
+        setOverworldTime(server(data), time);
+    }
+
+    /** the overworld clock's time: 1.21.11's day time, shared by every level */
+    public static void setOverworldTime(MinecraftServer s, long time) {
         Holder<WorldClock> clock = s.registryAccess().get(WorldClocks.OVERWORLD).orElseThrow();
         s.clockManager().setTotalTicks(clock, time);
     }

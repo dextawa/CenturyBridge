@@ -52,7 +52,17 @@
   "net/minecraft/class_4095.method_24529(Lnet/minecraft/class_4168;Lcom/google/common/collect/ImmutableList;Ljava/util/Set;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#addActivityWithConditions",
   "net/minecraft/class_4095.method_66676(Lnet/minecraft/class_4168;ILcom/google/common/collect/ImmutableList;Ljava/util/Set;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#addActivityWithConditions",
   "net/minecraft/class_4095.method_24530(Lnet/minecraft/class_4168;Lcom/google/common/collect/ImmutableList;Ljava/util/Set;Ljava/util/Set;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallBrain#addActivityAndRemoveMemoriesWhenStopped",
-  "net/minecraft/class_1860.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes#getSerializer"
+  "net/minecraft/class_1860.method_8119()Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes#getSerializer",
+  "net/minecraft/class_2540.method_52955(Lnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#writeVec3",
+  "net/minecraft/class_2540.method_52996()Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#readVec3",
+  "net/minecraft/class_2540.method_73167(Lnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#writeLpVec3",
+  "net/minecraft/class_2540.method_73168()Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#readLpVec3",
+  "net/minecraft/class_3218.method_24852(Lnet/minecraft/class_2350;Z)F": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getShade",
+  "net/minecraft/class_3218.method_27910(IIZZ)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#setWeatherParameters",
+  "net/minecraft/class_3218.method_29199(J)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#setDayTime",
+  "net/minecraft/class_3218.method_75003()J": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getDayCount",
+  "net/minecraft/class_3218.method_51836(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5819;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getRandomSequence",
+  "net/minecraft/class_3218.method_52168()Lnet/minecraft/class_8565;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#getRandomSequences"
  },
  "overrideHooks": [
   {
@@ -259,7 +269,9 @@
   "net/minecraft/class_765.method_24187(I)I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#sky",
   "net/minecraft/class_765.method_62228(II)I": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#lightCoordsWithEmission",
   "net/minecraft/class_765.method_62226(FI)F": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#getBrightness",
-  "net/minecraft/class_765.method_23284(Lnet/minecraft/class_2874;I)F": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#getBrightness"
+  "net/minecraft/class_765.method_23284(Lnet/minecraft/class_2874;I)F": "top/dext/centurybridge/step/v26_1/rt/CbWallLight#getBrightness",
+  "net/minecraft/class_2540.method_62783(Lio/netty/buffer/ByteBuf;Lnet/minecraft/class_243;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#writeVec3",
+  "net/minecraft/class_2540.method_62785(Lio/netty/buffer/ByteBuf;)Lnet/minecraft/class_243;": "top/dext/centurybridge/step/v26_1/rt/CbWallServerLevel#readVec3"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
