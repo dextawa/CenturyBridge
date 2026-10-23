@@ -35,6 +35,7 @@
     "CbRestFapiPlayerListMixin",
     "CbRestGameTestHelperMixin",
     "CbRestGenerationChunkHolderMixin",
+    "CbRestHolderLookupAdapterAccessor",
     "CbRestJsonListenerAccessor",
     "CbRestLevelMixin",
     "CbRestMinecraftServerMixin",

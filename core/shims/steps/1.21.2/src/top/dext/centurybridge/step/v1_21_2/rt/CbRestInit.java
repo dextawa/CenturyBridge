@@ -9,6 +9,7 @@ public final class CbRestInit implements ModInitializer {
     public void onInitialize() {
         CbRestRecipeSync.init();
         CbRestRecipeNet.init();
+        top.dext.centurybridge.step.v1_21_2.facade.fapi.FabricElytraItem.register();
         ServerLifecycleEvents.SERVER_STARTING.register(server -> CbRestRecipesHolder.server = server);
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
             if (CbRestRecipesHolder.server == server) {
