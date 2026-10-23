@@ -7,7 +7,10 @@
   "net/minecraft/class_308.method_1452(Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#setupLevel",
   "net/minecraft/class_308.method_27869(Lorg/joml/Matrix4f;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#setupNetherLevel",
   "net/minecraft/class_437.method_40041([Lnet/minecraft/class_339;)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
-  "net/minecraft/class_624.method_32068()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#wolfBodyLayer"
+  "net/minecraft/class_624.method_32068()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui#wolfBodyLayer",
+  "net/minecraft/class_8973.method_55233()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
+  "net/minecraft/class_8973.method_55234()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
+  "net/minecraft/class_8973.method_55235()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels"
  },
  "instanceRedirects": {
   "net/minecraft/class_276.method_1232(I)V": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender",
@@ -34,7 +37,8 @@
  "methodRenames": {
   "net/minecraft/class_383.method_41712()F": "method_56129",
   "net/minecraft/class_7196.method_54618(Ljava/lang/String;Ljava/lang/Runnable;)V": "method_57784",
-  "net/minecraft/class_4228.method_19721()Ljava/nio/ByteBuffer;": "method_59757"
+  "net/minecraft/class_4228.method_19721()Ljava/nio/ByteBuffer;": "method_59757",
+  "net/minecraft/class_4999.method_26422(Lnet/minecraft/class_4985;Lnet/minecraft/class_4587;F)V": "method_56155"
  },
  "overrideRenames": [
   {
@@ -57,6 +61,13 @@
    "onlyUnder": "net/minecraft/class_4228",
    "superCalls": "rename",
    "basis": "s4client: JOrbisAudioStream.readAll() is the FloatSampleSource default readAll() since 1.20.5: every sample read into one 16 KiB-chunked buffer, as the 1.20.4 body read it"
+  },
+  {
+   "old": "method_26422(Lnet/minecraft/class_4985;Lnet/minecraft/class_4587;F)V",
+   "new": "method_56155",
+   "onlyUnder": "net/minecraft/class_4999",
+   "superCalls": "rename",
+   "basis": "s4client: StriderRenderer.scale(strider, pose, partialTick) is 1.20.5's scale override under its own name: 1.20.4 scaled a baby by 0.5, 1.20.5 by the strider's age scale (0.5 for a baby, 1 otherwise); 1.20.4's shadow radius writes (0.25 baby / 0.5) are 1.20.5's getShadowRadius, halved for a baby"
   }
  ],
  "overrideHooks": [
@@ -151,6 +162,30 @@
    "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
    "onlyUnder": "net/minecraft/class_377",
    "basis": "s4client: FontSet.reload(providers) takes option-filtered providers and the options since 1.20.5: a 1.20.4 set's own gets the providers the options select, as 1.20.5's reload selects them"
+  },
+  {
+   "old": "method_55239(Lnet/minecraft/class_8956;FFFFF)V",
+   "new": "method_55239(Lnet/minecraft/class_9236;FFFFF)V",
+   "narrow": true,
+   "onlyUnder": "net/minecraft/class_8974",
+   "superCalls": "rewrite",
+   "basis": "s4client: WindChargeModel.setupAnim takes any AbstractWindCharge since 1.20.5 (1.20.4: WindCharge). A 1.20.4 override still gets only WindCharges"
+  },
+  {
+   "old": "method_55270(Lnet/minecraft/class_8956;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "new": "method_55270(Lnet/minecraft/class_9236;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+   "narrow": true,
+   "onlyUnder": "net/minecraft/class_8987",
+   "superCalls": "rewrite",
+   "basis": "s4client: WindChargeRenderer.render takes any AbstractWindCharge since 1.20.5 (1.20.4: WindCharge). A 1.20.4 override still gets only WindCharges"
+  },
+  {
+   "old": "method_55269(Lnet/minecraft/class_8956;)Lnet/minecraft/class_2960;",
+   "new": "method_55269(Lnet/minecraft/class_9236;)Lnet/minecraft/class_2960;",
+   "narrow": true,
+   "onlyUnder": "net/minecraft/class_8987",
+   "superCalls": "rewrite",
+   "basis": "s4client: WindChargeRenderer.getTextureLocation takes any AbstractWindCharge since 1.20.5 (1.20.4: WindCharge). A 1.20.4 override still answers only for WindCharges"
   }
  ],
  "frameDefaults": {
@@ -420,6 +455,44 @@
     "keep"
    ],
    "basis": "s4client: the debug charts take the SampleStorage since 1.20.5; every 1.20.4 SampleLogger is a LocalSampleLogger, which is one (rt/CbFinNetLoggers)"
+  },
+  "net/minecraft/class_8988.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels#cbBreezeEyesBuilt(Lnet/minecraft/class_8988;Lnet/minecraft/class_5599;Lnet/minecraft/class_2960;)V",
+   "postArgs": [
+    1,
+    2
+   ],
+   "basis": "s4client: 1.20.4's BreezeEyesLayer(parent, modelSet, texture) baked its own model from ModelLayers.BREEZE_EYES and drew it with the given texture; 1.20.5's draws the parent model's eyes. The model set and texture go to the layer, which then draws 1.20.4's way (mixin/CbClientBreezeEyesLayerMixin)"
+  },
+  "net/minecraft/class_8989.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;Lnet/minecraft/class_2960;)V": {
+   "desc": "(Lnet/minecraft/class_3883;)V",
+   "ops": [
+    "keep",
+    "drop",
+    "drop"
+   ],
+   "post": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels#cbBreezeWindBuilt(Lnet/minecraft/class_8989;Lnet/minecraft/class_5599;Lnet/minecraft/class_2960;)V",
+   "postArgs": [
+    1,
+    2
+   ],
+   "basis": "s4client: 1.20.4's BreezeWindLayer(parent, modelSet, texture) baked its own model from ModelLayers.BREEZE_WIND and drew it with getTextureLocation(breeze); 1.20.5's uses a static model and texture. The model set and texture go to the layer, which then draws 1.20.4's way (mixin/CbClientBreezeWindLayerMixin)"
+  },
+  "net/minecraft/class_1002.<init>(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;)V": {
+   "desc": "(Lnet/minecraft/class_3883;Lnet/minecraft/class_5599;Lnet/minecraft/class_5601;Lnet/minecraft/class_2960;)V",
+   "ops": [
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientModels#strayOuterLayer()Lnet/minecraft/class_5601;",
+    "push top/dext/centurybridge/step/v1_20_5/rt/CbClientModels#strayOverlay()Lnet/minecraft/class_2960;"
+   ],
+   "basis": "s4client: 1.20.4's SkeletonClothingLayer(parent, modelSet) was the stray's: ModelLayers.STRAY_OUTER_LAYER and textures/entity/skeleton/stray_overlay.png, which 1.20.5 takes as arguments (the stray renderer passes exactly these)"
   }
  },
  "fieldGetters": {
@@ -428,7 +501,9 @@
   "net/minecraft/class_525.field_43082:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
   "net/minecraft/class_525.field_44672:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
   "net/minecraft/class_442.field_17774:Lnet/minecraft/class_751;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
-  "net/minecraft/class_389.field_44801:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui"
+  "net/minecraft/class_389.field_44801:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientGui",
+  "net/minecraft/class_5602.field_47444:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels",
+  "net/minecraft/class_5602.field_47445:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v1_20_5/rt/CbClientModels"
  },
  "covers": [
   "net/minecraft/class_312.method_1606()V",
@@ -440,6 +515,13 @@
   "net/minecraft/class_378.method_27541(Ljava/util/Map;)V",
   "net/minecraft/class_377.method_2004(Ljava/util/List;)V",
   "net/minecraft/class_353.method_20407(Lnet/minecraft/class_7172;Lnet/minecraft/class_7172;)V",
-  "net/minecraft/class_340.method_53535(J)V"
+  "net/minecraft/class_340.method_53535(J)V",
+  "net/minecraft/class_8973.method_55236()Lnet/minecraft/class_630;",
+  "net/minecraft/class_8973.method_55237()Lnet/minecraft/class_630;",
+  "net/minecraft/class_8973.method_55238()Lnet/minecraft/class_630;",
+  "net/minecraft/class_8988.method_55271(Lnet/minecraft/class_8949;)Lnet/minecraft/class_2960;",
+  "net/minecraft/class_8989.method_55274(Lnet/minecraft/class_8949;)Lnet/minecraft/class_2960;",
+  "net/minecraft/class_958.method_4138(Lnet/minecraft/class_1481;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
+  "net/minecraft/class_967.method_4161(Lnet/minecraft/class_1547;Lnet/minecraft/class_4587;F)V"
  ]
 }

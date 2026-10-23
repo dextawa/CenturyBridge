@@ -336,6 +336,9 @@
     "CbTooltipLevelAccessor"
   ],
   "client": [
+    "CbClientBreezeEyesLayerMixin",
+    "CbClientBreezeModelMixin",
+    "CbClientBreezeWindLayerMixin",
     "CbClientButtonAccessor",
     "CbClientChatScreenMixin",
     "CbClientDebugChartAccessor",
@@ -345,6 +348,7 @@
     "CbClientFontSetMixin",
     "CbClientGameRendererMixin",
     "CbClientJoinMultiplayerMixin",
+    "CbClientLayerDefinitionsMixin",
     "CbClientLightingAccessor",
     "CbClientMinecraftMixin",
     "CbClientMouseMixin",
@@ -358,7 +362,9 @@
     "CbClientSelectionListMixin",
     "CbClientShaderAccessor",
     "CbClientTrueTypeMixin",
+    "CbClientTurtleRendererMixin",
     "CbClientVertexBufferMixin",
+    "CbClientWitherSkeletonRendererMixin",
     "CbFapiClientConfigurationMixin",
     "CbLevelDataClientMixin",
     "CbNetClientPacketListenerAccess",
