@@ -21,7 +21,13 @@
   "net/minecraft/class_5673": "top/dext/centurybridge/step/v1_21_2/facade/ResettingGeneratedWorldTask",
   "net/minecraft/class_8844": "top/dext/centurybridge/step/v1_21_2/facade/CreateSnapshotRealmTask",
   "net/minecraft/class_485": "top/dext/centurybridge/step/v1_21_2/facade/EffectRenderingInventoryScreen",
-  "net/minecraft/class_5829": "top/dext/centurybridge/step/v1_21_2/facade/BundleTutorial"
+  "net/minecraft/class_5829": "top/dext/centurybridge/step/v1_21_2/facade/BundleTutorial",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents$Join": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$Join",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents$Leave": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$Leave",
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$Generate": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$Generate",
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents$LevelTypeChange": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LevelTypeChange",
+  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents": "top/dext/centurybridge/step/v1_21_2/facade/fapi/ClientWorldEvents",
+  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange": "top/dext/centurybridge/step/v1_21_2/facade/fapi/ClientWorldEvents$AfterClientWorldChange"
  },
  "covers": [
   "net/minecraft/class_332.method_51741(Ljava/lang/Runnable;)V",
@@ -807,6 +813,24 @@
    "narrow": true,
    "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
    "basis": "DedicatedServerProperties.createDimensions: 1.21.2 takes a lookup provider; a 1.21.1 override is asked when it is a registry access (narrow), otherwise 1.21.2's own answers"
+  },
+  {
+   "old": "interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;",
+   "new": "interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+   "onlyUnder": "net/fabricmc/fabric/api/event/player/UseItemCallback",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyUseItem",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents.useItem(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyUseItem;Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "0.106.1's UseItemCallback answers an InteractionResult where 1.21.1's Fabric API answered an InteractionResultHolder<ItemStack>: a 1.21.1 callback class's holder is converted as Item.use's is (CbItemResults.result)"
+  },
+  {
+   "old": "onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V",
+   "new": "onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Lnet/minecraft/class_10179;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyMobConversion",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents.mobConversion(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyMobConversion;Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Lnet/minecraft/class_10179;)V",
+   "guard": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
+   "basis": "0.106.1's MobConversion hands the ConversionParams where 1.21.1's Fabric API handed keepEquipment: a 1.21.1 callback class gets the params' keepEquipment"
   }
  ],
  "lambdaAdapters": {
@@ -817,6 +841,14 @@
   "net/minecraft/class_368.method_1986(Lnet/minecraft/class_332;Lnet/minecraft/class_374;J)Lnet/minecraft/class_368$class_369;": {
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts#toast(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestToasts$LegacyToast;)Lnet/minecraft/class_368;"
+  },
+  "net/fabricmc/fabric/api/event/player/UseItemCallback.interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyUseItem",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents#useItem(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyUseItem;)Lnet/fabricmc/fabric/api/event/player/UseItemCallback;"
+  },
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyMobConversion",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents#mobConversion(Ltop/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents$LegacyMobConversion;)Lnet/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion;"
   }
  },
  "ctorRedirects": {
@@ -1075,5 +1107,15 @@
    ],
    "basis": "1.21.1's QueueStrictQueue is renamed to the layer's facade (StrictQueue$QueueStrictQueue, generic in T as 1.21.1's): a 1.21.1 mod's constructor call builds that facade, never 1.21.2's Runnable-only class"
   }
+ },
+ "fieldRedirects": {
+  "net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents.JOIN:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerPlayerEvents.LEAVE:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents.CHUNK_GENERATE:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/event/lifecycle/v1/ServerChunkEvents.CHUNK_LEVEL_TYPE_CHANGE:Lnet/fabricmc/fabric/api/event/Event;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents"
+ },
+ "interfaceCallRedirects": {
+  "net/fabricmc/fabric/api/event/player/UseItemCallback.interact(Lnet/minecraft/class_1657;Lnet/minecraft/class_1937;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1271;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents",
+  "net/fabricmc/fabric/api/entity/event/v1/ServerLivingEntityEvents$MobConversion.onConversion(Lnet/minecraft/class_1308;Lnet/minecraft/class_1308;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestFapiEvents"
  }
 }
