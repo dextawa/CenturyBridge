@@ -349,6 +349,8 @@
   "net/minecraft/class_350.method_60321(D)V",
   "net/minecraft/class_350.method_60322()V",
   "net/minecraft/class_380.method_4625(Lnet/minecraft/class_3300;)V",
+  "net/minecraft/class_4942.method_48524(Lnet/minecraft/class_2960;Ljava/util/Map;)Lcom/google/gson/JsonObject;",
+  "net/minecraft/class_4942.method_48525(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;Lnet/minecraft/class_4942$class_8073;)Lnet/minecraft/class_2960;",
   "net/minecraft/class_516.method_2656()Z",
   "net/minecraft/class_5599.method_14491(Lnet/minecraft/class_3300;)V",
   "net/minecraft/class_7528.method_44381()I",
@@ -701,7 +703,11 @@
   "net/minecraft/class_3888.field_17158:Lnet/minecraft/class_3890;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
   "net/minecraft/class_3888.field_32977:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbTextureMetadata",
   "net/minecraft/class_823.field_32816:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_4/rt/CbBlockEntityRenders",
-  "net/minecraft/class_582.field_52910:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers"
+  "net/minecraft/class_582.field_52910:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_4915.field_42086:Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_4943.field_22944:Lnet/minecraft/class_4942;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_4943.field_22945:Lnet/minecraft/class_4942;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_4946.field_23047:Lnet/minecraft/class_4946$class_4947;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest"
  },
  "classRenames": {
   "net/minecraft/class_7528": "net/minecraft/class_10415",
@@ -740,7 +746,8 @@
   "net/minecraft/class_4005": "top/dext/centurybridge/step/v1_21_4/facade/PreloadedTexture",
   "net/minecraft/class_1049$class_4006": "top/dext/centurybridge/step/v1_21_4/facade/LegacyTextureImage",
   "net/minecraft/class_1046": "top/dext/centurybridge/step/v1_21_4/facade/HttpTexture",
-  "net/minecraft/class_7761$class_7762": "top/dext/centurybridge/step/v1_21_4/facade/LegacyHangingSignModel"
+  "net/minecraft/class_7761$class_7762": "top/dext/centurybridge/step/v1_21_4/facade/LegacyHangingSignModel",
+  "net/minecraft/class_4942$class_8073": "top/dext/centurybridge/step/v1_21_4/facade/ModelTemplateJsonFactory"
  },
  "classRenameBasis": {
   "net/minecraft/class_7528": "1.21.3's AbstractScrollWidget (class_7528) is 1.21.4's AbstractTextAreaWidget (class_10415, same members, same abstract getInnerHeight / scrollRate / renderContents); 1.21.4 reused class_7528 for the new AbstractScrollArea above it. Every 1.21.3 reference to class_7528 meant the text-area widget",
@@ -759,7 +766,8 @@
   "net/minecraft/class_4005": "PreloadedTexture is gone in 1.21.4; the facade is 1.21.3's, a SimpleTexture whose contents are its getTextureImage",
   "net/minecraft/class_1049$class_4006": "SimpleTexture.TextureImage is gone in 1.21.4 (TextureContents); the facade is 1.21.3's",
   "net/minecraft/class_1046": "HttpTexture is gone in 1.21.4 (skins download through SkinTextureDownloader); the facade is 1.21.3's, its legacy-skin processing 1.21.4's same code",
-  "net/minecraft/class_7761$class_7762": "HangingSignRenderer.HangingSignModel is gone in 1.21.4 (a model per attachment); the facade is 1.21.3's, over its one layer"
+  "net/minecraft/class_7761$class_7762": "HangingSignRenderer.HangingSignModel is gone in 1.21.4 (a model per attachment); the facade is 1.21.3's, over its one layer",
+  "net/minecraft/class_4942$class_8073": "ModelTemplate.JsonFactory is gone in 1.21.4 (ModelTemplate builds its JSON itself); the facade is 1.21.3's interface, which ModelTemplate's 1.21.3 create(id, mapping, output, factory) takes again (CbDataModelTemplateMixin)"
  },
  "superCtorReshapes": {
   "net/minecraft/class_7543$class_7544$class_7550.<init>(Lnet/minecraft/class_7543$class_7544;)V": {
@@ -1171,6 +1179,23 @@
     "push top/dext/centurybridge/step/v1_21_4/rt/CbRenderTail#cbNotAlwaysVisible()Z"
    ],
    "basis": "LivingEntityEmissiveLayer takes whether it shows on an invisible entity since 1.21.4; 1.21.3's never did"
+  },
+  "net/minecraft/class_4915.<init>(Ljava/util/function/BiConsumer;)V": {
+   "desc": "(Lnet/minecraft/class_10405;Ljava/util/function/BiConsumer;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_21_4/rt/CbClientRest#cbNoItemDefinitions(Ljava/util/function/BiConsumer;)Lnet/minecraft/class_10405;",
+    "keep:0"
+   ],
+   "basis": "ItemModelGenerators also writes item definitions since 1.21.4; 1.21.3's wrote item model files only (its output here)"
+  },
+  "net/minecraft/class_4910.<init>(Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;Ljava/util/function/Consumer;)V": {
+   "desc": "(Ljava/util/function/Consumer;Lnet/minecraft/class_10405;Ljava/util/function/BiConsumer;)V",
+   "ops": [
+    "keep:0",
+    "conv:1,2 top/dext/centurybridge/step/v1_21_4/rt/CbClientRest#cbDelegatingItemModels(Ljava/util/function/BiConsumer;Ljava/util/function/Consumer;)Lnet/minecraft/class_10405;",
+    "keep:1"
+   ],
+   "basis": "BlockModelGenerators hands block items' definitions to an ItemModelOutput since 1.21.4; 1.21.3 wrote a delegating item model and reported the item as skipped, which the output does"
   }
  },
  "superRenames": {
@@ -1409,7 +1434,9 @@
   "net/minecraft/class_591.method_62111(Lnet/minecraft/class_10055;Lnet/minecraft/class_1306;)Lnet/minecraft/class_572$class_573;": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
   "net/minecraft/class_1005.method_62599(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10082;FF)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
   "net/minecraft/class_989.method_4192(Lnet/minecraft/class_10042;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
-  "net/minecraft/class_5697.method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers"
+  "net/minecraft/class_5697.method_62594(Lnet/minecraft/class_10055;Lnet/minecraft/class_1087;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;Lnet/minecraft/class_1306;Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbRenderLayers",
+  "net/minecraft/class_636.method_2916(I)V": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest",
+  "net/minecraft/class_3999.method_18130(Lnet/minecraft/class_289;Lnet/minecraft/class_1060;)Lnet/minecraft/class_287;": "top/dext/centurybridge/step/v1_21_4/rt/CbClientRest"
  },
  "superRedirects": {
   "net/minecraft/class_1087.method_4710()Lnet/minecraft/class_806;": "top/dext/centurybridge/step/v1_21_4/rt/CbItemRender#superGetOverrides",

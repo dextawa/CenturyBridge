@@ -111,6 +111,7 @@ def main():
     block_entity_renders(frag)
     render_tail(frag)
     render_layers(frag)
+    client_rest(frag)
     json.dump(frag, open(FRAG, "w"), indent=1, ensure_ascii=False)
     open(FRAG, "a").write("\n")
 
@@ -971,6 +972,38 @@ def render_layers(frag):
     frag.setdefault("lambdaAdapters", {})["net/minecraft/class_3884.method_17150(Z)V"] = {
         "iface": L + "$CbLegacyVillagerLikeModel", "adapt": L + "#adaptVillagerLikeModel(L" + L + "$CbLegacyVillagerLikeModel;)Lnet/minecraft/class_3884;"}
     frag.setdefault("fieldGetters", {})["net/minecraft/class_582.field_52910:Lnet/minecraft/class_9953;"] = L
+
+
+def client_rest(frag):
+    """model data generators, pick-from-inventory, vanilla particle render types' begin (CbClientRest)."""
+    R = RT + "/CbClientRest"
+    IMO = "Lnet/minecraft/class_10405;"
+    scr = frag.setdefault("superCtorReshapes", {})
+    scr["net/minecraft/class_4915.<init>(Ljava/util/function/BiConsumer;)V"] = {
+        "desc": "(" + IMO + "Ljava/util/function/BiConsumer;)V",
+        "ops": ["conv:0 " + R + "#cbNoItemDefinitions(Ljava/util/function/BiConsumer;)" + IMO, "keep:0"],
+        "basis": "ItemModelGenerators also writes item definitions since 1.21.4; 1.21.3's wrote item model files only (its output here)"}
+    scr["net/minecraft/class_4910.<init>(Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;Ljava/util/function/Consumer;)V"] = {
+        "desc": "(Ljava/util/function/Consumer;" + IMO + "Ljava/util/function/BiConsumer;)V",
+        "ops": ["keep:0", "conv:1,2 " + R + "#cbDelegatingItemModels(Ljava/util/function/BiConsumer;Ljava/util/function/Consumer;)" + IMO, "keep:1"],
+        "basis": "BlockModelGenerators hands block items' definitions to an ItemModelOutput since 1.21.4; 1.21.3 wrote a delegating item model "
+                 "and reported the item as skipped, which the output does"}
+    fg = frag.setdefault("fieldGetters", {})
+    for k in ["net/minecraft/class_4915.field_42086:Lnet/minecraft/class_2960;", "net/minecraft/class_4943.field_22944:Lnet/minecraft/class_4942;",
+              "net/minecraft/class_4943.field_22945:Lnet/minecraft/class_4942;", "net/minecraft/class_4946.field_23047:Lnet/minecraft/class_4946$class_4947;"]:
+        fg[k] = R
+    frag.setdefault("classRenames", {})["net/minecraft/class_4942$class_8073"] = FAC + "ModelTemplateJsonFactory"
+    frag.setdefault("classRenameBasis", {})["net/minecraft/class_4942$class_8073"] = (
+        "ModelTemplate.JsonFactory is gone in 1.21.4 (ModelTemplate builds its JSON itself); the facade is 1.21.3's interface, which "
+        "ModelTemplate's 1.21.3 create(id, mapping, output, factory) takes again (CbDataModelTemplateMixin)")
+    covers = set(frag.get("covers", []))
+    covers.add("net/minecraft/class_4942.method_48524(Lnet/minecraft/class_2960;Ljava/util/Map;)Lcom/google/gson/JsonObject;")
+    covers.add("net/minecraft/class_4942.method_48525(Lnet/minecraft/class_2960;Lnet/minecraft/class_4944;Ljava/util/function/BiConsumer;"
+               "Lnet/minecraft/class_4942$class_8073;)Lnet/minecraft/class_2960;")
+    frag["covers"] = sorted(covers)
+    ir = frag.setdefault("instanceRedirects", {})
+    ir["net/minecraft/class_636.method_2916(I)V"] = R
+    ir["net/minecraft/class_3999.method_18130(Lnet/minecraft/class_289;Lnet/minecraft/class_1060;)Lnet/minecraft/class_287;"] = R
 
 
 if __name__ == "__main__":

@@ -30,6 +30,8 @@
     "CbRestVillageGoalMixin"
   ],
   "client": [
+    "CbDataModelTemplateMixin",
+    "CbDataTexturedModelAccess",
     "CbEquipDispatcherAccess",
     "CbEquipMinecraftMixin",
     "CbGuiRecipeCollectionMixin",
