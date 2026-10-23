@@ -1,0 +1,21 @@
+{
+ "ctorRedirects": {
+  "net/minecraft/class_1273.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemLocks#newLockCode"
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1273.comp_2371()Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemLocks",
+  "net/minecraft/class_1273.method_5474(Lnet/minecraft/class_2487;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemLocks"
+ },
+ "staticRedirects": {
+  "net/minecraft/class_1273.method_5473(Lnet/minecraft/class_2487;)Lnet/minecraft/class_1273;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemLocks",
+  "net/minecraft/class_2350.method_50026(III)Lnet/minecraft/class_2350;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemGeometry",
+  "net/minecraft/class_259.method_16344(Lnet/minecraft/class_265;Lnet/minecraft/class_2350;)Lnet/minecraft/class_265;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemGeometry"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_174.field_1197:Lnet/minecraft/class_2076;": "net/minecraft/class_174#field_54206"
+ },
+ "methodRenames": {
+  "net/minecraft/class_238.method_61124()Lnet/minecraft/class_243;": "method_64033",
+  "net/minecraft/class_2350.method_10163()Lnet/minecraft/class_2382;": "method_62675"
+ }
+}
