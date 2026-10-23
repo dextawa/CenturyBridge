@@ -589,5 +589,14 @@
  },
  "instanceFieldSetters": {
   "net/minecraft/class_1297.field_28629:Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityMisc#setWasOnFire"
- }
+ },
+ "covers": [
+  "net/minecraft/class_1297.method_5687(I)Z",
+  "net/minecraft/class_1297.method_5691()I",
+  "net/minecraft/class_1297.method_5671()Lnet/minecraft/class_2168;",
+  "net/minecraft/class_1297.method_43496(Lnet/minecraft/class_2561;)V",
+  "net/minecraft/class_1297.method_9200()Z",
+  "net/minecraft/class_1297.method_9201()Z",
+  "net/minecraft/class_1297.method_9202()Z"
+ ]
 }
