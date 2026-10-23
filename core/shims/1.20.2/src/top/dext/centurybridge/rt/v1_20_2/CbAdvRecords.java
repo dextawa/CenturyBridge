@@ -181,6 +181,14 @@ public final class CbAdvRecords {
         return out;
     }
 
+    /**
+     * StatePropertiesPredicate.Builder.build(): 1.20.1 answered a predicate over the matchers added so far
+     * (none: one matching any state, as ANY does); 1.20.2 answers absent for none
+     */
+    public static net.minecraft.class_4559 method_22528(net.minecraft.class_4559.class_4560 self) {
+        return self.method_22528().orElse(CbAdvAny.field_20736);
+    }
+
     private CbAdvRecords() {
     }
 }

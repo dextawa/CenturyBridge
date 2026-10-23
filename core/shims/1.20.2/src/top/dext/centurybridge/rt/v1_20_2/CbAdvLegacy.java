@@ -91,6 +91,21 @@ public final class CbAdvLegacy {
         Float method_9177();
     }
 
+    /** EntitySubPredicate.serializeCustomData() (abstract in 1.20.1) */
+    public interface SubJson {
+        com.google.gson.JsonObject method_22494();
+    }
+
+    /** EntitySubPredicate.serialize() (a default in 1.20.1) */
+    public interface SubSerialize {
+        com.google.gson.JsonElement method_43098();
+    }
+
+    /** EntitySubPredicate.type() (abstract in 1.20.1; its Type is the facade) */
+    public interface SubType {
+        top.dext.centurybridge.facade.v1_20_2.class_7376$class_7377 method_43099();
+    }
+
     /** MobEffectsPredicate.and(effect) */
     public interface EffectsAnd {
         net.minecraft.class_2102 method_9065(net.minecraft.class_1291 effect);

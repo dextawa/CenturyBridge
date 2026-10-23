@@ -396,22 +396,35 @@ public final class CbAdvJson {
     }
 
     /**
-     * EntitySubPredicate.serializeCustomData(): the predicate's own fields, without "type" -- what its
-     * type's 1.20.2 MapCodec writes
+     * EntitySubPredicate.serializeCustomData(): the predicate's own fields, without "type". A 1.20.1
+     * implementation answers itself; a 1.20.2 predicate is what its kind's MapCodec writes.
      */
     public static JsonObject method_22494(net.minecraft.class_7376 self) {
+        if ((Object) self instanceof CbAdvLegacy.SubJson own) {
+            return own.method_22494();
+        }
         @SuppressWarnings("unchecked")
         MapCodec<net.minecraft.class_7376> codec = (MapCodec<net.minecraft.class_7376>) self.comp_1776().comp_1774();
         return encodeMap(codec, self, "entity sub-predicate");
     }
 
-    /** EntitySubPredicate.serialize(): ANY writes JsonNull, any other its fields plus its "type" */
+    /** EntitySubPredicate.serialize(): a 1.20.1 implementation's own override, else 1.20.1's default */
     public static JsonElement method_43098(net.minecraft.class_7376 self) {
-        if (self.comp_1776() == net.minecraft.class_7376.class_7378.field_38724) {
+        return (Object) self instanceof CbAdvLegacy.SubSerialize own ? own.method_43098() : super_method_43098(self);
+    }
+
+    /**
+     * 1.20.1's default serialize() (and a 1.20.1 implementation's super call to it): ANY's kind writes
+     * JsonNull, any other serializeCustomData() plus "type" -- the kind's name in Types.TYPES (null for a
+     * kind no table names, as 1.20.1 wrote it)
+     */
+    public static JsonElement super_method_43098(net.minecraft.class_7376 self) {
+        top.dext.centurybridge.facade.v1_20_2.class_7376$class_7377 type = CbAdvSubTypes.method_43099(self);
+        if (type == CbAdvSubTypes.field_38724) {
             return JsonNull.INSTANCE;
         }
         JsonObject o = method_22494(self);
-        o.addProperty("type", net.minecraft.class_7376.class_7378.field_38731.inverse().get(self.comp_1776()));
+        o.addProperty("type", CbAdvSubTypes.field_38731().inverse().get(type));
         return o;
     }
 

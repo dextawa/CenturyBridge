@@ -16,8 +16,11 @@
   "net/minecraft/class_4550.method_22452()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_4551.method_22473()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_4552.method_22481()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_4559$class_4560.method_22528()Lnet/minecraft/class_4559;": "top/dext/centurybridge/rt/v1_20_2/CbAdvRecords",
   "net/minecraft/class_7376.method_22494()Lcom/google/gson/JsonObject;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_7376.method_43098()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
+  "net/minecraft/class_7376.method_43099()Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7380.method_43114()Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
   "net/minecraft/class_8129.method_48964()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson"
  },
  "staticRedirects": {
@@ -48,6 +51,11 @@
  "fieldRedirects": {
   "net/minecraft/class_2035.field_20687:[Lnet/minecraft/class_2035;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson",
   "net/minecraft/class_2050.field_9609:Lnet/minecraft/class_2050;": "top/dext/centurybridge/rt/v1_20_2/CbAdvAny",
+  "net/minecraft/class_7376$class_7378.field_38724:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7376$class_7378.field_38725:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7376$class_7378.field_38726:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7376$class_7378.field_38727:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
+  "net/minecraft/class_7376$class_7378.field_38728:Lnet/minecraft/class_7376$class_7377;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes",
   "net/minecraft/class_7376.field_38723:Lnet/minecraft/class_7376;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson"
  },
  "adapterHooks": [
@@ -167,6 +175,38 @@
    ],
    "synth": [],
    "basis": "s1fin: a 1.20.1 subclass's own method_35290 is what a call of it answers (the bridge static dispatches through this adapter, as 1.20.1's virtual call did)"
+  },
+  {
+   "under": "net/minecraft/class_7376",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$SubType",
+   "requires": [
+    "method_43099()Lnet/minecraft/class_7376$class_7377;"
+   ],
+   "synth": [
+    {
+     "new": "comp_1776()Lnet/minecraft/class_7376$class_8745;",
+     "call": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes.legacyType(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$SubType;)Lnet/minecraft/class_7376$class_8745;"
+    }
+   ],
+   "basis": "s1fin: a 1.20.1 EntitySubPredicate's type() is its kind; 1.20.2 asks the kind's codec holder (comp_1776), a kind of the mod's own built on its Type (CbAdvSubTypes)"
+  },
+  {
+   "under": "net/minecraft/class_7376",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$SubJson",
+   "requires": [
+    "method_22494()Lcom/google/gson/JsonObject;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 EntitySubPredicate's serializeCustomData is what its kind writes, and what a call of it answers"
+  },
+  {
+   "under": "net/minecraft/class_7376",
+   "adapter": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$SubSerialize",
+   "requires": [
+    "method_43098()Lcom/google/gson/JsonElement;"
+   ],
+   "synth": [],
+   "basis": "s1fin: a 1.20.1 EntitySubPredicate's own serialize() is what a call of it answers"
   }
  ],
  "superRedirects": {
@@ -181,6 +221,7 @@
   "net/minecraft/class_3735.method_16225()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_16225",
   "net/minecraft/class_4550.method_22452()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_22452",
   "net/minecraft/class_4551.method_22473()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_22473",
+  "net/minecraft/class_7376.method_43098()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_43098",
   "net/minecraft/class_8129.method_48964()Lcom/google/gson/JsonElement;": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#super_method_48964"
  },
  "superCtorReshapes": {
@@ -197,5 +238,15 @@
    "iface": "top/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BoundsFactory",
    "adapt": "top/dext/centurybridge/rt/v1_20_2/CbAdvJson#boundsFactory(Ltop/dext/centurybridge/rt/v1_20_2/CbAdvLegacy$BoundsFactory;)Lnet/minecraft/class_2096$class_2097;"
   }
+ },
+ "covers": [
+  "net/minecraft/class_4550$class_4710.method_37214(Ljava/lang/Iterable;)Lnet/minecraft/class_4550$class_4710;",
+  "net/minecraft/class_4553$class_4557.method_35311(Lnet/minecraft/class_3445;Lnet/minecraft/class_2096$class_2100;)Lnet/minecraft/class_4553$class_4557;"
+ ],
+ "classRenames": {
+  "net/minecraft/class_7376$class_7377": "top/dext/centurybridge/facade/v1_20_2/class_7376$class_7377"
+ },
+ "fieldGetters": {
+  "net/minecraft/class_7376$class_7378.field_38731:Lcom/google/common/collect/BiMap;": "top/dext/centurybridge/rt/v1_20_2/CbAdvSubTypes"
  }
 }

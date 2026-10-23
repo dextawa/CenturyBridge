@@ -1502,5 +1502,28 @@
    ],
    "basis": "gen_s1adv: positional, predicates that may be ANY as Optionals, arrays as Lists"
   }
- }
+ },
+ "covers": [
+  "net/minecraft/class_2022$class_2023.method_35130(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2022$class_2023;",
+  "net/minecraft/class_2022$class_2023.method_35132(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2022$class_2023;",
+  "net/minecraft/class_2048$class_2049.method_27971(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_27972(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_37229(Lnet/minecraft/class_2048;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_37230(Lnet/minecraft/class_2090;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_8918(Lnet/minecraft/class_2090;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_8919(Lnet/minecraft/class_2040;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2048$class_2049.method_8923(Lnet/minecraft/class_2102;)Lnet/minecraft/class_2048$class_2049;",
+  "net/minecraft/class_2090$class_2091.method_27989(Lnet/minecraft/class_4550;)Lnet/minecraft/class_2090$class_2091;",
+  "net/minecraft/class_2090$class_2091.method_27990(Ljava/lang/Boolean;)Lnet/minecraft/class_2090$class_2091;",
+  "net/minecraft/class_2090$class_2091.method_35274(Lnet/minecraft/class_4551;)Lnet/minecraft/class_2090$class_2091;",
+  "net/minecraft/class_2090$class_2091.method_35275(Lnet/minecraft/class_4552;)Lnet/minecraft/class_2090$class_2091;",
+  "net/minecraft/class_3735$class_5278.method_27966(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_27968(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_27969(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_27970(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_35195(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_3735$class_5278.method_35196(Lnet/minecraft/class_2073;)Lnet/minecraft/class_3735$class_5278;",
+  "net/minecraft/class_4550$class_4710.method_27963(Lnet/minecraft/class_4559;)Lnet/minecraft/class_4550$class_4710;",
+  "net/minecraft/class_4553$class_4557.method_37251(Lnet/minecraft/class_2048;)Lnet/minecraft/class_4553$class_4557;"
+ ]
 }
