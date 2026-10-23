@@ -300,6 +300,15 @@ class Table:
             if hit is not None:
                 matched += 1
                 cvotes.extend(v)
+                # a body that kept its name and is the same code tells the renames it implies (the
+                # fields it reads and writes, the methods it calls: 26.1's loot classes named their
+                # MapCodec constant MAP_CODEC where 1.21.11 said CODEC, the class initializer that
+                # builds it otherwise unchanged)
+                if commit and m.insns is not None and hit.insns is not None:
+                    ok, bv = self.same_code(m, hit)
+                    if ok and self.last_anchors >= 2:
+                        renames.extend(("M" if e[0] == "M" else "F", e[1], e[2], e[4], self.last_anchors,
+                                        "named in a kept body that is the same code") for e in bv if e[0] in ("M", "F"))
                 continue
             if self.w_has(w, "M", n, dt, []):
                 matched += 0.5  # inherited on W: an override every subclass of the parent may have
