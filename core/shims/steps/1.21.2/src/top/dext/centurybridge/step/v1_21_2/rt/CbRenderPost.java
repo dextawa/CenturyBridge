@@ -46,6 +46,16 @@ public final class CbRenderPost {
         }
     }
 
+    /** TextureManager.bindForSetup(location), as an instance redirect */
+    public static void method_22813(net.minecraft.class_1060 textureManager, net.minecraft.class_2960 location) {
+        bindForSetup(textureManager, location);
+    }
+
+    /** ModelResourceLocation.vanilla(path, variant): 1.21.1's body, minecraft:path with the variant */
+    public static net.minecraft.class_1091 method_45910(String path, String variant) {
+        return new net.minecraft.class_1091(net.minecraft.class_2960.method_60656(path), variant);
+    }
+
     /** new MapRenderer(textureManager, decorationTextures): 1.21.1's renderer owned its map textures, a texture manager of its own */
     public static net.minecraft.class_330 mapRenderer(net.minecraft.class_1060 textureManager, net.minecraft.class_9443 decorationTextures) {
         return new net.minecraft.class_330(decorationTextures, new net.minecraft.class_10093(textureManager));

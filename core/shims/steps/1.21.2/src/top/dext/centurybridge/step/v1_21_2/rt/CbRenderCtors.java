@@ -60,4 +60,19 @@ public final class CbRenderCtors {
             | (int) (b * 255.0F) & 0xFF;
         return new net.minecraft.class_382.class_328(x0, y0, x1, y1, depth, color);
     }
+
+    /**
+     * the light emission 1.21.2's BakedQuad / BlockElement / FaceBakery.bakeQuad take: 1.21.1's quads and elements had
+     * none (no light_emission), which 1.21.2's 0 means
+     */
+    public static int noLightEmission() {
+        return 0;
+    }
+
+    /** FaceBakery.bakeQuad(from, to, face, sprite, direction, modelState, rotation, shade): 1.21.2's with no emission */
+    public static net.minecraft.class_777 method_3468(net.minecraft.class_796 bakery, org.joml.Vector3f from, org.joml.Vector3f to,
+                                                    net.minecraft.class_783 face, net.minecraft.class_1058 sprite, net.minecraft.class_2350 direction,
+                                                    net.minecraft.class_3665 modelState, net.minecraft.class_789 rotation, boolean shade) {
+        return bakery.method_3468(from, to, face, sprite, direction, modelState, rotation, shade, 0);
+    }
 }

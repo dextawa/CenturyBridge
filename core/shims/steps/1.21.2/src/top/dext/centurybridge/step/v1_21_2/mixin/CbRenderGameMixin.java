@@ -2,7 +2,9 @@ package top.dext.centurybridge.step.v1_21_2.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
@@ -16,10 +18,20 @@ import org.spongepowered.asm.mixin.injection.Redirect;
  *   callers passed a double getFov, 1.21.2's getFov is a float).
  * - getMapRenderer(): 1.21.2 keeps the one map renderer on Minecraft.
  * - processBlurEffect(partialTick): 1.21.2's processBlurEffect(); its blur chain has no time uniform to take the tick.
+ * And the resource pool 1.21.2 renders the level with, for CbRenderFrames.
  */
 @Environment(EnvType.CLIENT)
 @Mixin(net.minecraft.class_757.class)
-public abstract class CbRenderGameMixin {
+public abstract class CbRenderGameMixin implements top.dext.centurybridge.step.v1_21_2.rt.CbRenderFrames.ResourcePool {
+
+    @Shadow
+    @Final
+    private net.minecraft.class_9920 field_53066;
+
+    @Override
+    public net.minecraft.class_9922 cb$resourcePool() {
+        return this.field_53066;
+    }
 
     public void method_22709(org.joml.Matrix4f matrix) {
         com.mojang.blaze3d.systems.RenderSystem.setProjectionMatrix(matrix, net.minecraft.class_10366.field_54953);
