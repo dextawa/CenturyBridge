@@ -1,0 +1,69 @@
+{
+ "callReshapes": {
+  "net/minecraft/class_1297.method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
+   "desc": "(Lnet/minecraft/class_3218;DDDLjava/util/Set;FFZ)Z",
+   "ops": [
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#keepCamera()Z"
+   ],
+   "basis": "1.21.1 Entity/ServerPlayer.teleportTo never reset the camera; 1.21.2's last argument does it when true (CbEntityFrames#keepCamera)"
+  },
+  "net/minecraft/class_1299.method_5883(Lnet/minecraft/class_1937;)Lnet/minecraft/class_1297;": {
+   "desc": "(Lnet/minecraft/class_1937;Lnet/minecraft/class_3730;)Lnet/minecraft/class_1297;",
+   "ops": [
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#createReason()Lnet/minecraft/class_3730;"
+   ],
+   "basis": "1.21.2's EntityType.create(level, reason) reads the reason nowhere (same body as 1.21.1's create(level)); TRIGGERED as 1.21.2's game-logic callers pass (CbEntityFrames#createReason)"
+  },
+  "net/minecraft/class_1657.method_7284()V": {
+   "desc": "(Lnet/minecraft/class_1799;)V",
+   "ops": [
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#shield()Lnet/minecraft/class_1799;"
+   ],
+   "basis": "1.21.1 disableShield put the 100-tick cooldown on Items.SHIELD; 1.21.2's puts it on the stack's item: a SHIELD stack (CbEntityFrames#shield)"
+  }
+ },
+ "instanceRedirects": {
+  "net/minecraft/class_1308.method_5955(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#canReplaceCurrentItem"
+ },
+ "frameDefaults": {
+  "method_48105(Lnet/minecraft/class_3218;DDDLjava/util/Set;FF)Z": {
+   "7": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#keepCamera()Z"
+  },
+  "method_5883(Lnet/minecraft/class_1937;)Lnet/minecraft/class_1297;": {
+   "1": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#createReason()Lnet/minecraft/class_3730;"
+  },
+  "method_5955(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z": {
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#slotOf(Lnet/minecraft/class_1308;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1304;"
+  },
+  "method_29515(Lnet/minecraft/class_1309;)Z": {
+   "1": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#levelOfTarget(Lnet/minecraft/class_5354;Lnet/minecraft/class_1309;)Lnet/minecraft/class_3218;"
+  },
+  "method_29516(Lnet/minecraft/class_1657;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#levelOfPlayer(Lnet/minecraft/class_5354;Lnet/minecraft/class_1657;)Lnet/minecraft/class_3218;"
+  },
+  "method_6636(Lnet/minecraft/class_3419;)V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#levelOfShearable(Lnet/minecraft/class_5147;)Lnet/minecraft/class_3218;",
+   "2": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#shears(Lnet/minecraft/class_5147;)Lnet/minecraft/class_1799;"
+  },
+  "method_35148(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Z": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#levelOfSensing(Lnet/minecraft/class_6045;Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)Lnet/minecraft/class_3218;"
+  },
+  "method_18303(Lnet/minecraft/class_1309;)Z": {
+   "1": "zero: 1.21.2's Fox selector (and Guardian's) never reads the level; 1.21.1's had none"
+  },
+  "method_6855()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#levelOfPhase(Lnet/minecraft/class_1521;)Lnet/minecraft/class_3218;"
+  },
+  "method_7284()V": {
+   "0": "top/dext/centurybridge/step/v1_21_2/rt/CbEntityFrames#shield()Lnet/minecraft/class_1799;"
+  }
+ }
+}
