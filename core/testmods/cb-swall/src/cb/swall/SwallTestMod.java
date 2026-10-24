@@ -84,6 +84,8 @@ public class SwallTestMod implements ModInitializer {
         check("customRecipe.getSerializer", recipe.method_8119() == TEST_SERIALIZER, recipe.method_8119());
 
         lootRegistry();
+        EARLY_ATTACKS = new net.minecraft.class_10707(0.25F, 1.0F, List.of(), net.minecraft.class_10707.class_10709.field_56308,
+            Optional.of(net.minecraft.class_8103.field_56242), Optional.empty(), Optional.empty());
         ServerLifecycleEvents.SERVER_STARTED.register(SwallTestMod::onStarted);
     }
 
@@ -100,6 +102,7 @@ public class SwallTestMod implements ModInitializer {
         }
     }
 
+    static net.minecraft.class_10707 EARLY_ATTACKS;
     static final com.mojang.serialization.MapCodec<TestFn> TEST_FN_CODEC = com.mojang.serialization.MapCodec.unit(TestFn::new);
     static net.minecraft.class_5339<TestFn> TEST_FN_TYPE;
 
@@ -120,6 +123,46 @@ public class SwallTestMod implements ModInitializer {
         Object o = reg.method_63535(net.minecraft.class_2960.method_60656("set_count"));
         check("lootRegistry.iterateAndInstanceof", n > 30 && o instanceof net.minecraft.class_5339<?> sc
             && sc.comp_1858() == net.minecraft.class_141.field_45845 && new TestFn().method_29321() == TEST_FN_TYPE, n + " " + o);
+    }
+
+    /** data components whose value type 26.1 changed, set and read by 1.21.11 code */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void componentValues(MinecraftServer server) {
+        net.minecraft.class_2378<net.minecraft.class_8110> damageTypes = server.method_30611().method_30530(net.minecraft.class_7924.field_42534);
+        net.minecraft.class_6880<net.minecraft.class_8110> generic = damageTypes.method_46747(net.minecraft.class_8111.field_42348);
+        net.minecraft.class_1799 stack = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600);
+        stack.method_57379(net.minecraft.class_9334.field_63636, new net.minecraft.class_9791<>(generic));
+        net.minecraft.class_9791<net.minecraft.class_8110> back = stack.method_58694(net.minecraft.class_9334.field_63636);
+        check("componentValue.eitherHolder", back != null && back.comp_3636().left().get().method_40230().get().equals(net.minecraft.class_8111.field_42348), back);
+        stack.method_57379(net.minecraft.class_9334.field_63636, new net.minecraft.class_9791<>(net.minecraft.class_8111.field_42348));
+        Object raw = stack.method_58694(net.minecraft.class_9334.field_63636);
+        check("componentValue.eitherKeyResolvedAndInstanceof", raw instanceof net.minecraft.class_9791<?> e
+            && e.comp_3636().left().isPresent() && e.comp_3636().left().get().method_40230().get().equals(net.minecraft.class_8111.field_42348), raw);
+
+        net.minecraft.class_6862<net.minecraft.class_2582> flower = net.minecraft.class_1799.class.cast(
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_8498)).method_58694(net.minecraft.class_9334.field_56398);
+        check("componentValue.bannerTagVanilla", net.minecraft.class_7440.field_39098.equals(flower), flower);
+        stack.method_57379(net.minecraft.class_9334.field_56398, net.minecraft.class_7440.field_39098);
+        Optional<net.minecraft.class_2960> loc = Optional.ofNullable(stack.method_58694(net.minecraft.class_9334.field_56398))
+            .map((net.minecraft.class_6862<net.minecraft.class_2582> t) -> t.comp_327());
+        check("componentValue.bannerTagSetLambda", loc.isPresent() && loc.get().equals(net.minecraft.class_7440.field_39098.comp_327()), loc);
+
+        net.minecraft.class_10711 trim = new net.minecraft.class_1799(net.minecraft.class_1802.field_8620).method_58694(net.minecraft.class_9334.field_56397);
+        check("componentValue.providesTrimMaterial", trim != null && trim.comp_3599().comp_3636().left().get().method_40230().get()
+            .equals(net.minecraft.class_8055.field_42005), trim);
+
+        net.minecraft.class_10707 attacks = new net.minecraft.class_10707(0.25F, 1.0F, List.of(), net.minecraft.class_10707.class_10709.field_56308,
+            Optional.of(net.minecraft.class_8103.field_56242), Optional.empty(), Optional.empty());
+        net.minecraft.class_10707 shield = new net.minecraft.class_1799(net.minecraft.class_1802.field_8255).method_58694(net.minecraft.class_9334.field_56396);
+        check("componentValue.blocksAttacksTag", attacks.comp_3637().get().equals(net.minecraft.class_8103.field_56242)
+            && shield.comp_3637().get().equals(net.minecraft.class_8103.field_56242), attacks.comp_3637() + " " + shield.comp_3637());
+        net.minecraft.class_1799 early = new net.minecraft.class_1799(net.minecraft.class_1802.field_8600);
+        early.method_57379(net.minecraft.class_9334.field_56396, EARLY_ATTACKS);
+        net.minecraft.class_10707 earlyBack = early.method_58694(net.minecraft.class_9334.field_56396);
+        com.google.gson.JsonElement earlyJson = net.minecraft.class_1799.field_24671.encodeStart(
+            server.method_30611().method_57093(com.mojang.serialization.JsonOps.INSTANCE), early).getOrThrow();
+        check("componentValue.blocksAttacksEarlyTag", earlyBack.comp_3637().get().equals(net.minecraft.class_8103.field_56242)
+            && earlyJson.toString().contains("#minecraft:bypasses_shield"), earlyJson);
     }
 
     /** generic drift at the wall read on a running server */
@@ -170,6 +213,7 @@ public class SwallTestMod implements ModInitializer {
             interactions(server);
             levelData(server);
             generic(server);
+            componentValues(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);

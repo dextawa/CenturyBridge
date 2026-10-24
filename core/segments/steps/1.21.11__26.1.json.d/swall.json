@@ -150,7 +150,15 @@
   "net/minecraft/class_2378.method_10206(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getId",
   "net/minecraft/class_2378.method_47983(Ljava/lang/Object;)Lnet/minecraft/class_6880;": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#wrapAsHolder",
   "net/minecraft/class_2359.method_10206(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getId",
-  "net/minecraft/class_2359.method_56158(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getIdOrThrow"
+  "net/minecraft/class_2359.method_56158(Ljava/lang/Object;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistry#getIdOrThrow",
+  "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#set",
+  "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#update",
+  "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#update",
+  "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#set",
+  "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#set",
+  "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#set",
+  "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#setComponent",
+  "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#component"
  },
  "overrideHooks": [
   {
@@ -1265,6 +1273,19 @@
     "keep:3"
    ],
    "basis": "26.1 keeps the NBT path compiled with its text and adds a plain flag 1.21.11 lacked (CbWallComponents)"
+  },
+  "net/minecraft/class_10707.<init>(FFLjava/util/List;Lnet/minecraft/class_10707$class_10709;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V": {
+   "desc": "(FFLjava/util/List;Lnet/minecraft/class_10707$class_10709;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/Optional;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "keep:2",
+    "keep:3",
+    "conv:4 top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#tagSet(Ljava/util/Optional;)Ljava/util/Optional;",
+    "keep:5",
+    "keep:6"
+   ],
+   "basis": "new BlocksAttacks(.., bypassedBy tag, ..): 26.1 takes the damage types as a HolderSet; the tag as the registries' named set, or, made with an item before registries load, a set that is the tag's whenever used and encodes as the tag (CbWallTagSet) -- 1.21.11 looked the tag up when used"
   }
  },
  "fieldGetters": {
@@ -1509,6 +1530,12 @@
    ],
    "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#contextValue(Ljava/lang/Object;)Ljava/lang/Object;",
    "basis": "26.1's LootContextParams.TOOL is a key of ItemInstance and vanilla puts an ItemStackTemplate there where it has no stack (Block.getDrops / LootCommand / triggers take an ItemInstance); 1.21.11's held an ItemStack: a template read back is its stack, every other value as it is"
+  },
+  "net/minecraft/class_10707.comp_3637()Ljava/util/Optional;": {
+   "desc": "()Ljava/util/Optional;",
+   "ops": [],
+   "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#tagOf(Ljava/util/Optional;)Ljava/util/Optional;",
+   "basis": "BlocksAttacks.bypassedBy(): 26.1 holds a HolderSet of damage types where 1.21.11 held a TagKey; a set standing for a tag (a named set, or the tag a 1.21.11 mod gave) answers the tag; a listed set (26.1 data can list types) has no 1.21.11 form and stays a set"
   }
  },
  "instanceFieldGetters": {
@@ -1538,7 +1565,10 @@
   "net/minecraft/class_5338": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castEntryType",
   "net/minecraft/class_5657": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castNumberProviderType",
   "net/minecraft/class_5650": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castNbtProviderType",
-  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castScoreProviderType"
+  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#castScoreProviderType",
+  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#castEitherHolder",
+  "net/minecraft/class_10711": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#castProvidesTrimMaterial",
+  "net/minecraft/class_6862": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#castTagKey"
  },
  "instanceOfRedirects": {
   "net/minecraft/class_5339": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isFunctionType",
@@ -1546,7 +1576,10 @@
   "net/minecraft/class_5338": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isEntryType",
   "net/minecraft/class_5657": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isNumberProviderType",
   "net/minecraft/class_5650": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isNbtProviderType",
-  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isScoreProviderType"
+  "net/minecraft/class_5669": "top/dext/centurybridge/step/v26_1/rt/CbWallRegistryValues#isScoreProviderType",
+  "net/minecraft/class_9791": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#isEitherHolder",
+  "net/minecraft/class_10711": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#isProvidesTrimMaterial",
+  "net/minecraft/class_6862": "top/dext/centurybridge/step/v26_1/rt/CbWallComponentValues#isTagKey"
  },
  "genericWitnesses": {
   "net/minecraft/class_7923.field_41133:Lnet/minecraft/class_2378;": {
@@ -1676,6 +1709,76 @@
     "net/minecraft/class_10352.method_64966(Lnet/minecraft/class_169;Ljava/lang/Object;)Ljava/lang/Object;"
    ],
    "basis": "phantom key: LootContextArg.ArgCodecBuilder.anyItemStack(function of a tool key): the keys handed to the mod's function are 26.1's item keys (TOOL) and pass unchanged; a value the mod's LootContextArg reads under them comes through LootContext's getters, a template read as its stack"
+  },
+  "net/minecraft/class_9334.field_56397:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_10711"
+   ],
+   "basis": "DataComponents.PROVIDES_TRIM_MATERIAL: the component type passes unchanged; 1.21.11 held ProvidesTrimMaterial (around an EitherHolder), 26.1 holds the trim material's holder. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
+  },
+  "net/minecraft/class_9334.field_56398:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_6862"
+   ],
+   "basis": "DataComponents.PROVIDES_BANNER_PATTERNS: the component type passes unchanged; 1.21.11 held a TagKey of banner patterns, 26.1 holds the tag's HolderSet. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
+  },
+  "net/minecraft/class_9334.field_56595:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_9791"
+   ],
+   "basis": "DataComponents.CHICKEN_VARIANT: the component type passes unchanged; 1.21.11 held EitherHolder<ChickenVariant>, 26.1 holds the holder. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
+  },
+  "net/minecraft/class_9334.field_63636:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_9791"
+   ],
+   "basis": "DataComponents.DAMAGE_TYPE: the component type passes unchanged; 1.21.11 held EitherHolder<DamageType>, 26.1 holds the holder. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
+  },
+  "net/minecraft/class_9334.field_64474:Lnet/minecraft/class_9331;": {
+   "by": [
+    "net/minecraft/class_1799.method_57379(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57368(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/util/function/UnaryOperator;)Ljava/lang/Object;",
+    "net/minecraft/class_1799.method_57367(Lnet/minecraft/class_9331;Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+    "net/minecraft/class_9323$class_9324.method_57840(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9323$class_9324;",
+    "net/minecraft/class_9326$class_9327.method_57854(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_9326$class_9327;",
+    "net/minecraft/class_9335.method_57938(Lnet/minecraft/class_9331;Ljava/lang/Object;)Ljava/lang/Object;",
+    "net/minecraft/class_1297.method_66653(Lnet/minecraft/class_9331;Ljava/lang/Object;)V",
+    "net/minecraft/class_1792$class_1793.method_57349(Lnet/minecraft/class_9331;Ljava/lang/Object;)Lnet/minecraft/class_1792$class_1793;",
+    "net/minecraft/class_9791"
+   ],
+   "basis": "DataComponents.ZOMBIE_NAUTILUS_VARIANT: the component type passes unchanged; 1.21.11 held EitherHolder<ZombieNautilusVariant>, 26.1 holds the holder. A value 1.21.11 code hands in goes through the component setters (ItemStack.set/update, DataComponentMap/DataComponentPatch builders, PatchedDataComponentMap.set, Entity.setComponent, Item.Properties.component -- keys and tags made before registries load go to 26.1's delayed components), which convert it (CbWallComponentValues.in); a value it reads back meets a cast to the 1.21.11 type, explicit or LambdaMetafactory's, where checkCastRedirects / instanceOfRedirects turn 26.1's value into 1.21.11's"
   }
  }
 }
