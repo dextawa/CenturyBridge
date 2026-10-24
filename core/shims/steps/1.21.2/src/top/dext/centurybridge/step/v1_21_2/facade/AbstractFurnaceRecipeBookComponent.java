@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipeMenus;
+import top.dext.centurybridge.step.v1_21_2.rt.CbItemRecipeMenus;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipeView;
 
 /**
@@ -35,7 +35,7 @@ public abstract class AbstractFurnaceRecipeBookComponent extends RecipeBookCompo
     @Override
     public void method_2600(net.minecraft.class_1735 slot) {
         super.method_2600(slot);
-        if (slot != null && slot.field_7874 < CbRestRecipeMenus.method_7658(this.field_3095)) {
+        if (slot != null && slot.field_7874 < CbItemRecipeMenus.getSize(this.field_3095)) {
             this.field_3092.method_2571();
         }
     }

@@ -6,6 +6,8 @@
   superRedirects     a mod CraftingMenu / InventoryMenu / AbstractFurnaceMenu subclass's super.<member>(..): 1.21.1's body
   staticRedirects    CraftingMenu.slotChangedCraftingGrid(.., Level, ..)
   adapterHooks       a mod class under RecipeBookMenu declaring a 1.21.1 shape implements its Legacy_* interface
+  abstractFills      a mod class extending RecipeBookMenu itself: 1.21.2's abstract handlePlacement and
+                     fillCraftSlotsStackedContents, answered by its 1.21.1 methods (or 1.21.1's default placement)
   overrideHooks      a mod vanilla-menu subclass's 1.21.1 override answers the 1.21.2 method vanilla calls instead:
                      handlePlacement, finishPlacingRecipe, fillCraftSlotsStackedContents, getGridWidth/Height
                      (AbstractCraftingMenu's); its super call goes through a super bridge where the 1.21.2 method
@@ -19,7 +21,9 @@
                      RecipeCache.get(Level, input)
   classRenames       1.21.1 PlaceRecipe / ServerPlaceRecipe -> the layer's facades (1.21.1 bodies; 1.21.2 removed the one and
                      rebuilt the other as a private placer)
-  Direct mod subclasses of RecipeBookMenu are s7rest's facade (it implements CbItemRecipeMenus.Legacy).
+  The whole RecipeBookMenu family (RecipeBookMenu, CraftingMenu, InventoryMenu, AbstractFurnaceMenu, PlaceRecipe,
+  RecipeBookCategories) is this generator's and CbItemRecipeMenus'; one wiring per key (s7rest's earlier
+  RecipeBookMenu entries were folded in here).
 
   python gen_s7item_recipemenus.py <out fragment.json>
 """
@@ -60,8 +64,8 @@ def sup(name):
 
 
 def recipe_book_menus(out):
-    """RecipeBookMenu family -- integrated as s7rest's (the integration dropped these from this fragment); kept
-    for the record, not emitted: CbItemRecipeMenus' statics remain for s7rest's facade to call"""
+    """RecipeBookMenu, CraftingMenu, InventoryMenu, AbstractFurnaceMenu: calls, super calls, overrides of 1.21.1's
+    RecipeBookMenu members, and AbstractFurnaceMenu's old constructor"""
     for shape, name, per_owner in MEMBERS:
         out["instanceRedirects"][RBM + "." + shape] = RT + "#" + name
         out["adapterHooks"].append({
@@ -70,6 +74,11 @@ def recipe_book_menus(out):
         if per_owner:
             for owner in VANILLA:
                 out["superRedirects"][owner + "." + shape] = RT + "#" + sup(name)
+    for method, call in [
+            (PLACE_NEW, "placeW(L" + RBM + ";ZZ" + HOLDER
+             + "Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;"),
+            ("method_7654(Lnet/minecraft/class_9875;)V", "fillW(L" + RBM + ";Lnet/minecraft/class_9875;)V")]:
+        out["abstractFills"].append({"under": RBM, "method": method, "call": RT + "." + call})
     # RecipeBookMenu's empty default, reached from a mod furnace menu (CraftingMenu and InventoryMenu go through
     # the finishPlacingRecipe hook's super bridge below)
     out["superRedirects"][FURNACE + ".method_59964(" + HOLDER + ")V"] = RT + "#superFinishPlacingRecipe"
@@ -133,8 +142,9 @@ def recipe_book_menus(out):
 
 def main():
     out = {"instanceRedirects": {}, "superRedirects": {}, "staticRedirects": {}, "adapterHooks": [],
-           "overrideHooks": [], "superCtorReshapes": {}}
+           "overrideHooks": [], "superCtorReshapes": {}, "abstractFills": []}
     out["classRenames"] = {"net/minecraft/class_2955": "top/dext/centurybridge/step/v1_21_2/facade/ServerPlaceRecipe"}
+    recipe_book_menus(out)
     combiner(out)
     recipe_book(out)
     holders(out)

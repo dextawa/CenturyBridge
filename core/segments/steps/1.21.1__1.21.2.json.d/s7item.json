@@ -61,6 +61,30 @@
     0
    ],
    "basis": "StonecutterMenu.setupRecipeList(container, stack) -> setupRecipeList(stack): javap, the same reset of the selection and result slot and the recipe lookup for the stack (1.21.1 read the container only to build the lookup's input)"
+  },
+  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V": {
+   "to": "<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V",
+   "args": [
+    0,
+    1,
+    3,
+    4,
+    5
+   ],
+   "basis": "AbstractFurnaceMenu(menuType, recipeType, bookType, id, inventory[, container, data]) -> the same with the recipe property set after recipeType: javap, the same body (fields, the three furnace slots, the inventory slots, data slots); 1.21.2 adds the property-set lookup and moved the inventory-slot loops into addStandardInventorySlots"
+  },
+  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V": {
+   "to": "<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V",
+   "args": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "AbstractFurnaceMenu(menuType, recipeType, bookType, id, inventory[, container, data]) -> the same with the recipe property set after recipeType: javap, the same body (fields, the three furnace slots, the inventory slots, data slots); 1.21.2 adds the property-set lookup and moved the inventory-slot loops into addStandardInventorySlots"
   }
  },
  "callReshapes": {
