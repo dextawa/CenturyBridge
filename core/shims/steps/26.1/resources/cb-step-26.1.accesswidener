@@ -159,3 +159,5 @@ mutable field net/minecraft/world/level/levelgen/structure/TemplateStructurePiec
 mutable field net/minecraft/world/level/levelgen/structure/TemplateStructurePiece template Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;
 mutable field net/minecraft/world/level/levelgen/structure/templatesystem/LiquidSettings CODEC Lcom/mojang/serialization/Codec;
 # ---- END GENERATED (swall) ----
+# 1.21.11 SetOminousBottleAmplifierFunction.amplifier() was public; 26.1 keeps the field private with no accessor (swall, rt/CbWallRecordViews)
+accessible	field	net/minecraft/world/level/storage/loot/functions/SetOminousBottleAmplifierFunction	amplifier	Lnet/minecraft/world/level/storage/loot/providers/number/NumberProvider;
