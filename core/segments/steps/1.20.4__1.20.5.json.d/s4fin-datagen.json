@@ -1,0 +1,194 @@
+{
+ "_s4fin_datagen_basis": "s4fin Fabric API datagen: fabric-data-generation-api-v1 1.20.4 on 1.20.5 (compat/fapi/impl/datagen/CbFinDatagen): providers take the pack's registries (a 1.20.4 Pack.addProvider(Factory) becomes addProvider(RegistryDependentFactory)), 1.20.4's generate methods are reached from 1.20.5's, ConditionJsonProvider[] are ResourceCondition[]",
+ "callReshapes": {
+  "net/fabricmc/fabric/api/datagen/v1/FabricDataGenerator$Pack.addProvider(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataGenerator$Pack$Factory;)Lnet/minecraft/class_2405;": {
+   "desc": "(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataGenerator$Pack$RegistryDependentFactory;)Lnet/minecraft/class_2405;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#withRegistries(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataGenerator$Pack$Factory;)Lnet/fabricmc/fabric/api/datagen/v1/FabricDataGenerator$Pack$RegistryDependentFactory;"
+   ],
+   "basis": "s4fin Fabric API datagen: addProvider(output -> provider) is addProvider((output, registries) -> provider), the factory running with the pack's registries at hand for the provider's constructor"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricAdvancementProvider.withConditions(Ljava/util/function/Consumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Ljava/util/function/Consumer;": {
+   "desc": "(Ljava/util/function/Consumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)Ljava/util/function/Consumer;",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions#resourceConditions([Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;"
+   ],
+   "basis": "s4fin Fabric API datagen: withConditions takes ResourceConditions since 1.20.5; the 1.20.4 providers as conditions"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider.withConditions(Lnet/minecraft/class_8790;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Lnet/minecraft/class_8790;": {
+   "desc": "(Lnet/minecraft/class_8790;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)Lnet/minecraft/class_8790;",
+   "ops": [
+    "keep:0",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions#resourceConditions([Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;"
+   ],
+   "basis": "s4fin Fabric API datagen: withConditions takes ResourceConditions since 1.20.5; the 1.20.4 providers as conditions"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricLootTableProvider.withConditions(Ljava/util/function/BiConsumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Ljava/util/function/BiConsumer;": {
+   "desc": "(Ljava/util/function/BiConsumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)Ljava/util/function/BiConsumer;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootKeyConsumer(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;",
+    "conv:1 top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions#resourceConditions([Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;"
+   ],
+   "ret": "conv top/dext/centurybridge/step/v1_20_5/rt/CbItemGenerics#lootLocationConsumer(Ljava/util/function/BiConsumer;)Ljava/util/function/BiConsumer;",
+   "basis": "s4fin Fabric API datagen: FabricLootTableProvider.withConditions works on consumers of loot table keys and ResourceConditions since 1.20.5; 1.20.4's consumer of locations goes in as one of keys, the answer comes back as one of locations"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/loot/FabricBlockLootTableGenerator.withConditions([Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Lnet/minecraft/class_7788;": {
+   "desc": "([Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)Lnet/minecraft/class_7788;",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions#resourceConditions([Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;"
+   ],
+   "basis": "s4fin Fabric API datagen: withConditions takes ResourceConditions since 1.20.5 (also reached through BlockLootSubProvider, where Fabric API injects it)"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider$TranslationBuilder.add(Lnet/minecraft/class_1320;Ljava/lang/String;)V": {
+   "desc": "(Lnet/minecraft/class_6880;Ljava/lang/String;)V",
+   "ops": [
+    "conv:0 top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders#attributeHolder(Lnet/minecraft/class_1320;)Lnet/minecraft/class_6880;",
+    "keep:1"
+   ],
+   "basis": "s4fin Fabric API datagen: TranslationBuilder.add takes the attribute's holder since 1.20.5 (same description id)"
+  }
+ },
+ "superCtorReshapes": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricAdvancementProvider.<init>(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Ljava/util/concurrent/CompletableFuture;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#registries()Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "s4fin Fabric API datagen: the provider takes the pack's registries since 1.20.5"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider.<init>(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Ljava/util/concurrent/CompletableFuture;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#registries()Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "s4fin Fabric API datagen: the provider takes the pack's registries since 1.20.5"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider.<init>(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Ljava/util/concurrent/CompletableFuture;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#registries()Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "s4fin Fabric API datagen: the provider takes the pack's registries since 1.20.5"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider.<init>(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Ljava/util/concurrent/CompletableFuture;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#registries()Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "s4fin Fabric API datagen: the provider takes the pack's registries since 1.20.5"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider.<init>(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Ljava/lang/String;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Ljava/lang/String;Ljava/util/concurrent/CompletableFuture;)V",
+   "ops": [
+    "keep:0",
+    "keep:1",
+    "push top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#registries()Ljava/util/concurrent/CompletableFuture;"
+   ],
+   "basis": "s4fin Fabric API datagen: the provider takes the pack's registries since 1.20.5"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/SimpleFabricLootTableProvider.<init>(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Lnet/minecraft/class_176;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/class_176;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#registries()Ljava/util/concurrent/CompletableFuture;",
+    "keep:1"
+   ],
+   "basis": "s4fin Fabric API datagen: the provider takes the pack's registries since 1.20.5"
+  },
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricCodecDataProvider.<init>(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Lnet/minecraft/class_7784$class_7490;Ljava/lang/String;Lcom/mojang/serialization/Codec;)V": {
+   "desc": "(Lnet/fabricmc/fabric/api/datagen/v1/FabricDataOutput;Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/class_7784$class_7490;Ljava/lang/String;Lcom/mojang/serialization/Codec;)V",
+   "ops": [
+    "keep:0",
+    "push top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#registries()Ljava/util/concurrent/CompletableFuture;",
+    "keep:1",
+    "keep:2",
+    "keep:3"
+   ],
+   "basis": "s4fin Fabric API datagen: 1.20.5 has only the registry-taking constructor; a provider built with 1.20.4's registry-less one declares configure(consumer), which the configure hook reaches"
+  }
+ },
+ "instanceRedirects": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricAdvancementProvider.generateAdvancement(Ljava/util/function/Consumer;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#generateAdvancement",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider.generateTranslations(Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider$TranslationBuilder;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#generateTranslations",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricCodecDataProvider.configure(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#configure",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#generate"
+ },
+ "superRedirects": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricCodecDataProvider.configure(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#superConfigure",
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricBlockLootTableProvider.method_10399(Ljava/util/function/BiConsumer;)V": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen#superGenerate"
+ },
+ "overrideHooks": [
+  {
+   "old": "generateAdvancement(Ljava/util/function/Consumer;)V",
+   "new": "generateAdvancement(Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen.generateAdvancement(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen$LegacyAdvancements;Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen$LegacyAdvancements",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/fabricmc/fabric/api/datagen/v1/provider/FabricAdvancementProvider",
+   "basis": "s4fin Fabric API datagen: 1.20.5's generateAdvancement(lookup, consumer) runs a 1.20.4 provider's generateAdvancement(consumer)"
+  },
+  {
+   "old": "generateTranslations(Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider$TranslationBuilder;)V",
+   "new": "generateTranslations(Lnet/minecraft/class_7225$class_7874;Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider$TranslationBuilder;)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen.generateTranslations(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen$LegacyTranslations;Lnet/minecraft/class_7225$class_7874;Lnet/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider$TranslationBuilder;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen$LegacyTranslations",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider",
+   "basis": "s4fin Fabric API datagen: 1.20.5's generateTranslations(lookup, builder) runs a 1.20.4 provider's generateTranslations(builder)"
+  },
+  {
+   "old": "configure(Ljava/util/function/BiConsumer;)V",
+   "new": "configure(Ljava/util/function/BiConsumer;Lnet/minecraft/class_7225$class_7874;)V",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen.configure(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen$LegacyConfigure;Ljava/util/function/BiConsumer;Lnet/minecraft/class_7225$class_7874;)V",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen$LegacyConfigure",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/fabricmc/fabric/api/datagen/v1/provider/FabricCodecDataProvider",
+   "basis": "s4fin Fabric API datagen: 1.20.5 runs configure(consumer, lookup) only; a 1.20.4 provider built without registries declared configure(consumer), which runs"
+  },
+  {
+   "old": "withConditions(Ljava/util/function/BiConsumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Ljava/util/function/BiConsumer;",
+   "new": "withConditions(Ljava/util/function/BiConsumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)Ljava/util/function/BiConsumer;",
+   "bridge": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen.lootWithConditions(Ltop/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen$LegacyLootConditions;Ljava/util/function/BiConsumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)Ljava/util/function/BiConsumer;",
+   "adapter": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/datagen/CbFinDatagen$LegacyLootConditions",
+   "guard": "top/dext/centurybridge/step/v1_20_5/rt/Guard",
+   "onlyUnder": "net/fabricmc/fabric/api/datagen/v1/provider/FabricLootTableProvider",
+   "basis": "s4fin Fabric API datagen: a 1.20.4 override of withConditions(consumer of locations, providers) gets 1.20.5's consumer of keys as one of locations and the conditions as providers; its answer goes back as a consumer of keys"
+  },
+  {
+   "old": "withConditions(Ljava/util/function/Consumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Ljava/util/function/Consumer;",
+   "new": "withConditions(Ljava/util/function/Consumer;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)Ljava/util/function/Consumer;",
+   "onlyUnder": "net/fabricmc/fabric/api/datagen/v1/provider/FabricAdvancementProvider",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions.providers([Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;",
+   "basis": "s4fin Fabric API datagen: a 1.20.4 override of withConditions gets the conditions as providers"
+  },
+  {
+   "old": "withConditions(Lnet/minecraft/class_8790;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Lnet/minecraft/class_8790;",
+   "new": "withConditions(Lnet/minecraft/class_8790;[Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)Lnet/minecraft/class_8790;",
+   "onlyUnder": "net/fabricmc/fabric/api/datagen/v1/provider/FabricRecipeProvider",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions.providers([Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;",
+   "basis": "s4fin Fabric API datagen: a 1.20.4 override of withConditions gets the conditions as providers"
+  },
+  {
+   "old": "withConditions([Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;)Lnet/minecraft/class_7788;",
+   "new": "withConditions([Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)Lnet/minecraft/class_7788;",
+   "onlyUnder": "net/fabricmc/fabric/api/datagen/v1/loot/FabricBlockLootTableGenerator",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/compat/fapi/impl/resource/conditions/CbLegacyConditions.providers([Lnet/fabricmc/fabric/api/resource/conditions/v1/ResourceCondition;)[Lnet/fabricmc/fabric/api/resource/conditions/v1/ConditionJsonProvider;",
+   "basis": "s4fin Fabric API datagen: a 1.20.4 override of withConditions gets the conditions as providers"
+  },
+  {
+   "old": "add(Lnet/minecraft/class_1320;Ljava/lang/String;)V",
+   "new": "add(Lnet/minecraft/class_6880;Ljava/lang/String;)V",
+   "onlyUnder": "net/fabricmc/fabric/api/datagen/v1/provider/FabricLanguageProvider$TranslationBuilder",
+   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.attribute(Lnet/minecraft/class_6880;)Lnet/minecraft/class_1320;",
+   "basis": "s4fin Fabric API datagen: a 1.20.4 override of add(attribute, value) gets the holder's attribute"
+  }
+ ],
+ "classRenames": {
+  "net/fabricmc/fabric/api/datagen/v1/provider/FabricTagProvider$GameEventTagProvider": "top/dext/centurybridge/step/v1_20_5/compat/fapi/datagen/v1/provider/GameEventTagProvider"
+ }
+}

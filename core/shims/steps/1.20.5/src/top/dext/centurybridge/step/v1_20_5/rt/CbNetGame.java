@@ -306,6 +306,16 @@ public final class CbNetGame {
         return legacy::write;
     }
 
+    /** a 1.20.4 Action.Reader lambda's shape: read(EntryBuilder, FriendlyByteBuf) */
+    public interface LegacyInfoReader {
+        void read(net.minecraft.class_2703.class_7831 builder, net.minecraft.class_2540 buf);
+    }
+
+    /** a 1.20.4 Reader lambda as 1.20.5's (the RegistryFriendlyByteBuf 1.20.5 passes is a FriendlyByteBuf) */
+    public static net.minecraft.class_2703.class_5893.class_7829 infoReader(LegacyInfoReader legacy) {
+        return legacy::read;
+    }
+
     private CbNetGame() {
     }
 }

@@ -274,7 +274,9 @@
   "net/minecraft/class_2291$class_7216": "top/dext/centurybridge/step/v1_20_5/facade/ItemParserTagResult"
  },
  "superRedirects": {
-  "net/minecraft/class_2370.method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#superLifecycle"
+  "net/minecraft/class_2370.method_31139(Ljava/lang/Object;)Lcom/mojang/serialization/Lifecycle;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#superLifecycle",
+  "net/minecraft/class_2370.method_46744(ILnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#superRegisterMapping",
+  "net/minecraft/class_2348.method_46744(ILnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;": "top/dext/centurybridge/step/v1_20_5/rt/CbFinRegistries#superRegisterMapping"
  },
  "adapterHooks": [
   {

@@ -752,13 +752,6 @@
    "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
   },
   {
-   "old": "method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/class_6880$class_6883;",
-   "new": "method_10272(Lnet/minecraft/class_5321;Ljava/lang/Object;Lnet/minecraft/class_9248;)Lnet/minecraft/class_6880$class_6883;",
-   "onlyUnder": "net/minecraft/class_2385",
-   "wrap": "top/dext/centurybridge/step/v1_20_5/rt/CbItemHolders.lifecycle(Lnet/minecraft/class_9248;)Lcom/mojang/serialization/Lifecycle;",
-   "basis": "s4item: old override reconnected through converted values (gen_s4item.py)"
-  },
-  {
    "old": "method_46028(Lnet/minecraft/class_1299;Lnet/minecraft/class_2960;Lnet/minecraft/class_52$class_53;)V",
    "new": "method_46028(Lnet/minecraft/class_1299;Lnet/minecraft/class_5321;Lnet/minecraft/class_52$class_53;)V",
    "onlyUnder": "net/minecraft/class_7789",
