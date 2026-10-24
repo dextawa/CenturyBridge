@@ -16,7 +16,7 @@ SRV="${CB_SERVER_DIR:-$HOME/cbtest/server-$T}"
 [ -d "$WD/runtime-$T" ] || { echo "no $WD/runtime-$T (climb_runtime.sh $WD $T)"; exit 1; }
 CONV="$WD/boot/$TAG"
 rm -rf "$CONV" && mkdir -p "$CONV"
-"$JAVA" -Xmx8g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.20.1 "$T" "$CONV/conv" "$@" \
+"$JAVA" -Xmx8g -Dcb.layersDir="$WD/layers" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.20.1 "$T" "$CONV/conv" "$@" \
     > "$CONV/climb.log" 2>&1 || { echo "climb failed"; tail -5 "$CONV/climb.log"; exit 1; }
 rm -rf "$SRV/mods" "$SRV/world-$TAG" && mkdir -p "$SRV/mods"
 cp data/runtime/client-$T/mods/fabric-api-*.jar "$SRV/mods/"

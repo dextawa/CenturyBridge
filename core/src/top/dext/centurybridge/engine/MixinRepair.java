@@ -276,9 +276,17 @@ public final class MixinRepair {
                 Map<String, Object> v = values(an);
                 List<String> methods = strings(v.get("method"));
                 if (methods.isEmpty()) continue;
+                pendingDisable = null;
                 if (source != null && remapOrdinals(an, refmap, methods, targets, shortName + "." + handler.name, repairs)) {
                     dirty[0] = true;
                     v = values(an);
+                }
+                if (pendingDisable != null) {
+                    dropInjector(handler, an);
+                    dirty[0] = true;
+                    disabled.add(pendingDisable);
+                    pendingDisable = null;
+                    continue;
                 }
                 List<Anchor> anchors = anchors(an, v, refmap); // null = anchor not statically evaluable
                 int require = v.get("require") instanceof Integer i && i >= 0 ? i : defaultRequire;
@@ -740,13 +748,17 @@ public final class MixinRepair {
     }
 
     /**
-     * sites-split: an @Inject whose single @At names its anchor without an ordinal injects at every
-     * occurrence; where W holds the anchor more often than V and each V occurrence has its W counterpart
-     * (SiteMatch), the @At becomes one @At per counterpart, pinned by ordinal -- the injector fires
-     * where V's code did and not at the occurrences W added. With a V occurrence left without a
-     * counterpart nothing is changed (reported).
+     * sites-split: an @Inject whose single @At names its anchor without an ordinal fired, on V, at V's
+     * occurrences only. On W it must fire at their counterparts (SiteMatch) and never at an occurrence
+     * W added. The rule:
+     *   every V site matched, W adds sites          one @At per counterpart, pinned by ordinal
+     *   some V sites without a unique counterpart   pinned to the counterparts that are known; the V
+     *                                               sites left out are reported as lost ("sites-partial")
+     *   no V site matched, while W's occurrences    the injector is disabled and reported: firing on all
+     *   are not exactly V's                         would hook W-only code, firing on none is the truth
+     * Never "fire on all" where W's occurrences are not V's.
      */
-    private static boolean splitSites(AnnotationNode an, JsonObject refmap, MethodNode vm, MethodNode wm, String where, List<String> notes) {
+    private boolean splitSites(AnnotationNode an, JsonObject refmap, MethodNode vm, MethodNode wm, String where, List<String> notes) {
         if (!an.desc.equals(INJECT) || raw(an, "slice") != null) return false;
         List<Object> ats = list(raw(an, "at"));
         if (ats.size() != 1 || !(ats.get(0) instanceof AnnotationNode at)) return false;
@@ -754,17 +766,22 @@ public final class MixinRepair {
         if (a == null || a == POSITIONAL || a.ordinal >= 0) return false;
         List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> matchesAnchor(in, a));
         List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> matchesAnchor(in, a));
-        if (vo.isEmpty() || wo.size() <= vo.size()) return false;
+        if (vo.isEmpty() || wo.isEmpty()) return false;
         int[] map = SiteMatch.match(vm, vo, wm, wo);
-        for (int j : map) {
-            if (j < 0) {
-                notes.add("sites-unmatched " + where + " " + a + ": W holds it " + wo.size() + " times, V " + vo.size()
-                    + ", not every V occurrence has a counterpart; left injecting at all");
-                return false;
-            }
+        List<Integer> kept = new ArrayList<>();
+        List<Integer> lost = new ArrayList<>();
+        for (int i = 0; i < map.length; i++) {
+            if (map[i] >= 0) kept.add(map[i]);
+            else lost.add(i);
+        }
+        if (lost.isEmpty() && wo.size() == vo.size()) return false; // W's occurrences are V's, one for one
+        if (kept.isEmpty()) {
+            pendingDisable = "sites-unmatched: @Inject " + where + " " + a + ": none of V's " + vo.size()
+                + " sites has a unique counterpart among W's " + wo.size() + "; not fired on W's sites";
+            return false;
         }
         List<Object> split = new ArrayList<>();
-        for (int j : map) {
+        for (int j : kept) {
             AnnotationNode copy = new AnnotationNode(at.desc);
             copy.values = new ArrayList<>(at.values == null ? List.of() : at.values);
             copy.values.add("ordinal");
@@ -774,10 +791,13 @@ public final class MixinRepair {
         for (int i = 0; i + 1 < an.values.size(); i += 2) {
             if ("at".equals(an.values.get(i))) an.values.set(i + 1, split);
         }
-        notes.add("sites-split " + where + " " + a + " -> #" + java.util.Arrays.toString(map) + " of W's " + wo.size()
-            + " (V's " + vo.size() + " occurrences, by context)");
+        notes.add((lost.isEmpty() ? "sites-split " : "sites-partial ") + where + " " + a + " -> #" + kept + " of W's " + wo.size()
+            + " (V's " + vo.size() + " occurrences, by context" + (lost.isEmpty() ? "" : "; V sites " + lost + " have no counterpart and are lost") + ")");
         return true;
     }
+
+    /** set by splitSites when an injector must not fire at all (see there); consumed by repairMixin */
+    private String pendingDisable;
 
     /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
     private Map<String, List<MethodNode>> restoredByTarget = Map.of();
