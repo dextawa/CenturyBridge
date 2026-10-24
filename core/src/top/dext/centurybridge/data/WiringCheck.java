@@ -1054,6 +1054,15 @@ public final class WiringCheck {
             return;
         }
         ClassNode kn = stub.get(kt);
+        if (kn == null && !top.dext.centurybridge.engine.Chain.minecraftOwned(kt) && !lib.containsKey(kt)) {
+            // a game library's class (authlib's PropertyMap): the stub (Minecraft only) does not carry it, so
+            // only the subtype half is judged, through the facade's own compiled supertypes
+            if (classes.containsKey(fac) && !isSubtype(fac, kt)) {
+                problems.add("superRename " + key + " -> " + fac + ": not a subtype of the library class " + kt
+                    + " -- a mod instance reaching a " + kt + "-typed slot fails verification");
+            }
+            return;
+        }
         if (kn == null) {
             problems.add("superRename " + key + ": the class is gone on the target -- superRenames only move"
                 + " extends/implements, so NEW sites, casts and field/method types keep naming it; use classRenames");

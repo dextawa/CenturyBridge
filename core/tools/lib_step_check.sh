@@ -14,6 +14,7 @@ LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client
 SEG="${V}__${W}"
 OUT="$WD/libstep/$SEG"
 rm -rf "$OUT" && mkdir -p "$OUT/self"
+[ -f "$WD/build/centurybridge-0.3.0+$W.jar" ] || { echo "no layer jar $WD/build/centurybridge-0.3.0+$W.jar (run remote_step.sh first)"; exit 1; }
 jar_of() { case "$1" in 26.*) echo "data/jars/client-$1.jar" ;; *) echo "data/jars/client-$1-intermediary.jar" ;; esac; }
 # data/runtime/client-1.20.1 holds 1.20.2's libraries; ~/cbtest/client-1.20.1 has 1.20.1's own
 libdir() { case "$1" in 1.20.1) echo "$HOME/cbtest/client-1.20.1/libraries" ;; *) echo "data/runtime/client-$1/libraries" ;; esac; }
@@ -29,15 +30,21 @@ cp "$OUT/probe-$V.jar" "$OUT/self/"
     "$(jar_of "$V")" "$(libdir "$V")" > "$OUT/control.log" 2>&1
 python3 probe/probe_report.py "$OUT/probe-$V.jar.index.tsv" "$OUT/self/probe-$V.jar" "$OUT/control/link-findings.tsv" \
     "$OUT/control-report.tsv" > /dev/null 2>&1
+[ -f "$OUT/control/link-findings.tsv" ] || { echo "control link-check failed"; tail -5 "$OUT/control.log"; exit 1; }
 "$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/conv" \
     "$OUT/probe-$V.jar" > "$OUT/convert.log" 2>&1 || { echo "convert failed"; tail -5 "$OUT/convert.log"; exit 1; }
 "$JAVA" -Xmx16g -Dcb.linkcheck.perSite=true -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main link-check "$OUT/lc" "$OUT/conv/full-audit.tsv" "$OUT/conv" -- \
     "$WD/build/centurybridge-0.3.0+$W.jar" "$(jar_of "$W")" $FAPI "$(libdir "$W")" > "$OUT/linkcheck.log" 2>&1
 python3 probe/probe_report.py "$OUT/probe-$V.jar.index.tsv" "$(ls "$OUT"/conv/*.jar | head -1)" "$OUT/lc/link-findings.tsv" \
     "$OUT/report.tsv" > /dev/null 2>&1
-python3 - "$OUT" "$WD/core/segments/damage-lib/$SEG.tsv" <<'EOF'
-import collections, sys
-out, damage = sys.argv[1], sys.argv[2]
+[ -f "$OUT/lc/link-findings.tsv" ] && [ -f "$OUT/report.tsv" ] || { echo "link-check failed"; tail -5 "$OUT/linkcheck.log"; exit 1; }
+python3 - "$OUT" "$WD/core/segments/damage-lib/$SEG.tsv" "$WIRING" <<'EOF'
+import collections, glob, json, os, sys
+out, damage, wiring = sys.argv[1], sys.argv[2], sys.argv[3]
+ledger = {}
+for f in [wiring] + sorted(glob.glob(wiring + ".d/*.json")):
+    if os.path.exists(f):
+        ledger.update(json.load(open(f, encoding="utf-8")).get("ledger", {}))
 def rows(p):
     try:
         lines = open(p, encoding="utf-8").read().splitlines()
@@ -56,7 +63,12 @@ def artifact(owner):
 control = {r[0] for r in rows(out + "/control-report.tsv")}
 total = sum(1 for l in open(out + "/" + [f for f in __import__("os").listdir(out) if f.endswith(".index.tsv")][0], encoding="utf-8")) - 1
 opened = [r for r in rows(out + "/report.tsv") if r[0] not in control]
-print(f"library probe {out.split('/')[-1]}: {len(opened)} of {total} sites open ({len(control)} sites fail on V itself, not counted)")
+# a ledgered site: its member key (owner.name desc) or, for a class-level site, its class is in the wiring's ledger
+def ledgered(r):
+    return (r[2] + "." + r[3] + r[4]) in ledger or (not r[3] and r[2] in ledger)
+led = [r for r in opened if ledgered(r)]
+opened = [r for r in opened if not ledgered(r)]
+print(f"library probe {out.split('/')[-1]}: {len(opened)} of {total} sites open, {len(led)} ledgered ({len(control)} sites fail on V itself, not counted)")
 by = collections.Counter((artifact(r[2]), r[6]) for r in opened)
 for (a, k), c in by.most_common(15):
     print(f"  {c:5} {a:45} {k}")

@@ -1,0 +1,39 @@
+{
+ "_lib_basis": "slib library front: authlib 6.0.58 (1.21.8) -> 7.0.61 (1.21.9), core/segments/damage-lib/1.21.8__1.21.9.tsv; 6.0.58's semantics read off its bytecode (rt/CbLibAuthlib, rt/CbLibMutablePropertyMap, facade/AuthlibGameProfileSerializer)",
+ "methodRenames": {
+  "com/mojang/authlib/GameProfile.getId()Ljava/util/UUID;": "id",
+  "com/mojang/authlib/GameProfile.getName()Ljava/lang/String;": "name",
+  "com/mojang/authlib/GameProfile.getProperties()Lcom/mojang/authlib/properties/PropertyMap;": "properties"
+ },
+ "ctorRedirects": {
+  "com/mojang/authlib/GameProfile.<init>(Ljava/util/UUID;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbLibAuthlib#gameProfile",
+  "com/mojang/authlib/properties/PropertyMap.<init>()V": "top/dext/centurybridge/step/v1_21_9/rt/CbLibAuthlib#propertyMap",
+  "com/mojang/authlib/Environment.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbLibAuthlib#environment"
+ },
+ "superRenames": {
+  "com/mojang/authlib/properties/PropertyMap": "top/dext/centurybridge/step/v1_21_9/rt/CbLibMutablePropertyMap"
+ },
+ "classRenames": {
+  "com/mojang/authlib/GameProfile$Serializer": "top/dext/centurybridge/step/v1_21_9/facade/AuthlibGameProfileSerializer"
+ },
+ "instanceRedirects": {
+  "com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.toProfile()Lcom/mojang/authlib/GameProfile;": "top/dext/centurybridge/step/v1_21_9/rt/CbLibAuthlib",
+  "com/mojang/authlib/ProfileLookupCallback.onProfileLookupSucceeded(Lcom/mojang/authlib/GameProfile;)V": "top/dext/centurybridge/step/v1_21_9/rt/CbLibAuthlib"
+ },
+ "overrideHooks": [
+  {
+   "old": "onProfileLookupSucceeded(Lcom/mojang/authlib/GameProfile;)V",
+   "new": "onProfileLookupSucceeded(Ljava/lang/String;Ljava/util/UUID;)V",
+   "onlyUnder": "com/mojang/authlib/ProfileLookupCallback",
+   "adapter": "top/dext/centurybridge/step/v1_21_9/rt/CbLibProfileLookupOld",
+   "bridge": "top/dext/centurybridge/step/v1_21_9/rt/CbLibAuthlib.profileLookupSucceeded(Ltop/dext/centurybridge/step/v1_21_9/rt/CbLibProfileLookupOld;Ljava/lang/String;Ljava/util/UUID;)V",
+   "basis": "authlib 7.0.61's repository calls onProfileLookupSucceeded(name, id); 6.0.58's handed the profile it deserialized (id, name, empty mutable properties)"
+  }
+ ],
+ "ledger": {
+  "com/mojang/authlib/GameProfile": "authlib 7.0.61 made GameProfile a final record (javap: public final class com.mojang.authlib.GameProfile extends java.lang.Record): a mod subclass cannot load on 1.21.9, and an object of any other class cannot reach 1.21.9 code typed GameProfile (vanilla takes and returns the record everywhere: player profiles, skulls, the profile cache), so no facade can stand in for one. Covers the subclass's overrides of getId/getName/getProperties (calls are renamed to id/name/properties) and of equals/hashCode/toString (final in the record)",
+  "com/mojang/authlib/GameProfile.equals(Ljava/lang/Object;)Z": "an override needs a GameProfile subclass: see com/mojang/authlib/GameProfile (final record in authlib 7.0.61)",
+  "com/mojang/authlib/GameProfile.hashCode()I": "an override needs a GameProfile subclass: see com/mojang/authlib/GameProfile (final record in authlib 7.0.61)",
+  "com/mojang/authlib/GameProfile.toString()Ljava/lang/String;": "an override needs a GameProfile subclass: see com/mojang/authlib/GameProfile (final record in authlib 7.0.61)"
+ }
+}
