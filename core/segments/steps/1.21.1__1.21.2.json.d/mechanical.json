@@ -816,17 +816,6 @@
    "basis": "mechanical: the old method gets every parameter it had"
   },
   {
-   "old": "method_59964(Lnet/minecraft/class_8786;)V",
-   "new": "method_59964(Lnet/minecraft/class_3218;Lnet/minecraft/class_8786;)V",
-   "args": [
-    1
-   ],
-   "onlyUnder": "net/minecraft/class_1714",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lnet/minecraft/class_3218; not passed"
-  },
-  {
    "old": "method_54470(Lnet/minecraft/class_1937;Lnet/minecraft/class_9694;)Ljava/util/Optional;",
    "new": "method_54470(Lnet/minecraft/class_3218;Lnet/minecraft/class_9694;)Ljava/util/Optional;",
    "args": [

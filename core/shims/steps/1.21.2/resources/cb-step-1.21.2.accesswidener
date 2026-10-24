@@ -75,3 +75,13 @@ accessible method net/minecraft/class_1011 method_4305 (III)V
 accessible method net/minecraft/class_1011 method_4315 (II)I
 accessible method net/minecraft/class_7754 method_45713 (Lnet/minecraft/class_5610;)V
 # ---- END GENERATED (s7render) ----
+# ---- s7item: 1.21.1 RecipeBookMenu bodies on 1.21.2's menus (rt/CbItemRecipeMenus) ----
+accessible field net/minecraft/class_9884 field_52559 Lnet/minecraft/class_8566;
+accessible field net/minecraft/class_9884 field_52560 Lnet/minecraft/class_1731;
+accessible field net/minecraft/class_1714 field_7797 Lnet/minecraft/class_1657;
+accessible field net/minecraft/class_1723 field_7828 Lnet/minecraft/class_1657;
+accessible field net/minecraft/class_1720 field_7824 Lnet/minecraft/class_1263;
+accessible field net/minecraft/class_1720 field_7822 Lnet/minecraft/class_1937;
+accessible field net/minecraft/class_1714 field_51625 Z
+accessible field net/minecraft/class_1714 field_7799 Lnet/minecraft/class_3914;
+accessible method net/minecraft/class_1714 method_17399 (Lnet/minecraft/class_1703;Lnet/minecraft/class_3218;Lnet/minecraft/class_1657;Lnet/minecraft/class_8566;Lnet/minecraft/class_1731;Lnet/minecraft/class_8786;)V
