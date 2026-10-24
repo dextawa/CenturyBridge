@@ -885,7 +885,17 @@
   "net/minecraft/class_5537.method_61642(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#hasSelectedItem",
   "net/minecraft/class_5537.method_61644(Lnet/minecraft/class_1799;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getSelectedItem",
   "net/minecraft/class_5537.method_64975()Ljava/util/List;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getAllBundleItemColors",
-  "net/minecraft/class_5537.method_64277(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getByColor"
+  "net/minecraft/class_5537.method_64277(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1792;": "top/dext/centurybridge/step/v26_1/rt/CbWallBundles#getByColor",
+  "net/minecraft/class_2564.method_10881(Lnet/minecraft/class_2168;Lnet/minecraft/class_2561;Lnet/minecraft/class_1297;I)Lnet/minecraft/class_5250;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#updateForEntity",
+  "net/minecraft/class_2564.method_36330(Lnet/minecraft/class_2168;Ljava/util/Optional;Lnet/minecraft/class_1297;I)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#updateForEntity",
+  "net/minecraft/class_3031.method_23395(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#isStone",
+  "net/minecraft/class_3031.method_23396(Lnet/minecraft/class_2680;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#isDirt",
+  "net/minecraft/class_3031.method_27368(Lnet/minecraft/class_3746;Lnet/minecraft/class_2338;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#isGrassOrDirt",
+  "net/minecraft/class_2591.method_11033(Lnet/minecraft/class_2591;)Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getKey",
+  "net/minecraft/class_8055.method_48440(Lnet/minecraft/class_7225$class_7874;Lnet/minecraft/class_1799;)Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getFromIngredient",
+  "net/minecraft/class_2480.method_10525(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getBlockByColor",
+  "net/minecraft/class_2480.method_10529(Lnet/minecraft/class_1767;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#getColoredItemStack",
+  "net/minecraft/class_2215.method_9398(Lnet/minecraft/class_1767;)Lnet/minecraft/class_2248;": "top/dext/centurybridge/step/v26_1/rt/CbWallStatics#bannerByColor"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {

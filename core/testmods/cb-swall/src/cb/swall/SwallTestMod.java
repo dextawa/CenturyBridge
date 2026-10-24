@@ -343,6 +343,11 @@ public class SwallTestMod implements ModInitializer {
         net.minecraft.class_4616 storage = new net.minecraft.class_4616(net.minecraft.class_2960.method_60655("cbswall", "none"));
         net.minecraft.class_2574 good = new net.minecraft.class_2574("a.b", false, Optional.empty(), storage);
         net.minecraft.class_2574 bad = new net.minecraft.class_2574("[[[", false, Optional.empty(), storage);
+        net.minecraft.class_5250 updated = net.minecraft.class_2564.method_10881(source, net.minecraft.class_2561.method_43471("cb.up"), null, 0);
+        check("component.updateForEntity", "cb.up".equals(updated.getString()), updated.getString());
+        check("statics.colors", net.minecraft.class_2480.method_10525(net.minecraft.class_1767.field_7964) == net.minecraft.class_2246.field_10068
+            && net.minecraft.class_2480.method_10525(null) == net.minecraft.class_2246.field_10603
+            && net.minecraft.class_2215.method_9398(net.minecraft.class_1767.field_7964) == net.minecraft.class_2246.field_10406, "");
         check("component.nbtContents", "a.b".equals(good.method_10920()) && "[[[".equals(bad.method_10920())
             && bad.method_10890(source, null, 0).getString().isEmpty(), good.method_10920());
     }
