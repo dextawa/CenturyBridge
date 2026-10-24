@@ -156,12 +156,13 @@ final class MixinClassRenames {
      * class the converted mixin lands on. Only the annotations and refmap values: the code keeps V's
      * names for the class rewrite, whose wiring is keyed on them. Returns the mixins moved.
      */
-    static java.util.List<String> followTargets(Map<String, byte[]> entries, Map<String, String> follow) {
+    static java.util.List<String> followTargets(Map<String, byte[]> entries, Map<String, String> follow, Map<String, String> all) {
         java.util.List<String> moved = new java.util.ArrayList<>();
         if (follow.isEmpty()) {
             return moved;
         }
         java.util.Set<String> movedSet = new java.util.HashSet<>();
+        java.util.Set<String> facadeSet = new java.util.HashSet<>();
         for (Map.Entry<String, byte[]> e : new java.util.ArrayList<>(entries.entrySet())) {
             if (!e.getKey().endsWith(".class")) {
                 continue;
@@ -178,18 +179,24 @@ final class MixinClassRenames {
             }
             org.objectweb.asm.ClassReader r = new org.objectweb.asm.ClassReader(e.getValue());
             org.objectweb.asm.ClassWriter w = new org.objectweb.asm.ClassWriter(0);
-            r.accept(annotations(mixinTypes(w, follow), follow, c -> false), 0);
+            // onto a facade: every name as the class rewrite will spell it (the facade's code names facades);
+            // onto a vanilla class: the followed renames, as V's code is read (MixinRepair.aliases)
+            boolean facade = facadeMixin(ts, follow);
+            r.accept(annotations(mixinTypes(w, follow), facade ? all : follow, c -> false), 0);
             entries.put(e.getKey(), w.toByteArray());
             String cls = e.getKey().substring(0, e.getKey().length() - ".class".length());
             moved.add(cls);
             movedSet.add(cls);
+            if (facade) {
+                facadeSet.add(cls);
+            }
         }
         if (moved.isEmpty()) {
             return moved;
         }
         for (Map.Entry<String, byte[]> e : new java.util.ArrayList<>(entries.entrySet())) {
             if (e.getKey().endsWith(".json") && e.getKey().contains("refmap")) {
-                byte[] rew = refmap(e.getValue(), Map.of(), m -> movedSet.contains(m) ? follow : Map.of());
+                byte[] rew = refmap(e.getValue(), Map.of(), m -> facadeSet.contains(m) ? all : movedSet.contains(m) ? follow : Map.of());
                 if (rew != null) {
                     entries.put(e.getKey(), rew);
                 }

@@ -2215,7 +2215,7 @@ final class MixinBridge {
                 // a positional @Inject marks a place: a value read there (a getter call re-described as a field
                 // read of a render state) stands as well as a call of the same kind; operand-taking ones need the kind
                 AbstractInsnNode c = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in)
-                    || !operands && SiteMatch.valueRead(site) && SiteMatch.valueRead(in));
+                    || !operands && SiteMatch.valueRead(site) && SiteMatch.valueRead(in), !operands);
                 if (c == null) {
                     why.add("W's body has no single instruction of its kind between the same neighbours ("
                         + (sites.size() == 1 ? "the site" : found.size() + " of " + sites.size() + " sites found") + ")");

@@ -968,6 +968,40 @@ public final class Chain {
      */
     private java.util.Map<String, String> mixinFollow;
 
+    /**
+     * Does the facade hold V's class's code: every method of V's class (synthetic ones aside) that the
+     * facade declares too has the same significant instructions there once V's class names are renamed
+     * the way the step renames them, and it declares at least one. A facade rewriting any of them (a
+     * "rewrite" facade) is not V's code: a mixin of V's class does not follow onto it.
+     */
+    private boolean vanillaCode(org.objectweb.asm.tree.ClassNode v, org.objectweb.asm.tree.ClassNode f) {
+        if (v == null || f == null) {
+            return false;
+        }
+        org.objectweb.asm.tree.ClassNode vr = new org.objectweb.asm.tree.ClassNode();
+        v.accept(new org.objectweb.asm.commons.ClassRemapper(vr, new org.objectweb.asm.commons.SimpleRemapper(classRenames)));
+        int same = 0;
+        for (org.objectweb.asm.tree.MethodNode m : vr.methods) {
+            if ((m.access & org.objectweb.asm.Opcodes.ACC_SYNTHETIC) != 0 || m.instructions == null || m.instructions.size() == 0) {
+                continue;
+            }
+            org.objectweb.asm.tree.MethodNode fm = null;
+            for (org.objectweb.asm.tree.MethodNode x : f.methods) {
+                if (x.name.equals(m.name) && x.desc.equals(m.desc)) {
+                    fm = x;
+                }
+            }
+            if (fm == null) {
+                continue;
+            }
+            if (!SiteMatch.sig(m).equals(SiteMatch.sig(fm))) {
+                return false;
+            }
+            same++;
+        }
+        return same > 0;
+    }
+
     public java.util.Map<String, String> mixinFollow() {
         if (mixinFollow != null) {
             return mixinFollow;
@@ -981,9 +1015,12 @@ public final class Chain {
                 if (minecraftOwned(from) && minecraftOwned(to) && into.get(to) == 1
                         && w.declares(to) && !sourceCode.declares(to) && sourceCode.declares(from)) {
                     out.put(from, to);
+                } else if (minecraftOwned(from) && to.startsWith("top/dext/") && into.get(to) == 1 && sourceCode.declares(from)
+                        && vanillaCode(sourceCode.target(from), w.target(to))) {
+                    out.put(from, to); // a facade holding V's code (the layer jar answers for it in W's model)
                 }
             });
-            sourceCode.aliases(out);
+            sourceCode.aliases(out, classRenames);
         }
         mixinFollow = out;
         // their private members, re-declared under new ids in the new class, as the wiring of the step
@@ -991,6 +1028,7 @@ public final class Chain {
         for (java.util.Map.Entry<String, String> e : out.entrySet()) {
             inferred += MixinBridge.inferPrivateRenames(this, e.getKey(), e.getValue());
         }
+        out.forEach((f, t) -> System.out.println("  mixin follows the class rename " + f + " -> " + t));
         if (!out.isEmpty()) {
             System.out.println("mixins follow " + out.size() + " class renames into classes " + to + " adds; "
                 + inferred + " private member renames read off their bodies");
