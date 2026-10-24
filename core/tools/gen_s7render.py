@@ -1427,6 +1427,156 @@ class ClassInfoStub:
     fields = []
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Family 9 -- generic drift that only re-types renderers by their render state (genericWitnesses).
+#
+# 1.21.2 re-parameterized the renderer stack by render state: RenderLayerParent<T entity, M> -> <S state, M>,
+# EntityRenderer<T> -> <T, S>, RenderLayer<T, M> -> <S, M>, the entity models' <T entity> -> <S state> (or raw). A row
+# of the step's generic table in the area whose V and W signatures differ only there -- every differing type argument
+# is, in V, a type variable, an entity class or an entity model's own argument, and in W a type variable, a render
+# state class, a wildcard or nothing (a raw model) -- passes the same object in both releases: the renderer, layer or
+# model a 1.21.1 mod hands over or gets back is a 1.21.2 one of its superclass's state, and the entity-typed members
+# its 1.21.1 code declares are reached from 1.21.2's state-typed calls through the state hooks (EntityRenderer.render,
+# RenderLayer.render, EntityModel.setupAnim; families 1 and 4). Such a row closes as a type witness of those hooks.
+# Any other drift (a list of pairs becoming a list of records, a property key becoming a direction) is not matched.
+# ---------------------------------------------------------------------------------------------------------------------
+GENERIC_TABLE = os.path.join(ROOT, "core/segments/damage-generic/1.21.1__1.21.2.tsv")
+WITNESS_BY = [
+    # EntityRenderer.render(T, yaw, partialTick, PoseStack, MultiBufferSource, light) -- SPECS[0]
+    "method_3936(L" + ENTITY + ";FFL" + MC + "class_4587;L" + MC + "class_4597;I)V",
+    # RenderLayer.render(PoseStack, MultiBufferSource, light, T, limbSwing, ...) -- SPECS' RenderLayer entry
+    "method_4199(L" + MC + "class_4587;L" + MC + "class_4597;IL" + ENTITY + ";FFFFFF)V",
+    # EntityModel.setupAnim(T, 5 floats) -- family 1
+    SETUP[0] + SETUP[1],
+]
+
+
+def _sig_tree(s, i=0):
+    """parse one Java generic type signature at s[i]: (node, next index); node = (head, [args]) or a primitive"""
+    c = s[i]
+    if c in "BCDFIJSZV":
+        return (c, []), i + 1
+    if c == "[":
+        n, j = _sig_tree(s, i + 1)
+        return ("[", [n]), j
+    if c == "T":
+        j = s.index(";", i)
+        return ("T", [s[i + 1:j]]), j + 1
+    if c == "*":
+        return ("*", []), i + 1
+    if c in "+-":
+        n, j = _sig_tree(s, i + 1)
+        return (c, [n]), j
+    assert c == "L", s[i:]
+    j = i + 1
+    name, args = "", []
+    while True:
+        ch = s[j]
+        if ch == "<":
+            j += 1
+            while s[j] != ">":
+                n, j = _sig_tree(s, j)
+                args.append(n)
+            j += 1
+        elif ch == ";":
+            return ("L" + name, args), j + 1
+        elif ch == ".":
+            name += "$"
+            args = []
+            j += 1
+        else:
+            name += ch
+            j += 1
+
+
+def _sig_list(s):
+    """the parameter and return types of a method signature (or [field type]); type parameter decls dropped"""
+    if s.startswith("<"):
+        depth, k = 0, 0
+        while True:
+            if s[k] == "<":
+                depth += 1
+            elif s[k] == ">":
+                depth -= 1
+                if depth == 0:
+                    break
+            k += 1
+        s = s[k + 1:]
+    out = []
+    if s.startswith("("):
+        i = 1
+        while s[i] != ")":
+            n, i = _sig_tree(s, i)
+            out.append(n)
+        n, _ = _sig_tree(s, i + 1)
+        out.append(n)
+    else:
+        out.append(_sig_tree(s, 0)[0])
+    return out
+
+
+def family_generic(V, W):
+    entity_models = {c for c in V if ENTITY_MODEL in chain(c, V)}
+    w_models = {c for c in W if ENTITY_MODEL in chain(c, W)}
+
+    def is_entity(n):
+        return n[0].startswith("L") and ENTITY in chain(n[0][1:], V)
+
+    def is_state(n):
+        return n[0].startswith("L") and STATE in chain(n[0][1:], W)
+
+    def v_ok(n):
+        # a type variable, an entity class, or an entity model typed by one of those
+        return n[0] == "T" or is_entity(n) or (n[0][1:] in entity_models and all(v_ok(a) for a in n[1]))
+
+    def w_ok(n):
+        return n is None or n[0] in ("T", "*") or is_state(n) or (n[0][1:] in w_models and all(w_ok(a) for a in n[1]))
+
+    def same(a, b):
+        """whether V node a and W node b agree but for renderer-state re-typing"""
+        if a[0] != b[0] and not (v_ok(a) and w_ok(b)):
+            return False
+        if a[0] == b[0] and a[0] in ("T", "*"):
+            return True
+        if a[0] != b[0]:
+            return True
+        if a[0][1:] in entity_models and b[0][1:] in w_models and not b[1]:
+            return all(v_ok(x) for x in a[1])  # W raw model
+        aa, bb = a[1], b[1]
+        if len(aa) == len(bb):
+            return all(same(x, y) for x, y in zip(aa, bb))
+        if len(bb) == len(aa) + 1:
+            # EntityRenderer<T> -> <T, S>: the added argument is the state
+            return all(same(x, y) for x, y in zip(aa, bb[:len(aa)])) and w_ok(bb[-1])
+        return False
+
+    names = {}
+    for line in open(os.path.join(DATA, "mappings/inter-to-mojang-classes.tsv"), encoding="utf-8"):
+        p = line.rstrip("\n").split("\t")
+        if len(p) >= 3 and p[0] == "C":
+            names[p[1]] = p[2]
+    out = {}
+    for line in list(open(GENERIC_TABLE, encoding="utf-8"))[1:]:
+        p = line.rstrip("\n").split("\t")
+        usage, owner, name, desc, vs, ws = p[0], p[1], p[2], p[3], p[5], p[6]
+        if not AREA.match(names.get(owner, owner)):
+            continue
+        try:
+            va, wa = _sig_list(vs), _sig_list(ws)
+        except (AssertionError, IndexError, ValueError):
+            continue
+        if len(va) != len(wa) or not all(same(x, y) for x, y in zip(va, wa)) or va == wa:
+            continue
+        key = f"{owner}.{name}" + (":" if usage in ("get", "put") else "") + desc
+        out[key] = {"by": list(WITNESS_BY),
+                    "basis": "type witness: 1.21.2 only re-typed the renderer stack by render state here (" + vs + " -> " + ws
+                             + "); the renderer / layer / model passed is the same object (a 1.21.1 mod's is a 1.21.2 one of "
+                               "its superclass's state), its entity-typed 1.21.1 members reached from 1.21.2's state calls "
+                               "through the state hooks (gen_s7render.py family 9)"}
+    print(f"generic witnesses (renderer state re-typing): {len(out)}")
+    return out
+
+
 def write_mixin_config(generated):
     """the generated CbRenderTex<n>Mixin names in the client list, replacing the previous generation's"""
     cfg = json.load(open(MIXIN_CONFIG, encoding="utf-8"))
@@ -1556,7 +1706,8 @@ def main():
     covers += pt_covers
     shaders = family_shaders()
     shaders.update(family_moved())
-    frag = {"overrideHooks": hooks, "abstractFills": fills, "staticRedirects": shaders, "covers": sorted(covers)}
+    frag = {"overrideHooks": hooks, "abstractFills": fills, "staticRedirects": shaders, "covers": sorted(covers),
+            "genericWitnesses": family_generic(V, W)}
     open(FRAGMENT, "w", encoding="utf-8", newline="\n").write(json.dumps(frag, indent=1, ensure_ascii=False) + "\n")
     write_mixin_config(mixins)
 

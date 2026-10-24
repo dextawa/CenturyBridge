@@ -19,6 +19,9 @@ mutable field net/minecraft/class_5699 field_45075 Lcom/mojang/serialization/Cod
 # ---- s7level: members 1.21.1 had public that 1.21.2 keeps private (same body, verified) ----
 accessible method net/minecraft/class_2852 method_12393 ([Lit/unimi/dsi/fastutil/shorts/ShortList;)Lnet/minecraft/class_2499;
 
+# s7render: Blaze3D() public in 1.21.1, private in 1.21.2 (a utility class with only statics: the instance has no state)
+accessible method net/minecraft/class_3673 <init> ()V
+
 # s7render: ModelBakery's baker getModel(id), the 1.21.1 ModelBaker.getModel (CbRenderBakeBakerMixin)
 accessible method net/minecraft/class_1088$class_7778 method_45872 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
 # ---- s7entity: Phantom.canAttack(level, target, conditions), package-private in 1.21.2, answered by a mod Phantom's 1.21.1 canAttack(target, conditions) override (s7entity.json overrideHooks) ----

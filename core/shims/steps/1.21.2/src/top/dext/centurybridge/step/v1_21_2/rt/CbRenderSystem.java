@@ -157,4 +157,44 @@ public final class CbRenderSystem {
     public static void _setShaderTexture(int unit, int id) {
         com.mojang.blaze3d.systems.RenderSystem.setShaderTexture(unit, id);
     }
+
+    /**
+     * Blaze3D.process(storage, partialTick) / render(storage, partialTick), gone in 1.21.2 with RenderCallStorage
+     * (facade): 1.21.1's bodies only fetched the recording / processed queue and did nothing with it.
+     */
+    public static void method_35596(top.dext.centurybridge.step.v1_21_2.facade.RenderCallStorage storage, float partialTick) {
+        storage.method_35608();
+    }
+
+    public static void method_35597(top.dext.centurybridge.step.v1_21_2.facade.RenderCallStorage storage, float partialTick) {
+        storage.method_35609();
+    }
+
+    /**
+     * 1.21.1's VertexBuffer.Usage became 1.21.2's BufferUsage (net/minecraft/class_8555, the same class id; classRenames):
+     * STATIC (GL_STATIC_DRAW) is 1.21.2's STATIC_WRITE, DYNAMIC (GL_DYNAMIC_DRAW) its DYNAMIC_WRITE -- the same GL usage
+     * hints. values() / valueOf answer 1.21.1's two constants under 1.21.1's names (1.21.2's enum has more, other names).
+     */
+    public static net.minecraft.class_8555 field_44793() {
+        return net.minecraft.class_8555.field_54340;
+    }
+
+    public static net.minecraft.class_8555 field_44794() {
+        return net.minecraft.class_8555.field_54339;
+    }
+
+    public static net.minecraft.class_8555[] values() {
+        return new net.minecraft.class_8555[] {field_44793(), field_44794()};
+    }
+
+    public static net.minecraft.class_8555 valueOf(String name) {
+        switch (name) {
+            case "STATIC":
+                return field_44793();
+            case "DYNAMIC":
+                return field_44794();
+            default:
+                throw new IllegalArgumentException("No enum constant com.mojang.blaze3d.vertex.VertexBuffer.Usage." + name);
+        }
+    }
 }
