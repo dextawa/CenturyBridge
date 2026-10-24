@@ -107,6 +107,57 @@ public class S26TestMod implements ModInitializer {
         t.setB(2);
         check("tuple", "a".equals(t.getA()) && t.getB() == 2, t);
 
+        // EntitySelectorParser option flags on 26.2's option states (rt/CbS26Selector)
+        try {
+            net.minecraft.commands.arguments.selector.EntitySelectorParser p =
+                new net.minecraft.commands.arguments.selector.EntitySelectorParser(new com.mojang.brigadier.StringReader("@e[name=x,limit=1]"), true);
+            p.parse();
+            check("selector.parsed", p.hasNameEquals() && !p.hasNameNotEquals() && p.isLimited() && !p.isSorted()
+                && !p.hasGamemodeEquals() && !p.hasScores() && !p.isTypeLimited(), "");
+            net.minecraft.commands.arguments.selector.EntitySelectorParser q =
+                new net.minecraft.commands.arguments.selector.EntitySelectorParser(new com.mojang.brigadier.StringReader("@e[type=!pig,team=!red,gamemode=!creative]"), true);
+            q.parse();
+            check("selector.negative", q.isTypeLimitedInversely() && !q.isTypeLimited() && q.hasTeamNotEquals() && !q.hasTeamEquals()
+                && q.hasGamemodeNotEquals() && !q.hasGamemodeEquals(), "");
+            net.minecraft.commands.arguments.selector.EntitySelectorParser r =
+                new net.minecraft.commands.arguments.selector.EntitySelectorParser(new com.mojang.brigadier.StringReader("@e[type=pig]"), true);
+            r.parse();
+            check("selector.type", r.isTypeLimited() && !r.isTypeLimitedInversely(), "");
+            net.minecraft.commands.arguments.selector.EntitySelectorParser s =
+                new net.minecraft.commands.arguments.selector.EntitySelectorParser(new com.mojang.brigadier.StringReader("@e"), true);
+            s.setSorted(true);
+            s.setHasAdvancements(true);
+            s.setHasTeamEquals(true);
+            boolean set = s.isSorted() && s.hasAdvancements() && s.hasTeamEquals();
+            s.setSorted(false);
+            s.setHasTeamEquals(false);
+            s.setTypeLimitedInversely();
+            check("selector.setters", set && !s.isSorted() && !s.hasTeamEquals() && s.hasAdvancements() && s.isTypeLimitedInversely(), "");
+        } catch (Exception e) {
+            check("selector", false, e);
+        }
+
+        // ChatFormatting's 26.1.2 data and lookups (rt/CbS26ChatFormatting)
+        net.minecraft.ChatFormatting red = net.minecraft.ChatFormatting.RED;
+        check("chatformatting.red", red.getChar() == 'c' && red.getId() == 12 && red.getColor() == 16733525 && red.isColor()
+            && !red.isFormat() && "red".equals(red.getName()) && "red".equals(red.getSerializedName()), red);
+        check("chatformatting.lookups", net.minecraft.ChatFormatting.getByName("Dark_Blue") == net.minecraft.ChatFormatting.DARK_BLUE
+            && net.minecraft.ChatFormatting.getById(-5) == net.minecraft.ChatFormatting.RESET
+            && net.minecraft.ChatFormatting.getById(15) == net.minecraft.ChatFormatting.WHITE
+            && net.minecraft.ChatFormatting.BOLD.isFormat() && !net.minecraft.ChatFormatting.RESET.isColor()
+            && net.minecraft.ChatFormatting.getNames(true, false).size() == 17
+            && net.minecraft.ChatFormatting.getNames(false, true).contains("bold"), "");
+        com.google.gson.JsonElement je = net.minecraft.ChatFormatting.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,
+            net.minecraft.ChatFormatting.GOLD).getOrThrow();
+        check("chatformatting.codec", "\"gold\"".equals(je.toString())
+            && net.minecraft.ChatFormatting.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE, je).getOrThrow() == net.minecraft.ChatFormatting.GOLD
+            && net.minecraft.ChatFormatting.COLOR_CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, net.minecraft.ChatFormatting.ITALIC).isError(), je);
+
+        // BlockPos.getCenter / getBottomCenter (rt/CbS26World)
+        net.minecraft.core.BlockPos bp = new net.minecraft.core.BlockPos(1, 2, 3);
+        check("blockpos.center", bp.getCenter().equals(new net.minecraft.world.phys.Vec3(1.5, 2.5, 3.5))
+            && bp.getBottomCenter().equals(new net.minecraft.world.phys.Vec3(1.5, 2.0, 3.5)), bp.getCenter());
+
         System.out.println("CB-S26 DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS: " + FAILS));
     }
 }
