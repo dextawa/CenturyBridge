@@ -128,6 +128,38 @@ public class S4FinGtMod implements ModInitializer {
             name + ": ids 0, 1, 2 (" + registry.method_10206("va") + "," + registry.method_10206("vb") + "," + registry.method_10206("vc") + ")");
     }
 
+    // ---- DFU 6 API (1.20.4's library) ----
+
+    static void dfu() {
+        com.mojang.serialization.DataResult<Integer> ok = com.mojang.serialization.DataResult.success(7);
+        com.mojang.serialization.DataResult<Integer> bad = com.mojang.serialization.DataResult.error(() -> "nope", 3);
+        check(ok.result().get() == 7 && ok.get().left().get() == 7, "DataResult.result()/get() of a success");
+        check(bad.get().right().get().message().equals("nope") && bad.error().get().message().equals("nope") && bad.resultOrPartial(e -> { }).get() == 3,
+            "DataResult.get()/error() of an error: PartialResult message and partial value");
+        List<String> errs = new ArrayList<>();
+        check(bad.getOrThrow(true, errs::add) == 3 && errs.equals(List.of("nope")), "getOrThrow(allowPartial, onError) answers the partial after onError");
+        boolean threw = false;
+        try {
+            bad.getOrThrow(false, e -> { });
+        } catch (RuntimeException e) {
+            threw = "nope".equals(e.getMessage());
+        }
+        check(threw, "getOrThrow(false, ..) throws with the message");
+        com.mojang.serialization.Codec<Integer> rec = com.mojang.serialization.codecs.RecordCodecBuilder.create(i -> i.group(
+            com.mojang.serialization.Codec.optionalField("n", com.mojang.serialization.Codec.INT).forGetter(x -> java.util.Optional.of(x))
+        ).apply(i, o -> o.orElse(-1)));
+        com.google.gson.JsonObject j = new com.google.gson.JsonObject();
+        j.addProperty("n", "not a number");
+        check(rec.parse(com.mojang.serialization.JsonOps.INSTANCE, j).result().orElse(0) == -1, "Codec.optionalField is lenient (unparsable reads as absent)");
+        com.mojang.serialization.codecs.ListCodec<Integer> list = new com.mojang.serialization.codecs.ListCodec<>(com.mojang.serialization.Codec.INT);
+        check(list.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, List.of(1, 2, 3)).result().get().toString().equals("[1,2,3]"), "new ListCodec(codec) encodes");
+        com.mojang.serialization.MapCodec<Integer> kd = new com.mojang.serialization.codecs.KeyDispatchCodec<String, Integer>("type", com.mojang.serialization.Codec.STRING,
+            v -> com.mojang.serialization.DataResult.success("int"), k -> com.mojang.serialization.DataResult.success(com.mojang.serialization.Codec.INT));
+        com.google.gson.JsonElement enc = kd.codec().encodeStart(com.mojang.serialization.JsonOps.INSTANCE, 5).result().orElse(null);
+        check(enc != null && enc.equals(com.google.gson.JsonParser.parseString("{\"type\":\"int\",\"value\":5}")), "KeyDispatchCodec(.., codec): a plain codec's value under \"value\" (" + enc + ")");
+        check(kd.codec().parse(com.mojang.serialization.JsonOps.INSTANCE, enc).result().orElse(0) == 5, "KeyDispatchCodec decodes it back");
+    }
+
     // ---- entity effect particles ----
 
     static void particles(class_3218 level) {
@@ -271,6 +303,7 @@ public class S4FinGtMod implements ModInitializer {
             guard("register only", () -> registries("register only", new RegisterOnly(class_5321.method_29180(new class_2960("cb", "ronly"))), "R:a", "R:b", ""));
             guard("mapping only", () -> registries("mapping only", new MappingOnly(class_5321.method_29180(new class_2960("cb", "monly"))), "M0:a", "M1:b", "M2:c"));
             guard("particles", () -> particles(server.method_30002()));
+            guard("dfu", S4FinGtMod::dfu);
             guard("gametests", () -> gametests(server.method_30002()));
             if (running == null) {
                 System.out.println("CBS4GT DONE " + (checks - FAILS.size()) + "/" + checks + (FAILS.isEmpty() ? "" : " FAILS " + FAILS));
