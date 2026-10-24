@@ -298,6 +298,45 @@ public class SwallTestMod implements ModInitializer {
             && cjson.toString().contains("clamped"), cjson);
     }
 
+    /** a 1.21.11 placement modifier: the origin and the block above it */
+    static final class Twice extends net.minecraft.class_6797 {
+        @Override
+        public java.util.stream.Stream<net.minecraft.class_2338> method_14452(net.minecraft.class_5444 context, net.minecraft.class_5819 random,
+                net.minecraft.class_2338 pos) {
+            return java.util.stream.Stream.of(pos, pos.method_10084());
+        }
+
+        @Override
+        public net.minecraft.class_6798<?> method_39615() {
+            return net.minecraft.class_6798.field_35749;
+        }
+    }
+
+    /** a 1.21.11 repeating placement: three times */
+    static final class Thrice extends net.minecraft.class_5857 {
+        @Override
+        protected int method_14452(net.minecraft.class_5819 random, net.minecraft.class_2338 pos) {
+            return 3;
+        }
+
+        @Override
+        public net.minecraft.class_6798<?> method_39615() {
+            return net.minecraft.class_6798.field_35749;
+        }
+    }
+
+    /** method_14452 names both getPositions and RepeatingPlacement.count in 1.21.11 */
+    private static void placements() {
+        net.minecraft.class_5819 random = net.minecraft.class_5819.method_43049(2L);
+        net.minecraft.class_2338 origin = new net.minecraft.class_2338(0, 64, 0);
+        net.minecraft.class_6797 twice = new Twice();
+        Thrice thrice = new Thrice();
+        long a = twice.method_14452(null, random, origin).count();
+        long b = thrice.method_14452(null, random, origin).count();
+        long c = net.minecraft.class_5450.method_39639().method_14452(null, random, origin).count();
+        check("placement.reusedId", a == 2 && b == 3 && c == 1 && thrice.method_14452(random, origin) == 3, a + " " + b + " " + c);
+    }
+
     /** generic drift at the wall read on a running server */
     private static void generic(MinecraftServer server) {
         Optional<net.minecraft.class_5321<com.mojang.serialization.MapCodec<? extends net.minecraft.class_2794>>> key =
@@ -350,6 +389,7 @@ public class SwallTestMod implements ModInitializer {
             selectors();
             itemContainers(server);
             valueProviders(server);
+            placements();
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);

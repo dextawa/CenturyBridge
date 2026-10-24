@@ -64,6 +64,16 @@ public final class JarRemapper {
         public final java.util.Map<String, String> members = new java.util.HashMap<>();
         /** how many bare ids were ambiguous (owner-qualified lookup only) */
         public int ambiguous;
+        /** bare intermediary method id -> every mojang name the table gives it (more than one: reused ids) */
+        public final java.util.Map<String, java.util.Set<String>> candidates = new java.util.HashMap<>();
+        /**
+         * The target release's methods ("owner" -> name + desc, mojang names) and supertypes, and the input jar's
+         * own classes' supertypes (renamed): with them a reused id resolves by descriptor ({@link #remapper}).
+         * Null when no target jar is known.
+         */
+        public java.util.Map<String, java.util.Set<String>> targetMethods;
+        public java.util.Map<String, String[]> targetSupers;
+        public final java.util.Map<String, String[]> jarSupers = new java.util.HashMap<>();
 
         /**
          * Tokens only the step's facade classes declare keep their names across the wall. A class the
@@ -145,7 +155,60 @@ public final class JarRemapper {
                 public String mapMethodName(String owner, String name, String desc) {
                     // comp_NNNN: a record component accessor (intermediary names them
                     // apart from method_; the table lists them as methods)
-                    return name.startsWith("method_") || name.startsWith("comp_") ? member(owner, name) : name;
+                    if (!name.startsWith("method_") && !name.startsWith("comp_")) {
+                        return name;
+                    }
+                    String m = member(owner, name);
+                    return targetMethods == null ? m : byDescriptor(owner, name, desc, m);
+                }
+
+                /**
+                 * An id intermediary gave two members of one hierarchy (1.21.11's RepeatingPlacement.count(random,
+                 * pos) and getPositions(context, random, pos) are both method_14452) maps to two names; the
+                 * table keys members by owner and name only, so a call through any other owner found no
+                 * mapping and an override of the other member took the wrong name. When the name chosen is
+                 * not a method the target declares with this (renamed) descriptor in the owner's hierarchy,
+                 * the one candidate it does declare is taken.
+                 */
+                private String byDescriptor(String owner, String name, String desc, String m) {
+                    java.util.Set<String> cand = candidates.get(name);
+                    if (cand == null || cand.size() < 2 || owner.startsWith("top/dext/centurybridge/")) {
+                        return m;
+                    }
+                    String mo = map(owner);
+                    String md = mapMethodDesc(desc);
+                    if (declares(mo, m + md, new java.util.HashSet<>())) {
+                        return m;
+                    }
+                    String only = null;
+                    for (String c : cand) {
+                        if (declares(mo, c + md, new java.util.HashSet<>())) {
+                            if (only != null) {
+                                return m;
+                            }
+                            only = c;
+                        }
+                    }
+                    return only != null ? only : m;
+                }
+
+                private boolean declares(String owner, String nameDesc, java.util.Set<String> seen) {
+                    if (owner == null || !seen.add(owner)) {
+                        return false;
+                    }
+                    java.util.Set<String> ms = targetMethods.get(owner);
+                    if (ms != null && ms.contains(nameDesc)) {
+                        return true;
+                    }
+                    String[] sup = targetSupers.containsKey(owner) ? targetSupers.get(owner) : jarSupers.get(owner);
+                    if (sup != null) {
+                        for (String x : sup) {
+                            if (declares(x, nameDesc, seen)) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
                 }
 
                 @Override
@@ -193,6 +256,9 @@ public final class JarRemapper {
                 String name = p[1].substring(p[1].lastIndexOf('.') + 1);
                 String moj = p[2].substring(p[2].lastIndexOf('.') + 1);
                 t.byOwner.put(p[1], moj);
+                if (p[0].equals("M")) {
+                    t.candidates.computeIfAbsent(name, x -> new java.util.TreeSet<>()).add(moj);
+                }
                 String prev = t.members.putIfAbsent(name, moj);
                 if (prev != null && !prev.equals(moj)) {
                     ambiguous.add(name);
@@ -217,6 +283,8 @@ public final class JarRemapper {
     public static void remapWithTable(Table table, Path inJar, Path outJar, Path targetJar) throws IOException {
         if (targetJar != null && Files.exists(targetJar)) {
             table.targetKinds = loadKinds(targetJar);
+            loadTarget(table, targetJar);
+            loadJarSupers(table, inJar);
         }
         int nClasses;
         try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(inJar));
@@ -539,6 +607,58 @@ public final class JarRemapper {
             }
         }
         System.out.println("remapped " + classes + " classes -> " + outJar);
+    }
+
+    /** the target's game classes' methods and supertypes ({@link Table#targetMethods}) */
+    public static void loadTarget(Table table, Path jar) throws IOException {
+        java.util.Map<String, java.util.Set<String>> methods = new java.util.HashMap<>();
+        java.util.Map<String, String[]> supers = new java.util.HashMap<>();
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(jar))) {
+            ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                String n = e.getName();
+                if (!n.endsWith(".class") || !(n.startsWith("net/minecraft/") || n.startsWith("com/mojang/"))) {
+                    continue;
+                }
+                org.objectweb.asm.tree.ClassNode cn = new org.objectweb.asm.tree.ClassNode();
+                new ClassReader(zin.readAllBytes()).accept(cn, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                java.util.Set<String> ms = new java.util.HashSet<>();
+                for (org.objectweb.asm.tree.MethodNode m : cn.methods) {
+                    ms.add(m.name + m.desc);
+                }
+                methods.put(cn.name, ms);
+                java.util.List<String> sup = new java.util.ArrayList<>();
+                if (cn.superName != null) {
+                    sup.add(cn.superName);
+                }
+                sup.addAll(cn.interfaces);
+                supers.put(cn.name, sup.toArray(new String[0]));
+            }
+        }
+        table.targetMethods = methods;
+        table.targetSupers = supers;
+    }
+
+    /** the input jar's classes' supertypes, renamed as the jar will be ({@link Table#jarSupers}) */
+    private static void loadJarSupers(Table table, Path jar) throws IOException {
+        Remapper r = table.remapper();
+        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(jar))) {
+            ZipEntry e;
+            while ((e = zin.getNextEntry()) != null) {
+                if (!e.getName().endsWith(".class")) {
+                    continue;
+                }
+                ClassReader cr = new ClassReader(zin.readAllBytes());
+                java.util.List<String> sup = new java.util.ArrayList<>();
+                if (cr.getSuperName() != null) {
+                    sup.add(r.map(cr.getSuperName()));
+                }
+                for (String i : cr.getInterfaces()) {
+                    sup.add(r.map(i));
+                }
+                table.jarSupers.put(r.map(cr.getClassName()), sup.toArray(new String[0]));
+            }
+        }
     }
 
     /** every game class of a jar and whether it is an interface */
