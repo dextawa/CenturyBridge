@@ -15,19 +15,19 @@ public final class CbWallTags {
     private CbWallTags() {
     }
 
-    /** net/minecraft/class_3481.field_35443: minecraft:big_dripleaf_placeable */
+    /** net/minecraft/class_3481.field_35443: minecraft:big_dripleaf_placeable, renamed minecraft:supports_big_dripleaf in 26.1 (same members; read by BigDripleafBlock, BigDripleafStemBlock in both) */
     public static TagKey field_35443() {
-        return TagKey.create(Registries.BLOCK, Identifier.withDefaultNamespace("big_dripleaf_placeable"));
+        return net.minecraft.tags.BlockTags.SUPPORTS_BIG_DRIPLEAF;
     }
 
-    /** net/minecraft/class_3481.field_39104: minecraft:snow_layer_cannot_survive_on */
+    /** net/minecraft/class_3481.field_39104: minecraft:snow_layer_cannot_survive_on, renamed minecraft:cannot_support_snow_layer in 26.1 (same members; read by SnowLayerBlock in both) */
     public static TagKey field_39104() {
-        return TagKey.create(Registries.BLOCK, Identifier.withDefaultNamespace("snow_layer_cannot_survive_on"));
+        return net.minecraft.tags.BlockTags.CANNOT_SUPPORT_SNOW_LAYER;
     }
 
-    /** net/minecraft/class_3481.field_39105: minecraft:snow_layer_can_survive_on */
+    /** net/minecraft/class_3481.field_39105: minecraft:snow_layer_can_survive_on, renamed minecraft:support_override_snow_layer in 26.1 (same members; read by SnowLayerBlock in both) */
     public static TagKey field_39105() {
-        return TagKey.create(Registries.BLOCK, Identifier.withDefaultNamespace("snow_layer_can_survive_on"));
+        return net.minecraft.tags.BlockTags.SUPPORT_OVERRIDE_SNOW_LAYER;
     }
 
     /** net/minecraft/class_3489.field_48803: minecraft:dyeable */
@@ -68,10 +68,5 @@ public final class CbWallTags {
     /** net/minecraft/class_9636.field_51537: minecraft:trades/taiga_special */
     public static TagKey field_51537() {
         return TagKey.create(Registries.ENCHANTMENT, Identifier.withDefaultNamespace("trades/taiga_special"));
-    }
-
-    /** net/minecraft/class_3481.field_56529: minecraft:dry_vegetation_may_place_on */
-    public static TagKey field_56529() {
-        return TagKey.create(Registries.BLOCK, Identifier.withDefaultNamespace("dry_vegetation_may_place_on"));
     }
 }
