@@ -44,11 +44,4 @@ public final class CbTagCompat {
     public static net.minecraft.tags.TagKey<?> BlockTags_field_33641() {
         return BlockTags_field_33641;
     }
-
-    /** net/minecraft/class_3489.field_36269: 1.21.11 minecraft:dirt (narrowed at 26.1) */
-    public static final net.minecraft.tags.TagKey<?> ItemTags_field_36269 = key(net.minecraft.core.registries.Registries.ITEM, "centurybridge", "compat/1_21_11/dirt");
-
-    public static net.minecraft.tags.TagKey<?> ItemTags_field_36269() {
-        return ItemTags_field_36269;
-    }
 }

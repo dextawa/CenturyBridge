@@ -51,6 +51,6 @@ step	registry	tag	compat tag file	kind	CbTagCompat getters
 1.21.11__26.1	block	small_dripleaf_placeable	core/shims/steps/26.1/resources/data/minecraft/tags/block/small_dripleaf_placeable.json	removed	BlockTags_field_33641
 1.21.11__26.1	block	snow_layer_can_survive_on	core/shims/steps/26.1/resources/data/minecraft/tags/block/snow_layer_can_survive_on.json	removed	-
 1.21.11__26.1	block	snow_layer_cannot_survive_on	core/shims/steps/26.1/resources/data/minecraft/tags/block/snow_layer_cannot_survive_on.json	removed	-
-1.21.11__26.1	item	dirt	core/shims/steps/26.1/resources/data/centurybridge/tags/item/compat/1_21_11/dirt.json	narrowed	ItemTags_field_36269
-1.21.11__26.1	item	dyeable	core/shims/steps/26.1/resources/data/minecraft/tags/item/dyeable.json	removed	-
+1.21.11__26.1	item	dirt	-	narrowed	-
+1.21.11__26.1	item	dyeable	-	removed	-
 26.1.2__26.2	block	concrete_powder	core/shims/steps/26.2/resources/data/minecraft/tags/block/concrete_powder.json	removed	BlockTags_CONCRETE_POWDER
