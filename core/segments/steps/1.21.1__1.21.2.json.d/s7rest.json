@@ -239,7 +239,8 @@
   "net/minecraft/class_479.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
   "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
   "net/minecraft/class_634.method_11115(Lnet/minecraft/class_2713;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners",
-  "net/minecraft/class_2602.method_11115(Lnet/minecraft/class_2713;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners"
+  "net/minecraft/class_2602.method_11115(Lnet/minecraft/class_2713;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClientListeners",
+  "net/minecraft/class_638$class_5271.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#gameRules"
  },
  "staticRedirects": {
   "net/minecraft/class_156.method_18349()Ljava/util/concurrent/ExecutorService;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestServer#backgroundExecutor",
@@ -1131,7 +1132,8 @@
   "net/minecraft/class_636.method_2912(ILnet/minecraft/class_8786;Z)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipesClient#method_2912",
   "net/minecraft/class_490.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
   "net/minecraft/class_479.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
-  "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent"
+  "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#superRecipeBookComponent",
+  "net/minecraft/class_638$class_5271.method_146()Lnet/minecraft/class_1928;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#clientGameRules"
  },
  "adapterHooks": [
   {
@@ -1309,6 +1311,14 @@
     "method_11115(Lnet/minecraft/class_2713;)V"
    ],
    "synth": []
+  },
+  {
+   "under": "net/minecraft/class_638$class_5271",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient$LegacyGameRules",
+   "requires": [
+    "method_146()Lnet/minecraft/class_1928;"
+   ],
+   "synth": []
   }
  ],
  "abstractFills": [
@@ -1394,8 +1404,8 @@
   }
  ],
  "ledger": {
-  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "a 1.21.1 MinecraftServer subclass overriding getProfiler(): 1.21.2's MinecraftServer has only a private method of that name and descriptor (vanilla reads the profiler from Profiler.get()), so nothing can reach an override; 1.21.1 callers of server.getProfiler() are bridged (CbRestServer.profiler, Profiler.get() -- the same profiler 1.21.2's server ticks with)",
-  "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "RealmsClient.resetWorldWithSeed: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
+  "net/minecraft/server/MinecraftServer.method_16044()Lnet/minecraft/class_3695;": "override of getProfiler() in a 1.21.1 subclass of MinecraftServer: 1.21.2 made the server's getProfiler private and profiles through the thread's Profiler.get() (installed by the server's own tick loop), never asking the server for one, so an override's profiler has nowhere to go; calls of getProfiler() are bridged (instanceRedirects: the thread's profiler)",
+  "net/minecraft/class_4341.method_20995(JLnet/minecraft/class_4413;)Ljava/lang/Boolean;": "override of RealmsClient.resetWorldWithSeed in a 1.21.1 subclass: 1.21.2 removed resetting a Realms world from a seed (only templates remain), so nothing calls it; calls of it are answered with an explicit Realms error (see the RealmsClient entries)",
   "net/minecraft/class_5673.method_32517(Lnet/minecraft/class_4341;J)V": "ResettingGeneratedWorldTask.sendResetRequest: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
   "net/minecraft/class_8844.run()V": "CreateSnapshotRealmTask.run: 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
   "net/minecraft/class_4390.<init>(Lnet/minecraft/class_4325;J)V": "RealmsCreateRealmScreen(lastScreen, parentWorldId), the snapshot-creation screen whose only action is the removed request (and whose 1.21.1 subclass super(..) has no 1.21.2 constructor to call): 1.21.2 removed regenerating a Realms world from a seed and creating a snapshot realm from one (no screen, task or RealmsClient method sends these requests any more; worlds reset from templates only). The facades load and the screen works, but this member would send the removed request to the Realms service, which CenturyBridge does not replay for a 1.21.1 mod without verifying the service still accepts it: it answers with the error CbRestRealms.SEED_RESET_REMOVED instead",
