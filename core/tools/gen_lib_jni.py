@@ -5,7 +5,7 @@
 LWJGL's JNI class is a set of natives `call<letters>(args..., long functionAddress)` that call a native function pointer with
 a fixed C signature; each release ships only the variants its own bindings use, so a mod that called one of the dropped
 ones (core/segments/damage-lib/<V>__<W>.tsv, METHOD rows on org/lwjgl/system/JNI) meets NoSuchMethodError. The C signature
-is spelled by the variant itself: the name's letters after "call" are the long arguments in order (P a pointer, J an
+is spelled by the variant itself: the name's letters after "call" are the long arguments in order (P a pointer, N a C long -- 32 or 64 bits by platform, J an
 int64) and, last, the return type; every other argument is its descriptor type (B jbyte = signed 8-bit, S jshort = signed
 16-bit, C jchar = unsigned 16-bit, Z jboolean = unsigned 8-bit, I, F, D). The generated static makes exactly that call
 through libffi (org.lwjgl.system.libffi.LibFFI, part of every LWJGL 3 core jar and its natives): one call interface per
@@ -19,7 +19,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FFI = {"B": "ffi_type_sint8", "S": "ffi_type_sint16", "C": "ffi_type_uint16", "Z": "ffi_type_uint8", "I": "ffi_type_sint32",
-       "F": "ffi_type_float", "D": "ffi_type_double", "J": "ffi_type_sint64", "P": "ffi_type_pointer", "V": "ffi_type_void",
+       "F": "ffi_type_float", "D": "ffi_type_double", "J": "ffi_type_sint64", "P": "ffi_type_pointer", "N": "ffi_type_slong", "V": "ffi_type_void",
        "US": "ffi_type_uint16", "UB": "ffi_type_uint8"}
 SIZE = {"B": 1, "S": 2, "C": 2, "I": 4, "J": 8, "F": 4, "D": 8}
 BUF = {"B": "memByteBuffer", "S": "memShortBuffer", "C": "memCharBuffer", "I": "memIntBuffer", "J": "memLongBuffer",
@@ -54,7 +54,7 @@ def main():
         pos = 0
         for a in args[:-1]:
             if a == "J" or a.startswith("["):
-                if pos >= len(jlong_kinds) or jlong_kinds[pos] not in "PJ":
+                if pos >= len(jlong_kinds) or jlong_kinds[pos] not in "PJN":
                     sys.exit(f"{m}: name letters do not match the arguments")
                 kinds.append(jlong_kinds[pos])
                 pos += 1
@@ -83,6 +83,9 @@ def main():
                 body.append(f"            if (a{i} != null) {{ {BUF[e]}(p{i}, a{i}.length).put(a{i}); }}")
                 body.append(f"            memPutAddress(slots + {i * 8}, p{i});")
                 back.append(f"            if (a{i} != null) {{ {BUF[e]}(p{i}, a{i}.length).get(a{i}); }}")
+            elif k == "N":
+                # a C long: 32 or 64 bits by platform (LWJGL's CLONG_SIZE)
+                body.append(f"            memPutCLong(slots + {i * 8}, a{i});")
             else:
                 body.append("            " + PUT[a].format(s=f"slots + {i * 8}", a=f"a{i}") + ";")
             body.append(f"            memPutAddress(values + {i * 8}, slots + {i * 8});")
