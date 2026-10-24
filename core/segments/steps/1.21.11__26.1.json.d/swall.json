@@ -199,7 +199,21 @@
   "net/minecraft/class_2824.method_12251(Lnet/minecraft/class_2792;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#handle",
   "net/minecraft/class_2792.method_12062(Lnet/minecraft/class_2824;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#handleInteract",
   "net/minecraft/class_236.method_982()Lnet/minecraft/class_2499;": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#store",
-  "net/minecraft/class_10741.comp_3641()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallSavedData#id"
+  "net/minecraft/class_10741.comp_3641()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallSavedData#id",
+  "net/minecraft/class_2568$class_10612.comp_3509()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#showItemStack",
+  "net/minecraft/class_11434.comp_4324()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#itemBodyStack",
+  "net/minecraft/class_10131.comp_3093()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#useRemainderStack",
+  "net/minecraft/class_10302$class_10307.comp_3274()Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#slotDisplayStack",
+  "net/minecraft/class_2575.comp_733()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallDataSources#posPattern",
+  "net/minecraft/class_2575.comp_734()Lnet/minecraft/class_2267;": "top/dext/centurybridge/step/v26_1/rt/CbWallDataSources#compiledPos",
+  "net/minecraft/class_2576.comp_735()Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallDataSources#selectorPattern",
+  "net/minecraft/class_2576.comp_736()Lnet/minecraft/class_2300;": "top/dext/centurybridge/step/v26_1/rt/CbWallDataSources#compiledSelector",
+  "net/minecraft/class_9346.comp_3564()Lnet/minecraft/class_9346$class_10688;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#wolfAssetInfo",
+  "net/minecraft/class_6904.comp_359()Lnet/minecraft/class_5219;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#stemWorldData",
+  "net/minecraft/class_7655$class_7657.comp_2664()Z": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#requiredNonEmpty",
+  "net/minecraft/class_8895.comp_2008()Lnet/minecraft/class_5219;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#levelWorldData",
+  "net/minecraft/class_9476.method_58740()Lnet/minecraft/class_5658;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#amplifier",
+  "net/minecraft/class_7375.comp_3560()Lnet/minecraft/class_12079$class_10726;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#catAssetInfo"
  },
  "overrideHooks": [
   {
@@ -377,33 +391,6 @@
     "method_32439()Lnet/minecraft/class_5650;",
     "method_32475()Lnet/minecraft/class_5669;"
    ]
-  },
-  {
-   "old": "method_17700(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
-   "new": "method_17700(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
-   "onlyUnder": "net/minecraft/class_1849",
-   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
-   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
-   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
-   "basis": "26.1's assemble(input) of a mod's ArmorDyeRecipe subclass overriding 1.21.11's assemble(input, registries): its own assemble with the level's registries (as gen_wall_recipe_assemble.py hooks the other recipe classes)"
-  },
-  {
-   "old": "method_17714(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
-   "new": "method_17714(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
-   "onlyUnder": "net/minecraft/class_1855",
-   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
-   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
-   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
-   "basis": "26.1's assemble(input) of a mod's MapCloningRecipe subclass overriding 1.21.11's assemble(input, registries): its own assemble with the level's registries (as gen_wall_recipe_assemble.py hooks the other recipe classes)"
-  },
-  {
-   "old": "method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;",
-   "new": "method_17740(Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
-   "onlyUnder": "net/minecraft/class_1876",
-   "adapter": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting",
-   "bridge": "top/dext/centurybridge/step/v26_1/rt/CbWallRecipes.assembleCrafting(Ltop/dext/centurybridge/step/v26_1/rt/CbWallRecipes$LegacyAssembleCrafting;Lnet/minecraft/class_9694;)Lnet/minecraft/class_1799;",
-   "guard": "top/dext/centurybridge/step/v26_1/rt/Guard",
-   "basis": "26.1's assemble(input) of a mod's TippedArrowRecipe subclass overriding 1.21.11's assemble(input, registries): its own assemble with the level's registries (as gen_wall_recipe_assemble.py hooks the other recipe classes)"
   },
   {
    "old": "method_982()Lnet/minecraft/class_2499;",
@@ -664,7 +651,18 @@
   "net/minecraft/class_236.<init>(Lnet/minecraft/class_233;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#newQueue",
   "net/minecraft/class_236.<init>(Lnet/minecraft/class_233;Ljava/util/stream/Stream;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTimers#newQueue",
   "net/minecraft/class_10741.<init>(Ljava/lang/String;Ljava/util/function/Supplier;Lcom/mojang/serialization/Codec;Lnet/minecraft/class_4284;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallSavedData#newType",
-  "net/minecraft/class_10801.<init>(Lnet/minecraft/class_10817;ZLnet/minecraft/class_1058;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#simpleModelWrapper"
+  "net/minecraft/class_10801.<init>(Lnet/minecraft/class_10817;ZLnet/minecraft/class_1058;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#simpleModelWrapper",
+  "net/minecraft/class_2568$class_10612.<init>(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#showItem",
+  "net/minecraft/class_11434.<init>(Lnet/minecraft/class_1799;Ljava/util/Optional;ZZII)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#itemBody",
+  "net/minecraft/class_10131.<init>(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#useRemainder",
+  "net/minecraft/class_10302$class_10307.<init>(Lnet/minecraft/class_1799;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallItemTemplates#itemStackSlotDisplay",
+  "net/minecraft/class_2575.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDataSources#blockSource",
+  "net/minecraft/class_2575.<init>(Ljava/lang/String;Lnet/minecraft/class_2267;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDataSources#blockSource",
+  "net/minecraft/class_2576.<init>(Ljava/lang/String;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDataSources#entitySource",
+  "net/minecraft/class_2576.<init>(Ljava/lang/String;Lnet/minecraft/class_2300;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallDataSources#entitySource",
+  "net/minecraft/class_9346.<init>(Lnet/minecraft/class_9346$class_10688;Lnet/minecraft/class_10702;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#wolfVariant",
+  "net/minecraft/class_7655$class_7657.<init>(Lnet/minecraft/class_5321;Lcom/mojang/serialization/Codec;Z)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#registryData",
+  "net/minecraft/class_7375.<init>(Lnet/minecraft/class_12079$class_10726;Lnet/minecraft/class_10702;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#catVariant"
  },
  "adapterHooks": [
   {
@@ -977,12 +975,6 @@
   "net/minecraft/class_4628.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming RandomPatchFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
   "net/minecraft/class_3070.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming IceSpikeFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
   "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming BlockBlobFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
-  "net/minecraft/class_1849.method_17701(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "matches(input, level) under 1.21.11's ArmorDyeRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming ArmorDyeRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
-  "net/minecraft/class_1849.method_17700(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "assemble(input, registries) under 1.21.11's ArmorDyeRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming ArmorDyeRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
-  "net/minecraft/class_1855.method_17715(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "matches(input, level) under 1.21.11's MapCloningRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming MapCloningRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
-  "net/minecraft/class_1855.method_17714(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "assemble(input, registries) under 1.21.11's MapCloningRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming MapCloningRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
-  "net/minecraft/class_1876.method_17741(Lnet/minecraft/class_9694;Lnet/minecraft/class_1937;)Z": "matches(input, level) under 1.21.11's TippedArrowRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming TippedArrowRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
-  "net/minecraft/class_1876.method_17740(Lnet/minecraft/class_9694;Lnet/minecraft/class_7225$class_7874;)Lnet/minecraft/class_1799;": "assemble(input, registries) under 1.21.11's TippedArrowRecipe token: the facade overrides 26.1's matches / assemble (a mod's override is renamed / hooked onto them); a call naming TippedArrowRecipe goes through CbWallRecipeKinds (instanceRedirects: dispatches to the object), a mod's super call to 1.21.11's body (superRedirects: cb$matches / cb$assemble)",
   "net/minecraft/class_1849.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming ArmorDyeRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)",
   "net/minecraft/class_1855.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming MapCloningRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)",
   "net/minecraft/class_1876.method_8119()Lnet/minecraft/class_1865;": "getSerializer() under its 1.21.11 token answering 1.21.11's serializer type: the facade overrides 26.1's getSerializer (the 26.1 record); a call naming TippedArrowRecipe goes through CbWallRecipeKinds.getSerializer (the 1.21.11 serializer of the object's record, CbWallRecipes.getSerializer)"
@@ -1079,7 +1071,8 @@
   "net/minecraft/class_9082.method_55818()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#createBodyLayer",
   "net/minecraft/class_9939.method_62055(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AbstractPiglinModel#createMesh",
   "net/minecraft/class_9945.method_62080(F)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$DonkeyModel#createBabyLayer",
-  "net/minecraft/class_9945.method_66838(FZ)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$DonkeyModel#createSaddleLayer"
+  "net/minecraft/class_9945.method_66838(FZ)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$DonkeyModel#createSaddleLayer",
+  "net/minecraft/class_3532.method_15394()Ljava/util/UUID;": "top/dext/centurybridge/step/v26_1/rt/CbWallRecordViews#createInsecureUUID"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -2000,6 +1993,17 @@
    "ops": [],
    "ret": "conv top/dext/centurybridge/step/v26_1/rt/CbWallRuleProviders#ruleBased(Lnet/minecraft/class_4651;)Lnet/minecraft/class_7400;",
    "basis": "DiskConfiguration.stateProvider(): 26.1 answers any provider (its data can name one); a rule-based one as it is, another as a rule-based provider with no rules (the same states)"
+  },
+  "net/minecraft/class_2561.method_43468(Ljava/lang/String;ZLjava/util/Optional;Lnet/minecraft/class_7419;)Lnet/minecraft/class_5250;": {
+   "desc": "(Lnet/minecraft/util/CompilableString;ZZLjava/util/Optional;Lnet/minecraft/class_7419;)Lnet/minecraft/class_5250;",
+   "ops": [
+    "conv top/dext/centurybridge/step/v26_1/rt/CbWallComponents#nbtPath(Ljava/lang/String;)Lnet/minecraft/util/CompilableString;",
+    "keep",
+    "push top/dext/centurybridge/step/v26_1/rt/CbWallComponents#notPlain()Z",
+    "keep",
+    "keep"
+   ],
+   "basis": "Component.nbt(path, interpreting, separator, source) builds 26.1's NbtContents: the path compiled with its text (uncompiled when it does not parse, as 1.21.11's constructor kept it), and 26.1's plain flag off (1.21.11's NbtContents had none), as NbtContents' constructor reshape does"
   }
  },
  "instanceFieldGetters": {

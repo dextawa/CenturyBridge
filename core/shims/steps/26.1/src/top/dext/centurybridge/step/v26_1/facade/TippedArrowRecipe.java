@@ -9,6 +9,7 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.level.Level;
 import top.dext.centurybridge.step.v26_1.rt.CbWallRecipeKinds;
 import top.dext.centurybridge.step.v26_1.rt.CbWallRecipes;
+import top.dext.centurybridge.step.v26_1.rt.CbWallRegistries;
 
 /**
  * 1.21.11's TippedArrowRecipe (net/minecraft/class_1876, "crafting_special_tippedarrow"): a lingering potion amid
@@ -23,13 +24,28 @@ public class TippedArrowRecipe extends CustomRecipe {
         CbWallRecipes.customCategory(this, category);
     }
 
+    /** 26.1's matches: 1.21.11's matches(input, level) under its own token, which a 1.21.11 subclass overrides */
     @Override
     public boolean matches(CraftingInput input, Level level) {
+        return method_17741(input, level);
+    }
+
+    /** 26.1's assemble(input): 1.21.11's assemble(input, registries) under its own token, with the level's registries */
+    @Override
+    public ItemStack assemble(CraftingInput input) {
+        return method_17740(input, CbWallRegistries.access());
+    }
+
+    /**
+     * 1.21.11 TippedArrowRecipe.matches(input, level) (class_1876.method_17741): the class is gone in 26.1, so a 1.21.11 subclass's
+     * override keeps this name past the wall and overrides it here
+     */
+    public boolean method_17741(CraftingInput input, Level level) {
         return cb$matches(input, level);
     }
 
-    @Override
-    public ItemStack assemble(CraftingInput input) {
+    /** 1.21.11 TippedArrowRecipe.assemble(input, registries) (class_1876.method_17740), likewise */
+    public ItemStack method_17740(CraftingInput input, net.minecraft.core.HolderLookup.Provider registries) {
         return cb$assemble(input);
     }
 

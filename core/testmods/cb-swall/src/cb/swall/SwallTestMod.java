@@ -418,8 +418,32 @@ public class SwallTestMod implements ModInitializer {
         check("streamCodec.motion", back.method_11818() == 42 && ids.decode(buf2) == 7, back.method_11818());
     }
 
+    /** a 1.21.11 subclass of a recipe class 26.1 removed: vanilla's matches / assemble reach its overrides */
+    static class StickDye extends net.minecraft.class_1849 {
+        StickDye() {
+            super(net.minecraft.class_7710.field_40251);
+        }
+
+        @Override
+        public boolean method_17701(net.minecraft.class_9694 input, net.minecraft.class_1937 level) {
+            return input.method_59984(0).method_31574(net.minecraft.class_1802.field_8600) || super.method_17701(input, level);
+        }
+
+        @Override
+        public net.minecraft.class_1799 method_17700(net.minecraft.class_9694 input, net.minecraft.class_7225.class_7874 registries) {
+            return input.method_59984(0).method_31574(net.minecraft.class_1802.field_8600)
+                ? new net.minecraft.class_1799(net.minecraft.class_1802.field_8428) : super.method_17700(input, registries);
+        }
+    }
+
     /** ArmorDye / MapCloning / TippedArrow, removed in 26.1, given back with 1.21.11's bodies and serializers */
     private static void removedRecipes(MinecraftServer server) {
+        StickDye stickDye = new StickDye();
+        net.minecraft.class_9694 stickGrid = net.minecraft.class_9694.method_59986(1, 1, List.of(new net.minecraft.class_1799(net.minecraft.class_1802.field_8600)));
+        @SuppressWarnings({"rawtypes", "unchecked"})
+        net.minecraft.class_1860<net.minecraft.class_9694> asRecipe = (net.minecraft.class_1860) stickDye;
+        check("recipe.removedClassSubclass", asRecipe.method_8115(stickGrid, server.method_30002())
+            && asRecipe.method_8116(stickGrid, server.method_30611()).method_31574(net.minecraft.class_1802.field_8428), "");
         net.minecraft.class_7225.class_7874 registries = server.method_30611();
         net.minecraft.class_1799 e = net.minecraft.class_1799.field_8037;
         net.minecraft.class_1849 dye = new net.minecraft.class_1849(net.minecraft.class_7710.field_40251);
@@ -485,6 +509,39 @@ public class SwallTestMod implements ModInitializer {
 
     private static boolean is(net.minecraft.class_2248 block, net.minecraft.class_6862<net.minecraft.class_2248> tag) {
         return block.method_9564().method_26164(tag);
+    }
+
+    /** 1.21.11 records 26.1 rebuilt around templates, compilable strings, two assets, split world data */
+    private static void recordViews(MinecraftServer server) {
+        net.minecraft.class_1799 bowl = new net.minecraft.class_1799(net.minecraft.class_1802.field_8428, 3);
+        net.minecraft.class_10131 remainder = new net.minecraft.class_10131(bowl);
+        net.minecraft.class_2568.class_10612 show = new net.minecraft.class_2568.class_10612(new net.minecraft.class_1799(net.minecraft.class_1802.field_8279));
+        check("records.itemTemplates", remainder.comp_3093().method_31574(net.minecraft.class_1802.field_8428) && remainder.comp_3093().method_7947() == 3
+            && show.comp_3509().method_31574(net.minecraft.class_1802.field_8279), remainder.comp_3093());
+        net.minecraft.class_2575 block = new net.minecraft.class_2575("1 2 3");
+        net.minecraft.class_2575 badBlock = new net.minecraft.class_2575("not a position");
+        net.minecraft.class_2576 entity = new net.minecraft.class_2576("@p");
+        net.minecraft.class_2168 source = server.method_3739();
+        boolean emptyData;
+        try {
+            emptyData = badBlock.method_10916(source).findAny().isEmpty();
+        } catch (Exception e) {
+            emptyData = false;
+        }
+        check("records.dataSources", "1 2 3".equals(block.comp_733()) && block.comp_734() != null && badBlock.comp_734() == null
+            && "@p".equals(entity.comp_735()) && entity.comp_736() != null && emptyData, block);
+        net.minecraft.class_12079.class_10726 tex = new net.minecraft.class_12079.class_10726(net.minecraft.class_2960.method_60655("cbswall", "cat"));
+        net.minecraft.class_7375 cat = new net.minecraft.class_7375(tex, net.minecraft.class_10702.field_56285);
+        net.minecraft.class_9346.class_10688 wolfInfo = new net.minecraft.class_9346.class_10688(tex, tex, tex);
+        net.minecraft.class_9346 wolf = new net.minecraft.class_9346(wolfInfo, net.minecraft.class_10702.field_56285);
+        check("records.variants", cat.comp_3560() == tex && wolf.comp_3564() == wolfInfo, cat);
+        @SuppressWarnings({"rawtypes", "unchecked"}) net.minecraft.class_7655.class_7657 required = new net.minecraft.class_7655.class_7657(net.minecraft.class_7924.field_41236,
+            net.minecraft.class_1959.field_24677, true);
+        @SuppressWarnings({"rawtypes", "unchecked"}) net.minecraft.class_7655.class_7657 optional = new net.minecraft.class_7655.class_7657(net.minecraft.class_7924.field_41236,
+            net.minecraft.class_1959.field_24677, false);
+        java.util.UUID a = net.minecraft.class_3532.method_15394();
+        check("records.registryDataAndUuid", required.comp_2664() && !optional.comp_2664() && a.version() == 4
+            && !a.equals(net.minecraft.class_3532.method_15394()), a);
     }
 
     /** a 1.21.11 subclass of the structure index */
@@ -736,6 +793,7 @@ public class SwallTestMod implements ModInitializer {
             specialRecipeCtors(server);
             legacyRegionStorage(server);
             legacyStructureData(server);
+            recordViews(server);
             interactPacket(server);
             timerQueue();
             extendFinal();
