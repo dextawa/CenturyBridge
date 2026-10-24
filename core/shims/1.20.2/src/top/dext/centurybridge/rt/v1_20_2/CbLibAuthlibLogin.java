@@ -234,6 +234,12 @@ public final class CbLibAuthlibLogin {
      */
     public static <T extends Response> T superMakeRequest(YggdrasilAuthenticationService service, URL url, Object input, Class<T> classOfT,
             String authentication) throws AuthenticationException {
+        if (!Response.class.isAssignableFrom(classOfT)) {
+            // 4.0.43's BlockList/HasJoinedMinecraftServer/KeyPair/MinecraftProfileProperties/ProfileSearchResults/
+            // UserAttributesResponse extended Response; 5.0.47's records of those names do not, and this method answers a Response
+            throw new IllegalArgumentException("authlib 5.0.47's " + classOfT.getName()
+                + " is a record outside 4.0.43's Response hierarchy; 4.0.43's makeRequest cannot answer it");
+        }
         try {
             String jsonResult = input == null
                 ? performGetRequest(service, url, authentication)

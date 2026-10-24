@@ -149,7 +149,16 @@
     "SlotBridge",
     "SmithingTrimRecipeCtor",
     "StatusEffectBridge",
-    "UserCacheExecutorAccessor"
+    "UserCacheExecutorAccessor",
+    "CbLibAuthlibAbuseReportFields",
+    "CbLibAuthlibReportChatMessageFields",
+    "CbLibAuthlibReportEvidenceFields",
+    "CbLibAuthlibReportedEntityFields",
+    "CbLibAuthlibAbuseReportRequestFields",
+    "CbLibAuthlibAbuseReportClientInfoFields",
+    "CbLibAuthlibAbuseReportRealmInfoFields",
+    "CbLibAuthlibAbuseReportThirdPartyServerInfoFields",
+    "CbLibAuthlibJoinMinecraftServerRequestFields"
   ],
   "client": [
     "CbDisplayRendererOrientation",
