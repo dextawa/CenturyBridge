@@ -164,7 +164,6 @@
     "CbEntityDragonStateMixin",
     "CbEntitySpinRenderMixin",
     "CbEntitySpinStateMixin",
-    "CbFapiClientWorldMixin",
     "CbLevelFuelClientMixin",
     "CbRenderBakeBakerMixin",
     "CbRenderBakeBlockModelMixin",
