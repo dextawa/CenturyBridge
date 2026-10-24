@@ -36,8 +36,10 @@ def main():
             LOADER + "." + LOAD: RT,
             PAYLOAD + ".method_56531()I": RT,
             PAYLOAD + ".method_56532(Lnet/minecraft/class_2378;)V": RT,
+            # an instance redirect, not interfaceCallRedirects: a call through a class implementing the lookup
+            # (INVOKEVIRTUAL, the method inherited) resolves to the interface key as well (Chain.instanceRedirectHome)
+            LOOKUP + ".method_43948(Lnet/minecraft/class_2960;)Ljava/lang/Object;": RT,
         },
-        "interfaceCallRedirects": {LOOKUP + ".method_43948(Lnet/minecraft/class_2960;)Ljava/lang/Object;": RT},
         "superRedirects": {LOADER + "." + LOAD: RT + "#super_method_33176"},
         "adapterHooks": [{"under": LOADER, "adapter": RT + "$LegacyLoadAndBuild", "requires": [LOAD], "synth": [],
                           "basis": "a 1.21.1 TagLoader subclass overriding loadAndBuild: calls of it reach the override"}],
