@@ -86,6 +86,7 @@ import org.objectweb.asm.tree.VarInsnNode;
  */
 final class MixinBridge {
     private static final Gson GSON = new Gson();
+    static final String MIXIN = "Lorg/spongepowered/asm/mixin/Mixin;";
     static final String SHADOW = "Lorg/spongepowered/asm/mixin/Shadow;";
     static final String MUTABLE = "Lorg/spongepowered/asm/mixin/Mutable;";
     static final String OVERWRITE = "Lorg/spongepowered/asm/mixin/Overwrite;";
@@ -145,6 +146,11 @@ final class MixinBridge {
     private final String step;
     private ClassNode helper;
     private int helperSeq;
+    /** the config / side list / mixin package being bridged (restoreOverride lists its mixins there) */
+    private String curPkg = "";
+    private String curKey = "mixins";
+    /** restoring mixins made for the current config, by class name */
+    private final Map<String, ClassNode> restorers = new LinkedHashMap<>();
 
     private MixinBridge(Chain chain, Map<String, byte[]> entries, String helperName) {
         this.chain = chain;
@@ -246,7 +252,9 @@ final class MixinBridge {
                 if (!cfg.has(key) || !cfg.get(key).isJsonArray()) {
                     continue;
                 }
-                for (JsonElement e : cfg.getAsJsonArray(key)) {
+                b.curPkg = pkg;
+                b.curKey = key;
+                for (JsonElement e : cfg.getAsJsonArray(key).deepCopy()) {
                     String cls = (pkg.isEmpty() ? "" : pkg + "/") + e.getAsString().replace('.', '/');
                     byte[] bytes = entries.get(cls + ".class");
                     if (bytes == null) {
@@ -259,6 +267,18 @@ final class MixinBridge {
             }
             if (refmapDirty) {
                 entries.put(refmapName, GSON.toJson(refmapRoot).getBytes(StandardCharsets.UTF_8));
+            }
+            if (!b.restorers.isEmpty()) {
+                // the restoring mixins join the config, on the side of the mixins that needed them
+                for (Map.Entry<String, ClassNode> r : b.restorers.entrySet()) {
+                    String key = (String) r.getValue().invisibleAnnotations.get(1).values.get(1);
+                    r.getValue().invisibleAnnotations.remove(1);
+                    String rel = (pkg.isEmpty() ? r.getKey() : r.getKey().substring(pkg.length() + 1)).replace('/', '.');
+                    cfg.getAsJsonArray(key).add(rel);
+                    entries.put(r.getKey() + ".class", write(r.getValue()));
+                }
+                entries.put(cfgName, GSON.toJson(cfg).getBytes(StandardCharsets.UTF_8));
+                b.restorers.clear();
             }
         }
         if (b.helper != null) {
@@ -1507,6 +1527,12 @@ final class MixinBridge {
                     }
                 }
                 if (fate == null) {
+                    MethodNode restored = restoreOverride(vmeth, wt, why);
+                    if (restored != null) {
+                        injected("@" + kind + " " + sn + "." + h.name, where + " => the override " + chain.to
+                            + " dropped, restored in the mixin as a call of the inherited one");
+                        return new Selection(h, an, List.of(vmeth), List.of(restored));
+                    }
                     if (!why.isEmpty()) {
                         left.add(where + ": " + why.get(0));
                     }
@@ -1995,6 +2021,106 @@ final class MixinBridge {
                 return null;
             }
             return na;
+        }
+
+        /**
+         * V's class overrode the method, W's inherits it (the override was dropped): the injector's
+         * target method is put back as an override that only calls the inherited one -- Sub.m runs
+         * exactly when it did, and does what W does -- merged by this mixin, marked {@link #RESTORED}
+         * (repair and the judge take it as the target). Only for an instance method W declares on a
+         * superclass, not private, final, static or abstract there, overridable from the target's
+         * package; one per mixin and member. Anchors are then judged in it as in any target.
+         */
+        private MethodNode restoreOverride(MethodNode vmeth, ClassNode wt, List<String> why) {
+            if (itf || (vmeth.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE | Opcodes.ACC_ABSTRACT)) != 0
+                    || vmeth.name.startsWith("<")) {
+                return null;
+            }
+            for (MethodNode m : mx.methods) {
+                if (m.name.equals(vmeth.name) && m.desc.equals(vmeth.desc)) {
+                    return null; // the mixin itself declares it (an overwrite / its own method): not ours to add
+                }
+            }
+            ClassNode decl = null;
+            MethodNode inherited = null;
+            for (String c = wt.superName; c != null && inherited == null; ) {
+                ClassNode cn = w(c);
+                if (cn == null) {
+                    return null;
+                }
+                MethodNode m = method(cn, vmeth.name, vmeth.desc);
+                if (m != null) {
+                    decl = cn;
+                    inherited = m;
+                }
+                c = cn.superName;
+            }
+            if (inherited == null) {
+                return null;
+            }
+            int acc = inherited.access;
+            if ((acc & (Opcodes.ACC_FINAL | Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_ABSTRACT)) != 0) {
+                why.add(shortName(decl.name) + "." + vmeth.name + vmeth.desc + ", which " + shortName(wt.name) + " now inherits, cannot be overridden");
+                return null;
+            }
+            boolean pkgPrivate = (acc & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) == 0;
+            if (pkgPrivate && !pkg(decl.name).equals(pkg(wt.name))) {
+                why.add(shortName(decl.name) + "." + vmeth.name + vmeth.desc + " is package-private in another package");
+                return null;
+            }
+            ClassNode rc = restorer(target, decl.name);
+            for (MethodNode m : rc.methods) {
+                if (m.name.equals(vmeth.name) && m.desc.equals(vmeth.desc)) {
+                    return m;
+                }
+            }
+            if (!rc.superName.equals(decl.name)) {
+                why.add("restoring " + vmeth.name + vmeth.desc + " would need a second superclass for the restoring mixin of " + shortName(target));
+                return null;
+            }
+            MethodNode r = new MethodNode(acc & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED | Opcodes.ACC_VARARGS),
+                vmeth.name, vmeth.desc, null, inherited.exceptions == null ? null : inherited.exceptions.toArray(new String[0]));
+            r.visitAnnotation(RESTORED, false);
+            r.visitCode();
+            r.visitVarInsn(Opcodes.ALOAD, 0);
+            int slot = 1;
+            for (Type t : Type.getArgumentTypes(vmeth.desc)) {
+                r.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
+                slot += t.getSize();
+            }
+            r.visitMethodInsn(Opcodes.INVOKESPECIAL, decl.name, vmeth.name, vmeth.desc, false);
+            r.visitInsn(Type.getReturnType(vmeth.desc).getOpcode(Opcodes.IRETURN));
+            r.visitMaxs(slot + 1, slot);
+            r.visitEnd();
+            rc.methods.add(r);
+            return r;
+        }
+
+        /**
+         * The jar's restoring mixin for a target on the current config's side: abstract, extending the
+         * W class whose method it overrides (its super calls are then Mixin's own super calls), with
+         * priority 1 -- merged before any mod's mixins, so whichever converted mod restores a member
+         * first, every mod's injectors may target it (Mixin refuses an injector a method merged by a mixin
+         * of equal or higher priority); a second restoring of the same member is skipped by Mixin with
+         * an overwrite-conflict warning.
+         */
+        private ClassNode restorer(String target, String sup) {
+            String name = (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$restore$" + step + "$" + curKey + "$"
+                + target.replace('/', '_').replace('$', '_');
+            ClassNode rc = restorers.get(name);
+            if (rc == null) {
+                rc = new ClassNode();
+                rc.version = mx.version;
+                rc.access = Opcodes.ACC_PUBLIC | Opcodes.ACC_ABSTRACT | Opcodes.ACC_SUPER;
+                rc.name = name;
+                rc.superName = sup;
+                AnnotationNode mixin = new AnnotationNode(MIXIN);
+                mixin.values = new ArrayList<>(List.of("value", List.of(Type.getObjectType(target)), "priority", 1));
+                rc.invisibleAnnotations = new ArrayList<>(List.of(mixin, new AnnotationNode("Lcb/side;")));
+                rc.invisibleAnnotations.get(1).values = new ArrayList<>(List.of("key", curKey));
+                restorers.put(name, rc);
+            }
+            return rc;
         }
     }
 
@@ -2505,5 +2631,24 @@ final class MixinBridge {
     private static String constantKey(Object c) {
         return c instanceof Integer ? "intValue" : c instanceof Float ? "floatValue" : c instanceof Long ? "longValue"
             : c instanceof Double ? "doubleValue" : "stringValue";
+    }
+
+    /** marks a method MixinBridge put back into a mixin as a target override (restoreOverride) */
+    static final String RESTORED = "Ltop/dext/centurybridge/RestoredOverride;";
+
+    static boolean restoredMark(MethodNode m) {
+        if (m.invisibleAnnotations != null) {
+            for (AnnotationNode a : m.invisibleAnnotations) {
+                if (a.desc.equals(RESTORED)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static String pkg(String internal) {
+        int i = internal.lastIndexOf('/');
+        return i < 0 ? "" : internal.substring(0, i);
     }
 }

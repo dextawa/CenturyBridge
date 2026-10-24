@@ -163,6 +163,7 @@ public final class MixinRepair {
         List<String> disabledAll = new ArrayList<>();
         byte[] fmjBytes = entries.get("fabric.mod.json");
         if (fmjBytes == null) return new Outcome(fatal, why, repairs, disabledAll);
+        restoredByTarget = restoredOverrides(entries);
         JsonObject fmj;
         try {
             fmj = GSON.fromJson(new String(fmjBytes, StandardCharsets.UTF_8), JsonObject.class);
@@ -299,6 +300,7 @@ public final class MixinRepair {
                         ClassNode tc = target(owner);
                         if (tc == null) { live = true; break; } // not a class we hold code for: can't judge
                         List<MethodNode> cands = s.match(tc);
+                        if (cands.isEmpty()) cands = restored(restoredByTarget, owner, s); // an override MixinBridge put back
                         String where = shortName + "." + handler.name + " -> " + owner.substring(owner.lastIndexOf('/') + 1)
                             + "." + s.name + (s.desc != null ? s.desc : "");
                         if (cands.isEmpty()) {
@@ -739,6 +741,33 @@ public final class MixinRepair {
         notes.add("sites-split " + where + " " + a + " -> #" + java.util.Arrays.toString(map) + " of W's " + wo.size()
             + " (V's " + vo.size() + " occurrences, by context)");
         return true;
+    }
+
+    /** overrides MixinBridge.restoreOverride put back (restoring mixins of the jar being repaired), by target */
+    private Map<String, List<MethodNode>> restoredByTarget = Map.of();
+
+    /** the restored override of a target class this selector names, if any */
+    static List<MethodNode> restored(Map<String, List<MethodNode>> byTarget, String target, Sel s) {
+        for (MethodNode m : byTarget.getOrDefault(target, List.of())) {
+            if (m.name.equals(s.name) && (s.desc == null || m.desc.equals(s.desc))) return List.of(m);
+        }
+        return List.of();
+    }
+
+    /** the RESTORED methods of the jar's mixin classes, by target */
+    static Map<String, List<MethodNode>> restoredOverrides(Map<String, byte[]> entries) {
+        Map<String, List<MethodNode>> out = new HashMap<>();
+        for (Map.Entry<String, byte[]> e : entries.entrySet()) {
+            if (!e.getKey().endsWith(".class") || !e.getKey().contains("cb$restore$")) continue;
+            ClassNode cn = new ClassNode();
+            new ClassReader(e.getValue()).accept(cn, ClassReader.SKIP_FRAMES);
+            List<String> ts = mixinTargets(cn, null);
+            for (MethodNode m : cn.methods) {
+                if (!MixinBridge.restoredMark(m)) continue;
+                for (String t : ts) out.computeIfAbsent(t, k -> new ArrayList<>()).add(m);
+            }
+        }
+        return out;
     }
 
     /** an annotation value as stored (nested annotations stay AnnotationNodes) */

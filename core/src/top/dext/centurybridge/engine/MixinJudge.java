@@ -91,6 +91,9 @@ public final class MixinJudge {
         return i > 0 ? m.substring(0, i) : m;
     }
 
+    /** the converted jar's restored overrides (MixinBridge.restoreOverride), by target: built on first use */
+    private Map<String, List<MethodNode>> restoredByTarget;
+
     /** V's code (--source): an ordinal-pinned anchor is judged by whether it names V's site's counterpart */
     private MixinRepair source;
     /** the probe row being judged, as V had it (index columns owner, target, anchor, ordinal) */
@@ -342,7 +345,7 @@ public final class MixinJudge {
                 }
                 default -> {
                     if (MixinRepair.values(an).containsKey("method")) {
-                        return judgeInjector(tc, m, an, vcount, refmap(mx));
+                        return judgeInjector(mx, tc, m, an, vcount, refmap(mx));
                     }
                 }
             }
@@ -354,7 +357,7 @@ public final class MixinJudge {
         return judgeBody(mx, target, m, seen);
     }
 
-    private String judgeInjector(ClassNode tc, MethodNode h, AnnotationNode an, int vcount, com.google.gson.JsonObject rm) {
+    private String judgeInjector(ClassNode mx, ClassNode tc, MethodNode h, AnnotationNode an, int vcount, com.google.gson.JsonObject rm) {
         Map<String, Object> v = MixinRepair.values(an);
         List<String> sels = MixinRepair.strings(v.get("method"));
         boolean st = (h.access & Opcodes.ACC_STATIC) != 0;
@@ -368,6 +371,12 @@ public final class MixinJudge {
                 continue;
             }
             List<MethodNode> cands = s.match(oc);
+            if (cands.isEmpty() && oc == tc) {
+                if (restoredByTarget == null) {
+                    restoredByTarget = MixinRepair.restoredOverrides(jar);
+                }
+                cands = MixinRepair.restored(restoredByTarget, tc.name, s); // an override the converter put back (a super call)
+            }
             if (cands.isEmpty()) {
                 first = first != null ? first : methodFate(oc, s.name(), s.desc(), st, "target");
                 continue;
