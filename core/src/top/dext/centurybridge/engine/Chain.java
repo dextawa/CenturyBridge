@@ -957,6 +957,14 @@ public final class Chain {
     public boolean injectorsJudgedPastWall;
 
     /**
+     * The step's built layer jar (-Dcb.layerJar; convert-climb: -Dcb.layersDir holding
+     * centurybridge-0.3.0+&lt;W&gt;.jar): MixinBridge reads the bodies of the wiring's redirects there, so an
+     * @At on a V call the step redirects to a body making one game call follows to that call. Null: that
+     * rule does not apply (reported nowhere; the anchor is judged as before).
+     */
+    public java.nio.file.Path layerJar;
+
+    /**
      * Whether a reference resolves on the target the way the JVM resolves it: the owner,
      * its superclasses, their interfaces. TRUE found, FALSE definitely absent (every class
      * on the way is a target-stub class and none declares it), null when the answer leaves

@@ -192,6 +192,14 @@ public final class Main {
             ? top.dext.centurybridge.data.JarRemapper.loadTable(renameTable).keepFacadeTokens(
                 top.dext.centurybridge.data.JarRemapper.Table.facadeOwners(chain.classRenames))
             : null;
+        String lj = System.getProperty("cb.layerJar");
+        if (lj == null && System.getProperty("cb.layersDir") != null) {
+            lj = Path.of(System.getProperty("cb.layersDir"), "centurybridge-0.3.0+" + args[3] + ".jar").toString();
+        }
+        if (lj != null && Files.exists(Path.of(lj))) {
+            chain.layerJar = Path.of(lj);
+            System.out.println("step layer for redirect bodies: " + lj);
+        }
         Path targetStub = stubOf(args[3]);
         if (Files.exists(targetStub)) {
             chain.loadTargetCtors(targetStub, crossesWall ? renameTable : null);

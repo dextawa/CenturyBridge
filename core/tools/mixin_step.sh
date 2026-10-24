@@ -58,7 +58,7 @@ fi
     > "$OUT/mixin/probe.log" 2>&1 || { echo "isolated mixin probe failed"; tail -3 "$OUT/mixin/probe.log"; exit 1; }
 WIRING="$WD/core/segments/steps/$SEG.json"
 [ "$SEG" = "1.20.1__1.20.2" ] && WIRING="$WD/core/segments/shims-1.20.2.json"
-"$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -cp "$CP" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/mixin/conv" \
+"$JAVA" -Xmx16g -Dcb.wiring="$WIRING" -Dcb.layerJar="$WD/build/centurybridge-0.3.0+$W.jar" -cp "$CP" top.dext.centurybridge.Main convert "$WD/core/segments" "$V" "$W" "$OUT/mixin/conv" \
     "$OUT/mixin/mprobe-$V.jar" > "$OUT/mixin/convert.log" 2>&1 || { echo "mixin probe convert failed"; tail -5 "$OUT/mixin/convert.log"; exit 1; }
 # --source: an ordinal-pinned anchor W holds another number of times is judged by whether it names the
 # counterpart of the V site (same namespace on both sides: not at the wall)

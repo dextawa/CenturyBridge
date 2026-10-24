@@ -2426,7 +2426,93 @@ final class MixinBridge {
             }
             return new AtFate(a.owner(), h.newName, h.newDesc, "override hook");
         }
-        return null;
+        return redirectedCall(a);
+    }
+
+    private java.util.zip.ZipFile layerZip;
+    private final Map<String, ClassNode> layerClasses = new HashMap<>();
+
+    /**
+     * A V call the step redirects (static / instance redirect) to a layer body that makes one game call,
+     * the rest of the body at most reading record components of that call's answer (1.21.2:
+     * getShaderFogColor() is getShaderFog().color()): vanilla W calls that one game call where V called
+     * the redirected member, so an @At on it follows there. Needs the layer's bytecode (Chain.layerJar).
+     */
+    private AtFate redirectedCall(MixinRepair.Anchor a) {
+        if (chain.layerJar == null || !a.kind().equals("INVOKE") || chain.bridgeCode != null) {
+            // (not at the wall: the layer there is in 26.1's names, the anchors in the analysis namespace)
+            return null;
+        }
+        String nd = a.name() + a.desc();
+        String val = chain.redirectAnywhere(chain.staticRedirects, a.owner(), nd);
+        boolean instance = false;
+        if (val == null) {
+            val = chain.redirectAnywhere(chain.instanceRedirects, a.owner(), nd);
+            instance = val != null;
+        }
+        if (val == null) {
+            return null;
+        }
+        String cls = val.contains("#") ? val.substring(0, val.indexOf('#')) : val;
+        String name = val.contains("#") ? val.substring(val.indexOf('#') + 1) : a.name();
+        if (name.contains("(")) {
+            name = name.substring(0, name.indexOf('('));
+        }
+        ClassNode cn = layerClass(cls);
+        if (cn == null) {
+            return null;
+        }
+        String want = instance ? "(L" + a.owner() + ";" + a.desc().substring(1) : a.desc();
+        MethodNode body = null;
+        for (MethodNode m : cn.methods) {
+            if (m.name.equals(name) && (m.desc.equals(want) || m.desc.equals(a.desc()))) {
+                body = m;
+            }
+        }
+        if (body == null || body.instructions == null) {
+            return null;
+        }
+        MethodInsnNode first = null;
+        for (AbstractInsnNode in : body.instructions) {
+            if (in instanceof InvokeDynamicInsnNode) {
+                return null;
+            }
+            if (!(in instanceof MethodInsnNode mi)) {
+                continue;
+            }
+            if (first == null) {
+                if (!Chain.minecraftOwned(mi.owner)) {
+                    return null;
+                }
+                first = mi;
+                continue;
+            }
+            // only reads of the answer's components: no-argument calls on the class the first call returns
+            Type r = Type.getReturnType(first.desc);
+            if (r.getSort() != Type.OBJECT || !mi.owner.equals(r.getInternalName()) || Type.getArgumentTypes(mi.desc).length != 0) {
+                return null;
+            }
+        }
+        return first == null ? null : new AtFate(first.owner, first.name, first.desc, "the redirect body's one game call");
+    }
+
+    private ClassNode layerClass(String cls) {
+        return layerClasses.computeIfAbsent(cls, c -> {
+            try {
+                if (layerZip == null) {
+                    layerZip = new java.util.zip.ZipFile(chain.layerJar.toFile());
+                }
+                java.util.zip.ZipEntry e = layerZip.getEntry(c + ".class");
+                if (e == null) {
+                    return null;
+                }
+                ClassNode cn = new ClassNode();
+                new ClassReader(layerZip.getInputStream(e).readAllBytes()).accept(cn, ClassReader.SKIP_FRAMES);
+                return cn;
+            } catch (java.io.IOException ex) {
+                return null;
+            }
+        });
     }
 
     private static int count(List<MethodNode> ms, MixinRepair.Anchor a) {
