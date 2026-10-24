@@ -13,7 +13,10 @@
   "net/minecraft/class_1729.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#shouldMoveToInventory",
   "net/minecraft/class_4861.method_48352()Lnet/minecraft/class_8047;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#createInputSlotDefinitions",
   "net/minecraft/class_4861.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#getSlotToQuickMoveTo",
-  "net/minecraft/class_3441.method_14901(Lnet/minecraft/class_2487;Lnet/minecraft/class_1863;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeBook#fromNbt"
+  "net/minecraft/class_3441.method_14901(Lnet/minecraft/class_2487;Lnet/minecraft/class_1863;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeBook#fromNbt",
+  "net/minecraft/class_1732.method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#setRecipeUsed",
+  "net/minecraft/class_3971.method_17863()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#getRecipes",
+  "net/minecraft/class_8884.method_54470(Lnet/minecraft/class_1937;Lnet/minecraft/class_9694;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#get"
  },
  "superRedirects": {
   "net/minecraft/class_1714.method_7654(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superFillCraftSlotsStackedContents",
@@ -44,7 +47,9 @@
   "net/minecraft/class_1706.method_48352()Lnet/minecraft/class_8047;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superCreateInputSlotDefinitions",
   "net/minecraft/class_4862.method_48352()Lnet/minecraft/class_8047;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superCreateInputSlotDefinitions",
   "net/minecraft/class_4861.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superGetSlotToQuickMoveTo",
-  "net/minecraft/class_4862.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superGetSlotToQuickMoveTo"
+  "net/minecraft/class_4862.method_48357(Lnet/minecraft/class_1799;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemCombiner#superGetSlotToQuickMoveTo",
+  "net/minecraft/class_1732.method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superSetRecipeUsed",
+  "net/minecraft/class_3971.method_17863()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#superGetRecipes"
  },
  "staticRedirects": {
   "net/minecraft/class_1714.method_17399(Lnet/minecraft/class_1703;Lnet/minecraft/class_1937;Lnet/minecraft/class_1657;Lnet/minecraft/class_8566;Lnet/minecraft/class_1731;Lnet/minecraft/class_8786;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus#slotChangedCraftingGrid"
@@ -166,6 +171,15 @@
    ],
    "synth": [],
    "basis": "a mod ItemCombinerMenu declaring 1.21.1's getSlotToQuickMoveTo answers its calls, the definition 1.21.2's constructor takes / the quick-move start (CbItemCombiner, CbItemCombinerMenuMixin)"
+  },
+  {
+   "under": "net/minecraft/class_3971",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_getRecipes",
+   "requires": [
+    "method_17863()Ljava/util/List;"
+   ],
+   "synth": [],
+   "basis": "a 1.21.1 StonecutterMenu subclass's getRecipes() answers its calls (CbItemRecipeMenus)"
   }
  ],
  "overrideHooks": [
@@ -298,6 +312,14 @@
     "method_14901(Lnet/minecraft/class_2487;Ljava/util/function/Predicate;)V"
    ],
    "basis": "1.21.2's ServerPlayer loads the book with fromNbt(tag, recognised): a mod book's 1.21.1 fromNbt(tag, recipeManager) answers with the running server's recipe manager; its super call is 1.21.2's body with that manager's byKey as the test (CbItemRecipeBook)"
+  },
+  {
+   "old": "method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)Z",
+   "new": "method_7665(Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)Z",
+   "onlyUnder": "net/minecraft/class_1732",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_setRecipeUsed",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus.setRecipeUsedBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeMenus$Legacy_setRecipeUsed;Lnet/minecraft/class_3222;Lnet/minecraft/class_8786;)Z",
+   "basis": "1.21.2 asks setRecipeUsed(player, recipe): a 1.21.1 holder's setRecipeUsed(level, player, recipe) answers with the player's level; its super call is 1.21.1's default (CbItemRecipeMenus)"
   }
  ],
  "superCtorReshapes": {

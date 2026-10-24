@@ -211,6 +211,18 @@ public final class CbItemMembers {
         return item instanceof LegacyOrCreateDescriptionId l ? l.method_7869() : super_method_7869(item);
     }
 
+    private static final ThreadLocal<java.util.Set<Object>> IN_DESCRIPTION_ID =
+        ThreadLocal.withInitial(() -> java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));
+
+    /** CbItemMembersMixin: whether the item's getDescriptionId is not already answering through its 1.21.1 override */
+    public static boolean enterDescriptionId(Object item) {
+        return IN_DESCRIPTION_ID.get().add(item);
+    }
+
+    public static void exitDescriptionId(Object item) {
+        IN_DESCRIPTION_ID.get().remove(item);
+    }
+
     /** isComplex(): the class's own, else 1.21.1's Item's false */
     public static boolean method_16698(class_1792 item) {
         return item instanceof LegacyComplex l ? l.method_16698() : super_method_16698(item);

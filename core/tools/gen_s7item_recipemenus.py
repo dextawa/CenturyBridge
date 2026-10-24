@@ -15,6 +15,8 @@
                      (CbItemCombiner, CbItemCombinerMenuMixin)
   covers             1.21.1 RecipeBook known / highlight and its methods (CbItemRecipeBookMixin, CbItemRecipeBook);
                      ServerRecipeBook's old constructor and fromNbt(tag, recipeManager)
+  holders            RecipeCraftingHolder.setRecipeUsed(level, player, recipe), StonecutterMenu.getRecipes(),
+                     RecipeCache.get(Level, input)
   classRenames       1.21.1 PlaceRecipe / ServerPlaceRecipe -> the layer's facades (1.21.1 bodies; 1.21.2 removed the one and
                      rebuilt the other as a private placer)
   Direct mod subclasses of RecipeBookMenu are s7rest's facade (it implements CbItemRecipeMenus.Legacy).
@@ -134,7 +136,31 @@ def main():
     }
     combiner(out)
     recipe_book(out)
+    holders(out)
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
+
+
+def holders(out):
+    """RecipeCraftingHolder.setRecipeUsed(level, ..), StonecutterMenu.getRecipes(), RecipeCache.get(Level, ..)"""
+    rch = "net/minecraft/class_1732"
+    old = "method_7665(Lnet/minecraft/class_1937;Lnet/minecraft/class_3222;" + HOLDER + ")Z"
+    out["instanceRedirects"][rch + "." + old] = RT + "#setRecipeUsed"
+    out["superRedirects"][rch + "." + old] = RT + "#superSetRecipeUsed"
+    out["overrideHooks"].append({
+        "old": old, "new": "method_7665(Lnet/minecraft/class_3222;" + HOLDER + ")Z", "onlyUnder": rch,
+        "adapter": RT + "$Legacy_setRecipeUsed",
+        "bridge": RT + ".setRecipeUsedBridge(L" + RT + "$Legacy_setRecipeUsed;Lnet/minecraft/class_3222;" + HOLDER + ")Z",
+        "basis": "1.21.2 asks setRecipeUsed(player, recipe): a 1.21.1 holder's setRecipeUsed(level, player, recipe) "
+                 "answers with the player's level; its super call is 1.21.1's default (CbItemRecipeMenus)"})
+    sc = "net/minecraft/class_3971"
+    get = "method_17863()Ljava/util/List;"
+    out["instanceRedirects"][sc + "." + get] = RT + "#getRecipes"
+    out["superRedirects"][sc + "." + get] = RT + "#superGetRecipes"
+    out["adapterHooks"].append({
+        "under": sc, "adapter": RT + "$Legacy_getRecipes", "requires": [get], "synth": [],
+        "basis": "a 1.21.1 StonecutterMenu subclass's getRecipes() answers its calls (CbItemRecipeMenus)"})
+    out["instanceRedirects"]["net/minecraft/class_8884.method_54470(Lnet/minecraft/class_1937;Lnet/minecraft/class_9694;)"
+                             "Ljava/util/Optional;"] = "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeManager#get"
 
 
 def recipe_book(out):

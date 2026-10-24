@@ -118,7 +118,7 @@ public class GearTestMod implements ModInitializer {
     }
 
     static class_6880<class_1741> MATERIAL;
-    static class_1792 CHEST, HEAD, SWORD, PICK, FOOD;
+    static class_1792 CHEST, HEAD, SWORD, PICK, FOOD, BUNDLE, BOOK, NAMED, COMPLEX, TEMPLATE;
     static class_4174 FOOD_PROPS;
 
     static <T> T reg(class_2378<? super T> r, String path, T v) {
@@ -147,6 +147,11 @@ public class GearTestMod implements ModInitializer {
         FOOD_PROPS = new class_4174.class_4175().method_19238(3).method_19237(0.5F).method_19241()
             .method_19239(new class_1293(class_1294.field_5904, 100, 0), 1.0F).method_19240().method_19242();
         FOOD = reg(class_7923.field_41178, "food", new class_1792(new class_1792.class_1793().method_19265(FOOD_PROPS)));
+        BUNDLE = reg(class_7923.field_41178, "bundle", new net.minecraft.class_5537(new class_1792.class_1793()));
+        BOOK = reg(class_7923.field_41178, "book", new net.minecraft.class_1751(new class_1792.class_1793()));
+        NAMED = reg(class_7923.field_41178, "named", new net.minecraft.class_1798(class_2246.field_10293, new class_1792.class_1793()));
+        COMPLEX = reg(class_7923.field_41178, "complex", new net.minecraft.class_1762(new class_1792.class_1793()));
+        TEMPLATE = reg(class_7923.field_41178, "template", net.minecraft.class_8052.method_48418(net.minecraft.class_8057.field_42018));
         Thread t = new Thread(() -> {
             for (int i = 0; i < 600; i++) {
                 try {
@@ -179,6 +184,7 @@ public class GearTestMod implements ModInitializer {
             recipeManager(server);
             menus(server);
             combiners(server);
+            world(server);
         } catch (Throwable e) {
             e.printStackTrace();
             check(false, "no exception: " + e);
@@ -655,6 +661,67 @@ public class GearTestMod implements ModInitializer {
         tc.method_7601(player, 2);
         check(tc.method_7611(0).method_7677().method_31574(class_1802.field_8620), "quickMoveStack moves iron into the input slot");
         inv.method_5447(9, class_1799.field_8037);
+    }
+
+
+    /** 1.21.1's tick containers' NBT, MapItem / BannerPatternItem members, BundleItem(properties) */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    static void world(MinecraftServer server) {
+        net.minecraft.class_2248 stone = class_2246.field_10340;
+        java.util.function.Function<net.minecraft.class_2248, String> ids = b -> class_7923.field_41175.method_10221(b).toString();
+        net.minecraft.class_2338 pos = new net.minecraft.class_2338(3, 64, 5);
+        net.minecraft.class_4296<net.minecraft.class_2248> proto = new net.minecraft.class_4296<>();
+        proto.method_39363(new net.minecraft.class_6760<>(stone, pos, 105L, net.minecraft.class_1953.field_9314, 0L));
+        net.minecraft.class_2520 saved = proto.method_20463(100L, ids);
+        check(saved instanceof net.minecraft.class_2499 l && l.size() == 1
+                && "minecraft:stone".equals(l.method_10602(0).method_10558("i")),
+            "ProtoChunkTicks.save(gameTime, idGetter): one tick named minecraft:stone: " + saved);
+        net.minecraft.class_4296<net.minecraft.class_2248> loaded = net.minecraft.class_4296.method_39398((net.minecraft.class_2499) saved,
+            s -> java.util.Optional.of(stone), new net.minecraft.class_1923(pos));
+        check(loaded.method_20825() == 1, "ProtoChunkTicks.load(list, idParser, chunkPos): the tick back");
+        java.util.List<net.minecraft.class_6759<net.minecraft.class_2248>> got = new java.util.ArrayList<>();
+        net.minecraft.class_6759.method_39406((net.minecraft.class_2499) saved, s -> java.util.Optional.of(stone),
+            new net.minecraft.class_1923(pos), got::add);
+        check(got.size() == 1 && got.get(0).comp_249().equals(pos), "SavedTick.loadTickList(.., consumer) hands the tick on");
+        net.minecraft.class_2487 one = net.minecraft.class_6759.method_39401(
+            new net.minecraft.class_6760<>(stone, pos, 105L, net.minecraft.class_1953.field_9314, 0L), ids, 100L);
+        check(one.method_10550("t") == 5 && "minecraft:stone".equals(one.method_10558("i")),
+            "SavedTick.saveTick(tick, idGetter, gameTime): delay 5: " + one);
+        net.minecraft.class_6761<net.minecraft.class_2248> lambda = (time, f) -> new net.minecraft.class_2499();
+        check(lambda.method_20463(0L, ids) instanceof net.minecraft.class_2499, "a SerializableTickContainer lambda answers save");
+
+        class_1799 map = new class_1799(class_1802.field_8204);
+        check(((net.minecraft.class_1806) class_1802.field_8204).method_7757(map, server.method_30002(), player(server)) == null,
+            "MapItem.getUpdatePacket of a map without data: null");
+        net.minecraft.class_5250 desc = ((net.minecraft.class_1745) class_1802.field_8498).method_7703();
+        check(desc.method_10851() instanceof net.minecraft.class_2588 t && t.method_11022().equals("item.minecraft.flower_banner_pattern.desc"),
+            "BannerPatternItem.getDisplayName: item.minecraft.flower_banner_pattern.desc");
+        check(BUNDLE instanceof net.minecraft.class_5537, "new BundleItem(properties) registered");
+        check(new class_1799(BOOK).method_7923() && !new class_1799(BOOK, 2).method_7923() && BOOK.method_7837() == 1,
+            "BookItem: a single book is enchantable, two are not; enchantment value 1");
+        check("item.cbs7gear.named".equals(NAMED.method_7876()), "ItemNameBlockItem is named as an item: " + NAMED.method_7876());
+        check(COMPLEX.method_16698() && ((net.minecraft.class_1762) COMPLEX).method_7757(new class_1799(COMPLEX), server.method_30002(), player(server)) == null,
+            "ComplexItem: isComplex, no update packet of its own");
+        check(TEMPLATE instanceof net.minecraft.class_8052, "SmithingTemplateItem.createArmorTrimTemplate(COAST) registered");
+        check(net.minecraft.class_314.values().length == 18 && net.minecraft.class_314.valueOf("CRAFTING_SEARCH") == net.minecraft.class_314.field_1809,
+            "RecipeBookCategories: 18 constants, valueOf");
+        check(net.minecraft.class_314.method_30285(net.minecraft.class_5421.field_25763).size() == 5
+                && net.minecraft.class_314.field_1809.method_1623().get(0).method_31574(class_1802.field_8251)
+                && net.minecraft.class_314.field_25783.get(net.minecraft.class_314.field_1804).size() == 3,
+            "RecipeBookCategories: crafting tabs, search icon, furnace search sub-tabs");
+        net.minecraft.class_1842 unnamed = new net.minecraft.class_1842(new class_1293(class_1294.field_5904, 100, 0));
+        check(net.minecraft.class_1842.method_8051(java.util.Optional.of(class_6880.method_40223(unnamed)), "x.").equals("x.empty")
+                && net.minecraft.class_1842.method_8051(java.util.Optional.of(net.minecraft.class_1847.field_9005), "p.").equals("p.swiftness"),
+            "Potion(effects) and Potion.getName: x.empty / p.swiftness");
+        check(new net.minecraft.class_1844(java.util.Optional.empty(), java.util.Optional.of(0xFF0000), List.of()).method_8064() == 0xFF0000,
+            "PotionContents(potion, colour, effects): its custom colour");
+        org.joml.Vector3f dust = new net.minecraft.class_2390(new org.joml.Vector3f(1.0F, 0.5F, 0.0F), 1.0F).method_59843();
+        check(Math.abs(dust.x() - 1.0F) < 0.01F && Math.abs(dust.y() - 0.5F) < 0.01F && dust.z() == 0.0F
+                && net.minecraft.class_2390.field_28272.x() == 1.0F && net.minecraft.class_2390.field_28272.y() == 0.0F,
+            "DustParticleOptions(Vector3f, scale): the colour back; REDSTONE_PARTICLE_COLOR is red: " + dust);
+        net.minecraft.class_3971 cutter = new net.minecraft.class_3971(5, player(server).method_31548());
+        cutter.field_17629.method_5447(0, new class_1799(class_1802.field_20412));
+        check(cutter.method_17863().size() == 3, "StonecutterMenu.getRecipes() for cobblestone: slab, stairs, wall: " + cutter.method_17863().size());
     }
 
 }

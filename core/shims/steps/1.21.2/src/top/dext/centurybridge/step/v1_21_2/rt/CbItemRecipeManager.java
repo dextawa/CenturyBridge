@@ -327,4 +327,11 @@ public final class CbItemRecipeManager {
         throw new UnsupportedOperationException("1.21.2's RecipeManager.CachedCheck " + check.getClass().getName()
             + " answers only on a server level (1.21.1's asked any level's RecipeManager)");
     }
+
+    /** RecipeCache.get(level, input): 1.21.2's takes the ServerLevel the crafter is in (1.21.1's cache read recipes there) */
+    public static java.util.Optional<class_8786<net.minecraft.class_3955>> get(net.minecraft.class_8884 cache, net.minecraft.class_1937 level,
+            net.minecraft.class_9694 input) {
+        return cache.method_54470((net.minecraft.class_3218) level, input);
+    }
+
 }

@@ -624,6 +624,79 @@ public final class CbItemRecipeMenus {
         }
     }
 
+
+    // ---- RecipeCraftingHolder.setRecipeUsed(level, player, recipe) ----
+
+    /** a 1.21.1 RecipeCraftingHolder declaring setRecipeUsed(level, player, recipe) */
+    public interface Legacy_setRecipeUsed {
+        boolean method_7665(class_1937 level, class_3222 player, class_8786<?> recipe);
+    }
+
+    /** setRecipeUsed(level, player, recipe), called */
+    public static boolean setRecipeUsed(net.minecraft.class_1732 holder, class_1937 level, class_3222 player, class_8786<?> recipe) {
+        if (holder instanceof Legacy_setRecipeUsed legacy) {
+            return legacy.method_7665(level, player, recipe);
+        }
+        return superSetRecipeUsed(holder, level, player, recipe);
+    }
+
+    /**
+     * 1.21.1's default: a special recipe, a level without limited crafting, or a recipe in the player's book is
+     * marked used (setRecipeUsed(recipe)) and answers true. The game rule is the passed level's, as 1.21.1 read it
+     * (the server level the holder is in: 1.21.2 reads the player's).
+     */
+    public static boolean superSetRecipeUsed(net.minecraft.class_1732 holder, class_1937 level, class_3222 player, class_8786<?> recipe) {
+        if (recipe.comp_1933().method_8118()
+                || !((class_3218) level).method_64395().method_8355(net.minecraft.class_1928.field_19407)
+                || player.method_14253().method_64593(recipe.comp_1932())) {
+            holder.method_7662(recipe);
+            return true;
+        }
+        return false;
+    }
+
+    /** 1.21.2's setRecipeUsed(player, recipe) of a 1.21.1 holder declaring the old shape: with the player's level */
+    public static boolean setRecipeUsedBridge(Legacy_setRecipeUsed self, class_3222 player, class_8786<?> recipe) {
+        return self.method_7665(player.method_51469(), player, recipe);
+    }
+
+    // ---- StonecutterMenu.getRecipes() ----
+
+    /** a 1.21.1 StonecutterMenu subclass declaring getRecipes() */
+    public interface Legacy_getRecipes {
+        java.util.List<class_8786<net.minecraft.class_3975>> method_17863();
+    }
+
+    public static java.util.List<class_8786<net.minecraft.class_3975>> getRecipes(net.minecraft.class_3971 menu) {
+        if (menu instanceof Legacy_getRecipes legacy) {
+            return legacy.method_17863();
+        }
+        return superGetRecipes(menu);
+    }
+
+    /**
+     * 1.21.1: the stonecutting recipes matching the input slot (empty with the slot empty), as setupRecipeList last
+     * computed them on an input change -- the level's recipe manager's getRecipesFor (1.21.1's order). A 1.21.2 client
+     * holds no recipes: there the recipes are those the server's selectable set carried (1.21.2 sends displays only,
+     * so none).
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static java.util.List<class_8786<net.minecraft.class_3975>> superGetRecipes(net.minecraft.class_3971 menu) {
+        class_1799 input = menu.field_17629.method_5438(0);
+        if (input.method_7960()) {
+            return new java.util.ArrayList<>();
+        }
+        if (menu.field_17632 instanceof class_3218 server) {
+            return (java.util.List) CbItemRecipeManager.method_17877(server.method_8503().method_3772(),
+                (class_3956) class_3956.field_17641, new class_9696(input), server);
+        }
+        java.util.List<class_8786<net.minecraft.class_3975>> out = new java.util.ArrayList<>();
+        for (net.minecraft.class_10291.class_10292<net.minecraft.class_3975> entry : menu.method_17863().comp_3255()) {
+            entry.comp_3254().comp_3252().ifPresent(out::add);
+        }
+        return out;
+    }
+
     private static AbstractMethodError unknown(class_1729 menu, String member) {
         // 1.21.1's RecipeBookMenu members were abstract; every 1.21.2 vanilla subclass is CraftingMenu, InventoryMenu
         // (AbstractCraftingMenu) or an AbstractFurnaceMenu. Anything else is a mod menu that did not implement the
