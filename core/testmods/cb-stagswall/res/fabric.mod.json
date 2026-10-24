@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "cb_stagswall",
+  "version": "1.0.0",
+  "name": "CB stags wall tag test",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "cb.stagswall.StagsWallTestMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": "1.21.11",
+    "fabric-lifecycle-events-v1": "*"
+  }
+}

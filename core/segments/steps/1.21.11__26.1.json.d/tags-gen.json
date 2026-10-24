@@ -1,0 +1,69 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_44589:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbTagCompat#BlockTags_field_44589"
+ },
+ "tagMap": {
+  "block minecraft:bamboo_plantable_on": {
+   "to": "minecraft:supports_bamboo",
+   "mirror": [
+    "minecraft:supports_bamboo"
+   ]
+  },
+  "block minecraft:big_dripleaf_placeable": {
+   "to": "minecraft:supports_big_dripleaf",
+   "mirror": [
+    "minecraft:supports_big_dripleaf"
+   ]
+  },
+  "block minecraft:dirt": {
+   "to": "minecraft:substrate_overworld",
+   "mirror": []
+  },
+  "block minecraft:dry_vegetation_may_place_on": {
+   "to": "minecraft:supports_dry_vegetation",
+   "mirror": [
+    "minecraft:supports_dry_vegetation"
+   ]
+  },
+  "block minecraft:maintains_farmland": {
+   "to": "centurybridge:compat/1_21_11/maintains_farmland",
+   "mirror": [
+    "centurybridge:compat/1_21_11/maintains_farmland"
+   ]
+  },
+  "block minecraft:mushroom_grow_block": {
+   "to": "minecraft:mushroom_grow_block",
+   "mirror": [
+    "minecraft:overrides_mushroom_light_requirement"
+   ]
+  },
+  "block minecraft:small_dripleaf_placeable": {
+   "to": "minecraft:supports_small_dripleaf",
+   "mirror": [
+    "minecraft:supports_small_dripleaf"
+   ]
+  },
+  "block minecraft:snow_layer_can_survive_on": {
+   "to": "minecraft:support_override_snow_layer",
+   "mirror": [
+    "minecraft:support_override_snow_layer"
+   ]
+  },
+  "block minecraft:snow_layer_cannot_survive_on": {
+   "to": "minecraft:cannot_support_snow_layer",
+   "mirror": [
+    "minecraft:cannot_support_snow_layer"
+   ]
+  },
+  "item minecraft:dirt": {
+   "to": "centurybridge:compat/1_21_11/dirt",
+   "mirror": []
+  },
+  "item minecraft:dyeable": {
+   "to": "minecraft:dyeable",
+   "mirror": [
+    "minecraft:cauldron_can_remove_dye"
+   ]
+  }
+ }
+}

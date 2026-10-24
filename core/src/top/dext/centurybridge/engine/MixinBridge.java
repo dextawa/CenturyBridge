@@ -292,6 +292,16 @@ final class MixinBridge {
      * the jar whose references it retargets and its bridge-class statics are committed together, or
      * -- an engine error part way -- not at all. Returns whether the refmap changed.
      */
+    /** the restoring / guard mixins back to their method counts in before; ones created since are dropped */
+    private void rollbackRestorers(Map<String, Integer> before) {
+        restorers.entrySet().removeIf(e -> !before.containsKey(e.getKey()));
+        restorers.forEach((k, v) -> {
+            while (v.methods.size() > before.get(k)) {
+                v.methods.remove(v.methods.size() - 1);
+            }
+        });
+    }
+
     private boolean bridgeOne(String cls, byte[] bytes, JsonObject table, JsonObject mappings, Result res) {
         ClassNode mx = new ClassNode();
         try {
@@ -302,9 +312,14 @@ final class MixinBridge {
         Mixin m = new Mixin(mx, table == null ? null : table.deepCopy());
         byte[] out;
         Map<String, byte[]> others = new LinkedHashMap<>();
+        // the restoring and guard mixins as they stood: a mixin not committed takes back what it added there
+        // (a guarded injector calling a handler its uncommitted mixin never merged would fail at run time)
+        Map<String, Integer> before = new HashMap<>();
+        restorers.forEach((k, v) -> before.put(k, v.methods.size()));
         try {
             if (!m.bridge()) {
                 res.left.addAll(m.left);
+                rollbackRestorers(before);
                 return false;
             }
             out = write(mx);
@@ -313,6 +328,7 @@ final class MixinBridge {
             }
         } catch (RuntimeException ex) {
             res.left.add(shortName(cls) + ": not bridged, engine error " + ex);
+            rollbackRestorers(before);
             return false;
         }
         entries.put(cls + ".class", out);
@@ -383,6 +399,142 @@ final class MixinBridge {
     }
 
     // ------------------------------------------------------------------ what W has
+
+    private Map<String, String> followBack;
+
+    /**
+     * The private members of a class a mixin follows into a class W adds ({@link Chain#mixinFollow}):
+     * W declares them again under new intermediary ids (AbstractBoat's status field is field_54433, V
+     * Boat's field_7702). Read off the two classes' same-named methods: the significant instructions
+     * aligned (longest common subsequence), each gap between aligned instructions of the same length on
+     * both sides paired in order; a V member of the class declared private, not declared by W's class,
+     * maps to the W member of the class (same kind, same descriptor as the converted jar spells it, not
+     * declared by V) standing in its place -- every time, and no other V member mapping there. Written
+     * into the step's fieldRenames / methodRenames under V's names where the wiring says nothing (only
+     * mixins reach a private member, so nothing else reads these keys). Returns the number written.
+     */
+    static int inferPrivateRenames(Chain chain, String from, String to) {
+        MixinRepair w = wcode(chain);
+        ClassNode vc = chain.sourceCode == null ? null : chain.sourceCode.target(to); // V's class, named as W's
+        ClassNode wc = w == null ? null : w.target(to);
+        if (vc == null || wc == null) {
+            return 0;
+        }
+        Map<String, String> back = new HashMap<>();
+        chain.mixinFollow().forEach((a, b) -> back.put(b, a));
+        org.objectweb.asm.commons.SimpleRemapper toV = new org.objectweb.asm.commons.SimpleRemapper(back);
+        Map<String, Set<String>> votes = new HashMap<>();
+        for (MethodNode vm : vc.methods) {
+            MethodNode wm = method(wc, vm.name, vm.desc);
+            if (wm == null || vm.instructions == null || wm.instructions == null) {
+                continue;
+            }
+            List<AbstractInsnNode> vi = memberInsns(vm), wi = memberInsns(wm);
+            List<String> vs = new ArrayList<>(), ws = new ArrayList<>();
+            vi.forEach(in -> vs.add(SiteMatch.sigOf(in)));
+            wi.forEach(in -> ws.add(SiteMatch.sigOf(in)));
+            int[] al = SiteMatch.align(vs, ws);
+            if (al == null) {
+                continue;
+            }
+            int pi = -1, pj = -1;
+            for (int i = 0; i <= vs.size(); i++) {
+                if (i < vs.size() && al[i] < 0) {
+                    continue;
+                }
+                int j = i < vs.size() ? al[i] : ws.size();
+                if (i - pi == j - pj) {
+                    for (int d = 1; d < i - pi; d++) {
+                        vote(votes, vi.get(pi + d), wi.get(pj + d), to, vc, wc, chain);
+                    }
+                }
+                pi = i;
+                pj = j;
+            }
+        }
+        Map<String, String> into = new HashMap<>();
+        Map<String, String> picked = new HashMap<>();
+        votes.forEach((vk, ws) -> {
+            if (ws.size() == 1) {
+                String wn = ws.iterator().next();
+                if (into.putIfAbsent(wn, vk) == null) {
+                    picked.put(vk, wn);
+                } else {
+                    picked.remove(into.get(wn));
+                }
+            }
+        });
+        int n = 0;
+        for (Map.Entry<String, String> e : picked.entrySet()) {
+            if (into.get(e.getValue()) == null || !into.get(e.getValue()).equals(e.getKey())) {
+                continue;
+            }
+            boolean field = e.getKey().contains(":");
+            String vname = e.getKey().substring(0, e.getKey().indexOf(field ? ':' : '('));
+            String vdesc = e.getKey().substring(vname.length() + (field ? 1 : 0));
+            String wname = e.getValue().substring(0, e.getValue().indexOf(field ? ':' : '('));
+            String key = from + "." + vname + (field ? ":" + toV.mapDesc(vdesc) : toV.mapMethodDesc(vdesc));
+            Map<String, String> m = field ? chain.fieldRenames : chain.methodRenames;
+            if (m.putIfAbsent(key, wname) == null) {
+                System.out.println("  mixin follow, private member read off the bodies: " + key + " -> " + to + "." + wname);
+                n++;
+            }
+        }
+        return n;
+    }
+
+    private static List<AbstractInsnNode> memberInsns(MethodNode m) {
+        List<AbstractInsnNode> out = new ArrayList<>();
+        for (AbstractInsnNode in : m.instructions) {
+            if (SiteMatch.sigOf(in) != null) {
+                out.add(in);
+            }
+        }
+        return out;
+    }
+
+    private static void vote(Map<String, Set<String>> votes, AbstractInsnNode v, AbstractInsnNode w, String owner,
+                             ClassNode vc, ClassNode wc, Chain chain) {
+        String vkey, wkey;
+        if (v instanceof FieldInsnNode a && w instanceof FieldInsnNode b && a.getOpcode() == b.getOpcode()
+                && a.owner.equals(owner) && b.owner.equals(owner) && !a.name.equals(b.name)
+                && chain.renamedDesc(a.desc).equals(b.desc)) {
+            FieldNode vf = vc.fields.stream().filter(f -> f.name.equals(a.name) && f.desc.equals(a.desc)).findFirst().orElse(null);
+            boolean wHasV = wc.fields.stream().anyMatch(f -> f.name.equals(a.name));
+            boolean vHasW = vc.fields.stream().anyMatch(f -> f.name.equals(b.name));
+            boolean wDecl = wc.fields.stream().anyMatch(f -> f.name.equals(b.name) && f.desc.equals(b.desc));
+            if (vf == null || (vf.access & Opcodes.ACC_PRIVATE) == 0 || wHasV || vHasW || !wDecl) {
+                return;
+            }
+            vkey = a.name + ":" + a.desc;
+            wkey = b.name + ":" + b.desc;
+        } else if (v instanceof MethodInsnNode a && w instanceof MethodInsnNode b && a.getOpcode() == b.getOpcode()
+                && a.owner.equals(owner) && b.owner.equals(owner) && !a.name.equals(b.name) && !a.name.startsWith("<")
+                && chain.renamedDesc(a.desc).equals(b.desc)) {
+            MethodNode vmn = method(vc, a.name, a.desc);
+            if (vmn == null || (vmn.access & Opcodes.ACC_PRIVATE) == 0 || method(wc, a.name, b.desc) != null
+                    || vc.methods.stream().anyMatch(x -> x.name.equals(b.name)) || method(wc, b.name, b.desc) == null) {
+                return;
+            }
+            vkey = a.name + a.desc;
+            wkey = b.name + b.desc;
+        } else {
+            return;
+        }
+        votes.computeIfAbsent(vkey, k -> new HashSet<>()).add(wkey);
+    }
+
+    /**
+     * The name the step's wiring knows a mixin target by: a target that followed its class rename into
+     * a class W adds (Chain.mixinFollow) is V's class to the wiring, whose keys are V's members.
+     */
+    private String vk(String owner) {
+        if (followBack == null) {
+            followBack = new HashMap<>();
+            chain.mixinFollow().forEach((from, to) -> followBack.put(to, from));
+        }
+        return followBack.getOrDefault(owner, owner);
+    }
 
     /** W's class with its real bodies (the step's code jar), or null */
     private ClassNode w(String owner) {
@@ -566,21 +718,21 @@ final class MixinBridge {
             }
             return new CallFate("call reshape", name, r.newDesc, r, null, null, at);
         }
-        if (chain.coveredAnywhere(owner, nd)) {
+        if (chain.coveredAnywhere(vk(owner), nd)) {
             return new CallFate("restored by the step layer", name, desc, null, null, null, null);
         }
         if (isStatic) {
-            String rt = chain.redirectAnywhere(chain.staticRedirects, owner, nd);
+            String rt = chain.redirectAnywhere(chain.staticRedirects, vk(owner), nd);
             if (rt != null) {
                 return new CallFate("static redirect", name, desc, null, rt, null, null);
             }
         } else {
-            String ih = chain.instanceRedirectHome(chain.instanceRedirects, owner, nd);
+            String ih = chain.instanceRedirectHome(chain.instanceRedirects, vk(owner), nd);
             if (ih != null) {
                 return new CallFate("instance redirect", name, desc, null, chain.instanceRedirects.get(ih + "." + nd), ih, null);
             }
         }
-        String mrn = chain.methodRenames.get(owner + "." + nd);
+        String mrn = chain.methodRenames.get(vk(owner) + "." + nd);
         if (mrn != null) {
             Found at = wResolveMethod(owner, mrn, desc);
             if (at == null) {
@@ -603,8 +755,8 @@ final class MixinBridge {
      * was rejected).
      */
     private String fieldFate(String owner, String name, String desc, boolean isStatic, Refs refs, List<String> why) {
-        String key = owner + "." + name + ":" + desc;
-        if (chain.coveredAnywhere(owner, name + ":" + desc)) {
+        String key = vk(owner) + "." + name + ":" + desc;
+        if (chain.coveredAnywhere(vk(owner), name + ":" + desc)) {
             return "restored by the step layer";
         }
         if (isStatic) {
@@ -964,7 +1116,7 @@ final class MixinBridge {
             boolean isStatic = (f.access & Opcodes.ACC_STATIC) != 0;
             String what = "shadow field " + sn + "." + f.name + ":" + f.desc;
             Refs r = refs(f.name, f.desc, true);
-            String rn = chain.fieldRenames.get(target + "." + f.name + ":" + f.desc);
+            String rn = chain.fieldRenames.get(vk(target) + "." + f.name + ":" + f.desc);
             if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, f.desc))) {
                 for (FieldInsnNode fi : r.fieldInsns) {
                     fi.name = rn;
@@ -998,7 +1150,7 @@ final class MixinBridge {
                 return;
             }
             // a write a static field setter takes does not store into W's field: its finality does not matter
-            if (r.puts > 0 && !(isStatic && chain.staticFieldSetters.containsKey(target + "." + f.name + ":" + f.desc))) {
+            if (r.puts > 0 && !(isStatic && chain.staticFieldSetters.containsKey(vk(target) + "." + f.name + ":" + f.desc))) {
                 boolean mutable = has(f.visibleAnnotations, f.invisibleAnnotations, MUTABLE);
                 Found at = wResolveField(target, rn != null ? rn : f.name, f.desc);
                 if (mutable || at != null && (at.access() & Opcodes.ACC_FINAL) != 0) {
@@ -1218,7 +1370,7 @@ final class MixinBridge {
                 return;
             }
             String what = "constructor invoker " + sn + "." + m.name + m.desc;
-            String key = target + ".<init>" + ctor;
+            String key = vk(target) + ".<init>" + ctor;
             String factory = chain.ctorRedirects.get(key);
             if (factory != null) {
                 InsnList in = concrete(m, an);
@@ -1345,7 +1497,7 @@ final class MixinBridge {
                 return;
             }
             String what = "accessor " + sn + "." + m.name + m.desc;
-            String fkey = target + "." + name + ":" + fdesc;
+            String fkey = vk(target) + "." + name + ":" + fdesc;
             String rn = chain.fieldRenames.get(fkey);
             if (rn != null && Boolean.TRUE.equals(wDeclaresField(target, rn, fdesc))) {
                 pin(an, key, respell(mapped, rn, spec.contains(":") ? fdesc : null));
@@ -1387,7 +1539,7 @@ final class MixinBridge {
             } else {
                 String fname = rn != null ? rn : name;
                 Found at = wResolveField(target, fname, fdesc);
-                boolean covered = rn == null && chain.coveredAnywhere(target, name + ":" + fdesc);
+                boolean covered = rn == null && chain.coveredAnywhere(vk(target), name + ":" + fdesc);
                 if (at == null && !covered) {
                     if (rn != null) {
                         left.add(what + ": renamed to " + rn + ", which does not resolve on " + shortName(target) + " in " + chain.to);
@@ -1432,7 +1584,7 @@ final class MixinBridge {
                 return;
             }
             String what = "overwrite " + sn + "." + m.name + m.desc;
-            String rn = chain.methodRenames.get(target + "." + m.name + m.desc);
+            String rn = chain.methodRenames.get(vk(target) + "." + m.name + m.desc);
             if (rn != null && Boolean.TRUE.equals(wDeclares(target, rn, m.desc))) {
                 Refs r = refs(m.name, m.desc, false);
                 if (!r.handles.isEmpty()) {
@@ -1521,7 +1673,7 @@ final class MixinBridge {
                 MethodNode vmeth = vm.get(0);
                 String where = "@" + kind + " " + sn + "." + h.name + " -> " + shortName(target) + "." + vmeth.name + vmeth.desc;
                 List<String> why = new ArrayList<>();
-                Fate fate = selectorFate(target, vmeth.name, vmeth.desc, why);
+                Fate fate = selectorFate(vk(target), vmeth.name, vmeth.desc, why);
                 if (fate == null && method(wt, vmeth.name, vmeth.desc) == null) {
                     // no wiring for it, or wiring for mods' overrides that cannot carry an injector: where W keeps its code
                     List<String> bwhy = new ArrayList<>();
@@ -1531,6 +1683,11 @@ final class MixinBridge {
                     }
                 }
                 if (fate == null) {
+                    // an anchor in the body W moved up into a superclass: a guarded injector there
+                    Selection guarded = baseGuard(h, an, kind, vmeth, wt, where, why);
+                    if (guarded != null) {
+                        return guarded;
+                    }
                     MethodNode restored = restoreOverride(vmeth, wt, why);
                     if (restored != null) {
                         injected("@" + kind + " " + sn + "." + h.name, where + " => the override " + chain.to
@@ -1554,8 +1711,27 @@ final class MixinBridge {
                 }
                 String gone = anchorGone(an, h, kind, vmeth, wmeth, wt);
                 if (gone != null) {
+                    // V's site of the anchor may stand in what the new method calls: descend-site from V's method
+                    List<String> dwhy = new ArrayList<>();
+                    MixinRepair.Descend d = descendFollowed(an, h, vmeth, wmeth, vt, wt, dwhy);
+                    if (d != null) {
+                        String nm = respell(mapped, d.callee().name, d.callee().desc);
+                        if (ownKey(sel)) {
+                            MixinRepair.refmapPut(table, sel, nm);
+                            refmapDirty = true;
+                        } else {
+                            MixinRepair.setMethodSelector(an, idx, nm);
+                        }
+                        MixinRepair.applyDescend(d, h, an);
+                        changed = true;
+                        injected("@" + kind + " " + sn + "." + h.name, where + " => " + d.callee().name + d.callee().desc
+                            + (d.ordinal() >= 0 ? " #" + d.ordinal() : "") + " (" + fate.how() + " gives " + fate.name() + fate.desc()
+                            + "; V's site of the anchor stands in " + d.callee().name + ", called from one site"
+                            + (d.makeStatic() ? "; handler made static" : "") + (d.toCir() ? "; callback as CallbackInfoReturnable" : "") + ")");
+                        return new Selection(h, an, List.of(vmeth), List.of(d.callee()));
+                    }
                     left.add(where + ": " + fate.how() + " gives " + fate.name() + fate.desc() + ", where its anchor " + gone
-                        + " no longer stands");
+                        + " no longer stands" + (dwhy.isEmpty() ? "" : "; " + dwhy.get(0)));
                     continue;
                 }
                 Plan p = plan(h, an, kind, vmeth, fate, why);
@@ -1806,6 +1982,24 @@ final class MixinBridge {
          * nothing. Anchors that cannot be evaluated statically are not judged (null), as MixinRepair
          * leaves them alone too.
          */
+        /**
+         * The injector followed vmeth to wmeth, whose body no longer holds its anchor: MixinRepair's
+         * descend-site, from V's method to what W's new one calls (one anchor, a handler taking no target
+         * arguments -- the callee's are its own). Null when not applicable or refused (why says so).
+         */
+        private MixinRepair.Descend descendFollowed(AnnotationNode an, MethodNode h, MethodNode vmeth, MethodNode wmeth,
+                                                    ClassNode vt, ClassNode wt, List<String> why) {
+            MixinRepair code = wcode(chain);
+            if (code == null || MixinRepair.capturesTargetArgs(an, h) || hasSugar(h, "Local;")) {
+                return null;
+            }
+            List<MixinRepair.Anchor> anchors = code.anchors(an, MixinRepair.values(an), table);
+            if (anchors == null || anchors.size() != 1) {
+                return null;
+            }
+            return code.descendBySite(an, h, wt, vt, vmeth, wmeth, anchors.get(0), why);
+        }
+
         private String anchorGone(AnnotationNode an, MethodNode h, String kind, MethodNode vmeth, MethodNode wmeth, ClassNode wt) {
             List<MixinRepair.Anchor> anchors = wcode(chain).anchors(an, MixinRepair.values(an), table);
             if (anchors == null || anchors.isEmpty() || MixinRepair.anchorsIn(wmeth, wt, anchors)) {
@@ -1821,13 +2015,15 @@ final class MixinBridge {
                 // what ats() can retarget: the wiring's new anchor, as often in W as the old in V, with the
                 // handler able to take it
                 AtFate af = a.kind().equals("INVOKE") || a.kind().equals("FIELD") ? atFate(a) : null;
-                boolean byContext = a.role().equals("main") && counterpartAnchor(kind, h, a, List.of(vmeth), List.of(wmeth), new ArrayList<>()) != null;
+                List<String> cwhy = new ArrayList<>();
+                boolean byContext = a.role().equals("main") && counterpartAnchor(kind, h, a, List.of(vmeth), List.of(wmeth), cwhy) != null;
+                String gone = a + (cwhy.isEmpty() ? "" : " (in its place " + cwhy.get(0) + ")");
                 if (af == null || !af.desc().equals(a.desc()) && !kind.equals("Inject")
                         || kind.equals("Inject") && capturesLocals(h) || hasSugar(h, "Local;")) {
                     if (byContext) {
                         continue; // ats() retargets it to what stands in its place
                     }
-                    return a.toString();
+                    return gone;
                 }
                 MixinRepair.Anchor na = new MixinRepair.Anchor(a.kind(), af.owner(), af.name(), af.desc(), null, a.ordinal(), a.role());
                 int vc = count(List.of(vmeth), a);
@@ -1835,7 +2031,7 @@ final class MixinBridge {
                     if (byContext) {
                         continue;
                     }
-                    return a.toString();
+                    return gone;
                 }
             }
             return null;
@@ -1921,8 +2117,9 @@ final class MixinBridge {
          * An @At whose anchor W's body no longer holds, with no wiring that puts the same number of
          * anything in its place: retargeted to the instruction W has where each V site stood
          * ({@link SiteMatch#counterpart}: same kind, same significant neighbours, unique on both sides).
-         * A positional @Inject only -- every other injector handles the call or value itself, and a
-         * handler reading the target's locals reads them at a site whose surroundings changed. One new
+         * A positional @Inject, or an injector handling the call or value itself when the stand-in
+         * takes exactly the operands its handler is written for ({@link #sameOperands}); never a
+         * handler reading the target's locals, which it would read at a site whose surroundings changed. One new
          * anchor must stand at every counterpart; it is pinned by ordinal unless its occurrences in W
          * are exactly the counterparts. True when retargeted; otherwise the reason is reported.
          */
@@ -1939,7 +2136,10 @@ final class MixinBridge {
             }
             switch (value) {
                 case "INVOKE", "FIELD" -> {
-                    String nt = "L" + na.owner() + ";" + na.name() + (value.equals("FIELD") ? ":" : "") + na.desc();
+                    if (!na.kind().equals(value)) {
+                        setValue(at, "value", na.kind()); // a positional @Inject's call re-described as a field read, or back
+                    }
+                    String nt = "L" + na.owner() + ";" + na.name() + (na.kind().equals("FIELD") ? ":" : "") + na.desc();
                     if (t != null && ownKey(t)) {
                         MixinRepair.refmapPut(table, t, nt);
                         refmapDirty = true;
@@ -1989,22 +2189,48 @@ final class MixinBridge {
         /** the anchor standing where V's sites of {@code a} stood (see counterpartAt), or null with why */
         private MixinRepair.Anchor counterpartAnchor(String kind, MethodNode h, MixinRepair.Anchor a, List<MethodNode> vms,
                                                      List<MethodNode> wms, List<String> why) {
-            if (!kind.equals("Inject") || capturesLocals(h) || hasSugar(h, "Local;") || vms.size() != 1 || wms.size() != 1) {
+            boolean operands = OPERAND_KINDS.contains(kind);
+            if (!kind.equals("Inject") && !operands) {
+                why.add("@" + kind + " is not carried to a stand-in");
+                return null;
+            }
+            if (capturesLocals(h) || hasSugar(h, "Local;")) {
+                why.add("the handler reads the target's locals, in a body that changed around the anchor");
+                return null;
+            }
+            if (vms.size() != 1 || wms.size() != 1) {
+                why.add("the injector targets " + vms.size() + " method(s) in " + chain.from + " and " + wms.size() + " in " + chain.to);
                 return null;
             }
             MethodNode vm = vms.get(0);
             MethodNode wm = wms.get(0);
             List<AbstractInsnNode> vo = SiteMatch.occurrences(vm, in -> MixinRepair.matchesAnchor(in, a));
             if (vo.isEmpty() || a.ordinal() >= vo.size()) {
+                why.add("the anchor does not stand in " + chain.from + "'s body as the mod names it");
                 return null;
             }
             List<AbstractInsnNode> sites = a.ordinal() >= 0 ? List.of(vo.get(a.ordinal())) : vo;
             List<AbstractInsnNode> found = new ArrayList<>();
             for (AbstractInsnNode site : sites) {
-                AbstractInsnNode c = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in));
+                // a positional @Inject marks a place: a value read there (a getter call re-described as a field
+                // read of a render state) stands as well as a call of the same kind; operand-taking ones need the kind
+                AbstractInsnNode c = SiteMatch.counterpart(vm, site, wm, in -> SiteMatch.sameKind(site, in)
+                    || !operands && SiteMatch.valueRead(site) && SiteMatch.valueRead(in));
                 if (c == null) {
                     why.add("W's body has no single instruction of its kind between the same neighbours ("
                         + (sites.size() == 1 ? "the site" : found.size() + " of " + sites.size() + " sites found") + ")");
+                    return null;
+                }
+                if (operands && !sameOperands(kind, site, c)) {
+                    // the handler takes the call's / value's operands: they must be exactly V's
+                    why.add("what stands there (" + anchorOf(c) + ") does not take the operands @" + kind + "'s handler is written for");
+                    return null;
+                }
+                if (operands && !sameMember(site, c) && wLinks(site)) {
+                    // W still has V's member and calls another in its place (IntStream.range -> rangeClosed):
+                    // another operation, whose operands mean something else to a handler written for V's
+                    why.add("what stands there (" + anchorOf(c) + ") is another member, and " + chain.to + " still has "
+                        + anchorOf(site) + ": a different operation, not its replacement");
                     return null;
                 }
                 found.add(c);
@@ -2025,6 +2251,286 @@ final class MixinBridge {
                 return null;
             }
             return na;
+        }
+
+        /**
+         * V's class overrode the method and held the anchor in its body; W's inherits the method from a
+         * superclass whose body holds it (V's site by context, as in any followed target): the injector
+         * moves into a mixin of that superclass, guarded by {@code this instanceof} the target -- it
+         * runs for exactly the instances V's override ran for. The mod's handler stays in its mixin as a
+         * plain public method (merged into the target), which the guarded handler calls; outside the
+         * target the guarded handler does nothing ({@code @Inject}) or hands the value back unchanged
+         * ({@code @ModifyExpressionValue}, {@code @ModifyArg}, {@code @ModifyConstant} with the one
+         * value). Refused when the target's instances are not V's: a V subclass of the target that W
+         * moved out from under it, or a class new in W under the superclass but outside the target
+         * (which V class it stands for is not read off the hierarchy). Handlers capturing locals or
+         * carrying sugar, static handlers, and injectors handling a call itself are not moved.
+         */
+        private Selection baseGuard(MethodNode h, AnnotationNode an, String kind, MethodNode vmeth, ClassNode wt,
+                                    String where, List<String> why) {
+            MixinRepair code = wcode(chain);
+            if (itf || code == null || chain.sourceCode == null || !GUARD_KINDS.contains(kind)
+                    || (h.access & Opcodes.ACC_STATIC) != 0 || (vmeth.access & (Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) != 0
+                    || vmeth.name.startsWith("<") || capturesLocals(h) || sugarCount(h) > 0) {
+                return null;
+            }
+            if (!kind.equals("Inject") && Type.getArgumentTypes(h.desc).length != 1) {
+                return null; // the guard's other branch hands back its one value
+            }
+            List<MixinRepair.Anchor> anchors = code.anchors(an, MixinRepair.values(an), table);
+            if (anchors == null || anchors.isEmpty()) {
+                return null; // HEAD / RETURN / TAIL: a restored override carries them
+            }
+            for (MethodNode m : mx.methods) {
+                if (m != h && m.name.equals(vmeth.name) && m.desc.equals(vmeth.desc)) {
+                    return null;
+                }
+            }
+            ClassNode decl = null;
+            MethodNode inherited = null;
+            for (String c = wt.superName; c != null && inherited == null; ) {
+                ClassNode cn = w(c);
+                if (cn == null) {
+                    return null;
+                }
+                MethodNode m = method(cn, vmeth.name, vmeth.desc);
+                if (m != null) {
+                    decl = cn;
+                    inherited = m;
+                }
+                c = cn.superName;
+            }
+            if (inherited == null || (inherited.access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_STATIC | Opcodes.ACC_PRIVATE)) != 0
+                    || inherited.instructions == null || !Chain.minecraftOwned(decl.name)) {
+                return null;
+            }
+            // whose instances the guard admits: the target's in W, which must be the target's in V
+            Set<String> wSub = new HashSet<>(code.subclasses(target));
+            wSub.add(target);
+            List<String> movedOut = new ArrayList<>();
+            for (String c : chain.sourceCode.subclasses(target)) {
+                if (!wSub.contains(c) && w(c) != null) {
+                    movedOut.add(c);
+                }
+            }
+            if (!movedOut.isEmpty()) {
+                why.add(shortName(decl.name) + "." + vmeth.name + vmeth.desc + " holds the code W moved up, but "
+                    + shortName(movedOut.get(0)) + (movedOut.size() > 1 ? " (and " + (movedOut.size() - 1) + " more)" : "")
+                    + ", a " + shortName(target) + " in " + chain.from + ", is not one in " + chain.to + ": this instanceof "
+                    + shortName(target) + " would miss it");
+                return null;
+            }
+            List<String> newOut = new ArrayList<>();
+            for (String c : code.subclasses(decl.name)) {
+                if (!wSub.contains(c) && chain.sourceCode.target(c) == null) {
+                    newOut.add(c);
+                }
+            }
+            if (!newOut.isEmpty()) {
+                why.add(shortName(decl.name) + "." + vmeth.name + vmeth.desc + " holds the code W moved up, but "
+                    + shortName(newOut.get(0)) + (newOut.size() > 1 ? " (and " + (newOut.size() - 1) + " more)" : "")
+                    + ", new in " + chain.to + " under it, may stand for a " + shortName(target) + " of " + chain.from);
+                return null;
+            }
+            String sel = vmeth.name + vmeth.desc;
+            AnnotationNode moved = literalCopy(an, sel);
+            String gone = anchorGone(moved, h, kind, vmeth, inherited, decl);
+            if (gone != null) {
+                why.add(shortName(decl.name) + "." + sel + ", which " + shortName(target) + " now inherits, does not hold its anchor "
+                    + gone);
+                return null;
+            }
+            ClassNode vDecl = chain.sourceCode.target(decl.name);
+            String sites = guardSites(moved, vmeth, inherited, vDecl == null ? null : method(vDecl, vmeth.name, vmeth.desc));
+            if (sites != null) {
+                why.add(shortName(decl.name) + "." + sel + ", which " + shortName(target) + " now inherits: " + sites);
+                return null;
+            }
+            // the mod's handler: a plain public method of the target
+            String oldName = h.name;
+            String oldDesc = h.desc;
+            String plain = unique("cb$guarded$" + oldName);
+            Refs r = refs(oldName, oldDesc, false);
+            for (MethodInsnNode mi : r.calls) {
+                mi.name = plain;
+            }
+            retargetHandles(r, mx.name, plain, itf);
+            if (h.visibleAnnotations != null) {
+                h.visibleAnnotations.remove(an);
+            }
+            if (h.invisibleAnnotations != null) {
+                h.invisibleAnnotations.remove(an);
+            }
+            h.name = plain;
+            h.access = (h.access & ~(Opcodes.ACC_PRIVATE | Opcodes.ACC_PROTECTED)) | Opcodes.ACC_PUBLIC;
+            // the guarded injector in the superclass's mixin
+            ClassNode gc = guardMixin(decl.name);
+            String gname = shortName(mx.name).replaceAll("[^A-Za-z0-9_]", "_") + "$" + oldName;
+            for (MethodNode m : gc.methods) {
+                if (m.name.equals(gname)) {
+                    gname = gname + "_";
+                }
+            }
+            MethodNode g = new MethodNode(Opcodes.ACC_PRIVATE, gname, oldDesc, null, exceptions(h));
+            g.visibleAnnotations = new ArrayList<>(List.of(moved));
+            Type[] hp = Type.getArgumentTypes(oldDesc);
+            Type ret = Type.getReturnType(oldDesc);
+            LabelNode other = new LabelNode();
+            g.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            g.instructions.add(new TypeInsnNode(Opcodes.INSTANCEOF, target));
+            g.instructions.add(new JumpInsnNode(Opcodes.IFEQ, other));
+            g.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
+            g.instructions.add(new TypeInsnNode(Opcodes.CHECKCAST, target));
+            int slot = 1;
+            for (Type t : hp) {
+                g.instructions.add(new VarInsnNode(t.getOpcode(Opcodes.ILOAD), slot));
+                slot += t.getSize();
+            }
+            g.instructions.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, target, plain, oldDesc, false));
+            g.instructions.add(new InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+            g.instructions.add(other);
+            g.instructions.add(new FrameNode(Opcodes.F_SAME, 0, null, 0, null));
+            if (ret.getSort() == Type.VOID) {
+                g.instructions.add(new InsnNode(Opcodes.RETURN));
+            } else {
+                g.instructions.add(new VarInsnNode(hp[0].getOpcode(Opcodes.ILOAD), 1));
+                g.instructions.add(new InsnNode(ret.getOpcode(Opcodes.IRETURN)));
+            }
+            gc.methods.add(g);
+            AnnotationNode mark = new AnnotationNode(GUARDED);
+            mark.values = new ArrayList<>(List.of("of", oldName, "mixin", gc.name, "handler", gname));
+            h.invisibleAnnotations = h.invisibleAnnotations == null ? new ArrayList<>() : h.invisibleAnnotations;
+            h.invisibleAnnotations.add(mark);
+            changed = true;
+            injected("@" + kind + " " + sn + "." + oldName, where + " => " + shortName(decl.name) + "." + sel
+                + " (the override " + chain.to + " dropped held the anchor; W keeps it in the superclass: injected there, guarded by"
+                + " this instanceof " + shortName(target) + ", calling the mod's handler)");
+            return new Selection(g, moved, List.of(vmeth), List.of(inherited));
+        }
+
+        /**
+         * The count rule for an injector moved into another class's body: an anchor standing there as often
+         * as in V's override keeps its pin (the occurrences correspond in order, as MixinRepair takes them on
+         * any target). Otherwise each V site is found by context ({@link SiteMatch#match}, a context of 3
+         * or more, no alignment -- another method than V's own) among the occurrences there. A pinned anchor
+         * is re-pinned to its site's counterpart; an unpinned one must find every V site, and fires on
+         * W's occurrences only if they are exactly those (one V site among more W occurrences is pinned).
+         * When the superclass declared the method in V too, its own sites there (found from V's copy of
+         * it) are not the override's code: no V site may land on one, and the shortcut by count is off.
+         * An anchor W's method does not hold is left to the stand-in (ats). Null when the sites carry,
+         * else why not.
+         */
+        private String guardSites(AnnotationNode moved, MethodNode vmeth, MethodNode wm, MethodNode vOwn) {
+            for (Object c : MixinRepair.list(MixinRepair.values(moved).get("constant"))) {
+                if (c != null) {
+                    return "@Constant anchors are not re-pinned in another class's body";
+                }
+            }
+            for (AnnotationNode at : atNodes(moved)) {
+                MixinRepair.Anchor a = MixinRepair.parseAt(MixinRepair.values(at), null);
+                if (a == null || a == MixinRepair.POSITIONAL || a.kind().equals("LOCAL")) {
+                    continue;
+                }
+                List<AbstractInsnNode> vo = SiteMatch.occurrences(vmeth, in -> MixinRepair.matchesAnchor(in, a));
+                List<AbstractInsnNode> wo = SiteMatch.occurrences(wm, in -> MixinRepair.matchesAnchor(in, a));
+                if (vOwn != null && (wo.isEmpty() || vo.isEmpty())) {
+                    return "the superclass had the method in " + chain.from + " too, and " + a + " has no site of V's override there";
+                }
+                // what the superclass's own copy in V already held is not the override's code moved up
+                Set<Integer> own = new HashSet<>();
+                if (vOwn != null) {
+                    List<AbstractInsnNode> oo = SiteMatch.occurrences(vOwn, in -> MixinRepair.matchesAnchor(in, a));
+                    for (int j : SiteMatch.match(vOwn, oo, wm, wo)) {
+                        if (j >= 0) {
+                            own.add(j);
+                        }
+                    }
+                }
+                if (wo.isEmpty() || vo.isEmpty() || vOwn == null && wo.size() == vo.size()) {
+                    continue; // as often there as in V's override: the occurrences correspond in order, as on any target
+                }
+                int[] map = SiteMatch.match(vmeth, vo, wm, wo, 3, false);
+                for (int i = 0; i < map.length; i++) {
+                    if (own.contains(map[i])) {
+                        map[i] = -1;
+                    }
+                }
+                if (a.ordinal() >= 0) {
+                    if (a.ordinal() >= vo.size() || map[a.ordinal()] < 0) {
+                        return "V's site " + a + " has no counterpart there";
+                    }
+                    setValue(at, "ordinal", map[a.ordinal()]);
+                    continue;
+                }
+                Set<Integer> got = new HashSet<>();
+                for (int j : map) {
+                    if (j < 0) {
+                        return a + ": " + vo.size() + " site(s) in " + chain.from + ", not all of them found there";
+                    }
+                    got.add(j);
+                }
+                if (got.size() == wo.size() - own.size() && own.isEmpty()) {
+                    continue;
+                }
+                if (vo.size() == 1) {
+                    setValue(at, "ordinal", map[0]);
+                    continue;
+                }
+                return a + " stands there " + wo.size() + " time(s), " + vo.size() + " of them V's sites";
+            }
+            return null;
+        }
+
+        /** the injector with its selector set to sel and every refmap-keyed string spelled out (a new mixin has no refmap) */
+        private AnnotationNode literalCopy(AnnotationNode an, String sel) {
+            AnnotationNode c = new AnnotationNode(an.desc);
+            c.values = new ArrayList<>();
+            for (int i = 0; an.values != null && i + 1 < an.values.size(); i += 2) {
+                c.values.add(an.values.get(i));
+                c.values.add("method".equals(an.values.get(i)) ? new ArrayList<>(List.of(sel)) : literal(an.values.get(i + 1)));
+            }
+            return c;
+        }
+
+        private Object literal(Object v) {
+            if (v instanceof AnnotationNode a) {
+                AnnotationNode c = new AnnotationNode(a.desc);
+                c.values = new ArrayList<>();
+                for (int i = 0; a.values != null && i + 1 < a.values.size(); i += 2) {
+                    Object x = a.values.get(i + 1);
+                    c.values.add(a.values.get(i));
+                    c.values.add("target".equals(a.values.get(i)) && x instanceof String t ? MixinRepair.refmapLookup(table, t) : literal(x));
+                }
+                return c;
+            }
+            if (v instanceof List<?> l) {
+                List<Object> out = new ArrayList<>();
+                for (Object x : l) {
+                    out.add(literal(x));
+                }
+                return out;
+            }
+            return v;
+        }
+
+        /** the mixin of a superclass that guarded injectors of this config section go into (one per class) */
+        private ClassNode guardMixin(String decl) {
+            String name = (curPkg.isEmpty() ? "" : curPkg + "/") + "cb$guard$" + step + "$" + curKey + "$"
+                + decl.replace('/', '_').replace('$', '_');
+            ClassNode gc = restorers.get(name);
+            if (gc == null) {
+                gc = new ClassNode();
+                gc.version = mx.version;
+                gc.access = Opcodes.ACC_PUBLIC | Opcodes.ACC_ABSTRACT | Opcodes.ACC_SUPER;
+                gc.name = name;
+                gc.superName = "java/lang/Object";
+                AnnotationNode mixin = new AnnotationNode(MIXIN);
+                mixin.values = new ArrayList<>(List.of("value", List.of(Type.getObjectType(decl))));
+                gc.invisibleAnnotations = new ArrayList<>(List.of(mixin, new AnnotationNode("Lcb/side;")));
+                gc.invisibleAnnotations.get(1).values = new ArrayList<>(List.of("key", curKey));
+                restorers.put(name, gc);
+            }
+            return gc;
         }
 
         /**
@@ -2777,6 +3283,91 @@ final class MixinBridge {
         return new MixinRepair.Anchor("CONSTANT", null, null, null, SiteMatch.constantOf(in), -1);
     }
 
+    /**
+     * Injectors whose handler takes the anchor's operands (a call's receiver and arguments, its
+     * result, a field's value, a constant): carried to a stand-in only when it takes the same ones.
+     */
+    private static final Set<String> OPERAND_KINDS = Set.of("Redirect", "WrapOperation", "WrapWithCondition",
+        "ModifyArg", "ModifyArgs", "ModifyExpressionValue", "ModifyReturnValue", "ModifyConstant");
+
+    /**
+     * Does the stand-in c hand the handler what V's site handed it? Same descriptor and same
+     * invocation / access shape (static, interface, virtual / special); a handler that takes the
+     * receiver ({@code Redirect}, {@code WrapOperation}, {@code WrapWithCondition}) also needs the
+     * same owner. A constant: same type (sameKind already demands it). An allocation never: its
+     * handler takes the constructor's arguments, which another class's need not match.
+     */
+    static boolean sameOperands(String kind, AbstractInsnNode site, AbstractInsnNode c) {
+        boolean receiver = kind.equals("Redirect") || kind.equals("WrapOperation") || kind.equals("WrapWithCondition");
+        if (site instanceof MethodInsnNode s && c instanceof MethodInsnNode m) {
+            return !s.name.equals("<init>") && s.desc.equals(m.desc) && s.getOpcode() == m.getOpcode() && s.itf == m.itf
+                && (!receiver || s.getOpcode() == Opcodes.INVOKESTATIC || s.owner.equals(m.owner));
+        }
+        if (site instanceof FieldInsnNode s && c instanceof FieldInsnNode f) {
+            boolean stat = s.getOpcode() == Opcodes.GETSTATIC || s.getOpcode() == Opcodes.PUTSTATIC;
+            return s.desc.equals(f.desc) && s.getOpcode() == f.getOpcode() && (!receiver || stat || s.owner.equals(f.owner));
+        }
+        if (site instanceof TypeInsnNode) {
+            return false;
+        }
+        Object a = SiteMatch.constantOf(site);
+        Object b = SiteMatch.constantOf(c);
+        return a != null && b != null && a.getClass() == b.getClass();
+    }
+
+    /** do the two instructions name the same member (constants and allocations: always) */
+    static boolean sameMember(AbstractInsnNode a, AbstractInsnNode b) {
+        if (a instanceof MethodInsnNode x && b instanceof MethodInsnNode y) {
+            return x.owner.equals(y.owner) && x.name.equals(y.name) && x.desc.equals(y.desc);
+        }
+        if (a instanceof FieldInsnNode x && b instanceof FieldInsnNode y) {
+            return x.owner.equals(y.owner) && x.name.equals(y.name) && x.desc.equals(y.desc);
+        }
+        return true;
+    }
+
+    /**
+     * Does the member V's site names still link on W (W's code jar, its class and supertypes)? A
+     * library owner, or a supertype outside the code jar, counts as linking: nothing says it went.
+     */
+    private boolean wLinks(AbstractInsnNode site) {
+        String owner, name, desc;
+        boolean field = site instanceof FieldInsnNode;
+        if (site instanceof MethodInsnNode m) {
+            owner = m.owner; name = m.name; desc = m.desc;
+        } else if (site instanceof FieldInsnNode f) {
+            owner = f.owner; name = f.name; desc = f.desc;
+        } else {
+            return true;
+        }
+        if (!Chain.minecraftOwned(owner)) {
+            return true;
+        }
+        if (w(owner) == null) {
+            return false; // the class itself is gone
+        }
+        ArrayDeque<String> todo = new ArrayDeque<>(List.of(owner));
+        Set<String> seen = new HashSet<>();
+        while (!todo.isEmpty()) {
+            String c = todo.pop();
+            if (!seen.add(c)) {
+                continue;
+            }
+            ClassNode cn = w(c);
+            if (cn == null) {
+                return true; // a supertype outside the code jar may declare it
+            }
+            if (field ? cn.fields.stream().anyMatch(f -> f.name.equals(name) && f.desc.equals(desc)) : method(cn, name, desc) != null) {
+                return true;
+            }
+            if (cn.superName != null) {
+                todo.push(cn.superName);
+            }
+            todo.addAll(cn.interfaces);
+        }
+        return false;
+    }
+
     private static MixinRepair.Anchor withOrdinal(MixinRepair.Anchor a, int ordinal) {
         return new MixinRepair.Anchor(a.kind(), a.owner(), a.name(), a.desc(), a.constant(), ordinal, a.role());
     }
@@ -2785,6 +3376,15 @@ final class MixinBridge {
         return c instanceof Integer ? "intValue" : c instanceof Float ? "floatValue" : c instanceof Long ? "longValue"
             : c instanceof Double ? "doubleValue" : "stringValue";
     }
+
+    /** injectors baseGuard moves: positional, or handing back the one value they take */
+    private static final Set<String> GUARD_KINDS = Set.of("Inject", "ModifyExpressionValue", "ModifyArg", "ModifyConstant");
+
+    /**
+     * marks a mod handler baseGuard turned into a plain method: "of" its name in the mod, "mixin" the
+     * guard mixin and "handler" the guarded injector there (the judge follows it)
+     */
+    static final String GUARDED = "Ltop/dext/centurybridge/BaseGuarded;";
 
     /** marks a method MixinBridge put back into a mixin as a target override (restoreOverride) */
     static final String RESTORED = "Ltop/dext/centurybridge/RestoredOverride;";

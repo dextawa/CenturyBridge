@@ -40,5 +40,84 @@
    ],
    "basis": "Item.use answers an InteractionResult since 1.21.2 (a Success carries the stack the hand turns into) where 1.21.1's answered an InteractionResultHolder<ItemStack>: the mod's holder as that result, and the hand set as 1.21.1's game modes set it for PASS/FAIL (CbItemResults.result); its super.use(..) reaches super's 1.21.2 use, as a holder"
   }
- ]
+ ],
+ "mixinTargets": {
+  "net/minecraft/class_7803.method_10419(Lnet/minecraft/class_8790;)V": {
+   "to": "method_10419()V",
+   "args": [
+    -1
+   ],
+   "basis": "VanillaRecipeProvider.buildRecipes(output) -> buildRecipes() (1.21.2 saves into the provider's own output field); javap: the same recipe sequence, a few trim/dye loops moved into private helpers"
+  },
+  "net/minecraft/class_3971.method_17866()V": {
+   "to": "method_17866(I)V",
+   "args": [],
+   "basis": "StonecutterMenu.setupResultSlot() -> setupResultSlot(selected index): javap, the same result-slot update for the selected recipe (1.21.2's caller passes selectedRecipeIndex)"
+  },
+  "net/minecraft/class_3971.method_17855(Lnet/minecraft/class_1263;Lnet/minecraft/class_1799;)V": {
+   "to": "method_17855(Lnet/minecraft/class_1799;)V",
+   "args": [
+    -1,
+    0
+   ],
+   "basis": "StonecutterMenu.setupRecipeList(container, stack) -> setupRecipeList(stack): javap, the same reset of the selection and result slot and the recipe lookup for the stack (1.21.1 read the container only to build the lookup's input)"
+  },
+  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V": {
+   "to": "<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;)V",
+   "args": [
+    0,
+    1,
+    3,
+    4,
+    5
+   ],
+   "basis": "AbstractFurnaceMenu(menuType, recipeType, bookType, id, inventory[, container, data]) -> the same with the recipe property set after recipeType: javap, the same body (fields, the three furnace slots, the inventory slots, data slots); 1.21.2 adds the property-set lookup and moved the inventory-slot loops into addStandardInventorySlots"
+  },
+  "net/minecraft/class_1720.<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V": {
+   "to": "<init>(Lnet/minecraft/class_3917;Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;Lnet/minecraft/class_5421;ILnet/minecraft/class_1661;Lnet/minecraft/class_1263;Lnet/minecraft/class_3913;)V",
+   "args": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "basis": "AbstractFurnaceMenu(menuType, recipeType, bookType, id, inventory[, container, data]) -> the same with the recipe property set after recipeType: javap, the same body (fields, the three furnace slots, the inventory slots, data slots); 1.21.2 adds the property-set lookup and moved the inventory-slot loops into addStandardInventorySlots"
+  }
+ },
+ "callReshapes": {
+  "net/minecraft/class_1863.method_59821(Lnet/minecraft/class_3956;Lnet/minecraft/class_2960;)Lnet/minecraft/class_8786;": {
+   "desc": "(Lnet/minecraft/class_3956;Lnet/minecraft/class_5321;)Lnet/minecraft/class_8786;",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeBook#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
+   ],
+   "basis": "RecipeManager.byKeyTyped(type, id) (private) -> byKeyTyped(type, key): javap, the same lookup of the holder and type check, by the id's recipe key"
+  }
+ },
+ "mixinLedger": {
+  "net/minecraft/class_1834": "Tiers: 1.21.2 removed the enum (mods get the layer's Tiers); tool materials are ToolMaterial records (class_9886 constants), Tiers' getters became record components -- no vanilla code of Tiers runs on 1.21.2",
+  "net/minecraft/class_9462": "OminousBottleItem: removed in 1.21.2 (the layer's facade serves mods); the ominous bottle is a plain Item with a Consumable component and its Bad Omen effect is OminousBottleAmplifier.onConsume (class_10129.method_62831), another class",
+  "net/minecraft/class_9062": "ItemInteractionResult: 1.21.2 merged it into InteractionResult (class_1269, records); the enum and its methods have no counterpart in vanilla (the layer's facade serves mods)",
+  "net/minecraft/class_1757": "ChorusFruitItem: removed in 1.21.2; chorus fruit is a plain Item whose Consumable teleports through TeleportRandomlyConsumeEffect.apply (class_10138.method_62866), another class",
+  "net/minecraft/class_1873": "SuspiciousStewRecipe: 1.21.2 removed the special recipe class (the layer's facade serves mods); no vanilla class holds its matches/assemble code",
+  "net/minecraft/class_1871": "ShulkerBoxColoring: removed in 1.21.2; shulker box dyeing is a data TransmuteRecipe (class_10223) -- no vanilla code of the class runs",
+  "net/minecraft/class_3957": "SimpleCookingSerializer: removed in 1.21.2 (the layer's facade serves mods); cooking recipes use AbstractCookingRecipe.Serializer, another class built from a factory",
+  "net/minecraft/class_4480": "HoneyBottleItem: removed in 1.21.2; the honey bottle is a plain Item whose Consumable removes poison through RemoveStatusEffectsConsumeEffect, another class",
+  "net/minecraft/class_1271": "InteractionResultHolder: removed in 1.21.2; Item.use answers an InteractionResult whose Success record carries the new stack -- the holder class has no vanilla counterpart (the layer's facade serves mods)",
+  "net/minecraft/class_3505": "TagManager: removed in 1.21.2; tags load through TagLoader's static loaders (class_3503) during registry loading -- the reload listener and its methods are gone",
+  "net/minecraft/class_3505$class_6863": "TagManager.LoadResult: removed with TagManager in 1.21.2 -- no vanilla code of the record runs",
+  "net/minecraft/class_1830": "SuspiciousStewItem: removed in 1.21.2; suspicious stew is a plain Item and its effects are SuspiciousStewEffects.onConsume (class_9298.method_62831), another class",
+  "net/minecraft/class_1741$class_9196": "ArmorMaterial.Layer: removed in 1.21.2; armor textures come from equipment models (EquipmentModel) -- no code of Layer survives",
+  "net/minecraft/class_4174$class_9423": "FoodProperties.PossibleEffect: removed in 1.21.2; food effects are ApplyStatusEffectsConsumeEffect entries of the item's Consumable, another class",
+  "net/minecraft/class_1805": "MilkBucketItem: removed in 1.21.2; the milk bucket is a plain Item whose Consumable clears effects through ClearAllStatusEffectsConsumeEffect.apply (class_10133.method_62866), another class",
+  "net/minecraft/class_1770": "ElytraItem: removed in 1.21.2; the elytra is a plain Item with Equippable and Glider components, its flight checks live in LivingEntity and the components",
+  "net/minecraft/class_1831": "TieredItem: removed in 1.21.2; tool tiers are applied by ToolMaterial to Item.Properties -- no TieredItem code survives",
+  "net/minecraft/class_1772": "EnchantedBookItem: removed in 1.21.2; enchanted books are plain Items with STORED_ENCHANTMENTS -- no code of the class survives",
+  "net/minecraft/class_1751": "BookItem: removed in 1.21.2; the book is a plain Item, enchantable through the ENCHANTABLE component",
+  "net/minecraft/class_1762": "ComplexItem: removed in 1.21.2; MapItem, its only vanilla subclass, extends Item directly -- no ComplexItem method remains to hook",
+  "net/minecraft/class_1798": "ItemNameBlockItem: removed in 1.21.2; a BlockItem with Item.Properties.useItemDescriptionPrefix replaces it -- it had no code but getDescriptionId"
+ }
 }

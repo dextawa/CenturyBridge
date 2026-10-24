@@ -1,0 +1,20 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3483.field_15507:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_20_3/rt/CbTagCompat#EntityTypeTags_field_15507",
+  "net/minecraft/class_3483.field_22415:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_20_3/rt/CbTagCompat#EntityTypeTags_field_22415"
+ },
+ "tagMap": {
+  "entity_type minecraft:impact_projectiles": {
+   "to": "centurybridge:compat/1_20_2/impact_projectiles",
+   "mirror": [
+    "centurybridge:compat/1_20_2/impact_projectiles"
+   ]
+  },
+  "entity_type minecraft:skeletons": {
+   "to": "centurybridge:compat/1_20_2/skeletons",
+   "mirror": [
+    "centurybridge:compat/1_20_2/skeletons"
+   ]
+  }
+ }
+}

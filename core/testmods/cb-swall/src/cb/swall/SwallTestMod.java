@@ -391,6 +391,23 @@ public class SwallTestMod implements ModInitializer {
             && !net.minecraft.class_2246.field_10340.method_9564().method_26164(net.minecraft.class_3481.field_29822), "");
         check("tagDrift.itemDirt", new net.minecraft.class_1799(net.minecraft.class_1802.field_8270).method_31573(net.minecraft.class_3489.field_36269)
             && !new net.minecraft.class_1799(net.minecraft.class_1802.field_20391).method_31573(net.minecraft.class_3489.field_36269), "");
+        // block tags 26.1 renamed (same members, same vanilla readers): a 1.21.11 read is the tag vanilla 26.1 acts on
+        check("tagRename.members", is(net.minecraft.class_2246.field_10460, net.minecraft.class_3481.field_35443)
+            && is(net.minecraft.class_2246.field_10362, net.minecraft.class_3481.field_35443)
+            && is(net.minecraft.class_2246.field_10460, net.minecraft.class_3481.field_33641)
+            && is(net.minecraft.class_2246.field_10295, net.minecraft.class_3481.field_39104)
+            && is(net.minecraft.class_2246.field_21211, net.minecraft.class_3481.field_39105)
+            && is(net.minecraft.class_2246.field_10102, net.minecraft.class_3481.field_56529)
+            && is(net.minecraft.class_2246.field_10362, net.minecraft.class_3481.field_56529)
+            && is(net.minecraft.class_2246.field_10255, net.minecraft.class_3481.field_15497)
+            && is(net.minecraft.class_2246.field_10402, net.minecraft.class_3481.field_25739)
+            && !is(net.minecraft.class_2246.field_10340, net.minecraft.class_3481.field_35443), "");
+        check("tagRename.ids", "supports_big_dripleaf".equals(net.minecraft.class_3481.field_35443.comp_327().method_12832())
+            && "cannot_support_snow_layer".equals(net.minecraft.class_3481.field_39104.comp_327().method_12832())
+            && "support_override_snow_layer".equals(net.minecraft.class_3481.field_39105.comp_327().method_12832())
+            && "supports_dry_vegetation".equals(net.minecraft.class_3481.field_56529.comp_327().method_12832())
+            && "substrate_overworld".equals(net.minecraft.class_3481.field_29822.comp_327().method_12832()),
+            net.minecraft.class_3481.field_35443.comp_327() + " " + net.minecraft.class_3481.field_29822.comp_327());
         net.minecraft.class_2540 buf = new net.minecraft.class_2540(io.netty.buffer.Unpooled.buffer());
         net.minecraft.class_2743.field_47981.encode(buf, new net.minecraft.class_2743(42, new net.minecraft.class_243(0.5, 0.25, -1.0)));
         net.minecraft.class_2743 back = net.minecraft.class_2743.field_47981.decode(buf);
@@ -401,8 +418,32 @@ public class SwallTestMod implements ModInitializer {
         check("streamCodec.motion", back.method_11818() == 42 && ids.decode(buf2) == 7, back.method_11818());
     }
 
+    /** a 1.21.11 subclass of a recipe class 26.1 removed: vanilla's matches / assemble reach its overrides */
+    static class StickDye extends net.minecraft.class_1849 {
+        StickDye() {
+            super(net.minecraft.class_7710.field_40251);
+        }
+
+        @Override
+        public boolean method_17701(net.minecraft.class_9694 input, net.minecraft.class_1937 level) {
+            return input.method_59984(0).method_31574(net.minecraft.class_1802.field_8600) || super.method_17701(input, level);
+        }
+
+        @Override
+        public net.minecraft.class_1799 method_17700(net.minecraft.class_9694 input, net.minecraft.class_7225.class_7874 registries) {
+            return input.method_59984(0).method_31574(net.minecraft.class_1802.field_8600)
+                ? new net.minecraft.class_1799(net.minecraft.class_1802.field_8428) : super.method_17700(input, registries);
+        }
+    }
+
     /** ArmorDye / MapCloning / TippedArrow, removed in 26.1, given back with 1.21.11's bodies and serializers */
     private static void removedRecipes(MinecraftServer server) {
+        StickDye stickDye = new StickDye();
+        net.minecraft.class_9694 stickGrid = net.minecraft.class_9694.method_59986(1, 1, List.of(new net.minecraft.class_1799(net.minecraft.class_1802.field_8600)));
+        @SuppressWarnings({"rawtypes", "unchecked"})
+        net.minecraft.class_1860<net.minecraft.class_9694> asRecipe = (net.minecraft.class_1860) stickDye;
+        check("recipe.removedClassSubclass", asRecipe.method_8115(stickGrid, server.method_30002())
+            && asRecipe.method_8116(stickGrid, server.method_30611()).method_31574(net.minecraft.class_1802.field_8428), "");
         net.minecraft.class_7225.class_7874 registries = server.method_30611();
         net.minecraft.class_1799 e = net.minecraft.class_1799.field_8037;
         net.minecraft.class_1849 dye = new net.minecraft.class_1849(net.minecraft.class_7710.field_40251);
@@ -466,6 +507,127 @@ public class SwallTestMod implements ModInitializer {
         }
     }
 
+    private static boolean is(net.minecraft.class_2248 block, net.minecraft.class_6862<net.minecraft.class_2248> tag) {
+        return block.method_9564().method_26164(tag);
+    }
+
+    /** 1.21.11 records 26.1 rebuilt around templates, compilable strings, two assets, split world data */
+    private static void recordViews(MinecraftServer server) {
+        net.minecraft.class_1799 bowl = new net.minecraft.class_1799(net.minecraft.class_1802.field_8428, 3);
+        net.minecraft.class_10131 remainder = new net.minecraft.class_10131(bowl);
+        net.minecraft.class_2568.class_10612 show = new net.minecraft.class_2568.class_10612(new net.minecraft.class_1799(net.minecraft.class_1802.field_8279));
+        check("records.itemTemplates", remainder.comp_3093().method_31574(net.minecraft.class_1802.field_8428) && remainder.comp_3093().method_7947() == 3
+            && show.comp_3509().method_31574(net.minecraft.class_1802.field_8279), remainder.comp_3093());
+        net.minecraft.class_2575 block = new net.minecraft.class_2575("1 2 3");
+        net.minecraft.class_2575 badBlock = new net.minecraft.class_2575("not a position");
+        net.minecraft.class_2576 entity = new net.minecraft.class_2576("@p");
+        net.minecraft.class_2168 source = server.method_3739();
+        boolean emptyData;
+        try {
+            emptyData = badBlock.method_10916(source).findAny().isEmpty();
+        } catch (Exception e) {
+            emptyData = false;
+        }
+        check("records.dataSources", "1 2 3".equals(block.comp_733()) && block.comp_734() != null && badBlock.comp_734() == null
+            && "@p".equals(entity.comp_735()) && entity.comp_736() != null && emptyData, block);
+        net.minecraft.class_12079.class_10726 tex = new net.minecraft.class_12079.class_10726(net.minecraft.class_2960.method_60655("cbswall", "cat"));
+        net.minecraft.class_7375 cat = new net.minecraft.class_7375(tex, net.minecraft.class_10702.field_56285);
+        net.minecraft.class_9346.class_10688 wolfInfo = new net.minecraft.class_9346.class_10688(tex, tex, tex);
+        net.minecraft.class_9346 wolf = new net.minecraft.class_9346(wolfInfo, net.minecraft.class_10702.field_56285);
+        check("records.variants", cat.comp_3560() == tex && wolf.comp_3564() == wolfInfo, cat);
+        @SuppressWarnings({"rawtypes", "unchecked"}) net.minecraft.class_7655.class_7657 required = new net.minecraft.class_7655.class_7657(net.minecraft.class_7924.field_41236,
+            net.minecraft.class_1959.field_24677, true);
+        @SuppressWarnings({"rawtypes", "unchecked"}) net.minecraft.class_7655.class_7657 optional = new net.minecraft.class_7655.class_7657(net.minecraft.class_7924.field_41236,
+            net.minecraft.class_1959.field_24677, false);
+        java.util.UUID a = net.minecraft.class_3532.method_15394();
+        check("records.registryDataAndUuid", required.comp_2664() && !optional.comp_2664() && a.version() == 4
+            && !a.equals(net.minecraft.class_3532.method_15394()), a);
+    }
+
+    /** 1.21.11 noise, mushroom configuration and NBT statics */
+    private static void worldgenStatics(MinecraftServer server) {
+        net.minecraft.class_3537 noise = net.minecraft.class_3537.method_39126(net.minecraft.class_5819.method_43049(42L), -3,
+            it.unimi.dsi.fastutil.doubles.DoubleList.of(1.0, 1.0, 1.0));
+        double six = noise.method_16453(0.3, 0.7, 1.1, 0.0, 0.0, false);
+        double three = noise.method_15416(0.3, 0.7, 1.1);
+        double fixed = noise.method_16453(0.3, 0.7, 1.1, 0.0, 0.0, true);
+        double fixedOtherY = noise.method_16453(0.3, 99.7, 1.1, 0.0, 0.0, true);
+        check("noise.getValue6", six == three && fixed == fixedOtherY && Double.isFinite(fixed), six + " " + three + " " + fixed + " " + fixedOtherY);
+        net.minecraft.class_4635 mushroom = new net.minecraft.class_4635(net.minecraft.class_4651.method_38432(net.minecraft.class_2246.field_10340),
+            net.minecraft.class_4651.method_38432(net.minecraft.class_2246.field_10340), 2);
+        check("mushroom.config", mushroom.field_21232 == 2 && mushroom.field_21230 != null, mushroom);
+        com.mojang.serialization.Dynamic<net.minecraft.class_2520> dyn = new com.mojang.serialization.Dynamic<>(net.minecraft.class_2509.field_11560, new net.minecraft.class_2487());
+        int current = net.minecraft.class_155.method_16673().comp_4026().comp_4038();
+        check("nbt.addCurrentDataVersion", net.minecraft.class_2512.method_73082(dyn).get("DataVersion").asInt(0) == current, "");
+    }
+
+    /** a 1.21.11 subclass of the structure index */
+    static class CountingIndex extends net.minecraft.class_3440 {
+        int starts;
+
+        @Override
+        public boolean method_14897(long chunk) {
+            starts++;
+            return super.method_14897(chunk);
+        }
+    }
+
+    /** 1.21.11 string-named saved data, StructureFeatureIndexSavedData and LegacyStructureDataHandler */
+    private static void legacyStructureData(MinecraftServer server) throws Exception {
+        java.nio.file.Path dir = java.nio.file.Files.createTempDirectory("cbswall-data");
+        net.minecraft.class_10741<net.minecraft.class_3440> type = net.minecraft.class_3440.method_67412("cbswall_index");
+        net.minecraft.class_26 storage = new net.minecraft.class_26(dir, server.method_3855(), server.method_30611());
+        net.minecraft.class_3440 index = storage.method_17924(type);
+        index.method_14896(5L);
+        index.method_14896(6L);
+        index.method_14895(6L);
+        storage.method_125();
+        net.minecraft.class_26 reopened = new net.minecraft.class_26(dir, server.method_3855(), server.method_30611());
+        net.minecraft.class_3440 back = reopened.method_17924(net.minecraft.class_3440.method_67412("cbswall_index"));
+        check("savedData.stringIdFile", java.nio.file.Files.exists(dir.resolve("cbswall_index.dat"))
+            && "cbswall_index".equals(type.comp_3641()) && type.equals(net.minecraft.class_3440.method_67412("cbswall_index")), type.comp_3641());
+        check("structureIndex.roundTrip", back.method_14897(5L) && back.method_14897(6L) && back.method_14894(5L) && !back.method_14894(6L)
+            && back.method_14898().size() == 2, back.method_14898());
+        CountingIndex counting = new CountingIndex();
+        counting.method_14896(7L);
+        check("structureIndex.subclass", counting.method_14897(7L) && counting.starts == 1 && counting.method_14894(7L), counting.starts);
+
+        // a pre-1.13 nether: Fortress.dat in the data folder, a 1.13-era chunk flagged as holding legacy structure data
+        net.minecraft.class_2487 feature = new net.minecraft.class_2487();
+        feature.method_10569("ChunkX", 0);
+        feature.method_10569("ChunkZ", 0);
+        feature.method_10582("id", "Fortress");
+        net.minecraft.class_2487 features = new net.minecraft.class_2487();
+        features.method_10566("[0,0]", feature);
+        net.minecraft.class_2487 data = new net.minecraft.class_2487();
+        data.method_10566("Features", features);
+        net.minecraft.class_2487 file = new net.minecraft.class_2487();
+        file.method_10566("data", data);
+        file.method_10569("DataVersion", 1493);
+        net.minecraft.class_2507.method_30614(file, dir.resolve("Fortress.dat"));
+        java.util.function.Supplier<net.minecraft.class_12242> nether = net.minecraft.class_3360.method_14745(net.minecraft.class_1937.field_25180, () -> reopened, server.method_3855());
+        net.minecraft.class_12242 fixer = nether.get();
+        net.minecraft.class_2487 level = new net.minecraft.class_2487();
+        level.method_10569("xPos", 0);
+        level.method_10569("zPos", 0);
+        level.method_10556("hasLegacyStructureData", true);
+        net.minecraft.class_2487 chunk = new net.minecraft.class_2487();
+        chunk.method_10566("Level", level);
+        chunk.method_10569("DataVersion", 1492);
+        // DataFixTypes.update leaves DataVersion to the storage (1.21.11 and 26.1 alike); References gets the fortress key
+        net.minecraft.class_2487 fixed = fixer.applyFix(chunk);
+        java.util.Optional<long[]> refs = fixed.method_68568("Level").method_68568("Structures").method_68568("References").method_10565("Fortress");
+        check("legacyStructure.netherFixer", fixer instanceof net.minecraft.class_3360 && fixer.targetDataVersion() == 1493
+            && refs.isPresent() && refs.get().length == 0, fixed);
+        fixer.markChunkDone(new net.minecraft.class_1923(0, 0));
+        net.minecraft.class_2487 plain = new net.minecraft.class_2487();
+        net.minecraft.class_12242 none = net.minecraft.class_3360.method_14745(
+            net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41223, net.minecraft.class_2960.method_60655("cbswall", "dim")),
+            () -> reopened, server.method_3855()).get();
+        check("legacyStructure.otherDimension", !(none instanceof net.minecraft.class_3360) && none.applyFix(plain) == plain
+            && none.targetDataVersion() == -1, none);
+    }
+
     /** 1.21.11's one interact packet for three actions, over 26.1's interact and attack packets */
     private static void interactPacket(MinecraftServer server) {
         net.minecraft.class_3218 level = server.method_30002();
@@ -496,6 +658,96 @@ public class SwallTestMod implements ModInitializer {
         check("interactPacket.split", attack.method_12248(level) == stand && at.method_12248(level) == stand && at.method_30007()
             && !attack.method_30007() && "attack;at;interact;".contentEquals(log) && asObject instanceof net.minecraft.class_2824, log);
         stand.method_31472();
+    }
+
+    /** a 1.21.11 ChunkPos subclass (26.1's ChunkPos is a final record) */
+    static final class TaggedChunk extends net.minecraft.class_1923 {
+        final String tag;
+
+        TaggedChunk(net.minecraft.class_2338 pos, String tag) {
+            super(pos);
+            this.tag = tag;
+        }
+
+        TaggedChunk(long packed, String tag) {
+            super(packed);
+            this.tag = tag;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return super.equals(o) && (!(o instanceof TaggedChunk t) || t.tag.equals(tag));
+        }
+    }
+
+    /** a 1.21.11 ItemInput subclass (26.1's ItemInput is a final record) */
+    static final class NamedInput extends net.minecraft.class_2290 {
+        NamedInput() {
+            super(net.minecraft.class_1802.field_8477.method_40131(), net.minecraft.class_9326.field_49588);
+        }
+
+        @Override
+        public String toString() {
+            return "named:" + method_9785();
+        }
+    }
+
+    /** subclasses of classes 26.1 made final records */
+    private static void extendFinal() throws Exception {
+        TaggedChunk byBlock = new TaggedChunk(new net.minecraft.class_2338(33, 70, -17), "a");
+        long packed = ((long) -7 << 32) | (5L & 0xFFFFFFFFL);
+        TaggedChunk byLong = new TaggedChunk(packed, "b");
+        check("extendFinal.chunkPos", byBlock.field_9181 == 2 && byBlock.field_9180 == -2 && byLong.field_9181 == 5
+            && byLong.field_9180 == -7 && byBlock.equals(new net.minecraft.class_1923(2, -2))
+            && !byBlock.equals(new TaggedChunk(new net.minecraft.class_2338(33, 0, -17), "c")),
+            byBlock.field_9181 + "," + byBlock.field_9180 + " " + byLong.field_9181 + "," + byLong.field_9180);
+        NamedInput input = new NamedInput();
+        net.minecraft.class_1799 stack = input.method_9781(3, false);
+        check("extendFinal.itemInput", input.toString().startsWith("named:") && stack.method_7947() == 3
+            && stack.method_31574(net.minecraft.class_1802.field_8477), input + " " + stack);
+    }
+
+    /** 1.21.11's TimerQueue subclass writing itself through store() */
+    static final class StoringQueue extends net.minecraft.class_236<MinecraftServer> {
+        int stores;
+
+        StoringQueue() {
+            super(net.minecraft.class_233.field_1306);
+        }
+
+        @Override
+        public net.minecraft.class_2499 method_982() {
+            stores++;
+            return super.method_982();
+        }
+    }
+
+    /** 1.21.11 TimerQueue: built with its callbacks, written with store(), read back from saved events */
+    private static void timerQueue() {
+        net.minecraft.class_236<MinecraftServer> queue = new net.minecraft.class_236<>(net.minecraft.class_233.field_1306);
+        queue.method_985("cb_later", 200L, new net.minecraft.class_231(net.minecraft.class_2960.method_60655("cb", "later")));
+        queue.method_985("cb_sooner", 100L, new net.minecraft.class_231(net.minecraft.class_2960.method_60655("cb", "sooner")));
+        net.minecraft.class_2499 stored = queue.method_982();
+        net.minecraft.class_2487 first = stored.isEmpty() ? null : (net.minecraft.class_2487) stored.get(0);
+        check("timerQueue.store", stored.size() == 2 && first != null && "cb_sooner".equals(first.method_68564("Name", ""))
+            && first.method_68080("TriggerTime", 0L) == 100L && first.method_10545("Callback"), stored);
+        net.minecraft.class_236<MinecraftServer> loaded = new net.minecraft.class_236<>(net.minecraft.class_233.field_1306,
+            stored.stream().map(t -> new com.mojang.serialization.Dynamic<>(class_2509.field_11560, t)));
+        check("timerQueue.load", loaded.method_22592().equals(java.util.Set.of("cb_later", "cb_sooner")), loaded.method_22592());
+        StoringQueue sub = new StoringQueue();
+        sub.method_985("cb_sub", 5L, new net.minecraft.class_231(net.minecraft.class_2960.method_60655("cb", "sub")));
+        net.minecraft.class_2499 subStored = sub.method_982();
+        check("timerQueue.subclassStore", subStored.size() == 1 && sub.stores == 1, subStored + " stores=" + sub.stores);
+        // 26.1 writes the queue through pack(): the subclass's store() is what it writes (read reflectively, as the
+        // name exists only on 26.1)
+        Object packed = null;
+        try {
+            java.lang.reflect.Method pack = sub.getClass().getMethod("pack");
+            packed = pack.invoke(sub);
+        } catch (ReflectiveOperationException e) {
+            packed = e;
+        }
+        check("timerQueue.packThroughStore", sub.stores == 2 && String.valueOf(packed).contains("cb_sub"), packed + " stores=" + sub.stores);
     }
 
     /** generic drift at the wall read on a running server */
@@ -557,7 +809,13 @@ public class SwallTestMod implements ModInitializer {
             removedRecipes(server);
             specialRecipeCtors(server);
             legacyRegionStorage(server);
+            legacyStructureData(server);
+            recordViews(server);
+            worldgenStatics(server);
             interactPacket(server);
+            timerQueue();
+            extendFinal();
+            worldCalls(server);
         } catch (Throwable t) {
             t.printStackTrace();
             check("server.exception", false, t);
@@ -785,5 +1043,58 @@ public class SwallTestMod implements ModInitializer {
             && net.minecraft.class_2215.method_9398(net.minecraft.class_1767.field_7964) == net.minecraft.class_2246.field_10406, "");
         check("component.nbtContents", "a.b".equals(good.method_10920()) && "[[[".equals(bad.method_10920())
             && bad.method_10890(source, null, 0).getString().isEmpty(), good.method_10920());
+    }
+
+    /** 1.21.11 world calls 26.1 reshaped (CbWallWorldCalls); each check on its own so one failure keeps the rest */
+    private static void worldCalls(MinecraftServer server) {
+        net.minecraft.class_3218 level = server.method_30002();
+        try {
+            java.util.List<net.minecraft.class_1799> drops = net.minecraft.class_2248.method_9609(net.minecraft.class_2246.field_10340.method_9564(),
+                level, new net.minecraft.class_2338(0, 100, 0), null, null, new net.minecraft.class_1799(net.minecraft.class_1802.field_8377));
+            check("world.getDrops", drops.size() == 1 && drops.get(0).method_31574(net.minecraft.class_1802.field_20412), drops);
+        } catch (Throwable t) {
+            check("world.getDrops", false, t);
+        }
+        try {
+            net.minecraft.class_2338 pos = new net.minecraft.class_2338(3, 250, 3);
+            level.method_8501(pos.method_10074(), net.minecraft.class_2246.field_10114.method_9564());
+            level.method_8501(pos, net.minecraft.class_2246.field_10382.method_9564());
+            net.minecraft.class_2258.method_34267(level, pos, level.method_8320(pos), level.method_8320(pos.method_10074()));
+            net.minecraft.class_2680 now = level.method_8320(pos);
+            check("world.bubbleColumn", now.method_27852(net.minecraft.class_2246.field_10422), now);
+        } catch (Throwable t) {
+            check("world.bubbleColumn", false, t);
+        }
+        try {
+            net.minecraft.class_12210<Float> lerp = net.minecraft.class_12210.method_75706();
+            net.minecraft.class_12210<Float> step = net.minecraft.class_12210.method_75707(0.5F);
+            net.minecraft.class_12192<Float> type = net.minecraft.class_12192.method_75634(com.mojang.serialization.Codec.FLOAT, java.util.Map.of(), lerp, step);
+            check("world.attributeType", type.comp_5211() == lerp && type.comp_5131() == lerp && type.comp_5132() == step && type.comp_5128() == com.mojang.serialization.Codec.FLOAT, type);
+        } catch (Throwable t) {
+            check("world.attributeType", false, t);
+        }
+        try {
+            net.minecraft.class_2761 on = new net.minecraft.class_2761(5L, 1234L, true);
+            net.minecraft.class_2761 off = new net.minecraft.class_2761(6L, 99L, false);
+            check("world.setTimePacket", on.comp_3219() == 5L && on.comp_3220() == 1234L && on.comp_3221()
+                && off.comp_3220() == 99L && !off.comp_3221(), on);
+        } catch (Throwable t) {
+            check("world.setTimePacket", false, t);
+        }
+        try {
+            net.minecraft.class_10215 resist = new net.minecraft.class_1799(net.minecraft.class_1802.field_22020).method_58694(net.minecraft.class_9334.field_54273);
+            check("world.damageResistantTag", resist != null && resist.comp_3210() == net.minecraft.class_8103.field_42246, resist);
+        } catch (Throwable t) {
+            check("world.damageResistantTag", false, t);
+        }
+        try {
+            @SuppressWarnings({"rawtypes", "unchecked"}) net.minecraft.class_7655.class_7657 banners = new net.minecraft.class_7655.class_7657(net.minecraft.class_7924.field_41252,
+                net.minecraft.class_2582.field_49757, false);
+            @SuppressWarnings("unchecked") net.minecraft.class_5455.class_6890 loaded = net.minecraft.class_7655.method_56515(server.method_34864(), java.util.List.of(), java.util.List.of(banners));
+            long n = loaded.method_30530(net.minecraft.class_7924.field_41252).method_10220().count();
+            check("world.registryLoadSync", n > 10, n);
+        } catch (Throwable t) {
+            check("world.registryLoadSync", false, t);
+        }
     }
 }

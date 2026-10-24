@@ -1,0 +1,88 @@
+{
+  "values": [
+    {
+      "id": "minecraft:cramming",
+      "required": false
+    },
+    {
+      "id": "minecraft:dragon_breath",
+      "required": false
+    },
+    {
+      "id": "minecraft:drown",
+      "required": false
+    },
+    {
+      "id": "minecraft:ender_pearl",
+      "required": false
+    },
+    {
+      "id": "minecraft:fall",
+      "required": false
+    },
+    {
+      "id": "minecraft:falling_anvil",
+      "required": false
+    },
+    {
+      "id": "minecraft:falling_stalactite",
+      "required": false
+    },
+    {
+      "id": "minecraft:fly_into_wall",
+      "required": false
+    },
+    {
+      "id": "minecraft:freeze",
+      "required": false
+    },
+    {
+      "id": "minecraft:generic",
+      "required": false
+    },
+    {
+      "id": "minecraft:generic_kill",
+      "required": false
+    },
+    {
+      "id": "minecraft:in_wall",
+      "required": false
+    },
+    {
+      "id": "minecraft:indirect_magic",
+      "required": false
+    },
+    {
+      "id": "minecraft:magic",
+      "required": false
+    },
+    {
+      "id": "minecraft:on_fire",
+      "required": false
+    },
+    {
+      "id": "minecraft:out_of_world",
+      "required": false
+    },
+    {
+      "id": "minecraft:outside_border",
+      "required": false
+    },
+    {
+      "id": "minecraft:sonic_boom",
+      "required": false
+    },
+    {
+      "id": "minecraft:stalagmite",
+      "required": false
+    },
+    {
+      "id": "minecraft:starve",
+      "required": false
+    },
+    {
+      "id": "minecraft:wither",
+      "required": false
+    }
+  ]
+}

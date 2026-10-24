@@ -52,6 +52,12 @@ public final class JarProcessor {
      * same ClassRemapper as the rest of the class, so a facade-renamed old
      * parameter type lands on the facade.
      */
+    /** does W's code (in the analysis namespace) declare the class; false when no code is at hand */
+    static boolean wDeclares(Chain chain, String cls) {
+        MixinRepair w = MixinBridge.wcode(chain);
+        return w != null && w.declares(cls);
+    }
+
     /** verifier frame type for one parameter (locals are never widened here) */
     static Object frameType(org.objectweb.asm.Type t) {
         switch (t.getSort()) {
@@ -2081,12 +2087,27 @@ public final class JarProcessor {
             Set<String> d = layer.decls.get(cur);
             if (d == null) {
                 // the first class outside the layer: a library class and its library superclasses
-                for (String c = cur; c != null && !c.startsWith("java/") && !Chain.minecraftOwned(c) && hops < 64;
+                String c = cur;
+                boolean declared = false;
+                for (; c != null && !c.startsWith("java/") && !Chain.minecraftOwned(c) && hops < 64;
                         c = chain.libSuperOf.get(c), hops++) {
                     if (keyed.test(c + "." + member)) {
                         return c;
                     }
+                    declared |= chain.libDecls.getOrDefault(c, Set.of()).contains(member);
                     todo.addAll(chain.libInterfacesOf.getOrDefault(c, List.of()));
+                }
+                // a static member reached through library classes above a Minecraft class, none of them declaring
+                // it (a mod's Fabric API FabricRecipeProvider subclass calling RecipeProvider's static has(item)
+                // through its own name): resolved by declaration, it is the Minecraft class's, served by the wiring
+                // keyed there. Not an instance member: the library class may stand on another hierarchy on the
+                // target (a superRename), where its own members answer the virtual call.
+                if (isStatic && c != null && Chain.minecraftOwned(c) && !declared) {
+                    for (String v : chain.selfAndSupers(c)) {
+                        if (keyed.test(v + "." + member)) {
+                            return v;
+                        }
+                    }
                 }
                 break;
             }
@@ -2381,6 +2402,10 @@ public final class JarProcessor {
         // repair and triage judge the retargeted mixin (MixinBridge; every step but the wall --
         // across it the refmaps take their names later, see repairPastWall)
         MixinBridge.Result bridged = null;
+        // a mixin of a class the step renames into a class W adds in its place goes there first (Chain.mixinFollow)
+        for (String moved : MixinClassRenames.followTargets(entries, chain.mixinFollow())) {
+            rpt.notes.add(tag + "mixin follows its target's class rename: " + shortName(moved));
+        }
         if (MixinBridge.applies(chain)) {
             bridged = MixinBridge.run(entries, chain,
                 "centurybridge/gen/MixinBridges_" + jarTag + "_" + chain.to.replace('.', '_')
@@ -2526,7 +2551,17 @@ public final class JarProcessor {
             } else if (name.endsWith(".json") && name.contains("refmap") && !chain.classRenames.isEmpty()) {
                 // the mixins' refmap names classes in strings the class rewrite never reads: the
                 // step's class renames carried into its values (MixinClassRenames)
-                byte[] rew = MixinClassRenames.refmap(e.getValue(), chain.classRenames);
+                Map<String, String> vanillaRenames = MixinClassRenames.forVanilla(chain.classRenames, c -> wDeclares(chain, c));
+                byte[] rew = MixinClassRenames.refmap(e.getValue(), chain.classRenames, mixinCls -> {
+                    byte[] mb = entries.get(mixinCls + ".class");
+                    if (mb == null) {
+                        return chain.classRenames;
+                    }
+                    org.objectweb.asm.tree.ClassNode mcn = new org.objectweb.asm.tree.ClassNode();
+                    new org.objectweb.asm.ClassReader(mb).accept(mcn, org.objectweb.asm.ClassReader.SKIP_CODE);
+                    List<String> ts = MixinRepair.mixinTargets(mcn, null);
+                    return ts.isEmpty() || MixinClassRenames.facadeMixin(ts, chain.classRenames) ? chain.classRenames : vanillaRenames;
+                });
                 if (rew != null) {
                     e.setValue(rew);
                     rpt.notes.add(tag + "refmap " + name + ": class renames carried into its values");
@@ -2539,7 +2574,8 @@ public final class JarProcessor {
         // the data pack and resource pack are read by the target's loaders, in the
         // target's formats: carry them over the same boundaries the bytecode crossed
         top.dext.centurybridge.engine.res.ResourceTranslator.Outcome res =
-            top.dext.centurybridge.engine.res.ResourceTranslator.apply(entries, chain.from, chain.to, chain.resourceTypes);
+            top.dext.centurybridge.engine.res.ResourceTranslator.apply(entries, chain.from, chain.to, chain.resourceTypes,
+                chain.tagMap, chain.tagMirror);
         if (res.changedAnything()) {
             rpt.notes.add(tag + "resources: " + res.moved + " moved, " + res.rewritten + " rewritten, "
                 + res.generated + " generated for " + chain.to);
@@ -4178,7 +4214,7 @@ public final class JarProcessor {
         };
         ClassVisitor sink = needClassRename
             ? MixinClassRenames.annotations(new org.objectweb.asm.commons.ClassRemapper(kinds,
-                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames)), chain.classRenames)
+                new org.objectweb.asm.commons.SimpleRemapper(chain.classRenames)), chain.classRenames, c -> wDeclares(chain, c))
             : kinds;
         // super/implements-only rename layer: rewrites the hierarchy declaration
         // and super-invocations to the facade, leaving every other reference to

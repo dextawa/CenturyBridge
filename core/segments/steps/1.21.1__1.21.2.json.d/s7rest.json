@@ -117,9 +117,6 @@
   "method_3118()F": {
    "0": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#firstPersonCamera()Z",
    "1": "top/dext/centurybridge/step/v1_21_2/rt/CbRestClient#unscaledFovEffect()F"
-  },
-  "method_59964(Lnet/minecraft/class_8786;)V": {
-   "0": "zero: 1.21.2 calls finishPlacingRecipe only from its own placement, which passes the level; a 1.21.1 mod calling its super directly, outside a placement, has no level 1.21.1's shape could hand on"
   }
  },
  "methodRenames": {
@@ -220,14 +217,6 @@
   "net/minecraft/class_299.method_1393()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
   "net/minecraft/class_1124.method_60352(Lnet/minecraft/class_299;Lnet/minecraft/class_5455$class_6890;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient#updateRecipes",
   "net/minecraft/class_1124.method_60364()Lnet/minecraft/class_1129;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
-  "net/minecraft/class_1729.method_7653()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
-  "net/minecraft/class_1729.method_7656()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
-  "net/minecraft/class_1729.method_7655()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
-  "net/minecraft/class_1729.method_7658()I": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
-  "net/minecraft/class_1729.method_7654(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
-  "net/minecraft/class_1729.method_7657()V": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
-  "net/minecraft/class_1729.method_7652(Lnet/minecraft/class_8786;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
-  "net/minecraft/class_1729.method_32339(I)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus",
   "net/minecraft/class_490.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
   "net/minecraft/class_479.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
   "net/minecraft/class_489.method_2659()Lnet/minecraft/class_507;": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient",
@@ -991,17 +980,6 @@
    "basis": "0.106.1's ResourceCondition.test takes the registry info lookup of the reading ops where 0.116's took a provider: a 1.21.1 condition gets the provider that lookup wraps (CbRestFapiResources.provider)"
   },
   {
-   "old": "method_59964(Lnet/minecraft/class_8786;)V",
-   "new": "method_59964(Lnet/minecraft/class_3218;Lnet/minecraft/class_8786;)V",
-   "args": [
-    1
-   ],
-   "onlyUnder": "net/minecraft/class_1714",
-   "frames": "top/dext/centurybridge/step/v1_21_2/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "1.21.2's CraftingMenu.finishPlacingRecipe takes the level too: a 1.21.1 subclass's finishPlacingRecipe(recipe) is asked from it, its super call passes the level 1.21.2's placement passed (the generated hook, kept here: the RecipeBookMenu adapters of this fragment made the generator count it as wired)"
-  },
-  {
    "old": "method_3141(Lnet/minecraft/class_8786;)V",
    "new": "method_3141(Lnet/minecraft/class_10298;)V",
    "onlyUnder": "net/minecraft/class_746",
@@ -1132,94 +1110,6 @@
    "synth": []
   },
   {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyGridWidth",
-   "requires": [
-    "method_7653()I"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyGridHeight",
-   "requires": [
-    "method_7656()I"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyResultSlot",
-   "requires": [
-    "method_7655()I"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacySize",
-   "requires": [
-    "method_7658()I"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyFill",
-   "requires": [
-    "method_7654(Lnet/minecraft/class_1662;)V"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyMatches",
-   "requires": [
-    "method_7652(Lnet/minecraft/class_8786;)Z"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyPlacement",
-   "requires": [
-    "method_17697(ZLnet/minecraft/class_8786;Lnet/minecraft/class_3222;)V"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyBeginPlacing",
-   "requires": [
-    "method_59963()V"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyFinishPlacing",
-   "requires": [
-    "method_59964(Lnet/minecraft/class_8786;)V"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyClear",
-   "requires": [
-    "method_7657()V"
-   ],
-   "synth": []
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus$LegacyMoveToInventory",
-   "requires": [
-    "method_32339(I)Z"
-   ],
-   "synth": []
-  },
-  {
    "under": "net/minecraft/class_299",
    "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeBookClient$LegacySetupCollections",
    "requires": [
@@ -1304,16 +1194,6 @@
    "under": "net/minecraft/class_368",
    "method": "method_61988()Lnet/minecraft/class_368$class_369;",
    "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestToasts.wantedVisibility(Lnet/minecraft/class_368;)Lnet/minecraft/class_368$class_369;"
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "method": "method_7654(Lnet/minecraft/class_9875;)V",
-   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus.fillW(Lnet/minecraft/class_1729;Lnet/minecraft/class_9875;)V"
-  },
-  {
-   "under": "net/minecraft/class_1729",
-   "method": "method_17697(ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;",
-   "call": "top/dext/centurybridge/step/v1_21_2/rt/CbRestRecipeMenus.handlePlacement(Lnet/minecraft/class_1729;ZZLnet/minecraft/class_8786;Lnet/minecraft/class_3218;Lnet/minecraft/class_1661;)Lnet/minecraft/class_1729$class_9885;"
   },
   {
    "under": "net/minecraft/class_2602",

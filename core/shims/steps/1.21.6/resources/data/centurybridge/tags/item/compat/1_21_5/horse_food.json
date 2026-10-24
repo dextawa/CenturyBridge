@@ -1,0 +1,32 @@
+{
+  "values": [
+    {
+      "id": "minecraft:apple",
+      "required": false
+    },
+    {
+      "id": "minecraft:enchanted_golden_apple",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_apple",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_carrot",
+      "required": false
+    },
+    {
+      "id": "minecraft:hay_block",
+      "required": false
+    },
+    {
+      "id": "minecraft:sugar",
+      "required": false
+    },
+    {
+      "id": "minecraft:wheat",
+      "required": false
+    }
+  ]
+}

@@ -105,6 +105,7 @@ public class SlibAuthlib2Test implements ModInitializer {
                 check(false, "new shapes " + e);
             }
         });
+        SlibOshiTest.run();
         System.out.println("CB-SLIB DONE " + (checks - FAILS.size()) + "/" + checks);
     }
 }

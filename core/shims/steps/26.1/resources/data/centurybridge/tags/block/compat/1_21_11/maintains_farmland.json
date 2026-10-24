@@ -1,0 +1,48 @@
+{
+  "values": [
+    {
+      "id": "minecraft:attached_melon_stem",
+      "required": false
+    },
+    {
+      "id": "minecraft:attached_pumpkin_stem",
+      "required": false
+    },
+    {
+      "id": "minecraft:beetroots",
+      "required": false
+    },
+    {
+      "id": "minecraft:carrots",
+      "required": false
+    },
+    {
+      "id": "minecraft:melon_stem",
+      "required": false
+    },
+    {
+      "id": "minecraft:pitcher_crop",
+      "required": false
+    },
+    {
+      "id": "minecraft:potatoes",
+      "required": false
+    },
+    {
+      "id": "minecraft:pumpkin_stem",
+      "required": false
+    },
+    {
+      "id": "minecraft:torchflower",
+      "required": false
+    },
+    {
+      "id": "minecraft:torchflower_crop",
+      "required": false
+    },
+    {
+      "id": "minecraft:wheat",
+      "required": false
+    }
+  ]
+}

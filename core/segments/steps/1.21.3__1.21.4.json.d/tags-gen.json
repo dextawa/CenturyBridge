@@ -1,0 +1,50 @@
+{
+ "fieldGetters": {
+  "net/minecraft/class_3481.field_20338:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#BlockTags_field_20338",
+  "net/minecraft/class_3481.field_33719:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#BlockTags_field_33719",
+  "net/minecraft/class_3481.field_38832:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#BlockTags_field_38832",
+  "net/minecraft/class_3481.field_44469:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#BlockTags_field_44469",
+  "net/minecraft/class_3481.field_44470:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#BlockTags_field_44470",
+  "net/minecraft/class_3481.field_49929:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#BlockTags_field_49929",
+  "net/minecraft/class_3481.field_49930:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#BlockTags_field_49930",
+  "net/minecraft/class_3489.field_20343:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#ItemTags_field_20343",
+  "net/minecraft/class_3489.field_20344:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#ItemTags_field_20344",
+  "net/minecraft/class_3489.field_41892:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_4/rt/CbTagCompat#ItemTags_field_41892"
+ },
+ "tagMap": {
+  "block minecraft:incorrect_for_gold_tool": {
+   "to": "centurybridge:compat/1_21_3/incorrect_for_gold_tool",
+   "mirror": []
+  },
+  "block minecraft:incorrect_for_wooden_tool": {
+   "to": "centurybridge:compat/1_21_3/incorrect_for_wooden_tool",
+   "mirror": []
+  },
+  "block minecraft:needs_stone_tool": {
+   "to": "centurybridge:compat/1_21_3/needs_stone_tool",
+   "mirror": []
+  },
+  "block minecraft:overworld_carver_replaceables": {
+   "to": "centurybridge:compat/1_21_3/overworld_carver_replaceables",
+   "mirror": [
+    "centurybridge:compat/1_21_3/overworld_carver_replaceables"
+   ]
+  },
+  "block minecraft:replaceable_by_trees": {
+   "to": "centurybridge:compat/1_21_3/replaceable_by_trees",
+   "mirror": [
+    "centurybridge:compat/1_21_3/replaceable_by_trees"
+   ]
+  },
+  "block minecraft:sword_efficient": {
+   "to": "centurybridge:compat/1_21_3/sword_efficient",
+   "mirror": []
+  },
+  "item minecraft:flowers": {
+   "to": "centurybridge:compat/1_21_3/flowers",
+   "mirror": [
+    "centurybridge:compat/1_21_3/flowers"
+   ]
+  }
+ }
+}

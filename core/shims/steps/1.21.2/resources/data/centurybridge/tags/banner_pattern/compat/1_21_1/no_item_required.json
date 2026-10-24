@@ -1,0 +1,144 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:no_item_required",
+      "required": false
+    },
+    {
+      "id": "minecraft:border",
+      "required": false
+    },
+    {
+      "id": "minecraft:bricks",
+      "required": false
+    },
+    {
+      "id": "minecraft:circle",
+      "required": false
+    },
+    {
+      "id": "minecraft:cross",
+      "required": false
+    },
+    {
+      "id": "minecraft:curly_border",
+      "required": false
+    },
+    {
+      "id": "minecraft:diagonal_left",
+      "required": false
+    },
+    {
+      "id": "minecraft:diagonal_right",
+      "required": false
+    },
+    {
+      "id": "minecraft:diagonal_up_left",
+      "required": false
+    },
+    {
+      "id": "minecraft:diagonal_up_right",
+      "required": false
+    },
+    {
+      "id": "minecraft:gradient",
+      "required": false
+    },
+    {
+      "id": "minecraft:gradient_up",
+      "required": false
+    },
+    {
+      "id": "minecraft:half_horizontal",
+      "required": false
+    },
+    {
+      "id": "minecraft:half_horizontal_bottom",
+      "required": false
+    },
+    {
+      "id": "minecraft:half_vertical",
+      "required": false
+    },
+    {
+      "id": "minecraft:half_vertical_right",
+      "required": false
+    },
+    {
+      "id": "minecraft:rhombus",
+      "required": false
+    },
+    {
+      "id": "minecraft:small_stripes",
+      "required": false
+    },
+    {
+      "id": "minecraft:square_bottom_left",
+      "required": false
+    },
+    {
+      "id": "minecraft:square_bottom_right",
+      "required": false
+    },
+    {
+      "id": "minecraft:square_top_left",
+      "required": false
+    },
+    {
+      "id": "minecraft:square_top_right",
+      "required": false
+    },
+    {
+      "id": "minecraft:straight_cross",
+      "required": false
+    },
+    {
+      "id": "minecraft:stripe_bottom",
+      "required": false
+    },
+    {
+      "id": "minecraft:stripe_center",
+      "required": false
+    },
+    {
+      "id": "minecraft:stripe_downleft",
+      "required": false
+    },
+    {
+      "id": "minecraft:stripe_downright",
+      "required": false
+    },
+    {
+      "id": "minecraft:stripe_left",
+      "required": false
+    },
+    {
+      "id": "minecraft:stripe_middle",
+      "required": false
+    },
+    {
+      "id": "minecraft:stripe_right",
+      "required": false
+    },
+    {
+      "id": "minecraft:stripe_top",
+      "required": false
+    },
+    {
+      "id": "minecraft:triangle_bottom",
+      "required": false
+    },
+    {
+      "id": "minecraft:triangle_top",
+      "required": false
+    },
+    {
+      "id": "minecraft:triangles_bottom",
+      "required": false
+    },
+    {
+      "id": "minecraft:triangles_top",
+      "required": false
+    }
+  ]
+}
