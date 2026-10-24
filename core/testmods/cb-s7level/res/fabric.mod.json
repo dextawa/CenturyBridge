@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_s7level",
+ "version": "1.0.0",
+ "name": "CB s7level Test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.s7level.S7LevelTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.1", "fabric-object-builder-api-v1": "*" }
+}

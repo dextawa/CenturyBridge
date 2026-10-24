@@ -1,0 +1,9 @@
+{
+ "schemaVersion": 1,
+ "id": "cb_swall",
+ "version": "1.0.0",
+ "name": "CB swall step test",
+ "environment": "*",
+ "entrypoints": { "main": ["cb.swall.SwallTestMod"] },
+ "depends": { "fabricloader": ">=0.14.0", "minecraft": "1.21.11", "fabric-lifecycle-events-v1": "*" }
+}

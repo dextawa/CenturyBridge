@@ -57,6 +57,15 @@ public final class CbLevelPalette {
     }
 
     /**
+     * PalettedContainer.Data.copy() (package-private record, reached by mixin invokers): 1.21.1 copied the storage
+     * and the palette, the palette with its own resize handler (copy()); 1.21.2's copy(resize) hands the palette copy
+     * the handler it is given -- here the palette's own, 1.21.1's value
+     */
+    public static <T> class_2841.class_6561<T> method_44338(class_2841.class_6561<T> data) {
+        return data.method_44338(resize(data.comp_119()));
+    }
+
+    /**
      * PalettedContainerRO.copy(), abstract since 1.21.2, for a 1.21.1 mod's own read-only container (abstractFills):
      * what 1.21.2's PalettedContainer.copy() answers -- a container of the same registry and strategy holding the same
      * value at every position -- made from the mod's recreate() (an empty container of its registry and strategy)

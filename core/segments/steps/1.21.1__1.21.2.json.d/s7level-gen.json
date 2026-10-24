@@ -693,9 +693,15 @@
   "net/minecraft/class_2834.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
   "net/minecraft/class_2837.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
   "net/minecraft/class_6564.method_39956()Lnet/minecraft/class_2837;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
+  "net/minecraft/class_2841$class_6561.method_44338()Lnet/minecraft/class_2841$class_6561;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelPalette",
   "net/minecraft/class_3609.method_15738(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_3610;Lnet/minecraft/class_3611;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing",
   "net/minecraft/class_3609.method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;)I": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelFlowing",
-  "net/minecraft/class_8490.method_51204(Lnet/minecraft/class_2960;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc"
+  "net/minecraft/class_8490.method_51204(Lnet/minecraft/class_2960;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Ljava/util/Optional;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelMisc",
+  "net/minecraft/class_1277.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked",
+  "net/minecraft/class_1715.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked",
+  "net/minecraft/class_1737.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked",
+  "net/minecraft/class_2609.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked",
+  "net/minecraft/class_8887.method_7683(Lnet/minecraft/class_1662;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked"
  },
  "fieldGetters": {
   "net/minecraft/class_39.field_844:Lnet/minecraft/class_5321;": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelLoot",
@@ -1314,6 +1320,13 @@
    "basis": "1.21.2 asks a coral tryScheduleDieTick with reader, tick access and random: every caller reader is a LevelAccessor (narrow); the old method super call gets back the tick access and random vanilla passed"
   },
   {
+   "old": "method_44338()Lnet/minecraft/class_2841$class_6561;",
+   "new": "method_44338(Lnet/minecraft/class_2835;)Lnet/minecraft/class_2841$class_6561;",
+   "args": [],
+   "onlyUnder": "net/minecraft/class_2841$class_6561",
+   "basis": "PalettedContainer.Data.copy() takes the palette's resize handler since 1.21.2"
+  },
+  {
    "old": "method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;)I",
    "new": "method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_3609$class_9900;)I",
    "onlyUnder": "net/minecraft/class_3609",
@@ -1325,6 +1338,19 @@
     "method_15742(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;ILnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_3609$class_9900;)I"
    ],
    "basis": "getSlopeDistance keeps the source position and caches in a SpreadContext since 1.21.2: a 1.21.1 override is asked with the context's origin and fresh caches, its super call with a context at its source position (CbLevelFlowing)"
+  },
+  {
+   "old": "method_7683(Lnet/minecraft/class_1662;)V",
+   "new": "method_7683(Lnet/minecraft/class_9875;)V",
+   "onlyUnder": "net/minecraft/class_1737",
+   "adapter": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$LegacyFill",
+   "bridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked.fillBridge(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$LegacyFill;Lnet/minecraft/class_9875;)V",
+   "superBridge": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked.superFill(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$SuperFill;Lnet/minecraft/class_1662;)V",
+   "superAccess": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$SuperFill",
+   "superAccessors": [
+    "method_7683(Lnet/minecraft/class_9875;)V"
+   ],
+   "basis": "StackedContentsCompatible.fillStackedContents takes StackedItemContents since 1.21.2: a 1.21.1 override fills 1.21.1's StackedContents (s7entity's facade), poured into it; its super call is 1.21.2's body read back (CbLevelStacked)"
   }
  ],
  "overrideRenames": [
@@ -1718,6 +1744,17 @@
    "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOffsetFunction",
    "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes#offsetFunction(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelShapes$LegacyOffsetFunction;)Lnet/minecraft/class_4970$class_8176;",
    "basis": "a 1.21.1 offset function lambda, as 1.21.2's evaluate(state, pos): 1.21.2 asks without a level"
+  },
+  "net/minecraft/class_1737.method_7683(Lnet/minecraft/class_1662;)V": {
+   "iface": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$LegacyFill",
+   "adapt": "top/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked#lambda(Ltop/dext/centurybridge/step/v1_21_2/rt/CbLevelStacked$LegacyFill;)Lnet/minecraft/class_1737;",
+   "basis": "a 1.21.1 StackedContentsCompatible lambda fills 1.21.1's StackedContents (CbLevelStacked)"
   }
+ },
+ "ledger": {
+  "net/minecraft/class_7159$class_7163.comp_591()Lnet/minecraft/class_2338;": "CollectingNeighborUpdater.SimpleNeighborUpdate.neighborPos(): 1.21.2's record holds the update's Orientation (class_9904) in place of the neighbor position (same constructor slot, compared in both jars); no member of the record answers a neighbor position any more, so an injector, invoker or shadow on this accessor has nothing to stand on",
+  "net/minecraft/class_7159$class_7160.comp_587()Lnet/minecraft/class_2338;": "CollectingNeighborUpdater.FullNeighborUpdate.neighborPos(): 1.21.2's record holds the update's Orientation (class_9904) in place of the neighbor position (same constructor slot, compared in both jars); no member of the record answers a neighbor position any more, so an injector, invoker or shadow on this accessor has nothing to stand on",
+  "net/minecraft/class_4970$class_4971$class_3752.field_16557:Z": "BlockStateBase.Cache.solidRender: 1.21.1 computed isSolidRender(EmptyBlockGetter, ORIGIN) into the cache; 1.21.2 computes it into a private field of BlockStateBase itself (field_52639, set in initCache), not of the Cache class an accessor or shadow on Cache names; the value stays readable through BlockStateBase.isSolidRender()",
+  "net/minecraft/class_2852.<init>()V": "1.21.1 ChunkSerializer's implicit empty constructor (a static utility); converted mods' ChunkSerializer is CenturyBridge's facade (classRenames), and 1.21.2's class_2852 is the record SerializableChunkData whose only constructor builds a chunk's data: an injector into the empty constructor has no counterpart"
  }
 }

@@ -308,6 +308,15 @@
   },
   "method_22920(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFF[IIZ)V": {
    "6": "top/dext/centurybridge/step/v1_20_5/rt/CbClientRender#opaque()F"
+  },
+  "method_22165()V": {
+   "0": "top/dext/centurybridge/step/v1_20_5/rt/CbGameTests#tickerRunner()Lnet/minecraft/class_4520;"
+  },
+  "method_33317(Lnet/minecraft/class_4517;)V": {
+   "1": "zero: GameTestListener.testPassed is abstract in 1.20.4's interface -- no implementation's super call can reach it, so no rewritten super call ever reads this"
+  },
+  "method_22190(Lnet/minecraft/class_4517;)V": {
+   "1": "zero: GameTestListener.testFailed is abstract in 1.20.4's interface -- no implementation's super call can reach it, so no rewritten super call ever reads this"
   }
  },
  "adapterHooks": [

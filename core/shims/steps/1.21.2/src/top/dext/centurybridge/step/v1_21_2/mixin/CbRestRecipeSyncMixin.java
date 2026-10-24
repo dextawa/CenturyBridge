@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipeNet;
 import top.dext.centurybridge.step.v1_21_2.rt.CbRestRecipeSync;
 
 /**
@@ -20,7 +21,7 @@ public abstract class CbRestRecipeSyncMixin {
 
     @Inject(method = "method_52391", at = @At("HEAD"))
     private void cb$recipes(class_2596<?> packet, class_7648 listener, CallbackInfo ci) {
-        if (packet instanceof class_2788 recipes && (Object) this instanceof class_3244 game && game.field_14140 != null) {
+        if (CbRestRecipeNet.outgoing(packet) instanceof class_2788 recipes && (Object) this instanceof class_3244 game && game.field_14140 != null) {
             CbRestRecipeSync.beforeSend(game, recipes);
         }
     }

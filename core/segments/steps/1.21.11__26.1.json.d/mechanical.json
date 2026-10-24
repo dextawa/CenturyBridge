@@ -446,17 +446,6 @@
    "basis": "mechanical: the old method gets every parameter it had; new Z not passed"
   },
   {
-   "old": "method_65587(Lnet/minecraft/class_10439$class_10440;)Lnet/minecraft/class_10439;",
-   "new": "method_65587(Lnet/minecraft/class_10439$class_10440;Lorg/joml/Matrix4fc;)Lnet/minecraft/class_10439;",
-   "args": [
-    0
-   ],
-   "onlyUnder": "net/minecraft/class_10439$class_10441",
-   "frames": "top/dext/centurybridge/step/v26_1/rt/Guard",
-   "superCalls": "rewrite",
-   "basis": "mechanical: the old method gets every parameter it had; new Lorg/joml/Matrix4fc; not passed"
-  },
-  {
    "old": "method_22752(Lnet/minecraft/class_638;)V",
    "new": "method_22752(Lnet/minecraft/class_638;Lnet/minecraft/class_9810;)V",
    "args": [
