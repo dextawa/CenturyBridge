@@ -1,11 +1,129 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:swords",
-    "#minecraft:axes",
-    "#minecraft:pickaxes",
-    "#minecraft:shovels",
-    "#minecraft:hoes",
-    "minecraft:trident"
+    {
+      "id": "minecraft:diamond_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:diamond_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:diamond_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:diamond_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:diamond_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:golden_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:iron_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:netherite_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:netherite_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:netherite_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:netherite_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:netherite_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:stone_sword",
+      "required": false
+    },
+    {
+      "id": "minecraft:trident",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_axe",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_hoe",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_pickaxe",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_shovel",
+      "required": false
+    },
+    {
+      "id": "minecraft:wooden_sword",
+      "required": false
+    }
   ]
 }

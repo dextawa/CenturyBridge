@@ -2,5 +2,15 @@
  "fieldGetters": {
   "net/minecraft/class_3489.field_49936:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_2/rt/CbTagCompat#ItemTags_field_49936",
   "net/minecraft/class_7440.field_39097:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v1_21_2/rt/CbTagCompat#BannerPatternTags_field_39097"
+ },
+ "tagMap": {
+  "banner_pattern minecraft:no_item_required": {
+   "to": "centurybridge:compat/1_21_1/no_item_required",
+   "mirror": false
+  },
+  "item minecraft:wolf_food": {
+   "to": "centurybridge:compat/1_21_1/wolf_food",
+   "mirror": true
+  }
  }
 }
