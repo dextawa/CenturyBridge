@@ -243,7 +243,7 @@ java $SRC_STUBS -Dcb.fapi="$FAPI" -Dcb.libs="$LIBS" -cp "core/build/classes$SEP$
 # implemented interface (name AND descriptor), and the original member -- read
 # from the older stubs in data/jars -- must not be static, since a covered call
 # site keeps its invokestatic and no mixin may add a non-private static.
-java $SRC_STUBS -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
+java $SRC_STUBS -Dcb.libs="$LIBS" -cp "core/build/classes$SEP$CP" top.dext.centurybridge.Main mixin-check "$CLASSES" "$STUB" "$WIRING" "$NAMETABLE" \
     "${CB_STUBS:-$DATA/jars}" "$VERSION" \
     || { echo "build aborted: mixin targets unresolved against $STUB"; exit 1; }
 
