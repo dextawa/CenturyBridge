@@ -99,12 +99,38 @@ RULES[(C + "Ingredient", "method_8100")] = (
     "(another class); Ingredient keeps no method holding it")
 
 
+# (owner's Mojang name, member name) -> reason for every anchor row of that member mixin-cause filed as
+# "target-wired: follows, anchor gone in the new method": the selector follows, the anchor has no place there
+ANCHOR_RULES = {
+    (C + "RecipeManager", "method_20705"): (
+        "1.21.2 split RecipeManager's reload: prepare (method_64680, on the reload executor) decodes the recipe files "
+        "through SimpleJsonResourceReloadListener.scanDirectory (class_4309) and builds the RecipeMap; apply only "
+        "installs it and logs the count -- 1.21.1's parse / build anchors have no place in apply"),
+}
+
+RULES[(C + "RecipeManager", "method_20702")] = (
+    "1.21.2 removed RecipeManager.replaceRecipes: clients no longer receive the recipe list, and the server installs "
+    "its RecipeMap in apply -- no vanilla code replaces the recipes")
+RULES[(C + "RecipeManager", "method_17877")] = (
+    "1.21.2 removed RecipeManager.getRecipesFor(type, input, level): the per-type lookup is RecipeMap.getRecipesFor "
+    "(class_10289), another class, behind getRecipeFor")
+RULES[(C + "RecipeManager", "method_8128")] = (
+    "1.21.2 removed RecipeManager.getRemainingItemsFor: ResultSlot.getRemainingItems (class_1734, another class) asks "
+    "getRecipeFor and the recipe's remainders itself")
+
+
 def main():
     src, out = sys.argv[1], sys.argv[2]
     led = {}
     with open(src, encoding="utf-8") as f:
         for r in csv.DictReader(f, delimiter="\t"):
             c = r["cause"]
+            name = r["target"][:r["target"].index("(")] if "(" in r["target"] else r["target"]
+            if c.startswith("target-wired: follows, anchor gone in the new method") and r["anchor"]:
+                why = ANCHOR_RULES.get((r["mojang"], name))
+                if why:
+                    led[r["owner"] + "." + r["target"] + " @ " + r["anchor"]] = why
+                continue
             if not (c.startswith("target-wired") and ("no W method holds its code" in c or "disabled, target gone" in c)):
                 continue
             name = r["target"][:r["target"].index("(")] if "(" in r["target"] else r["target"]
