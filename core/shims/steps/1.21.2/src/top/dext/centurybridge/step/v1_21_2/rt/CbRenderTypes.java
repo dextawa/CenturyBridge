@@ -104,4 +104,39 @@ public final class CbRenderTypes extends net.minecraft.class_4668 {
         }
         return entityGlintDirect;
     }
+
+    /**
+     * 1.21.1 Sheets.translucentCullBlockSheet(): entityTranslucentCull over the block atlas (1.21.2 dropped the sheet with
+     * the render type; method_23689 rebuilds that)
+     */
+    public static net.minecraft.class_1921 method_24076() {
+        return method_23689(net.minecraft.class_1059.field_5275);
+    }
+
+    /**
+     * 1.21.1 ItemBlockRenderTypes.getRenderType(state, cull): 1.21.1's body -- a translucent block drew with the
+     * translucent-cull block sheet unless Fabulous transparency was on and cull was false (then the translucent item
+     * sheet); anything else with the cutout block sheet. 1.21.2's getRenderType(state) always answers the item sheet
+     * for translucent blocks.
+     */
+    public static net.minecraft.class_1921 method_23683(net.minecraft.class_2680 state, boolean cull) {
+        if (net.minecraft.class_4696.method_23679(state) == net.minecraft.class_1921.method_23583()) {
+            if (!net.minecraft.class_310.method_29611()) {
+                return method_24076();
+            }
+            return cull ? method_24076() : net.minecraft.class_4722.method_29382();
+        }
+        return net.minecraft.class_4722.method_24074();
+    }
+
+    /**
+     * 1.21.1 ItemBlockRenderTypes.getRenderType(stack, cull): a block item as its block's default state, any other item
+     * with the translucent-cull block sheet when cull, else the translucent item sheet (1.21.1's body)
+     */
+    public static net.minecraft.class_1921 method_23678(net.minecraft.class_1799 stack, boolean cull) {
+        if (stack.method_7909() instanceof net.minecraft.class_1747 block) {
+            return method_23683(block.method_7711().method_9564(), cull);
+        }
+        return cull ? method_24076() : net.minecraft.class_4722.method_29382();
+    }
 }

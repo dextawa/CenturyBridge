@@ -17,6 +17,8 @@ import top.dext.centurybridge.step.v1_21_2.rt.Guard;
  *   final renderToBuffer, which draws the root.
  * - 1.21.2's renderToBuffer on a model whose class draws itself (declares 1.21.1's renderToBuffer) runs that one instead,
  *   once (the guard: its own super call, reaching Model's put-back one, draws the root as 1.21.2 does).
+ * - a QuadrupedModel built by 1.21.1's constructor draws its 1.21.1 head and body parts, a young one's scaled
+ *   (CbRenderQuadruped).
  * - root(): every 1.21.1 vanilla HierarchicalModel answered its root part, which is the 1.21.2 model's root; a 1.21.1
  *   model drawing itself (the HierarchicalModel facade's subclasses) declares its own.
  */
@@ -43,6 +45,12 @@ public abstract class CbRenderModelMixin implements CbRenderModelBase.Legacy {
 
     @Inject(method = "method_62100(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;III)V", at = @At("HEAD"), cancellable = true)
     private void cb$drawItself(net.minecraft.class_4587 pose, net.minecraft.class_4588 consumer, int light, int overlay, int color, CallbackInfo ci) {
+        if (this instanceof top.dext.centurybridge.step.v1_21_2.rt.CbRenderQuadruped.Legacy quadruped
+            && quadruped.cb$drawLegacy(pose, consumer, light, overlay, color)) {
+            // a QuadrupedModel built by 1.21.1's constructor draws as 1.21.1's AgeableListModel did (CbRenderQuadruped)
+            ci.cancel();
+            return;
+        }
         if (CbRenderModelBase.drawsItself(this) && Guard.cbEnter(this)) {
             try {
                 this.method_2828(pose, consumer, light, overlay, color);
