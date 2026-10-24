@@ -193,3 +193,6 @@ mutable	field	net/minecraft/client/renderer/state/GameRenderState	optionsRenderS
 mutable	field	net/minecraft/client/renderer/state/GameRenderState	windowRenderState	Lnet/minecraft/client/renderer/state/WindowRenderState;
 # 1.21.11 SectionRenderDispatcher.setLevel(level) keeps the dispatcher's compiler (swall, rt/CbWallChunks)
 accessible	field	net/minecraft/client/renderer/chunk/SectionRenderDispatcher	sectionCompiler	Lnet/minecraft/client/renderer/chunk/SectionCompiler;
+# 1.21.11 CompiledSectionMesh.uploadMeshLayer(layer, data, sectionNode) finds its section in the view area (swall, rt/CbWallSectionUploads)
+accessible	field	net/minecraft/client/renderer/LevelRenderer	viewArea	Lnet/minecraft/client/renderer/ViewArea;
+accessible	method	net/minecraft/client/renderer/ViewArea	getRenderSection	(J)Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$RenderSection;

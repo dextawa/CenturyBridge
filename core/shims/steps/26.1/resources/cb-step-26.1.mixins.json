@@ -132,7 +132,14 @@
     "CbWallMinecartContentsMixin",
     "CbWallTntMinecartContentsMixin",
     "CbWallItemLayerMixin",
-    "CbWallAudioLibraryMixin"
+    "CbWallAudioLibraryMixin",
+    "CbWallRenderSectionUploadMixin",
+    "CbWallCompiledSectionMeshUploadMixin",
+    "CbWallLevelRendererFrustumMixin",
+    "CbWallCameraLegacyMixin",
+    "CbWallHumanoidModelVisibleMixin",
+    "CbWallContainerScreenBgMixin",
+    "CbWallScreenContainerBgMixin"
   ],
   "server": [],
   "injectors": {
