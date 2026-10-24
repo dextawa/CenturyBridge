@@ -1,0 +1,17 @@
+# library damage 1.21.8__1.21.9 (Main lib-diff, JVM-style resolution on both sides; calibrated: V vs V = 0 rows, unchanged jars = 0)
+# old/new = client-<V>/client-<W> runtime libraries on beta2 (1.20.1: ~/cbtest/client-1.20.1, the runtime dir holds 1.20.2 libraries);
+# scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
+# regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
+artifact	sides	kind	symbol	note
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/Environment.<init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/GameProfile	class made final
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/GameProfile.equals(Ljava/lang/Object;)Z	method made final
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfile.getId()Ljava/util/UUID;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfile.getName()Ljava/lang/String;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/GameProfile.getProperties()Lcom/mojang/authlib/properties/PropertyMap;	
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/GameProfile.hashCode()I	method made final
+com/mojang/authlib	client,server	FINAL	com/mojang/authlib/GameProfile.toString()Ljava/lang/String;	method made final
+com/mojang/authlib	client,server	CLASS	com/mojang/authlib/GameProfile$Serializer	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/ProfileLookupCallback.onProfileLookupSucceeded(Lcom/mojang/authlib/GameProfile;)V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/properties/PropertyMap.<init>()V	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/MinecraftProfilePropertiesResponse.toProfile()Lcom/mojang/authlib/GameProfile;	

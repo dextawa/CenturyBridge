@@ -1,0 +1,71 @@
+# library damage 26.1.2__26.2 (Main lib-diff, JVM-style resolution on both sides; calibrated: V vs V = 0 rows, unchanged jars = 0)
+# old/new = client-<V>/client-<W> runtime libraries on beta2 (1.20.1: ~/cbtest/client-1.20.1, the runtime dir holds 1.20.2 libraries);
+# scope = the artifacts V ships (artifacts.tsv: version JSON = client, server bundler list = server); sides column from it.
+# regenerate: Main lib-diff <oldLibs> <newLibs> <out.tsv> core/segments/damage-lib/artifacts.tsv <V> <W>
+artifact	sides	kind	symbol	note
+com/google/guava/guava	client,server	FINAL	com/google/common/util/concurrent/ClosingFuture$Combiner.call(Lcom/google/common/util/concurrent/ClosingFuture$Combiner$CombiningCallable;Ljava/util/concurrent/Executor;)Lcom/google/common/util/concurrent/ClosingFuture;	method made final
+com/google/guava/guava	client,server	FINAL	com/google/common/util/concurrent/ClosingFuture$Combiner.callAsync(Lcom/google/common/util/concurrent/ClosingFuture$Combiner$AsyncCombiningCallable;Ljava/util/concurrent/Executor;)Lcom/google/common/util/concurrent/ClosingFuture;	method made final
+com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
+com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner2.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
+com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner3.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
+com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner4.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
+com/google/guava/guava	client,server	ACCESS	com/google/common/util/concurrent/ClosingFuture$Combiner5.inputs:Lcom/google/common/collect/ImmutableList;	narrowed
+com/google/guava/guava	client,server	FIELD	com/google/thirdparty/publicsuffix/PublicSuffixPatterns.EXACT:Lcom/google/common/collect/ImmutableMap;	
+com/google/guava/guava	client,server	FIELD	com/google/thirdparty/publicsuffix/PublicSuffixPatterns.EXCLUDED:Lcom/google/common/collect/ImmutableMap;	
+com/google/guava/guava	client,server	FIELD	com/google/thirdparty/publicsuffix/PublicSuffixPatterns.UNDER:Lcom/google/common/collect/ImmutableMap;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/EraRules.getCurrentEraIndex()I	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/EraRules.getEraIndex(III)I	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/Utility.appendToRule(Ljava/lang/StringBuffer;IZZLjava/lang/StringBuffer;)V	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/Utility.appendToRule(Ljava/lang/StringBuffer;Lcom/ibm/icu/text/UnicodeMatcher;ZLjava/lang/StringBuffer;)V	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/Utility.appendToRule(Ljava/lang/StringBuffer;Ljava/lang/String;ZZLjava/lang/StringBuffer;)V	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/UtilityExtensions.appendToRule(Ljava/lang/StringBuffer;Lcom/ibm/icu/text/UnicodeMatcher;ZLjava/lang/StringBuffer;)V	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/UtilityExtensions.appendToRule(Ljava/lang/StringBuffer;Ljava/lang/String;ZZLjava/lang/StringBuffer;)V	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/UtilityExtensions.formatInput(Ljava/lang/StringBuffer;Lcom/ibm/icu/text/Replaceable;Lcom/ibm/icu/text/Transliterator$Position;)Ljava/lang/StringBuffer;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/impl/UtilityExtensions.formatInput(Ljava/lang/StringBuffer;Lcom/ibm/icu/text/ReplaceableString;Lcom/ibm/icu/text/Transliterator$Position;)Ljava/lang/StringBuffer;	
+com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/impl/number/CustomSymbolCurrency.PORTION_PER_1E9:Lcom/ibm/icu/util/MeasureUnit;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/Directionality.of(Lcom/ibm/icu/util/ULocale;)Lcom/ibm/icu/message2/Directionality;	
+com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/Formatter	
+com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/FormatterFactory	
+com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/MFDataModel$Function	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFDataModel$FunctionExpression.<init>(Lcom/ibm/icu/message2/MFDataModel$Function;Ljava/util/List;)V	
+com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/message2/MFDataModel$FunctionExpression.function:Lcom/ibm/icu/message2/MFDataModel$Function;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFDataModel$LiteralExpression.<init>(Lcom/ibm/icu/message2/MFDataModel$Literal;Lcom/ibm/icu/message2/MFDataModel$Function;Ljava/util/List;)V	
+com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/message2/MFDataModel$LiteralExpression.function:Lcom/ibm/icu/message2/MFDataModel$Function;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFDataModel$VariableExpression.<init>(Lcom/ibm/icu/message2/MFDataModel$VariableRef;Lcom/ibm/icu/message2/MFDataModel$Function;Ljava/util/List;)V	
+com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/message2/MFDataModel$VariableExpression.function:Lcom/ibm/icu/message2/MFDataModel$Function;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry.getDefaultFormatterNameForType(Ljava/lang/Class;)Ljava/lang/String;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry.getDefaultFormatterTypes()Ljava/util/Set;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry.getFormatter(Ljava/lang/String;)Lcom/ibm/icu/message2/FormatterFactory;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry.getFormatterNames()Ljava/util/Set;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry.getSelector(Ljava/lang/String;)Lcom/ibm/icu/message2/SelectorFactory;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry.getSelectorNames()Ljava/util/Set;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry$Builder.clearDefaultFormatterNames()Lcom/ibm/icu/message2/MFFunctionRegistry$Builder;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry$Builder.clearFormatters()Lcom/ibm/icu/message2/MFFunctionRegistry$Builder;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry$Builder.clearSelectors()Lcom/ibm/icu/message2/MFFunctionRegistry$Builder;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry$Builder.removeDefaultFormatterNameForType(Ljava/lang/Class;)Lcom/ibm/icu/message2/MFFunctionRegistry$Builder;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry$Builder.removeFormatter(Ljava/lang/String;)Lcom/ibm/icu/message2/MFFunctionRegistry$Builder;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry$Builder.removeSelector(Ljava/lang/String;)Lcom/ibm/icu/message2/MFFunctionRegistry$Builder;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry$Builder.setDefaultFormatterNameForType(Ljava/lang/Class;Ljava/lang/String;)Lcom/ibm/icu/message2/MFFunctionRegistry$Builder;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry$Builder.setFormatter(Ljava/lang/String;Lcom/ibm/icu/message2/FormatterFactory;)Lcom/ibm/icu/message2/MFFunctionRegistry$Builder;	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/message2/MFFunctionRegistry$Builder.setSelector(Ljava/lang/String;Lcom/ibm/icu/message2/SelectorFactory;)Lcom/ibm/icu/message2/MFFunctionRegistry$Builder;	
+com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/Selector	
+com/ibm/icu/icu4j	client	CLASS	com/ibm/icu/message2/SelectorFactory	
+com/ibm/icu/icu4j	client	METHOD	com/ibm/icu/util/ChineseCalendar.<init>(Lcom/ibm/icu/util/TimeZone;Lcom/ibm/icu/util/ULocale;ILcom/ibm/icu/util/TimeZone;)V	
+com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/util/Currency.PORTION_PER_1E9:Lcom/ibm/icu/util/MeasureUnit;	
+com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/util/MeasureUnit.PORTION_PER_1E9:Lcom/ibm/icu/util/MeasureUnit;	
+com/ibm/icu/icu4j	client	FIELD	com/ibm/icu/util/TimeUnit.PORTION_PER_1E9:Lcom/ibm/icu/util/MeasureUnit;	
+com/mojang/authlib	client,server	METHOD	com/mojang/authlib/yggdrasil/response/UserAttributesResponse.<init>(Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges;Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$ProfanityFilterPreferences;Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$BanStatus;)V	
+com/mojang/logging	client,server	CLASS	com/mojang/logging/annotations/FieldsAreNonnullByDefault	
+com/mojang/logging	client,server	CLASS	com/mojang/logging/annotations/MethodsReturnNonnullByDefault	
+io/netty/netty-common	client,server	METHOD	io/netty/util/internal/PlatformDependent.allocateDirectBufferNoCleaner(I)Lio/netty/util/internal/CleanableDirectBuffer;	
+io/netty/netty-common	client,server	METHOD	io/netty/util/internal/PlatformDependent.allocateDirectNoCleaner(I)Ljava/nio/ByteBuffer;	
+io/netty/netty-common	client,server	METHOD	io/netty/util/internal/PlatformDependent.freeDirectNoCleaner(Ljava/nio/ByteBuffer;)V	
+io/netty/netty-common	client,server	METHOD	io/netty/util/internal/PlatformDependent.reallocateDirectBufferNoCleaner(Lio/netty/util/internal/CleanableDirectBuffer;I)Lio/netty/util/internal/CleanableDirectBuffer;	
+io/netty/netty-common	client,server	METHOD	io/netty/util/internal/PlatformDependent.reallocateDirectNoCleaner(Ljava/nio/ByteBuffer;I)Ljava/nio/ByteBuffer;	
+io/netty/netty-common	client,server	CLASS	io/netty/util/internal/shaded/org/jctools/queues/atomic/AtomicReferenceArrayQueue	
+io/netty/netty-common	client,server	METHOD	io/netty/util/internal/shaded/org/jctools/queues/atomic/MpmcAtomicArrayQueue.calcSequenceOffset(J)J	
+io/netty/netty-common	client,server	METHOD	io/netty/util/internal/shaded/org/jctools/queues/atomic/MpmcAtomicArrayQueue.calcSequenceOffset(JI)I	
+io/netty/netty-common	client,server	METHOD	io/netty/util/internal/shaded/org/jctools/queues/atomic/MpmcAtomicArrayQueue.lvSequence(Ljava/util/concurrent/atomic/AtomicLongArray;I)J	
+io/netty/netty-common	client,server	METHOD	io/netty/util/internal/shaded/org/jctools/queues/atomic/MpmcAtomicArrayQueue.soSequence(Ljava/util/concurrent/atomic/AtomicLongArray;IJ)V	
+io/netty/netty-common	client,server	CLASS	io/netty/util/internal/shaded/org/jctools/queues/atomic/SequencedAtomicReferenceArrayQueue	
+org/apache/logging/log4j/log4j-core	client,server	CLASS	org/apache/logging/log4j/core/lookup/JmxRuntimeInputArgumentsLookup	
