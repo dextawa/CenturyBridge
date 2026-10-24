@@ -7,7 +7,8 @@
   "entrypoints": {
     "main": [
       "top.dext.centurybridge.step.v1_21_2.rt.CbLevelInit",
-      "top.dext.centurybridge.step.v1_21_2.rt.CbRestInit"
+      "top.dext.centurybridge.step.v1_21_2.rt.CbRestInit",
+      "top.dext.centurybridge.step.v1_21_2.rt.CbItemInit"
     ],
     "client": [
       "top.dext.centurybridge.step.v1_21_2.rt.CbRestClientInit"

@@ -183,7 +183,8 @@
   "net/minecraft/class_8062.method_30029(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
   "net/minecraft/class_8957.method_59997()Lnet/minecraft/class_2371;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
   "net/minecraft/class_9694.method_59988()Lnet/minecraft/class_1662;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
-  "net/minecraft/class_8786.comp_1932()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses"
+  "net/minecraft/class_8786.comp_1932()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_3957.method_55104(Ljava/lang/String;Lnet/minecraft/class_7709;Lnet/minecraft/class_1856;Lnet/minecraft/class_1799;FI)Lnet/minecraft/class_1874;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeSerializers"
  },
  "superRedirects": {
   "net/minecraft/class_8060.method_48453(Lnet/minecraft/class_1799;)Z": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses#super_method_48453",
@@ -235,6 +236,21 @@
   "net/minecraft/class_3972.field_17645:Ljava/lang/String;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses"
  },
  "fieldGetters": {
-  "net/minecraft/class_7709.field_40245:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses"
+  "net/minecraft/class_7709.field_40245:Lnet/minecraft/class_3542$class_7292;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeClasses",
+  "net/minecraft/class_1865.field_9041:Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeSerializers",
+  "net/minecraft/class_1865.field_9030:Lnet/minecraft/class_1865;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeSerializers"
+ },
+ "classRenames": {
+  "net/minecraft/class_1871": "top/dext/centurybridge/step/v1_21_2/facade/ShulkerBoxColoring",
+  "net/minecraft/class_1873": "top/dext/centurybridge/step/v1_21_2/facade/SuspiciousStewRecipe",
+  "net/minecraft/class_1866": "net/minecraft/class_1852$class_1866",
+  "net/minecraft/class_1866$class_7711": "net/minecraft/class_1852$class_1866$class_7711",
+  "net/minecraft/class_3957": "net/minecraft/class_1874$class_10285"
+ },
+ "superRenames": {
+  "net/minecraft/class_3957": "top/dext/centurybridge/step/v1_21_2/facade/SimpleCookingSerializer"
+ },
+ "ctorRedirects": {
+  "net/minecraft/class_3957.<init>(Lnet/minecraft/class_1874$class_3958;I)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeSerializers#newSimpleCookingSerializer"
  }
 }

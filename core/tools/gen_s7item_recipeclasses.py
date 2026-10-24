@@ -10,6 +10,11 @@
   abstractFills     getType()/getSerializer() of those, SmithingRecipe's Optional ingredients from 1.21.1's predicates
   smithing members  isTemplate/Base/AdditionIngredient(stack): the override (adapterHooks), else the ingredient's test
   fields            the protected fields of AbstractCookingRecipe / SingleItemRecipe; CookingBookCategory.CODEC
+  removed classes   ShulkerBoxColoring / SuspiciousStewRecipe -> facades with 1.21.1's bodies, their serializers
+                    registered under 1.21.1's ids (CbItemRecipeSerializers, CbItemInit); SimpleCraftingRecipeSerializer
+                    (+ Factory) -> 1.21.2's CustomRecipe.Serializer (same codecs); SimpleCookingSerializer -> 1.21.2's
+                    AbstractCookingRecipe.Serializer (same codecs), its subclasses / new onto a facade keeping the
+                    factory, create(..) a static
   RecipeHolder      constructed from an id (-> the recipe registry key), id() the key's location
 
   python gen_s7item_recipeclasses.py <out fragment.json>
@@ -130,6 +135,21 @@ def main():
         "desc": "(Lnet/minecraft/class_5321;Lnet/minecraft/class_1860;)V",
         "ops": [conv("key", "(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"), "keep"],
         "basis": "1.21.2's RecipeHolder is keyed by the recipe registry key of the id"}
+    SER = "top/dext/centurybridge/step/v1_21_2/rt/CbItemRecipeSerializers"
+    FAC = "top/dext/centurybridge/step/v1_21_2/facade/"
+    out["classRenames"] = {
+        N + "class_1871": FAC + "ShulkerBoxColoring",
+        N + "class_1873": FAC + "SuspiciousStewRecipe",
+        N + "class_1866": N + "class_1852$class_1866",
+        N + "class_1866$class_7711": N + "class_1852$class_1866$class_7711",
+        N + "class_3957": N + "class_1874$class_10285",
+    }
+    out["superRenames"] = {N + "class_3957": FAC + "SimpleCookingSerializer"}
+    out["ctorRedirects"] = {N + "class_3957.<init>(Lnet/minecraft/class_1874$class_3958;I)V": SER + "#newSimpleCookingSerializer"}
+    out["instanceRedirects"][N + "class_3957.method_55104(Ljava/lang/String;Lnet/minecraft/class_7709;" + ING + STACK
+                             + "FI)Lnet/minecraft/class_1874;"] = SER
+    out["fieldGetters"][N + "class_1865.field_9041:Lnet/minecraft/class_1865;"] = SER
+    out["fieldGetters"][N + "class_1865.field_9030:Lnet/minecraft/class_1865;"] = SER
     json.dump(out, open(sys.argv[1], "w", encoding="utf-8", newline="\n"), indent=1)
 
 

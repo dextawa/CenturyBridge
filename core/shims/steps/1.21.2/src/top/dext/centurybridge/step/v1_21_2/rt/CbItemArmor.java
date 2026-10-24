@@ -140,6 +140,15 @@ public final class CbItemArmor {
         return w;
     }
 
+    /**
+     * The 1.21.2 equipment model id an ArmorItem built from this 1.21.1 material gets (its EQUIPPABLE asset id): the
+     * matching 1.21.2 vanilla material's, else the first layer's asset, else the registry id -- the id {@link #toW}
+     * gives the material (for s7render's synthesis of equipment models from 1.21.1 layers)
+     */
+    public static class_2960 equipmentModelId(class_6880<ArmorMaterial> holder) {
+        return toW(holder).comp_3168();
+    }
+
     private static class_2960 modelId(class_6880<ArmorMaterial> holder, ArmorMaterial m) {
         if (!m.comp_2302().isEmpty()) {
             return m.comp_2302().get(0).cb$assetName();
