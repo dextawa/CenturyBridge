@@ -172,7 +172,10 @@
   "net/minecraft/class_5862.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
   "net/minecraft/class_5866.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
   "net/minecraft/class_5861.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
-  "net/minecraft/class_5865.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType"
+  "net/minecraft/class_5865.method_33923()Lnet/minecraft/class_5864;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#floatGetType",
+  "net/minecraft/class_4628.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#place",
+  "net/minecraft/class_3070.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#place",
+  "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#place"
  },
  "overrideHooks": [
   {
@@ -571,7 +574,11 @@
   "net/minecraft/class_1265": "top/dext/centurybridge/step/v26_1/facade/ContainerListener",
   "net/minecraft/class_10104": "net/minecraft/util/CompilableString",
   "net/minecraft/class_6018": "top/dext/centurybridge/step/v26_1/facade/IntProviderType",
-  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/facade/FloatProviderType"
+  "net/minecraft/class_5864": "top/dext/centurybridge/step/v26_1/facade/FloatProviderType",
+  "net/minecraft/class_4638": "top/dext/centurybridge/step/v26_1/facade/RandomPatchConfiguration",
+  "net/minecraft/class_4628": "top/dext/centurybridge/step/v26_1/facade/RandomPatchFeature",
+  "net/minecraft/class_3070": "top/dext/centurybridge/step/v26_1/facade/IceSpikeFeature",
+  "net/minecraft/class_2950": "top/dext/centurybridge/step/v26_1/facade/BlockBlobFeature"
  },
  "ctorRedirects": {
   "net/minecraft/class_777.<init>(Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;JJJJILnet/minecraft/class_2350;Lnet/minecraft/class_1058;ZI)V": "top/dext/centurybridge/step/v26_1/rt/CbWallModels#bakedQuad",
@@ -895,7 +902,10 @@
   "net/minecraft/class_1869$class_1870.method_8165(Lnet/minecraft/class_9129;Lnet/minecraft/class_1869;)V": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
   "net/minecraft/class_1867$class_1868.field_46104:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
   "net/minecraft/class_10223$class_10224.field_54326:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
-  "net/minecraft/class_8060$class_8061.field_46108:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104"
+  "net/minecraft/class_8060$class_8061.field_46108:Lcom/mojang/serialization/MapCodec;": "1.21.11 private member of the dead class (its codec or stream codec body): only an access widener on it ever reached it, and access wideners never reach a CenturyBridge class; the facade answers 26.1's recipe codecs through method_53736 / method_56104",
+  "net/minecraft/class_4628.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming RandomPatchFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
+  "net/minecraft/class_3070.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming IceSpikeFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)",
+  "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "place(context) under its 1.21.11 token: the facade overrides 26.1's place (a mod's override is renamed onto it by the wall); a call naming BlockBlobFeature goes through CbWallFeatures.place (instanceRedirects: dispatches to the object's place) and a mod's super call through CbWallFeatures.superPlace (superRedirects: 1.21.11's body, cb$place)"
  },
  "staticRedirects": {
   "net/minecraft/class_1163.method_4962(Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;)I": "top/dext/centurybridge/step/v26_1/rt/CbWallTintClient#getAverageGrassColor",
@@ -1394,7 +1404,12 @@
   "net/minecraft/class_6017.field_29946:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
   "net/minecraft/class_6017.field_33450:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
   "net/minecraft/class_6017.field_33451:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
-  "net/minecraft/class_5863.field_29007:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders"
+  "net/minecraft/class_5863.field_29007:Lcom/mojang/serialization/Codec;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders",
+  "net/minecraft/class_3031.field_21219:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
+  "net/minecraft/class_3031.field_26361:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
+  "net/minecraft/class_3031.field_21220:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
+  "net/minecraft/class_3031.field_13562:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures",
+  "net/minecraft/class_3031.field_13584:Lnet/minecraft/class_3031;": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures"
  },
  "abstractFills": [
   {
@@ -1441,7 +1456,10 @@
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthBiasConstant()F": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthBiasConstant",
   "net/minecraft/class_2881.method_12530()Lnet/minecraft/class_2881$class_8576;": "top/dext/centurybridge/step/v26_1/rt/CbWallDragonFight#superSaveData",
   "net/minecraft/class_6334.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#clampedType",
-  "net/minecraft/class_6642.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#weightedListType"
+  "net/minecraft/class_6642.method_35012()Lnet/minecraft/class_6018;": "top/dext/centurybridge/step/v26_1/rt/CbWallValueProviders#weightedListType",
+  "net/minecraft/class_4628.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#superPlace",
+  "net/minecraft/class_3070.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#superPlace",
+  "net/minecraft/class_2950.method_13151(Lnet/minecraft/class_5821;)Z": "top/dext/centurybridge/step/v26_1/rt/CbWallFeatures#superPlace"
  },
  "covers": [
   "net/minecraft/class_4095.method_35058()Ljava/util/Map;",
@@ -1897,6 +1915,12 @@
     "net/minecraft/class_5864"
    ],
    "basis": "phantom key: Registries.FLOAT_PROVIDER_TYPE names the same registry in both releases; its values reach 1.21.11 code converted as for BuiltInRegistries.FLOAT_PROVIDER_TYPE"
+  },
+  "net/minecraft/class_2950.<init>(Lcom/mojang/serialization/Codec;)V": {
+   "by": [
+    "net/minecraft/class_2950"
+   ],
+   "basis": "1.21.11's BlockBlobFeature (BlockStateConfiguration, blobs on dirt or stone) is this layer's facade (classRenames): 1.21.11 code constructing or extending it takes the Codec<BlockStateConfiguration> it passed; 26.1's BlockBlobFeature of a BlockBlobConfiguration is a different feature (forest_rock's 26.1 data) no 1.21.11 code names"
   }
  },
  "superRenames": {
