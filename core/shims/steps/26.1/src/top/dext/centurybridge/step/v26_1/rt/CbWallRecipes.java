@@ -116,4 +116,91 @@ public final class CbWallRecipes {
     public static void customCategory(net.minecraft.world.item.crafting.CustomRecipe recipe, net.minecraft.world.item.crafting.CraftingBookCategory category) {
         ((CustomCategory) recipe).cb$setCategory(category);
     }
+
+    /** a 1.21.11 crafting recipe subclass's own assemble(input, registries) (gen_wall_recipe_assemble.py hooks) */
+    public interface LegacyAssembleCrafting {
+        net.minecraft.world.item.ItemStack assemble(net.minecraft.world.item.crafting.CraftingInput input, net.minecraft.core.HolderLookup.Provider registries);
+    }
+
+    /** a 1.21.11 single-item recipe subclass's own assemble(input, registries) */
+    public interface LegacyAssembleSingle {
+        net.minecraft.world.item.ItemStack assemble(net.minecraft.world.item.crafting.SingleRecipeInput input, net.minecraft.core.HolderLookup.Provider registries);
+    }
+
+    /** a 1.21.11 smithing recipe subclass's own assemble(input, registries) */
+    public interface LegacyAssembleSmithing {
+        net.minecraft.world.item.ItemStack assemble(net.minecraft.world.item.crafting.SmithingRecipeInput input, net.minecraft.core.HolderLookup.Provider registries);
+    }
+
+    /** 26.1's assemble(input) of such a recipe: its own assemble with the registries 1.21.11's callers passed (see {@link #assemble}) */
+    public static net.minecraft.world.item.ItemStack assembleCrafting(LegacyAssembleCrafting recipe, net.minecraft.world.item.crafting.CraftingInput input) {
+        return recipe.assemble(input, CbWallRegistries.access());
+    }
+
+    public static net.minecraft.world.item.ItemStack assembleSingle(LegacyAssembleSingle recipe, net.minecraft.world.item.crafting.SingleRecipeInput input) {
+        return recipe.assemble(input, CbWallRegistries.access());
+    }
+
+    public static net.minecraft.world.item.ItemStack assembleSmithing(LegacyAssembleSmithing recipe, net.minecraft.world.item.crafting.SmithingRecipeInput input) {
+        return recipe.assemble(input, CbWallRegistries.access());
+    }
+
+    // ---- 1.21.11 overrides of what 26.1's NormalCraftingRecipe made final (overrideRenames + mixin/CbWallNormalCraftingRecipeMixin) ----
+
+    /** a 1.21.11 shaped / shapeless / transmute recipe subclass's own group() */
+    public interface LegacyGroup {
+        String cb$legacyGroup();
+    }
+
+    /** ... its own category() */
+    public interface LegacyCategory {
+        net.minecraft.world.item.crafting.CraftingBookCategory cb$legacyCategory();
+    }
+
+    /** ... its own showNotification() */
+    public interface LegacyShowNotification {
+        boolean cb$legacyShowNotification();
+    }
+
+    /** ... its own placementInfo() */
+    public interface LegacyPlacementInfo {
+        net.minecraft.world.item.crafting.PlacementInfo cb$legacyPlacementInfo();
+    }
+
+    /**
+     * the recipes whose 1.21.11 override of a final member is running on this thread, per member: its
+     * super call reaches the final 26.1 member again, which then runs its own body
+     */
+    private static final ThreadLocal<Map<String, java.util.Set<Object>>> IN_OVERRIDE = ThreadLocal.withInitial(java.util.HashMap::new);
+
+    private static final StackWalker WALKER = StackWalker.getInstance();
+
+    /**
+     * enter a recipe's 1.21.11 override of the member (false: answer 26.1's body) -- false when the override is
+     * already running for it, or when the final member was called straight from the renamed override (its super
+     * call: a mod calling its own override reaches it directly, not through the final member)
+     */
+    public static boolean enterOverride(String member, String legacyName, Object recipe) {
+        // frames: this method, the mixin handler, the final member, its caller
+        if (WALKER.walk(frames -> frames.skip(3).findFirst().map(f -> f.getMethodName().equals(legacyName)).orElse(false))) {
+            return false;
+        }
+        return enterOverride(member, recipe);
+    }
+
+    /** enter a recipe's 1.21.11 override of the member (false: it is already running, answer 26.1's body) */
+    public static boolean enterOverride(String member, Object recipe) {
+        return IN_OVERRIDE.get().computeIfAbsent(member, k -> java.util.Collections.newSetFromMap(new IdentityHashMap<>())).add(recipe);
+    }
+
+    public static void exitOverride(String member, Object recipe) {
+        IN_OVERRIDE.get().get(member).remove(recipe);
+    }
+
+    /** 26.1's SingleItemRecipe keeping 1.21.11's constructor group (mixin/CbWallSingleItemRecipeMixin) */
+    public interface SingleItemGroup {
+        void cb$setGroup(String group);
+
+        String cb$group();
+    }
 }

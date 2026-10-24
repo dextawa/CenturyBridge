@@ -115,6 +115,7 @@ public class SwallTestMod implements ModInitializer {
             class_1928 rules = server.method_27728().method_146();
             check("worldData.getGameRules", rules == server.method_30002().method_64395(), rules);
 
+            recipes(server);
             interactions(server);
             levelData(server);
         } catch (Throwable t) {
@@ -250,4 +251,29 @@ public class SwallTestMod implements ModInitializer {
     }
 
     static final net.minecraft.class_1852.class_1866<TestRecipe> TEST_SERIALIZER = new net.minecraft.class_1852.class_1866<>(TestRecipe::new);
+
+    /** a 1.21.11 shapeless recipe subclass overriding group(), which 26.1 made final */
+    static class TestShapeless extends net.minecraft.class_1867 {
+        TestShapeless() {
+            super("g", net.minecraft.class_7710.field_40251, new net.minecraft.class_1799(net.minecraft.class_1802.field_20395),
+                List.of(net.minecraft.class_1856.method_8091(net.minecraft.class_1802.field_8831)));
+        }
+
+        @Override
+        public String method_8112() {
+            return super.method_8112() + "!";
+        }
+    }
+
+    private static void recipes(MinecraftServer server) {
+        net.minecraft.class_3975 cutting = new net.minecraft.class_3975("grp", net.minecraft.class_1856.method_8091(net.minecraft.class_1802.field_20391),
+            new net.minecraft.class_1799(net.minecraft.class_1802.field_20395));
+        net.minecraft.class_1799 out = cutting.method_59998(new net.minecraft.class_9696(new net.minecraft.class_1799(net.minecraft.class_1802.field_20391)),
+            server.method_30611());
+        check("recipe.stonecutterGroupAssemble", "grp".equals(cutting.method_8112()) && cutting.method_49188()
+            && out.method_7909() == net.minecraft.class_1802.field_20395, cutting.method_8112() + " " + out);
+        TestShapeless shapeless = new TestShapeless();
+        check("recipe.finalGroupOverride", "g!".equals(shapeless.method_8112()) && shapeless.method_45441() == net.minecraft.class_7710.field_40251,
+            shapeless.method_8112());
+    }
 }
