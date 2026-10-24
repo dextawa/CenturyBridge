@@ -20,14 +20,21 @@ TMP="${TMPDIR:-/tmp}/cb-remote-$NAME"
 mkdir -p "$TMP"
 rm -f "$TMP/up.tar"
 tar --force-local --exclude=__pycache__ -cf "$TMP/up.tar" core/src core/shims core/segments core/tools build.sh
-$SSH "mkdir -p ~/cbwork/agents/$NAME"
+$SSH "mkdir -p ~/cbwork/agents/$NAME; rm -f ~/cbwork/agents/$NAME/wall.tsv"
 scp -q -P 20022 -o BatchMode=yes "$TMP/up.tar" "dext@beta2.dext.top:cbwork/agents/$NAME/up.tar"
+# CB_WALL_TABLE=<local candidate table>: uploaded beside the tree and exported in the remote shell, so
+# build.sh's gates, Main convert (WallTable.java) and step_check's readers (wall_tables.py) all use it
+WTX="echo 'wall table: deployed'"
+if [ -n "${CB_WALL_TABLE:-}" ]; then
+    scp -q -P 20022 -o BatchMode=yes "$CB_WALL_TABLE" "dext@beta2.dext.top:cbwork/agents/$NAME/wall.tsv"
+    WTX='export CB_WALL_TABLE=$HOME/cbwork/agents/'"$NAME"'/wall.tsv; echo "wall table: $(md5sum $CB_WALL_TABLE)"'
+fi
 if [ "$V" = "1.20.1" ] && [ "$W" = "1.20.2" ]; then
     LAYER="bash build.sh 1.20.2 build"
 else
     LAYER="CB_SHIM=core/shims/steps/$W CB_WIRING=core/segments/steps/${V}__$W.json bash build.sh $W build"
 fi
-$SSH "set -e; cd ~/cbwork/agents/$NAME && rm -rf core build.sh build && tar xf up.tar && rm up.tar
+$SSH "set -e; $WTX; cd ~/cbwork/agents/$NAME && rm -rf core build.sh build && tar xf up.tar && rm up.tar
   find core build.sh -name '*.sh' -o -name '*.py' | xargs sed -i 's/\r\$//'
   export PATH=\$HOME/cbtest/jdk-25.0.4.1+1/bin:\$PATH
   LIBS=\$(find ~/cbwork/data/runtime/client-1.20.4/libraries/org/ow2/asm ~/cbwork/data/runtime/client-1.20.4/libraries/com/google/code/gson -name '*.jar' | tr '\n' ':')
