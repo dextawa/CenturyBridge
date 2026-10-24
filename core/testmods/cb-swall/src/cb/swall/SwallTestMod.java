@@ -116,6 +116,7 @@ public class SwallTestMod implements ModInitializer {
             check("worldData.getGameRules", rules == server.method_30002().method_64395(), rules);
 
             recipes(server);
+            items();
             interactions(server);
             levelData(server);
         } catch (Throwable t) {
@@ -275,5 +276,18 @@ public class SwallTestMod implements ModInitializer {
         TestShapeless shapeless = new TestShapeless();
         check("recipe.finalGroupOverride", "g!".equals(shapeless.method_8112()) && shapeless.method_45441() == net.minecraft.class_7710.field_40251,
             shapeless.method_8112());
+    }
+
+    private static void items() {
+        net.minecraft.class_1769 red = net.minecraft.class_1769.method_7803(net.minecraft.class_1767.field_7964);
+        check("dye.byColorAndColor", red == net.minecraft.class_1802.field_8264 && red.method_7802() == net.minecraft.class_1767.field_7964, red);
+        net.minecraft.class_1826 pigEgg = net.minecraft.class_1826.method_8019(net.minecraft.class_1299.field_6093);
+        net.minecraft.class_1799 eggStack = new net.minecraft.class_1799(net.minecraft.class_1802.field_8493);
+        boolean listed = false;
+        for (net.minecraft.class_1826 egg : net.minecraft.class_1826.method_8017()) {
+            listed |= egg == pigEgg;
+        }
+        check("spawnEgg.byIdTypeEggs", pigEgg == net.minecraft.class_1802.field_8493 && listed
+            && pigEgg.method_8015(eggStack) == net.minecraft.class_1299.field_6093 && pigEgg.method_8018(eggStack, net.minecraft.class_1299.field_6093), pigEgg);
     }
 }
