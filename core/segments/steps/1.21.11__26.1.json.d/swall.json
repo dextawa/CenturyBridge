@@ -1054,7 +1054,27 @@
   "net/minecraft/class_5141.method_27400(Lnet/minecraft/class_3746;Ljava/util/function/BiConsumer;Lnet/minecraft/class_5819;Lnet/minecraft/class_2338;Lnet/minecraft/class_4643;)V": "top/dext/centurybridge/step/v26_1/rt/CbWallTrees#setDirtAt",
   "net/minecraft/class_2824.method_34206(Lnet/minecraft/class_1297;Z)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#attack",
   "net/minecraft/class_2824.method_34207(Lnet/minecraft/class_1297;ZLnet/minecraft/class_1268;)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#interaction",
-  "net/minecraft/class_2824.method_34208(Lnet/minecraft/class_1297;ZLnet/minecraft/class_1268;Lnet/minecraft/class_243;)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#interaction"
+  "net/minecraft/class_2824.method_34208(Lnet/minecraft/class_1297;ZLnet/minecraft/class_1268;Lnet/minecraft/class_243;)Lnet/minecraft/class_2824;": "top/dext/centurybridge/step/v26_1/rt/CbWallInteractPacket#interaction",
+  "net/minecraft/class_10648.method_66840(Z)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$EquineSaddleModel#createSaddleLayer",
+  "net/minecraft/class_10648.method_66841(Z)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$EquineSaddleModel#createFullScaleSaddleLayer",
+  "net/minecraft/class_4041.method_31999()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$FoxModel#createBodyLayer",
+  "net/minecraft/class_4495.method_31981()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$BeeModel#createBodyLayer",
+  "net/minecraft/class_4791.method_62091()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$HoglinModel#createBabyLayer",
+  "net/minecraft/class_4997.method_32058()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$StriderModel#createBodyLayer",
+  "net/minecraft/class_549.method_62053(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AbstractEquineModel#createBabyMesh",
+  "net/minecraft/class_549.method_62054(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AbstractEquineModel#createFullScaleBabyMesh",
+  "net/minecraft/class_558.method_31988()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ChickenModel#createBodyLayer",
+  "net/minecraft/class_558.method_67546()Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ChickenModel#createBaseChickenModel",
+  "net/minecraft/class_590.method_32029(Z)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$PolarBearModel#createBodyLayer",
+  "net/minecraft/class_596.method_32034(Z)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$RabbitModel#createBodyLayer",
+  "net/minecraft/class_614.method_32062()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$TurtleModel#createBodyLayer",
+  "net/minecraft/class_624.method_32068(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$WolfModel#createMeshDefinition",
+  "net/minecraft/class_7751.method_45707()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$CamelModel#createBodyLayer",
+  "net/minecraft/class_7751.method_66836()Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$CamelModel#createBodyMesh",
+  "net/minecraft/class_9082.method_55818()Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#createBodyLayer",
+  "net/minecraft/class_9939.method_62055(Lnet/minecraft/class_5605;)Lnet/minecraft/class_5609;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AbstractPiglinModel#createMesh",
+  "net/minecraft/class_9945.method_62080(F)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$DonkeyModel#createBabyLayer",
+  "net/minecraft/class_9945.method_66838(FZ)Lnet/minecraft/class_5607;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$DonkeyModel#createSaddleLayer"
  },
  "superCtorReshapes": {
   "net/minecraft/class_778.<init>(Lnet/minecraft/class_324;)V": {
@@ -1734,7 +1754,22 @@
   "net/minecraft/class_2824.field_48195:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
   "net/minecraft/class_2761.field_47991:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v26_1/rt/CbWallStreamCodecs",
   "net/minecraft/class_3481.field_29822:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift",
-  "net/minecraft/class_3489.field_36269:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift"
+  "net/minecraft/class_3489.field_36269:Lnet/minecraft/class_6862;": "top/dext/centurybridge/step/v26_1/rt/CbWallTagDrift",
+  "net/minecraft/class_5602.field_56080:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#camelBabySaddle",
+  "net/minecraft/class_5602.field_64212:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#camelHuskBabySaddle",
+  "net/minecraft/class_5602.field_56581:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#coldChickenBaby",
+  "net/minecraft/class_5602.field_55865:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#coldPigBaby",
+  "net/minecraft/class_5602.field_56082:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#donkeyBabySaddle",
+  "net/minecraft/class_5602.field_52965:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#horseBabyArmor",
+  "net/minecraft/class_5602.field_56086:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#horseBabySaddle",
+  "net/minecraft/class_5602.field_56084:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#muleBabySaddle",
+  "net/minecraft/class_5602.field_52989:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#pigBabySaddle",
+  "net/minecraft/class_5602.field_57103:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#sheepBabyWoolUndercoat",
+  "net/minecraft/class_5602.field_56088:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#skeletonHorseBabySaddle",
+  "net/minecraft/class_5602.field_55120:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#striderBabySaddle",
+  "net/minecraft/class_5602.field_63560:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#undeadHorseBabyArmor",
+  "net/minecraft/class_5602.field_53005:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#wolfBabyArmor",
+  "net/minecraft/class_5602.field_56090:Lnet/minecraft/class_5601;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelLayers#zombieHorseBabySaddle"
  },
  "abstractFills": [
   {
@@ -1750,23 +1785,7 @@
    "basis": "26.1 made group abstract; 1.21.11 default answered the empty group"
   }
  ],
- "ledger": {
-  "net/minecraft/class_5602.field_56080:Lnet/minecraft/class_5601;": "model layer minecraft:camel_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_64212:Lnet/minecraft/class_5601;": "model layer minecraft:camel_husk_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56581:Lnet/minecraft/class_5601;": "model layer minecraft:cold_chicken_baby#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_55865:Lnet/minecraft/class_5601;": "model layer minecraft:cold_pig_baby#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56082:Lnet/minecraft/class_5601;": "model layer minecraft:donkey_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_52965:Lnet/minecraft/class_5601;": "model layer minecraft:horse_armor_baby#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56086:Lnet/minecraft/class_5601;": "model layer minecraft:horse_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56084:Lnet/minecraft/class_5601;": "model layer minecraft:mule_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_52989:Lnet/minecraft/class_5601;": "model layer minecraft:pig_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_57103:Lnet/minecraft/class_5601;": "model layer minecraft:sheep_baby#wool_undercoat: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56088:Lnet/minecraft/class_5601;": "model layer minecraft:skeleton_horse_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_55120:Lnet/minecraft/class_5601;": "model layer minecraft:strider_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_63560:Lnet/minecraft/class_5601;": "model layer minecraft:undead_horse_baby_armor#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_53005:Lnet/minecraft/class_5601;": "model layer minecraft:wolf_baby_armor#main: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read",
-  "net/minecraft/class_5602.field_56090:Lnet/minecraft/class_5601;": "model layer minecraft:zombie_horse_baby#saddle: 26.1 registers no layer definition for it (its ModelLayers has no such location and no renderer names it: the baby saddle / armor / variant layers were dropped with 26.1 baby models), so the ModelLayerLocation value 1.21.11 held would only make EntityModelSet.bakeLayer throw; NoSuchFieldError at the read"
- },
+ "ledger": {},
  "superRedirects": {
   "com/mojang/blaze3d/pipeline/RenderPipeline.getDepthTestFunction()Lcom/mojang/blaze3d/platform/DepthTestFunction;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetDepthTestFunction",
   "com/mojang/blaze3d/pipeline/RenderPipeline.getBlendFunction()Ljava/util/Optional;": "top/dext/centurybridge/step/v26_1/rt/CbWallPipeline#superGetBlendFunction",
@@ -2284,5 +2303,25 @@
  "superRenames": {
   "net/minecraft/class_6017": "top/dext/centurybridge/step/v26_1/facade/IntProvider",
   "net/minecraft/class_5863": "top/dext/centurybridge/step/v26_1/facade/FloatProvider"
+ },
+ "fieldRedirects": {
+  "net/minecraft/class_4041.field_52912:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$FoxModel#BABY_TRANSFORMER",
+  "net/minecraft/class_4495.field_52871:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$BeeModel#BABY_TRANSFORMER",
+  "net/minecraft/class_4791.field_52916:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$HoglinModel#BABY_TRANSFORMER",
+  "net/minecraft/class_4997.field_55115:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$StriderModel#BABY_TRANSFORMER",
+  "net/minecraft/class_549.field_52854:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AbstractEquineModel#BABY_TRANSFORMER",
+  "net/minecraft/class_558.field_32471:Ljava/lang/String;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ChickenModel#RED_THING",
+  "net/minecraft/class_558.field_52891:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ChickenModel#BABY_TRANSFORMER",
+  "net/minecraft/class_5772.field_52869:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$AxolotlModel#BABY_TRANSFORMER",
+  "net/minecraft/class_578.field_52920:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$LlamaModel#BABY_TRANSFORMER",
+  "net/minecraft/class_586.field_52924:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$PandaModel#BABY_TRANSFORMER",
+  "net/minecraft/class_601.field_52936:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$SheepModel#BABY_TRANSFORMER",
+  "net/minecraft/class_614.field_52940:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$TurtleModel#BABY_TRANSFORMER",
+  "net/minecraft/class_620.field_55116:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$VillagerModel#BABY_TRANSFORMER",
+  "net/minecraft/class_6227.field_52914:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$GoatModel#BABY_TRANSFORMER",
+  "net/minecraft/class_624.field_52948:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$WolfModel#BABY_TRANSFORMER",
+  "net/minecraft/class_7751.field_52883:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$CamelModel#BABY_TRANSFORMER",
+  "net/minecraft/class_8185.field_52938:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$SnifferModel#BABY_TRANSFORMER",
+  "net/minecraft/class_9082.field_52867:Lnet/minecraft/class_9953;": "top/dext/centurybridge/step/v26_1/rt/CbWallModelMeshes$ArmadilloModel#BABY_TRANSFORMER"
  }
 }
