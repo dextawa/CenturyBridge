@@ -1,6 +1,17 @@
 {
  "classRenames": {
-  "net/minecraft/class_2838": "top/dext/centurybridge/step/v1_21_4/facade/ServerboundPickItemPacket"
+  "net/minecraft/class_2838": "top/dext/centurybridge/step/v1_21_4/facade/ServerboundPickItemPacket",
+  "net/minecraft/class_10340": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropAdvancementProvider",
+  "net/minecraft/class_10341": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropAdventureAdvancements",
+  "net/minecraft/class_10342": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropBlockLoot",
+  "net/minecraft/class_10343": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropLootTableProvider",
+  "net/minecraft/class_10344": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropRecipeProvider",
+  "net/minecraft/class_10344$class_10345": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropRecipeProvider$Runner",
+  "net/minecraft/class_10346": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropRegistries",
+  "net/minecraft/class_10347": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropBiomeTagsProvider",
+  "net/minecraft/class_10348": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropBlockTagsProvider",
+  "net/minecraft/class_10349": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropEntityTypeTagsProvider",
+  "net/minecraft/class_10350": "top/dext/centurybridge/step/v1_21_4/facade/WinterDropItemTagsProvider"
  },
  "fieldGetters": {
   "net/minecraft/class_9094.field_48096:Lnet/minecraft/class_9145;": "top/dext/centurybridge/step/v1_21_4/rt/CbFinPick"

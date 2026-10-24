@@ -93,3 +93,6 @@ extendable class net/minecraft/class_1079
 extendable class net/minecraft/class_1080
 extendable class net/minecraft/class_1084
 extendable class net/minecraft/class_3888
+# s9fin: 1.21.3's WinterDropAdventureAdvancements (facade) reads AdventureAdvancements.MOBS_TO_KILL as 1.21.3's did
+accessible field net/minecraft/class_2412 field_11294 Ljava/util/List;
+accessible method net/minecraft/class_2412 method_49356 (Lnet/minecraft/class_7225$class_7874;Ljava/util/function/Consumer;Lnet/minecraft/class_8779;Lnet/minecraft/class_8197$class_5305;)V
