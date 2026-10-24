@@ -30,7 +30,9 @@
   "net/fabricmc/fabric/api/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback",
   "net/fabricmc/fabric/api/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback$RegistrationHelper": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/rendereregistry/v1/LivingEntityFeatureRendererRegistrationCallback$RegistrationHelper",
   "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/event/lifecycle/v1/ClientWorldEvents",
-  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange"
+  "net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/event/lifecycle/v1/ClientWorldEvents$AfterClientWorldChange",
+  "net/fabricmc/fabric/api/client/model/loading/v1/ModelLoadingPlugin": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/model/loading/v1/ModelLoadingPlugin",
+  "net/fabricmc/fabric/api/client/model/loading/v1/PreparableModelLoadingPlugin": "top/dext/centurybridge/step/v1_21_2/compat/fapi/client/model/loading/v1/PreparableModelLoadingPlugin"
  },
  "facadeGaps": {},
  "staticRedirects": {
