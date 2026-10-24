@@ -54,6 +54,21 @@ public class PostChain implements AutoCloseable {
         this.method_1256(textureManager, location);
     }
 
+    /**
+     * A chain with no 1.21.1 json of its own (rt/CbRenderPostNative: 1.21.2's chain GameRenderer runs, as 1.21.1's
+     * currentEffect() answered it): 1.21.1's state over the screen target, no passes or targets.
+     */
+    protected PostChain(net.minecraft.class_5912 resourceProvider, net.minecraft.class_276 screenTarget, String name) {
+        this.field_49569 = resourceProvider;
+        this.field_1499 = screenTarget;
+        this.field_1501 = 0.0F;
+        this.field_1500 = 0.0F;
+        this.field_1493 = screenTarget.field_1480;
+        this.field_1492 = screenTarget.field_1477;
+        this.field_1494 = name;
+        this.method_1267();
+    }
+
     /** load(textureManager, location) */
     public void method_1256(net.minecraft.class_1060 textureManager, net.minecraft.class_2960 location) throws IOException, JsonSyntaxException {
         net.minecraft.class_3298 resource = this.field_49569.getResourceOrThrow(location);

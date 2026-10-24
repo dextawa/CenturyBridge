@@ -22,6 +22,21 @@ accessible method net/minecraft/class_2852 method_12393 ([Lit/unimi/dsi/fastutil
 # s7render: Blaze3D() public in 1.21.1, private in 1.21.2 (a utility class with only statics: the instance has no state)
 accessible method net/minecraft/class_3673 <init> ()V
 
+# s7render: 1.21.1's new MultiPart(definition, selectors) builds 1.21.2's predicate/variant pairs (package-private in 1.21.2) itself (rt/CbRenderBlockDefs)
+accessible method net/minecraft/class_816 <init> (Ljava/util/List;)V
+accessible class net/minecraft/class_816$class_9983
+accessible method net/minecraft/class_816$class_9983 <init> (Ljava/util/function/Predicate;Lnet/minecraft/class_807;)V
+# s7render: MultiVariant, a plain class 1.21.1 mods extend (equals/hashCode overridable there), a final record in 1.21.2
+extendable class net/minecraft/class_807
+extendable method net/minecraft/class_807 equals (Ljava/lang/Object;)Z
+extendable method net/minecraft/class_807 hashCode ()I
+extendable method net/minecraft/class_807 toString ()Ljava/lang/String;
+# s7render: RenderType.create, to build 1.21.1's entityTranslucentCull / entityGlintDirect render types 1.21.2 deleted (rt/CbRenderTypes)
+accessible class net/minecraft/class_1921$class_4688
+accessible class net/minecraft/class_1921$class_4687
+accessible method net/minecraft/class_1921 method_24048 (Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+accessible method net/minecraft/class_1921 method_24049 (Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;IZZLnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+
 # s7render: ModelBakery's baker getModel(id), the 1.21.1 ModelBaker.getModel (CbRenderBakeBakerMixin)
 accessible method net/minecraft/class_1088$class_7778 method_45872 (Lnet/minecraft/class_2960;)Lnet/minecraft/class_1100;
 # ---- s7entity: Phantom.canAttack(level, target, conditions), package-private in 1.21.2, answered by a mod Phantom's 1.21.1 canAttack(target, conditions) override (s7entity.json overrideHooks) ----
