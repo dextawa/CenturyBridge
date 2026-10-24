@@ -6,11 +6,15 @@
  "tagMap": {
   "block minecraft:impermeable": {
    "to": "centurybridge:compat/1_21_8/impermeable",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_21_8/impermeable"
+   ]
   },
   "worldgen/biome minecraft:stronghold_biased_to": {
    "to": "centurybridge:compat/1_21_8/stronghold_biased_to",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_21_8/stronghold_biased_to"
+   ]
   }
  }
 }

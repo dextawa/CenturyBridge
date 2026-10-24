@@ -7,11 +7,19 @@
  "tagMap": {
   "block minecraft:wolves_spawnable_on": {
    "to": "centurybridge:compat/1_20_4/wolves_spawnable_on",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_20_4/wolves_spawnable_on"
+   ]
   },
   "damage_type minecraft:always_kills_armor_stands": {
    "to": "centurybridge:compat/1_20_4/always_kills_armor_stands",
-   "mirror": false
+   "mirror": []
+  },
+  "item minecraft:axolotl_tempt_items": {
+   "to": "minecraft:axolotl_food",
+   "mirror": [
+    "minecraft:axolotl_food"
+   ]
   }
  }
 }

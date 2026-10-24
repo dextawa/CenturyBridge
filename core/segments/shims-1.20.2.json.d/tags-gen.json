@@ -6,11 +6,15 @@
  "tagMap": {
   "block minecraft:flowers": {
    "to": "centurybridge:compat/1_20_1/flowers",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_20_1/flowers"
+   ]
   },
   "item minecraft:flowers": {
    "to": "centurybridge:compat/1_20_1/flowers",
-   "mirror": true
+   "mirror": [
+    "centurybridge:compat/1_20_1/flowers"
+   ]
   }
  }
 }

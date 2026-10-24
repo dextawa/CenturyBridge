@@ -668,6 +668,7 @@ def compare(V, W, details=None):
         if details is not None:
             succs = [] if succ == "-" else succ.split(",")
             details.append({"key": key, "kind": kind, "vset": a, "successors": succs,
+                            "exact": sorted(t for t in w_by_set.get((reg, a), []) if t != tag) if a else [],
                             "new_successors": [c for c in succs if (reg, c) not in vs],
                             "fields": sorted(V.fields().raw.get(key, []))})
     return rows, unknown, len(set(vs) & set(ws)), len(set(vs) - set(ws))

@@ -17,31 +17,10 @@ public final class CbTagCompat {
         return net.minecraft.tags.TagKey.create(registry, net.minecraft.resources.Identifier.fromNamespaceAndPath(namespace, path));
     }
 
-    /** net/minecraft/class_3481.field_15497: 1.21.11 minecraft:bamboo_plantable_on (removed at 26.1) */
-    public static final net.minecraft.tags.TagKey<?> BlockTags_field_15497 = key(net.minecraft.core.registries.Registries.BLOCK, "minecraft", "bamboo_plantable_on");
-
-    public static net.minecraft.tags.TagKey<?> BlockTags_field_15497() {
-        return BlockTags_field_15497;
-    }
-
     /** net/minecraft/class_3481.field_44589: 1.21.11 minecraft:maintains_farmland (widened at 26.1) */
     public static final net.minecraft.tags.TagKey<?> BlockTags_field_44589 = key(net.minecraft.core.registries.Registries.BLOCK, "centurybridge", "compat/1_21_11/maintains_farmland");
 
     public static net.minecraft.tags.TagKey<?> BlockTags_field_44589() {
         return BlockTags_field_44589;
-    }
-
-    /** net/minecraft/class_3481.field_25739: 1.21.11 minecraft:mushroom_grow_block (removed at 26.1) */
-    public static final net.minecraft.tags.TagKey<?> BlockTags_field_25739 = key(net.minecraft.core.registries.Registries.BLOCK, "minecraft", "mushroom_grow_block");
-
-    public static net.minecraft.tags.TagKey<?> BlockTags_field_25739() {
-        return BlockTags_field_25739;
-    }
-
-    /** net/minecraft/class_3481.field_33641: 1.21.11 minecraft:small_dripleaf_placeable (removed at 26.1) */
-    public static final net.minecraft.tags.TagKey<?> BlockTags_field_33641 = key(net.minecraft.core.registries.Registries.BLOCK, "minecraft", "small_dripleaf_placeable");
-
-    public static net.minecraft.tags.TagKey<?> BlockTags_field_33641() {
-        return BlockTags_field_33641;
     }
 }
