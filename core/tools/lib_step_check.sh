@@ -16,8 +16,7 @@ OUT="$WD/libstep/$SEG"
 rm -rf "$OUT" && mkdir -p "$OUT/self"
 [ -f "$WD/build/centurybridge-0.3.0+$W.jar" ] || { echo "no layer jar $WD/build/centurybridge-0.3.0+$W.jar (run remote_step.sh first)"; exit 1; }
 jar_of() { case "$1" in 26.*) echo "data/jars/client-$1.jar" ;; *) echo "data/jars/client-$1-intermediary.jar" ;; esac; }
-# data/runtime/client-1.20.1 holds 1.20.2's libraries; ~/cbtest/client-1.20.1 has 1.20.1's own
-libdir() { case "$1" in 1.20.1) echo "$HOME/cbtest/client-1.20.1/libraries" ;; *) echo "data/runtime/client-$1/libraries" ;; esac; }
+. "$WD/core/tools/lib_dirs.sh"
 WIRING="$WD/core/segments/steps/$SEG.json"
 [ "$SEG" = "1.20.1__1.20.2" ] && WIRING="$WD/core/segments/shims-1.20.2.json"
 FAPI=$(ls data/runtime/client-$W/mods/fabric-api-*.jar 2>/dev/null | head -1)
