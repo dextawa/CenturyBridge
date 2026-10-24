@@ -49,7 +49,8 @@ def main():
         with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zout:
             for item in zin.infolist():
                 zout.writestr(item, zin.read(item.filename))
-            zout.writestr("fabric.mod.json", json.dumps(fmj, indent=1))
+            # a fixed date: the same inputs give the same nested jar, byte for byte, on every build
+            zout.writestr(zipfile.ZipInfo("fabric.mod.json", date_time=(1980, 1, 1, 0, 0, 0)), json.dumps(fmj, indent=1))
         name = f"{artifact}-{version}.jar"
         with open(os.path.join(out_dir, name), "wb") as f:
             f.write(buf.getvalue())
