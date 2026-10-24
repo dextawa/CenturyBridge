@@ -8,7 +8,8 @@
   "net/minecraft/class_8047.method_48371()Ljava/util/List;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall#getInputSlotIndexes",
   "net/minecraft/class_8508$class_8509.comp_2087()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#recipeId",
   "net/minecraft/class_2119$class_2121.comp_2089()Lnet/minecraft/class_2960;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#recipe",
-  "net/minecraft/class_8508.method_51350(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#trigger"
+  "net/minecraft/class_8508.method_51350(Lnet/minecraft/class_3222;Lnet/minecraft/class_2960;Ljava/util/List;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#trigger",
+  "net/minecraft/class_7444.comp_773()I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemInstruments#comp_773"
  },
  "superRedirects": {
   "net/minecraft/class_4296.method_20463(JLjava/util/function/Function;)Lnet/minecraft/class_2520;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTicks#superSave",
@@ -32,7 +33,10 @@
   "net/minecraft/class_8508$class_8509.method_51352(Lnet/minecraft/class_2960;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#craftedItem",
   "net/minecraft/class_8508$class_8509.method_51353(Lnet/minecraft/class_2960;Ljava/util/List;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#craftedItem",
   "net/minecraft/class_8508$class_8509.method_58450(Lnet/minecraft/class_2960;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#crafterCraftedItem",
-  "net/minecraft/class_2119.method_27847(Lnet/minecraft/class_2960;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#unlocked"
+  "net/minecraft/class_2119.method_27847(Lnet/minecraft/class_2960;)Lnet/minecraft/class_175;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#unlocked",
+  "net/minecraft/class_7445.method_43713(Lnet/minecraft/class_2378;)Lnet/minecraft/class_7444;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemInstruments#bootstrapInto",
+  "net/minecraft/class_7430.method_43562(Lnet/minecraft/class_1799;Lnet/minecraft/class_6862;Lnet/minecraft/class_5819;)V": "top/dext/centurybridge/step/v1_21_2/rt/CbItemInstruments#setRandom",
+  "net/minecraft/class_7430.method_43558(Lnet/minecraft/class_1792;Lnet/minecraft/class_6880;)Lnet/minecraft/class_1799;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemInstruments#create"
  },
  "adapterHooks": [
   {
@@ -219,13 +223,26 @@
     "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers#key(Lnet/minecraft/class_2960;)Lnet/minecraft/class_5321;"
    ],
    "basis": "1.21.2 names the recipe by its key: the id in the recipe registry"
+  },
+  "net/minecraft/class_7444.<init>(Lnet/minecraft/class_6880;IF)V": {
+   "desc": "(Lnet/minecraft/class_6880;FFLnet/minecraft/class_2561;)V",
+   "ops": [
+    "keep",
+    "conv top/dext/centurybridge/step/v1_21_2/rt/CbItemInstruments#seconds(I)F",
+    "keep",
+    "push top/dext/centurybridge/step/v1_21_2/rt/CbItemInstruments#unnamed()Lnet/minecraft/class_2561;"
+   ],
+   "basis": "1.21.2's Instrument counts its use duration in seconds and carries a description (made when the entry joins a world: CbItemInstruments)"
   }
  },
  "fieldGetters": {
   "net/minecraft/class_2390.field_28272:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions",
   "net/minecraft/class_5743.field_28267:Lorg/joml/Vector3f;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemPotions",
   "net/minecraft/class_7701.field_40178:Lnet/minecraft/class_7696;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall",
-  "net/minecraft/class_1799.field_48350:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall"
+  "net/minecraft/class_1799.field_48350:Lnet/minecraft/class_9139;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemSmall",
+  "net/minecraft/class_7923.field_41166:Lnet/minecraft/class_2378;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemInstruments",
+  "net/minecraft/class_7445.field_39125:I": "top/dext/centurybridge/step/v1_21_2/rt/CbItemInstruments",
+  "net/minecraft/class_7378.field_41535:Lnet/minecraft/class_7378$class_7380;": "top/dext/centurybridge/step/v1_21_2/rt/CbItemTriggers"
  },
  "abstractFills": [
   {

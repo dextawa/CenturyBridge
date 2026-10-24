@@ -21,6 +21,8 @@ import net.minecraft.class_9334;
  * <li>FIRE_RESISTANT (1.21.1, a Unit marker): 1.21.2's DAMAGE_RESISTANT for the is_fire damage tag -- what 1.21.2's
  *     Item.Properties.fireResistant() sets. A 1.21.1 read of it sees the marker for that resistance and nothing for a
  *     resistance to other damage, which 1.21.1 could not express.</li>
+ * <li>INSTRUMENT: a holder of the stand-in BuiltInRegistries.INSTRUMENT goes in as the world's holder of its key
+ *     (CbItemInstruments).</li>
  * </ul>
  * A value going in is converted by its component type ({@link #toW}); one coming out by what it is ({@link #toV}),
  * since only these components hold such values: a recipe key list, an OminousBottleAmplifier, a DamageResistant.
@@ -45,6 +47,9 @@ public final class CbItemComponentValues {
         }
         if (type == class_9334.field_50238 && value instanceof Integer amplifier) {
             return new class_10129(amplifier);
+        }
+        if (type == class_9334.field_49612) {
+            return CbItemInstruments.worldHolder(value);
         }
         if (type == class_9334.field_54273 && value == class_3902.field_17274) {
             return new class_10215(class_8103.field_42246);

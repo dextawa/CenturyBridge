@@ -118,6 +118,7 @@ public class GearTestMod implements ModInitializer {
     }
 
     static class_6880<class_1741> MATERIAL;
+    static net.minecraft.class_5321<net.minecraft.class_7444> HORN;
     static class_1792 CHEST, HEAD, SWORD, PICK, FOOD, BUNDLE, BOOK, NAMED, COMPLEX, TEMPLATE;
     static class_4174 FOOD_PROPS;
 
@@ -147,6 +148,9 @@ public class GearTestMod implements ModInitializer {
         FOOD_PROPS = new class_4174.class_4175().method_19238(3).method_19237(0.5F).method_19241()
             .method_19239(new class_1293(class_1294.field_5904, 100, 0), 1.0F).method_19240().method_19242();
         net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer.register(IRON_SERIALIZER);
+        HORN = net.minecraft.class_5321.method_29179(net.minecraft.class_7924.field_41275, class_2960.method_60655("cbs7gear", "horn"));
+        class_2378.method_47984(class_7923.field_41166, HORN, new net.minecraft.class_7444(
+            (class_6880<net.minecraft.class_3414>) net.minecraft.class_3417.field_39028.get(0), 100, 64.0F));
         FOOD = reg(class_7923.field_41178, "food", new class_1792(new class_1792.class_1793().method_19265(FOOD_PROPS)));
         BUNDLE = reg(class_7923.field_41178, "bundle", new net.minecraft.class_5537(new class_1792.class_1793()));
         BOOK = reg(class_7923.field_41178, "book", new net.minecraft.class_1751(new class_1792.class_1793()));
@@ -790,6 +794,15 @@ public class GearTestMod implements ModInitializer {
         check(netherite.method_57826(class_9334.field_50076) && netherite.method_57824(class_9334.field_50076) == net.minecraft.class_3902.field_17274
                 && !new class_1799(class_1802.field_8620).method_57826(class_9334.field_50076),
             "FIRE_RESISTANT: netherite has it (Unit), iron not");
+        class_2378<net.minecraft.class_7444> worldHorns = server.method_30611().method_30530(net.minecraft.class_7924.field_41275);
+        check(worldHorns.method_35842(HORN) && worldHorns.method_35842(net.minecraft.class_7445.field_39126),
+            "the 1.21.1 mod's instrument joined the world's instrument registry, beside vanilla's");
+        net.minecraft.class_7444 standin = class_7923.field_41166.method_40290(HORN).comp_349();
+        check(standin.comp_773() == 100 && class_7923.field_41166.method_40290(net.minecraft.class_7445.field_39126).comp_349().comp_773() == 140,
+            "Instrument.useDuration(): 100 ticks (mod), 140 (vanilla goat horn)");
+        class_1799 horn = net.minecraft.class_7430.method_43558(class_1802.field_39057, class_7923.field_41166.method_40290(HORN));
+        boolean encodes = class_1799.field_24671.encodeStart(server.method_30611().method_57093(com.mojang.serialization.JsonOps.INSTANCE), horn).result().isPresent();
+        check(encodes, "InstrumentItem.create with the stand-in's holder: the stack saves (the world's holder)");
         check("cbs7gear".equals(((net.fabricmc.fabric.api.item.v1.FabricItem) CHEST).getCreatorNamespace(new class_1799(CHEST))) && "minecraft".equals(((net.fabricmc.fabric.api.item.v1.FabricItemStack) (Object) new class_1799(class_1802.field_8620)).getCreatorNamespace()),
             "FabricItem / FabricItemStack.getCreatorNamespace");
     }

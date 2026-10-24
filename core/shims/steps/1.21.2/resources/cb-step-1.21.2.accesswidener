@@ -120,6 +120,8 @@ accessible field net/minecraft/class_3441 field_54550 Ljava/util/Set;
 accessible field net/minecraft/class_3441 field_54551 Ljava/util/Set;
 # ---- s7item: 1.21.1 Potion.getName reads the potion's name (rt/CbItemPotions) ----
 accessible field net/minecraft/class_1842 field_8954 Ljava/lang/String;
+# ---- s7item: 1.21.1's boat variant sub-predicate type registers its codec (rt/CbItemTriggers) ----
+accessible field net/minecraft/class_7378$class_7380 field_49794 Lcom/mojang/serialization/MapCodec;
 # ---- s7item: 1.21.1 SavedTick.saveTick on 1.21.2's compound writer (rt/CbItemTicks) ----
 accessible method net/minecraft/class_6759 method_39403 (Ljava/lang/String;Lnet/minecraft/class_2338;ILnet/minecraft/class_1953;)Lnet/minecraft/class_2487;
 
