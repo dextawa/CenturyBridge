@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:tropical_fish_bucket",
+      "required": false
+    }
+  ]
+}

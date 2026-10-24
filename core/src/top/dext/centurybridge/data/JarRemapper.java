@@ -26,7 +26,7 @@ public final class JarRemapper {
      * files' pass does, so an id the table holds ambiguously still maps where the refmap says whose it is.
      */
     private static final java.util.regex.Pattern MEMBER_TOKEN =
-        java.util.regex.Pattern.compile("(?:L([\\w/$]+);)?((?:method|field|comp)_\\d+)");
+        java.util.regex.Pattern.compile("(?:L([\\w/$]+);)?((?:method|field|comp)_\\d+)(\\([^)]*\\)[^\\s\"\\\\,]*)?");
     /**
      * An intermediary class name: net/minecraft/class_N with its nested classes, and an intermediary-named
      * nested class of a class whose own name is not intermediary (com/mojang/blaze3d/opengl/GlStateManager$class_1017
@@ -305,11 +305,16 @@ public final class JarRemapper {
         text = MEMBER_TOKEN.matcher(text).replaceAll(mr -> {
             String owner = mr.group(1);
             String id = mr.group(2);
+            String desc = mr.group(3);
             String moj = owner != null ? table.byOwner.get(owner + "." + id) : null;
             if (moj == null) {
                 moj = table.members.getOrDefault(id, id);
             }
-            return java.util.regex.Matcher.quoteReplacement((owner != null ? "L" + owner + ";" : "") + moj);
+            if (owner != null && desc != null && table.targetMethods != null && !id.startsWith("field_")) {
+                // a reused id resolves by the descriptor written after it, as the class files' pass does
+                moj = remapper.mapMethodName(owner, id, desc);
+            }
+            return java.util.regex.Matcher.quoteReplacement((owner != null ? "L" + owner + ";" : "") + moj + (desc != null ? desc : ""));
         });
         return CLASS_TOKEN.matcher(text).replaceAll(
             mr -> java.util.regex.Matcher.quoteReplacement(remapper.map(mr.group())));
@@ -381,6 +386,19 @@ public final class JarRemapper {
      * checks them, and until now the wall pass skipped them wholesale: every
      * jar-in-jar library crossed into 26.x still spelling intermediary names.
      */
+    /** a nested jar marked "centurybridge:verbatim" (JarProcessor.verbatimLibrary) */
+    private static boolean verbatim(byte[] jar) throws IOException {
+        try (ZipInputStream nin = new ZipInputStream(new java.io.ByteArrayInputStream(jar))) {
+            ZipEntry n;
+            while ((n = nin.getNextEntry()) != null) {
+                if (n.getName().equals("fabric.mod.json")) {
+                    return top.dext.centurybridge.engine.JarProcessor.verbatimLibrary(nin.readAllBytes());
+                }
+            }
+        }
+        return false;
+    }
+
     private static int remapEntries(ZipInputStream zin, ZipOutputStream zout, Table table) throws IOException {
         java.util.Map<String, String> byOwner = table.byOwner;
         java.util.Map<String, String> members = table.members;
@@ -399,6 +417,12 @@ public final class JarRemapper {
                     continue;
                 }
                 byte[] data = zin.readAllBytes();
+                if (e.getName().startsWith("META-INF/jars/") && e.getName().endsWith(".jar") && verbatim(data)) {
+                    zout.putNextEntry(new ZipEntry(e.getName())); // a library a layer gives back whole: byte for byte
+                    zout.write(data);
+                    zout.closeEntry();
+                    continue;
+                }
                 if (e.getName().startsWith("META-INF/jars/") && e.getName().endsWith(".jar")) {
                     java.io.ByteArrayOutputStream bos = new java.io.ByteArrayOutputStream();
                     try (ZipInputStream nin = new ZipInputStream(new java.io.ByteArrayInputStream(data));

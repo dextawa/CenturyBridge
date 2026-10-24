@@ -54,8 +54,46 @@ public class SlibLibs262Test implements ModInitializer {
         public JsonElement remove(JsonElement e, String k) { return J.remove(e, k); }
     }
 
+    /** a mod's own Graph (Guava 33.5 had no asNetwork), delegating to a Guava graph */
+    static class MyGraph implements com.google.common.graph.Graph<String> {
+        final com.google.common.graph.MutableGraph<String> g = com.google.common.graph.GraphBuilder.directed().build();
+
+        public java.util.Set<String> nodes() { return g.nodes(); }
+        public java.util.Set<com.google.common.graph.EndpointPair<String>> edges() { return g.edges(); }
+        public boolean isDirected() { return g.isDirected(); }
+        public boolean allowsSelfLoops() { return g.allowsSelfLoops(); }
+        public com.google.common.graph.ElementOrder<String> nodeOrder() { return g.nodeOrder(); }
+        public com.google.common.graph.ElementOrder<String> incidentEdgeOrder() { return g.incidentEdgeOrder(); }
+        public java.util.Set<String> adjacentNodes(String n) { return g.adjacentNodes(n); }
+        public java.util.Set<String> predecessors(String n) { return g.predecessors(n); }
+        public java.util.Set<String> successors(String n) { return g.successors(n); }
+        public java.util.Set<com.google.common.graph.EndpointPair<String>> incidentEdges(String n) { return g.incidentEdges(n); }
+        public int degree(String n) { return g.degree(n); }
+        public int inDegree(String n) { return g.inDegree(n); }
+        public int outDegree(String n) { return g.outDegree(n); }
+        public boolean hasEdgeConnecting(String a, String b) { return g.hasEdgeConnecting(a, b); }
+        public boolean hasEdgeConnecting(com.google.common.graph.EndpointPair<String> e) { return g.hasEdgeConnecting(e); }
+    }
+
     @Override
     public void onInitialize() {
+        run("Guava asNetwork", () -> {
+            MyGraph mine = new MyGraph();
+            mine.g.putEdge("a", "b");
+            mine.g.putEdge("c", "b");
+            try {
+                java.lang.reflect.Method m = com.google.common.graph.Graph.class.getMethod("asNetwork");
+                m.setAccessible(true); // declared on Guava 33.6's package-private BaseGraph
+                Object net = m.invoke(mine);
+                java.util.Set<?> in = (java.util.Set<?>) net.getClass().getMethod("inEdges", Object.class).invoke(net, "b");
+                java.util.Set<?> out = (java.util.Set<?>) net.getClass().getMethod("outEdges", Object.class).invoke(net, "a");
+                check(in.size() == 2 && in.contains(com.google.common.graph.EndpointPair.ordered("a", "b"))
+                    && out.size() == 1 && !out.contains(com.google.common.graph.EndpointPair.ordered("c", "b")),
+                    "a 33.5 graph's asNetwork: in/out edges as Guava's own view answers them");
+            } catch (ReflectiveOperationException e) {
+                check(false, "asNetwork " + e);
+            }
+        });
         run("DynamicOps defaults", () -> {
             MyOps ops = new MyOps();
             JsonElement t = ops.createBoolean(true);

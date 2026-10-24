@@ -25,6 +25,11 @@ public abstract class CbWallCustomRecipeMixin implements CbWallRecipes.CustomCat
         this.cb$category = category;
     }
 
+    @Override
+    public CraftingBookCategory cb$legacyCategory() {
+        return this.cb$category;
+    }
+
     @Inject(method = "category", at = @At("HEAD"), cancellable = true)
     private void cb$category(CallbackInfoReturnable<CraftingBookCategory> cir) {
         if (this.cb$category != null) {

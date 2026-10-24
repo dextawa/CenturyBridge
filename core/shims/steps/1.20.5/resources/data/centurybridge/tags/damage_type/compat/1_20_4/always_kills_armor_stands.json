@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:always_kills_armor_stands",
+      "required": false
+    },
+    {
+      "id": "minecraft:arrow",
+      "required": false
+    },
+    {
+      "id": "minecraft:fireball",
+      "required": false
+    },
+    {
+      "id": "minecraft:mob_projectile",
+      "required": false
+    },
+    {
+      "id": "minecraft:trident",
+      "required": false
+    },
+    {
+      "id": "minecraft:wither_skull",
+      "required": false
+    }
+  ]
+}

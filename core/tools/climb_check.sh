@@ -12,7 +12,7 @@ LIBS=$(find data/runtime/client-1.20.4/libraries/org/ow2/asm data/runtime/client
 OUT="$WD/climb/probe-$T"
 rm -rf "$OUT" && mkdir -p "$OUT"
 [ -d "$WD/runtime-$T" ] || { echo "no $WD/runtime-$T (run climb_runtime.sh $WD $T first)"; exit 1; }
-"$JAVA" -Xmx24g -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.20.1 "$T" "$OUT/conv" \
+"$JAVA" -Xmx24g -Dcb.layersDir="$WD/layers" -cp "$WD/core/build/classes:$LIBS" top.dext.centurybridge.Main convert-climb "$WD/core/segments" 1.20.1 "$T" "$OUT/conv" \
     probe/seg/1.20.1__1.20.2/probe-1.20.1.jar > "$OUT/climb.log" 2>&1 || { echo "climb failed"; tail -5 "$OUT/climb.log"; exit 1; }
 grep -E "^== climb" "$OUT/climb.log"
 case "$T" in 26.*) GAME="data/jars/client-$T.jar" ;; *) GAME="data/jars/client-$T-intermediary.jar" ;; esac

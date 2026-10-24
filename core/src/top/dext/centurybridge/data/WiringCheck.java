@@ -178,7 +178,11 @@ public final class WiringCheck {
             if (root.has("classRenames")) {
                 root.getAsJsonObject("classRenames").entrySet().forEach(e -> renames.put(e.getKey(), e.getValue().getAsString()));
             }
-            w.wall = JarRemapper.loadTable(table).keepFacadeTokens(JarRemapper.Table.facadeOwners(renames)).remapper();
+            JarRemapper.Table t = JarRemapper.loadTable(table).keepFacadeTokens(JarRemapper.Table.facadeOwners(renames));
+            if (stubJar != null && Files.exists(stubJar)) {
+                JarRemapper.loadTarget(t, stubJar); // the conversion's descriptor choice for reused ids
+            }
+            w.wall = t.remapper();
         }
         w.genericOverrides = genericOverrideRows(shimsJson);
         w.check(root);
