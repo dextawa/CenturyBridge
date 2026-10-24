@@ -129,6 +129,22 @@ public final class MixinCause {
         }
 
         /** declared on owner or a superclass / superinterface */
+        /** a member of that name (any descriptor) on owner or a supertype */
+        boolean resolvesName(String owner, String name, boolean field) {
+            Set<String> seen = new HashSet<>();
+            List<String> todo = new ArrayList<>(List.of(owner));
+            while (!todo.isEmpty()) {
+                String c = todo.remove(todo.size() - 1);
+                if (!seen.add(c)) continue;
+                ClassNode cn = get(c);
+                if (cn == null) continue;
+                if (field ? cn.fields.stream().anyMatch(f -> f.name.equals(name)) : cn.methods.stream().anyMatch(m -> m.name.equals(name))) return true;
+                if (cn.superName != null) todo.add(cn.superName);
+                todo.addAll(cn.interfaces);
+            }
+            return false;
+        }
+
         boolean resolves(String owner, String name, String desc, boolean field) {
             Set<String> seen = new HashSet<>();
             List<String> todo = new ArrayList<>(List.of(owner));
@@ -394,6 +410,13 @@ public final class MixinCause {
         if (best != null && bs >= 0.6 && bs - second >= 0.2) {
             return new Verdict("target-private-similar", best.name + best.desc + String.format(" (%.2f, next %.2f)", bs, second));
         }
+        // the only W method of V's exact descriptor and static-ness V has nothing of that name+desc for: a
+        // rename the body did not prove (a candidate to judge, never "gone")
+        List<MethodNode> sameDesc = new ArrayList<>();
+        for (MethodNode m : cands) if (m.desc.equals(vm.desc)) sameDesc.add(m);
+        if (sameDesc.size() == 1) {
+            return new Verdict("target-private-rename-candidate", sameDesc.get(0).name + sameDesc.get(0).desc + " (only unmatched method of the descriptor)");
+        }
         return new Verdict("target-private-gone", access(vm.access) + " " + vm.name + vm.desc);
     }
 
@@ -413,6 +436,14 @@ public final class MixinCause {
         }
         if (hits.size() == 1) return new Verdict("target-private-rename", hits.get(0).name + ":" + hits.get(0).desc + " (same uses)");
         if (hits.size() > 1) return new Verdict("target-private-ambiguous", hits.size() + " W fields with the same uses");
+        // the only W field of the type and static-ness V has no field of that name for: a rename the uses did
+        // not prove (its uses changed, or past the wall a name the table missed: GuiSignRenderer.materials ->
+        // sprites). A candidate to judge, never "gone"
+        List<FieldNode> cand = new ArrayList<>();
+        for (FieldNode f : wc.fields) {
+            if (!vnames.contains(f.name) && f.desc.equals(vf.desc) && (f.access & Opcodes.ACC_STATIC) == (vf.access & Opcodes.ACC_STATIC)) cand.add(f);
+        }
+        if (cand.size() == 1) return new Verdict("target-private-rename-candidate", cand.get(0).name + ":" + cand.get(0).desc + " (only unmatched field of the type)");
         return new Verdict("target-private-gone", access(vf.access) + " " + vf.name + ":" + vf.desc);
     }
 
@@ -527,14 +558,21 @@ public final class MixinCause {
         if (avc == null) return new Verdict("anchor-member-gone", "outside the game: " + key);
         if (a.kind().equals("INVOKE")) {
             MethodNode am = v.method(a.owner(), a.name(), a.desc());
-            if (am == null) return new Verdict("anchor-member-gone", "inherited: " + key);
+            if (am == null) {
+                // declared above the owner in V: re-described there (same name, another descriptor) is no removal
+                return w.resolvesName(a.owner(), a.name(), false) ? new Verdict("anchor-reshaped", "inherited, same name in W: " + key)
+                    : new Verdict("anchor-member-gone", "inherited: " + key);
+            }
             if (w.get(a.owner()) == null) return new Verdict("anchor-member-gone", "class gone: " + a.owner());
             if (api(am.access)) return new Verdict("anchor-api-gone", key);
             Verdict p = privateMethod(a.owner(), am);
             return new Verdict(p.cause().replace("target-", "anchor-"), p.evidence());
         }
         FieldNode af = v.field(a.owner(), a.name(), a.desc());
-        if (af == null) return new Verdict("anchor-member-gone", "inherited: " + key);
+        if (af == null) {
+            return w.resolvesName(a.owner(), a.name(), true) ? new Verdict("anchor-reshaped", "inherited, same name in W: " + key)
+                : new Verdict("anchor-member-gone", "inherited: " + key);
+        }
         if (w.get(a.owner()) == null) return new Verdict("anchor-member-gone", "class gone: " + a.owner());
         if (api(af.access)) return new Verdict("anchor-api-gone", key);
         Verdict p = privateField(a.owner(), af);
