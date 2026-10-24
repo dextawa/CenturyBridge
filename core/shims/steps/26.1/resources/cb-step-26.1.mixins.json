@@ -20,9 +20,13 @@
     "CbWallServerMixin"
   ],
   "client": [
+    "CbFapiBlockColorsMixin",
+    "CbFapiBlockModelRenderStateAccess",
+    "CbFapiBlockStateModelSetMixin",
     "CbFapiBuiltInBlockModelsAccess",
     "CbFapiBuiltInBlockModelsMixin",
     "CbFapiCameraAccess",
+    "CbFapiCuboidItemModelMixin",
     "CbFapiFluidRendererMixin",
     "CbFapiFluidStateModelSetMixin",
     "CbFapiGameRendererAccess",
@@ -31,6 +35,8 @@
     "CbFapiLayerRenderStateMixin",
     "CbFapiLevelRendererMixin",
     "CbFapiModelManagerFluidMixin",
+    "CbFapiSectionCompilerMixin",
+    "CbFapiSubmitNodeCollectionAccess",
     "CbWallBlockStateModelSetMixin",
     "CbWallCameraAccess",
     "CbWallClientLevelDataMixin",
