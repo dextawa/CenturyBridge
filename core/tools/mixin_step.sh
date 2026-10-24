@@ -108,13 +108,12 @@ EOF
 rm -f "$OUT"/mixin/*.jar "$OUT"/mixin/conv/*.jar "$OUT/mixin/index-wall.tsv"
 # why each open row is open (Main mixin-cause: V's and W's bytecode, the step's wiring, what the converter
 # said about each probe member, the layer's redirect bodies) -> cause-mixin.tsv, and how many of them the
-# step's mixinLedger (gen_mixin_ledger.py) writes down as having no hook point in W. Same namespace on both
-# sides only: not at the wall.
-if [ -z "$WALL" ]; then
-    "$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-cause "$(code_of "$V")" "$(code_of "$W")" "$WIRING" \
-        "$OUT/open-mixin.tsv" "$OUT/cause-mixin.tsv" "$OUT/mixin/mprobe-$V.jar.index.tsv" "$OUT/mixin/conv/report.md" \
-        "$WD/build/centurybridge-0.3.0+$W.jar" > "$OUT/mixin/cause.log" 2>&1 \
-        && { echo "  causes (rows / targets; all in cause-mixin.tsv):"; sed -n '2,13p' "$OUT/mixin/cause.log"; } \
-        || { echo "  mixin-cause failed"; tail -3 "$OUT/mixin/cause.log"; }
-    python3 "$WD/core/tools/gen_mixin_ledger.py" --count "$OUT/open-mixin.tsv" "$WIRING"
-fi
+# step's mixinLedger (gen_mixin_ledger.py) writes down as having no hook point in W. At the wall W's code is
+# judged in the analysis namespace (--wall: WallInverse), like the rows and the wiring.
+WALLARG=(); [ -n "$WALL" ] && WALLARG=(--wall "$WALL")
+"$JAVA" -Xmx8g -cp "$CP" top.dext.centurybridge.Main mixin-cause "$(code_of "$V")" "$(code_of "$W")" "$WIRING" \
+    "$OUT/open-mixin.tsv" "$OUT/cause-mixin.tsv" "$OUT/mixin/mprobe-$V.jar.index.tsv" "$OUT/mixin/conv/report.md" \
+    "$WD/build/centurybridge-0.3.0+$W.jar" "${WALLARG[@]}" > "$OUT/mixin/cause.log" 2>&1 \
+    && { echo "  causes (rows / targets; all in cause-mixin.tsv):"; sed -n '2,13p' "$OUT/mixin/cause.log"; } \
+    || { echo "  mixin-cause failed"; tail -3 "$OUT/mixin/cause.log"; }
+python3 "$WD/core/tools/gen_mixin_ledger.py" --count "$OUT/open-mixin.tsv" "$WIRING"
