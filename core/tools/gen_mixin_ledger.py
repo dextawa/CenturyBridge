@@ -17,6 +17,8 @@ Ledgered (each reason is what mixin-cause verified; nothing else is):
   anchor-unused-here / anchor-member-gone / anchor-private-gone / anchor-api-gone / constant-gone
                            the anchor no longer stands in the target, in what the target calls (depth 2) or in
                            the lambdas it makes, and no single instruction stands in its place
+  target-moved-up-anchor   W dropped the override (MixinBridge restores it as a super call for HEAD / RETURN);
+                           an anchor of V's override body has no code to stand in
 Left open (mechanisms or a step agent's judgment): the API side still open (target-api), members moved up,
 reshaped or only similar, anchors moved into callees with several call sites, wired anchors, counts and
 ordinals, constants with a candidate, renamed vanilla classes.
@@ -47,6 +49,8 @@ def reason(cause, mojang, target, anchor, evidence):
     if cause.startswith("target-wired") and ("no W method holds its code" in cause or "disabled, target gone" in cause):
         how = cause.split(" / ")[-1] if " / " in cause else "the step's wiring"
         return "member", f"gone from W; rebuilt for mods' calls only ({how}); no W method holds its code"
+    if cause == "target-moved-up-anchor":
+        return "anchor", "W dropped this override (the class inherits it now): the anchor was in the override's own body, which no longer exists"
     if cause in ANCHOR_GONE:
         return "anchor", "anchor gone: not in the target, its callees (depth 2) or lambdas; nothing stands in its place"
     return None, None

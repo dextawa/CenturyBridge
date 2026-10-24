@@ -2068,15 +2068,12 @@ final class MixinBridge {
                 why.add(shortName(decl.name) + "." + vmeth.name + vmeth.desc + " is package-private in another package");
                 return null;
             }
-            ClassNode rc = restorer(target, decl.name);
+            // super.m(..) as javac writes it: through the direct superclass, the JVM finds the declaration above
+            ClassNode rc = restorer(target, wt.superName);
             for (MethodNode m : rc.methods) {
                 if (m.name.equals(vmeth.name) && m.desc.equals(vmeth.desc)) {
                     return m;
                 }
-            }
-            if (!rc.superName.equals(decl.name)) {
-                why.add("restoring " + vmeth.name + vmeth.desc + " would need a second superclass for the restoring mixin of " + shortName(target));
-                return null;
             }
             MethodNode r = new MethodNode(acc & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED | Opcodes.ACC_VARARGS),
                 vmeth.name, vmeth.desc, null, inherited.exceptions == null ? null : inherited.exceptions.toArray(new String[0]));
@@ -2088,7 +2085,7 @@ final class MixinBridge {
                 r.visitVarInsn(t.getOpcode(Opcodes.ILOAD), slot);
                 slot += t.getSize();
             }
-            r.visitMethodInsn(Opcodes.INVOKESPECIAL, decl.name, vmeth.name, vmeth.desc, false);
+            r.visitMethodInsn(Opcodes.INVOKESPECIAL, wt.superName, vmeth.name, vmeth.desc, false);
             r.visitInsn(Type.getReturnType(vmeth.desc).getOpcode(Opcodes.IRETURN));
             r.visitMaxs(slot + 1, slot);
             r.visitEnd();
@@ -2098,7 +2095,7 @@ final class MixinBridge {
 
         /**
          * The jar's restoring mixin for a target on the current config's side: abstract, extending the
-         * W class whose method it overrides (its super calls are then Mixin's own super calls), with
+         * target's W superclass (its super calls are then Mixin's own super calls), with
          * priority 1 -- merged before any mod's mixins, so whichever converted mod restores a member
          * first, every mod's injectors may target it (Mixin refuses an injector a method merged by a mixin
          * of equal or higher priority); a second restoring of the same member is skipped by Mixin with

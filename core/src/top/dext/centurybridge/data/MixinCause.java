@@ -153,7 +153,7 @@ public final class MixinCause {
         v = new Jar(vJar);
         w = new Jar(wJar);
         for (Map.Entry<String, JsonElement> sec : wiring.entrySet()) {
-            if (!sec.getValue().isJsonObject() || sec.getKey().startsWith("_") || sec.getKey().equals("ledger")) continue;
+            if (!sec.getValue().isJsonObject() || sec.getKey().startsWith("_") || sec.getKey().equals("ledger") || sec.getKey().equals("mixinLedger")) continue;
             for (String k : sec.getValue().getAsJsonObject().keySet()) {
                 wired.add(k);
                 if (sec.getKey().endsWith("Redirects") && sec.getValue().getAsJsonObject().get(k).isJsonPrimitive()) {
@@ -333,7 +333,14 @@ public final class MixinCause {
             // the member stands: what failed is the handler shape / static-ness / the mixin as a whole
             return new Verdict("target-stands", r.now());
         }
-        if (!n.startsWith("<") && w.resolves(r.owner(), n, d, false)) return new Verdict("target-moved-up", n + d);
+        if (!n.startsWith("<") && w.resolves(r.owner(), n, d, false)) {
+            // MixinBridge restores the dropped override as a super call: HEAD / RETURN hook there again,
+            // an anchor of V's own override body has nothing to stand in
+            if (!r.anchor().isEmpty() && !r.anchor().equals("HEAD") && !r.anchor().equals("RETURN")) {
+                return new Verdict("target-moved-up-anchor", n + d + ": W dropped the override, its body with it");
+            }
+            return new Verdict("target-moved-up", n + d);
+        }
         if (wiredOnSuper(r.owner(), n + d)) return new Verdict("target-wired-on-super", n + d);
         if (api(vm.access)) return new Verdict("target-api", access(vm.access) + " " + n + d);
         return privateMethod(r.owner(), vm);
